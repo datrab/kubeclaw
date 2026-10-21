@@ -2039,7 +2039,11 @@
         "docs/config/documentation-tree-classification.json",
         "docs/site/reference/documentation-route-registry.json",
         "package.json",
-        ".github/workflows/docs-checks.yaml"
+        ".github/workflows/docs-checks.yaml",
+        "scripts/docs-reader/redirects.mjs",
+        "scripts/docs-reader/serve.mjs",
+        "scripts/tests/docs-reader-redirects.test.mjs",
+        "scripts/tests/docs-reader-redirects.browser.mjs"
       ],
       "checks": [
         "npm run docs:governance:check",
@@ -2101,7 +2105,7 @@
       "audience": "operator, developer, plugin author, maintainer",
       "owner": "documentation; named components own diagnostic and delivery semantics",
       "appliesTo": "the named diagnostic representations, families and current source boundaries below",
-      "lastVerified": "2026-10-15 original topics; HTTP error chapter source and local probes 2026-10-21 only; no live recovery",
+      "lastVerified": "2026-10-15 original topics; HTTP error chapter source and local probes 2026-10-21; NRI units and API-validator controls 2026-10-21; no live recovery",
       "sourceDependencies": [
         "skills/common/plugins/transport-publisher/src/adapter.ts",
         "skills/common/plugins/runtime-dispatch/src/adapter.ts",
@@ -2112,7 +2116,10 @@
         "skills/worker/core/worker/attempt-executor.ts",
         "skills/worker/core/worker/phase-deadline.ts",
         "skills/prism/server/worker-service.ts",
-        "scripts/generate-buster-error-reference.mjs"
+        "scripts/generate-buster-error-reference.mjs",
+        "tools/native-worker-nri/main.go",
+        "scripts/kubernetes-api-probe.mjs",
+        "scripts/render-kubernetes-api-probe.mjs"
       ],
       "checks": [
         "npm run docs:governance:check",

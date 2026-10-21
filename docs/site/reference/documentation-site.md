@@ -3,7 +3,7 @@
 Status: implemented local static reader; external hosting and broader live acceptance remain separate
 Audience: operator, plugin author, developer, documentation maintainer
 Owner: documentation
-Evidence: scripts/docs-publication.mjs; scripts/docs-reader/diagrams.mjs; scripts/docs-reader/check-diagrams.mjs; scripts/tests/docs-reader-diagrams.test.mjs; docs/config/documentation-diagrams.json; scripts/docs-reader/metadata.mjs; scripts/lib/docs-publication-assets.mjs; scripts/lib/docs-publication-links.mjs; scripts/docs-reader/renderer.mjs; scripts/docs-reader/package.json; scripts/docs-reader/package-lock.json; scripts/tests/docs-reader.test.mjs; scripts/docs-reader/check-artifact.mjs; scripts/docs-reader/check-search.mjs; scripts/docs-reader/search-questions.json; scripts/docs-reader/check-source-links.mjs; scripts/docs-reader/source-links.mjs; scripts/docs-reader/source-previews.mjs; scripts/docs-reader/check-source-previews.mjs; scripts/tests/docs-reader-source-previews.test.mjs; scripts/tests/docs-reader-source-links.test.mjs; scripts/docs-governance.mjs; scripts/docs-check-refs.mjs; scripts/check-site-reader-boundary.mjs; docs/config/documentation-tree-classification.json; docs/site/reference/documentation-route-registry.json; package.json; .github/workflows/docs-checks.yaml
+Evidence: scripts/docs-publication.mjs; scripts/docs-reader/diagrams.mjs; scripts/docs-reader/check-diagrams.mjs; scripts/tests/docs-reader-diagrams.test.mjs; docs/config/documentation-diagrams.json; scripts/docs-reader/metadata.mjs; scripts/lib/docs-publication-assets.mjs; scripts/lib/docs-publication-links.mjs; scripts/docs-reader/renderer.mjs; scripts/docs-reader/package.json; scripts/docs-reader/package-lock.json; scripts/tests/docs-reader.test.mjs; scripts/docs-reader/check-artifact.mjs; scripts/docs-reader/check-search.mjs; scripts/docs-reader/search-questions.json; scripts/docs-reader/check-source-links.mjs; scripts/docs-reader/source-links.mjs; scripts/docs-reader/source-previews.mjs; scripts/docs-reader/check-source-previews.mjs; scripts/tests/docs-reader-source-previews.test.mjs; scripts/tests/docs-reader-source-links.test.mjs; scripts/docs-governance.mjs; scripts/docs-check-refs.mjs; scripts/check-site-reader-boundary.mjs; docs/config/documentation-tree-classification.json; docs/site/reference/documentation-route-registry.json; package.json; .github/workflows/docs-checks.yaml; scripts/docs-reader/redirects.mjs; scripts/docs-reader/serve.mjs; scripts/tests/docs-reader-redirects.test.mjs; scripts/tests/docs-reader-redirects.browser.mjs
 Applies to: positively selected repository reader pages and the local HTML publication artifact
 Last verified: source, original 167-page build, parser tests, and rendered local links checked on 2026-10-21; browser observations have their own recorded scope
 
@@ -121,7 +121,7 @@ than editing the generated map by hand.
 The publication manifest owns actual HTML paths: the home page is
 `/README.html`, a section index is such as `/use/README.html`, and this page is
 `/reference/documentation-site.html`. The artifact's `index.html` supplies a
-static home redirect and a visible fallback link. Parsed reader links target
+fragment/query-preserving local-script home redirect and a visible no-script fallback link. Parsed reader links target
 those HTML files; code examples keep their original text. Approved example
 folders have generated file indexes, without admitting extra repository files.
 
@@ -129,11 +129,13 @@ These artifact paths are distinct from the ownership map's logical trailing-slas
 identities. A hosting system must explicitly map any additional public routes;
 this local builder does not claim that an external host serves them.
 
-The [route registry](documentation-route-registry.json) records redirect intent.
-The governance checker rejects duplicate redirect origins, an origin that is
-still an active page, a missing active target, and a self-redirect. A valid
-registry alone does not prove HTTP redirects, static redirects, query/fragment
-preservation, or a successful request through a hosting layer.
+The [route registry](documentation-route-registry.json) owns explicit transfers.
+The build compiles it with selected canonical pages and the pinned known-route
+baseline, rejecting missing successors, collisions and lost declared anchors.
+The optional loopback preview sends actual HTTP redirects; static fallback
+behavior has a separate JavaScript/no-script boundary. Follow
+[redirect maintenance](#maintain-redirects-without-inventing-history) for the
+exact source-route and fragment contract. None of this proves external hosting.
 
 Keep a single canonical explanation for each fact. Before a rename or removal,
 move still-valid information, update incoming links and ownership, and declare
@@ -169,13 +171,40 @@ access. Local reading does not execute the published runnable examples.
 
 ## Check and stage a local copy
 
-Use the repository root with Node.js 24 and its locked root dependencies.
-Install the isolated, locked reader dependencies before checking or building:
+Use Node.js 24, npm, Git and the committed root and reader lockfiles. Keep the
+selected checkout and its source objects available throughout the build.
+Follow the [clean-checkout procedure](../extend/developer-handbook.md#prepare-a-clean-checkout).
+Install both dependency sets from the repository root:
 
-```sh
+```bash
+npm ci --include=dev --ignore-scripts
 npm ci --prefix scripts/docs-reader --ignore-scripts
 npx --no-install playwright install --with-deps chromium
-node --test scripts/tests/docs-reader.test.mjs scripts/tests/docs-reader-source-links.test.mjs scripts/tests/docs-reader-source-previews.test.mjs scripts/tests/docs-reader-diagrams.test.mjs
+```
+
+The last command installs Chromium and its platform dependencies. It needs the
+installation permissions supported by that environment. Chromium also needs
+readable system fonts and a working fontconfig configuration. Missing fonts can
+produce zero-sized text even when the DOM contains a link. A DOM-only assertion
+is not proof of a usable fallback. Restricted hosts must provide their own
+verified browser, shared libraries and font configuration; do not disable
+rendering checks to conceal a missing prerequisite.
+
+The broader documentation inventory also uses the configured Go and Helm
+parsers. The CI workflow selects Go 1.26.3 and Helm 3.22.0. Those prerequisites
+do not make a runtime deployment or a cluster available. Git must resolve every
+pinned source revision needed by the reader. Preserve full clone history or
+fetch the exact missing objects through the repository owner.
+
+Source verification reads this repository through Git. Declared source blobs in
+other repositories use bounded primary HTTPS requests. An offline artifact does
+not prove that this network-dependent verification ran.
+
+Check the maintained reader components and the isolated redirect fixtures:
+
+```sh
+node --test scripts/tests/docs-reader.test.mjs scripts/tests/docs-reader-source-links.test.mjs scripts/tests/docs-reader-source-previews.test.mjs scripts/tests/docs-reader-diagrams.test.mjs scripts/tests/docs-reader-redirects.test.mjs
+node scripts/tests/docs-reader-redirects.browser.mjs
 ```
 Prepare the selected route's additional tools and source revision through the
 [handbook prerequisites](../extend/developer-handbook.md#add-tools-and-credentials-only-for-the-selected-route).
@@ -236,7 +265,7 @@ existence and valid ranges do not prove that the linked code supports a claim.
 Inspect `.tmp/docs-publication/build-report.json` and `reader-manifest.json`.
 The build report retains its input digest, selected page and asset counts, and
 checkout revision. The reader manifest additionally lists each generated HTML,
-CSS, JavaScript and index output with its exact byte count and SHA-256. It does
+CSS, JavaScript, index output and positively selected copied asset with its exact byte count and SHA-256. It does
 not include its own recursive digest. Neither report labels a declared check as
 a browser observation. A failed build must not be published merely because an
 older report exists. Reproducibility requires the same selected input bytes,
@@ -248,11 +277,84 @@ after replacement, preserve the diagnostic and partial output for diagnosis;
 remove only the owned `.tmp/docs-publication` tree when no inspection uses it.
 Never reset unrelated generated files or another author's changes.
 
+## Preview the exact artifact on loopback
+
+From the selected checkout, start the optional manifest-only Node preview:
+
+```bash
+node scripts/docs-reader/serve.mjs .tmp/docs-publication 4173
+```
+
+Open `http://127.0.0.1:4173/`. The process serves only GET/HEAD requests for
+registered, hash-verified artifact outputs and registered redirects. It does
+not expose the checkout, list directories, proxy external requests or accept
+writes. Unknown paths return 404, unsupported methods 405 and changed artifact
+members 409. Stop the owned preview process when finished; it is not a
+production hosting configuration, authenticated service or deployment recipe.
+
+For offline reading, open `index.html` from the complete artifact. Navigation,
+page content, source links and diagram alternatives remain available without
+JavaScript. Full-text search needs local JavaScript; use navigation or browser
+Find without it. Following an external source URL still needs network access;
+the displayed local excerpt remains part of the artifact.
+
+## Maintain redirects without inventing history
+
+The [route registry](documentation-route-registry.json) owns explicit transfers.
+The pinned [known-route baseline](../../../scripts/docs-published-route-baseline.json)
+prevents a known page from disappearing merely because a map was regenerated.
+It is not proof of earlier external hosting or unknown pre-registry routes.
+The current registry may legitimately contain no transfers.
+
+For a real supported move, preserve the old known route, identify one selected
+canonical successor, provide a reason and list the original anchors that the
+successor must retain in `preservedFragments`. Use the exact existing governance
+route vocabulary, such as `/use/topic/`; canonical artifact targets resolve to
+their `.html` file. Register an additional known HTML source URL separately
+when that URL also needs continuity. Do not assume a directory transfer
+implicitly covers every other spelling of an old URL.
+
+The compiler rejects chains, loops, dead targets, canonical-source collisions,
+unsafe/nonlocal paths, duplicate outputs and unregistered known removals. Every
+declared retained anchor must exist in the actual rendered target. An explicit
+empty anchor list means the owner reviewed that no original anchors need
+retention; it is not permission to omit a known linked anchor.
+
+The preview sends a single HTTP 308 with a canonical target. Native browser
+navigation inherits an incoming fragment when the Location has no fragment;
+the server also preserves the query. A static fallback uses a local script to
+carry the query and fragment before replacing the URL. It includes a canonical
+link and does not enter canonical navigation or search as duplicate content.
+
+The existing `index.html` home entry uses the same preservation boundary,
+without inventing a historical migration entry.
+
+Without JavaScript, the static page stays at the original URL and displays a
+working canonical link and explicit fragment instructions. Follow that link
+and retain any original `#fragment` on the destination address manually. This
+is a usable fallback, not automatic opaque-fragment forwarding. Native meta
+refresh drops that fragment, so the reader does not use it for registered
+transfers. An unknown or already-removed target anchor cannot be recovered by
+changing a URL; obtain the content owner's mapping instead.
+
+To check a proposed transfer in the maintained isolated fixtures, run:
+
+```bash
+node --test scripts/tests/docs-reader-redirects.test.mjs
+node scripts/tests/docs-reader-redirects.browser.mjs
+```
+
+The native browser fixture checks actual loopback requests and static file
+navigation, with JavaScript enabled and disabled. Its synthetic old/new routes
+are test data, not a claimed historical publication. Keep missing browser/fonts
+as prerequisite failures rather than substituting string-only assertions.
+
 ## CI and the remaining acceptance boundary
 
 The documentation workflow validates pull requests and applicable manual runs.
 It installs the declared Node, Go, and Helm tools and locked root and reader dependencies,
-checks publication and parser/build regressions, builds the local HTML artifact,
+checks publication and parser/build regressions, including isolated redirect
+requests and native browser fixtures, builds the local HTML artifact,
 and checks blueprint and suite documentation contracts. It also
 regenerates selected inventories/reference output, and rejects resulting drift.
 Its `docs:check:generated` chain also includes multiple inventory and parity

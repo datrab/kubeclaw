@@ -1,0 +1,289 @@
+{
+  "status": "AUTHOR_DRAFT_ONLY; ROOT_INDEPENDENT_REVIEW_REQUIRED; NO_MAIN_EDIT",
+  "pinRevision": "cfc97be096908c1193877d054bb80662120f1eca",
+  "sources": [
+    {
+      "path": "tools/native-worker-nri/main.go",
+      "sha256": "3d0c3149fc703f6c8e2fd3392b7f8e2e1bbd1df1b18215c2857cb2cddf417531",
+      "bytes": 5682,
+      "lines": 167,
+      "exactCommittedBytes": true,
+      "bindingScope": "current linked program/test/settings bytes match pinned revision",
+      "pinnedSha256": "3d0c3149fc703f6c8e2fd3392b7f8e2e1bbd1df1b18215c2857cb2cddf417531",
+      "readScope": "whole file"
+    },
+    {
+      "path": "tools/native-worker-nri/main_test.go",
+      "sha256": "9a785c9b6395f80f7a5aed1461c23032899f99469006813971897f3667eeb446",
+      "bytes": 7040,
+      "lines": 206,
+      "exactCommittedBytes": true,
+      "bindingScope": "current linked program/test/settings bytes match pinned revision",
+      "pinnedSha256": "9a785c9b6395f80f7a5aed1461c23032899f99469006813971897f3667eeb446",
+      "readScope": "whole file"
+    },
+    {
+      "path": "tools/native-worker-nri/go.mod",
+      "sha256": "2e4ff78b7fb9a5cd83284d4b002104d7035c67d404de25082c3681945419bd73",
+      "bytes": 1039,
+      "lines": 27,
+      "exactCommittedBytes": true,
+      "bindingScope": "current linked program/test/settings bytes match pinned revision",
+      "pinnedSha256": "2e4ff78b7fb9a5cd83284d4b002104d7035c67d404de25082c3681945419bd73",
+      "readScope": "whole file"
+    },
+    {
+      "path": "tools/native-worker-nri/go.sum",
+      "sha256": "7d1026a3af798fcf9b05a7339fa460abf72ac8d6a63f6582ccd92b89cb24d662",
+      "bytes": 9169,
+      "lines": 98,
+      "exactCommittedBytes": true,
+      "bindingScope": "current linked program/test/settings bytes match pinned revision",
+      "pinnedSha256": "7d1026a3af798fcf9b05a7339fa460abf72ac8d6a63f6582ccd92b89cb24d662",
+      "readScope": "binding/settings acquisition; no complete dependency semantic audit"
+    },
+    {
+      "path": "scripts/build-native-worker-nri.mjs",
+      "sha256": "f74f19215dbf5a6f6fff57aa7444d47f0051f2c20fb50c85a09a459b888a54db",
+      "bytes": 1185,
+      "lines": 19,
+      "exactCommittedBytes": true,
+      "bindingScope": "current linked program/test/settings bytes match pinned revision",
+      "pinnedSha256": "f74f19215dbf5a6f6fff57aa7444d47f0051f2c20fb50c85a09a459b888a54db",
+      "readScope": "whole file"
+    },
+    {
+      "path": "scripts/install-native-worker-pools-stage.sh",
+      "sha256": "e70f3fb2c1be7c2d90d5e686851e5b8e61c3a3ef64b3365eb20f960b89e4491a",
+      "bytes": 3637,
+      "lines": 66,
+      "exactCommittedBytes": true,
+      "bindingScope": "current linked program/test/settings bytes match pinned revision",
+      "pinnedSha256": "e70f3fb2c1be7c2d90d5e686851e5b8e61c3a3ef64b3365eb20f960b89e4491a",
+      "readScope": "whole file"
+    },
+    {
+      "path": "scripts/activate-native-worker-ax41.sh",
+      "sha256": "61d6a0ee66a726237b81a14b1b29b3bf074af15040f65ac0eeb5b9b4cc94f7cd",
+      "bytes": 6676,
+      "lines": 102,
+      "exactCommittedBytes": true,
+      "bindingScope": "current linked program/test/settings bytes match pinned revision",
+      "pinnedSha256": "61d6a0ee66a726237b81a14b1b29b3bf074af15040f65ac0eeb5b9b4cc94f7cd",
+      "readScope": "whole file"
+    },
+    {
+      "path": "scripts/repair-native-nri-launch.sh",
+      "sha256": "154359fb212c761aeb74069c04008c47f46856e68e868d05d91c79b5138a85f9",
+      "bytes": 1778,
+      "lines": 35,
+      "exactCommittedBytes": true,
+      "bindingScope": "current linked program/test/settings bytes match pinned revision",
+      "pinnedSha256": "154359fb212c761aeb74069c04008c47f46856e68e868d05d91c79b5138a85f9",
+      "readScope": "whole file"
+    },
+    {
+      "path": "scripts/native-worker-node-policy.mjs",
+      "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+      "bytes": 3383,
+      "lines": 59,
+      "exactCommittedBytes": true,
+      "bindingScope": "current linked program/test/settings bytes match pinned revision",
+      "pinnedSha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+      "readScope": "whole file"
+    },
+    {
+      "path": "scripts/native-worker-node-preflight.mjs",
+      "sha256": "e17c6c2570d3a4926b063330adfbdb67f3c0014915f570d6ad8b95333e1c2e56",
+      "bytes": 3497,
+      "lines": 53,
+      "exactCommittedBytes": true,
+      "bindingScope": "current linked program/test/settings bytes match pinned revision",
+      "pinnedSha256": "e17c6c2570d3a4926b063330adfbdb67f3c0014915f570d6ad8b95333e1c2e56",
+      "readScope": "whole file"
+    },
+    {
+      "path": "scripts/render-native-worker-node.mjs",
+      "sha256": "fe49ebbe3640b340c7b51a6284515f18101f3160c4817fa8f92876ef66f9dcc9",
+      "bytes": 3781,
+      "lines": 75,
+      "exactCommittedBytes": true,
+      "bindingScope": "current linked program/test/settings bytes match pinned revision",
+      "pinnedSha256": "fe49ebbe3640b340c7b51a6284515f18101f3160c4817fa8f92876ef66f9dcc9",
+      "readScope": "whole file"
+    },
+    {
+      "path": "scripts/install/README.md",
+      "sha256": "6d9d9a77aa808036cdaa0e460c3dafa5f45afc36403775e0f29875e5e3907e6b",
+      "bytes": 7340,
+      "lines": 87,
+      "exactCommittedBytes": true,
+      "bindingScope": "current linked program/test/settings bytes match pinned revision",
+      "pinnedSha256": "6d9d9a77aa808036cdaa0e460c3dafa5f45afc36403775e0f29875e5e3907e6b",
+      "readScope": "whole file"
+    },
+    {
+      "path": "scripts/kubernetes-api-probe.mjs",
+      "sha256": "ee81430754dfd3f936e86ce8c18ce13441b3c5aaaaf430dd90bfbffcfa242817",
+      "bytes": 3512,
+      "lines": 72,
+      "exactCommittedBytes": true,
+      "bindingScope": "current linked program/test/settings bytes match pinned revision",
+      "pinnedSha256": "ee81430754dfd3f936e86ce8c18ce13441b3c5aaaaf430dd90bfbffcfa242817",
+      "readScope": "whole file"
+    },
+    {
+      "path": "scripts/render-kubernetes-api-probe.mjs",
+      "sha256": "f081a58cdce9aea6a958ae9bd543c0c440b47c97b4a4d5d284a66262e8753eb0",
+      "bytes": 2919,
+      "lines": 39,
+      "exactCommittedBytes": true,
+      "bindingScope": "current linked program/test/settings bytes match pinned revision",
+      "pinnedSha256": "f081a58cdce9aea6a958ae9bd543c0c440b47c97b4a4d5d284a66262e8753eb0",
+      "readScope": "whole file"
+    },
+    {
+      "path": "versions.json",
+      "sha256": "04281d9b2addd93073bd548293ea9ba6e1d88c2a18fff0f34cbdbc14ca7fe2c1",
+      "bytes": 7603,
+      "lines": 147,
+      "exactCommittedBytes": true,
+      "bindingScope": "current linked program/test/settings bytes match pinned revision",
+      "pinnedSha256": "04281d9b2addd93073bd548293ea9ba6e1d88c2a18fff0f34cbdbc14ca7fe2c1",
+      "readScope": "binding/settings acquisition; no complete dependency semantic audit"
+    },
+    {
+      "path": "docs/site/reference/errors.md",
+      "sha256": "c1818431abc965ca84ee87dd3170e83bb27c49012beefdb7802b743737d6589b",
+      "bytes": 42810,
+      "lines": 392,
+      "exactCommittedBytes": true,
+      "bindingScope": "historical pre-append canonical-page baseline; append integration does not preserve whole page bytes",
+      "pinnedSha256": "c1818431abc965ca84ee87dd3170e83bb27c49012beefdb7802b743737d6589b",
+      "readScope": "whole file"
+    }
+  ],
+  "selectedCallerScope": {
+    "scripts/deploy.sh": {
+      "ranges": [
+        [
+          1,
+          150
+        ],
+        [
+          2870,
+          2895
+        ]
+      ],
+      "claim": "only exact native renderer/preflight dispatch; unrelated deployment behavior not requalified"
+    },
+    "canonicalContext": [
+      "errors.md full392lines",
+      "developer-handbook native host/setup chapters scoped current context",
+      "worker profiles native-pool and security network boundary headings"
+    ]
+  },
+  "artifacts": [
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/error-family-author/errors-native-nri-api-probe.draft.md",
+      "sha256": "4f3882c4e8993db78f5415a7214189ea7bceeb7bdc194992bf25bf51e7354856"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/error-family-author/integration-instructions.md",
+      "sha256": "b3b136d15be845586762f31f930f804e7179f771d8d752ae7367380769e99107"
+    }
+  ],
+  "nativeControls": {
+    "NRI_initialAuthorAttempt": "BLOCKED_PREREQUISITE; original Go test command did not reach tests because default module cache /home/node/go is read-only. Retained separately from later root-owned successful private-cache run.",
+    "NRI_raw": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/error-emitter-census/native-nri-nonlive-controls.txt",
+    "API": "8 genuine original-validator/renderer non-live controls terminal0; source hashes identical before/after. Pending Pod-shaped fixture accepted, demonstrating actual phase-check limitation; missingUID rejected. No HTTPS/token/cluster/apply.",
+    "API_result": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/error-emitter-census/api-probe-nonlive-controls.json",
+    "API_raw": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/error-emitter-census/api-probe-nonlive-controls.txt",
+    "NRI_rootCompletedRun": {
+      "owner": "root reviewer; author independently read retained raw JSONL and before/after hashes",
+      "command": "go test -mod=readonly -count=1 -json ./...",
+      "go": "1.26.5 matching central GO_VERSION and go.mod",
+      "cache": "private fresh module/build/temp caches",
+      "topLevelPassed": 5,
+      "subtestsPassed": 6,
+      "failures": 0,
+      "skips": 0,
+      "sourceAndModuleFilesBeforeAfterIdentical": 4,
+      "processProvenance": "Root-owned historical observed unit process real UID 0; root-owned temporary-file guard exercised; not a prepared native Worker host or general non-root reproduction claim",
+      "scope": "SDK construction, Configure, NRI wire/OCI serialization, selection and root-owned-file unit controls; no SDK registration, native kernel/containerd, installation/activation or recovery",
+      "proofs": [
+        {
+          "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/nri-parent-nonlive-tests.jsonl",
+          "sha256": "701dd41599e54e21d4b8d55d122c8c001039dd694ca5e7067d790f83c3d24fac"
+        },
+        {
+          "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/nri-parent-nonlive-tests.stderr",
+          "sha256": "68d88079b46aad6e0596068e449801c2e42e4ffaff58bc1798fccc950ab4c5a8"
+        },
+        {
+          "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/nri-parent-source-before.txt",
+          "sha256": "aa0ccaeb5410650c684e22cfc2fd5229e1b8eef2cd3fb1068c89ace58fed1052"
+        },
+        {
+          "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/nri-parent-source-after.txt",
+          "sha256": "aa0ccaeb5410650c684e22cfc2fd5229e1b8eef2cd3fb1068c89ace58fed1052"
+        },
+        {
+          "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/nri-parent-owned-cache-path.txt",
+          "sha256": "0e268ce26481d1afaa73aad56763e29c53348220f81703570571b977bc9d241a"
+        }
+      ]
+    }
+  },
+  "parentPrecisionReview": {
+    "applied": [
+      "Identity regex is coercive with no typeof string guard; null/7 can reach missing-token ENOENT instead of IDENTITY_INVALID.",
+      "Origin uniqueness uses raw Set entries, not normalized URL origins; equivalent endpoint spellings can pass.",
+      "Activation citation split into15-59 and60-102 without changing its claimed scope."
+    ],
+    "originalFunctionControl": {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/error-family-parent-precision-controls.json",
+      "sha256": "a08c9b5723b00c5fcaa9393a534bdccf593f129346115af0d432e82cf03634cb",
+      "observations": {
+        "sameNormalizedEndpointAccepted": true,
+        "nonStringIdentityPassesRegexBeforeMissingToken": true,
+        "observedTerminal": "ENOENT before token/CA acquisition and before HTTPS call",
+        "scope": "actual maintained functions; no token, CA, HTTPS, Job/apply or live network request",
+        "ownedCleanup": "finally"
+      }
+    },
+    "testOwnership": "Root-owned original-function precision controls; author read retained observation and applied bounded prose corrections. No extra native/cluster execution claimed."
+  },
+  "materialPrecision": [
+    "Identity regex coercion is not string-type validation.",
+    "Raw Set origin distinctness is not normalized-origin uniqueness.",
+    "Policy-check mode is distinct from real-UID0 startup and does not register NRI.",
+    "Supplied/printed binary/path is not acquired installed artifact identity.",
+    "NRI callback validates selected Pod authority before deciding to ignore a different container.",
+    "Error named RUNNING_SOURCE_POD checks fields, not running phase.",
+    "Probe token-subject decode is not signature verification; TLS/API/RBAC are separate.",
+    "Unready probe is not universal Service-backend exclusion, and Job/ConfigMap have no automatic joint cleanup contract.",
+    "Original bare native errors and per-request HTTP/status error differ from the selected network-http provider namespace."
+  ],
+  "limits": [
+    "No main/public/register/codeguard write.",
+    "Owned NRI source is fully read; external SDK/containerd receiving lifecycle is an explicit boundary, not an inspected or executed native protocol guarantee.",
+    "No NRI SDK connect, native kernel/containerd/cgroup execution, cluster mutation/Job execution, CNI or live recovery.",
+    "No telemetry missing-topic claim or new telemetry chapter.",
+    "No global REF005/A91105 or current Reader/source aggregate acceptance.",
+    "Frozen31 qualification candidate remained unchanged."
+  ],
+  "evidenceFormat": {
+    "fields": [
+      "Claim",
+      "Implementation",
+      "Contract/setting",
+      "Test evidence",
+      "Revision",
+      "Limit"
+    ],
+    "callouts": 2,
+    "maintainedStandaloneAPITestSuite": "not found in inspected scope; eight author controls and two separate reviewer controls are explicitly attributed instead",
+    "baselinePage": "errors.md is a historical pre-append baseline, not a promise of whole-page byte preservation after integration"
+  }
+}

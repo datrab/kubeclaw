@@ -3,6 +3,7 @@ import path from 'node:path';
 import crypto from 'node:crypto';
 import MarkdownIt from 'markdown-it';
 import sanitizeHtml from 'sanitize-html';
+import { appendReaderRedirects, readerRedirectPage } from './redirects.mjs';
 import { validateDiagramSvg } from './diagrams.mjs';
 import { githubHeadingText, githubSlug } from '../lib/docs-markdown-anchors.mjs';
 
@@ -119,7 +120,7 @@ ${toc ? `<aside aria-label="On this page"><strong>On this page</strong>${toc}</a
 }
 
 // Inputs come only from the publication selector; this never walks the repository.
-export function buildReader({ outputRoot, pages, assets, revision, sourceLink, sourcePreviews, generatedAssets = [], diagramManifest }) {
+export function buildReader({ outputRoot, pages, assets, revision, sourceLink, sourcePreviews, generatedAssets = [], diagramManifest, redirectRegistry, routeBaseline }) {
   const routes = new Map(pages.map(p => [p.relative, `/${p.relative.slice(0, -3)}.html`]));
   const allAssets = [...assets, ...generatedAssets.map(asset => asset.path)];
   if (new Set(allAssets).size !== allAssets.length) throw new Error('Generated diagram asset collides with a selected asset');
@@ -163,11 +164,15 @@ export function buildReader({ outputRoot, pages, assets, revision, sourceLink, s
   write('search-index.js', `window.kubeclawSearchIndex=${JSON.stringify(index).replace(/</gu, '\\u003c')};\n`);
   write('reader.css', readerCss);
   write('reader.js', readerScript);
-  write('index.html', `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="refresh" content="0;url=README.html"><title>KubeClaw Documentation</title></head><body><a href="README.html">Open KubeClaw Documentation</a></body></html>\n`);
+  write('index.html', redirectRegistry ? readerRedirectPage({href:'README.html',script:'reader-redirect.js',stylesheet:'reader.css',reason:'Open the canonical documentation home.'}) : `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="refresh" content="0;url=README.html"><title>KubeClaw Documentation</title></head><body><a href="README.html">Open KubeClaw Documentation</a></body></html>\n`);
   if (diagramManifest) write('diagram-manifest.json', `${JSON.stringify(diagramManifest, null, 2)}\n`);
   if (sourcePreviews) write('source-previews.json', `${JSON.stringify(sourcePreviews, null, 2)}\n`);
   const manifest = { schemaVersion: 'kubeclaw-reader-artifact.v1', revision, pageCount: rendered.length, outputs: outputs.sort((a, b) => a.path.localeCompare(b.path)) };
   write('reader-manifest.json', `${JSON.stringify(manifest, null, 2)}\n`);
+  if (redirectRegistry || routeBaseline) {
+    if (!redirectRegistry || !routeBaseline) throw new Error('Reader redirects need both explicit registry and known-route baseline');
+    return appendReaderRedirects({ outputRoot, manifest, pages: pages.map(page => ({ relative: page.relative, owner: page.owner ?? page.text.match(/^Owner: (.+)$/mu)?.[1] })), registry: redirectRegistry, baseline: routeBaseline, assets });
+  }
   return manifest;
 }
 

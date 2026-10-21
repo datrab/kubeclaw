@@ -14,7 +14,7 @@ import { spawnSync } from 'node:child_process';
 import YAML from 'yaml';
 import ts from 'typescript';
 import { shellHeredocCustody, shellCommandAcquisitions, shellNativeNodeEntries } from './docs-shell-source-custody.mjs';
-import { assertDocumentationExecutableRole, qualifiedRootNodeHarnessSources, expandReviewedNodePackageGlob, reviewedRootSelectedCompilerCapability, rootSelectedCompilerTarget, reviewedImporterResolutionOperation } from './docs-api-documentation-role-custody.mjs';
+import { documentationExecutableRoleRecipes, assertDocumentationExecutableRole, qualifiedRootNodeHarnessSources, expandReviewedNodePackageGlob, reviewedRootSelectedCompilerCapability, rootSelectedCompilerTarget, reviewedImporterResolutionOperation } from './docs-api-documentation-role-custody.mjs';
 import { createSerializedOutputRoleClassifier } from './docs-api-output-role-classification.mjs';
 
 const isRootSelectedCompilerCapability=value=>value?.kind==='root-selected-compiler-require';
@@ -662,9 +662,19 @@ const documentationEdgeOrder=(a,b)=>a.source.localeCompare(b.source)||a.target.l
 const staticReceiverSourceAuthorities={
   'scripts/docs-kubernetes-pv-selected-receiver-contracts.mjs':'02d9af8019e1300767aa0ca507607004aa6ee6e107fb455da3579af46e551f51',
 };
+// Exact existing executable consumer roles whose purpose is not discovered by
+// the root-only docs-helper traversal. This is analysis routing, never entry or
+// runtime acquisition authority. The Source-locator has no current invocation.
+const reviewedDocumentationPurposeRoutes=Object.freeze({
+ 'scripts/docs-reader/check-source-links.mjs':'uninvoked-primary-source-locator-analysis/v1',
+ 'scripts/docs-reader/renderer.mjs':'positive-publication-reader-renderer/v1',
+ 'scripts/docs-sdk-reference.mjs':'sdk-source-reference-consumer/v1',
+});
 function assertDocumentationToolQualifications(root,boundary,packageBytes) {
-  const records=boundary.qualifications??[],required=[...new Set([...(boundary.qualificationRequiredSources??[]),...Object.keys(staticReceiverSourceAuthorities).filter(source=>(boundary.sources??[]).includes(source)||records.some(record=>record.source===source))])];
+  const qualificationRecords=boundary.qualifications??[],routes=boundary.purposeRoutes??[],records=[...qualificationRecords,...routes],required=[...new Set([...(boundary.qualificationRequiredSources??[]),...Object.keys(staticReceiverSourceAuthorities).filter(source=>(boundary.sources??[]).includes(source)||records.some(record=>record.source===source))])];
   for(const source of required)assert(records.some(record=>record.source===source),`DOCUMENTATION_TOOL_QUALIFICATION_MISSING: ${source}`);
+  for(const [source,recipe]of Object.entries(documentationExecutableRoleRecipes))if(recipe.qualificationKind==='reviewed-documentation-consumer/v1'&&(boundary.sources??[]).includes(source))assert(qualificationRecords.some(record=>record.source===source&&record.kind===recipe.qualificationKind),`DOCUMENTATION_TOOL_QUALIFICATION_MISSING: ${source}`);
+  for(const [source,kind]of Object.entries(reviewedDocumentationPurposeRoutes))if((boundary.sources??[]).includes(source))assert(routes.some(record=>record.source===source&&record.kind===kind),`DOCUMENTATION_TOOL_PURPOSE_ROUTE_MISSING: ${source}`);
   // Public executable transfers exist independently of metadata exemptions.
   // Build their complete canonical closure even in an ordinary checkout, and
   // reject unresolved loader custody instead of silently losing its outputs.
@@ -672,20 +682,37 @@ function assertDocumentationToolQualifications(root,boundary,packageBytes) {
   for(const record of records)assert(fs.existsSync(path.join(root,record.source))&&hash(fs.readFileSync(path.join(root,record.source)))===record.sha256,`DOCUMENTATION_TOOL_QUALIFICATION_SOURCE_DRIFT: ${record.source}; renewed source review is required`);
   const graph=documentationModuleGraph(root,packageBytes,boundary),entries=documentationEntryPoints(JSON.parse(packageBytes).scripts??{},true,root);
   const inputAuthorityKey=documentationModuleInputAuthority(root,boundary,graph);
+  // Purpose data and role receipts are separate from module-graph inputs.
+  // Reacquire them even when the graph/registry qualification is warm.
+  for(const record of records)if(record.kind!=='static-receiver-descriptions/v1')assertDocumentationExecutableRole(root,record.source);
   const qualificationKey=hash(JSON.stringify([graph.inputKey,inputAuthorityKey,boundary]));if(documentationQualificationCache.get(root)===qualificationKey)return;
   const docsReachable=new Set(entries.map(entry=>entry.source));let changed=true;
   while(changed){changed=false;for(const edge of graph.edges)if(docsReachable.has(edge.source)&&!docsReachable.has(edge.target)){docsReachable.add(edge.target);changed=true;}}
   for(const record of records) {
     const source=record.source,file=path.join(root,source);
-    assert(record.kind==='static-receiver-descriptions/v1'&&boundary.sources.includes(source)&&fs.existsSync(file),`DOCUMENTATION_TOOL_QUALIFICATION_SOURCE_DRIFT: ${source}`);
+    const purposeRoute=routes.includes(record),consumerRecipe=documentationExecutableRoleRecipes[source];
+    assert(boundary.sources.includes(source)&&fs.existsSync(file),`DOCUMENTATION_TOOL_QUALIFICATION_SOURCE_DRIFT: ${source}`);
     const bytes=fs.readFileSync(file);
-    assert(staticReceiverSourceAuthorities[source]===hash(bytes),`DOCUMENTATION_TOOL_STATIC_SOURCE_ROLE_UNQUALIFIED: ${source}; registry refresh cannot authorize changed static Source behavior`);
+    if(purposeRoute){
+      assert(reviewedDocumentationPurposeRoutes[source]===record.kind&&consumerRecipe?.role==='documentation-consumer',`DOCUMENTATION_TOOL_PURPOSE_ROUTE_UNQUALIFIED: ${source}`);
+      assertDocumentationExecutableRole(root,source);
+    }else if(record.kind==='reviewed-documentation-consumer/v1'){
+      assert(consumerRecipe?.qualificationKind===record.kind&&consumerRecipe.sourceSha256===hash(bytes),`DOCUMENTATION_TOOL_PURPOSE_SOURCE_DRIFT: ${source}`);
+      assertDocumentationExecutableRole(root,source);
+    }else{
+      assert(record.kind==='static-receiver-descriptions/v1',`DOCUMENTATION_TOOL_QUALIFICATION_SOURCE_DRIFT: ${source}`);
+      assert(staticReceiverSourceAuthorities[source]===hash(bytes),`DOCUMENTATION_TOOL_STATIC_SOURCE_ROLE_UNQUALIFIED: ${source}; registry refresh cannot authorize changed static Source behavior`);
+    }
     assert.equal(hash(bytes),record.sha256,`DOCUMENTATION_TOOL_QUALIFICATION_SOURCE_DRIFT: ${source}; renewed source review is required`);
     assert.deepEqual(producerAdapterOperationRecipe(source,bytes.toString()),record.operationRecipe,`DOCUMENTATION_TOOL_QUALIFICATION_OPERATION_DRIFT: ${source}; a digest refresh does not qualify a changed operation`);
     const ancestors=new Set([source]);changed=true;
     while(changed){changed=false;for(const edge of graph.edges)if(ancestors.has(edge.target)&&!ancestors.has(edge.source)){ancestors.add(edge.source);changed=true;}}
     for(const alias of graph.aliases)assert(![...ancestors].some(ancestor=>ancestor===alias.target||alias.directory&&ancestor.startsWith(alias.target+'/'))||ancestors.has(alias.source),`DOCUMENTATION_TOOL_PUBLIC_CONSUMER_UNQUALIFIED: ${source}; symlink ${alias.source}`);
-    for(const consumer of ancestors)assert(docsReachable.has(consumer),`DOCUMENTATION_TOOL_PUBLIC_CONSUMER_UNQUALIFIED: ${source}; ${consumer}`);
+    if(purposeRoute&&record.kind==='uninvoked-primary-source-locator-analysis/v1'){
+      // An uninvoked analysis source is not invented documentation execution.
+      // Any newly selected import or entry needs a separate Source review.
+      assert(ancestors.size===1&&!entries.some(entry=>entry.source===source),`DOCUMENTATION_TOOL_PUBLIC_CONSUMER_UNQUALIFIED: ${source}; uninvoked analysis gained a consumer`);
+    }else for(const consumer of ancestors)assert(docsReachable.has(consumer),`DOCUMENTATION_TOOL_PUBLIC_CONSUMER_UNQUALIFIED: ${source}; ${consumer}`);
     for(const entry of documentationEntryPoints(JSON.parse(packageBytes).scripts??{},false,root))if(!entry.name.startsWith('docs:')&&!entry.name.startsWith('verify:docs:'))assert(!ancestors.has(entry.source),`DOCUMENTATION_TOOL_PUBLIC_CONSUMER_UNQUALIFIED: ${source}; package invocation ${entry.name}`);
     const packageDefinition=JSON.parse(packageBytes);
     function publicTargets(value){return typeof value==='string'?[value]:value&&typeof value==='object'?Object.values(value).flatMap(publicTargets):[];}
@@ -740,7 +767,8 @@ function documentationToolSources(root) {
   for(const entry of documentationEntryPoints(scripts,true,root))queue.push(entry.source);
   while(queue.length){const source=queue.pop();if(result.has(source)||!qualifiedBoundary.has(source)||!fs.existsSync(path.join(root,source)))continue;result.add(source);const bytes=fs.readFileSync(path.join(root,source),'utf8');for(const helper of bytes.matchAll(/new URL\('\.\/(docs-[A-Za-z0-9_-]+\.(?:py|go))',import\.meta\.url\)/gu)){const target=path.posix.join(path.dirname(source),helper[1]);if(qualifiedBoundary.has(target))result.add(target);}for(const match of bytes.matchAll(/(?:from\s*|import\s*\()(['"])(\.\.?\/[^'"]+)\1/gu)){const target=path.posix.normalize(path.posix.join(path.dirname(source),match[2]));if(/^scripts\/docs-[^/]+\.mjs$/u.test(target))queue.push(target);}}
   for(const record of boundary.qualifications??[])result.add(record.source);
-  for(const source of [...result].reverse())assertDocumentationExecutableRole(root,source,new Set((boundary.qualifications??[]).map(record=>record.source)));
+  for(const record of boundary.purposeRoutes??[])result.add(record.source);
+  for(const source of [...result].reverse())assertDocumentationExecutableRole(root,source,new Set((boundary.qualifications??[]).filter(record=>record.kind==='static-receiver-descriptions/v1').map(record=>record.source)));
   return result;
 }
 function assertNativeSerializationRoles(root,source,bytes,language) {

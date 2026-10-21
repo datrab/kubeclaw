@@ -5943,6 +5943,3130 @@ export const documentationExecutableRoleRecipes = {
     ],
     "factsDigest": "2e77fd1131c12daa991291d0f42f81a6cdb07539accf87239d35212b66c90ed1",
     "authorityInputs": []
+  },
+  "scripts/check-capability-drift-mutations.mjs": {
+    "role": "documentation-consumer",
+    "qualificationKind": "reviewed-documentation-consumer/v1",
+    "sourceSha256": "31171d9e192c617b2a56cc752dd19339a485de22b19a97af30759e0d6c9a604f",
+    "consumer": "Documentation verification harness in fresh disposable workspace: deterministic exact single-authority patches/controlled source or reader changes; child gate rejection and baseline/restoration assertions. Read-only capability vocabulary/declaration/example-policy comparison and exact documentation-boundary qualification; registration grants remain separate from swarm roles, installed registry and deployment. Source restoration and API-shaped fixture bytes remain test-only effects, not product resource outputs or child/module execution authority.",
+    "selectors": [
+      {
+        "expressionSha256": "a36ce2b5d0a22c403a2e413e990de2c5a8760b53b764831cea86f816be010484"
+      },
+      {
+        "expressionSha256": "15fe9d84e254e09e7bd4a68ad284ac7b89b4eb2282918d1385b8898996ca536b"
+      },
+      {
+        "expressionSha256": "5ccd6e31bc63455486ef426e4d09e01ce34eeed96a74cddda15797d9df8f26f1"
+      },
+      {
+        "expressionSha256": "ea86d9e26f710a05c109c1f24a78c04bb604f7e92a5197cd076c2d289ff4ce43"
+      },
+      {
+        "expressionSha256": "5a7adaf5535cee0ff0c8f1308d5b256a00a62fc7414a6fecdd408d96fda276a2"
+      },
+      {
+        "expressionSha256": "3bd42e15e5427f946b98b898212af900ed0a4068cff03a37aa2ce1d3a081f2ec"
+      },
+      {
+        "expressionSha256": "99a8a8a7117b1395e3a209cdc8ba5a70424687458932bc4dc8a7b6e59ff53868"
+      },
+      {
+        "expressionSha256": "8f15d80e7efb2a5d032af6aeba410bc9b4bd498ba70c7278654526b1e2259752"
+      },
+      {
+        "expressionSha256": "113f0af17fdf683cf360ab9d03b7eff1b572d3475e83119031d47ee4331621aa"
+      },
+      {
+        "expressionSha256": "2948024387391b149bf95db8466bc244e8c0bb1f158e0fbf6b9ba730c29aa67e"
+      },
+      {
+        "expressionSha256": "abfcad28ec14344e651d5f0983b24be76635f7dc84460622b29987c2a7f15ad3"
+      },
+      {
+        "expressionSha256": "f5820dd98f9c617efde6d602297f85df78b635879ad2c1623f041657985714a9"
+      },
+      {
+        "expressionSha256": "1f6417e229a9b4322d80803b91056398e206cfc76b243e63d7a23b3ac18edc75"
+      },
+      {
+        "expressionSha256": "a033ca56449a6593c3688e0fa8aa391f55264aa87fddd6c9a78c1ced03587c39"
+      }
+    ],
+    "factsDigest": "029864aeb501eabc9c072473b0d64322ac375af3d8b9161b36ac0ebf482f6263",
+    "authorityInputs": [],
+    "purposeInputs": [
+      {
+        "path": "docs/blueprint/AP09-acceptance-fixtures.json",
+        "canonical": "docs/blueprint/AP09-acceptance-fixtures.json",
+        "sha256": "5671508592d263002a2689007cd554b7e2c179403bc9e0e793a7a6a22adb88a8"
+      },
+      {
+        "path": "docs/site/use/workflows/wait-resume/platform.template.json",
+        "canonical": "docs/site/use/workflows/wait-resume/platform.template.json",
+        "sha256": "8d9f160964ea4c3ff5c924c3c4c36291f5a6bfa969807721f5a8383578a5b1ef"
+      },
+      {
+        "path": "package.json",
+        "canonical": "package.json",
+        "sha256": "4ab1e90c2259aeb96acfdc877e5a9eed330f605abff46d7eca85faded0f020c3"
+      },
+      {
+        "path": "scripts/check-capability-drift-mutations.mjs",
+        "canonical": "scripts/check-capability-drift-mutations.mjs",
+        "sha256": "31171d9e192c617b2a56cc752dd19339a485de22b19a97af30759e0d6c9a604f"
+      },
+      {
+        "path": "scripts/check-capability-drift.mjs",
+        "canonical": "scripts/check-capability-drift.mjs",
+        "sha256": "70847dabcd9771f5fc5a8e430386d5935237bfed265ccef86013d1fbfc1cdca4"
+      },
+      {
+        "path": "scripts/check-capability-registrations-drift.mjs",
+        "canonical": "scripts/check-capability-registrations-drift.mjs",
+        "sha256": "8a4d3b81e0f8f2ac374bcda38a6502c78c37308a218230c908e544a7766f0180"
+      },
+      {
+        "path": "scripts/docs-ap09-mutation-fixture.mjs",
+        "canonical": "scripts/docs-ap09-mutation-fixture.mjs",
+        "sha256": "f46c275fce0ef9d55e2ac61a4bcc7b466519d42f07bec4ec8d86a7c2ce6fc687"
+      },
+      {
+        "path": "scripts/docs-publication.mjs",
+        "canonical": "scripts/docs-publication.mjs",
+        "sha256": "da5c158070d0423177506d6527127efddf6ed0a14d12dfb1326667efb1e03c8d"
+      },
+      {
+        "path": "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+        "canonical": "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+        "sha256": "147fae4d867752edcb4cb1bf9966ed62372e77a5e90402a9f8fac9a8ab170fa0"
+      }
+    ]
+  },
+  "scripts/check-capability-drift.mjs": {
+    "role": "documentation-consumer",
+    "qualificationKind": "reviewed-documentation-consumer/v1",
+    "sourceSha256": "70847dabcd9771f5fc5a8e430386d5935237bfed265ccef86013d1fbfc1cdca4",
+    "consumer": "Read-only capability vocabulary/declaration/example-policy comparison and exact documentation-boundary qualification; registration grants remain separate from swarm roles, installed registry and deployment.",
+    "selectors": [
+      {
+        "expressionSha256": "de0a399e8c0e8ca89515a3dff05acae9ce005cae0392aa5cec1353e9d2affd1c"
+      },
+      {
+        "expressionSha256": "22cb39d9b20ba1547b2662030bc8a9849e086b08bacbc38f8f4d59af85430b53"
+      },
+      {
+        "expressionSha256": "5fe4a8188c100cd7322f24c43f6716d5acbe66207efff66c3817d2c262220963"
+      },
+      {
+        "expressionSha256": "113f0af17fdf683cf360ab9d03b7eff1b572d3475e83119031d47ee4331621aa"
+      },
+      {
+        "expressionSha256": "abfcad28ec14344e651d5f0983b24be76635f7dc84460622b29987c2a7f15ad3"
+      },
+      {
+        "expressionSha256": "18a56da0d17ad7e4297d7c89e434223156910b90ff9c53aa4c332241c523610c"
+      },
+      {
+        "expressionSha256": "e304d8a64df52946bb23be030f59c7843dddb13193563352b5a2e6298baffe64"
+      },
+      {
+        "expressionSha256": "80d9d51de62cc721605f36a0060d58ff5255e337ab0ed5fa9037c42181c65b4e"
+      }
+    ],
+    "factsDigest": "6677ccc7b91470a78d043456760f493bf2bc0132da52ce9390f6de1ba7b4834c",
+    "authorityInputs": [],
+    "purposeInputs": [
+      {
+        "path": "scripts/check-capability-policy-drift.mjs",
+        "canonical": "scripts/check-capability-policy-drift.mjs",
+        "sha256": "4470cc4342ea7c4e39d41f57626734e2c75c79a5fd4a57103e6868b7cdb69924"
+      },
+      {
+        "path": "scripts/check-capability-registrations-drift.mjs",
+        "canonical": "scripts/check-capability-registrations-drift.mjs",
+        "sha256": "8a4d3b81e0f8f2ac374bcda38a6502c78c37308a218230c908e544a7766f0180"
+      },
+      {
+        "path": "scripts/check-capability-swarm-boundary.mjs",
+        "canonical": "scripts/check-capability-swarm-boundary.mjs",
+        "sha256": "0147ec6cf172c612023fc3fe55b43ec3848899b84f2b0e729be9c575d9b61aa2"
+      },
+      {
+        "path": "scripts/check-capability-vocabulary-drift.mjs",
+        "canonical": "scripts/check-capability-vocabulary-drift.mjs",
+        "sha256": "c466cfa01aaf23a3f6927538a09dff6f31d1eb8c83c80e204d4853692492c2f7"
+      }
+    ]
+  },
+  "scripts/check-capability-policy-drift-mutations.mjs": {
+    "role": "documentation-consumer",
+    "qualificationKind": "reviewed-documentation-consumer/v1",
+    "sourceSha256": "aab7f432c3f92f5c01397007c49e1527bb901741277fbfc6e2fd0a0c4887b08f",
+    "consumer": "Documentation verification harness in fresh disposable workspace: deterministic exact single-authority patches/controlled source or reader changes; child gate rejection and baseline/restoration assertions. Read-only capability vocabulary/declaration/example-policy comparison and exact documentation-boundary qualification; registration grants remain separate from swarm roles, installed registry and deployment. Source restoration and API-shaped fixture bytes remain test-only effects, not product resource outputs or child/module execution authority.",
+    "selectors": [
+      {
+        "expressionSha256": "f5dc5da56313269759d55899cd53589b97effd0e937d53a3792d7a75a4fb4a67"
+      },
+      {
+        "expressionSha256": "280e74616ac4f0c087f70ca5fe533849cacea1b663b3bc458cf5fa94fd6160a7"
+      },
+      {
+        "expressionSha256": "cc1b14a91873e63b17fe32f80d2b9d2d048fb2b2c8ff4d82920ad7d74d41be84"
+      },
+      {
+        "expressionSha256": "1c7184f6f7b2c498a8446b1e6062f6a19bb46bb8dcb3e415531f0c6cd754669b"
+      },
+      {
+        "expressionSha256": "764158a449bc89c30016b1ec0a422921d59d2fe484f7c48c203e7fd304184abe"
+      },
+      {
+        "expressionSha256": "eda17088dbf75e08dff4dc37b6485d875f4595c0426b11a28415df5efda52b8f"
+      },
+      {
+        "expressionSha256": "61f45ca297d36bcbf6af4df0ce6792b1c0905fd397c9fdfbc027105675a7623f"
+      },
+      {
+        "expressionSha256": "ea86d9e26f710a05c109c1f24a78c04bb604f7e92a5197cd076c2d289ff4ce43"
+      },
+      {
+        "expressionSha256": "3bd42e15e5427f946b98b898212af900ed0a4068cff03a37aa2ce1d3a081f2ec"
+      },
+      {
+        "expressionSha256": "99a8a8a7117b1395e3a209cdc8ba5a70424687458932bc4dc8a7b6e59ff53868"
+      },
+      {
+        "expressionSha256": "8f15d80e7efb2a5d032af6aeba410bc9b4bd498ba70c7278654526b1e2259752"
+      },
+      {
+        "expressionSha256": "113f0af17fdf683cf360ab9d03b7eff1b572d3475e83119031d47ee4331621aa"
+      },
+      {
+        "expressionSha256": "abfcad28ec14344e651d5f0983b24be76635f7dc84460622b29987c2a7f15ad3"
+      },
+      {
+        "expressionSha256": "f5820dd98f9c617efde6d602297f85df78b635879ad2c1623f041657985714a9"
+      },
+      {
+        "expressionSha256": "1f6417e229a9b4322d80803b91056398e206cfc76b243e63d7a23b3ac18edc75"
+      }
+    ],
+    "factsDigest": "ec394161f48a92120363d1a5901c79a70b5cbb898cf67508811ae1d95436729b",
+    "authorityInputs": [],
+    "purposeInputs": [
+      {
+        "path": "docs/blueprint/AP09-acceptance-fixtures.json",
+        "canonical": "docs/blueprint/AP09-acceptance-fixtures.json",
+        "sha256": "5671508592d263002a2689007cd554b7e2c179403bc9e0e793a7a6a22adb88a8"
+      },
+      {
+        "path": "docs/site/use/workflows/wait-resume/platform.template.json",
+        "canonical": "docs/site/use/workflows/wait-resume/platform.template.json",
+        "sha256": "8d9f160964ea4c3ff5c924c3c4c36291f5a6bfa969807721f5a8383578a5b1ef"
+      },
+      {
+        "path": "package.json",
+        "canonical": "package.json",
+        "sha256": "4ab1e90c2259aeb96acfdc877e5a9eed330f605abff46d7eca85faded0f020c3"
+      },
+      {
+        "path": "scripts/check-capability-drift.mjs",
+        "canonical": "scripts/check-capability-drift.mjs",
+        "sha256": "70847dabcd9771f5fc5a8e430386d5935237bfed265ccef86013d1fbfc1cdca4"
+      },
+      {
+        "path": "scripts/check-capability-policy-drift.mjs",
+        "canonical": "scripts/check-capability-policy-drift.mjs",
+        "sha256": "4470cc4342ea7c4e39d41f57626734e2c75c79a5fd4a57103e6868b7cdb69924"
+      },
+      {
+        "path": "scripts/docs-ap09-mutation-fixture.mjs",
+        "canonical": "scripts/docs-ap09-mutation-fixture.mjs",
+        "sha256": "f46c275fce0ef9d55e2ac61a4bcc7b466519d42f07bec4ec8d86a7c2ce6fc687"
+      },
+      {
+        "path": "skills/common/plugin-runtime/foundation/config/platform.schema.json",
+        "canonical": "skills/common/plugin-runtime/foundation/config/platform.schema.json",
+        "sha256": "4b4814b370a035668309df52af51dd138bc4c92ae3ec596393fb87b959dae605"
+      },
+      {
+        "path": "skills/common/plugin-runtime/foundation/config/platform.ts",
+        "canonical": "skills/common/plugin-runtime/foundation/config/platform.ts",
+        "sha256": "4bce96fe0b9556266c7586aa7803f6ff790dfd7f74e4952ddc5ebd25f9ebc7e8"
+      },
+      {
+        "path": "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+        "canonical": "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+        "sha256": "147fae4d867752edcb4cb1bf9966ed62372e77a5e90402a9f8fac9a8ab170fa0"
+      }
+    ]
+  },
+  "scripts/check-capability-policy-drift.mjs": {
+    "role": "documentation-consumer",
+    "qualificationKind": "reviewed-documentation-consumer/v1",
+    "sourceSha256": "4470cc4342ea7c4e39d41f57626734e2c75c79a5fd4a57103e6868b7cdb69924",
+    "consumer": "Read-only capability vocabulary/declaration/example-policy comparison and exact documentation-boundary qualification; registration grants remain separate from swarm roles, installed registry and deployment.",
+    "selectors": [
+      {
+        "expressionSha256": "61c71bc45562b384f95aaaede1bd23a126756f026b43674104a7ec38f2475d90"
+      },
+      {
+        "expressionSha256": "fdda881e0e0c08da55b7ef0877a42479b5f6f40eada3c154987fe588589fd168"
+      },
+      {
+        "expressionSha256": "8aa3f0788ecf5dc84e28a9f7dae06e3e7f5e6019eb434df9a7dcfe27e2e4b68a"
+      },
+      {
+        "expressionSha256": "3bd42e15e5427f946b98b898212af900ed0a4068cff03a37aa2ce1d3a081f2ec"
+      },
+      {
+        "expressionSha256": "99a8a8a7117b1395e3a209cdc8ba5a70424687458932bc4dc8a7b6e59ff53868"
+      },
+      {
+        "expressionSha256": "113f0af17fdf683cf360ab9d03b7eff1b572d3475e83119031d47ee4331621aa"
+      },
+      {
+        "expressionSha256": "5b7fbdb4096a717e58dc7b0b3d131eee6c907472ecb9a69930bced3ce002a8bd"
+      }
+    ],
+    "factsDigest": "97acf518dcdecc29cfb30c183d9e91ee6fd254721140b5fe41b305496718493e",
+    "authorityInputs": [],
+    "purposeInputs": [
+      {
+        "path": "docs/site/use/workflows/wait-resume/platform.template.json",
+        "canonical": "docs/site/use/workflows/wait-resume/platform.template.json",
+        "sha256": "8d9f160964ea4c3ff5c924c3c4c36291f5a6bfa969807721f5a8383578a5b1ef"
+      },
+      {
+        "path": "skills/common/plugin-runtime/foundation/config/platform.ts",
+        "canonical": "skills/common/plugin-runtime/foundation/config/platform.ts",
+        "sha256": "4bce96fe0b9556266c7586aa7803f6ff790dfd7f74e4952ddc5ebd25f9ebc7e8"
+      }
+    ]
+  },
+  "scripts/check-capability-registrations-drift.mjs": {
+    "role": "documentation-consumer",
+    "qualificationKind": "reviewed-documentation-consumer/v1",
+    "sourceSha256": "8a4d3b81e0f8f2ac374bcda38a6502c78c37308a218230c908e544a7766f0180",
+    "consumer": "Read-only capability vocabulary/declaration/example-policy comparison and exact documentation-boundary qualification; registration grants remain separate from swarm roles, installed registry and deployment.",
+    "selectors": [
+      {
+        "expressionSha256": "c61ab6489f9703ea07790157ce38999e66c0c416648b115ea45da5c015862201"
+      },
+      {
+        "expressionSha256": "964cec34991ef4030d0422af172150e4d7992cac521135ad57b0daf5a0010725"
+      },
+      {
+        "expressionSha256": "63b3a191baa8256b5f894eef2ea7bd3785c323b2a910b005d36bdaa05c134592"
+      },
+      {
+        "expressionSha256": "67c7f770c189b9c3a07299b2e475f35d65ca19e18e62bc647fb51c956d2a969f"
+      },
+      {
+        "expressionSha256": "99a8a8a7117b1395e3a209cdc8ba5a70424687458932bc4dc8a7b6e59ff53868"
+      },
+      {
+        "expressionSha256": "113f0af17fdf683cf360ab9d03b7eff1b572d3475e83119031d47ee4331621aa"
+      }
+    ],
+    "factsDigest": "b76bf0219d739f5c7c9ef1ef293c3b26a1be7e0fb8a8ac3026b83c12035a187c",
+    "authorityInputs": [],
+    "purposeInputs": []
+  },
+  "scripts/check-capability-swarm-boundary.mjs": {
+    "role": "documentation-consumer",
+    "qualificationKind": "reviewed-documentation-consumer/v1",
+    "sourceSha256": "0147ec6cf172c612023fc3fe55b43ec3848899b84f2b0e729be9c575d9b61aa2",
+    "consumer": "Read-only capability vocabulary/declaration/example-policy comparison and exact documentation-boundary qualification; registration grants remain separate from swarm roles, installed registry and deployment.",
+    "selectors": [
+      {
+        "expressionSha256": "480366d7552a03ce55c940edd8ee01d907939211aa8ef9e65208ca3ed137079e"
+      },
+      {
+        "expressionSha256": "755b18f42f5e2f30bab9441efdf3f388e5e76852bbf3617ca153b5eb9b8207d2"
+      },
+      {
+        "expressionSha256": "02b2f520ad805bd6f2c1a85ac4a36474df141a0759fe8d6c7a87c33808b08951"
+      },
+      {
+        "expressionSha256": "26768a9779439b79a287c44f422233a22fa680ee5f26eb9bb87c57fe874dfbe1"
+      },
+      {
+        "expressionSha256": "f696b5fe3d0e8e8e095dc25f4f664726cc12baabb387df058aec4a2d794474d6"
+      },
+      {
+        "expressionSha256": "407ad1ce19654ded51d3e9836ebb569800931499b0ad1112eb9575ed4a7a75b0"
+      },
+      {
+        "expressionSha256": "180ec65750e9ee691a61e5bfbc199a398510b813c666290d402a1059a07277e1"
+      },
+      {
+        "expressionSha256": "fbd912e8d9fad471029d82a3454379331f718595fda69355a1d4bd5d489b0646"
+      },
+      {
+        "expressionSha256": "c31d4f1e58e55e8766e17c0ce2500cc9c230a130737acdb6844013a45a893c2b"
+      },
+      {
+        "expressionSha256": "5eea42e4faf1e5f34fa149eb667d4ef62e3d627269340cf75f66c2792083918d"
+      },
+      {
+        "expressionSha256": "8a6483e955b423cb0b650d6da7d3183a5245d042986620b0b23913e3dc8c34d4"
+      },
+      {
+        "expressionSha256": "95877f30b16a96175f9051d6d861ca8da8c2ba62c52cedc04803e17491360c72"
+      },
+      {
+        "expressionSha256": "b7baaa1609253a3e3e2b5cc84f363b756a2daaac34fc0d80787081cb82178585"
+      },
+      {
+        "expressionSha256": "ab4427f24a94712bd46391021ab3962ff7b2edc4e8e7c05308e5829ebd13758a"
+      },
+      {
+        "expressionSha256": "f6e620d42953406a9466966ae1aba93f126bbcb570c993c074301acff8e008e4"
+      },
+      {
+        "expressionSha256": "932e1c8f15107edc6e98912d1a5aa5cd2a49b3e1e15e4a3fda39714dcaa7f236"
+      },
+      {
+        "expressionSha256": "056945fa5158685212e70047e57a3d4f5aecbf1f3f8d9048610afb030403d816"
+      },
+      {
+        "expressionSha256": "e24b11b03119e24acd917ad3bd18b6670b7bd405d1ae072e53bff980b8b5a563"
+      },
+      {
+        "expressionSha256": "d99e7882bf916a9fe9f6f412108d5484cbc6c8ef012648a811c37def0dea94c5"
+      },
+      {
+        "expressionSha256": "f4dc7f419f7bf417337f11182feade9f3250c31168f612a21764ee3f00ff8c3e"
+      },
+      {
+        "expressionSha256": "3bd42e15e5427f946b98b898212af900ed0a4068cff03a37aa2ce1d3a081f2ec"
+      },
+      {
+        "expressionSha256": "99a8a8a7117b1395e3a209cdc8ba5a70424687458932bc4dc8a7b6e59ff53868"
+      },
+      {
+        "expressionSha256": "8f15d80e7efb2a5d032af6aeba410bc9b4bd498ba70c7278654526b1e2259752"
+      },
+      {
+        "expressionSha256": "113f0af17fdf683cf360ab9d03b7eff1b572d3475e83119031d47ee4331621aa"
+      },
+      {
+        "expressionSha256": "054deae631c4fae210437a6779432572a0bdc256e602ae3f9b5e69a1e9409395"
+      },
+      {
+        "expressionSha256": "5b7fbdb4096a717e58dc7b0b3d131eee6c907472ecb9a69930bced3ce002a8bd"
+      },
+      {
+        "expressionSha256": "3600a2b4eb1a317f9c1bdd432de48b4bd39822df3b98be8dabf4c075bf4f2685"
+      },
+      {
+        "expressionSha256": "abfcad28ec14344e651d5f0983b24be76635f7dc84460622b29987c2a7f15ad3"
+      },
+      {
+        "expressionSha256": "76816385d3332dda3b0efd2275656348604824fae156ea3e36135792b9c3046e"
+      },
+      {
+        "expressionSha256": "9726829e6b9943675b53e0005a5638f4698114b8c685c46efb3229d61ba3f9d4"
+      }
+    ],
+    "factsDigest": "5645df69deff39aeb1c88c1e38826cb0946588e723558394cf33da25968426e2",
+    "authorityInputs": [
+      {
+        "path": "scripts/docs-publication.mjs",
+        "canonical": "scripts/docs-publication.mjs",
+        "sha256": "da5c158070d0423177506d6527127efddf6ed0a14d12dfb1326667efb1e03c8d"
+      }
+    ],
+    "purposeInputs": [
+      {
+        "path": "charts/kubeclaw/files/config/swarm.config.json",
+        "canonical": "charts/kubeclaw/files/config/swarm.config.json",
+        "sha256": "e7331f631ed85b4c85ca6b4ab5fccd62a1381e40f973e441888d8aa59cb3f678"
+      },
+      {
+        "path": "docs/generated/inventory/documentation-source-revision.json",
+        "canonical": "docs/generated/inventory/documentation-source-revision.json",
+        "sha256": "58c8cfa0cda7e75cf8d2a34a81ee6e4a4b54013ed853d11490dd84aac874bd68"
+      },
+      {
+        "path": "docs/site/use/workflows/wait-resume/platform.template.json",
+        "canonical": "docs/site/use/workflows/wait-resume/platform.template.json",
+        "sha256": "8d9f160964ea4c3ff5c924c3c4c36291f5a6bfa969807721f5a8383578a5b1ef"
+      },
+      {
+        "path": "scripts/docs-publication.mjs",
+        "canonical": "scripts/docs-publication.mjs",
+        "sha256": "da5c158070d0423177506d6527127efddf6ed0a14d12dfb1326667efb1e03c8d"
+      },
+      {
+        "path": "skills/common/plugin-runtime/foundation/config/platform.schema.json",
+        "canonical": "skills/common/plugin-runtime/foundation/config/platform.schema.json",
+        "sha256": "4b4814b370a035668309df52af51dd138bc4c92ae3ec596393fb87b959dae605"
+      },
+      {
+        "path": "skills/common/plugin-runtime/foundation/config/platform.ts",
+        "canonical": "skills/common/plugin-runtime/foundation/config/platform.ts",
+        "sha256": "4bce96fe0b9556266c7586aa7803f6ff790dfd7f74e4952ddc5ebd25f9ebc7e8"
+      },
+      {
+        "path": "skills/common/plugin-runtime/foundation/registry/capabilities.ts",
+        "canonical": "skills/common/plugin-runtime/foundation/registry/capabilities.ts",
+        "sha256": "eeebd66fcb6a813fdad60188261e14d530c5d09f6c61f9972bc0428ecff151b6"
+      },
+      {
+        "path": "skills/nova/core/execution/authorization.ts",
+        "canonical": "skills/nova/core/execution/authorization.ts",
+        "sha256": "3f04309435d4fe3eebe5a73bac5247b0d3c981ffd4a9580e52974cf46cf3942d"
+      },
+      {
+        "path": "tests/verification/e2e/support/config-profiles/standard.json",
+        "canonical": "tests/verification/e2e/support/config-profiles/standard.json",
+        "sha256": "75e5e5e8fdd9c17b8bb33c49f298789f718d511816ee417e82cd46e350fc2346"
+      },
+      {
+        "path": "tests/verification/e2e/support/platform-config.ts",
+        "canonical": "tests/verification/e2e/support/platform-config.ts",
+        "sha256": "e05530e73fe5ea3a853defe8db219af79aa56d86a14a56eb5170bc214a5f8ba6"
+      }
+    ]
+  },
+  "scripts/check-capability-vocabulary-drift-mutations.mjs": {
+    "role": "documentation-consumer",
+    "qualificationKind": "reviewed-documentation-consumer/v1",
+    "sourceSha256": "160e780708a62f95238dfc435d105aaf60f8e653029f3c895b6fceb8c0b14325",
+    "consumer": "Documentation verification harness in fresh disposable workspace: deterministic exact single-authority patches/controlled source or reader changes; child gate rejection and baseline/restoration assertions. Read-only capability vocabulary/declaration/example-policy comparison and exact documentation-boundary qualification; registration grants remain separate from swarm roles, installed registry and deployment. Source restoration and API-shaped fixture bytes remain test-only effects, not product resource outputs or child/module execution authority.",
+    "selectors": [
+      {
+        "expressionSha256": "61c32659f0e8adab015e027fccdcb1c3eebee666e2ff02d1dea8cffb1b26e460"
+      },
+      {
+        "expressionSha256": "4c6d536d12c7343c4c203b690e8fed7711663445f3aa1807460a44c9f5d96034"
+      },
+      {
+        "expressionSha256": "308e0571ed8260a00cfe29c8cbe652871cd6b12775f52b3f519db6d8686599ee"
+      },
+      {
+        "expressionSha256": "9b80de081ea89bd284ef24098184ee23bfd1d57b980567fead9b0374514ffa00"
+      },
+      {
+        "expressionSha256": "ea86d9e26f710a05c109c1f24a78c04bb604f7e92a5197cd076c2d289ff4ce43"
+      },
+      {
+        "expressionSha256": "3bd42e15e5427f946b98b898212af900ed0a4068cff03a37aa2ce1d3a081f2ec"
+      },
+      {
+        "expressionSha256": "99a8a8a7117b1395e3a209cdc8ba5a70424687458932bc4dc8a7b6e59ff53868"
+      },
+      {
+        "expressionSha256": "8f15d80e7efb2a5d032af6aeba410bc9b4bd498ba70c7278654526b1e2259752"
+      },
+      {
+        "expressionSha256": "113f0af17fdf683cf360ab9d03b7eff1b572d3475e83119031d47ee4331621aa"
+      },
+      {
+        "expressionSha256": "2948024387391b149bf95db8466bc244e8c0bb1f158e0fbf6b9ba730c29aa67e"
+      },
+      {
+        "expressionSha256": "abfcad28ec14344e651d5f0983b24be76635f7dc84460622b29987c2a7f15ad3"
+      },
+      {
+        "expressionSha256": "f5820dd98f9c617efde6d602297f85df78b635879ad2c1623f041657985714a9"
+      },
+      {
+        "expressionSha256": "1f6417e229a9b4322d80803b91056398e206cfc76b243e63d7a23b3ac18edc75"
+      }
+    ],
+    "factsDigest": "ffa53c0a2d845946c9e7032b530d5c5b5de821928b67444c59385125a65b7020",
+    "authorityInputs": [],
+    "purposeInputs": [
+      {
+        "path": "docs/blueprint/AP09-acceptance-fixtures.json",
+        "canonical": "docs/blueprint/AP09-acceptance-fixtures.json",
+        "sha256": "5671508592d263002a2689007cd554b7e2c179403bc9e0e793a7a6a22adb88a8"
+      },
+      {
+        "path": "docs/site/use/workflows/wait-resume/platform.template.json",
+        "canonical": "docs/site/use/workflows/wait-resume/platform.template.json",
+        "sha256": "8d9f160964ea4c3ff5c924c3c4c36291f5a6bfa969807721f5a8383578a5b1ef"
+      },
+      {
+        "path": "package.json",
+        "canonical": "package.json",
+        "sha256": "4ab1e90c2259aeb96acfdc877e5a9eed330f605abff46d7eca85faded0f020c3"
+      },
+      {
+        "path": "scripts/check-capability-drift.mjs",
+        "canonical": "scripts/check-capability-drift.mjs",
+        "sha256": "70847dabcd9771f5fc5a8e430386d5935237bfed265ccef86013d1fbfc1cdca4"
+      },
+      {
+        "path": "scripts/check-capability-vocabulary-drift.mjs",
+        "canonical": "scripts/check-capability-vocabulary-drift.mjs",
+        "sha256": "c466cfa01aaf23a3f6927538a09dff6f31d1eb8c83c80e204d4853692492c2f7"
+      },
+      {
+        "path": "scripts/docs-ap09-mutation-fixture.mjs",
+        "canonical": "scripts/docs-ap09-mutation-fixture.mjs",
+        "sha256": "f46c275fce0ef9d55e2ac61a4bcc7b466519d42f07bec4ec8d86a7c2ce6fc687"
+      },
+      {
+        "path": "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+        "canonical": "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+        "sha256": "147fae4d867752edcb4cb1bf9966ed62372e77a5e90402a9f8fac9a8ab170fa0"
+      }
+    ]
+  },
+  "scripts/check-capability-vocabulary-drift.mjs": {
+    "role": "documentation-consumer",
+    "qualificationKind": "reviewed-documentation-consumer/v1",
+    "sourceSha256": "c466cfa01aaf23a3f6927538a09dff6f31d1eb8c83c80e204d4853692492c2f7",
+    "consumer": "Read-only capability vocabulary/declaration/example-policy comparison and exact documentation-boundary qualification; registration grants remain separate from swarm roles, installed registry and deployment.",
+    "selectors": [
+      {
+        "expressionSha256": "c61ab6489f9703ea07790157ce38999e66c0c416648b115ea45da5c015862201"
+      },
+      {
+        "expressionSha256": "b9b1e7c2fc647eee207bc814f1c2e15859b28d763a4924cb761f306d7c0f7230"
+      },
+      {
+        "expressionSha256": "ac50dd3402f70150d718ffc44fec2b571d8a607f4444762b25edf1b28796c308"
+      },
+      {
+        "expressionSha256": "bc8ea8ca531d5d3dacbc215dfda26fda9e656d182289dcb992b80cde048bbaf2"
+      },
+      {
+        "expressionSha256": "99a8a8a7117b1395e3a209cdc8ba5a70424687458932bc4dc8a7b6e59ff53868"
+      },
+      {
+        "expressionSha256": "113f0af17fdf683cf360ab9d03b7eff1b572d3475e83119031d47ee4331621aa"
+      },
+      {
+        "expressionSha256": "2948024387391b149bf95db8466bc244e8c0bb1f158e0fbf6b9ba730c29aa67e"
+      }
+    ],
+    "factsDigest": "eea3b4ab743862492d8708a3571fd387af4209a5f019d497869623c75ed7802c",
+    "authorityInputs": [],
+    "purposeInputs": [
+      {
+        "path": "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+        "canonical": "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+        "sha256": "147fae4d867752edcb4cb1bf9966ed62372e77a5e90402a9f8fac9a8ab170fa0"
+      }
+    ]
+  },
+  "scripts/check-configuration-cli-drift.mjs": {
+    "role": "documentation-consumer",
+    "qualificationKind": "reviewed-documentation-consumer/v1",
+    "sourceSha256": "82148923a66dc77711ba7b67dcb7da747d279691dc51a449f86b383a8c3e3cf0",
+    "consumer": "Read-only owned CLI flag and shell-derived-value inventory/documentation assertions, preserving external-command and internal tooling exclusions.",
+    "selectors": [
+      {
+        "expressionSha256": "d370be84170d806874279a9f955e28eee9aba9797daa2eca9355a00e7bf0932a"
+      },
+      {
+        "expressionSha256": "b126ed74abb75d4382e4e4b0b3104207d95a01ddea4f93b2eb3eb06dccf0d74e"
+      },
+      {
+        "expressionSha256": "20cd0a39a39d40268f79bd45486d43f7a76c957a8167ee214fa5b5e2ec1911cd"
+      },
+      {
+        "expressionSha256": "b71d16a84403989c6c7c1770d5479609a4818dc1596fc1e401d98d43d9bf73ad"
+      },
+      {
+        "expressionSha256": "af707c3bfd5c3c0c4717a0d5ffd642476c9330e6c74c62365e961a115b2b44fe"
+      },
+      {
+        "expressionSha256": "b819f4edff4e9f8edfd9436bf49f9477d053bae8972db9c54379204736540d7d"
+      },
+      {
+        "expressionSha256": "830bbda3437006156274a036241ea1a2440c90807aa7f4099de533e5639ac89f"
+      },
+      {
+        "expressionSha256": "109d1f223c67905e62405a60f354c4fa9c62f2bf48659817dccd466e184cf9f4"
+      },
+      {
+        "expressionSha256": "e60310a9593e3e5612a843be1b056f5612ec4237072e2b97a154f4e421f17992"
+      },
+      {
+        "expressionSha256": "c34847d2180cb0bc613adc92a37079f8d98e990cbffd732a6cb7be58b781efd6"
+      },
+      {
+        "expressionSha256": "5dfe39ad33262cc52d0187bd0e0bf031e14e82dfcba1aafdba1a488d518caf9e"
+      },
+      {
+        "expressionSha256": "1f3cad837ab8c71f59ceb28bddc5b6f03e945ddf30838c776faceb82b8074f9a"
+      },
+      {
+        "expressionSha256": "acd563835dbe13ccb0d8aff474f58a163d21528c6168d34e060d046a4ed3c468"
+      },
+      {
+        "expressionSha256": "21a24f8db93e3a25c556854264f7c6514f966a1d61ed3cfaa40f67b3ee35e62c"
+      },
+      {
+        "expressionSha256": "7d12a73ce0eee4933c58e1db5ceb6aa9219548c5517e0ac95ff22cf6233e50ca"
+      },
+      {
+        "expressionSha256": "7fac5bc3243b3dc0fc4388edd865427d9c8829b5ba164988f6bb64ed2e5ca30c"
+      },
+      {
+        "expressionSha256": "e8e390738207d77b362a1a9681593ebf4664b38b39c360547c701c8503e112d7"
+      },
+      {
+        "expressionSha256": "1aaee3db6c2ff11e676a01d76409793b8520fea8e6b6801932dacd65078c1de8"
+      },
+      {
+        "expressionSha256": "b7a23d6a3a02e64bc2a7371582a38546092ce632130c634c623c7f2a117ac668"
+      },
+      {
+        "expressionSha256": "adc5fa974e25d98c58fad9c11ebc9755d9ac5ee2d45ebe8c1782919168ba843b"
+      },
+      {
+        "expressionSha256": "462a4b41386b87508b4c2f4fe702a25e80bc3f73514a096b5cb06ee05c6f8efd"
+      },
+      {
+        "expressionSha256": "b2a367a3b1a72fe999dab0a1556de89d7e72920077bcbced08d045de83030bb1"
+      },
+      {
+        "expressionSha256": "3a7e5eb7cf594a9c24344fec552b4ecb809a2c4fe3aef446f1048a1874b335f4"
+      },
+      {
+        "expressionSha256": "3bd42e15e5427f946b98b898212af900ed0a4068cff03a37aa2ce1d3a081f2ec"
+      },
+      {
+        "expressionSha256": "99a8a8a7117b1395e3a209cdc8ba5a70424687458932bc4dc8a7b6e59ff53868"
+      },
+      {
+        "expressionSha256": "113f0af17fdf683cf360ab9d03b7eff1b572d3475e83119031d47ee4331621aa"
+      },
+      {
+        "expressionSha256": "abfcad28ec14344e651d5f0983b24be76635f7dc84460622b29987c2a7f15ad3"
+      },
+      {
+        "expressionSha256": "3c4e81f521df085b2e3380f15b5470f445ae3f4bac233c29d552f0fd2f1ae992"
+      },
+      {
+        "expressionSha256": "4b0b9cb08f6d11b8fcc1166aa92c8425d39680f430865521cd2f883579b9eed5"
+      },
+      {
+        "expressionSha256": "7dd3fccd5c9c1473c145bbdfff674a63393ce88ecc089f430329afabfce98a99"
+      }
+    ],
+    "factsDigest": "dab463f4b6cad18b7b73fa62625c316e3ed300b87fc3659513559ac936e32fd7",
+    "authorityInputs": [
+      {
+        "path": "scripts/docs-configuration-inventory.mjs",
+        "canonical": "scripts/docs-configuration-inventory.mjs",
+        "sha256": "7314148ac1c662049961cf274f1e5b1d4f7133769cd5f9c8889d49a329ddfa6b"
+      }
+    ],
+    "purposeInputs": [
+      {
+        "path": "charts/prism/templates/postgresql.yaml",
+        "canonical": "charts/prism/templates/postgresql.yaml",
+        "sha256": "e81248bfa623695e0e79f36ddf347ad75a1d7bc449a4250287a96a80e17742c1"
+      },
+      {
+        "path": "docker/buster-runtime-entrypoint.sh",
+        "canonical": "docker/buster-runtime-entrypoint.sh",
+        "sha256": "1b13228deb6e53e66580b96752c34abcada89ecef278ea3dff9b1ed980f68225"
+      },
+      {
+        "path": "docs/generated/inventory/configuration-runtime-inputs.json",
+        "canonical": "docs/generated/inventory/configuration-runtime-inputs.json",
+        "sha256": "8ab1550b7ac382535b32e434eed920e0b62c7fbbd70840e32e0ed116912172f9"
+      },
+      {
+        "path": "ops/pod/shell.sh",
+        "canonical": "ops/pod/shell.sh",
+        "sha256": "81c102a5a58ddf7dcc92c1e8fa96d378d8322241d12fcd7f17d06467dd1ca488"
+      },
+      {
+        "path": "scripts/check-configuration-drift-mutations.mjs",
+        "canonical": "scripts/check-configuration-drift-mutations.mjs",
+        "sha256": "e0e5d36a69e8467101ca7c0f045c32f8565111d841f3bc34c41d4e4f2cab49da"
+      },
+      {
+        "path": "scripts/check-runtime-role-manifests.mjs",
+        "canonical": "scripts/check-runtime-role-manifests.mjs",
+        "sha256": "521f14214afa42f7651ef81eca689f206cf3bc63c1c9edeb2376037dfba7d80c"
+      },
+      {
+        "path": "scripts/deploy-cilium.sh",
+        "canonical": "scripts/deploy-cilium.sh",
+        "sha256": "8b6a6bf4fa028f4f5f76adfe50783adae20024d92f06deb515a4e8c854b13b03"
+      },
+      {
+        "path": "scripts/deploy.sh",
+        "canonical": "scripts/deploy.sh",
+        "sha256": "97c1e39bf9cec6c1d5d8e11198af90ed04efd15a6077f2bbac1129c2ea0741e2"
+      },
+      {
+        "path": "scripts/docs-configuration-inventory.mjs",
+        "canonical": "scripts/docs-configuration-inventory.mjs",
+        "sha256": "7314148ac1c662049961cf274f1e5b1d4f7133769cd5f9c8889d49a329ddfa6b"
+      },
+      {
+        "path": "scripts/lint-baseline-prune.mjs",
+        "canonical": "scripts/lint-baseline-prune.mjs",
+        "sha256": "36dfaab42f84be9f5c4dbf88bb95e70607e97a8451781f3e1d5894248c7e4454"
+      },
+      {
+        "path": "scripts/pipeline-light-openclaw-notify.sh",
+        "canonical": "scripts/pipeline-light-openclaw-notify.sh",
+        "sha256": "17da3c6e435d56cda4e2fce7a90fb103c33a37be3c9c2356213f89e5d2f13ccc"
+      },
+      {
+        "path": "scripts/pipeline-light-watchdog.sh",
+        "canonical": "scripts/pipeline-light-watchdog.sh",
+        "sha256": "ae53510e8f29e2b406e155e1a19769f6f052b8d62c3465e7de88931cc6075260"
+      },
+      {
+        "path": "scripts/repair-k3s-reservation-arguments.py",
+        "canonical": "scripts/repair-k3s-reservation-arguments.py",
+        "sha256": "f7a319dfd418376d7eed4c7e02cdad2792e5469658de85b49d0d9507a4a58847"
+      },
+      {
+        "path": "skills/buster/engine/remote-plan-cli.ts",
+        "canonical": "skills/buster/engine/remote-plan-cli.ts",
+        "sha256": "50520ba5efe6d4647463da64e3ae186a8076b4508208959470587d8da3977c5f"
+      },
+      {
+        "path": "skills/nova/core/cli.ts",
+        "canonical": "skills/nova/core/cli.ts",
+        "sha256": "09121b4b0a160d2e5e35448795156856b15ccc078a229bb1895f570c22f76787"
+      },
+      {
+        "path": "skills/nova/core/test-gates/remote-gate-cli.ts",
+        "canonical": "skills/nova/core/test-gates/remote-gate-cli.ts",
+        "sha256": "e40718d15fff2d21f7fe60e920b968677321b5c318bf18476e7c0b1569f4690c"
+      },
+      {
+        "path": "skills/nova/project/cli.ts",
+        "canonical": "skills/nova/project/cli.ts",
+        "sha256": "6dbf4cb0a699b1e4c5e64c7f94d1bcbe9bdba1fcd1cf5232d81d7ad45ea5f366"
+      },
+      {
+        "path": "skills/nova/project/legacy-import-cli.ts",
+        "canonical": "skills/nova/project/legacy-import-cli.ts",
+        "sha256": "61f0e1ebb20a807a5b2fac3e0508931d0935e24aecaf7affa34bb30ee640f824"
+      },
+      {
+        "path": "skills/nova/project_setup/tools/progress-scaffold.ts",
+        "canonical": "skills/nova/project_setup/tools/progress-scaffold.ts",
+        "sha256": "ccb59cfb186e4d0917290f8f75a61644da2fdfb0e03694ece51995cb70ee3a2f"
+      }
+    ]
+  },
+  "scripts/check-configuration-drift-mutations.mjs": {
+    "role": "documentation-consumer",
+    "qualificationKind": "reviewed-documentation-consumer/v1",
+    "sourceSha256": "e0e5d36a69e8467101ca7c0f045c32f8565111d841f3bc34c41d4e4f2cab49da",
+    "consumer": "Documentation verification harness in fresh disposable workspace: deterministic exact single-authority patches/controlled source or reader changes; child gate rejection and baseline/restoration assertions. Isolated configuration documentation mutation matrix; resource/source/shell fixtures are parsed as data by exact documentation generators and compared against inert generated pages/inventories; no fixture shell or Kubernetes resource is executed/applied. Source restoration and API-shaped fixture bytes remain test-only effects, not product resource outputs or child/module execution authority.",
+    "selectors": [
+      {
+        "expressionSha256": "872e0f7a4cd04862155eb2e2a3c849ddfca7449d499e1682f675e5b0c7a094d4"
+      },
+      {
+        "expressionSha256": "434a119180f0e3206a19b9ec5684c980f7d5306e52461a2e5778454a3faff71f"
+      },
+      {
+        "expressionSha256": "7775bbcc279cb400f78084452bd6cd5377ac46829fe905f86867acf1110b823e"
+      },
+      {
+        "expressionSha256": "2bea8b8521c56b56ba90421d3e5a0c72854f6a4012f1ba827122fe8efbba5507"
+      },
+      {
+        "expressionSha256": "1231e7b7ead7cc611bd87b2f6bf47eb9afaa9ac456cb01ee3cb69a87e2da4266"
+      },
+      {
+        "expressionSha256": "da743c8dd8488b8cb1f5685ff3f69320784059b1c4b23a8d5cbce338c3d4e037"
+      },
+      {
+        "expressionSha256": "a075bbe1ca39f43c7262f5d6e8ab03cfaa502d69333bee8ce6fedc29283547a3"
+      },
+      {
+        "expressionSha256": "41f2b79bd9bd970f488aeaa0773771aa9fad4dfb11df11b1900a7ed5cf1ad7f6"
+      },
+      {
+        "expressionSha256": "6cfedbfc706394427be92b0240d185f35cfe120e84dc425094a20d72ac24b45c"
+      },
+      {
+        "expressionSha256": "510e3ec4534ff8aeea05adea8e6b422342b6b9379d5c8d7ef37338a885670936"
+      },
+      {
+        "expressionSha256": "d464bf3f72058ee82980834a12b83eb6bc22792a35a56a85ec0440aa04ae48af"
+      },
+      {
+        "expressionSha256": "a53ff2bab0c7e315f551cb184d2190cfa7d9b7bfc4d8573363d0beb551c49022"
+      },
+      {
+        "expressionSha256": "2e0f10717be818fda8fede0a75c6729b902096b6bf0fda4acde7caeb8fe19a07"
+      },
+      {
+        "expressionSha256": "c8e1da23ee39af815f07056b756239fa76812ce2a7df050d1f7b34fa0c75dd63"
+      },
+      {
+        "expressionSha256": "10f94bb59d7b8817fa9a2fcf96eec842b7b74b7fc99afbfa6163987b48f7efc2"
+      },
+      {
+        "expressionSha256": "c2541f5fd06058576eef454572c5abafee0a7e603e18420e158dafc99efa711d"
+      },
+      {
+        "expressionSha256": "6afe5b18bd015ffaa6d546e32dfc6bbfa47a3ba8b6694d061f2b70738f74c5e7"
+      },
+      {
+        "expressionSha256": "bdba8f296f7f8b084725e61d074b9ee3498929cbb2ee3b2277185ac7982533eb"
+      },
+      {
+        "expressionSha256": "557e1f5bd298b5dfe201f6400b05026cdb07891788c99edb5056fc31cbd521fe"
+      },
+      {
+        "expressionSha256": "aee0076dc679b393481b172752cd38a89a9ce87f23ee77f20ebfb52af9e1b8e2"
+      },
+      {
+        "expressionSha256": "33aa2886557f6ae9e6cb20999b325e35f8a9de8dbadf4c79886eb11a5ae8fc6c"
+      },
+      {
+        "expressionSha256": "d7379396c878afa62d43067df4746d9fa7c604f7baaa9d7425aa96d9c84ae127"
+      },
+      {
+        "expressionSha256": "cb14d90710ce8138abbc0f66e58fb5fb764305552bb336d7cbb7d85ba2f8d6bf"
+      },
+      {
+        "expressionSha256": "e11a6d73efaf0fe7aec8230c785e1c6d0d41bb590cbff0a560f7f179e0672bf2"
+      },
+      {
+        "expressionSha256": "7636ebc731670f71b9e9bc9d6bef51977810cf117f3a592613257c91cec6a01f"
+      },
+      {
+        "expressionSha256": "4c4115e11c190ed8104e85e284be893bd70a5e552173a968ca4d05a3eb745281"
+      },
+      {
+        "expressionSha256": "3d6c9ddb39ae4daa32c653d3e4cdb0b0cfdb7658a8817528287ad2a2ab3bfdc2"
+      },
+      {
+        "expressionSha256": "ed93fd1d482c8051b32030a488bbe0609dd048a6c676467a4686320bc2befd22"
+      },
+      {
+        "expressionSha256": "cf38e78434e0a8b5e432e0c3c94c34f6952d7e21e1dd0acc3c83bc12cca515dd"
+      },
+      {
+        "expressionSha256": "36af4e72f1d0181a9891265f84174c4d711151857a6cd2ff49b4574e9d36a08f"
+      },
+      {
+        "expressionSha256": "1a1bbd89063e3aaf2c874583e7d500d8b0865f5c9d8fd8a905ec131bacf83782"
+      },
+      {
+        "expressionSha256": "0ccd0687f00733cd9d7ba2de8dcfa5b48aa208d2a91d4fc128ff0194839819b7"
+      },
+      {
+        "expressionSha256": "3bd42e15e5427f946b98b898212af900ed0a4068cff03a37aa2ce1d3a081f2ec"
+      },
+      {
+        "expressionSha256": "99a8a8a7117b1395e3a209cdc8ba5a70424687458932bc4dc8a7b6e59ff53868"
+      },
+      {
+        "expressionSha256": "8f15d80e7efb2a5d032af6aeba410bc9b4bd498ba70c7278654526b1e2259752"
+      },
+      {
+        "expressionSha256": "113f0af17fdf683cf360ab9d03b7eff1b572d3475e83119031d47ee4331621aa"
+      },
+      {
+        "expressionSha256": "abfcad28ec14344e651d5f0983b24be76635f7dc84460622b29987c2a7f15ad3"
+      },
+      {
+        "expressionSha256": "1fc7b8d997ca8eff88ef0dd0b0e52834cb92e599c26bd52afa42c2dc1de310ac"
+      },
+      {
+        "expressionSha256": "f979a503a42e753523398afece019ab2247dcd94782730f16275f33af096e4b3"
+      },
+      {
+        "expressionSha256": "75abd1f28bbdfea0bd31907b48806fa6c1ba3f2668ffa25f351e72a1dd78b347"
+      },
+      {
+        "expressionSha256": "e2e631b3786ad8cd3476cd88a2c61b292367a6e52e4a6e7834f11330dd69a1c6"
+      },
+      {
+        "expressionSha256": "68b13d14bf4633c22ad702b78cca03fe77836b98045555aecb05768c420d77ab"
+      },
+      {
+        "expressionSha256": "117bec9d7270ae5ab653bba98f125631f5f311a12589ac7455bb271de6dee05d"
+      },
+      {
+        "expressionSha256": "d807ea206bc8b453b8229d01fa6785329308f51431a12522bb78631262d248b6"
+      },
+      {
+        "expressionSha256": "529c224ba81a4770b979fa88aa5eb8acd1a457534d429a97ef7a9ce5f942d138"
+      },
+      {
+        "expressionSha256": "d89951c5a756874ceb2a6fbbd20a5e276683a39a10803d909dc5efcc9bc0428b"
+      },
+      {
+        "expressionSha256": "8982d146bfad56e28b480253c772202ad74bc3bc9fa298bf4da374d8f5fbea32"
+      },
+      {
+        "expressionSha256": "1e8597200f57a98747f3fd96d9fbb618a9c6efeb440983028224f3ecfd116402"
+      },
+      {
+        "expressionSha256": "da78a0b20ce6e87415bec646ef3d29d2ac918643dc573c197ae50e60dd639536"
+      },
+      {
+        "expressionSha256": "8fc68e5464cd2e5e8ccbc34533d409094cfe4e09a0d242e6912201b83de753b6"
+      }
+    ],
+    "factsDigest": "9ec990b9a17c32e00c0a6c47c4c11fb9bbdef42e40804a58733f2c4f0a489464",
+    "authorityInputs": [
+      {
+        "path": "scripts/check-configuration-cli-drift.mjs",
+        "canonical": "scripts/check-configuration-cli-drift.mjs",
+        "sha256": "82148923a66dc77711ba7b67dcb7da747d279691dc51a449f86b383a8c3e3cf0"
+      },
+      {
+        "path": "scripts/generate-local-helm-authorities.mjs",
+        "canonical": "scripts/generate-local-helm-authorities.mjs",
+        "sha256": "0c01058c36010623664ecf46a886dabb59c3d5c8446715641f481b2100fb9a94"
+      },
+      {
+        "path": "skills/common/plugins/openclaw-agent-observer/scripts/sync-contract.mjs",
+        "canonical": "skills/common/plugins/openclaw-agent-observer/scripts/sync-contract.mjs",
+        "sha256": "9cf81c81f0fa85ea740e578d6a3e10bcf86c7d85dec3c1ea287f3e7bab7d9fab"
+      }
+    ],
+    "purposeInputs": [
+      {
+        "path": "charts/kubeclaw/files/config/.semgrep.yml",
+        "canonical": "charts/kubeclaw/files/config/.semgrep.yml",
+        "sha256": "430adf26f8a72db1275e92061d33a2e1c66ef29199fcde647e3ac34ec51de58d"
+      },
+      {
+        "path": "charts/kubeclaw/files/config/.yamllint.yml",
+        "canonical": "charts/kubeclaw/files/config/.yamllint.yml",
+        "sha256": "32e922f3c1c45cbef3d46fe40a476460a10ee1c44794436bd8a3d3f10f62513c"
+      },
+      {
+        "path": "charts/kubeclaw/files/config/kubernetes-policy-pack-default.json",
+        "canonical": "charts/kubeclaw/files/config/kubernetes-policy-pack-default.json",
+        "sha256": "3c0e2815bc1154e89fdeca2623adbc5018a4b6348f966bdec6dadf82cbc32781"
+      },
+      {
+        "path": "charts/kubeclaw/files/config/swarm.config.json",
+        "canonical": "charts/kubeclaw/files/config/swarm.config.json",
+        "sha256": "e7331f631ed85b4c85ca6b4ab5fccd62a1381e40f973e441888d8aa59cb3f678"
+      },
+      {
+        "path": "charts/kubeclaw/templates/deployment.yaml",
+        "canonical": "charts/kubeclaw/templates/deployment.yaml",
+        "sha256": "8e780bc0033c3da5c0a3d4db53e8ba9e0753200a072ce0ed63a598c461231883"
+      },
+      {
+        "path": "charts/kubeclaw/templates/secret.yaml",
+        "canonical": "charts/kubeclaw/templates/secret.yaml",
+        "sha256": "33a2926486d301371ffc741826079277a2a48daddbabe209d2b466f44c19a01f"
+      },
+      {
+        "path": "charts/kubeclaw/templates/service.yaml",
+        "canonical": "charts/kubeclaw/templates/service.yaml",
+        "sha256": "76a347213feffadad635311cc89fdbfb896c6a3f800e8e92528ec9efee280cc2"
+      },
+      {
+        "path": "charts/kubeclaw/values.yaml",
+        "canonical": "charts/kubeclaw/values.yaml",
+        "sha256": "2bff3214d88e912445b1c435b6353cfb438cd5184124b3eb0cc9f7394dfc05aa"
+      },
+      {
+        "path": "charts/ops-pod/templates/workload.yaml",
+        "canonical": "charts/ops-pod/templates/workload.yaml",
+        "sha256": "3471a815948e99e52b03b7952f1076c9d21afddbd24b62c37e1c848b7a129d58"
+      },
+      {
+        "path": "cmd/buster-namespace-controller/demo-product.go",
+        "canonical": "cmd/buster-namespace-controller/demo-product.go",
+        "sha256": "127c82f150c8277a931ae9fba701b7a1c6cc368d9e8290f9fb2082efd74cc49c"
+      },
+      {
+        "path": "cmd/buster-namespace-controller/demo-readiness-lifecycle.go",
+        "canonical": "cmd/buster-namespace-controller/demo-readiness-lifecycle.go",
+        "sha256": "6c79d6dd6d94ed7df8903c2d617eeec2574bb9789bf6ac2c0c34d6059a8c8ba2"
+      },
+      {
+        "path": "docker/buster-runtime-entrypoint.sh",
+        "canonical": "docker/buster-runtime-entrypoint.sh",
+        "sha256": "1b13228deb6e53e66580b96752c34abcada89ecef278ea3dff9b1ed980f68225"
+      },
+      {
+        "path": "docs/blueprint/AP09-acceptance-fixtures.json",
+        "canonical": "docs/blueprint/AP09-acceptance-fixtures.json",
+        "sha256": "5671508592d263002a2689007cd554b7e2c179403bc9e0e793a7a6a22adb88a8"
+      },
+      {
+        "path": "examples/buster-values.yaml",
+        "canonical": "examples/buster-values.yaml",
+        "sha256": "4556149002f08e3bf03aaf39245e5ed9629a5ab58e53b9305d471701c515e46a"
+      },
+      {
+        "path": "examples/cilium/project-network-policy.yaml",
+        "canonical": "examples/cilium/project-network-policy.yaml",
+        "sha256": "5c1d3e138ddf135293ba53bc100d134aee863a8c4df8b2ab1bc87ef45de1f61e"
+      },
+      {
+        "path": "examples/nova-values.yaml",
+        "canonical": "examples/nova-values.yaml",
+        "sha256": "88ecc03e06d9d85179eae32f1bc2f63305840c91fdd7600a22d18dd7a28e9def"
+      },
+      {
+        "path": "gitops/platform/bootstrap/alloy.yaml",
+        "canonical": "gitops/platform/bootstrap/alloy.yaml",
+        "sha256": "b2c06f6acba94c24edd5b30980376675ba920a9ea6f92c403577d2a236073434"
+      },
+      {
+        "path": "gitops/platform/bootstrap/codex-ops.yaml",
+        "canonical": "gitops/platform/bootstrap/codex-ops.yaml",
+        "sha256": "7b5f813ecf6e5c6e5a99b0ce7e1545abd30c7a283b3a06b63d78f701703d9bac"
+      },
+      {
+        "path": "gitops/platform/litellm/resources.yaml",
+        "canonical": "gitops/platform/litellm/resources.yaml",
+        "sha256": "faf5a32f91568604ee1726ac60a58c7490fb95802d61a0019171006423474637"
+      },
+      {
+        "path": "gitops/platform/values/alloy.yaml",
+        "canonical": "gitops/platform/values/alloy.yaml",
+        "sha256": "29e18d6d49210bfe193f21e43aaac00ecea5bacc3175d7f3efe7d8be6d1b2c61"
+      },
+      {
+        "path": "my-values/buster-values.yaml",
+        "canonical": "my-values/buster-values.yaml",
+        "sha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
+      },
+      {
+        "path": "my-values/infra/argocd-values.yaml",
+        "canonical": "my-values/infra/argocd-values.yaml",
+        "sha256": "eb0a7cdadf4bab951724dafa6ec48f5d4e07152cb3d41929c59d3c2899247dac"
+      },
+      {
+        "path": "my-values/infra/network-policies.yaml",
+        "canonical": "my-values/infra/network-policies.yaml",
+        "sha256": "a42018fe382e389077f4ed373c4ae54ebfd7e46a639b5360215cd80948823d79"
+      },
+      {
+        "path": "my-values/infra/postgresql-values.yaml",
+        "canonical": "my-values/infra/postgresql-values.yaml",
+        "sha256": "b7c1445d47350c6fcae2fc7de901e930dec1f8309331bf0db69c70c1f3404994"
+      },
+      {
+        "path": "my-values/infra/redis-values.yaml",
+        "canonical": "my-values/infra/redis-values.yaml",
+        "sha256": "929dec7ffac0922517188e0fb318b746e276292acad2723c59da802e5962c9b2"
+      },
+      {
+        "path": "my-values/infra/registry-local.yaml",
+        "canonical": "my-values/infra/registry-local.yaml",
+        "sha256": "966ab5af3851d5a6f9305d8819574301ca78d6c20f6d19074d078bf3b8e28d53"
+      },
+      {
+        "path": "my-values/nova-values.yaml",
+        "canonical": "my-values/nova-values.yaml",
+        "sha256": "1704ad41236dbc9ea8c210c8d3e360189f9623ca65d1ca70eac23901d770ff7e"
+      },
+      {
+        "path": "my-values/prism-agent-values.yaml",
+        "canonical": "my-values/prism-agent-values.yaml",
+        "sha256": "aaa81d8deb3ae3a512b98edad516f235be958866f4b11eaf54e0c1b2e919c696"
+      },
+      {
+        "path": "my-values/prism-values.yaml",
+        "canonical": "my-values/prism-values.yaml",
+        "sha256": "9462337fa87add8927e3e4eb9888fa197a25dea40c1598fa5017b7e5d26b11d2"
+      },
+      {
+        "path": "my-values/setup-secrets.sh",
+        "canonical": "my-values/setup-secrets.sh",
+        "sha256": "d417ee6bb8f6ba1008ad077f7cb4bf6172891aa9d8753681701aad4697e1834c"
+      },
+      {
+        "path": "package.json",
+        "canonical": "package.json",
+        "sha256": "4ab1e90c2259aeb96acfdc877e5a9eed330f605abff46d7eca85faded0f020c3"
+      },
+      {
+        "path": "scripts/check-configuration-cli-drift.mjs",
+        "canonical": "scripts/check-configuration-cli-drift.mjs",
+        "sha256": "82148923a66dc77711ba7b67dcb7da747d279691dc51a449f86b383a8c3e3cf0"
+      },
+      {
+        "path": "scripts/deploy.sh",
+        "canonical": "scripts/deploy.sh",
+        "sha256": "97c1e39bf9cec6c1d5d8e11198af90ed04efd15a6077f2bbac1129c2ea0741e2"
+      },
+      {
+        "path": "scripts/docs-ap09-mutation-fixture.mjs",
+        "canonical": "scripts/docs-ap09-mutation-fixture.mjs",
+        "sha256": "f46c275fce0ef9d55e2ac61a4bcc7b466519d42f07bec4ec8d86a7c2ce6fc687"
+      },
+      {
+        "path": "scripts/docs-api-authority-lock.json",
+        "canonical": "scripts/docs-api-authority-lock.json",
+        "sha256": "961ab61ec84a0a9491e24d6d863068f5a6bf3779891957a5cc428ac55e70f549"
+      },
+      {
+        "path": "scripts/docs-configuration-inventory.mjs",
+        "canonical": "scripts/docs-configuration-inventory.mjs",
+        "sha256": "7314148ac1c662049961cf274f1e5b1d4f7133769cd5f9c8889d49a329ddfa6b"
+      },
+      {
+        "path": "scripts/docs-external-helm-authority-lock.json",
+        "canonical": "scripts/docs-external-helm-authority-lock.json",
+        "sha256": "257d829a2e4d79ed9bc886c33c8c5e8b8a64a9fc05a36e7f378173b54c76516a"
+      },
+      {
+        "path": "scripts/docs-generate.mjs",
+        "canonical": "scripts/docs-generate.mjs",
+        "sha256": "aad4c1a16b693443bdd5ff1f663f59659c1a5da74efb62e65ae0b049f74a500e"
+      },
+      {
+        "path": "scripts/docs-local-helm-field-authorities.json",
+        "canonical": "scripts/docs-local-helm-field-authorities.json",
+        "sha256": "5071ad7619ede1dc51ef160be0a1eb1ea075094d7855c8d34cc631ca0111b63f"
+      },
+      {
+        "path": "scripts/docs-yaml-field-authorities.mjs",
+        "canonical": "scripts/docs-yaml-field-authorities.mjs",
+        "sha256": "80208318a343c0f57cfa61a82c87bc236e14015daed7df63c0b9702959e9a567"
+      },
+      {
+        "path": "scripts/external-helm-archives.json",
+        "canonical": "scripts/external-helm-archives.json",
+        "sha256": "4b79ed0dc21517f54ae1a167a79930524c01e85418bd75e8694478ce7f365070"
+      },
+      {
+        "path": "scripts/external-helm-authority-snapshots.json",
+        "canonical": "scripts/external-helm-authority-snapshots.json",
+        "sha256": "5ed46a00578b5ae30ed6a2a5e02c401c9ca235aac69524f43144ec3b9d4482fc"
+      },
+      {
+        "path": "scripts/generate-local-helm-authorities.mjs",
+        "canonical": "scripts/generate-local-helm-authorities.mjs",
+        "sha256": "0c01058c36010623664ecf46a886dabb59c3d5c8446715641f481b2100fb9a94"
+      },
+      {
+        "path": "scripts/versions.mjs",
+        "canonical": "scripts/versions.mjs",
+        "sha256": "c837f871d19a8d37bc1748c3f85db9cb46ccdf9d53b1c0aaa6f64c7c6efbf00b"
+      },
+      {
+        "path": "scripts/yaml-field-path.mjs",
+        "canonical": "scripts/yaml-field-path.mjs",
+        "sha256": "646f14105e48d9401b8d8ac99a0c439f60c8b69e42d72c15c0b66e132a1c9a2d"
+      },
+      {
+        "path": "skills/buster/plugins/direct-command/schemas/config.schema.json",
+        "canonical": "skills/buster/plugins/direct-command/schemas/config.schema.json",
+        "sha256": "8ea9a179b44f3bdcdeb0c9f251caf62757c3bf6a93724c993e3b51f23dc35ef8"
+      },
+      {
+        "path": "skills/buster/plugins/openapi/schemas/config.schema.json",
+        "canonical": "skills/buster/plugins/openapi/schemas/config.schema.json",
+        "sha256": "7f52e048a57a7527c47c02f6018af113cdb60a8e63cc446f1b9017f425bdab29"
+      },
+      {
+        "path": "skills/common/plugins/command-runner/schemas/config.schema.json",
+        "canonical": "skills/common/plugins/command-runner/schemas/config.schema.json",
+        "sha256": "489dac2930cb42ad50dcd8174928471ecdd9b5be25354916aaa3813bed50e2b6"
+      },
+      {
+        "path": "skills/common/plugins/openclaw-agent-observer/scripts/sync-contract.mjs",
+        "canonical": "skills/common/plugins/openclaw-agent-observer/scripts/sync-contract.mjs",
+        "sha256": "9cf81c81f0fa85ea740e578d6a3e10bcf86c7d85dec3c1ea287f3e7bab7d9fab"
+      },
+      {
+        "path": "skills/common/plugins/runtime-dispatch/schemas/config.schema.json",
+        "canonical": "skills/common/plugins/runtime-dispatch/schemas/config.schema.json",
+        "sha256": "c780e8086e6d6c954734e62c171f3de67a37b1c94c7483c887571ea08f18a641"
+      },
+      {
+        "path": "skills/common/plugins/runtime-dispatch/schemas/openclaw-config.schema.json",
+        "canonical": "skills/common/plugins/runtime-dispatch/schemas/openclaw-config.schema.json",
+        "sha256": "defa712aa87820a8e2d4fa593f6e3dedf2fbc6c22a22f2a6933dc36e3d8d95b7"
+      },
+      {
+        "path": "skills/nova/core/cli.ts",
+        "canonical": "skills/nova/core/cli.ts",
+        "sha256": "09121b4b0a160d2e5e35448795156856b15ccc078a229bb1895f570c22f76787"
+      },
+      {
+        "path": "skills/nova/plugins/lint/schemas/adapter-config.schema.json",
+        "canonical": "skills/nova/plugins/lint/schemas/adapter-config.schema.json",
+        "sha256": "07d9497e85246c310e93213a90ff22d7b1323302051902e6a75e3e0f6bb46b24"
+      },
+      {
+        "path": "skills/nova/plugins/lint/schemas/config.schema.json",
+        "canonical": "skills/nova/plugins/lint/schemas/config.schema.json",
+        "sha256": "02ee8a644c0e7ce0bfa58b0fe22582ba12e97f65c3a1e13170304231662a5bf8"
+      },
+      {
+        "path": "skills/nova/plugins/lint/src/engine/index.ts",
+        "canonical": "skills/nova/plugins/lint/src/engine/index.ts",
+        "sha256": "b7c408dc76e87aada6047264734c766b259a24254d7a3bb59e5fb735229c5214"
+      },
+      {
+        "path": "skills/nova/plugins/lint/src/engine/policy-paths.ts",
+        "canonical": "skills/nova/plugins/lint/src/engine/policy-paths.ts",
+        "sha256": "4e7723eb14813fe5d594222d8a9b69809f809abaa379fbb44041793f28aa66e3"
+      },
+      {
+        "path": "skills/nova/plugins/remote-test-gate/schemas/config.schema.json",
+        "canonical": "skills/nova/plugins/remote-test-gate/schemas/config.schema.json",
+        "sha256": "282ed6bdc8d07486e6e34b40cec822036a5cc851af4369e55f68ab7f146eef47"
+      },
+      {
+        "path": "skills/nova/plugins/review/schemas/config.schema.json",
+        "canonical": "skills/nova/plugins/review/schemas/config.schema.json",
+        "sha256": "c03f8eee6b49a316a3bd61a9a33b02fec50eed7473c020fd0f503c047de410d3"
+      },
+      {
+        "path": "skills/nova/project_setup/tools/progress-scaffold.ts",
+        "canonical": "skills/nova/project_setup/tools/progress-scaffold.ts",
+        "sha256": "ccb59cfb186e4d0917290f8f75a61644da2fdfb0e03694ece51995cb70ee3a2f"
+      },
+      {
+        "path": "skills/prism/server/control-config.ts",
+        "canonical": "skills/prism/server/control-config.ts",
+        "sha256": "9da649103dd1bf2c1a95f533725942bd760e80f1353d4e0db924c4053c8dcd7a"
+      },
+      {
+        "path": "skills/prism/server/migrate.ts",
+        "canonical": "skills/prism/server/migrate.ts",
+        "sha256": "19eeb8571e604ec548334b4f4ea75bfb65975a6499dabef18052bc02f5a7cb18"
+      },
+      {
+        "path": "skills/prism/server/worker-config.ts",
+        "canonical": "skills/prism/server/worker-config.ts",
+        "sha256": "03d8f233f98575392d58d3dc2c8a15fef681d06c51db61e6f748fc16ac96ab99"
+      }
+    ]
+  },
+  "scripts/check-contract-drift-mutations.mjs": {
+    "role": "documentation-consumer",
+    "qualificationKind": "reviewed-documentation-consumer/v1",
+    "sourceSha256": "cd1bdc5438cb072bd495892f871888460226cfcb5a8e85a27cc48c173ae2e623",
+    "consumer": "Documentation verification harness in fresh disposable workspace: deterministic exact single-authority patches/controlled source or reader changes; child gate rejection and baseline/restoration assertions. Read-only SDK semantic inventory/handbook delegated reader path and product-progress source-reference comparison. Source AST and generated references are data, not SDK execution or persistence proof. Source restoration and API-shaped fixture bytes remain test-only effects, not product resource outputs or child/module execution authority.",
+    "selectors": [
+      {
+        "expressionSha256": "ac774d39a37118a8d1a78f62a0867b979e30e104384dc614083a6dbb0150ddb8"
+      },
+      {
+        "expressionSha256": "15fe9d84e254e09e7bd4a68ad284ac7b89b4eb2282918d1385b8898996ca536b"
+      },
+      {
+        "expressionSha256": "bc1b09d57cda17d0376f91a6604bac1b70ae35d7ee910e90af164472162b3ae5"
+      },
+      {
+        "expressionSha256": "9b80de081ea89bd284ef24098184ee23bfd1d57b980567fead9b0374514ffa00"
+      },
+      {
+        "expressionSha256": "ea86d9e26f710a05c109c1f24a78c04bb604f7e92a5197cd076c2d289ff4ce43"
+      },
+      {
+        "expressionSha256": "3bd42e15e5427f946b98b898212af900ed0a4068cff03a37aa2ce1d3a081f2ec"
+      },
+      {
+        "expressionSha256": "99a8a8a7117b1395e3a209cdc8ba5a70424687458932bc4dc8a7b6e59ff53868"
+      },
+      {
+        "expressionSha256": "8f15d80e7efb2a5d032af6aeba410bc9b4bd498ba70c7278654526b1e2259752"
+      },
+      {
+        "expressionSha256": "113f0af17fdf683cf360ab9d03b7eff1b572d3475e83119031d47ee4331621aa"
+      },
+      {
+        "expressionSha256": "2948024387391b149bf95db8466bc244e8c0bb1f158e0fbf6b9ba730c29aa67e"
+      },
+      {
+        "expressionSha256": "abfcad28ec14344e651d5f0983b24be76635f7dc84460622b29987c2a7f15ad3"
+      },
+      {
+        "expressionSha256": "f5820dd98f9c617efde6d602297f85df78b635879ad2c1623f041657985714a9"
+      },
+      {
+        "expressionSha256": "1f6417e229a9b4322d80803b91056398e206cfc76b243e63d7a23b3ac18edc75"
+      }
+    ],
+    "factsDigest": "14c4f2916ce6ea22f2976c5828dda2dc727f776798e5d0072ebc8fdd4b0981f2",
+    "authorityInputs": [],
+    "purposeInputs": [
+      {
+        "path": "docs/blueprint/AP09-acceptance-fixtures.json",
+        "canonical": "docs/blueprint/AP09-acceptance-fixtures.json",
+        "sha256": "5671508592d263002a2689007cd554b7e2c179403bc9e0e793a7a6a22adb88a8"
+      },
+      {
+        "path": "package.json",
+        "canonical": "package.json",
+        "sha256": "4ab1e90c2259aeb96acfdc877e5a9eed330f605abff46d7eca85faded0f020c3"
+      },
+      {
+        "path": "scripts/check-contract-drift.mjs",
+        "canonical": "scripts/check-contract-drift.mjs",
+        "sha256": "463b2a8a3999e977ea3839b80549336431cdbc2ea3c76caf3d218005d8ccbae8"
+      },
+      {
+        "path": "scripts/docs-ap09-mutation-fixture.mjs",
+        "canonical": "scripts/docs-ap09-mutation-fixture.mjs",
+        "sha256": "f46c275fce0ef9d55e2ac61a4bcc7b466519d42f07bec4ec8d86a7c2ce6fc687"
+      },
+      {
+        "path": "skills/common/plugin-runtime/sdk/src/generated/contracts.ts",
+        "canonical": "skills/common/plugin-runtime/sdk/src/generated/contracts.ts",
+        "sha256": "8ade81b1f64c78b4cf2198f7ae7dc0c726fb4cec3ffa553986310d353dbc71c1"
+      },
+      {
+        "path": "skills/common/plugin-runtime/sdk/src/index.ts",
+        "canonical": "skills/common/plugin-runtime/sdk/src/index.ts",
+        "sha256": "464a94399315ad25f40511b8d1ee93c76b3535a82cd90fbde06bf0a58aa0cc9a"
+      },
+      {
+        "path": "skills/nova/project_setup/tools/progress-scaffold-validation.ts",
+        "canonical": "skills/nova/project_setup/tools/progress-scaffold-validation.ts",
+        "sha256": "dafa016f41e824b82951a8532b0c291cda421181de1614d79f0cffd91ee436fe"
+      }
+    ]
+  },
+  "scripts/check-contract-drift.mjs": {
+    "role": "documentation-consumer",
+    "qualificationKind": "reviewed-documentation-consumer/v1",
+    "sourceSha256": "463b2a8a3999e977ea3839b80549336431cdbc2ea3c76caf3d218005d8ccbae8",
+    "consumer": "Exact bounded documentation declaration-to-reader comparison; no runtime activation or API apply.",
+    "selectors": [
+      {
+        "expressionSha256": "9acf86619b699edef3a920afa4a7f5df3e76a0b572774d64052e4c4d6042721d"
+      },
+      {
+        "expressionSha256": "c41ee77eaafbc396eb046e420bc21127898ea68bddc20e7651a8cfbda74350ae"
+      },
+      {
+        "expressionSha256": "4bce75de8fbad16c9de150a29a15525f6f44b4ec05aa447a7f45abf9d6c5e409"
+      },
+      {
+        "expressionSha256": "900458170fb63c16f595f6c5f201408f3f73892158d33c017ff2d65e745acf2c"
+      },
+      {
+        "expressionSha256": "99a8a8a7117b1395e3a209cdc8ba5a70424687458932bc4dc8a7b6e59ff53868"
+      },
+      {
+        "expressionSha256": "113f0af17fdf683cf360ab9d03b7eff1b572d3475e83119031d47ee4331621aa"
+      },
+      {
+        "expressionSha256": "2948024387391b149bf95db8466bc244e8c0bb1f158e0fbf6b9ba730c29aa67e"
+      },
+      {
+        "expressionSha256": "067bf8b26910823e32e4f6cd400fe7c4cbd368046b62c3f96b2ccbe7a7f8202a"
+      },
+      {
+        "expressionSha256": "62bd4aab02a002731ff2344eab42d02812bd36143fe5ae3ae6a979b0dc4f25ef"
+      },
+      {
+        "expressionSha256": "9d196a1875159c508cfac6bfb2060ff64a56d5d38cb28623767e3b75870fba67"
+      },
+      {
+        "expressionSha256": "5e35d2b003541216a2d45e4d63d8a01f8d27e4952e25090a1cb0e0ae686d396b"
+      }
+    ],
+    "factsDigest": "9cb51aa7de5e04a299e7f058443070235a3baf1ad073e50c3f32a1ca19daf0a7",
+    "authorityInputs": [],
+    "purposeInputs": [
+      {
+        "path": "docs/generated/inventory/documentation-source-revision.json",
+        "canonical": "docs/generated/inventory/documentation-source-revision.json",
+        "sha256": "58c8cfa0cda7e75cf8d2a34a81ee6e4a4b54013ed853d11490dd84aac874bd68"
+      },
+      {
+        "path": "docs/generated/inventory/sdk-reference.json",
+        "canonical": "docs/generated/inventory/sdk-reference.json",
+        "sha256": "9d4f7a92f51d83303d39b3ec4a3ae0e56d5030f2c53f86cb7e9d676042bd264e"
+      },
+      {
+        "path": "scripts/docs-product-pipeline-reference.mjs",
+        "canonical": "scripts/docs-product-pipeline-reference.mjs",
+        "sha256": "0d5ca69959c9ac502d60cc2f51c8485330888f082b861d1ca52c96b0eac0c25d"
+      },
+      {
+        "path": "scripts/docs-sdk-reference.mjs",
+        "canonical": "scripts/docs-sdk-reference.mjs",
+        "sha256": "0b9a68256214b05289a60355a536526bcfca823c0d95cf763ba5c461a0921b1a"
+      },
+      {
+        "path": "scripts/docs-sdk-semantics.mjs",
+        "canonical": "scripts/docs-sdk-semantics.mjs",
+        "sha256": "90f99449e46f59d04b6c55b158086bc575569920c107d374accde70da92f2d56"
+      }
+    ]
+  },
+  "scripts/check-error-code-drift-mutations.mjs": {
+    "role": "documentation-consumer",
+    "qualificationKind": "reviewed-documentation-consumer/v1",
+    "sourceSha256": "47b1dd5a26085725b1464752e1c8c18753ed2bbff9f230affdf165b4c5c8ffb5",
+    "consumer": "Documentation verification harness in fresh disposable workspace: deterministic exact single-authority patches/controlled source or reader changes; child gate rejection and baseline/restoration assertions. Exact owning Buster error-reference child check and documentation drift diagnostics; parser/admission failures retain their actual failure status. Source restoration and API-shaped fixture bytes remain test-only effects, not product resource outputs or child/module execution authority.",
+    "selectors": [
+      {
+        "expressionSha256": "7cc1976d0daf634a53ece2d053e3a78d771930031c409118e0e9ab095cbaaf74"
+      },
+      {
+        "expressionSha256": "f4466b510ee691b951489684b777b2adcebe9b5fa4ad5efa1ffd47edbcf576e5"
+      },
+      {
+        "expressionSha256": "15fe9d84e254e09e7bd4a68ad284ac7b89b4eb2282918d1385b8898996ca536b"
+      },
+      {
+        "expressionSha256": "ea86d9e26f710a05c109c1f24a78c04bb604f7e92a5197cd076c2d289ff4ce43"
+      },
+      {
+        "expressionSha256": "3bd42e15e5427f946b98b898212af900ed0a4068cff03a37aa2ce1d3a081f2ec"
+      },
+      {
+        "expressionSha256": "99a8a8a7117b1395e3a209cdc8ba5a70424687458932bc4dc8a7b6e59ff53868"
+      },
+      {
+        "expressionSha256": "8f15d80e7efb2a5d032af6aeba410bc9b4bd498ba70c7278654526b1e2259752"
+      },
+      {
+        "expressionSha256": "113f0af17fdf683cf360ab9d03b7eff1b572d3475e83119031d47ee4331621aa"
+      },
+      {
+        "expressionSha256": "abfcad28ec14344e651d5f0983b24be76635f7dc84460622b29987c2a7f15ad3"
+      },
+      {
+        "expressionSha256": "f5820dd98f9c617efde6d602297f85df78b635879ad2c1623f041657985714a9"
+      },
+      {
+        "expressionSha256": "1f6417e229a9b4322d80803b91056398e206cfc76b243e63d7a23b3ac18edc75"
+      }
+    ],
+    "factsDigest": "44e32a3a2f6d2b411b38d2bc43d4b31100bcbe71ad7a6d2f91597ad6883f6fc2",
+    "authorityInputs": [],
+    "purposeInputs": [
+      {
+        "path": "docs/blueprint/AP09-acceptance-fixtures.json",
+        "canonical": "docs/blueprint/AP09-acceptance-fixtures.json",
+        "sha256": "5671508592d263002a2689007cd554b7e2c179403bc9e0e793a7a6a22adb88a8"
+      },
+      {
+        "path": "package.json",
+        "canonical": "package.json",
+        "sha256": "4ab1e90c2259aeb96acfdc877e5a9eed330f605abff46d7eca85faded0f020c3"
+      },
+      {
+        "path": "scripts/check-error-code-drift.mjs",
+        "canonical": "scripts/check-error-code-drift.mjs",
+        "sha256": "da6af31671d8f5dffe4fda86ff0e152ba9ed7627a7aa497953faa80ff365c944"
+      },
+      {
+        "path": "scripts/docs-ap09-mutation-fixture.mjs",
+        "canonical": "scripts/docs-ap09-mutation-fixture.mjs",
+        "sha256": "f46c275fce0ef9d55e2ac61a4bcc7b466519d42f07bec4ec8d86a7c2ce6fc687"
+      },
+      {
+        "path": "scripts/generate-buster-error-reference.mjs",
+        "canonical": "scripts/generate-buster-error-reference.mjs",
+        "sha256": "5b7f48767226cbc0a1bbcf310b879052b4aa55919bb60d52985b01f8f7b2424e"
+      },
+      {
+        "path": "skills/buster/engine/test-gates/production.ts",
+        "canonical": "skills/buster/engine/test-gates/production.ts",
+        "sha256": "79c47d55e525f5ebb5e7e05a9c52e18514f9e464401c51e7def38dcec7f646a3"
+      }
+    ]
+  },
+  "scripts/check-error-code-drift.mjs": {
+    "role": "documentation-consumer",
+    "qualificationKind": "reviewed-documentation-consumer/v1",
+    "sourceSha256": "da6af31671d8f5dffe4fda86ff0e152ba9ed7627a7aa497953faa80ff365c944",
+    "consumer": "Exact bounded documentation declaration-to-reader comparison; no runtime activation or API apply.",
+    "selectors": [
+      {
+        "expressionSha256": "418af7d0ee78c2890e5df857b0ec30f8200135840db7584a7559cacdae7648ef"
+      },
+      {
+        "expressionSha256": "eaf9e3fe6e17f45e927ba658a3748ea1d421d27f51f7073cae02fa8a0d074a14"
+      },
+      {
+        "expressionSha256": "7760b7aedd0fc726938bdb8a892f1ea569c10dc7d0bc072c96f159747260b271"
+      },
+      {
+        "expressionSha256": "99a8a8a7117b1395e3a209cdc8ba5a70424687458932bc4dc8a7b6e59ff53868"
+      },
+      {
+        "expressionSha256": "113f0af17fdf683cf360ab9d03b7eff1b572d3475e83119031d47ee4331621aa"
+      },
+      {
+        "expressionSha256": "abfcad28ec14344e651d5f0983b24be76635f7dc84460622b29987c2a7f15ad3"
+      },
+      {
+        "expressionSha256": "18a56da0d17ad7e4297d7c89e434223156910b90ff9c53aa4c332241c523610c"
+      },
+      {
+        "expressionSha256": "e304d8a64df52946bb23be030f59c7843dddb13193563352b5a2e6298baffe64"
+      },
+      {
+        "expressionSha256": "122d2127f5759a24ded71ae3a4be0400cbde6e0fbe1fc4b5d24435e85d309029"
+      }
+    ],
+    "factsDigest": "51862426fc009157d8f602f5f49f5124fd4f9ae230c84ee75d6c67ed381a760e",
+    "authorityInputs": [
+      {
+        "path": "scripts/generate-buster-error-reference.mjs",
+        "canonical": "scripts/generate-buster-error-reference.mjs",
+        "sha256": "5b7f48767226cbc0a1bbcf310b879052b4aa55919bb60d52985b01f8f7b2424e"
+      }
+    ],
+    "purposeInputs": [
+      {
+        "path": "scripts/generate-buster-error-reference.mjs",
+        "canonical": "scripts/generate-buster-error-reference.mjs",
+        "sha256": "5b7f48767226cbc0a1bbcf310b879052b4aa55919bb60d52985b01f8f7b2424e"
+      }
+    ]
+  },
+  "scripts/check-extension-class-drift-mutations.mjs": {
+    "role": "documentation-consumer",
+    "qualificationKind": "reviewed-documentation-consumer/v1",
+    "sourceSha256": "34358ec82373a23a66cc47a489927b18a7612f92c778f7287f81c31795bb32f4",
+    "consumer": "Documentation verification harness in fresh disposable workspace: deterministic exact single-authority patches/controlled source or reader changes; child gate rejection and baseline/restoration assertions. Read-only exact declared manifest/schema/registry/E2E requirement/provider/report record comparison with bounded reader sections; not activation, runtime provider/report execution or full-family acceptance. Source restoration and API-shaped fixture bytes remain test-only effects, not product resource outputs or child/module execution authority.",
+    "selectors": [
+      {
+        "expressionSha256": "899bf216d9517f090dd5bd0be2f62b7e0ae61850558629bc75da403fdd1dce5b"
+      },
+      {
+        "expressionSha256": "55627a20c836325c9e1832e3647cad9c925c287d7fafce4321d213432210df75"
+      },
+      {
+        "expressionSha256": "6330284a30e43b79ea346d0f99b33ea9c9a7354dfecea259421a95bd7938c5e5"
+      },
+      {
+        "expressionSha256": "7af1037ac326db2d3ce467d3d6b4b73caf91faa0527a3464cc79d25dc1608439"
+      },
+      {
+        "expressionSha256": "98abee28da69d66c80a68951afa5ecbb3a48b1033057bc5b83c20c7ba94c66f9"
+      },
+      {
+        "expressionSha256": "a365345a33bbf1a359f7ebf4dd4141f1a11930e7109ad27bd63bf59ccc5260b1"
+      },
+      {
+        "expressionSha256": "ea86d9e26f710a05c109c1f24a78c04bb604f7e92a5197cd076c2d289ff4ce43"
+      },
+      {
+        "expressionSha256": "77c784b19791b5b70ee664d75c5f313e1ab3176db380b1cf7c26c7ae202a6c72"
+      },
+      {
+        "expressionSha256": "3bd42e15e5427f946b98b898212af900ed0a4068cff03a37aa2ce1d3a081f2ec"
+      },
+      {
+        "expressionSha256": "99a8a8a7117b1395e3a209cdc8ba5a70424687458932bc4dc8a7b6e59ff53868"
+      },
+      {
+        "expressionSha256": "8f15d80e7efb2a5d032af6aeba410bc9b4bd498ba70c7278654526b1e2259752"
+      },
+      {
+        "expressionSha256": "113f0af17fdf683cf360ab9d03b7eff1b572d3475e83119031d47ee4331621aa"
+      },
+      {
+        "expressionSha256": "2948024387391b149bf95db8466bc244e8c0bb1f158e0fbf6b9ba730c29aa67e"
+      },
+      {
+        "expressionSha256": "abfcad28ec14344e651d5f0983b24be76635f7dc84460622b29987c2a7f15ad3"
+      },
+      {
+        "expressionSha256": "9c294408130de6e511dde09c5f445ebb5313bbb5d099109a90685de7ad596c19"
+      },
+      {
+        "expressionSha256": "35f4639042b12dc28e757b3612a850d35d2298772cf08d3411b3650571141fc4"
+      },
+      {
+        "expressionSha256": "f5fd251da7b017ec9c62c6fc7957b06417d4034f91a8e722eedba2c288cc8061"
+      },
+      {
+        "expressionSha256": "e0ffa8aed18803e493e49cd61ab63fcb7bbc3abc007935ff15a9fd253a68c886"
+      },
+      {
+        "expressionSha256": "f5820dd98f9c617efde6d602297f85df78b635879ad2c1623f041657985714a9"
+      },
+      {
+        "expressionSha256": "1f6417e229a9b4322d80803b91056398e206cfc76b243e63d7a23b3ac18edc75"
+      }
+    ],
+    "factsDigest": "9b1bf05d5dbc636328c8329eb87c0c329cba5ec8087ec1f862fb9fd290167481",
+    "authorityInputs": [],
+    "purposeInputs": [
+      {
+        "path": "docs/blueprint/AP09-acceptance-fixtures.json",
+        "canonical": "docs/blueprint/AP09-acceptance-fixtures.json",
+        "sha256": "5671508592d263002a2689007cd554b7e2c179403bc9e0e793a7a6a22adb88a8"
+      },
+      {
+        "path": "package.json",
+        "canonical": "package.json",
+        "sha256": "4ab1e90c2259aeb96acfdc877e5a9eed330f605abff46d7eca85faded0f020c3"
+      },
+      {
+        "path": "scripts/check-extension-class-drift.mjs",
+        "canonical": "scripts/check-extension-class-drift.mjs",
+        "sha256": "61cda6e05a7e12b28a8d16adb0a3de5b439418645a738b3e0a284522df68ef74"
+      },
+      {
+        "path": "scripts/docs-ap09-mutation-fixture.mjs",
+        "canonical": "scripts/docs-ap09-mutation-fixture.mjs",
+        "sha256": "f46c275fce0ef9d55e2ac61a4bcc7b466519d42f07bec4ec8d86a7c2ce6fc687"
+      },
+      {
+        "path": "skills/buster/plugins/junit-report-adapter/plugin.json",
+        "canonical": "skills/buster/plugins/junit-report-adapter/plugin.json",
+        "sha256": "9787400a76dea54fbfe31a6371c1724f60fdacb7fc544fa33c0c454132e92b77"
+      },
+      {
+        "path": "skills/common/plugin-runtime/foundation/registry/types.ts",
+        "canonical": "skills/common/plugin-runtime/foundation/registry/types.ts",
+        "sha256": "6667bd4389377d33ba41c2c7166f3488c40f0cad1fc0e7c067fb37a6f2eca291"
+      },
+      {
+        "path": "skills/nova/plugins/lint/plugin.json",
+        "canonical": "skills/nova/plugins/lint/plugin.json",
+        "sha256": "3d671a34bb259b1c031d7f2ac1c54b19b4821e023bb53c7d43e5642dd1a0ce04"
+      },
+      {
+        "path": "tests/verification/e2e/fixture-coverage.mjs",
+        "canonical": "tests/verification/e2e/fixture-coverage.mjs",
+        "sha256": "eae30bf79e5ed942658322be75dc75a98b74ceacae57cd9072f5a7b81e118aa6"
+      },
+      {
+        "path": "tests/verification/e2e/provider-catalog.mjs",
+        "canonical": "tests/verification/e2e/provider-catalog.mjs",
+        "sha256": "04fe590099a3a9803cc610389528190d330b75527305b50c409d0e9de647293e"
+      }
+    ]
+  },
+  "scripts/check-extension-class-drift.mjs": {
+    "role": "documentation-consumer",
+    "qualificationKind": "reviewed-documentation-consumer/v1",
+    "sourceSha256": "61cda6e05a7e12b28a8d16adb0a3de5b439418645a738b3e0a284522df68ef74",
+    "consumer": "Exact bounded documentation declaration-to-reader comparison; no runtime activation or API apply.",
+    "selectors": [
+      {
+        "expressionSha256": "d1e7c04d0add2e54a2492f3591d3687fc49dc8c01287cf94cdf257f9e7ef03a8"
+      },
+      {
+        "expressionSha256": "547f590a867cf37a980d02eb61d7f9c1cf44d4ee980e6a9dccc6efca3a1dd2f5"
+      },
+      {
+        "expressionSha256": "8db5630bbf6187d4259f39dfce4bed9119b3af078366562db008919201a9b90b"
+      },
+      {
+        "expressionSha256": "d1318fd971cfa1708f44526a14ad252da3520b5fbe27048cf9b1509ae31adfe2"
+      },
+      {
+        "expressionSha256": "3bd42e15e5427f946b98b898212af900ed0a4068cff03a37aa2ce1d3a081f2ec"
+      },
+      {
+        "expressionSha256": "99a8a8a7117b1395e3a209cdc8ba5a70424687458932bc4dc8a7b6e59ff53868"
+      },
+      {
+        "expressionSha256": "113f0af17fdf683cf360ab9d03b7eff1b572d3475e83119031d47ee4331621aa"
+      },
+      {
+        "expressionSha256": "2948024387391b149bf95db8466bc244e8c0bb1f158e0fbf6b9ba730c29aa67e"
+      }
+    ],
+    "factsDigest": "562fe8fd0fb1c23b3c071b80801d865e24d5e51cbee9ffcc28bc401472adc176",
+    "authorityInputs": [],
+    "purposeInputs": [
+      {
+        "path": "skills/common/plugin-runtime/foundation/registry/types.ts",
+        "canonical": "skills/common/plugin-runtime/foundation/registry/types.ts",
+        "sha256": "6667bd4389377d33ba41c2c7166f3488c40f0cad1fc0e7c067fb37a6f2eca291"
+      }
+    ]
+  },
+  "scripts/check-fixture-registration-drift-mutations.mjs": {
+    "role": "documentation-consumer",
+    "qualificationKind": "reviewed-documentation-consumer/v1",
+    "sourceSha256": "69873ea3df07137d5ebaa89344de1168ca9786245d642436de3059d3f1b03ece",
+    "consumer": "Documentation verification harness in fresh disposable workspace: deterministic exact single-authority patches/controlled source or reader changes; child gate rejection and baseline/restoration assertions. Read-only exact declared manifest/schema/registry/E2E requirement/provider/report record comparison with bounded reader sections; not activation, runtime provider/report execution or full-family acceptance. Source restoration and API-shaped fixture bytes remain test-only effects, not product resource outputs or child/module execution authority.",
+    "selectors": [
+      {
+        "expressionSha256": "0929ffe5e348cb579d17970b936285963744fae9fdebfff62f4b8303f2f82e5c"
+      },
+      {
+        "expressionSha256": "552bfe09f9c5e2a0a4d1c6c48898e4d1560f2269ce94f3a0b7a0c78cb9072db3"
+      },
+      {
+        "expressionSha256": "59512235295981096fc5df1ac5f1466aac17b715f0b2a7f28b75830b1981910b"
+      },
+      {
+        "expressionSha256": "7af1037ac326db2d3ce467d3d6b4b73caf91faa0527a3464cc79d25dc1608439"
+      },
+      {
+        "expressionSha256": "cc6cf43400b67ffbbf4f38fca5de01c46d6a7f3fdafb8b36c1bb4c99ae8be77c"
+      },
+      {
+        "expressionSha256": "9b80de081ea89bd284ef24098184ee23bfd1d57b980567fead9b0374514ffa00"
+      },
+      {
+        "expressionSha256": "ea86d9e26f710a05c109c1f24a78c04bb604f7e92a5197cd076c2d289ff4ce43"
+      },
+      {
+        "expressionSha256": "77c784b19791b5b70ee664d75c5f313e1ab3176db380b1cf7c26c7ae202a6c72"
+      },
+      {
+        "expressionSha256": "3bd42e15e5427f946b98b898212af900ed0a4068cff03a37aa2ce1d3a081f2ec"
+      },
+      {
+        "expressionSha256": "99a8a8a7117b1395e3a209cdc8ba5a70424687458932bc4dc8a7b6e59ff53868"
+      },
+      {
+        "expressionSha256": "8f15d80e7efb2a5d032af6aeba410bc9b4bd498ba70c7278654526b1e2259752"
+      },
+      {
+        "expressionSha256": "113f0af17fdf683cf360ab9d03b7eff1b572d3475e83119031d47ee4331621aa"
+      },
+      {
+        "expressionSha256": "2948024387391b149bf95db8466bc244e8c0bb1f158e0fbf6b9ba730c29aa67e"
+      },
+      {
+        "expressionSha256": "abfcad28ec14344e651d5f0983b24be76635f7dc84460622b29987c2a7f15ad3"
+      },
+      {
+        "expressionSha256": "9c294408130de6e511dde09c5f445ebb5313bbb5d099109a90685de7ad596c19"
+      },
+      {
+        "expressionSha256": "35f4639042b12dc28e757b3612a850d35d2298772cf08d3411b3650571141fc4"
+      },
+      {
+        "expressionSha256": "f5fd251da7b017ec9c62c6fc7957b06417d4034f91a8e722eedba2c288cc8061"
+      },
+      {
+        "expressionSha256": "6d182f13f90cb6afe658bf4082a44d7e6f7d91497464418b32ade64e363cfaa8"
+      },
+      {
+        "expressionSha256": "f5820dd98f9c617efde6d602297f85df78b635879ad2c1623f041657985714a9"
+      },
+      {
+        "expressionSha256": "1f6417e229a9b4322d80803b91056398e206cfc76b243e63d7a23b3ac18edc75"
+      }
+    ],
+    "factsDigest": "fe4992a08f51a8d12fb89dca97ce8c60283d2144f3fc60ffca7702b94bf46cf0",
+    "authorityInputs": [],
+    "purposeInputs": [
+      {
+        "path": "docs/blueprint/AP09-acceptance-fixtures.json",
+        "canonical": "docs/blueprint/AP09-acceptance-fixtures.json",
+        "sha256": "5671508592d263002a2689007cd554b7e2c179403bc9e0e793a7a6a22adb88a8"
+      },
+      {
+        "path": "package.json",
+        "canonical": "package.json",
+        "sha256": "4ab1e90c2259aeb96acfdc877e5a9eed330f605abff46d7eca85faded0f020c3"
+      },
+      {
+        "path": "scripts/check-fixture-registration-drift.mjs",
+        "canonical": "scripts/check-fixture-registration-drift.mjs",
+        "sha256": "89683802223aadcddbf631fb6bdd1ef8a6c43203d2a3118a89fc8440d6843937"
+      },
+      {
+        "path": "scripts/docs-ap09-mutation-fixture.mjs",
+        "canonical": "scripts/docs-ap09-mutation-fixture.mjs",
+        "sha256": "f46c275fce0ef9d55e2ac61a4bcc7b466519d42f07bec4ec8d86a7c2ce6fc687"
+      },
+      {
+        "path": "skills/buster/plugins/junit-report-adapter/plugin.json",
+        "canonical": "skills/buster/plugins/junit-report-adapter/plugin.json",
+        "sha256": "9787400a76dea54fbfe31a6371c1724f60fdacb7fc544fa33c0c454132e92b77"
+      },
+      {
+        "path": "skills/common/plugin-runtime/foundation/registry/types.ts",
+        "canonical": "skills/common/plugin-runtime/foundation/registry/types.ts",
+        "sha256": "6667bd4389377d33ba41c2c7166f3488c40f0cad1fc0e7c067fb37a6f2eca291"
+      },
+      {
+        "path": "skills/nova/plugins/lint/plugin.json",
+        "canonical": "skills/nova/plugins/lint/plugin.json",
+        "sha256": "3d671a34bb259b1c031d7f2ac1c54b19b4821e023bb53c7d43e5642dd1a0ce04"
+      },
+      {
+        "path": "tests/verification/e2e/fixture-coverage.mjs",
+        "canonical": "tests/verification/e2e/fixture-coverage.mjs",
+        "sha256": "eae30bf79e5ed942658322be75dc75a98b74ceacae57cd9072f5a7b81e118aa6"
+      },
+      {
+        "path": "tests/verification/e2e/provider-catalog.mjs",
+        "canonical": "tests/verification/e2e/provider-catalog.mjs",
+        "sha256": "04fe590099a3a9803cc610389528190d330b75527305b50c409d0e9de647293e"
+      }
+    ]
+  },
+  "scripts/check-fixture-registration-drift.mjs": {
+    "role": "documentation-consumer",
+    "qualificationKind": "reviewed-documentation-consumer/v1",
+    "sourceSha256": "89683802223aadcddbf631fb6bdd1ef8a6c43203d2a3118a89fc8440d6843937",
+    "consumer": "Exact bounded documentation declaration-to-reader comparison; no runtime activation or API apply.",
+    "selectors": [
+      {
+        "expressionSha256": "d1e7c04d0add2e54a2492f3591d3687fc49dc8c01287cf94cdf257f9e7ef03a8"
+      },
+      {
+        "expressionSha256": "23c9e7a69a7d20631289ab1d5a50df8939d40b901b86ce49bb75cf23e57b63e9"
+      },
+      {
+        "expressionSha256": "7d368160e38c2866968484e850c2daaa06ebd0e6bf20792d5257d7be2f86f8f4"
+      },
+      {
+        "expressionSha256": "d1318fd971cfa1708f44526a14ad252da3520b5fbe27048cf9b1509ae31adfe2"
+      },
+      {
+        "expressionSha256": "3bd42e15e5427f946b98b898212af900ed0a4068cff03a37aa2ce1d3a081f2ec"
+      },
+      {
+        "expressionSha256": "99a8a8a7117b1395e3a209cdc8ba5a70424687458932bc4dc8a7b6e59ff53868"
+      },
+      {
+        "expressionSha256": "113f0af17fdf683cf360ab9d03b7eff1b572d3475e83119031d47ee4331621aa"
+      },
+      {
+        "expressionSha256": "2948024387391b149bf95db8466bc244e8c0bb1f158e0fbf6b9ba730c29aa67e"
+      }
+    ],
+    "factsDigest": "2e6561a77a805ea26ef9574e1da5cae3ba9b4253031b1be676323c33cf7adad9",
+    "authorityInputs": [],
+    "purposeInputs": [
+      {
+        "path": "tests/verification/e2e/fixture-coverage.mjs",
+        "canonical": "tests/verification/e2e/fixture-coverage.mjs",
+        "sha256": "eae30bf79e5ed942658322be75dc75a98b74ceacae57cd9072f5a7b81e118aa6"
+      }
+    ]
+  },
+  "scripts/check-platform-surface-drift-mutations.mjs": {
+    "role": "documentation-consumer",
+    "qualificationKind": "reviewed-documentation-consumer/v1",
+    "sourceSha256": "3cbe65acb14b66acba5754fd44728801b301f50a8de1deed6a642c5293a28e45",
+    "consumer": "Documentation verification harness in fresh disposable workspace: deterministic exact single-authority patches/controlled source or reader changes; child gate rejection and baseline/restoration assertions. Isolated platform documentation mutation matrix; copied source/resource fixtures are inventory/render inputs, not live routes/stores/Kubernetes mutations. Source restoration and API-shaped fixture bytes remain test-only effects, not product resource outputs or child/module execution authority.",
+    "selectors": [
+      {
+        "expressionSha256": "1245cfbf0491e162537c4a1945d4f4f04f19782c63f7bd84411c5095bc285a86"
+      },
+      {
+        "expressionSha256": "2a3706a002b5de6ba74121175b8690eb9da3f44b1658bef1d258ab495bc3df8f"
+      },
+      {
+        "expressionSha256": "67369edc9f150f7b81001cec3bb06860cf30282c62003bddf7ec265cf093d713"
+      },
+      {
+        "expressionSha256": "b625f58d4bf5538364339330680339aa1b33008e4695585a3ae4cb56914f31e2"
+      },
+      {
+        "expressionSha256": "f933cf145a510a9daa0ac5f46f77caae0abb98b987e55fa5f8c1f94a2b17dab2"
+      },
+      {
+        "expressionSha256": "a90aa1ffd8011cabc55adf5ed7ea8d350d1063b37fae0ac2e43cd66a19ef562b"
+      },
+      {
+        "expressionSha256": "a76ee744da5f32b93279d7610b0ec4673732bbb68e5de2afc43458ce69c50215"
+      },
+      {
+        "expressionSha256": "7f2a119278b9e570b523c449865b482826b33e3fe0e636e150bf5cce32148a6a"
+      },
+      {
+        "expressionSha256": "a9311af7da283bfaac60922a1442aef03d149e31cbc5c7859d3b8a2352b2d54c"
+      },
+      {
+        "expressionSha256": "d37b04f73b9a3499f793d16fcf0d925694adc6626d0e66de1388d68c7869777a"
+      },
+      {
+        "expressionSha256": "0657230dda2f07d1f152147609c09666538fd6941e4e12caaae5d8d5cec96df3"
+      },
+      {
+        "expressionSha256": "a6437aa933c8add16373968b519e6526cee9c9f86e054a3630826ada86857b13"
+      },
+      {
+        "expressionSha256": "3bd42e15e5427f946b98b898212af900ed0a4068cff03a37aa2ce1d3a081f2ec"
+      },
+      {
+        "expressionSha256": "99a8a8a7117b1395e3a209cdc8ba5a70424687458932bc4dc8a7b6e59ff53868"
+      },
+      {
+        "expressionSha256": "8f15d80e7efb2a5d032af6aeba410bc9b4bd498ba70c7278654526b1e2259752"
+      },
+      {
+        "expressionSha256": "113f0af17fdf683cf360ab9d03b7eff1b572d3475e83119031d47ee4331621aa"
+      },
+      {
+        "expressionSha256": "abfcad28ec14344e651d5f0983b24be76635f7dc84460622b29987c2a7f15ad3"
+      },
+      {
+        "expressionSha256": "1bd67cb5fb04ade893855a80b9dbf7ce3a2f0e007e47768da9648b584440697e"
+      },
+      {
+        "expressionSha256": "b0902b7942f215a01d76f51337b87a27df4dc671a7688bccaf342244225b68de"
+      },
+      {
+        "expressionSha256": "d027f5741ad4bc9b8035f5df97eb9b4f16d1b70adb2f375d15b8e0e6f5ae3f22"
+      },
+      {
+        "expressionSha256": "29ecdd97931d0ad49d7bb57f126d384e18cbcf98f4097022fc40c80cf574ceed"
+      }
+    ],
+    "factsDigest": "84bcdaf63345befab21328cf2e4165d5bd7913d2f2a82167c6b1cce26b4dd828",
+    "authorityInputs": [],
+    "purposeInputs": [
+      {
+        "path": "charts/ops-pod/templates/rbac.yaml",
+        "canonical": "charts/ops-pod/templates/rbac.yaml",
+        "sha256": "103ed540a9b71ca0fdde5d693e5e4d07b2943910e79116bbd7206d528668874b"
+      },
+      {
+        "path": "charts/ops-pod/templates/workload.yaml",
+        "canonical": "charts/ops-pod/templates/workload.yaml",
+        "sha256": "3471a815948e99e52b03b7952f1076c9d21afddbd24b62c37e1c848b7a129d58"
+      },
+      {
+        "path": "charts/ops-pod/values.yaml",
+        "canonical": "charts/ops-pod/values.yaml",
+        "sha256": "9f1d58dfe213f13169fdd9f983878b688d5f42fcf9f5283e31eed329e82b8c79"
+      },
+      {
+        "path": "charts/prism/templates/backup-storage-check.yaml",
+        "canonical": "charts/prism/templates/backup-storage-check.yaml",
+        "sha256": "7c17c21949a6cce79f47f2646f4beca3d85a9baa73bfaae58a450b7fc76a5a06"
+      },
+      {
+        "path": "charts/prism/templates/networkpolicy.yaml",
+        "canonical": "charts/prism/templates/networkpolicy.yaml",
+        "sha256": "45aa5b3b5de8b05f698c104633c9411bc91a55818361cbf13f479200e65dc208"
+      },
+      {
+        "path": "charts/prism/templates/services.yaml",
+        "canonical": "charts/prism/templates/services.yaml",
+        "sha256": "c09a05501eca8a1876e44c1d70898fb5dd6770210e777353d6eff0ee9cd9ae1b"
+      },
+      {
+        "path": "cmd/buster-namespace-controller/demo-readiness-sources.go",
+        "canonical": "cmd/buster-namespace-controller/demo-readiness-sources.go",
+        "sha256": "d1aca629a3c5c739e84a9116a95af6d0a0bbc7b0782cc0b0ee680a004f621628"
+      },
+      {
+        "path": "cmd/buster-namespace-controller/demo-readiness.go",
+        "canonical": "cmd/buster-namespace-controller/demo-readiness.go",
+        "sha256": "a0838b433b686307159055d07684657a87524f54e125de23bbe82895853fd34e"
+      },
+      {
+        "path": "contracts/agent-observability/v1/src/constants.ts",
+        "canonical": "contracts/agent-observability/v1/src/constants.ts",
+        "sha256": "7362261fe21d18e7acdf32b266f938a740e1106a4642579e7a1b203cb8b97924"
+      },
+      {
+        "path": "docs/blueprint/AP09-acceptance-fixtures.json",
+        "canonical": "docs/blueprint/AP09-acceptance-fixtures.json",
+        "sha256": "5671508592d263002a2689007cd554b7e2c179403bc9e0e793a7a6a22adb88a8"
+      },
+      {
+        "path": "docs/config/platform-surface-map.json",
+        "canonical": "docs/config/platform-surface-map.json",
+        "sha256": "b671c509126571e435c13badecb1cc69715c82ebf02c743760decb9b5ec11c94"
+      },
+      {
+        "path": "docs/generated/inventory/platform-surfaces.json",
+        "canonical": "docs/generated/inventory/platform-surfaces.json",
+        "sha256": "399ff79d63e12df3ebe1bdb6127b313bf84eb4fbfa4d96967e2a8a68d3b96ae7"
+      },
+      {
+        "path": "my-values/buster-values.yaml",
+        "canonical": "my-values/buster-values.yaml",
+        "sha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
+      },
+      {
+        "path": "my-values/infra/argocd-tailscale-ingress.yaml",
+        "canonical": "my-values/infra/argocd-tailscale-ingress.yaml",
+        "sha256": "eb86daeca77a9329d80d0f0f96b0b9a46ee5807a7b9bd9187cb6ebb2d1ece58e"
+      },
+      {
+        "path": "my-values/nova-values.yaml",
+        "canonical": "my-values/nova-values.yaml",
+        "sha256": "1704ad41236dbc9ea8c210c8d3e360189f9623ca65d1ca70eac23901d770ff7e"
+      },
+      {
+        "path": "package.json",
+        "canonical": "package.json",
+        "sha256": "4ab1e90c2259aeb96acfdc877e5a9eed330f605abff46d7eca85faded0f020c3"
+      },
+      {
+        "path": "scripts/docs-ap09-mutation-fixture.mjs",
+        "canonical": "scripts/docs-ap09-mutation-fixture.mjs",
+        "sha256": "f46c275fce0ef9d55e2ac61a4bcc7b466519d42f07bec4ec8d86a7c2ce6fc687"
+      },
+      {
+        "path": "scripts/docs-platform-surface-inventory.mjs",
+        "canonical": "scripts/docs-platform-surface-inventory.mjs",
+        "sha256": "a3a1d632599be39d09eaefc7ef412b3065ac2189f2cb9f687d0733a6327e6d42"
+      },
+      {
+        "path": "skills/common/plugin-runtime/sdk/src/generated/contracts.ts",
+        "canonical": "skills/common/plugin-runtime/sdk/src/generated/contracts.ts",
+        "sha256": "8ade81b1f64c78b4cf2198f7ae7dc0c726fb4cec3ffa553986310d353dbc71c1"
+      },
+      {
+        "path": "skills/nova/core/effects/locks.ts",
+        "canonical": "skills/nova/core/effects/locks.ts",
+        "sha256": "7ca675286800ee88314919f7c0d524c7b5cde99928b9e93c8036e566ecc4b793"
+      },
+      {
+        "path": "skills/prism/server/agent-bridge.mjs",
+        "canonical": "skills/prism/server/agent-bridge.mjs",
+        "sha256": "f908013330077103e3c8c37df76401c642737d245f361b4c6ff63d9161e9738c"
+      },
+      {
+        "path": "skills/prism/server/agent-job-runner.mjs",
+        "canonical": "skills/prism/server/agent-job-runner.mjs",
+        "sha256": "f97926e67b1737be717db6a549ca60920232b7fbd2da23f73c0a15597c331bfb"
+      },
+      {
+        "path": "skills/prism/server/studio-request.ts",
+        "canonical": "skills/prism/server/studio-request.ts",
+        "sha256": "efca0f821ef3da9f441e9c6c5458a33d8c525f8e7db3a63aea1a8e7f37e93bbb"
+      },
+      {
+        "path": "tools/ops-mcp/src/server.mjs",
+        "canonical": "tools/ops-mcp/src/server.mjs",
+        "sha256": "a4fef1a5e66a45ea2885cc9a1715aba5835d77cb5219e39ac35a5f50b5bab65d"
+      }
+    ]
+  },
+  "scripts/check-plugin-manifest-drift-mutations.mjs": {
+    "role": "documentation-consumer",
+    "qualificationKind": "reviewed-documentation-consumer/v1",
+    "sourceSha256": "d0463149d637e0061da26512f73048a949846c964ef6dfc82480325762675653",
+    "consumer": "Documentation verification harness in fresh disposable workspace: deterministic exact single-authority patches/controlled source or reader changes; child gate rejection and baseline/restoration assertions. Read-only exact declared manifest/schema/registry/E2E requirement/provider/report record comparison with bounded reader sections; not activation, runtime provider/report execution or full-family acceptance. Source restoration and API-shaped fixture bytes remain test-only effects, not product resource outputs or child/module execution authority.",
+    "selectors": [
+      {
+        "expressionSha256": "924056c87583dfa4ee490453796fd2824ea13b17bb55357862e41bdadb9e2d98"
+      },
+      {
+        "expressionSha256": "b00f4f72e16969d0cf40f5526852fca089339606a2c3c6489140f1cef8d5b4bf"
+      },
+      {
+        "expressionSha256": "5d45ee02bf91d7afaea085168969d6e6df707b96ea218fc47f285c375462fbd0"
+      },
+      {
+        "expressionSha256": "ef04a2767faa9e9262e134764704f5fcd12bb993f5eea6d75252b0beadc6dc40"
+      },
+      {
+        "expressionSha256": "4e7a7a68aa0070f007f69e8b5ff03ed7c763f3e6640e8a1e1957991da5c49a26"
+      },
+      {
+        "expressionSha256": "79adad727a2b5b0766b8efe65d166b8f4bb5190f05ba6ceedf35c179cdf32f76"
+      },
+      {
+        "expressionSha256": "ecc5229b06f4b22611cc512e6f1706bd918ee8de8ecd049418c346b6d40f8920"
+      },
+      {
+        "expressionSha256": "ea86d9e26f710a05c109c1f24a78c04bb604f7e92a5197cd076c2d289ff4ce43"
+      },
+      {
+        "expressionSha256": "3bd42e15e5427f946b98b898212af900ed0a4068cff03a37aa2ce1d3a081f2ec"
+      },
+      {
+        "expressionSha256": "99a8a8a7117b1395e3a209cdc8ba5a70424687458932bc4dc8a7b6e59ff53868"
+      },
+      {
+        "expressionSha256": "8f15d80e7efb2a5d032af6aeba410bc9b4bd498ba70c7278654526b1e2259752"
+      },
+      {
+        "expressionSha256": "113f0af17fdf683cf360ab9d03b7eff1b572d3475e83119031d47ee4331621aa"
+      },
+      {
+        "expressionSha256": "abfcad28ec14344e651d5f0983b24be76635f7dc84460622b29987c2a7f15ad3"
+      },
+      {
+        "expressionSha256": "f5820dd98f9c617efde6d602297f85df78b635879ad2c1623f041657985714a9"
+      },
+      {
+        "expressionSha256": "1f6417e229a9b4322d80803b91056398e206cfc76b243e63d7a23b3ac18edc75"
+      }
+    ],
+    "factsDigest": "9265f0bdcc52c8bc1afe5e02992d987c9075b5d1e362dae10b0c39c8cdd1e226",
+    "authorityInputs": [],
+    "purposeInputs": [
+      {
+        "path": "docs/blueprint/AP09-acceptance-fixtures.json",
+        "canonical": "docs/blueprint/AP09-acceptance-fixtures.json",
+        "sha256": "5671508592d263002a2689007cd554b7e2c179403bc9e0e793a7a6a22adb88a8"
+      },
+      {
+        "path": "package.json",
+        "canonical": "package.json",
+        "sha256": "4ab1e90c2259aeb96acfdc877e5a9eed330f605abff46d7eca85faded0f020c3"
+      },
+      {
+        "path": "scripts/check-plugin-manifest-drift.mjs",
+        "canonical": "scripts/check-plugin-manifest-drift.mjs",
+        "sha256": "2da10898085027449f543c966027c983ac11ad9508aa03156f972af005acd1f9"
+      },
+      {
+        "path": "scripts/docs-ap09-mutation-fixture.mjs",
+        "canonical": "scripts/docs-ap09-mutation-fixture.mjs",
+        "sha256": "f46c275fce0ef9d55e2ac61a4bcc7b466519d42f07bec4ec8d86a7c2ce6fc687"
+      },
+      {
+        "path": "skills/buster/plugins/junit-report-adapter/plugin.json",
+        "canonical": "skills/buster/plugins/junit-report-adapter/plugin.json",
+        "sha256": "9787400a76dea54fbfe31a6371c1724f60fdacb7fc544fa33c0c454132e92b77"
+      },
+      {
+        "path": "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json",
+        "canonical": "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json",
+        "sha256": "837efd7975991aa21b8c92b57881194e9bc8c7adc4370f238d1a15b6d85d44db"
+      },
+      {
+        "path": "skills/common/plugin-runtime/foundation/registry/types.ts",
+        "canonical": "skills/common/plugin-runtime/foundation/registry/types.ts",
+        "sha256": "6667bd4389377d33ba41c2c7166f3488c40f0cad1fc0e7c067fb37a6f2eca291"
+      },
+      {
+        "path": "skills/nova/plugins/lint/plugin.json",
+        "canonical": "skills/nova/plugins/lint/plugin.json",
+        "sha256": "3d671a34bb259b1c031d7f2ac1c54b19b4821e023bb53c7d43e5642dd1a0ce04"
+      },
+      {
+        "path": "tests/verification/e2e/fixture-coverage.mjs",
+        "canonical": "tests/verification/e2e/fixture-coverage.mjs",
+        "sha256": "eae30bf79e5ed942658322be75dc75a98b74ceacae57cd9072f5a7b81e118aa6"
+      },
+      {
+        "path": "tests/verification/e2e/provider-catalog.mjs",
+        "canonical": "tests/verification/e2e/provider-catalog.mjs",
+        "sha256": "04fe590099a3a9803cc610389528190d330b75527305b50c409d0e9de647293e"
+      }
+    ]
+  },
+  "scripts/check-plugin-manifest-drift.mjs": {
+    "role": "documentation-consumer",
+    "qualificationKind": "reviewed-documentation-consumer/v1",
+    "sourceSha256": "2da10898085027449f543c966027c983ac11ad9508aa03156f972af005acd1f9",
+    "consumer": "Exact bounded documentation declaration-to-reader comparison; no runtime activation or API apply.",
+    "selectors": [
+      {
+        "expressionSha256": "69b30915f4e55adbe0a3475994157f5be4c8e687bc6bdc4b7d03c4b8a1d065e8"
+      },
+      {
+        "expressionSha256": "8204772618289a915259e9ec10172ec66ce278710369da393abdd3f862f23602"
+      },
+      {
+        "expressionSha256": "e0f3c61dd3b7533ef535f5873b3c8bda01f6c473a6cb1895ad1702431d93fe0c"
+      },
+      {
+        "expressionSha256": "d1318fd971cfa1708f44526a14ad252da3520b5fbe27048cf9b1509ae31adfe2"
+      },
+      {
+        "expressionSha256": "1a1bbd89063e3aaf2c874583e7d500d8b0865f5c9d8fd8a905ec131bacf83782"
+      },
+      {
+        "expressionSha256": "0ccd0687f00733cd9d7ba2de8dcfa5b48aa208d2a91d4fc128ff0194839819b7"
+      },
+      {
+        "expressionSha256": "3bd42e15e5427f946b98b898212af900ed0a4068cff03a37aa2ce1d3a081f2ec"
+      },
+      {
+        "expressionSha256": "99a8a8a7117b1395e3a209cdc8ba5a70424687458932bc4dc8a7b6e59ff53868"
+      },
+      {
+        "expressionSha256": "113f0af17fdf683cf360ab9d03b7eff1b572d3475e83119031d47ee4331621aa"
+      }
+    ],
+    "factsDigest": "4bffe869c1c80f9ea387e76a30ba0f3a6392151b35a55c2e2220351260a52874",
+    "authorityInputs": [],
+    "purposeInputs": [
+      {
+        "path": "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json",
+        "canonical": "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json",
+        "sha256": "837efd7975991aa21b8c92b57881194e9bc8c7adc4370f238d1a15b6d85d44db"
+      },
+      {
+        "path": "skills/nova/plugins/lint/plugin.json",
+        "canonical": "skills/nova/plugins/lint/plugin.json",
+        "sha256": "3d671a34bb259b1c031d7f2ac1c54b19b4821e023bb53c7d43e5642dd1a0ce04"
+      }
+    ]
+  },
+  "scripts/check-progress-contract-drift-mutations.mjs": {
+    "role": "documentation-consumer",
+    "qualificationKind": "reviewed-documentation-consumer/v1",
+    "sourceSha256": "c740b33340853111031e6ebea7adb0a145cdc1b1d1773ba7cc33c2b11467a5aa",
+    "consumer": "Documentation verification harness in fresh disposable workspace: deterministic exact single-authority patches/controlled source or reader changes; child gate rejection and baseline/restoration assertions. Read-only SDK semantic inventory/handbook delegated reader path and product-progress source-reference comparison. Source AST and generated references are data, not SDK execution or persistence proof. Source restoration and API-shaped fixture bytes remain test-only effects, not product resource outputs or child/module execution authority.",
+    "selectors": [
+      {
+        "expressionSha256": "a275ce66903d5c5b9a75b61e9339c26aa8f8a412e2bad139cf11bcb396909875"
+      },
+      {
+        "expressionSha256": "78056958e091ebccebcd1d8a21dfc4a3910263c4e22646de5abfc2201f826634"
+      },
+      {
+        "expressionSha256": "5e6f772eb91bc79b5f18ebddfa77ce3cf1b610c2bd4528a1620e8a12dda6ee68"
+      },
+      {
+        "expressionSha256": "9b80de081ea89bd284ef24098184ee23bfd1d57b980567fead9b0374514ffa00"
+      },
+      {
+        "expressionSha256": "ea86d9e26f710a05c109c1f24a78c04bb604f7e92a5197cd076c2d289ff4ce43"
+      },
+      {
+        "expressionSha256": "3bd42e15e5427f946b98b898212af900ed0a4068cff03a37aa2ce1d3a081f2ec"
+      },
+      {
+        "expressionSha256": "99a8a8a7117b1395e3a209cdc8ba5a70424687458932bc4dc8a7b6e59ff53868"
+      },
+      {
+        "expressionSha256": "8f15d80e7efb2a5d032af6aeba410bc9b4bd498ba70c7278654526b1e2259752"
+      },
+      {
+        "expressionSha256": "113f0af17fdf683cf360ab9d03b7eff1b572d3475e83119031d47ee4331621aa"
+      },
+      {
+        "expressionSha256": "2948024387391b149bf95db8466bc244e8c0bb1f158e0fbf6b9ba730c29aa67e"
+      },
+      {
+        "expressionSha256": "abfcad28ec14344e651d5f0983b24be76635f7dc84460622b29987c2a7f15ad3"
+      },
+      {
+        "expressionSha256": "f5820dd98f9c617efde6d602297f85df78b635879ad2c1623f041657985714a9"
+      },
+      {
+        "expressionSha256": "1f6417e229a9b4322d80803b91056398e206cfc76b243e63d7a23b3ac18edc75"
+      }
+    ],
+    "factsDigest": "d12ea3298dfe82ff6ecbbb11bb3b9a1f3419da33c2d7e9c797e658babba4f506",
+    "authorityInputs": [],
+    "purposeInputs": [
+      {
+        "path": "docs/blueprint/AP09-acceptance-fixtures.json",
+        "canonical": "docs/blueprint/AP09-acceptance-fixtures.json",
+        "sha256": "5671508592d263002a2689007cd554b7e2c179403bc9e0e793a7a6a22adb88a8"
+      },
+      {
+        "path": "package.json",
+        "canonical": "package.json",
+        "sha256": "4ab1e90c2259aeb96acfdc877e5a9eed330f605abff46d7eca85faded0f020c3"
+      },
+      {
+        "path": "scripts/check-contract-drift.mjs",
+        "canonical": "scripts/check-contract-drift.mjs",
+        "sha256": "463b2a8a3999e977ea3839b80549336431cdbc2ea3c76caf3d218005d8ccbae8"
+      },
+      {
+        "path": "scripts/docs-ap09-mutation-fixture.mjs",
+        "canonical": "scripts/docs-ap09-mutation-fixture.mjs",
+        "sha256": "f46c275fce0ef9d55e2ac61a4bcc7b466519d42f07bec4ec8d86a7c2ce6fc687"
+      },
+      {
+        "path": "scripts/docs-product-pipeline-reference.mjs",
+        "canonical": "scripts/docs-product-pipeline-reference.mjs",
+        "sha256": "0d5ca69959c9ac502d60cc2f51c8485330888f082b861d1ca52c96b0eac0c25d"
+      },
+      {
+        "path": "skills/common/plugin-runtime/sdk/src/generated/contracts.ts",
+        "canonical": "skills/common/plugin-runtime/sdk/src/generated/contracts.ts",
+        "sha256": "8ade81b1f64c78b4cf2198f7ae7dc0c726fb4cec3ffa553986310d353dbc71c1"
+      },
+      {
+        "path": "skills/common/plugin-runtime/sdk/src/index.ts",
+        "canonical": "skills/common/plugin-runtime/sdk/src/index.ts",
+        "sha256": "464a94399315ad25f40511b8d1ee93c76b3535a82cd90fbde06bf0a58aa0cc9a"
+      },
+      {
+        "path": "skills/nova/project_setup/tools/progress-scaffold-validation.ts",
+        "canonical": "skills/nova/project_setup/tools/progress-scaffold-validation.ts",
+        "sha256": "dafa016f41e824b82951a8532b0c291cda421181de1614d79f0cffd91ee436fe"
+      }
+    ]
+  },
+  "scripts/check-provider-registration-drift-mutations.mjs": {
+    "role": "documentation-consumer",
+    "qualificationKind": "reviewed-documentation-consumer/v1",
+    "sourceSha256": "e923ea164e2686b835c70fc8edd3041c4e49a04f582b305d7859daf0782fb30d",
+    "consumer": "Documentation verification harness in fresh disposable workspace: deterministic exact single-authority patches/controlled source or reader changes; child gate rejection and baseline/restoration assertions. Read-only exact declared manifest/schema/registry/E2E requirement/provider/report record comparison with bounded reader sections; not activation, runtime provider/report execution or full-family acceptance. Source restoration and API-shaped fixture bytes remain test-only effects, not product resource outputs or child/module execution authority.",
+    "selectors": [
+      {
+        "expressionSha256": "19b975baafe9cbd00939f5d2c5ce01ca7082aa9844c57b1105c9bb7f527b557d"
+      },
+      {
+        "expressionSha256": "8e4bf5363da6b9fd57bd32ede00ad218fdd9a53e2950c1213ca536ab66a60c72"
+      },
+      {
+        "expressionSha256": "ecaeaa80d16a538ef562d53096eb284ce19385cd56a634c40a920458fbae682f"
+      },
+      {
+        "expressionSha256": "7af1037ac326db2d3ce467d3d6b4b73caf91faa0527a3464cc79d25dc1608439"
+      },
+      {
+        "expressionSha256": "13e7aa07a4fe721691f28ab565cba47346e858c83b55d7aed0ca98206864aecb"
+      },
+      {
+        "expressionSha256": "9b80de081ea89bd284ef24098184ee23bfd1d57b980567fead9b0374514ffa00"
+      },
+      {
+        "expressionSha256": "ea86d9e26f710a05c109c1f24a78c04bb604f7e92a5197cd076c2d289ff4ce43"
+      },
+      {
+        "expressionSha256": "77c784b19791b5b70ee664d75c5f313e1ab3176db380b1cf7c26c7ae202a6c72"
+      },
+      {
+        "expressionSha256": "3bd42e15e5427f946b98b898212af900ed0a4068cff03a37aa2ce1d3a081f2ec"
+      },
+      {
+        "expressionSha256": "99a8a8a7117b1395e3a209cdc8ba5a70424687458932bc4dc8a7b6e59ff53868"
+      },
+      {
+        "expressionSha256": "8f15d80e7efb2a5d032af6aeba410bc9b4bd498ba70c7278654526b1e2259752"
+      },
+      {
+        "expressionSha256": "113f0af17fdf683cf360ab9d03b7eff1b572d3475e83119031d47ee4331621aa"
+      },
+      {
+        "expressionSha256": "2948024387391b149bf95db8466bc244e8c0bb1f158e0fbf6b9ba730c29aa67e"
+      },
+      {
+        "expressionSha256": "abfcad28ec14344e651d5f0983b24be76635f7dc84460622b29987c2a7f15ad3"
+      },
+      {
+        "expressionSha256": "9c294408130de6e511dde09c5f445ebb5313bbb5d099109a90685de7ad596c19"
+      },
+      {
+        "expressionSha256": "35f4639042b12dc28e757b3612a850d35d2298772cf08d3411b3650571141fc4"
+      },
+      {
+        "expressionSha256": "f5fd251da7b017ec9c62c6fc7957b06417d4034f91a8e722eedba2c288cc8061"
+      },
+      {
+        "expressionSha256": "2b77761c21669fa8096e05b88e374d5144e36a4c2ef8b2d2637bc089fa508f38"
+      },
+      {
+        "expressionSha256": "f5820dd98f9c617efde6d602297f85df78b635879ad2c1623f041657985714a9"
+      },
+      {
+        "expressionSha256": "1f6417e229a9b4322d80803b91056398e206cfc76b243e63d7a23b3ac18edc75"
+      }
+    ],
+    "factsDigest": "95858985f90997c794ca36639a03f702cb7f8e983f6ac0d671acb351fe7647b7",
+    "authorityInputs": [],
+    "purposeInputs": [
+      {
+        "path": "docs/blueprint/AP09-acceptance-fixtures.json",
+        "canonical": "docs/blueprint/AP09-acceptance-fixtures.json",
+        "sha256": "5671508592d263002a2689007cd554b7e2c179403bc9e0e793a7a6a22adb88a8"
+      },
+      {
+        "path": "package.json",
+        "canonical": "package.json",
+        "sha256": "4ab1e90c2259aeb96acfdc877e5a9eed330f605abff46d7eca85faded0f020c3"
+      },
+      {
+        "path": "scripts/check-provider-registration-drift.mjs",
+        "canonical": "scripts/check-provider-registration-drift.mjs",
+        "sha256": "5bc75b333b0b88880e77f1bf2572af3be97124957c562cb55b781f1a1a99dcca"
+      },
+      {
+        "path": "scripts/docs-ap09-mutation-fixture.mjs",
+        "canonical": "scripts/docs-ap09-mutation-fixture.mjs",
+        "sha256": "f46c275fce0ef9d55e2ac61a4bcc7b466519d42f07bec4ec8d86a7c2ce6fc687"
+      },
+      {
+        "path": "skills/buster/plugins/junit-report-adapter/plugin.json",
+        "canonical": "skills/buster/plugins/junit-report-adapter/plugin.json",
+        "sha256": "9787400a76dea54fbfe31a6371c1724f60fdacb7fc544fa33c0c454132e92b77"
+      },
+      {
+        "path": "skills/common/plugin-runtime/foundation/registry/types.ts",
+        "canonical": "skills/common/plugin-runtime/foundation/registry/types.ts",
+        "sha256": "6667bd4389377d33ba41c2c7166f3488c40f0cad1fc0e7c067fb37a6f2eca291"
+      },
+      {
+        "path": "skills/nova/plugins/lint/plugin.json",
+        "canonical": "skills/nova/plugins/lint/plugin.json",
+        "sha256": "3d671a34bb259b1c031d7f2ac1c54b19b4821e023bb53c7d43e5642dd1a0ce04"
+      },
+      {
+        "path": "tests/verification/e2e/fixture-coverage.mjs",
+        "canonical": "tests/verification/e2e/fixture-coverage.mjs",
+        "sha256": "eae30bf79e5ed942658322be75dc75a98b74ceacae57cd9072f5a7b81e118aa6"
+      },
+      {
+        "path": "tests/verification/e2e/provider-catalog.mjs",
+        "canonical": "tests/verification/e2e/provider-catalog.mjs",
+        "sha256": "04fe590099a3a9803cc610389528190d330b75527305b50c409d0e9de647293e"
+      }
+    ]
+  },
+  "scripts/check-provider-registration-drift.mjs": {
+    "role": "documentation-consumer",
+    "qualificationKind": "reviewed-documentation-consumer/v1",
+    "sourceSha256": "5bc75b333b0b88880e77f1bf2572af3be97124957c562cb55b781f1a1a99dcca",
+    "consumer": "Exact bounded documentation declaration-to-reader comparison; no runtime activation or API apply.",
+    "selectors": [
+      {
+        "expressionSha256": "d1e7c04d0add2e54a2492f3591d3687fc49dc8c01287cf94cdf257f9e7ef03a8"
+      },
+      {
+        "expressionSha256": "00a6b1c49a2f0168468daf11394166bd8ee47119fddd1cdf288a953fdd761546"
+      },
+      {
+        "expressionSha256": "3d20e13657b864b63ac6756b4f18e75aefa62e24befb76a6f6e82f625d21b4a2"
+      },
+      {
+        "expressionSha256": "d1318fd971cfa1708f44526a14ad252da3520b5fbe27048cf9b1509ae31adfe2"
+      },
+      {
+        "expressionSha256": "3bd42e15e5427f946b98b898212af900ed0a4068cff03a37aa2ce1d3a081f2ec"
+      },
+      {
+        "expressionSha256": "99a8a8a7117b1395e3a209cdc8ba5a70424687458932bc4dc8a7b6e59ff53868"
+      },
+      {
+        "expressionSha256": "113f0af17fdf683cf360ab9d03b7eff1b572d3475e83119031d47ee4331621aa"
+      },
+      {
+        "expressionSha256": "2948024387391b149bf95db8466bc244e8c0bb1f158e0fbf6b9ba730c29aa67e"
+      }
+    ],
+    "factsDigest": "18db671a25f87960ba76d26cf82b5f908022a43a6b731477fd4e20dc755f8dcd",
+    "authorityInputs": [],
+    "purposeInputs": [
+      {
+        "path": "tests/verification/e2e/provider-catalog.mjs",
+        "canonical": "tests/verification/e2e/provider-catalog.mjs",
+        "sha256": "04fe590099a3a9803cc610389528190d330b75527305b50c409d0e9de647293e"
+      }
+    ]
+  },
+  "scripts/check-report-registration-drift-mutations.mjs": {
+    "role": "documentation-consumer",
+    "qualificationKind": "reviewed-documentation-consumer/v1",
+    "sourceSha256": "bc064e1f02567b515a69efe6b0c1b0d20b64ed835017e24d3a3739237f021c4e",
+    "consumer": "Documentation verification harness in fresh disposable workspace: deterministic exact single-authority patches/controlled source or reader changes; child gate rejection and baseline/restoration assertions. Read-only exact declared manifest/schema/registry/E2E requirement/provider/report record comparison with bounded reader sections; not activation, runtime provider/report execution or full-family acceptance. Source restoration and API-shaped fixture bytes remain test-only effects, not product resource outputs or child/module execution authority.",
+    "selectors": [
+      {
+        "expressionSha256": "48fce5e1e831da3044ddb0e48e4c9172ddc32aed00f6f523c2af7c8922d1340e"
+      },
+      {
+        "expressionSha256": "0f876680ab78a5ed29cee526f94a1e7a9d284fb75128bc3c624d6667de6feb8b"
+      },
+      {
+        "expressionSha256": "ef04a2767faa9e9262e134764704f5fcd12bb993f5eea6d75252b0beadc6dc40"
+      },
+      {
+        "expressionSha256": "7af1037ac326db2d3ce467d3d6b4b73caf91faa0527a3464cc79d25dc1608439"
+      },
+      {
+        "expressionSha256": "f61397891bf7f116a9ea774ff858bc49e4f087e3ecd09b83158825f2a2fb9847"
+      },
+      {
+        "expressionSha256": "79adad727a2b5b0766b8efe65d166b8f4bb5190f05ba6ceedf35c179cdf32f76"
+      },
+      {
+        "expressionSha256": "ea86d9e26f710a05c109c1f24a78c04bb604f7e92a5197cd076c2d289ff4ce43"
+      },
+      {
+        "expressionSha256": "77c784b19791b5b70ee664d75c5f313e1ab3176db380b1cf7c26c7ae202a6c72"
+      },
+      {
+        "expressionSha256": "3bd42e15e5427f946b98b898212af900ed0a4068cff03a37aa2ce1d3a081f2ec"
+      },
+      {
+        "expressionSha256": "99a8a8a7117b1395e3a209cdc8ba5a70424687458932bc4dc8a7b6e59ff53868"
+      },
+      {
+        "expressionSha256": "8f15d80e7efb2a5d032af6aeba410bc9b4bd498ba70c7278654526b1e2259752"
+      },
+      {
+        "expressionSha256": "113f0af17fdf683cf360ab9d03b7eff1b572d3475e83119031d47ee4331621aa"
+      },
+      {
+        "expressionSha256": "abfcad28ec14344e651d5f0983b24be76635f7dc84460622b29987c2a7f15ad3"
+      },
+      {
+        "expressionSha256": "9c294408130de6e511dde09c5f445ebb5313bbb5d099109a90685de7ad596c19"
+      },
+      {
+        "expressionSha256": "35f4639042b12dc28e757b3612a850d35d2298772cf08d3411b3650571141fc4"
+      },
+      {
+        "expressionSha256": "f5fd251da7b017ec9c62c6fc7957b06417d4034f91a8e722eedba2c288cc8061"
+      },
+      {
+        "expressionSha256": "dd3defba7d0658614e22309f813271a3731f6591c2c0adbaa9cd7357855c09a1"
+      },
+      {
+        "expressionSha256": "f5820dd98f9c617efde6d602297f85df78b635879ad2c1623f041657985714a9"
+      },
+      {
+        "expressionSha256": "1f6417e229a9b4322d80803b91056398e206cfc76b243e63d7a23b3ac18edc75"
+      }
+    ],
+    "factsDigest": "d4bfccfd148eaea0f1bf1d21e0b8ce5b4014f12befeb382947bfee58468d906b",
+    "authorityInputs": [],
+    "purposeInputs": [
+      {
+        "path": "docs/blueprint/AP09-acceptance-fixtures.json",
+        "canonical": "docs/blueprint/AP09-acceptance-fixtures.json",
+        "sha256": "5671508592d263002a2689007cd554b7e2c179403bc9e0e793a7a6a22adb88a8"
+      },
+      {
+        "path": "package.json",
+        "canonical": "package.json",
+        "sha256": "4ab1e90c2259aeb96acfdc877e5a9eed330f605abff46d7eca85faded0f020c3"
+      },
+      {
+        "path": "scripts/check-report-registration-drift.mjs",
+        "canonical": "scripts/check-report-registration-drift.mjs",
+        "sha256": "cfd5071ee4a167768fadf00ede81e1d847ee42d151c68121d20697c84893acee"
+      },
+      {
+        "path": "scripts/docs-ap09-mutation-fixture.mjs",
+        "canonical": "scripts/docs-ap09-mutation-fixture.mjs",
+        "sha256": "f46c275fce0ef9d55e2ac61a4bcc7b466519d42f07bec4ec8d86a7c2ce6fc687"
+      },
+      {
+        "path": "skills/buster/plugins/junit-report-adapter/plugin.json",
+        "canonical": "skills/buster/plugins/junit-report-adapter/plugin.json",
+        "sha256": "9787400a76dea54fbfe31a6371c1724f60fdacb7fc544fa33c0c454132e92b77"
+      },
+      {
+        "path": "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json",
+        "canonical": "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json",
+        "sha256": "837efd7975991aa21b8c92b57881194e9bc8c7adc4370f238d1a15b6d85d44db"
+      },
+      {
+        "path": "skills/common/plugin-runtime/foundation/registry/types.ts",
+        "canonical": "skills/common/plugin-runtime/foundation/registry/types.ts",
+        "sha256": "6667bd4389377d33ba41c2c7166f3488c40f0cad1fc0e7c067fb37a6f2eca291"
+      },
+      {
+        "path": "skills/nova/plugins/lint/plugin.json",
+        "canonical": "skills/nova/plugins/lint/plugin.json",
+        "sha256": "3d671a34bb259b1c031d7f2ac1c54b19b4821e023bb53c7d43e5642dd1a0ce04"
+      },
+      {
+        "path": "tests/verification/e2e/fixture-coverage.mjs",
+        "canonical": "tests/verification/e2e/fixture-coverage.mjs",
+        "sha256": "eae30bf79e5ed942658322be75dc75a98b74ceacae57cd9072f5a7b81e118aa6"
+      },
+      {
+        "path": "tests/verification/e2e/provider-catalog.mjs",
+        "canonical": "tests/verification/e2e/provider-catalog.mjs",
+        "sha256": "04fe590099a3a9803cc610389528190d330b75527305b50c409d0e9de647293e"
+      }
+    ]
+  },
+  "scripts/check-report-registration-drift.mjs": {
+    "role": "documentation-consumer",
+    "qualificationKind": "reviewed-documentation-consumer/v1",
+    "sourceSha256": "cfd5071ee4a167768fadf00ede81e1d847ee42d151c68121d20697c84893acee",
+    "consumer": "Exact bounded documentation declaration-to-reader comparison; no runtime activation or API apply.",
+    "selectors": [
+      {
+        "expressionSha256": "d1e7c04d0add2e54a2492f3591d3687fc49dc8c01287cf94cdf257f9e7ef03a8"
+      },
+      {
+        "expressionSha256": "765cb5190e75e6653f65459aafa8e93d13457d6d8db708924741e67e22c0c3a1"
+      },
+      {
+        "expressionSha256": "2c9b5dc3ee31a7ccf157fda218def2a7d5ffd38744cc233af719c0958fbfae94"
+      },
+      {
+        "expressionSha256": "d1318fd971cfa1708f44526a14ad252da3520b5fbe27048cf9b1509ae31adfe2"
+      },
+      {
+        "expressionSha256": "1a1bbd89063e3aaf2c874583e7d500d8b0865f5c9d8fd8a905ec131bacf83782"
+      },
+      {
+        "expressionSha256": "0ccd0687f00733cd9d7ba2de8dcfa5b48aa208d2a91d4fc128ff0194839819b7"
+      },
+      {
+        "expressionSha256": "3bd42e15e5427f946b98b898212af900ed0a4068cff03a37aa2ce1d3a081f2ec"
+      },
+      {
+        "expressionSha256": "99a8a8a7117b1395e3a209cdc8ba5a70424687458932bc4dc8a7b6e59ff53868"
+      },
+      {
+        "expressionSha256": "113f0af17fdf683cf360ab9d03b7eff1b572d3475e83119031d47ee4331621aa"
+      }
+    ],
+    "factsDigest": "901d8e73ccfb5b371675aba402fbee16172d09082025cc67165d30bbf2d0ecfa",
+    "authorityInputs": [],
+    "purposeInputs": [
+      {
+        "path": "skills/buster/plugins/junit-report-adapter/plugin.json",
+        "canonical": "skills/buster/plugins/junit-report-adapter/plugin.json",
+        "sha256": "9787400a76dea54fbfe31a6371c1724f60fdacb7fc544fa33c0c454132e92b77"
+      },
+      {
+        "path": "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json",
+        "canonical": "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json",
+        "sha256": "837efd7975991aa21b8c92b57881194e9bc8c7adc4370f238d1a15b6d85d44db"
+      }
+    ]
+  },
+  "scripts/check-schema-drift-mutations.mjs": {
+    "role": "documentation-consumer",
+    "qualificationKind": "reviewed-documentation-consumer/v1",
+    "sourceSha256": "307a040b9875969e5533c2edd46f9ce301cca001d2ddc606f70e546cc9bac73f",
+    "consumer": "Documentation verification harness in fresh disposable workspace: deterministic exact single-authority patches/controlled source or reader changes; child gate rejection and baseline/restoration assertions. Source-parsed pipeline field/compiler declaration documentation comparison, retaining parser failures separately from semantic drift. Source restoration and API-shaped fixture bytes remain test-only effects, not product resource outputs or child/module execution authority.",
+    "selectors": [
+      {
+        "expressionSha256": "1fa0e2864cb810f56dd7f3f7682b8f1c5b705a27ec9cbf819d29448aea919755"
+      },
+      {
+        "expressionSha256": "15fe9d84e254e09e7bd4a68ad284ac7b89b4eb2282918d1385b8898996ca536b"
+      },
+      {
+        "expressionSha256": "9d95afa107f825d8da0b8014c77124567cfc94d2464b66cb1b492fee61cfe7d3"
+      },
+      {
+        "expressionSha256": "9b80de081ea89bd284ef24098184ee23bfd1d57b980567fead9b0374514ffa00"
+      },
+      {
+        "expressionSha256": "ea86d9e26f710a05c109c1f24a78c04bb604f7e92a5197cd076c2d289ff4ce43"
+      },
+      {
+        "expressionSha256": "3bd42e15e5427f946b98b898212af900ed0a4068cff03a37aa2ce1d3a081f2ec"
+      },
+      {
+        "expressionSha256": "99a8a8a7117b1395e3a209cdc8ba5a70424687458932bc4dc8a7b6e59ff53868"
+      },
+      {
+        "expressionSha256": "8f15d80e7efb2a5d032af6aeba410bc9b4bd498ba70c7278654526b1e2259752"
+      },
+      {
+        "expressionSha256": "113f0af17fdf683cf360ab9d03b7eff1b572d3475e83119031d47ee4331621aa"
+      },
+      {
+        "expressionSha256": "2948024387391b149bf95db8466bc244e8c0bb1f158e0fbf6b9ba730c29aa67e"
+      },
+      {
+        "expressionSha256": "abfcad28ec14344e651d5f0983b24be76635f7dc84460622b29987c2a7f15ad3"
+      },
+      {
+        "expressionSha256": "f5820dd98f9c617efde6d602297f85df78b635879ad2c1623f041657985714a9"
+      },
+      {
+        "expressionSha256": "1f6417e229a9b4322d80803b91056398e206cfc76b243e63d7a23b3ac18edc75"
+      }
+    ],
+    "factsDigest": "38a11dc72e1cc0720102b4c399e0e9949ef697fd17f957d513dd5917c8c9149d",
+    "authorityInputs": [],
+    "purposeInputs": [
+      {
+        "path": "docs/blueprint/AP09-acceptance-fixtures.json",
+        "canonical": "docs/blueprint/AP09-acceptance-fixtures.json",
+        "sha256": "5671508592d263002a2689007cd554b7e2c179403bc9e0e793a7a6a22adb88a8"
+      },
+      {
+        "path": "package.json",
+        "canonical": "package.json",
+        "sha256": "4ab1e90c2259aeb96acfdc877e5a9eed330f605abff46d7eca85faded0f020c3"
+      },
+      {
+        "path": "scripts/docs-ap09-mutation-fixture.mjs",
+        "canonical": "scripts/docs-ap09-mutation-fixture.mjs",
+        "sha256": "f46c275fce0ef9d55e2ac61a4bcc7b466519d42f07bec4ec8d86a7c2ce6fc687"
+      },
+      {
+        "path": "scripts/docs-product-pipeline-reference.mjs",
+        "canonical": "scripts/docs-product-pipeline-reference.mjs",
+        "sha256": "0d5ca69959c9ac502d60cc2f51c8485330888f082b861d1ca52c96b0eac0c25d"
+      },
+      {
+        "path": "skills/common/plugin-runtime/sdk/src/generated/contracts.ts",
+        "canonical": "skills/common/plugin-runtime/sdk/src/generated/contracts.ts",
+        "sha256": "8ade81b1f64c78b4cf2198f7ae7dc0c726fb4cec3ffa553986310d353dbc71c1"
+      },
+      {
+        "path": "skills/nova/project/compiler.ts",
+        "canonical": "skills/nova/project/compiler.ts",
+        "sha256": "9d8ccdb3a1ccc56c58c1ec510aed54473f7db6d4135d28b2e265bbf90d7f1ef5"
+      }
+    ]
+  },
+  "scripts/check-sdk-contract-mutation-constructors.mjs": {
+    "role": "documentation-consumer",
+    "qualificationKind": "reviewed-documentation-consumer/v1",
+    "sourceSha256": "24837bf0fe0391ac6cc48b17bcce2ff2bf05da7f962c0cd3be1732321afdf325",
+    "consumer": "Documentation verification harness in fresh disposable workspace: deterministic exact single-authority patches/controlled source or reader changes; child gate rejection and baseline/restoration assertions. Read-only SDK semantic inventory/handbook delegated reader path and product-progress source-reference comparison. Source AST and generated references are data, not SDK execution or persistence proof. Source restoration and API-shaped fixture bytes remain test-only effects, not product resource outputs or child/module execution authority.",
+    "selectors": [
+      {
+        "expressionSha256": "ccdca899f7b3e4c61945d3d2e430e4a025c94106a99671345ee2155c48dd66a2"
+      },
+      {
+        "expressionSha256": "c74fa4ccbd2a57f911451c799c4c864323efda1b894cc536c835c56cd74c766d"
+      },
+      {
+        "expressionSha256": "ea86d9e26f710a05c109c1f24a78c04bb604f7e92a5197cd076c2d289ff4ce43"
+      },
+      {
+        "expressionSha256": "3bd42e15e5427f946b98b898212af900ed0a4068cff03a37aa2ce1d3a081f2ec"
+      },
+      {
+        "expressionSha256": "99a8a8a7117b1395e3a209cdc8ba5a70424687458932bc4dc8a7b6e59ff53868"
+      },
+      {
+        "expressionSha256": "8f15d80e7efb2a5d032af6aeba410bc9b4bd498ba70c7278654526b1e2259752"
+      },
+      {
+        "expressionSha256": "113f0af17fdf683cf360ab9d03b7eff1b572d3475e83119031d47ee4331621aa"
+      },
+      {
+        "expressionSha256": "2948024387391b149bf95db8466bc244e8c0bb1f158e0fbf6b9ba730c29aa67e"
+      },
+      {
+        "expressionSha256": "abfcad28ec14344e651d5f0983b24be76635f7dc84460622b29987c2a7f15ad3"
+      },
+      {
+        "expressionSha256": "56cb0833712c6d10ac0b8883b736169d23c9868276f977eb7ca08cf9667e36d8"
+      }
+    ],
+    "factsDigest": "50969745d2c116634982ccea3a9967ba7251b45b55c0ca80ee7275aca1d29296",
+    "authorityInputs": [],
+    "purposeInputs": [
+      {
+        "path": "docs/blueprint/AP09-acceptance-fixtures.json",
+        "canonical": "docs/blueprint/AP09-acceptance-fixtures.json",
+        "sha256": "5671508592d263002a2689007cd554b7e2c179403bc9e0e793a7a6a22adb88a8"
+      },
+      {
+        "path": "package.json",
+        "canonical": "package.json",
+        "sha256": "4ab1e90c2259aeb96acfdc877e5a9eed330f605abff46d7eca85faded0f020c3"
+      },
+      {
+        "path": "scripts/check-contract-drift.mjs",
+        "canonical": "scripts/check-contract-drift.mjs",
+        "sha256": "463b2a8a3999e977ea3839b80549336431cdbc2ea3c76caf3d218005d8ccbae8"
+      },
+      {
+        "path": "scripts/docs-ap09-mutation-fixture.mjs",
+        "canonical": "scripts/docs-ap09-mutation-fixture.mjs",
+        "sha256": "f46c275fce0ef9d55e2ac61a4bcc7b466519d42f07bec4ec8d86a7c2ce6fc687"
+      },
+      {
+        "path": "skills/common/plugin-runtime/sdk/src/generated/contracts.ts",
+        "canonical": "skills/common/plugin-runtime/sdk/src/generated/contracts.ts",
+        "sha256": "8ade81b1f64c78b4cf2198f7ae7dc0c726fb4cec3ffa553986310d353dbc71c1"
+      },
+      {
+        "path": "skills/common/plugin-runtime/sdk/src/index.ts",
+        "canonical": "skills/common/plugin-runtime/sdk/src/index.ts",
+        "sha256": "464a94399315ad25f40511b8d1ee93c76b3535a82cd90fbde06bf0a58aa0cc9a"
+      },
+      {
+        "path": "skills/nova/project_setup/tools/progress-scaffold-validation.ts",
+        "canonical": "skills/nova/project_setup/tools/progress-scaffold-validation.ts",
+        "sha256": "dafa016f41e824b82951a8532b0c291cda421181de1614d79f0cffd91ee436fe"
+      }
+    ]
+  },
+  "scripts/check-workflow-drift-mutations.mjs": {
+    "role": "documentation-consumer",
+    "qualificationKind": "reviewed-documentation-consumer/v1",
+    "sourceSha256": "94324dda29e23fe924eb89282a882ed6e46442ec066caf5f728a641d1755fd41",
+    "consumer": "Documentation verification harness in fresh disposable workspace: deterministic exact single-authority patches/controlled source or reader changes; child gate rejection and baseline/restoration assertions. Source-parsed project compiler declaration documentation comparison; no successful compiler, scheduler, registry or crash-recovery inference. Source restoration and API-shaped fixture bytes remain test-only effects, not product resource outputs or child/module execution authority.",
+    "selectors": [
+      {
+        "expressionSha256": "0ce42b0524602ba34f093a10e36521151274bf20666284c90fad0fc29f4ef09f"
+      },
+      {
+        "expressionSha256": "83121c74fe0884fafe2dbfd1dc1d7b737c871217f0cf7bc3447344462d0938aa"
+      },
+      {
+        "expressionSha256": "15fe9d84e254e09e7bd4a68ad284ac7b89b4eb2282918d1385b8898996ca536b"
+      },
+      {
+        "expressionSha256": "5caaf5eaab1abda435f3d8f3bf4297720857d2095d08810bf92fa87715116fc4"
+      },
+      {
+        "expressionSha256": "551d69302719f39672a960d242aa159df78fb53f271333364d33a1496772cae3"
+      },
+      {
+        "expressionSha256": "9b80de081ea89bd284ef24098184ee23bfd1d57b980567fead9b0374514ffa00"
+      },
+      {
+        "expressionSha256": "ea86d9e26f710a05c109c1f24a78c04bb604f7e92a5197cd076c2d289ff4ce43"
+      },
+      {
+        "expressionSha256": "3bd42e15e5427f946b98b898212af900ed0a4068cff03a37aa2ce1d3a081f2ec"
+      },
+      {
+        "expressionSha256": "99a8a8a7117b1395e3a209cdc8ba5a70424687458932bc4dc8a7b6e59ff53868"
+      },
+      {
+        "expressionSha256": "8f15d80e7efb2a5d032af6aeba410bc9b4bd498ba70c7278654526b1e2259752"
+      },
+      {
+        "expressionSha256": "113f0af17fdf683cf360ab9d03b7eff1b572d3475e83119031d47ee4331621aa"
+      },
+      {
+        "expressionSha256": "2948024387391b149bf95db8466bc244e8c0bb1f158e0fbf6b9ba730c29aa67e"
+      },
+      {
+        "expressionSha256": "86c8bdd899093598d798b23d65c4a6da48605ca01d9fb61efd9e51cf0a25d8cb"
+      },
+      {
+        "expressionSha256": "abfcad28ec14344e651d5f0983b24be76635f7dc84460622b29987c2a7f15ad3"
+      },
+      {
+        "expressionSha256": "30e3a576783deb500d8de4f43430b73dd01364056bb752d97c552c03d4504c62"
+      },
+      {
+        "expressionSha256": "f5820dd98f9c617efde6d602297f85df78b635879ad2c1623f041657985714a9"
+      },
+      {
+        "expressionSha256": "1f6417e229a9b4322d80803b91056398e206cfc76b243e63d7a23b3ac18edc75"
+      }
+    ],
+    "factsDigest": "0e3443d9ff20065feb3328c687523a08f092ce53174621a700596f0eeb491c65",
+    "authorityInputs": [],
+    "purposeInputs": [
+      {
+        "path": "docs/blueprint/AP09-acceptance-fixtures.json",
+        "canonical": "docs/blueprint/AP09-acceptance-fixtures.json",
+        "sha256": "5671508592d263002a2689007cd554b7e2c179403bc9e0e793a7a6a22adb88a8"
+      },
+      {
+        "path": "package.json",
+        "canonical": "package.json",
+        "sha256": "4ab1e90c2259aeb96acfdc877e5a9eed330f605abff46d7eca85faded0f020c3"
+      },
+      {
+        "path": "scripts/docs-ap09-mutation-fixture.mjs",
+        "canonical": "scripts/docs-ap09-mutation-fixture.mjs",
+        "sha256": "f46c275fce0ef9d55e2ac61a4bcc7b466519d42f07bec4ec8d86a7c2ce6fc687"
+      },
+      {
+        "path": "scripts/docs-product-pipeline-reference.mjs",
+        "canonical": "scripts/docs-product-pipeline-reference.mjs",
+        "sha256": "0d5ca69959c9ac502d60cc2f51c8485330888f082b861d1ca52c96b0eac0c25d"
+      },
+      {
+        "path": "skills/common/plugin-runtime/sdk/src/generated/contracts.ts",
+        "canonical": "skills/common/plugin-runtime/sdk/src/generated/contracts.ts",
+        "sha256": "8ade81b1f64c78b4cf2198f7ae7dc0c726fb4cec3ffa553986310d353dbc71c1"
+      },
+      {
+        "path": "skills/nova/project/compiler.ts",
+        "canonical": "skills/nova/project/compiler.ts",
+        "sha256": "9d8ccdb3a1ccc56c58c1ec510aed54473f7db6d4135d28b2e265bbf90d7f1ef5"
+      }
+    ]
+  },
+  "scripts/docs-product-pipeline-reference.mjs": {
+    "role": "documentation-consumer",
+    "qualificationKind": "reviewed-documentation-consumer/v1",
+    "sourceSha256": "0d5ca69959c9ac502d60cc2f51c8485330888f082b861d1ca52c96b0eac0c25d",
+    "consumer": "Source-parsed project compiler declaration documentation comparison; no successful compiler, scheduler, registry or crash-recovery inference.",
+    "selectors": [
+      {
+        "expressionSha256": "b0773ef0bacdb57ea7df2b6ab4bab28ae0e8f3c2c77068b6ce8ae26d9b211b65"
+      },
+      {
+        "expressionSha256": "80df4391f8d7cfeee2d1ff2699b7ed9f6aca30ad56ac29a1d8f4d0f98e97a535"
+      },
+      {
+        "expressionSha256": "0c92108f9346679c053841dc25be2f2e040ebb4e1bdf9d3602d5f1b019b1766d"
+      },
+      {
+        "expressionSha256": "cffd54de50aba544206635408c83b084bb17bc3c8e2f1e7906a72d7ceda5a731"
+      },
+      {
+        "expressionSha256": "836e51e99fdd5ff611ab1434ae9f6633a4e6fc129f80ffd2b741551a491f51aa"
+      },
+      {
+        "expressionSha256": "d7f48361975d139c9d538537e260bd0ff76e0fa813dfafe0cbd2a7ef32c3a9f5"
+      },
+      {
+        "expressionSha256": "29c0ffaf4904863a49b9cb2369a6c643a61e8ab1b242eaae189cd19645851c6a"
+      },
+      {
+        "expressionSha256": "99a8a8a7117b1395e3a209cdc8ba5a70424687458932bc4dc8a7b6e59ff53868"
+      },
+      {
+        "expressionSha256": "113f0af17fdf683cf360ab9d03b7eff1b572d3475e83119031d47ee4331621aa"
+      },
+      {
+        "expressionSha256": "2948024387391b149bf95db8466bc244e8c0bb1f158e0fbf6b9ba730c29aa67e"
+      },
+      {
+        "expressionSha256": "d284087d8274693e9c3abdb1382ded93999265e70f986bc09e4f749bd6b23d97"
+      }
+    ],
+    "factsDigest": "bd4fb25aab9573f2a46bc34be0cac26dcfea8c1f04749e8f1f376aaf02d9cc20",
+    "authorityInputs": [],
+    "purposeInputs": [
+      {
+        "path": "skills/common/plugin-runtime/sdk/src/generated/contracts.ts",
+        "canonical": "skills/common/plugin-runtime/sdk/src/generated/contracts.ts",
+        "sha256": "8ade81b1f64c78b4cf2198f7ae7dc0c726fb4cec3ffa553986310d353dbc71c1"
+      },
+      {
+        "path": "skills/nova/project/compiler.ts",
+        "canonical": "skills/nova/project/compiler.ts",
+        "sha256": "9d8ccdb3a1ccc56c58c1ec510aed54473f7db6d4135d28b2e265bbf90d7f1ef5"
+      },
+      {
+        "path": "skills/nova/project_setup/tools/progress-scaffold-validation.ts",
+        "canonical": "skills/nova/project_setup/tools/progress-scaffold-validation.ts",
+        "sha256": "dafa016f41e824b82951a8532b0c291cda421181de1614d79f0cffd91ee436fe"
+      }
+    ]
+  },
+  "scripts/generate-local-helm-authorities.mjs": {
+    "role": "documentation-consumer",
+    "qualificationKind": "reviewed-documentation-consumer/v1",
+    "sourceSha256": "0c01058c36010623664ecf46a886dabb59c3d5c8446715641f481b2100fb9a94",
+    "consumer": "Maintenance of the exact local Helm documentation field-authority JSON; normal inventory child produces disposable candidate metadata, exact checked-in semantic contracts/receiver/schema evidence required, no generic heuristic approval or API apply.",
+    "selectors": [
+      {
+        "expressionSha256": "46b2f5253f79345dae2c683c02d38237520c405ea607f4d65a142187989f3aad"
+      },
+      {
+        "expressionSha256": "bfb0d41d8f8aa87703d9c3fb1d5aa280739633a373c50dec1a25a1045f95a5da"
+      },
+      {
+        "expressionSha256": "59b9628945b75f2565b4441a6b2259394e523a604a1449b17876aa7a80ebcb7d"
+      },
+      {
+        "expressionSha256": "a79bf83139ceb49c5d18244690756af192868c5badf9957261d869470a796ca5"
+      },
+      {
+        "expressionSha256": "6170763db6acc0069ab97e20e57cd6d8c931662ba9c8c569798f074eb80f2743"
+      },
+      {
+        "expressionSha256": "8c693bff25173606a86a05437a6156f4b84f8638c75feff09fbb8d020f42382f"
+      },
+      {
+        "expressionSha256": "8b0e06789adb8205f481cbe61c6f9f81589559445003041ce7015bef2e146f96"
+      },
+      {
+        "expressionSha256": "31bfe847ada6fd08ecfeac86cacb688f1830dec5e1e0a5b0699ff1aa3a44fa11"
+      },
+      {
+        "expressionSha256": "920404e485e23086da126787b9e92068e179712fa30a96a253326313c0f050df"
+      },
+      {
+        "expressionSha256": "8465d09c2437805ba241e23095a58f5a2ec5e534d0f05e53c67f30d3839b1b40"
+      },
+      {
+        "expressionSha256": "090594a743566d72421c3d092233b2be9dc109db7663c260fff870c30c76c164"
+      },
+      {
+        "expressionSha256": "aea24252728ff2e2478e8f7eb691f9438fd30871998419f346ea6bcb7777bd41"
+      },
+      {
+        "expressionSha256": "89007679cc9926d359163000f9db4f784e3b44ca4e866a332471710d652db02f"
+      },
+      {
+        "expressionSha256": "a57d12a2e8e9a58c0c16ca0b3e3af443c37d7f29a177377987d9882ae7eb3d8d"
+      },
+      {
+        "expressionSha256": "7c9371247eb24cfbda7e3120108ffd1b59ad412cf683dd951c6a904278e31c01"
+      },
+      {
+        "expressionSha256": "3ef9a780a699b15c4908ef64826e5d613a6b43f89004d7a92a1ab035a1910a29"
+      },
+      {
+        "expressionSha256": "3bd42e15e5427f946b98b898212af900ed0a4068cff03a37aa2ce1d3a081f2ec"
+      },
+      {
+        "expressionSha256": "967573157d8a0118a9b81842abb29015d82a1e83f6d2d055d56e848e4def640e"
+      },
+      {
+        "expressionSha256": "99a8a8a7117b1395e3a209cdc8ba5a70424687458932bc4dc8a7b6e59ff53868"
+      },
+      {
+        "expressionSha256": "8f15d80e7efb2a5d032af6aeba410bc9b4bd498ba70c7278654526b1e2259752"
+      },
+      {
+        "expressionSha256": "113f0af17fdf683cf360ab9d03b7eff1b572d3475e83119031d47ee4331621aa"
+      },
+      {
+        "expressionSha256": "facf81dc94071832d72519d0c1cb9f8508c89e5e3ead0fc1da1dc06272b967a7"
+      },
+      {
+        "expressionSha256": "abfcad28ec14344e651d5f0983b24be76635f7dc84460622b29987c2a7f15ad3"
+      },
+      {
+        "expressionSha256": "0442f3f5214df63da7a20debe2cadfe0f934c8afef4d6411cb993765d25c2a24"
+      },
+      {
+        "expressionSha256": "466cd1e86f0433600d47263ee4289beb91941e53dae3ea111e5428503958b443"
+      },
+      {
+        "expressionSha256": "8434cb12d5134331c6cf001755a1bb661d8f532afd2685025952021faa50b2e2"
+      }
+    ],
+    "factsDigest": "cbe0bfc95ec38e0f469b685b33f37f649ae505ccf2347e567600840be1128a7f",
+    "authorityInputs": [
+      {
+        "path": "scripts/docs-configuration-inventory.mjs",
+        "canonical": "scripts/docs-configuration-inventory.mjs",
+        "sha256": "7314148ac1c662049961cf274f1e5b1d4f7133769cd5f9c8889d49a329ddfa6b"
+      }
+    ],
+    "purposeInputs": [
+      {
+        "path": "charts/gitops/values.yaml",
+        "canonical": "charts/gitops/values.yaml",
+        "sha256": "13594b5b5bf3bbe761f98090ee82cd6b20831a1419b2d9d11e4bca950b039a9b"
+      },
+      {
+        "path": "charts/kubeclaw/templates/configmap-gateway.yaml",
+        "canonical": "charts/kubeclaw/templates/configmap-gateway.yaml",
+        "sha256": "7282446c984679ad226222708c98d716c310686bfb39d8dd75a1ccd32af3feda"
+      },
+      {
+        "path": "charts/kubeclaw/templates/deployment.yaml",
+        "canonical": "charts/kubeclaw/templates/deployment.yaml",
+        "sha256": "8e780bc0033c3da5c0a3d4db53e8ba9e0753200a072ce0ed63a598c461231883"
+      },
+      {
+        "path": "cmd/buster-namespace-controller/main.go",
+        "canonical": "cmd/buster-namespace-controller/main.go",
+        "sha256": "c93bcc15f56bf6c5a9266c48835018b42589489846642bede2eb93851c4b6624"
+      },
+      {
+        "path": "my-values/prism-values.yaml",
+        "canonical": "my-values/prism-values.yaml",
+        "sha256": "9462337fa87add8927e3e4eb9888fa197a25dea40c1598fa5017b7e5d26b11d2"
+      },
+      {
+        "path": "scripts/docs-api-schema-authorities.mjs",
+        "canonical": "scripts/docs-api-schema-authorities.mjs",
+        "sha256": "58786f8df40404877acc129df423bcaab906d4767b0bc49b5e358944c3512e34"
+      },
+      {
+        "path": "scripts/docs-configuration-inventory.mjs",
+        "canonical": "scripts/docs-configuration-inventory.mjs",
+        "sha256": "7314148ac1c662049961cf274f1e5b1d4f7133769cd5f9c8889d49a329ddfa6b"
+      },
+      {
+        "path": "scripts/docs-local-helm-field-authorities.json",
+        "canonical": "scripts/docs-local-helm-field-authorities.json",
+        "sha256": "5071ad7619ede1dc51ef160be0a1eb1ea075094d7855c8d34cc631ca0111b63f"
+      },
+      {
+        "path": "scripts/generate-local-helm-authorities.mjs",
+        "canonical": "scripts/generate-local-helm-authorities.mjs",
+        "sha256": "0c01058c36010623664ecf46a886dabb59c3d5c8446715641f481b2100fb9a94"
+      },
+      {
+        "path": "scripts/yaml-field-path.mjs",
+        "canonical": "scripts/yaml-field-path.mjs",
+        "sha256": "646f14105e48d9401b8d8ac99a0c439f60c8b69e42d72c15c0b66e132a1c9a2d"
+      }
+    ]
   }
 };
 const syntaxSha256=syntax=>createHash('sha256').update(syntax).digest('hex');
@@ -6878,6 +10002,18 @@ function qualifiedStaticForwarding(root,source,staticSources,seen=new Set()){
 }
 export function assertDocumentationExecutableRole(root,source,staticSources=new Set()){
  const bytes=fs.readFileSync(path.join(root,source),'utf8');
+ // These exact documentation consumers have additional dynamic data/child
+ // contracts. Acquire physical bytes before either role-cache reuse or use.
+ // Registry membership/digest refresh cannot renew Source-owned purpose data.
+ const purposeRecipe=documentationExecutableRoleRecipes[source],purposeFiles=[];
+ if(purposeRecipe?.qualificationKind==='reviewed-documentation-consumer/v1'){
+  assert.equal(syntaxSha256(bytes),purposeRecipe.sourceSha256,`DOCUMENTATION_TOOL_PURPOSE_SOURCE_DRIFT: ${source}`);
+  for(const input of purposeRecipe.purposeInputs){
+   const file=path.join(root,input.path),canonical=fs.existsSync(file)?path.relative(root,fs.realpathSync(file)).replaceAll(path.sep,'/'):null;
+   assert(canonical===input.canonical&&canonical===input.path&&fs.statSync(file).isFile()&&syntaxSha256(fs.readFileSync(file))===input.sha256,`DOCUMENTATION_TOOL_PURPOSE_INPUT_DRIFT: ${source}; ${input.path}`);
+   purposeFiles.push(file);
+  }
+ }
  if(reuseCustody(root,source,bytes))return;
  if(/\.(?:py|go)$/u.test(source)){
   const recipe=documentationExecutableRoleRecipes[source];
@@ -6896,7 +10032,7 @@ export function assertDocumentationExecutableRole(root,source,staticSources=new 
  const facts=deriveNativeOperationFacts(root,source,selectors,{trustAnchorSources:[anchorSource]});
  assert(facts&&nativeOperationFactDigest(facts)===recipe.factsDigest,`DOCUMENTATION_TOOL_OUTPUT_ROLE_UNQUALIFIED: ${source}; selected producer/helper/initialization custody changed`);
  assert.deepEqual(documentationChildSourceAuthority(root,source),recipe.authorityInputs,`DOCUMENTATION_TOOL_OUTPUT_ROLE_UNQUALIFIED: ${source}; literal child/source acquisition authority changed`);
- retainCustody(root,source,bytes,[...facts.map(fact=>path.join(root,fact.source)),...recipe.authorityInputs.map(input=>path.join(root,input.path))]);
+ retainCustody(root,source,bytes,[...purposeFiles,...facts.map(fact=>path.join(root,fact.source)),...recipe.authorityInputs.map(input=>path.join(root,input.path))]);
 }
 
 // BEGIN FINITE NODE ENTRY RECIPES

@@ -1,0 +1,57 @@
+{
+  "status": "FROZEN_OFFTREE_CODE_TEST_AND_DRAFT_DATA_CANDIDATE; INDEPENDENT_REVIEW_PENDING; FINAL_GRAPH_CALLERS_FACTS_PENDING_PARENT_SOURCE_FREEZE",
+  "baseCommit": "24a3fa0b",
+  "candidateRoot": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/documentation-purpose-candidate",
+  "files": [
+    {
+      "path": "scripts/docs-api-documentation-role-custody.mjs",
+      "absolute": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/documentation-purpose-candidate/scripts/docs-api-documentation-role-custody.mjs",
+      "sha256": "9edb03a0853488341df83bc65957699ab8b89c84bc8d5648ca71a045246bb45d",
+      "bytes": 1194592
+    },
+    {
+      "path": "scripts/docs-api-output-discovery.mjs",
+      "absolute": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/documentation-purpose-candidate/scripts/docs-api-output-discovery.mjs",
+      "sha256": "987ff618c6aa26e472f9ff1b9b42d9f42057a3e16a33dacac8bea948fb421173",
+      "bytes": 412676
+    },
+    {
+      "path": "scripts/docs-api-producer-adapter-authorities.json",
+      "absolute": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/documentation-purpose-candidate/scripts/docs-api-producer-adapter-authorities.json",
+      "sha256": "4bcf2a83b03c4d405b810cffddc7da22a6bc6756a05807f3d3481ecd5bfe8980",
+      "bytes": 4729277
+    },
+    {
+      "path": "scripts/tests/docs-documentation-purpose-routing.test.mjs",
+      "absolute": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/documentation-purpose-candidate/scripts/tests/docs-documentation-purpose-routing.test.mjs",
+      "sha256": "8c039b8ec71ae23c49ed6d633e143c16604e169c3bfa60355d766b0bbb02d412",
+      "bytes": 5682
+    }
+  ],
+  "existingRegistryRecords": "All original non-boundary records equal; all original boundary fields/qualification records preserved, old source list retained as prefix. Exactly34 Source members,31 executable qualifications,3 distinct purpose routes appended.",
+  "existingSourceRoleRecipes": "Original69 unchanged;31 finite consumer recipes appended. No original producer/runtime/package Source edited.",
+  "owningTests": {
+    "command": "node --test scripts/tests/docs-documentation-purpose-routing.test.mjs",
+    "log": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/documentation-purpose-tests-final.txt",
+    "expected": "8 terminal tests, zero skipped"
+  },
+  "publicationRegression": {
+    "log": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/documentation-purpose-publication-regression.txt",
+    "status": "NOT PASS:44/45, one failing exact diagnostic expectation",
+    "untouchedMainControl": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/documentation-purpose-baseline-regression-control.txt",
+    "finding": "Same failing negative independently reproduced on untouched main; current GRAPH semantic-input failure precedes its expected OUTPUT_ROLE rejection. No guard/assertion relaxed."
+  },
+  "normalCurrentGraph": "Correct named stop DOCUMENTATION_TOOL_NODE_ENTRY_CUSTODY_UNQUALIFIED:scripts/lib/docs-publication-assets.mjs defining operation files. Not bypassed. Registry graph/entry scaffolding is explicitly historical af1; no whole fresh census or owner PASS claimed.",
+  "reports": [
+    "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/documentation-purpose-review-manifest.json",
+    "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/documentation-purpose-routing-write-scope.md",
+    "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/documentation-purpose-graph-candidate-summary.json"
+  ],
+  "excluded": [
+    "New redirects/serve/browser/publication module changes",
+    "Other109 verification candidates",
+    "Four closed-writer native exceptions",
+    "Product runtime/API apply/module execution authority",
+    "Global generation/Reader/aggregate acceptance"
+  ]
+}

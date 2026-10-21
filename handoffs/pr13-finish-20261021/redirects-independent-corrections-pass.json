@@ -1,0 +1,183 @@
+{
+  "verdict": "PASS bounded corrected Source/semantic Reader/quality topic; final integrated gates remain parent-owned",
+  "candidateInputs": {
+    "status": "CORRECTED ROOT-AUTHORED F1/F2; independent rereview pending",
+    "sourceBaseHead": "24cec4bc5974d3ec543843fab01aafca49f905d5",
+    "files": {
+      "scripts/docs-reader/redirects.mjs": {
+        "candidate": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/publication-redirects-author/scripts/docs-reader/redirects.mjs",
+        "sha256": "bdeb3d97575e9e8116fc5d07eb2fd359aeac3a5ae824d0521e688ff187e43a60",
+        "lines": 73
+      },
+      "scripts/docs-reader/serve.mjs": {
+        "candidate": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/publication-redirects-author/scripts/docs-reader/serve.mjs",
+        "sha256": "15d8bfea45c90d2f2d7380e18e2190498c4ca9f64259f651354418782195e834",
+        "lines": 32
+      },
+      "scripts/tests/docs-reader-redirects.test.mjs": {
+        "candidate": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/publication-redirects-author/scripts/tests/docs-reader-redirects.test.mjs",
+        "sha256": "dec1ca9dcfb5ca80adeb661ff57350029df06d3690794d3194cff8d406c4c646",
+        "lines": 54
+      },
+      "scripts/tests/docs-reader-redirects.browser.mjs": {
+        "candidate": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/publication-redirects-author/scripts/tests/docs-reader-redirects.browser.mjs",
+        "sha256": "4c0f4fdc4112201b289172c21e4123bbb976718dd10cfd7e3ba8390542f3bcec",
+        "lines": 36
+      },
+      "scripts/docs-reader/renderer.mjs": {
+        "candidate": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/publication-redirects-author/scripts/docs-reader/renderer.mjs",
+        "sha256": "9e87c023a29932f35c9c0ca5169c7c4cc39953a849e31b206e6f431bf91acf2b",
+        "lines": 195
+      },
+      "scripts/docs-publication.mjs": {
+        "candidate": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/publication-redirects-author/scripts/docs-publication.mjs",
+        "sha256": "3b22ff66706c132c96a3b3ba39c7c2d043d314336d46660d94e7481c0f0ef360",
+        "lines": 1138
+      },
+      ".github/workflows/docs-checks.yaml": {
+        "candidate": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/publication-redirects-author/docs-checks.yaml",
+        "sha256": "f44033eb4877618d34c65fb292a33f88f8dddb3dbe7c471439328f81f57ac2c5",
+        "lines": 172
+      },
+      "docs/site/reference/documentation-site.md": {
+        "candidate": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/publication-redirects-author/documentation-site.md",
+        "sha256": "4f418aa28e32443300e50431ba9a80552a5bbcb96d2a58821316e6b1821300d8",
+        "lines": 382
+      }
+    },
+    "noMainSourceWrites": true,
+    "noRealRegistryChanges": true,
+    "noPackageChanges": true,
+    "noSelfAcceptance": true,
+    "previousCandidate": "v1-not-accepted/candidate-hashes.json"
+  },
+  "review": {
+    "sourceAccuracy": "PASS",
+    "readerUsability": "PASS",
+    "quality": "PASS"
+  },
+  "resolvedFindings": [
+    {
+      "id": "REDIRECT-REVIEW-F1",
+      "verdict": "RESOLVED",
+      "proof": "copied-asset-correction-positive.json and corrected-owning-tests.txt; actual selected helper now200/exactbytes, moduleJSON/GETHEAD/tamper409/unlisted404/missing/symlink/duplicate controls"
+    },
+    {
+      "id": "REDIRECT-REVIEW-F2",
+      "verdict": "RESOLVED",
+      "proof": "complete382line merged candidate read; all6originalH2s and original valid source/search/diagram/mode/write/CI scopes retained; actualrenderer anchor check corrected-page-render.json"
+    }
+  ],
+  "additionalCompleteSourceReads": [
+    {
+      "path": "scripts/docs-reader/source-previews.mjs",
+      "sha256": "44a78b3922c7cc9af759ca1e2757c6f91e85d5ee8204a35eab56a7119576e13d",
+      "readRanges": [
+        [
+          1,
+          133
+        ]
+      ]
+    },
+    {
+      "path": "scripts/docs-reader/diagrams.mjs",
+      "sha256": "c37045c51e6bbbf2c6c473389900497444f6194dafe61f29f9efacbf2dc08b81",
+      "readRanges": [
+        [
+          1,
+          183
+        ]
+      ]
+    },
+    {
+      "path": "scripts/docs-reader/source-links.mjs",
+      "sha256": "710eba36c3f4d674923a9db42707695e6c1d391530adc668dfad130b33a74b03",
+      "readRanges": [
+        [
+          1,
+          100
+        ]
+      ]
+    },
+    {
+      "path": "scripts/docs-reader/check-source-links.mjs",
+      "sha256": "464ca70cdd65dcb4c82e8e464717672534127ec2514e34d638599776cacb22c5",
+      "readRanges": [
+        [
+          1,
+          36
+        ]
+      ]
+    },
+    {
+      "path": "scripts/docs-reader/check-source-previews.mjs",
+      "sha256": "d4cd1e6e31e550844fbb1d8de5a6aef64da41114c5f3fc3ae7f4249051aaecc1",
+      "readRanges": [
+        [
+          1,
+          5
+        ]
+      ]
+    },
+    {
+      "path": "scripts/docs-reader/check-diagrams.mjs",
+      "sha256": "9eab3c7a781f76130c321706b226e5c34764fee76caba1e38e6f9558163675f5",
+      "readRanges": [
+        [
+          1,
+          5
+        ]
+      ]
+    }
+  ],
+  "publicationExtraReadRanges": [
+    [
+      115,
+      178
+    ],
+    [
+      812,
+      855
+    ]
+  ],
+  "checks": [
+    {
+      "command": "node --test <author>/scripts/tests/docs-reader.test.mjs <author>/scripts/tests/docs-reader-redirects.test.mjs scripts/tests/docs-publication-assets.test.mjs scripts/tests/docs-publication-links.test.mjs",
+      "exitCode": 0,
+      "result": "42/42pass0skip; independent corrected-owning-tests.txt"
+    },
+    {
+      "command": "node copied-asset-correction-positive.mjs",
+      "exitCode": 0,
+      "result": "original404defectnow200andexactrealhelperbytes"
+    },
+    {
+      "command": "nativeChromium with exact existingfonts/libraries, corrected browserfixture",
+      "exitCode": 0,
+      "result": "10actualobservations, stderr0bytes"
+    },
+    {
+      "command": "node corrected-page-render.mjs",
+      "exitCode": 0,
+      "result": "actualrenderer completepage retains6oldanchors and newselfanchor resolves; notwholeproductionbuild"
+    },
+    {
+      "command": "node <author>/check-draft-language.mjs",
+      "exitCode": 0,
+      "result": "actualcurrentowninglanguagefunctions reviewed before bounded extraction;0findings,notwholepublicationcheck"
+    },
+    {
+      "command": "all8correctedcandidateSHA256verification",
+      "exitCode": 0,
+      "result": "allmatchfrozenrootcandidate"
+    }
+  ],
+  "openIssues": [],
+  "limits": [
+    "Initial failed8filecandidate, independentF1/F2report and actual404witness remain preserved; firstrootassertionwordingfailure preserved.",
+    "Onlyoff-treeboundedtopic accepted, not integratedA91201/03/PUB008/finalReader or globaldocs:publish-check/CI success.",
+    "Emptycurrentrealregistry and unchanged pinned166routebaseline; synthetictransfersnotrealhistory.",
+    "NoJSstaticmanualcanonical-link/originalfragmentcarry,notautomaticquery/fragmentforwarding.",
+    "Parentmustapplynarrowdiffs,commitSource,factsrenewal,andactualcurrentpublication/artifact/Readerchecks."
+  ]
+}

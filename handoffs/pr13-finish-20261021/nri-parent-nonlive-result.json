@@ -1,0 +1,57 @@
+{
+  "reviewer": "/root nonauthor",
+  "sourceRevision": "cfc97be096908c1193877d054bb80662120f1eca",
+  "executable": "/usr/local/go/bin/go",
+  "version": "go1.26.5 linux/amd64",
+  "uid": 0,
+  "command": [
+    "go",
+    "test",
+    "-mod=readonly",
+    "-count=1",
+    "-json",
+    "./..."
+  ],
+  "cwd": "tools/native-worker-nri",
+  "environment": {
+    "GOTOOLCHAIN": "local",
+    "CGO_ENABLED": "0",
+    "GOPROXY": "https://proxy.golang.org",
+    "GOSUMDB": "sum.golang.org",
+    "cacheRootsFile": "nri-parent-owned-cache-path.txt",
+    "GOFLAGS": "unset",
+    "NRI_PLUGIN_NAME": "unset",
+    "NRI_PLUGIN_IDX": "unset",
+    "NRI_PLUGIN_SOCKET": "unset"
+  },
+  "dependencyPreparation": "Fresh private writable module/build/temp caches; actual pinned modules downloaded under original go.sum, go.mod/go.sum unchanged. Earlier author default readonly-cache failure retained, not relabelled PASS.",
+  "exitCode": 0,
+  "passedTopLevelTests": [
+    "TestPluginStubLauncherIdentity",
+    "TestConfigureOptionalVersionPrefix",
+    "TestOriginalNRIWireAndOCIGeneratorChangeOnlyCgroupNamespace",
+    "TestSelectionRejectsMismatchedAuthorityAndLeavesOtherContainersUntouched",
+    "TestSelectedRuntimeAndRootOwnedPolicy"
+  ],
+  "passedSubtests": [
+    "TestPluginStubLauncherIdentity/kubeclaw-native/10",
+    "TestPluginStubLauncherIdentity//",
+    "TestPluginStubLauncherIdentity/kubeclaw-native/",
+    "TestPluginStubLauncherIdentity//10",
+    "TestPluginStubLauncherIdentity/other/10",
+    "TestPluginStubLauncherIdentity/kubeclaw-native/11"
+  ],
+  "skipped": 0,
+  "failed": 0,
+  "sourcePrePostEqual": true,
+  "limits": [
+    "SDK stub construction, Configure, actual protobuf/OCI in-memory transform and owned local root-policy guard tests only. No SDK registration/client.Run/containerd/kernel/nativehost/cgroup or deployed workload execution.",
+    "Go-owned temporary test roots cleaned automatically; private pinned dependency/build caches retained outside Source for existing task tooling, not product state."
+  ],
+  "rawHashes": {
+    "nri-parent-nonlive-tests.jsonl": "701dd41599e54e21d4b8d55d122c8c001039dd694ca5e7067d790f83c3d24fac",
+    "nri-parent-nonlive-tests.stderr": "68d88079b46aad6e0596068e449801c2e42e4ffaff58bc1798fccc950ab4c5a8",
+    "nri-parent-source-before.txt": "aa0ccaeb5410650c684e22cfc2fd5229e1b8eef2cd3fb1068c89ace58fed1052",
+    "nri-parent-source-after.txt": "aa0ccaeb5410650c684e22cfc2fd5229e1b8eef2cd3fb1068c89ace58fed1052"
+  }
+}

@@ -1,0 +1,107 @@
+{
+  "reviewer": "operator_acceptance",
+  "verdict": "PASS_BOUNDED_IMPLEMENTATION_AND_31_PURPOSE_SEMANTICS",
+  "materialFindings": [],
+  "frozenFiles": [
+    {
+      "path": "scripts/docs-api-documentation-role-custody.mjs",
+      "sha256": "9edb03a0853488341df83bc65957699ab8b89c84bc8d5648ca71a045246bb45d",
+      "matchesFrozen": true,
+      "bytes": 1194592
+    },
+    {
+      "path": "scripts/docs-api-output-discovery.mjs",
+      "sha256": "987ff618c6aa26e472f9ff1b9b42d9f42057a3e16a33dacac8bea948fb421173",
+      "matchesFrozen": true,
+      "bytes": 412676
+    },
+    {
+      "path": "scripts/docs-api-producer-adapter-authorities.json",
+      "sha256": "4bcf2a83b03c4d405b810cffddc7da22a6bc6756a05807f3d3481ecd5bfe8980",
+      "matchesFrozen": true,
+      "bytes": 4729277
+    },
+    {
+      "path": "scripts/tests/docs-documentation-purpose-routing.test.mjs",
+      "sha256": "8c039b8ec71ae23c49ed6d633e143c16604e169c3bfa60355d766b0bbb02d412",
+      "matchesFrozen": true,
+      "bytes": 5682
+    }
+  ],
+  "source": "PASS_BOUNDED_CODE_AND_PURPOSE_CLASSIFICATION",
+  "quality": "PASS_BOUNDED_CACHE_AND_NEGATIVE_CONTROLS",
+  "reader": "NOT_APPLICABLE_NO_PUBLIC_PAGE_CHANGE",
+  "owningTests": {
+    "exit": 0,
+    "passed": 8,
+    "skipped": 0
+  },
+  "currentIntegration": "PENDING_FINAL_SOURCE_FREEZE_FACTS_GRAPH_CALLERS",
+  "directRoleAcquisition": {
+    "pass": 30,
+    "stop": [
+      {
+        "source": "scripts/check-capability-swarm-boundary.mjs",
+        "sourceHashMatchesFrozenRecipe": true,
+        "currentMainPrimaryBytesEqual": true,
+        "roleCheck": "DOCUMENTATION_TOOL_OUTPUT_ROLE_UNQUALIFIED: scripts/check-capability-swarm-boundary.mjs; selected producer/helper/initialization custody changed",
+        "purposeInputs": [
+          {
+            "path": "charts/kubeclaw/files/config/swarm.config.json",
+            "candidateMatch": true,
+            "currentMatch": true
+          },
+          {
+            "path": "docs/generated/inventory/documentation-source-revision.json",
+            "candidateMatch": true,
+            "currentMatch": true
+          },
+          {
+            "path": "docs/site/use/workflows/wait-resume/platform.template.json",
+            "candidateMatch": true,
+            "currentMatch": true
+          },
+          {
+            "path": "scripts/docs-publication.mjs",
+            "candidateMatch": true,
+            "currentMatch": true
+          },
+          {
+            "path": "skills/common/plugin-runtime/foundation/config/platform.schema.json",
+            "candidateMatch": true,
+            "currentMatch": true
+          },
+          {
+            "path": "skills/common/plugin-runtime/foundation/config/platform.ts",
+            "candidateMatch": true,
+            "currentMatch": true
+          },
+          {
+            "path": "skills/common/plugin-runtime/foundation/registry/capabilities.ts",
+            "candidateMatch": true,
+            "currentMatch": true
+          },
+          {
+            "path": "skills/nova/core/execution/authorization.ts",
+            "candidateMatch": true,
+            "currentMatch": true
+          },
+          {
+            "path": "tests/verification/e2e/support/config-profiles/standard.json",
+            "candidateMatch": true,
+            "currentMatch": true
+          },
+          {
+            "path": "tests/verification/e2e/support/platform-config.ts",
+            "candidateMatch": true,
+            "currentMatch": true
+          }
+        ],
+        "callersMatch": true
+      }
+    ]
+  },
+  "aggregateRegression": "NOT_PASS_44_OF_45_SAME_UNTOUCHED_BASELINE_DIAGNOSTIC_FAILURE",
+  "report": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/documentation-purpose-independent-review.md",
+  "newGateAcceptance": false
+}

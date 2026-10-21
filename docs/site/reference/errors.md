@@ -3,9 +3,9 @@
 Status: bounded reference; discovery limitations stated below
 Audience: operator, developer, plugin author, maintainer
 Owner: documentation; named components own diagnostic and delivery semantics
-Evidence: skills/common/plugins/transport-publisher/src/adapter.ts; skills/common/plugins/runtime-dispatch/src/adapter.ts; skills/common/plugins/network-http/src/adapter.ts; skills/nova/core/execution/adapters.ts; skills/common/plugin-runtime/foundation/registry/errors.ts; skills/nova/core/execution/stage-executor.ts; skills/worker/core/worker/attempt-executor.ts; skills/worker/core/worker/phase-deadline.ts; skills/prism/server/worker-service.ts; scripts/generate-buster-error-reference.mjs
+Evidence: skills/common/plugins/transport-publisher/src/adapter.ts; skills/common/plugins/runtime-dispatch/src/adapter.ts; skills/common/plugins/network-http/src/adapter.ts; skills/nova/core/execution/adapters.ts; skills/common/plugin-runtime/foundation/registry/errors.ts; skills/nova/core/execution/stage-executor.ts; skills/worker/core/worker/attempt-executor.ts; skills/worker/core/worker/phase-deadline.ts; skills/prism/server/worker-service.ts; scripts/generate-buster-error-reference.mjs; tools/native-worker-nri/main.go; scripts/kubernetes-api-probe.mjs; scripts/render-kubernetes-api-probe.mjs
 Applies to: the named diagnostic representations, families and current source boundaries below
-Last verified: 2026-10-15 original topics; HTTP error chapter source and local probes 2026-10-21 only; no live recovery
+Last verified: 2026-10-15 original topics; HTTP error chapter source and local probes 2026-10-21; NRI units and API-validator controls 2026-10-21; no live recovery
 
 ## Start with the first owning boundary
 
@@ -65,6 +65,8 @@ procedure; do not copy one component's recovery rule to a similar prefix.
 | Observer `OBSERVER_*` / `REQUIRED_OBSERVER_*` | Actual subscription, delivery attempts, sink receipt and checkpoint | [Events and delivery](events.md), [telemetry](../understand/telemetry.md) | Use bounded policy and retained identities; do not advance checkpoints manually |
 | Audit `AUDIT_*` and journal failures | Correct event file/run, possible acquisition changes, chain integrity | [Audit acquisition](events.md#audit-acquisition-can-change-the-journal) | Preserve original evidence before deciding retry; no unchanged-byte assumption |
 | OpenClaw Redis transport | Exact typed transport-policy or dependency error | [Telemetry](../understand/telemetry.md), [environment](environment-variables.md) | Correct the actual dependency/transport condition; do not disable protection to hide the failure |
+| Native host `NATIVE_NRI_*` | Build/policy-check versus plugin Configure/container callback, selected binary/policy/runtime identity | [Native NRI diagnostics](#native-nri-policy-and-callback-diagnostics), [native fixture-host preparation](../extend/developer-handbook.md#prepare-a-native-worker-fixture-host) | Fix the owning rejection before admission; no automatic K3s/service restart or removal of retained pools/state |
+| Kubernetes identity-path `API_PROBE_*` | Original renderer versus actual Job/Pod/origin/token/HTTPS response and matching probe JSON | [Identity-path probe diagnostics](#kubernetes-identity-path-probe-diagnostics), [network/identity boundaries](../understand/security-and-trust.md#network-segmentation-and-negative-paths) | Rendering and a positive path do not prove negative policy or controller state; preserve exact created identities before authorized cleanup |
 | Dependency / unknown component | Original cause and actual owner, not a guessed family | [Diagnosis](../use/diagnose.md) | Stop until the operation's outcome and supported recovery are known |
 
 The Buster code page remains the owner of its generated mechanical rows. Its
@@ -351,6 +353,186 @@ to make a maintained integration fixture pass.
 > [Durable request conflict at existing-record lookup](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/skills/common/plugin-runtime/foundation/observability/record-retirement.ts#L121-L136).
 >
 > [Durable CAS, capacity, retirement and write errors](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/skills/common/plugin-runtime/foundation/observability/durable-records.ts#L183-L219).
+
+## Native NRI policy and callback diagnostics
+
+`NATIVE_NRI_*` belongs to the native Worker host integration, not the Worker
+attempt/result schema or a Kubernetes HTTP response. Establish whether the
+message came from a build, `--check-policy`, plugin startup, or a container
+callback. Retain the complete first error, selected binary/policy identities,
+node/runtime version and relevant host logs without credentials.
+
+The original `--check-policy POLICY_JSON` mode reads and validates that file,
+prints `NATIVE_NRI_POLICY_VALID` on success, and exits. Interpret that string
+only after establishing the actual selected binary identity; the installer
+executes a supplied bundle binary and does not attest its bytes. This mode
+does **not** connect to
+containerd, register NRI, create a container, or prove a worker adjustment. This
+mode does not itself require real UID 0; the file must satisfy its root-owned
+policy checks. Normal plugin startup separately requires real UID 0 and reads
+`/etc/kubeclaw/native-nri.json`.
+
+| Exact message | Actual rejecting boundary | Decision before retry |
+| --- | --- | --- |
+| `NATIVE_NRI_POLICY_NOT_TRUSTED` | Opened policy is not a regular root-owned file, permits group/world writes, exceeds 65,536 bytes, or lacks the required native stat representation. | Stop before installation/start. Verify the selected authority and owner/mode/size; do not make an arbitrary copied policy trusted merely to clear the guard. |
+| `NATIVE_NRI_POLICY_TRAILING_DATA` | A first JSON value decoded, but the next decode was not end-of-file. | Inspect the exact selected bytes. Whitespace after one value is allowed; a second value or malformed trailing data is not. First-value JSON/unknown-field errors can instead remain native decoder errors. |
+| `NATIVE_NRI_CONFIGURATION_INVALID` | Schema version is not 1, selected containerd version fails the checked-in 2.2-or-later-in-major 2 grammar, or the role map does not contain exactly two entries. | Reconcile the supported policy and actual runtime selection. A version-shaped string is not evidence that the runtime exists or is running it. |
+| `NATIVE_NRI_SELECTION_INVALID` | Required `buster`/`prism` selection is absent, namespace/container name fails the exact lower-case label grammar, or policy digest is not 64 lower-case hexadecimal characters. | Correct the owning generated policy and selected workload binding; do not broaden selection to unrelated containers. |
+| `NATIVE_NRI_SELECTION_AMBIGUOUS` | Both roles select the same namespace **and** container name. | Resolve role ownership before enabling the plugin. Do not guess which role should own the container. |
+| `NATIVE_NRI_SELECTED_RUNTIME_REQUIRED` | Configure receives non-whitespace extra configuration, a runtime other than exact `containerd`, or a different complete selected version. Only a single optional leading `v` is ignored in the version comparison. | Compare the original selected/reported versions, including release/build suffixes. Correct the actual runtime/policy authority, not the comparison guard. |
+| `NATIVE_NRI_SUPERVISOR_SELECTION_REJECTED` | A nonempty role annotation selects no configured role, the Pod namespace differs, or the policy annotation differs. These checks precede the container-name check. | Preserve Pod/role/policy identity and investigate the mismatch. An unannotated Pod is ignored; a different container is ignored only after the Pod's selection checks pass. |
+| `NATIVE_NRI_SANDBOX_BINDING_REQUIRED` | Selected Pod ID or UID is empty, or the container's sandbox ID differs from the Pod's ID. | Stop this admission and resolve the original sandbox binding. This branch returns no adjustment; it does not prove the fate of earlier containers. |
+| `NATIVE_NRI_PLUGIN_IDENTITY_INVALID` | An SDK launcher-supplied plugin name/index differs from `kubeclaw-native`/`10`. Missing values use the original fallback options. | Check the actual launcher identity and selected binary. Successful local stub construction is not plugin registration or workload-adjustment evidence. |
+| `NATIVE_NRI_HOST_ROOT_REQUIRED` | Normal plugin startup has nonzero real UID. | Use the approved native-host owner/runtime setup. Do not turn an unprivileged shared developer environment into that host. |
+
+File open/stat, JSON decode, NRI SDK construction and SDK run failures can retain
+native error text rather than a `NATIVE_NRI_*` prefix. Normal main prints a
+returned error to stderr and exits 1. The selected container callback returns its
+error and no adjustment at the rejecting site; the SDK/container runtime owns
+the upstream lifecycle. No universal rollback, durable attempt result or safe
+restart follows from this namespace.
+
+The builder has separate `NATIVE_NRI_BUILD_OUTPUT_EXISTS` and
+`NATIVE_NRI_SELECTED_GO_VERSION_REQUIRED` guards. It checks the PATH-selected Go
+version against central `GO_VERSION`, verifies modules, and builds a new output
+path. A build path printed to stdout is not proof that an installed plugin has
+those bytes or that its target OS/architecture matches another host.
+
+The initial installer validates the bundled policy before installing host files,
+refuses an existing installation, and starts the pool service without activating
+NRI. The AX41 activation and historical launch-repair scripts have separate,
+mutating host prerequisites and restart K3s. Do **not** run either merely because
+a diagnostic has this prefix. They are not a generic retry or rollback command;
+a later failure can follow installed files or a service/runtime restart. Keep
+the exact bundle/backup and first failure for the host owner. Do not delete live
+pools, retained ownership state or installed authority files to make readiness
+green. Follow the [native fixture-host boundary](../extend/developer-handbook.md#prepare-a-native-worker-fixture-host)
+and [native pool policy](worker-profiles-and-roles.md#native-pool-policy).
+
+> **Source — exact emitter, entry mode and selected callers**
+>
+> **Claim:** Policy-check, startup and selected callback failures have the distinct
+> rejecting boundaries above; build/install/activation are separate operations.
+>
+> **Implementation:** [Original NRI policy loader and validation](https://github.com/datrab/kubeclaw/blob/cfc97be096908c1193877d054bb80662120f1eca/tools/native-worker-nri/main.go#L36-L85),
+> [Configure/container callback and launcher identity](https://github.com/datrab/kubeclaw/blob/cfc97be096908c1193877d054bb80662120f1eca/tools/native-worker-nri/main.go#L87-L132),
+> [startup versus policy-check mode](https://github.com/datrab/kubeclaw/blob/cfc97be096908c1193877d054bb80662120f1eca/tools/native-worker-nri/main.go#L134-L167).
+>
+> **Contract/setting:** [Policy fields](https://github.com/datrab/kubeclaw/blob/cfc97be096908c1193877d054bb80662120f1eca/tools/native-worker-nri/main.go#L23-L33),
+> [selected Go and SDK module versions](https://github.com/datrab/kubeclaw/blob/cfc97be096908c1193877d054bb80662120f1eca/tools/native-worker-nri/go.mod#L1-L10),
+> [central Go selection](https://github.com/datrab/kubeclaw/blob/cfc97be096908c1193877d054bb80662120f1eca/versions.json#L20-L22).
+> [Exact builder guards](https://github.com/datrab/kubeclaw/blob/cfc97be096908c1193877d054bb80662120f1eca/scripts/build-native-worker-nri.mjs#L8-L19),
+> [initial validation and existing-install stop](https://github.com/datrab/kubeclaw/blob/cfc97be096908c1193877d054bb80662120f1eca/scripts/install-native-worker-pools-stage.sh#L7-L32),
+> [installation/start and explicit remaining limits](https://github.com/datrab/kubeclaw/blob/cfc97be096908c1193877d054bb80662120f1eca/scripts/install-native-worker-pools-stage.sh#L45-L66),
+> [AX41 activation prerequisites and selected-policy checks](https://github.com/datrab/kubeclaw/blob/cfc97be096908c1193877d054bb80662120f1eca/scripts/activate-native-worker-ax41.sh#L15-L59),
+> [activation writes, restart and verification limits](https://github.com/datrab/kubeclaw/blob/cfc97be096908c1193877d054bb80662120f1eca/scripts/activate-native-worker-ax41.sh#L60-L102),
+> [historical launch repair's exact scope](https://github.com/datrab/kubeclaw/blob/cfc97be096908c1193877d054bb80662120f1eca/scripts/repair-native-nri-launch.sh#L5-L35).
+>
+> **Test evidence:** The original [launcher identity tests](https://github.com/datrab/kubeclaw/blob/cfc97be096908c1193877d054bb80662120f1eca/tools/native-worker-nri/main_test.go#L19-L43),
+> [Configure version-prefix test](https://github.com/datrab/kubeclaw/blob/cfc97be096908c1193877d054bb80662120f1eca/tools/native-worker-nri/main_test.go#L45-L61),
+> [NRI wire/OCI serialization test](https://github.com/datrab/kubeclaw/blob/cfc97be096908c1193877d054bb80662120f1eca/tools/native-worker-nri/main_test.go#L78-L131),
+> [selection tests](https://github.com/datrab/kubeclaw/blob/cfc97be096908c1193877d054bb80662120f1eca/tools/native-worker-nri/main_test.go#L133-L159) and
+> [runtime/root-owned-file controls](https://github.com/datrab/kubeclaw/blob/cfc97be096908c1193877d054bb80662120f1eca/tools/native-worker-nri/main_test.go#L161-L206)
+> completed with `go test -mod=readonly -count=1 -json ./...` using Go 1.26.5
+> and private fresh caches: five top-level tests and six subtests passed, with
+> no failures or skips. This observed unit process ran with real UID 0 and
+> exercised root-owned temporary-file guards; it was not a prepared native
+> Worker host or a general non-root reproduction claim. Original source and
+> module-file bytes were unchanged.
+>
+> **Revision:** `cfc97be096908c1193877d054bb80662120f1eca`; linked program, test and
+> setting bytes were checked against this revision.
+>
+> **Limit:** These unit checks exercise SDK construction, Configure, serialized
+> OCI changes and selected policy-file controls—not SDK registration, a native
+> host, kernel isolation, containerd execution or recovery. They do not execute
+> installation/activation or establish every error branch.
+
+## Kubernetes identity-path probe diagnostics
+
+`API_PROBE_*` belongs to the standalone Kubernetes identity-path probe, not
+`kubeclaw.network-http:http` or a universal HTTP error namespace. The renderer
+prints a ConfigMap and Job; it does not apply or run them. Its
+`API_PROBE_RUNNING_SOURCE_POD_REQUIRED` name checks Pod kind, nonempty UID,
+ServiceAccount and node fields—not Pod phase or live ownership. A local Pending
+Pod-shaped fixture passes this guard. Use independently observed current Pod
+identity before treating a rendered probe as evidence for a workload.
+
+The rendered probe Pod template copies that Pod's labels, ServiceAccount and selected node,
+mounts the probe/options through the same-named ConfigMap, and uses the centrally
+pinned Node image. It has `backoffLimit:0`, an active deadline of 600 seconds and
+`restartPolicy:Never`. Its readiness probe intentionally fails. That does not
+prove universal exclusion from Service traffic: selectors, policy and Service
+`publishNotReadyAddresses` remain separate receiving conditions.
+
+| Exact message or family | Actual boundary | Decision before retry |
+| --- | --- | --- |
+| `API_PROBE_RUNNING_SOURCE_POD_REQUIRED`, `API_PROBE_PINNED_IMAGE_REQUIRED` | Renderer lacks the named source fields, or central Node image lacks its required digest suffix. | Stop before applying rendered objects. Verify the original Pod/image selection; rendering alone is not cluster or image-acquisition proof. |
+| `API_SERVICE_AND_ENDPOINT_ORIGINS_REQUIRED` | Origins are not an array of 2–32 entries distinct under the raw JavaScript `Set` comparison. This is not normalized-URL uniqueness. | Supply the approved Service origin plus selected endpoint origins. Equivalent IP-origin spellings can pass as separate entries; do not infer independent network paths or replace a rejected endpoint with an unrelated reachable host. |
+| `API_PROBE_HTTPS_ORIGIN_REQUIRED` | Parsed URL is not HTTPS or includes credentials, a non-root path, query or fragment. | Correct the exact origin. URL construction can also throw a native parser error; do not print credential-bearing input. |
+| `API_PROBE_SERVICE_443_REQUIRED` | First URL is not `kubernetes.default.svc` with no explicit nondefault port. | Restore the selected Service origin. Native URL normalization can remove an explicit default 443 port; the guard tests the parsed URL. |
+| `API_PROBE_ENDPOINT_IP_REQUIRED` | A later URL hostname is not an IP address. | Use the actual approved endpoint IPs, not guessed DNS aliases. Origin validation is not reachability proof. |
+| `API_PROBE_IDENTITY_INVALID`, `API_PROBE_WRONG_SERVICE_ACCOUNT` | Namespace/SA fails the regular-expression test after JavaScript coercion, or decoded token `sub` differs from the interpolated `system:serviceaccount:<namespace>:<SA>`. There is no preceding string-type guard. | Resolve the original workload/token binding and actual value types. Values such as `null` and `7` can pass the regex and fail later at file/token handling instead. Local payload decoding is not signature verification, RBAC validation or proof that the API accepted the token. |
+| `API_PROBE_HTTP_<status>` | A selected origin returns a status other than 200; that response is destroyed rather than followed as a redirect. | Retain the actual status, origin and original probe/Pod identity. Check the selected API, authentication, authorization, transport and proxy owner; the code does not distinguish those causes. It is not a reason to widen policy or replace credentials blindly. |
+| `API_PROBE_RESPONSE_LIMIT`, `API_PROBE_RESPONSE_INVALID`, `API_PROBE_NOT_KUBERNETES_SERVICE_LIST` | Response exceeds 8 MiB, JSON cannot be decoded, or body lacks `kind: ServiceList` and array `items`. | Preserve partial output/first cause. Inspect the actual responder and representation; a successful connection or 200 status is insufficient. |
+| Native file/token/URL/HTTPS error | Reading token/CA, decoding token JSON, parsing URL, TLS/socket/DNS or the per-request 15-second abort failed without a custom code. | Preserve the first exception and selected identity/time. There is no probe-specific code for every native failure; do not relabel all failures as an HTTP status. |
+
+Origin distinctness is checked before URL parsing. For example, the Service
+origin followed by `https://127.0.0.1` and `https://127.0.0.1:443/` passes despite
+the two endpoint strings normalizing to the same origin. The identity regex also
+does not establish string types: a later missing-token-file error can occur
+without `API_PROBE_IDENTITY_INVALID`. Preserve the actual input and first error;
+do not infer supported typed input or authentication from these admission tests.
+
+The child reads its projected token/CA and sequentially GETs
+`/api/v1/namespaces/<namespace>/services?limit=1` at each origin. TLS uses the
+provided CA and `kubernetes.default.svc` server name even for endpoint-IP URLs.
+Success is one JSON object with `ok`, decoded ServiceAccount subject and checked
+origins. It is not a signed receipt or continuous readiness guarantee. The
+returned exclusions explicitly leave negative private-target policy, CNI drop
+verdicts and controller reconciliation unproved.
+
+This inspected standalone renderer/probe pair supplies no apply/log/cleanup
+orchestrator. Rendering again creates a new random name, not a retry of
+an existing Job identity. Retain the actual created Job/ConfigMap names, source
+Pod UID, selected image/origins, Job conditions, Pod/container exit status and
+complete logs before any authorized cleanup. Job completion without matching
+probe JSON is not this check's success. The renderer sets no completed-Job TTL
+and no ConfigMap owner reference; do not promise automatic cleanup of both.
+Clean only owner-approved exact created objects, never source Pods, broad label
+matches or unrelated policy. Use the [network/identity boundary](../understand/security-and-trust.md#network-segmentation-and-negative-paths)
+when deciding what a positive path probe leaves unproved.
+
+> **Source — standalone renderer, read-only request and actual result**
+>
+> **Claim:** The standalone renderer admits source fields and prints objects;
+> the probe validates origins/decoded subject and reports bounded GET results,
+> not universal workload, network-policy or recovery evidence.
+>
+> **Implementation:** [Renderer admission and source identity/options](https://github.com/datrab/kubeclaw/blob/cfc97be096908c1193877d054bb80662120f1eca/scripts/render-kubernetes-api-probe.mjs#L6-L20),
+> [Job, identity/node selection and printed YAML](https://github.com/datrab/kubeclaw/blob/cfc97be096908c1193877d054bb80662120f1eca/scripts/render-kubernetes-api-probe.mjs#L21-L39),
+> [Origin and decoded-subject guards](https://github.com/datrab/kubeclaw/blob/cfc97be096908c1193877d054bb80662120f1eca/scripts/kubernetes-api-probe.mjs#L7-L44),
+> [HTTPS/status/bytes/body and CLI output](https://github.com/datrab/kubeclaw/blob/cfc97be096908c1193877d054bb80662120f1eca/scripts/kubernetes-api-probe.mjs#L47-L72).
+>
+> **Contract/setting:** [Central Node image selection](https://github.com/datrab/kubeclaw/blob/cfc97be096908c1193877d054bb80662120f1eca/versions.json#L29-L32);
+> the linked renderer fixes Job retry/deadline, projected identity and node
+> placement, while the linked probe supplies origin/subject and response guards.
+>
+> **Test evidence:** No maintained standalone test suite for this inspected
+> pair was found. Eight author-owned non-live controls exercised the original
+> validator/renderer (including Pending-Pod acceptance and missing-UID rejection).
+> Two separate reviewer-owned controls confirmed equivalent normalized endpoint
+> spellings are accepted and coercive non-string identity values reach missing-
+> token `ENOENT` before HTTPS. These are bounded controls, not an invented test
+> suite or a live request result.
+>
+> **Revision:** `cfc97be096908c1193877d054bb80662120f1eca`; linked program and
+> setting bytes were checked against this revision.
+>
+> **Limit:** No token or CA acquisition, HTTPS request, created Job, API apply,
+> CNI/kernel check or live recovery was established by these controls. The
+> reviewer missing-token control invoked the original verifier but stopped at
+> file acquisition; the author controls did not invoke its request path.
 
 ## Diagnose uncertainty before retry
 
