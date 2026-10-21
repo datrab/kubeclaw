@@ -1,0 +1,6 @@
+{
+  "findings": [],
+  "overall_correctness": "patch is correct",
+  "overall_explanation": "PASS for the selected scripts/generate-knip-config.mjs Source/native consumer record. Inspected all 242 unchanged source lines. Lines 6\u20138 fix the repository root, output destination and --check selection. Lines 231\u2013236 compare generated configuration with existing bytes; the unique selected expression at line 235 emits a fixed message plus the fixed relative destination and exits 1. Package.json lines 66\u201368 establish generation and check callers; the && chain prevents Knip execution after mismatch. The configuration envelope and success result {ok, plugins, output} remain distinct from package/plugin/filesystem inputs and actual configuration bytes. This decision qualifies only the selected consumer role, not generated content, filesystem effects, other records or aggregate gates. No execution or file changes performed.",
+  "overall_confidence": 0.97
+}
