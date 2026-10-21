@@ -4,7 +4,7 @@
   "completionRecords": [
     {
       "id": "A911-03-REF-007-20261020",
-      "revision": "8f79e328cf216b53dc2e665896c65cbb19a2e0ce",
+      "revision": "744b9a15e06d202eed24884ac2248c36074354f1",
       "author": "PR13 automation capability author",
       "reviewer": "/root/review_a91103",
       "gateIds": [
@@ -47,6 +47,11 @@
           "command": "Read-only topic source/link review",
           "exitCode": 0,
           "observation": "Independent reviewer checked namespace semantics, denial decisions, three canonical reader links and three pinned source citations; no material findings."
+        },
+        {
+          "command": "Independent static-reader Source/reader-quality impact review plus original 76-test custody/publication/adapter/reader run",
+          "exitCode": 0,
+          "observation": "17 impacted existing records re-bound only for their affected files. Positive publication/asset selection retained; no broader API/live/deployment/all-accessibility acceptance. Review docs/blueprint/acceptance-evidence/static-reader-closeout-20261021/reader-closeout-review.json"
         }
       ],
       "review": {
@@ -85,11 +90,21 @@
           "summary": "Independent publication impact preserves original requirement/gate scopes and limits.53generated pages change only commit IDs;505cited source pairs byte-identical. Prose corrections/entry links preserve technical meaning. Derived page-map lastVerified fields use the same audited revision substitution only; ownership/routes/sources/checks byte-identical after revision normalization."
         }
       ],
-      "previousReviewedRevision": "08d8f917b08b3faacd0909ccbda3fa069a094a67"
+      "previousReviewedRevision": "08d8f917b08b3faacd0909ccbda3fa069a094a67",
+      "revisionHistory": [
+        {
+          "revision": "8f79e328cf216b53dc2e665896c65cbb19a2e0ce",
+          "reason": "Preserved by independent local static-reader review; original publisher delta limited to new renderer import/build, CI validation gates and truthful reader/map projection. Original content facts, grants, role boundaries and stated execution limits unchanged.",
+          "changedFiles": [
+            "scripts/docs-publication.mjs"
+          ],
+          "review": "docs/blueprint/acceptance-evidence/static-reader-closeout-20261021/reader-closeout-review.json"
+        }
+      ]
     },
     {
       "id": "AP09.1-ready-topics-20261020",
-      "revision": "3745dce3d46361806f86f17595f20aef1e044f1b",
+      "revision": "744b9a15e06d202eed24884ac2248c36074354f1",
       "author": "Documentation implementation authors before review campaign",
       "reviewer": "/root/review_ready_foundations (01a157c4-a915-7bd0-9f54-0de78011b9b7)",
       "gateIds": [],
@@ -151,6 +166,11 @@
           "command": "Independent topic source and reader review",
           "exitCode": 0,
           "observation": "All11 named scopes PASS;18 inspected/supporting pages,298 local links, no missing paths/anchors; decision identity namespaces compared."
+        },
+        {
+          "command": "Independent static-reader Source/reader-quality impact review plus original 76-test custody/publication/adapter/reader run",
+          "exitCode": 0,
+          "observation": "17 impacted existing records re-bound only for their affected files. Positive publication/asset selection retained; no broader API/live/deployment/all-accessibility acceptance. Review docs/blueprint/acceptance-evidence/static-reader-closeout-20261021/reader-closeout-review.json"
         }
       ],
       "review": {
@@ -291,6 +311,17 @@
             "docs/blueprint/acceptance-evidence/argocd-original-check-profile-20261021/argocd-role-propagation.json",
             "docs/blueprint/acceptance-evidence/argocd-original-check-profile-20261021/adapter-check-results.json"
           ]
+        }
+      ],
+      "revisionHistory": [
+        {
+          "revision": "3745dce3d46361806f86f17595f20aef1e044f1b",
+          "reason": "Preserved by independent local static-reader review; original publisher delta limited to new renderer import/build, CI validation gates and truthful reader/map projection. Original content facts, grants, role boundaries and stated execution limits unchanged.",
+          "changedFiles": [
+            "docs/site/reference/generated-documentation-map.json",
+            "scripts/docs-publication.mjs"
+          ],
+          "review": "docs/blueprint/acceptance-evidence/static-reader-closeout-20261021/reader-closeout-review.json"
         }
       ]
     },
@@ -1214,7 +1245,7 @@
     },
     {
       "id": "Reviewed-corrections-20261020",
-      "revision": "3745dce3d46361806f86f17595f20aef1e044f1b",
+      "revision": "744b9a15e06d202eed24884ac2248c36074354f1",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/review_worker_ready",
       "gateIds": [],
@@ -1288,6 +1319,11 @@
           "command": "Independent focused re-review and foundation impact review",
           "exitCode": 0,
           "observation": "All7 corrections source/reader/quality PASS; previous11foundation PASSs preserved."
+        },
+        {
+          "command": "Independent static-reader Source/reader-quality impact review plus original 76-test custody/publication/adapter/reader run",
+          "exitCode": 0,
+          "observation": "17 impacted existing records re-bound only for their affected files. Positive publication/asset selection retained; no broader API/live/deployment/all-accessibility acceptance. Review docs/blueprint/acceptance-evidence/static-reader-closeout-20261021/reader-closeout-review.json"
         }
       ],
       "review": {
@@ -1437,11 +1473,21 @@
           ]
         }
       ],
-      "previousReviewedRevision": "078105e40a50f23983e31c136f9bd81912ae6310"
+      "previousReviewedRevision": "078105e40a50f23983e31c136f9bd81912ae6310",
+      "revisionHistory": [
+        {
+          "revision": "3745dce3d46361806f86f17595f20aef1e044f1b",
+          "reason": "Preserved by independent local static-reader review; original publisher delta limited to new renderer import/build, CI validation gates and truthful reader/map projection. Original content facts, grants, role boundaries and stated execution limits unchanged.",
+          "changedFiles": [
+            "docs/site/reference/generated-documentation-map.json"
+          ],
+          "review": "docs/blueprint/acceptance-evidence/static-reader-closeout-20261021/reader-closeout-review.json"
+        }
+      ]
     },
     {
       "id": "AP09-reader-operators-20261020",
-      "revision": "2f8a116e00d6d38a5cc5076b10befcabe426f9f4",
+      "revision": "744b9a15e06d202eed24884ac2248c36074354f1",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/review_worker_ready",
       "gateIds": [
@@ -1540,6 +1586,11 @@
           "command": "Independent operator topic/source/reader review",
           "exitCode": 0,
           "observation": "7 named requirements and whole A98-01/05/07 sourceAccuracy/readerUsability/quality PASS;51-row selection matrix exactly matches current discovery."
+        },
+        {
+          "command": "Independent static-reader Source/reader-quality impact review plus original 76-test custody/publication/adapter/reader run",
+          "exitCode": 0,
+          "observation": "17 impacted existing records re-bound only for their affected files. Positive publication/asset selection retained; no broader API/live/deployment/all-accessibility acceptance. Review docs/blueprint/acceptance-evidence/static-reader-closeout-20261021/reader-closeout-review.json"
         }
       ],
       "review": {
@@ -1610,7 +1661,17 @@
           ]
         }
       ],
-      "previousReviewedRevision": "3be8232a024f551f163d55f770c5fc97127d7902"
+      "previousReviewedRevision": "3be8232a024f551f163d55f770c5fc97127d7902",
+      "revisionHistory": [
+        {
+          "revision": "2f8a116e00d6d38a5cc5076b10befcabe426f9f4",
+          "reason": "Preserved by independent local static-reader review; original publisher delta limited to new renderer import/build, CI validation gates and truthful reader/map projection. Original content facts, grants, role boundaries and stated execution limits unchanged.",
+          "changedFiles": [
+            "scripts/docs-publication.mjs"
+          ],
+          "review": "docs/blueprint/acceptance-evidence/static-reader-closeout-20261021/reader-closeout-review.json"
+        }
+      ]
     },
     {
       "id": "AP09-reader-workflows-20261020",
@@ -1714,7 +1775,7 @@
     },
     {
       "id": "AP09-reader-developers-20261020",
-      "revision": "078105e40a50f23983e31c136f9bd81912ae6310",
+      "revision": "744b9a15e06d202eed24884ac2248c36074354f1",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/review_platform_ready",
       "gateIds": [
@@ -1850,6 +1911,11 @@
           "command": "Independent developer/source/reader review",
           "exitCode": 0,
           "observation": "14named requirements and whole A910-02 PASS;complete discovery51manifests/51pages/48pipeline packages/67registrations reconciled with no missing or orphan entries."
+        },
+        {
+          "command": "Independent static-reader Source/reader-quality impact review plus original 76-test custody/publication/adapter/reader run",
+          "exitCode": 0,
+          "observation": "17 impacted existing records re-bound only for their affected files. Positive publication/asset selection retained; no broader API/live/deployment/all-accessibility acceptance. Review docs/blueprint/acceptance-evidence/static-reader-closeout-20261021/reader-closeout-review.json"
         }
       ],
       "review": {
@@ -1970,11 +2036,22 @@
           ]
         }
       ],
-      "previousReviewedRevision": "2f8a116e00d6d38a5cc5076b10befcabe426f9f4"
+      "previousReviewedRevision": "2f8a116e00d6d38a5cc5076b10befcabe426f9f4",
+      "revisionHistory": [
+        {
+          "revision": "078105e40a50f23983e31c136f9bd81912ae6310",
+          "reason": "Preserved by independent local static-reader review; original publisher delta limited to new renderer import/build, CI validation gates and truthful reader/map projection. Original content facts, grants, role boundaries and stated execution limits unchanged.",
+          "changedFiles": [
+            ".github/workflows/docs-checks.yaml",
+            "scripts/docs-publication.mjs"
+          ],
+          "review": "docs/blueprint/acceptance-evidence/static-reader-closeout-20261021/reader-closeout-review.json"
+        }
+      ]
     },
     {
       "id": "AP09-reviewed-configuration-20261020",
-      "revision": "078105e40a50f23983e31c136f9bd81912ae6310",
+      "revision": "744b9a15e06d202eed24884ac2248c36074354f1",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/review_worker_ready",
       "gateIds": [],
@@ -2035,6 +2112,11 @@
           "command": "Independent configuration source/reader review",
           "exitCode": 0,
           "observation": "4named requirements sourceAccuracy/readerUsability/quality PASS;84 local targets checked. Index acceptance does not imply destination completeness."
+        },
+        {
+          "command": "Independent static-reader Source/reader-quality impact review plus original 76-test custody/publication/adapter/reader run",
+          "exitCode": 0,
+          "observation": "17 impacted existing records re-bound only for their affected files. Positive publication/asset selection retained; no broader API/live/deployment/all-accessibility acceptance. Review docs/blueprint/acceptance-evidence/static-reader-closeout-20261021/reader-closeout-review.json"
         }
       ],
       "review": {
@@ -2096,11 +2178,21 @@
           ]
         }
       ],
-      "previousReviewedRevision": "2f8a116e00d6d38a5cc5076b10befcabe426f9f4"
+      "previousReviewedRevision": "2f8a116e00d6d38a5cc5076b10befcabe426f9f4",
+      "revisionHistory": [
+        {
+          "revision": "078105e40a50f23983e31c136f9bd81912ae6310",
+          "reason": "Preserved by independent local static-reader review; original publisher delta limited to new renderer import/build, CI validation gates and truthful reader/map projection. Original content facts, grants, role boundaries and stated execution limits unchanged.",
+          "changedFiles": [
+            "scripts/docs-publication.mjs"
+          ],
+          "review": "docs/blueprint/acceptance-evidence/static-reader-closeout-20261021/reader-closeout-review.json"
+        }
+      ]
     },
     {
       "id": "AP09-reviewed-reference-20261020",
-      "revision": "ac6de3002f7556d2975da44616c6ed220e35e189",
+      "revision": "744b9a15e06d202eed24884ac2248c36074354f1",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/review_platform_ready",
       "gateIds": [],
@@ -2178,6 +2270,11 @@
           "command": "Independent reference source/reader review",
           "exitCode": 0,
           "observation": "5named requirements all3aspects PASS;47index destinations and51unique package destinations checked. Unchanged prior catalogue scope reused;glossary boundaries independently reviewed."
+        },
+        {
+          "command": "Independent static-reader Source/reader-quality impact review plus original 76-test custody/publication/adapter/reader run",
+          "exitCode": 0,
+          "observation": "17 impacted existing records re-bound only for their affected files. Positive publication/asset selection retained; no broader API/live/deployment/all-accessibility acceptance. Review docs/blueprint/acceptance-evidence/static-reader-closeout-20261021/reader-closeout-review.json"
         }
       ],
       "review": {
@@ -2250,11 +2347,21 @@
           ]
         }
       ],
-      "previousReviewedRevision": "2f8a116e00d6d38a5cc5076b10befcabe426f9f4"
+      "previousReviewedRevision": "2f8a116e00d6d38a5cc5076b10befcabe426f9f4",
+      "revisionHistory": [
+        {
+          "revision": "ac6de3002f7556d2975da44616c6ed220e35e189",
+          "reason": "Preserved by independent local static-reader review; original publisher delta limited to new renderer import/build, CI validation gates and truthful reader/map projection. Original content facts, grants, role boundaries and stated execution limits unchanged.",
+          "changedFiles": [
+            "scripts/docs-publication.mjs"
+          ],
+          "review": "docs/blueprint/acceptance-evidence/static-reader-closeout-20261021/reader-closeout-review.json"
+        }
+      ]
     },
     {
       "id": "AP09-reviewed-maintenance-20261020",
-      "revision": "3745dce3d46361806f86f17595f20aef1e044f1b",
+      "revision": "744b9a15e06d202eed24884ac2248c36074354f1",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/review_data_ready",
       "gateIds": [],
@@ -2306,6 +2413,11 @@
           "command": "Independent generator/source/reader review",
           "exitCode": 0,
           "observation": "MNT-013/016 all3aspects PASS: actual pinned source scanner semantics and separated authored catalogue guidance/prefix-suffix preservation.85local targets passed."
+        },
+        {
+          "command": "Independent static-reader Source/reader-quality impact review plus original 76-test custody/publication/adapter/reader run",
+          "exitCode": 0,
+          "observation": "17 impacted existing records re-bound only for their affected files. Positive publication/asset selection retained; no broader API/live/deployment/all-accessibility acceptance. Review docs/blueprint/acceptance-evidence/static-reader-closeout-20261021/reader-closeout-review.json"
         }
       ],
       "review": {
@@ -2410,11 +2522,21 @@
           ]
         }
       ],
-      "previousReviewedRevision": "078105e40a50f23983e31c136f9bd81912ae6310"
+      "previousReviewedRevision": "078105e40a50f23983e31c136f9bd81912ae6310",
+      "revisionHistory": [
+        {
+          "revision": "3745dce3d46361806f86f17595f20aef1e044f1b",
+          "reason": "Preserved by independent local static-reader review; original publisher delta limited to new renderer import/build, CI validation gates and truthful reader/map projection. Original content facts, grants, role boundaries and stated execution limits unchanged.",
+          "changedFiles": [
+            "scripts/docs-publication.mjs"
+          ],
+          "review": "docs/blueprint/acceptance-evidence/static-reader-closeout-20261021/reader-closeout-review.json"
+        }
+      ]
     },
     {
       "id": "AP09-reviewed-publication-navigation-20261020",
-      "revision": "078105e40a50f23983e31c136f9bd81912ae6310",
+      "revision": "744b9a15e06d202eed24884ac2248c36074354f1",
       "author": "Documentation implementation authors",
       "reviewer": "/root/review_publication",
       "gateIds": [
@@ -2454,6 +2576,11 @@
           "command": "Independent shared-parser canonical navigation traversal and role/task label review",
           "exitCode": 0,
           "observation": "166 of 166 positively registered pages reachable within three local page decisions: depth counts 1/22/142/1. Meaningful home and role/task labels inspected."
+        },
+        {
+          "command": "Independent static-reader Source/reader-quality impact review plus original 76-test custody/publication/adapter/reader run",
+          "exitCode": 0,
+          "observation": "17 impacted existing records re-bound only for their affected files. Positive publication/asset selection retained; no broader API/live/deployment/all-accessibility acceptance. Review docs/blueprint/acceptance-evidence/static-reader-closeout-20261021/reader-closeout-review.json"
         }
       ],
       "review": {
@@ -2577,7 +2704,18 @@
           ]
         }
       ],
-      "previousReviewedRevision": "3be8232a024f551f163d55f770c5fc97127d7902"
+      "previousReviewedRevision": "3be8232a024f551f163d55f770c5fc97127d7902",
+      "revisionHistory": [
+        {
+          "revision": "078105e40a50f23983e31c136f9bd81912ae6310",
+          "reason": "Preserved by independent local static-reader review; original publisher delta limited to new renderer import/build, CI validation gates and truthful reader/map projection. Original content facts, grants, role boundaries and stated execution limits unchanged.",
+          "changedFiles": [
+            "docs/site/reference/documentation-site.md",
+            "scripts/docs-publication.mjs"
+          ],
+          "review": "docs/blueprint/acceptance-evidence/static-reader-closeout-20261021/reader-closeout-review.json"
+        }
+      ]
     },
     {
       "id": "AP09-closeout-runtime-20261020",
@@ -2739,7 +2877,7 @@
     },
     {
       "id": "AP09-closeout-config-reference-20261020",
-      "revision": "078105e40a50f23983e31c136f9bd81912ae6310",
+      "revision": "744b9a15e06d202eed24884ac2248c36074354f1",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/close_config_reference",
       "gateIds": [],
@@ -2809,6 +2947,11 @@
           "command": "Independent configuration/reference source/reader and impact review",
           "exitCode": 0,
           "observation": "5 complete named requirement PASSs;full referenced topic semantics reviewed,broader incomplete reference families excluded."
+        },
+        {
+          "command": "Independent static-reader Source/reader-quality impact review plus original 76-test custody/publication/adapter/reader run",
+          "exitCode": 0,
+          "observation": "17 impacted existing records re-bound only for their affected files. Positive publication/asset selection retained; no broader API/live/deployment/all-accessibility acceptance. Review docs/blueprint/acceptance-evidence/static-reader-closeout-20261021/reader-closeout-review.json"
         }
       ],
       "review": {
@@ -2868,11 +3011,21 @@
           ]
         }
       ],
-      "previousReviewedRevision": "2f8a116e00d6d38a5cc5076b10befcabe426f9f4"
+      "previousReviewedRevision": "2f8a116e00d6d38a5cc5076b10befcabe426f9f4",
+      "revisionHistory": [
+        {
+          "revision": "078105e40a50f23983e31c136f9bd81912ae6310",
+          "reason": "Preserved by independent local static-reader review; original publisher delta limited to new renderer import/build, CI validation gates and truthful reader/map projection. Original content facts, grants, role boundaries and stated execution limits unchanged.",
+          "changedFiles": [
+            "scripts/docs-publication.mjs"
+          ],
+          "review": "docs/blueprint/acceptance-evidence/static-reader-closeout-20261021/reader-closeout-review.json"
+        }
+      ]
     },
     {
       "id": "AP09-closeout-developer-maintenance-20261020",
-      "revision": "078105e40a50f23983e31c136f9bd81912ae6310",
+      "revision": "744b9a15e06d202eed24884ac2248c36074354f1",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/close_developer_maintenance",
       "gateIds": [],
@@ -2950,6 +3103,11 @@
           "command": "Independent developer/operator/governance source/reader and impact review",
           "exitCode": 0,
           "observation": "11complete named requirement PASSs;3exact retained-root readerlinks resolved;existing scopes preserved separately."
+        },
+        {
+          "command": "Independent static-reader Source/reader-quality impact review plus original 76-test custody/publication/adapter/reader run",
+          "exitCode": 0,
+          "observation": "17 impacted existing records re-bound only for their affected files. Positive publication/asset selection retained; no broader API/live/deployment/all-accessibility acceptance. Review docs/blueprint/acceptance-evidence/static-reader-closeout-20261021/reader-closeout-review.json"
         }
       ],
       "review": {
@@ -3076,7 +3234,17 @@
           ]
         }
       ],
-      "previousReviewedRevision": "2f8a116e00d6d38a5cc5076b10befcabe426f9f4"
+      "previousReviewedRevision": "2f8a116e00d6d38a5cc5076b10befcabe426f9f4",
+      "revisionHistory": [
+        {
+          "revision": "078105e40a50f23983e31c136f9bd81912ae6310",
+          "reason": "Preserved by independent local static-reader review; original publisher delta limited to new renderer import/build, CI validation gates and truthful reader/map projection. Original content facts, grants, role boundaries and stated execution limits unchanged.",
+          "changedFiles": [
+            "scripts/docs-publication.mjs"
+          ],
+          "review": "docs/blueprint/acceptance-evidence/static-reader-closeout-20261021/reader-closeout-review.json"
+        }
+      ]
     },
     {
       "id": "AP09-closeout-ARC006-20261020",
@@ -4539,7 +4707,7 @@
     },
     {
       "id": "AP09-decision-record-content-20261021",
-      "revision": "3be8232a024f551f163d55f770c5fc97127d7902",
+      "revision": "744b9a15e06d202eed24884ac2248c36074354f1",
       "author": "Nova /root authored content and correction coordinator",
       "reviewer": "Independent Codex autoreview 2026-10-21 platform-ready-review",
       "gateIds": [],
@@ -4593,6 +4761,11 @@
           "command": "Independent whole DEC002 decision content review",
           "exitCode": 0,
           "observation": "Source accuracy, reader task and quality PASS; platform-change omissions separately fixed and reviewed."
+        },
+        {
+          "command": "Independent static-reader Source/reader-quality impact review plus original 76-test custody/publication/adapter/reader run",
+          "exitCode": 0,
+          "observation": "17 impacted existing records re-bound only for their affected files. Positive publication/asset selection retained; no broader API/live/deployment/all-accessibility acceptance. Review docs/blueprint/acceptance-evidence/static-reader-closeout-20261021/reader-closeout-review.json"
         }
       ],
       "review": {
@@ -4609,11 +4782,21 @@
       "evidence": [
         "docs/blueprint/acceptance-evidence/ready-topics-20261021/platform-ready-review.json",
         "docs/blueprint/acceptance-evidence/ready-topics-20261021/scope.json"
+      ],
+      "revisionHistory": [
+        {
+          "revision": "3be8232a024f551f163d55f770c5fc97127d7902",
+          "reason": "Preserved by independent local static-reader review; original publisher delta limited to new renderer import/build, CI validation gates and truthful reader/map projection. Original content facts, grants, role boundaries and stated execution limits unchanged.",
+          "changedFiles": [
+            "scripts/docs-publication.mjs"
+          ],
+          "review": "docs/blueprint/acceptance-evidence/static-reader-closeout-20261021/reader-closeout-review.json"
+        }
       ]
     },
     {
       "id": "AP09-documentation-agent-maintenance-20261021",
-      "revision": "3745dce3d46361806f86f17595f20aef1e044f1b",
+      "revision": "744b9a15e06d202eed24884ac2248c36074354f1",
       "author": "Nova /root authored content and correction coordinator",
       "reviewer": "Independent Codex autoreview 2026-10-21 maintenance-ready-review",
       "gateIds": [],
@@ -4676,6 +4859,10 @@
         "scripts/docs-parity-transition.mjs",
         "scripts/docs-platform-surface-inventory.mjs",
         "scripts/docs-publication.mjs",
+        "scripts/docs-reader/check-artifact.mjs",
+        "scripts/docs-reader/package-lock.json",
+        "scripts/docs-reader/package.json",
+        "scripts/docs-reader/renderer.mjs",
         "scripts/docs-status.mjs",
         "scripts/docs-tree-boundary.mjs",
         "scripts/external-helm-archives.json",
@@ -4695,6 +4882,7 @@
         "scripts/scan-runtime-images.sh",
         "scripts/tests/argocd-checked-artifacts.test.mjs",
         "scripts/tests/docs-publication-assets.test.mjs",
+        "scripts/tests/docs-reader.test.mjs",
         "scripts/tests/docs-source-freshness.test.mjs",
         "scripts/tests/vendor-external-helm-authorities.test.mjs",
         "scripts/updates/code-release.mjs",
@@ -4774,6 +4962,11 @@
           "command": "Independent whole MNT017 maintenance-guide review",
           "exitCode": 0,
           "observation": "Source accuracy, reader task and quality PASS; no global implementation qualification inferred."
+        },
+        {
+          "command": "Independent static-reader Source/reader-quality impact review plus original 76-test custody/publication/adapter/reader run",
+          "exitCode": 0,
+          "observation": "17 impacted existing records re-bound only for their affected files. Positive publication/asset selection retained; no broader API/live/deployment/all-accessibility acceptance. Review docs/blueprint/acceptance-evidence/static-reader-closeout-20261021/reader-closeout-review.json"
         }
       ],
       "review": {
@@ -4861,7 +5054,19 @@
           ]
         }
       ],
-      "previousReviewedRevision": "ac6de3002f7556d2975da44616c6ed220e35e189"
+      "previousReviewedRevision": "ac6de3002f7556d2975da44616c6ed220e35e189",
+      "revisionHistory": [
+        {
+          "revision": "3745dce3d46361806f86f17595f20aef1e044f1b",
+          "reason": "Preserved by independent local static-reader review; original publisher delta limited to new renderer import/build, CI validation gates and truthful reader/map projection. Original content facts, grants, role boundaries and stated execution limits unchanged.",
+          "changedFiles": [
+            ".github/workflows/docs-checks.yaml",
+            "docs/site/reference/documentation-site.md",
+            "scripts/docs-publication.mjs"
+          ],
+          "review": "docs/blueprint/acceptance-evidence/static-reader-closeout-20261021/reader-closeout-review.json"
+        }
+      ]
     },
     {
       "id": "AP09-specialists-whole-gate-20261021",
@@ -4981,7 +5186,7 @@
     },
     {
       "id": "AP09-complete-platform-change-content-20261021",
-      "revision": "078105e40a50f23983e31c136f9bd81912ae6310",
+      "revision": "744b9a15e06d202eed24884ac2248c36074354f1",
       "author": "Nova /root authored content and correction coordinator",
       "reviewer": "Independent Codex autoreview 2026-10-21 platform-final-review",
       "gateIds": [],
@@ -5134,6 +5339,11 @@
           "command": "Independent whole corrected CDV003/007/010/012 content review",
           "exitCode": 0,
           "observation": "Each original whole content obligation sourceAccuracy/readerUsability/quality PASS; previous accepted router scopes preserved."
+        },
+        {
+          "command": "Independent static-reader Source/reader-quality impact review plus original 76-test custody/publication/adapter/reader run",
+          "exitCode": 0,
+          "observation": "17 impacted existing records re-bound only for their affected files. Positive publication/asset selection retained; no broader API/live/deployment/all-accessibility acceptance. Review docs/blueprint/acceptance-evidence/static-reader-closeout-20261021/reader-closeout-review.json"
         }
       ],
       "review": {
@@ -5186,7 +5396,18 @@
           ]
         }
       ],
-      "previousReviewedRevision": "2f8a116e00d6d38a5cc5076b10befcabe426f9f4"
+      "previousReviewedRevision": "2f8a116e00d6d38a5cc5076b10befcabe426f9f4",
+      "revisionHistory": [
+        {
+          "revision": "078105e40a50f23983e31c136f9bd81912ae6310",
+          "reason": "Preserved by independent local static-reader review; original publisher delta limited to new renderer import/build, CI validation gates and truthful reader/map projection. Original content facts, grants, role boundaries and stated execution limits unchanged.",
+          "changedFiles": [
+            ".github/workflows/docs-checks.yaml",
+            "scripts/docs-publication.mjs"
+          ],
+          "review": "docs/blueprint/acceptance-evidence/static-reader-closeout-20261021/reader-closeout-review.json"
+        }
+      ]
     },
     {
       "id": "AP09-registry-data-path-20261021",
@@ -5507,7 +5728,7 @@
     },
     {
       "id": "AP09-complete-plugin-maintenance-mechanisms-20261021",
-      "revision": "ac6de3002f7556d2975da44616c6ed220e35e189",
+      "revision": "744b9a15e06d202eed24884ac2248c36074354f1",
       "author": "Nova /root documentation coordinator",
       "reviewer": "Independent Codex autoreview 2026-10-21 plugin-mechanisms whole original MNT obligations",
       "gateIds": [],
@@ -6049,6 +6270,11 @@
           "command": "AP08 choice/minimal/advanced/effectful/host-lifecycle/observer/reader-reference checks",
           "exitCode": 0,
           "observation": "npm notice run docs:ap08:choice:check\nnpm notice run node scripts/check-ap08-choice-guide.mjs\nAP08 choice-guide check passed (24 pinned source links, 12 decision scenarios)\nnpm notice run docs:ap08:minimal-plugin:check\nnpm notice run node scripts/check-ap08-minimal-plugin.mjs\n{\"ok\":true,\"journey\":\"ap08-minimal-pipeline-plugin\",\"packageTest\":\"passed\",\"roleOmission\":\"rejected\",\"roleInclusion\":\"passed\",\"activatedStages\":1,\"successFact\":\"Hello, KubeClaw!\",\"intentionalFailure\":\"failed\",\"invalidInput\":\"rejected\",\"removal\":\"stage-owner-missing\",\"retainedRunJournals\":2,\"persistenceBoundary\":\"in-memory journal; persistent recovery requires separate checks\"}\nnpm notice run docs:ap08:advanced-guides:check\nnpm notice run node scripts/check-ap08-advanced-guides.mjs\n{\"ok\":true,\"pages\":4,\"pinnedSourceLinks\":94,\"registrations\":{\"novaStages\":21,\"novaAdapters\":6,\"novaObservers\":0,\"busterTests\":17,\"busterFixtures\":2,\"busterReports\":1},\"suites\":12}\nnpm notice run docs:ap08:effectful:check\nnpm notice run node scripts/check-ap08-effectful-guide.mjs\n{\"ok\":true,\"referencePlugin\":\"kubeclaw.blueprint-sync\",\"capabilityOrder\":[\"git.sync\",\"git.commit\",\"state.append\",\"artifacts.write\"],\"duplicateAdapterInvocations\":1,\"nextEffectAfterLockRelease\":\"completed\",\"failedRetryAdapterInvocations\":1,\"acceptedWithoutReceipt\":true,\"recoveredByReceipt\":\"completed\",\"cancellation\":\"rejected\",\"persistenceBoundary\":\"memory journals; GNU flock-dependent checks reported separately\"}\nnpm notice run docs:ap08:host-lifecycle-catalogue:check\nnpm notice run node scripts/check-ap08-host-lifecycle-catalogue.mjs && node scripts/check-ap08-observers.mjs && node scripts/check-ap08-reader-references.mjs\n{\"ok\":true,\"pages\":54,\"packages\":51,\"authoredRecords\":51,\"sourceTargets\":435,\"pinnedLineLinks\":72,\"auditStatuses\":{\"locally-verified\":18,\"content-written\":33},\"localResults\":{\"passed\":18,\"unavailable\":32,\"not-run\":1}}\n{\"ok\":true,\"observers\":[\"kubeclaw.agent-observability:ingester\",\"kubeclaw.agent-observability:evidence\",\"kubeclaw.notification-observer:notifications\",\"kubeclaw.notification-observer:preview-delivery\",\"kubeclaw.telemetry-observer:telemetry\"],\"proof\":\"registry identities, role inclusion, and selected activation; no delivery claim\"}\n{\"ok\":true,\"localLinks\":878,\"pinnedLinks\":1055,\"pinnedObjects\":743,\"boundary\":\"Targets, Markdown anchors and Git source ranges only; claim semantics require reader review.\"}"
+        },
+        {
+          "command": "Independent static-reader Source/reader-quality impact review plus original 76-test custody/publication/adapter/reader run",
+          "exitCode": 0,
+          "observation": "17 impacted existing records re-bound only for their affected files. Positive publication/asset selection retained; no broader API/live/deployment/all-accessibility acceptance. Review docs/blueprint/acceptance-evidence/static-reader-closeout-20261021/reader-closeout-review.json"
         }
       ],
       "review": {
@@ -6089,7 +6315,17 @@
           ]
         }
       ],
-      "previousReviewedRevision": "5276ecde0b50f86936e58c5de2de233e5a061e1e"
+      "previousReviewedRevision": "5276ecde0b50f86936e58c5de2de233e5a061e1e",
+      "revisionHistory": [
+        {
+          "revision": "ac6de3002f7556d2975da44616c6ed220e35e189",
+          "reason": "Preserved by independent local static-reader review; original publisher delta limited to new renderer import/build, CI validation gates and truthful reader/map projection. Original content facts, grants, role boundaries and stated execution limits unchanged.",
+          "changedFiles": [
+            "scripts/docs-publication.mjs"
+          ],
+          "review": "docs/blueprint/acceptance-evidence/static-reader-closeout-20261021/reader-closeout-review.json"
+        }
+      ]
     },
     {
       "id": "AP09-litellm-complete-data-contract-20261021",
@@ -6231,7 +6467,7 @@
     },
     {
       "id": "AP09-complete-publication-reference-navigation-20261021",
-      "revision": "078105e40a50f23983e31c136f9bd81912ae6310",
+      "revision": "744b9a15e06d202eed24884ac2248c36074354f1",
       "author": "Nova /root documentation author and correction coordinator",
       "reviewer": "Independent Codex autoreview whole finished-reader-topics and LiteLLM audits with correction-final follow-up",
       "gateIds": [],
@@ -6339,6 +6575,11 @@
           "command": "node scripts/docs-governance.mjs --check",
           "exitCode": 0,
           "observation": "documentation governance passed (167 pages mapped)"
+        },
+        {
+          "command": "Independent static-reader Source/reader-quality impact review plus original 76-test custody/publication/adapter/reader run",
+          "exitCode": 0,
+          "observation": "17 impacted existing records re-bound only for their affected files. Positive publication/asset selection retained; no broader API/live/deployment/all-accessibility acceptance. Review docs/blueprint/acceptance-evidence/static-reader-closeout-20261021/reader-closeout-review.json"
         }
       ],
       "review": {
@@ -6359,11 +6600,23 @@
         "docs/blueprint/acceptance-evidence/finished-reader-closeout-20261021/ready-correction-final-review.json",
         "docs/blueprint/acceptance-evidence/finished-reader-closeout-20261021/scope.json",
         "docs/blueprint/acceptance-evidence/finished-reader-closeout-20261021/check-results.json"
+      ],
+      "revisionHistory": [
+        {
+          "revision": "078105e40a50f23983e31c136f9bd81912ae6310",
+          "reason": "Preserved by independent local static-reader review; original publisher delta limited to new renderer import/build, CI validation gates and truthful reader/map projection. Original content facts, grants, role boundaries and stated execution limits unchanged.",
+          "changedFiles": [
+            ".github/workflows/docs-checks.yaml",
+            "docs/site/reference/documentation-site.md",
+            "scripts/docs-publication.mjs"
+          ],
+          "review": "docs/blueprint/acceptance-evidence/static-reader-closeout-20261021/reader-closeout-review.json"
+        }
       ]
     },
     {
       "id": "AP09-complete-developer-reader-contracts-20261021",
-      "revision": "078105e40a50f23983e31c136f9bd81912ae6310",
+      "revision": "744b9a15e06d202eed24884ac2248c36074354f1",
       "author": "Nova /root documentation author and correction coordinator",
       "reviewer": "Independent Codex autoreview whole finished-reader-topics and LiteLLM audits with correction-final follow-up",
       "gateIds": [],
@@ -6582,6 +6835,11 @@
           "command": "node scripts/docs-governance.mjs --check",
           "exitCode": 0,
           "observation": "documentation governance passed (167 pages mapped)"
+        },
+        {
+          "command": "Independent static-reader Source/reader-quality impact review plus original 76-test custody/publication/adapter/reader run",
+          "exitCode": 0,
+          "observation": "17 impacted existing records re-bound only for their affected files. Positive publication/asset selection retained; no broader API/live/deployment/all-accessibility acceptance. Review docs/blueprint/acceptance-evidence/static-reader-closeout-20261021/reader-closeout-review.json"
         }
       ],
       "review": {
@@ -6602,7 +6860,252 @@
         "docs/blueprint/acceptance-evidence/finished-reader-closeout-20261021/ready-correction-final-review.json",
         "docs/blueprint/acceptance-evidence/finished-reader-closeout-20261021/scope.json",
         "docs/blueprint/acceptance-evidence/finished-reader-closeout-20261021/check-results.json"
+      ],
+      "revisionHistory": [
+        {
+          "revision": "078105e40a50f23983e31c136f9bd81912ae6310",
+          "reason": "Preserved by independent local static-reader review; original publisher delta limited to new renderer import/build, CI validation gates and truthful reader/map projection. Original content facts, grants, role boundaries and stated execution limits unchanged.",
+          "changedFiles": [
+            ".github/workflows/docs-checks.yaml",
+            "scripts/docs-publication.mjs"
+          ],
+          "review": "docs/blueprint/acceptance-evidence/static-reader-closeout-20261021/reader-closeout-review.json"
+        }
       ]
+    },
+    {
+      "id": "AP09-complete-static-reader-search-20261021",
+      "revision": "744b9a15e06d202eed24884ac2248c36074354f1",
+      "author": "Nova /root documentation author and implementation coordinator",
+      "reviewer": "Independent Codex autoreview static-reader whole PUB-002 Source/reader-quality closeout",
+      "verdict": "PASS",
+      "gateIds": [],
+      "requirementIds": [
+        "PUB-002"
+      ],
+      "pages": [
+        "docs/site/README.md",
+        "docs/site/decisions/README.md",
+        "docs/site/decisions/acceptance.md",
+        "docs/site/decisions/core-and-plugins.md",
+        "docs/site/decisions/echo.md",
+        "docs/site/decisions/implementation.md",
+        "docs/site/decisions/prism.md",
+        "docs/site/decisions/runtime-and-operations.md",
+        "docs/site/decisions/test-gate.md",
+        "docs/site/extend/README.md",
+        "docs/site/extend/buster.md",
+        "docs/site/extend/contracts.md",
+        "docs/site/extend/developer-handbook.md",
+        "docs/site/extend/documentation-maintenance.md",
+        "docs/site/extend/effectful-plugin.md",
+        "docs/site/extend/first-plugin.md",
+        "docs/site/extend/host-and-engine.md",
+        "docs/site/extend/lint.md",
+        "docs/site/extend/nova.md",
+        "docs/site/extend/platform/README.md",
+        "docs/site/extend/platform/buster.md",
+        "docs/site/extend/platform/prism.md",
+        "docs/site/extend/plugin-catalogue/README.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw-agent-observer.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw-ops.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw-prism.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.agent-observability.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.api-flow.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.architecture-validator.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.artifact-store.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.axe.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.blueprint-sync.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.buster-quality-gate.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.case-study.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.command-runner.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.container-build.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.coverage-budget.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.delivery-lint.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.demo-auth-smoke.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.demo-handoff.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.direct-command.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.git-workspace.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.http.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.human-approval.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.implementation-agent.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.junit-report.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.kubernetes-fixture.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.lighthouse.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.lint.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.network-http.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.notification-observer.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.openapi.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.openclaw-agent-events.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.operator-messaging.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.pipeline-review.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.playwright.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.preflight-contract.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.prism-design.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.project-summary.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.redis-transport.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.remote-test-gate.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.repository-adapter.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.review.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.runtime-dispatch.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.secret-resolver.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.security-providers.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.size-budget.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.state-store.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.tailscale-exposure.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.telemetry-observer.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.telemetry-store.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.transport-publisher.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.visual.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.wait-store.md",
+        "docs/site/extend/testing.md",
+        "docs/site/product-surfaces.md",
+        "docs/site/reference/README.md",
+        "docs/site/reference/api-object-updates.md",
+        "docs/site/reference/buster-error-codes.md",
+        "docs/site/reference/buster-namespace-lease.md",
+        "docs/site/reference/buster-provider-configuration.md",
+        "docs/site/reference/buster-runtime-configuration.md",
+        "docs/site/reference/buster-suites.md",
+        "docs/site/reference/capabilities.md",
+        "docs/site/reference/cli.md",
+        "docs/site/reference/configuration-change-impact.md",
+        "docs/site/reference/configuration-compatibility.md",
+        "docs/site/reference/configuration-errors.md",
+        "docs/site/reference/configuration-precedence.md",
+        "docs/site/reference/configuration.md",
+        "docs/site/reference/contracts.md",
+        "docs/site/reference/documentation-governance.md",
+        "docs/site/reference/documentation-site.md",
+        "docs/site/reference/endpoints.md",
+        "docs/site/reference/environment-variables.md",
+        "docs/site/reference/errors.md",
+        "docs/site/reference/events.md",
+        "docs/site/reference/glossary.md",
+        "docs/site/reference/helm-values.md",
+        "docs/site/reference/host-and-prism-configuration.md",
+        "docs/site/reference/images-and-digests.md",
+        "docs/site/reference/lint-policy-generated.md",
+        "docs/site/reference/lint-policy.md",
+        "docs/site/reference/lint-rules.md",
+        "docs/site/reference/nova-project.md",
+        "docs/site/reference/pipeline-definition.md",
+        "docs/site/reference/pipeline-json.md",
+        "docs/site/reference/pipeline-platform.md",
+        "docs/site/reference/platform-surfaces-generated.md",
+        "docs/site/reference/plugin-configuration.md",
+        "docs/site/reference/project-pipeline-publication.md",
+        "docs/site/reference/roles-and-package-ownership.md",
+        "docs/site/reference/schemas.md",
+        "docs/site/reference/sdk-exports.md",
+        "docs/site/reference/sdk.md",
+        "docs/site/reference/secrets.md",
+        "docs/site/reference/service-routing.md",
+        "docs/site/reference/stores-and-retention.md",
+        "docs/site/reference/verification-commands.md",
+        "docs/site/reference/worker-profiles-and-roles.md",
+        "docs/site/reference/workflows.md",
+        "docs/site/status/acceptance.md",
+        "docs/site/status/current.md",
+        "docs/site/status/open-issues.md",
+        "docs/site/status/roadmap.md",
+        "docs/site/understand/README.md",
+        "docs/site/understand/archviewer.md",
+        "docs/site/understand/buster-namespace-controller.md",
+        "docs/site/understand/buster.md",
+        "docs/site/understand/codex-integration.md",
+        "docs/site/understand/communication.md",
+        "docs/site/understand/components-and-authority.md",
+        "docs/site/understand/data-and-state.md",
+        "docs/site/understand/deployment-and-trust.md",
+        "docs/site/understand/echo.md",
+        "docs/site/understand/forge.md",
+        "docs/site/understand/nova-core.md",
+        "docs/site/understand/openclaw.md",
+        "docs/site/understand/ops-mcp.md",
+        "docs/site/understand/pipeline-dependencies.md",
+        "docs/site/understand/platform-and-operations.md",
+        "docs/site/understand/plugin-runtime.md",
+        "docs/site/understand/prism-data.md",
+        "docs/site/understand/prism-runtime.md",
+        "docs/site/understand/prism.md",
+        "docs/site/understand/request-state-recovery.md",
+        "docs/site/understand/request-to-result.md",
+        "docs/site/understand/security-and-trust.md",
+        "docs/site/understand/telemetry.md",
+        "docs/site/understand/worker-core.md",
+        "docs/site/understand/worker-trust.md",
+        "docs/site/use/README.md",
+        "docs/site/use/capacity.md",
+        "docs/site/use/demo-delivery.md",
+        "docs/site/use/diagnose.md",
+        "docs/site/use/install.md",
+        "docs/site/use/maintenance.md",
+        "docs/site/use/operate.md",
+        "docs/site/use/plugins.md",
+        "docs/site/use/prism-studio.md",
+        "docs/site/use/quickstart.md",
+        "docs/site/use/recovery.md",
+        "docs/site/use/worker-trust.md",
+        "docs/site/use/workflows/README.md",
+        "docs/site/use/workflows/buster-suite.md",
+        "docs/site/use/workflows/kubernetes-fixture.md",
+        "docs/site/use/workflows/wait-resume.md"
+      ],
+      "sources": [
+        "scripts/docs-publication.mjs",
+        "scripts/lib/docs-publication-assets.mjs",
+        "scripts/lib/docs-publication-links.mjs",
+        "scripts/lib/docs-markdown-anchors.mjs",
+        "scripts/docs-reader/renderer.mjs",
+        "scripts/docs-reader/check-artifact.mjs",
+        "scripts/docs-reader/package.json",
+        "scripts/docs-reader/package-lock.json",
+        "scripts/tests/docs-reader.test.mjs",
+        "scripts/tests/docs-publication-assets.test.mjs",
+        "scripts/tests/docs-publication-links.test.mjs",
+        "scripts/docs-api-documentation-role-custody.mjs",
+        "docs/config/documentation-tree-classification.json",
+        "docs/config/documentation-publication-manifest.json",
+        "docs/blueprint/acceptance-evidence/static-reader-closeout-20261021/reader-closeout-review.json",
+        "docs/blueprint/acceptance-evidence/static-reader-closeout-20261021/committed-reader-observation.json"
+      ],
+      "summary": "Whole PUB-002: existing positive page/asset allowlists plus actual artifact-local full-text search across all167 canonical reader pages, headings and code/technical identifiers. Browser find/empty/no-JS behavior observed; code and output reviewed.",
+      "review": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS",
+        "report": "docs/blueprint/acceptance-evidence/static-reader-closeout-20261021/reader-closeout-review.json"
+      },
+      "checks": [
+        {
+          "command": "node --test scripts/tests/api-output-custody.test.mjs scripts/tests/api-output-publication.test.mjs scripts/tests/argocd-checked-artifacts.test.mjs scripts/tests/docs-reader.test.mjs",
+          "exitCode": 0,
+          "observation": "76/76 PASS, including positive parser/render/build and changed-output/missing-fragment negative artifact checks."
+        },
+        {
+          "command": "node scripts/docs-publication.mjs build && node --max-old-space-size=4096 scripts/docs-reader/check-artifact.mjs",
+          "exitCode": 0,
+          "observation": "Original committed build167 reader pages,176HTML incl. generated file indexes/search/homefallback;179exact output hashes and36523local links/anchors verified."
+        },
+        {
+          "command": "Actual retained reader-browser-qa source with Chromium151/Playwright1.62.1 and local fonts/libraries",
+          "exitCode": 0,
+          "observation": "Four routes at320/768/1440:HTTP200,loadedCSS,nooverflow,zero Axe violations;minimumLinePercent search and no-results behavior;mobile no-JS skip/keyboard navigation PASS. Not all-page accessibility/screenreader validation."
+        },
+        {
+          "command": "node scripts/docs-check-refs.mjs",
+          "exitCode": 0,
+          "observation": "6032 local links,3284local anchors,8328repository paths,31893pinned source links PASS."
+        }
+      ],
+      "limits": [
+        "Only whole PUB-002. Ranked/synonym reader search questions in A912-04 remain unaccepted; substring full-text search is stated honestly.",
+        "No other publication gate or whole documentation package acceptance.",
+        "Local HTML/search output is not external hosting, actual cluster/runtime behavior, rendered Mermaid, source-preview or human screenreader acceptance.",
+        "Global API source/caller discovery still blocked at bundle copier; site boundary still has three unchanged Helm generated-prose diagnostics."
+      ],
+      "openIssues": []
     }
   ],
   "purpose": "Internal planning and observed findings; not an acceptance ledger and not reader documentation.",
@@ -22215,19 +22718,28 @@
         "quality",
         "astra-final"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L385",
       "closureDecision": {
-        "verdict": "FAIL",
-        "revision": "e161be417432d4ebdd22a3d84e09057df70abc0d",
-        "reason": "- PUB-002 FAIL: finite canonical-page/asset allowlists now exist and their injection/symlink tests pass, but there is no full-text search index, query ranking, synonym or technical-ID search implementation. documentation-site.md explicitly admits this. Absence is honest but the required search capability is not delivered.",
-        "requiresAffectedRereview": true,
-        "currentScopeNote": "Historical integrated review; later scoped fixes and first-project example are separately accepted. Remaining whole requirement needs affected re-review, not automatic promotion.",
-        "campaign": "independent-ready-topics-20261020"
-      }
+        "verdict": "PASS",
+        "revision": "744b9a15e06d202eed24884ac2248c36074354f1",
+        "reason": "Independent whole PUB-002 static-reader Source/reader-quality review plus actual167page HTML/search artifact and retained browser/output observations. A912-04 ranking/synonym gate remains open.",
+        "completionRecord": "AP09-complete-static-reader-search-20261021"
+      },
+      "completionRecord": "AP09-complete-static-reader-search-20261021",
+      "closureHistory": [
+        {
+          "verdict": "FAIL",
+          "revision": "e161be417432d4ebdd22a3d84e09057df70abc0d",
+          "reason": "- PUB-002 FAIL: finite canonical-page/asset allowlists now exist and their injection/symlink tests pass, but there is no full-text search index, query ranking, synonym or technical-ID search implementation. documentation-site.md explicitly admits this. Absence is honest but the required search capability is not delivered.",
+          "requiresAffectedRereview": true,
+          "currentScopeNote": "Historical integrated review; later scoped fixes and first-project example are separately accepted. Remaining whole requirement needs affected re-review, not automatic promotion.",
+          "campaign": "independent-ready-topics-20261020"
+        }
+      ]
     },
     {
       "id": "PUB-003",
@@ -38688,40 +39200,45 @@
       "scope": "Author32Bash53Node20CJS24syntheticchecks only, noformal6scenario/live/ReaderQualityapproval."
     },
     "currentCloseout20261021": {
-      "securedSourceRevision": "3745dce3d46361806f86f17595f20aef1e044f1b",
-      "acceptedRequirements": 200,
+      "securedSourceRevision": "744b9a15e06d202eed24884ac2248c36074354f1",
+      "acceptedRequirements": 201,
       "acceptedGates": 13,
-      "newRequirementsThisCampaign": 41,
+      "newRequirementsThisCampaign": 42,
       "newGatesThisCampaign": 2,
-      "nextWork": "Continue actual global API input/caller coverage at build-runtime-role-bundle.mjs:74. Original Argo producer admitted only through Source-owned exact checked-artifact profile (21APIs), preserving its API role. Whole plugin configuration remains open after four field corrections; remaining61contents/76gates unwaived.",
-      "codeCandidate": "Core fixed-module receipt plus five exact dependent role propagations independently PASS.58/58 documentation roles and52/52 custody/publication tests PASS; whole global discovery still blocked by495unknown outputs. Code candidate6abafbbc.",
-      "currentGlobalBlocker": "DOCUMENTATION_TOOL_OUTPUT_ROLE_UNQUALIFIED: scripts/docs-check.mjs; current Markdown stripping/export/main guard differs from Source-owned executable role receipt.",
-      "publication": "167pages51plugins pass publicationcheck and Markdownbuild; no rendered HTML/browser/search proof.",
-      "scope": "No promise of unattended running work and no completeness claim. MNT/OPL NOT_READY remains explicit.",
+      "nextWork": "Continue API copier/input-caller closure at scripts/build-runtime-role-bundle.mjs:74; repair three existing generated Helm boundary phrases at owning source. Whole configuration and remaining60contents/76gates remain unwaived.",
+      "codeCandidate": "Static-reader9baf5583 independently reviewed;76/76custody/publication/Argo/reader tests PASS. One exact publisher native receipt plus2newdocumentation-only roles;53existingroles unchanged.",
+      "currentGlobalBlocker": "API_PRODUCT_SCRIPT_OUTPUT_ROLE_UNQUALIFIED: scripts/build-runtime-role-bundle.mjs:74; copied opaque package/dependency payloads and caller-context coverage.",
+      "publication": "Actual167page HTML reader with local full-text search,176HTML routes incl auxiliary indexes,179verifiedgeneratedhashes,36523local links. Four routes x3widths and no-JS keyboard route observed; no all-page/human-screenreader/hosting acceptance.",
+      "scope": "201/261contents and13/89gates accepted. Preserve all negative/historical evidence; no completeness claim.",
       "owner": "Nova, continuing the authorized PR13 request from Raven on2026-10-21",
       "workingTree": "Expected clean after checkpoint; verify before continuation. Never use obsolete dirty kubeclaw-documentation-cloud checkout as the current PR13 source.",
       "checkout": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery",
       "remoteBranch": "refs/heads/docs/documentation-overhaul",
       "review": {
-        "command": "python3 /home/node/.openclaw/agents/main/agent/codex-home/skills/autoreview/scripts/autoreview --mode local --codex-bin /tmp/pr13-codex-review-host --prompt-file /tmp/pr13-replay-review.md",
-        "result": "Exit0; no accepted/actionable findings. Six replay source/archive/overlay/caller recipes and tests inspected.",
-        "limit": "Metadata/code review only; no native replay execution, content acceptance or global generator PASS."
+        "report": "docs/blueprint/acceptance-evidence/static-reader-closeout-20261021/reader-closeout-review.json",
+        "result": "No accepted/actionable findings; whole PUB002 and impacted existing acceptance boundaries supported.",
+        "limit": "No wholepublication/globalAPI/allaccessibility/externalhosting acceptance."
       },
       "checks": [
         {
-          "command": "node --test scripts/tests/api-output-custody.test.mjs scripts/tests/api-output-node-entry-custody.test.mjs",
+          "command": "node --test scripts/tests/api-output-custody.test.mjs scripts/tests/api-output-publication.test.mjs scripts/tests/argocd-checked-artifacts.test.mjs scripts/tests/docs-reader.test.mjs",
           "exitCode": 0,
-          "result": "25/25 pass plus affected six-recipe test rerun after clearer helper mutation control. Native nullish root/empty-string selector checked on isolated stubs."
+          "observation": "76/76 PASS, including positive parser/render/build and changed-output/missing-fragment negative artifact checks."
         },
         {
-          "command": "node scripts/generate-local-helm-authorities.mjs --check",
-          "exitCode": 1,
-          "result": "Compiler, historical and six native replay metadata operations clear; stops at node:module builtinModules namespace data read in module-graph helper. No global baseline PASS."
+          "command": "node scripts/docs-publication.mjs build && node --max-old-space-size=4096 scripts/docs-reader/check-artifact.mjs",
+          "exitCode": 0,
+          "observation": "Original committed build167 reader pages,176HTML incl. generated file indexes/search/homefallback;179exact output hashes and36523local links/anchors verified."
         },
         {
-          "command": "node scripts/check-ap09-acceptance-contract.mjs",
+          "command": "Actual retained reader-browser-qa source with Chromium151/Playwright1.62.1 and local fonts/libraries",
           "exitCode": 0,
-          "result": "174/261 requirements and12/89gates accepted; completefalse."
+          "observation": "Four routes at320/768/1440:HTTP200,loadedCSS,nooverflow,zero Axe violations;minimumLinePercent search and no-results behavior;mobile no-JS skip/keyboard navigation PASS. Not all-page accessibility/screenreader validation."
+        },
+        {
+          "command": "node scripts/docs-check-refs.mjs",
+          "exitCode": 0,
+          "observation": "6032 local links,3284local anchors,8328repository paths,31893pinned source links PASS."
         }
       ]
     }
