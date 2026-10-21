@@ -588,7 +588,9 @@ function documentationModuleGraph(root,packageBytes,boundary={}) {
       if(capability==='node-module-promise')return ts.isAwaitExpression(parent);
       if(capability==='commonjs-module'&&ts.isCallExpression(parent)&&parent.arguments[0]===node
         && ['call','apply','bind'].includes(propertyOf(parent.expression))&&['require','module-require'].includes(loaderCapability(parent.expression.expression)))return true;
-      if((ts.isPropertyAccessExpression(parent)||ts.isElementAccessExpression(parent))&&parent.expression===node)return capability==='commonjs-module'&&propertyOf(parent)==='exports'||loaderCapability(parent)!==null;
+      // builtinModules is a string inventory, not a loader capability. Admit
+      // only its literal projection; unknown/dynamic namespace reads still fail.
+      if((ts.isPropertyAccessExpression(parent)||ts.isElementAccessExpression(parent))&&parent.expression===node)return capability==='node-module'&&propertyOf(parent)==='builtinModules'||capability==='commonjs-module'&&propertyOf(parent)==='exports'||loaderCapability(parent)!==null;
       if(ts.isCallExpression(parent)&&parent.expression===node)return ['require','module-require','require-forwarder','create-require','create-require-forwarder'].includes(capability);
       return false;
     }

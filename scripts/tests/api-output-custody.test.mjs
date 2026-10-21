@@ -14,6 +14,19 @@ const sha=value=>createHash('sha256').update(value).digest('hex');
 const secret="const body={apiVersion:'v1',kind:'Secret',metadata:{name:'custody'}};console.log(JSON.stringify(body));\n";
 function fixture(run){const root=fs.mkdtempSync(path.join(os.tmpdir(),'docs-output-custody-'));const write=(file,bytes)=>{fs.mkdirSync(path.dirname(path.join(root,file)),{recursive:true});fs.writeFileSync(path.join(root,file),bytes);};write('package.json','{"scripts":{}}');try{run({root,write,discover:()=>discoverScriptApiOutputs(root)});}finally{fs.rmSync(root,{recursive:true,force:true});}}
 
+test('node module builtin-name projections preserve API discovery and reject loader escapes',()=>fixture(({write,discover})=>{
+ for(const binding of ["import module from 'node:module';", "import * as module from 'node:module';"]){
+  for(const projection of ['module.builtinModules', "module['builtinModules']"]){
+   write('tools/p.mjs',binding+`const names=new Set([...${projection},...${projection}.map(name=>'node:'+name)]);`+secret);
+   assert.equal(discover()[0].value.kind,'Secret');
+  }
+  for(const operation of ['module[process.argv[2]]','module.unknown','consume(module)','const load=module.createRequire(import.meta.url);load(process.argv[2])',"import(process.argv[2])"]){
+   write('tools/p.mjs',binding+operation+';'+secret);
+   assert.throws(discover,/DOCUMENTATION_TOOL_GRAPH_UNQUALIFIED/);
+  }
+ }
+}));
+
 test('native ESM keeps actual .js authority, explicit .ts neighbors, creation and removal custody',()=>fixture(({root,write,discover})=>{
  write('tools/gateway.mjs',"import '../examples/p.js';");write('examples/p.ts',secret);
  const native=spawnSync(process.execPath,[path.join(root,'tools/gateway.mjs')],{encoding:'utf8'});assert.equal(native.status,1);assert.match(native.stderr,/ERR_MODULE_NOT_FOUND/);assert.throws(discover,/GRAPH_UNQUALIFIED.*tools\/gateway\.mjs/);
