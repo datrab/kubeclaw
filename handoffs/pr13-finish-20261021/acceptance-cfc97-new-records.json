@@ -1,0 +1,446 @@
+[
+  {
+    "id": "FLW007-supported-failure-task-20261021",
+    "revision": "cfc97be096908c1193877d054bb80662120f1eca",
+    "author": "/root/workflow_acceptance",
+    "reviewer": "/root/operator_acceptance independent whole topic and correction rereview; parent installed-path/Reader integration",
+    "gateIds": [],
+    "requirementIds": [
+      "FLW-007"
+    ],
+    "pages": [
+      "docs/site/use/workflows/README.md",
+      "docs/site/use/workflows/repair-retry.md"
+    ],
+    "sources": [
+      "docs/site/use/workflows/examples/repair-retry.mjs",
+      "skills/nova/core/execution/graph-repair-budget.ts",
+      "skills/nova/core/lifecycle/remediation.ts",
+      "skills/nova/core/lifecycle/repair-authorization.ts",
+      "skills/nova/core/lifecycle/repair-budget.ts",
+      "tests/fixtures/repair-budget/plugin/stage.mjs",
+      "tests/verification/reliability/repair-budget-fixture.mjs"
+    ],
+    "checks": [
+      {
+        "command": "Independent source/semantic-reader/quality review of the complete task and current canonical integration",
+        "exitCode": 0,
+        "observation": "Independent four-guide review plus exact four-correction rereview, installed helper closeout, build-tailnet parent Source review and current Reader. Source-proven limits stay explicit; not author selfacceptance."
+      },
+      {
+        "command": "Installed maintained repair helper prepare/run/verify and two independent negative controls; owned cleanup",
+        "exitCode": 0,
+        "observation": "Actual24Source helper bytes unchanged atcfc: mixed succeeded132events, technical-exhausted blocked21, extra-order blocked98;251total. Existing intent EEXIST before runtime mutation; missing original capture rejects, exactrestoreverify0; cleanupboth0. Original359regular-file evidence retained, notproductionquality."
+      },
+      {
+        "command": "node scripts/docs-publication.mjs check; node scripts/docs-publication.mjs build",
+        "exitCode": 0,
+        "observation": "Actual177page/51package check and cfc97be0 build terminal0."
+      },
+      {
+        "command": "Reader artifact/search/source-links/source-previews/diagrams checks; offline browser; extracted artifact/search checks",
+        "exitCode": 0,
+        "observation": "177canonical/187HTML/40815localtargets/219outputdigests;12search questions;14753SourceLinks/3910objects;1783previews/925objects;27freshSVG, exact27diagram records unchanged;28offline browser observations0findings0network. ZIP240members/19Source-compared copiedassets; actualfresh extracted artifact/searchPASS. Source/Reader checkpoint, not accessibility/globalgenerator/runtime/release approval."
+      }
+    ],
+    "review": {
+      "sourceAccuracy": "PASS",
+      "readerUsability": "PASS",
+      "quality": "PASS"
+    },
+    "summary": "Whole supported retry/repair task now has actual trusted TEST fixture input, deliberate failures, separate technical retry and per-category repair histories, mandatory rechecks, one authorized extra assignment, original-state capture, strict replay, success and bounded exhaustion, and owned cleanup.",
+    "limits": [
+      "Not production implementation/quality-agent or compiled-project execution; local TEST stage boundary explicit.",
+      "No full AP09/package, fresh-context persona, global generator or runtime release approval."
+    ],
+    "openIssues": [],
+    "verdict": "PASS"
+  },
+  {
+    "id": "FLW009-supported-failure-task-20261021",
+    "revision": "cfc97be096908c1193877d054bb80662120f1eca",
+    "author": "/root/workflow_acceptance",
+    "reviewer": "/root/operator_acceptance independent whole topic and correction rereview; parent installed-path/Reader integration",
+    "gateIds": [],
+    "requirementIds": [
+      "FLW-009"
+    ],
+    "pages": [
+      "docs/site/use/workflows/README.md",
+      "docs/site/use/workflows/interruption-recovery.md"
+    ],
+    "sources": [
+      "skills/nova/core/execution/effect-recovery.ts",
+      "tests/fixtures/plugin-system-v2/resume-plugin/checkpoint.js",
+      "tests/verification/contracts/check-plugin-system-v2-checkpoint-recovery.mjs",
+      "tests/verification/reliability/external-effect-recovery.test.mts"
+    ],
+    "checks": [
+      {
+        "command": "Independent source/semantic-reader/quality review of the complete task and current canonical integration",
+        "exitCode": 0,
+        "observation": "Independent four-guide review plus exact four-correction rereview, installed helper closeout, build-tailnet parent Source review and current Reader. Source-proven limits stay explicit; not author selfacceptance."
+      },
+      {
+        "command": "node scripts/docs-publication.mjs check; node scripts/docs-publication.mjs build",
+        "exitCode": 0,
+        "observation": "Actual177page/51package check and cfc97be0 build terminal0."
+      },
+      {
+        "command": "Reader artifact/search/source-links/source-previews/diagrams checks; offline browser; extracted artifact/search checks",
+        "exitCode": 0,
+        "observation": "177canonical/187HTML/40815localtargets/219outputdigests;12search questions;14753SourceLinks/3910objects;1783previews/925objects;27freshSVG, exact27diagram records unchanged;28offline browser observations0findings0network. ZIP240members/19Source-compared copiedassets; actualfresh extracted artifact/searchPASS. Source/Reader checkpoint, not accessibility/globalgenerator/runtime/release approval."
+      }
+    ],
+    "review": {
+      "sourceAccuracy": "PASS",
+      "readerUsability": "PASS",
+      "quality": "PASS"
+    },
+    "summary": "Whole supported interruption task gives actual maintained checkpoint child interruption and original-artifact recovery, exact run/platform/graph identity, audit and cleanup; external-effect interruption cases lead to explicit uncertainty/continuation/terminal stops with original evidence retained.",
+    "limits": [
+      "No generic external-effect reconciliation, deployed incident or native Worker recovery inferred.",
+      "No full AP09/package, fresh-context persona, global generator or runtime release approval."
+    ],
+    "openIssues": [],
+    "verdict": "PASS"
+  },
+  {
+    "id": "FLW015-supported-failure-task-20261021",
+    "revision": "cfc97be096908c1193877d054bb80662120f1eca",
+    "author": "/root/workflow_acceptance",
+    "reviewer": "/root/operator_acceptance independent whole topic and correction rereview; parent installed-path/Reader integration",
+    "gateIds": [],
+    "requirementIds": [
+      "FLW-015"
+    ],
+    "pages": [
+      "docs/site/use/workflows/README.md",
+      "docs/site/use/workflows/redis-replay-recovery.md"
+    ],
+    "sources": [
+      "skills/common/plugins/redis-transport/src/adapter.ts",
+      "skills/common/plugins/redis-transport/src/stream-identity.ts",
+      "skills/nova/core/telemetry/observer-delivery.ts",
+      "skills/nova/core/telemetry/observer-recovery.ts",
+      "skills/nova/core/telemetry/observers.ts",
+      "tests/verification/reliability/redis-transport.test.mts"
+    ],
+    "checks": [
+      {
+        "command": "Independent source/semantic-reader/quality review of the complete task and current canonical integration",
+        "exitCode": 0,
+        "observation": "Independent four-guide review plus exact four-correction rereview, installed helper closeout, build-tailnet parent Source review and current Reader. Source-proven limits stay explicit; not author selfacceptance."
+      },
+      {
+        "command": "node scripts/docs-publication.mjs check; node scripts/docs-publication.mjs build",
+        "exitCode": 0,
+        "observation": "Actual177page/51package check and cfc97be0 build terminal0."
+      },
+      {
+        "command": "Reader artifact/search/source-links/source-previews/diagrams checks; offline browser; extracted artifact/search checks",
+        "exitCode": 0,
+        "observation": "177canonical/187HTML/40815localtargets/219outputdigests;12search questions;14753SourceLinks/3910objects;1783previews/925objects;27freshSVG, exact27diagram records unchanged;28offline browser observations0findings0network. ZIP240members/19Source-compared copiedassets; actualfresh extracted artifact/searchPASS. Source/Reader checkpoint, not accessibility/globalgenerator/runtime/release approval."
+      }
+    ],
+    "review": {
+      "sourceAccuracy": "PASS",
+      "readerUsability": "PASS",
+      "quality": "PASS"
+    },
+    "summary": "Whole supported Redis task distinguishes native stream dedup and TTL/trim limits, same-effect receipt replay versus second physical test-journal send, original observer delivery retry/order, required drain failure versus best_effort, stopped-writer custody, exact missing live proof and named owner/safe-stop/cleanup.",
+    "limits": [
+      "Native Redis/deployed outage not run in this environment; socket/file and Source proofs are not relabelled native Redis execution.",
+      "No full AP09/package, fresh-context persona, global generator or runtime release approval."
+    ],
+    "openIssues": [],
+    "verdict": "PASS"
+  },
+  {
+    "id": "FLW016-supported-failure-task-20261021",
+    "revision": "cfc97be096908c1193877d054bb80662120f1eca",
+    "author": "/root/workflow_acceptance",
+    "reviewer": "/root/operator_acceptance independent whole topic and correction rereview; parent installed-path/Reader integration",
+    "gateIds": [],
+    "requirementIds": [
+      "FLW-016"
+    ],
+    "pages": [
+      "docs/site/use/workflows/README.md",
+      "docs/site/use/workflows/worker-result-recovery.md"
+    ],
+    "sources": [
+      "skills/prism/server/native-worker-execution.ts",
+      "skills/prism/server/worker.ts",
+      "skills/worker/core/worker/native-attempt-executor.ts",
+      "skills/worker/core/worker/native-attempt-recovery.ts",
+      "tests/verification/reliability/worker-native-journal.test.mts"
+    ],
+    "checks": [
+      {
+        "command": "Independent source/semantic-reader/quality review of the complete task and current canonical integration",
+        "exitCode": 0,
+        "observation": "Independent four-guide review plus exact four-correction rereview, installed helper closeout, build-tailnet parent Source review and current Reader. Source-proven limits stay explicit; not author selfacceptance."
+      },
+      {
+        "command": "node scripts/docs-publication.mjs check; node scripts/docs-publication.mjs build",
+        "exitCode": 0,
+        "observation": "Actual177page/51package check and cfc97be0 build terminal0."
+      },
+      {
+        "command": "Reader artifact/search/source-links/source-previews/diagrams checks; offline browser; extracted artifact/search checks",
+        "exitCode": 0,
+        "observation": "177canonical/187HTML/40815localtargets/219outputdigests;12search questions;14753SourceLinks/3910objects;1783previews/925objects;27freshSVG, exact27diagram records unchanged;28offline browser observations0findings0network. ZIP240members/19Source-compared copiedassets; actualfresh extracted artifact/searchPASS. Source/Reader checkpoint, not accessibility/globalgenerator/runtime/release approval."
+      }
+    ],
+    "review": {
+      "sourceAccuracy": "PASS",
+      "readerUsability": "PASS",
+      "quality": "PASS"
+    },
+    "summary": "Whole supported accepted-Worker interruption task connects original envelope/host/ownership/journal/spool/process counters/sealed-result authority, ownership exception map, same-original reconstruction, fencing and nonreconstructable safe stops. Exact delegated-host prerequisites and owned cleanup retained.",
+    "limits": [
+      "Local journal/lock crash controls are not delegated-cgroup live workload recovery; no generic kill/recover/import command invented.",
+      "No full AP09/package, fresh-context persona, global generator or runtime release approval."
+    ],
+    "openIssues": [],
+    "verdict": "PASS"
+  },
+  {
+    "id": "FLW012-supported-failure-task-20261021",
+    "revision": "cfc97be096908c1193877d054bb80662120f1eca",
+    "author": "/root/workflow_acceptance",
+    "reviewer": "/root independent nonauthor Source/Reader/quality review; operator_acceptance independent canonical integration preservation",
+    "gateIds": [],
+    "requirementIds": [
+      "FLW-012"
+    ],
+    "pages": [
+      "docs/site/use/workflows/README.md",
+      "docs/site/use/workflows/build-image.md"
+    ],
+    "sources": [
+      "docker/buster-runtime-entrypoint.sh",
+      "my-values/infra/k3s-registries.yaml",
+      "scripts/deploy.sh",
+      "scripts/inspect-node-registry.mjs",
+      "scripts/registry-client-config.mjs",
+      "skills/buster/engine/test-gates/container-build-runtime.ts",
+      "skills/buster/plugins/container-build/src/provider.js",
+      "tests/verification/e2e/nova-buildkit-production-preflight.mts"
+    ],
+    "checks": [
+      {
+        "command": "Independent source/semantic-reader/quality review of the complete task and current canonical integration",
+        "exitCode": 0,
+        "observation": "Independent four-guide review plus exact four-correction rereview, installed helper closeout, build-tailnet parent Source review and current Reader. Source-proven limits stay explicit; not author selfacceptance."
+      },
+      {
+        "command": "node scripts/docs-publication.mjs check; node scripts/docs-publication.mjs build",
+        "exitCode": 0,
+        "observation": "Actual177page/51package check and cfc97be0 build terminal0."
+      },
+      {
+        "command": "Reader artifact/search/source-links/source-previews/diagrams checks; offline browser; extracted artifact/search checks",
+        "exitCode": 0,
+        "observation": "177canonical/187HTML/40815localtargets/219outputdigests;12search questions;14753SourceLinks/3910objects;1783previews/925objects;27freshSVG, exact27diagram records unchanged;28offline browser observations0findings0network. ZIP240members/19Source-compared copiedassets; actualfresh extracted artifact/searchPASS. Source/Reader checkpoint, not accessibility/globalgenerator/runtime/release approval."
+      }
+    ],
+    "review": {
+      "sourceAccuracy": "PASS",
+      "readerUsability": "PASS",
+      "quality": "PASS"
+    },
+    "summary": "Whole supported image task follows one client contract through original BuildKit request, attempt tag, exact raw manifest/digest and Nova import, consuming node/platform/imageID/application authority, failed-request reconciliation boundary and owner-bound cleanup. Missing node installation/cold-pull/application commands have named required inputs and safe stops.",
+    "limits": [
+      "No live build/push/node pull/application proof; buildctl ENOENT retained; a new preflight is not reconciliation of an original uncertain push.",
+      "No full AP09/package, fresh-context persona, global generator or runtime release approval."
+    ],
+    "openIssues": [],
+    "verdict": "PASS"
+  },
+  {
+    "id": "FLW013-supported-failure-task-20261021",
+    "revision": "cfc97be096908c1193877d054bb80662120f1eca",
+    "author": "/root/workflow_acceptance",
+    "reviewer": "/root independent nonauthor Source/Reader/quality review; operator_acceptance independent canonical integration preservation",
+    "gateIds": [],
+    "requirementIds": [
+      "FLW-013"
+    ],
+    "pages": [
+      "docs/site/use/workflows/README.md",
+      "docs/site/use/workflows/tailnet-exposure.md"
+    ],
+    "sources": [
+      "my-values/infra/tailscale-operator-values.yaml",
+      "scripts/deploy.sh",
+      "skills/buster/engine/test-gates/exposure-generation.ts",
+      "skills/buster/engine/test-gates/exposure-handoff.ts",
+      "skills/buster/engine/test-gates/tailscale-exposure-runtime.ts",
+      "skills/buster/plugins/tailscale-exposure/src/provider.js",
+      "tests/verification/e2e/nova-tailscale-production-preflight.mts"
+    ],
+    "checks": [
+      {
+        "command": "Independent source/semantic-reader/quality review of the complete task and current canonical integration",
+        "exitCode": 0,
+        "observation": "Independent four-guide review plus exact four-correction rereview, installed helper closeout, build-tailnet parent Source review and current Reader. Source-proven limits stay explicit; not author selfacceptance."
+      },
+      {
+        "command": "node scripts/docs-publication.mjs check; node scripts/docs-publication.mjs build",
+        "exitCode": 0,
+        "observation": "Actual177page/51package check and cfc97be0 build terminal0."
+      },
+      {
+        "command": "Reader artifact/search/source-links/source-previews/diagrams checks; offline browser; extracted artifact/search checks",
+        "exitCode": 0,
+        "observation": "177canonical/187HTML/40815localtargets/219outputdigests;12search questions;14753SourceLinks/3910objects;1783previews/925objects;27freshSVG, exact27diagram records unchanged;28offline browser observations0findings0network. ZIP240members/19Source-compared copiedassets; actualfresh extracted artifact/searchPASS. Source/Reader checkpoint, not accessibility/globalgenerator/runtime/release approval."
+      }
+    ],
+    "review": {
+      "sourceAccuracy": "PASS",
+      "readerUsability": "PASS",
+      "quality": "PASS"
+    },
+    "summary": "Whole supported exposure task separates platform routes, ephemeral release and retained readiness handoff; binds actual typed deployment/owner/request/generation/expiry, permitted and unpermitted client/policy proof, UID/image/manifest handoff and successor-safe release/cleanup with named external controls and stops.",
+    "limits": [
+      "No live OAuth/ACL/DNS/TLS/Tailnet or independent external device retirement proof; local package/loopback/injected vectors bounded.",
+      "No full AP09/package, fresh-context persona, global generator or runtime release approval."
+    ],
+    "openIssues": [],
+    "verdict": "PASS"
+  },
+  {
+    "id": "A99-08-complete-supported-failure-journey-union-20261021",
+    "revision": "cfc97be096908c1193877d054bb80662120f1eca",
+    "author": "Documentation topic authors and integration coordinator",
+    "reviewer": "Independent topic-review union: operator_acceptance (new Redis/Worker topics); original independent Codex topic reviewers (registry/Tailnet diagnosis); workflow_acceptance (uncertain-effect/Demo); root nonauthor (BuildKit/Tailnet task guides)",
+    "gateIds": [
+      "A99-08"
+    ],
+    "requirementIds": [],
+    "pages": [
+      "docs/site/extend/contracts.md",
+      "docs/site/extend/effectful-plugin.md",
+      "docs/site/reference/capabilities.md",
+      "docs/site/reference/nova-project.md",
+      "docs/site/understand/buster-namespace-controller.md",
+      "docs/site/understand/nova-core.md",
+      "docs/site/understand/plugin-runtime.md",
+      "docs/site/use/demo-delivery.md",
+      "docs/site/use/diagnose.md",
+      "docs/site/use/install.md",
+      "docs/site/use/operate.md",
+      "docs/site/use/recovery.md",
+      "docs/site/use/workflows/README.md",
+      "docs/site/use/workflows/build-image.md",
+      "docs/site/use/workflows/interruption-recovery.md",
+      "docs/site/use/workflows/redis-replay-recovery.md",
+      "docs/site/use/workflows/repair-retry.md",
+      "docs/site/use/workflows/tailnet-exposure.md",
+      "docs/site/use/workflows/worker-result-recovery.md"
+    ],
+    "sources": [
+      "docker/buster-runtime-entrypoint.sh",
+      "docs/site/use/workflows/examples/repair-retry.mjs",
+      "my-values/infra/k3s-registries.yaml",
+      "my-values/infra/tailscale-operator-values.yaml",
+      "scripts/check-ap08-effectful-guide.mjs",
+      "scripts/deploy.sh",
+      "scripts/inspect-node-registry.mjs",
+      "scripts/registry-client-config.mjs",
+      "skills/buster/engine/test-gates/container-build-runtime.ts",
+      "skills/buster/engine/test-gates/exposure-generation.ts",
+      "skills/buster/engine/test-gates/exposure-handoff.ts",
+      "skills/buster/engine/test-gates/tailscale-exposure-runtime.ts",
+      "skills/buster/plugins/container-build/src/provider.js",
+      "skills/buster/plugins/tailscale-exposure/src/provider.js",
+      "skills/common/plugin-runtime/foundation/registry/activation.ts",
+      "skills/common/plugin-runtime/foundation/registry/capabilities.ts",
+      "skills/common/plugin-runtime/foundation/registry/import-audit.ts",
+      "skills/common/plugins/redis-transport/src/adapter.ts",
+      "skills/common/plugins/redis-transport/src/stream-identity.ts",
+      "skills/nova/core/effects/coordinator.ts",
+      "skills/nova/core/effects/journal.ts",
+      "skills/nova/core/execution/effect-recovery.ts",
+      "skills/nova/core/execution/engine-admin.ts",
+      "skills/nova/core/execution/engine-run.ts",
+      "skills/nova/core/execution/graph-repair-budget.ts",
+      "skills/nova/core/lifecycle/remediation.ts",
+      "skills/nova/core/lifecycle/repair-authorization.ts",
+      "skills/nova/core/lifecycle/repair-budget.ts",
+      "skills/nova/core/telemetry/audit.ts",
+      "skills/nova/core/telemetry/observer-delivery.ts",
+      "skills/nova/core/telemetry/observer-recovery.ts",
+      "skills/nova/core/telemetry/observers.ts",
+      "skills/nova/plugins/demo-handoff/schemas/adapter.schema.json",
+      "skills/nova/plugins/demo-handoff/schemas/candidate.schema.json",
+      "skills/nova/plugins/demo-handoff/schemas/delivery.schema.json",
+      "skills/nova/plugins/demo-handoff/schemas/empty.schema.json",
+      "skills/nova/plugins/demo-handoff/schemas/ready.schema.json",
+      "skills/nova/plugins/demo-handoff/schemas/result.schema.json",
+      "skills/nova/plugins/demo-handoff/src/adapter.ts",
+      "skills/nova/plugins/demo-handoff/src/binding.ts",
+      "skills/nova/plugins/demo-handoff/src/candidate.ts",
+      "skills/nova/plugins/demo-handoff/src/controller-client.ts",
+      "skills/nova/plugins/demo-handoff/src/delivery.ts",
+      "skills/nova/plugins/demo-handoff/src/protocol.ts",
+      "skills/nova/plugins/demo-handoff/src/ready.ts",
+      "skills/nova/plugins/demo-handoff/tests/compiler.test.mjs",
+      "skills/nova/plugins/demo-handoff/tests/controller-client.test.mts",
+      "skills/nova/plugins/demo-handoff/tests/handoff.test.mts",
+      "skills/nova/project/cli.ts",
+      "skills/nova/project/compiler.ts",
+      "skills/nova/project/demo.ts",
+      "skills/nova/project/source.ts",
+      "skills/prism/server/native-worker-execution.ts",
+      "skills/prism/server/worker.ts",
+      "skills/worker/core/worker/native-attempt-executor.ts",
+      "skills/worker/core/worker/native-attempt-recovery.ts",
+      "tests/fixtures/plugin-system-v2/resume-plugin/checkpoint.js",
+      "tests/fixtures/repair-budget/plugin/stage.mjs",
+      "tests/verification/contracts/check-plugin-system-v2-checkpoint-recovery.mjs",
+      "tests/verification/e2e/nova-buildkit-production-preflight.mts",
+      "tests/verification/e2e/nova-tailscale-production-preflight.mts",
+      "tests/verification/reliability/external-effect-recovery.test.mts",
+      "tests/verification/reliability/redis-transport.test.mts",
+      "tests/verification/reliability/repair-budget-fixture.mjs",
+      "tests/verification/reliability/worker-native-journal.test.mts"
+    ],
+    "checks": [
+      {
+        "command": "Independent source/semantic-reader/quality review of the complete task and current canonical integration",
+        "exitCode": 0,
+        "observation": "Independent four-guide review plus exact four-correction rereview, installed helper closeout, build-tailnet parent Source review and current Reader. Source-proven limits stay explicit; not author selfacceptance."
+      },
+      {
+        "command": "node scripts/docs-publication.mjs check; node scripts/docs-publication.mjs build",
+        "exitCode": 0,
+        "observation": "Actual177page/51package check and cfc97be0 build terminal0."
+      },
+      {
+        "command": "Reader artifact/search/source-links/source-previews/diagrams checks; offline browser; extracted artifact/search checks",
+        "exitCode": 0,
+        "observation": "177canonical/187HTML/40815localtargets/219outputdigests;12search questions;14753SourceLinks/3910objects;1783previews/925objects;27freshSVG, exact27diagram records unchanged;28offline browser observations0findings0network. ZIP240members/19Source-compared copiedassets; actualfresh extracted artifact/searchPASS. Source/Reader checkpoint, not accessibility/globalgenerator/runtime/release approval."
+      },
+      {
+        "command": "Exact six-family Source/Reader review union and unchanged supporting-topic byte comparison",
+        "exitCode": 0,
+        "observation": "Redis/Worker complete independent four-guide correction verdict; registry/image and Tailnet exact14objects/21pins and prior diagnosis review; uncertain effect FLW010; Demo rejection FLW017. Old supporting page/product bytes unchanged except separately independently reviewed task-index rows. Every family has retained state assessment, retry/stop decision and cleanup. No duplicate old topic acceptance."
+      }
+    ],
+    "review": {
+      "sourceAccuracy": "PASS",
+      "readerUsability": "PASS",
+      "quality": "PASS"
+    },
+    "summary": "Whole documentation gate covers all six required failure families through independently reviewed coherent procedures: Redis, registry/image, Tailnet, Worker abort, uncertain external effect and demo rejection. Current index routes each named task; actual new recovery helper and bounded native fixtures support their stated claims. Unavailable live controls have explicit original-identity retention, owning authority, follow-up inputs, stop and cleanup boundaries, as required by compact contract1\u20134.",
+    "limits": [
+      "Documentation-content gate only. Native Redis/delegated Worker/live registry/Tailnet/demo-human execution are not claimed passed.",
+      "No independent fresh-context A99-12 or full AP09.9 acceptance. Existing product/closure and runtime Knip release stops retained."
+    ],
+    "openIssues": [],
+    "verdict": "PASS"
+  }
+]

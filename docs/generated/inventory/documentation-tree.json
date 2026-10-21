@@ -16,7 +16,7 @@
   "baselineFiles": 2915,
   "missingBaselineFiles": [],
   "counts": {
-    "canonical-reader-documentation": 189,
+    "canonical-reader-documentation": 196,
     "internal-documentation-input": 1168,
     "legacy-extraction-source": 249,
     "deletable-remainder": 2335
@@ -53353,7 +53353,7 @@
         "scripts/tests/docs-source-freshness.test.mjs"
       ],
       "indirectExecutableConsumers": [],
-      "sha256": "bf9a95c5e83987928b0f861a760e7aedd66cfea92b33101c588d91a97ff5fafe"
+      "sha256": "16b9bbaa8ee23fb483c70a6df379eba02c0517386bd03d76725b26d893998971"
     },
     {
       "path": "docs/blueprint/documentation-parity-contract.md",
@@ -54851,6 +54851,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "token": "docs/config/documentation-publication-manifest.json",
+          "inputUse": false
+        },
+        {
           "sourcePath": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "token": "docs/config/documentation-publication-manifest.json",
           "inputUse": false
@@ -54887,11 +54892,12 @@
         }
       ],
       "executableConsumers": [
+        "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
         "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
         "scripts/tests/docs-reader-source-previews.test.mjs"
       ],
       "indirectExecutableConsumers": [],
-      "sha256": "4e1c3827c72aa3499985548a79db6aeb9fce9344d4de936fa65aaa877e8e406f"
+      "sha256": "15858632cc67db446d945bda9a7209d0bdf05c776b7b4242e190cd3afeafefe5"
     },
     {
       "path": "docs/config/documentation-tree-baseline.json",
@@ -55172,6 +55178,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "token": "docs/config/documentation-tree-classification.json",
+          "inputUse": false
+        },
+        {
           "sourcePath": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "token": "docs/config/documentation-tree-classification.json",
           "inputUse": false
@@ -55258,6 +55269,7 @@
         }
       ],
       "executableConsumers": [
+        "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
         "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
         "scripts/tests/docs-parity-batches.test.mjs",
         "scripts/tests/docs-parity-check.test.mjs",
@@ -55268,7 +55280,7 @@
         "scripts/tests/docs-tree-boundary.test.mjs"
       ],
       "indirectExecutableConsumers": [],
-      "sha256": "6eaad838208f5c644c8b75e2d0e0334886ce5f2dc592f74c8f925d5861eee067"
+      "sha256": "18e6e05a152d43d31d48b9d245f40137612385f419fb24c1d28631c527fe0f18"
     },
     {
       "path": "docs/config/platform-surface-map.json",
@@ -155422,6 +155434,12 @@
       ],
       "indirectExecutableConsumers": [
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
             "docs/config/documentation-publication-manifest.json"
@@ -155543,6 +155561,12 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
@@ -155670,6 +155694,12 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
@@ -155823,6 +155853,12 @@
       "executableConsumers": [],
       "indirectExecutableConsumers": [
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
             "docs/config/documentation-publication-manifest.json"
@@ -155940,6 +155976,12 @@
       "executableConsumers": [],
       "indirectExecutableConsumers": [
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
             "docs/config/documentation-publication-manifest.json"
@@ -156056,6 +156098,12 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
@@ -156194,6 +156242,12 @@
       "executableConsumers": [],
       "indirectExecutableConsumers": [
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
             "docs/config/documentation-publication-manifest.json"
@@ -156303,6 +156357,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "token": "docs/site/decisions/runtime-and-operations.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "scripts/docs-publication.mjs",
           "token": "docs/site/decisions/runtime-and-operations.md",
           "inputUse": false
@@ -156313,8 +156372,16 @@
           "inputUse": false
         }
       ],
-      "executableConsumers": [],
+      "executableConsumers": [
+        "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json"
+      ],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
@@ -156328,7 +156395,7 @@
           ]
         }
       ],
-      "sha256": "d0f6f35afb05af56d2e4d4adc96926e17dbe369c5bc0533ed5aaa83daa053ec3"
+      "sha256": "dc6d33f37fe05b3af41a9020e23d998c124b3c2ef4bbf8a02efe6584c4f0ddec"
     },
     {
       "path": "docs/site/decisions/test-gate.md",
@@ -156437,6 +156504,12 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
@@ -156703,6 +156776,12 @@
       ],
       "indirectExecutableConsumers": [
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
             "docs/config/documentation-publication-manifest.json"
@@ -156853,6 +156932,12 @@
       ],
       "indirectExecutableConsumers": [
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
             "docs/config/documentation-publication-manifest.json"
@@ -156987,6 +157072,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "handoffs/pr13-finish-20261021/acceptance-cfc97-new-records.json",
+          "token": "docs/site/extend/contracts.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "handoffs/pr13-finish-20261021/workflow-developer-completion-records.json",
           "token": "docs/site/extend/contracts.md",
           "inputUse": false
@@ -157013,9 +157103,16 @@
         }
       ],
       "executableConsumers": [
+        "handoffs/pr13-finish-20261021/acceptance-cfc97-new-records.json",
         "handoffs/pr13-finish-20261021/workflow-developer-completion-records.json"
       ],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
@@ -157074,6 +157171,12 @@
       "executableConsumers": [],
       "indirectExecutableConsumers": [
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
             "docs/config/documentation-publication-manifest.json"
@@ -157127,6 +157230,12 @@
         "handoffs/pr13-finish-20261021/style-and-scope-preservation-independent.json"
       ],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
@@ -157186,6 +157295,12 @@
         "handoffs/pr13-finish-20261021/style-and-scope-preservation-independent.json"
       ],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
@@ -157394,6 +157509,12 @@
       ],
       "indirectExecutableConsumers": [
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
             "docs/config/documentation-publication-manifest.json"
@@ -157510,6 +157631,12 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
@@ -157645,6 +157772,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "handoffs/pr13-finish-20261021/acceptance-cfc97-new-records.json",
+          "token": "docs/site/extend/effectful-plugin.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "handoffs/pr13-finish-20261021/workflow-developer-completion-records.json",
           "token": "docs/site/extend/effectful-plugin.md",
           "inputUse": false
@@ -157666,9 +157798,16 @@
         }
       ],
       "executableConsumers": [
+        "handoffs/pr13-finish-20261021/acceptance-cfc97-new-records.json",
         "handoffs/pr13-finish-20261021/workflow-developer-completion-records.json"
       ],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
@@ -158164,6 +158303,12 @@
       "executableConsumers": [],
       "indirectExecutableConsumers": [
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
             "docs/config/documentation-publication-manifest.json"
@@ -158290,6 +158435,12 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
@@ -158468,6 +158619,12 @@
       ],
       "indirectExecutableConsumers": [
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
             "docs/config/documentation-publication-manifest.json"
@@ -158625,6 +158782,12 @@
       "executableConsumers": [],
       "indirectExecutableConsumers": [
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
             "docs/config/documentation-publication-manifest.json"
@@ -158773,6 +158936,12 @@
         "handoffs/pr13-finish-20261021/workflow-developer-completion-records.json"
       ],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
@@ -158923,6 +159092,12 @@
         "scripts/check-buster-guides.mjs"
       ],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
@@ -159124,6 +159299,12 @@
       ],
       "indirectExecutableConsumers": [
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
             "docs/config/documentation-publication-manifest.json"
@@ -159288,6 +159469,12 @@
       ],
       "indirectExecutableConsumers": [
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
             "docs/config/documentation-publication-manifest.json"
@@ -159420,6 +159607,12 @@
       "executableConsumers": [],
       "indirectExecutableConsumers": [
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
             "docs/config/documentation-publication-manifest.json"
@@ -159541,6 +159734,12 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
@@ -159679,6 +159878,12 @@
       "executableConsumers": [],
       "indirectExecutableConsumers": [
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
             "docs/config/documentation-publication-manifest.json"
@@ -159810,6 +160015,12 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
@@ -159943,6 +160154,12 @@
       "executableConsumers": [],
       "indirectExecutableConsumers": [
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
             "docs/config/documentation-publication-manifest.json"
@@ -160074,6 +160291,12 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
@@ -160207,6 +160430,12 @@
       "executableConsumers": [],
       "indirectExecutableConsumers": [
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
             "docs/config/documentation-publication-manifest.json"
@@ -160338,6 +160567,12 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
@@ -160471,6 +160706,12 @@
       "executableConsumers": [],
       "indirectExecutableConsumers": [
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
             "docs/config/documentation-publication-manifest.json"
@@ -160602,6 +160843,12 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
@@ -160735,6 +160982,12 @@
       "executableConsumers": [],
       "indirectExecutableConsumers": [
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
             "docs/config/documentation-publication-manifest.json"
@@ -160866,6 +161119,12 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
@@ -160999,6 +161258,12 @@
       "executableConsumers": [],
       "indirectExecutableConsumers": [
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
             "docs/config/documentation-publication-manifest.json"
@@ -161130,6 +161395,12 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
@@ -161263,6 +161534,12 @@
       "executableConsumers": [],
       "indirectExecutableConsumers": [
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
             "docs/config/documentation-publication-manifest.json"
@@ -161389,6 +161666,12 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
@@ -161524,6 +161807,12 @@
       ],
       "indirectExecutableConsumers": [
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
             "docs/config/documentation-publication-manifest.json"
@@ -161656,6 +161945,12 @@
       "executableConsumers": [],
       "indirectExecutableConsumers": [
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
             "docs/config/documentation-publication-manifest.json"
@@ -161787,6 +162082,12 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
@@ -161925,6 +162226,12 @@
       "executableConsumers": [],
       "indirectExecutableConsumers": [
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
             "docs/config/documentation-publication-manifest.json"
@@ -162062,6 +162369,12 @@
       "executableConsumers": [],
       "indirectExecutableConsumers": [
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
             "docs/config/documentation-publication-manifest.json"
@@ -162193,6 +162506,12 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
@@ -162326,6 +162645,12 @@
       "executableConsumers": [],
       "indirectExecutableConsumers": [
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
             "docs/config/documentation-publication-manifest.json"
@@ -162458,6 +162783,12 @@
       "executableConsumers": [],
       "indirectExecutableConsumers": [
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
             "docs/config/documentation-publication-manifest.json"
@@ -162589,6 +162920,12 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
@@ -162775,6 +163112,12 @@
       ],
       "indirectExecutableConsumers": [
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
             "docs/config/documentation-publication-manifest.json"
@@ -162906,6 +163249,12 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
@@ -163039,6 +163388,12 @@
       "executableConsumers": [],
       "indirectExecutableConsumers": [
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
             "docs/config/documentation-publication-manifest.json"
@@ -163170,6 +163525,12 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
@@ -163303,6 +163664,12 @@
       "executableConsumers": [],
       "indirectExecutableConsumers": [
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
             "docs/config/documentation-publication-manifest.json"
@@ -163434,6 +163801,12 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
@@ -163567,6 +163940,12 @@
       "executableConsumers": [],
       "indirectExecutableConsumers": [
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
             "docs/config/documentation-publication-manifest.json"
@@ -163699,6 +164078,12 @@
       "executableConsumers": [],
       "indirectExecutableConsumers": [
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
             "docs/config/documentation-publication-manifest.json"
@@ -163830,6 +164215,12 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
@@ -163968,6 +164359,12 @@
       "executableConsumers": [],
       "indirectExecutableConsumers": [
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
             "docs/config/documentation-publication-manifest.json"
@@ -164105,6 +164502,12 @@
       "executableConsumers": [],
       "indirectExecutableConsumers": [
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
             "docs/config/documentation-publication-manifest.json"
@@ -164236,6 +164639,12 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
@@ -164369,6 +164778,12 @@
       "executableConsumers": [],
       "indirectExecutableConsumers": [
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
             "docs/config/documentation-publication-manifest.json"
@@ -164500,6 +164915,12 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
@@ -164633,6 +165054,12 @@
       "executableConsumers": [],
       "indirectExecutableConsumers": [
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
             "docs/config/documentation-publication-manifest.json"
@@ -164764,6 +165191,12 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
@@ -164897,6 +165330,12 @@
       "executableConsumers": [],
       "indirectExecutableConsumers": [
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
             "docs/config/documentation-publication-manifest.json"
@@ -165028,6 +165467,12 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
@@ -165161,6 +165606,12 @@
       "executableConsumers": [],
       "indirectExecutableConsumers": [
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
             "docs/config/documentation-publication-manifest.json"
@@ -165292,6 +165743,12 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
@@ -165425,6 +165882,12 @@
       "executableConsumers": [],
       "indirectExecutableConsumers": [
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
             "docs/config/documentation-publication-manifest.json"
@@ -165556,6 +166019,12 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
@@ -165689,6 +166158,12 @@
       "executableConsumers": [],
       "indirectExecutableConsumers": [
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
             "docs/config/documentation-publication-manifest.json"
@@ -165820,6 +166295,12 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
@@ -165953,6 +166434,12 @@
       "executableConsumers": [],
       "indirectExecutableConsumers": [
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
             "docs/config/documentation-publication-manifest.json"
@@ -166084,6 +166571,12 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
@@ -166267,6 +166760,12 @@
       "executableConsumers": [],
       "indirectExecutableConsumers": [
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
             "docs/config/documentation-publication-manifest.json"
@@ -166438,6 +166937,12 @@
       ],
       "indirectExecutableConsumers": [
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
             "docs/config/documentation-publication-manifest.json"
@@ -166578,6 +167083,12 @@
       ],
       "indirectExecutableConsumers": [
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
             "docs/config/documentation-publication-manifest.json"
@@ -166699,6 +167210,12 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
@@ -166946,6 +167463,12 @@
         "tests/verification/contracts/check-worker-trust-documentation.mts"
       ],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
@@ -168077,6 +168600,12 @@
       "executableConsumers": [],
       "indirectExecutableConsumers": [
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
             "docs/config/documentation-publication-manifest.json"
@@ -168465,6 +168994,12 @@
         "scripts/tests/docs-tree-boundary.test.mjs"
       ],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
@@ -169750,6 +170285,12 @@
       ],
       "indirectExecutableConsumers": [
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
             "docs/config/documentation-publication-manifest.json"
@@ -170220,6 +170761,12 @@
         "scripts/tests/docs-tree-boundary.test.mjs"
       ],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
@@ -171463,6 +172010,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "handoffs/pr13-finish-20261021/acceptance-cfc97-new-records.json",
+          "token": "docs/site/reference/capabilities.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "scripts/check-capability-drift-mutations.mjs",
           "token": "docs/site/reference/capabilities.md",
           "inputUse": false
@@ -171514,6 +172066,7 @@
         }
       ],
       "executableConsumers": [
+        "handoffs/pr13-finish-20261021/acceptance-cfc97-new-records.json",
         "scripts/check-capability-drift-mutations.mjs",
         "scripts/check-capability-policy-drift.mjs",
         "scripts/check-capability-registrations-drift-controls.mjs",
@@ -171523,6 +172076,12 @@
         "scripts/tests/docs-tree-boundary.test.mjs"
       ],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
@@ -171703,6 +172262,12 @@
         "scripts/check-configuration-drift-mutations.mjs"
       ],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
@@ -171904,6 +172469,12 @@
       ],
       "indirectExecutableConsumers": [
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
             "docs/config/documentation-publication-manifest.json"
@@ -172025,6 +172596,12 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
@@ -172173,6 +172750,12 @@
       "executableConsumers": [],
       "indirectExecutableConsumers": [
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
             "docs/config/documentation-publication-manifest.json"
@@ -172320,6 +172903,12 @@
       "executableConsumers": [],
       "indirectExecutableConsumers": [
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
             "docs/config/documentation-publication-manifest.json"
@@ -172441,6 +173030,12 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
@@ -172566,6 +173161,12 @@
         "handoffs/pr13-finish-20261021/reader-6d-scope-preservation.json"
       ],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
@@ -172728,6 +173329,12 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
@@ -173019,6 +173626,12 @@
       ],
       "indirectExecutableConsumers": [
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
             "docs/config/documentation-publication-manifest.json"
@@ -173182,6 +173795,12 @@
         "handoffs/pr13-finish-20261021/operator-platform-completion-records.json"
       ],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
@@ -173374,6 +173993,12 @@
       ],
       "indirectExecutableConsumers": [
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
             "docs/config/documentation-publication-manifest.json"
@@ -173478,6 +174103,26 @@
           "inputUse": false
         },
         {
+          "sourcePath": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "token": "docs/site/reference/errors.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "handoffs/pr13-finish-20261021/http-errors-independent-source-reader.json",
+          "token": "docs/site/reference/errors.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "handoffs/pr13-finish-20261021/ref005-http-errors-author.json",
+          "token": "docs/site/reference/errors.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "handoffs/pr13-finish-20261021/ref005-http-errors-author.md",
+          "token": "docs/site/reference/errors.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "scripts/docs-ap09-catalogue.mjs",
           "token": "docs/site/reference/errors.md",
           "inputUse": false
@@ -173488,8 +174133,18 @@
           "inputUse": false
         }
       ],
-      "executableConsumers": [],
+      "executableConsumers": [
+        "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+        "handoffs/pr13-finish-20261021/http-errors-independent-source-reader.json",
+        "handoffs/pr13-finish-20261021/ref005-http-errors-author.json"
+      ],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
@@ -173503,7 +174158,7 @@
           ]
         }
       ],
-      "sha256": "242ba686128abc4d95c00d9f342fb5afa5b311f9f4d4231000f2da54884da13c"
+      "sha256": "c1818431abc965ca84ee87dd3170e83bb27c49012beefdb7802b743737d6589b"
     },
     {
       "path": "docs/site/reference/events.md",
@@ -173597,6 +174252,12 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
@@ -173832,6 +174493,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "token": "docs/site/reference/generated-documentation-map.json",
+          "inputUse": false
+        },
+        {
           "sourcePath": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "token": "docs/site/reference/generated-documentation-map.json",
           "inputUse": false
@@ -173853,11 +174519,12 @@
         }
       ],
       "executableConsumers": [
+        "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
         "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
         "handoffs/pr13-finish-20261021/reader-6d-scope-preservation.json"
       ],
       "indirectExecutableConsumers": [],
-      "sha256": "2f106e8153227b57a886757d0c5c4a5971b50bc7a3ec0f23dc9d10fb99289813"
+      "sha256": "e8fd30626d793dd6d45e6914034f5dcc7497ef574237546acbb6112ab13aa99e"
     },
     {
       "path": "docs/site/reference/glossary.md",
@@ -173988,6 +174655,12 @@
         ".codex/handoffs/documentation-cloud/evidence-index.json"
       ],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
@@ -174186,6 +174859,12 @@
       ],
       "indirectExecutableConsumers": [
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
             "docs/config/documentation-publication-manifest.json"
@@ -174333,6 +175012,12 @@
       "executableConsumers": [],
       "indirectExecutableConsumers": [
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
             "docs/config/documentation-publication-manifest.json"
@@ -174466,6 +175151,12 @@
         "handoffs/pr13-reset-20261021/whole-diagram-record-inputs.json"
       ],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
@@ -174620,6 +175311,12 @@
         "scripts/check-platform-specialist-guides.mjs"
       ],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
@@ -174786,6 +175483,12 @@
       ],
       "indirectExecutableConsumers": [
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
             "docs/config/documentation-publication-manifest.json"
@@ -174924,6 +175627,12 @@
         "scripts/check-platform-specialist-guides.mjs"
       ],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
@@ -175104,6 +175813,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "handoffs/pr13-finish-20261021/acceptance-cfc97-new-records.json",
+          "token": "docs/site/reference/nova-project.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "token": "docs/site/reference/nova-project.md",
           "inputUse": false
@@ -175151,12 +175865,19 @@
       ],
       "executableConsumers": [
         "handoffs/pr13-finish-20261021/a99-01-completion-record.json",
+        "handoffs/pr13-finish-20261021/acceptance-cfc97-new-records.json",
         "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
         "handoffs/pr13-finish-20261021/style-and-scope-preservation-independent.json",
         "handoffs/pr13-finish-20261021/workflow-developer-completion-records.json",
         "scripts/check-suite-migration-workflow.mjs"
       ],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
@@ -175286,6 +176007,12 @@
         "handoffs/pr13-finish-20261021/a99-01-completion-record.json"
       ],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
@@ -175439,6 +176166,12 @@
       ],
       "indirectExecutableConsumers": [
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
             "docs/config/documentation-publication-manifest.json"
@@ -175585,6 +176318,12 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
@@ -175756,6 +176495,12 @@
         "scripts/check-platform-specialist-guides.mjs"
       ],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
@@ -175951,6 +176696,12 @@
         "scripts/tests/docs-source-freshness.test.mjs"
       ],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
@@ -176157,6 +176908,12 @@
       ],
       "indirectExecutableConsumers": [
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
             "docs/config/documentation-publication-manifest.json"
@@ -176329,6 +177086,12 @@
       "executableConsumers": [],
       "indirectExecutableConsumers": [
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
             "docs/config/documentation-publication-manifest.json"
@@ -176465,6 +177228,12 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
@@ -176639,6 +177408,12 @@
         "scripts/check-contract-drift.mjs"
       ],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
@@ -176841,6 +177616,12 @@
       ],
       "indirectExecutableConsumers": [
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
             "docs/config/documentation-publication-manifest.json"
@@ -177042,6 +177823,12 @@
           ]
         },
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
             "docs/config/documentation-publication-manifest.json"
@@ -177188,6 +177975,12 @@
       ],
       "indirectExecutableConsumers": [
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
             "docs/config/documentation-publication-manifest.json"
@@ -177324,6 +178117,12 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
@@ -177487,6 +178286,12 @@
       "executableConsumers": [],
       "indirectExecutableConsumers": [
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
             "docs/config/documentation-publication-manifest.json"
@@ -177608,6 +178413,12 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
@@ -177810,6 +178621,12 @@
       ],
       "indirectExecutableConsumers": [
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
             "docs/config/documentation-publication-manifest.json"
@@ -177957,6 +178774,12 @@
       "executableConsumers": [],
       "indirectExecutableConsumers": [
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
             "docs/config/documentation-publication-manifest.json"
@@ -178103,6 +178926,12 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
@@ -178295,6 +179124,12 @@
       ],
       "indirectExecutableConsumers": [
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
             "docs/config/documentation-publication-manifest.json"
@@ -178468,6 +179303,12 @@
         "scripts/check-platform-specialist-guides.mjs"
       ],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
@@ -178646,6 +179487,12 @@
       ],
       "indirectExecutableConsumers": [
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
             "docs/config/documentation-publication-manifest.json"
@@ -178802,6 +179649,12 @@
       ],
       "indirectExecutableConsumers": [
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
             "docs/config/documentation-publication-manifest.json"
@@ -178946,6 +179799,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "handoffs/pr13-finish-20261021/acceptance-cfc97-new-records.json",
+          "token": "docs/site/understand/buster-namespace-controller.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "handoffs/pr13-finish-20261021/buster-source-roster-review.md",
           "token": "docs/site/understand/buster-namespace-controller.md",
           "inputUse": false
@@ -178982,12 +179840,19 @@
         }
       ],
       "executableConsumers": [
+        "handoffs/pr13-finish-20261021/acceptance-cfc97-new-records.json",
         "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
         "handoffs/pr13-finish-20261021/workflow-parent-smallfix-preservation.json",
         "handoffs/pr13-reset-20261021/whole-diagram-record-inputs.json",
         "scripts/check-buster-guides.mjs"
       ],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
@@ -179135,6 +180000,12 @@
       ],
       "indirectExecutableConsumers": [
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
             "docs/config/documentation-publication-manifest.json"
@@ -179253,6 +180124,12 @@
         "scripts/check-platform-specialist-guides.mjs"
       ],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
@@ -179492,6 +180369,12 @@
       ],
       "indirectExecutableConsumers": [
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
             "docs/config/documentation-publication-manifest.json"
@@ -179695,6 +180578,12 @@
         "scripts/check-core-architecture-guides.mjs"
       ],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
@@ -179903,6 +180792,12 @@
         "scripts/check-platform-specialist-guides.mjs"
       ],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
@@ -180158,6 +181053,12 @@
       ],
       "indirectExecutableConsumers": [
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
             "docs/config/documentation-publication-manifest.json"
@@ -180293,6 +181194,12 @@
       ],
       "indirectExecutableConsumers": [
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
             "docs/config/documentation-publication-manifest.json"
@@ -180427,6 +181334,12 @@
         "scripts/check-platform-specialist-guides.mjs"
       ],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
@@ -180567,6 +181480,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "handoffs/pr13-finish-20261021/acceptance-cfc97-new-records.json",
+          "token": "docs/site/understand/nova-core.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "handoffs/pr13-finish-20261021/workflow-developer-completion-records.json",
           "token": "docs/site/understand/nova-core.md",
           "inputUse": false
@@ -180593,11 +181511,18 @@
         }
       ],
       "executableConsumers": [
+        "handoffs/pr13-finish-20261021/acceptance-cfc97-new-records.json",
         "handoffs/pr13-finish-20261021/workflow-developer-completion-records.json",
         "handoffs/pr13-reset-20261021/whole-diagram-record-inputs.json",
         "scripts/check-core-architecture-guides.mjs"
       ],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
@@ -180758,6 +181683,12 @@
         "scripts/check-platform-specialist-guides.mjs"
       ],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
@@ -180927,6 +181858,12 @@
         "scripts/check-platform-specialist-guides.mjs"
       ],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
@@ -181110,6 +182047,12 @@
         "handoffs/pr13-reset-20261021/whole-diagram-record-inputs.json"
       ],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
@@ -181409,6 +182352,12 @@
       ],
       "indirectExecutableConsumers": [
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
             "docs/config/documentation-publication-manifest.json"
@@ -181562,6 +182511,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "handoffs/pr13-finish-20261021/acceptance-cfc97-new-records.json",
+          "token": "docs/site/understand/plugin-runtime.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "handoffs/pr13-reset-20261021/whole-diagram-record-inputs.json",
           "token": "docs/site/understand/plugin-runtime.md",
           "inputUse": false
@@ -181583,10 +182537,17 @@
         }
       ],
       "executableConsumers": [
+        "handoffs/pr13-finish-20261021/acceptance-cfc97-new-records.json",
         "handoffs/pr13-reset-20261021/whole-diagram-record-inputs.json",
         "scripts/check-core-architecture-guides.mjs"
       ],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
@@ -181762,6 +182723,12 @@
         "scripts/check-prism-guides.mjs"
       ],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
@@ -181943,6 +182910,12 @@
       ],
       "indirectExecutableConsumers": [
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
             "docs/config/documentation-publication-manifest.json"
@@ -182112,6 +183085,12 @@
         "scripts/check-prism-guides.mjs"
       ],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
@@ -182323,6 +183302,12 @@
       ],
       "indirectExecutableConsumers": [
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
             "docs/config/documentation-publication-manifest.json"
@@ -182474,6 +183459,12 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
@@ -182686,6 +183677,12 @@
         "scripts/check-platform-specialist-guides.mjs"
       ],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
@@ -182935,6 +183932,12 @@
       ],
       "indirectExecutableConsumers": [
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
             "docs/config/documentation-publication-manifest.json"
@@ -183132,6 +184135,12 @@
       ],
       "indirectExecutableConsumers": [
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
             "docs/config/documentation-publication-manifest.json"
@@ -183265,6 +184274,12 @@
         "tests/verification/contracts/check-worker-trust-documentation.mts"
       ],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
@@ -183452,6 +184467,12 @@
       ],
       "indirectExecutableConsumers": [
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
             "docs/config/documentation-publication-manifest.json"
@@ -183624,6 +184645,12 @@
           "executableSource": ".codex/handoffs/documentation-cloud/evidence-index.json",
           "via": [
             "docs/operator-tasks.json"
+          ]
+        },
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
           ]
         },
         {
@@ -183803,6 +184830,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "handoffs/pr13-finish-20261021/acceptance-cfc97-new-records.json",
+          "token": "docs/site/use/demo-delivery.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "handoffs/pr13-finish-20261021/operator-platform-completion-records.json",
           "token": "docs/site/use/demo-delivery.md",
           "inputUse": false
@@ -183819,6 +184851,7 @@
         }
       ],
       "executableConsumers": [
+        "handoffs/pr13-finish-20261021/acceptance-cfc97-new-records.json",
         "handoffs/pr13-finish-20261021/operator-platform-completion-records.json"
       ],
       "indirectExecutableConsumers": [
@@ -183826,6 +184859,12 @@
           "executableSource": ".codex/handoffs/documentation-cloud/evidence-index.json",
           "via": [
             "docs/operator-tasks.json"
+          ]
+        },
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
           ]
         },
         {
@@ -184045,6 +185084,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "handoffs/pr13-finish-20261021/acceptance-cfc97-new-records.json",
+          "token": "docs/site/use/diagnose.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "scripts/check-platform-specialist-guides.mjs",
           "token": "docs/site/use/diagnose.md",
           "inputUse": true
@@ -184067,6 +185111,7 @@
       ],
       "executableConsumers": [
         ".codex/handoffs/documentation-cloud/evidence-index.json",
+        "handoffs/pr13-finish-20261021/acceptance-cfc97-new-records.json",
         "scripts/check-platform-specialist-guides.mjs"
       ],
       "indirectExecutableConsumers": [
@@ -184074,6 +185119,12 @@
           "executableSource": ".codex/handoffs/documentation-cloud/evidence-index.json",
           "via": [
             "docs/operator-tasks.json"
+          ]
+        },
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
           ]
         },
         {
@@ -184258,6 +185309,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "handoffs/pr13-finish-20261021/acceptance-cfc97-new-records.json",
+          "token": "docs/site/use/install.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "handoffs/pr13-finish-20261021/operator-platform-completion-records.json",
           "token": "docs/site/use/install.md",
           "inputUse": false
@@ -184325,6 +185381,7 @@
       ],
       "executableConsumers": [
         ".codex/handoffs/documentation-cloud/evidence-index.json",
+        "handoffs/pr13-finish-20261021/acceptance-cfc97-new-records.json",
         "handoffs/pr13-finish-20261021/operator-platform-completion-records.json",
         "scripts/check-operator-task-registry.mjs",
         "scripts/deploy-cilium.sh",
@@ -184335,6 +185392,12 @@
           "executableSource": ".codex/handoffs/documentation-cloud/evidence-index.json",
           "via": [
             "docs/operator-tasks.json"
+          ]
+        },
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
           ]
         },
         {
@@ -184562,6 +185625,12 @@
           ]
         },
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
             "docs/config/documentation-publication-manifest.json"
@@ -184773,6 +185842,16 @@
           "inputUse": false
         },
         {
+          "sourcePath": "handoffs/pr13-finish-20261021/acceptance-cfc97-new-records.json",
+          "token": "docs/site/use/operate.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "handoffs/pr13-finish-20261021/failure-workflows-independent-review.md",
+          "token": "docs/site/use/operate.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "handoffs/pr13-finish-20261021/operator-platform-completion-records.json",
           "token": "docs/site/use/operate.md",
           "inputUse": false
@@ -184815,6 +185894,7 @@
       ],
       "executableConsumers": [
         ".codex/handoffs/documentation-cloud/evidence-index.json",
+        "handoffs/pr13-finish-20261021/acceptance-cfc97-new-records.json",
         "handoffs/pr13-finish-20261021/operator-platform-completion-records.json",
         "handoffs/pr13-finish-20261021/workflow-developer-completion-records.json",
         "scripts/generate-operator-task-registry.mjs"
@@ -184824,6 +185904,12 @@
           "executableSource": ".codex/handoffs/documentation-cloud/evidence-index.json",
           "via": [
             "docs/operator-tasks.json"
+          ]
+        },
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
           ]
         },
         {
@@ -185026,6 +186112,12 @@
           "executableSource": ".codex/handoffs/documentation-cloud/evidence-index.json",
           "via": [
             "docs/operator-tasks.json"
+          ]
+        },
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
           ]
         },
         {
@@ -185248,6 +186340,12 @@
           ]
         },
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
             "docs/config/documentation-publication-manifest.json"
@@ -185434,6 +186532,12 @@
         "scripts/check-operator-task-registry.mjs"
       ],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
@@ -185694,6 +186798,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "handoffs/pr13-finish-20261021/acceptance-cfc97-new-records.json",
+          "token": "docs/site/use/recovery.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "handoffs/pr13-finish-20261021/operator-platform-completion-records.json",
           "token": "docs/site/use/recovery.md",
           "inputUse": false
@@ -185721,6 +186830,7 @@
       ],
       "executableConsumers": [
         ".codex/handoffs/documentation-cloud/evidence-index.json",
+        "handoffs/pr13-finish-20261021/acceptance-cfc97-new-records.json",
         "handoffs/pr13-finish-20261021/operator-platform-completion-records.json"
       ],
       "indirectExecutableConsumers": [
@@ -185728,6 +186838,12 @@
           "executableSource": ".codex/handoffs/documentation-cloud/evidence-index.json",
           "via": [
             "docs/operator-tasks.json"
+          ]
+        },
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
           ]
         },
         {
@@ -185930,6 +187046,12 @@
           ]
         },
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
             "docs/config/documentation-publication-manifest.json"
@@ -186041,6 +187163,16 @@
           "inputUse": false
         },
         {
+          "sourcePath": "handoffs/pr13-finish-20261021/acceptance-cfc97-new-records.json",
+          "token": "docs/site/use/workflows/README.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "token": "docs/site/use/workflows/README.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "token": "docs/site/use/workflows/README.md",
           "inputUse": false
@@ -186073,11 +187205,19 @@
       ],
       "executableConsumers": [
         "handoffs/pr13-finish-20261021/A99-07-after-pin-completion-record-corrected.json",
+        "handoffs/pr13-finish-20261021/acceptance-cfc97-new-records.json",
+        "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
         "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
         "handoffs/pr13-finish-20261021/contracts-notification-routing-independent-source.json",
         "handoffs/pr13-finish-20261021/reader-6d-scope-preservation.json"
       ],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
@@ -186091,7 +187231,77 @@
           ]
         }
       ],
-      "sha256": "70f31ea0fc50ef12181a13bfa14489287cfa44246f4643b9097241108826151b"
+      "sha256": "e59fedf0bddb19b870e4beb14398b1f7db63327bd4961dd4e2e646581226a863"
+    },
+    {
+      "path": "docs/site/use/workflows/build-image.md",
+      "class": "canonical-reader-documentation",
+      "purpose": "Source-backed image/node and Tailnet operator task with explicit original identity, supported lifecycle and safe unavailable-operation boundaries.",
+      "originalPath": "docs/site/use/workflows/build-image.md",
+      "expectedPath": "docs/site/use/workflows/build-image.md",
+      "introducedAfterBaseline": true,
+      "locationValid": true,
+      "consumers": [
+        {
+          "sourcePath": "docs/blueprint/documentation-completion-matrix.json",
+          "token": "docs/site/use/workflows/build-image.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "docs/config/documentation-publication-manifest.json",
+          "token": "docs/site/use/workflows/build-image.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "docs/config/documentation-tree-classification.json",
+          "token": "docs/site/use/workflows/build-image.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "docs/site/reference/generated-documentation-map.json",
+          "token": "docs/site/use/workflows/build-image.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "docs/site/use/workflows/README.md",
+          "token": "docs/site/use/workflows/build-image.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "handoffs/pr13-finish-20261021/acceptance-cfc97-new-records.json",
+          "token": "docs/site/use/workflows/build-image.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "handoffs/pr13-finish-20261021/build-tailnet-guide-author-report.md",
+          "token": "docs/site/use/workflows/build-image.md",
+          "inputUse": false
+        }
+      ],
+      "executableConsumers": [
+        "handoffs/pr13-finish-20261021/acceptance-cfc97-new-records.json"
+      ],
+      "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
+          "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        }
+      ],
+      "sha256": "d90f9f2160554e216d0f45f5ef90de72b6e3373d9a91ffcbb40d8f20554ab499"
     },
     {
       "path": "docs/site/use/workflows/buster-suite.md",
@@ -186292,6 +187502,12 @@
       ],
       "indirectExecutableConsumers": [
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
             "docs/config/documentation-publication-manifest.json"
@@ -186467,6 +187683,47 @@
       "sha256": "9dd76ffc6ba99af003b1349a2dc644e642124c4a43f4f88d8f50b145b1da6a96"
     },
     {
+      "path": "docs/site/use/workflows/examples/repair-retry.mjs",
+      "class": "canonical-reader-documentation",
+      "purpose": "Source-backed owned local Core retry/repair executable rehearsal with explicit trusted test-stage boundary.",
+      "originalPath": "docs/site/use/workflows/examples/repair-retry.mjs",
+      "expectedPath": "docs/site/use/workflows/examples/repair-retry.mjs",
+      "introducedAfterBaseline": true,
+      "locationValid": true,
+      "consumers": [
+        {
+          "sourcePath": "docs/blueprint/documentation-completion-matrix.json",
+          "token": "docs/site/use/workflows/examples/repair-retry.mjs",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "docs/config/documentation-tree-classification.json",
+          "token": "docs/site/use/workflows/examples/repair-retry.mjs",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "docs/site/reference/generated-documentation-map.json",
+          "token": "docs/site/use/workflows/examples/repair-retry.mjs",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "docs/site/use/workflows/repair-retry.md",
+          "token": "docs/site/use/workflows/examples/repair-retry.mjs",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "handoffs/pr13-finish-20261021/acceptance-cfc97-new-records.json",
+          "token": "docs/site/use/workflows/examples/repair-retry.mjs",
+          "inputUse": false
+        }
+      ],
+      "executableConsumers": [
+        "handoffs/pr13-finish-20261021/acceptance-cfc97-new-records.json"
+      ],
+      "indirectExecutableConsumers": [],
+      "sha256": "4f18a7ff3aba3e53c9e80b757f8eb0711f3d57ae246410b39d06d67be2466698"
+    },
+    {
       "path": "docs/site/use/workflows/examples/request-trace-redis-unavailable.json",
       "class": "canonical-reader-documentation",
       "purpose": "Published, user-facing KubeClaw documentation.",
@@ -186573,6 +187830,71 @@
       ],
       "indirectExecutableConsumers": [],
       "sha256": "ad5e77b0b88753809f6117ea0d55c92147f814d0bfafd0b117b652b69e560eb7"
+    },
+    {
+      "path": "docs/site/use/workflows/interruption-recovery.md",
+      "class": "canonical-reader-documentation",
+      "purpose": "Source-backed workflow recovery procedure with original identity, retained state, supported controls and explicit execution limits.",
+      "originalPath": "docs/site/use/workflows/interruption-recovery.md",
+      "expectedPath": "docs/site/use/workflows/interruption-recovery.md",
+      "introducedAfterBaseline": true,
+      "locationValid": true,
+      "consumers": [
+        {
+          "sourcePath": "docs/blueprint/documentation-completion-matrix.json",
+          "token": "docs/site/use/workflows/interruption-recovery.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "docs/config/documentation-publication-manifest.json",
+          "token": "docs/site/use/workflows/interruption-recovery.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "docs/config/documentation-tree-classification.json",
+          "token": "docs/site/use/workflows/interruption-recovery.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "docs/site/reference/generated-documentation-map.json",
+          "token": "docs/site/use/workflows/interruption-recovery.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "docs/site/use/workflows/README.md",
+          "token": "docs/site/use/workflows/interruption-recovery.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "handoffs/pr13-finish-20261021/acceptance-cfc97-new-records.json",
+          "token": "docs/site/use/workflows/interruption-recovery.md",
+          "inputUse": false
+        }
+      ],
+      "executableConsumers": [
+        "handoffs/pr13-finish-20261021/acceptance-cfc97-new-records.json"
+      ],
+      "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
+          "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        }
+      ],
+      "sha256": "b61a37d28ad9f9305cd0d69ebdb199ddfed6ab8168c843b4f299efc2298097e0"
     },
     {
       "path": "docs/site/use/workflows/kubernetes-fixture.md",
@@ -186702,6 +188024,12 @@
       "executableConsumers": [],
       "indirectExecutableConsumers": [
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
             "docs/config/documentation-publication-manifest.json"
@@ -186761,6 +188089,12 @@
       ],
       "indirectExecutableConsumers": [
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
             "docs/config/documentation-publication-manifest.json"
@@ -186774,6 +188108,201 @@
         }
       ],
       "sha256": "2e5b1d5dff7184ff37eb8f115d262efea4fa2c9f2274b421ca9d2cf6841367f1"
+    },
+    {
+      "path": "docs/site/use/workflows/redis-replay-recovery.md",
+      "class": "canonical-reader-documentation",
+      "purpose": "Source-backed workflow recovery procedure with original identity, retained state, supported controls and explicit execution limits.",
+      "originalPath": "docs/site/use/workflows/redis-replay-recovery.md",
+      "expectedPath": "docs/site/use/workflows/redis-replay-recovery.md",
+      "introducedAfterBaseline": true,
+      "locationValid": true,
+      "consumers": [
+        {
+          "sourcePath": "docs/blueprint/documentation-completion-matrix.json",
+          "token": "docs/site/use/workflows/redis-replay-recovery.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "docs/config/documentation-publication-manifest.json",
+          "token": "docs/site/use/workflows/redis-replay-recovery.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "docs/config/documentation-tree-classification.json",
+          "token": "docs/site/use/workflows/redis-replay-recovery.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "docs/site/reference/generated-documentation-map.json",
+          "token": "docs/site/use/workflows/redis-replay-recovery.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "docs/site/use/workflows/README.md",
+          "token": "docs/site/use/workflows/redis-replay-recovery.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "handoffs/pr13-finish-20261021/acceptance-cfc97-new-records.json",
+          "token": "docs/site/use/workflows/redis-replay-recovery.md",
+          "inputUse": false
+        }
+      ],
+      "executableConsumers": [
+        "handoffs/pr13-finish-20261021/acceptance-cfc97-new-records.json"
+      ],
+      "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
+          "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        }
+      ],
+      "sha256": "bd34d0cc99fccdef0983f9259f705be6578bc86df2991346dd89694bba491beb"
+    },
+    {
+      "path": "docs/site/use/workflows/repair-retry.md",
+      "class": "canonical-reader-documentation",
+      "purpose": "Source-backed workflow recovery procedure with original identity, retained state, supported controls and explicit execution limits.",
+      "originalPath": "docs/site/use/workflows/repair-retry.md",
+      "expectedPath": "docs/site/use/workflows/repair-retry.md",
+      "introducedAfterBaseline": true,
+      "locationValid": true,
+      "consumers": [
+        {
+          "sourcePath": "docs/blueprint/documentation-completion-matrix.json",
+          "token": "docs/site/use/workflows/repair-retry.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "docs/config/documentation-publication-manifest.json",
+          "token": "docs/site/use/workflows/repair-retry.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "docs/config/documentation-tree-classification.json",
+          "token": "docs/site/use/workflows/repair-retry.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "docs/site/reference/generated-documentation-map.json",
+          "token": "docs/site/use/workflows/repair-retry.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "docs/site/use/workflows/README.md",
+          "token": "docs/site/use/workflows/repair-retry.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "handoffs/pr13-finish-20261021/acceptance-cfc97-new-records.json",
+          "token": "docs/site/use/workflows/repair-retry.md",
+          "inputUse": false
+        }
+      ],
+      "executableConsumers": [
+        "handoffs/pr13-finish-20261021/acceptance-cfc97-new-records.json"
+      ],
+      "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
+          "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        }
+      ],
+      "sha256": "81dd334d8bf5ac98ac06da9261cfcd9697890c9a0ab867a3b513cbc1de5be2c4"
+    },
+    {
+      "path": "docs/site/use/workflows/tailnet-exposure.md",
+      "class": "canonical-reader-documentation",
+      "purpose": "Source-backed image/node and Tailnet operator task with explicit original identity, supported lifecycle and safe unavailable-operation boundaries.",
+      "originalPath": "docs/site/use/workflows/tailnet-exposure.md",
+      "expectedPath": "docs/site/use/workflows/tailnet-exposure.md",
+      "introducedAfterBaseline": true,
+      "locationValid": true,
+      "consumers": [
+        {
+          "sourcePath": "docs/blueprint/documentation-completion-matrix.json",
+          "token": "docs/site/use/workflows/tailnet-exposure.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "docs/config/documentation-publication-manifest.json",
+          "token": "docs/site/use/workflows/tailnet-exposure.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "docs/config/documentation-tree-classification.json",
+          "token": "docs/site/use/workflows/tailnet-exposure.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "docs/site/reference/generated-documentation-map.json",
+          "token": "docs/site/use/workflows/tailnet-exposure.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "docs/site/use/workflows/README.md",
+          "token": "docs/site/use/workflows/tailnet-exposure.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "handoffs/pr13-finish-20261021/acceptance-cfc97-new-records.json",
+          "token": "docs/site/use/workflows/tailnet-exposure.md",
+          "inputUse": false
+        }
+      ],
+      "executableConsumers": [
+        "handoffs/pr13-finish-20261021/acceptance-cfc97-new-records.json"
+      ],
+      "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
+          "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        }
+      ],
+      "sha256": "e2a84bcd30e11ca5fd922891f9d20c5689b43596a12aeb7e82b9a664e333660f"
     },
     {
       "path": "docs/site/use/workflows/wait-resume.md",
@@ -186924,6 +188453,12 @@
         "handoffs/pr13-finish-20261021/workflow-developer-completion-records.json"
       ],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
           "via": [
@@ -187108,6 +188643,71 @@
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
       "sha256": "5ca867de4e70a28a24f3cf7f6e74499ce6b9af5a98c45b7358e6b226dfee0ffd"
+    },
+    {
+      "path": "docs/site/use/workflows/worker-result-recovery.md",
+      "class": "canonical-reader-documentation",
+      "purpose": "Source-backed workflow recovery procedure with original identity, retained state, supported controls and explicit execution limits.",
+      "originalPath": "docs/site/use/workflows/worker-result-recovery.md",
+      "expectedPath": "docs/site/use/workflows/worker-result-recovery.md",
+      "introducedAfterBaseline": true,
+      "locationValid": true,
+      "consumers": [
+        {
+          "sourcePath": "docs/blueprint/documentation-completion-matrix.json",
+          "token": "docs/site/use/workflows/worker-result-recovery.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "docs/config/documentation-publication-manifest.json",
+          "token": "docs/site/use/workflows/worker-result-recovery.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "docs/config/documentation-tree-classification.json",
+          "token": "docs/site/use/workflows/worker-result-recovery.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "docs/site/reference/generated-documentation-map.json",
+          "token": "docs/site/use/workflows/worker-result-recovery.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "docs/site/use/workflows/README.md",
+          "token": "docs/site/use/workflows/worker-result-recovery.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "handoffs/pr13-finish-20261021/acceptance-cfc97-new-records.json",
+          "token": "docs/site/use/workflows/worker-result-recovery.md",
+          "inputUse": false
+        }
+      ],
+      "executableConsumers": [
+        "handoffs/pr13-finish-20261021/acceptance-cfc97-new-records.json"
+      ],
+      "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-cfc97-22-record-preservation.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
+          "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        }
+      ],
+      "sha256": "aa2b18c69592b02d9165347cf45ea5b58fb720bf51bb18a532dcf0339a0e2ffe"
     },
     {
       "path": "docs/spikes/prism-foundation-spikes.md",

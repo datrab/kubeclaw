@@ -1,0 +1,774 @@
+{
+  "schemaVersion": "pr13-bounded-record-preservation.v1",
+  "baseRevision": "0e7606922f9a1859dad8709959784a4794d57a84",
+  "candidateRevision": "cfc97be096908c1193877d054bb80662120f1eca",
+  "reviewer": "/root/operator_acceptance",
+  "distinctPreexistingPassRecords": 22,
+  "intersectionMethod": "Unique record ID union over current pages+sources matched to git diff paths, exact path or changed path nested under declared Source prefix. Only records already PASS atbase.",
+  "currentReader": "PENDING parent177actualbuild",
+  "unmodifiedOriginalRecordObjects": true,
+  "newGatesAccepted": [],
+  "newRequirementsAccepted": [],
+  "httpAuthorConflictResolution": {
+    "report": "handoffs/pr13-finish-20261021/http-errors-independent-review.md",
+    "reviewer": "/root/workflow_acceptance",
+    "pageSha256": "c1818431abc965ca84ee87dd3170e83bb27c49012beefdb7802b743737d6589b",
+    "renderedRevision": "24a3fa0b316160187f23b02aeac8b2c60bb6e527",
+    "renderedHtmlSha256": "ca3243cc036fec09efd2a8087d24d8457f0fdb1a11a6c7449e120ae7f46bb165",
+    "scope": "Reuse exact bounded independent HTTP chapter Source/semantic rendered review, not author selfacceptance or whole REF005."
+  },
+  "records": [
+    {
+      "id": "AP09.1-ready-topics-20261020",
+      "changedPages": [],
+      "changedSources": [
+        "docs/site/reference/generated-documentation-map.json"
+      ],
+      "gateIds": [],
+      "requirementIds": [
+        "GOV-001",
+        "GOV-003",
+        "GOV-004",
+        "GOV-008",
+        "ENT-001",
+        "ENT-002",
+        "ENT-003",
+        "ENT-004",
+        "DEC-001",
+        "STA-001",
+        "STA-002"
+      ],
+      "originalSummary": "Independent PASS for entry/authority/completeness rules, product explanation/request, stable decision identity and public status/register consistency.",
+      "originalLimits": [
+        "Source and documentation acceptance only; no live deployment or global publication acceptance.",
+        "GOV-002 exhaustive inventory and DEC-002 full rationale review remain NOT_READY; GOV-006 metadata map stale.",
+        "Other-page/global refs/publication/boundary checks failed; not accepted by this scoped review."
+      ],
+      "originalRevision": "af1b987ee4d461fc6205a18553db3e21461ca203",
+      "originalRecordObjectUnchanged": true,
+      "originalRecordCanonicalJsonSha256": "c6a85cd08d6ebb9ba70d5ff24f7f384b6bd36d1bd432e171f995cbffa11ffd1a",
+      "sourceAccuracy": "PASS",
+      "semanticReaderTraversal": "PASS",
+      "readerUsability": "PENDING_CURRENT_READER",
+      "quality": "PASS",
+      "sourceBasis": [
+        "JSON semantic comparison:171\u2192177 pages,6specific guide entries added,0removed. Existing changes only README sourceDependencies and errors lastVerified/sourceDependencies; every other existing entry exactly equal. Owners/routes/kinds/checks for original records unchanged; new-entry purposes independently reviewed, not inferred from presence."
+      ],
+      "readerBasis": "Original accepted semantic reader tasks and unchanged exact owning evidence reused; six task additions do not change old steps. Nonauthor HTTP rendered24 scope reused where applicable. Fresh177artifact/search/Source/previews/diagrams/offline/extracted verification pending parent, not inferred from6d or24 evidence.",
+      "qualityBasis": "Bounded text/nav/metadata deltas preserve original terminology, authority and proof limits; D05 internal aside removed. No new broad requirement/gate qualification. Original summary, campaign/reasons and limits are retained verbatim, not replaced by this checkpoint note.",
+      "verdict": "SOURCE_QUALITY_PRESERVED_CURRENT_READER_PENDING",
+      "newGateAcceptance": false
+    },
+    {
+      "id": "Reviewed-corrections-20261020",
+      "changedPages": [],
+      "changedSources": [
+        "docs/site/reference/generated-documentation-map.json"
+      ],
+      "gateIds": [],
+      "requirementIds": [
+        "SPC-001",
+        "CFG-006",
+        "FLW-011",
+        "EXT-005",
+        "EXT-006",
+        "CFG-016",
+        "GOV-006"
+      ],
+      "originalSummary": "Seven concrete review findings corrected and independently re-reviewed: unsafe retry opt-in in4Buster reader paths,actual admission/invocation error codes,current lint facts and generated metadata freshness.",
+      "originalLimits": [
+        "Documentation/source acceptance only; no live deployment or globally green publication/CI claim.",
+        "Carries forward prior reviewed unchanged topic content; unrelated whole-file pin/publication failures remain open."
+      ],
+      "originalRevision": "af1b987ee4d461fc6205a18553db3e21461ca203",
+      "originalRecordObjectUnchanged": true,
+      "originalRecordCanonicalJsonSha256": "ecc8d1de89a411243e06f81e6d64de00aeb8e269534b07e2f33e68c05c0527cf",
+      "sourceAccuracy": "PASS",
+      "semanticReaderTraversal": "PASS",
+      "readerUsability": "PENDING_CURRENT_READER",
+      "quality": "PASS",
+      "sourceBasis": [
+        "JSON semantic comparison:171\u2192177 pages,6specific guide entries added,0removed. Existing changes only README sourceDependencies and errors lastVerified/sourceDependencies; every other existing entry exactly equal. Owners/routes/kinds/checks for original records unchanged; new-entry purposes independently reviewed, not inferred from presence."
+      ],
+      "readerBasis": "Original accepted semantic reader tasks and unchanged exact owning evidence reused; six task additions do not change old steps. Nonauthor HTTP rendered24 scope reused where applicable. Fresh177artifact/search/Source/previews/diagrams/offline/extracted verification pending parent, not inferred from6d or24 evidence.",
+      "qualityBasis": "Bounded text/nav/metadata deltas preserve original terminology, authority and proof limits; D05 internal aside removed. No new broad requirement/gate qualification. Original summary, campaign/reasons and limits are retained verbatim, not replaced by this checkpoint note.",
+      "verdict": "SOURCE_QUALITY_PRESERVED_CURRENT_READER_PENDING",
+      "newGateAcceptance": false
+    },
+    {
+      "id": "AP09-reader-workflows-20261020",
+      "changedPages": [
+        "docs/site/use/workflows/README.md"
+      ],
+      "changedSources": [],
+      "gateIds": [],
+      "requirementIds": [
+        "FLW-002",
+        "FLW-004",
+        "FLW-008"
+      ],
+      "originalSummary": "Independent topic acceptance for FLW-002, FLW-004, FLW-008; whole-gate acceptance only for explicitly reviewed none.",
+      "originalLimits": [
+        "Documentation/source acceptance only; no live deployment or globally green publication/CI claim.",
+        "Executed artifact/telemetry success,retry/repair,interruption,Redis replay and Worker recovery worked exercises remain open. Full project input and compiler before/after separately accepted after independent review.",
+        "External-effect fixture fails before mutation on runtime-dispatch import admission; demo tests and full Buster wrapper not green. No A99 whole-gate acceptance."
+      ],
+      "originalRevision": "af1b987ee4d461fc6205a18553db3e21461ca203",
+      "originalRecordObjectUnchanged": true,
+      "originalRecordCanonicalJsonSha256": "cb6cec050cec657859f1c591b40659c63d8cfc6cdc3829a3818d82c2f424a85f",
+      "sourceAccuracy": "PASS",
+      "semanticReaderTraversal": "PASS",
+      "readerUsability": "PENDING_CURRENT_READER",
+      "quality": "PASS",
+      "sourceBasis": [
+        "Read exact current-vs-base diff: original task rows and all executable/procedure body bytes unchanged; header adds6guide sources and6continuous task rows with explicit proof/stop limits. Existing task destinations unchanged. Parent independently Source-read new build/tailnet guides; four correction-reviewed failure guides reused. This preserves original scopes, not new FLW/gate adoption."
+      ],
+      "readerBasis": "Original accepted semantic reader tasks and unchanged exact owning evidence reused; six task additions do not change old steps. Nonauthor HTTP rendered24 scope reused where applicable. Fresh177artifact/search/Source/previews/diagrams/offline/extracted verification pending parent, not inferred from6d or24 evidence.",
+      "qualityBasis": "Bounded text/nav/metadata deltas preserve original terminology, authority and proof limits; D05 internal aside removed. No new broad requirement/gate qualification. Original summary, campaign/reasons and limits are retained verbatim, not replaced by this checkpoint note.",
+      "verdict": "SOURCE_QUALITY_PRESERVED_CURRENT_READER_PENDING",
+      "newGateAcceptance": false
+    },
+    {
+      "id": "AP09-reviewed-publication-navigation-20261020",
+      "changedPages": [
+        "docs/site/use/workflows/README.md"
+      ],
+      "changedSources": [
+        "docs/config/documentation-publication-manifest.json",
+        "docs/config/documentation-tree-classification.json",
+        "scripts/lib/docs-publication-assets.mjs"
+      ],
+      "gateIds": [
+        "A912-02"
+      ],
+      "requirementIds": [
+        "PUB-001"
+      ],
+      "originalSummary": "Independent navigation-only acceptance for PUB-001 and A912-02; all canonical pages reachable through meaningful role/task links in at most three decisions. Reviewed sources and pages unchanged since baseline.",
+      "originalLimits": [
+        "Navigation reachability only, not substantive acceptance of all destinations.",
+        "Publication/reference/boundary checks remain failed; no successful current output build, search, accessibility, rendered/offline task or live acceptance claimed.",
+        "Pre-existing dirty events.md excluded and preserved."
+      ],
+      "originalRevision": "af1b987ee4d461fc6205a18553db3e21461ca203",
+      "originalRecordObjectUnchanged": true,
+      "originalRecordCanonicalJsonSha256": "454df8e576f978ae40f2f00e1854ac1349e2aa2c7a6f76ef6cdda94b27eb280d",
+      "sourceAccuracy": "PASS",
+      "semanticReaderTraversal": "PASS",
+      "readerUsability": "PENDING_CURRENT_READER",
+      "quality": "PASS",
+      "sourceBasis": [
+        "Read exact current-vs-base diff: original task rows and all executable/procedure body bytes unchanged; header adds6guide sources and6continuous task rows with explicit proof/stop limits. Existing task destinations unchanged. Parent independently Source-read new build/tailnet guides; four correction-reviewed failure guides reused. This preserves original scopes, not new FLW/gate adoption.",
+        "Positive-manifest/classification object comparison:6canonical routes added and1exact runnable helper classification; all171previous route/canonical entries and3934previous classifications unchanged,0removals. No broad Markdown/directory rule. Current renderer/router/search code unchanged; actual expanded177Reader pending.",
+        "Full existing selector/assets consumer reused unchanged; exact diff adds only use/workflows/examples/repair-retry.mjs to literal positive file set. No new directory allowance, Source/module execution, general API waiver or changed copy behavior. Complete helper independently reviewed and installed-parent execution/re-entry/capture negatives reported; original reader/developer/maintenance paths stay unchanged."
+      ],
+      "readerBasis": "Original accepted semantic reader tasks and unchanged exact owning evidence reused; six task additions do not change old steps. Nonauthor HTTP rendered24 scope reused where applicable. Fresh177artifact/search/Source/previews/diagrams/offline/extracted verification pending parent, not inferred from6d or24 evidence.",
+      "qualityBasis": "Bounded text/nav/metadata deltas preserve original terminology, authority and proof limits; D05 internal aside removed. No new broad requirement/gate qualification. Original summary, campaign/reasons and limits are retained verbatim, not replaced by this checkpoint note.",
+      "verdict": "SOURCE_QUALITY_PRESERVED_CURRENT_READER_PENDING",
+      "newGateAcceptance": false
+    },
+    {
+      "id": "AP09-first-project-example-20261020",
+      "changedPages": [
+        "docs/site/use/workflows/README.md"
+      ],
+      "changedSources": [
+        "docs/config/documentation-tree-classification.json",
+        "scripts/lib/docs-publication-assets.mjs"
+      ],
+      "gateIds": [],
+      "requirementIds": [
+        "FLW-003",
+        "FLW-005"
+      ],
+      "originalSummary": "Complete published maintainednova-project.v2 materializer andactualcompiledgraphwithall8stages,ordinary/repair edges,budgets,prerequisites,writeeffects,expectedobservations andcleanup. Independentfunctionalreviewandpublicationimpactreview complete.",
+      "originalLimits": [
+        "Documentation/source acceptance only; no live deployment or globally green publication/CI claim.",
+        "Compile-only: no runtimeadmission,platform/lintpolicy/provideragentexecution,runartifact/audit/telemetry/delivery proof.",
+        "NoFLW001/006orwholeA99/A912gateacceptanceinferred;globaltree/publication/readerboundary issuesremain.",
+        "Helperrequirespreparedsourcecheckout;publishedsourceasset isnotstandalonedownloadedsoftware."
+      ],
+      "originalRevision": "af1b987ee4d461fc6205a18553db3e21461ca203",
+      "originalRecordObjectUnchanged": true,
+      "originalRecordCanonicalJsonSha256": "2ff3c39858a36720c1d528749caada1b8ea9a45fefff8051305508ea9ffbeae1",
+      "sourceAccuracy": "PASS",
+      "semanticReaderTraversal": "PASS",
+      "readerUsability": "PENDING_CURRENT_READER",
+      "quality": "PASS",
+      "sourceBasis": [
+        "Read exact current-vs-base diff: original task rows and all executable/procedure body bytes unchanged; header adds6guide sources and6continuous task rows with explicit proof/stop limits. Existing task destinations unchanged. Parent independently Source-read new build/tailnet guides; four correction-reviewed failure guides reused. This preserves original scopes, not new FLW/gate adoption.",
+        "Positive-manifest/classification object comparison:6canonical routes added and1exact runnable helper classification; all171previous route/canonical entries and3934previous classifications unchanged,0removals. No broad Markdown/directory rule. Current renderer/router/search code unchanged; actual expanded177Reader pending.",
+        "Full existing selector/assets consumer reused unchanged; exact diff adds only use/workflows/examples/repair-retry.mjs to literal positive file set. No new directory allowance, Source/module execution, general API waiver or changed copy behavior. Complete helper independently reviewed and installed-parent execution/re-entry/capture negatives reported; original reader/developer/maintenance paths stay unchanged."
+      ],
+      "readerBasis": "Original accepted semantic reader tasks and unchanged exact owning evidence reused; six task additions do not change old steps. Nonauthor HTTP rendered24 scope reused where applicable. Fresh177artifact/search/Source/previews/diagrams/offline/extracted verification pending parent, not inferred from6d or24 evidence.",
+      "qualityBasis": "Bounded text/nav/metadata deltas preserve original terminology, authority and proof limits; D05 internal aside removed. No new broad requirement/gate qualification. Original summary, campaign/reasons and limits are retained verbatim, not replaced by this checkpoint note.",
+      "verdict": "SOURCE_QUALITY_PRESERVED_CURRENT_READER_PENDING",
+      "newGateAcceptance": false
+    },
+    {
+      "id": "AP09-compiler-import-provider-diagnosis-20261021",
+      "changedPages": [
+        "docs/site/use/workflows/README.md"
+      ],
+      "changedSources": [],
+      "gateIds": [
+        "A98-06"
+      ],
+      "requirementIds": [
+        "NVC-002",
+        "NVC-003",
+        "PLG-006",
+        "PLG-008",
+        "OPR-006"
+      ],
+      "originalSummary": "Closes complete compiler/admission, import audit, capability provider resolution and symptom-first safe diagnosis after independent current-source review.",
+      "originalLimits": [
+        "Documentation and repository evidence only; no live deployment, outage, provider embedding, native isolation or production restore claim.",
+        "No global documentation/publication/Helm-generation acceptance; unsupported importer-relative resolution remains an explicit global blocker."
+      ],
+      "originalRevision": "af1b987ee4d461fc6205a18553db3e21461ca203",
+      "originalRecordObjectUnchanged": true,
+      "originalRecordCanonicalJsonSha256": "6150d6fee1d1e00d2c0944a1024ddf547a342642579bcdf37e7d2699d4aba8e0",
+      "sourceAccuracy": "PASS",
+      "semanticReaderTraversal": "PASS",
+      "readerUsability": "PENDING_CURRENT_READER",
+      "quality": "PASS",
+      "sourceBasis": [
+        "Read exact current-vs-base diff: original task rows and all executable/procedure body bytes unchanged; header adds6guide sources and6continuous task rows with explicit proof/stop limits. Existing task destinations unchanged. Parent independently Source-read new build/tailnet guides; four correction-reviewed failure guides reused. This preserves original scopes, not new FLW/gate adoption."
+      ],
+      "readerBasis": "Original accepted semantic reader tasks and unchanged exact owning evidence reused; six task additions do not change old steps. Nonauthor HTTP rendered24 scope reused where applicable. Fresh177artifact/search/Source/previews/diagrams/offline/extracted verification pending parent, not inferred from6d or24 evidence.",
+      "qualityBasis": "Bounded text/nav/metadata deltas preserve original terminology, authority and proof limits; D05 internal aside removed. No new broad requirement/gate qualification. Original summary, campaign/reasons and limits are retained verbatim, not replaced by this checkpoint note.",
+      "verdict": "SOURCE_QUALITY_PRESERVED_CURRENT_READER_PENDING",
+      "newGateAcceptance": false
+    },
+    {
+      "id": "AP09-install-maintenance-project-entry-20261021",
+      "changedPages": [
+        "docs/site/use/workflows/README.md"
+      ],
+      "changedSources": [],
+      "gateIds": [],
+      "requirementIds": [
+        "OPR-003",
+        "OPR-008",
+        "CFG-003",
+        "ENT-005"
+      ],
+      "originalSummary": "Complete safe install/preflight, maintain/retire, project reference and connected first-reader routes accepted. First-project input omission corrected; current compiler contract check now passes.",
+      "originalLimits": [
+        "Documentation/source and bounded local compiler evidence only; no live install/readiness, upgrade/rollback, restore, provider/pipeline execution, clean dependency installation or native isolation certified.",
+        "No A98-03/A98-08/A98-09 or global generator/publication/UI gates accepted by these four requirements.",
+        "Historical composite findings retain other-page scopes. Only the accepted canonical-page namespace/status/decision-reason facets are closed."
+      ],
+      "originalRevision": "af1b987ee4d461fc6205a18553db3e21461ca203",
+      "originalRecordObjectUnchanged": true,
+      "originalRecordCanonicalJsonSha256": "2cbe757995bb4a7daac6dc66bcaa34555a33ed4187347af2ce9a3610a7cd1e6c",
+      "sourceAccuracy": "PASS",
+      "semanticReaderTraversal": "PASS",
+      "readerUsability": "PENDING_CURRENT_READER",
+      "quality": "PASS",
+      "sourceBasis": [
+        "Read exact current-vs-base diff: original task rows and all executable/procedure body bytes unchanged; header adds6guide sources and6continuous task rows with explicit proof/stop limits. Existing task destinations unchanged. Parent independently Source-read new build/tailnet guides; four correction-reviewed failure guides reused. This preserves original scopes, not new FLW/gate adoption."
+      ],
+      "readerBasis": "Original accepted semantic reader tasks and unchanged exact owning evidence reused; six task additions do not change old steps. Nonauthor HTTP rendered24 scope reused where applicable. Fresh177artifact/search/Source/previews/diagrams/offline/extracted verification pending parent, not inferred from6d or24 evidence.",
+      "qualityBasis": "Bounded text/nav/metadata deltas preserve original terminology, authority and proof limits; D05 internal aside removed. No new broad requirement/gate qualification. Original summary, campaign/reasons and limits are retained verbatim, not replaced by this checkpoint note.",
+      "verdict": "SOURCE_QUALITY_PRESERVED_CURRENT_READER_PENDING",
+      "newGateAcceptance": false
+    },
+    {
+      "id": "AP09-decision-record-content-20261021",
+      "changedPages": [
+        "docs/site/decisions/runtime-and-operations.md"
+      ],
+      "changedSources": [],
+      "gateIds": [],
+      "requirementIds": [
+        "DEC-002"
+      ],
+      "originalSummary": "Whole rationale, recorded alternatives, consequences and supersession obligation; unknown approval remains explicit and independent of implementation.",
+      "originalLimits": [
+        "Source-backed documentation acceptance only; no deployed encryption assurance, live restore, native host, rendered site or whole global generator/drift claim."
+      ],
+      "originalRevision": "8f775411fdd8e0232bdd45135accb61f23768f0b",
+      "originalRecordObjectUnchanged": true,
+      "originalRecordCanonicalJsonSha256": "664968fec7e58b647905914a92e9c6c23b21cb2708e541fc13e8e61930492e28",
+      "sourceAccuracy": "PASS",
+      "semanticReaderTraversal": "PASS",
+      "readerUsability": "PENDING_CURRENT_READER",
+      "quality": "PASS",
+      "sourceBasis": [
+        "Independent exact one-sentence D05 deletion PASS: removes documentation-branches internal aside only; complete product rule/rationale/alternatives unchanged. Prior decision scope retained."
+      ],
+      "readerBasis": "Original accepted semantic reader tasks and unchanged exact owning evidence reused; six task additions do not change old steps. Nonauthor HTTP rendered24 scope reused where applicable. Fresh177artifact/search/Source/previews/diagrams/offline/extracted verification pending parent, not inferred from6d or24 evidence.",
+      "qualityBasis": "Bounded text/nav/metadata deltas preserve original terminology, authority and proof limits; D05 internal aside removed. No new broad requirement/gate qualification. Original summary, campaign/reasons and limits are retained verbatim, not replaced by this checkpoint note.",
+      "verdict": "SOURCE_QUALITY_PRESERVED_CURRENT_READER_PENDING",
+      "newGateAcceptance": false
+    },
+    {
+      "id": "AP09-documentation-agent-maintenance-20261021",
+      "changedPages": [],
+      "changedSources": [
+        "docs/config/documentation-tree-classification.json",
+        "scripts/lib/docs-publication-assets.mjs"
+      ],
+      "gateIds": [],
+      "requirementIds": [
+        "MNT-017"
+      ],
+      "originalSummary": "Whole central documentation-agent maintenance contract: discovery, impact, owned generation, review, reader probe and safe retirement.",
+      "originalLimits": [
+        "Source-backed documentation acceptance only; no deployed encryption assurance, live restore, native host, rendered site or whole global generator/drift claim.",
+        "Other MNT global discovery/generator/drift obligations are NOT accepted from this authored maintenance guide audit; see scope.json."
+      ],
+      "originalRevision": "af1b987ee4d461fc6205a18553db3e21461ca203",
+      "originalRecordObjectUnchanged": true,
+      "originalRecordCanonicalJsonSha256": "96124a8e0a4edad170f7e4481ff179cbec0403e4636f9395ad72adf1050350ee",
+      "sourceAccuracy": "PASS",
+      "semanticReaderTraversal": "PASS",
+      "readerUsability": "PENDING_CURRENT_READER",
+      "quality": "PASS",
+      "sourceBasis": [
+        "Positive-manifest/classification object comparison:6canonical routes added and1exact runnable helper classification; all171previous route/canonical entries and3934previous classifications unchanged,0removals. No broad Markdown/directory rule. Current renderer/router/search code unchanged; actual expanded177Reader pending.",
+        "Full existing selector/assets consumer reused unchanged; exact diff adds only use/workflows/examples/repair-retry.mjs to literal positive file set. No new directory allowance, Source/module execution, general API waiver or changed copy behavior. Complete helper independently reviewed and installed-parent execution/re-entry/capture negatives reported; original reader/developer/maintenance paths stay unchanged."
+      ],
+      "readerBasis": "Original accepted semantic reader tasks and unchanged exact owning evidence reused; six task additions do not change old steps. Nonauthor HTTP rendered24 scope reused where applicable. Fresh177artifact/search/Source/previews/diagrams/offline/extracted verification pending parent, not inferred from6d or24 evidence.",
+      "qualityBasis": "Bounded text/nav/metadata deltas preserve original terminology, authority and proof limits; D05 internal aside removed. No new broad requirement/gate qualification. Original summary, campaign/reasons and limits are retained verbatim, not replaced by this checkpoint note.",
+      "verdict": "SOURCE_QUALITY_PRESERVED_CURRENT_READER_PENDING",
+      "newGateAcceptance": false
+    },
+    {
+      "id": "AP09-complete-platform-change-content-20261021",
+      "changedPages": [],
+      "changedSources": [
+        "scripts/lib/docs-publication-assets.mjs"
+      ],
+      "gateIds": [],
+      "requirementIds": [
+        "CDV-003",
+        "CDV-007",
+        "CDV-010",
+        "CDV-012"
+      ],
+      "originalSummary": "Whole effect-format/identity/recovery change path, capability/event introduction, Forge/Echo integration and selected GitOps generation/ownership/security/upgrade tasks.",
+      "originalLimits": [
+        "Source-backed documentation acceptance only; no deployed encryption assurance, live restore, native host, rendered site or whole global generator/drift claim."
+      ],
+      "originalRevision": "d0bb52c4d8bcf323c0ff32b95e8e3120ffa6eefb",
+      "originalRecordObjectUnchanged": true,
+      "originalRecordCanonicalJsonSha256": "4d7e285f4dad03874263138417aa0a9f8533385cc13ab2f70ad5f4c697f04ef2",
+      "sourceAccuracy": "PASS",
+      "semanticReaderTraversal": "PASS",
+      "readerUsability": "PENDING_CURRENT_READER",
+      "quality": "PASS",
+      "sourceBasis": [
+        "Full existing selector/assets consumer reused unchanged; exact diff adds only use/workflows/examples/repair-retry.mjs to literal positive file set. No new directory allowance, Source/module execution, general API waiver or changed copy behavior. Complete helper independently reviewed and installed-parent execution/re-entry/capture negatives reported; original reader/developer/maintenance paths stay unchanged."
+      ],
+      "readerBasis": "Original accepted semantic reader tasks and unchanged exact owning evidence reused; six task additions do not change old steps. Nonauthor HTTP rendered24 scope reused where applicable. Fresh177artifact/search/Source/previews/diagrams/offline/extracted verification pending parent, not inferred from6d or24 evidence.",
+      "qualityBasis": "Bounded text/nav/metadata deltas preserve original terminology, authority and proof limits; D05 internal aside removed. No new broad requirement/gate qualification. Original summary, campaign/reasons and limits are retained verbatim, not replaced by this checkpoint note.",
+      "verdict": "SOURCE_QUALITY_PRESERVED_CURRENT_READER_PENDING",
+      "newGateAcceptance": false
+    },
+    {
+      "id": "AP09-complete-publication-reference-navigation-20261021",
+      "changedPages": [],
+      "changedSources": [
+        "docs/config/documentation-tree-classification.json",
+        "scripts/lib/docs-publication-assets.mjs"
+      ],
+      "gateIds": [],
+      "requirementIds": [
+        "PUB-003",
+        "PUB-009"
+      ],
+      "originalSummary": "Whole repository links/anchors/version-bound code evidence and canonical-versus-legacy reader navigation.71 platform bindings now point to explicit inspected source revisions and appropriate implementation ranges.",
+      "originalLimits": [
+        "Source-backed documentation and reader-contract acceptance only; no whole gate/global API inventory/generator/drift or rendered/live execution qualification.",
+        "No rendered website routes, HTTP redirects, code preview widget, search or browser/accessibility result implied."
+      ],
+      "originalRevision": "d0bb52c4d8bcf323c0ff32b95e8e3120ffa6eefb",
+      "originalRecordObjectUnchanged": true,
+      "originalRecordCanonicalJsonSha256": "06da5a222d3c2f0c304ab5c6a4d812c1f45e658c4bb85f9e907ef17189fd6bf4",
+      "sourceAccuracy": "PASS",
+      "semanticReaderTraversal": "PASS",
+      "readerUsability": "PENDING_CURRENT_READER",
+      "quality": "PASS",
+      "sourceBasis": [
+        "Positive-manifest/classification object comparison:6canonical routes added and1exact runnable helper classification; all171previous route/canonical entries and3934previous classifications unchanged,0removals. No broad Markdown/directory rule. Current renderer/router/search code unchanged; actual expanded177Reader pending.",
+        "Full existing selector/assets consumer reused unchanged; exact diff adds only use/workflows/examples/repair-retry.mjs to literal positive file set. No new directory allowance, Source/module execution, general API waiver or changed copy behavior. Complete helper independently reviewed and installed-parent execution/re-entry/capture negatives reported; original reader/developer/maintenance paths stay unchanged."
+      ],
+      "readerBasis": "Original accepted semantic reader tasks and unchanged exact owning evidence reused; six task additions do not change old steps. Nonauthor HTTP rendered24 scope reused where applicable. Fresh177artifact/search/Source/previews/diagrams/offline/extracted verification pending parent, not inferred from6d or24 evidence.",
+      "qualityBasis": "Bounded text/nav/metadata deltas preserve original terminology, authority and proof limits; D05 internal aside removed. No new broad requirement/gate qualification. Original summary, campaign/reasons and limits are retained verbatim, not replaced by this checkpoint note.",
+      "verdict": "SOURCE_QUALITY_PRESERVED_CURRENT_READER_PENDING",
+      "newGateAcceptance": false
+    },
+    {
+      "id": "AP09-complete-developer-reader-contracts-20261021",
+      "changedPages": [],
+      "changedSources": [
+        "scripts/lib/docs-publication-assets.mjs"
+      ],
+      "gateIds": [],
+      "requirementIds": [
+        "QUA-008",
+        "QUA-009"
+      ],
+      "originalSummary": "Whole authored Extension Developer and Platform/Core Developer reader paths: selection, local teaching journeys, host lifecycle boundaries, capability/event changes, Forge/Echo integration, GitOps and retained-state/change tasks. Current Source provenance corrected; declared deployment limits remain explicit.",
+      "originalLimits": [
+        "Source-backed documentation and reader-contract acceptance only; no whole gate/global API inventory/generator/drift or rendered/live execution qualification.",
+        "Reader-contract review is not executed full deployed multi-persona workflow acceptance."
+      ],
+      "originalRevision": "d0bb52c4d8bcf323c0ff32b95e8e3120ffa6eefb",
+      "originalRecordObjectUnchanged": true,
+      "originalRecordCanonicalJsonSha256": "346bfe49aae1218b365592b61cc8d207f95f30d163c0ff7108b0917fa2f49549",
+      "sourceAccuracy": "PASS",
+      "semanticReaderTraversal": "PASS",
+      "readerUsability": "PENDING_CURRENT_READER",
+      "quality": "PASS",
+      "sourceBasis": [
+        "Full existing selector/assets consumer reused unchanged; exact diff adds only use/workflows/examples/repair-retry.mjs to literal positive file set. No new directory allowance, Source/module execution, general API waiver or changed copy behavior. Complete helper independently reviewed and installed-parent execution/re-entry/capture negatives reported; original reader/developer/maintenance paths stay unchanged."
+      ],
+      "readerBasis": "Original accepted semantic reader tasks and unchanged exact owning evidence reused; six task additions do not change old steps. Nonauthor HTTP rendered24 scope reused where applicable. Fresh177artifact/search/Source/previews/diagrams/offline/extracted verification pending parent, not inferred from6d or24 evidence.",
+      "qualityBasis": "Bounded text/nav/metadata deltas preserve original terminology, authority and proof limits; D05 internal aside removed. No new broad requirement/gate qualification. Original summary, campaign/reasons and limits are retained verbatim, not replaced by this checkpoint note.",
+      "verdict": "SOURCE_QUALITY_PRESERVED_CURRENT_READER_PENDING",
+      "newGateAcceptance": false
+    },
+    {
+      "id": "AP09-complete-static-reader-search-20261021",
+      "changedPages": [
+        "docs/site/decisions/runtime-and-operations.md",
+        "docs/site/reference/errors.md",
+        "docs/site/use/workflows/README.md"
+      ],
+      "changedSources": [
+        "docs/config/documentation-publication-manifest.json",
+        "docs/config/documentation-tree-classification.json",
+        "scripts/lib/docs-publication-assets.mjs"
+      ],
+      "gateIds": [],
+      "requirementIds": [
+        "PUB-002"
+      ],
+      "originalSummary": "Whole PUB-002: existing positive page/asset allowlists plus actual artifact-local full-text search across all167 canonical reader pages, headings and code/technical identifiers. Browser find/empty/no-JS behavior observed; code and output reviewed.",
+      "originalLimits": [
+        "Only whole PUB-002. Ranked/synonym reader search questions in A912-04 remain unaccepted; substring full-text search is stated honestly.",
+        "No other publication gate or whole documentation package acceptance.",
+        "Local HTML/search output is not external hosting, actual cluster/runtime behavior, rendered Mermaid, source-preview or human screenreader acceptance.",
+        "Global API source/caller discovery still blocked at bundle copier; site boundary still has three unchanged Helm generated-prose diagnostics."
+      ],
+      "originalRevision": "af1b987ee4d461fc6205a18553db3e21461ca203",
+      "originalRecordObjectUnchanged": true,
+      "originalRecordCanonicalJsonSha256": "98cf68bf38493cdbaad445185d9d3ca54f920ed50455083fb2d1e26206c12134",
+      "sourceAccuracy": "PASS",
+      "semanticReaderTraversal": "PASS",
+      "readerUsability": "PENDING_CURRENT_READER",
+      "quality": "PASS",
+      "sourceBasis": [
+        "Read exact current-vs-base diff: original task rows and all executable/procedure body bytes unchanged; header adds6guide sources and6continuous task rows with explicit proof/stop limits. Existing task destinations unchanged. Parent independently Source-read new build/tailnet guides; four correction-reviewed failure guides reused. This preserves original scopes, not new FLW/gate adoption.",
+        "Independent exact one-sentence D05 deletion PASS: removes documentation-branches internal aside only; complete product rule/rationale/alternatives unchanged. Prior decision scope retained.",
+        "Author conflict excluded: reuse committed nonauthor workflow_acceptance HTTP Source+semantic/rendered24 review, not this reviewer selfapproval. Candidate page hash exactly equals independent report c1818431abc965ca84ee87dd3170e83bb27c49012beefdb7802b743737d6589b; that report bounds newchapter/20pins/45stems/4tables, not whole REF005. Older unrelated error families unchanged.",
+        "Positive-manifest/classification object comparison:6canonical routes added and1exact runnable helper classification; all171previous route/canonical entries and3934previous classifications unchanged,0removals. No broad Markdown/directory rule. Current renderer/router/search code unchanged; actual expanded177Reader pending.",
+        "Full existing selector/assets consumer reused unchanged; exact diff adds only use/workflows/examples/repair-retry.mjs to literal positive file set. No new directory allowance, Source/module execution, general API waiver or changed copy behavior. Complete helper independently reviewed and installed-parent execution/re-entry/capture negatives reported; original reader/developer/maintenance paths stay unchanged."
+      ],
+      "readerBasis": "Original accepted semantic reader tasks and unchanged exact owning evidence reused; six task additions do not change old steps. Nonauthor HTTP rendered24 scope reused where applicable. Fresh177artifact/search/Source/previews/diagrams/offline/extracted verification pending parent, not inferred from6d or24 evidence.",
+      "qualityBasis": "Bounded text/nav/metadata deltas preserve original terminology, authority and proof limits; D05 internal aside removed. No new broad requirement/gate qualification. Original summary, campaign/reasons and limits are retained verbatim, not replaced by this checkpoint note.",
+      "verdict": "SOURCE_QUALITY_PRESERVED_CURRENT_READER_PENDING",
+      "newGateAcceptance": false
+    },
+    {
+      "id": "AP09-search-reader-gate-20261021",
+      "changedPages": [],
+      "changedSources": [
+        "docs/config/documentation-publication-manifest.json",
+        "docs/config/documentation-tree-classification.json",
+        "scripts/lib/docs-publication-assets.mjs"
+      ],
+      "gateIds": [
+        "A912-04"
+      ],
+      "requirementIds": [],
+      "originalSummary": "Whole A912-04: canonical search index includes all167pages, headings and technical IDs, finite reader synonyms and weighted upper results. Twelve defined reader questions find expected route among top3 in actual browser at320/768/1440; exact positive-manifest equality excludes internal artifacts.",
+      "originalLimits": [
+        "Whole A912-04 only; finite declared reader synonyms, not universal semantic or natural-language search.",
+        "No other publication gate, all-page/human-screenreader, rendered-Mermaid/source-preview/externalhosting acceptance.",
+        "Global API bundle input/caller closure and three unchanged generated Helm-language diagnostics remain open."
+      ],
+      "originalRevision": "af1b987ee4d461fc6205a18553db3e21461ca203",
+      "originalRecordObjectUnchanged": true,
+      "originalRecordCanonicalJsonSha256": "a7cc2a21781d90c9a3ee9b24721d980201b0da738adf098db1096356cd74c606",
+      "sourceAccuracy": "PASS",
+      "semanticReaderTraversal": "PASS",
+      "readerUsability": "PENDING_CURRENT_READER",
+      "quality": "PASS",
+      "sourceBasis": [
+        "Positive-manifest/classification object comparison:6canonical routes added and1exact runnable helper classification; all171previous route/canonical entries and3934previous classifications unchanged,0removals. No broad Markdown/directory rule. Current renderer/router/search code unchanged; actual expanded177Reader pending.",
+        "Full existing selector/assets consumer reused unchanged; exact diff adds only use/workflows/examples/repair-retry.mjs to literal positive file set. No new directory allowance, Source/module execution, general API waiver or changed copy behavior. Complete helper independently reviewed and installed-parent execution/re-entry/capture negatives reported; original reader/developer/maintenance paths stay unchanged."
+      ],
+      "readerBasis": "Original accepted semantic reader tasks and unchanged exact owning evidence reused; six task additions do not change old steps. Nonauthor HTTP rendered24 scope reused where applicable. Fresh177artifact/search/Source/previews/diagrams/offline/extracted verification pending parent, not inferred from6d or24 evidence.",
+      "qualityBasis": "Bounded text/nav/metadata deltas preserve original terminology, authority and proof limits; D05 internal aside removed. No new broad requirement/gate qualification. Original summary, campaign/reasons and limits are retained verbatim, not replaced by this checkpoint note.",
+      "verdict": "SOURCE_QUALITY_PRESERVED_CURRENT_READER_PENDING",
+      "newGateAcceptance": false
+    },
+    {
+      "id": "AP09-rendered-source-bounds-gate-20261021",
+      "changedPages": [],
+      "changedSources": [
+        "docs/config/documentation-publication-manifest.json",
+        "scripts/lib/docs-publication-assets.mjs"
+      ],
+      "gateIds": [
+        "A912-09"
+      ],
+      "requirementIds": [],
+      "originalSummary": "Whole A912-09: repository references and actual hash-verified built HTML links, anchors, assets and routes checked, plus full Source commit/type/actual-byte/line-or-Markdown-anchor validation.167 canonical pages,176HTML,179digests,36698localtargets,14401Source locators/3723objects including118primary upstream files across11repositories.",
+      "originalLimits": [
+        "Exact source location/object/type/byte/range checks, not semantic correctness of every claim, signatures, live runtime or hosting.",
+        "Local Source objects were observed in actual Git; GitHub reachability follows pushed ancestors, not a substituted upstream HTTP proof.",
+        "Native documentation purposes preserve source/caller identity and do not waive the global API bundle-copier boundary.",
+        "Whole A912-09 only; remaining publication/accessibility/diagram/preview/full-workflow gates not automatically accepted.",
+        "Three unchanged stale generated Helm phrases and global API bundle input/caller gap remain open."
+      ],
+      "originalRevision": "af1b987ee4d461fc6205a18553db3e21461ca203",
+      "originalRecordObjectUnchanged": true,
+      "originalRecordCanonicalJsonSha256": "fcb4383319e36b2e052db88ae10996defeb1dd388c1de800e2172acd4dc5b91e",
+      "sourceAccuracy": "PASS",
+      "semanticReaderTraversal": "PASS",
+      "readerUsability": "PENDING_CURRENT_READER",
+      "quality": "PASS",
+      "sourceBasis": [
+        "Positive-manifest/classification object comparison:6canonical routes added and1exact runnable helper classification; all171previous route/canonical entries and3934previous classifications unchanged,0removals. No broad Markdown/directory rule. Current renderer/router/search code unchanged; actual expanded177Reader pending.",
+        "Full existing selector/assets consumer reused unchanged; exact diff adds only use/workflows/examples/repair-retry.mjs to literal positive file set. No new directory allowance, Source/module execution, general API waiver or changed copy behavior. Complete helper independently reviewed and installed-parent execution/re-entry/capture negatives reported; original reader/developer/maintenance paths stay unchanged."
+      ],
+      "readerBasis": "Original accepted semantic reader tasks and unchanged exact owning evidence reused; six task additions do not change old steps. Nonauthor HTTP rendered24 scope reused where applicable. Fresh177artifact/search/Source/previews/diagrams/offline/extracted verification pending parent, not inferred from6d or24 evidence.",
+      "qualityBasis": "Bounded text/nav/metadata deltas preserve original terminology, authority and proof limits; D05 internal aside removed. No new broad requirement/gate qualification. Original summary, campaign/reasons and limits are retained verbatim, not replaced by this checkpoint note.",
+      "verdict": "SOURCE_QUALITY_PRESERVED_CURRENT_READER_PENDING",
+      "newGateAcceptance": false
+    },
+    {
+      "id": "AP09-complete-static-offline-fallback-20261021",
+      "changedPages": [
+        "docs/site/use/workflows/README.md"
+      ],
+      "changedSources": [
+        "docs/config/documentation-publication-manifest.json",
+        "scripts/lib/docs-publication-assets.mjs"
+      ],
+      "gateIds": [
+        "A912-10"
+      ],
+      "requirementIds": [
+        "PUB-006"
+      ],
+      "originalSummary": "Whole PUB-006/A912-10: actual local-file reader keeps critical content/instructions, navigation, native disclosures and explicit search fallback usable without JavaScript, external network, hover or normal color palette. Optional local search works offline. Architecture interaction remains optional, not invented for acceptance.",
+      "originalLimits": [
+        "Static browser/navigation/read-action-selection acceptance only, not execution of recovery/plugin/platform/pipeline product commands.",
+        "No fresh-person user study or human screenreader trial; no PUB007/A91208 acceptance.",
+        "Mermaid remains static code plus text alternative; no rendered visual interpretation or A91206/A91207 promotion from DOM metrics.",
+        "Whole PUB006/A91210 only; all other runtime/globalAPI/hosting/publication boundaries preserved."
+      ],
+      "originalRevision": "af1b987ee4d461fc6205a18553db3e21461ca203",
+      "originalRecordObjectUnchanged": true,
+      "originalRecordCanonicalJsonSha256": "3f0d14b9822614ff8dee7a9369d813b8783edb343456e2ef83ff9744a81eae42",
+      "sourceAccuracy": "PASS",
+      "semanticReaderTraversal": "PASS",
+      "readerUsability": "PENDING_CURRENT_READER",
+      "quality": "PASS",
+      "sourceBasis": [
+        "Read exact current-vs-base diff: original task rows and all executable/procedure body bytes unchanged; header adds6guide sources and6continuous task rows with explicit proof/stop limits. Existing task destinations unchanged. Parent independently Source-read new build/tailnet guides; four correction-reviewed failure guides reused. This preserves original scopes, not new FLW/gate adoption.",
+        "Positive-manifest/classification object comparison:6canonical routes added and1exact runnable helper classification; all171previous route/canonical entries and3934previous classifications unchanged,0removals. No broad Markdown/directory rule. Current renderer/router/search code unchanged; actual expanded177Reader pending.",
+        "Full existing selector/assets consumer reused unchanged; exact diff adds only use/workflows/examples/repair-retry.mjs to literal positive file set. No new directory allowance, Source/module execution, general API waiver or changed copy behavior. Complete helper independently reviewed and installed-parent execution/re-entry/capture negatives reported; original reader/developer/maintenance paths stay unchanged."
+      ],
+      "readerBasis": "Original accepted semantic reader tasks and unchanged exact owning evidence reused; six task additions do not change old steps. Nonauthor HTTP rendered24 scope reused where applicable. Fresh177artifact/search/Source/previews/diagrams/offline/extracted verification pending parent, not inferred from6d or24 evidence.",
+      "qualityBasis": "Bounded text/nav/metadata deltas preserve original terminology, authority and proof limits; D05 internal aside removed. No new broad requirement/gate qualification. Original summary, campaign/reasons and limits are retained verbatim, not replaced by this checkpoint note.",
+      "verdict": "SOURCE_QUALITY_PRESERVED_CURRENT_READER_PENDING",
+      "newGateAcceptance": false
+    },
+    {
+      "id": "AP09-complete-same-source-code-preview-20261021",
+      "changedPages": [],
+      "changedSources": [
+        "docs/config/documentation-publication-manifest.json"
+      ],
+      "gateIds": [],
+      "requirementIds": [
+        "PUB-004"
+      ],
+      "originalSummary": "Whole PUB004: general same-source component automatically pairs immutable source links with exact same-revision inert code inside original evidence boxes.1660excerpts/390boxes/874objects across53pages;fresh-source and actualbrowser/text/native-disclosure proof.",
+      "originalLimits": [
+        "WholePUB004 only; A91205 all-six-field canonical format not established for every older evidence box and remains unaccepted.",
+        "Preserves originalclaims/contracts/tests/limits; missing author evidence not fabricated and source snippets do not prove live or semantic correctness.",
+        "ThreeSource boxes containingonlydirectory/named-anchor references remain ordinarylinks, not fake code previews.",
+        "No diagram/layoutgate, humanScreenReader, freshuser, hosting, globalAPI or productruntime approval.",
+        "GlobalAPIbundlecopier74 andthreeunchangedstaleHelmphrases stayopen."
+      ],
+      "originalRevision": "af1b987ee4d461fc6205a18553db3e21461ca203",
+      "originalRecordObjectUnchanged": true,
+      "originalRecordCanonicalJsonSha256": "1c9ac66d5f3e216f34ec6f62d71a90085cac06ea74f33078a56c7414e6430054",
+      "sourceAccuracy": "PASS",
+      "semanticReaderTraversal": "PASS",
+      "readerUsability": "PENDING_CURRENT_READER",
+      "quality": "PASS",
+      "sourceBasis": [
+        "Positive-manifest/classification object comparison:6canonical routes added and1exact runnable helper classification; all171previous route/canonical entries and3934previous classifications unchanged,0removals. No broad Markdown/directory rule. Current renderer/router/search code unchanged; actual expanded177Reader pending."
+      ],
+      "readerBasis": "Original accepted semantic reader tasks and unchanged exact owning evidence reused; six task additions do not change old steps. Nonauthor HTTP rendered24 scope reused where applicable. Fresh177artifact/search/Source/previews/diagrams/offline/extracted verification pending parent, not inferred from6d or24 evidence.",
+      "qualityBasis": "Bounded text/nav/metadata deltas preserve original terminology, authority and proof limits; D05 internal aside removed. No new broad requirement/gate qualification. Original summary, campaign/reasons and limits are retained verbatim, not replaced by this checkpoint note.",
+      "verdict": "SOURCE_QUALITY_PRESERVED_CURRENT_READER_PENDING",
+      "newGateAcceptance": false
+    },
+    {
+      "id": "FLW010-uncertain-effect-supported-boundary-20261021",
+      "changedPages": [
+        "docs/site/use/workflows/README.md"
+      ],
+      "changedSources": [],
+      "gateIds": [],
+      "requirementIds": [
+        "FLW-010"
+      ],
+      "originalSummary": "Whole supported unclear-effect task is documented:stopped-writer raw preservation before audit;request/key/resource/receipt inspection;authorized owner read against original identity;unknown outcome is not nonexecution;Core recovery guards require explicit continuation and no general supported clearing/import CLI exists. Current guide names safe stop,original state retention,owning external authority and follow-up instead of inventing an operation.",
+      "originalLimits": [
+        "No generic reconciliation/import function implemented or marked passed. No live external query or persistence claim from memory-journal fixture. Existing accepted Core/data/security/operator mechanism evidence reused,not recounted."
+      ],
+      "originalRevision": "af1b987ee4d461fc6205a18553db3e21461ca203",
+      "originalRecordObjectUnchanged": true,
+      "originalRecordCanonicalJsonSha256": "7e8a79bc761bd3afe063ba6829816b7479df32e7824555efdc280a231a8c591e",
+      "sourceAccuracy": "PASS",
+      "semanticReaderTraversal": "PASS",
+      "readerUsability": "PENDING_CURRENT_READER",
+      "quality": "PASS",
+      "sourceBasis": [
+        "Read exact current-vs-base diff: original task rows and all executable/procedure body bytes unchanged; header adds6guide sources and6continuous task rows with explicit proof/stop limits. Existing task destinations unchanged. Parent independently Source-read new build/tailnet guides; four correction-reviewed failure guides reused. This preserves original scopes, not new FLW/gate adoption."
+      ],
+      "readerBasis": "Original accepted semantic reader tasks and unchanged exact owning evidence reused; six task additions do not change old steps. Nonauthor HTTP rendered24 scope reused where applicable. Fresh177artifact/search/Source/previews/diagrams/offline/extracted verification pending parent, not inferred from6d or24 evidence.",
+      "qualityBasis": "Bounded text/nav/metadata deltas preserve original terminology, authority and proof limits; D05 internal aside removed. No new broad requirement/gate qualification. Original summary, campaign/reasons and limits are retained verbatim, not replaced by this checkpoint note.",
+      "verdict": "SOURCE_QUALITY_PRESERVED_CURRENT_READER_PENDING",
+      "newGateAcceptance": false
+    },
+    {
+      "id": "FLW014-plugin-operator-supported-lifecycle-20261021",
+      "changedPages": [
+        "docs/site/use/workflows/README.md"
+      ],
+      "changedSources": [],
+      "gateIds": [],
+      "requirementIds": [
+        "FLW-014"
+      ],
+      "originalSummary": "Whole supported operator plugin task now follows exact roots/trust/package identities,provider/grant/config selection,compile admission versus readiness and actual result,stopped-writer preservation before audit,drain,exclusive same-ID replacement roots,old pinned bytes/state and surface-specific removal limits. Reuses independently accepted OPL002/003/004;fresh existing maintained activation/removal path supports concrete local behavior without claiming general install/remove CLI.",
+      "originalLimits": [
+        "No general operator install/remove/cancel CLI invented. OpenClaw/Codex host unavailable controls retain explicit owner/safe-stop/absence proof conditions. No external or deployed activation claim. Does not selfaccept authored local-core helper."
+      ],
+      "originalRevision": "af1b987ee4d461fc6205a18553db3e21461ca203",
+      "originalRecordObjectUnchanged": true,
+      "originalRecordCanonicalJsonSha256": "c901a82de6b926ae6a7d08db562f187df3bf558a70b1edefcd695511b061cbf0",
+      "sourceAccuracy": "PASS",
+      "semanticReaderTraversal": "PASS",
+      "readerUsability": "PENDING_CURRENT_READER",
+      "quality": "PASS",
+      "sourceBasis": [
+        "Read exact current-vs-base diff: original task rows and all executable/procedure body bytes unchanged; header adds6guide sources and6continuous task rows with explicit proof/stop limits. Existing task destinations unchanged. Parent independently Source-read new build/tailnet guides; four correction-reviewed failure guides reused. This preserves original scopes, not new FLW/gate adoption."
+      ],
+      "readerBasis": "Original accepted semantic reader tasks and unchanged exact owning evidence reused; six task additions do not change old steps. Nonauthor HTTP rendered24 scope reused where applicable. Fresh177artifact/search/Source/previews/diagrams/offline/extracted verification pending parent, not inferred from6d or24 evidence.",
+      "qualityBasis": "Bounded text/nav/metadata deltas preserve original terminology, authority and proof limits; D05 internal aside removed. No new broad requirement/gate qualification. Original summary, campaign/reasons and limits are retained verbatim, not replaced by this checkpoint note.",
+      "verdict": "SOURCE_QUALITY_PRESERVED_CURRENT_READER_PENDING",
+      "newGateAcceptance": false
+    },
+    {
+      "id": "FLW017-demo-supported-contract-and-live-gap-20261021",
+      "changedPages": [
+        "docs/site/use/workflows/README.md"
+      ],
+      "changedSources": [],
+      "gateIds": [],
+      "requirementIds": [
+        "FLW-017"
+      ],
+      "originalSummary": "Whole available demo journey separates actual compiler/local TLS/handoff contract rehearsal from technical readiness and external human acceptance. Exact identities and receipts,lost-response/rejection handling,expiry/provider ownership,cancellation/wait limits,retained result and cleanup are explained. Live integration has no complete supported project/platform/decision pair and names release/project/platform/exposure/controller/acceptance owners plus missing proofs and safe stop. Historical unavailable test prerequisites are disclosed,not converted to success.",
+      "originalLimits": [
+        "No live demo,human accept/reject,signature authority or teardown executed/claimed. Product-owned decision system is external/unavailable;no generic CLI or journal editing suggested. Authored deep-guide demo-handoff excluded from selfacceptance;parent independently reviewed it."
+      ],
+      "originalRevision": "af1b987ee4d461fc6205a18553db3e21461ca203",
+      "originalRecordObjectUnchanged": true,
+      "originalRecordCanonicalJsonSha256": "4f96b2b14ab4947b621f0ccdbdf7d74e142810e81311249b065b785f0d81df73",
+      "sourceAccuracy": "PASS",
+      "semanticReaderTraversal": "PASS",
+      "readerUsability": "PENDING_CURRENT_READER",
+      "quality": "PASS",
+      "sourceBasis": [
+        "Read exact current-vs-base diff: original task rows and all executable/procedure body bytes unchanged; header adds6guide sources and6continuous task rows with explicit proof/stop limits. Existing task destinations unchanged. Parent independently Source-read new build/tailnet guides; four correction-reviewed failure guides reused. This preserves original scopes, not new FLW/gate adoption."
+      ],
+      "readerBasis": "Original accepted semantic reader tasks and unchanged exact owning evidence reused; six task additions do not change old steps. Nonauthor HTTP rendered24 scope reused where applicable. Fresh177artifact/search/Source/previews/diagrams/offline/extracted verification pending parent, not inferred from6d or24 evidence.",
+      "qualityBasis": "Bounded text/nav/metadata deltas preserve original terminology, authority and proof limits; D05 internal aside removed. No new broad requirement/gate qualification. Original summary, campaign/reasons and limits are retained verbatim, not replaced by this checkpoint note.",
+      "verdict": "SOURCE_QUALITY_PRESERVED_CURRENT_READER_PENDING",
+      "newGateAcceptance": false
+    },
+    {
+      "id": "FLW006-local-core-same-run-audit-artifact-telemetry-20261021",
+      "changedPages": [
+        "docs/site/use/workflows/README.md"
+      ],
+      "changedSources": [],
+      "gateIds": [],
+      "requirementIds": [
+        "FLW-006"
+      ],
+      "originalSummary": "Whole successful local explicit-graph workflow connects real inputs and shipped stage execution, succeeded state, original artifact reference/digest/producer/bytes, authoritative stopped-writer audit and same-run actual observer delivery and durable telemetry. Separate blocked run, grant admission rejection, ownership/revision and digest controls make the boundaries reproducible.",
+      "originalLimits": [
+        "Credits independent root source/reader/quality inspection and actual clean-checkout reproduction, not author selfacceptance.",
+        "Local explicit-graph Core and local file telemetry only; not Nova project compilation, eight-stage implementation project, Forge, Buster/provider, Redis, image/cluster deployment, remote collector, human acceptance or release. No complete telemetry replay/failure suite inferred."
+      ],
+      "originalRevision": "af1b987ee4d461fc6205a18553db3e21461ca203",
+      "originalRecordObjectUnchanged": true,
+      "originalRecordCanonicalJsonSha256": "384252c2acddb2c153edb7d7fb148b9edb52fbfda937b9f0456150013b5ed91c",
+      "sourceAccuracy": "PASS",
+      "semanticReaderTraversal": "PASS",
+      "readerUsability": "PENDING_CURRENT_READER",
+      "quality": "PASS",
+      "sourceBasis": [
+        "Read exact current-vs-base diff: original task rows and all executable/procedure body bytes unchanged; header adds6guide sources and6continuous task rows with explicit proof/stop limits. Existing task destinations unchanged. Parent independently Source-read new build/tailnet guides; four correction-reviewed failure guides reused. This preserves original scopes, not new FLW/gate adoption."
+      ],
+      "readerBasis": "Original accepted semantic reader tasks and unchanged exact owning evidence reused; six task additions do not change old steps. Nonauthor HTTP rendered24 scope reused where applicable. Fresh177artifact/search/Source/previews/diagrams/offline/extracted verification pending parent, not inferred from6d or24 evidence.",
+      "qualityBasis": "Bounded text/nav/metadata deltas preserve original terminology, authority and proof limits; D05 internal aside removed. No new broad requirement/gate qualification. Original summary, campaign/reasons and limits are retained verbatim, not replaced by this checkpoint note.",
+      "verdict": "SOURCE_QUALITY_PRESERVED_CURRENT_READER_PENDING",
+      "newGateAcceptance": false
+    },
+    {
+      "id": "A99-07-representative-buster-workflow-content-20261021",
+      "changedPages": [
+        "docs/site/use/workflows/README.md"
+      ],
+      "changedSources": [],
+      "gateIds": [
+        "A99-07"
+      ],
+      "requirementIds": [],
+      "originalSummary": "Whole representative workflow documentation connects a complete real suite/checked-manifest/Kubernetes-fixture/HTTP-matrix/JUnit declaration and actual installed registry resolution to source-attested dispatch, real provider/report execution path, exact result verification and digest-bound evidence import. The complete template explicitly identifies image/catalog-command substitutions and deployment prerequisites; production commands identify owning checkout, same project/plan/run, raw-preservation-before-audit, result interpretation, failed boundaries and recovery/cleanup. Separate native vertical proof command has exact expected remote/direct-command/JUnit/LCOV result and explicit scope; neither resolver green nor HTTP acceptance becomes a quality verdict.",
+      "originalLimits": [
+        "Documentation-content PASS under compact contract1\u20134, NOT a claim that full fixture+matrix+deployment chain actually ran. Template and local vertical proof have separate explicit scopes; image and command placeholders require operator resolution and real broker authority.",
+        "Root exact pin repair review is reused; author of repair does not selfaccept its source changes. No new phase8 execution claimed. This follow-up only resolves historical required-check blocker on whole A99-07.",
+        "No A99-06/11/12, FLW-001/012/013 or runtime/release acceptance inferred. Other maintained workflow composition failures remain separately tracked.",
+        "Corrected metadata also removes a mistaken nonexistent understand/buster-suites.md locator; actual owning suite reference is reference/buster-suites.md, included. All listed current pages/sources individually checked as real tracked files."
+      ],
+      "originalRevision": "af1b987ee4d461fc6205a18553db3e21461ca203",
+      "originalRecordObjectUnchanged": true,
+      "originalRecordCanonicalJsonSha256": "14884e510d8137350c4c2c8d68d760bae69464e8849ade7390f9ca2b36280ee0",
+      "sourceAccuracy": "PASS",
+      "semanticReaderTraversal": "PASS",
+      "readerUsability": "PENDING_CURRENT_READER",
+      "quality": "PASS",
+      "sourceBasis": [
+        "Read exact current-vs-base diff: original task rows and all executable/procedure body bytes unchanged; header adds6guide sources and6continuous task rows with explicit proof/stop limits. Existing task destinations unchanged. Parent independently Source-read new build/tailnet guides; four correction-reviewed failure guides reused. This preserves original scopes, not new FLW/gate adoption."
+      ],
+      "readerBasis": "Original accepted semantic reader tasks and unchanged exact owning evidence reused; six task additions do not change old steps. Nonauthor HTTP rendered24 scope reused where applicable. Fresh177artifact/search/Source/previews/diagrams/offline/extracted verification pending parent, not inferred from6d or24 evidence.",
+      "qualityBasis": "Bounded text/nav/metadata deltas preserve original terminology, authority and proof limits; D05 internal aside removed. No new broad requirement/gate qualification. Original summary, campaign/reasons and limits are retained verbatim, not replaced by this checkpoint note.",
+      "verdict": "SOURCE_QUALITY_PRESERVED_CURRENT_READER_PENDING",
+      "newGateAcceptance": false
+    }
+  ],
+  "limits": [
+    "No current177Reader success claimed yet; frozen6d171 and HTTP24 bounded rendering remain distinct prior evidence.",
+    "No acceptance of new4FLW records or six guides inferred from these22preservations.",
+    "Off-tree newredirect/preview/chapter candidate explicitly excluded; independent review and confirmed copiedasset defect remain separate.",
+    "Runtime/configuration release stop, broader generation, deployment/live Redis/kernel, wholeReference census and aggregate approval not changed."
+  ]
+}

@@ -173,7 +173,7 @@
     },
     {
       "id": "AP09.1-ready-topics-20261020",
-      "revision": "af1b987ee4d461fc6205a18553db3e21461ca203",
+      "revision": "cfc97be096908c1193877d054bb80662120f1eca",
       "author": "Documentation implementation authors before review campaign",
       "reviewer": "/root/review_ready_foundations (01a157c4-a915-7bd0-9f54-0de78011b9b7)",
       "gateIds": [],
@@ -289,6 +289,11 @@
           "command": "Current6d Reader artifact/search/Source/previews/diagrams/offline-browser and extracted delivered archive checks",
           "exitCode": 0,
           "observation": "171canonical/181HTML/38554localtargets/213digests;12search;14665SourceLinks3851objects;1763excerpts921objects;27freshSVG(allrecords unchanged);13offline/browser observations0findings0network under corrected canonical-destination criterion; final ZIP233members18copiedassets Sourcecompared, extraction artifact/searchPASS. reader-6d-scope-preservation.md retains failed expectation/environment attempts and boundaries. No overall/runtime/release approval."
+        },
+        {
+          "command": "Current cfc97 Reader and extracted archive checks with independent22scope preservation",
+          "exitCode": 0,
+          "observation": "177canonical/187HTML/40815localtargets/219outputdigests;12search questions;14753SourceLinks/3910objects;1783previews/925objects;27freshSVG, exact27diagram records unchanged;28offline browser observations0findings0network. ZIP240members/19Source-compared copiedassets; actualfresh extracted artifact/searchPASS. Source/Reader checkpoint, not accessibility/globalgenerator/runtime/release approval."
         }
       ],
       "review": {
@@ -450,6 +455,16 @@
           "reviewer": "/root independent semantic delta/Reader review; workflow_acceptance exact portal correction and Buster followup; operator_acceptance nonauthor finite-code review",
           "verdict": "PASS",
           "summary": "Only exact changed dependencies independently reviewed against named reports; unchanged original scopes/limits reused. Reader6d public bytes unchanged ataf1; no duplicate topic/gate acceptance or aggregate claim. See reader-6d-scope-preservation.md and finite-context-ap08-independent.md."
+        },
+        {
+          "previousReviewedRevision": "af1b987ee4d461fc6205a18553db3e21461ca203",
+          "revision": "cfc97be096908c1193877d054bb80662120f1eca",
+          "reviewer": "operator_acceptance independent22scope preservation; HTTP chapter reused nonauthor workflow_acceptance verdict; parent actual177Reader",
+          "changedDependencies": [
+            "docs/site/reference/generated-documentation-map.json"
+          ],
+          "verdict": "PASS",
+          "summary": "Exact original scope and limits preserved; no new approval. See checkpoint-cfc97-22-record-preservation and reader-cfc97-closeout."
         }
       ],
       "revisionHistory": [
@@ -1653,7 +1668,7 @@
     },
     {
       "id": "Reviewed-corrections-20261020",
-      "revision": "af1b987ee4d461fc6205a18553db3e21461ca203",
+      "revision": "cfc97be096908c1193877d054bb80662120f1eca",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/review_worker_ready",
       "gateIds": [],
@@ -1781,6 +1796,11 @@
           "command": "Current6d Reader artifact/search/Source/previews/diagrams/offline-browser and extracted delivered archive checks",
           "exitCode": 0,
           "observation": "171canonical/181HTML/38554localtargets/213digests;12search;14665SourceLinks3851objects;1763excerpts921objects;27freshSVG(allrecords unchanged);13offline/browser observations0findings0network under corrected canonical-destination criterion; final ZIP233members18copiedassets Sourcecompared, extraction artifact/searchPASS. reader-6d-scope-preservation.md retains failed expectation/environment attempts and boundaries. No overall/runtime/release approval."
+        },
+        {
+          "command": "Current cfc97 Reader and extracted archive checks with independent22scope preservation",
+          "exitCode": 0,
+          "observation": "177canonical/187HTML/40815localtargets/219outputdigests;12search questions;14753SourceLinks/3910objects;1783previews/925objects;27freshSVG, exact27diagram records unchanged;28offline browser observations0findings0network. ZIP240members/19Source-compared copiedassets; actualfresh extracted artifact/searchPASS. Source/Reader checkpoint, not accessibility/globalgenerator/runtime/release approval."
         }
       ],
       "review": {
@@ -1952,6 +1972,16 @@
           "reviewer": "/root independent semantic delta/Reader review; workflow_acceptance exact portal correction and Buster followup; operator_acceptance nonauthor finite-code review",
           "verdict": "PASS",
           "summary": "Only exact changed dependencies independently reviewed against named reports; unchanged original scopes/limits reused. Reader6d public bytes unchanged ataf1; no duplicate topic/gate acceptance or aggregate claim. See reader-6d-scope-preservation.md and finite-context-ap08-independent.md."
+        },
+        {
+          "previousReviewedRevision": "af1b987ee4d461fc6205a18553db3e21461ca203",
+          "revision": "cfc97be096908c1193877d054bb80662120f1eca",
+          "reviewer": "operator_acceptance independent22scope preservation; HTTP chapter reused nonauthor workflow_acceptance verdict; parent actual177Reader",
+          "changedDependencies": [
+            "docs/site/reference/generated-documentation-map.json"
+          ],
+          "verdict": "PASS",
+          "summary": "Exact original scope and limits preserved; no new approval. See checkpoint-cfc97-22-record-preservation and reader-cfc97-closeout."
         }
       ],
       "previousReviewedRevision": "078105e40a50f23983e31c136f9bd81912ae6310",
@@ -2268,7 +2298,7 @@
     },
     {
       "id": "AP09-reader-workflows-20261020",
-      "revision": "af1b987ee4d461fc6205a18553db3e21461ca203",
+      "revision": "cfc97be096908c1193877d054bb80662120f1eca",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/review_data_ready",
       "gateIds": [],
@@ -2337,6 +2367,11 @@
           "command": "Current6d Reader artifact/search/Source/previews/diagrams/offline-browser and extracted delivered archive checks",
           "exitCode": 0,
           "observation": "171canonical/181HTML/38554localtargets/213digests;12search;14665SourceLinks3851objects;1763excerpts921objects;27freshSVG(allrecords unchanged);13offline/browser observations0findings0network under corrected canonical-destination criterion; final ZIP233members18copiedassets Sourcecompared, extraction artifact/searchPASS. reader-6d-scope-preservation.md retains failed expectation/environment attempts and boundaries. No overall/runtime/release approval."
+        },
+        {
+          "command": "Current cfc97 Reader and extracted archive checks with independent22scope preservation",
+          "exitCode": 0,
+          "observation": "177canonical/187HTML/40815localtargets/219outputdigests;12search questions;14753SourceLinks/3910objects;1783previews/925objects;27freshSVG, exact27diagram records unchanged;28offline browser observations0findings0network. ZIP240members/19Source-compared copiedassets; actualfresh extracted artifact/searchPASS. Source/Reader checkpoint, not accessibility/globalgenerator/runtime/release approval."
         }
       ],
       "review": {
@@ -2395,6 +2430,16 @@
           "reviewer": "/root independent semantic delta/Reader review; workflow_acceptance exact portal correction and Buster followup; operator_acceptance nonauthor finite-code review",
           "verdict": "PASS",
           "summary": "Only exact changed dependencies independently reviewed against named reports; unchanged original scopes/limits reused. Reader6d public bytes unchanged ataf1; no duplicate topic/gate acceptance or aggregate claim. See reader-6d-scope-preservation.md and finite-context-ap08-independent.md."
+        },
+        {
+          "previousReviewedRevision": "af1b987ee4d461fc6205a18553db3e21461ca203",
+          "revision": "cfc97be096908c1193877d054bb80662120f1eca",
+          "reviewer": "operator_acceptance independent22scope preservation; HTTP chapter reused nonauthor workflow_acceptance verdict; parent actual177Reader",
+          "changedDependencies": [
+            "docs/site/use/workflows/README.md"
+          ],
+          "verdict": "PASS",
+          "summary": "Exact original scope and limits preserved; no new approval. See checkpoint-cfc97-22-record-preservation and reader-cfc97-closeout."
         }
       ],
       "previousReviewedRevision": "8ccb32055745d4f834837c7e7042ad06901f3c8a"
@@ -3366,7 +3411,7 @@
     },
     {
       "id": "AP09-reviewed-publication-navigation-20261020",
-      "revision": "af1b987ee4d461fc6205a18553db3e21461ca203",
+      "revision": "cfc97be096908c1193877d054bb80662120f1eca",
       "author": "Documentation implementation authors",
       "reviewer": "/root/review_publication",
       "gateIds": [
@@ -3455,6 +3500,11 @@
           "command": "Current6d Reader artifact/search/Source/previews/diagrams/offline-browser and extracted delivered archive checks",
           "exitCode": 0,
           "observation": "171canonical/181HTML/38554localtargets/213digests;12search;14665SourceLinks3851objects;1763excerpts921objects;27freshSVG(allrecords unchanged);13offline/browser observations0findings0network under corrected canonical-destination criterion; final ZIP233members18copiedassets Sourcecompared, extraction artifact/searchPASS. reader-6d-scope-preservation.md retains failed expectation/environment attempts and boundaries. No overall/runtime/release approval."
+        },
+        {
+          "command": "Current cfc97 Reader and extracted archive checks with independent22scope preservation",
+          "exitCode": 0,
+          "observation": "177canonical/187HTML/40815localtargets/219outputdigests;12search questions;14753SourceLinks/3910objects;1783previews/925objects;27freshSVG, exact27diagram records unchanged;28offline browser observations0findings0network. ZIP240members/19Source-compared copiedassets; actualfresh extracted artifact/searchPASS. Source/Reader checkpoint, not accessibility/globalgenerator/runtime/release approval."
         }
       ],
       "review": {
@@ -3601,6 +3651,19 @@
           "reviewer": "/root independent semantic delta/Reader review; workflow_acceptance exact portal correction and Buster followup; operator_acceptance nonauthor finite-code review",
           "verdict": "PASS",
           "summary": "Only exact changed dependencies independently reviewed against named reports; unchanged original scopes/limits reused. Reader6d public bytes unchanged ataf1; no duplicate topic/gate acceptance or aggregate claim. See reader-6d-scope-preservation.md and finite-context-ap08-independent.md."
+        },
+        {
+          "previousReviewedRevision": "af1b987ee4d461fc6205a18553db3e21461ca203",
+          "revision": "cfc97be096908c1193877d054bb80662120f1eca",
+          "reviewer": "operator_acceptance independent22scope preservation; HTTP chapter reused nonauthor workflow_acceptance verdict; parent actual177Reader",
+          "changedDependencies": [
+            "docs/site/use/workflows/README.md",
+            "docs/config/documentation-publication-manifest.json",
+            "docs/config/documentation-tree-classification.json",
+            "scripts/lib/docs-publication-assets.mjs"
+          ],
+          "verdict": "PASS",
+          "summary": "Exact original scope and limits preserved; no new approval. See checkpoint-cfc97-22-record-preservation and reader-cfc97-closeout."
         }
       ],
       "previousReviewedRevision": "3be8232a024f551f163d55f770c5fc97127d7902",
@@ -4439,7 +4502,7 @@
     },
     {
       "id": "AP09-first-project-example-20261020",
-      "revision": "af1b987ee4d461fc6205a18553db3e21461ca203",
+      "revision": "cfc97be096908c1193877d054bb80662120f1eca",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/review_first_project",
       "gateIds": [],
@@ -4517,6 +4580,11 @@
           "command": "Current6d Reader artifact/search/Source/previews/diagrams/offline-browser and extracted delivered archive checks",
           "exitCode": 0,
           "observation": "171canonical/181HTML/38554localtargets/213digests;12search;14665SourceLinks3851objects;1763excerpts921objects;27freshSVG(allrecords unchanged);13offline/browser observations0findings0network under corrected canonical-destination criterion; final ZIP233members18copiedassets Sourcecompared, extraction artifact/searchPASS. reader-6d-scope-preservation.md retains failed expectation/environment attempts and boundaries. No overall/runtime/release approval."
+        },
+        {
+          "command": "Current cfc97 Reader and extracted archive checks with independent22scope preservation",
+          "exitCode": 0,
+          "observation": "177canonical/187HTML/40815localtargets/219outputdigests;12search questions;14753SourceLinks/3910objects;1783previews/925objects;27freshSVG, exact27diagram records unchanged;28offline browser observations0findings0network. ZIP240members/19Source-compared copiedassets; actualfresh extracted artifact/searchPASS. Source/Reader checkpoint, not accessibility/globalgenerator/runtime/release approval."
         }
       ],
       "review": {
@@ -4575,6 +4643,18 @@
           "reviewer": "/root independent semantic delta/Reader review; workflow_acceptance exact portal correction and Buster followup; operator_acceptance nonauthor finite-code review",
           "verdict": "PASS",
           "summary": "Only exact changed dependencies independently reviewed against named reports; unchanged original scopes/limits reused. Reader6d public bytes unchanged ataf1; no duplicate topic/gate acceptance or aggregate claim. See reader-6d-scope-preservation.md and finite-context-ap08-independent.md."
+        },
+        {
+          "previousReviewedRevision": "af1b987ee4d461fc6205a18553db3e21461ca203",
+          "revision": "cfc97be096908c1193877d054bb80662120f1eca",
+          "reviewer": "operator_acceptance independent22scope preservation; HTTP chapter reused nonauthor workflow_acceptance verdict; parent actual177Reader",
+          "changedDependencies": [
+            "docs/site/use/workflows/README.md",
+            "docs/config/documentation-tree-classification.json",
+            "scripts/lib/docs-publication-assets.mjs"
+          ],
+          "verdict": "PASS",
+          "summary": "Exact original scope and limits preserved; no new approval. See checkpoint-cfc97-22-record-preservation and reader-cfc97-closeout."
         }
       ],
       "previousReviewedRevision": "113da57a37d25cd45f23d902728e87dcd1770f8c",
@@ -4824,7 +4904,7 @@
     },
     {
       "id": "AP09-compiler-import-provider-diagnosis-20261021",
-      "revision": "af1b987ee4d461fc6205a18553db3e21461ca203",
+      "revision": "cfc97be096908c1193877d054bb80662120f1eca",
       "author": "Documentation authors and /root correction coordinator",
       "reviewer": "Independent Codex autoreview 2026-10-21 (ready, correction-final and contributor invocations)",
       "gateIds": [
@@ -4893,6 +4973,11 @@
           "command": "Current6d Reader artifact/search/Source/previews/diagrams/offline-browser and extracted delivered archive checks",
           "exitCode": 0,
           "observation": "171canonical/181HTML/38554localtargets/213digests;12search;14665SourceLinks3851objects;1763excerpts921objects;27freshSVG(allrecords unchanged);13offline/browser observations0findings0network under corrected canonical-destination criterion; final ZIP233members18copiedassets Sourcecompared, extraction artifact/searchPASS. reader-6d-scope-preservation.md retains failed expectation/environment attempts and boundaries. No overall/runtime/release approval."
+        },
+        {
+          "command": "Current cfc97 Reader and extracted archive checks with independent22scope preservation",
+          "exitCode": 0,
+          "observation": "177canonical/187HTML/40815localtargets/219outputdigests;12search questions;14753SourceLinks/3910objects;1783previews/925objects;27freshSVG, exact27diagram records unchanged;28offline browser observations0findings0network. ZIP240members/19Source-compared copiedassets; actualfresh extracted artifact/searchPASS. Source/Reader checkpoint, not accessibility/globalgenerator/runtime/release approval."
         }
       ],
       "review": {
@@ -4968,6 +5053,16 @@
           "reviewer": "/root independent semantic delta/Reader review; workflow_acceptance exact portal correction and Buster followup; operator_acceptance nonauthor finite-code review",
           "verdict": "PASS",
           "summary": "Only exact changed dependencies independently reviewed against named reports; unchanged original scopes/limits reused. Reader6d public bytes unchanged ataf1; no duplicate topic/gate acceptance or aggregate claim. See reader-6d-scope-preservation.md and finite-context-ap08-independent.md."
+        },
+        {
+          "previousReviewedRevision": "af1b987ee4d461fc6205a18553db3e21461ca203",
+          "revision": "cfc97be096908c1193877d054bb80662120f1eca",
+          "reviewer": "operator_acceptance independent22scope preservation; HTTP chapter reused nonauthor workflow_acceptance verdict; parent actual177Reader",
+          "changedDependencies": [
+            "docs/site/use/workflows/README.md"
+          ],
+          "verdict": "PASS",
+          "summary": "Exact original scope and limits preserved; no new approval. See checkpoint-cfc97-22-record-preservation and reader-cfc97-closeout."
         }
       ],
       "previousReviewedRevision": "a7d0e07cacc037b94e8a45ed2f0d90bd0259b213",
@@ -5366,7 +5461,7 @@
     },
     {
       "id": "AP09-install-maintenance-project-entry-20261021",
-      "revision": "af1b987ee4d461fc6205a18553db3e21461ca203",
+      "revision": "cfc97be096908c1193877d054bb80662120f1eca",
       "author": "Documentation authors and /root entry correction coordinator",
       "reviewer": "Independent Codex autoreview 2026-10-21 (operator, entry closeout and publication impact invocations)",
       "gateIds": [],
@@ -5442,6 +5537,11 @@
           "command": "Current6d Reader artifact/search/Source/previews/diagrams/offline-browser and extracted delivered archive checks",
           "exitCode": 0,
           "observation": "171canonical/181HTML/38554localtargets/213digests;12search;14665SourceLinks3851objects;1763excerpts921objects;27freshSVG(allrecords unchanged);13offline/browser observations0findings0network under corrected canonical-destination criterion; final ZIP233members18copiedassets Sourcecompared, extraction artifact/searchPASS. reader-6d-scope-preservation.md retains failed expectation/environment attempts and boundaries. No overall/runtime/release approval."
+        },
+        {
+          "command": "Current cfc97 Reader and extracted archive checks with independent22scope preservation",
+          "exitCode": 0,
+          "observation": "177canonical/187HTML/40815localtargets/219outputdigests;12search questions;14753SourceLinks/3910objects;1783previews/925objects;27freshSVG, exact27diagram records unchanged;28offline browser observations0findings0network. ZIP240members/19Source-compared copiedassets; actualfresh extracted artifact/searchPASS. Source/Reader checkpoint, not accessibility/globalgenerator/runtime/release approval."
         }
       ],
       "review": {
@@ -5499,6 +5599,16 @@
           "reviewer": "/root independent semantic delta/Reader review; workflow_acceptance exact portal correction and Buster followup; operator_acceptance nonauthor finite-code review",
           "verdict": "PASS",
           "summary": "Only exact changed dependencies independently reviewed against named reports; unchanged original scopes/limits reused. Reader6d public bytes unchanged ataf1; no duplicate topic/gate acceptance or aggregate claim. See reader-6d-scope-preservation.md and finite-context-ap08-independent.md."
+        },
+        {
+          "previousReviewedRevision": "af1b987ee4d461fc6205a18553db3e21461ca203",
+          "revision": "cfc97be096908c1193877d054bb80662120f1eca",
+          "reviewer": "operator_acceptance independent22scope preservation; HTTP chapter reused nonauthor workflow_acceptance verdict; parent actual177Reader",
+          "changedDependencies": [
+            "docs/site/use/workflows/README.md"
+          ],
+          "verdict": "PASS",
+          "summary": "Exact original scope and limits preserved; no new approval. See checkpoint-cfc97-22-record-preservation and reader-cfc97-closeout."
         }
       ]
     },
@@ -6198,7 +6308,7 @@
     },
     {
       "id": "AP09-decision-record-content-20261021",
-      "revision": "8f775411fdd8e0232bdd45135accb61f23768f0b",
+      "revision": "cfc97be096908c1193877d054bb80662120f1eca",
       "author": "Nova /root authored content and correction coordinator",
       "reviewer": "Independent Codex autoreview 2026-10-21 platform-ready-review",
       "gateIds": [],
@@ -6272,6 +6382,11 @@
           "command": "Independent whole A91207 and narrow24-record changed-boundary review; original91tests and final actual Source/preview/SVG/browser proof",
           "exitCode": 0,
           "observation": "209output hashes,27freshSVGhashes,1660fresh excerpts; prior scoped facts and limits preserved without whole semantic/runtime reapproval. docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/whole-layout-and-prior-impact-review.json"
+        },
+        {
+          "command": "Current cfc97 Reader and extracted archive checks with independent22scope preservation",
+          "exitCode": 0,
+          "observation": "177canonical/187HTML/40815localtargets/219outputdigests;12search questions;14753SourceLinks/3910objects;1783previews/925objects;27freshSVG, exact27diagram records unchanged;28offline browser observations0findings0network. ZIP240members/19Source-compared copiedassets; actualfresh extracted artifact/searchPASS. Source/Reader checkpoint, not accessibility/globalgenerator/runtime/release approval."
         }
       ],
       "review": {
@@ -6322,11 +6437,23 @@
           ],
           "review": "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/whole-layout-and-prior-impact-review.json"
         }
+      ],
+      "impactReviews": [
+        {
+          "previousReviewedRevision": "8f775411fdd8e0232bdd45135accb61f23768f0b",
+          "revision": "cfc97be096908c1193877d054bb80662120f1eca",
+          "reviewer": "operator_acceptance independent22scope preservation; HTTP chapter reused nonauthor workflow_acceptance verdict; parent actual177Reader",
+          "changedDependencies": [
+            "docs/site/decisions/runtime-and-operations.md"
+          ],
+          "verdict": "PASS",
+          "summary": "Exact original scope and limits preserved; no new approval. See checkpoint-cfc97-22-record-preservation and reader-cfc97-closeout."
+        }
       ]
     },
     {
       "id": "AP09-documentation-agent-maintenance-20261021",
-      "revision": "af1b987ee4d461fc6205a18553db3e21461ca203",
+      "revision": "cfc97be096908c1193877d054bb80662120f1eca",
       "author": "Nova /root authored content and correction coordinator",
       "reviewer": "Independent Codex autoreview 2026-10-21 maintenance-ready-review",
       "gateIds": [],
@@ -6550,6 +6677,11 @@
           "command": "Current6d Reader artifact/search/Source/previews/diagrams/offline-browser and extracted delivered archive checks",
           "exitCode": 0,
           "observation": "171canonical/181HTML/38554localtargets/213digests;12search;14665SourceLinks3851objects;1763excerpts921objects;27freshSVG(allrecords unchanged);13offline/browser observations0findings0network under corrected canonical-destination criterion; final ZIP233members18copiedassets Sourcecompared, extraction artifact/searchPASS. reader-6d-scope-preservation.md retains failed expectation/environment attempts and boundaries. No overall/runtime/release approval."
+        },
+        {
+          "command": "Current cfc97 Reader and extracted archive checks with independent22scope preservation",
+          "exitCode": 0,
+          "observation": "177canonical/187HTML/40815localtargets/219outputdigests;12search questions;14753SourceLinks/3910objects;1783previews/925objects;27freshSVG, exact27diagram records unchanged;28offline browser observations0findings0network. ZIP240members/19Source-compared copiedassets; actualfresh extracted artifact/searchPASS. Source/Reader checkpoint, not accessibility/globalgenerator/runtime/release approval."
         }
       ],
       "review": {
@@ -6661,6 +6793,17 @@
           "reviewer": "/root independent semantic delta/Reader review; workflow_acceptance exact portal correction and Buster followup; operator_acceptance nonauthor finite-code review",
           "verdict": "PASS",
           "summary": "Only exact changed dependencies independently reviewed against named reports; unchanged original scopes/limits reused. Reader6d public bytes unchanged ataf1; no duplicate topic/gate acceptance or aggregate claim. See reader-6d-scope-preservation.md and finite-context-ap08-independent.md."
+        },
+        {
+          "previousReviewedRevision": "af1b987ee4d461fc6205a18553db3e21461ca203",
+          "revision": "cfc97be096908c1193877d054bb80662120f1eca",
+          "reviewer": "operator_acceptance independent22scope preservation; HTTP chapter reused nonauthor workflow_acceptance verdict; parent actual177Reader",
+          "changedDependencies": [
+            "docs/config/documentation-tree-classification.json",
+            "scripts/lib/docs-publication-assets.mjs"
+          ],
+          "verdict": "PASS",
+          "summary": "Exact original scope and limits preserved; no new approval. See checkpoint-cfc97-22-record-preservation and reader-cfc97-closeout."
         }
       ],
       "previousReviewedRevision": "ac6de3002f7556d2975da44616c6ed220e35e189",
@@ -6881,7 +7024,7 @@
     },
     {
       "id": "AP09-complete-platform-change-content-20261021",
-      "revision": "d0bb52c4d8bcf323c0ff32b95e8e3120ffa6eefb",
+      "revision": "cfc97be096908c1193877d054bb80662120f1eca",
       "author": "Nova /root authored content and correction coordinator",
       "reviewer": "Independent Codex autoreview 2026-10-21 platform-final-review",
       "gateIds": [],
@@ -7064,6 +7207,11 @@
           "command": "Independent d0bb scoped preservation addendum plus actual publication Reader artifact/search/Source/previews/diagram and offline-browser checks",
           "exitCode": 0,
           "observation": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.md plus named source-only/new-topic reviews. 171canonical/181HTML/38517targets/213hashes;12search;14635SourceLinks3829objects;1741excerpts905objects;27freshSVG;52browser observations0findings0network. No global config/CI/runtime/release success."
+        },
+        {
+          "command": "Current cfc97 Reader and extracted archive checks with independent22scope preservation",
+          "exitCode": 0,
+          "observation": "177canonical/187HTML/40815localtargets/219outputdigests;12search questions;14753SourceLinks/3910objects;1783previews/925objects;27freshSVG, exact27diagram records unchanged;28offline browser observations0findings0network. ZIP240members/19Source-compared copiedassets; actualfresh extracted artifact/searchPASS. Source/Reader checkpoint, not accessibility/globalgenerator/runtime/release approval."
         }
       ],
       "review": {
@@ -7126,6 +7274,16 @@
           "reviewer": "Scope-aware independent union: original topic reviewers; operator_acceptance checkpoint53; custody_review maintenance locator correction; /root independent authored package/telemetry/pin scopes",
           "verdict": "PASS",
           "summary": "Only changed dependencies preserved against the named independent topic reports and actual d0bb Reader. Original summary and limitations retained; no duplicate or aggregate/release approval."
+        },
+        {
+          "previousReviewedRevision": "d0bb52c4d8bcf323c0ff32b95e8e3120ffa6eefb",
+          "revision": "cfc97be096908c1193877d054bb80662120f1eca",
+          "reviewer": "operator_acceptance independent22scope preservation; HTTP chapter reused nonauthor workflow_acceptance verdict; parent actual177Reader",
+          "changedDependencies": [
+            "scripts/lib/docs-publication-assets.mjs"
+          ],
+          "verdict": "PASS",
+          "summary": "Exact original scope and limits preserved; no new approval. See checkpoint-cfc97-22-record-preservation and reader-cfc97-closeout."
         }
       ],
       "previousReviewedRevision": "2f8a116e00d6d38a5cc5076b10befcabe426f9f4",
@@ -8390,7 +8548,7 @@
     },
     {
       "id": "AP09-complete-publication-reference-navigation-20261021",
-      "revision": "d0bb52c4d8bcf323c0ff32b95e8e3120ffa6eefb",
+      "revision": "cfc97be096908c1193877d054bb80662120f1eca",
       "author": "Nova /root documentation author and correction coordinator",
       "reviewer": "Independent Codex autoreview whole finished-reader-topics and LiteLLM audits with correction-final follow-up",
       "gateIds": [],
@@ -8542,6 +8700,11 @@
           "command": "Independent d0bb scoped preservation addendum plus actual publication Reader artifact/search/Source/previews/diagram and offline-browser checks",
           "exitCode": 0,
           "observation": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.md plus named source-only/new-topic reviews. 171canonical/181HTML/38517targets/213hashes;12search;14635SourceLinks3829objects;1741excerpts905objects;27freshSVG;52browser observations0findings0network. No global config/CI/runtime/release success."
+        },
+        {
+          "command": "Current cfc97 Reader and extracted archive checks with independent22scope preservation",
+          "exitCode": 0,
+          "observation": "177canonical/187HTML/40815localtargets/219outputdigests;12search questions;14753SourceLinks/3910objects;1783previews/925objects;27freshSVG, exact27diagram records unchanged;28offline browser observations0findings0network. ZIP240members/19Source-compared copiedassets; actualfresh extracted artifact/searchPASS. Source/Reader checkpoint, not accessibility/globalgenerator/runtime/release approval."
         }
       ],
       "review": {
@@ -8643,12 +8806,23 @@
           "reviewer": "Scope-aware independent union: original topic reviewers; operator_acceptance checkpoint53; custody_review maintenance locator correction; /root independent authored package/telemetry/pin scopes",
           "verdict": "PASS",
           "summary": "Only changed dependencies preserved against the named independent topic reports and actual d0bb Reader. Original summary and limitations retained; no duplicate or aggregate/release approval."
+        },
+        {
+          "previousReviewedRevision": "d0bb52c4d8bcf323c0ff32b95e8e3120ffa6eefb",
+          "revision": "cfc97be096908c1193877d054bb80662120f1eca",
+          "reviewer": "operator_acceptance independent22scope preservation; HTTP chapter reused nonauthor workflow_acceptance verdict; parent actual177Reader",
+          "changedDependencies": [
+            "docs/config/documentation-tree-classification.json",
+            "scripts/lib/docs-publication-assets.mjs"
+          ],
+          "verdict": "PASS",
+          "summary": "Exact original scope and limits preserved; no new approval. See checkpoint-cfc97-22-record-preservation and reader-cfc97-closeout."
         }
       ]
     },
     {
       "id": "AP09-complete-developer-reader-contracts-20261021",
-      "revision": "d0bb52c4d8bcf323c0ff32b95e8e3120ffa6eefb",
+      "revision": "cfc97be096908c1193877d054bb80662120f1eca",
       "author": "Nova /root documentation author and correction coordinator",
       "reviewer": "Independent Codex autoreview whole finished-reader-topics and LiteLLM audits with correction-final follow-up",
       "gateIds": [],
@@ -8897,6 +9071,11 @@
           "command": "Independent d0bb scoped preservation addendum plus actual publication Reader artifact/search/Source/previews/diagram and offline-browser checks",
           "exitCode": 0,
           "observation": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.md plus named source-only/new-topic reviews. 171canonical/181HTML/38517targets/213hashes;12search;14635SourceLinks3829objects;1741excerpts905objects;27freshSVG;52browser observations0findings0network. No global config/CI/runtime/release success."
+        },
+        {
+          "command": "Current cfc97 Reader and extracted archive checks with independent22scope preservation",
+          "exitCode": 0,
+          "observation": "177canonical/187HTML/40815localtargets/219outputdigests;12search questions;14753SourceLinks/3910objects;1783previews/925objects;27freshSVG, exact27diagram records unchanged;28offline browser observations0findings0network. ZIP240members/19Source-compared copiedassets; actualfresh extracted artifact/searchPASS. Source/Reader checkpoint, not accessibility/globalgenerator/runtime/release approval."
         }
       ],
       "review": {
@@ -8976,12 +9155,22 @@
           "reviewer": "Scope-aware independent union: original topic reviewers; operator_acceptance checkpoint53; custody_review maintenance locator correction; /root independent authored package/telemetry/pin scopes",
           "verdict": "PASS",
           "summary": "Only changed dependencies preserved against the named independent topic reports and actual d0bb Reader. Original summary and limitations retained; no duplicate or aggregate/release approval."
+        },
+        {
+          "previousReviewedRevision": "d0bb52c4d8bcf323c0ff32b95e8e3120ffa6eefb",
+          "revision": "cfc97be096908c1193877d054bb80662120f1eca",
+          "reviewer": "operator_acceptance independent22scope preservation; HTTP chapter reused nonauthor workflow_acceptance verdict; parent actual177Reader",
+          "changedDependencies": [
+            "scripts/lib/docs-publication-assets.mjs"
+          ],
+          "verdict": "PASS",
+          "summary": "Exact original scope and limits preserved; no new approval. See checkpoint-cfc97-22-record-preservation and reader-cfc97-closeout."
         }
       ]
     },
     {
       "id": "AP09-complete-static-reader-search-20261021",
-      "revision": "af1b987ee4d461fc6205a18553db3e21461ca203",
+      "revision": "cfc97be096908c1193877d054bb80662120f1eca",
       "author": "Nova /root documentation author and implementation coordinator",
       "reviewer": "Independent Codex autoreview static-reader whole PUB-002 Source/reader-quality closeout",
       "verdict": "PASS",
@@ -9292,6 +9481,11 @@
           "command": "Current6d Reader artifact/search/Source/previews/diagrams/offline-browser and extracted delivered archive checks",
           "exitCode": 0,
           "observation": "171canonical/181HTML/38554localtargets/213digests;12search;14665SourceLinks3851objects;1763excerpts921objects;27freshSVG(allrecords unchanged);13offline/browser observations0findings0network under corrected canonical-destination criterion; final ZIP233members18copiedassets Sourcecompared, extraction artifact/searchPASS. reader-6d-scope-preservation.md retains failed expectation/environment attempts and boundaries. No overall/runtime/release approval."
+        },
+        {
+          "command": "Current cfc97 Reader and extracted archive checks with independent22scope preservation",
+          "exitCode": 0,
+          "observation": "177canonical/187HTML/40815localtargets/219outputdigests;12search questions;14753SourceLinks/3910objects;1783previews/925objects;27freshSVG, exact27diagram records unchanged;28offline browser observations0findings0network. ZIP240members/19Source-compared copiedassets; actualfresh extracted artifact/searchPASS. Source/Reader checkpoint, not accessibility/globalgenerator/runtime/release approval."
         }
       ],
       "limits": [
@@ -9480,12 +9674,27 @@
           "reviewer": "/root independent semantic delta/Reader review; workflow_acceptance exact portal correction and Buster followup; operator_acceptance nonauthor finite-code review",
           "verdict": "PASS",
           "summary": "Only exact changed dependencies independently reviewed against named reports; unchanged original scopes/limits reused. Reader6d public bytes unchanged ataf1; no duplicate topic/gate acceptance or aggregate claim. See reader-6d-scope-preservation.md and finite-context-ap08-independent.md."
+        },
+        {
+          "previousReviewedRevision": "af1b987ee4d461fc6205a18553db3e21461ca203",
+          "revision": "cfc97be096908c1193877d054bb80662120f1eca",
+          "reviewer": "operator_acceptance independent22scope preservation; HTTP chapter reused nonauthor workflow_acceptance verdict; parent actual177Reader",
+          "changedDependencies": [
+            "docs/site/decisions/runtime-and-operations.md",
+            "docs/site/reference/errors.md",
+            "docs/site/use/workflows/README.md",
+            "docs/config/documentation-publication-manifest.json",
+            "docs/config/documentation-tree-classification.json",
+            "scripts/lib/docs-publication-assets.mjs"
+          ],
+          "verdict": "PASS",
+          "summary": "Exact original scope and limits preserved; no new approval. See checkpoint-cfc97-22-record-preservation and reader-cfc97-closeout."
         }
       ]
     },
     {
       "id": "AP09-search-reader-gate-20261021",
-      "revision": "af1b987ee4d461fc6205a18553db3e21461ca203",
+      "revision": "cfc97be096908c1193877d054bb80662120f1eca",
       "author": "Nova /root documentation author and implementation coordinator",
       "reviewer": "Independent Codex autoreview whole A912-04 code/evidence review plus narrow Source/Reader/Quality native-impact follow-up",
       "verdict": "PASS",
@@ -9588,6 +9797,11 @@
           "command": "Current6d Reader artifact/search/Source/previews/diagrams/offline-browser and extracted delivered archive checks",
           "exitCode": 0,
           "observation": "171canonical/181HTML/38554localtargets/213digests;12search;14665SourceLinks3851objects;1763excerpts921objects;27freshSVG(allrecords unchanged);13offline/browser observations0findings0network under corrected canonical-destination criterion; final ZIP233members18copiedassets Sourcecompared, extraction artifact/searchPASS. reader-6d-scope-preservation.md retains failed expectation/environment attempts and boundaries. No overall/runtime/release approval."
+        },
+        {
+          "command": "Current cfc97 Reader and extracted archive checks with independent22scope preservation",
+          "exitCode": 0,
+          "observation": "177canonical/187HTML/40815localtargets/219outputdigests;12search questions;14753SourceLinks/3910objects;1783previews/925objects;27freshSVG, exact27diagram records unchanged;28offline browser observations0findings0network. ZIP240members/19Source-compared copiedassets; actualfresh extracted artifact/searchPASS. Source/Reader checkpoint, not accessibility/globalgenerator/runtime/release approval."
         }
       ],
       "limits": [
@@ -9689,12 +9903,24 @@
           "reviewer": "/root independent semantic delta/Reader review; workflow_acceptance exact portal correction and Buster followup; operator_acceptance nonauthor finite-code review",
           "verdict": "PASS",
           "summary": "Only exact changed dependencies independently reviewed against named reports; unchanged original scopes/limits reused. Reader6d public bytes unchanged ataf1; no duplicate topic/gate acceptance or aggregate claim. See reader-6d-scope-preservation.md and finite-context-ap08-independent.md."
+        },
+        {
+          "previousReviewedRevision": "af1b987ee4d461fc6205a18553db3e21461ca203",
+          "revision": "cfc97be096908c1193877d054bb80662120f1eca",
+          "reviewer": "operator_acceptance independent22scope preservation; HTTP chapter reused nonauthor workflow_acceptance verdict; parent actual177Reader",
+          "changedDependencies": [
+            "docs/config/documentation-publication-manifest.json",
+            "docs/config/documentation-tree-classification.json",
+            "scripts/lib/docs-publication-assets.mjs"
+          ],
+          "verdict": "PASS",
+          "summary": "Exact original scope and limits preserved; no new approval. See checkpoint-cfc97-22-record-preservation and reader-cfc97-closeout."
         }
       ]
     },
     {
       "id": "AP09-rendered-source-bounds-gate-20261021",
-      "revision": "af1b987ee4d461fc6205a18553db3e21461ca203",
+      "revision": "cfc97be096908c1193877d054bb80662120f1eca",
       "author": "Nova /root documentation author and implementation coordinator",
       "reviewer": "Independent Codex autoreview whole A912-09 Source/Reader/Quality review and narrow changed-boundary impact review for 21 prior PASS records",
       "verdict": "PASS",
@@ -9806,6 +10032,11 @@
           "command": "Current6d Reader artifact/search/Source/previews/diagrams/offline-browser and extracted delivered archive checks",
           "exitCode": 0,
           "observation": "171canonical/181HTML/38554localtargets/213digests;12search;14665SourceLinks3851objects;1763excerpts921objects;27freshSVG(allrecords unchanged);13offline/browser observations0findings0network under corrected canonical-destination criterion; final ZIP233members18copiedassets Sourcecompared, extraction artifact/searchPASS. reader-6d-scope-preservation.md retains failed expectation/environment attempts and boundaries. No overall/runtime/release approval."
+        },
+        {
+          "command": "Current cfc97 Reader and extracted archive checks with independent22scope preservation",
+          "exitCode": 0,
+          "observation": "177canonical/187HTML/40815localtargets/219outputdigests;12search questions;14753SourceLinks/3910objects;1783previews/925objects;27freshSVG, exact27diagram records unchanged;28offline browser observations0findings0network. ZIP240members/19Source-compared copiedassets; actualfresh extracted artifact/searchPASS. Source/Reader checkpoint, not accessibility/globalgenerator/runtime/release approval."
         }
       ],
       "limits": [
@@ -9903,12 +10134,23 @@
           "reviewer": "/root independent semantic delta/Reader review; workflow_acceptance exact portal correction and Buster followup; operator_acceptance nonauthor finite-code review",
           "verdict": "PASS",
           "summary": "Only exact changed dependencies independently reviewed against named reports; unchanged original scopes/limits reused. Reader6d public bytes unchanged ataf1; no duplicate topic/gate acceptance or aggregate claim. See reader-6d-scope-preservation.md and finite-context-ap08-independent.md."
+        },
+        {
+          "previousReviewedRevision": "af1b987ee4d461fc6205a18553db3e21461ca203",
+          "revision": "cfc97be096908c1193877d054bb80662120f1eca",
+          "reviewer": "operator_acceptance independent22scope preservation; HTTP chapter reused nonauthor workflow_acceptance verdict; parent actual177Reader",
+          "changedDependencies": [
+            "docs/config/documentation-publication-manifest.json",
+            "scripts/lib/docs-publication-assets.mjs"
+          ],
+          "verdict": "PASS",
+          "summary": "Exact original scope and limits preserved; no new approval. See checkpoint-cfc97-22-record-preservation and reader-cfc97-closeout."
         }
       ]
     },
     {
       "id": "AP09-complete-static-offline-fallback-20261021",
-      "revision": "af1b987ee4d461fc6205a18553db3e21461ca203",
+      "revision": "cfc97be096908c1193877d054bb80662120f1eca",
       "author": "Nova /root documentation author and implementation coordinator",
       "reviewer": "Independent Codex autoreview whole PUB-006/A912-10 Source/Reader/Quality closeout, inspecting original obligation, actual browser provenance and critical task prose",
       "verdict": "PASS",
@@ -9984,6 +10226,11 @@
           "command": "Current6d Reader artifact/search/Source/previews/diagrams/offline-browser and extracted delivered archive checks",
           "exitCode": 0,
           "observation": "171canonical/181HTML/38554localtargets/213digests;12search;14665SourceLinks3851objects;1763excerpts921objects;27freshSVG(allrecords unchanged);13offline/browser observations0findings0network under corrected canonical-destination criterion; final ZIP233members18copiedassets Sourcecompared, extraction artifact/searchPASS. reader-6d-scope-preservation.md retains failed expectation/environment attempts and boundaries. No overall/runtime/release approval."
+        },
+        {
+          "command": "Current cfc97 Reader and extracted archive checks with independent22scope preservation",
+          "exitCode": 0,
+          "observation": "177canonical/187HTML/40815localtargets/219outputdigests;12search questions;14753SourceLinks/3910objects;1783previews/925objects;27freshSVG, exact27diagram records unchanged;28offline browser observations0findings0network. ZIP240members/19Source-compared copiedassets; actualfresh extracted artifact/searchPASS. Source/Reader checkpoint, not accessibility/globalgenerator/runtime/release approval."
         }
       ],
       "limits": [
@@ -10038,12 +10285,24 @@
           "reviewer": "/root independent semantic delta/Reader review; workflow_acceptance exact portal correction and Buster followup; operator_acceptance nonauthor finite-code review",
           "verdict": "PASS",
           "summary": "Only exact changed dependencies independently reviewed against named reports; unchanged original scopes/limits reused. Reader6d public bytes unchanged ataf1; no duplicate topic/gate acceptance or aggregate claim. See reader-6d-scope-preservation.md and finite-context-ap08-independent.md."
+        },
+        {
+          "previousReviewedRevision": "af1b987ee4d461fc6205a18553db3e21461ca203",
+          "revision": "cfc97be096908c1193877d054bb80662120f1eca",
+          "reviewer": "operator_acceptance independent22scope preservation; HTTP chapter reused nonauthor workflow_acceptance verdict; parent actual177Reader",
+          "changedDependencies": [
+            "docs/site/use/workflows/README.md",
+            "docs/config/documentation-publication-manifest.json",
+            "scripts/lib/docs-publication-assets.mjs"
+          ],
+          "verdict": "PASS",
+          "summary": "Exact original scope and limits preserved; no new approval. See checkpoint-cfc97-22-record-preservation and reader-cfc97-closeout."
         }
       ]
     },
     {
       "id": "AP09-complete-same-source-code-preview-20261021",
-      "revision": "af1b987ee4d461fc6205a18553db3e21461ca203",
+      "revision": "cfc97be096908c1193877d054bb80662120f1eca",
       "author": "Nova /root documentation author and implementation coordinator",
       "reviewer": "Independent Codex autoreview whole PUB004 Source/Reader/Quality closeout plus narrow changed-boundary preservation for21priorPASSrecords",
       "verdict": "PASS",
@@ -10143,6 +10402,11 @@
           "command": "Current6d Reader artifact/search/Source/previews/diagrams/offline-browser and extracted delivered archive checks",
           "exitCode": 0,
           "observation": "171canonical/181HTML/38554localtargets/213digests;12search;14665SourceLinks3851objects;1763excerpts921objects;27freshSVG(allrecords unchanged);13offline/browser observations0findings0network under corrected canonical-destination criterion; final ZIP233members18copiedassets Sourcecompared, extraction artifact/searchPASS. reader-6d-scope-preservation.md retains failed expectation/environment attempts and boundaries. No overall/runtime/release approval."
+        },
+        {
+          "command": "Current cfc97 Reader and extracted archive checks with independent22scope preservation",
+          "exitCode": 0,
+          "observation": "177canonical/187HTML/40815localtargets/219outputdigests;12search questions;14753SourceLinks/3910objects;1783previews/925objects;27freshSVG, exact27diagram records unchanged;28offline browser observations0findings0network. ZIP240members/19Source-compared copiedassets; actualfresh extracted artifact/searchPASS. Source/Reader checkpoint, not accessibility/globalgenerator/runtime/release approval."
         }
       ],
       "limits": [
@@ -10213,6 +10477,16 @@
           "reviewer": "/root independent semantic delta/Reader review; workflow_acceptance exact portal correction and Buster followup; operator_acceptance nonauthor finite-code review",
           "verdict": "PASS",
           "summary": "Only exact changed dependencies independently reviewed against named reports; unchanged original scopes/limits reused. Reader6d public bytes unchanged ataf1; no duplicate topic/gate acceptance or aggregate claim. See reader-6d-scope-preservation.md and finite-context-ap08-independent.md."
+        },
+        {
+          "previousReviewedRevision": "af1b987ee4d461fc6205a18553db3e21461ca203",
+          "revision": "cfc97be096908c1193877d054bb80662120f1eca",
+          "reviewer": "operator_acceptance independent22scope preservation; HTTP chapter reused nonauthor workflow_acceptance verdict; parent actual177Reader",
+          "changedDependencies": [
+            "docs/config/documentation-publication-manifest.json"
+          ],
+          "verdict": "PASS",
+          "summary": "Exact original scope and limits preserved; no new approval. See checkpoint-cfc97-22-record-preservation and reader-cfc97-closeout."
         }
       ]
     },
@@ -12518,7 +12792,7 @@
       "verdict": "PASS"
     },
     {
-      "revision": "af1b987ee4d461fc6205a18553db3e21461ca203",
+      "revision": "cfc97be096908c1193877d054bb80662120f1eca",
       "author": "existing documentation authors",
       "reviewer": "/root/workflow_acceptance supporting procedures and root integration/correction; /root independent authored row Source/Reader/quality",
       "review": {
@@ -12569,6 +12843,11 @@
           "command": "Independent corrected canonical task-table review",
           "exitCode": 0,
           "observation": "Original blank-line render defect retained, corrected Source6d actual renderedAST contains both task rows. Exact three destination anchors and supporting procedure source bytes validated. Same existing IDs promoted, not duplicate requirements."
+        },
+        {
+          "command": "Current cfc97 Reader and extracted archive checks with independent22scope preservation",
+          "exitCode": 0,
+          "observation": "177canonical/187HTML/40815localtargets/219outputdigests;12search questions;14753SourceLinks/3910objects;1783previews/925objects;27freshSVG, exact27diagram records unchanged;28offline browser observations0findings0network. ZIP240members/19Source-compared copiedassets; actualfresh extracted artifact/searchPASS. Source/Reader checkpoint, not accessibility/globalgenerator/runtime/release approval."
         }
       ],
       "summary": "Whole supported unclear-effect task is documented:stopped-writer raw preservation before audit;request/key/resource/receipt inspection;authorized owner read against original identity;unknown outcome is not nonexecution;Core recovery guards require explicit continuation and no general supported clearing/import CLI exists. Current guide names safe stop,original state retention,owning external authority and follow-up instead of inventing an operation.",
@@ -12581,10 +12860,22 @@
         "openIssues": [
           "Supporting procedures are independently reviewed, but the canonical workflow task index lacks the explicit uncertain-effect/plugin-lifecycle task routes. Exact two-row correction is authored off-tree for the next Source update."
         ]
-      }
+      },
+      "impactReviews": [
+        {
+          "previousReviewedRevision": "af1b987ee4d461fc6205a18553db3e21461ca203",
+          "revision": "cfc97be096908c1193877d054bb80662120f1eca",
+          "reviewer": "operator_acceptance independent22scope preservation; HTTP chapter reused nonauthor workflow_acceptance verdict; parent actual177Reader",
+          "changedDependencies": [
+            "docs/site/use/workflows/README.md"
+          ],
+          "verdict": "PASS",
+          "summary": "Exact original scope and limits preserved; no new approval. See checkpoint-cfc97-22-record-preservation and reader-cfc97-closeout."
+        }
+      ]
     },
     {
-      "revision": "af1b987ee4d461fc6205a18553db3e21461ca203",
+      "revision": "cfc97be096908c1193877d054bb80662120f1eca",
       "author": "existing documentation authors",
       "reviewer": "/root/workflow_acceptance supporting procedures and root integration/correction; /root independent authored row Source/Reader/quality",
       "review": {
@@ -12633,6 +12924,11 @@
           "command": "Independent corrected canonical task-table review",
           "exitCode": 0,
           "observation": "Original blank-line render defect retained, corrected Source6d actual renderedAST contains both task rows. Exact three destination anchors and supporting procedure source bytes validated. Same existing IDs promoted, not duplicate requirements."
+        },
+        {
+          "command": "Current cfc97 Reader and extracted archive checks with independent22scope preservation",
+          "exitCode": 0,
+          "observation": "177canonical/187HTML/40815localtargets/219outputdigests;12search questions;14753SourceLinks/3910objects;1783previews/925objects;27freshSVG, exact27diagram records unchanged;28offline browser observations0findings0network. ZIP240members/19Source-compared copiedassets; actualfresh extracted artifact/searchPASS. Source/Reader checkpoint, not accessibility/globalgenerator/runtime/release approval."
         }
       ],
       "summary": "Whole supported operator plugin task now follows exact roots/trust/package identities,provider/grant/config selection,compile admission versus readiness and actual result,stopped-writer preservation before audit,drain,exclusive same-ID replacement roots,old pinned bytes/state and surface-specific removal limits. Reuses independently accepted OPL002/003/004;fresh existing maintained activation/removal path supports concrete local behavior without claiming general install/remove CLI.",
@@ -12645,10 +12941,22 @@
         "openIssues": [
           "Supporting procedures are independently reviewed, but the canonical workflow task index lacks the explicit uncertain-effect/plugin-lifecycle task routes. Exact two-row correction is authored off-tree for the next Source update."
         ]
-      }
+      },
+      "impactReviews": [
+        {
+          "previousReviewedRevision": "af1b987ee4d461fc6205a18553db3e21461ca203",
+          "revision": "cfc97be096908c1193877d054bb80662120f1eca",
+          "reviewer": "operator_acceptance independent22scope preservation; HTTP chapter reused nonauthor workflow_acceptance verdict; parent actual177Reader",
+          "changedDependencies": [
+            "docs/site/use/workflows/README.md"
+          ],
+          "verdict": "PASS",
+          "summary": "Exact original scope and limits preserved; no new approval. See checkpoint-cfc97-22-record-preservation and reader-cfc97-closeout."
+        }
+      ]
     },
     {
-      "revision": "af1b987ee4d461fc6205a18553db3e21461ca203",
+      "revision": "cfc97be096908c1193877d054bb80662120f1eca",
       "author": "existing documentation authors",
       "reviewer": "/root/workflow_acceptance",
       "review": {
@@ -12703,6 +13011,11 @@
           "command": "Current6d Reader artifact/search/Source/previews/diagrams/offline-browser and extracted delivered archive checks",
           "exitCode": 0,
           "observation": "171canonical/181HTML/38554localtargets/213digests;12search;14665SourceLinks3851objects;1763excerpts921objects;27freshSVG(allrecords unchanged);13offline/browser observations0findings0network under corrected canonical-destination criterion; final ZIP233members18copiedassets Sourcecompared, extraction artifact/searchPASS. reader-6d-scope-preservation.md retains failed expectation/environment attempts and boundaries. No overall/runtime/release approval."
+        },
+        {
+          "command": "Current cfc97 Reader and extracted archive checks with independent22scope preservation",
+          "exitCode": 0,
+          "observation": "177canonical/187HTML/40815localtargets/219outputdigests;12search questions;14753SourceLinks/3910objects;1783previews/925objects;27freshSVG, exact27diagram records unchanged;28offline browser observations0findings0network. ZIP240members/19Source-compared copiedassets; actualfresh extracted artifact/searchPASS. Source/Reader checkpoint, not accessibility/globalgenerator/runtime/release approval."
         }
       ],
       "summary": "Whole available demo journey separates actual compiler/local TLS/handoff contract rehearsal from technical readiness and external human acceptance. Exact identities and receipts,lost-response/rejection handling,expiry/provider ownership,cancellation/wait limits,retained result and cleanup are explained. Live integration has no complete supported project/platform/decision pair and names release/project/platform/exposure/controller/acceptance owners plus missing proofs and safe stop. Historical unavailable test prerequisites are disclosed,not converted to success.",
@@ -12719,6 +13032,16 @@
           "reviewer": "/root independent semantic delta/Reader review; workflow_acceptance exact portal correction and Buster followup; operator_acceptance nonauthor finite-code review",
           "verdict": "PASS",
           "summary": "Only exact changed dependencies independently reviewed against named reports; unchanged original scopes/limits reused. Reader6d public bytes unchanged ataf1; no duplicate topic/gate acceptance or aggregate claim. See reader-6d-scope-preservation.md and finite-context-ap08-independent.md."
+        },
+        {
+          "previousReviewedRevision": "af1b987ee4d461fc6205a18553db3e21461ca203",
+          "revision": "cfc97be096908c1193877d054bb80662120f1eca",
+          "reviewer": "operator_acceptance independent22scope preservation; HTTP chapter reused nonauthor workflow_acceptance verdict; parent actual177Reader",
+          "changedDependencies": [
+            "docs/site/use/workflows/README.md"
+          ],
+          "verdict": "PASS",
+          "summary": "Exact original scope and limits preserved; no new approval. See checkpoint-cfc97-22-record-preservation and reader-cfc97-closeout."
         }
       ]
     },
@@ -12850,7 +13173,7 @@
       ]
     },
     {
-      "revision": "af1b987ee4d461fc6205a18553db3e21461ca203",
+      "revision": "cfc97be096908c1193877d054bb80662120f1eca",
       "author": "/root/workflow_acceptance",
       "reviewer": "/root",
       "pages": [
@@ -12917,6 +13240,11 @@
           "command": "Current6d Reader artifact/search/Source/previews/diagrams/offline-browser and extracted delivered archive checks",
           "exitCode": 0,
           "observation": "171canonical/181HTML/38554localtargets/213digests;12search;14665SourceLinks3851objects;1763excerpts921objects;27freshSVG(allrecords unchanged);13offline/browser observations0findings0network under corrected canonical-destination criterion; final ZIP233members18copiedassets Sourcecompared, extraction artifact/searchPASS. reader-6d-scope-preservation.md retains failed expectation/environment attempts and boundaries. No overall/runtime/release approval."
+        },
+        {
+          "command": "Current cfc97 Reader and extracted archive checks with independent22scope preservation",
+          "exitCode": 0,
+          "observation": "177canonical/187HTML/40815localtargets/219outputdigests;12search questions;14753SourceLinks/3910objects;1783previews/925objects;27freshSVG, exact27diagram records unchanged;28offline browser observations0findings0network. ZIP240members/19Source-compared copiedassets; actualfresh extracted artifact/searchPASS. Source/Reader checkpoint, not accessibility/globalgenerator/runtime/release approval."
         }
       ],
       "limits": [
@@ -12933,6 +13261,16 @@
           "reviewer": "/root independent semantic delta/Reader review; workflow_acceptance exact portal correction and Buster followup; operator_acceptance nonauthor finite-code review",
           "verdict": "PASS",
           "summary": "Only exact changed dependencies independently reviewed against named reports; unchanged original scopes/limits reused. Reader6d public bytes unchanged ataf1; no duplicate topic/gate acceptance or aggregate claim. See reader-6d-scope-preservation.md and finite-context-ap08-independent.md."
+        },
+        {
+          "previousReviewedRevision": "af1b987ee4d461fc6205a18553db3e21461ca203",
+          "revision": "cfc97be096908c1193877d054bb80662120f1eca",
+          "reviewer": "operator_acceptance independent22scope preservation; HTTP chapter reused nonauthor workflow_acceptance verdict; parent actual177Reader",
+          "changedDependencies": [
+            "docs/site/use/workflows/README.md"
+          ],
+          "verdict": "PASS",
+          "summary": "Exact original scope and limits preserved; no new approval. See checkpoint-cfc97-22-record-preservation and reader-cfc97-closeout."
         }
       ]
     },
@@ -13012,7 +13350,7 @@
     },
     {
       "id": "A99-07-representative-buster-workflow-content-20261021",
-      "revision": "af1b987ee4d461fc6205a18553db3e21461ca203",
+      "revision": "cfc97be096908c1193877d054bb80662120f1eca",
       "author": "existing Buster workflow authors; package citation repair independently reviewed by root",
       "reviewer": "/root/workflow_acceptance",
       "gateIds": [
@@ -13063,6 +13401,11 @@
           "command": "Current6d Reader artifact/search/Source/previews/diagrams/offline-browser and extracted delivered archive checks",
           "exitCode": 0,
           "observation": "171canonical/181HTML/38554localtargets/213digests;12search;14665SourceLinks3851objects;1763excerpts921objects;27freshSVG(allrecords unchanged);13offline/browser observations0findings0network under corrected canonical-destination criterion; final ZIP233members18copiedassets Sourcecompared, extraction artifact/searchPASS. reader-6d-scope-preservation.md retains failed expectation/environment attempts and boundaries. No overall/runtime/release approval."
+        },
+        {
+          "command": "Current cfc97 Reader and extracted archive checks with independent22scope preservation",
+          "exitCode": 0,
+          "observation": "177canonical/187HTML/40815localtargets/219outputdigests;12search questions;14753SourceLinks/3910objects;1783previews/925objects;27freshSVG, exact27diagram records unchanged;28offline browser observations0findings0network. ZIP240members/19Source-compared copiedassets; actualfresh extracted artifact/searchPASS. Source/Reader checkpoint, not accessibility/globalgenerator/runtime/release approval."
         }
       ],
       "summary": "Whole representative workflow documentation connects a complete real suite/checked-manifest/Kubernetes-fixture/HTTP-matrix/JUnit declaration and actual installed registry resolution to source-attested dispatch, real provider/report execution path, exact result verification and digest-bound evidence import. The complete template explicitly identifies image/catalog-command substitutions and deployment prerequisites; production commands identify owning checkout, same project/plan/run, raw-preservation-before-audit, result interpretation, failed boundaries and recovery/cleanup. Separate native vertical proof command has exact expected remote/direct-command/JUnit/LCOV result and explicit scope; neither resolver green nor HTTP acceptance becomes a quality verdict.",
@@ -13071,6 +13414,18 @@
         "Root exact pin repair review is reused; author of repair does not selfaccept its source changes. No new phase8 execution claimed. This follow-up only resolves historical required-check blocker on whole A99-07.",
         "No A99-06/11/12, FLW-001/012/013 or runtime/release acceptance inferred. Other maintained workflow composition failures remain separately tracked.",
         "Corrected metadata also removes a mistaken nonexistent understand/buster-suites.md locator; actual owning suite reference is reference/buster-suites.md, included. All listed current pages/sources individually checked as real tracked files."
+      ],
+      "impactReviews": [
+        {
+          "previousReviewedRevision": "af1b987ee4d461fc6205a18553db3e21461ca203",
+          "revision": "cfc97be096908c1193877d054bb80662120f1eca",
+          "reviewer": "operator_acceptance independent22scope preservation; HTTP chapter reused nonauthor workflow_acceptance verdict; parent actual177Reader",
+          "changedDependencies": [
+            "docs/site/use/workflows/README.md"
+          ],
+          "verdict": "PASS",
+          "summary": "Exact original scope and limits preserved; no new approval. See checkpoint-cfc97-22-record-preservation and reader-cfc97-closeout."
+        }
       ]
     },
     {
@@ -13153,6 +13508,450 @@
       "limits": [
         "Content reference PASS, not global schema/config-generation freshness, absent external readers, universal compatibility, conversion, deployed upgrade, live migration/retirement/recovery or aggregate reference/release acceptance. Exact fields remain with canonical schema authorities."
       ]
+    },
+    {
+      "id": "FLW007-supported-failure-task-20261021",
+      "revision": "cfc97be096908c1193877d054bb80662120f1eca",
+      "author": "/root/workflow_acceptance",
+      "reviewer": "/root/operator_acceptance independent whole topic and correction rereview; parent installed-path/Reader integration",
+      "gateIds": [],
+      "requirementIds": [
+        "FLW-007"
+      ],
+      "pages": [
+        "docs/site/use/workflows/README.md",
+        "docs/site/use/workflows/repair-retry.md"
+      ],
+      "sources": [
+        "docs/site/use/workflows/examples/repair-retry.mjs",
+        "skills/nova/core/execution/graph-repair-budget.ts",
+        "skills/nova/core/lifecycle/remediation.ts",
+        "skills/nova/core/lifecycle/repair-authorization.ts",
+        "skills/nova/core/lifecycle/repair-budget.ts",
+        "tests/fixtures/repair-budget/plugin/stage.mjs",
+        "tests/verification/reliability/repair-budget-fixture.mjs"
+      ],
+      "checks": [
+        {
+          "command": "Independent source/semantic-reader/quality review of the complete task and current canonical integration",
+          "exitCode": 0,
+          "observation": "Independent four-guide review plus exact four-correction rereview, installed helper closeout, build-tailnet parent Source review and current Reader. Source-proven limits stay explicit; not author selfacceptance."
+        },
+        {
+          "command": "Installed maintained repair helper prepare/run/verify and two independent negative controls; owned cleanup",
+          "exitCode": 0,
+          "observation": "Actual24Source helper bytes unchanged atcfc: mixed succeeded132events, technical-exhausted blocked21, extra-order blocked98;251total. Existing intent EEXIST before runtime mutation; missing original capture rejects, exactrestoreverify0; cleanupboth0. Original359regular-file evidence retained, notproductionquality."
+        },
+        {
+          "command": "node scripts/docs-publication.mjs check; node scripts/docs-publication.mjs build",
+          "exitCode": 0,
+          "observation": "Actual177page/51package check and cfc97be0 build terminal0."
+        },
+        {
+          "command": "Reader artifact/search/source-links/source-previews/diagrams checks; offline browser; extracted artifact/search checks",
+          "exitCode": 0,
+          "observation": "177canonical/187HTML/40815localtargets/219outputdigests;12search questions;14753SourceLinks/3910objects;1783previews/925objects;27freshSVG, exact27diagram records unchanged;28offline browser observations0findings0network. ZIP240members/19Source-compared copiedassets; actualfresh extracted artifact/searchPASS. Source/Reader checkpoint, not accessibility/globalgenerator/runtime/release approval."
+        }
+      ],
+      "review": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "summary": "Whole supported retry/repair task now has actual trusted TEST fixture input, deliberate failures, separate technical retry and per-category repair histories, mandatory rechecks, one authorized extra assignment, original-state capture, strict replay, success and bounded exhaustion, and owned cleanup.",
+      "limits": [
+        "Not production implementation/quality-agent or compiled-project execution; local TEST stage boundary explicit.",
+        "No full AP09/package, fresh-context persona, global generator or runtime release approval."
+      ],
+      "openIssues": [],
+      "verdict": "PASS"
+    },
+    {
+      "id": "FLW009-supported-failure-task-20261021",
+      "revision": "cfc97be096908c1193877d054bb80662120f1eca",
+      "author": "/root/workflow_acceptance",
+      "reviewer": "/root/operator_acceptance independent whole topic and correction rereview; parent installed-path/Reader integration",
+      "gateIds": [],
+      "requirementIds": [
+        "FLW-009"
+      ],
+      "pages": [
+        "docs/site/use/workflows/README.md",
+        "docs/site/use/workflows/interruption-recovery.md"
+      ],
+      "sources": [
+        "skills/nova/core/execution/effect-recovery.ts",
+        "tests/fixtures/plugin-system-v2/resume-plugin/checkpoint.js",
+        "tests/verification/contracts/check-plugin-system-v2-checkpoint-recovery.mjs",
+        "tests/verification/reliability/external-effect-recovery.test.mts"
+      ],
+      "checks": [
+        {
+          "command": "Independent source/semantic-reader/quality review of the complete task and current canonical integration",
+          "exitCode": 0,
+          "observation": "Independent four-guide review plus exact four-correction rereview, installed helper closeout, build-tailnet parent Source review and current Reader. Source-proven limits stay explicit; not author selfacceptance."
+        },
+        {
+          "command": "node scripts/docs-publication.mjs check; node scripts/docs-publication.mjs build",
+          "exitCode": 0,
+          "observation": "Actual177page/51package check and cfc97be0 build terminal0."
+        },
+        {
+          "command": "Reader artifact/search/source-links/source-previews/diagrams checks; offline browser; extracted artifact/search checks",
+          "exitCode": 0,
+          "observation": "177canonical/187HTML/40815localtargets/219outputdigests;12search questions;14753SourceLinks/3910objects;1783previews/925objects;27freshSVG, exact27diagram records unchanged;28offline browser observations0findings0network. ZIP240members/19Source-compared copiedassets; actualfresh extracted artifact/searchPASS. Source/Reader checkpoint, not accessibility/globalgenerator/runtime/release approval."
+        }
+      ],
+      "review": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "summary": "Whole supported interruption task gives actual maintained checkpoint child interruption and original-artifact recovery, exact run/platform/graph identity, audit and cleanup; external-effect interruption cases lead to explicit uncertainty/continuation/terminal stops with original evidence retained.",
+      "limits": [
+        "No generic external-effect reconciliation, deployed incident or native Worker recovery inferred.",
+        "No full AP09/package, fresh-context persona, global generator or runtime release approval."
+      ],
+      "openIssues": [],
+      "verdict": "PASS"
+    },
+    {
+      "id": "FLW015-supported-failure-task-20261021",
+      "revision": "cfc97be096908c1193877d054bb80662120f1eca",
+      "author": "/root/workflow_acceptance",
+      "reviewer": "/root/operator_acceptance independent whole topic and correction rereview; parent installed-path/Reader integration",
+      "gateIds": [],
+      "requirementIds": [
+        "FLW-015"
+      ],
+      "pages": [
+        "docs/site/use/workflows/README.md",
+        "docs/site/use/workflows/redis-replay-recovery.md"
+      ],
+      "sources": [
+        "skills/common/plugins/redis-transport/src/adapter.ts",
+        "skills/common/plugins/redis-transport/src/stream-identity.ts",
+        "skills/nova/core/telemetry/observer-delivery.ts",
+        "skills/nova/core/telemetry/observer-recovery.ts",
+        "skills/nova/core/telemetry/observers.ts",
+        "tests/verification/reliability/redis-transport.test.mts"
+      ],
+      "checks": [
+        {
+          "command": "Independent source/semantic-reader/quality review of the complete task and current canonical integration",
+          "exitCode": 0,
+          "observation": "Independent four-guide review plus exact four-correction rereview, installed helper closeout, build-tailnet parent Source review and current Reader. Source-proven limits stay explicit; not author selfacceptance."
+        },
+        {
+          "command": "node scripts/docs-publication.mjs check; node scripts/docs-publication.mjs build",
+          "exitCode": 0,
+          "observation": "Actual177page/51package check and cfc97be0 build terminal0."
+        },
+        {
+          "command": "Reader artifact/search/source-links/source-previews/diagrams checks; offline browser; extracted artifact/search checks",
+          "exitCode": 0,
+          "observation": "177canonical/187HTML/40815localtargets/219outputdigests;12search questions;14753SourceLinks/3910objects;1783previews/925objects;27freshSVG, exact27diagram records unchanged;28offline browser observations0findings0network. ZIP240members/19Source-compared copiedassets; actualfresh extracted artifact/searchPASS. Source/Reader checkpoint, not accessibility/globalgenerator/runtime/release approval."
+        }
+      ],
+      "review": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "summary": "Whole supported Redis task distinguishes native stream dedup and TTL/trim limits, same-effect receipt replay versus second physical test-journal send, original observer delivery retry/order, required drain failure versus best_effort, stopped-writer custody, exact missing live proof and named owner/safe-stop/cleanup.",
+      "limits": [
+        "Native Redis/deployed outage not run in this environment; socket/file and Source proofs are not relabelled native Redis execution.",
+        "No full AP09/package, fresh-context persona, global generator or runtime release approval."
+      ],
+      "openIssues": [],
+      "verdict": "PASS"
+    },
+    {
+      "id": "FLW016-supported-failure-task-20261021",
+      "revision": "cfc97be096908c1193877d054bb80662120f1eca",
+      "author": "/root/workflow_acceptance",
+      "reviewer": "/root/operator_acceptance independent whole topic and correction rereview; parent installed-path/Reader integration",
+      "gateIds": [],
+      "requirementIds": [
+        "FLW-016"
+      ],
+      "pages": [
+        "docs/site/use/workflows/README.md",
+        "docs/site/use/workflows/worker-result-recovery.md"
+      ],
+      "sources": [
+        "skills/prism/server/native-worker-execution.ts",
+        "skills/prism/server/worker.ts",
+        "skills/worker/core/worker/native-attempt-executor.ts",
+        "skills/worker/core/worker/native-attempt-recovery.ts",
+        "tests/verification/reliability/worker-native-journal.test.mts"
+      ],
+      "checks": [
+        {
+          "command": "Independent source/semantic-reader/quality review of the complete task and current canonical integration",
+          "exitCode": 0,
+          "observation": "Independent four-guide review plus exact four-correction rereview, installed helper closeout, build-tailnet parent Source review and current Reader. Source-proven limits stay explicit; not author selfacceptance."
+        },
+        {
+          "command": "node scripts/docs-publication.mjs check; node scripts/docs-publication.mjs build",
+          "exitCode": 0,
+          "observation": "Actual177page/51package check and cfc97be0 build terminal0."
+        },
+        {
+          "command": "Reader artifact/search/source-links/source-previews/diagrams checks; offline browser; extracted artifact/search checks",
+          "exitCode": 0,
+          "observation": "177canonical/187HTML/40815localtargets/219outputdigests;12search questions;14753SourceLinks/3910objects;1783previews/925objects;27freshSVG, exact27diagram records unchanged;28offline browser observations0findings0network. ZIP240members/19Source-compared copiedassets; actualfresh extracted artifact/searchPASS. Source/Reader checkpoint, not accessibility/globalgenerator/runtime/release approval."
+        }
+      ],
+      "review": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "summary": "Whole supported accepted-Worker interruption task connects original envelope/host/ownership/journal/spool/process counters/sealed-result authority, ownership exception map, same-original reconstruction, fencing and nonreconstructable safe stops. Exact delegated-host prerequisites and owned cleanup retained.",
+      "limits": [
+        "Local journal/lock crash controls are not delegated-cgroup live workload recovery; no generic kill/recover/import command invented.",
+        "No full AP09/package, fresh-context persona, global generator or runtime release approval."
+      ],
+      "openIssues": [],
+      "verdict": "PASS"
+    },
+    {
+      "id": "FLW012-supported-failure-task-20261021",
+      "revision": "cfc97be096908c1193877d054bb80662120f1eca",
+      "author": "/root/workflow_acceptance",
+      "reviewer": "/root independent nonauthor Source/Reader/quality review; operator_acceptance independent canonical integration preservation",
+      "gateIds": [],
+      "requirementIds": [
+        "FLW-012"
+      ],
+      "pages": [
+        "docs/site/use/workflows/README.md",
+        "docs/site/use/workflows/build-image.md"
+      ],
+      "sources": [
+        "docker/buster-runtime-entrypoint.sh",
+        "my-values/infra/k3s-registries.yaml",
+        "scripts/deploy.sh",
+        "scripts/inspect-node-registry.mjs",
+        "scripts/registry-client-config.mjs",
+        "skills/buster/engine/test-gates/container-build-runtime.ts",
+        "skills/buster/plugins/container-build/src/provider.js",
+        "tests/verification/e2e/nova-buildkit-production-preflight.mts"
+      ],
+      "checks": [
+        {
+          "command": "Independent source/semantic-reader/quality review of the complete task and current canonical integration",
+          "exitCode": 0,
+          "observation": "Independent four-guide review plus exact four-correction rereview, installed helper closeout, build-tailnet parent Source review and current Reader. Source-proven limits stay explicit; not author selfacceptance."
+        },
+        {
+          "command": "node scripts/docs-publication.mjs check; node scripts/docs-publication.mjs build",
+          "exitCode": 0,
+          "observation": "Actual177page/51package check and cfc97be0 build terminal0."
+        },
+        {
+          "command": "Reader artifact/search/source-links/source-previews/diagrams checks; offline browser; extracted artifact/search checks",
+          "exitCode": 0,
+          "observation": "177canonical/187HTML/40815localtargets/219outputdigests;12search questions;14753SourceLinks/3910objects;1783previews/925objects;27freshSVG, exact27diagram records unchanged;28offline browser observations0findings0network. ZIP240members/19Source-compared copiedassets; actualfresh extracted artifact/searchPASS. Source/Reader checkpoint, not accessibility/globalgenerator/runtime/release approval."
+        }
+      ],
+      "review": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "summary": "Whole supported image task follows one client contract through original BuildKit request, attempt tag, exact raw manifest/digest and Nova import, consuming node/platform/imageID/application authority, failed-request reconciliation boundary and owner-bound cleanup. Missing node installation/cold-pull/application commands have named required inputs and safe stops.",
+      "limits": [
+        "No live build/push/node pull/application proof; buildctl ENOENT retained; a new preflight is not reconciliation of an original uncertain push.",
+        "No full AP09/package, fresh-context persona, global generator or runtime release approval."
+      ],
+      "openIssues": [],
+      "verdict": "PASS"
+    },
+    {
+      "id": "FLW013-supported-failure-task-20261021",
+      "revision": "cfc97be096908c1193877d054bb80662120f1eca",
+      "author": "/root/workflow_acceptance",
+      "reviewer": "/root independent nonauthor Source/Reader/quality review; operator_acceptance independent canonical integration preservation",
+      "gateIds": [],
+      "requirementIds": [
+        "FLW-013"
+      ],
+      "pages": [
+        "docs/site/use/workflows/README.md",
+        "docs/site/use/workflows/tailnet-exposure.md"
+      ],
+      "sources": [
+        "my-values/infra/tailscale-operator-values.yaml",
+        "scripts/deploy.sh",
+        "skills/buster/engine/test-gates/exposure-generation.ts",
+        "skills/buster/engine/test-gates/exposure-handoff.ts",
+        "skills/buster/engine/test-gates/tailscale-exposure-runtime.ts",
+        "skills/buster/plugins/tailscale-exposure/src/provider.js",
+        "tests/verification/e2e/nova-tailscale-production-preflight.mts"
+      ],
+      "checks": [
+        {
+          "command": "Independent source/semantic-reader/quality review of the complete task and current canonical integration",
+          "exitCode": 0,
+          "observation": "Independent four-guide review plus exact four-correction rereview, installed helper closeout, build-tailnet parent Source review and current Reader. Source-proven limits stay explicit; not author selfacceptance."
+        },
+        {
+          "command": "node scripts/docs-publication.mjs check; node scripts/docs-publication.mjs build",
+          "exitCode": 0,
+          "observation": "Actual177page/51package check and cfc97be0 build terminal0."
+        },
+        {
+          "command": "Reader artifact/search/source-links/source-previews/diagrams checks; offline browser; extracted artifact/search checks",
+          "exitCode": 0,
+          "observation": "177canonical/187HTML/40815localtargets/219outputdigests;12search questions;14753SourceLinks/3910objects;1783previews/925objects;27freshSVG, exact27diagram records unchanged;28offline browser observations0findings0network. ZIP240members/19Source-compared copiedassets; actualfresh extracted artifact/searchPASS. Source/Reader checkpoint, not accessibility/globalgenerator/runtime/release approval."
+        }
+      ],
+      "review": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "summary": "Whole supported exposure task separates platform routes, ephemeral release and retained readiness handoff; binds actual typed deployment/owner/request/generation/expiry, permitted and unpermitted client/policy proof, UID/image/manifest handoff and successor-safe release/cleanup with named external controls and stops.",
+      "limits": [
+        "No live OAuth/ACL/DNS/TLS/Tailnet or independent external device retirement proof; local package/loopback/injected vectors bounded.",
+        "No full AP09/package, fresh-context persona, global generator or runtime release approval."
+      ],
+      "openIssues": [],
+      "verdict": "PASS"
+    },
+    {
+      "id": "A99-08-complete-supported-failure-journey-union-20261021",
+      "revision": "cfc97be096908c1193877d054bb80662120f1eca",
+      "author": "Documentation topic authors and integration coordinator",
+      "reviewer": "Independent topic-review union: operator_acceptance (new Redis/Worker topics); original independent Codex topic reviewers (registry/Tailnet diagnosis); workflow_acceptance (uncertain-effect/Demo); root nonauthor (BuildKit/Tailnet task guides)",
+      "gateIds": [
+        "A99-08"
+      ],
+      "requirementIds": [],
+      "pages": [
+        "docs/site/extend/contracts.md",
+        "docs/site/extend/effectful-plugin.md",
+        "docs/site/reference/capabilities.md",
+        "docs/site/reference/nova-project.md",
+        "docs/site/understand/buster-namespace-controller.md",
+        "docs/site/understand/nova-core.md",
+        "docs/site/understand/plugin-runtime.md",
+        "docs/site/use/demo-delivery.md",
+        "docs/site/use/diagnose.md",
+        "docs/site/use/install.md",
+        "docs/site/use/operate.md",
+        "docs/site/use/recovery.md",
+        "docs/site/use/workflows/README.md",
+        "docs/site/use/workflows/build-image.md",
+        "docs/site/use/workflows/interruption-recovery.md",
+        "docs/site/use/workflows/redis-replay-recovery.md",
+        "docs/site/use/workflows/repair-retry.md",
+        "docs/site/use/workflows/tailnet-exposure.md",
+        "docs/site/use/workflows/worker-result-recovery.md"
+      ],
+      "sources": [
+        "docker/buster-runtime-entrypoint.sh",
+        "docs/site/use/workflows/examples/repair-retry.mjs",
+        "my-values/infra/k3s-registries.yaml",
+        "my-values/infra/tailscale-operator-values.yaml",
+        "scripts/check-ap08-effectful-guide.mjs",
+        "scripts/deploy.sh",
+        "scripts/inspect-node-registry.mjs",
+        "scripts/registry-client-config.mjs",
+        "skills/buster/engine/test-gates/container-build-runtime.ts",
+        "skills/buster/engine/test-gates/exposure-generation.ts",
+        "skills/buster/engine/test-gates/exposure-handoff.ts",
+        "skills/buster/engine/test-gates/tailscale-exposure-runtime.ts",
+        "skills/buster/plugins/container-build/src/provider.js",
+        "skills/buster/plugins/tailscale-exposure/src/provider.js",
+        "skills/common/plugin-runtime/foundation/registry/activation.ts",
+        "skills/common/plugin-runtime/foundation/registry/capabilities.ts",
+        "skills/common/plugin-runtime/foundation/registry/import-audit.ts",
+        "skills/common/plugins/redis-transport/src/adapter.ts",
+        "skills/common/plugins/redis-transport/src/stream-identity.ts",
+        "skills/nova/core/effects/coordinator.ts",
+        "skills/nova/core/effects/journal.ts",
+        "skills/nova/core/execution/effect-recovery.ts",
+        "skills/nova/core/execution/engine-admin.ts",
+        "skills/nova/core/execution/engine-run.ts",
+        "skills/nova/core/execution/graph-repair-budget.ts",
+        "skills/nova/core/lifecycle/remediation.ts",
+        "skills/nova/core/lifecycle/repair-authorization.ts",
+        "skills/nova/core/lifecycle/repair-budget.ts",
+        "skills/nova/core/telemetry/audit.ts",
+        "skills/nova/core/telemetry/observer-delivery.ts",
+        "skills/nova/core/telemetry/observer-recovery.ts",
+        "skills/nova/core/telemetry/observers.ts",
+        "skills/nova/plugins/demo-handoff/schemas/adapter.schema.json",
+        "skills/nova/plugins/demo-handoff/schemas/candidate.schema.json",
+        "skills/nova/plugins/demo-handoff/schemas/delivery.schema.json",
+        "skills/nova/plugins/demo-handoff/schemas/empty.schema.json",
+        "skills/nova/plugins/demo-handoff/schemas/ready.schema.json",
+        "skills/nova/plugins/demo-handoff/schemas/result.schema.json",
+        "skills/nova/plugins/demo-handoff/src/adapter.ts",
+        "skills/nova/plugins/demo-handoff/src/binding.ts",
+        "skills/nova/plugins/demo-handoff/src/candidate.ts",
+        "skills/nova/plugins/demo-handoff/src/controller-client.ts",
+        "skills/nova/plugins/demo-handoff/src/delivery.ts",
+        "skills/nova/plugins/demo-handoff/src/protocol.ts",
+        "skills/nova/plugins/demo-handoff/src/ready.ts",
+        "skills/nova/plugins/demo-handoff/tests/compiler.test.mjs",
+        "skills/nova/plugins/demo-handoff/tests/controller-client.test.mts",
+        "skills/nova/plugins/demo-handoff/tests/handoff.test.mts",
+        "skills/nova/project/cli.ts",
+        "skills/nova/project/compiler.ts",
+        "skills/nova/project/demo.ts",
+        "skills/nova/project/source.ts",
+        "skills/prism/server/native-worker-execution.ts",
+        "skills/prism/server/worker.ts",
+        "skills/worker/core/worker/native-attempt-executor.ts",
+        "skills/worker/core/worker/native-attempt-recovery.ts",
+        "tests/fixtures/plugin-system-v2/resume-plugin/checkpoint.js",
+        "tests/fixtures/repair-budget/plugin/stage.mjs",
+        "tests/verification/contracts/check-plugin-system-v2-checkpoint-recovery.mjs",
+        "tests/verification/e2e/nova-buildkit-production-preflight.mts",
+        "tests/verification/e2e/nova-tailscale-production-preflight.mts",
+        "tests/verification/reliability/external-effect-recovery.test.mts",
+        "tests/verification/reliability/redis-transport.test.mts",
+        "tests/verification/reliability/repair-budget-fixture.mjs",
+        "tests/verification/reliability/worker-native-journal.test.mts"
+      ],
+      "checks": [
+        {
+          "command": "Independent source/semantic-reader/quality review of the complete task and current canonical integration",
+          "exitCode": 0,
+          "observation": "Independent four-guide review plus exact four-correction rereview, installed helper closeout, build-tailnet parent Source review and current Reader. Source-proven limits stay explicit; not author selfacceptance."
+        },
+        {
+          "command": "node scripts/docs-publication.mjs check; node scripts/docs-publication.mjs build",
+          "exitCode": 0,
+          "observation": "Actual177page/51package check and cfc97be0 build terminal0."
+        },
+        {
+          "command": "Reader artifact/search/source-links/source-previews/diagrams checks; offline browser; extracted artifact/search checks",
+          "exitCode": 0,
+          "observation": "177canonical/187HTML/40815localtargets/219outputdigests;12search questions;14753SourceLinks/3910objects;1783previews/925objects;27freshSVG, exact27diagram records unchanged;28offline browser observations0findings0network. ZIP240members/19Source-compared copiedassets; actualfresh extracted artifact/searchPASS. Source/Reader checkpoint, not accessibility/globalgenerator/runtime/release approval."
+        },
+        {
+          "command": "Exact six-family Source/Reader review union and unchanged supporting-topic byte comparison",
+          "exitCode": 0,
+          "observation": "Redis/Worker complete independent four-guide correction verdict; registry/image and Tailnet exact14objects/21pins and prior diagnosis review; uncertain effect FLW010; Demo rejection FLW017. Old supporting page/product bytes unchanged except separately independently reviewed task-index rows. Every family has retained state assessment, retry/stop decision and cleanup. No duplicate old topic acceptance."
+        }
+      ],
+      "review": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "summary": "Whole documentation gate covers all six required failure families through independently reviewed coherent procedures: Redis, registry/image, Tailnet, Worker abort, uncertain external effect and demo rejection. Current index routes each named task; actual new recovery helper and bounded native fixtures support their stated claims. Unavailable live controls have explicit original-identity retention, owning authority, follow-up inputs, stop and cleanup boundaries, as required by compact contract1–4.",
+      "limits": [
+        "Documentation-content gate only. Native Redis/delegated Worker/live registry/Tailnet/demo-human execution are not claimed passed.",
+        "No independent fresh-context A99-12 or full AP09.9 acceptance. Existing product/closure and runtime Knip release stops retained."
+      ],
+      "openIssues": [],
+      "verdict": "PASS"
     }
   ],
   "purpose": "Internal planning and observed findings; not an acceptance ledger and not reader documentation.",
@@ -13262,7 +14061,9 @@
       "openFindingIds": [],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L94",
       "completionRecord": "AP09.1-ready-topics-20261020",
-      "closureDecision": {}
+      "closureDecision": {
+        "revision": "cfc97be096908c1193877d054bb80662120f1eca"
+      }
     },
     {
       "id": "GOV-002",
@@ -13348,7 +14149,9 @@
       "openFindingIds": [],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L96",
       "completionRecord": "AP09.1-ready-topics-20261020",
-      "closureDecision": {}
+      "closureDecision": {
+        "revision": "cfc97be096908c1193877d054bb80662120f1eca"
+      }
     },
     {
       "id": "GOV-004",
@@ -13381,7 +14184,9 @@
       "openFindingIds": [],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L97",
       "completionRecord": "AP09.1-ready-topics-20261020",
-      "closureDecision": {}
+      "closureDecision": {
+        "revision": "cfc97be096908c1193877d054bb80662120f1eca"
+      }
     },
     {
       "id": "GOV-005",
@@ -13466,7 +14271,9 @@
       "openFindingIds": [],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L99",
       "completionRecord": "Reviewed-corrections-20261020",
-      "closureDecision": {}
+      "closureDecision": {
+        "revision": "cfc97be096908c1193877d054bb80662120f1eca"
+      }
     },
     {
       "id": "GOV-007",
@@ -13548,7 +14355,9 @@
       "openFindingIds": [],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L101",
       "completionRecord": "AP09.1-ready-topics-20261020",
-      "closureDecision": {}
+      "closureDecision": {
+        "revision": "cfc97be096908c1193877d054bb80662120f1eca"
+      }
     },
     {
       "id": "ENT-001",
@@ -13583,7 +14392,9 @@
       "openFindingIds": [],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L107",
       "completionRecord": "AP09.1-ready-topics-20261020",
-      "closureDecision": {}
+      "closureDecision": {
+        "revision": "cfc97be096908c1193877d054bb80662120f1eca"
+      }
     },
     {
       "id": "ENT-002",
@@ -13618,7 +14429,9 @@
       "openFindingIds": [],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L108",
       "completionRecord": "AP09.1-ready-topics-20261020",
-      "closureDecision": {}
+      "closureDecision": {
+        "revision": "cfc97be096908c1193877d054bb80662120f1eca"
+      }
     },
     {
       "id": "ENT-003",
@@ -13653,7 +14466,9 @@
       "openFindingIds": [],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L109",
       "completionRecord": "AP09.1-ready-topics-20261020",
-      "closureDecision": {}
+      "closureDecision": {
+        "revision": "cfc97be096908c1193877d054bb80662120f1eca"
+      }
     },
     {
       "id": "ENT-004",
@@ -13688,7 +14503,9 @@
       "openFindingIds": [],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L110",
       "completionRecord": "AP09.1-ready-topics-20261020",
-      "closureDecision": {}
+      "closureDecision": {
+        "revision": "cfc97be096908c1193877d054bb80662120f1eca"
+      }
     },
     {
       "id": "ENT-005",
@@ -13741,7 +14558,7 @@
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L111",
       "closureDecision": {
         "verdict": "PASS",
-        "revision": "af1b987ee4d461fc6205a18553db3e21461ca203",
+        "revision": "cfc97be096908c1193877d054bb80662120f1eca",
         "reason": "Complete safe install/preflight, maintain/retire, project reference and connected first-reader routes accepted. First-project input omission corrected; current compiler contract check now passes.",
         "campaign": "independent-compact-closeout-20261021"
       },
@@ -14092,7 +14909,7 @@
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L129",
       "closureDecision": {
         "verdict": "PASS",
-        "revision": "af1b987ee4d461fc6205a18553db3e21461ca203",
+        "revision": "cfc97be096908c1193877d054bb80662120f1eca",
         "reason": "Closes complete compiler/admission, import audit, capability provider resolution and symptom-first safe diagnosis after independent current-source review.",
         "campaign": "independent-compact-closeout-20261021"
       },
@@ -14198,7 +15015,7 @@
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L130",
       "closureDecision": {
         "verdict": "PASS",
-        "revision": "af1b987ee4d461fc6205a18553db3e21461ca203",
+        "revision": "cfc97be096908c1193877d054bb80662120f1eca",
         "reason": "Closes complete compiler/admission, import audit, capability provider resolution and symptom-first safe diagnosis after independent current-source review.",
         "campaign": "independent-compact-closeout-20261021"
       },
@@ -16119,7 +16936,9 @@
       "openFindingIds": [],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L170",
       "completionRecord": "Reviewed-corrections-20261020",
-      "closureDecision": {}
+      "closureDecision": {
+        "revision": "cfc97be096908c1193877d054bb80662120f1eca"
+      }
     },
     {
       "id": "SPC-002",
@@ -16899,7 +17718,7 @@
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L190",
       "closureDecision": {
         "verdict": "PASS",
-        "revision": "af1b987ee4d461fc6205a18553db3e21461ca203",
+        "revision": "cfc97be096908c1193877d054bb80662120f1eca",
         "reason": "Closes complete compiler/admission, import audit, capability provider resolution and symptom-first safe diagnosis after independent current-source review.",
         "campaign": "independent-compact-closeout-20261021"
       },
@@ -16993,7 +17812,7 @@
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L192",
       "closureDecision": {
         "verdict": "PASS",
-        "revision": "af1b987ee4d461fc6205a18553db3e21461ca203",
+        "revision": "cfc97be096908c1193877d054bb80662120f1eca",
         "reason": "Closes complete compiler/admission, import audit, capability provider resolution and symptom-first safe diagnosis after independent current-source review.",
         "campaign": "independent-compact-closeout-20261021"
       },
@@ -21431,7 +22250,7 @@
       "currentContentScopeQualification": "Exact current page content contributions from Source, Reader and Quality reports; prior whole FAIL reports stay immutable. Operator route capacity dependency separately reviewed at current bytes; no whole route reissuance or practical/package acceptance.",
       "closureDecision": {
         "verdict": "PASS",
-        "revision": "af1b987ee4d461fc6205a18553db3e21461ca203",
+        "revision": "cfc97be096908c1193877d054bb80662120f1eca",
         "reason": "Complete safe install/preflight, maintain/retire, project reference and connected first-reader routes accepted. First-project input omission corrected; current compiler contract check now passes.",
         "campaign": "independent-compact-closeout-20261021"
       },
@@ -21856,7 +22675,7 @@
       },
       "closureDecision": {
         "verdict": "PASS",
-        "revision": "af1b987ee4d461fc6205a18553db3e21461ca203",
+        "revision": "cfc97be096908c1193877d054bb80662120f1eca",
         "reason": "Closes complete compiler/admission, import audit, capability provider resolution and symptom-first safe diagnosis after independent current-source review.",
         "campaign": "independent-compact-closeout-20261021"
       },
@@ -22327,7 +23146,7 @@
       "currentContentScopeQualification": "Exact current page content contributions from Source, Reader and Quality reports; prior whole FAIL reports stay immutable. Operator route capacity dependency separately reviewed at current bytes; no whole route reissuance or practical/package acceptance.",
       "closureDecision": {
         "verdict": "PASS",
-        "revision": "af1b987ee4d461fc6205a18553db3e21461ca203",
+        "revision": "cfc97be096908c1193877d054bb80662120f1eca",
         "reason": "Complete safe install/preflight, maintain/retire, project reference and connected first-reader routes accepted. First-project input omission corrected; current compiler contract check now passes.",
         "campaign": "independent-compact-closeout-20261021"
       },
@@ -23234,7 +24053,7 @@
       },
       "closureDecision": {
         "verdict": "PASS",
-        "revision": "af1b987ee4d461fc6205a18553db3e21461ca203",
+        "revision": "cfc97be096908c1193877d054bb80662120f1eca",
         "reason": "Complete safe install/preflight, maintain/retire, project reference and connected first-reader routes accepted. First-project input omission corrected; current compiler contract check now passes.",
         "campaign": "independent-compact-closeout-20261021"
       },
@@ -23443,7 +24262,9 @@
       "openFindingIds": [],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L281",
       "completionRecord": "Reviewed-corrections-20261020",
-      "closureDecision": {}
+      "closureDecision": {
+        "revision": "cfc97be096908c1193877d054bb80662120f1eca"
+      }
     },
     {
       "id": "CFG-007",
@@ -24584,7 +25405,9 @@
       "openFindingIds": [],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L291",
       "completionRecord": "Reviewed-corrections-20261020",
-      "closureDecision": {}
+      "closureDecision": {
+        "revision": "cfc97be096908c1193877d054bb80662120f1eca"
+      }
     },
     {
       "id": "CFG-017",
@@ -24894,7 +25717,9 @@
       "openFindingIds": [],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L300",
       "completionRecord": "AP09-reader-workflows-20261020",
-      "closureDecision": {}
+      "closureDecision": {
+        "revision": "cfc97be096908c1193877d054bb80662120f1eca"
+      }
     },
     {
       "id": "FLW-003",
@@ -24935,7 +25760,9 @@
       "openFindingIds": [],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L301",
       "completionRecord": "AP09-first-project-example-20261020",
-      "closureDecision": {}
+      "closureDecision": {
+        "revision": "cfc97be096908c1193877d054bb80662120f1eca"
+      }
     },
     {
       "id": "FLW-004",
@@ -24976,7 +25803,9 @@
       "openFindingIds": [],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L302",
       "completionRecord": "AP09-reader-workflows-20261020",
-      "closureDecision": {}
+      "closureDecision": {
+        "revision": "cfc97be096908c1193877d054bb80662120f1eca"
+      }
     },
     {
       "id": "FLW-005",
@@ -25017,7 +25846,9 @@
       "openFindingIds": [],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L303",
       "completionRecord": "AP09-first-project-example-20261020",
-      "closureDecision": {}
+      "closureDecision": {
+        "revision": "cfc97be096908c1193877d054bb80662120f1eca"
+      }
     },
     {
       "id": "FLW-006",
@@ -25062,7 +25893,7 @@
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L304",
       "closureDecision": {
         "verdict": "PASS",
-        "revision": "af1b987ee4d461fc6205a18553db3e21461ca203",
+        "revision": "cfc97be096908c1193877d054bb80662120f1eca",
         "completionRecord": "FLW006-local-core-same-run-audit-artifact-telemetry-20261021",
         "reason": "Whole successful local explicit-graph workflow connects real inputs and shipped stage execution, succeeded state, original artifact reference/digest/producer/bytes, authoritative stopped-writer audit and same-run actual observer delivery and durable telemetry. Separate blocked run, grant admission rejection, ownership/revision and digest controls make the boundaries reproducible."
       },
@@ -25077,7 +25908,7 @@
       "pageOwner": null,
       "readerTask": "Stage-Fehler, Retry und Repair",
       "sourceDependencies": [],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "independent-scoped-topic-review-PASS; see completionRecord",
       "contentKind": "not-in-current-map",
       "generator": null,
       "automatedChecks": [],
@@ -25104,17 +25935,18 @@
         "quality",
         "astra-final"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L305",
       "closureDecision": {
-        "verdict": "FAIL",
-        "revision": "13d6f0a8326d5672f97cb42c0fc91f28da008e0d",
-        "reason": "- FLW-007 — Stage-Fehler, Retry und Repair — FAIL. Canonical target: docs/site/use/workflows/README.md. FAIL, F4. Retry versus repair concepts and budgets are explained, but no maintained operator exercise provides a deliberately failing stage, concrete input, budget/repair-edge observations, recheck and terminal outcome.",
-        "campaign": "independent-ready-topics-20261020"
-      }
+        "verdict": "PASS",
+        "revision": "cfc97be096908c1193877d054bb80662120f1eca",
+        "completionRecord": "FLW007-supported-failure-task-20261021",
+        "reason": "Whole supported retry/repair task now has actual trusted TEST fixture input, deliberate failures, separate technical retry and per-category repair histories, mandatory rechecks, one authorized extra assignment, original-state capture, strict replay, success and bounded exhaustion, and owned cleanup."
+      },
+      "completionRecord": "FLW007-supported-failure-task-20261021"
     },
     {
       "id": "FLW-008",
@@ -25155,7 +25987,9 @@
       "openFindingIds": [],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L306",
       "completionRecord": "AP09-reader-workflows-20261020",
-      "closureDecision": {}
+      "closureDecision": {
+        "revision": "cfc97be096908c1193877d054bb80662120f1eca"
+      }
     },
     {
       "id": "FLW-009",
@@ -25166,7 +26000,7 @@
       "pageOwner": null,
       "readerTask": "Unterbrechung und Recovery",
       "sourceDependencies": [],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "independent-scoped-topic-review-PASS; see completionRecord",
       "contentKind": "not-in-current-map",
       "generator": null,
       "automatedChecks": [],
@@ -25193,17 +26027,18 @@
         "quality",
         "astra-final"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L307",
       "closureDecision": {
-        "verdict": "FAIL",
-        "revision": "13d6f0a8326d5672f97cb42c0fc91f28da008e0d",
-        "reason": "- FLW-009 — Unterbrechung und Recovery — FAIL. Canonical target: docs/site/use/workflows/README.md. FAIL, F5. Generic recovery commands and rigorous state-preservation rules exist; a concrete controlled interruption example with executable starting input, accepted in-flight attempt, process-stop boundary, retained identity and final observed audit is absent.",
-        "campaign": "independent-ready-topics-20261020"
-      }
+        "verdict": "PASS",
+        "revision": "cfc97be096908c1193877d054bb80662120f1eca",
+        "completionRecord": "FLW009-supported-failure-task-20261021",
+        "reason": "Whole supported interruption task gives actual maintained checkpoint child interruption and original-artifact recovery, exact run/platform/graph identity, audit and cleanup; external-effect interruption cases lead to explicit uncertainty/continuation/terminal stops with original evidence retained."
+      },
+      "completionRecord": "FLW009-supported-failure-task-20261021"
     },
     {
       "id": "FLW-010",
@@ -25248,7 +26083,7 @@
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L308",
       "closureDecision": {
         "verdict": "PASS",
-        "revision": "af1b987ee4d461fc6205a18553db3e21461ca203",
+        "revision": "cfc97be096908c1193877d054bb80662120f1eca",
         "completionRecord": "FLW010-uncertain-effect-supported-boundary-20261021",
         "reason": "Whole supported unclear-effect task is documented:stopped-writer raw preservation before audit;request/key/resource/receipt inspection;authorized owner read against original identity;unknown outcome is not nonexecution;Core recovery guards require explicit continuation and no general supported clearing/import CLI exists. Current guide names safe stop,original state retention,owning external authority and follow-up instead of inventing an operation."
       },
@@ -25289,7 +26124,9 @@
       "openFindingIds": [],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L309",
       "completionRecord": "Reviewed-corrections-20261020",
-      "closureDecision": {}
+      "closureDecision": {
+        "revision": "cfc97be096908c1193877d054bb80662120f1eca"
+      }
     },
     {
       "id": "FLW-012",
@@ -25300,7 +26137,7 @@
       "pageOwner": null,
       "readerTask": "BuildKit, Registry und Image",
       "sourceDependencies": [],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "independent-scoped-topic-review-PASS; see completionRecord",
       "contentKind": "not-in-current-map",
       "generator": null,
       "automatedChecks": [],
@@ -25327,17 +26164,18 @@
         "quality",
         "astra-final"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L310",
       "closureDecision": {
-        "verdict": "NOT_READY",
-        "revision": "13d6f0a8326d5672f97cb42c0fc91f28da008e0d",
-        "reason": "- FLW-012 — BuildKit, Registry und Image — NOT_READY. Canonical target: docs/site/use/workflows/README.md. NOT_READY. Build/registry architecture and bounded registered fault preflight route exist in diagnose.md; full client-generation, original-build custody, digest verification, uncached consuming node, failure and cleanup source path was not fully independently reviewed. No FAIL merely for absent live BuildKit execution.",
-        "campaign": "independent-ready-topics-20261020"
-      }
+        "verdict": "PASS",
+        "revision": "cfc97be096908c1193877d054bb80662120f1eca",
+        "completionRecord": "FLW012-supported-failure-task-20261021",
+        "reason": "Whole supported image task follows one client contract through original BuildKit request, attempt tag, exact raw manifest/digest and Nova import, consuming node/platform/imageID/application authority, failed-request reconciliation boundary and owner-bound cleanup. Missing node installation/cold-pull/application commands have named required inputs and safe stops."
+      },
+      "completionRecord": "FLW012-supported-failure-task-20261021"
     },
     {
       "id": "FLW-013",
@@ -25348,7 +26186,7 @@
       "pageOwner": null,
       "readerTask": "Tailscale-Exposure und Cleanup",
       "sourceDependencies": [],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "independent-scoped-topic-review-PASS; see completionRecord",
       "contentKind": "not-in-current-map",
       "generator": null,
       "automatedChecks": [],
@@ -25375,17 +26213,18 @@
         "quality",
         "astra-final"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L311",
       "closureDecision": {
-        "verdict": "NOT_READY",
-        "revision": "13d6f0a8326d5672f97cb42c0fc91f28da008e0d",
-        "reason": "- FLW-013 — Tailscale-Exposure und Cleanup — NOT_READY. Canonical target: docs/site/use/workflows/README.md. NOT_READY. Kubernetes fixture guide and Tailscale diagnosis/preflight provide substantive lease/access/cleanup boundaries. Complete actual provider/runtime/controller/route source chain, generation checks and negative-access procedure were not independently reviewed. No FAIL merely for absent Tailnet execution.",
-        "campaign": "independent-ready-topics-20261020"
-      }
+        "verdict": "PASS",
+        "revision": "cfc97be096908c1193877d054bb80662120f1eca",
+        "completionRecord": "FLW013-supported-failure-task-20261021",
+        "reason": "Whole supported exposure task separates platform routes, ephemeral release and retained readiness handoff; binds actual typed deployment/owner/request/generation/expiry, permitted and unpermitted client/policy proof, UID/image/manifest handoff and successor-safe release/cleanup with named external controls and stops."
+      },
+      "completionRecord": "FLW013-supported-failure-task-20261021"
     },
     {
       "id": "FLW-014",
@@ -25430,7 +26269,7 @@
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L312",
       "closureDecision": {
         "verdict": "PASS",
-        "revision": "af1b987ee4d461fc6205a18553db3e21461ca203",
+        "revision": "cfc97be096908c1193877d054bb80662120f1eca",
         "completionRecord": "FLW014-plugin-operator-supported-lifecycle-20261021",
         "reason": "Whole supported operator plugin task now follows exact roots/trust/package identities,provider/grant/config selection,compile admission versus readiness and actual result,stopped-writer preservation before audit,drain,exclusive same-ID replacement roots,old pinned bytes/state and surface-specific removal limits. Reuses independently accepted OPL002/003/004;fresh existing maintained activation/removal path supports concrete local behavior without claiming general install/remove CLI."
       },
@@ -25445,7 +26284,7 @@
       "pageOwner": null,
       "readerTask": "Redis-Ausfall und Wiederanlauf",
       "sourceDependencies": [],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "independent-scoped-topic-review-PASS; see completionRecord",
       "contentKind": "not-in-current-map",
       "generator": null,
       "automatedChecks": [],
@@ -25472,17 +26311,18 @@
         "quality",
         "astra-final"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L313",
       "closureDecision": {
-        "verdict": "FAIL",
-        "revision": "13d6f0a8326d5672f97cb42c0fc91f28da008e0d",
-        "reason": "- FLW-015 — Redis-Ausfall und Wiederanlauf — FAIL. Canonical target: docs/site/use/workflows/README.md. FAIL, F6. Existing Redis diagnosis keeps a previously stopped run unchanged and writes/reads a new health-stream entry. It does not provide the claimed workflow task’s stable event/delivery replay and deduplication verification; the linked contract trace remains conceptual.",
-        "campaign": "independent-ready-topics-20261020"
-      }
+        "verdict": "PASS",
+        "revision": "cfc97be096908c1193877d054bb80662120f1eca",
+        "completionRecord": "FLW015-supported-failure-task-20261021",
+        "reason": "Whole supported Redis task distinguishes native stream dedup and TTL/trim limits, same-effect receipt replay versus second physical test-journal send, original observer delivery retry/order, required drain failure versus best_effort, stopped-writer custody, exact missing live proof and named owner/safe-stop/cleanup."
+      },
+      "completionRecord": "FLW015-supported-failure-task-20261021"
     },
     {
       "id": "FLW-016",
@@ -25493,7 +26333,7 @@
       "pageOwner": null,
       "readerTask": "Worker-Abbruch und Result Recovery",
       "sourceDependencies": [],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "independent-scoped-topic-review-PASS; see completionRecord",
       "contentKind": "not-in-current-map",
       "generator": null,
       "automatedChecks": [],
@@ -25520,17 +26360,18 @@
         "quality",
         "astra-final"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L314",
       "closureDecision": {
-        "verdict": "FAIL",
-        "revision": "13d6f0a8326d5672f97cb42c0fc91f28da008e0d",
-        "reason": "- FLW-016 — Worker-Abbruch und Result Recovery — FAIL. Canonical target: docs/site/use/workflows/README.md. FAIL, F7. Worker architecture, store explanations and native test sources exist, but no central executable operator exercise binds an accepted attempt to intentional process interruption, ownership/journal/spool inspection and sealed-result recovery or explicit recovery stop.",
-        "campaign": "independent-ready-topics-20261020"
-      }
+        "verdict": "PASS",
+        "revision": "cfc97be096908c1193877d054bb80662120f1eca",
+        "completionRecord": "FLW016-supported-failure-task-20261021",
+        "reason": "Whole supported accepted-Worker interruption task connects original envelope/host/ownership/journal/spool/process counters/sealed-result authority, ownership exception map, same-original reconstruction, fencing and nonreconstructable safe stops. Exact delegated-host prerequisites and owned cleanup retained."
+      },
+      "completionRecord": "FLW016-supported-failure-task-20261021"
     },
     {
       "id": "FLW-017",
@@ -25575,7 +26416,7 @@
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L315",
       "closureDecision": {
         "verdict": "PASS",
-        "revision": "af1b987ee4d461fc6205a18553db3e21461ca203",
+        "revision": "cfc97be096908c1193877d054bb80662120f1eca",
         "completionRecord": "FLW017-demo-supported-contract-and-live-gap-20261021",
         "reason": "Whole available demo journey separates actual compiler/local TLS/handoff contract rehearsal from technical readiness and external human acceptance. Exact identities and receipts,lost-response/rejection handling,expiry/provider ownership,cancellation/wait limits,retained result and cleanup are explained. Live integration has no complete supported project/platform/decision pair and names release/project/platform/exposure/controller/acceptance owners plus missing proofs and safe stop. Historical unavailable test prerequisites are disclosed,not converted to success."
       },
@@ -26945,7 +27786,9 @@
       "openFindingIds": [],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L334",
       "completionRecord": "Reviewed-corrections-20261020",
-      "closureDecision": {}
+      "closureDecision": {
+        "revision": "cfc97be096908c1193877d054bb80662120f1eca"
+      }
     },
     {
       "id": "EXT-006",
@@ -26985,7 +27828,9 @@
       "openFindingIds": [],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L335",
       "completionRecord": "Reviewed-corrections-20261020",
-      "closureDecision": {}
+      "closureDecision": {
+        "revision": "cfc97be096908c1193877d054bb80662120f1eca"
+      }
     },
     {
       "id": "EXT-007",
@@ -27276,7 +28121,9 @@
         "reason": "- CDV-003 — Effects und Recoverysemantik ändern: **NOT_READY**, SA P / RU P / Q P; N. Source route is accurate; named external-effect CLI interruption fixture fails all three cases before mutation on runtime-dispatch OpenClaw import audit. Four other dependency/effect identity fixtures pass but do not replace this exact changed-boundary check.",
         "campaign": "independent-ready-topics-20261020"
       },
-      "closureDecision": {}
+      "closureDecision": {
+        "revision": "cfc97be096908c1193877d054bb80662120f1eca"
+      }
     },
     {
       "id": "CDV-004",
@@ -27469,7 +28316,9 @@
         "reason": "- CDV-007 — Capability oder Telemetrieevent einführen: **FAIL**, SA P / RU F / Q P; K; DEV-R4. No full new-capability activation/retirement task. Existing event/source-retention guidance is useful and not invalidated wholesale.",
         "campaign": "independent-ready-topics-20261020"
       },
-      "closureDecision": {}
+      "closureDecision": {
+        "revision": "cfc97be096908c1193877d054bb80662120f1eca"
+      }
     },
     {
       "id": "CDV-008",
@@ -27592,7 +28441,9 @@
         "reason": "- CDV-010 — Forge-, Echo-, Service- oder API-Integration ändern: **FAIL**, SA P / RU F / Q P; J; DEV-R5. Generic integration admission and unknown-effect stop are accurate, not a complete supported Forge/Echo change guide.",
         "campaign": "independent-ready-topics-20261020"
       },
-      "closureDecision": {}
+      "closureDecision": {
+        "revision": "cfc97be096908c1193877d054bb80662120f1eca"
+      }
     },
     {
       "id": "CDV-011",
@@ -27685,7 +28536,9 @@
         "reason": "- CDV-012 — Helm, GitOps oder Infrastruktur ändern: **NOT_READY**, SA P / RU P / Q P; C. Render/receiver/branch/default/rollout-data distinctions correct. Selected deployment-release fixture has 2 failed cases on missing Prism control image digest; narrower source-binding tests pass. This prevents closing the whole contributor check path, not a claim that every chart sentence is wrong.",
         "campaign": "independent-ready-topics-20261020"
       },
-      "closureDecision": {}
+      "closureDecision": {
+        "revision": "cfc97be096908c1193877d054bb80662120f1eca"
+      }
     },
     {
       "id": "CDV-013",
@@ -28779,7 +29632,9 @@
       "openFindingIds": [],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L380",
       "completionRecord": "AP09.1-ready-topics-20261020",
-      "closureDecision": {}
+      "closureDecision": {
+        "revision": "cfc97be096908c1193877d054bb80662120f1eca"
+      }
     },
     {
       "id": "DEC-002",
@@ -28821,7 +29676,9 @@
         "reason": "All historical decision rationales/alternatives/supersession not semantically compared.",
         "campaign": "independent-ready-topics-20261020"
       },
-      "closureDecision": {}
+      "closureDecision": {
+        "revision": "cfc97be096908c1193877d054bb80662120f1eca"
+      }
     },
     {
       "id": "STA-001",
@@ -28856,7 +29713,9 @@
       "openFindingIds": [],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L382",
       "completionRecord": "AP09.1-ready-topics-20261020",
-      "closureDecision": {}
+      "closureDecision": {
+        "revision": "cfc97be096908c1193877d054bb80662120f1eca"
+      }
     },
     {
       "id": "STA-002",
@@ -28891,7 +29750,9 @@
       "openFindingIds": [],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L383",
       "completionRecord": "AP09.1-ready-topics-20261020",
-      "closureDecision": {}
+      "closureDecision": {
+        "revision": "cfc97be096908c1193877d054bb80662120f1eca"
+      }
     },
     {
       "id": "PUB-001",
@@ -28931,7 +29792,9 @@
       "openFindingIds": [],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L384",
       "completionRecord": "AP09-reviewed-publication-navigation-20261020",
-      "closureDecision": {}
+      "closureDecision": {
+        "revision": "cfc97be096908c1193877d054bb80662120f1eca"
+      }
     },
     {
       "id": "PUB-002",
@@ -28975,7 +29838,7 @@
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L385",
       "closureDecision": {
         "verdict": "PASS",
-        "revision": "af1b987ee4d461fc6205a18553db3e21461ca203",
+        "revision": "cfc97be096908c1193877d054bb80662120f1eca",
         "reason": "Independent whole PUB-002 static-reader Source/reader-quality review plus actual167page HTML/search artifact and retained browser/output observations. A912-04 ranking/synonym gate remains open.",
         "completionRecord": "AP09-complete-static-reader-search-20261021"
       },
@@ -29040,7 +29903,9 @@
         "currentScopeNote": "Historical integrated review; later scoped fixes and first-project example are separately accepted. Remaining whole requirement needs affected re-review, not automatic promotion.",
         "campaign": "independent-ready-topics-20261020"
       },
-      "closureDecision": {}
+      "closureDecision": {
+        "revision": "cfc97be096908c1193877d054bb80662120f1eca"
+      }
     },
     {
       "id": "PUB-004",
@@ -29084,7 +29949,7 @@
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L387",
       "closureDecision": {
         "verdict": "PASS",
-        "revision": "af1b987ee4d461fc6205a18553db3e21461ca203",
+        "revision": "cfc97be096908c1193877d054bb80662120f1eca",
         "reason": "Whole PUB004: general same-source component automatically pairs immutable source links with exact same-revision inert code inside original evidence boxes.1660excerpts/390boxes/874objects across53pages;fresh-source and actualbrowser/text/native-disclosure proof.",
         "completionRecord": "AP09-complete-same-source-code-preview-20261021"
       },
@@ -29200,7 +30065,7 @@
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L389",
       "closureDecision": {
         "verdict": "PASS",
-        "revision": "af1b987ee4d461fc6205a18553db3e21461ca203",
+        "revision": "cfc97be096908c1193877d054bb80662120f1eca",
         "reason": "Whole PUB-006/A912-10: actual local-file reader keeps critical content/instructions, navigation, native disclosures and explicit search fallback usable without JavaScript, external network, hover or normal color palette. Optional local search works offline. Architecture interaction remains optional, not invented for acceptance.",
         "completionRecord": "AP09-complete-static-offline-fallback-20261021"
       },
@@ -29363,7 +30228,9 @@
         "currentScopeNote": "Historical integrated review; later scoped fixes and first-project example are separately accepted. Remaining whole requirement needs affected re-review, not automatic promotion.",
         "campaign": "independent-ready-topics-20261020"
       },
-      "closureDecision": {}
+      "closureDecision": {
+        "revision": "cfc97be096908c1193877d054bb80662120f1eca"
+      }
     },
     {
       "id": "MNT-001",
@@ -30187,7 +31054,9 @@
         "reason": "- MNT-017 — Pflegeanleitung für Dokumentationsagenten — NOT_READY. Canonical: docs/site/extend/documentation-maintenance.md. NOT_READY: central maintenance/agent workflow now exists and clearly describes discovery, change impact, owned generation, independent reader review, rename/removal and stops. Detailed current qualification/receiver/tool-repair recipes and the whole fresh-context maintainer task were not independently verified; no source repair or qualification chain was authorized/run.",
         "campaign": "independent-ready-topics-20261020"
       },
-      "closureDecision": {}
+      "closureDecision": {
+        "revision": "cfc97be096908c1193877d054bb80662120f1eca"
+      }
     },
     {
       "id": "QUA-001",
@@ -31157,7 +32026,9 @@
         "currentScopeNote": "Historical integrated review; later scoped fixes and first-project example are separately accepted. Remaining whole requirement needs affected re-review, not automatic promotion.",
         "campaign": "independent-ready-topics-20261020"
       },
-      "closureDecision": {}
+      "closureDecision": {
+        "revision": "cfc97be096908c1193877d054bb80662120f1eca"
+      }
     },
     {
       "id": "QUA-009",
@@ -31291,7 +32162,9 @@
         "currentScopeNote": "Historical integrated review; later scoped fixes and first-project example are separately accepted. Remaining whole requirement needs affected re-review, not automatic promotion.",
         "campaign": "independent-ready-topics-20261020"
       },
-      "closureDecision": {}
+      "closureDecision": {
+        "revision": "cfc97be096908c1193877d054bb80662120f1eca"
+      }
     },
     {
       "id": "QUA-010",
@@ -32041,7 +32914,7 @@
       "executionScenarioIds": [],
       "closureDecision": {
         "verdict": "PASS",
-        "revision": "af1b987ee4d461fc6205a18553db3e21461ca203",
+        "revision": "cfc97be096908c1193877d054bb80662120f1eca",
         "reason": "Closes complete compiler/admission, import audit, capability provider resolution and symptom-first safe diagnosis after independent current-source review.",
         "campaign": "independent-compact-closeout-20261021"
       },
@@ -32949,7 +33822,7 @@
       ],
       "closureDecision": {
         "verdict": "PASS",
-        "revision": "af1b987ee4d461fc6205a18553db3e21461ca203",
+        "revision": "cfc97be096908c1193877d054bb80662120f1eca",
         "completionRecord": "A99-07-representative-buster-workflow-content-20261021",
         "reason": "Whole representative workflow documentation connects a complete real suite/checked-manifest/Kubernetes-fixture/HTTP-matrix/JUnit declaration and actual installed registry resolution to source-attested dispatch, real provider/report execution path, exact result verification and digest-bound evidence import. The complete template explicitly identifies image/catalog-command substitutions and deployment prerequisites; production commands identify owning checkout, same project/plan/run, raw-preservation-before-audit, result interpretation, failed boundaries and recovery/cleanup. Separate native vertical proof command has exact expected remote/direct-command/JUnit/LCOV result and explicit scope; neither resolver green nor HTTP acceptance becomes a quality verdict."
       },
@@ -32959,7 +33832,7 @@
       "id": "A99-08",
       "passCondition": "Fehlerjourneys decken mindestens Redis-Ausfall, Registry/Image-Fehler, Tailscale-Fehler, Worker-Abbruch, unklaren externen Effect und Demo-Delivery-Ablehnung ab.",
       "automaticFailure": "Ein Fehlerweg endet ohne Zustandsbewertung, Retryentscheidung oder Cleanup.",
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [],
       "readerFixtureIds": [
@@ -32976,11 +33849,12 @@
         "EXEC-FAIL-DEMO-REJECTION"
       ],
       "closureDecision": {
-        "verdict": "FAIL",
-        "revision": "13d6f0a8326d5672f97cb42c0fc91f28da008e0d",
-        "reason": "Independent workflows review: material supported-task or authority gap; see topic closure decisions.",
-        "campaign": "independent-ready-topics-20261020"
-      }
+        "verdict": "PASS",
+        "revision": "cfc97be096908c1193877d054bb80662120f1eca",
+        "completionRecord": "A99-08-complete-supported-failure-journey-union-20261021",
+        "reason": "Whole documentation gate covers all six required failure families through independently reviewed coherent procedures: Redis, registry/image, Tailnet, Worker abort, uncertain external effect and demo rejection. Current index routes each named task; actual new recovery helper and bounded native fixtures support their stated claims. Unavailable live controls have explicit original-identity retention, owning authority, follow-up inputs, stop and cleanup boundaries, as required by compact contract1–4."
+      },
+      "completionRecord": "A99-08-complete-supported-failure-journey-union-20261021"
     },
     {
       "id": "A99-09",
@@ -34086,7 +34960,9 @@
       "readerFixtureIds": [],
       "executionScenarioIds": [],
       "completionRecord": "AP09-reviewed-publication-navigation-20261020",
-      "closureDecision": {}
+      "closureDecision": {
+        "revision": "cfc97be096908c1193877d054bb80662120f1eca"
+      }
     },
     {
       "id": "A912-03",
@@ -34116,7 +34992,7 @@
       "completionRecord": "AP09-search-reader-gate-20261021",
       "closureDecision": {
         "verdict": "PASS",
-        "revision": "af1b987ee4d461fc6205a18553db3e21461ca203",
+        "revision": "cfc97be096908c1193877d054bb80662120f1eca",
         "reason": "Whole A912-04: canonical search index includes all167pages, headings and technical IDs, finite reader synonyms and weighted upper results. Twelve defined reader questions find expected route among top3 in actual browser at320/768/1440; exact positive-manifest equality excludes internal artifacts.",
         "completionRecord": "AP09-search-reader-gate-20261021"
       }
@@ -34214,7 +35090,7 @@
       "executionScenarioIds": [],
       "closureDecision": {
         "verdict": "PASS",
-        "revision": "af1b987ee4d461fc6205a18553db3e21461ca203",
+        "revision": "cfc97be096908c1193877d054bb80662120f1eca",
         "reason": "Whole A912-09: repository references and actual hash-verified built HTML links, anchors, assets and routes checked, plus full Source commit/type/actual-byte/line-or-Markdown-anchor validation.167 canonical pages,176HTML,179digests,36698localtargets,14401Source locators/3723objects including118primary upstream files across11repositories.",
         "completionRecord": "AP09-rendered-source-bounds-gate-20261021"
       },
@@ -34241,7 +35117,7 @@
       "completionRecord": "AP09-complete-static-offline-fallback-20261021",
       "closureDecision": {
         "verdict": "PASS",
-        "revision": "af1b987ee4d461fc6205a18553db3e21461ca203",
+        "revision": "cfc97be096908c1193877d054bb80662120f1eca",
         "reason": "Whole PUB-006/A912-10: actual local-file reader keeps critical content/instructions, navigation, native disclosures and explicit search fallback usable without JavaScript, external network, hover or normal color palette. Optional local search works offline. Architecture interaction remains optional, not invented for acceptance.",
         "completionRecord": "AP09-complete-static-offline-fallback-20261021"
       }
