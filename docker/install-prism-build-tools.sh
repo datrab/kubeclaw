@@ -13,6 +13,6 @@ printf '%s\n' \
   'Signed-By: /usr/share/keyrings/debian-archive-keyring.gpg' \
   > /etc/apt/sources.list.d/debian.sources
 printf 'Acquire::Check-Valid-Until "false";\n' > /etc/apt/apt.conf.d/99snapshot
-apt-get update
-apt-get install -y --no-install-recommends gcc libc6-dev
+apt-get -o Acquire::Retries=5 -o APT::Update::Error-Mode=any update
+apt-get -o Acquire::Retries=5 install -y --no-install-recommends gcc libc6-dev
 rm -rf /var/lib/apt/lists/*
