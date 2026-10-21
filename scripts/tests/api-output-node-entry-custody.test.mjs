@@ -39,6 +39,8 @@ test('import-time effects, generated crash/historical child bytes, fixture root 
   ['scripts/tests/docs-parity-status.test.mjs','process.exit(86)','process.exit(0)'],
   ['scripts/tests/docs-parity-transition.test.mjs','fixture parity: PASS','fixture parity: NOT PASS'],
   ['scripts/tests/docs-parity-extract.test.mjs',"os.tmpdir()","process.cwd()"],
+  ['scripts/tests/docs-tree-boundary.test.mjs','assert(record.executableConsumers.includes(consumer)','assert(!record.executableConsumers.includes(consumer)'],
+  ['scripts/docs-tree-boundary.mjs',"'61cda6e05a7e12b28a8d16adb0a3de5b439418645a738b3e0a284522df68ef74'","'"+'0'.repeat(64)+"'"],
   ['scripts/docs-parity-batches.mjs',null,"\nprocess.stdout.write(process.env.EXTERNAL_BODY);\n"],
   ['scripts/tests/docs-publication-links.test.mjs',null,"\nexport function publish(){console.log(JSON.stringify({apiVersion:'v1',kind:'Secret'}));}\n"]
  ])harnessFixture(({root,write})=>{

@@ -9548,8 +9548,8 @@ export const reviewedRootNodeEntryRecipes = {
       "exports": []
     },
     "scripts/tests/docs-tree-boundary.test.mjs": {
-      "purpose": "Tree-boundary temporary Git/classification/reader-input mutation consumer",
-      "terminalPurpose": "12–80 explicit fixture run/write/copy/Git/tree generation; 82–529 fixture atomic write failures, aliases/composed reader paths, transitive carriers, untracked/symlink/classification/deletion mutations.",
+      "purpose": "Tree-boundary temporary Git/classification/reader-input and standalone-checker preserved-edge mutation consumer",
+      "terminalPurpose": "Fixture run/write/copy/Git/tree generation; atomic-write failures, aliases/composed paths, transitive carriers, untracked/symlink/classification/deletion mutations. Ten fixed checker/page pairs copy inspected checker bytes as fixture inputs (never execute them), assert canonical read edges survive, then append a product read and require rejection.",
       "limits": "Strings naming docs/site or docs/_legacy-source here deliberately describe fixture source snippets, not maintained runtime readers. Copied tree CLI root is script-location bound; its imported transition child replay is separately scoped. Imported atomicWriteTreeOutput accepts explicit root and must not get generic file immunity.",
       "callers": [
         {
@@ -9737,6 +9737,10 @@ export const reviewedRootNodeEntryRecipes = {
         {
           "kind": "ExpressionStatement",
           "syntaxSha256": "4f0d3bd82ddb27f3e47aeadc4a54d9c0c02536a8557b72222c4f5d5de2a69b57"
+        },
+        {
+          "kind": "ForOfStatement",
+          "syntaxSha256": "f72b3d6f1b7dd41cc4956f407c5a5b1d3a59240f29464d529bb92dcb082a365b"
         },
         {
           "kind": "ExpressionStatement",
@@ -14495,7 +14499,7 @@ export const reviewedRootNodeEntryRecipes = {
     {
       "source": "scripts/docs-tree-boundary.mjs",
       "kind": "selected-operative-definition",
-      "purpose": "Completed full source-body reading in same independent Source role; public generic producers are retained, never given test-only file exemptions.",
+      "purpose": "Complete independently inspected tree/transition closure. Exact standalone-validator bindings preserve canonical input read edges only; changed checker bytes revoke the exception. CLI root, atomic output, baseline/classification, transitive legacy consumers and generic product producers retain their original fences.",
       "units": [
         {
           "symbol": "ImportDeclaration",
@@ -14596,206 +14600,213 @@ export const reviewedRootNodeEntryRecipes = {
           "syntaxSha256": "b6a965a78e48d6ee3a970f7ea790c0a4bb44d3b105cb90bb5f55f3a5551745ab"
         },
         {
+          "symbol": "reviewedStandaloneDocumentationTools",
+          "kind": "FirstStatement",
+          "startLine": 31,
+          "endLine": 42,
+          "syntaxSha256": "779f28f89ed2b8f8ccce272a1e450e0f8fcec09a96409f99d5ab9173df75b64d"
+        },
+        {
           "symbol": "parseTreeArguments",
           "kind": "FunctionDeclaration",
-          "startLine": 29,
-          "endLine": 43,
+          "startLine": 44,
+          "endLine": 58,
           "syntaxSha256": "af4e249bedbabae469906812f6724787cdaa44de44ae3e997ebe29f6e3dd5368"
         },
         {
           "symbol": "lstatIfPresent",
           "kind": "FunctionDeclaration",
-          "startLine": 45,
-          "endLine": 48,
+          "startLine": 60,
+          "endLine": 63,
           "syntaxSha256": "1404071a5bede47df22181010fff5d3200f9c70d301ecb8b7e6f0e6b1d6dbf61"
         },
         {
           "symbol": "safeTreePath",
           "kind": "FunctionDeclaration",
-          "startLine": 50,
-          "endLine": 79,
+          "startLine": 65,
+          "endLine": 94,
           "syntaxSha256": "588c8131dda6f2570c57f92086b10664f82442ac2ae85b6b08130afcf2066e4a"
         },
         {
           "symbol": "atomicWriteTreeOutput",
           "kind": "FunctionDeclaration",
-          "startLine": 81,
-          "endLine": 99,
+          "startLine": 96,
+          "endLine": 114,
           "syntaxSha256": "dbfbd9ef83ff4c8c4b3cd9eb3e2706112c171570680366bd4b0b3f0d2ad8c227"
         },
         {
           "symbol": "git",
           "kind": "FunctionDeclaration",
-          "startLine": 101,
-          "endLine": 103,
+          "startLine": 116,
+          "endLine": 118,
           "syntaxSha256": "c6b46b311d69ebe8180f88e8796299fc861d0491925c04c5e6e1b3b143d02924"
         },
         {
           "symbol": "trackedAndUntrackedDocs",
           "kind": "FunctionDeclaration",
-          "startLine": 105,
-          "endLine": 144,
+          "startLine": 120,
+          "endLine": 159,
           "syntaxSha256": "ee4b036b5ca1c8970e8c4ec71fc894beba2b4d63ae9da2f0a8aa9b549df3525c"
         },
         {
           "symbol": "documentationKind",
           "kind": "FunctionDeclaration",
-          "startLine": 146,
-          "endLine": 153,
+          "startLine": 161,
+          "endLine": 168,
           "syntaxSha256": "943c42776a91c1f2c7f832f52448bcd6e65535956c6c691521b0398cb2065df4"
         },
         {
           "symbol": "captureBaseline",
           "kind": "FunctionDeclaration",
-          "startLine": 155,
-          "endLine": 172,
+          "startLine": 170,
+          "endLine": 187,
           "syntaxSha256": "704ca28bd77417d1f140825e7f277a89965d2a8e26bb016784b2ba9b2bff98c7"
         },
         {
           "symbol": "sourceConsumers",
           "kind": "FunctionDeclaration",
-          "startLine": 174,
-          "endLine": 470,
+          "startLine": 189,
+          "endLine": 485,
           "syntaxSha256": "d7f70019e5fdeb520474e693752a56e41c39b5cdb5e23a33867a47ebed31cc0c"
         },
         {
           "symbol": "executableConsumers",
           "kind": "FunctionDeclaration",
-          "startLine": 472,
-          "endLine": 491,
+          "startLine": 487,
+          "endLine": 506,
           "syntaxSha256": "4950fb8c7829f04aca31f825928e0646ffa27cc0127044364b9c7f39a841202d"
         },
         {
           "symbol": "canonicalDocumentationTooling",
           "kind": "FunctionDeclaration",
-          "startLine": 493,
-          "endLine": 502,
-          "syntaxSha256": "ac3fd7377f7565c98ee9ecc5690399ea6e90ba7ac870a177eefc7be8cae15927"
+          "startLine": 508,
+          "endLine": 522,
+          "syntaxSha256": "475501e86546149e8531d907384c54ddca153cb67825c2d65c218099a06c0916"
         },
         {
           "symbol": "canonicalExecutableConsumers",
           "kind": "FunctionDeclaration",
-          "startLine": 504,
-          "endLine": 507,
+          "startLine": 524,
+          "endLine": 527,
           "syntaxSha256": "40356d1f35ba3dcf429602a4039d186c2aa6bc5a75cd1728dc366bbd860e49b7"
         },
         {
           "symbol": "provenanceOnlyDocument",
           "kind": "FunctionDeclaration",
-          "startLine": 509,
-          "endLine": 522,
+          "startLine": 529,
+          "endLine": 542,
           "syntaxSha256": "9128d3ad9f9ff4ccb74929ee9acac69e5074d6f73e35b46188e43d013af5c322"
         },
         {
           "symbol": "structuredDependencyDocument",
           "kind": "FunctionDeclaration",
-          "startLine": 524,
-          "endLine": 527,
+          "startLine": 544,
+          "endLine": 547,
           "syntaxSha256": "71d45a8fae6bd524714fb3f134d1c0a7f08238101334cb58f977d3081bae9605"
         },
         {
           "symbol": "executableDocumentDependencies",
           "kind": "FunctionDeclaration",
-          "startLine": 529,
-          "endLine": 580,
+          "startLine": 549,
+          "endLine": 600,
           "syntaxSha256": "facbca849cacaed42c732f62bf09d021955e9ddc946bbee7fa3c239bce3b41cc"
         },
         {
           "symbol": "historicalReferenceConsumer",
           "kind": "FunctionDeclaration",
-          "startLine": 582,
-          "endLine": 598,
+          "startLine": 602,
+          "endLine": 618,
           "syntaxSha256": "2ceb0714983ab99b52daf7028de825bb560b3a39aa80eb2c8fa78ff7f3b702a5"
         },
         {
           "symbol": "internalRoot",
           "kind": "FunctionDeclaration",
-          "startLine": 600,
-          "endLine": 610,
+          "startLine": 620,
+          "endLine": 630,
           "syntaxSha256": "1e3d2fe8c0a1affa57354fd7aa82d7a2d00d517185adb12be5260bf21239991d"
         },
         {
           "symbol": "classify",
           "kind": "FunctionDeclaration",
-          "startLine": 612,
-          "endLine": 666,
+          "startLine": 632,
+          "endLine": 686,
           "syntaxSha256": "01ed2f0f4411c39f566cc96f7bfc0174c7ece1e1a42efe3b5f73167b11b7af69"
         },
         {
           "symbol": "parityRoot",
           "kind": "FunctionDeclaration",
-          "startLine": 668,
-          "endLine": 670,
+          "startLine": 688,
+          "endLine": 690,
           "syntaxSha256": "e9e24a0543efb0b1f980ec0497c74e130bfc6c6d626fbee42124ba1888080027"
         },
         {
           "symbol": "derivedTransitionClassification",
           "kind": "FunctionDeclaration",
-          "startLine": 672,
-          "endLine": 687,
+          "startLine": 692,
+          "endLine": 707,
           "syntaxSha256": "9af2050fdb5a894d846ceb4b15b817c484b754f50371d367e315846f9d2053b9"
         },
         {
           "symbol": "derivedParityClassification",
           "kind": "FunctionDeclaration",
-          "startLine": 689,
-          "endLine": 712,
+          "startLine": 709,
+          "endLine": 732,
           "syntaxSha256": "ccffe5b758efc4218c59f1316512cbd46a353aa156c4d153768d32bae9c79aef"
         },
         {
           "symbol": "sha256",
           "kind": "FunctionDeclaration",
-          "startLine": 714,
-          "endLine": 718,
+          "startLine": 734,
+          "endLine": 738,
           "syntaxSha256": "40b66f7467495466d705815e1fdf002a84a79a87f5bf01bcb4a4cc63178e6326"
         },
         {
           "symbol": "readJson",
           "kind": "FunctionDeclaration",
-          "startLine": 720,
-          "endLine": 722,
+          "startLine": 740,
+          "endLine": 742,
           "syntaxSha256": "e763beb03513990e92d565c9b994c66965d2775ecd210470261bdfe0443f6852"
         },
         {
           "symbol": "classificationRegistry",
           "kind": "FunctionDeclaration",
-          "startLine": 724,
-          "endLine": 745,
+          "startLine": 744,
+          "endLine": 765,
           "syntaxSha256": "34ec54f7aafd0c959b88804c36b7142a82b63046fba07814bd607193d0f0a469"
         },
         {
           "symbol": "baselineRegistry",
           "kind": "FunctionDeclaration",
-          "startLine": 747,
-          "endLine": 764,
+          "startLine": 767,
+          "endLine": 784,
           "syntaxSha256": "e81fc723413efcc100692ea639887f5b251687afa81563b3eb3f7bd5135c1773"
         },
         {
           "symbol": "writeInitialClassification",
           "kind": "FunctionDeclaration",
-          "startLine": 766,
-          "endLine": 789,
+          "startLine": 786,
+          "endLine": 809,
           "syntaxSha256": "6b8adf1faa728e28367422051bc29eb46e2b44c8b5fe05fb0abdae3231120430"
         },
         {
           "symbol": "build",
           "kind": "FunctionDeclaration",
-          "startLine": 791,
-          "endLine": 902,
-          "syntaxSha256": "d5337159ed2cefb9f0fcd2be683a09ed0f51ad5c3de44666f1730d3ab0dc71b1"
+          "startLine": 811,
+          "endLine": 925,
+          "syntaxSha256": "0812dc8fc9afbf8fec2473850e3f8d21ec7ed933ec8148a22a13823650eae3bf"
         },
         {
           "symbol": "main",
           "kind": "FunctionDeclaration",
-          "startLine": 904,
-          "endLine": 932,
+          "startLine": 927,
+          "endLine": 955,
           "syntaxSha256": "e2395e28a82124065dbd1ffb60f574494132bc9bd329ad0777edb58df9fc5d7b"
         },
         {
           "symbol": "IfStatement",
           "kind": "IfStatement",
-          "startLine": 934,
-          "endLine": 936,
+          "startLine": 957,
+          "endLine": 959,
           "syntaxSha256": "4e070add69344445011fb0ce9d6b82d2f4103ab129edb0f6f93e8e63120c7ad9"
         }
       ],
@@ -14803,37 +14814,37 @@ export const reviewedRootNodeEntryRecipes = {
         {
           "startLine": 1,
           "endLine": 150,
-          "sha256": "148b21f17de9520255d84e1bdd60923a302fb3170d3feeae0ed1d6e78f98351d"
+          "sha256": "510b560ad11786f50ee0a16a675f264f88d8bc862c9c32a72eff1f042598e580"
         },
         {
           "startLine": 151,
           "endLine": 300,
-          "sha256": "71b0b25e831bc121f376f363fea6d0014da9d808d9c6dfa471d4c6936068ada7"
+          "sha256": "0483b215cd4e01349bf9aa2c9d89784ced55078684c0648bbfe454ea42f71b20"
         },
         {
           "startLine": 301,
           "endLine": 450,
-          "sha256": "bbff6ad8586d4c741b592a6fae7fb24ad51a45a9ca14af12e660aa38c07617b4"
+          "sha256": "0eda2a7a1961a00d77e3bd101ca8f0f2ceaf2bb1cd9d021a12e6d1f190faf54a"
         },
         {
           "startLine": 451,
           "endLine": 600,
-          "sha256": "f625ddf1882b0cf0ef61d119698c7c3bea2d833219ddf1a6cb501fb5071ffac6"
+          "sha256": "17b3aa0539e7d4ba28e0deee23418d97c927d613ca6b89a28c941ce2364e1cc7"
         },
         {
           "startLine": 601,
           "endLine": 750,
-          "sha256": "7fbdae184855975fef286e18233f3490f15d94b14a2cf8912ef46a355f763d95"
+          "sha256": "6b01aad0a46edf448b2e45c51f85ae5689286163e404252910c76f64f9eddae5"
         },
         {
           "startLine": 751,
           "endLine": 900,
-          "sha256": "360fc374366bee828f01ffd3091637890e0d9940888b83711d7218f550f35070"
+          "sha256": "b96f6c32c366db5f2cff0e5f1409954df9a8aae5b7ed76e144b82a2dc350a0ad"
         },
         {
           "startLine": 901,
-          "endLine": 936,
-          "sha256": "000f823978093513389c63fe1f963f48a2862353d7a524a2df6cd05f99fe0c52"
+          "endLine": 959,
+          "sha256": "3149bbfbd0cad904604dfd2a61b064102324bd8864c345c800f03798d75c2c89"
         }
       ],
       "initialization": [
@@ -14892,6 +14903,10 @@ export const reviewedRootNodeEntryRecipes = {
         {
           "kind": "FirstStatement",
           "syntaxSha256": "b6a965a78e48d6ee3a970f7ea790c0a4bb44d3b105cb90bb5f55f3a5551745ab"
+        },
+        {
+          "kind": "FirstStatement",
+          "syntaxSha256": "779f28f89ed2b8f8ccce272a1e450e0f8fcec09a96409f99d5ab9173df75b64d"
         },
         {
           "kind": "IfStatement",
