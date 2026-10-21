@@ -1,0 +1,1802 @@
+{
+  "revision": "d0bb52c4d8bcf323c0ff32b95e8e3120ffa6eefb",
+  "reviewer": "/root/operator_acceptance",
+  "verdict": "PASS_53_ORIGINAL_SCOPE_PRESERVATION_AFTER_CORRECTION",
+  "readyPreservedCount": 53,
+  "pendingCount": 0,
+  "records": [
+    {
+      "id": "A911-03-REF-007-20261020",
+      "previousReviewedRevision": "c5d0062db699056ebc044c0a016a77ace6a1ede9",
+      "revision": "d0bb52c4d8bcf323c0ff32b95e8e3120ffa6eefb",
+      "changedDependencies": [
+        "docs/site/understand/security-and-trust.md"
+      ],
+      "gateIds": [
+        "A911-03"
+      ],
+      "requirementIds": [
+        "REF-007"
+      ],
+      "sourceAccuracy": "PASS_ORIGINAL_SCOPE_PRESERVED",
+      "readerUsability": "PASS_ORIGINAL_SCOPE_PRESERVED_WITH_CURRENT_APPLICABLE_READER_CHECKS",
+      "quality": "PASS_ORIGINAL_SCOPE_PRESERVED",
+      "basis": [
+        "handoffs/pr13-finish-20261021/platform-corrections-independent-review.md",
+        "handoffs/pr13-finish-20261021/source-pin-and-guide-independent-review.md (security source-pin intersection only; capability namespace/non-translation claims unchanged)",
+        "checkpoint-d0bb-53-record-preservation-addendum.md (exact three-topic delta, independent source/execution reports plus current affected Reader checks)"
+      ],
+      "originalSummary": "Independent read-only topic review PASS: separate Nova/Buster grants, plugin declarations, worker profile and resource capabilities, Kubernetes RBAC and Codex interface metadata; clear non-translation and safe denial decisions. Canonical page agrees with generator.",
+      "originalLimitsRetained": [
+        "Source/documentation acceptance for capability namespace topic only; no live or deployed-policy claim.",
+        "No A911-11 mutation-suite or whole-AP09 acceptance."
+      ],
+      "verdict": "PASS_PRESERVATION_ONLY",
+      "openIssues": []
+    },
+    {
+      "id": "AP09.1-ready-topics-20261020",
+      "previousReviewedRevision": "310b8dca1377e0ef3b5c307fc1f917af8a3c89de",
+      "revision": "d0bb52c4d8bcf323c0ff32b95e8e3120ffa6eefb",
+      "changedDependencies": [
+        "docs/site/reference/generated-documentation-map.json",
+        "scripts/docs-governance.mjs"
+      ],
+      "gateIds": [],
+      "requirementIds": [
+        "GOV-001",
+        "GOV-003",
+        "GOV-004",
+        "GOV-008",
+        "ENT-001",
+        "ENT-002",
+        "ENT-003",
+        "ENT-004",
+        "DEC-001",
+        "STA-001",
+        "STA-002"
+      ],
+      "sourceAccuracy": "PASS_ORIGINAL_SCOPE_PRESERVED",
+      "readerUsability": "PASS_ORIGINAL_SCOPE_PRESERVED_WITH_CURRENT_APPLICABLE_READER_CHECKS",
+      "quality": "PASS_ORIGINAL_SCOPE_PRESERVED",
+      "basis": [
+        "handoffs/pr13-finish-20261021/deepguide-integration-review.md (28 exact original scopes)",
+        "checkpoint-d0bb-53-record-preservation-addendum.md (exact three-topic delta, independent source/execution reports plus current affected Reader checks)"
+      ],
+      "originalSummary": "Independent PASS for entry/authority/completeness rules, product explanation/request, stable decision identity and public status/register consistency.",
+      "originalLimitsRetained": [
+        "Source and documentation acceptance only; no live deployment or global publication acceptance.",
+        "GOV-002 exhaustive inventory and DEC-002 full rationale review remain NOT_READY; GOV-006 metadata map stale.",
+        "Other-page/global refs/publication/boundary checks failed; not accepted by this scoped review."
+      ],
+      "verdict": "PASS_PRESERVATION_ONLY",
+      "openIssues": []
+    },
+    {
+      "id": "AP09.2-ready-topics-20261020",
+      "previousReviewedRevision": "c5d0062db699056ebc044c0a016a77ace6a1ede9",
+      "revision": "d0bb52c4d8bcf323c0ff32b95e8e3120ffa6eefb",
+      "changedDependencies": [
+        "docs/site/extend/README.md"
+      ],
+      "gateIds": [],
+      "requirementIds": [
+        "ARC-001",
+        "ARC-002",
+        "ARC-004",
+        "ARC-005",
+        "NVC-001",
+        "NVC-004",
+        "NVC-005",
+        "NVC-006",
+        "NVC-007",
+        "NVC-008",
+        "NVC-009",
+        "NVC-010",
+        "NVC-011",
+        "NVC-012",
+        "NVC-013",
+        "NVC-014",
+        "NVC-015",
+        "NVC-016",
+        "NVC-017",
+        "NVC-018",
+        "PLG-001",
+        "PLG-002",
+        "PLG-003",
+        "PLG-005",
+        "PLG-007",
+        "PLG-010",
+        "PLG-013",
+        "PLG-014"
+      ],
+      "sourceAccuracy": "PASS_ORIGINAL_SCOPE_PRESERVED",
+      "readerUsability": "PASS_ORIGINAL_SCOPE_PRESERVED_WITH_CURRENT_APPLICABLE_READER_CHECKS",
+      "quality": "PASS_ORIGINAL_SCOPE_PRESERVED",
+      "basis": [
+        "handoffs/pr13-finish-20261021/deepguide-integration-review.md (28 exact original scopes)",
+        "checkpoint-d0bb-53-record-preservation-addendum.md (exact three-topic delta, independent source/execution reports plus current affected Reader checks)"
+      ],
+      "originalSummary": "Independent PASS for named authority/architecture, execution/graph/state/repair/effects/wait/recovery/audit/result import and plugin contract/discovery/configuration/isolation/removal/extension scopes.",
+      "originalLimitsRetained": [
+        "Source and documentation acceptance only; no live deployment or global publication acceptance.",
+        "ARC-003/006 and PLG-004/012 have material content gaps and are not accepted.",
+        "NVC-002/003,PLG-006/008/009/011 remain NOT_READY; missing workspace dependency or stale capability-security fixture blocks their checks.",
+        "Kernel isolation remains environment-dependent; no whole-AP09.2 or gate acceptance."
+      ],
+      "verdict": "PASS_PRESERVATION_ONLY",
+      "openIssues": []
+    },
+    {
+      "id": "AP09.3-ready-worker-topics-20261020",
+      "previousReviewedRevision": "c5d0062db699056ebc044c0a016a77ace6a1ede9",
+      "revision": "d0bb52c4d8bcf323c0ff32b95e8e3120ffa6eefb",
+      "changedDependencies": [
+        "docs/site/understand/worker-core.md"
+      ],
+      "gateIds": [],
+      "requirementIds": [
+        "WKC-001",
+        "WKC-003",
+        "WKC-004",
+        "WKC-005",
+        "WKC-006",
+        "WKC-007",
+        "WKC-008",
+        "WKC-009",
+        "WKC-010",
+        "WKC-012",
+        "WKC-013"
+      ],
+      "sourceAccuracy": "PASS_ORIGINAL_SCOPE_PRESERVED",
+      "readerUsability": "PASS_ORIGINAL_SCOPE_PRESERVED_WITH_CURRENT_APPLICABLE_READER_CHECKS",
+      "quality": "PASS_ORIGINAL_SCOPE_PRESERVED",
+      "basis": [
+        "style-and-scope-preservation-independent.json (24 exact original scopes)",
+        "checkpoint-d0bb-53-record-preservation-addendum.md (exact three-topic delta, independent source/execution reports plus current affected Reader checks)"
+      ],
+      "originalSummary": "Independent PASS for neutral worker authority, readiness/claims/replay, trusted supervisor/launch/control/spool/resources/cancellation and ownership/cleanup/result-sealing descriptions.",
+      "originalLimitsRetained": [
+        "Documentation/source acceptance only; no live deployment or globally green publication/CI claim.",
+        "WKC-002/014 field-reference completeness and WKC-011 native recovery result classification remain FAIL.",
+        "Broad wrappers fail at unrelated missing Buster/browser dependencies; no whole-suite or live cgroup claim."
+      ],
+      "verdict": "PASS_PRESERVATION_ONLY",
+      "openIssues": []
+    },
+    {
+      "id": "AP09.7-ready-platform-topics-20261020",
+      "previousReviewedRevision": "c5d0062db699056ebc044c0a016a77ace6a1ede9",
+      "revision": "d0bb52c4d8bcf323c0ff32b95e8e3120ffa6eefb",
+      "changedDependencies": [
+        "docs/site/understand/echo.md",
+        "docs/site/understand/forge.md",
+        "docs/site/understand/openclaw.md",
+        "docs/site/understand/platform-and-operations.md",
+        "docs/site/understand/security-and-trust.md",
+        "scripts/check-platform-specialist-guides.mjs"
+      ],
+      "gateIds": [
+        "A97-02",
+        "A97-04"
+      ],
+      "requirementIds": [
+        "SPC-004",
+        "SPC-005",
+        "SPC-006",
+        "SPC-007",
+        "INF-001",
+        "INF-002",
+        "INF-003",
+        "INF-004",
+        "INF-005",
+        "INF-006",
+        "INF-007",
+        "INF-008",
+        "INF-009",
+        "INF-010",
+        "INF-011",
+        "SEC-001",
+        "SEC-002",
+        "SEC-003",
+        "SEC-004",
+        "SEC-005",
+        "SEC-006",
+        "SEC-007"
+      ],
+      "sourceAccuracy": "PASS_ORIGINAL_SCOPE_PRESERVED",
+      "readerUsability": "PASS_ORIGINAL_SCOPE_PRESERVED_WITH_CURRENT_APPLICABLE_READER_CHECKS",
+      "quality": "PASS_ORIGINAL_SCOPE_PRESERVED",
+      "basis": [
+        "style-and-scope-preservation-independent.json (24 exact original scopes)",
+        "checkpoint-d0bb-53-record-preservation-addendum.md (exact three-topic delta, independent source/execution reports plus current affected Reader checks)"
+      ],
+      "originalSummary": "Independent PASS for Forge/Echo/OpenClaw/Codex, infrastructure INF001..011 and seven security topics. Explicit whole-gate PASS for six named runtime dependencies and optional-layer/unsupported-fallback boundary.",
+      "originalLimitsRetained": [
+        "Documentation/source acceptance only; no live deployment or globally green publication/CI claim.",
+        "SPC-010 Archviewer alternative and INF-012 embedding-client release remain FAIL; SPC-009 HTTP/auth execution check dependency missing.",
+        "A97-08 complete discovered trust/Secret inventory reconciliation not established; broad specialist sourcepin check failed and not treated as passed."
+      ],
+      "verdict": "PASS_PRESERVATION_ONLY",
+      "openIssues": []
+    },
+    {
+      "id": "AP09.7-ready-data-topics-20261020",
+      "previousReviewedRevision": "c5d0062db699056ebc044c0a016a77ace6a1ede9",
+      "revision": "d0bb52c4d8bcf323c0ff32b95e8e3120ffa6eefb",
+      "changedDependencies": [
+        "docs/site/understand/communication.md",
+        "docs/site/understand/data-and-state.md",
+        "docs/site/understand/telemetry.md",
+        "scripts/check-platform-specialist-guides.mjs"
+      ],
+      "gateIds": [],
+      "requirementIds": [
+        "COM-002",
+        "COM-006",
+        "COM-007",
+        "DAT-002",
+        "DAT-003",
+        "DAT-007",
+        "TEL-001",
+        "TEL-004",
+        "TEL-005",
+        "TEL-006",
+        "TEL-007"
+      ],
+      "sourceAccuracy": "PASS_ORIGINAL_SCOPE_PRESERVED",
+      "readerUsability": "PASS_ORIGINAL_SCOPE_PRESERVED_WITH_CURRENT_APPLICABLE_READER_CHECKS",
+      "quality": "PASS_ORIGINAL_SCOPE_PRESERVED",
+      "basis": [
+        "style-and-scope-preservation-independent.json (24 exact original scopes)",
+        "checkpoint-d0bb-53-record-preservation-addendum.md (exact three-topic delta, independent source/execution reports plus current affected Reader checks)"
+      ],
+      "originalSummary": "Independent PASS for Nova-Buster dispatch/result import,Worker control channel,Redis streams,Core and Worker persistence,transport-vs-authority and five telemetry authority/identity/recovery/retention topics.",
+      "originalLimitsRetained": [
+        "Documentation/source acceptance only; no live deployment or globally green publication/CI claim.",
+        "TEL-002 event-specific payload catalogue and DAT-008 codec/exact-reference compatibility remain FAIL.",
+        "Other15 assigned scopes remain NOT_READY from incomplete independent full source coverage; A97-05/07 NOT_READY,A97-06 FAIL."
+      ],
+      "verdict": "PASS_PRESERVATION_ONLY",
+      "openIssues": []
+    },
+    {
+      "id": "Reviewed-corrections-20261020",
+      "previousReviewedRevision": "310b8dca1377e0ef3b5c307fc1f917af8a3c89de",
+      "revision": "d0bb52c4d8bcf323c0ff32b95e8e3120ffa6eefb",
+      "changedDependencies": [
+        "docs/site/extend/buster.md",
+        "docs/site/reference/generated-documentation-map.json",
+        "docs/site/reference/lint-policy.md",
+        "scripts/docs-governance.mjs"
+      ],
+      "gateIds": [],
+      "requirementIds": [
+        "SPC-001",
+        "CFG-006",
+        "FLW-011",
+        "EXT-005",
+        "EXT-006",
+        "CFG-016",
+        "GOV-006"
+      ],
+      "sourceAccuracy": "PASS_ORIGINAL_SCOPE_PRESERVED",
+      "readerUsability": "PASS_ORIGINAL_SCOPE_PRESERVED_WITH_CURRENT_APPLICABLE_READER_CHECKS",
+      "quality": "PASS_ORIGINAL_SCOPE_PRESERVED",
+      "basis": [
+        "handoffs/pr13-finish-20261021/deepguide-integration-review.md (28 exact original scopes)",
+        "checkpoint-d0bb-53-record-preservation-addendum.md (exact three-topic delta, independent source/execution reports plus current affected Reader checks)"
+      ],
+      "originalSummary": "Seven concrete review findings corrected and independently re-reviewed: unsafe retry opt-in in4Buster reader paths,actual admission/invocation error codes,current lint facts and generated metadata freshness.",
+      "originalLimitsRetained": [
+        "Documentation/source acceptance only; no live deployment or globally green publication/CI claim.",
+        "Carries forward prior reviewed unchanged topic content; unrelated whole-file pin/publication failures remain open."
+      ],
+      "verdict": "PASS_PRESERVATION_ONLY",
+      "openIssues": []
+    },
+    {
+      "id": "AP09-reader-workflows-20261020",
+      "previousReviewedRevision": "8f79e328cf216b53dc2e665896c65cbb19a2e0ce",
+      "revision": "d0bb52c4d8bcf323c0ff32b95e8e3120ffa6eefb",
+      "changedDependencies": [
+        "docs/site/use/workflows/README.md",
+        "scripts/check-buster-guides.mjs"
+      ],
+      "gateIds": [],
+      "requirementIds": [
+        "FLW-002",
+        "FLW-004",
+        "FLW-008"
+      ],
+      "sourceAccuracy": "PASS_ORIGINAL_SCOPE_PRESERVED",
+      "readerUsability": "PASS_ORIGINAL_SCOPE_PRESERVED_WITH_CURRENT_APPLICABLE_READER_CHECKS",
+      "quality": "PASS_ORIGINAL_SCOPE_PRESERVED",
+      "basis": [
+        "handoffs/pr13-finish-20261021/deepguide-integration-review.md (28 exact original scopes)",
+        "checkpoint-d0bb-53-record-preservation-addendum.md (exact three-topic delta, independent source/execution reports plus current affected Reader checks)"
+      ],
+      "originalSummary": "Independent topic acceptance for FLW-002, FLW-004, FLW-008; whole-gate acceptance only for explicitly reviewed none.",
+      "originalLimitsRetained": [
+        "Documentation/source acceptance only; no live deployment or globally green publication/CI claim.",
+        "Executed artifact/telemetry success,retry/repair,interruption,Redis replay and Worker recovery worked exercises remain open. Full project input and compiler before/after separately accepted after independent review.",
+        "External-effect fixture fails before mutation on runtime-dispatch import admission; demo tests and full Buster wrapper not green. No A99 whole-gate acceptance."
+      ],
+      "verdict": "PASS_PRESERVATION_ONLY",
+      "openIssues": []
+    },
+    {
+      "id": "AP09-reader-developers-20261020",
+      "previousReviewedRevision": "8f775411fdd8e0232bdd45135accb61f23768f0b",
+      "revision": "d0bb52c4d8bcf323c0ff32b95e8e3120ffa6eefb",
+      "changedDependencies": [
+        "docs/site/extend/README.md",
+        "scripts/docs-governance.mjs"
+      ],
+      "gateIds": [
+        "A910-02"
+      ],
+      "requirementIds": [
+        "DEV-001",
+        "DEV-003",
+        "DEV-004",
+        "DEV-006",
+        "DEV-009",
+        "EXT-001",
+        "EXT-002",
+        "EXT-003",
+        "EXT-004",
+        "EXT-009",
+        "CDV-001",
+        "CDV-002",
+        "CDV-004",
+        "CDV-011"
+      ],
+      "sourceAccuracy": "PASS_ORIGINAL_SCOPE_PRESERVED",
+      "readerUsability": "PASS_ORIGINAL_SCOPE_PRESERVED_WITH_CURRENT_APPLICABLE_READER_CHECKS",
+      "quality": "PASS_ORIGINAL_SCOPE_PRESERVED",
+      "basis": [
+        "handoffs/pr13-finish-20261021/deepguide-integration-review.md (28 exact original scopes)",
+        "checkpoint-d0bb-53-record-preservation-addendum.md (exact three-topic delta, independent source/execution reports plus current affected Reader checks)"
+      ],
+      "originalSummary": "Independent topic acceptance for DEV-001, DEV-003, DEV-004, DEV-006, DEV-009, EXT-001, EXT-002, EXT-003, EXT-004, EXT-009, CDV-001, CDV-002, CDV-004, CDV-011; whole-gate acceptance only for explicitly reviewed A910-02.",
+      "originalLimitsRetained": [
+        "Documentation/source acceptance only; no live deployment or globally green publication/CI claim.",
+        "SDKgeneration missing json-schema-to-typescript; capability-security fixture stale; external-effect import admission,Prism deployment fixture and missing pglite keep assigned scopes NOT_READY.",
+        "Ops promotion authority,host version,same-ID replacement roots and missing capability/Forge/Echo change tasks remain FAIL. Inventory word-count freshness and choice-guide metadata check not green."
+      ],
+      "verdict": "PASS_PRESERVATION_ONLY",
+      "openIssues": []
+    },
+    {
+      "id": "AP09-reviewed-maintenance-20261020",
+      "previousReviewedRevision": "8f775411fdd8e0232bdd45135accb61f23768f0b",
+      "revision": "d0bb52c4d8bcf323c0ff32b95e8e3120ffa6eefb",
+      "changedDependencies": [
+        "scripts/docs-governance.mjs"
+      ],
+      "gateIds": [],
+      "requirementIds": [
+        "MNT-013",
+        "MNT-016"
+      ],
+      "sourceAccuracy": "PASS_ORIGINAL_SCOPE_PRESERVED",
+      "readerUsability": "PASS_ORIGINAL_SCOPE_PRESERVED_WITH_CURRENT_APPLICABLE_READER_CHECKS",
+      "quality": "PASS_ORIGINAL_SCOPE_PRESERVED",
+      "basis": [
+        "handoffs/pr13-finish-20261021/deepguide-integration-review.md (28 exact original scopes)",
+        "checkpoint-d0bb-53-record-preservation-addendum.md (exact three-topic delta, independent source/execution reports plus current affected Reader checks)"
+      ],
+      "originalSummary": "Independent PASS for MNT-013, MNT-016. No whole-gate acceptance inferred from narrower requirements.",
+      "originalLimitsRetained": [
+        "Documentation/source acceptance only; no live deployment or globally green publication/CI claim.",
+        "Exhaustive configuration/error/event/store/public-source coverage remains unaccepted where independently failed or not established.",
+        "Passing focused checks do not assert all current repository links,generated outputs,publication,build,live services or deployed recovery are green."
+      ],
+      "verdict": "PASS_PRESERVATION_ONLY",
+      "openIssues": []
+    },
+    {
+      "id": "AP09-reviewed-publication-navigation-20261020",
+      "previousReviewedRevision": "c5d0062db699056ebc044c0a016a77ace6a1ede9",
+      "revision": "d0bb52c4d8bcf323c0ff32b95e8e3120ffa6eefb",
+      "changedDependencies": [
+        "docs/config/documentation-publication-manifest.json",
+        "docs/config/documentation-tree-classification.json",
+        "docs/site/extend/README.md",
+        "docs/site/use/workflows/README.md",
+        "scripts/lib/docs-publication-assets.mjs"
+      ],
+      "gateIds": [
+        "A912-02"
+      ],
+      "requirementIds": [
+        "PUB-001"
+      ],
+      "sourceAccuracy": "PASS_ORIGINAL_SCOPE_PRESERVED",
+      "readerUsability": "PASS_ORIGINAL_SCOPE_PRESERVED_WITH_CURRENT_APPLICABLE_READER_CHECKS",
+      "quality": "PASS_ORIGINAL_SCOPE_PRESERVED",
+      "basis": [
+        "handoffs/pr13-finish-20261021/deepguide-integration-review.md (28 exact original scopes)",
+        "checkpoint-d0bb-53-record-preservation-addendum.md (exact three-topic delta, independent source/execution reports plus current affected Reader checks)"
+      ],
+      "originalSummary": "Independent navigation-only acceptance for PUB-001 and A912-02; all canonical pages reachable through meaningful role/task links in at most three decisions. Reviewed sources and pages unchanged since baseline.",
+      "originalLimitsRetained": [
+        "Navigation reachability only, not substantive acceptance of all destinations.",
+        "Publication/reference/boundary checks remain failed; no successful current output build, search, accessibility, rendered/offline task or live acceptance claimed.",
+        "Pre-existing dirty events.md excluded and preserved."
+      ],
+      "verdict": "PASS_PRESERVATION_ONLY",
+      "openIssues": []
+    },
+    {
+      "id": "AP09-closeout-runtime-20261020",
+      "previousReviewedRevision": "c5d0062db699056ebc044c0a016a77ace6a1ede9",
+      "revision": "d0bb52c4d8bcf323c0ff32b95e8e3120ffa6eefb",
+      "changedDependencies": [
+        "docs/site/understand/archviewer.md",
+        "docs/site/understand/data-and-state.md",
+        "docs/site/understand/worker-core.md"
+      ],
+      "gateIds": [],
+      "requirementIds": [
+        "ARC-003",
+        "SPC-010",
+        "DAT-008",
+        "WKC-002",
+        "WKC-011",
+        "WKC-014"
+      ],
+      "sourceAccuracy": "PASS_ORIGINAL_SCOPE_PRESERVED",
+      "readerUsability": "PASS_ORIGINAL_SCOPE_PRESERVED_WITH_CURRENT_APPLICABLE_READER_CHECKS",
+      "quality": "PASS_ORIGINAL_SCOPE_PRESERVED",
+      "basis": [
+        "style-and-scope-preservation-independent.json (24 exact original scopes)",
+        "checkpoint-d0bb-53-record-preservation-addendum.md (exact three-topic delta, independent source/execution reports plus current affected Reader checks)"
+      ],
+      "originalSummary": "Independent sourceAccuracy/readerUsability/quality PASS for ARC-003, SPC-010, DAT-008, WKC-002, WKC-011, WKC-014. Exact correction bytes reviewed; full scopes rather than file-existence or count proxies.",
+      "originalLimitsRetained": [
+        "Documentation/source acceptance only; no live deployment or globally green publication/CI claim.",
+        "No new whole-gate acceptance;all inherited scoped limits retained.",
+        "Remaining public reference/schema/error/event/store completeness,SDK/environment prerequisites,missing first-project/capability/integration journeys and integrated publication/language findings remain open."
+      ],
+      "verdict": "PASS_PRESERVATION_ONLY",
+      "openIssues": []
+    },
+    {
+      "id": "AP09-closeout-config-reference-20261020",
+      "previousReviewedRevision": "d303e57edad20b27f2332c6d037c8daeadb8e1ba",
+      "revision": "d0bb52c4d8bcf323c0ff32b95e8e3120ffa6eefb",
+      "changedDependencies": [
+        "docs/site/reference/pipeline-json.md",
+        "scripts/docs-governance.mjs"
+      ],
+      "gateIds": [],
+      "requirementIds": [
+        "CFG-004",
+        "CFG-005",
+        "CFG-008",
+        "CFG-018",
+        "REF-015"
+      ],
+      "sourceAccuracy": "PASS_ORIGINAL_SCOPE_PRESERVED",
+      "readerUsability": "PASS_ORIGINAL_SCOPE_PRESERVED_WITH_CURRENT_APPLICABLE_READER_CHECKS",
+      "quality": "PASS_ORIGINAL_SCOPE_PRESERVED",
+      "basis": [
+        "handoffs/pr13-finish-20261021/deepguide-integration-review.md (28 exact original scopes)",
+        "checkpoint-d0bb-53-record-preservation-addendum.md (exact three-topic delta, independent source/execution reports plus current affected Reader checks)"
+      ],
+      "originalSummary": "Independent sourceAccuracy/readerUsability/quality PASS for CFG-004, CFG-005, CFG-008, CFG-018, REF-015. Exact correction bytes reviewed; full scopes rather than file-existence or count proxies.",
+      "originalLimitsRetained": [
+        "Documentation/source acceptance only; no live deployment or globally green publication/CI claim.",
+        "No new whole-gate acceptance;all inherited scoped limits retained.",
+        "Remaining public reference/schema/error/event/store completeness,SDK/environment prerequisites,missing first-project/capability/integration journeys and integrated publication/language findings remain open."
+      ],
+      "verdict": "PASS_PRESERVATION_ONLY",
+      "openIssues": []
+    },
+    {
+      "id": "AP09-closeout-developer-maintenance-20261020",
+      "previousReviewedRevision": "8f775411fdd8e0232bdd45135accb61f23768f0b",
+      "revision": "d0bb52c4d8bcf323c0ff32b95e8e3120ffa6eefb",
+      "changedDependencies": [
+        "docs/site/extend/README.md",
+        "scripts/docs-governance.mjs"
+      ],
+      "gateIds": [],
+      "requirementIds": [
+        "DEV-005",
+        "DEV-008",
+        "EXT-007",
+        "EXT-008",
+        "CDV-005",
+        "OPL-003",
+        "OPL-004",
+        "PLG-004",
+        "PLG-012",
+        "GOV-005",
+        "GOV-007"
+      ],
+      "sourceAccuracy": "PASS_ORIGINAL_SCOPE_PRESERVED",
+      "readerUsability": "PASS_ORIGINAL_SCOPE_PRESERVED_WITH_CURRENT_APPLICABLE_READER_CHECKS",
+      "quality": "PASS_ORIGINAL_SCOPE_PRESERVED",
+      "basis": [
+        "handoffs/pr13-finish-20261021/deepguide-integration-review.md (28 exact original scopes)",
+        "checkpoint-d0bb-53-record-preservation-addendum.md (exact three-topic delta, independent source/execution reports plus current affected Reader checks)"
+      ],
+      "originalSummary": "Independent sourceAccuracy/readerUsability/quality PASS for DEV-005, DEV-008, EXT-007, EXT-008, CDV-005, OPL-003, OPL-004, PLG-004, PLG-012, GOV-005, GOV-007. Exact correction bytes reviewed; full scopes rather than file-existence or count proxies.",
+      "originalLimitsRetained": [
+        "Documentation/source acceptance only; no live deployment or globally green publication/CI claim.",
+        "No new whole-gate acceptance;all inherited scoped limits retained.",
+        "Remaining public reference/schema/error/event/store completeness,SDK/environment prerequisites,missing first-project/capability/integration journeys and integrated publication/language findings remain open."
+      ],
+      "verdict": "PASS_PRESERVATION_ONLY",
+      "openIssues": []
+    },
+    {
+      "id": "AP09-first-project-example-20261020",
+      "previousReviewedRevision": "c5d0062db699056ebc044c0a016a77ace6a1ede9",
+      "revision": "d0bb52c4d8bcf323c0ff32b95e8e3120ffa6eefb",
+      "changedDependencies": [
+        "docs/config/documentation-tree-classification.json",
+        "docs/site/use/workflows/README.md",
+        "scripts/lib/docs-publication-assets.mjs"
+      ],
+      "gateIds": [],
+      "requirementIds": [
+        "FLW-003",
+        "FLW-005"
+      ],
+      "sourceAccuracy": "PASS_ORIGINAL_SCOPE_PRESERVED",
+      "readerUsability": "PASS_ORIGINAL_SCOPE_PRESERVED_WITH_CURRENT_APPLICABLE_READER_CHECKS",
+      "quality": "PASS_ORIGINAL_SCOPE_PRESERVED",
+      "basis": [
+        "handoffs/pr13-finish-20261021/deepguide-integration-review.md (28 exact original scopes)",
+        "checkpoint-d0bb-53-record-preservation-addendum.md (exact three-topic delta, independent source/execution reports plus current affected Reader checks)"
+      ],
+      "originalSummary": "Complete published maintainednova-project.v2 materializer andactualcompiledgraphwithall8stages,ordinary/repair edges,budgets,prerequisites,writeeffects,expectedobservations andcleanup. Independentfunctionalreviewandpublicationimpactreview complete.",
+      "originalLimitsRetained": [
+        "Documentation/source acceptance only; no live deployment or globally green publication/CI claim.",
+        "Compile-only: no runtimeadmission,platform/lintpolicy/provideragentexecution,runartifact/audit/telemetry/delivery proof.",
+        "NoFLW001/006orwholeA99/A912gateacceptanceinferred;globaltree/publication/readerboundary issuesremain.",
+        "Helperrequirespreparedsourcecheckout;publishedsourceasset isnotstandalonedownloadedsoftware."
+      ],
+      "verdict": "PASS_PRESERVATION_ONLY",
+      "openIssues": []
+    },
+    {
+      "id": "AP09-buster-lease-reference-20261020",
+      "previousReviewedRevision": "2febcd995924bfd05961b1c41142c401205bf39e",
+      "revision": "d0bb52c4d8bcf323c0ff32b95e8e3120ffa6eefb",
+      "changedDependencies": [
+        "docs/site/understand/buster-namespace-controller.md",
+        "scripts/docs-governance.mjs"
+      ],
+      "gateIds": [],
+      "requirementIds": [
+        "SPC-008"
+      ],
+      "sourceAccuracy": "PASS_ORIGINAL_SCOPE_PRESERVED",
+      "readerUsability": "PASS_ORIGINAL_SCOPE_PRESERVED_WITH_CURRENT_APPLICABLE_READER_CHECKS",
+      "quality": "PASS_ORIGINAL_SCOPE_PRESERVED",
+      "basis": [
+        "handoffs/pr13-finish-20261021/deepguide-integration-review.md (28 exact original scopes)",
+        "checkpoint-d0bb-53-record-preservation-addendum.md (exact three-topic delta, independent source/execution reports plus current affected Reader checks)"
+      ],
+      "originalSummary": "Complete ownedBusterNamespaceLease recursive readerreference linkedfromcontrollerguide;type,required/default/omission,enum/range/collection,CEL,operatorpolicy,writeownership,readiness,credentials,retention andsafechanges independentlyreviewed.",
+      "originalLimitsRetained": [
+        "Documentation/source acceptance only; no live deployment or globally green publication/CI claim.",
+        "No live Kubernetesadmission/DNS/delivery/RBAC/recovery/deletion orglobalpublicationgreenclaim.",
+        "StandardObjectMeta remains upstream;renderedpolicy andcontrollerfallbacks areseparatefromshippedtemplate values."
+      ],
+      "verdict": "PASS_PRESERVATION_ONLY",
+      "openIssues": []
+    },
+    {
+      "id": "AP09-compiler-import-provider-diagnosis-20261021",
+      "previousReviewedRevision": "d303e57edad20b27f2332c6d037c8daeadb8e1ba",
+      "revision": "d0bb52c4d8bcf323c0ff32b95e8e3120ffa6eefb",
+      "changedDependencies": [
+        "docs/site/reference/nova-project.md",
+        "docs/site/use/workflows/README.md"
+      ],
+      "gateIds": [
+        "A98-06"
+      ],
+      "requirementIds": [
+        "NVC-002",
+        "NVC-003",
+        "PLG-006",
+        "PLG-008",
+        "OPR-006"
+      ],
+      "sourceAccuracy": "PASS_ORIGINAL_SCOPE_PRESERVED",
+      "readerUsability": "PASS_ORIGINAL_SCOPE_PRESERVED_WITH_CURRENT_APPLICABLE_READER_CHECKS",
+      "quality": "PASS_ORIGINAL_SCOPE_PRESERVED",
+      "basis": [
+        "handoffs/pr13-finish-20261021/deepguide-integration-review.md (28 exact original scopes)",
+        "style-and-scope-preservation-independent.json (24 exact original scopes)",
+        "checkpoint-d0bb-53-record-preservation-addendum.md (exact three-topic delta, independent source/execution reports plus current affected Reader checks)"
+      ],
+      "originalSummary": "Closes complete compiler/admission, import audit, capability provider resolution and symptom-first safe diagnosis after independent current-source review.",
+      "originalLimitsRetained": [
+        "Documentation and repository evidence only; no live deployment, outage, provider embedding, native isolation or production restore claim.",
+        "No global documentation/publication/Helm-generation acceptance; unsupported importer-relative resolution remains an explicit global blocker."
+      ],
+      "verdict": "PASS_PRESERVATION_ONLY",
+      "openIssues": []
+    },
+    {
+      "id": "AP09-selected-model-gateway-20261021",
+      "previousReviewedRevision": "c5d0062db699056ebc044c0a016a77ace6a1ede9",
+      "revision": "d0bb52c4d8bcf323c0ff32b95e8e3120ffa6eefb",
+      "changedDependencies": [
+        "docs/site/understand/platform-and-operations.md"
+      ],
+      "gateIds": [
+        "A97-03"
+      ],
+      "requirementIds": [
+        "INF-012"
+      ],
+      "sourceAccuracy": "PASS_ORIGINAL_SCOPE_PRESERVED",
+      "readerUsability": "PASS_ORIGINAL_SCOPE_PRESERVED_WITH_CURRENT_APPLICABLE_READER_CHECKS",
+      "quality": "PASS_ORIGINAL_SCOPE_PRESERVED",
+      "basis": [
+        "style-and-scope-preservation-independent.json (24 exact original scopes)",
+        "checkpoint-d0bb-53-record-preservation-addendum.md (exact three-topic delta, independent source/execution reports plus current affected Reader checks)"
+      ],
+      "originalSummary": "Current model-gateway routing/consumer/credential/readiness/failure/recovery guide and selected embedding-client limits independently accepted.",
+      "originalLimitsRetained": [
+        "Documentation and repository evidence only; no live deployment, outage, provider embedding, native isolation or production restore claim.",
+        "No global documentation/publication/Helm-generation acceptance; unsupported importer-relative resolution remains an explicit global blocker.",
+        "Upstream implementation review is not upstream test execution or image/source attestation."
+      ],
+      "verdict": "PASS_PRESERVATION_ONLY",
+      "openIssues": []
+    },
+    {
+      "id": "AP09-contributor-baselines-and-migrations-20261021",
+      "previousReviewedRevision": "078105e40a50f23983e31c136f9bd81912ae6310",
+      "revision": "d0bb52c4d8bcf323c0ff32b95e8e3120ffa6eefb",
+      "changedDependencies": [
+        "package.json"
+      ],
+      "gateIds": [],
+      "requirementIds": [
+        "DEV-002",
+        "DEV-007",
+        "CDV-006",
+        "CDV-013"
+      ],
+      "sourceAccuracy": "PASS_ORIGINAL_SCOPE_PRESERVED",
+      "readerUsability": "PASS_ORIGINAL_SCOPE_PRESERVED_WITH_CURRENT_APPLICABLE_READER_CHECKS",
+      "quality": "PASS_ORIGINAL_SCOPE_PRESERVED",
+      "basis": [
+        "handoffs/pr13-finish-20261021/deepguide-integration-review.md (28 exact original scopes)",
+        "checkpoint-d0bb-53-record-preservation-addendum.md (exact three-topic delta, independent source/execution reports plus current affected Reader checks)"
+      ],
+      "originalSummary": "Closes accurate contributor setup/security guidance and SDK/data migration change procedures with previously blocked focused checks now passing.",
+      "originalLimitsRetained": [
+        "Documentation and repository evidence only; no live deployment, outage, provider embedding, native isolation or production restore claim.",
+        "No global documentation/publication/Helm-generation acceptance; unsupported importer-relative resolution remains an explicit global blocker.",
+        "No clean npm-ci/install reproduction, whole A910-01 gate, complete old-reader migration matrix or application restore certified."
+      ],
+      "verdict": "PASS_PRESERVATION_ONLY",
+      "openIssues": []
+    },
+    {
+      "id": "AP09-install-maintenance-project-entry-20261021",
+      "previousReviewedRevision": "d303e57edad20b27f2332c6d037c8daeadb8e1ba",
+      "revision": "d0bb52c4d8bcf323c0ff32b95e8e3120ffa6eefb",
+      "changedDependencies": [
+        "docs/site/reference/nova-project.md",
+        "docs/site/use/workflows/README.md"
+      ],
+      "gateIds": [],
+      "requirementIds": [
+        "OPR-003",
+        "OPR-008",
+        "CFG-003",
+        "ENT-005"
+      ],
+      "sourceAccuracy": "PASS_ORIGINAL_SCOPE_PRESERVED",
+      "readerUsability": "PASS_ORIGINAL_SCOPE_PRESERVED_WITH_CURRENT_APPLICABLE_READER_CHECKS",
+      "quality": "PASS_ORIGINAL_SCOPE_PRESERVED",
+      "basis": [
+        "handoffs/pr13-finish-20261021/deepguide-integration-review.md (28 exact original scopes)",
+        "style-and-scope-preservation-independent.json (24 exact original scopes)",
+        "checkpoint-d0bb-53-record-preservation-addendum.md (exact three-topic delta, independent source/execution reports plus current affected Reader checks)"
+      ],
+      "originalSummary": "Complete safe install/preflight, maintain/retire, project reference and connected first-reader routes accepted. First-project input omission corrected; current compiler contract check now passes.",
+      "originalLimitsRetained": [
+        "Documentation/source and bounded local compiler evidence only; no live install/readiness, upgrade/rollback, restore, provider/pipeline execution, clean dependency installation or native isolation certified.",
+        "No A98-03/A98-08/A98-09 or global generator/publication/UI gates accepted by these four requirements.",
+        "Historical composite findings retain other-page scopes. Only the accepted canonical-page namespace/status/decision-reason facets are closed."
+      ],
+      "verdict": "PASS_PRESERVATION_ONLY",
+      "openIssues": []
+    },
+    {
+      "id": "AP09-communication-complete-contracts-20261021",
+      "previousReviewedRevision": "6abafbbc81a728f3ea7f12e83426c9565a72c473",
+      "revision": "d0bb52c4d8bcf323c0ff32b95e8e3120ffa6eefb",
+      "changedDependencies": [
+        "docs/site/understand/communication.md"
+      ],
+      "gateIds": [],
+      "requirementIds": [
+        "COM-003",
+        "COM-004",
+        "COM-005",
+        "COM-012"
+      ],
+      "sourceAccuracy": "PASS_ORIGINAL_SCOPE_PRESERVED",
+      "readerUsability": "PASS_ORIGINAL_SCOPE_PRESERVED_WITH_CURRENT_APPLICABLE_READER_CHECKS",
+      "quality": "PASS_ORIGINAL_SCOPE_PRESERVED",
+      "basis": [
+        "style-and-scope-preservation-independent.json (24 exact original scopes)",
+        "checkpoint-d0bb-53-record-preservation-addendum.md (exact three-topic delta, independent source/execution reports plus current affected Reader checks)"
+      ],
+      "originalSummary": "Complete Nova-Prism identity/restart/result contract, Forge/Echo dispatch/import protocol, Core invocation/isolation/abort/result and per-connection deadline/retry/order/pressure model accepted.",
+      "originalLimitsRetained": [
+        "Documentation/source acceptance only; no executed native restart, live SPIFFE issuance/enforcement, cluster admission or runtime-effect success asserted.",
+        "COM001/008/009/010/011 remain open; no whole A97/global generation/publication/browser gate accepted."
+      ],
+      "verdict": "PASS_PRESERVATION_ONLY",
+      "openIssues": []
+    },
+    {
+      "id": "AP09-private-routes-complete-20261021",
+      "previousReviewedRevision": "6abafbbc81a728f3ea7f12e83426c9565a72c473",
+      "revision": "d0bb52c4d8bcf323c0ff32b95e8e3120ffa6eefb",
+      "changedDependencies": [
+        "docs/site/understand/communication.md"
+      ],
+      "gateIds": [],
+      "requirementIds": [
+        "COM-009"
+      ],
+      "sourceAccuracy": "PASS_ORIGINAL_SCOPE_PRESERVED",
+      "readerUsability": "PASS_ORIGINAL_SCOPE_PRESERVED_WITH_CURRENT_APPLICABLE_READER_CHECKS",
+      "quality": "PASS_ORIGINAL_SCOPE_PRESERVED",
+      "basis": [
+        "style-and-scope-preservation-independent.json (24 exact original scopes)",
+        "checkpoint-d0bb-53-record-preservation-addendum.md (exact three-topic delta, independent source/execution reports plus current affected Reader checks)"
+      ],
+      "originalSummary": "Complete selected private-route inventory, TLS/auth/ACL boundary, broker lease/generation/CAS/rollback, committed demo readiness retained owner/deadline/status/product-extension and cleanup lifecycle. Outbound-only optional Ops SOCKS distinguished from inbound publication.",
+      "originalLimitsRetained": [
+        "Source documentation acceptance only; no live Tailnet/DNS/TLS/ACL/header issuance, reachability or runtime execution established.",
+        "No COM001/008/010/011 or whole package/global gate acceptance."
+      ],
+      "verdict": "PASS_PRESERVATION_ONLY",
+      "openIssues": []
+    },
+    {
+      "id": "AP09-complete-state-content-20261021",
+      "previousReviewedRevision": "bbee1c8d7493c50fdce8b726c5a1c10b667d8a89",
+      "revision": "d0bb52c4d8bcf323c0ff32b95e8e3120ffa6eefb",
+      "changedDependencies": [
+        "docs/site/understand/data-and-state.md"
+      ],
+      "gateIds": [],
+      "requirementIds": [
+        "DAT-001",
+        "DAT-004",
+        "DAT-005",
+        "DAT-009"
+      ],
+      "sourceAccuracy": "PASS_ORIGINAL_SCOPE_PRESERVED",
+      "readerUsability": "PASS_ORIGINAL_SCOPE_PRESERVED_WITH_CURRENT_APPLICABLE_READER_CHECKS",
+      "quality": "PASS_ORIGINAL_SCOPE_PRESERVED",
+      "basis": [
+        "style-and-scope-preservation-independent.json (24 exact original scopes)",
+        "checkpoint-d0bb-53-record-preservation-addendum.md (exact three-topic delta, independent source/execution reports plus current affected Reader checks)"
+      ],
+      "originalSummary": "Whole persistence matrix/encryption, Buster physical evidence and signing/retention boundaries, complete Prism data model, and grouped backup order with supported offline Redis preparation task.",
+      "originalLimitsRetained": [
+        "Source-backed documentation acceptance only; no deployed encryption assurance, live restore, native host, rendered site or whole global generator/drift claim.",
+        "DAT006 upstream revalidation incomplete; no new DAT006 or whole A97 storage gate acceptance."
+      ],
+      "verdict": "PASS_PRESERVATION_ONLY",
+      "openIssues": []
+    },
+    {
+      "id": "AP09-documentation-agent-maintenance-20261021",
+      "previousReviewedRevision": "c5d0062db699056ebc044c0a016a77ace6a1ede9",
+      "revision": "d0bb52c4d8bcf323c0ff32b95e8e3120ffa6eefb",
+      "changedDependencies": [
+        "docs/config/documentation-tree-classification.json",
+        "package.json",
+        "scripts/docs-api-argocd-checked-artifact-authority.json",
+        "scripts/docs-api-output-discovery.mjs",
+        "scripts/docs-governance.mjs",
+        "scripts/lib/docs-publication-assets.mjs"
+      ],
+      "gateIds": [],
+      "requirementIds": [
+        "MNT-017"
+      ],
+      "sourceAccuracy": "PASS_CORRECTED_ORIGINAL_SCOPE_PRESERVED",
+      "readerUsability": "PASS_CORRECTED_ORIGINAL_SCOPE_AND_CURRENT_READER",
+      "quality": "PASS_ORIGINAL_SCOPE_PRESERVED",
+      "basis": [
+        "handoffs/pr13-finish-20261021/deepguide-integration-review.md (28 exact original scopes)",
+        "mnt017-80178-preservation.md (independent custody reviewer; exact committed snapshot, dirty scalar excluded)",
+        "handoffs/pr13-finish-20261021/mnt017-80178-preservation.md updated independent custody review of exact c4371page, now committed d0bb",
+        "checkpoint-d0bb-53-record-preservation-addendum.md (exact three-topic delta, independent source/execution reports plus current affected Reader checks)"
+      ],
+      "originalSummary": "Whole central documentation-agent maintenance contract: discovery, impact, owned generation, review, reader probe and safe retirement.",
+      "originalLimitsRetained": [
+        "Source-backed documentation acceptance only; no deployed encryption assurance, live restore, native host, rendered site or whole global generator/drift claim.",
+        "Other MNT global discovery/generator/drift obligations are NOT accepted from this authored maintenance guide audit; see scope.json."
+      ],
+      "verdict": "PASS_PRESERVATION_ONLY",
+      "openIssues": []
+    },
+    {
+      "id": "AP09-specialists-whole-gate-20261021",
+      "previousReviewedRevision": "3be8232a024f551f163d55f770c5fc97127d7902",
+      "revision": "d0bb52c4d8bcf323c0ff32b95e8e3120ffa6eefb",
+      "changedDependencies": [
+        "docs/site/understand/archviewer.md",
+        "docs/site/understand/echo.md",
+        "docs/site/understand/forge.md",
+        "docs/site/understand/openclaw.md"
+      ],
+      "gateIds": [
+        "A97-09"
+      ],
+      "requirementIds": [],
+      "sourceAccuracy": "PASS_ORIGINAL_SCOPE_PRESERVED",
+      "readerUsability": "PASS_ORIGINAL_SCOPE_PRESERVED_WITH_CURRENT_APPLICABLE_READER_CHECKS",
+      "quality": "PASS_ORIGINAL_SCOPE_PRESERVED",
+      "basis": [
+        "style-and-scope-preservation-independent.json (24 exact original scopes)",
+        "checkpoint-d0bb-53-record-preservation-addendum.md (exact three-topic delta, independent source/execution reports plus current affected Reader checks)"
+      ],
+      "originalSummary": "WHOLE A97-09: each named specialist/host/tool/UI has connected request/data/error route, configuration, operation, recovery, extension and reasoned system role.",
+      "originalLimitsRetained": [
+        "Source-backed documentation acceptance only; no deployed encryption assurance, live restore, native host, rendered site or whole global generator/drift claim."
+      ],
+      "verdict": "PASS_PRESERVATION_ONLY",
+      "openIssues": []
+    },
+    {
+      "id": "AP09-complete-platform-change-content-20261021",
+      "previousReviewedRevision": "8f775411fdd8e0232bdd45135accb61f23768f0b",
+      "revision": "d0bb52c4d8bcf323c0ff32b95e8e3120ffa6eefb",
+      "changedDependencies": [
+        "package.json",
+        "scripts/docs-governance.mjs",
+        "scripts/lib/docs-publication-assets.mjs"
+      ],
+      "gateIds": [],
+      "requirementIds": [
+        "CDV-003",
+        "CDV-007",
+        "CDV-010",
+        "CDV-012"
+      ],
+      "sourceAccuracy": "PASS_ORIGINAL_SCOPE_PRESERVED",
+      "readerUsability": "PASS_ORIGINAL_SCOPE_PRESERVED_WITH_CURRENT_APPLICABLE_READER_CHECKS",
+      "quality": "PASS_ORIGINAL_SCOPE_PRESERVED",
+      "basis": [
+        "handoffs/pr13-finish-20261021/deepguide-integration-review.md (28 exact original scopes)",
+        "checkpoint-d0bb-53-record-preservation-addendum.md (exact three-topic delta, independent source/execution reports plus current affected Reader checks)"
+      ],
+      "originalSummary": "Whole effect-format/identity/recovery change path, capability/event introduction, Forge/Echo integration and selected GitOps generation/ownership/security/upgrade tasks.",
+      "originalLimitsRetained": [
+        "Source-backed documentation acceptance only; no deployed encryption assurance, live restore, native host, rendered site or whole global generator/drift claim."
+      ],
+      "verdict": "PASS_PRESERVATION_ONLY",
+      "openIssues": []
+    },
+    {
+      "id": "AP09-registry-data-path-20261021",
+      "previousReviewedRevision": "c5d0062db699056ebc044c0a016a77ace6a1ede9",
+      "revision": "d0bb52c4d8bcf323c0ff32b95e8e3120ffa6eefb",
+      "changedDependencies": [
+        "docs/site/understand/communication.md",
+        "docs/site/understand/platform-and-operations.md"
+      ],
+      "gateIds": [],
+      "requirementIds": [
+        "COM-010"
+      ],
+      "sourceAccuracy": "PASS_ORIGINAL_SCOPE_PRESERVED",
+      "readerUsability": "PASS_ORIGINAL_SCOPE_PRESERVED_WITH_CURRENT_APPLICABLE_READER_CHECKS",
+      "quality": "PASS_ORIGINAL_SCOPE_PRESERVED",
+      "basis": [
+        "style-and-scope-preservation-independent.json (24 exact original scopes)",
+        "checkpoint-d0bb-53-record-preservation-addendum.md (exact three-topic delta, independent source/execution reports plus current affected Reader checks)"
+      ],
+      "originalSummary": "Complete Git/OCI/BuildKit/registry/mirror path with per-transition credentials, digest, limits and profile-specific retained/ephemeral failure/recovery.",
+      "originalLimitsRetained": [
+        "Source documentation only; no live/browser/runtime/cluster/native/encryption/recovery outcome claimed.",
+        "No whole configuration/endpoint/trust/global discovery/publication/drift gate accepted."
+      ],
+      "verdict": "PASS_PRESERVATION_ONLY",
+      "openIssues": []
+    },
+    {
+      "id": "AP09-studio-complete-journey-20261021",
+      "previousReviewedRevision": "6abafbbc81a728f3ea7f12e83426c9565a72c473",
+      "revision": "d0bb52c4d8bcf323c0ff32b95e8e3120ffa6eefb",
+      "changedDependencies": [
+        "package.json"
+      ],
+      "gateIds": [],
+      "requirementIds": [
+        "OPR-010"
+      ],
+      "sourceAccuracy": "PASS_ORIGINAL_SCOPE_PRESERVED",
+      "readerUsability": "PASS_ORIGINAL_SCOPE_PRESERVED_WITH_CURRENT_APPLICABLE_READER_CHECKS",
+      "quality": "PASS_ORIGINAL_SCOPE_PRESERVED",
+      "basis": [
+        "handoffs/pr13-finish-20261021/deepguide-integration-review.md (28 exact original scopes)",
+        "checkpoint-d0bb-53-record-preservation-addendum.md (exact three-topic delta, independent source/execution reports plus current affected Reader checks)"
+      ],
+      "originalSummary": "Complete source-level Studio operator/user journey: admission, rounds, selection, exact revision, preview/evaluation/approval, render/publication/export and Nova handoff; stale/concurrent/uncertain outcomes and unsupported routes explicit.",
+      "originalLimitsRetained": [
+        "Source documentation only; no live/browser/runtime/cluster/native/encryption/recovery outcome claimed.",
+        "No whole configuration/endpoint/trust/global discovery/publication/drift gate accepted."
+      ],
+      "verdict": "PASS_PRESERVATION_ONLY",
+      "openIssues": []
+    },
+    {
+      "id": "AP09-complete-plugin-maintenance-mechanisms-20261021",
+      "previousReviewedRevision": "8f775411fdd8e0232bdd45135accb61f23768f0b",
+      "revision": "d0bb52c4d8bcf323c0ff32b95e8e3120ffa6eefb",
+      "changedDependencies": [
+        "package.json"
+      ],
+      "gateIds": [],
+      "requirementIds": [
+        "MNT-002",
+        "MNT-007",
+        "MNT-012"
+      ],
+      "sourceAccuracy": "PASS_ORIGINAL_SCOPE_PRESERVED",
+      "readerUsability": "PASS_ORIGINAL_SCOPE_PRESERVED_WITH_CURRENT_APPLICABLE_READER_CHECKS",
+      "quality": "PASS_ORIGINAL_SCOPE_PRESERVED",
+      "basis": [
+        "handoffs/pr13-finish-20261021/deepguide-integration-review.md (28 exact original scopes)",
+        "checkpoint-d0bb-53-record-preservation-addendum.md (exact three-topic delta, independent source/execution reports plus current affected Reader checks)"
+      ],
+      "originalSummary": "Whole mechanical generated plugin facts, roles/packages/registrations and plugin-registration drift implementation: all51 manifests/inventory rows/package pages,67 pipeline registrations,2 OpenClaw extensions and1 Codex plugin; separate editorial guidance and actual discovery/comparison mechanisms audited.",
+      "originalLimitsRetained": [
+        "No OPL001/005 full native runtime or credential semantics acceptance.",
+        "No A910-05 artifact/owner completeness, global API/discovery/generation/drift or rendered publication gate acceptance."
+      ],
+      "verdict": "PASS_PRESERVATION_ONLY",
+      "openIssues": []
+    },
+    {
+      "id": "AP09-litellm-complete-data-contract-20261021",
+      "previousReviewedRevision": "c5d0062db699056ebc044c0a016a77ace6a1ede9",
+      "revision": "d0bb52c4d8bcf323c0ff32b95e8e3120ffa6eefb",
+      "changedDependencies": [
+        "docs/site/understand/data-and-state.md"
+      ],
+      "gateIds": [],
+      "requirementIds": [
+        "DAT-006"
+      ],
+      "sourceAccuracy": "PASS_ORIGINAL_SCOPE_PRESERVED",
+      "readerUsability": "PASS_ORIGINAL_SCOPE_PRESERVED_WITH_CURRENT_APPLICABLE_READER_CHECKS",
+      "quality": "PASS_ORIGINAL_SCOPE_PRESERVED",
+      "basis": [
+        "style-and-scope-preservation-independent.json (24 exact original scopes)",
+        "checkpoint-d0bb-53-record-preservation-addendum.md (exact three-topic delta, independent source/execution reports plus current affected Reader checks)"
+      ],
+      "originalSummary": "Whole LiteLLM PostgreSQL schema/migration authority, credentials/encryption inputs, pool/precedence/startup, upgrade, retention/capacity and backup/restore verification. Both reported revisions and four registry platform digest chains inspected; unsupported image-layer equality claim removed.",
+      "originalLimitsRetained": [
+        "Source-backed documentation and reader-contract acceptance only; no whole gate/global API inventory/generator/drift or rendered/live execution qualification.",
+        "No filesystem-layer equality, publisher signature, application image execution, decryption round trip, migration success or live restore claimed."
+      ],
+      "verdict": "PASS_PRESERVATION_ONLY",
+      "openIssues": []
+    },
+    {
+      "id": "AP09-complete-publication-reference-navigation-20261021",
+      "previousReviewedRevision": "c5d0062db699056ebc044c0a016a77ace6a1ede9",
+      "revision": "d0bb52c4d8bcf323c0ff32b95e8e3120ffa6eefb",
+      "changedDependencies": [
+        "docs/config/documentation-tree-classification.json",
+        "package.json",
+        "scripts/docs-governance.mjs",
+        "scripts/lib/docs-publication-assets.mjs"
+      ],
+      "gateIds": [],
+      "requirementIds": [
+        "PUB-003",
+        "PUB-009"
+      ],
+      "sourceAccuracy": "PASS_ORIGINAL_SCOPE_PRESERVED",
+      "readerUsability": "PASS_ORIGINAL_SCOPE_PRESERVED_WITH_CURRENT_APPLICABLE_READER_CHECKS",
+      "quality": "PASS_ORIGINAL_SCOPE_PRESERVED",
+      "basis": [
+        "handoffs/pr13-finish-20261021/deepguide-integration-review.md (28 exact original scopes)",
+        "checkpoint-d0bb-53-record-preservation-addendum.md (exact three-topic delta, independent source/execution reports plus current affected Reader checks)"
+      ],
+      "originalSummary": "Whole repository links/anchors/version-bound code evidence and canonical-versus-legacy reader navigation.71 platform bindings now point to explicit inspected source revisions and appropriate implementation ranges.",
+      "originalLimitsRetained": [
+        "Source-backed documentation and reader-contract acceptance only; no whole gate/global API inventory/generator/drift or rendered/live execution qualification.",
+        "No rendered website routes, HTTP redirects, code preview widget, search or browser/accessibility result implied."
+      ],
+      "verdict": "PASS_PRESERVATION_ONLY",
+      "openIssues": []
+    },
+    {
+      "id": "AP09-complete-developer-reader-contracts-20261021",
+      "previousReviewedRevision": "8f775411fdd8e0232bdd45135accb61f23768f0b",
+      "revision": "d0bb52c4d8bcf323c0ff32b95e8e3120ffa6eefb",
+      "changedDependencies": [
+        "package.json",
+        "scripts/docs-governance.mjs",
+        "scripts/lib/docs-publication-assets.mjs"
+      ],
+      "gateIds": [],
+      "requirementIds": [
+        "QUA-008",
+        "QUA-009"
+      ],
+      "sourceAccuracy": "PASS_ORIGINAL_SCOPE_PRESERVED",
+      "readerUsability": "PASS_ORIGINAL_SCOPE_PRESERVED_WITH_CURRENT_APPLICABLE_READER_CHECKS",
+      "quality": "PASS_ORIGINAL_SCOPE_PRESERVED",
+      "basis": [
+        "handoffs/pr13-finish-20261021/deepguide-integration-review.md (28 exact original scopes)",
+        "checkpoint-d0bb-53-record-preservation-addendum.md (exact three-topic delta, independent source/execution reports plus current affected Reader checks)"
+      ],
+      "originalSummary": "Whole authored Extension Developer and Platform/Core Developer reader paths: selection, local teaching journeys, host lifecycle boundaries, capability/event changes, Forge/Echo integration, GitOps and retained-state/change tasks. Current Source provenance corrected; declared deployment limits remain explicit.",
+      "originalLimitsRetained": [
+        "Source-backed documentation and reader-contract acceptance only; no whole gate/global API inventory/generator/drift or rendered/live execution qualification.",
+        "Reader-contract review is not executed full deployed multi-persona workflow acceptance."
+      ],
+      "verdict": "PASS_PRESERVATION_ONLY",
+      "openIssues": []
+    },
+    {
+      "id": "AP09-complete-static-reader-search-20261021",
+      "previousReviewedRevision": "7e006461f46614e1f334b7c8a63d9db4815cf8db",
+      "revision": "d0bb52c4d8bcf323c0ff32b95e8e3120ffa6eefb",
+      "changedDependencies": [
+        "docs/config/documentation-publication-manifest.json",
+        "docs/config/documentation-tree-classification.json",
+        "docs/site/extend/README.md",
+        "docs/site/extend/buster.md",
+        "docs/site/extend/lint.md",
+        "docs/site/reference/lint-policy.md",
+        "docs/site/reference/nova-project.md",
+        "docs/site/reference/pipeline-json.md",
+        "docs/site/understand/archviewer.md",
+        "docs/site/understand/buster-namespace-controller.md",
+        "docs/site/understand/communication.md",
+        "docs/site/understand/data-and-state.md",
+        "docs/site/understand/echo.md",
+        "docs/site/understand/forge.md",
+        "docs/site/understand/openclaw.md",
+        "docs/site/understand/platform-and-operations.md",
+        "docs/site/understand/security-and-trust.md",
+        "docs/site/understand/telemetry.md",
+        "docs/site/understand/worker-core.md",
+        "docs/site/use/workflows/README.md",
+        "scripts/docs-api-documentation-role-custody.mjs",
+        "scripts/lib/docs-publication-assets.mjs"
+      ],
+      "gateIds": [],
+      "requirementIds": [
+        "PUB-002"
+      ],
+      "sourceAccuracy": "PASS_ORIGINAL_SCOPE_PRESERVED",
+      "readerUsability": "PASS_ORIGINAL_SCOPE_PRESERVED_WITH_CURRENT_APPLICABLE_READER_CHECKS",
+      "quality": "PASS_ORIGINAL_SCOPE_PRESERVED",
+      "basis": [
+        "handoffs/pr13-finish-20261021/deepguide-integration-review.md (28 exact original scopes)",
+        "style-and-scope-preservation-independent.json (24 exact original scopes)",
+        "checkpoint-d0bb-53-record-preservation-addendum.md (exact three-topic delta, independent source/execution reports plus current affected Reader checks)"
+      ],
+      "originalSummary": "Whole PUB-002: existing positive page/asset allowlists plus actual artifact-local full-text search across all167 canonical reader pages, headings and code/technical identifiers. Browser find/empty/no-JS behavior observed; code and output reviewed.",
+      "originalLimitsRetained": [
+        "Only whole PUB-002. Ranked/synonym reader search questions in A912-04 remain unaccepted; substring full-text search is stated honestly.",
+        "No other publication gate or whole documentation package acceptance.",
+        "Local HTML/search output is not external hosting, actual cluster/runtime behavior, rendered Mermaid, source-preview or human screenreader acceptance.",
+        "Global API source/caller discovery still blocked at bundle copier; site boundary still has three unchanged Helm generated-prose diagnostics."
+      ],
+      "verdict": "PASS_PRESERVATION_ONLY",
+      "openIssues": []
+    },
+    {
+      "id": "AP09-search-reader-gate-20261021",
+      "previousReviewedRevision": "7e006461f46614e1f334b7c8a63d9db4815cf8db",
+      "revision": "d0bb52c4d8bcf323c0ff32b95e8e3120ffa6eefb",
+      "changedDependencies": [
+        "docs/config/documentation-publication-manifest.json",
+        "docs/config/documentation-tree-classification.json",
+        "scripts/docs-api-documentation-role-custody.mjs",
+        "scripts/lib/docs-publication-assets.mjs"
+      ],
+      "gateIds": [
+        "A912-04"
+      ],
+      "requirementIds": [],
+      "sourceAccuracy": "PASS_ORIGINAL_SCOPE_PRESERVED",
+      "readerUsability": "PASS_ORIGINAL_SCOPE_PRESERVED_WITH_CURRENT_APPLICABLE_READER_CHECKS",
+      "quality": "PASS_ORIGINAL_SCOPE_PRESERVED",
+      "basis": [
+        "handoffs/pr13-finish-20261021/deepguide-integration-review.md (28 exact original scopes)",
+        "checkpoint-d0bb-53-record-preservation-addendum.md (exact three-topic delta, independent source/execution reports plus current affected Reader checks)"
+      ],
+      "originalSummary": "Whole A912-04: canonical search index includes all167pages, headings and technical IDs, finite reader synonyms and weighted upper results. Twelve defined reader questions find expected route among top3 in actual browser at320/768/1440; exact positive-manifest equality excludes internal artifacts.",
+      "originalLimitsRetained": [
+        "Whole A912-04 only; finite declared reader synonyms, not universal semantic or natural-language search.",
+        "No other publication gate, all-page/human-screenreader, rendered-Mermaid/source-preview/externalhosting acceptance.",
+        "Global API bundle input/caller closure and three unchanged generated Helm-language diagnostics remain open."
+      ],
+      "verdict": "PASS_PRESERVATION_ONLY",
+      "openIssues": []
+    },
+    {
+      "id": "AP09-rendered-source-bounds-gate-20261021",
+      "previousReviewedRevision": "7e006461f46614e1f334b7c8a63d9db4815cf8db",
+      "revision": "d0bb52c4d8bcf323c0ff32b95e8e3120ffa6eefb",
+      "changedDependencies": [
+        "docs/config/documentation-publication-manifest.json",
+        "scripts/docs-api-documentation-role-custody.mjs",
+        "scripts/lib/docs-publication-assets.mjs"
+      ],
+      "gateIds": [
+        "A912-09"
+      ],
+      "requirementIds": [],
+      "sourceAccuracy": "PASS_ORIGINAL_SCOPE_PRESERVED",
+      "readerUsability": "PASS_ORIGINAL_SCOPE_PRESERVED_WITH_CURRENT_APPLICABLE_READER_CHECKS",
+      "quality": "PASS_ORIGINAL_SCOPE_PRESERVED",
+      "basis": [
+        "handoffs/pr13-finish-20261021/deepguide-integration-review.md (28 exact original scopes)",
+        "checkpoint-d0bb-53-record-preservation-addendum.md (exact three-topic delta, independent source/execution reports plus current affected Reader checks)"
+      ],
+      "originalSummary": "Whole A912-09: repository references and actual hash-verified built HTML links, anchors, assets and routes checked, plus full Source commit/type/actual-byte/line-or-Markdown-anchor validation.167 canonical pages,176HTML,179digests,36698localtargets,14401Source locators/3723objects including118primary upstream files across11repositories.",
+      "originalLimitsRetained": [
+        "Exact source location/object/type/byte/range checks, not semantic correctness of every claim, signatures, live runtime or hosting.",
+        "Local Source objects were observed in actual Git; GitHub reachability follows pushed ancestors, not a substituted upstream HTTP proof.",
+        "Native documentation purposes preserve source/caller identity and do not waive the global API bundle-copier boundary.",
+        "Whole A912-09 only; remaining publication/accessibility/diagram/preview/full-workflow gates not automatically accepted.",
+        "Three unchanged stale generated Helm phrases and global API bundle input/caller gap remain open."
+      ],
+      "verdict": "PASS_PRESERVATION_ONLY",
+      "openIssues": []
+    },
+    {
+      "id": "AP09-complete-static-offline-fallback-20261021",
+      "previousReviewedRevision": "8f775411fdd8e0232bdd45135accb61f23768f0b",
+      "revision": "d0bb52c4d8bcf323c0ff32b95e8e3120ffa6eefb",
+      "changedDependencies": [
+        "docs/config/documentation-publication-manifest.json",
+        "docs/site/extend/README.md",
+        "docs/site/use/workflows/README.md",
+        "scripts/lib/docs-publication-assets.mjs"
+      ],
+      "gateIds": [
+        "A912-10"
+      ],
+      "requirementIds": [
+        "PUB-006"
+      ],
+      "sourceAccuracy": "PASS_ORIGINAL_SCOPE_PRESERVED",
+      "readerUsability": "PASS_ORIGINAL_SCOPE_PRESERVED_WITH_CURRENT_APPLICABLE_READER_CHECKS",
+      "quality": "PASS_ORIGINAL_SCOPE_PRESERVED",
+      "basis": [
+        "handoffs/pr13-finish-20261021/deepguide-integration-review.md (28 exact original scopes)",
+        "checkpoint-d0bb-53-record-preservation-addendum.md (exact three-topic delta, independent source/execution reports plus current affected Reader checks)"
+      ],
+      "originalSummary": "Whole PUB-006/A912-10: actual local-file reader keeps critical content/instructions, navigation, native disclosures and explicit search fallback usable without JavaScript, external network, hover or normal color palette. Optional local search works offline. Architecture interaction remains optional, not invented for acceptance.",
+      "originalLimitsRetained": [
+        "Static browser/navigation/read-action-selection acceptance only, not execution of recovery/plugin/platform/pipeline product commands.",
+        "No fresh-person user study or human screenreader trial; no PUB007/A91208 acceptance.",
+        "Mermaid remains static code plus text alternative; no rendered visual interpretation or A91206/A91207 promotion from DOM metrics.",
+        "Whole PUB006/A91210 only; all other runtime/globalAPI/hosting/publication boundaries preserved."
+      ],
+      "verdict": "PASS_PRESERVATION_ONLY",
+      "openIssues": []
+    },
+    {
+      "id": "AP09-complete-same-source-code-preview-20261021",
+      "previousReviewedRevision": "7e006461f46614e1f334b7c8a63d9db4815cf8db",
+      "revision": "d0bb52c4d8bcf323c0ff32b95e8e3120ffa6eefb",
+      "changedDependencies": [
+        "docs/config/documentation-publication-manifest.json",
+        "scripts/docs-api-documentation-role-custody.mjs"
+      ],
+      "gateIds": [],
+      "requirementIds": [
+        "PUB-004"
+      ],
+      "sourceAccuracy": "PASS_ORIGINAL_SCOPE_PRESERVED",
+      "readerUsability": "PASS_ORIGINAL_SCOPE_PRESERVED_WITH_CURRENT_APPLICABLE_READER_CHECKS",
+      "quality": "PASS_ORIGINAL_SCOPE_PRESERVED",
+      "basis": [
+        "handoffs/pr13-finish-20261021/deepguide-integration-review.md (28 exact original scopes)",
+        "checkpoint-d0bb-53-record-preservation-addendum.md (exact three-topic delta, independent source/execution reports plus current affected Reader checks)"
+      ],
+      "originalSummary": "Whole PUB004: general same-source component automatically pairs immutable source links with exact same-revision inert code inside original evidence boxes.1660excerpts/390boxes/874objects across53pages;fresh-source and actualbrowser/text/native-disclosure proof.",
+      "originalLimitsRetained": [
+        "WholePUB004 only; A91205 all-six-field canonical format not established for every older evidence box and remains unaccepted.",
+        "Preserves originalclaims/contracts/tests/limits; missing author evidence not fabricated and source snippets do not prove live or semantic correctness.",
+        "ThreeSource boxes containingonlydirectory/named-anchor references remain ordinarylinks, not fake code previews.",
+        "No diagram/layoutgate, humanScreenReader, freshuser, hosting, globalAPI or productruntime approval.",
+        "GlobalAPIbundlecopier74 andthreeunchangedstaleHelmphrases stayopen."
+      ],
+      "verdict": "PASS_PRESERVATION_ONLY",
+      "openIssues": []
+    },
+    {
+      "id": "AP09-complete-responsive-reader-layout-20261021",
+      "previousReviewedRevision": "7e006461f46614e1f334b7c8a63d9db4815cf8db",
+      "revision": "d0bb52c4d8bcf323c0ff32b95e8e3120ffa6eefb",
+      "changedDependencies": [
+        "docs/site/understand/worker-core.md",
+        "scripts/docs-api-documentation-role-custody.mjs"
+      ],
+      "gateIds": [
+        "A912-07"
+      ],
+      "requirementIds": [],
+      "sourceAccuracy": "PASS_ORIGINAL_SCOPE_PRESERVED",
+      "readerUsability": "PASS_ORIGINAL_SCOPE_PRESERVED_WITH_CURRENT_APPLICABLE_READER_CHECKS",
+      "quality": "PASS_ORIGINAL_SCOPE_PRESERVED",
+      "basis": [
+        "style-and-scope-preservation-independent.json (24 exact original scopes)",
+        "checkpoint-d0bb-53-record-preservation-addendum.md (exact three-topic delta, independent source/execution reports plus current affected Reader checks)"
+      ],
+      "originalSummary": "Whole A91207 responsive reader layout at320/768/1440: navigation,tables,code,27 registered static diagrams,callouts,search remain available without page overflow; focusable internally scrolling regions preserve full content and textual alternatives.",
+      "originalLimitsRetained": [
+        "Whole responsive-layout gate only; PUB005/A91206 semantic diagram completeness NOT_READY:16/27 scoped supported,6system and5service proofs incomplete;capacity failures preserved.",
+        "Human screenreader/fresh-role user/hosting/live workflows/global API not accepted by automated browser or byte checks.",
+        "Native table/code/diagram internal horizontal scroll is intentional and focus/keyboard tested; no horizontal PAGE navigation.",
+        "Global bundle-copier and three stale generated Helm phrases remain open."
+      ],
+      "verdict": "PASS_PRESERVATION_ONLY",
+      "openIssues": []
+    },
+    {
+      "id": "AP09-complete-source-backed-diagrams-20261021",
+      "previousReviewedRevision": "310b8dca1377e0ef3b5c307fc1f917af8a3c89de",
+      "revision": "d0bb52c4d8bcf323c0ff32b95e8e3120ffa6eefb",
+      "changedDependencies": [
+        "docs/site/extend/README.md",
+        "docs/site/extend/lint.md",
+        "docs/site/understand/buster-namespace-controller.md",
+        "docs/site/understand/communication.md",
+        "docs/site/understand/platform-and-operations.md",
+        "docs/site/understand/security-and-trust.md",
+        "docs/site/understand/telemetry.md",
+        "docs/site/understand/worker-core.md"
+      ],
+      "gateIds": [
+        "A912-06"
+      ],
+      "requirementIds": [
+        "PUB-005"
+      ],
+      "sourceAccuracy": "PASS_ORIGINAL_SCOPE_PRESERVED",
+      "readerUsability": "PASS_ORIGINAL_SCOPE_PRESERVED_WITH_CURRENT_APPLICABLE_READER_CHECKS",
+      "quality": "PASS_ORIGINAL_SCOPE_PRESERVED",
+      "basis": [
+        "handoffs/pr13-finish-20261021/deepguide-integration-review.md (28 exact original scopes)",
+        "style-and-scope-preservation-independent.json (24 exact original scopes)",
+        "checkpoint-d0bb-53-record-preservation-addendum.md (exact three-topic delta, independent source/execution reports plus current affected Reader checks)"
+      ],
+      "originalSummary": "Whole PUB-005 and A912-06:27registered question-led,source-backed diagrams in19owningpages have visible alternatives and drift owners. Full source semantics and final rendered visual interpretation supported after correcting public-web admission and precise manifest-identity scope.",
+      "originalLimitsRetained": [
+        "Only whole diagram obligations PUB-005/A912-06;not AP09/AP10/AP11 or release approval.",
+        "Configured/source-level arrows do not claim successful model calls,Discord traffic,SPIRE/Cilium enforcement,Tailscale delivery,live deployment,archive observation or application behavior.",
+        "No hosting or human screenreader/accessibility acceptance;A912-08 stays open.",
+        "Existing runtime configuration rejection,three generated Helm reader-boundary failures and global API qualification remain open."
+      ],
+      "verdict": "PASS_PRESERVATION_ONLY",
+      "openIssues": []
+    },
+    {
+      "id": "AP09-whole-platform-discovery-and-drift-20261021",
+      "previousReviewedRevision": "0e35889a3c4e65d5c47ba88e924611aace67eb1d",
+      "revision": "d0bb52c4d8bcf323c0ff32b95e8e3120ffa6eefb",
+      "changedDependencies": [
+        "docs/site/understand/platform-and-operations.md"
+      ],
+      "gateIds": [
+        "A97-01",
+        "A97-12"
+      ],
+      "requirementIds": [],
+      "sourceAccuracy": "PASS_ORIGINAL_SCOPE_PRESERVED",
+      "readerUsability": "PASS_ORIGINAL_SCOPE_PRESERVED_WITH_CURRENT_APPLICABLE_READER_CHECKS",
+      "quality": "PASS_ORIGINAL_SCOPE_PRESERVED",
+      "basis": [
+        "style-and-scope-preservation-independent.json (24 exact original scopes)",
+        "checkpoint-d0bb-53-record-preservation-addendum.md (exact three-topic delta, independent source/execution reports plus current affected Reader checks)"
+      ],
+      "originalSummary": "Pages: understand/platform-and-operations.md (Required/Conditional/Optional Systems; Runtime Dependency Contracts), reference/platform-surfaces-generated.md. Sources: docs/generated/inventory/platform-surfaces.json, docs/config/platform-surface-map.json, scripts/docs-platform-surface-inventory.mjs, charts/{kubeclaw,prism,ops-pod}, my-values, gitops/platform. Fresh inventory discovery check reconciles498 dependency signals/171resources, including enabled/conditional/optional distinctions. Pipeline authority is explicitly separated from showcase readiness. No missing-dependency claim inferred from a fixed count.",
+      "originalLimitsRetained": [
+        "No guarantee that all future source syntax is supported; new independent parser routes need qualification.",
+        "Listed documentation scope only; no live deployment, release or product approval. RELEASE_CONFIGURATION_CHANGED: charts/kubeclaw/files/config/knip.json remains a stop.",
+        "Parallel custody-metadata and negative-test corrections do not alter reviewed named product-source claims; changes to those sources or reader claims require bounded impact review. Unrelated whole-source generator/source-pin failures are not passed checks here."
+      ],
+      "verdict": "PASS_PRESERVATION_ONLY",
+      "openIssues": []
+    },
+    {
+      "id": "AP09-whole-store-contract-20261021",
+      "previousReviewedRevision": "0e35889a3c4e65d5c47ba88e924611aace67eb1d",
+      "revision": "d0bb52c4d8bcf323c0ff32b95e8e3120ffa6eefb",
+      "changedDependencies": [
+        "docs/site/understand/data-and-state.md"
+      ],
+      "gateIds": [
+        "A97-06"
+      ],
+      "requirementIds": [],
+      "sourceAccuracy": "PASS_ORIGINAL_SCOPE_PRESERVED",
+      "readerUsability": "PASS_ORIGINAL_SCOPE_PRESERVED_WITH_CURRENT_APPLICABLE_READER_CHECKS",
+      "quality": "PASS_ORIGINAL_SCOPE_PRESERVED",
+      "basis": [
+        "style-and-scope-preservation-independent.json (24 exact original scopes)",
+        "checkpoint-d0bb-53-record-preservation-addendum.md (exact three-topic delta, independent source/execution reports plus current affected Reader checks)"
+      ],
+      "originalSummary": "Pages: understand/data-and-state.md (Complete Store Matrix, Backup Groups, Restore Decision Rules, Encryption, Failure/Recovery), use/recovery.md. Sources: platform inventory75stores; skills/nova/core/state, skills/worker/core/native, skills/buster/engine, skills/prism/control and storage, charts/prism/files/prism-backup.sh, scripts/postgresql-recovery.sh, gitops/platform/values/{redis,postgresql,loki,prometheus}. Reuse full accepted DAT001\u2013009 reviews, including corrected LiteLLM PostgreSQL and generic JSON artifact contracts. Authority/writers/readers/fencing/retention/capacity/backup/restore/corruption/loss/retirement are distinguished, and absent restore coverage stops explicitly rather than pretending full-platform recoverability.",
+      "originalLimitsRetained": [
+        "No full-platform restore, accepted RTO/RPO or executed recovery claimed; unsupported paths have explicit stop and follow-up boundaries.",
+        "Listed documentation scope only; no live deployment, release or product approval. RELEASE_CONFIGURATION_CHANGED: charts/kubeclaw/files/config/knip.json remains a stop.",
+        "Parallel custody-metadata and negative-test corrections do not alter reviewed named product-source claims; changes to those sources or reader claims require bounded impact review. Unrelated whole-source generator/source-pin failures are not passed checks here."
+      ],
+      "verdict": "PASS_PRESERVATION_ONLY",
+      "openIssues": []
+    },
+    {
+      "id": "AP09-whole-trust-and-spiffe-contract-20261021",
+      "previousReviewedRevision": "0e35889a3c4e65d5c47ba88e924611aace67eb1d",
+      "revision": "d0bb52c4d8bcf323c0ff32b95e8e3120ffa6eefb",
+      "changedDependencies": [
+        "docs/site/understand/communication.md",
+        "docs/site/understand/security-and-trust.md"
+      ],
+      "gateIds": [
+        "A97-08"
+      ],
+      "requirementIds": [
+        "COM-011"
+      ],
+      "sourceAccuracy": "PASS_ORIGINAL_SCOPE_PRESERVED",
+      "readerUsability": "PASS_ORIGINAL_SCOPE_PRESERVED_WITH_CURRENT_APPLICABLE_READER_CHECKS",
+      "quality": "PASS_ORIGINAL_SCOPE_PRESERVED",
+      "basis": [
+        "style-and-scope-preservation-independent.json (24 exact original scopes)",
+        "checkpoint-d0bb-53-record-preservation-addendum.md (exact three-topic delta, independent source/execution reports plus current affected Reader checks)"
+      ],
+      "originalSummary": "Pages: understand/security-and-trust.md and deployment-and-trust.md; reference/secrets.md; use/worker-trust.md. Sources: skills/worker/core/worker/trust.ts17\u201352, skills/nova/core/execution/authorization.ts, source-snapshot.ts, my-values/infra/spire-values.yaml, charts/kubeclaw/templates/{configmap-worker-trust,serviceaccount,rbac}.yaml, charts/prism/templates/networkpolicy.yaml, charts/ops-pod/templates/{network,rbac,workload}.yaml, my-values/setup-secrets.sh. Reuse accepted SEC001\u2013007; independently checked SPIFFE exact allowlist plus loopback proxy proof, session/CSRF versus workload identity, capability grants, default-deny enforcement limit, secret rotation, digest-versus-provenance distinctions and mutable Ops Tailscale exception. Render intent is not live enforcement. Correctly asks for positive and negative controls without asserting they ran.",
+      "originalLimitsRetained": [
+        "COM011 preservation after planned communication model/mention correction: compare diff and confirm SPIFFE section664\u2013678 and security cross-referenced contract unchanged before carrying acceptance forward.",
+        "No live SPIRE/CNI/ACL enforcement or credential rotation claimed.",
+        "Listed documentation scope only; no live deployment, release or product approval. RELEASE_CONFIGURATION_CHANGED: charts/kubeclaw/files/config/knip.json remains a stop.",
+        "Parallel custody-metadata and negative-test corrections do not alter reviewed named product-source claims; changes to those sources or reader claims require bounded impact review. Unrelated whole-source generator/source-pin failures are not passed checks here."
+      ],
+      "verdict": "PASS_PRESERVATION_ONLY",
+      "openIssues": []
+    },
+    {
+      "id": "AP09-whole-dependency-decision-traces-20261021",
+      "previousReviewedRevision": "0e35889a3c4e65d5c47ba88e924611aace67eb1d",
+      "revision": "d0bb52c4d8bcf323c0ff32b95e8e3120ffa6eefb",
+      "changedDependencies": [
+        "docs/site/understand/communication.md"
+      ],
+      "gateIds": [
+        "A97-10"
+      ],
+      "requirementIds": [],
+      "sourceAccuracy": "PASS_ORIGINAL_SCOPE_PRESERVED",
+      "readerUsability": "PASS_ORIGINAL_SCOPE_PRESERVED_WITH_CURRENT_APPLICABLE_READER_CHECKS",
+      "quality": "PASS_ORIGINAL_SCOPE_PRESERVED",
+      "basis": [
+        "style-and-scope-preservation-independent.json (24 exact original scopes)",
+        "checkpoint-d0bb-53-record-preservation-addendum.md (exact three-topic delta, independent source/execution reports plus current affected Reader checks)"
+      ],
+      "originalSummary": "Page: understand/communication.md979\u20131135 and linked request-trace-success.json/request-trace-redis-unavailable.json. Sources: skills/nova/core/execution, skills/nova/plugins/demo-handoff, skills/buster/engine/test-gates, skills/prism/control/agent-jobs.ts, docker/buster-runtime-entrypoint.sh, registry client configuration. Full showcase target trace follows every owner and durable identity through separate human acceptance; explicitly target/contract-only, not observed success. Redis, both PostgreSQL owners, registry/BuildKit, Tailscale, LiteLLM/provider, and exact Git revision failures end in classified narrow repair, uncertain-outcome reconciliation and original identity. The model/Discord row errors below do not alter the inspected ordered success/failure trace.",
+      "originalLimitsRetained": [
+        "Contract/target trace is not observed live execution.",
+        "Other communication model/Discord rows remain separately open COM001/COM008/A9705; confirm ordered traces preserved after those edits.",
+        "Listed documentation scope only; no live deployment, release or product approval. RELEASE_CONFIGURATION_CHANGED: charts/kubeclaw/files/config/knip.json remains a stop.",
+        "Parallel custody-metadata and negative-test corrections do not alter reviewed named product-source claims; changes to those sources or reader claims require bounded impact review. Unrelated whole-source generator/source-pin failures are not passed checks here."
+      ],
+      "verdict": "PASS_PRESERVATION_ONLY",
+      "openIssues": []
+    },
+    {
+      "id": "AP09-complete-event-producer-consumer-catalogue-20261021",
+      "previousReviewedRevision": "0e35889a3c4e65d5c47ba88e924611aace67eb1d",
+      "revision": "d0bb52c4d8bcf323c0ff32b95e8e3120ffa6eefb",
+      "changedDependencies": [
+        "docs/site/understand/telemetry.md"
+      ],
+      "gateIds": [],
+      "requirementIds": [
+        "TEL-003"
+      ],
+      "sourceAccuracy": "PASS_ORIGINAL_SCOPE_PRESERVED",
+      "readerUsability": "PASS_ORIGINAL_SCOPE_PRESERVED_WITH_CURRENT_APPLICABLE_READER_CHECKS",
+      "quality": "PASS_ORIGINAL_SCOPE_PRESERVED",
+      "basis": [
+        "handoffs/pr13-finish-20261021/platform-corrections-independent-review.md (exact5registrations/subscriptions and domain/host/retained authority unchanged)",
+        "platform-union-d477-independent-review.md (remaining original subscription scope only; prior TEL002 incompleteness note remains historical, not erased)",
+        "checkpoint-d0bb-53-record-preservation-addendum.md (exact three-topic delta, independent source/execution reports plus current affected Reader checks)"
+      ],
+      "originalSummary": "All5shipped observer registrations and exact subscriptions compared:27telemetry lifecycle types with4omissions;12namespaced domain types; direct host producer/no-repository-consumer route; inactive retained assets. Manifest availability is not activation/delivery.",
+      "originalLimitsRetained": [
+        "TEL002 active projected-envelope and per-type v1 payload catalogue remain separate incomplete scope; no whole A9707 acceptance.",
+        "After telemetry correction, bounded diff review must confirm this existing producer/consumer/subscription/authority catalogue preserved.",
+        "Listed documentation scope only; no live deployment, release or product approval. RELEASE_CONFIGURATION_CHANGED: charts/kubeclaw/files/config/knip.json remains a stop.",
+        "Parallel custody-metadata and negative-test corrections do not alter reviewed named product-source claims; changes to those sources or reader claims require bounded impact review. Unrelated whole-source generator/source-pin failures are not passed checks here."
+      ],
+      "verdict": "PASS_PRESERVATION_ONLY",
+      "openIssues": []
+    },
+    {
+      "id": "A99-02-whole-content-20261021",
+      "previousReviewedRevision": "0e35889a3c4e65d5c47ba88e924611aace67eb1d",
+      "revision": "d0bb52c4d8bcf323c0ff32b95e8e3120ffa6eefb",
+      "changedDependencies": [
+        "docs/site/reference/nova-project.md",
+        "docs/site/reference/pipeline-json.md"
+      ],
+      "gateIds": [
+        "A99-02"
+      ],
+      "requirementIds": [],
+      "sourceAccuracy": "PASS_ORIGINAL_SCOPE_PRESERVED",
+      "readerUsability": "PASS_ORIGINAL_SCOPE_PRESERVED_WITH_CURRENT_APPLICABLE_READER_CHECKS",
+      "quality": "PASS_ORIGINAL_SCOPE_PRESERVED",
+      "basis": [
+        "style-and-scope-preservation-independent.json (24 exact original scopes)",
+        "checkpoint-d0bb-53-record-preservation-addendum.md (exact three-topic delta, independent source/execution reports plus current affected Reader checks)"
+      ],
+      "originalSummary": "Compile order,normalization,defaults,registry snapshot,role resolution,matrix/dependency/gate and immutable identity semantics complete.",
+      "originalLimitsRetained": [
+        "Documentation/source acceptance only; no live deployment,production/provider execution,release,clean installation or platform restore newly certified.",
+        "Already accepted catalogue requirements are not re-counted; no unrelated FLW requirement or whole package acceptance."
+      ],
+      "verdict": "PASS_PRESERVATION_ONLY",
+      "openIssues": []
+    },
+    {
+      "id": "A99-03-whole-content-20261021",
+      "previousReviewedRevision": "0e35889a3c4e65d5c47ba88e924611aace67eb1d",
+      "revision": "d0bb52c4d8bcf323c0ff32b95e8e3120ffa6eefb",
+      "changedDependencies": [
+        "docs/site/reference/nova-project.md",
+        "docs/site/reference/pipeline-json.md"
+      ],
+      "gateIds": [
+        "A99-03"
+      ],
+      "requirementIds": [],
+      "sourceAccuracy": "PASS_ORIGINAL_SCOPE_PRESERVED",
+      "readerUsability": "PASS_ORIGINAL_SCOPE_PRESERVED_WITH_CURRENT_APPLICABLE_READER_CHECKS",
+      "quality": "PASS_ORIGINAL_SCOPE_PRESERVED",
+      "basis": [
+        "style-and-scope-preservation-independent.json (24 exact original scopes)",
+        "checkpoint-d0bb-53-record-preservation-addendum.md (exact three-topic delta, independent source/execution reports plus current affected Reader checks)"
+      ],
+      "originalSummary": "Stage/plugin/provider/fixture/report/artifact selection distinguishes package,global registration and consumer-facing identities; ambiguity/invalid selection explicit.",
+      "originalLimitsRetained": [
+        "Documentation/source acceptance only; no live deployment,production/provider execution,release,clean installation or platform restore newly certified.",
+        "Already accepted catalogue requirements are not re-counted; no unrelated FLW requirement or whole package acceptance."
+      ],
+      "verdict": "PASS_PRESERVATION_ONLY",
+      "openIssues": []
+    },
+    {
+      "id": "A99-05-whole-content-20261021",
+      "previousReviewedRevision": "0e35889a3c4e65d5c47ba88e924611aace67eb1d",
+      "revision": "d0bb52c4d8bcf323c0ff32b95e8e3120ffa6eefb",
+      "changedDependencies": [
+        "docs/site/reference/nova-project.md",
+        "docs/site/reference/pipeline-json.md"
+      ],
+      "gateIds": [
+        "A99-05"
+      ],
+      "requirementIds": [],
+      "sourceAccuracy": "PASS_ORIGINAL_SCOPE_PRESERVED",
+      "readerUsability": "PASS_ORIGINAL_SCOPE_PRESERVED_WITH_CURRENT_APPLICABLE_READER_CHECKS",
+      "quality": "PASS_ORIGINAL_SCOPE_PRESERVED",
+      "basis": [
+        "style-and-scope-preservation-independent.json (24 exact original scopes)",
+        "checkpoint-d0bb-53-record-preservation-addendum.md (exact three-topic delta, independent source/execution reports plus current affected Reader checks)"
+      ],
+      "originalSummary": "Complete authoring pair writer/reader,pointer commit,immutable generation,atomicity,locks/concurrency,loose/legacy compatibility,corruption,republish and safe unsupported repair boundaries.",
+      "originalLimitsRetained": [
+        "Documentation/source acceptance only; no live deployment,production/provider execution,release,clean installation or platform restore newly certified.",
+        "Already accepted catalogue requirements are not re-counted; no unrelated FLW requirement or whole package acceptance.",
+        "Atomic local publication does not prove durability of every external filesystem; malformed loose progress/immutable corruption have explicit unsupported repair boundaries."
+      ],
+      "verdict": "PASS_PRESERVATION_ONLY",
+      "openIssues": []
+    },
+    {
+      "id": "A910-01-whole-content-20261021",
+      "previousReviewedRevision": "0e35889a3c4e65d5c47ba88e924611aace67eb1d",
+      "revision": "d0bb52c4d8bcf323c0ff32b95e8e3120ffa6eefb",
+      "changedDependencies": [
+        "package.json"
+      ],
+      "gateIds": [
+        "A910-01"
+      ],
+      "requirementIds": [],
+      "sourceAccuracy": "PASS_ORIGINAL_SCOPE_PRESERVED",
+      "readerUsability": "PASS_ORIGINAL_SCOPE_PRESERVED_WITH_CURRENT_APPLICABLE_READER_CHECKS",
+      "quality": "PASS_ORIGINAL_SCOPE_PRESERVED",
+      "basis": [
+        "handoffs/pr13-finish-20261021/deepguide-integration-review.md (28 exact original scopes)",
+        "checkpoint-d0bb-53-record-preservation-addendum.md (exact three-topic delta, independent source/execution reports plus current affected Reader checks)"
+      ],
+      "originalSummary": "Clean-checkout preparation fully specifies toolchains,services,credentials,local dependencies,locked installation and baseline checks with expected results and safe-stop boundaries.",
+      "originalLimitsRetained": [
+        "Documentation/source acceptance only; no live deployment,production/provider execution,release,clean installation or platform restore newly certified.",
+        "Already accepted catalogue requirements are not re-counted; no unrelated FLW requirement or whole package acceptance."
+      ],
+      "verdict": "PASS_PRESERVATION_ONLY",
+      "openIssues": []
+    },
+    {
+      "id": "A910-11-whole-content-20261021",
+      "previousReviewedRevision": "0e35889a3c4e65d5c47ba88e924611aace67eb1d",
+      "revision": "d0bb52c4d8bcf323c0ff32b95e8e3120ffa6eefb",
+      "changedDependencies": [
+        "package.json"
+      ],
+      "gateIds": [
+        "A910-11"
+      ],
+      "requirementIds": [],
+      "sourceAccuracy": "PASS_ORIGINAL_SCOPE_PRESERVED",
+      "readerUsability": "PASS_ORIGINAL_SCOPE_PRESERVED_WITH_CURRENT_APPLICABLE_READER_CHECKS",
+      "quality": "PASS_ORIGINAL_SCOPE_PRESERVED",
+      "basis": [
+        "handoffs/pr13-finish-20261021/deepguide-integration-review.md (28 exact original scopes)",
+        "checkpoint-d0bb-53-record-preservation-addendum.md (exact three-topic delta, independent source/execution reports plus current affected Reader checks)"
+      ],
+      "originalSummary": "All specified component-change routes explain distinct smallest complete chains,tools/credentials,expected outcomes,error/skip interpretation,activation/evidence class and cleanup.",
+      "originalLimitsRetained": [
+        "Documentation/source acceptance only; no live deployment,production/provider execution,release,clean installation or platform restore newly certified.",
+        "Already accepted catalogue requirements are not re-counted; no unrelated FLW requirement or whole package acceptance."
+      ],
+      "verdict": "PASS_PRESERVATION_ONLY",
+      "openIssues": []
+    },
+    {
+      "id": "A99-01-whole-recursive-input-content-20261021",
+      "previousReviewedRevision": "47d17498d379cd1f7826444df8187a72231c1111",
+      "revision": "d0bb52c4d8bcf323c0ff32b95e8e3120ffa6eefb",
+      "changedDependencies": [
+        "docs/site/reference/nova-project.md"
+      ],
+      "gateIds": [
+        "A99-01"
+      ],
+      "requirementIds": [],
+      "sourceAccuracy": "PASS_ORIGINAL_SCOPE_PRESERVED",
+      "readerUsability": "PASS_ORIGINAL_SCOPE_PRESERVED_WITH_CURRENT_APPLICABLE_READER_CHECKS",
+      "quality": "PASS_ORIGINAL_SCOPE_PRESERVED",
+      "basis": [
+        "style-and-scope-preservation-independent.json (24 exact original scopes)",
+        "checkpoint-d0bb-53-record-preservation-addendum.md (exact three-topic delta, independent source/execution reports plus current affected Reader checks)"
+      ],
+      "originalSummary": "Whole A99-01 recursive public pipeline input/reference content PASS after correcting the sole established semantic defect (unknown lint members are ignored,not rejected). Current authored field semantics and generated source/schema declarations jointly cover supported recursive variants,conditions,identities,defaults,bounds and validation with canonical provider configuration delegation. Resolved historical FAIL is not retained as an open defect.",
+      "originalLimitsRetained": [
+        "Documentation/source/actual local resolver acceptance; no project/provider/deployment execution or whole global generation/publication acceptance.",
+        "No new whole FLW catalogue requirement is added; existing accepted recursive-input scopes reused without re-counting.",
+        "Maintained full runtime journeys,all-example acceptance and representative drift mutations remain separate gates; this record does not accept A99-06/07/08/11/12/13."
+      ],
+      "verdict": "PASS_PRESERVATION_ONLY",
+      "openIssues": []
+    },
+    {
+      "id": "AP09-whole-current-communication-union-20261021-d477",
+      "previousReviewedRevision": "d477d1c49ea259262c40ccdc5d78ba9f065edb56",
+      "revision": "d0bb52c4d8bcf323c0ff32b95e8e3120ffa6eefb",
+      "changedDependencies": [
+        "docs/site/understand/communication.md"
+      ],
+      "gateIds": [
+        "A97-05"
+      ],
+      "requirementIds": [
+        "COM-001",
+        "COM-008"
+      ],
+      "sourceAccuracy": "PASS_ORIGINAL_SCOPE_PRESERVED",
+      "readerUsability": "PASS_ORIGINAL_SCOPE_PRESERVED_WITH_CURRENT_APPLICABLE_READER_CHECKS",
+      "quality": "PASS_ORIGINAL_SCOPE_PRESERVED",
+      "basis": [
+        "platform-union-d477-independent-review.md",
+        "handoffs/pr13-finish-20261021/http-package-sections-independent-review.md",
+        "style-and-scope-preservation-independent.md (80178 style/current source preservation)",
+        "checkpoint-d0bb-53-record-preservation-addendum.md (exact three-topic delta, independent source/execution reports plus current affected Reader checks)"
+      ],
+      "originalSummary": "Whole communication Source/semantic Reader/Quality PASS at d477: reuses unchanged accepted COM002/006/007 data topics, COM003/004/005/012 complete contracts, COM009 private routes, COM010 registry, COM011 SPIFFE; parent independently accepted routing/model and generic runtime versus Gateway plus signed HTTP publisher corrections. Full30-group message/auth/timeout/order/durable/pressure/failure universe now includes exact generic HMAC/proxy and publisher wrapper/LF-HMAC/ACK/request-reservation-terminal boundaries. No omitted contract inferred complete merely from package or route inventory.",
+      "originalLimitsRetained": [
+        "Unknown provider-owned wire endpoint/retry policy is explicitly external authority, not invented from configuration. Conditional/unavailable product decisions, real provider composition, unresolved registry clients and lab transport are classified honestly.",
+        "No live cluster, provider, Discord, browser, deployment/recovery or end-to-end signal execution is claimed; declared types and supported contract paths are not successful observed traffic.",
+        "Runtime RELEASE_CONFIGURATION_CHANGED: charts/kubeclaw/files/config/knip.json remains a release stop.",
+        "ReaderUsability PASS is semantic task traversal only. Current171-page rendered artifact/search is NOT reviewed here; parent reports only old310b render available and owns a fresh source-coherent build/Reader checkpoint separately. No built Reader approval follows from docs/ref checks.",
+        "Publisher maintained Core-backed live-function fixture fails canonical effectRequest admission at line195, including sanitized rerun. Exact public verification-limit disclosure retained; passing stubbed actual-adapter protocol probes/config/package tests do not establish Core activation, real wire/receiver, credentials or deployment.",
+        "Reuses named complete unchanged constituent topic scopes; independent parent reports supply acceptance of this reviewer\u2019s authored399d/d477 corrections. Prior premature whole-COM no-gap claim is superseded; no self-acceptance or inventory-only blanket promotion."
+      ],
+      "verdict": "PASS_PRESERVATION_ONLY",
+      "openIssues": []
+    },
+    {
+      "id": "AP09-whole-current-telemetry-union-20261021-d477",
+      "previousReviewedRevision": "d477d1c49ea259262c40ccdc5d78ba9f065edb56",
+      "revision": "d0bb52c4d8bcf323c0ff32b95e8e3120ffa6eefb",
+      "changedDependencies": [
+        "docs/site/understand/communication.md",
+        "docs/site/understand/data-and-state.md"
+      ],
+      "gateIds": [
+        "A97-07"
+      ],
+      "requirementIds": [
+        "TEL-002"
+      ],
+      "sourceAccuracy": "PASS_ORIGINAL_SCOPE_PRESERVED",
+      "readerUsability": "PASS_ORIGINAL_SCOPE_PRESERVED_WITH_CURRENT_APPLICABLE_READER_CHECKS",
+      "quality": "PASS_ORIGINAL_SCOPE_PRESERVED",
+      "basis": [
+        "platform-union-d477-independent-review.md",
+        "handoffs/pr13-finish-20261021/http-package-sections-independent-review.md",
+        "style-and-scope-preservation-independent.md (80178 style/current source preservation)",
+        "checkpoint-d0bb-53-record-preservation-addendum.md (exact three-topic delta, independent source/execution reports plus current affected Reader checks)"
+      ],
+      "originalSummary": "Whole telemetry Source/semantic Reader/Quality PASS at d477: accepted TEL001/003/004/005/006/007 retained, parent independently reviewed full13-type host-ingress v1 and3-field inner/8-field outer v2 projection correction. 31 lifecycle+12 domain+13 host declarations distinguished from emission; canonical journal/observer sink/raw host/monitoring authority and retention/redaction/recovery boundaries complete. HTTP corrections preserve telemetry unchanged.",
+      "originalLimitsRetained": [
+        "Host queues/counters can be irrecoverably lost; no repository v1stream consumer/ACK/replay or automatic canonical journal retirement is claimed.",
+        "Monitoring configuration does not prove live scrape, signal delivery, complete labels, log retention capacity, alerting or application success. File audit can alter acquisition metadata/incomplete tails and must use preserved inactive copies.",
+        "No live cluster, provider, Discord, browser, deployment/recovery or end-to-end signal execution is claimed; declared types and supported contract paths are not successful observed traffic.",
+        "Runtime RELEASE_CONFIGURATION_CHANGED: charts/kubeclaw/files/config/knip.json remains a release stop.",
+        "ReaderUsability PASS is semantic task traversal only. Current171-page rendered artifact/search is NOT reviewed here; parent reports only old310b render available and owns a fresh source-coherent build/Reader checkpoint separately. No built Reader approval follows from docs/ref checks.",
+        "Publisher maintained Core-backed live-function fixture fails canonical effectRequest admission at line195, including sanitized rerun. Exact public verification-limit disclosure retained; passing stubbed actual-adapter protocol probes/config/package tests do not establish Core activation, real wire/receiver, credentials or deployment.",
+        "Reuses named complete unchanged constituent topic scopes; independent parent reports supply acceptance of this reviewer\u2019s authored399d/d477 corrections. Prior premature whole-COM no-gap claim is superseded; no self-acceptance or inventory-only blanket promotion."
+      ],
+      "verdict": "PASS_PRESERVATION_ONLY",
+      "openIssues": []
+    },
+    {
+      "id": "AP09-whole-independent-platform-decision-review-20261021-d477",
+      "previousReviewedRevision": "d477d1c49ea259262c40ccdc5d78ba9f065edb56",
+      "revision": "d0bb52c4d8bcf323c0ff32b95e8e3120ffa6eefb",
+      "changedDependencies": [
+        "docs/site/understand/communication.md",
+        "docs/site/understand/data-and-state.md"
+      ],
+      "gateIds": [
+        "A97-11"
+      ],
+      "requirementIds": [],
+      "sourceAccuracy": "PASS_ORIGINAL_SCOPE_PRESERVED",
+      "readerUsability": "PASS_ORIGINAL_SCOPE_PRESERVED_WITH_CURRENT_APPLICABLE_READER_CHECKS",
+      "quality": "PASS_ORIGINAL_SCOPE_PRESERVED",
+      "basis": [
+        "platform-union-d477-independent-review.md",
+        "handoffs/pr13-finish-20261021/http-package-sections-independent-review.md",
+        "style-and-scope-preservation-independent.md (80178 style/current source preservation)",
+        "checkpoint-d0bb-53-record-preservation-addendum.md (exact three-topic delta, independent source/execution reports plus current affected Reader checks)"
+      ],
+      "originalSummary": "Independent whole platform diagnosis/safe-recovery documentation decision PASS at d477: all28 dependency classes reviewed in seven coherent owner batches, accepted matrix facets reused, plus current30-group communication and complete telemetry union. New generic runtime and HTTP publisher uncertainties resolve at original key/receiver and durable authority, not OpenClaw session cancellation or Redis replay. Current-profile/conditional/optional/planned/unresolved classes remain distinct. Source and semantic reader decision supported; fresh rendered Reader checkpoint separate.",
+      "originalLimitsRetained": [
+        "This closes the independent documentation decision task, not live operator execution, deployment readiness, restored production state or global package/release approval.",
+        "No live cluster, provider, Discord, browser, deployment/recovery or end-to-end signal execution is claimed; declared types and supported contract paths are not successful observed traffic.",
+        "Runtime RELEASE_CONFIGURATION_CHANGED: charts/kubeclaw/files/config/knip.json remains a release stop.",
+        "ReaderUsability PASS is semantic task traversal only. Current171-page rendered artifact/search is NOT reviewed here; parent reports only old310b render available and owns a fresh source-coherent build/Reader checkpoint separately. No built Reader approval follows from docs/ref checks.",
+        "Publisher maintained Core-backed live-function fixture fails canonical effectRequest admission at line195, including sanitized rerun. Exact public verification-limit disclosure retained; passing stubbed actual-adapter protocol probes/config/package tests do not establish Core activation, real wire/receiver, credentials or deployment.",
+        "Reuses named complete unchanged constituent topic scopes; independent parent reports supply acceptance of this reviewer\u2019s authored399d/d477 corrections. Prior premature whole-COM no-gap claim is superseded; no self-acceptance or inventory-only blanket promotion."
+      ],
+      "verdict": "PASS_PRESERVATION_ONLY",
+      "openIssues": []
+    }
+  ],
+  "reusedBaseline": "checkpoint-80178-53-record-preservation-independent.json (52PASS + explicit MNT017NOT_READY, not silently retroactively green)",
+  "deltas": [
+    "MNT017 source quote now exact80178snapshot links/ranges/hash, independent custody source/semantic-reader/quality rereview PASS, actuald0bbmaintenance hashc4371matches",
+    "LocalCore same-run telemetry guide/helper/index source and actual fresh-lock clean-checkout successful/blocked/missing-grant + revision and corrupt-record negatives independently accepted by root; prior compile/remote/deployed limits remain",
+    "Productsurface map removes obsolete absence claims, adds bounded canonical links and preserves original per-family depth dates/labels; exact generated map metadata matches"
+  ],
+  "actualCurrentReaderReports": [
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/reader-artifact-d0bb.json",
+      "sha256": "304d6856eca4e5b812141f89ec03a7fb8ca2b77c0b27b326cd1221f2a1a62f0b",
+      "summary": {
+        "selectedPages": 171,
+        "htmlPages": 181,
+        "localLinks": 38517,
+        "verifiedOutputDigests": 213
+      }
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/reader-search-d0bb.json",
+      "sha256": "e2a30948a1fa7e289161621d71ab0224398733159d55cbbc899b9f3d1b017c58",
+      "summary": {
+        "indexedCanonicalPages": 171,
+        "internalArtifacts": 0,
+        "readerQuestionsPassed": 12
+      }
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/reader-source-links-d0bb.json",
+      "sha256": "46db323859b1b2abc31c1e47cd03f816681dade9cda72e99c0b7cd2535dce159",
+      "summary": {
+        "htmlPages": 181,
+        "uniqueVerifiedLinks": 14635,
+        "uniqueSourceObjects": 3829,
+        "limit": "Primary source object/revision/line or Markdown-fragment verification only; not semantic or live-runtime acceptance."
+      }
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/reader-source-previews-d0bb.json",
+      "sha256": "8da8fb1a02889e47a4c86edf6b610ee5d9fb6f06cff8940f8223b974b72e719b",
+      "summary": {
+        "pages": 171,
+        "sourceBoxes": 406,
+        "boxesWithPreviews": 404,
+        "excerpts": 1741,
+        "uniqueSourceObjects": 905,
+        "limit": "Exact linked source and rendered excerpt verification; no semantic claim or test/runtime result inferred."
+      }
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/reader-diagrams-d0bb.json",
+      "sha256": "e1d974213d8334157a2fca8963bc8b37a0d7615b1fb4787d8752e4671619193a",
+      "summary": {
+        "pages": 171,
+        "diagrams": 27,
+        "freshRenderHashesMatched": 27,
+        "localOnly": true,
+        "limit": "Source/owner/question/visible alternative routing, static SVG and deterministic render checks only; not per-edge semantic or human screenreader acceptance."
+      }
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/browser-d0bb.json",
+      "sha256": "b17794a1923e6f233bf01c27c6f2aa7c39b5136c11f0931a8aee1e4906c67b5e",
+      "summary": {
+        "limits": "15 changed/new pages at3widths offline/noJS and actual offline JS search; no complete accessibility, semantic51package, deployed or release acceptance."
+      }
+    }
+  ],
+  "additionalIndependentCheck": {
+    "manifestOutputs": 213,
+    "allCurrentHashesAndBytesVerified": true,
+    "exactBuildAndManifestRevision": "d0bb52c4d8bcf323c0ff32b95e8e3120ffa6eefb",
+    "maintenanceBrowserWidths": [
+      320,
+      768,
+      1440
+    ]
+  },
+  "proofReports": [
+    "handoffs/pr13-finish-20261021/mnt017-80178-preservation.md",
+    "handoffs/pr13-finish-20261021/local-core-telemetry-source-independent-review.md",
+    "handoffs/pr13-finish-20261021/local-core-telemetry-independent-execution.md"
+  ],
+  "limits": [
+    "Original53distinct record scopes and exact prior limits preserved only; not53new approvals, all261/89, all51package, globalconfig/source/recipe or release approval.",
+    "No postd0bbdirty rawscalar/sourcegraph/custodyWIP included. Publiccontract draft stays off-tree and is not reviewed content.",
+    "Current171page d0bbartifact/search/source/previews/27SVG/browser checks cover their actual bounded claims, not fullaxe/screenreader/nativeproduct/deployed verification.",
+    "80178ZIP/extracted-client observations remain80178only; no newly built d0bbZIP is claimed by these six new reports. Currentd0bbfile-based offline/browser observations are independently reviewed separately.",
+    "Earlier initial MNT017 staleSHA finding remains real in80178; only independently corrected c4371page+d0bbReader closes its preservation stop.",
+    "Knip release stop and independent config/localHelm owner stops remain."
+  ],
+  "openIssues": []
+}

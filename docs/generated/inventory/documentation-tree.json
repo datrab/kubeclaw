@@ -16,8 +16,8 @@
   "baselineFiles": 2915,
   "missingBaselineFiles": [],
   "counts": {
-    "canonical-reader-documentation": 184,
-    "internal-documentation-input": 1167,
+    "canonical-reader-documentation": 189,
+    "internal-documentation-input": 1168,
     "legacy-extraction-source": 249,
     "deletable-remainder": 2335
   },
@@ -53323,6 +53323,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "handoffs/pr13-finish-20261021/custody-review.md",
+          "token": "docs/blueprint/documentation-completion-matrix.json",
+          "inputUse": false
+        },
+        {
           "sourcePath": "handoffs/pr13-reset-20261021/prism-diagram-review.md",
           "token": "docs/blueprint/documentation-completion-matrix.json",
           "inputUse": false
@@ -53348,7 +53353,7 @@
         "scripts/tests/docs-source-freshness.test.mjs"
       ],
       "indirectExecutableConsumers": [],
-      "sha256": "acbeadd56a01d268ce48e774154d8b05a13c10d08b9a9dc3f70a7cab28716b4b"
+      "sha256": "e1c2f96001462071a360d8ea06c81e9ce9c6fd6a89923bf05f4b2a407678a702"
     },
     {
       "path": "docs/blueprint/documentation-parity-contract.md",
@@ -53738,7 +53743,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "14233b431c00832455aebce9ec7ba479ddfdb5482d4884e099c5db435daf1783"
+      "sha256": "618c8884a3b0c8491549578168e1226604dadd6ee211e7c10861613e9826f407"
     },
     {
       "path": "docs/blueprint/generated/completeness.json",
@@ -53782,7 +53787,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "f69ed960e1ffa21ea1b737bac9172b86bf38ace628f6f94d590e45cbb1cc8463"
+      "sha256": "8c83414f85001947298c2a7656ec6ea28542b52516efd4ee23765170a6bd2c48"
     },
     {
       "path": "docs/blueprint/generated/migration-ledger-summary.md",
@@ -53821,7 +53826,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "3ba81dc4e26cf1c955b5e1e2f096aa4b2abb6df67a2bce9bcc13fb917ab11e40"
+      "sha256": "fb7309c3d4dc997163fd2da6aab22d35324586f2ac0f44542e447abbd2dedff7"
     },
     {
       "path": "docs/blueprint/generated/migration-ledger.csv",
@@ -53875,7 +53880,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "b99845015ac6db9f781b52e656c2f5e0c4a9c895db67ec562df29a83cc7027ce"
+      "sha256": "92fbfcf648191cc91eaf5241722106bb53f805edd3b21707d50345353b6b1af9"
     },
     {
       "path": "docs/blueprint/generated/platform-inventory.json",
@@ -54748,6 +54753,45 @@
       "sha256": "1cd7c98b484915f949bdf44543df14a3c7e922abc2e973bdd4ac068a643f16c5"
     },
     {
+      "path": "docs/config/documentation-plugin-complexity.json",
+      "class": "internal-documentation-input",
+      "purpose": "Source-bound editorial complexity criteria and canonical guide assignments, not product runtime configuration or depth acceptance.",
+      "originalPath": "docs/config/documentation-plugin-complexity.json",
+      "expectedPath": "docs/config/documentation-plugin-complexity.json",
+      "introducedAfterBaseline": true,
+      "locationValid": true,
+      "consumers": [
+        {
+          "sourcePath": "docs/config/documentation-tree-classification.json",
+          "token": "docs/config/documentation-plugin-complexity.json",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "docs/site/extend/deep-guides/README.md",
+          "token": "docs/config/documentation-plugin-complexity.json",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "docs/site/reference/generated-documentation-map.json",
+          "token": "docs/config/documentation-plugin-complexity.json",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "handoffs/pr13-finish-20261021/workflow-developer-author-batch.md",
+          "token": "docs/config/documentation-plugin-complexity.json",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "scripts/docs-plugin-complexity.mjs",
+          "token": "docs/config/documentation-plugin-complexity.json",
+          "inputUse": false
+        }
+      ],
+      "executableConsumers": [],
+      "indirectExecutableConsumers": [],
+      "sha256": "350aea2edc2c80426474888a4ef5f558f640c78b1d80399c5e81765ba1ed1100"
+    },
+    {
       "path": "docs/config/documentation-publication-manifest.json",
       "class": "internal-documentation-input",
       "purpose": "Generated positive publication authority from explicit canonical classifications; owner scripts/docs-publication.mjs.",
@@ -54807,6 +54851,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "handoffs/pr13-finish-20261021/deepguide-integration-review.md",
+          "token": "docs/config/documentation-publication-manifest.json",
+          "inputUse": false
+        },
+        {
           "sourcePath": "scripts/docs-publication.mjs",
           "token": "docs/config/documentation-publication-manifest.json",
           "inputUse": false
@@ -54836,7 +54885,7 @@
         "scripts/tests/docs-reader-source-previews.test.mjs"
       ],
       "indirectExecutableConsumers": [],
-      "sha256": "af172dd3d424323555924b3b5f3d74b1d123500853b4b923f35fd6aa78093f25"
+      "sha256": "4e1c3827c72aa3499985548a79db6aeb9fce9344d4de936fa65aaa877e8e406f"
     },
     {
       "path": "docs/config/documentation-tree-baseline.json",
@@ -55117,6 +55166,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "handoffs/pr13-finish-20261021/deepguide-integration-review.md",
+          "token": "docs/config/documentation-tree-classification.json",
+          "inputUse": false
+        },
+        {
           "sourcePath": "scripts/docs-parity-batches.mjs",
           "token": "docs/config/documentation-tree-classification.json",
           "inputUse": false
@@ -55202,7 +55256,7 @@
         "scripts/tests/docs-tree-boundary.test.mjs"
       ],
       "indirectExecutableConsumers": [],
-      "sha256": "2596e4e4123ca7fb49378a30a2b5df423fc8458a97b4376ca523b793d449470c"
+      "sha256": "6eaad838208f5c644c8b75e2d0e0334886ce5f2dc592f74c8f925d5861eee067"
     },
     {
       "path": "docs/config/platform-surface-map.json",
@@ -55284,6 +55338,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "docs/blueprint/documentation-completion-matrix.json",
+          "token": "docs/config/platform-surface-map.json",
+          "inputUse": false
+        },
+        {
           "sourcePath": "docs/config/documentation-tree-baseline.json",
           "token": "docs/config/platform-surface-map.json",
           "inputUse": false
@@ -55304,6 +55363,16 @@
           "inputUse": false
         },
         {
+          "sourcePath": "handoffs/pr13-finish-20261021/operator-platform-acceptance.md",
+          "token": "docs/config/platform-surface-map.json",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "handoffs/pr13-finish-20261021/operator-platform-completion-records.json",
+          "token": "docs/config/platform-surface-map.json",
+          "inputUse": false
+        },
+        {
           "sourcePath": "scripts/check-platform-specialist-guides.mjs",
           "token": "docs/config/platform-surface-map.json",
           "inputUse": true
@@ -55320,6 +55389,7 @@
         }
       ],
       "executableConsumers": [
+        "handoffs/pr13-finish-20261021/operator-platform-completion-records.json",
         "scripts/check-platform-specialist-guides.mjs",
         "scripts/check-platform-surface-drift-mutations.mjs"
       ],
@@ -57047,6 +57117,16 @@
           "inputUse": false
         },
         {
+          "sourcePath": "handoffs/pr13-finish-20261021/operator-platform-acceptance.md",
+          "token": "docs/generated/inventory/platform-surfaces.json",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "handoffs/pr13-finish-20261021/operator-platform-completion-records.json",
+          "token": "docs/generated/inventory/platform-surfaces.json",
+          "inputUse": false
+        },
+        {
           "sourcePath": "scripts/check-platform-surface-drift-mutations.mjs",
           "token": "docs/generated/inventory/platform-surfaces.json",
           "inputUse": true
@@ -57064,6 +57144,7 @@
       ],
       "executableConsumers": [
         ".codex/handoffs/documentation-cloud/worktree-files.json",
+        "handoffs/pr13-finish-20261021/operator-platform-completion-records.json",
         "scripts/check-platform-surface-drift-mutations.mjs"
       ],
       "indirectExecutableConsumers": [],
@@ -57216,6 +57297,11 @@
         },
         {
           "sourcePath": "docs/generated/reference/README.md",
+          "token": "docs/generated/inventory/sdk-reference.json",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "handoffs/pr13-finish-20261021/workflow-developer-acceptance.md",
           "token": "docs/generated/inventory/sdk-reference.json",
           "inputUse": false
         },
@@ -156452,6 +156538,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "handoffs/pr13-finish-20261021/deepguide-integration-review.md",
+          "token": "docs/site/extend/README.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "handoffs/pr13-reset-20261021/whole-diagram-record-inputs.json",
           "token": "docs/site/extend/README.md",
           "inputUse": false
@@ -156528,7 +156619,7 @@
           ]
         }
       ],
-      "sha256": "ea2870036311cbcf9d72545a572fb807e8a649f5da23696f7a2c2d95aaae8dca"
+      "sha256": "7569bcbbb93d1fa8cc9346324705ec64cbae5373668a2a0da3bc15b86fa6bd75"
     },
     {
       "path": "docs/site/extend/buster.md",
@@ -156625,6 +156716,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "handoffs/pr13-finish-20261021/buster-source-roster-review.md",
+          "token": "docs/site/extend/buster.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "scripts/ap08-review-scope.mjs",
           "token": "docs/site/extend/buster.md",
           "inputUse": false
@@ -156661,7 +156757,7 @@
           ]
         }
       ],
-      "sha256": "be54aa18cda20591ab4f72daf483a6a8406a5a05f56b01a3be6258ebfb64ba0f"
+      "sha256": "561609a23f82da2629cf83f72366a9f3532503b99d5f03d8ea2c32eac49007b5"
     },
     {
       "path": "docs/site/extend/contracts.md",
@@ -156783,6 +156879,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "handoffs/pr13-finish-20261021/workflow-developer-completion-records.json",
+          "token": "docs/site/extend/contracts.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "scripts/ap08-review-scope.mjs",
           "token": "docs/site/extend/contracts.md",
           "inputUse": false
@@ -156803,7 +156904,9 @@
           "inputUse": false
         }
       ],
-      "executableConsumers": [],
+      "executableConsumers": [
+        "handoffs/pr13-finish-20261021/workflow-developer-completion-records.json"
+      ],
       "indirectExecutableConsumers": [
         {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
@@ -156813,6 +156916,158 @@
         }
       ],
       "sha256": "1ba210f4603a26665e3b7a14939c79109968c95a80b58ad48fd512d08dbfc8b5"
+    },
+    {
+      "path": "docs/site/extend/deep-guides/README.md",
+      "class": "canonical-reader-documentation",
+      "purpose": "Source-bound package classification and canonical deep-guide ownership index.",
+      "originalPath": "docs/site/extend/deep-guides/README.md",
+      "expectedPath": "docs/site/extend/deep-guides/README.md",
+      "introducedAfterBaseline": true,
+      "locationValid": true,
+      "consumers": [
+        {
+          "sourcePath": "docs/config/documentation-publication-manifest.json",
+          "token": "docs/site/extend/deep-guides/README.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "docs/config/documentation-tree-classification.json",
+          "token": "docs/site/extend/deep-guides/README.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "docs/site/reference/generated-documentation-map.json",
+          "token": "docs/site/extend/deep-guides/README.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "handoffs/pr13-finish-20261021/workflow-developer-author-batch.md",
+          "token": "docs/site/extend/deep-guides/README.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "scripts/docs-governance.mjs",
+          "token": "docs/site/extend/deep-guides/README.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "scripts/docs-plugin-complexity.mjs",
+          "token": "docs/site/extend/deep-guides/README.md",
+          "inputUse": true
+        }
+      ],
+      "executableConsumers": [],
+      "indirectExecutableConsumers": [
+        {
+          "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        }
+      ],
+      "sha256": "9d2da3a18f28d69c5db78ec520cf71416b50e92c1d9f8032e7768cdad5a24ccd"
+    },
+    {
+      "path": "docs/site/extend/deep-guides/demo-handoff.md",
+      "class": "canonical-reader-documentation",
+      "purpose": "Package-specific demo handoff behavior, configuration, failure and change guide.",
+      "originalPath": "docs/site/extend/deep-guides/demo-handoff.md",
+      "expectedPath": "docs/site/extend/deep-guides/demo-handoff.md",
+      "introducedAfterBaseline": true,
+      "locationValid": true,
+      "consumers": [
+        {
+          "sourcePath": "docs/config/documentation-plugin-complexity.json",
+          "token": "docs/site/extend/deep-guides/demo-handoff.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "docs/config/documentation-publication-manifest.json",
+          "token": "docs/site/extend/deep-guides/demo-handoff.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "docs/config/documentation-tree-classification.json",
+          "token": "docs/site/extend/deep-guides/demo-handoff.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "docs/site/reference/generated-documentation-map.json",
+          "token": "docs/site/extend/deep-guides/demo-handoff.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "handoffs/pr13-finish-20261021/style-and-scope-preservation-independent.json",
+          "token": "docs/site/extend/deep-guides/demo-handoff.md",
+          "inputUse": false
+        }
+      ],
+      "executableConsumers": [
+        "handoffs/pr13-finish-20261021/style-and-scope-preservation-independent.json"
+      ],
+      "indirectExecutableConsumers": [
+        {
+          "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        }
+      ],
+      "sha256": "1d5e58a771bed49c7f368ad43ebc983a59d8c0e804520cc5880f046a743a0e27"
+    },
+    {
+      "path": "docs/site/extend/deep-guides/reports.md",
+      "class": "canonical-reader-documentation",
+      "purpose": "Package-specific source-bound case study and pipeline review behavior, state and change guide.",
+      "originalPath": "docs/site/extend/deep-guides/reports.md",
+      "expectedPath": "docs/site/extend/deep-guides/reports.md",
+      "introducedAfterBaseline": true,
+      "locationValid": true,
+      "consumers": [
+        {
+          "sourcePath": "docs/config/documentation-plugin-complexity.json",
+          "token": "docs/site/extend/deep-guides/reports.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "docs/config/documentation-publication-manifest.json",
+          "token": "docs/site/extend/deep-guides/reports.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "docs/config/documentation-tree-classification.json",
+          "token": "docs/site/extend/deep-guides/reports.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "docs/site/reference/generated-documentation-map.json",
+          "token": "docs/site/extend/deep-guides/reports.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "handoffs/pr13-finish-20261021/reports-guide-independent-review.md",
+          "token": "docs/site/extend/deep-guides/reports.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "handoffs/pr13-finish-20261021/style-and-scope-preservation-independent.json",
+          "token": "docs/site/extend/deep-guides/reports.md",
+          "inputUse": false
+        }
+      ],
+      "executableConsumers": [
+        "handoffs/pr13-finish-20261021/style-and-scope-preservation-independent.json"
+      ],
+      "indirectExecutableConsumers": [
+        {
+          "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        }
+      ],
+      "sha256": "df2209e3867165364e89e7e7aa1d1c46bf26e8ec47a9221276dfd65c5f29c0fc"
     },
     {
       "path": "docs/site/extend/developer-handbook.md",
@@ -156969,6 +157224,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "handoffs/pr13-finish-20261021/workflow-developer-completion-records.json",
+          "token": "docs/site/extend/developer-handbook.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "scripts/check-contract-drift.mjs",
           "token": "docs/site/extend/developer-handbook.md",
           "inputUse": true
@@ -156995,6 +157255,7 @@
         }
       ],
       "executableConsumers": [
+        "handoffs/pr13-finish-20261021/workflow-developer-completion-records.json",
         "scripts/check-contract-drift.mjs",
         "scripts/tests/docs-sdk-reference-navigation.test.mjs",
         "scripts/tests/docs-tree-boundary.test.mjs"
@@ -157118,7 +157379,7 @@
           ]
         }
       ],
-      "sha256": "80f12b7cd8dd30fabf0dc6fc1f2a9adc094c719ce084216575ab59a508b2a347"
+      "sha256": "c4371fb5186b88b6dc76f00024a1c2a993ebd53fa0404d0e28dcad0d5ace7dec"
     },
     {
       "path": "docs/site/extend/effectful-plugin.md",
@@ -157240,6 +157501,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "handoffs/pr13-finish-20261021/workflow-developer-completion-records.json",
+          "token": "docs/site/extend/effectful-plugin.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "scripts/ap08-review-scope.mjs",
           "token": "docs/site/extend/effectful-plugin.md",
           "inputUse": false
@@ -157255,7 +157521,9 @@
           "inputUse": false
         }
       ],
-      "executableConsumers": [],
+      "executableConsumers": [
+        "handoffs/pr13-finish-20261021/workflow-developer-completion-records.json"
+      ],
       "indirectExecutableConsumers": [
         {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
@@ -157930,6 +158198,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "docs/config/documentation-plugin-complexity.json",
+          "token": "docs/site/extend/lint.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "docs/config/documentation-publication-manifest.json",
           "token": "docs/site/extend/lint.md",
           "inputUse": false
@@ -157950,6 +158223,16 @@
           "inputUse": false
         },
         {
+          "sourcePath": "handoffs/pr13-finish-20261021/six-guide-independent-review.md",
+          "token": "docs/site/extend/lint.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "handoffs/pr13-finish-20261021/style-and-scope-preservation-independent.json",
+          "token": "docs/site/extend/lint.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "handoffs/pr13-reset-20261021/whole-diagram-record-inputs.json",
           "token": "docs/site/extend/lint.md",
           "inputUse": false
@@ -157957,7 +158240,7 @@
         {
           "sourcePath": "scripts/check-platform-specialist-guides.mjs",
           "token": "docs/site/extend/lint.md",
-          "inputUse": false
+          "inputUse": true
         },
         {
           "sourcePath": "scripts/docs-ap09-catalogue.mjs",
@@ -157971,6 +158254,7 @@
         }
       ],
       "executableConsumers": [
+        "handoffs/pr13-finish-20261021/style-and-scope-preservation-independent.json",
         "handoffs/pr13-reset-20261021/whole-diagram-record-inputs.json",
         "scripts/check-platform-specialist-guides.mjs"
       ],
@@ -157982,7 +158266,7 @@
           ]
         }
       ],
-      "sha256": "c57c08ef38153d5adceec947cdccc545722d18438a253bb02096f50a8c881ab1"
+      "sha256": "3cb803be65a88f7e742e37ee3602526648d4e7dbcdc9407f334fd4f1f40a0b28"
     },
     {
       "path": "docs/site/extend/nova.md",
@@ -158250,6 +158534,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "handoffs/pr13-finish-20261021/workflow-developer-completion-records.json",
+          "token": "docs/site/extend/platform/README.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "scripts/docs-ap09-catalogue.mjs",
           "token": "docs/site/extend/platform/README.md",
           "inputUse": false
@@ -158260,7 +158549,9 @@
           "inputUse": false
         }
       ],
-      "executableConsumers": [],
+      "executableConsumers": [
+        "handoffs/pr13-finish-20261021/workflow-developer-completion-records.json"
+      ],
       "indirectExecutableConsumers": [
         {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
@@ -158376,6 +158667,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "handoffs/pr13-finish-20261021/workflow-developer-completion-records.json",
+          "token": "docs/site/extend/platform/buster.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "scripts/check-buster-guides.mjs",
           "token": "docs/site/extend/platform/buster.md",
           "inputUse": false
@@ -158397,6 +158693,7 @@
         }
       ],
       "executableConsumers": [
+        "handoffs/pr13-finish-20261021/workflow-developer-completion-records.json",
         "scripts/check-buster-guides.mjs"
       ],
       "indirectExecutableConsumers": [
@@ -158564,6 +158861,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "handoffs/pr13-finish-20261021/workflow-developer-completion-records.json",
+          "token": "docs/site/extend/platform/prism.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "scripts/check-prism-guides.mjs",
           "token": "docs/site/extend/platform/prism.md",
           "inputUse": false
@@ -158585,6 +158887,7 @@
         }
       ],
       "executableConsumers": [
+        "handoffs/pr13-finish-20261021/workflow-developer-completion-records.json",
         "scripts/check-prism-guides.mjs"
       ],
       "indirectExecutableConsumers": [
@@ -158722,6 +159025,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "handoffs/pr13-finish-20261021/workflow-developer-completion-records.json",
+          "token": "docs/site/extend/plugin-catalogue/README.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "scripts/check-ap08-host-lifecycle-catalogue.mjs",
           "token": "docs/site/extend/plugin-catalogue/README.md",
           "inputUse": false
@@ -158737,7 +159045,9 @@
           "inputUse": false
         }
       ],
-      "executableConsumers": [],
+      "executableConsumers": [
+        "handoffs/pr13-finish-20261021/workflow-developer-completion-records.json"
+      ],
       "indirectExecutableConsumers": [
         {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
@@ -160859,12 +161169,19 @@
           "inputUse": false
         },
         {
+          "sourcePath": "handoffs/pr13-finish-20261021/workflow-developer-completion-records.json",
+          "token": "docs/site/extend/plugin-catalogue/kubeclaw.demo-handoff.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "scripts/docs-published-route-baseline.json",
           "token": "docs/site/extend/plugin-catalogue/kubeclaw.demo-handoff.md",
           "inputUse": false
         }
       ],
-      "executableConsumers": [],
+      "executableConsumers": [
+        "handoffs/pr13-finish-20261021/workflow-developer-completion-records.json"
+      ],
       "indirectExecutableConsumers": [
         {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
@@ -165571,7 +165888,7 @@
           ]
         }
       ],
-      "sha256": "6cd496e1a16469b11b7a38f4a1a796e39ca1084c90004a5bbc17741a1c5fa4c2"
+      "sha256": "1fc6c2712849c9b251ee713ee33aef5aae87a74b0292f7650d408c94981d2145"
     },
     {
       "path": "docs/site/reference/README.md",
@@ -167508,6 +167825,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "handoffs/pr13-finish-20261021/a99-01-completion-record.json",
+          "token": "docs/site/reference/buster-provider-configuration.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "scripts/check-buster-guides.mjs",
           "token": "docs/site/reference/buster-provider-configuration.md",
           "inputUse": false
@@ -167544,6 +167866,7 @@
         }
       ],
       "executableConsumers": [
+        "handoffs/pr13-finish-20261021/a99-01-completion-record.json",
         "scripts/check-buster-guides.mjs",
         "scripts/check-provider-registration-drift.mjs",
         "scripts/generate-buster-provider-reference.mjs",
@@ -169187,6 +169510,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "docs/config/documentation-plugin-complexity.json",
+          "token": "docs/site/reference/buster-suites.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "docs/config/documentation-publication-manifest.json",
           "token": "docs/site/reference/buster-suites.md",
           "inputUse": false
@@ -169203,6 +169531,11 @@
         },
         {
           "sourcePath": "docs/site/reference/generated-documentation-map.json",
+          "token": "docs/site/reference/buster-suites.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "handoffs/pr13-finish-20261021/a99-01-completion-record.json",
           "token": "docs/site/reference/buster-suites.md",
           "inputUse": false
         },
@@ -169263,6 +169596,7 @@
         }
       ],
       "executableConsumers": [
+        "handoffs/pr13-finish-20261021/a99-01-completion-record.json",
         "scripts/check-buster-guides.mjs",
         "scripts/check-fixture-registration-drift.mjs",
         "scripts/check-report-registration-drift.mjs",
@@ -170910,6 +171244,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "handoffs/pr13-finish-20261021/operator-platform-completion-records.json",
+          "token": "docs/site/reference/configuration-change-impact.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "scripts/docs-ap09-catalogue.mjs",
           "token": "docs/site/reference/configuration-change-impact.md",
           "inputUse": false
@@ -170926,7 +171265,8 @@
         }
       ],
       "executableConsumers": [
-        ".codex/handoffs/documentation-cloud/evidence-index.json"
+        ".codex/handoffs/documentation-cloud/evidence-index.json",
+        "handoffs/pr13-finish-20261021/operator-platform-completion-records.json"
       ],
       "indirectExecutableConsumers": [
         {
@@ -172118,6 +172458,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "handoffs/pr13-finish-20261021/operator-platform-completion-records.json",
+          "token": "docs/site/reference/endpoints.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "scripts/docs-ap09-catalogue.mjs",
           "token": "docs/site/reference/endpoints.md",
           "inputUse": false
@@ -172138,7 +172483,9 @@
           "inputUse": false
         }
       ],
-      "executableConsumers": [],
+      "executableConsumers": [
+        "handoffs/pr13-finish-20261021/operator-platform-completion-records.json"
+      ],
       "indirectExecutableConsumers": [
         {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
@@ -172778,7 +173125,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "291975654090a334cf66c0e903cdbda3f022deb7be46ef6b8c4422ada89c6126"
+      "sha256": "7dc6e196f9aa343d01da12c0d2e840919bf1bd4b510def46519b0daeafd0b93d"
     },
     {
       "path": "docs/site/reference/glossary.md",
@@ -173653,7 +174000,7 @@
         {
           "sourcePath": "scripts/check-platform-specialist-guides.mjs",
           "token": "docs/site/reference/lint-policy.md",
-          "inputUse": false
+          "inputUse": true
         },
         {
           "sourcePath": "scripts/docs-ap09-catalogue.mjs",
@@ -173677,7 +174024,7 @@
           ]
         }
       ],
-      "sha256": "41eb67193888f1892a2a93fdb566a7a576bca7ec091192762a2c2b9da703a7f7"
+      "sha256": "fa2e9b42bd393c43c09ed81aa4001d281120bc1c9a25e881d24be07b27e68686"
     },
     {
       "path": "docs/site/reference/lint-rules.md",
@@ -173791,7 +174138,7 @@
         {
           "sourcePath": "scripts/check-platform-specialist-guides.mjs",
           "token": "docs/site/reference/lint-rules.md",
-          "inputUse": false
+          "inputUse": true
         },
         {
           "sourcePath": "scripts/docs-published-route-baseline.json",
@@ -173942,6 +174289,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "docs/config/documentation-plugin-complexity.json",
+          "token": "docs/site/reference/nova-project.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "docs/config/documentation-publication-manifest.json",
           "token": "docs/site/reference/nova-project.md",
           "inputUse": false
@@ -173963,6 +174315,26 @@
         },
         {
           "sourcePath": "docs/site/reference/generated-documentation-map.json",
+          "token": "docs/site/reference/nova-project.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "handoffs/pr13-finish-20261021/a99-01-completion-record.json",
+          "token": "docs/site/reference/nova-project.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "handoffs/pr13-finish-20261021/six-guide-independent-review.md",
+          "token": "docs/site/reference/nova-project.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "handoffs/pr13-finish-20261021/style-and-scope-preservation-independent.json",
+          "token": "docs/site/reference/nova-project.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "handoffs/pr13-finish-20261021/workflow-developer-completion-records.json",
           "token": "docs/site/reference/nova-project.md",
           "inputUse": false
         },
@@ -173993,6 +174365,9 @@
         }
       ],
       "executableConsumers": [
+        "handoffs/pr13-finish-20261021/a99-01-completion-record.json",
+        "handoffs/pr13-finish-20261021/style-and-scope-preservation-independent.json",
+        "handoffs/pr13-finish-20261021/workflow-developer-completion-records.json",
         "scripts/check-suite-migration-workflow.mjs"
       ],
       "indirectExecutableConsumers": [
@@ -174003,7 +174378,7 @@
           ]
         }
       ],
-      "sha256": "7f67c50891bf658696ec62827368f5889bbbf053a468c2056d730275fef5b4cf"
+      "sha256": "95a4f241b276ad604cae43f38965bb055a5a63cbdf760138feb06eb8021e60f0"
     },
     {
       "path": "docs/site/reference/pipeline-definition.md",
@@ -174095,6 +174470,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "handoffs/pr13-finish-20261021/a99-01-completion-record.json",
+          "token": "docs/site/reference/pipeline-definition.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "scripts/docs-ap09-catalogue.mjs",
           "token": "docs/site/reference/pipeline-definition.md",
           "inputUse": false
@@ -174110,7 +174490,9 @@
           "inputUse": false
         }
       ],
-      "executableConsumers": [],
+      "executableConsumers": [
+        "handoffs/pr13-finish-20261021/a99-01-completion-record.json"
+      ],
       "indirectExecutableConsumers": [
         {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
@@ -174211,6 +174593,26 @@
           "inputUse": false
         },
         {
+          "sourcePath": "handoffs/pr13-finish-20261021/a99-01-completion-record.json",
+          "token": "docs/site/reference/pipeline-json.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "handoffs/pr13-finish-20261021/workflow-developer-acceptance.md",
+          "token": "docs/site/reference/pipeline-json.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "handoffs/pr13-finish-20261021/workflow-developer-completion-records.json",
+          "token": "docs/site/reference/pipeline-json.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "handoffs/pr13-finish-20261021/workflow-parent-smallfix-preservation.json",
+          "token": "docs/site/reference/pipeline-json.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "scripts/docs-ap09-catalogue.mjs",
           "token": "docs/site/reference/pipeline-json.md",
           "inputUse": false
@@ -174226,7 +174628,11 @@
           "inputUse": false
         }
       ],
-      "executableConsumers": [],
+      "executableConsumers": [
+        "handoffs/pr13-finish-20261021/a99-01-completion-record.json",
+        "handoffs/pr13-finish-20261021/workflow-developer-completion-records.json",
+        "handoffs/pr13-finish-20261021/workflow-parent-smallfix-preservation.json"
+      ],
       "indirectExecutableConsumers": [
         {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
@@ -174235,7 +174641,7 @@
           ]
         }
       ],
-      "sha256": "e75bfc59c5e6c7b37cbfe8dee0e8a255f026aa3142403fc567be4a0576d23d3d"
+      "sha256": "97e71e6f62b80f4fde5e599a156ca74739a5eb68958bcc269d3c292599234726"
     },
     {
       "path": "docs/site/reference/pipeline-platform.md",
@@ -174503,6 +174909,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "handoffs/pr13-finish-20261021/operator-platform-completion-records.json",
+          "token": "docs/site/reference/platform-surfaces-generated.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "scripts/check-platform-specialist-guides.mjs",
           "token": "docs/site/reference/platform-surfaces-generated.md",
           "inputUse": false
@@ -174525,6 +174936,7 @@
       ],
       "executableConsumers": [
         ".codex/handoffs/documentation-cloud/worktree-files.json",
+        "handoffs/pr13-finish-20261021/operator-platform-completion-records.json",
         "scripts/check-platform-specialist-guides.mjs"
       ],
       "indirectExecutableConsumers": [
@@ -174886,6 +175298,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "handoffs/pr13-finish-20261021/workflow-developer-completion-records.json",
+          "token": "docs/site/reference/project-pipeline-publication.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "scripts/docs-ap09-catalogue.mjs",
           "token": "docs/site/reference/project-pipeline-publication.md",
           "inputUse": false
@@ -174907,7 +175324,8 @@
         }
       ],
       "executableConsumers": [
-        ".codex/handoffs/documentation-cloud/worktree-files.json"
+        ".codex/handoffs/documentation-cloud/worktree-files.json",
+        "handoffs/pr13-finish-20261021/workflow-developer-completion-records.json"
       ],
       "indirectExecutableConsumers": [
         {
@@ -175714,6 +176132,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "handoffs/pr13-finish-20261021/operator-platform-completion-records.json",
+          "token": "docs/site/reference/secrets.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "scripts/check-configuration-drift-mutations.mjs",
           "token": "docs/site/reference/secrets.md",
           "inputUse": false
@@ -175750,6 +176173,7 @@
         }
       ],
       "executableConsumers": [
+        "handoffs/pr13-finish-20261021/operator-platform-completion-records.json",
         "scripts/check-configuration-drift-mutations.mjs"
       ],
       "indirectExecutableConsumers": [
@@ -176451,6 +176875,16 @@
           "inputUse": false
         },
         {
+          "sourcePath": "handoffs/pr13-finish-20261021/a99-01-completion-record.json",
+          "token": "docs/site/reference/workflows.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "handoffs/pr13-finish-20261021/workflow-developer-completion-records.json",
+          "token": "docs/site/reference/workflows.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "scripts/docs-check.mjs",
           "token": "docs/site/reference/workflows.md",
           "inputUse": false
@@ -176482,6 +176916,8 @@
         }
       ],
       "executableConsumers": [
+        "handoffs/pr13-finish-20261021/a99-01-completion-record.json",
+        "handoffs/pr13-finish-20261021/workflow-developer-completion-records.json",
         "scripts/tests/docs-compact-acceptance.test.mjs"
       ],
       "indirectExecutableConsumers": [
@@ -177410,6 +177846,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "handoffs/pr13-finish-20261021/style-and-scope-preservation-independent.json",
+          "token": "docs/site/understand/archviewer.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "scripts/check-platform-specialist-guides.mjs",
           "token": "docs/site/understand/archviewer.md",
           "inputUse": false
@@ -177426,6 +177867,7 @@
         }
       ],
       "executableConsumers": [
+        "handoffs/pr13-finish-20261021/style-and-scope-preservation-independent.json",
         "scripts/check-platform-specialist-guides.mjs"
       ],
       "indirectExecutableConsumers": [
@@ -177436,7 +177878,7 @@
           ]
         }
       ],
-      "sha256": "08feb81aa49497d939c461c9e083a2f790ece37db66136f2bd065da00d0cd6be"
+      "sha256": "0f60687ababb15bd3a622cfe06a49216088176415bd4bb69fe440462e7e1598b"
     },
     {
       "path": "docs/site/understand/buster-namespace-controller.md",
@@ -177568,6 +178010,16 @@
           "inputUse": false
         },
         {
+          "sourcePath": "handoffs/pr13-finish-20261021/buster-source-roster-review.md",
+          "token": "docs/site/understand/buster-namespace-controller.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "handoffs/pr13-finish-20261021/workflow-parent-smallfix-preservation.json",
+          "token": "docs/site/understand/buster-namespace-controller.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "handoffs/pr13-reset-20261021/whole-diagram-record-inputs.json",
           "token": "docs/site/understand/buster-namespace-controller.md",
           "inputUse": false
@@ -177589,6 +178041,7 @@
         }
       ],
       "executableConsumers": [
+        "handoffs/pr13-finish-20261021/workflow-parent-smallfix-preservation.json",
         "handoffs/pr13-reset-20261021/whole-diagram-record-inputs.json",
         "scripts/check-buster-guides.mjs"
       ],
@@ -177600,7 +178053,7 @@
           ]
         }
       ],
-      "sha256": "879468dc581c695dc1906bc374b370833361db89bc03de65f9bc25ec4fc6ee38"
+      "sha256": "1cd0acee6201b9cbc8a43dd3ebe8c57121fb3bdbf1143c87c52c3bf995994d06"
     },
     {
       "path": "docs/site/understand/buster.md",
@@ -177673,6 +178126,11 @@
         },
         {
           "sourcePath": "docs/blueprint/review-ledger.jsonl",
+          "token": "docs/site/understand/buster.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "docs/config/documentation-plugin-complexity.json",
           "token": "docs/site/understand/buster.md",
           "inputUse": false
         },
@@ -177989,6 +178447,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "docs/config/documentation-plugin-complexity.json",
+          "token": "docs/site/understand/communication.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "docs/config/documentation-publication-manifest.json",
           "token": "docs/site/understand/communication.md",
           "inputUse": false
@@ -178014,6 +178477,21 @@
           "inputUse": false
         },
         {
+          "sourcePath": "handoffs/pr13-finish-20261021/operator-platform-completion-records.json",
+          "token": "docs/site/understand/communication.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "handoffs/pr13-finish-20261021/platform-corrections-author-report.md",
+          "token": "docs/site/understand/communication.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "handoffs/pr13-finish-20261021/style-and-scope-preservation-independent.json",
+          "token": "docs/site/understand/communication.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "handoffs/pr13-reset-20261021/whole-diagram-record-inputs.json",
           "token": "docs/site/understand/communication.md",
           "inputUse": false
@@ -178035,10 +178513,18 @@
         }
       ],
       "executableConsumers": [
+        "handoffs/pr13-finish-20261021/operator-platform-completion-records.json",
+        "handoffs/pr13-finish-20261021/style-and-scope-preservation-independent.json",
         "handoffs/pr13-reset-20261021/whole-diagram-record-inputs.json",
         "scripts/check-platform-specialist-guides.mjs"
       ],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/operator-platform-completion-records.json",
+          "via": [
+            "docs/config/platform-surface-map.json"
+          ]
+        },
         {
           "executableSource": "scripts/check-platform-specialist-guides.mjs",
           "via": [
@@ -178058,7 +178544,7 @@
           ]
         }
       ],
-      "sha256": "021f6549abecc99c0443c826dce6699e6fa893c09257ead0fd64933ea824fe57"
+      "sha256": "89605e8e262b22ceabc8fa0a2becae7bef0c4e8051a4e3513fd5985501cb9eaf"
     },
     {
       "path": "docs/site/understand/components-and-authority.md",
@@ -178359,6 +178845,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "docs/config/documentation-plugin-complexity.json",
+          "token": "docs/site/understand/data-and-state.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "docs/config/documentation-publication-manifest.json",
           "token": "docs/site/understand/data-and-state.md",
           "inputUse": false
@@ -178384,6 +178875,16 @@
           "inputUse": false
         },
         {
+          "sourcePath": "handoffs/pr13-finish-20261021/operator-platform-completion-records.json",
+          "token": "docs/site/understand/data-and-state.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "handoffs/pr13-finish-20261021/style-and-scope-preservation-independent.json",
+          "token": "docs/site/understand/data-and-state.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "scripts/check-platform-specialist-guides.mjs",
           "token": "docs/site/understand/data-and-state.md",
           "inputUse": true
@@ -178401,9 +178902,17 @@
       ],
       "executableConsumers": [
         ".codex/handoffs/documentation-cloud/evidence-index.json",
+        "handoffs/pr13-finish-20261021/operator-platform-completion-records.json",
+        "handoffs/pr13-finish-20261021/style-and-scope-preservation-independent.json",
         "scripts/check-platform-specialist-guides.mjs"
       ],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/operator-platform-completion-records.json",
+          "via": [
+            "docs/config/platform-surface-map.json"
+          ]
+        },
         {
           "executableSource": "scripts/check-platform-specialist-guides.mjs",
           "via": [
@@ -178423,7 +178932,7 @@
           ]
         }
       ],
-      "sha256": "2f885a34c94075044b855412dd73bdf8e14c4ff768c020c8bad125b3267408c6"
+      "sha256": "2a2c5442bd88eaf53b7be31d97007351d4157ae1274773a4d50430ce3c2f428e"
     },
     {
       "path": "docs/site/understand/deployment-and-trust.md",
@@ -178600,6 +179109,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "handoffs/pr13-finish-20261021/operator-platform-completion-records.json",
+          "token": "docs/site/understand/deployment-and-trust.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "handoffs/pr13-reset-20261021/diagram-system-review.md",
           "token": "docs/site/understand/deployment-and-trust.md",
           "inputUse": false
@@ -178631,6 +179145,7 @@
         }
       ],
       "executableConsumers": [
+        "handoffs/pr13-finish-20261021/operator-platform-completion-records.json",
         "handoffs/pr13-reset-20261021/whole-diagram-record-inputs.json"
       ],
       "indirectExecutableConsumers": [
@@ -178708,6 +179223,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "docs/config/documentation-plugin-complexity.json",
+          "token": "docs/site/understand/echo.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "docs/config/documentation-publication-manifest.json",
           "token": "docs/site/understand/echo.md",
           "inputUse": false
@@ -178724,6 +179244,11 @@
         },
         {
           "sourcePath": "docs/site/reference/generated-documentation-map.json",
+          "token": "docs/site/understand/echo.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "handoffs/pr13-finish-20261021/six-guide-independent-review.md",
           "token": "docs/site/understand/echo.md",
           "inputUse": false
         },
@@ -178754,7 +179279,7 @@
           ]
         }
       ],
-      "sha256": "7f915b01b5c028d6561dd8d89bbcf2515515ea4189c3eec87a39865639a3ffce"
+      "sha256": "3bd74ef477f26e501967e84b4f059fe67419f63fe2023b62d25f8e3a18312cd9"
     },
     {
       "path": "docs/site/understand/forge.md",
@@ -178821,6 +179346,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "docs/config/documentation-plugin-complexity.json",
+          "token": "docs/site/understand/forge.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "docs/config/documentation-publication-manifest.json",
           "token": "docs/site/understand/forge.md",
           "inputUse": false
@@ -178837,6 +179367,11 @@
         },
         {
           "sourcePath": "docs/site/reference/generated-documentation-map.json",
+          "token": "docs/site/understand/forge.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "handoffs/pr13-finish-20261021/six-guide-independent-review.md",
           "token": "docs/site/understand/forge.md",
           "inputUse": false
         },
@@ -178867,7 +179402,7 @@
           ]
         }
       ],
-      "sha256": "a151f8524a0cbc41642a8ebf813cb1a15844bee1749a3a13e964447aba97bd49"
+      "sha256": "69b06135677d2c6402481b679e486e8026fc2421f388520e564999dcd38c7d6c"
     },
     {
       "path": "docs/site/understand/nova-core.md",
@@ -178994,6 +179529,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "handoffs/pr13-finish-20261021/workflow-developer-completion-records.json",
+          "token": "docs/site/understand/nova-core.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "handoffs/pr13-reset-20261021/whole-diagram-record-inputs.json",
           "token": "docs/site/understand/nova-core.md",
           "inputUse": false
@@ -179015,6 +179555,7 @@
         }
       ],
       "executableConsumers": [
+        "handoffs/pr13-finish-20261021/workflow-developer-completion-records.json",
         "handoffs/pr13-reset-20261021/whole-diagram-record-inputs.json",
         "scripts/check-core-architecture-guides.mjs"
       ],
@@ -179118,6 +179659,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "docs/config/documentation-plugin-complexity.json",
+          "token": "docs/site/understand/openclaw.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "docs/config/documentation-publication-manifest.json",
           "token": "docs/site/understand/openclaw.md",
           "inputUse": false
@@ -179134,6 +179680,11 @@
         },
         {
           "sourcePath": "docs/site/reference/generated-documentation-map.json",
+          "token": "docs/site/understand/openclaw.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "handoffs/pr13-finish-20261021/generic-publisher-package-sections-author.md",
           "token": "docs/site/understand/openclaw.md",
           "inputUse": false
         },
@@ -179164,7 +179715,7 @@
           ]
         }
       ],
-      "sha256": "146b83fc4cb5cfa331924839140ff3cbd7830780226f5f4377569629e53f89a2"
+      "sha256": "15859d1b90bc7dfac9fd215de3b110b358ab338b41f80c78278c3db58033f35e"
     },
     {
       "path": "docs/site/understand/ops-mcp.md",
@@ -179271,6 +179822,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "docs/config/documentation-plugin-complexity.json",
+          "token": "docs/site/understand/ops-mcp.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "docs/config/documentation-publication-manifest.json",
           "token": "docs/site/understand/ops-mcp.md",
           "inputUse": false
@@ -179315,6 +179871,12 @@
         "scripts/check-platform-specialist-guides.mjs"
       ],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/operator-platform-completion-records.json",
+          "via": [
+            "docs/config/platform-surface-map.json"
+          ]
+        },
         {
           "executableSource": "scripts/check-platform-specialist-guides.mjs",
           "via": [
@@ -179649,6 +180211,16 @@
           "inputUse": false
         },
         {
+          "sourcePath": "handoffs/pr13-finish-20261021/operator-platform-completion-records.json",
+          "token": "docs/site/understand/platform-and-operations.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "handoffs/pr13-finish-20261021/style-and-scope-preservation-independent.json",
+          "token": "docs/site/understand/platform-and-operations.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "handoffs/pr13-reset-20261021/diagram-services-review.md",
           "token": "docs/site/understand/platform-and-operations.md",
           "inputUse": false
@@ -179743,6 +180315,8 @@
         ".codex/handoffs/documentation-cloud/evidence-index.json",
         "charts/kubeclaw/templates/_registry-clients.tpl",
         "docker/buster-runtime-entrypoint.sh",
+        "handoffs/pr13-finish-20261021/operator-platform-completion-records.json",
+        "handoffs/pr13-finish-20261021/style-and-scope-preservation-independent.json",
         "handoffs/pr13-reset-20261021/whole-diagram-record-inputs.json",
         "my-values/buster-values.yaml",
         "my-values/infra/cilium-values.yaml",
@@ -179754,6 +180328,12 @@
         "scripts/registry-client-config.mjs"
       ],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/operator-platform-completion-records.json",
+          "via": [
+            "docs/config/platform-surface-map.json"
+          ]
+        },
         {
           "executableSource": "scripts/check-platform-specialist-guides.mjs",
           "via": [
@@ -179773,7 +180353,7 @@
           ]
         }
       ],
-      "sha256": "a5c2f72d685b2e158ab4860bdf8f810a219be3a68b438f4b0e0fafe432f89f5c"
+      "sha256": "0c138033e653e9b1a2765345ea6c1a82afdcae0da0c452e1e342ca4448b2b098"
     },
     {
       "path": "docs/site/understand/plugin-runtime.md",
@@ -180204,6 +180784,11 @@
         },
         {
           "sourcePath": "docs/blueprint/documentation-completion-matrix.json",
+          "token": "docs/site/understand/prism-runtime.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "docs/config/documentation-plugin-complexity.json",
           "token": "docs/site/understand/prism-runtime.md",
           "inputUse": false
         },
@@ -180891,6 +181476,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "docs/config/documentation-plugin-complexity.json",
+          "token": "docs/site/understand/security-and-trust.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "docs/config/documentation-publication-manifest.json",
           "token": "docs/site/understand/security-and-trust.md",
           "inputUse": false
@@ -180912,6 +181502,11 @@
         },
         {
           "sourcePath": "docs/site/reference/generated-documentation-map.json",
+          "token": "docs/site/understand/security-and-trust.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "handoffs/pr13-finish-20261021/operator-platform-completion-records.json",
           "token": "docs/site/understand/security-and-trust.md",
           "inputUse": false
         },
@@ -180952,10 +181547,17 @@
         }
       ],
       "executableConsumers": [
+        "handoffs/pr13-finish-20261021/operator-platform-completion-records.json",
         "handoffs/pr13-reset-20261021/whole-diagram-record-inputs.json",
         "scripts/check-platform-specialist-guides.mjs"
       ],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/operator-platform-completion-records.json",
+          "via": [
+            "docs/config/platform-surface-map.json"
+          ]
+        },
         {
           "executableSource": "scripts/check-platform-specialist-guides.mjs",
           "via": [
@@ -180975,7 +181577,7 @@
           ]
         }
       ],
-      "sha256": "232610aafb07cbda703e2b95c884ea51b43932441d5ab9bd5763b47d705c4960"
+      "sha256": "df44304ef2e3a70b98755edb2ed853abc3dd220302d1f65cbdc7f66df1e03d7d"
     },
     {
       "path": "docs/site/understand/telemetry.md",
@@ -181097,6 +181699,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "docs/config/documentation-plugin-complexity.json",
+          "token": "docs/site/understand/telemetry.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "docs/config/documentation-publication-manifest.json",
           "token": "docs/site/understand/telemetry.md",
           "inputUse": false
@@ -181118,6 +181725,16 @@
         },
         {
           "sourcePath": "docs/site/reference/generated-documentation-map.json",
+          "token": "docs/site/understand/telemetry.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "handoffs/pr13-finish-20261021/operator-platform-completion-records.json",
+          "token": "docs/site/understand/telemetry.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "handoffs/pr13-finish-20261021/platform-corrections-author-report.md",
           "token": "docs/site/understand/telemetry.md",
           "inputUse": false
         },
@@ -181148,10 +181765,17 @@
         }
       ],
       "executableConsumers": [
+        "handoffs/pr13-finish-20261021/operator-platform-completion-records.json",
         "handoffs/pr13-reset-20261021/whole-diagram-record-inputs.json",
         "scripts/check-platform-specialist-guides.mjs"
       ],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/operator-platform-completion-records.json",
+          "via": [
+            "docs/config/platform-surface-map.json"
+          ]
+        },
         {
           "executableSource": "scripts/check-platform-specialist-guides.mjs",
           "via": [
@@ -181171,7 +181795,7 @@
           ]
         }
       ],
-      "sha256": "6c51980d3bb2446c180f70f0b11f28927f8e5f8015128598f444f29e6394f2cb"
+      "sha256": "b372b976176d3b03de3978b9b6e2a52b8a36c5a63f57759d22b06da731f74a1b"
     },
     {
       "path": "docs/site/understand/worker-core.md",
@@ -181258,6 +181882,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "docs/config/documentation-plugin-complexity.json",
+          "token": "docs/site/understand/worker-core.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "docs/config/documentation-publication-manifest.json",
           "token": "docs/site/understand/worker-core.md",
           "inputUse": false
@@ -181274,6 +181903,16 @@
         },
         {
           "sourcePath": "docs/site/reference/generated-documentation-map.json",
+          "token": "docs/site/understand/worker-core.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "handoffs/pr13-finish-20261021/six-guide-independent-review.md",
+          "token": "docs/site/understand/worker-core.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "handoffs/pr13-finish-20261021/style-and-scope-preservation-independent.json",
           "token": "docs/site/understand/worker-core.md",
           "inputUse": false
         },
@@ -181304,6 +181943,7 @@
         }
       ],
       "executableConsumers": [
+        "handoffs/pr13-finish-20261021/style-and-scope-preservation-independent.json",
         "handoffs/pr13-reset-20261021/whole-diagram-record-inputs.json",
         "scripts/check-core-architecture-guides.mjs",
         "tests/verification/contracts/check-worker-trust-documentation.mts"
@@ -181316,7 +181956,7 @@
           ]
         }
       ],
-      "sha256": "ba54d8efb1209e7881cc9c92ea20e7fcee4228636fcd3ec15b0f080fc048dcb6"
+      "sha256": "42639afdc86e5b7d0b9cbaa3b2b80d2f9990b195a597b30138ec8e87fd79e7d0"
     },
     {
       "path": "docs/site/understand/worker-trust.md",
@@ -181957,6 +182597,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "handoffs/pr13-finish-20261021/operator-platform-completion-records.json",
+          "token": "docs/site/use/demo-delivery.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "scripts/docs-publication.mjs",
           "token": "docs/site/use/demo-delivery.md",
           "inputUse": false
@@ -181967,7 +182612,9 @@
           "inputUse": false
         }
       ],
-      "executableConsumers": [],
+      "executableConsumers": [
+        "handoffs/pr13-finish-20261021/operator-platform-completion-records.json"
+      ],
       "indirectExecutableConsumers": [
         {
           "executableSource": ".codex/handoffs/documentation-cloud/evidence-index.json",
@@ -182388,6 +183035,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "handoffs/pr13-finish-20261021/operator-platform-completion-records.json",
+          "token": "docs/site/use/install.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "handoffs/pr13-reset-20261021/metadata-preservation-review.md",
           "token": "docs/site/use/install.md",
           "inputUse": false
@@ -182450,6 +183102,7 @@
       ],
       "executableConsumers": [
         ".codex/handoffs/documentation-cloud/evidence-index.json",
+        "handoffs/pr13-finish-20261021/operator-platform-completion-records.json",
         "scripts/check-operator-task-registry.mjs",
         "scripts/deploy-cilium.sh",
         "scripts/tests/api-reference.test.mjs"
@@ -182627,6 +183280,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "handoffs/pr13-finish-20261021/operator-platform-completion-records.json",
+          "token": "docs/site/use/maintenance.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "handoffs/pr13-reset-20261021/metadata-preservation-review.md",
           "token": "docs/site/use/maintenance.md",
           "inputUse": false
@@ -182664,6 +183322,7 @@
       ],
       "executableConsumers": [
         ".codex/handoffs/documentation-cloud/evidence-index.json",
+        "handoffs/pr13-finish-20261021/operator-platform-completion-records.json",
         "scripts/tests/api-reference-reader-language.test.mjs"
       ],
       "indirectExecutableConsumers": [
@@ -182879,6 +183538,16 @@
           "inputUse": false
         },
         {
+          "sourcePath": "handoffs/pr13-finish-20261021/operator-platform-completion-records.json",
+          "token": "docs/site/use/operate.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "handoffs/pr13-finish-20261021/workflow-developer-completion-records.json",
+          "token": "docs/site/use/operate.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "scripts/docs-ap09-catalogue.mjs",
           "token": "docs/site/use/operate.md",
           "inputUse": false
@@ -182911,6 +183580,8 @@
       ],
       "executableConsumers": [
         ".codex/handoffs/documentation-cloud/evidence-index.json",
+        "handoffs/pr13-finish-20261021/operator-platform-completion-records.json",
+        "handoffs/pr13-finish-20261021/workflow-developer-completion-records.json",
         "scripts/generate-operator-task-registry.mjs"
       ],
       "indirectExecutableConsumers": [
@@ -183287,6 +183958,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "handoffs/pr13-finish-20261021/operator-platform-completion-records.json",
+          "token": "docs/site/use/prism-studio.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "scripts/check-prism-guides.mjs",
           "token": "docs/site/use/prism-studio.md",
           "inputUse": false
@@ -183309,6 +183985,7 @@
       ],
       "executableConsumers": [
         ".codex/handoffs/documentation-cloud/evidence-index.json",
+        "handoffs/pr13-finish-20261021/operator-platform-completion-records.json",
         "scripts/check-prism-guides.mjs"
       ],
       "indirectExecutableConsumers": [
@@ -183748,6 +184425,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "handoffs/pr13-finish-20261021/operator-platform-completion-records.json",
+          "token": "docs/site/use/recovery.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "scripts/docs-ap09-catalogue.mjs",
           "token": "docs/site/use/recovery.md",
           "inputUse": false
@@ -183769,7 +184451,8 @@
         }
       ],
       "executableConsumers": [
-        ".codex/handoffs/documentation-cloud/evidence-index.json"
+        ".codex/handoffs/documentation-cloud/evidence-index.json",
+        "handoffs/pr13-finish-20261021/operator-platform-completion-records.json"
       ],
       "indirectExecutableConsumers": [
         {
@@ -183939,6 +184622,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "handoffs/pr13-finish-20261021/operator-platform-completion-records.json",
+          "token": "docs/site/use/worker-trust.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "README.md",
           "token": "docs/site/use/worker-trust.md",
           "inputUse": false
@@ -183956,6 +184644,7 @@
       ],
       "executableConsumers": [
         ".codex/handoffs/documentation-cloud/evidence-index.json",
+        "handoffs/pr13-finish-20261021/operator-platform-completion-records.json",
         "tests/verification/contracts/check-worker-trust-documentation.mts"
       ],
       "indirectExecutableConsumers": [
@@ -184066,6 +184755,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "handoffs/pr13-finish-20261021/deepguide-integration-review.md",
+          "token": "docs/site/use/workflows/README.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "scripts/docs-ap09-catalogue.mjs",
           "token": "docs/site/use/workflows/README.md",
           "inputUse": false
@@ -184085,7 +184779,7 @@
           ]
         }
       ],
-      "sha256": "b34daeac0d8ba654ae6d2fa31869f9e2e53521a7b3a1d0af2c989d7291e0a8ab"
+      "sha256": "6a786225aa2ab2e62dd73b0b37d05295b0c3523bfb347409c91ac71ac081a55f"
     },
     {
       "path": "docs/site/use/workflows/buster-suite.md",
@@ -184397,6 +185091,40 @@
       "sha256": "c638a68901abe8372f868cd527fb84cdbe927b591d57cf6c40d0b993de942616"
     },
     {
+      "path": "docs/site/use/workflows/examples/local-core.mjs",
+      "class": "canonical-reader-documentation",
+      "purpose": "Published runnable local Core journey using shipped stage and adapters, durable state and bounded cleanup.",
+      "originalPath": "docs/site/use/workflows/examples/local-core.mjs",
+      "expectedPath": "docs/site/use/workflows/examples/local-core.mjs",
+      "introducedAfterBaseline": true,
+      "locationValid": true,
+      "consumers": [
+        {
+          "sourcePath": "docs/blueprint/documentation-completion-matrix.json",
+          "token": "docs/site/use/workflows/examples/local-core.mjs",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "docs/config/documentation-tree-classification.json",
+          "token": "docs/site/use/workflows/examples/local-core.mjs",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "docs/site/reference/generated-documentation-map.json",
+          "token": "docs/site/use/workflows/examples/local-core.mjs",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "docs/site/use/workflows/local-core.md",
+          "token": "docs/site/use/workflows/examples/local-core.mjs",
+          "inputUse": false
+        }
+      ],
+      "executableConsumers": [],
+      "indirectExecutableConsumers": [],
+      "sha256": "9dd76ffc6ba99af003b1349a2dc644e642124c4a43f4f88d8f50b145b1da6a96"
+    },
+    {
       "path": "docs/site/use/workflows/examples/request-trace-redis-unavailable.json",
       "class": "canonical-reader-documentation",
       "purpose": "Published, user-facing KubeClaw documentation.",
@@ -184421,6 +185149,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "docs/blueprint/documentation-completion-matrix.json",
+          "token": "docs/site/use/workflows/examples/request-trace-redis-unavailable.json",
+          "inputUse": false
+        },
+        {
           "sourcePath": "docs/config/documentation-tree-baseline.json",
           "token": "docs/site/use/workflows/examples/request-trace-redis-unavailable.json",
           "inputUse": false
@@ -184429,9 +185162,16 @@
           "sourcePath": "docs/config/documentation-tree-classification.json",
           "token": "docs/site/use/workflows/examples/request-trace-redis-unavailable.json",
           "inputUse": false
+        },
+        {
+          "sourcePath": "handoffs/pr13-finish-20261021/operator-platform-completion-records.json",
+          "token": "docs/site/use/workflows/examples/request-trace-redis-unavailable.json",
+          "inputUse": false
         }
       ],
-      "executableConsumers": [],
+      "executableConsumers": [
+        "handoffs/pr13-finish-20261021/operator-platform-completion-records.json"
+      ],
       "indirectExecutableConsumers": [],
       "sha256": "a7e50d68b2a4c0ed85ec1ce1d7b7c25e441c1c378df666d908d1ce0221b2c3b4"
     },
@@ -184460,6 +185200,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "docs/blueprint/documentation-completion-matrix.json",
+          "token": "docs/site/use/workflows/examples/request-trace-success.json",
+          "inputUse": false
+        },
+        {
           "sourcePath": "docs/config/documentation-tree-baseline.json",
           "token": "docs/site/use/workflows/examples/request-trace-success.json",
           "inputUse": false
@@ -184470,12 +185215,18 @@
           "inputUse": false
         },
         {
+          "sourcePath": "handoffs/pr13-finish-20261021/operator-platform-completion-records.json",
+          "token": "docs/site/use/workflows/examples/request-trace-success.json",
+          "inputUse": false
+        },
+        {
           "sourcePath": "scripts/check-platform-specialist-guides.mjs",
           "token": "docs/site/use/workflows/examples/request-trace-success.json",
           "inputUse": true
         }
       ],
       "executableConsumers": [
+        "handoffs/pr13-finish-20261021/operator-platform-completion-records.json",
         "scripts/check-platform-specialist-guides.mjs"
       ],
       "indirectExecutableConsumers": [],
@@ -184618,6 +185369,59 @@
       "sha256": "c210323194a2c63056b4804684a100d593b7bcfdbc955a81a3b55695fa2bc540"
     },
     {
+      "path": "docs/site/use/workflows/local-core.md",
+      "class": "canonical-reader-documentation",
+      "purpose": "Maintained local durable Core CLI success, rejection, audit, artifact and owned cleanup journey.",
+      "originalPath": "docs/site/use/workflows/local-core.md",
+      "expectedPath": "docs/site/use/workflows/local-core.md",
+      "introducedAfterBaseline": true,
+      "locationValid": true,
+      "consumers": [
+        {
+          "sourcePath": "docs/blueprint/documentation-completion-matrix.json",
+          "token": "docs/site/use/workflows/local-core.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "docs/config/documentation-publication-manifest.json",
+          "token": "docs/site/use/workflows/local-core.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "docs/config/documentation-tree-classification.json",
+          "token": "docs/site/use/workflows/local-core.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "docs/site/reference/generated-documentation-map.json",
+          "token": "docs/site/use/workflows/local-core.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "handoffs/pr13-finish-20261021/style-and-scope-preservation-independent.json",
+          "token": "docs/site/use/workflows/local-core.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "handoffs/pr13-finish-20261021/workflow-developer-author-batch.md",
+          "token": "docs/site/use/workflows/local-core.md",
+          "inputUse": false
+        }
+      ],
+      "executableConsumers": [
+        "handoffs/pr13-finish-20261021/style-and-scope-preservation-independent.json"
+      ],
+      "indirectExecutableConsumers": [
+        {
+          "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        }
+      ],
+      "sha256": "2e5b1d5dff7184ff37eb8f115d262efea4fa2c9f2274b421ca9d2cf6841367f1"
+    },
+    {
       "path": "docs/site/use/workflows/wait-resume.md",
       "class": "canonical-reader-documentation",
       "purpose": "Published, user-facing KubeClaw documentation.",
@@ -184727,6 +185531,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "docs/config/documentation-plugin-complexity.json",
+          "token": "docs/site/use/workflows/wait-resume.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "docs/config/documentation-publication-manifest.json",
           "token": "docs/site/use/workflows/wait-resume.md",
           "inputUse": false
@@ -184747,12 +185556,19 @@
           "inputUse": false
         },
         {
+          "sourcePath": "handoffs/pr13-finish-20261021/workflow-developer-completion-records.json",
+          "token": "docs/site/use/workflows/wait-resume.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "scripts/docs-published-route-baseline.json",
           "token": "docs/site/use/workflows/wait-resume.md",
           "inputUse": false
         }
       ],
-      "executableConsumers": [],
+      "executableConsumers": [
+        "handoffs/pr13-finish-20261021/workflow-developer-completion-records.json"
+      ],
       "indirectExecutableConsumers": [
         {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",

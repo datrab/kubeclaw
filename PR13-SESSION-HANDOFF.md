@@ -1,5 +1,14 @@
 # PR13 continuation — 2026-10-21
 
+## Secured acceptance integration — 2026-10-21
+
+- Register now 41/89 gates and214/261 requirements;23gates/10requirements newly accepted relative to0e35889a. Exact compact records remain solely in documentation-completion-matrix.json. Snapshot validator PASS; no aggregate or release approval.
+- Reviewed Source d0bb52c4d8bcf323c0ff32b95e8e3120ffa6eefb:171canonical pages/181HTML/38,517local targets/213output hashes;12search questions;14,635verifiedSource links/3,829objects;1,741excerpts/905objects;27fresh deterministic SVGs;52offline/browser observations without findings/network. Native Reader27/27PASS. Old27diagram manifest records remain identical in every field; original semantic scopes reused, not recounted.
+- Real original localCore helper independently reproduced in a fresh clean detached checkout with fresh locked dependencies:15success+12blocked events,27same-run telemetry records,54delivery records,27full effect receipts, terminal checkpoints, original artifact/audit, four meaningful negatives, restoredverify and ownedcleanup PASS. No project compiler/Forge/remoteBuster/Redis/deployment/human-acceptance claim. FLW006 accepted. FLW001/A9906 still genuinely lack a single compiled-project execution journey; normalization is not compilation.
+- Maintenance guide stale current-byte/hash/function-locator claim found during preservation, earlier preservation retracted, independently corrected to exact committed80178snapshot functions/hashes, current Reader checked.53distinct original scopes preserved after that correction; not53new approvals.
+- Two supporting workflow topics FLW010/014 remain NOT_READY only for missing canonical task-index routes; exact two-row correction authored off-tree. REF010expanded compatibility hub and notification-observer function appendix also authored off-tree, pending parent independent Source review/application. Buster guide package pin correction is prepared, not yet applied; do not claim its failing whole checker green.
+- Uncommitted next finite scalar/Helm occurrence work is EXCLUDED from this checkpoint. Candidate has Source-owned two exact contexts,996product/workflow and1239selected-source facts; actual four supported-root adversaries passed and originalpackage/probe paths restored. Independent parent review still required. Actual localHelm owner now reaches next unqualified AP08fixture-metadata output; no global generation PASS. Existing knip runtime-configuration stop unchanged; no receipt rewriting, validator bypass, live deployment or AP10 deletion.
+
 ## Active finish-all request — 2026-10-21
 
 - User explicitly requires reviewing all finished material and continuing until every remaining point is complete. Do not stop after checkpoints.
