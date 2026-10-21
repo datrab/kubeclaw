@@ -103,11 +103,15 @@ test('docs-check-refs validates reference destinations and their fragments', () 
     path.join(sourceRoot, 'scripts/docs-check-refs.mjs'), 'utf8'));
   write(root, 'scripts/lib/docs-markdown-anchors.mjs', fs.readFileSync(
     path.join(sourceRoot, 'scripts/lib/docs-markdown-anchors.mjs'), 'utf8'));
+  write(root, 'docs/blueprint/acceptance-evidence/historical/publication/input/old.md',
+    '[captured relative asset](missing-snapshot-only.json)\n');
   write(root, 'package.json', '{}\n');
   fs.symlinkSync(path.join(sourceRoot, 'node_modules'), path.join(root, 'node_modules'), 'dir');
   fs.symlinkSync('/etc/passwd', path.join(root, 'outside-link'));
   write(root, 'docs/site/index.md', [
     '[Full][full] [Collapsed][] [Shortcut] ![Diagram][diagram]',
+    '`scripts/docs-check-refs.mjs:1–2` and `scripts/docs-check-refs.mjs:1—2`',
+    '`skills/missing-real-source.ts:1–2`',
     '',
     '[full]: missing-full.md',
     '[collapsed]: missing-collapsed.md',
@@ -150,6 +154,8 @@ test('docs-check-refs validates reference destinations and their fragments', () 
       'missing-multiline.md', 'absolute local path', 'outside the repository', 'exists(missing).md',
       'symbolic link', 'real#missing', 'missing-angle-inline.md', 'missing-angle-reference.md']
       .every((name) => output.includes(name))
+      && output.includes('skills/missing-real-source.ts')
+      && !output.includes('missing-snapshot-only.json')
       && !output.includes('missing-code.md') && !output.includes('missing-html.md');
   });
 
@@ -165,6 +171,7 @@ test('docs-check-refs validates reference destinations and their fragments', () 
   write(root, 'docs/site/missing-angle-reference.md', '# Reference angle\n');
   const indexPath = path.join(root, 'docs/site/index.md');
   fs.writeFileSync(indexPath, fs.readFileSync(indexPath, 'utf8')
+    .replace('`skills/missing-real-source.ts:1–2`\n', '')
     .replace('[Absolute](/etc/passwd)\n', '').replace('[Escape](../../../outside.md)\n', '')
     .replace('[Symlink](../../outside-link)\n', '').replace('#real#missing', '#real'));
   assert.match(run(root), /docs reference check passed/u);

@@ -21,7 +21,11 @@
     "test.plan.execute": "kubeclaw.remote-test-gate:plan",
     "lint.execute": "kubeclaw.lint:executor",
     "transport.publish": "kubeclaw.transport-publisher:publisher",
-    "agent.events.subscribe": "kubeclaw.openclaw-agent-events:source"
+    "agent.events.subscribe": "kubeclaw.openclaw-agent-events:source",
+    "report.evidence.read": "kubeclaw.pipeline-review:evidence",
+    "operator.receipt": "kubeclaw.operator-messaging:operator",
+    "demo.handoff": "kubeclaw.demo-handoff:handoff",
+    "test.plan.evidence": "kubeclaw.remote-test-gate:evidence"
   },
   "runtimeCapabilities": {
     "container.build": "Buster operator-owned container-build runtime",

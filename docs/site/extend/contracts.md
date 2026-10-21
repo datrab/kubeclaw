@@ -183,8 +183,14 @@ to `requiredCapabilities`.
 Activation creates a long-lived instance with `ready`, `invoke`, and `shutdown`
 operations. Ordinary effect calls carry a resource lock and fence. The adapter must
 check the fence before a mutation and again where a long operation can outlive its
-authority. Confidential operations omit the durable payload and resource identity;
-only capabilities explicitly classified as confidential can use that path.
+authority. Confidential operations replace the audit payload and resource identity
+with redacted markers; they do not produce an ordinary durable effect receipt.
+Top-level calls select this path for confidential capabilities such as
+`secrets.read`. An adapter can also explicitly call a declared, granted dependency
+through `invokeConfidential`, even when that capability is not classified as
+confidential. This changes recording, not the provider, grant or resource checks.
+[The dependency dispatcher selects either confidential condition](https://github.com/datrab/kubeclaw/blob/7994a51e16bc752357c3a801190b12b7d6a191a4/skills/nova/core/execution/adapter-startup.ts#L75-L95);
+[the coordinator redacts the audit and returns the result without a durable receipt](https://github.com/datrab/kubeclaw/blob/7994a51e16bc752357c3a801190b12b7d6a191a4/skills/nova/core/effects/coordinator.ts#L39-L70).
 
 The effect coordinator records request, acceptance, and receipt around ordinary
 mutations. A durable receipt prevents the same effect key from invoking the adapter
@@ -199,9 +205,22 @@ guess whether the external system changed.
 
 ### Adapter failure and recovery
 
-Startup is all-or-nothing. If one selected adapter cannot activate or become ready,
-the runtime tears down started and pending instances. Shutdown has a bounded timeout
-and aborts active work.
+Startup publishes ready instances only after all selected adapters start. On
+failure, cleanup aborts lifecycle signals and requests teardown of instances
+already created. This is not a guarantee that every pending factory or teardown
+finishes: an uncooperative factory can remain pending, and late completion does
+not prove cleanup completed. Do not retry startup or external work while its
+outcome remains uncertain.
+
+Explicit shutdown aborts active lifecycle signals and waits up to
+`shutdownTimeoutMs`. A timeout clears the runtime's instance maps; it does not
+prove external operations stopped or resources disappeared. Preserve their
+identities and reconcile with the owning provider before a retry.
+[Startup sequence](https://github.com/datrab/kubeclaw/blob/7994a51e16bc752357c3a801190b12b7d6a191a4/skills/nova/core/execution/adapter-startup.ts#L23-L62)
+, [rollback teardown](https://github.com/datrab/kubeclaw/blob/7994a51e16bc752357c3a801190b12b7d6a191a4/skills/nova/core/execution/adapter-startup.ts#L160-L166)
+and [bounded explicit shutdown](https://github.com/datrab/kubeclaw/blob/7994a51e16bc752357c3a801190b12b7d6a191a4/skills/nova/core/execution/adapters.ts#L69-L88)
+define these limits. See [the runtime lifecycle](../understand/plugin-runtime.md)
+for activation, readiness and partial-failure diagnosis.
 
 The adapter can implement `receipt()` when the external system can answer whether a
 previous operation completed. Reconciliation must compare stable external identity,

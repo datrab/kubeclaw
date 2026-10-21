@@ -729,7 +729,7 @@ This contract covers signal-driven resolution, not administrative reopening.
 > **Source evidence — accepted-signal resolution**
 >
 > [Resume guards, journal ordering, duplicate checks, and exact event](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/skills/nova/core/execution/engine-run.ts#L82-L122).
-> [Signal validation against the recovered wait](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/skills/nova/core/execution/engine-snapshots.ts#L137-L145).
+> [Signal validation against the recovered wait](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/skills/nova/core/execution/engine-snapshots.ts#L137-L144).
 > [Nested signal contract](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/skills/common/plugin-runtime/sdk/src/generated/contracts.ts#L543-L555).
 
 ### Attempt event payloads

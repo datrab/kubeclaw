@@ -163,7 +163,7 @@ configuration alone does not prove host readiness or successful task execution.
 Reconcile any earlier uncertain operation separately before resubmitting work.
 
 **Source — OpenClaw target keys, exact suffix, parser and activation order:**
-[openclaw-config.ts:4–7](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/skills/common/plugins/runtime-dispatch/src/openclaw-config.ts#L4-L7) [openclaw-config.ts:51–54](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/skills/common/plugins/runtime-dispatch/src/openclaw-config.ts#L51-L54) [openclaw-config.ts:82–86](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/skills/common/plugins/runtime-dispatch/src/openclaw-config.ts#L82-L86) [openclaw-adapter.ts:18–24](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/skills/common/plugins/runtime-dispatch/src/openclaw-adapter.ts#L18-L24)
+[openclaw-config.ts:4–7](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/skills/common/plugins/runtime-dispatch/src/openclaw-config.ts#L4-L7) [openclaw-config.ts:51–54](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/skills/common/plugins/runtime-dispatch/src/openclaw-config.ts#L51-L54) [openclaw-config.ts:82–86](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/skills/common/plugins/runtime-dispatch/src/openclaw-config.ts#L82-L85) [openclaw-adapter.ts:18–24](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/skills/common/plugins/runtime-dispatch/src/openclaw-adapter.ts#L18-L24)
 
 ## Diagnose uncertainty before retry
 

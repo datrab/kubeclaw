@@ -1,6 +1,6 @@
 {
   "schemaVersion": "kubeclaw-platform-surfaces.v1",
-  "sourceRevision": "586f1f558a673c4df51c0afb9ea535c814b933b1",
+  "sourceRevision": "7994a51e16bc752357c3a801190b12b7d6a191a4",
   "acceptanceContract": {
     "source": "docs/blueprint/AP09-acceptance-contract.md",
     "acceptanceIds": [
@@ -172,24 +172,6 @@
       "skills/common/plugins/notification-observer/src/observer.ts",
       "skills/common/plugins/openclaw-agent-events/src/adapter.ts",
       "skills/common/plugins/openclaw-agent-events/src/ingress-queue.ts",
-      "skills/common/plugins/openclaw-agent-observer/dist/config.js",
-      "skills/common/plugins/openclaw-agent-observer/dist/diagnostics.js",
-      "skills/common/plugins/openclaw-agent-observer/dist/generated/agent-observability/complexity.js",
-      "skills/common/plugins/openclaw-agent-observer/dist/generated/agent-observability/constants.js",
-      "skills/common/plugins/openclaw-agent-observer/dist/generated/agent-observability/index.js",
-      "skills/common/plugins/openclaw-agent-observer/dist/generated/agent-observability/mapping.js",
-      "skills/common/plugins/openclaw-agent-observer/dist/generated/agent-observability/routing.js",
-      "skills/common/plugins/openclaw-agent-observer/dist/generated/agent-observability/types.js",
-      "skills/common/plugins/openclaw-agent-observer/dist/generated/agent-observability/validation.js",
-      "skills/common/plugins/openclaw-agent-observer/dist/hook-normalizers.js",
-      "skills/common/plugins/openclaw-agent-observer/dist/hook-payloads.js",
-      "skills/common/plugins/openclaw-agent-observer/dist/hook-values.js",
-      "skills/common/plugins/openclaw-agent-observer/dist/index.js",
-      "skills/common/plugins/openclaw-agent-observer/dist/observer-support.js",
-      "skills/common/plugins/openclaw-agent-observer/dist/plugin-api.js",
-      "skills/common/plugins/openclaw-agent-observer/dist/redis-transport.js",
-      "skills/common/plugins/openclaw-agent-observer/dist/redis-writer-types.js",
-      "skills/common/plugins/openclaw-agent-observer/dist/redis-writer.js",
       "skills/common/plugins/openclaw-agent-observer/scripts/build.mjs",
       "skills/common/plugins/openclaw-agent-observer/scripts/sync-contract.mjs",
       "skills/common/plugins/openclaw-agent-observer/src/config.ts",
@@ -741,7 +723,7 @@
       "value": "git-origin",
       "classification": "current-profile-required",
       "source": "my-values/nova-values.yaml",
-      "line": 74,
+      "line": 78,
       "needle": "repoUrl:",
       "renderedSignalCount": 0,
       "renderedProfiles": []
@@ -750,7 +732,7 @@
       "value": "redis",
       "classification": "current-profile-required",
       "source": "charts/kubeclaw/values.yaml",
-      "line": 229,
+      "line": 230,
       "needle": "redis-master.kubeclaw.svc.cluster.local",
       "renderedSignalCount": 23,
       "renderedProfiles": [
@@ -856,9 +838,9 @@
       "value": "managed-openai-reasoning",
       "classification": "enabled-feature-required",
       "source": "my-values/prism-agent-values.yaml",
-      "line": 48,
+      "line": 58,
       "needle": "primary: openai/gpt-5.6-sol",
-      "renderedSignalCount": 39,
+      "renderedSignalCount": 43,
       "renderedProfiles": [
         "helm:buster",
         "helm:nova",
@@ -896,7 +878,7 @@
       "source": "my-values/nova-values.yaml",
       "line": 25,
       "needle": "repository: ghcr.io/",
-      "renderedSignalCount": 27,
+      "renderedSignalCount": 30,
       "renderedProfiles": [
         "gitops/platform/bootstrap/codex-ops.yaml",
         "gitops/platform/litellm/resources.yaml",
@@ -939,7 +921,7 @@
       "value": "openclaw-gateway",
       "classification": "current-profile-required",
       "source": "charts/kubeclaw/templates/deployment.yaml",
-      "line": 254,
+      "line": 287,
       "needle": "/app/openclaw.mjs",
       "renderedSignalCount": 0,
       "renderedProfiles": []
@@ -984,7 +966,7 @@
       "value": "git-mirror",
       "classification": "planned",
       "source": "docs/site/status/roadmap.md",
-      "line": 55,
+      "line": 134,
       "needle": "## Resilient Git Source Acquisition",
       "renderedSignalCount": 0,
       "renderedProfiles": []
@@ -993,7 +975,7 @@
       "value": "authenticated-https-registry",
       "classification": "planned",
       "source": "docs/site/status/roadmap.md",
-      "line": 64,
+      "line": 143,
       "needle": "## Production-Grade Local OCI Registry",
       "renderedSignalCount": 0,
       "renderedProfiles": []
@@ -1002,7 +984,7 @@
       "value": "automated-host-bootstrap",
       "classification": "planned",
       "source": "docs/site/status/roadmap.md",
-      "line": 16,
+      "line": 95,
       "needle": "## Automated Host Bootstrap and Recovery",
       "renderedSignalCount": 0,
       "renderedProfiles": []
@@ -1071,7 +1053,7 @@
       "profile": "gitops/platform/bootstrap/argocd.yaml",
       "signal": "sources[1].repoURL=https://github.com/datrab/kubeclaw.git",
       "source": "gitops/platform/bootstrap/argocd.yaml",
-      "line": 63,
+      "line": 81,
       "evidenceLocation": "exact-value"
     },
     {
@@ -1084,7 +1066,7 @@
       "profile": "gitops/platform/bootstrap/argocd.yaml",
       "signal": "destination.server=https://kubernetes.default.svc",
       "source": "gitops/platform/bootstrap/argocd.yaml",
-      "line": 70,
+      "line": 88,
       "evidenceLocation": "exact-value"
     },
     {
@@ -1097,31 +1079,31 @@
       "profile": "gitops/platform/bootstrap/argocd.yaml",
       "signal": "sources[1].directory.include=argocd-tailscale-ingress.yaml",
       "source": "gitops/platform/bootstrap/argocd.yaml",
-      "line": 68,
+      "line": 86,
       "evidenceLocation": "exact-value"
     },
     {
-      "value": "Application/argocd/codex-ops -> ghcr.io [source.helm.valuesObject.codexImage=ghcr.io/datrab/kubeclaw-codex-ops@sha256:607b51291c8f6952be903d81f760d8eb893474b47bb419b1b67526f38c7589c0]",
+      "value": "Application/argocd/codex-ops -> ghcr.io [source.helm.valuesObject.codexImage=ghcr.io/datrab/kubeclaw-codex-ops@sha256:d77c02468d15f8e8ddd2f6edaa3782a7a3f1daf8c3c482c364ce9752b3b0e45b]",
       "consumer": "Application/argocd/codex-ops",
       "dependencyIdentity": "ghcr.io",
       "classification": "application-source",
       "activationState": "active",
       "activationCondition": "source.helm.valuesObject.codexImage is present in the rendered object",
       "profile": "gitops/platform/bootstrap/codex-ops.yaml",
-      "signal": "source.helm.valuesObject.codexImage=ghcr.io/datrab/kubeclaw-codex-ops@sha256:607b51291c8f6952be903d81f760d8eb893474b47bb419b1b67526f38c7589c0",
+      "signal": "source.helm.valuesObject.codexImage=ghcr.io/datrab/kubeclaw-codex-ops@sha256:d77c02468d15f8e8ddd2f6edaa3782a7a3f1daf8c3c482c364ce9752b3b0e45b",
       "source": "gitops/platform/bootstrap/codex-ops.yaml",
       "line": 34,
       "evidenceLocation": "exact-value"
     },
     {
-      "value": "Application/argocd/codex-ops -> ghcr.io [source.helm.valuesObject.mcpImage=ghcr.io/datrab/kubeclaw-ops-mcp@sha256:a9aa21492d046ba5929c0bca7cc0991bd8d52a25f69e8a824ca286c8aa23f855]",
+      "value": "Application/argocd/codex-ops -> ghcr.io [source.helm.valuesObject.mcpImage=ghcr.io/datrab/kubeclaw-ops-mcp@sha256:36dbe805084bb31984aaa62b2cd33362d92f6a50157e856ce1c556aaf62ae1d9]",
       "consumer": "Application/argocd/codex-ops",
       "dependencyIdentity": "ghcr.io",
       "classification": "application-source",
       "activationState": "active",
       "activationCondition": "source.helm.valuesObject.mcpImage is present in the rendered object",
       "profile": "gitops/platform/bootstrap/codex-ops.yaml",
-      "signal": "source.helm.valuesObject.mcpImage=ghcr.io/datrab/kubeclaw-ops-mcp@sha256:a9aa21492d046ba5929c0bca7cc0991bd8d52a25f69e8a824ca286c8aa23f855",
+      "signal": "source.helm.valuesObject.mcpImage=ghcr.io/datrab/kubeclaw-ops-mcp@sha256:36dbe805084bb31984aaa62b2cd33362d92f6a50157e856ce1c556aaf62ae1d9",
       "source": "gitops/platform/bootstrap/codex-ops.yaml",
       "line": 35,
       "evidenceLocation": "exact-value"
@@ -1864,7 +1846,7 @@
       "profile": "helm:buster",
       "signal": "openclaw.json.channels.discord.execApprovals.target=dm",
       "source": "charts/kubeclaw/templates/configmap-gateway.yaml",
-      "line": 231,
+      "line": 251,
       "evidenceLocation": "exact-field"
     },
     {
@@ -1877,7 +1859,7 @@
       "profile": "helm:buster",
       "signal": "openclaw.json.channels.discord.groupPolicy=allowlist",
       "source": "charts/kubeclaw/templates/configmap-gateway.yaml",
-      "line": 208,
+      "line": 228,
       "evidenceLocation": "exact-value"
     },
     {
@@ -1903,7 +1885,7 @@
       "profile": "helm:buster",
       "signal": "openclaw.json.channels.discord.streaming.mode=partial",
       "source": "charts/kubeclaw/templates/configmap-gateway.yaml",
-      "line": 210,
+      "line": 230,
       "evidenceLocation": "exact-value"
     },
     {
@@ -1916,7 +1898,7 @@
       "profile": "helm:buster",
       "signal": "openclaw.json.channels.discord.token.id=DISCORD_TOKEN",
       "source": "charts/kubeclaw/templates/configmap-gateway.yaml",
-      "line": 205,
+      "line": 225,
       "evidenceLocation": "exact-value"
     },
     {
@@ -1942,7 +1924,7 @@
       "profile": "helm:buster",
       "signal": "openclaw.json.channels.discord.token.source=env",
       "source": "charts/kubeclaw/templates/configmap-gateway.yaml",
-      "line": 61,
+      "line": 65,
       "evidenceLocation": "exact-field"
     },
     {
@@ -2020,7 +2002,7 @@
       "profile": "helm:buster",
       "signal": "openclaw.json.agents.defaults.models.openai/gpt-5.5.agentRuntime.id=codex",
       "source": "charts/kubeclaw/templates/configmap-gateway.yaml",
-      "line": 46,
+      "line": 50,
       "evidenceLocation": "exact-value"
     },
     {
@@ -2033,7 +2015,7 @@
       "profile": "helm:buster",
       "signal": "openclaw.json.agents.defaults.models.openai/gpt-5.6-sol.agentRuntime.id=codex",
       "source": "charts/kubeclaw/templates/configmap-gateway.yaml",
-      "line": 46,
+      "line": 50,
       "evidenceLocation": "exact-value"
     },
     {
@@ -2046,7 +2028,7 @@
       "profile": "helm:buster",
       "signal": "openclaw.json.memory.search.model=gemini-embedding-001",
       "source": "charts/kubeclaw/templates/configmap-gateway.yaml",
-      "line": 74,
+      "line": 78,
       "evidenceLocation": "exact-value"
     },
     {
@@ -2059,7 +2041,7 @@
       "profile": "helm:buster",
       "signal": "openclaw.json.agents.defaults.model.fallbacks[0]=openai/gpt-5.5",
       "source": "charts/kubeclaw/templates/configmap-gateway.yaml",
-      "line": 95,
+      "line": 103,
       "evidenceLocation": "exact-value"
     },
     {
@@ -2072,7 +2054,7 @@
       "profile": "helm:buster",
       "signal": "openclaw.json.agents.defaults.model.primary=openai/gpt-5.6-sol",
       "source": "charts/kubeclaw/templates/configmap-gateway.yaml",
-      "line": 94,
+      "line": 102,
       "evidenceLocation": "exact-value"
     },
     {
@@ -2085,7 +2067,7 @@
       "profile": "helm:buster",
       "signal": "openclaw.json.agents.defaults.model.fallbacks[0]=openai/gpt-5.5",
       "source": "charts/kubeclaw/templates/configmap-gateway.yaml",
-      "line": 95,
+      "line": 103,
       "evidenceLocation": "exact-value"
     },
     {
@@ -2098,7 +2080,7 @@
       "profile": "helm:buster",
       "signal": "openclaw.json.agents.defaults.model.primary=openai/gpt-5.6-sol",
       "source": "charts/kubeclaw/templates/configmap-gateway.yaml",
-      "line": 94,
+      "line": 102,
       "evidenceLocation": "exact-value"
     },
     {
@@ -2111,7 +2093,7 @@
       "profile": "helm:buster",
       "signal": "openclaw.json.agents.defaults.modelPolicy.allow[0]=openai/gpt-5.6-sol",
       "source": "charts/kubeclaw/templates/configmap-gateway.yaml",
-      "line": 94,
+      "line": 102,
       "evidenceLocation": "exact-value"
     },
     {
@@ -2124,7 +2106,7 @@
       "profile": "helm:buster",
       "signal": "openclaw.json.agents.defaults.modelPolicy.allow[1]=openai/gpt-5.5",
       "source": "charts/kubeclaw/templates/configmap-gateway.yaml",
-      "line": 95,
+      "line": 103,
       "evidenceLocation": "exact-value"
     },
     {
@@ -2137,7 +2119,7 @@
       "profile": "helm:buster",
       "signal": "openclaw.json.agents.defaults.models.openai/gpt-5.5.agentRuntime.id=codex",
       "source": "charts/kubeclaw/templates/configmap-gateway.yaml",
-      "line": 46,
+      "line": 50,
       "evidenceLocation": "exact-value"
     },
     {
@@ -2150,7 +2132,7 @@
       "profile": "helm:buster",
       "signal": "openclaw.json.agents.defaults.models.openai/gpt-5.6-sol.agentRuntime.id=codex",
       "source": "charts/kubeclaw/templates/configmap-gateway.yaml",
-      "line": 46,
+      "line": 50,
       "evidenceLocation": "exact-value"
     },
     {
@@ -2163,7 +2145,7 @@
       "profile": "helm:buster",
       "signal": "openclaw.json.auth.order.openai[0]=openai:<redacted-email>",
       "source": "charts/kubeclaw/templates/configmap-gateway.yaml",
-      "line": 26,
+      "line": 30,
       "evidenceLocation": "exact-value"
     },
     {
@@ -2176,7 +2158,7 @@
       "profile": "helm:buster",
       "signal": "openclaw.json.auth.order.openai[1]=openai:<redacted-email>",
       "source": "charts/kubeclaw/templates/configmap-gateway.yaml",
-      "line": 31,
+      "line": 35,
       "evidenceLocation": "exact-value"
     },
     {
@@ -2189,7 +2171,7 @@
       "profile": "helm:buster",
       "signal": "openclaw.json.auth.profiles.openai:<redacted-email>.email=<redacted-email>",
       "source": "charts/kubeclaw/templates/configmap-gateway.yaml",
-      "line": 26,
+      "line": 30,
       "evidenceLocation": "exact-value"
     },
     {
@@ -2202,7 +2184,7 @@
       "profile": "helm:buster",
       "signal": "openclaw.json.auth.profiles.openai:<redacted-email>.mode=oauth",
       "source": "charts/kubeclaw/templates/configmap-gateway.yaml",
-      "line": 28,
+      "line": 32,
       "evidenceLocation": "exact-value"
     },
     {
@@ -2215,7 +2197,7 @@
       "profile": "helm:buster",
       "signal": "openclaw.json.auth.profiles.openai:<redacted-email>.provider=openai",
       "source": "charts/kubeclaw/templates/configmap-gateway.yaml",
-      "line": 26,
+      "line": 30,
       "evidenceLocation": "exact-value"
     },
     {
@@ -2228,7 +2210,7 @@
       "profile": "helm:buster",
       "signal": "openclaw.json.memory.search.provider=openai-compatible",
       "source": "charts/kubeclaw/templates/configmap-gateway.yaml",
-      "line": 65,
+      "line": 69,
       "evidenceLocation": "exact-value"
     },
     {
@@ -2241,7 +2223,7 @@
       "profile": "helm:buster",
       "signal": "openclaw.json.plugins.allow[3]=openai",
       "source": "charts/kubeclaw/templates/configmap-gateway.yaml",
-      "line": 26,
+      "line": 30,
       "evidenceLocation": "exact-value"
     },
     {
@@ -2293,7 +2275,7 @@
       "profile": "helm:buster",
       "signal": "openclaw.json.auth.profiles.openai:<redacted-email>.provider=openai",
       "source": "charts/kubeclaw/templates/configmap-gateway.yaml",
-      "line": 26,
+      "line": 30,
       "evidenceLocation": "exact-value"
     },
     {
@@ -2306,7 +2288,7 @@
       "profile": "helm:buster",
       "signal": "openclaw.json.memory.search.provider=openai-compatible",
       "source": "charts/kubeclaw/templates/configmap-gateway.yaml",
-      "line": 65,
+      "line": 69,
       "evidenceLocation": "exact-value"
     },
     {
@@ -2357,7 +2339,7 @@
       "profile": "helm:nova",
       "signal": "openclaw.json.channels.discord.allowFrom[0]=<redacted-identity>",
       "source": "my-values/nova-values.yaml",
-      "line": 64,
+      "line": 65,
       "evidenceLocation": "exact-value"
     },
     {
@@ -2370,7 +2352,7 @@
       "profile": "helm:nova",
       "signal": "openclaw.json.channels.discord.allowFrom[1]=user:<redacted-identity>",
       "source": "my-values/nova-values.yaml",
-      "line": 67,
+      "line": 68,
       "evidenceLocation": "exact-value"
     },
     {
@@ -2383,7 +2365,7 @@
       "profile": "helm:nova",
       "signal": "openclaw.json.channels.discord.execApprovals.target=dm",
       "source": "charts/kubeclaw/templates/configmap-gateway.yaml",
-      "line": 231,
+      "line": 251,
       "evidenceLocation": "exact-field"
     },
     {
@@ -2396,7 +2378,7 @@
       "profile": "helm:nova",
       "signal": "openclaw.json.channels.discord.groupPolicy=allowlist",
       "source": "charts/kubeclaw/templates/configmap-gateway.yaml",
-      "line": 208,
+      "line": 228,
       "evidenceLocation": "exact-value"
     },
     {
@@ -2409,7 +2391,7 @@
       "profile": "helm:nova",
       "signal": "openclaw.json.channels.discord.guilds.*.users[0]=<redacted-identity>",
       "source": "my-values/nova-values.yaml",
-      "line": 64,
+      "line": 65,
       "evidenceLocation": "exact-value"
     },
     {
@@ -2422,7 +2404,7 @@
       "profile": "helm:nova",
       "signal": "openclaw.json.channels.discord.streaming.mode=partial",
       "source": "charts/kubeclaw/templates/configmap-gateway.yaml",
-      "line": 210,
+      "line": 230,
       "evidenceLocation": "exact-value"
     },
     {
@@ -2435,7 +2417,7 @@
       "profile": "helm:nova",
       "signal": "openclaw.json.channels.discord.token.id=DISCORD_TOKEN",
       "source": "charts/kubeclaw/templates/configmap-gateway.yaml",
-      "line": 205,
+      "line": 225,
       "evidenceLocation": "exact-value"
     },
     {
@@ -2461,7 +2443,7 @@
       "profile": "helm:nova",
       "signal": "openclaw.json.channels.discord.token.source=env",
       "source": "charts/kubeclaw/templates/configmap-gateway.yaml",
-      "line": 61,
+      "line": 65,
       "evidenceLocation": "exact-field"
     },
     {
@@ -2474,7 +2456,7 @@
       "profile": "helm:nova",
       "signal": "openclaw.json.commands.allowFrom.discord[0]=<redacted-identity>",
       "source": "my-values/nova-values.yaml",
-      "line": 64,
+      "line": 65,
       "evidenceLocation": "exact-value"
     },
     {
@@ -2487,7 +2469,7 @@
       "profile": "helm:nova",
       "signal": "openclaw.json.commands.allowFrom.discord[1]=user:<redacted-identity>",
       "source": "my-values/nova-values.yaml",
-      "line": 67,
+      "line": 68,
       "evidenceLocation": "exact-value"
     },
     {
@@ -2500,7 +2482,7 @@
       "profile": "helm:nova",
       "signal": "openclaw.json.commands.ownerAllowFrom[0]=discord:<redacted-identity>",
       "source": "my-values/nova-values.yaml",
-      "line": 64,
+      "line": 65,
       "evidenceLocation": "exact-value"
     },
     {
@@ -2539,7 +2521,7 @@
       "profile": "helm:nova",
       "signal": "openclaw.json.agents.defaults.models.openai/gpt-5.5.agentRuntime.id=codex",
       "source": "charts/kubeclaw/templates/configmap-gateway.yaml",
-      "line": 46,
+      "line": 50,
       "evidenceLocation": "exact-value"
     },
     {
@@ -2552,7 +2534,33 @@
       "profile": "helm:nova",
       "signal": "openclaw.json.agents.defaults.models.openai/gpt-5.6-sol.agentRuntime.id=codex",
       "source": "charts/kubeclaw/templates/configmap-gateway.yaml",
-      "line": 46,
+      "line": 50,
+      "evidenceLocation": "exact-value"
+    },
+    {
+      "value": "ConfigMap/kubeclaw/agent-nova-config -> model:codex [openclaw.json.agents.defaults.models.openai/gpt-6-astra.agentRuntime.id=codex]",
+      "consumer": "ConfigMap/kubeclaw/agent-nova-config",
+      "dependencyIdentity": "model:codex",
+      "classification": "configuration-signal",
+      "activationState": "active",
+      "activationCondition": "openclaw.json.agents.defaults.models.openai/gpt-6-astra.agentRuntime.id is present in the rendered ConfigMap",
+      "profile": "helm:nova",
+      "signal": "openclaw.json.agents.defaults.models.openai/gpt-6-astra.agentRuntime.id=codex",
+      "source": "charts/kubeclaw/templates/configmap-gateway.yaml",
+      "line": 50,
+      "evidenceLocation": "exact-value"
+    },
+    {
+      "value": "ConfigMap/kubeclaw/agent-nova-config -> model:codex [openclaw.json.agents.defaults.models.openai/gpt-6.1-sol.agentRuntime.id=codex]",
+      "consumer": "ConfigMap/kubeclaw/agent-nova-config",
+      "dependencyIdentity": "model:codex",
+      "classification": "configuration-signal",
+      "activationState": "active",
+      "activationCondition": "openclaw.json.agents.defaults.models.openai/gpt-6.1-sol.agentRuntime.id is present in the rendered ConfigMap",
+      "profile": "helm:nova",
+      "signal": "openclaw.json.agents.defaults.models.openai/gpt-6.1-sol.agentRuntime.id=codex",
+      "source": "charts/kubeclaw/templates/configmap-gateway.yaml",
+      "line": 50,
       "evidenceLocation": "exact-value"
     },
     {
@@ -2565,7 +2573,7 @@
       "profile": "helm:nova",
       "signal": "openclaw.json.memory.search.model=gemini-embedding-001",
       "source": "charts/kubeclaw/templates/configmap-gateway.yaml",
-      "line": 74,
+      "line": 78,
       "evidenceLocation": "exact-value"
     },
     {
@@ -2578,20 +2586,20 @@
       "profile": "helm:nova",
       "signal": "openclaw.json.agents.defaults.model.fallbacks[0]=openai/gpt-5.5",
       "source": "charts/kubeclaw/templates/configmap-gateway.yaml",
-      "line": 95,
+      "line": 103,
       "evidenceLocation": "exact-value"
     },
     {
-      "value": "ConfigMap/kubeclaw/agent-nova-config -> model:openai/gpt-5.6-sol [openclaw.json.agents.defaults.model.primary=openai/gpt-5.6-sol]",
+      "value": "ConfigMap/kubeclaw/agent-nova-config -> model:openai/gpt-6.1-sol [openclaw.json.agents.defaults.model.primary=openai/gpt-6.1-sol]",
       "consumer": "ConfigMap/kubeclaw/agent-nova-config",
-      "dependencyIdentity": "model:openai/gpt-5.6-sol",
+      "dependencyIdentity": "model:openai/gpt-6.1-sol",
       "classification": "configuration-signal",
       "activationState": "active",
       "activationCondition": "openclaw.json.agents.defaults.model.primary is present in the rendered ConfigMap",
       "profile": "helm:nova",
-      "signal": "openclaw.json.agents.defaults.model.primary=openai/gpt-5.6-sol",
+      "signal": "openclaw.json.agents.defaults.model.primary=openai/gpt-6.1-sol",
       "source": "charts/kubeclaw/templates/configmap-gateway.yaml",
-      "line": 94,
+      "line": 98,
       "evidenceLocation": "exact-value"
     },
     {
@@ -2604,46 +2612,72 @@
       "profile": "helm:nova",
       "signal": "openclaw.json.agents.defaults.model.fallbacks[0]=openai/gpt-5.5",
       "source": "charts/kubeclaw/templates/configmap-gateway.yaml",
-      "line": 95,
+      "line": 103,
       "evidenceLocation": "exact-value"
     },
     {
-      "value": "ConfigMap/kubeclaw/agent-nova-config -> openai [openclaw.json.agents.defaults.model.primary=openai/gpt-5.6-sol]",
+      "value": "ConfigMap/kubeclaw/agent-nova-config -> openai [openclaw.json.agents.defaults.model.primary=openai/gpt-6.1-sol]",
       "consumer": "ConfigMap/kubeclaw/agent-nova-config",
       "dependencyIdentity": "openai",
       "classification": "configuration-signal",
       "activationState": "active",
       "activationCondition": "openclaw.json.agents.defaults.model.primary is present in the rendered ConfigMap",
       "profile": "helm:nova",
-      "signal": "openclaw.json.agents.defaults.model.primary=openai/gpt-5.6-sol",
+      "signal": "openclaw.json.agents.defaults.model.primary=openai/gpt-6.1-sol",
       "source": "charts/kubeclaw/templates/configmap-gateway.yaml",
-      "line": 94,
+      "line": 98,
       "evidenceLocation": "exact-value"
     },
     {
-      "value": "ConfigMap/kubeclaw/agent-nova-config -> openai [openclaw.json.agents.defaults.modelPolicy.allow[0]=openai/gpt-5.6-sol]",
+      "value": "ConfigMap/kubeclaw/agent-nova-config -> openai [openclaw.json.agents.defaults.modelPolicy.allow[0]=openai/gpt-6-astra]",
       "consumer": "ConfigMap/kubeclaw/agent-nova-config",
       "dependencyIdentity": "openai",
       "classification": "configuration-signal",
       "activationState": "active",
       "activationCondition": "openclaw.json.agents.defaults.modelPolicy.allow[0] is present in the rendered ConfigMap",
       "profile": "helm:nova",
-      "signal": "openclaw.json.agents.defaults.modelPolicy.allow[0]=openai/gpt-5.6-sol",
+      "signal": "openclaw.json.agents.defaults.modelPolicy.allow[0]=openai/gpt-6-astra",
       "source": "charts/kubeclaw/templates/configmap-gateway.yaml",
-      "line": 94,
+      "line": 98,
       "evidenceLocation": "exact-value"
     },
     {
-      "value": "ConfigMap/kubeclaw/agent-nova-config -> openai [openclaw.json.agents.defaults.modelPolicy.allow[1]=openai/gpt-5.5]",
+      "value": "ConfigMap/kubeclaw/agent-nova-config -> openai [openclaw.json.agents.defaults.modelPolicy.allow[1]=openai/gpt-6.1-sol]",
       "consumer": "ConfigMap/kubeclaw/agent-nova-config",
       "dependencyIdentity": "openai",
       "classification": "configuration-signal",
       "activationState": "active",
       "activationCondition": "openclaw.json.agents.defaults.modelPolicy.allow[1] is present in the rendered ConfigMap",
       "profile": "helm:nova",
-      "signal": "openclaw.json.agents.defaults.modelPolicy.allow[1]=openai/gpt-5.5",
+      "signal": "openclaw.json.agents.defaults.modelPolicy.allow[1]=openai/gpt-6.1-sol",
       "source": "charts/kubeclaw/templates/configmap-gateway.yaml",
-      "line": 95,
+      "line": 98,
+      "evidenceLocation": "exact-value"
+    },
+    {
+      "value": "ConfigMap/kubeclaw/agent-nova-config -> openai [openclaw.json.agents.defaults.modelPolicy.allow[2]=openai/gpt-5.6-sol]",
+      "consumer": "ConfigMap/kubeclaw/agent-nova-config",
+      "dependencyIdentity": "openai",
+      "classification": "configuration-signal",
+      "activationState": "active",
+      "activationCondition": "openclaw.json.agents.defaults.modelPolicy.allow[2] is present in the rendered ConfigMap",
+      "profile": "helm:nova",
+      "signal": "openclaw.json.agents.defaults.modelPolicy.allow[2]=openai/gpt-5.6-sol",
+      "source": "charts/kubeclaw/templates/configmap-gateway.yaml",
+      "line": 102,
+      "evidenceLocation": "exact-value"
+    },
+    {
+      "value": "ConfigMap/kubeclaw/agent-nova-config -> openai [openclaw.json.agents.defaults.modelPolicy.allow[3]=openai/gpt-5.5]",
+      "consumer": "ConfigMap/kubeclaw/agent-nova-config",
+      "dependencyIdentity": "openai",
+      "classification": "configuration-signal",
+      "activationState": "active",
+      "activationCondition": "openclaw.json.agents.defaults.modelPolicy.allow[3] is present in the rendered ConfigMap",
+      "profile": "helm:nova",
+      "signal": "openclaw.json.agents.defaults.modelPolicy.allow[3]=openai/gpt-5.5",
+      "source": "charts/kubeclaw/templates/configmap-gateway.yaml",
+      "line": 103,
       "evidenceLocation": "exact-value"
     },
     {
@@ -2656,7 +2690,7 @@
       "profile": "helm:nova",
       "signal": "openclaw.json.agents.defaults.models.openai/gpt-5.5.agentRuntime.id=codex",
       "source": "charts/kubeclaw/templates/configmap-gateway.yaml",
-      "line": 46,
+      "line": 50,
       "evidenceLocation": "exact-value"
     },
     {
@@ -2669,7 +2703,33 @@
       "profile": "helm:nova",
       "signal": "openclaw.json.agents.defaults.models.openai/gpt-5.6-sol.agentRuntime.id=codex",
       "source": "charts/kubeclaw/templates/configmap-gateway.yaml",
-      "line": 46,
+      "line": 50,
+      "evidenceLocation": "exact-value"
+    },
+    {
+      "value": "ConfigMap/kubeclaw/agent-nova-config -> openai [openclaw.json.agents.defaults.models.openai/gpt-6-astra.agentRuntime.id=codex]",
+      "consumer": "ConfigMap/kubeclaw/agent-nova-config",
+      "dependencyIdentity": "openai",
+      "classification": "configuration-signal",
+      "activationState": "active",
+      "activationCondition": "openclaw.json.agents.defaults.models.openai/gpt-6-astra.agentRuntime.id is present in the rendered ConfigMap",
+      "profile": "helm:nova",
+      "signal": "openclaw.json.agents.defaults.models.openai/gpt-6-astra.agentRuntime.id=codex",
+      "source": "charts/kubeclaw/templates/configmap-gateway.yaml",
+      "line": 50,
+      "evidenceLocation": "exact-value"
+    },
+    {
+      "value": "ConfigMap/kubeclaw/agent-nova-config -> openai [openclaw.json.agents.defaults.models.openai/gpt-6.1-sol.agentRuntime.id=codex]",
+      "consumer": "ConfigMap/kubeclaw/agent-nova-config",
+      "dependencyIdentity": "openai",
+      "classification": "configuration-signal",
+      "activationState": "active",
+      "activationCondition": "openclaw.json.agents.defaults.models.openai/gpt-6.1-sol.agentRuntime.id is present in the rendered ConfigMap",
+      "profile": "helm:nova",
+      "signal": "openclaw.json.agents.defaults.models.openai/gpt-6.1-sol.agentRuntime.id=codex",
+      "source": "charts/kubeclaw/templates/configmap-gateway.yaml",
+      "line": 50,
       "evidenceLocation": "exact-value"
     },
     {
@@ -2682,7 +2742,7 @@
       "profile": "helm:nova",
       "signal": "openclaw.json.auth.order.openai[0]=openai:<redacted-email>",
       "source": "charts/kubeclaw/templates/configmap-gateway.yaml",
-      "line": 26,
+      "line": 30,
       "evidenceLocation": "exact-value"
     },
     {
@@ -2695,7 +2755,7 @@
       "profile": "helm:nova",
       "signal": "openclaw.json.auth.order.openai[1]=openai:<redacted-email>",
       "source": "charts/kubeclaw/templates/configmap-gateway.yaml",
-      "line": 31,
+      "line": 35,
       "evidenceLocation": "exact-value"
     },
     {
@@ -2708,7 +2768,7 @@
       "profile": "helm:nova",
       "signal": "openclaw.json.auth.profiles.openai:<redacted-email>.email=<redacted-email>",
       "source": "charts/kubeclaw/templates/configmap-gateway.yaml",
-      "line": 26,
+      "line": 30,
       "evidenceLocation": "exact-value"
     },
     {
@@ -2721,7 +2781,7 @@
       "profile": "helm:nova",
       "signal": "openclaw.json.auth.profiles.openai:<redacted-email>.mode=oauth",
       "source": "charts/kubeclaw/templates/configmap-gateway.yaml",
-      "line": 28,
+      "line": 32,
       "evidenceLocation": "exact-value"
     },
     {
@@ -2734,7 +2794,7 @@
       "profile": "helm:nova",
       "signal": "openclaw.json.auth.profiles.openai:<redacted-email>.provider=openai",
       "source": "charts/kubeclaw/templates/configmap-gateway.yaml",
-      "line": 26,
+      "line": 30,
       "evidenceLocation": "exact-value"
     },
     {
@@ -2747,7 +2807,7 @@
       "profile": "helm:nova",
       "signal": "openclaw.json.memory.search.provider=openai-compatible",
       "source": "charts/kubeclaw/templates/configmap-gateway.yaml",
-      "line": 65,
+      "line": 69,
       "evidenceLocation": "exact-value"
     },
     {
@@ -2760,7 +2820,7 @@
       "profile": "helm:nova",
       "signal": "openclaw.json.plugins.allow[3]=openai",
       "source": "charts/kubeclaw/templates/configmap-gateway.yaml",
-      "line": 26,
+      "line": 30,
       "evidenceLocation": "exact-value"
     },
     {
@@ -2812,7 +2872,7 @@
       "profile": "helm:nova",
       "signal": "openclaw.json.auth.profiles.openai:<redacted-email>.provider=openai",
       "source": "charts/kubeclaw/templates/configmap-gateway.yaml",
-      "line": 26,
+      "line": 30,
       "evidenceLocation": "exact-value"
     },
     {
@@ -2825,7 +2885,7 @@
       "profile": "helm:nova",
       "signal": "openclaw.json.memory.search.provider=openai-compatible",
       "source": "charts/kubeclaw/templates/configmap-gateway.yaml",
-      "line": 65,
+      "line": 69,
       "evidenceLocation": "exact-value"
     },
     {
@@ -2850,7 +2910,7 @@
       "profile": "helm:prism-agent",
       "signal": "openclaw.json.plugins.entries.kubeclaw-prism.config.controlUrl=http://127.0.0.1:28080",
       "source": "charts/kubeclaw/templates/configmap-gateway.yaml",
-      "line": 317,
+      "line": 337,
       "evidenceLocation": "exact-value"
     },
     {
@@ -2863,7 +2923,7 @@
       "profile": "helm:prism-agent",
       "signal": "openclaw.json.channels.discord.allowFrom[0]=<redacted-identity>",
       "source": "my-values/prism-agent-values.yaml",
-      "line": 42,
+      "line": 52,
       "evidenceLocation": "exact-value"
     },
     {
@@ -2876,7 +2936,7 @@
       "profile": "helm:prism-agent",
       "signal": "openclaw.json.channels.discord.allowFrom[1]=user:<redacted-identity>",
       "source": "my-values/prism-agent-values.yaml",
-      "line": 43,
+      "line": 53,
       "evidenceLocation": "exact-value"
     },
     {
@@ -2889,7 +2949,7 @@
       "profile": "helm:prism-agent",
       "signal": "openclaw.json.channels.discord.execApprovals.target=dm",
       "source": "charts/kubeclaw/templates/configmap-gateway.yaml",
-      "line": 231,
+      "line": 251,
       "evidenceLocation": "exact-field"
     },
     {
@@ -2902,7 +2962,7 @@
       "profile": "helm:prism-agent",
       "signal": "openclaw.json.channels.discord.groupPolicy=allowlist",
       "source": "charts/kubeclaw/templates/configmap-gateway.yaml",
-      "line": 208,
+      "line": 228,
       "evidenceLocation": "exact-value"
     },
     {
@@ -2915,7 +2975,7 @@
       "profile": "helm:prism-agent",
       "signal": "openclaw.json.channels.discord.guilds.*.users[0]=<redacted-identity>",
       "source": "my-values/prism-agent-values.yaml",
-      "line": 42,
+      "line": 52,
       "evidenceLocation": "exact-value"
     },
     {
@@ -2928,7 +2988,7 @@
       "profile": "helm:prism-agent",
       "signal": "openclaw.json.channels.discord.streaming.mode=partial",
       "source": "charts/kubeclaw/templates/configmap-gateway.yaml",
-      "line": 210,
+      "line": 230,
       "evidenceLocation": "exact-value"
     },
     {
@@ -2941,7 +3001,7 @@
       "profile": "helm:prism-agent",
       "signal": "openclaw.json.channels.discord.token.id=DISCORD_TOKEN",
       "source": "charts/kubeclaw/templates/configmap-gateway.yaml",
-      "line": 205,
+      "line": 225,
       "evidenceLocation": "exact-value"
     },
     {
@@ -2967,7 +3027,7 @@
       "profile": "helm:prism-agent",
       "signal": "openclaw.json.channels.discord.token.source=env",
       "source": "charts/kubeclaw/templates/configmap-gateway.yaml",
-      "line": 61,
+      "line": 65,
       "evidenceLocation": "exact-field"
     },
     {
@@ -2980,7 +3040,7 @@
       "profile": "helm:prism-agent",
       "signal": "openclaw.json.commands.allowFrom.discord[0]=<redacted-identity>",
       "source": "my-values/prism-agent-values.yaml",
-      "line": 42,
+      "line": 52,
       "evidenceLocation": "exact-value"
     },
     {
@@ -2993,7 +3053,7 @@
       "profile": "helm:prism-agent",
       "signal": "openclaw.json.commands.allowFrom.discord[1]=user:<redacted-identity>",
       "source": "my-values/prism-agent-values.yaml",
-      "line": 43,
+      "line": 53,
       "evidenceLocation": "exact-value"
     },
     {
@@ -3006,7 +3066,7 @@
       "profile": "helm:prism-agent",
       "signal": "openclaw.json.commands.ownerAllowFrom[0]=discord:<redacted-identity>",
       "source": "my-values/prism-agent-values.yaml",
-      "line": 42,
+      "line": 52,
       "evidenceLocation": "exact-value"
     },
     {
@@ -3032,7 +3092,7 @@
       "profile": "helm:prism-agent",
       "signal": "openclaw.json.memory.search.remote.baseUrl=http://litellm.kubeclaw.svc.cluster.local:4000/v1",
       "source": "my-values/prism-agent-values.yaml",
-      "line": 29,
+      "line": 39,
       "evidenceLocation": "exact-value"
     },
     {
@@ -3045,7 +3105,7 @@
       "profile": "helm:prism-agent",
       "signal": "openclaw.json.agents.defaults.models.openai/gpt-5.5.agentRuntime.id=codex",
       "source": "charts/kubeclaw/templates/configmap-gateway.yaml",
-      "line": 46,
+      "line": 50,
       "evidenceLocation": "exact-value"
     },
     {
@@ -3058,7 +3118,7 @@
       "profile": "helm:prism-agent",
       "signal": "openclaw.json.agents.defaults.models.openai/gpt-5.6-sol.agentRuntime.id=codex",
       "source": "charts/kubeclaw/templates/configmap-gateway.yaml",
-      "line": 46,
+      "line": 50,
       "evidenceLocation": "exact-value"
     },
     {
@@ -3071,7 +3131,7 @@
       "profile": "helm:prism-agent",
       "signal": "openclaw.json.memory.search.model=gemini-embedding-001",
       "source": "charts/kubeclaw/templates/configmap-gateway.yaml",
-      "line": 74,
+      "line": 78,
       "evidenceLocation": "exact-value"
     },
     {
@@ -3084,7 +3144,7 @@
       "profile": "helm:prism-agent",
       "signal": "openclaw.json.agents.defaults.model.fallbacks[0]=openai/gpt-5.5",
       "source": "charts/kubeclaw/templates/configmap-gateway.yaml",
-      "line": 95,
+      "line": 103,
       "evidenceLocation": "exact-value"
     },
     {
@@ -3097,7 +3157,7 @@
       "profile": "helm:prism-agent",
       "signal": "openclaw.json.agents.defaults.model.primary=openai/gpt-5.6-sol",
       "source": "charts/kubeclaw/templates/configmap-gateway.yaml",
-      "line": 94,
+      "line": 102,
       "evidenceLocation": "exact-value"
     },
     {
@@ -3110,7 +3170,7 @@
       "profile": "helm:prism-agent",
       "signal": "openclaw.json.agents.defaults.model.fallbacks[0]=openai/gpt-5.5",
       "source": "charts/kubeclaw/templates/configmap-gateway.yaml",
-      "line": 95,
+      "line": 103,
       "evidenceLocation": "exact-value"
     },
     {
@@ -3123,7 +3183,7 @@
       "profile": "helm:prism-agent",
       "signal": "openclaw.json.agents.defaults.model.primary=openai/gpt-5.6-sol",
       "source": "charts/kubeclaw/templates/configmap-gateway.yaml",
-      "line": 94,
+      "line": 102,
       "evidenceLocation": "exact-value"
     },
     {
@@ -3136,7 +3196,7 @@
       "profile": "helm:prism-agent",
       "signal": "openclaw.json.agents.defaults.modelPolicy.allow[0]=openai/gpt-5.6-sol",
       "source": "charts/kubeclaw/templates/configmap-gateway.yaml",
-      "line": 94,
+      "line": 102,
       "evidenceLocation": "exact-value"
     },
     {
@@ -3149,7 +3209,7 @@
       "profile": "helm:prism-agent",
       "signal": "openclaw.json.agents.defaults.modelPolicy.allow[1]=openai/gpt-5.5",
       "source": "charts/kubeclaw/templates/configmap-gateway.yaml",
-      "line": 95,
+      "line": 103,
       "evidenceLocation": "exact-value"
     },
     {
@@ -3162,7 +3222,7 @@
       "profile": "helm:prism-agent",
       "signal": "openclaw.json.agents.defaults.models.openai/gpt-5.5.agentRuntime.id=codex",
       "source": "charts/kubeclaw/templates/configmap-gateway.yaml",
-      "line": 46,
+      "line": 50,
       "evidenceLocation": "exact-value"
     },
     {
@@ -3175,7 +3235,7 @@
       "profile": "helm:prism-agent",
       "signal": "openclaw.json.agents.defaults.models.openai/gpt-5.6-sol.agentRuntime.id=codex",
       "source": "charts/kubeclaw/templates/configmap-gateway.yaml",
-      "line": 46,
+      "line": 50,
       "evidenceLocation": "exact-value"
     },
     {
@@ -3188,7 +3248,7 @@
       "profile": "helm:prism-agent",
       "signal": "openclaw.json.auth.order.openai[0]=openai:<redacted-email>",
       "source": "charts/kubeclaw/templates/configmap-gateway.yaml",
-      "line": 26,
+      "line": 30,
       "evidenceLocation": "exact-value"
     },
     {
@@ -3201,7 +3261,7 @@
       "profile": "helm:prism-agent",
       "signal": "openclaw.json.auth.order.openai[1]=openai:<redacted-email>",
       "source": "charts/kubeclaw/templates/configmap-gateway.yaml",
-      "line": 31,
+      "line": 35,
       "evidenceLocation": "exact-value"
     },
     {
@@ -3214,7 +3274,7 @@
       "profile": "helm:prism-agent",
       "signal": "openclaw.json.auth.profiles.openai:<redacted-email>.email=<redacted-email>",
       "source": "charts/kubeclaw/templates/configmap-gateway.yaml",
-      "line": 26,
+      "line": 30,
       "evidenceLocation": "exact-value"
     },
     {
@@ -3227,7 +3287,7 @@
       "profile": "helm:prism-agent",
       "signal": "openclaw.json.auth.profiles.openai:<redacted-email>.mode=oauth",
       "source": "charts/kubeclaw/templates/configmap-gateway.yaml",
-      "line": 28,
+      "line": 32,
       "evidenceLocation": "exact-value"
     },
     {
@@ -3240,7 +3300,7 @@
       "profile": "helm:prism-agent",
       "signal": "openclaw.json.auth.profiles.openai:<redacted-email>.provider=openai",
       "source": "charts/kubeclaw/templates/configmap-gateway.yaml",
-      "line": 26,
+      "line": 30,
       "evidenceLocation": "exact-value"
     },
     {
@@ -3253,7 +3313,7 @@
       "profile": "helm:prism-agent",
       "signal": "openclaw.json.memory.search.provider=openai-compatible",
       "source": "charts/kubeclaw/templates/configmap-gateway.yaml",
-      "line": 65,
+      "line": 69,
       "evidenceLocation": "exact-value"
     },
     {
@@ -3266,7 +3326,7 @@
       "profile": "helm:prism-agent",
       "signal": "openclaw.json.plugins.allow[3]=openai",
       "source": "charts/kubeclaw/templates/configmap-gateway.yaml",
-      "line": 26,
+      "line": 30,
       "evidenceLocation": "exact-value"
     },
     {
@@ -3318,7 +3378,7 @@
       "profile": "helm:prism-agent",
       "signal": "openclaw.json.auth.profiles.openai:<redacted-email>.provider=openai",
       "source": "charts/kubeclaw/templates/configmap-gateway.yaml",
-      "line": 26,
+      "line": 30,
       "evidenceLocation": "exact-value"
     },
     {
@@ -3331,7 +3391,7 @@
       "profile": "helm:prism-agent",
       "signal": "openclaw.json.memory.search.provider=openai-compatible",
       "source": "charts/kubeclaw/templates/configmap-gateway.yaml",
-      "line": 65,
+      "line": 69,
       "evidenceLocation": "exact-value"
     },
     {
@@ -3497,7 +3557,7 @@
       "profile": "helm:prism",
       "signal": "automountServiceAccountToken=false",
       "source": "charts/prism/templates/backup.yaml",
-      "line": 34,
+      "line": 37,
       "evidenceLocation": "exact-field"
     },
     {
@@ -3510,7 +3570,7 @@
       "profile": "helm:prism",
       "signal": "volume:artifacts",
       "source": "charts/prism/templates/backup.yaml",
-      "line": 69,
+      "line": 78,
       "evidenceLocation": "exact-field"
     },
     {
@@ -3523,7 +3583,7 @@
       "profile": "helm:prism",
       "signal": "volume:backups",
       "source": "charts/prism/templates/backup.yaml",
-      "line": 66,
+      "line": 75,
       "evidenceLocation": "exact-field"
     },
     {
@@ -3549,7 +3609,7 @@
       "profile": "helm:prism",
       "signal": "automountServiceAccountToken=false",
       "source": "charts/prism/templates/backup.yaml",
-      "line": 34,
+      "line": 37,
       "evidenceLocation": "exact-field"
     },
     {
@@ -3562,7 +3622,7 @@
       "profile": "helm:prism",
       "signal": "volume:backups",
       "source": "charts/prism/templates/backup.yaml",
-      "line": 66,
+      "line": 75,
       "evidenceLocation": "exact-field"
     },
     {
@@ -3605,12 +3665,12 @@
       "evidenceLocation": "exact-value"
     },
     {
-      "value": "CronJob/kubeclaw/prism-backup#backup -> docker.io [image registry for pgvector/pgvector:pg17@sha256:cf134a767f474095eeba57e0117be8e568e011a63f33fbf252f14c9b760f8e6f]",
-      "consumer": "CronJob/kubeclaw/prism-backup#backup",
+      "value": "CronJob/kubeclaw/prism-backup#proof -> docker.io [image registry for pgvector/pgvector:pg17@sha256:cf134a767f474095eeba57e0117be8e568e011a63f33fbf252f14c9b760f8e6f]",
+      "consumer": "CronJob/kubeclaw/prism-backup#proof",
       "dependencyIdentity": "docker.io",
       "classification": "image-registry",
       "activationState": "active",
-      "activationCondition": "backup pulls the rendered image",
+      "activationCondition": "proof pulls the rendered image",
       "profile": "helm:prism",
       "signal": "image registry for pgvector/pgvector:pg17@sha256:cf134a767f474095eeba57e0117be8e568e011a63f33fbf252f14c9b760f8e6f",
       "source": "my-values/prism-values.yaml",
@@ -3618,8 +3678,8 @@
       "evidenceLocation": "exact-value"
     },
     {
-      "value": "CronJob/kubeclaw/prism-backup#backup -> ghcr.io [PRISM_BACKUP_IMAGE=ghcr.io/datrab/kubeclaw-prism-control@sha256:5ea059c199c8e32089f56274b606a4cceed22050e62671392399b06fffafd8d4]",
-      "consumer": "CronJob/kubeclaw/prism-backup#backup",
+      "value": "CronJob/kubeclaw/prism-backup#proof -> ghcr.io [PRISM_BACKUP_IMAGE=ghcr.io/datrab/kubeclaw-prism-control@sha256:5ea059c199c8e32089f56274b606a4cceed22050e62671392399b06fffafd8d4]",
+      "consumer": "CronJob/kubeclaw/prism-backup#proof",
       "dependencyIdentity": "ghcr.io",
       "classification": "environment-signal",
       "activationState": "active",
@@ -3627,16 +3687,16 @@
       "profile": "helm:prism",
       "signal": "PRISM_BACKUP_IMAGE=ghcr.io/datrab/kubeclaw-prism-control@sha256:5ea059c199c8e32089f56274b606a4cceed22050e62671392399b06fffafd8d4",
       "source": "charts/prism/templates/backup.yaml",
-      "line": 50,
+      "line": 59,
       "evidenceLocation": "exact-field"
     },
     {
-      "value": "CronJob/kubeclaw/prism-backup#backup -> pgvector/pgvector:pg17@sha256:cf134a767f474095eeba57e0117be8e568e011a63f33fbf252f14c9b760f8e6f [image=pgvector/pgvector:pg17@sha256:cf134a767f474095eeba57e0117be8e568e011a63f33fbf252f14c9b760f8e6f]",
-      "consumer": "CronJob/kubeclaw/prism-backup#backup",
+      "value": "CronJob/kubeclaw/prism-backup#proof -> pgvector/pgvector:pg17@sha256:cf134a767f474095eeba57e0117be8e568e011a63f33fbf252f14c9b760f8e6f [image=pgvector/pgvector:pg17@sha256:cf134a767f474095eeba57e0117be8e568e011a63f33fbf252f14c9b760f8e6f]",
+      "consumer": "CronJob/kubeclaw/prism-backup#proof",
       "dependencyIdentity": "pgvector/pgvector:pg17@sha256:cf134a767f474095eeba57e0117be8e568e011a63f33fbf252f14c9b760f8e6f",
       "classification": "workload-image",
       "activationState": "active",
-      "activationCondition": "backup is present in the rendered pod specification",
+      "activationCondition": "proof is present in the rendered pod specification",
       "profile": "helm:prism",
       "signal": "image=pgvector/pgvector:pg17@sha256:cf134a767f474095eeba57e0117be8e568e011a63f33fbf252f14c9b760f8e6f",
       "source": "my-values/prism-values.yaml",
@@ -3644,8 +3704,8 @@
       "evidenceLocation": "exact-value"
     },
     {
-      "value": "CronJob/kubeclaw/prism-backup#backup -> prism-postgresql [PGHOST=prism-postgresql]",
-      "consumer": "CronJob/kubeclaw/prism-backup#backup",
+      "value": "CronJob/kubeclaw/prism-backup#proof -> prism-postgresql [PGHOST=prism-postgresql]",
+      "consumer": "CronJob/kubeclaw/prism-backup#proof",
       "dependencyIdentity": "prism-postgresql",
       "classification": "environment-signal",
       "activationState": "active",
@@ -3653,12 +3713,12 @@
       "profile": "helm:prism",
       "signal": "PGHOST=prism-postgresql",
       "source": "charts/prism/templates/backup.yaml",
-      "line": 54,
+      "line": 63,
       "evidenceLocation": "exact-value"
     },
     {
-      "value": "CronJob/kubeclaw/prism-backup#backup -> prism-postgresql [PGPASSWORD=secret:prism-postgresql-auth#password]",
-      "consumer": "CronJob/kubeclaw/prism-backup#backup",
+      "value": "CronJob/kubeclaw/prism-backup#proof -> prism-postgresql [PGPASSWORD=secret:prism-postgresql-auth#password]",
+      "consumer": "CronJob/kubeclaw/prism-backup#proof",
       "dependencyIdentity": "prism-postgresql",
       "classification": "environment-signal",
       "activationState": "active",
@@ -3666,12 +3726,12 @@
       "profile": "helm:prism",
       "signal": "PGPASSWORD=secret:prism-postgresql-auth#password",
       "source": "charts/prism/templates/backup.yaml",
-      "line": 57,
+      "line": 66,
       "evidenceLocation": "exact-field"
     },
     {
-      "value": "CronJob/kubeclaw/prism-backup#backup -> prism-postgresql [PGUSER=postgres]",
-      "consumer": "CronJob/kubeclaw/prism-backup#backup",
+      "value": "CronJob/kubeclaw/prism-backup#proof -> prism-postgresql [PGUSER=postgres]",
+      "consumer": "CronJob/kubeclaw/prism-backup#proof",
       "dependencyIdentity": "prism-postgresql",
       "classification": "environment-signal",
       "activationState": "active",
@@ -3692,7 +3752,7 @@
       "profile": "helm:prism",
       "signal": "automountServiceAccountToken=false",
       "source": "charts/prism/templates/backup.yaml",
-      "line": 34,
+      "line": 37,
       "evidenceLocation": "exact-field"
     },
     {
@@ -3705,7 +3765,7 @@
       "profile": "helm:prism",
       "signal": "volume:backups",
       "source": "charts/prism/templates/backup.yaml",
-      "line": 66,
+      "line": 75,
       "evidenceLocation": "exact-field"
     },
     {
@@ -3722,12 +3782,12 @@
       "evidenceLocation": "exact-value"
     },
     {
-      "value": "CronJob/kubeclaw/prism-restore-proof#database-proof -> docker.io [image registry for pgvector/pgvector:pg17@sha256:cf134a767f474095eeba57e0117be8e568e011a63f33fbf252f14c9b760f8e6f]",
-      "consumer": "CronJob/kubeclaw/prism-restore-proof#database-proof",
+      "value": "CronJob/kubeclaw/prism-restore-proof#restore-proof -> docker.io [image registry for pgvector/pgvector:pg17@sha256:cf134a767f474095eeba57e0117be8e568e011a63f33fbf252f14c9b760f8e6f]",
+      "consumer": "CronJob/kubeclaw/prism-restore-proof#restore-proof",
       "dependencyIdentity": "docker.io",
       "classification": "image-registry",
       "activationState": "active",
-      "activationCondition": "database-proof pulls the rendered image",
+      "activationCondition": "restore-proof pulls the rendered image",
       "profile": "helm:prism",
       "signal": "image registry for pgvector/pgvector:pg17@sha256:cf134a767f474095eeba57e0117be8e568e011a63f33fbf252f14c9b760f8e6f",
       "source": "my-values/prism-values.yaml",
@@ -3735,12 +3795,12 @@
       "evidenceLocation": "exact-value"
     },
     {
-      "value": "CronJob/kubeclaw/prism-restore-proof#database-proof -> pgvector/pgvector:pg17@sha256:cf134a767f474095eeba57e0117be8e568e011a63f33fbf252f14c9b760f8e6f [image=pgvector/pgvector:pg17@sha256:cf134a767f474095eeba57e0117be8e568e011a63f33fbf252f14c9b760f8e6f]",
-      "consumer": "CronJob/kubeclaw/prism-restore-proof#database-proof",
+      "value": "CronJob/kubeclaw/prism-restore-proof#restore-proof -> pgvector/pgvector:pg17@sha256:cf134a767f474095eeba57e0117be8e568e011a63f33fbf252f14c9b760f8e6f [image=pgvector/pgvector:pg17@sha256:cf134a767f474095eeba57e0117be8e568e011a63f33fbf252f14c9b760f8e6f]",
+      "consumer": "CronJob/kubeclaw/prism-restore-proof#restore-proof",
       "dependencyIdentity": "pgvector/pgvector:pg17@sha256:cf134a767f474095eeba57e0117be8e568e011a63f33fbf252f14c9b760f8e6f",
       "classification": "workload-image",
       "activationState": "active",
-      "activationCondition": "database-proof is present in the rendered pod specification",
+      "activationCondition": "restore-proof is present in the rendered pod specification",
       "profile": "helm:prism",
       "signal": "image=pgvector/pgvector:pg17@sha256:cf134a767f474095eeba57e0117be8e568e011a63f33fbf252f14c9b760f8e6f",
       "source": "my-values/prism-values.yaml",
@@ -3748,8 +3808,8 @@
       "evidenceLocation": "exact-value"
     },
     {
-      "value": "CronJob/kubeclaw/prism-restore-proof#database-proof -> prism-postgresql [PGHOST=prism-postgresql]",
-      "consumer": "CronJob/kubeclaw/prism-restore-proof#database-proof",
+      "value": "CronJob/kubeclaw/prism-restore-proof#restore-proof -> prism-postgresql [PGHOST=prism-postgresql]",
+      "consumer": "CronJob/kubeclaw/prism-restore-proof#restore-proof",
       "dependencyIdentity": "prism-postgresql",
       "classification": "environment-signal",
       "activationState": "active",
@@ -3757,12 +3817,12 @@
       "profile": "helm:prism",
       "signal": "PGHOST=prism-postgresql",
       "source": "charts/prism/templates/backup.yaml",
-      "line": 54,
+      "line": 63,
       "evidenceLocation": "exact-value"
     },
     {
-      "value": "CronJob/kubeclaw/prism-restore-proof#database-proof -> prism-postgresql [PGPASSWORD=secret:prism-postgresql-auth#password]",
-      "consumer": "CronJob/kubeclaw/prism-restore-proof#database-proof",
+      "value": "CronJob/kubeclaw/prism-restore-proof#restore-proof -> prism-postgresql [PGPASSWORD=secret:prism-postgresql-auth#password]",
+      "consumer": "CronJob/kubeclaw/prism-restore-proof#restore-proof",
       "dependencyIdentity": "prism-postgresql",
       "classification": "environment-signal",
       "activationState": "active",
@@ -3770,12 +3830,12 @@
       "profile": "helm:prism",
       "signal": "PGPASSWORD=secret:prism-postgresql-auth#password",
       "source": "charts/prism/templates/backup.yaml",
-      "line": 57,
+      "line": 66,
       "evidenceLocation": "exact-field"
     },
     {
-      "value": "CronJob/kubeclaw/prism-restore-proof#database-proof -> prism-postgresql [PGUSER=postgres]",
-      "consumer": "CronJob/kubeclaw/prism-restore-proof#database-proof",
+      "value": "CronJob/kubeclaw/prism-restore-proof#restore-proof -> prism-postgresql [PGUSER=postgres]",
+      "consumer": "CronJob/kubeclaw/prism-restore-proof#restore-proof",
       "dependencyIdentity": "prism-postgresql",
       "classification": "environment-signal",
       "activationState": "active",
@@ -3796,7 +3856,7 @@
       "profile": "helm:buster",
       "signal": "volume:spiffe-workload-api",
       "source": "charts/kubeclaw/templates/deployment.yaml",
-      "line": 1437,
+      "line": 1509,
       "evidenceLocation": "exact-field"
     },
     {
@@ -3848,7 +3908,7 @@
       "profile": "helm:buster",
       "signal": "volume:config",
       "source": "charts/kubeclaw/templates/deployment.yaml",
-      "line": 106,
+      "line": 139,
       "evidenceLocation": "exact-field"
     },
     {
@@ -3874,7 +3934,7 @@
       "profile": "helm:buster",
       "signal": "volume:workspace",
       "source": "charts/kubeclaw/templates/deployment.yaml",
-      "line": 296,
+      "line": 329,
       "evidenceLocation": "exact-field"
     },
     {
@@ -3990,7 +4050,7 @@
       "profile": "helm:buster",
       "signal": "startupProbe",
       "source": "charts/kubeclaw/templates/deployment.yaml",
-      "line": 1480,
+      "line": 1552,
       "evidenceLocation": "exact-value"
     },
     {
@@ -4003,7 +4063,7 @@
       "profile": "helm:buster",
       "signal": "readinessProbe",
       "source": "charts/kubeclaw/templates/deployment.yaml",
-      "line": 1492,
+      "line": 1564,
       "evidenceLocation": "exact-value"
     },
     {
@@ -4053,7 +4113,7 @@
       "profile": "helm:buster",
       "signal": "DISCORD_TOKEN=secret:openclaw-shared-secrets#discordToken-buster",
       "source": "charts/kubeclaw/templates/deployment.yaml",
-      "line": 275,
+      "line": 308,
       "evidenceLocation": "exact-field"
     },
     {
@@ -4066,7 +4126,7 @@
       "profile": "helm:buster",
       "signal": "DISCORD_WEBHOOK=secret:openclaw-shared-secrets#discordWebhook",
       "source": "charts/kubeclaw/templates/deployment.yaml",
-      "line": 1193,
+      "line": 1265,
       "evidenceLocation": "exact-field"
     },
     {
@@ -4104,7 +4164,7 @@
       "profile": "helm:buster",
       "signal": "LITELLM_API_KEY=secret:openclaw-shared-secrets#litellmApiKey",
       "source": "charts/kubeclaw/templates/deployment.yaml",
-      "line": 270,
+      "line": 303,
       "evidenceLocation": "exact-field"
     },
     {
@@ -4117,7 +4177,7 @@
       "profile": "helm:buster",
       "signal": "OPENCLAW_GATEWAY_URL=http://127.0.0.1:18789",
       "source": "charts/kubeclaw/templates/deployment.yaml",
-      "line": 1296,
+      "line": 1368,
       "evidenceLocation": "exact-field"
     },
     {
@@ -4156,7 +4216,7 @@
       "profile": "helm:buster",
       "signal": "DISCORD_TOKEN=secret:openclaw-shared-secrets#discordToken-buster",
       "source": "charts/kubeclaw/templates/deployment.yaml",
-      "line": 275,
+      "line": 308,
       "evidenceLocation": "exact-field"
     },
     {
@@ -4169,7 +4229,7 @@
       "profile": "helm:buster",
       "signal": "DISCORD_WEBHOOK=secret:openclaw-shared-secrets#discordWebhook",
       "source": "charts/kubeclaw/templates/deployment.yaml",
-      "line": 1193,
+      "line": 1265,
       "evidenceLocation": "exact-field"
     },
     {
@@ -4182,7 +4242,7 @@
       "profile": "helm:buster",
       "signal": "readinessProbe",
       "source": "charts/kubeclaw/templates/deployment.yaml",
-      "line": 1492,
+      "line": 1564,
       "evidenceLocation": "exact-value"
     },
     {
@@ -4195,7 +4255,7 @@
       "profile": "helm:buster",
       "signal": "startupProbe",
       "source": "charts/kubeclaw/templates/deployment.yaml",
-      "line": 1480,
+      "line": 1552,
       "evidenceLocation": "exact-value"
     },
     {
@@ -4233,7 +4293,7 @@
       "profile": "helm:buster",
       "signal": "KUBECLAW_HEALTH_CHECK_LITELLM=true",
       "source": "charts/kubeclaw/templates/deployment.yaml",
-      "line": 1383,
+      "line": 1455,
       "evidenceLocation": "exact-field"
     },
     {
@@ -4246,7 +4306,7 @@
       "profile": "helm:buster",
       "signal": "LITELLM_API_KEY=secret:openclaw-shared-secrets#litellmApiKey",
       "source": "charts/kubeclaw/templates/deployment.yaml",
-      "line": 270,
+      "line": 303,
       "evidenceLocation": "exact-field"
     },
     {
@@ -4272,7 +4332,7 @@
       "profile": "helm:buster",
       "signal": "KUBECLAW_HEALTH_CHECK_REDIS_STREAM=true",
       "source": "charts/kubeclaw/templates/deployment.yaml",
-      "line": 1377,
+      "line": 1449,
       "evidenceLocation": "exact-field"
     },
     {
@@ -4285,7 +4345,7 @@
       "profile": "helm:buster",
       "signal": "KUBECLAW_HEALTH_CHECK_REDIS=true",
       "source": "charts/kubeclaw/templates/deployment.yaml",
-      "line": 1375,
+      "line": 1447,
       "evidenceLocation": "exact-field"
     },
     {
@@ -4311,7 +4371,7 @@
       "profile": "helm:buster",
       "signal": "KUBECLAW_HEALTH_REDIS_STREAM=",
       "source": "charts/kubeclaw/templates/deployment.yaml",
-      "line": 1379,
+      "line": 1451,
       "evidenceLocation": "exact-field"
     },
     {
@@ -4324,7 +4384,7 @@
       "profile": "helm:buster",
       "signal": "REDIS_HOST=redis-master.kubeclaw.svc.cluster.local",
       "source": "charts/kubeclaw/values.yaml",
-      "line": 229,
+      "line": 230,
       "evidenceLocation": "exact-value"
     },
     {
@@ -4337,7 +4397,7 @@
       "profile": "helm:buster",
       "signal": "REDIS_PASSWORD=secret:redis-secrets#redis-password",
       "source": "charts/kubeclaw/templates/deployment.yaml",
-      "line": 1289,
+      "line": 1361,
       "evidenceLocation": "exact-field"
     },
     {
@@ -4350,7 +4410,7 @@
       "profile": "helm:buster",
       "signal": "REDIS_PORT=6379",
       "source": "charts/kubeclaw/templates/deployment.yaml",
-      "line": 1288,
+      "line": 1360,
       "evidenceLocation": "exact-value"
     },
     {
@@ -4363,7 +4423,7 @@
       "profile": "helm:buster",
       "signal": "REDIS_HOST=redis-master.kubeclaw.svc.cluster.local",
       "source": "charts/kubeclaw/values.yaml",
-      "line": 229,
+      "line": 230,
       "evidenceLocation": "exact-value"
     },
     {
@@ -4376,7 +4436,7 @@
       "profile": "helm:buster",
       "signal": "KUBECLAW_HEALTH_REGISTRIES=http://registry-local.kubeclaw.svc.cluster.local:5001,http://registry-mirror.kubeclaw.svc.cluster.local:5000",
       "source": "charts/kubeclaw/templates/deployment.yaml",
-      "line": 1387,
+      "line": 1459,
       "evidenceLocation": "exact-field"
     },
     {
@@ -4389,7 +4449,7 @@
       "profile": "helm:buster",
       "signal": "KUBECLAW_HEALTH_REGISTRIES=http://registry-local.kubeclaw.svc.cluster.local:5001",
       "source": "charts/kubeclaw/values.yaml",
-      "line": 348,
+      "line": 349,
       "evidenceLocation": "exact-value"
     },
     {
@@ -4402,7 +4462,7 @@
       "profile": "helm:buster",
       "signal": "KUBECLAW_HEALTH_REGISTRIES=http://registry-local.kubeclaw.svc.cluster.local:5001,http://registry-mirror.kubeclaw.svc.cluster.local:5000",
       "source": "charts/kubeclaw/templates/deployment.yaml",
-      "line": 1387,
+      "line": 1459,
       "evidenceLocation": "exact-field"
     },
     {
@@ -4415,7 +4475,7 @@
       "profile": "helm:buster",
       "signal": "KUBECLAW_HEALTH_REGISTRIES=http://registry-mirror.kubeclaw.svc.cluster.local:5000",
       "source": "charts/kubeclaw/values.yaml",
-      "line": 349,
+      "line": 350,
       "evidenceLocation": "exact-value"
     },
     {
@@ -4428,7 +4488,7 @@
       "profile": "helm:buster",
       "signal": "SPIFFE_ENDPOINT_SOCKET=unix:///run/spire/sockets/spire-agent.sock",
       "source": "charts/kubeclaw/templates/deployment.yaml",
-      "line": 1397,
+      "line": 1469,
       "evidenceLocation": "exact-field"
     },
     {
@@ -4441,7 +4501,7 @@
       "profile": "helm:buster",
       "signal": "DISCORD_TOKEN=secret:openclaw-shared-secrets#discordToken-buster",
       "source": "charts/kubeclaw/templates/deployment.yaml",
-      "line": 275,
+      "line": 308,
       "evidenceLocation": "exact-field"
     },
     {
@@ -4479,7 +4539,32 @@
       "profile": "helm:buster",
       "signal": "LITELLM_API_KEY=secret:openclaw-shared-secrets#litellmApiKey",
       "source": "charts/kubeclaw/templates/deployment.yaml",
-      "line": 270,
+      "line": 303,
+      "evidenceLocation": "exact-field"
+    },
+    {
+      "value": "Deployment/kubeclaw/agent-buster#tmp-permissions -> ghcr.io [image registry for ghcr.io/datrab/kubeclaw-buster-gateway:latest]",
+      "consumer": "Deployment/kubeclaw/agent-buster#tmp-permissions",
+      "dependencyIdentity": "ghcr.io",
+      "classification": "image-registry",
+      "activationState": "active",
+      "activationCondition": "tmp-permissions pulls the rendered image",
+      "profile": "helm:buster",
+      "signal": "image registry for ghcr.io/datrab/kubeclaw-buster-gateway:latest",
+      "source": "helm:buster:rendered-output",
+      "evidenceLocation": "rendered-output"
+    },
+    {
+      "value": "Deployment/kubeclaw/agent-buster#tmp-permissions -> ghcr.io/datrab/kubeclaw-buster-gateway:latest [image=ghcr.io/datrab/kubeclaw-buster-gateway:latest]",
+      "consumer": "Deployment/kubeclaw/agent-buster#tmp-permissions",
+      "dependencyIdentity": "ghcr.io/datrab/kubeclaw-buster-gateway:latest",
+      "classification": "workload-image",
+      "activationState": "active",
+      "activationCondition": "tmp-permissions is present in the rendered pod specification",
+      "profile": "helm:buster",
+      "signal": "image=ghcr.io/datrab/kubeclaw-buster-gateway:latest",
+      "source": "charts/kubeclaw/templates/deployment.yaml",
+      "line": 43,
       "evidenceLocation": "exact-field"
     },
     {
@@ -4517,7 +4602,7 @@
       "profile": "helm:buster",
       "signal": "startupProbe",
       "source": "charts/kubeclaw/templates/deployment.yaml",
-      "line": 1480,
+      "line": 1552,
       "evidenceLocation": "exact-value"
     },
     {
@@ -4530,7 +4615,7 @@
       "profile": "helm:buster",
       "signal": "readinessProbe",
       "source": "charts/kubeclaw/templates/deployment.yaml",
-      "line": 1492,
+      "line": 1564,
       "evidenceLocation": "exact-value"
     },
     {
@@ -4543,7 +4628,7 @@
       "profile": "helm:nova",
       "signal": "volume:spiffe-workload-api",
       "source": "charts/kubeclaw/templates/deployment.yaml",
-      "line": 1437,
+      "line": 1509,
       "evidenceLocation": "exact-field"
     },
     {
@@ -4569,7 +4654,7 @@
       "profile": "helm:nova",
       "signal": "volume:config",
       "source": "charts/kubeclaw/templates/deployment.yaml",
-      "line": 106,
+      "line": 139,
       "evidenceLocation": "exact-field"
     },
     {
@@ -4582,7 +4667,7 @@
       "profile": "helm:nova",
       "signal": "volume:workspace",
       "source": "charts/kubeclaw/templates/deployment.yaml",
-      "line": 296,
+      "line": 329,
       "evidenceLocation": "exact-field"
     },
     {
@@ -4608,7 +4693,7 @@
       "profile": "helm:nova",
       "signal": "image registry for ghcr.io/datrab/kubeclaw-archviewer:latest",
       "source": "my-values/nova-values.yaml",
-      "line": 156,
+      "line": 160,
       "evidenceLocation": "exact-value"
     },
     {
@@ -4621,7 +4706,7 @@
       "profile": "helm:nova",
       "signal": "image=ghcr.io/datrab/kubeclaw-archviewer:latest",
       "source": "my-values/nova-values.yaml",
-      "line": 156,
+      "line": 160,
       "evidenceLocation": "exact-value"
     },
     {
@@ -4634,7 +4719,7 @@
       "profile": "helm:nova",
       "signal": "readinessProbe",
       "source": "charts/kubeclaw/templates/deployment.yaml",
-      "line": 1492,
+      "line": 1564,
       "evidenceLocation": "exact-value"
     },
     {
@@ -4647,7 +4732,7 @@
       "profile": "helm:nova",
       "signal": "startupProbe",
       "source": "charts/kubeclaw/templates/deployment.yaml",
-      "line": 1480,
+      "line": 1552,
       "evidenceLocation": "exact-value"
     },
     {
@@ -4660,7 +4745,7 @@
       "profile": "helm:nova",
       "signal": "DISCORD_TOKEN=secret:openclaw-shared-secrets#discordToken-nova",
       "source": "charts/kubeclaw/templates/deployment.yaml",
-      "line": 275,
+      "line": 308,
       "evidenceLocation": "exact-field"
     },
     {
@@ -4673,7 +4758,7 @@
       "profile": "helm:nova",
       "signal": "DISCORD_WEBHOOK=secret:openclaw-shared-secrets#discordWebhook",
       "source": "charts/kubeclaw/templates/deployment.yaml",
-      "line": 1193,
+      "line": 1265,
       "evidenceLocation": "exact-field"
     },
     {
@@ -4711,7 +4796,7 @@
       "profile": "helm:nova",
       "signal": "LITELLM_API_KEY=secret:openclaw-shared-secrets#litellmApiKey",
       "source": "charts/kubeclaw/templates/deployment.yaml",
-      "line": 270,
+      "line": 303,
       "evidenceLocation": "exact-field"
     },
     {
@@ -4724,7 +4809,7 @@
       "profile": "helm:nova",
       "signal": "KUBECLAW_CAPABILITY_PROVIDERS=http://127.0.0.1:28080",
       "source": "my-values/prism-agent-values.yaml",
-      "line": 65,
+      "line": 75,
       "evidenceLocation": "exact-value"
     },
     {
@@ -4737,7 +4822,7 @@
       "profile": "helm:nova",
       "signal": "KUBECLAW_CAPABILITY_PROVIDERS=http://127.0.0.1:28891",
       "source": "charts/kubeclaw/templates/deployment.yaml",
-      "line": 1339,
+      "line": 1411,
       "evidenceLocation": "exact-field"
     },
     {
@@ -4750,7 +4835,7 @@
       "profile": "helm:nova",
       "signal": "OPENCLAW_GATEWAY_URL=http://127.0.0.1:18789",
       "source": "charts/kubeclaw/templates/deployment.yaml",
-      "line": 1296,
+      "line": 1368,
       "evidenceLocation": "exact-field"
     },
     {
@@ -4763,7 +4848,7 @@
       "profile": "helm:nova",
       "signal": "KUBECLAW_CAPABILITY_PROVIDERS=http://agent-buster:18789",
       "source": "charts/kubeclaw/templates/deployment.yaml",
-      "line": 1339,
+      "line": 1411,
       "evidenceLocation": "exact-field"
     },
     {
@@ -4776,7 +4861,7 @@
       "profile": "helm:nova",
       "signal": "DISCORD_CHANNEL=<redacted-identity>",
       "source": "my-values/nova-values.yaml",
-      "line": 56,
+      "line": 57,
       "evidenceLocation": "exact-value"
     },
     {
@@ -4789,7 +4874,7 @@
       "profile": "helm:nova",
       "signal": "DISCORD_CHANNEL=<redacted-identity>",
       "source": "my-values/nova-values.yaml",
-      "line": 56,
+      "line": 57,
       "evidenceLocation": "exact-value"
     },
     {
@@ -4802,7 +4887,7 @@
       "profile": "helm:nova",
       "signal": "DISCORD_TOKEN=secret:openclaw-shared-secrets#discordToken-nova",
       "source": "charts/kubeclaw/templates/deployment.yaml",
-      "line": 275,
+      "line": 308,
       "evidenceLocation": "exact-field"
     },
     {
@@ -4815,7 +4900,7 @@
       "profile": "helm:nova",
       "signal": "DISCORD_WEBHOOK=secret:openclaw-shared-secrets#discordWebhook",
       "source": "charts/kubeclaw/templates/deployment.yaml",
-      "line": 1193,
+      "line": 1265,
       "evidenceLocation": "exact-field"
     },
     {
@@ -4828,7 +4913,7 @@
       "profile": "helm:nova",
       "signal": "readinessProbe",
       "source": "charts/kubeclaw/templates/deployment.yaml",
-      "line": 1492,
+      "line": 1564,
       "evidenceLocation": "exact-value"
     },
     {
@@ -4841,7 +4926,7 @@
       "profile": "helm:nova",
       "signal": "startupProbe",
       "source": "charts/kubeclaw/templates/deployment.yaml",
-      "line": 1480,
+      "line": 1552,
       "evidenceLocation": "exact-value"
     },
     {
@@ -4879,7 +4964,7 @@
       "profile": "helm:nova",
       "signal": "KUBECLAW_HEALTH_CHECK_LITELLM=true",
       "source": "charts/kubeclaw/templates/deployment.yaml",
-      "line": 1383,
+      "line": 1455,
       "evidenceLocation": "exact-field"
     },
     {
@@ -4892,7 +4977,7 @@
       "profile": "helm:nova",
       "signal": "LITELLM_API_KEY=secret:openclaw-shared-secrets#litellmApiKey",
       "source": "charts/kubeclaw/templates/deployment.yaml",
-      "line": 270,
+      "line": 303,
       "evidenceLocation": "exact-field"
     },
     {
@@ -4918,7 +5003,7 @@
       "profile": "helm:nova",
       "signal": "KUBECLAW_HEALTH_CHECK_REDIS_STREAM=true",
       "source": "charts/kubeclaw/templates/deployment.yaml",
-      "line": 1377,
+      "line": 1449,
       "evidenceLocation": "exact-field"
     },
     {
@@ -4931,7 +5016,7 @@
       "profile": "helm:nova",
       "signal": "KUBECLAW_HEALTH_CHECK_REDIS=true",
       "source": "charts/kubeclaw/templates/deployment.yaml",
-      "line": 1375,
+      "line": 1447,
       "evidenceLocation": "exact-field"
     },
     {
@@ -4957,7 +5042,7 @@
       "profile": "helm:nova",
       "signal": "KUBECLAW_HEALTH_REDIS_STREAM=",
       "source": "charts/kubeclaw/templates/deployment.yaml",
-      "line": 1379,
+      "line": 1451,
       "evidenceLocation": "exact-field"
     },
     {
@@ -4970,7 +5055,7 @@
       "profile": "helm:nova",
       "signal": "REDIS_HOST=redis-master.kubeclaw.svc.cluster.local",
       "source": "charts/kubeclaw/values.yaml",
-      "line": 229,
+      "line": 230,
       "evidenceLocation": "exact-value"
     },
     {
@@ -4983,7 +5068,7 @@
       "profile": "helm:nova",
       "signal": "REDIS_PASSWORD=secret:redis-secrets#redis-password",
       "source": "charts/kubeclaw/templates/deployment.yaml",
-      "line": 1289,
+      "line": 1361,
       "evidenceLocation": "exact-field"
     },
     {
@@ -4996,7 +5081,7 @@
       "profile": "helm:nova",
       "signal": "REDIS_PORT=6379",
       "source": "charts/kubeclaw/templates/deployment.yaml",
-      "line": 1288,
+      "line": 1360,
       "evidenceLocation": "exact-value"
     },
     {
@@ -5009,7 +5094,7 @@
       "profile": "helm:nova",
       "signal": "REDIS_HOST=redis-master.kubeclaw.svc.cluster.local",
       "source": "charts/kubeclaw/values.yaml",
-      "line": 229,
+      "line": 230,
       "evidenceLocation": "exact-value"
     },
     {
@@ -5022,7 +5107,7 @@
       "profile": "helm:nova",
       "signal": "KUBECLAW_HEALTH_REGISTRIES=http://registry-local.kubeclaw.svc.cluster.local:5001,http://registry-mirror.kubeclaw.svc.cluster.local:5000",
       "source": "charts/kubeclaw/templates/deployment.yaml",
-      "line": 1387,
+      "line": 1459,
       "evidenceLocation": "exact-field"
     },
     {
@@ -5035,7 +5120,7 @@
       "profile": "helm:nova",
       "signal": "KUBECLAW_HEALTH_REGISTRIES=http://registry-local.kubeclaw.svc.cluster.local:5001",
       "source": "charts/kubeclaw/values.yaml",
-      "line": 348,
+      "line": 349,
       "evidenceLocation": "exact-value"
     },
     {
@@ -5048,7 +5133,7 @@
       "profile": "helm:nova",
       "signal": "KUBECLAW_HEALTH_REGISTRIES=http://registry-local.kubeclaw.svc.cluster.local:5001,http://registry-mirror.kubeclaw.svc.cluster.local:5000",
       "source": "charts/kubeclaw/templates/deployment.yaml",
-      "line": 1387,
+      "line": 1459,
       "evidenceLocation": "exact-field"
     },
     {
@@ -5061,7 +5146,7 @@
       "profile": "helm:nova",
       "signal": "KUBECLAW_HEALTH_REGISTRIES=http://registry-mirror.kubeclaw.svc.cluster.local:5000",
       "source": "charts/kubeclaw/values.yaml",
-      "line": 349,
+      "line": 350,
       "evidenceLocation": "exact-value"
     },
     {
@@ -5074,7 +5159,7 @@
       "profile": "helm:nova",
       "signal": "TAILSCALE_OAUTH_SECRET_NAME=operator-oauth",
       "source": "charts/kubeclaw/values.yaml",
-      "line": 394,
+      "line": 395,
       "evidenceLocation": "exact-value"
     },
     {
@@ -5087,7 +5172,7 @@
       "profile": "helm:nova",
       "signal": "TAILSCALE_OPERATOR_NAMESPACE=tailscale",
       "source": "charts/kubeclaw/templates/deployment.yaml",
-      "line": 1264,
+      "line": 1336,
       "evidenceLocation": "exact-value"
     },
     {
@@ -5100,7 +5185,7 @@
       "profile": "helm:nova",
       "signal": "SPIFFE_ENDPOINT_SOCKET=unix:///run/spire/sockets/spire-agent.sock",
       "source": "charts/kubeclaw/templates/deployment.yaml",
-      "line": 1397,
+      "line": 1469,
       "evidenceLocation": "exact-field"
     },
     {
@@ -5113,7 +5198,7 @@
       "profile": "helm:nova",
       "signal": "DISCORD_TOKEN=secret:openclaw-shared-secrets#discordToken-nova",
       "source": "charts/kubeclaw/templates/deployment.yaml",
-      "line": 275,
+      "line": 308,
       "evidenceLocation": "exact-field"
     },
     {
@@ -5151,7 +5236,32 @@
       "profile": "helm:nova",
       "signal": "LITELLM_API_KEY=secret:openclaw-shared-secrets#litellmApiKey",
       "source": "charts/kubeclaw/templates/deployment.yaml",
-      "line": 270,
+      "line": 303,
+      "evidenceLocation": "exact-field"
+    },
+    {
+      "value": "Deployment/kubeclaw/agent-nova#tmp-permissions -> ghcr.io [image registry for ghcr.io/datrab/kubeclaw-nova:latest]",
+      "consumer": "Deployment/kubeclaw/agent-nova#tmp-permissions",
+      "dependencyIdentity": "ghcr.io",
+      "classification": "image-registry",
+      "activationState": "active",
+      "activationCondition": "tmp-permissions pulls the rendered image",
+      "profile": "helm:nova",
+      "signal": "image registry for ghcr.io/datrab/kubeclaw-nova:latest",
+      "source": "helm:nova:rendered-output",
+      "evidenceLocation": "rendered-output"
+    },
+    {
+      "value": "Deployment/kubeclaw/agent-nova#tmp-permissions -> ghcr.io/datrab/kubeclaw-nova:latest [image=ghcr.io/datrab/kubeclaw-nova:latest]",
+      "consumer": "Deployment/kubeclaw/agent-nova#tmp-permissions",
+      "dependencyIdentity": "ghcr.io/datrab/kubeclaw-nova:latest",
+      "classification": "workload-image",
+      "activationState": "active",
+      "activationCondition": "tmp-permissions is present in the rendered pod specification",
+      "profile": "helm:nova",
+      "signal": "image=ghcr.io/datrab/kubeclaw-nova:latest",
+      "source": "charts/kubeclaw/templates/deployment.yaml",
+      "line": 43,
       "evidenceLocation": "exact-field"
     },
     {
@@ -5189,7 +5299,7 @@
       "profile": "helm:nova",
       "signal": "startupProbe",
       "source": "charts/kubeclaw/templates/deployment.yaml",
-      "line": 1480,
+      "line": 1552,
       "evidenceLocation": "exact-value"
     },
     {
@@ -5202,7 +5312,7 @@
       "profile": "helm:nova",
       "signal": "readinessProbe",
       "source": "charts/kubeclaw/templates/deployment.yaml",
-      "line": 1492,
+      "line": 1564,
       "evidenceLocation": "exact-value"
     },
     {
@@ -5215,7 +5325,7 @@
       "profile": "helm:prism-agent",
       "signal": "volume:spiffe-workload-api",
       "source": "charts/kubeclaw/templates/deployment.yaml",
-      "line": 1437,
+      "line": 1509,
       "evidenceLocation": "exact-field"
     },
     {
@@ -5241,7 +5351,7 @@
       "profile": "helm:prism-agent",
       "signal": "volume:config",
       "source": "charts/kubeclaw/templates/deployment.yaml",
-      "line": 106,
+      "line": 139,
       "evidenceLocation": "exact-field"
     },
     {
@@ -5254,7 +5364,7 @@
       "profile": "helm:prism-agent",
       "signal": "volume:workspace",
       "source": "charts/kubeclaw/templates/deployment.yaml",
-      "line": 296,
+      "line": 329,
       "evidenceLocation": "exact-field"
     },
     {
@@ -5280,7 +5390,7 @@
       "profile": "helm:prism-agent",
       "signal": "DISCORD_TOKEN=",
       "source": "charts/kubeclaw/templates/deployment.yaml",
-      "line": 275,
+      "line": 308,
       "evidenceLocation": "exact-field"
     },
     {
@@ -5293,7 +5403,7 @@
       "profile": "helm:prism-agent",
       "signal": "image registry for ghcr.io/datrab/kubeclaw-prism-agent:latest",
       "source": "my-values/prism-agent-values.yaml",
-      "line": 70,
+      "line": 80,
       "evidenceLocation": "exact-value"
     },
     {
@@ -5306,7 +5416,7 @@
       "profile": "helm:prism-agent",
       "signal": "image=ghcr.io/datrab/kubeclaw-prism-agent:latest",
       "source": "my-values/prism-agent-values.yaml",
-      "line": 70,
+      "line": 80,
       "evidenceLocation": "exact-value"
     },
     {
@@ -5319,7 +5429,7 @@
       "profile": "helm:prism-agent",
       "signal": "LITELLM_API_KEY=secret:openclaw-shared-secrets#litellmApiKey",
       "source": "charts/kubeclaw/templates/deployment.yaml",
-      "line": 270,
+      "line": 303,
       "evidenceLocation": "exact-field"
     },
     {
@@ -5332,7 +5442,7 @@
       "profile": "helm:prism-agent",
       "signal": "OPENCLAW_GATEWAY_URL=http://127.0.0.1:18789",
       "source": "charts/kubeclaw/templates/deployment.yaml",
-      "line": 1296,
+      "line": 1368,
       "evidenceLocation": "exact-field"
     },
     {
@@ -5345,7 +5455,7 @@
       "profile": "helm:prism-agent",
       "signal": "PRISM_CONTROL_URL=http://127.0.0.1:28080",
       "source": "my-values/prism-agent-values.yaml",
-      "line": 65,
+      "line": 75,
       "evidenceLocation": "exact-value"
     },
     {
@@ -5358,7 +5468,7 @@
       "profile": "helm:prism-agent",
       "signal": "readinessProbe",
       "source": "charts/kubeclaw/templates/deployment.yaml",
-      "line": 1492,
+      "line": 1564,
       "evidenceLocation": "exact-value"
     },
     {
@@ -5371,7 +5481,7 @@
       "profile": "helm:prism-agent",
       "signal": "startupProbe",
       "source": "charts/kubeclaw/templates/deployment.yaml",
-      "line": 1480,
+      "line": 1552,
       "evidenceLocation": "exact-value"
     },
     {
@@ -5384,7 +5494,7 @@
       "profile": "helm:prism-agent",
       "signal": "image registry for ghcr.io/datrab/kubeclaw-prism-agent:latest",
       "source": "my-values/prism-agent-values.yaml",
-      "line": 70,
+      "line": 80,
       "evidenceLocation": "exact-value"
     },
     {
@@ -5397,7 +5507,7 @@
       "profile": "helm:prism-agent",
       "signal": "image=ghcr.io/datrab/kubeclaw-prism-agent:latest",
       "source": "my-values/prism-agent-values.yaml",
-      "line": 70,
+      "line": 80,
       "evidenceLocation": "exact-value"
     },
     {
@@ -5410,7 +5520,7 @@
       "profile": "helm:prism-agent",
       "signal": "KUBECLAW_HEALTH_CHECK_LITELLM=true",
       "source": "charts/kubeclaw/templates/deployment.yaml",
-      "line": 1383,
+      "line": 1455,
       "evidenceLocation": "exact-field"
     },
     {
@@ -5423,7 +5533,7 @@
       "profile": "helm:prism-agent",
       "signal": "LITELLM_API_KEY=secret:openclaw-shared-secrets#litellmApiKey",
       "source": "charts/kubeclaw/templates/deployment.yaml",
-      "line": 270,
+      "line": 303,
       "evidenceLocation": "exact-field"
     },
     {
@@ -5436,7 +5546,7 @@
       "profile": "helm:prism-agent",
       "signal": "LITELLM_URL=http://litellm.kubeclaw.svc.cluster.local:4000",
       "source": "my-values/prism-agent-values.yaml",
-      "line": 29,
+      "line": 39,
       "evidenceLocation": "exact-value"
     },
     {
@@ -5449,7 +5559,7 @@
       "profile": "helm:prism-agent",
       "signal": "PRISM_STUDIO_PUBLIC_URL=https://prism-studio",
       "source": "my-values/prism-agent-values.yaml",
-      "line": 66,
+      "line": 76,
       "evidenceLocation": "exact-value"
     },
     {
@@ -5462,7 +5572,7 @@
       "profile": "helm:prism-agent",
       "signal": "KUBECLAW_HEALTH_CHECK_REDIS_STREAM=true",
       "source": "charts/kubeclaw/templates/deployment.yaml",
-      "line": 1377,
+      "line": 1449,
       "evidenceLocation": "exact-field"
     },
     {
@@ -5475,7 +5585,7 @@
       "profile": "helm:prism-agent",
       "signal": "KUBECLAW_HEALTH_CHECK_REDIS=false",
       "source": "charts/kubeclaw/templates/deployment.yaml",
-      "line": 1375,
+      "line": 1447,
       "evidenceLocation": "exact-field"
     },
     {
@@ -5501,7 +5611,7 @@
       "profile": "helm:prism-agent",
       "signal": "KUBECLAW_HEALTH_REDIS_STREAM=",
       "source": "charts/kubeclaw/templates/deployment.yaml",
-      "line": 1379,
+      "line": 1451,
       "evidenceLocation": "exact-field"
     },
     {
@@ -5514,7 +5624,7 @@
       "profile": "helm:prism-agent",
       "signal": "REDIS_HOST=redis-master.kubeclaw.svc.cluster.local",
       "source": "charts/kubeclaw/values.yaml",
-      "line": 229,
+      "line": 230,
       "evidenceLocation": "exact-value"
     },
     {
@@ -5527,7 +5637,7 @@
       "profile": "helm:prism-agent",
       "signal": "REDIS_PASSWORD=secret:redis-secrets#redis-password",
       "source": "charts/kubeclaw/templates/deployment.yaml",
-      "line": 1289,
+      "line": 1361,
       "evidenceLocation": "exact-field"
     },
     {
@@ -5540,7 +5650,7 @@
       "profile": "helm:prism-agent",
       "signal": "REDIS_PORT=6379",
       "source": "charts/kubeclaw/templates/deployment.yaml",
-      "line": 1288,
+      "line": 1360,
       "evidenceLocation": "exact-value"
     },
     {
@@ -5553,7 +5663,7 @@
       "profile": "helm:prism-agent",
       "signal": "REDIS_HOST=redis-master.kubeclaw.svc.cluster.local",
       "source": "charts/kubeclaw/values.yaml",
-      "line": 229,
+      "line": 230,
       "evidenceLocation": "exact-value"
     },
     {
@@ -5566,7 +5676,7 @@
       "profile": "helm:prism-agent",
       "signal": "SPIFFE_ENDPOINT_SOCKET=unix:///run/spire/sockets/spire-agent.sock",
       "source": "charts/kubeclaw/templates/deployment.yaml",
-      "line": 1397,
+      "line": 1469,
       "evidenceLocation": "exact-field"
     },
     {
@@ -5579,7 +5689,7 @@
       "profile": "helm:prism-agent",
       "signal": "image registry for ghcr.io/datrab/kubeclaw-prism-agent:latest",
       "source": "my-values/prism-agent-values.yaml",
-      "line": 70,
+      "line": 80,
       "evidenceLocation": "exact-value"
     },
     {
@@ -5592,7 +5702,7 @@
       "profile": "helm:prism-agent",
       "signal": "image=ghcr.io/datrab/kubeclaw-prism-agent:latest",
       "source": "my-values/prism-agent-values.yaml",
-      "line": 70,
+      "line": 80,
       "evidenceLocation": "exact-value"
     },
     {
@@ -5605,7 +5715,7 @@
       "profile": "helm:prism-agent",
       "signal": "LITELLM_API_KEY=secret:openclaw-shared-secrets#litellmApiKey",
       "source": "charts/kubeclaw/templates/deployment.yaml",
-      "line": 270,
+      "line": 303,
       "evidenceLocation": "exact-field"
     },
     {
@@ -5618,7 +5728,7 @@
       "profile": "helm:prism-agent",
       "signal": "image registry for ghcr.io/datrab/kubeclaw-prism-agent:latest",
       "source": "my-values/prism-agent-values.yaml",
-      "line": 70,
+      "line": 80,
       "evidenceLocation": "exact-value"
     },
     {
@@ -5631,7 +5741,7 @@
       "profile": "helm:prism-agent",
       "signal": "image=ghcr.io/datrab/kubeclaw-prism-agent:latest",
       "source": "my-values/prism-agent-values.yaml",
-      "line": 70,
+      "line": 80,
       "evidenceLocation": "exact-value"
     },
     {
@@ -5644,7 +5754,20 @@
       "profile": "helm:prism-agent",
       "signal": "PRISM_CONTROL_URL=http://127.0.0.1:28080",
       "source": "my-values/prism-agent-values.yaml",
-      "line": 65,
+      "line": 75,
+      "evidenceLocation": "exact-value"
+    },
+    {
+      "value": "Deployment/kubeclaw/agent-prism#prism-agent-bridge -> exec:node -e fetch('http://127.0.0.1:18080/ready',{signal:AbortSignal.timeout(800)}).then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1)) [readinessProbe]",
+      "consumer": "Deployment/kubeclaw/agent-prism#prism-agent-bridge",
+      "dependencyIdentity": "exec:node -e fetch('http://127.0.0.1:18080/ready',{signal:AbortSignal.timeout(800)}).then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))",
+      "classification": "hard-readiness-gate",
+      "activationState": "active",
+      "activationCondition": "Kubernetes requires the rendered readinessProbe to succeed",
+      "profile": "helm:prism-agent",
+      "signal": "readinessProbe",
+      "source": "charts/kubeclaw/templates/deployment.yaml",
+      "line": 1564,
       "evidenceLocation": "exact-value"
     },
     {
@@ -5657,7 +5780,7 @@
       "profile": "helm:prism-agent",
       "signal": "image registry for ghcr.io/datrab/kubeclaw-prism-agent:latest",
       "source": "my-values/prism-agent-values.yaml",
-      "line": 70,
+      "line": 80,
       "evidenceLocation": "exact-value"
     },
     {
@@ -5670,20 +5793,7 @@
       "profile": "helm:prism-agent",
       "signal": "image=ghcr.io/datrab/kubeclaw-prism-agent:latest",
       "source": "my-values/prism-agent-values.yaml",
-      "line": 70,
-      "evidenceLocation": "exact-value"
-    },
-    {
-      "value": "Deployment/kubeclaw/agent-prism#prism-agent-bridge -> http:18080/ready [readinessProbe]",
-      "consumer": "Deployment/kubeclaw/agent-prism#prism-agent-bridge",
-      "dependencyIdentity": "http:18080/ready",
-      "classification": "hard-readiness-gate",
-      "activationState": "active",
-      "activationCondition": "Kubernetes requires the rendered readinessProbe to succeed",
-      "profile": "helm:prism-agent",
-      "signal": "readinessProbe",
-      "source": "charts/kubeclaw/templates/deployment.yaml",
-      "line": 1492,
+      "line": 80,
       "evidenceLocation": "exact-value"
     },
     {
@@ -5696,7 +5806,33 @@
       "profile": "helm:prism-agent",
       "signal": "PRISM_STUDIO_PUBLIC_URL=https://prism-studio",
       "source": "my-values/prism-agent-values.yaml",
-      "line": 66,
+      "line": 76,
+      "evidenceLocation": "exact-value"
+    },
+    {
+      "value": "Deployment/kubeclaw/agent-prism#tmp-permissions -> ghcr.io [image registry for ghcr.io/datrab/kubeclaw-prism-agent:latest]",
+      "consumer": "Deployment/kubeclaw/agent-prism#tmp-permissions",
+      "dependencyIdentity": "ghcr.io",
+      "classification": "image-registry",
+      "activationState": "active",
+      "activationCondition": "tmp-permissions pulls the rendered image",
+      "profile": "helm:prism-agent",
+      "signal": "image registry for ghcr.io/datrab/kubeclaw-prism-agent:latest",
+      "source": "my-values/prism-agent-values.yaml",
+      "line": 80,
+      "evidenceLocation": "exact-value"
+    },
+    {
+      "value": "Deployment/kubeclaw/agent-prism#tmp-permissions -> ghcr.io/datrab/kubeclaw-prism-agent:latest [image=ghcr.io/datrab/kubeclaw-prism-agent:latest]",
+      "consumer": "Deployment/kubeclaw/agent-prism#tmp-permissions",
+      "dependencyIdentity": "ghcr.io/datrab/kubeclaw-prism-agent:latest",
+      "classification": "workload-image",
+      "activationState": "active",
+      "activationCondition": "tmp-permissions is present in the rendered pod specification",
+      "profile": "helm:prism-agent",
+      "signal": "image=ghcr.io/datrab/kubeclaw-prism-agent:latest",
+      "source": "my-values/prism-agent-values.yaml",
+      "line": 80,
       "evidenceLocation": "exact-value"
     },
     {
@@ -5734,7 +5870,7 @@
       "profile": "helm:prism-agent",
       "signal": "startupProbe",
       "source": "charts/kubeclaw/templates/deployment.yaml",
-      "line": 1480,
+      "line": 1552,
       "evidenceLocation": "exact-value"
     },
     {
@@ -5747,7 +5883,7 @@
       "profile": "helm:prism-agent",
       "signal": "readinessProbe",
       "source": "charts/kubeclaw/templates/deployment.yaml",
-      "line": 1492,
+      "line": 1564,
       "evidenceLocation": "exact-value"
     },
     {
@@ -6574,7 +6710,7 @@
       "profile": "helm:nova",
       "signal": "ingressClassName=tailscale",
       "source": "charts/kubeclaw/templates/archviewer.yaml",
-      "line": 27,
+      "line": 31,
       "evidenceLocation": "exact-value"
     },
     {
@@ -6600,7 +6736,7 @@
       "profile": "helm:prism",
       "signal": "automountServiceAccountToken=false",
       "source": "charts/prism/templates/backup-storage-check.yaml",
-      "line": 21,
+      "line": 22,
       "evidenceLocation": "exact-field"
     },
     {
@@ -6613,7 +6749,7 @@
       "profile": "helm:prism",
       "signal": "volume:backups",
       "source": "charts/prism/templates/backup-storage-check.yaml",
-      "line": 39,
+      "line": 40,
       "evidenceLocation": "exact-field"
     },
     {
@@ -6665,7 +6801,7 @@
       "profile": "helm:prism",
       "signal": "automountServiceAccountToken=false",
       "source": "charts/prism/templates/jobs.yaml",
-      "line": 22,
+      "line": 23,
       "evidenceLocation": "exact-field"
     },
     {
@@ -6678,7 +6814,7 @@
       "profile": "helm:prism",
       "signal": "serviceAccountName=prism-control",
       "source": "charts/prism/templates/jobs.yaml",
-      "line": 20,
+      "line": 21,
       "evidenceLocation": "exact-value"
     },
     {
@@ -6703,7 +6839,7 @@
       "profile": "helm:prism",
       "signal": "image=ghcr.io/datrab/kubeclaw-prism-control@sha256:5ea059c199c8e32089f56274b606a4cceed22050e62671392399b06fffafd8d4",
       "source": "charts/prism/templates/jobs.yaml",
-      "line": 21,
+      "line": 22,
       "evidenceLocation": "exact-field"
     },
     {
@@ -6716,7 +6852,7 @@
       "profile": "helm:prism",
       "signal": "ADMIN_DATABASE_URL=secret:prism-postgresql-auth#admin-url",
       "source": "charts/prism/templates/jobs.yaml",
-      "line": 31,
+      "line": 32,
       "evidenceLocation": "exact-field"
     },
     {
@@ -6729,7 +6865,7 @@
       "profile": "helm:prism",
       "signal": "PRISM_MIGRATOR_PASSWORD=secret:prism-postgresql-auth#migrator-password",
       "source": "charts/prism/templates/jobs.yaml",
-      "line": 35,
+      "line": 36,
       "evidenceLocation": "exact-field"
     },
     {
@@ -6742,7 +6878,7 @@
       "profile": "helm:prism",
       "signal": "PRISM_READONLY_PASSWORD=secret:prism-postgresql-auth#readonly-password",
       "source": "charts/prism/templates/jobs.yaml",
-      "line": 37,
+      "line": 38,
       "evidenceLocation": "exact-field"
     },
     {
@@ -6755,7 +6891,7 @@
       "profile": "helm:prism",
       "signal": "PRISM_RUNTIME_PASSWORD=secret:prism-postgresql-auth#runtime-password",
       "source": "charts/prism/templates/jobs.yaml",
-      "line": 33,
+      "line": 34,
       "evidenceLocation": "exact-field"
     },
     {
@@ -6780,7 +6916,7 @@
       "profile": "helm:prism",
       "signal": "image=ghcr.io/datrab/kubeclaw-prism-control@sha256:5ea059c199c8e32089f56274b606a4cceed22050e62671392399b06fffafd8d4",
       "source": "charts/prism/templates/jobs.yaml",
-      "line": 21,
+      "line": 22,
       "evidenceLocation": "exact-field"
     },
     {
@@ -6793,7 +6929,7 @@
       "profile": "helm:prism",
       "signal": "DATABASE_URL=secret:prism-postgresql-auth#migrator-url",
       "source": "charts/prism/templates/jobs.yaml",
-      "line": 49,
+      "line": 50,
       "evidenceLocation": "exact-field"
     },
     {
@@ -6927,7 +7063,7 @@
       "profile": "helm:prism",
       "signal": "PersistentVolumeClaim/prism-backups",
       "source": "charts/prism/templates/jobs.yaml",
-      "line": 63,
+      "line": 64,
       "evidenceLocation": "exact-field"
     },
     {
@@ -7022,27 +7158,27 @@
       "evidenceLocation": "exact-value"
     },
     {
-      "value": "StatefulSet/kubeclaw-ops/codex-ops#codex -> ghcr.io [image registry for ghcr.io/datrab/kubeclaw-codex-ops@sha256:607b51291c8f6952be903d81f760d8eb893474b47bb419b1b67526f38c7589c0]",
+      "value": "StatefulSet/kubeclaw-ops/codex-ops#codex -> ghcr.io [image registry for ghcr.io/datrab/kubeclaw-codex-ops@sha256:d77c02468d15f8e8ddd2f6edaa3782a7a3f1daf8c3c482c364ce9752b3b0e45b]",
       "consumer": "StatefulSet/kubeclaw-ops/codex-ops#codex",
       "dependencyIdentity": "ghcr.io",
       "classification": "image-registry",
       "activationState": "active",
       "activationCondition": "codex pulls the rendered image",
       "profile": "helm:ops-default",
-      "signal": "image registry for ghcr.io/datrab/kubeclaw-codex-ops@sha256:607b51291c8f6952be903d81f760d8eb893474b47bb419b1b67526f38c7589c0",
+      "signal": "image registry for ghcr.io/datrab/kubeclaw-codex-ops@sha256:d77c02468d15f8e8ddd2f6edaa3782a7a3f1daf8c3c482c364ce9752b3b0e45b",
       "source": "gitops/platform/bootstrap/codex-ops.yaml",
       "line": 34,
       "evidenceLocation": "exact-value"
     },
     {
-      "value": "StatefulSet/kubeclaw-ops/codex-ops#codex -> ghcr.io/datrab/kubeclaw-codex-ops@sha256:607b51291c8f6952be903d81f760d8eb893474b47bb419b1b67526f38c7589c0 [image=ghcr.io/datrab/kubeclaw-codex-ops@sha256:607b51291c8f6952be903d81f760d8eb893474b47bb419b1b67526f38c7589c0]",
+      "value": "StatefulSet/kubeclaw-ops/codex-ops#codex -> ghcr.io/datrab/kubeclaw-codex-ops@sha256:d77c02468d15f8e8ddd2f6edaa3782a7a3f1daf8c3c482c364ce9752b3b0e45b [image=ghcr.io/datrab/kubeclaw-codex-ops@sha256:d77c02468d15f8e8ddd2f6edaa3782a7a3f1daf8c3c482c364ce9752b3b0e45b]",
       "consumer": "StatefulSet/kubeclaw-ops/codex-ops#codex",
-      "dependencyIdentity": "ghcr.io/datrab/kubeclaw-codex-ops@sha256:607b51291c8f6952be903d81f760d8eb893474b47bb419b1b67526f38c7589c0",
+      "dependencyIdentity": "ghcr.io/datrab/kubeclaw-codex-ops@sha256:d77c02468d15f8e8ddd2f6edaa3782a7a3f1daf8c3c482c364ce9752b3b0e45b",
       "classification": "workload-image",
       "activationState": "active",
       "activationCondition": "codex is present in the rendered pod specification",
       "profile": "helm:ops-default",
-      "signal": "image=ghcr.io/datrab/kubeclaw-codex-ops@sha256:607b51291c8f6952be903d81f760d8eb893474b47bb419b1b67526f38c7589c0",
+      "signal": "image=ghcr.io/datrab/kubeclaw-codex-ops@sha256:d77c02468d15f8e8ddd2f6edaa3782a7a3f1daf8c3c482c364ce9752b3b0e45b",
       "source": "gitops/platform/bootstrap/codex-ops.yaml",
       "line": 34,
       "evidenceLocation": "exact-value"
@@ -7074,27 +7210,27 @@
       "evidenceLocation": "exact-value"
     },
     {
-      "value": "StatefulSet/kubeclaw-ops/codex-ops#ops-mcp -> ghcr.io [image registry for ghcr.io/datrab/kubeclaw-ops-mcp@sha256:a9aa21492d046ba5929c0bca7cc0991bd8d52a25f69e8a824ca286c8aa23f855]",
+      "value": "StatefulSet/kubeclaw-ops/codex-ops#ops-mcp -> ghcr.io [image registry for ghcr.io/datrab/kubeclaw-ops-mcp@sha256:36dbe805084bb31984aaa62b2cd33362d92f6a50157e856ce1c556aaf62ae1d9]",
       "consumer": "StatefulSet/kubeclaw-ops/codex-ops#ops-mcp",
       "dependencyIdentity": "ghcr.io",
       "classification": "image-registry",
       "activationState": "active",
       "activationCondition": "ops-mcp pulls the rendered image",
       "profile": "helm:ops-default",
-      "signal": "image registry for ghcr.io/datrab/kubeclaw-ops-mcp@sha256:a9aa21492d046ba5929c0bca7cc0991bd8d52a25f69e8a824ca286c8aa23f855",
+      "signal": "image registry for ghcr.io/datrab/kubeclaw-ops-mcp@sha256:36dbe805084bb31984aaa62b2cd33362d92f6a50157e856ce1c556aaf62ae1d9",
       "source": "gitops/platform/bootstrap/codex-ops.yaml",
       "line": 35,
       "evidenceLocation": "exact-value"
     },
     {
-      "value": "StatefulSet/kubeclaw-ops/codex-ops#ops-mcp -> ghcr.io/datrab/kubeclaw-ops-mcp@sha256:a9aa21492d046ba5929c0bca7cc0991bd8d52a25f69e8a824ca286c8aa23f855 [image=ghcr.io/datrab/kubeclaw-ops-mcp@sha256:a9aa21492d046ba5929c0bca7cc0991bd8d52a25f69e8a824ca286c8aa23f855]",
+      "value": "StatefulSet/kubeclaw-ops/codex-ops#ops-mcp -> ghcr.io/datrab/kubeclaw-ops-mcp@sha256:36dbe805084bb31984aaa62b2cd33362d92f6a50157e856ce1c556aaf62ae1d9 [image=ghcr.io/datrab/kubeclaw-ops-mcp@sha256:36dbe805084bb31984aaa62b2cd33362d92f6a50157e856ce1c556aaf62ae1d9]",
       "consumer": "StatefulSet/kubeclaw-ops/codex-ops#ops-mcp",
-      "dependencyIdentity": "ghcr.io/datrab/kubeclaw-ops-mcp@sha256:a9aa21492d046ba5929c0bca7cc0991bd8d52a25f69e8a824ca286c8aa23f855",
+      "dependencyIdentity": "ghcr.io/datrab/kubeclaw-ops-mcp@sha256:36dbe805084bb31984aaa62b2cd33362d92f6a50157e856ce1c556aaf62ae1d9",
       "classification": "workload-image",
       "activationState": "active",
       "activationCondition": "ops-mcp is present in the rendered pod specification",
       "profile": "helm:ops-default",
-      "signal": "image=ghcr.io/datrab/kubeclaw-ops-mcp@sha256:a9aa21492d046ba5929c0bca7cc0991bd8d52a25f69e8a824ca286c8aa23f855",
+      "signal": "image=ghcr.io/datrab/kubeclaw-ops-mcp@sha256:36dbe805084bb31984aaa62b2cd33362d92f6a50157e856ce1c556aaf62ae1d9",
       "source": "gitops/platform/bootstrap/codex-ops.yaml",
       "line": 35,
       "evidenceLocation": "exact-value"
@@ -7481,7 +7617,7 @@
     {
       "value": "CiliumNetworkPolicy/kubeclaw/agent-nova-archviewer",
       "source": "charts/kubeclaw/templates/archviewer.yaml",
-      "line": 38,
+      "line": 43,
       "lifecycle": "managed-resource",
       "activationState": "active"
     },
@@ -7954,7 +8090,7 @@
     {
       "value": "Ingress/kubeclaw/agent-nova-archviewer",
       "source": "charts/kubeclaw/templates/archviewer.yaml",
-      "line": 25,
+      "line": 29,
       "lifecycle": "managed-resource",
       "activationState": "active"
     },
@@ -8006,7 +8142,7 @@
     {
       "value": "NetworkPolicy/kubeclaw/prism-database-clients",
       "source": "charts/prism/templates/networkpolicy.yaml",
-      "line": 145,
+      "line": 148,
       "lifecycle": "managed-resource",
       "activationState": "active"
     },
@@ -8034,7 +8170,7 @@
     {
       "value": "NetworkPolicy/kubeclaw/prism-postgresql",
       "source": "charts/prism/templates/networkpolicy.yaml",
-      "line": 137,
+      "line": 140,
       "lifecycle": "managed-resource",
       "activationState": "active"
     },
@@ -8048,14 +8184,14 @@
     {
       "value": "NetworkPolicy/kubeclaw/prism-studio-entry",
       "source": "charts/prism/templates/networkpolicy.yaml",
-      "line": 125,
+      "line": 128,
       "lifecycle": "managed-resource",
       "activationState": "active"
     },
     {
       "value": "NetworkPolicy/kubeclaw/prism-test-runner",
       "source": "charts/prism/templates/networkpolicy.yaml",
-      "line": 169,
+      "line": 172,
       "lifecycle": "managed-resource",
       "activationState": "active"
     },
@@ -8147,7 +8283,7 @@
     {
       "value": "PersistentVolumeClaim/kubeclaw/prism-backups",
       "source": "charts/prism/templates/jobs.yaml",
-      "line": 63,
+      "line": 64,
       "lifecycle": "managed-resource",
       "activationState": "active"
     },
@@ -8284,7 +8420,7 @@
     {
       "value": "Service/kubeclaw/agent-nova-archviewer",
       "source": "charts/kubeclaw/templates/archviewer.yaml",
-      "line": 14,
+      "line": 18,
       "lifecycle": "managed-resource",
       "activationState": "active"
     },
@@ -8545,7 +8681,7 @@
       ],
       "activationState": "active",
       "source": "charts/kubeclaw/templates/archviewer.yaml",
-      "line": 28
+      "line": 32
     },
     {
       "value": "Ingress/kubeclaw/prism-studio:default-backend",
@@ -8664,7 +8800,7 @@
       },
       "activationState": "active",
       "source": "charts/kubeclaw/templates/archviewer.yaml",
-      "line": 14
+      "line": 18
     },
     {
       "value": "Service/kubeclaw/agent-nova:bridge",
@@ -8964,14 +9100,14 @@
     {
       "value": "git-deploy-key-nova#*",
       "source": "charts/kubeclaw/values.yaml",
-      "line": 219,
+      "line": 220,
       "consumerPath": "spec.template.spec.volumes.4.secret.secretName"
     },
     {
       "value": "github-bundle-reader#token",
       "source": "my-values/buster-values.yaml",
       "line": 34,
-      "consumerPath": "spec.template.spec.initContainers.1.env.16.valueFrom.secretKeyRef"
+      "consumerPath": "spec.template.spec.initContainers.2.env.16.valueFrom.secretKeyRef"
     },
     {
       "value": "google-sa-key#*",
@@ -9018,7 +9154,7 @@
     {
       "value": "nova-archviewer-auth#*",
       "source": "my-values/nova-values.yaml",
-      "line": 89,
+      "line": 93,
       "consumerPath": "spec.template.spec.volumes.13.secret.secretName"
     },
     {
@@ -9031,19 +9167,19 @@
       "value": "openclaw-shared-secrets#discordToken-buster",
       "source": "my-values/buster-values.yaml",
       "line": 38,
-      "consumerPath": "spec.template.spec.initContainers.0.env.9.valueFrom.secretKeyRef"
+      "consumerPath": "spec.template.spec.initContainers.1.env.9.valueFrom.secretKeyRef"
     },
     {
       "value": "openclaw-shared-secrets#discordToken-nova",
       "source": "my-values/buster-values.yaml",
       "line": 38,
-      "consumerPath": "spec.template.spec.initContainers.0.env.9.valueFrom.secretKeyRef"
+      "consumerPath": "spec.template.spec.initContainers.1.env.9.valueFrom.secretKeyRef"
     },
     {
       "value": "openclaw-shared-secrets#discordWebhook",
       "source": "my-values/buster-values.yaml",
       "line": 38,
-      "consumerPath": "spec.template.spec.initContainers.1.env.20.valueFrom.secretKeyRef"
+      "consumerPath": "spec.template.spec.initContainers.2.env.20.valueFrom.secretKeyRef"
     },
     {
       "value": "openclaw-shared-secrets#gatewayToken-buster",
@@ -9055,25 +9191,25 @@
       "value": "openclaw-shared-secrets#gatewayToken-nova",
       "source": "my-values/buster-values.yaml",
       "line": 38,
-      "consumerPath": "spec.template.spec.initContainers.0.env.8.valueFrom.secretKeyRef"
+      "consumerPath": "spec.template.spec.initContainers.1.env.8.valueFrom.secretKeyRef"
     },
     {
       "value": "openclaw-shared-secrets#gatewayToken-prism",
       "source": "my-values/buster-values.yaml",
       "line": 38,
-      "consumerPath": "spec.template.spec.initContainers.1.env.8.valueFrom.secretKeyRef"
+      "consumerPath": "spec.template.spec.initContainers.2.env.8.valueFrom.secretKeyRef"
     },
     {
       "value": "openclaw-shared-secrets#litellmApiKey",
       "source": "my-values/buster-values.yaml",
       "line": 38,
-      "consumerPath": "spec.template.spec.initContainers.0.env.7.valueFrom.secretKeyRef"
+      "consumerPath": "spec.template.spec.initContainers.1.env.7.valueFrom.secretKeyRef"
     },
     {
       "value": "openclaw-shared-secrets#stitchApiKey",
       "source": "my-values/buster-values.yaml",
       "line": 38,
-      "consumerPath": "spec.template.spec.initContainers.1.env.19.valueFrom.secretKeyRef"
+      "consumerPath": "spec.template.spec.initContainers.2.env.19.valueFrom.secretKeyRef"
     },
     {
       "value": "pipeline-test-gate-source-attestation#privateKey",
@@ -9186,7 +9322,7 @@
     {
       "value": "redis-secrets#redis-password",
       "source": "charts/kubeclaw/values.yaml",
-      "line": 231,
+      "line": 232,
       "consumerPath": "spec.template.spec.containers.0.env.18.valueFrom.secretKeyRef"
     }
   ],
@@ -10741,7 +10877,7 @@
     {
       "value": "openclaw/state",
       "source": "charts/kubeclaw/templates/deployment.yaml",
-      "line": 126
+      "line": 159
     },
     {
       "value": "outbox.json",
@@ -10831,7 +10967,7 @@
     {
       "value": "pvc:kubeclaw/prism-backups",
       "source": "charts/prism/templates/jobs.yaml",
-      "line": 63
+      "line": 64
     },
     {
       "value": "pvc:kubeclaw/registry-local-data",

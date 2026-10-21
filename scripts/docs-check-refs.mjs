@@ -85,7 +85,10 @@ function walk(dir, predicate = () => true) {
 function docsToScan() {
   return walk(docsRoot, (filePath) => filePath.endsWith('.md')).filter((filePath) => {
     return !rel(filePath).startsWith('docs/archive/')
-      && !rel(filePath).startsWith('docs/_legacy-source/');
+      && !rel(filePath).startsWith('docs/_legacy-source/')
+      // Captured publication inputs and reviewer prompts are immutable historical
+      // artifacts, not current documents with self-contained relative assets.
+      && !rel(filePath).startsWith('docs/blueprint/acceptance-evidence/');
   });
 }
 
@@ -113,7 +116,7 @@ function normalizeReference(raw) {
   ref = ref.split(/\s+/)[0];
   ref = ref.replace(/^git-repo\//, '');
   ref = ref.replace(/^\.\//, '');
-  ref = ref.replace(/:\d+(?:-\d+)?(?::\d+)?$/, '');
+  ref = ref.replace(/:\d+(?:[-–—]\d+)?(?::\d+)?$/, '');
   return ref || null;
 }
 
@@ -251,6 +254,8 @@ if (JSON.stringify(linkParserMatches) !== JSON.stringify(['target.md'])) {
 for (const [reference, expected] of [
   ['scripts/docs-check-refs.mjs:71', 'scripts/docs-check-refs.mjs'],
   ['scripts/docs-check-refs.mjs:71-77', 'scripts/docs-check-refs.mjs'],
+  ['scripts/docs-check-refs.mjs:71–77', 'scripts/docs-check-refs.mjs'],
+  ['scripts/docs-check-refs.mjs:71—77', 'scripts/docs-check-refs.mjs'],
   ['scripts/docs-check-refs.mjs:71:12', 'scripts/docs-check-refs.mjs'],
 ]) {
   if (normalizeReference(reference) !== expected) {
