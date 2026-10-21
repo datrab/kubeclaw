@@ -1166,7 +1166,7 @@ const scriptOutputCache=new Map();
 // authority. Sink facts alone cannot bind new values added to the error list.
 // A mutable line/digest refresh cannot authorize a changed producer or output.
 const reviewedDiagnosticOutputSources={
-  'scripts/check-site-reader-boundary.mjs':'79469dc8ac99a7d111c93d5d22c6f3cdbe1a3834822a7ec275da3ac3eaec7715',
+  'scripts/check-site-reader-boundary.mjs':'8621bd96590bae1dbdb973ddee07be8fccf27cc66f6be0acb9d13dc71438e5c5',
 };
 function assertReviewedDiagnosticOutputSources(root) {
   const registry=path.join(root,'scripts/docs-api-producer-adapter-authorities.json');
@@ -1203,7 +1203,7 @@ export function discoverScriptApiOutputs(root) {
       unqualified=unqualified.replace(/printf 'Acquire::Check-Valid-Until "false";\\n' > \/etc\/apt\/apt\.conf\.d\/99snapshot/gu,'');
       unqualified=unqualified.replace(/printf 'builder:100000:65536\\n' >> \/etc\/sub(?:uid|gid)/gu,'');
       unqualified=unqualified.replace(/printf '%s  %s\\n' "\$[a-z_]+_sha" (?:"[^"\n]*"|\/tmp\/kubectl) \| sha256sum -c -/gu,'');
-      unqualified=unqualified.replace(/printf '%s  (?:source|helm)\.tar\.gz\\n' "\$(?:GH_SOURCE_SHA256|helm_sha)" \| sha256sum -c -/gu,'');
+      unqualified=unqualified.replace(/printf '%s  (?:source|helm)\.tar\.gz\\n' "\$(?:GH_SOURCE_SHA256|OPS_HELM_SOURCE_SHA256|helm_sha)" \| sha256sum -c -/gu,'');
       unqualified=unqualified.replace(/printf '%s\\n' "v\$\{KUBECTL_VERSION\}-standalone-strict\/" > "\$schema_repo\/\.git\/info\/sparse-checkout"/gu,'');
       unqualified=unqualified.replace(/echo "Unsupported architecture: \$arch" >&2/gu,'');
       assert(!/\b(?:printf|echo)\s/u.test(unqualified.replace(/^\s*#[^\n]*/gmu,'')),`API_PRODUCT_PRODUCER_LANGUAGE_UNQUALIFIED: ${source}`);

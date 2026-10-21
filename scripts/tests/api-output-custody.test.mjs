@@ -8,11 +8,28 @@ import {reviewedImporterResolutionOperation,assertDocumentationExecutableRole} f
 import {spawnSync} from 'node:child_process';
 import {createHash} from 'node:crypto';
 import {documentationModuleInputAuthority,discoverScriptApiOutputs,discoverScriptOutputRoleClassifications,discoverTransformedApiOutputs,discoverShellApiOutputs,producerAdapterOperationRecipe,shellRawOutputSinks,shellRawOutputOperationRecipe} from '../docs-api-output-discovery.mjs';
-import {classifySerializedOutputRoles,deriveNativeOperationFacts,nativeOperationFactDigest} from '../docs-api-output-role-classification.mjs';
+import {classifySerializedOutputRoles,serializedOutputSinkSites,deriveNativeOperationFacts,nativeOperationFactDigest} from '../docs-api-output-role-classification.mjs';
 import {shellHeredocCustody,shellCommandAcquisitions} from '../docs-shell-source-custody.mjs';
 const sha=value=>createHash('sha256').update(value).digest('hex');
 const secret="const body={apiVersion:'v1',kind:'Secret',metadata:{name:'custody'}};console.log(JSON.stringify(body));\n";
 function fixture(run){const root=fs.mkdtempSync(path.join(os.tmpdir(),'docs-output-custody-'));const write=(file,bytes)=>{fs.mkdirSync(path.dirname(path.join(root,file)),{recursive:true});fs.writeFileSync(path.join(root,file),bytes);};write('package.json','{"scripts":{}}');try{run({root,write,discover:()=>discoverScriptApiOutputs(root)});}finally{fs.rmSync(root,{recursive:true,force:true});}}
+
+test('sink location discovery conservatively retains classified writers without assigning roles',()=>fixture(({root,write})=>{
+ const source='tools/p.mjs';
+ for(const bytes of [secret,"import {writeFileSync as save} from 'node:fs';save('out',process.argv[2]);",'const emit=process.stdout.write;emit(process.env.PAYLOAD);',"export function serialize(value){return JSON.stringify(value);}","import fs from 'node:fs';const stream=fs.createWriteStream('out');stream.end(process.env.PAYLOAD);"]){
+  write(source,bytes);const sites=serializedOutputSinkSites(root,source),roles=classifySerializedOutputRoles(root,source);
+  assert(sites.length>0);assert(sites.every(site=>!('role'in site)&&Object.keys(site).sort().join(',')==='line,sink'));
+  for(const role of roles)assert(sites.some(site=>site.line===role.line&&site.sink===role.sink),'classified writer lost from conservative selection');
+ }
+ write(source,secret);assert.equal(classifySerializedOutputRoles(root,source)[0].role,'api');
+ write(source,'process.stdout.write(process.env.PAYLOAD);');assert.equal(classifySerializedOutputRoles(root,source)[0].role,'unknown');
+}));
+
+test('Ops Helm source checksum stays a hash-check input, not a generic Docker writer exemption',()=>fixture(({write,discover})=>{
+ const checksum='RUN printf \'%s  source.tar.gz\\n\' "$OPS_HELM_SOURCE_SHA256" | sha256sum -c -\n';
+ write('ops/pod/Dockerfile',checksum);assert.deepEqual(discover(),[]);
+ for(const changed of [checksum.replace('OPS_HELM_SOURCE_SHA256','UNREVIEWED'),checksum.replace('sha256sum -c -','kubectl apply -f -'),checksum+"RUN echo '{\"apiVersion\":\"v1\",\"kind\":\"Secret\"}'\n"]){write('ops/pod/Dockerfile',changed);assert.throws(discover,/API_PRODUCT_PRODUCER_LANGUAGE_UNQUALIFIED.*ops\/pod\/Dockerfile/);}
+}));
 
 test('node module builtin-name projections preserve API discovery and reject loader escapes',()=>fixture(({write,discover})=>{
  for(const binding of ["import module from 'node:module';", "import * as module from 'node:module';"]){

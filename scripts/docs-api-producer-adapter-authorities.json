@@ -18522,7 +18522,7 @@
     },
     {
       "source": "scripts/check-site-reader-boundary.mjs",
-      "line": 213,
+      "line": 235,
       "sink": "console.error",
       "expression": "`- ${error}`",
       "basis": "original-native-diagnostic-consumer-role",
@@ -18545,10 +18545,10 @@
           "selectors": [
             {
               "expression": "`- ${error}`",
-              "line": 213
+              "line": 235
             }
           ],
-          "factsDigest": "39214734920f53e3fd2991445d7056e0ee3b9486c40a05e2a471456ec4f7a83d"
+          "factsDigest": "71df610deee40a61f5291f2a4bbb03b7af8f9612a46902ef681a2c565afcf075"
         }
       ]
     },

@@ -10,6 +10,8 @@ const siteRoot = path.join(docsRoot, 'site');
 const statusSource = path.join(docsRoot, 'status', 'open-issues.json');
 const errors = [];
 const textualExtensions = new Set(['.md', '.json', '.js', '.mjs', '.txt', '.yaml', '.yml']);
+const packageCommands = new Set(Object.keys(JSON.parse(fs.readFileSync(path.join(root, 'package.json'), 'utf8')).scripts ?? {})
+  .map(name => `npm run ${name}`));
 
 function walk(directory) {
   return fs.readdirSync(directory, { withFileTypes: true }).flatMap((entry) => {
@@ -88,9 +90,21 @@ function isCryptoEncodingToken(text, match) {
   return Boolean(format && after.startsWith(format[1]));
 }
 
+function isRegisteredCommandToken(text, match) {
+  // A complete quoted, existing CLI command is reader-facing machine data,
+  // not a work-package label. Never exempt arbitrary AP-prefixed prose.
+  for (const token of text.matchAll(/"(?:\\.|[^"\\])*"/gu)) {
+    if (token.index > match.index) break;
+    if (token.index + token[0].length <= match.index + match[0].length) continue;
+    try { return packageCommands.has(JSON.parse(token[0])); } catch { return false; }
+  }
+  return false;
+}
+
 const findViolations = text => forbiddenText.flatMap(([pattern, description]) =>
   [...text.matchAll(pattern)]
     .filter(match => description !== 'non-English reader prose' || !isCryptoEncodingToken(text, match))
+    .filter(match => description !== 'work-package label' || !isRegisteredCommandToken(text, match))
     .map(match => ({ index: match.index, description })));
 
 function withoutExternalUrls(text) {
@@ -152,6 +166,14 @@ function assertNegativeFixtures() {
   }
   if (findViolations(withoutExternalUrls('See https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.35/.')).length) {
     throw new Error('Reader-boundary check mistook an external API URL for a superseded repository path');
+  }
+  if (findViolations('"npm run docs:ap09:platform-inventory:check"').length) {
+    throw new Error('Reader-boundary check mistook a registered command for a work-package label');
+  }
+  for (const text of ['"npm run docs:ap09:unregistered"', '"AP09.7 implementation notes"', '"npm run docs:ap09:platform-inventory:check draft"']) {
+    if (!findViolations(text).some(item => item.description === 'work-package label')) {
+      throw new Error('Reader-boundary command exception admitted unregistered command or work-package prose');
+    }
   }
   const duplicates = h1Errors([
     { file: path.join(siteRoot, '__fixture-one.md'), text: '# Duplicate fixture\n' },

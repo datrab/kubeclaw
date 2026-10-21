@@ -1,0 +1,6 @@
+{
+  "findings": [],
+  "overall_correctness": "patch is correct",
+  "overall_explanation": "No actionable defects found. The exception requires a containing JSON string whose decoded value exactly matches a root npm script command, and applies only to work-package labels. Existing diagnostic output and metadata exclusions remain unchanged. The whole-source hash, sink at line 235, and recomputed operation-facts digest match their receipts. The isolated fixture exercises accepted and rejected command data. Tests were inspected but not run; existing stale Helm prose remains prohibited, and no global checker, generator, runtime, or publication acceptance is implied.",
+  "overall_confidence": 0.94
+}

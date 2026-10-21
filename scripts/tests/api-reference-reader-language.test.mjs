@@ -2,10 +2,32 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
+import os from 'node:os';
+import {spawnSync} from 'node:child_process';
 import {fileURLToPath} from 'node:url';
 import {receiverContracts as pvReceiverContracts} from '../docs-kubernetes-pv-selected-receiver-contracts.mjs';
 import {apiResourceFieldBoundaries} from '../docs-api-schema-authorities.mjs';
 import {renderApiResourceReference} from '../docs-api-reference.mjs';
+
+test('reader boundary accepts exact registered command data but rejects work notes and unknown commands',()=>{
+ const root=fs.mkdtempSync(path.join(os.tmpdir(),'reader-command-boundary-'));
+ try {
+  fs.mkdirSync(path.join(root,'scripts'),{recursive:true});
+  fs.mkdirSync(path.join(root,'docs/site'),{recursive:true});
+  fs.mkdirSync(path.join(root,'docs/status'),{recursive:true});
+  fs.copyFileSync(new URL('../check-site-reader-boundary.mjs',import.meta.url),path.join(root,'scripts/check-site-reader-boundary.mjs'));
+  fs.writeFileSync(path.join(root,'package.json'),JSON.stringify({scripts:{'docs:ap09:platform-inventory:check':'node scripts/inventory.mjs'}}));
+  fs.writeFileSync(path.join(root,'docs/status/open-issues.json'),'{}');
+  const map=path.join(root,'docs/site/map.json');
+  const run=()=>spawnSync(process.execPath,[path.join(root,'scripts/check-site-reader-boundary.mjs')],{encoding:'utf8'});
+  fs.writeFileSync(map,JSON.stringify({checks:['npm run docs:ap09:platform-inventory:check']}));
+  let result=run();assert.equal(result.status,0,result.stderr);
+  for(const text of ['npm run docs:ap09:missing','AP09.7 implementation notes','npm run docs:ap09:platform-inventory:check draft']) {
+   fs.writeFileSync(map,JSON.stringify({checks:[text]}));result=run();
+   assert.equal(result.status,1);assert.match(result.stderr,/work-package label/);
+  }
+ } finally {fs.rmSync(root,{recursive:true,force:true});}
+});
 
 // Synthetic prose exercises publication policy; it is no product behavior proof.
 function render(note, readerReferences = [], kind = 'ConfigMap', actual = []) {

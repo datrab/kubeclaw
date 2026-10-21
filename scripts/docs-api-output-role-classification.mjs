@@ -174,6 +174,13 @@ export function nativeOperationFactDigest(facts){return facts&&createHash('sha25
 // Unknown roots, unknown root spreads and unknown collection items are not a
 // role. Resolve the actual producer expression and its source dependencies.
 export function classifySerializedOutputRoles(root,source,universe=[]) {return createSerializedOutputRoleClassifier(root,universe)(source);}
+// Selection needs the conservative writer/capability inventory, not a value
+// classification. In particular, analyzing the analyzer's own return graph
+// here would repeat deep interprocedural role inference just to retain lines.
+// These records deliberately carry no role or authorization verdict.
+export function serializedOutputSinkSites(root,source,universe=[]) {
+ return createSerializedOutputRoleClassifier(root,universe).sinkSites(source);
+}
 export function createSerializedOutputRoleClassifier(root,universe=[]) {
  root=path.resolve(root);
  const roleRegistryFile=path.join(root,'scripts/docs-api-producer-adapter-authorities.json');
@@ -625,7 +632,7 @@ export function createSerializedOutputRoleClassifier(root,universe=[]) {
   if(compactDestination==='outputPath'&&expression==='`${JSON.stringify(signed,null,2)}\\n`'&&/const signed = attestProductionReceipt\(receipt, fs\.readFileSync\(keyPath\)\)/u.test(text)&&/validateProductionReceiptPayload\(receipt, \{ expectedRevision, expectedBusterRevision \}\)\.length > 0/u.test(text)&&/command === 'sign'/u.test(text)&&/function attestProductionReceipt/u.test(text)&&/production-receipt-attestation\.v1/u.test(text)&&/function verifyProductionReceipt/u.test(text))return role('validated-signed-operator-observation-artifact');
   return null;
  }
- return source=>{
+ const classify=source=>{
  refreshObserverState();
  const state=module(source);const results=[];
  for(const sink of state.sinks) {
@@ -636,4 +643,9 @@ export function createSerializedOutputRoleClassifier(root,universe=[]) {
  }
  return results;
  };
+ classify.sinkSites=source=>{
+  refreshObserverState();const state=module(source);
+  return state.sinks.map(sink=>({line:state.tree.getLineAndCharacterOfPosition(sink.getStart(state.tree)).line+1,sink:sink.expression.getText(state.tree)}));
+ };
+ return classify;
 }
