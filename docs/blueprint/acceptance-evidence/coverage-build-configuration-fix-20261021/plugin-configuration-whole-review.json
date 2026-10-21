@@ -1,0 +1,6 @@
+{
+  "findings": [],
+  "overall_correctness": "patch is correct",
+  "overall_explanation": "CFG007: sourceAccuracy NOT_READY; readerUsability NOT_READY; quality NOT_READY. The current API-flow endpoint explanation matches its consumer, and recursive extraction covers the previously missing schema structures. However, concrete plugin consumer semantics remain absent from the canonical reader page, including omission that disables coverage enforcement and effective container-build defaults. These are defects in the requested current-content scope, independent of unrelated generic API/YAML inventory readiness. The identified defects suffice to withhold whole CFG007 acceptance; this inspection does not establish exhaustive semantic correctness of all 855 facts. No files were modified, tests or generators executed, or nested reviewers invoked.\n\nIgnored 2 out-of-scope finding(s) outside the reviewed change.",
+  "overall_confidence": 0.97
+}

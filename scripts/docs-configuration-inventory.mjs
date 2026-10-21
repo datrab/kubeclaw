@@ -3229,6 +3229,8 @@ function schemaAcceptedValues(field) {
 }
 
 const SCHEMA_RUNTIME_FALLBACK_AUTHORITIES = new Map(Object.entries({
+  'skills/buster/plugins/coverage-budget/schemas/config.schema.json::$.combine': [true, 'skills/buster/plugins/coverage-budget/src/provider.js', 'config.combine !== false'],
+  'skills/buster/plugins/container-build/schemas/config.schema.json::$.platform': ['linux/amd64', 'skills/buster/plugins/container-build/src/provider.js', "value.platform ?? 'linux/amd64'"],
   'skills/buster/plugins/openapi/schemas/config.schema.json::$.requestTimeoutMs': [10000, 'skills/buster/plugins/openapi/src/provider.js', 'config.requestTimeoutMs ?? 10_000'],
   'skills/buster/plugins/openapi/schemas/config.schema.json::$.maximumResponseBytes': [1048576, 'skills/buster/plugins/openapi/src/provider.js', 'config.maximumResponseBytes ?? 1_048_576'],
   'skills/buster/plugins/security-providers/schemas/dependency.schema.json::$.timeoutMs': [300000, 'skills/buster/plugins/security-providers/src/dependency.js', 'integer(value.timeoutMs, 300_000'],
@@ -3470,6 +3472,32 @@ function schemaEmptyBehavior(field) {
 }
 
 function schemaRuntimeValidationRules(authorityPath, field) {
+  if (authorityPath === 'skills/buster/plugins/coverage-budget/schemas/config.schema.json'
+    && ['$.minimumLinePercent', '$.combine'].includes(field.path)) return {
+    accepted: field.path === '$.combine'
+      ? 'True measures the merged LCOV file/line set, retaining the maximum hit count for duplicate lines. False measures the lowest percentage among the individual inputs.'
+      : 'A finite percentage from 0 through 100; measured coverage at or above it passes, and lower coverage returns a failed provider decision.',
+    omission: field.path === '$.combine'
+      ? 'The consumer uses combined coverage when combine is omitted; only an explicit false selects the lowest individual input percentage.'
+      : 'No threshold is enforced when minimumLinePercent is omitted: the budget decision passes regardless of measured coverage. Required LCOV inputs, integrity checks and parsing still apply and can fail.',
+    empty: 'Null and an empty string fail the declared field type. Omission is a separate supported state, not an empty value.',
+    failure: 'A threshold miss returns outcome failed with a coverage.minimum-lines finding, not a successful coverage gate. Missing, malformed, duplicate or digest-mismatched LCOV inputs still reject execution even when no threshold is configured.',
+    evidence: ['skills/buster/plugins/coverage-budget/src/provider.js:53', 'skills/buster/plugins/coverage-budget/src/provider.js:79', 'skills/buster/plugins/coverage-budget/src/provider.js:81'],
+  };
+  if (authorityPath === 'skills/buster/plugins/container-build/schemas/config.schema.json'
+    && ['$.platform', '$.outputName'].includes(field.path)) return {
+    accepted: field.path === '$.platform'
+      ? 'A Linux platform string accepted by the declared pattern; the selected container.build capability must also support the requested build platform.'
+      : 'A name accepted by the declared pattern; explicit outputName replaces the invocation-derived name rather than modifying it.',
+    omission: field.path === '$.platform'
+      ? 'The consumer selects linux/amd64 when platform is omitted. This is an effective provider default, not a schema default.'
+      : 'The consumer uses moduleId when present, otherwise nodeId, converts it to a string, lowercases it and replaces each character outside a-z, 0-9, dot, underscore and hyphen with a hyphen. It then validates the derived output name; an invalid derived name is rejected.',
+    empty: 'The schema rejects null and an empty string. The native consumer also rejects an empty string rather than applying the omission fallback.',
+    failure: field.path === '$.platform'
+      ? 'Invalid native platform syntax raises CONTAINER_BUILD_PLATFORM_INVALID. A syntactically valid platform can still fail in the selected container.build capability; a documented default is not a successful image build.'
+      : 'An invalid explicit or derived name raises CONTAINER_BUILD_OUTPUT_NAME_INVALID before the build capability is invoked.',
+    evidence: ['skills/buster/plugins/container-build/src/provider.js:84', 'skills/buster/plugins/container-build/src/provider.js:85', 'skills/buster/plugins/container-build/src/provider.js:86', 'skills/buster/plugins/container-build/src/provider.js:87'],
+  };
   if (authorityPath === 'skills/buster/plugins/api-flow/schemas/config.schema.json'
     && ['$.endpointName', '$.url'].includes(field.path)) return {
     accepted: field.path === '$.endpointName'
@@ -3522,6 +3550,14 @@ function schemaRuntimeValidationRules(authorityPath, field) {
 }
 
 function schemaSpecificPurpose(authorityPath, fieldPath, context) {
+  if (authorityPath === 'skills/buster/plugins/coverage-budget/schemas/config.schema.json') {
+    if (fieldPath === '$.minimumLinePercent') return 'Sets the enforced minimum line-coverage percentage; omitting this threshold disables budget enforcement, not LCOV input validation.';
+    if (fieldPath === '$.combine') return 'Chooses merged line coverage or the lowest individual input percentage for the coverage-budget decision.';
+  }
+  if (authorityPath === 'skills/buster/plugins/container-build/schemas/config.schema.json') {
+    if (fieldPath === '$.platform') return 'Selects the Linux architecture and optional variant requested from the container.build capability.';
+    if (fieldPath === '$.outputName') return 'Sets the build output identity instead of deriving it from the module or node identity.';
+  }
   if (authorityPath === 'skills/buster/plugins/api-flow/schemas/config.schema.json' && fieldPath === '$.endpointName') {
     return 'Selects an exact named endpoint only from a typed Kubernetes deployment fixture. Omission selects its sole endpoint; multiple endpoints require a matching name. A typed public-endpoint input already supplies its URL and ignores this selector.';
   }

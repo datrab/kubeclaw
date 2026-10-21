@@ -20,6 +20,32 @@ try {
   } };
 
   assert.equal(typeof provider().execute, 'function');
+  // Observe original consumer selection, then stop at the capability boundary.
+  // This does not execute BuildKit or return a synthetic image result.
+  const selected: any[] = [];
+  const observe = { ...guard, async invoke(capability: string, request: any) {
+    assert.equal(capability, 'container.build');
+    selected.push(request);
+    throw new Error('CONTAINER_BUILD_SELECTION_PROBE_STOP');
+  } };
+  await assert.rejects(() => provider().execute({ ...invocation, moduleId: 'Module / Alpha' }, observe),
+    /CONTAINER_BUILD_SELECTION_PROBE_STOP/u);
+  assert.equal(selected[0].payload.platform, 'linux/amd64');
+  assert.equal(selected[0].payload.outputName, 'module---alpha');
+  await assert.rejects(() => provider().execute({ ...invocation, moduleId: undefined, nodeId: 'Node / Beta' }, observe),
+    /CONTAINER_BUILD_SELECTION_PROBE_STOP/u);
+  assert.equal(selected[1].payload.outputName, 'node---beta');
+  await assert.rejects(() => provider().execute({ ...invocation, configuration: { values: {
+    ...invocation.configuration.values, outputName: 'selected-name', platform: 'linux/arm64',
+  } } }, observe), /CONTAINER_BUILD_SELECTION_PROBE_STOP/u);
+  assert.equal(selected[2].payload.outputName, 'selected-name');
+  assert.equal(selected[2].payload.platform, 'linux/arm64');
+  await assert.rejects(() => provider().execute({ ...invocation, configuration: { values: {
+    ...invocation.configuration.values, outputName: '',
+  } } }, guard), /CONTAINER_BUILD_OUTPUT_NAME_INVALID/u);
+  await assert.rejects(() => provider().execute({ ...invocation, configuration: { values: {
+    ...invocation.configuration.values, platform: '',
+  } } }, guard), /CONTAINER_BUILD_PLATFORM_INVALID/u);
   await assert.rejects(() => provider().execute({ ...invocation,
     configuration: { values: { buildContext: '..', definition: { type: 'dockerfile', dockerfile: 'Dockerfile' } } } },
   guard), /CONTAINER_BUILD_PATH_INVALID/u);

@@ -1,0 +1,6 @@
+{
+  "findings": [],
+  "overall_correctness": "patch is correct",
+  "overall_explanation": "The scoped changes accurately document the four provider contracts and preserve the inventory's documentation-only purpose. The added fixtures exercise original provider behavior; the container fixture stops at the capability boundary without claiming native build acceptance. No actionable defects were found. Tests and generators were not run, and generated artifacts were outside this review.",
+  "overall_confidence": 0.94
+}

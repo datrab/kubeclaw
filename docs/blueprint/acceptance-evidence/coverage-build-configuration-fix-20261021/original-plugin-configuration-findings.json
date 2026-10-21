@@ -1,0 +1,29 @@
+{
+  "findings": [
+    {
+      "title": "[P2] Explain that omitting the coverage threshold disables enforcement",
+      "body": "The coverage-budget rows leave omission to the linked consumer, but that omission changes whether the gate enforces any budget. In skills/buster/plugins/coverage-budget/src/provider.js:79-81, `combine` defaults to true, false selects the minimum individual input percentage, and an omitted `minimumLinePercent` makes the decision pass regardless of measured coverage. The current explanation does not tell an operator that leaving out the threshold disables enforcement. Record these concrete omission and aggregation semantics in the owning generator and reader page; a source link and qualified-runtime-authority label do not complete this field contract.",
+      "priority": "P2",
+      "confidence": 0.99,
+      "category": "maintainability",
+      "code_location": {
+        "file_path": "docs/site/reference/plugin-configuration.md",
+        "line": 122
+      }
+    },
+    {
+      "title": "[P2] Publish the container-build consumer defaults",
+      "body": "The container-build `platform` and adjacent `outputName` rows say only that the consumer owns any later fallback. The native consumer already defines exact behavior: skills/buster/plugins/container-build/src/provider.js:84-87 defaults platform to `linux/amd64` and derives outputName from moduleId or nodeId by lowercasing and replacing unsupported characters with hyphens, then validates the result. These determine the architecture built and the output identity when valid optional fields are omitted. Document those effective defaults separately from schema defaults instead of requiring readers to reconstruct them from implementation links.",
+      "priority": "P2",
+      "confidence": 0.99,
+      "category": "maintainability",
+      "code_location": {
+        "file_path": "docs/site/reference/plugin-configuration.md",
+        "line": 105
+      }
+    }
+  ],
+  "overall_correctness": "patch is incorrect",
+  "overall_explanation": "CFG007: sourceAccuracy NOT_READY; readerUsability NOT_READY; quality NOT_READY. The current API-flow endpoint explanation matches its consumer, and recursive extraction covers the previously missing schema structures. However, concrete plugin consumer semantics remain absent from the canonical reader page, including omission that disables coverage enforcement and effective container-build defaults. These are defects in the requested current-content scope, independent of unrelated generic API/YAML inventory readiness. The identified defects suffice to withhold whole CFG007 acceptance; this inspection does not establish exhaustive semantic correctness of all 855 facts. No files were modified, tests or generators executed, or nested reviewers invoked.",
+  "overall_confidence": 0.97
+}

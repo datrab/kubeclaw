@@ -1,0 +1,5 @@
+{
+  "coverage-default-tests.log": "npm notice run test\nnpm notice run node tests/live-function.test.ts\n{\"ok\":true,\"provider\":\"coverage-budget\",\"format\":\"lcov\"}",
+  "container-build-default-tests.log": "npm notice run test\nnpm notice run node tests/deadline.test.mts && node tests/live-function.test.ts\n{\"ok\":true,\"suite\":\"container-registry-deadline\",\"transport\":\"real-http\",\"buildkitExecution\":\"not-exercised\"}\n{\"ok\":true,\"provider\":\"container-build\",\"validation\":\"real-files\",\"acceptance\":\"verify:test-gate:container-build-live\",\"mocks\":0,\"emulators\":0}",
+  "coverage-build-schema-semantics.log": "PASS recursive schema rules, actual registry default boundaries, approval omission/explicit/empty, direct-command collection behavior and common-executor rejection, new shell Secret authority"
+}

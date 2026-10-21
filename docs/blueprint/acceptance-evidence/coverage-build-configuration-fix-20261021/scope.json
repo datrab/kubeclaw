@@ -1,0 +1,11 @@
+{
+  "correctedFields": [
+    "coverage-budget.minimumLinePercent",
+    "coverage-budget.combine",
+    "container-build.platform",
+    "container-build.outputName"
+  ],
+  "implementation": "Original provider contracts documented by owning schema inventory, with source-derived fixed fallback values and explicit invocation-derived output identity.",
+  "testScope": "Real original providers; coverage LCOV artifacts and native parser; container payload observed and capability intentionally stopped, no synthetic image outcome or BuildKit execution.",
+  "wholeCFG007": "NOT_READY: original review did not establish all855field semantics; four corrected fields do not qualify all plugin behavior or any global API/generation gate."
+}
