@@ -6,3 +6,10 @@ worker:
     nodeName: ax41-production
     namespace: kubeclaw
     policyDigest: b16f8b792c92629ba761597ccc38bc5056d135072d1bed2da2e88e1c0022c6af
+
+# One-time replay of the failed 2026-10-18 checks; remove after verified success.
+backup:
+  recovery:
+    runId: oct21
+    verificationCronJobUid: 3815a03a-470e-48ed-b9c3-a11638d339c7
+    databaseProofCronJobUid: 4a9d326b-6a85-4dfb-9400-aa4d23c4715a

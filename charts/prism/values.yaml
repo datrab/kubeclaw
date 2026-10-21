@@ -62,6 +62,9 @@ secrets:
   database: prism-postgresql-auth
 artifactStorage: { storage: 100Gi, storageClass: "" }
 backup:
+  # Operator-authorized replay against existing CronJob UIDs. Remove after
+  # success; enabled recovery hooks run before ordinary workload sync waves.
+  recovery: {}
   schedule: "0 2 * * *"
   verificationSchedule: "0 3 * * 0"
   databaseProofSchedule: "0 4 * * 0"
