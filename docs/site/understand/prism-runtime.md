@@ -6,7 +6,7 @@ Owner: Prism maintainers
 Evidence: skills/prism; contracts/prism/v1; charts/prism; my-values/prism-agent-values.yaml
 Evidence revision: `b2b85d4c8d3174aa41507cde77637227bb709e1e`
 Applies to: the current Prism Control, Studio, native Worker, Ingestion service, Agent Bridge, and pipeline adapter
-Last verified: source, deployment, and test inspection on 2026-09-19; Prism Agent values checked against the cited implementation on 2026-10-17; no live readiness result is established
+Last verified: source, deployment, and test inspection on 2026-09-19; Prism Agent values checked against the cited implementation on 2026-10-17; runtime-map execution/result separation checked against the pinned source on 2026-10-21; no live readiness result is established
 
 ## Purpose
 
@@ -46,7 +46,9 @@ flowchart LR
     Control -->|durable agent job| Agent[Prism Agent Bridge]
     Agent --> Gateway[OpenClaw gateway]
     Gateway --> Model[Managed model route]
-    Agent -->|fenced design result| Control
+    Agent -->|bound execution outcome or startup diagnostic| Control
+    Gateway -->|agent tool invocation| Tools[OpenClaw Prism tools]
+    Tools -->|fenced design set or revision commit| Control
     Control -->|bound attempt| Worker[Native Prism Worker]
     Worker -->|isolated host| Engine[Prism engine]
     Engine -->|artifact read and write| Control
@@ -70,7 +72,9 @@ Each row names a directed connection. Labels preserve the diagram’s conditions
 | Prism Control | Directed connection — durable agent job | Prism Agent Bridge |
 | Prism Agent Bridge | Directed connection | OpenClaw gateway |
 | OpenClaw gateway | Directed connection | Managed model route |
-| Prism Agent Bridge | Directed connection — fenced design result | Prism Control |
+| Prism Agent Bridge | Directed connection — bound execution outcome or startup diagnostic | Prism Control |
+| OpenClaw gateway | Directed connection — agent tool invocation | OpenClaw Prism tools |
+| OpenClaw Prism tools | Directed connection — fenced design set or revision commit | Prism Control |
 | Prism Control | Directed connection — bound attempt | Native Prism Worker |
 | Native Prism Worker | Directed connection — isolated host | Prism engine |
 | Prism engine | Directed connection — artifact read and write | Prism Control |
@@ -80,7 +84,15 @@ Each row names a directed connection. Labels preserve the diagram’s conditions
 | Prism Control | Directed connection — approved baseline | Nova pipeline |
 
 
-Text version: Nova sends a design request to Control. A user reaches Studio through the Tailscale ingress. Studio proxies the user API to Control. Control owns PostgreSQL records and the artifact volume. Model-driven jobs go through the Agent Bridge and OpenClaw. Deterministic operations go to the native Worker. The Worker reads and writes artifacts through Control. The optional Ingestion service acquires untrusted corpus content. The pipeline adapter converts a published baseline handoff into Buster and Forge inputs.
+Text version: Nova sends a design request to Control. A user reaches Studio through the Tailscale ingress. Studio proxies the user API to Control. Control owns PostgreSQL records and the artifact volume. Model-driven jobs go through the Agent Bridge and OpenClaw. The bridge reports its bounded execution outcome separately from the design commit made by an OpenClaw Prism tool. A completed execution receipt alone is not a committed design result. Deterministic operations go to the native Worker. The Worker reads and writes artifacts through Control. The optional Ingestion service acquires untrusted corpus content. The pipeline adapter converts a published baseline handoff into Buster and Forge inputs.
+
+The two result paths have separate admission checks. The [bridge submits its
+Worker outcome to the job finish route](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/server/agent-job-runner.mjs#L27-L44).
+[Control completes that job only when the bound outcome is completed and its
+design result is already committed](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/control/agent-jobs.ts#L56-L66).
+The [OpenClaw tools use separate design-set and revision routes](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/openclaw-plugin/index.mjs#L54-L78).
+Their document transactions hold the [agent-result fence and expiry lock](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/control/agent-jobs.ts#L85-L97).
+These are the pinned implementation boundaries, not a newly executed live result.
 
 ### Components and authority
 

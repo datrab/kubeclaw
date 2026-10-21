@@ -3240,7 +3240,7 @@
       "audience": "architecture reader, Prism developer, operator, incident responder",
       "owner": "Prism maintainers",
       "appliesTo": "the current Prism Control, Studio, native Worker, Ingestion service, Agent Bridge, and pipeline adapter",
-      "lastVerified": "source, deployment, and test inspection on 2026-09-19; Prism Agent values checked against the cited implementation on 2026-10-17; no live readiness result is established",
+      "lastVerified": "source, deployment, and test inspection on 2026-09-19; Prism Agent values checked against the cited implementation on 2026-10-17; runtime-map execution/result separation checked against the pinned source on 2026-10-21; no live readiness result is established",
       "sourceDependencies": [
         "skills/prism",
         "contracts/prism/v1",

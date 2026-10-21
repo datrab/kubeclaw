@@ -654,7 +654,10 @@ stateDiagram-v2
     allocated --> quiescing
     running --> quiescing
     quiescing --> empty
+    empty --> empty : install missing final observation
     empty --> disposed
+    empty --> unresolved : diagnosis required
+    empty --> abandoned : diagnosis and no final observation
     reserved --> unresolved
     allocated --> unresolved
     running --> unresolved
@@ -669,7 +672,7 @@ stateDiagram-v2
 
 **Text alternative to the diagram**
 
-States shown: `reserved`, `allocated`, `running`, `quiescing`, `empty`, `disposed`, `unresolved`, `abandoned`. The start marker enters the first state; each row names one directed transition.
+States shown: `reserved`, `allocated`, `running`, `quiescing`, `empty`, `disposed`, `unresolved`, `abandoned`. The start marker enters the first state; each row names one directed phase transition. The arrows describe the transition relation, not unconditional permission: record validation, compare-and-swap, binding, diagnosis, and final-observation guards still apply. An unresolved record that retains a final observation cannot move to a phase that forbids that observation.
 
 | From | Relationship | To |
 | --- | --- | --- |
@@ -679,7 +682,10 @@ States shown: `reserved`, `allocated`, `running`, `quiescing`, `empty`, `dispose
 | allocated | State transition | quiescing |
 | running | State transition | quiescing |
 | quiescing | State transition | empty |
+| empty | Self-transition — install a previously absent final observation | empty |
 | empty | State transition | disposed |
+| empty | State transition — diagnosis required | unresolved |
+| empty | State transition — diagnosis and no final observation | abandoned |
 | reserved | State transition | unresolved |
 | allocated | State transition | unresolved |
 | running | State transition | unresolved |
@@ -694,16 +700,22 @@ States shown: `reserved`, `allocated`, `running`, `quiescing`, `empty`, `dispose
 
 `reserved` means that the identity and scope name are durable but no kernel
 binding exists. `allocated` adds the durable kernel binding. `running` is the
-launch fence. `quiescing` blocks new starts. `empty` includes final kernel
-counters. `disposed` means that the empty scope was removed. `unresolved`
+launch fence. `quiescing` blocks new starts. `empty` marks the empty-scope phase; the trusted coordinator must supply
+kernel evidence. Converted legacy records can retain a null final observation
+until it is installed. `disposed` means that the empty scope was removed. `unresolved`
 means that the supervisor cannot prove a safe terminal state. `abandoned`
 means that recovery proved no usable current-host scope, but it cannot produce
 a normal completion result.
 
 One process holds the supervisor lock for recovery and admission. Every update
 uses a compare-and-swap against the complete prior record. The store accepts a
-binding only in `reserved -> allocated`. It accepts final counters only once,
-when entering `empty`. Terminal identities remain stored. This prevents
+binding only in `reserved -> allocated`. It accepts a previously absent final observation only when the destination is
+`empty` and the prior phase is `quiescing` or `empty`. The `empty -> empty`
+self-transition must install that missing observation; an ordinary repeated
+phase remains invalid. An existing observation cannot be rewritten. A transition
+to `unresolved` requires a diagnosis. A transition from `empty` to `abandoned`
+also requires that no final observation is present, because an abandoned record
+cannot carry one. Terminal identities remain stored. This prevents
 a stale request from starting the same identity again.
 
 The store has fixed record and byte limits. It has no automatic compaction.
@@ -728,6 +740,8 @@ identity, binding, and scope state or stops admission.
 > [Local health reports a monotonic sequence but creates no durable ownership heartbeat](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/worker/core/worker/local-runtime.ts#L116-L151).
 >
 > [The ownership record and file store define identity, phases, binding, diagnosis, counters, locking, and compare-and-swap updates](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/worker/core/worker/ownership-store.ts#L10-L170).
+>
+> [The one-time observation and same-phase guards constrain the permitted transitions](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/worker/core/worker/ownership-store.ts#L41-L48).
 >
 > [The transition graph and strict record validator reject impossible stored states](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/worker/core/worker/ownership-state.ts#L5-L90).
 

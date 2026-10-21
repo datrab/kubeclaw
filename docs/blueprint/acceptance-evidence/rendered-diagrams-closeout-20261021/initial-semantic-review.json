@@ -1,0 +1,29 @@
+{
+  "findings": [
+    {
+      "title": "P2: Distinguish the bridge receipt from the committed design result",
+      "body": "The registered runtime map labels Agent Bridge \u2192 Control as \u201cfenced design result\u201d. At the page\u2019s pinned revision b2b85d4c8d3174aa41507cde77637227bb709e1e, AgentJobRunner.runOne sends a Worker attempt outcome to /jobs/:id/finish; finishAgentRun separately requires job.result to have already been committed. Designs are committed by the OpenClaw tool through /v1/agent/design-sets or /v1/agent/revisions, under lockAgentResult. This distinction matters when an execution receipt exists without a committed design. Correct the owning Mermaid definition and adjacent alternative in docs/site/understand/prism-runtime.md:49 to distinguish these handoffs, then refresh this registration.",
+      "priority": "P2",
+      "confidence": 0.9,
+      "category": "bug",
+      "code_location": {
+        "file_path": "docs/config/documentation-diagrams.json",
+        "line": 82
+      }
+    },
+    {
+      "title": "P2: Represent the ownership contract\u2019s additional empty-state transitions",
+      "body": "The registered state diagram gives empty only an outgoing transition to disposed. Its pinned ownership-state.ts transition table also permits empty \u2192 empty, empty \u2192 unresolved and empty \u2192 abandoned. The self-transition is meaningful: ownership-store.ts permits installing previously absent finalObservation while already empty, including converted legacy records. Consequently the diagram and alternative do not fully answer the registered question about permitted progress and unresolved stops. Update the owning definition at docs/site/understand/worker-core.md:657 and its alternative with the applicable conditions, or explicitly distinguish a simplified supervisor path from the full store transition contract; then refresh this hash.",
+      "priority": "P2",
+      "confidence": 0.95,
+      "category": "bug",
+      "code_location": {
+        "file_path": "docs/config/documentation-diagrams.json",
+        "line": 37
+      }
+    }
+  ],
+  "overall_correctness": "patch is incorrect",
+  "overall_explanation": "Two semantic discrepancies are exposed by the registered graphics. Questions, owners and substantive adjacent text alternatives are present for all 27 definitions. Complete independent per-edge implementation verification was not achieved; the coverage below explicitly preserves that limitation rather than treating citations or render hashes as proof.\n\nDecision coverage (page:index; understand/ prefix omitted):\nPASS in this Source/reader-question/owner/text scope: extend/README.md:0; extend/lint.md:0; worker-core.md:0; components-and-authority.md:1,2; nova-core.md:0; prism-runtime.md:1; plugin-runtime.md:0; deployment-and-trust.md:1; telemetry.md:0,1; request-state-recovery.md:0,1; communication.md:0.\nNOT_READY, concrete semantic correction required: worker-core.md:1; prism-runtime.md:0.\nNOT_READY, remaining edge proof incomplete: components-and-authority.md:0 (complete specialist/runtime handoffs); buster.md:0 (complete runner/provider/result-import chain); platform-and-operations.md:0 (all infrastructure and upstream model boundaries); deployment-and-trust.md:0 (every protected and optional connection); telemetry.md:2 (complete chart endpoint/query and observer-sink chain); security-and-trust.md:0 (every credential, deployment and policy boundary); pipeline-dependencies.md:0 (complete selected infrastructure path); prism-data.md:0 (retrieval-to-round and all artifact relationships); prism.md:0 (complete service/ingestion/adapter handoffs); buster-namespace-controller.md:0 (complete retention, readiness and deletion fences); reference/images-and-digests.md:0 (complete producer-to-selection-to-observation chain).\n\nPASS refers to the documented source snapshots and stated limits, not current deployed behavior. PUB-005\u2019s previous NOT_READY decision and A912-06\u2019s unsupported-edge prohibition remain applicable. No whole PUB005/A91206 acceptance, visual interpretation, browser-result or human screen-reader claim is made. No tests, generators, product execution, nested reviewers or edits were performed. A91205, global API copier line 74, the three old Helm phrases, fresh-person, screen-reader and hosting obligations remain open.",
+  "overall_confidence": 0.78
+}

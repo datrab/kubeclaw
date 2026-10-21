@@ -34,7 +34,7 @@
       "index": 1,
       "readerQuestion": "Which Worker allocation states permit progress, cleanup or an unresolved stop?",
       "owner": "Worker Core maintainers",
-      "sourceSha256": "4b8cdabcd972066bb94c5dea6dfbdbefc5dca61279dfabd125a2194b7a0c9fc7",
+      "sourceSha256": "377fe01957389e64aa887c1aac5935f8b1e8405845c0aa180bf581bf683da8a1",
       "textAlternative": "The existing text alternative immediately following this diagram; retained visibly in publication."
     },
     {
@@ -79,7 +79,7 @@
       "index": 0,
       "readerQuestion": "Which Prism runtime components hand work and results to one another?",
       "owner": "Prism maintainers",
-      "sourceSha256": "29280289e119d0c86cf1468b220dfb74c74509f84727eb70fcee3c3d8407badd",
+      "sourceSha256": "9b3b5433e5e40aced94d98558902760302ad3265ec241dd66ae109e7793ea73f",
       "textAlternative": "The existing text alternative immediately following this diagram; retained visibly in publication."
     },
     {

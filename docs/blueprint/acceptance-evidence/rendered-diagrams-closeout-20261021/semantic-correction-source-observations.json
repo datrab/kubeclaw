@@ -1,0 +1,24 @@
+{
+  "scope": "Initial27diagram semanticreview retained.14scopedPASS,2concreteP2,11unfinished per-edgeproof; no wholePUB005/A91206 acceptance.",
+  "confirmedFixes": [
+    {
+      "page": "docs/site/understand/prism-runtime.md",
+      "change": "Separate boundbridgeoutcome fromOpenClawtool-fenceddesigncommit;finishrequirescompletedvalidreceipt+committedresult.",
+      "sources": [
+        "b2b85d4c8d3174aa41507cde77637227bb709e1e:skills/prism/server/agent-job-runner.mjs:27-44",
+        "b2b85d4c8d3174aa41507cde77637227bb709e1e:skills/prism/control/agent-jobs.ts:56-66,85-97",
+        "b2b85d4c8d3174aa41507cde77637227bb709e1e:skills/prism/openclaw-plugin/index.mjs:54-78"
+      ]
+    },
+    {
+      "page": "docs/site/understand/worker-core.md",
+      "change": "Addempty->empty/missingobservation,empty->unresolved/diagnosis,empty->abandoned/noobservation+diagnosis. Clarify allphasearrows conditionalonrecord/CAS/finalobservationguards; convertedlegacyrecords mayretainnullobservation.",
+      "sources": [
+        "ce7740252864a9b547bee8a35260d6ab10c9f05e:skills/worker/core/worker/ownership-state.ts:11-20,58-86",
+        "ce7740252864a9b547bee8a35260d6ab10c9f05e:skills/worker/core/worker/ownership-store.ts:41-48,122-144"
+      ]
+    }
+  ],
+  "reviewStatus": "Two bounded semantic follow-ups now running; actualpublication must rebuildafterfixcommit.",
+  "priorArtifact": "6b17f6e2 fullchecks/freshSVG/browser results remain prior-candidate evidence, not falsely relabelled as fixed-diagram proof."
+}
