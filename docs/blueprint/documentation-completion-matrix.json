@@ -35014,14 +35014,14 @@
       "scope": "Author32Bash53Node20CJS24syntheticchecks only, noformal6scenario/live/ReaderQualityapproval."
     },
     "currentCloseout20261021": {
-      "securedSourceRevision": "cff4e05d27686e7ea68d165ef5569f26195d3821",
+      "securedSourceRevision": "62c0c8a47515046caa4c3151a8d055a92b19477c",
       "acceptedRequirements": 174,
       "acceptedGates": 12,
       "newRequirementsThisCampaign": 16,
       "newGatesThisCampaign": 2,
-      "nextWork": "Continue remaining native test dynamic-input classification from observability-replay.test.mjs, then rerun generator and complete content/reference/workflow/publication gaps. Do not bypass unknown loaders or promote MNT002/007 and OPL001/005 without whole audits.",
-      "codeCandidate": "Compiler/archive and four historical environment-root metadata recipes independently clean. Three compiler/helper and five historical import expressions bound to complete sources and callers. External archive/source/baseline/proof bytes and native effects remain unqualified; current selected sources remain executable/API discovery inputs. 23 focused tests pass.",
-      "currentGlobalBlocker": "tests/verification/reliability/observability-replay.test.mjs: import(pathToFileURL(path.join(sourceRoot, durable-delivery/durable-attempts paths)).href). OBSERVABILITY_REPLAY_SOURCE_ROOT ?? process.cwd(); actual caller and environment fallback need truthful input metadata.",
+      "nextWork": "Classify actual module.builtinModules namespace reads in tests/verification/lib/module-graph.mjs without allowing createRequire/unknown namespace member custody or suppressing dynamic imports; rerun generator, then remaining content/reference/workflow/publication gaps.",
+      "codeCandidate": "Six additional native replay input recipes independently clean; 21 exact dynamic import expressions bound to source/overlay/archive/caller inputs. Total this continuation: 12 recipes,29 imports. Runtime archive/environment/temporary-copy identity and all native effects remain unqualified; current selected sources still executable/API discovery. 25 focused tests pass.",
+      "currentGlobalBlocker": "tests/verification/lib/module-graph.mjs: unsupported node-module custody: module. Actual default node:module import only reads module.builtinModules twice into builtin-name Set; current capability scanner admits named builtinModules but rejects namespace property projection.",
       "publication": "167pages51plugins pass publicationcheck and Markdownbuild; no rendered HTML/browser/search proof.",
       "scope": "No promise of unattended running work and no completeness claim. MNT/OPL NOT_READY remains explicit.",
       "owner": "Nova, continuing the authorized PR13 request from Raven on2026-10-21",
@@ -35029,20 +35029,20 @@
       "checkout": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery",
       "remoteBranch": "refs/heads/docs/documentation-overhaul",
       "review": {
-        "command": "python3 /home/node/.openclaw/agents/main/agent/codex-home/skills/autoreview/scripts/autoreview --mode local --codex-bin /tmp/pr13-codex-review-host --prompt-file /tmp/pr13-historical-review.md",
-        "result": "Exit0; no accepted/actionable findings. Four historical recipes, caller/child transfer and five exact import expressions checked; no external source identity/runtime qualification.",
-        "limit": "Code/input metadata only, not historical execution, content acceptance or global generator PASS."
+        "command": "python3 /home/node/.openclaw/agents/main/agent/codex-home/skills/autoreview/scripts/autoreview --mode local --codex-bin /tmp/pr13-codex-review-host --prompt-file /tmp/pr13-replay-review.md",
+        "result": "Exit0; no accepted/actionable findings. Six replay source/archive/overlay/caller recipes and tests inspected.",
+        "limit": "Metadata/code review only; no native replay execution, content acceptance or global generator PASS."
       },
       "checks": [
         {
           "command": "node --test scripts/tests/api-output-custody.test.mjs scripts/tests/api-output-node-entry-custody.test.mjs",
           "exitCode": 0,
-          "result": "23/23 pass; two new historical metadata/actual native root-selector tests plus prior compiler/source/caller and public producer negative controls."
+          "result": "25/25 pass plus affected six-recipe test rerun after clearer helper mutation control. Native nullish root/empty-string selector checked on isolated stubs."
         },
         {
           "command": "node scripts/generate-local-helm-authorities.mjs --check",
           "exitCode": 1,
-          "result": "Compiler/archive and historical metadata clear. Stops at observability replay environment/fallback-root imports; no global baseline PASS."
+          "result": "Compiler, historical and six native replay metadata operations clear; stops at node:module builtinModules namespace data read in module-graph helper. No global baseline PASS."
         },
         {
           "command": "node scripts/check-ap09-acceptance-contract.mjs",

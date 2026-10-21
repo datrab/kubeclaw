@@ -69639,6 +69639,437 @@
             "sha256": "9c451f69559d32b556e34e7f0afc47a7dcca0c9333cbaa7dc20967f1eca05b0f"
           }
         ]
+      },
+      {
+        "source": "tests/verification/reliability/observability-replay.test.mjs",
+        "semanticClass": "native-reliability-replay-selected-module-metadata",
+        "sourceSha256": "987a9a4efe9320b858c448f03f4a296323e3b8e1893fea524bb91fec5b77159e",
+        "operations": [
+          {
+            "expression": "import(pathToFileURL(path.join(sourceRoot, 'skills/common/plugin-runtime/foundation/observability/durable-delivery.ts')).href)",
+            "operationSha256": "de48826a3b343df431354abd6e5a32236fa2b860f736a66f934e6288b7bd64f7"
+          },
+          {
+            "expression": "import(pathToFileURL(path.join(sourceRoot, 'skills/common/plugin-runtime/foundation/observability/durable-attempts.ts')).href)",
+            "operationSha256": "749f576885a259dc25e24f58cfceed0cefaf0320a56f03daccddea5d967dbb62"
+          }
+        ],
+        "inputConstraints": {
+          "modulePaths": [
+            "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts",
+            "skills/common/plugin-runtime/foundation/observability/durable-attempts.ts"
+          ],
+          "qualificationScope": "Exact passive selected-source/caller/archive-input metadata only, not fixture-purpose exclusion, runtime acquired module identity, initialization, execution, dependency/effect or AP acceptance.",
+          "runtimeAcquisitionAuthorized": false,
+          "selection": "Top-level sourceRoot=process.env.OBSERVABILITY_REPLAY_SOURCE_ROOT ?? process.cwd(); empty string is NOT fallback. Two literal module suffixes imported before tests. No isAbsolute, canonical containment, source byte or scanner-root equality check.",
+          "caller": "Root package verify:reliability native *.test.mjs glob and CI pipeline-reliability core shards via scripts/reliability-tests.mjs; shard runner sorts filenames and excludes named native/service sets. Child files only through actual named parents; no top-level inert assertion. Pinned callers are metadata evidence, not proof of execution.",
+          "selectedCheckoutBinding": "Current modulePaths remain executable/API discovery seeds with transitive local closure; they are NOT proof that environment-selected/temporary/archive runtime modules equal checkout sources. Existing temporary directories, external root overrides and direct child arguments are not authenticated.",
+          "unqualifiedEffects": [
+            "All static/dynamic module and transitive initialization, loader/package/environment/CWD identity, native test callbacks and side effects remain unqualified.",
+            "Git blob/provenance assertions are inspected source behavior, not scanner-executed archive authenticity, extracted/transformed/copy byte custody or imported dependency qualification. No archived code is reconstructed, loaded or exempted by this recipe.",
+            "Current-core recursive copy, symlinks, historical replacements/transforms, temporary writes/cleanup, network/HTTP/adapter calls, journal/artifact mutations and process SIGKILL/watchdog/child launch effects are unqualified as present in source."
+          ]
+        },
+        "authorityInputs": [
+          {
+            "path": "package.json",
+            "sha256": "602c41b16a66c10ba9e7385ddb12bb9e1cf9227183374acbe987198640ed4cab"
+          },
+          {
+            "path": "scripts/reliability-tests.mjs",
+            "sha256": "0f563997afb6c49c3eb0d35ee440da496a32d8e1abbbc36c7e2d0d98c550ff05"
+          },
+          {
+            "path": ".github/workflows/pipeline-reliability.yaml",
+            "sha256": "e338f143d87d8fcbf16830fdf82a0f7a9396f53376a780f4076ee4fb5e87ac4a"
+          }
+        ]
+      },
+      {
+        "source": "tests/verification/reliability/review-cache-legacy-prefix.test.mjs",
+        "semanticClass": "native-reliability-replay-selected-module-metadata",
+        "sourceSha256": "208c37c7a34c84fc29430dcf20b53827475fe6b182b2dc3a46ce947e199a01a7",
+        "operations": [
+          {
+            "expression": "import(pathToFileURL(path.join(core,'execution/engine-snapshots.ts')))",
+            "operationSha256": "e2841bf836d362b9924012b29ecd09ec2fe8cb934d9dc16c22e6067ed4fe36cf"
+          },
+          {
+            "expression": "import(pathToFileURL(path.join(selected,'repository-audit-cache.ts')))",
+            "operationSha256": "e2841bf836d362b9924012b29ecd09ec2fe8cb934d9dc16c22e6067ed4fe36cf"
+          },
+          {
+            "expression": "import(pathToFileURL(path.join(selected,'review-content-cache.ts')))",
+            "operationSha256": "e2841bf836d362b9924012b29ecd09ec2fe8cb934d9dc16c22e6067ed4fe36cf"
+          }
+        ],
+        "inputConstraints": {
+          "modulePaths": [
+            "skills/nova/core/execution/engine-snapshots.ts",
+            "skills/nova/plugins/review/src/repository-audit-cache.ts",
+            "skills/nova/plugins/review/src/review-content-cache.ts"
+          ],
+          "qualificationScope": "Exact passive selected-source/caller/archive-input metadata only, not fixture-purpose exclusion, runtime acquired module identity, initialization, execution, dependency/effect or AP acceptance.",
+          "runtimeAcquisitionAuthorized": false,
+          "selection": "modules(root,version,old) reached only from --child branch. Cwd source core copied if absent, node_modules linked. Snapshot replaced for non-v4: v1 source-producer snapshot+graph, v2 transport snapshot, otherwise legacy-review-cache snapshot. Archived review cache/content always copied; current review-ordering copied. selected=old&&version!==v4 ? temporary review : current source review. Existing core skips copy branch. Parent self-spawns with controlled version/write/read/boundary/archive-current/locale tuple and source cwd; arbitrary direct CLI values are not authenticated.",
+          "caller": "Root package verify:reliability native *.test.mjs glob and CI pipeline-reliability core shards via scripts/reliability-tests.mjs; shard runner sorts filenames and excludes named native/service sets. Child files only through actual named parents; no top-level inert assertion. Pinned callers are metadata evidence, not proof of execution.",
+          "selectedCheckoutBinding": "Current modulePaths remain executable/API discovery seeds with transitive local closure; they are NOT proof that environment-selected/temporary/archive runtime modules equal checkout sources. Existing temporary directories, external root overrides and direct child arguments are not authenticated.",
+          "unqualifiedEffects": [
+            "All static/dynamic module and transitive initialization, loader/package/environment/CWD identity, native test callbacks and side effects remain unqualified.",
+            "Git blob/provenance assertions are inspected source behavior, not scanner-executed archive authenticity, extracted/transformed/copy byte custody or imported dependency qualification. No archived code is reconstructed, loaded or exempted by this recipe.",
+            "Current-core recursive copy, symlinks, historical replacements/transforms, temporary writes/cleanup, network/HTTP/adapter calls, journal/artifact mutations and process SIGKILL/watchdog/child launch effects are unqualified as present in source."
+          ]
+        },
+        "authorityInputs": [
+          {
+            "path": "package.json",
+            "sha256": "602c41b16a66c10ba9e7385ddb12bb9e1cf9227183374acbe987198640ed4cab"
+          },
+          {
+            "path": "scripts/reliability-tests.mjs",
+            "sha256": "0f563997afb6c49c3eb0d35ee440da496a32d8e1abbbc36c7e2d0d98c550ff05"
+          },
+          {
+            "path": ".github/workflows/pipeline-reliability.yaml",
+            "sha256": "e338f143d87d8fcbf16830fdf82a0f7a9396f53376a780f4076ee4fb5e87ac4a"
+          },
+          {
+            "path": "tests/verification/reliability/fixtures/legacy-review-cache/provenance.json",
+            "sha256": "d1307e56c0b2fae5aff7a012957926ea43da1adb3466ff5a445d024cb7623126"
+          },
+          {
+            "path": "tests/verification/reliability/fixtures/legacy-review-cache/engine-snapshots.ts.txt",
+            "sha256": "25f806eac3f6402e2720e059e0d782947fd23f10987a8029849a49c4c1f706b4"
+          },
+          {
+            "path": "tests/verification/reliability/fixtures/legacy-review-cache/repository-audit-cache.ts.txt",
+            "sha256": "7acfef491630744c9de83e0367859e1d651b77badc30974d0549949b065f88e9"
+          },
+          {
+            "path": "tests/verification/reliability/fixtures/legacy-review-cache/review-content-cache.ts.txt",
+            "sha256": "88cbebebfe8210246fd67b67a2dec403b73d95d373182833071d7a7ecd4f0139"
+          },
+          {
+            "path": "tests/verification/reliability/fixtures/legacy-transport-profile/provenance.json",
+            "sha256": "884a92258103a980d3f93c4d1a805c9ae835f079f414100e3c23e34ca2744f19"
+          },
+          {
+            "path": "tests/verification/reliability/fixtures/legacy-transport-profile/engine-snapshots-v2.ts.txt",
+            "sha256": "5dc8507a212b3ec1f9a796dad112c4cc5a0142051ab4accb45a413a5298155ad"
+          },
+          {
+            "path": "tests/verification/reliability/fixtures/legacy-source-producer/provenance.json",
+            "sha256": "d1a7754e7bb096e362182969e61a11d2081065caef7f3e232f57e5aec5b16ee1"
+          },
+          {
+            "path": "tests/verification/reliability/fixtures/legacy-source-producer/core/execution/engine-snapshots.ts.txt",
+            "sha256": "12fc2f012477e71bc59420452d086e208d685bced9e7aa05182f9c1833359ed0"
+          },
+          {
+            "path": "tests/verification/reliability/fixtures/legacy-source-producer/core/execution/graph.ts.txt",
+            "sha256": "c11f9c7e2c19c357ba7d7320af2a87f49497d8bf03c4e80685bf5a15090c6dea"
+          }
+        ]
+      },
+      {
+        "source": "tests/verification/reliability/review-evidence-compiler-recovery.test.mjs",
+        "semanticClass": "native-reliability-replay-selected-module-metadata",
+        "sourceSha256": "05652bf5b882f659850534314ed43e0daf4525c632e82c7782abcb0a04cc3939",
+        "operations": [
+          {
+            "expression": "import(pathToFileURL(target).href)",
+            "operationSha256": "c45f88e16e9e627c20989fe8a9c976d898f95447072def8e91709470064e46f8"
+          }
+        ],
+        "inputConstraints": {
+          "modulePaths": [
+            "skills/nova/core/src/index.ts",
+            "skills/nova/project/compiler.ts"
+          ],
+          "qualificationScope": "Exact passive selected-source/caller/archive-input metadata only, not fixture-purpose exclusion, runtime acquired module identity, initialization, execution, dependency/effect or AP acceptance.",
+          "runtimeAcquisitionAuthorized": false,
+          "selection": "Inside registered test, materializeCurrentCore(temp/original) copies current skills/tests/contracts and package/dependency links, writes only historical locale producer from legacy-core archive. Read legacy-review-compiler JSON content; verify Git blob SHA1, write overlay.destination/original.path, dynamically import target, then fixture compile/recovery assertions and cleanup. No scanner execution or overlay byte equality established.",
+          "caller": "Root package verify:reliability native *.test.mjs glob and CI pipeline-reliability core shards via scripts/reliability-tests.mjs; shard runner sorts filenames and excludes named native/service sets. Child files only through actual named parents; no top-level inert assertion. Pinned callers are metadata evidence, not proof of execution.",
+          "selectedCheckoutBinding": "Current modulePaths remain executable/API discovery seeds with transitive local closure; they are NOT proof that environment-selected/temporary/archive runtime modules equal checkout sources. Existing temporary directories, external root overrides and direct child arguments are not authenticated.",
+          "unqualifiedEffects": [
+            "All static/dynamic module and transitive initialization, loader/package/environment/CWD identity, native test callbacks and side effects remain unqualified.",
+            "Git blob/provenance assertions are inspected source behavior, not scanner-executed archive authenticity, extracted/transformed/copy byte custody or imported dependency qualification. No archived code is reconstructed, loaded or exempted by this recipe.",
+            "Current-core recursive copy, symlinks, historical replacements/transforms, temporary writes/cleanup, network/HTTP/adapter calls, journal/artifact mutations and process SIGKILL/watchdog/child launch effects are unqualified as present in source."
+          ]
+        },
+        "authorityInputs": [
+          {
+            "path": "package.json",
+            "sha256": "602c41b16a66c10ba9e7385ddb12bb9e1cf9227183374acbe987198640ed4cab"
+          },
+          {
+            "path": "scripts/reliability-tests.mjs",
+            "sha256": "0f563997afb6c49c3eb0d35ee440da496a32d8e1abbbc36c7e2d0d98c550ff05"
+          },
+          {
+            "path": ".github/workflows/pipeline-reliability.yaml",
+            "sha256": "e338f143d87d8fcbf16830fdf82a0f7a9396f53376a780f4076ee4fb5e87ac4a"
+          },
+          {
+            "path": "tests/verification/reliability/repair-identity-historical.mjs",
+            "sha256": "7bcd89d9c05f0a4a8d09422c422926769c8bb7b565b3a4cbedd7dee35dc444c4"
+          },
+          {
+            "path": "tests/fixtures/repair-budget/legacy-core.json",
+            "sha256": "fcaf041c044f7f0aae6a661671d216d923318fef22ff885024c3818896581405"
+          },
+          {
+            "path": "tests/fixtures/repair-budget/legacy-review-compiler.json",
+            "sha256": "0dd6ec10bc0abdf1c7b727a1525d67c24ab997a8fb074c1de84e27ade3203177"
+          }
+        ]
+      },
+      {
+        "source": "tests/verification/reliability/review-report-compiler-recovery.test.mjs",
+        "semanticClass": "native-reliability-replay-selected-module-metadata",
+        "sourceSha256": "c6a4115ccd007e70bc583717f46bd3e1252ecef16d0cca0aee94eb750dc1342e",
+        "operations": [
+          {
+            "expression": "import(pathToFileURL(target).href)",
+            "operationSha256": "c45f88e16e9e627c20989fe8a9c976d898f95447072def8e91709470064e46f8"
+          }
+        ],
+        "inputConstraints": {
+          "modulePaths": [
+            "skills/nova/project/compiler.ts"
+          ],
+          "qualificationScope": "Exact passive selected-source/caller/archive-input metadata only, not fixture-purpose exclusion, runtime acquired module identity, initialization, execution, dependency/effect or AP acceptance.",
+          "runtimeAcquisitionAuthorized": false,
+          "selection": "Only archived compiler test loads target: materializeCurrentCore, legacy-review-compiler JSON Buffer content and Git blob SHA1 assertion, write overlay/ archive.path then import target; portable source/legacy report assertions and recovery. Other tests statically import current compiler/recovery; remain ordinary executable source.",
+          "caller": "Root package verify:reliability native *.test.mjs glob and CI pipeline-reliability core shards via scripts/reliability-tests.mjs; shard runner sorts filenames and excludes named native/service sets. Child files only through actual named parents; no top-level inert assertion. Pinned callers are metadata evidence, not proof of execution.",
+          "selectedCheckoutBinding": "Current modulePaths remain executable/API discovery seeds with transitive local closure; they are NOT proof that environment-selected/temporary/archive runtime modules equal checkout sources. Existing temporary directories, external root overrides and direct child arguments are not authenticated.",
+          "unqualifiedEffects": [
+            "All static/dynamic module and transitive initialization, loader/package/environment/CWD identity, native test callbacks and side effects remain unqualified.",
+            "Git blob/provenance assertions are inspected source behavior, not scanner-executed archive authenticity, extracted/transformed/copy byte custody or imported dependency qualification. No archived code is reconstructed, loaded or exempted by this recipe.",
+            "Current-core recursive copy, symlinks, historical replacements/transforms, temporary writes/cleanup, network/HTTP/adapter calls, journal/artifact mutations and process SIGKILL/watchdog/child launch effects are unqualified as present in source."
+          ]
+        },
+        "authorityInputs": [
+          {
+            "path": "package.json",
+            "sha256": "602c41b16a66c10ba9e7385ddb12bb9e1cf9227183374acbe987198640ed4cab"
+          },
+          {
+            "path": "scripts/reliability-tests.mjs",
+            "sha256": "0f563997afb6c49c3eb0d35ee440da496a32d8e1abbbc36c7e2d0d98c550ff05"
+          },
+          {
+            "path": ".github/workflows/pipeline-reliability.yaml",
+            "sha256": "e338f143d87d8fcbf16830fdf82a0f7a9396f53376a780f4076ee4fb5e87ac4a"
+          },
+          {
+            "path": "tests/verification/reliability/repair-identity-historical.mjs",
+            "sha256": "7bcd89d9c05f0a4a8d09422c422926769c8bb7b565b3a4cbedd7dee35dc444c4"
+          },
+          {
+            "path": "tests/fixtures/repair-budget/legacy-core.json",
+            "sha256": "fcaf041c044f7f0aae6a661671d216d923318fef22ff885024c3818896581405"
+          },
+          {
+            "path": "tests/fixtures/repair-budget/legacy-review-compiler.json",
+            "sha256": "0dd6ec10bc0abdf1c7b727a1525d67c24ab997a8fb074c1de84e27ade3203177"
+          }
+        ]
+      },
+      {
+        "source": "tests/verification/reliability/review-report-locale-child.mjs",
+        "semanticClass": "native-reliability-replay-selected-module-metadata",
+        "sourceSha256": "b1359aafc37d85f9d69c7dacc3325a38343f9d5b7d5e27e4fa965ba3985d0138",
+        "operations": [
+          {
+            "expression": "import(pathToFileURL(target).href)",
+            "operationSha256": "957ddb4b57ed4cc567704edd5c3ddc8ae61f43cca8892fc243b9671c8629552c"
+          }
+        ],
+        "inputConstraints": {
+          "modulePaths": [
+            "skills/nova/plugins/review/src/review-report-storage.ts"
+          ],
+          "qualificationScope": "Exact passive selected-source/caller/archive-input metadata only, not fixture-purpose exclusion, runtime acquired module identity, initialization, execution, dependency/effect or AP acceptance.",
+          "runtimeAcquisitionAuthorized": false,
+          "selection": "Child root/mode/phase from argv slice(2); originalWriter only when mode===original inside try after adapter.ready(). Read original storage archive; verify fixed Git blob SHA1; stripTypeScriptTypes then regex-rewrite from specifiers: relative URLs anchored at current review-report-storage.ts, packages via import.meta.resolve. Write root/original-storage.mjs then import and select storeReviewReport. Parent locale/corruption tests execute native child with root/mode/phase and inherited environment with LANG/LC_ALL. This text transform is not generalized semantic import closure proof; initialization, dependency resolution and strip behavior remain unqualified.",
+          "caller": "Root package verify:reliability native *.test.mjs glob and CI pipeline-reliability core shards via scripts/reliability-tests.mjs; shard runner sorts filenames and excludes named native/service sets. Child files only through actual named parents; no top-level inert assertion. Pinned callers are metadata evidence, not proof of execution.",
+          "selectedCheckoutBinding": "Current modulePaths remain executable/API discovery seeds with transitive local closure; they are NOT proof that environment-selected/temporary/archive runtime modules equal checkout sources. Existing temporary directories, external root overrides and direct child arguments are not authenticated.",
+          "unqualifiedEffects": [
+            "All static/dynamic module and transitive initialization, loader/package/environment/CWD identity, native test callbacks and side effects remain unqualified.",
+            "Git blob/provenance assertions are inspected source behavior, not scanner-executed archive authenticity, extracted/transformed/copy byte custody or imported dependency qualification. No archived code is reconstructed, loaded or exempted by this recipe.",
+            "Current-core recursive copy, symlinks, historical replacements/transforms, temporary writes/cleanup, network/HTTP/adapter calls, journal/artifact mutations and process SIGKILL/watchdog/child launch effects are unqualified as present in source."
+          ]
+        },
+        "authorityInputs": [
+          {
+            "path": "package.json",
+            "sha256": "602c41b16a66c10ba9e7385ddb12bb9e1cf9227183374acbe987198640ed4cab"
+          },
+          {
+            "path": "scripts/reliability-tests.mjs",
+            "sha256": "0f563997afb6c49c3eb0d35ee440da496a32d8e1abbbc36c7e2d0d98c550ff05"
+          },
+          {
+            "path": ".github/workflows/pipeline-reliability.yaml",
+            "sha256": "e338f143d87d8fcbf16830fdf82a0f7a9396f53376a780f4076ee4fb5e87ac4a"
+          },
+          {
+            "path": "tests/verification/reliability/fixtures/review-report-storage-original.json",
+            "sha256": "667c784a0d8f504d0c9a340442e63d080aae2021442737b200332b613c057dfa"
+          },
+          {
+            "path": "tests/verification/reliability/review-report-locales.test.mjs",
+            "sha256": "3439b994d8997c1f853bcee06bf7e5faf8036dea9553e72c8f781ad325b2361b"
+          },
+          {
+            "path": "tests/verification/reliability/review-report-corruption-independent.test.mjs",
+            "sha256": "06a92fd5d226df054beac7ecde4544d364765bb301dc8d89f0d9c72a1d38da25"
+          },
+          {
+            "path": "tests/verification/reliability/review-report-locale-fixture.mjs",
+            "sha256": "03ec4f64e3b39d0710d387fb788f09fe880f789cf0a0270d7d39828fabd2341f"
+          },
+          {
+            "path": "tests/verification/reliability/review-report-summary-fixture.mjs",
+            "sha256": "a3aef0fb91adee10e673338201b13b4127d09f52b88c651a996a886144b29743"
+          }
+        ]
+      },
+      {
+        "source": "tests/verification/reliability/runtime-dispatch-native-profile.test.mjs",
+        "semanticClass": "native-reliability-replay-selected-module-metadata",
+        "sourceSha256": "90f70288cd10d97d7245ec96389f59152523eec154ad0b0e5f23ea7b38a6b266",
+        "operations": [
+          {
+            "expression": "import(pathToFileURL(path.join(source,'skills/nova/core/src/index.ts')))",
+            "operationSha256": "912847ae35aabb8bc8cf9c13aee438081ebeb6fec5539f0e8ab691c23dcbe477"
+          },
+          {
+            "expression": "import(pathToFileURL(path.join(source,'skills/nova/core/execution/engine-snapshots.ts')))",
+            "operationSha256": "8c331c82fbe760354b5ef2102b7f7a866e0fa5dd8af3993125136e2ae6fe4075"
+          },
+          {
+            "expression": "import(pathToFileURL(path.join(source,'skills/nova/core/execution/engine-runtime.ts')))",
+            "operationSha256": "e93480229ffa5a42ab780c9196a58d401c2dbcc90e5c06092cab9f82e77ae7bf"
+          },
+          {
+            "expression": "import(pathToFileURL(path.join(source,'skills/nova/core/execution/run-root.ts')))",
+            "operationSha256": "836257c7ac96cfd28425a6a3fb92ebbacb923fd4b939046f253876a210f3e96d"
+          },
+          {
+            "expression": "import(pathToFileURL(path.join(source,'skills/nova/plugins/architecture-validator/src/protocol.ts')))",
+            "operationSha256": "44e021555e4ad39af6d082268666d36e11bca90a07ed3921ce86eed1a4cda691"
+          },
+          {
+            "expression": "import(pathToFileURL(path.join(modules,'review-graph.ts')))",
+            "operationSha256": "8cee6df5e6133383bdc138fab9d1ea4eba3b50d30d92e9514d5148f148a226f9"
+          },
+          {
+            "expression": "import(pathToFileURL(path.join(modules,'review-snapshot-inventory.ts')))",
+            "operationSha256": "ee12290104391a59b9fb62c8e0ad42fd07e9b24b0b569f4d674205fb8fb7bb89"
+          },
+          {
+            "expression": "import(pathToFileURL(path.join(modules,'review-scale-slicing.ts')))",
+            "operationSha256": "3ad451f342fa91a74d3b536807d3745c53c65e0424a64ac5a995744e8d2d2d5a"
+          },
+          {
+            "expression": "import(pathToFileURL(path.join(modules,'scalable-review-jobs.ts')))",
+            "operationSha256": "57dabfbeb800f3f7446c909af925564fe2b0d4a8016e9257b507a3c7d2c05603"
+          },
+          {
+            "expression": "import(pathToFileURL(path.join(modules,'scalable-review-execution.ts')))",
+            "operationSha256": "2029d8ea7baec599764111c50b58bb9cfee09e30a4689df7b38f5a700c95d1aa"
+          },
+          {
+            "expression": "import(pathToFileURL(path.join(modules,'scalable-review-verification.ts')))",
+            "operationSha256": "d26274d329c75b2e388ba8b8dc836afa1ae7fbe081fe4d8871ea357409c65650"
+          },
+          {
+            "expression": "import(pathToFileURL(path.join(mode==='pipeline'?archivedCore(root,version):path.join(source,'skills/nova/core'),'execution/engine.ts')))",
+            "operationSha256": "580f7d2b98e0ededd4b534114ff17168e4510a8a462ede9663b0725aef760bbe"
+          },
+          {
+            "expression": "import(pathToFileURL(path.join(archivedCore(root,version),'execution/engine-snapshots.ts')))",
+            "operationSha256": "026fbb46f7d47f50514fe538330d2b1dd2534faeae859eefc2a3018effd72ab5"
+          }
+        ],
+        "inputConstraints": {
+          "modulePaths": [
+            "skills/nova/core/src/index.ts",
+            "skills/nova/core/execution/engine-snapshots.ts",
+            "skills/nova/core/execution/engine-runtime.ts",
+            "skills/nova/core/execution/run-root.ts",
+            "skills/nova/plugins/architecture-validator/src/protocol.ts",
+            "skills/nova/plugins/review/src/review-graph.ts",
+            "skills/nova/plugins/review/src/review-snapshot-inventory.ts",
+            "skills/nova/plugins/review/src/review-scale-slicing.ts",
+            "skills/nova/plugins/review/src/scalable-review-jobs.ts",
+            "skills/nova/plugins/review/src/scalable-review-execution.ts",
+            "skills/nova/plugins/review/src/scalable-review-verification.ts",
+            "skills/nova/core/execution/engine.ts"
+          ],
+          "qualificationScope": "Exact passive selected-source/caller/archive-input metadata only, not fixture-purpose exclusion, runtime acquired module identity, initialization, execution, dependency/effect or AP acceptance.",
+          "runtimeAcquisitionAuthorized": false,
+          "selection": "All nonliteral imports occur in --child branch. First five current source modules always. helper-* imports six current review modules after literal SDK package import. pipeline/recover imports engine from archivedCore(root,version) only for pipeline, current core for recover; other mode imports archived snapshots only when no stored run snapshot. archivedCore v4=current core, otherwise current core copy+dependency symlink if target absent; exact v1/v2/other snapshot provenance+Git blob assertions and optional v1 graph replacement. Existing target skips replacement; no scanner proof of runtime copies. Parent self-spawns native process at source cwd with root, loopback receiver, version, mode, boundary, locale journal; deliberate local token/HTTP 503 receiver is not a Gateway or live provider success.",
+          "caller": "Root package verify:reliability native *.test.mjs glob and CI pipeline-reliability core shards via scripts/reliability-tests.mjs; shard runner sorts filenames and excludes named native/service sets. Child files only through actual named parents; no top-level inert assertion. Pinned callers are metadata evidence, not proof of execution.",
+          "selectedCheckoutBinding": "Current modulePaths remain executable/API discovery seeds with transitive local closure; they are NOT proof that environment-selected/temporary/archive runtime modules equal checkout sources. Existing temporary directories, external root overrides and direct child arguments are not authenticated.",
+          "unqualifiedEffects": [
+            "All static/dynamic module and transitive initialization, loader/package/environment/CWD identity, native test callbacks and side effects remain unqualified.",
+            "Git blob/provenance assertions are inspected source behavior, not scanner-executed archive authenticity, extracted/transformed/copy byte custody or imported dependency qualification. No archived code is reconstructed, loaded or exempted by this recipe.",
+            "Current-core recursive copy, symlinks, historical replacements/transforms, temporary writes/cleanup, network/HTTP/adapter calls, journal/artifact mutations and process SIGKILL/watchdog/child launch effects are unqualified as present in source."
+          ]
+        },
+        "authorityInputs": [
+          {
+            "path": "package.json",
+            "sha256": "602c41b16a66c10ba9e7385ddb12bb9e1cf9227183374acbe987198640ed4cab"
+          },
+          {
+            "path": "scripts/reliability-tests.mjs",
+            "sha256": "0f563997afb6c49c3eb0d35ee440da496a32d8e1abbbc36c7e2d0d98c550ff05"
+          },
+          {
+            "path": ".github/workflows/pipeline-reliability.yaml",
+            "sha256": "e338f143d87d8fcbf16830fdf82a0f7a9396f53376a780f4076ee4fb5e87ac4a"
+          },
+          {
+            "path": "tests/verification/reliability/fixtures/legacy-review-cache/provenance.json",
+            "sha256": "d1307e56c0b2fae5aff7a012957926ea43da1adb3466ff5a445d024cb7623126"
+          },
+          {
+            "path": "tests/verification/reliability/fixtures/legacy-review-cache/engine-snapshots.ts.txt",
+            "sha256": "25f806eac3f6402e2720e059e0d782947fd23f10987a8029849a49c4c1f706b4"
+          },
+          {
+            "path": "tests/verification/reliability/fixtures/legacy-review-cache/repository-audit-cache.ts.txt",
+            "sha256": "7acfef491630744c9de83e0367859e1d651b77badc30974d0549949b065f88e9"
+          },
+          {
+            "path": "tests/verification/reliability/fixtures/legacy-review-cache/review-content-cache.ts.txt",
+            "sha256": "88cbebebfe8210246fd67b67a2dec403b73d95d373182833071d7a7ecd4f0139"
+          },
+          {
+            "path": "tests/verification/reliability/fixtures/legacy-transport-profile/provenance.json",
+            "sha256": "884a92258103a980d3f93c4d1a805c9ae835f079f414100e3c23e34ca2744f19"
+          },
+          {
+            "path": "tests/verification/reliability/fixtures/legacy-transport-profile/engine-snapshots-v2.ts.txt",
+            "sha256": "5dc8507a212b3ec1f9a796dad112c4cc5a0142051ab4accb45a413a5298155ad"
+          },
+          {
+            "path": "tests/verification/reliability/fixtures/legacy-source-producer/provenance.json",
+            "sha256": "d1a7754e7bb096e362182969e61a11d2081065caef7f3e232f57e5aec5b16ee1"
+          },
+          {
+            "path": "tests/verification/reliability/fixtures/legacy-source-producer/core/execution/engine-snapshots.ts.txt",
+            "sha256": "12fc2f012477e71bc59420452d086e208d685bced9e7aa05182f9c1833359ed0"
+          },
+          {
+            "path": "tests/verification/reliability/fixtures/legacy-source-producer/core/execution/graph.ts.txt",
+            "sha256": "c11f9c7e2c19c357ba7d7320af2a87f49497d8bf03c4e80685bf5a15090c6dea"
+          }
+        ]
       }
     ]
   }

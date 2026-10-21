@@ -35,6 +35,12 @@ const reviewedNodeModuleNamedImports=new Set(['createRequire','Module','default'
 // authority requires a Source-reviewed recipe change here, not a JSON digest
 // refresh. These recipes never permit unsupported capability custody.
 const reviewedDocumentationModuleInputRecipes = [
+  {"source":"tests/verification/reliability/observability-replay.test.mjs","semanticClass":"native-reliability-replay-selected-module-metadata","recipeSha256":"7b941730bf3d35bc3564dcadf0c4d7a25e60e652338d589164985a1cdae04f8e"},
+  {"source":"tests/verification/reliability/review-cache-legacy-prefix.test.mjs","semanticClass":"native-reliability-replay-selected-module-metadata","recipeSha256":"7078054483cdd6d2f7d4df77e25ea35fd332d0a7679bd945ff2ee90c24ebff9e"},
+  {"source":"tests/verification/reliability/review-evidence-compiler-recovery.test.mjs","semanticClass":"native-reliability-replay-selected-module-metadata","recipeSha256":"fe0f2f5f299a77fcb3e36f1a11174da7f57c64727ceafd691ca9c1d18a67797f"},
+  {"source":"tests/verification/reliability/review-report-compiler-recovery.test.mjs","semanticClass":"native-reliability-replay-selected-module-metadata","recipeSha256":"5a5b28fefe306787766b16875909378e1cc2983a4b77f44240894e60ab24d7e2"},
+  {"source":"tests/verification/reliability/review-report-locale-child.mjs","semanticClass":"native-reliability-replay-selected-module-metadata","recipeSha256":"0018eff92167e11517d112365a26560c94ad0b55c7603fb5ef0786cc89ed6ead"},
+  {"source":"tests/verification/reliability/runtime-dispatch-native-profile.test.mjs","semanticClass":"native-reliability-replay-selected-module-metadata","recipeSha256":"7c41e68da44f659b4d6e40c4dfe47916542d1b731ba9542ef2af947c804de21f"},
   {"source":"tests/verification/historical-branch-acceptance/delivery-manifest-v3-compiler-recovery-independent.test.mjs","semanticClass":"historical-environment-root-module-input-metadata","recipeSha256":"a180c18bd5fba57de5610daf697df8d8ec1f3e0582f2d8d3e6088ca1b8344307"},
   {"source":"tests/verification/historical-branch-acceptance/delivery-manifest-v3-contract-independent.test.mjs","semanticClass":"historical-environment-root-module-input-metadata","recipeSha256":"dd8f9502a9dde911d4991e6c853a7d2104f2e2eaafb9ac1c864652ac89a93a1a"},
   {"source":"tests/verification/historical-branch-acceptance/delivery-manifest-v3-summary-mode-independent.test.mjs","semanticClass":"historical-environment-root-module-input-metadata","recipeSha256":"51f0abb6784cd9c5082b8ab4dd35a0abd907f1464cb94b7a70870d9ea045b842"},

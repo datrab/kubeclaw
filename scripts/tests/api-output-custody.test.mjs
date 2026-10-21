@@ -206,3 +206,35 @@ test('native historical from selector really follows external root, not scanner 
  const program="import path from 'node:path';import {pathToFileURL} from 'node:url';"+declaration.getText(tree)+"console.log((await from(process.argv[1], 'skills/nova/project/compiler.ts')).identity);";
  for(const [directory,expected]of [['candidate','candidate'],['baseline','external-baseline']]){const native=spawnSync(process.execPath,['--input-type=module','-e',program,path.join(root,directory)],{encoding:'utf8'});assert.equal(native.status,0,native.stderr);assert.equal(native.stdout.trim(),expected);}
 }));
+
+test('six native replay recipes bind archive, overlay, caller and exact loader branches without fixture exclusion',()=>fixture(({root,write})=>{
+ const repository=path.resolve(new URL('../..',import.meta.url).pathname),boundary=JSON.parse(fs.readFileSync(path.join(repository,'scripts/docs-api-producer-adapter-authorities.json'))).documentationToolBoundary;
+ const recipes=boundary.unresolvedModuleInputAuthorities.filter(r=>r.semanticClass==='native-reliability-replay-selected-module-metadata');assert.equal(recipes.length,6);
+ for(const source of new Set(recipes.flatMap(r=>[r.source,...r.authorityInputs.map(x=>x.path),...r.inputConstraints.modulePaths])))write(source,fs.readFileSync(path.join(repository,source),'utf8'));
+ const graph={dynamicOperations:[],resolutionOnlyOperations:[]};
+ for(const recipe of recipes){const bytes=fs.readFileSync(path.join(root,recipe.source),'utf8'),tree=ts.createSourceFile(recipe.source,bytes,ts.ScriptTarget.Latest,true);const visit=node=>{if(ts.isCallExpression(node)&&node.expression.kind===ts.SyntaxKind.ImportKeyword&&!ts.isStringLiteralLike(node.arguments[0])){let owner=node;for(let parent=node.parent;parent;parent=parent.parent)if(ts.isFunctionDeclaration(parent))owner=parent;graph.dynamicOperations.push({source:recipe.source,expression:node.getText(tree),operation:owner.getText(tree)});}ts.forEachChild(node,visit);};visit(tree);assert.equal(recipe.inputConstraints.runtimeAcquisitionAuthorized,false);assert.match(recipe.inputConstraints.selectedCheckoutBinding,/NOT proof/);}
+ assert.equal(graph.dynamicOperations.length,21);
+ const check=(b=boundary,g=graph)=>documentationModuleInputAuthority(root,b,g),baseline=check();
+ for(const [source,before,after]of [
+  ['tests/verification/reliability/observability-replay.test.mjs','?? process.cwd()','|| process.cwd()'],
+  ['tests/verification/reliability/review-cache-legacy-prefix.test.mjs',"old&&version!=='v4'","old||version!=='v4'"],
+  ['tests/verification/reliability/runtime-dispatch-native-profile.test.mjs',"mode==='pipeline'?archivedCore(root,version)","mode==='pipeline'?archivedCore(root,process.argv[12])"],
+  ['tests/verification/reliability/repair-identity-historical.mjs','if (!historical && file.path !== producerPath) continue;','if (historical && file.path !== producerPath) continue;'],
+  ['scripts/reliability-tests.mjs',"group === 'native'", "group === 'foreign'"],
+  ['tests/verification/reliability/review-report-locales.test.mjs','child,root,mode,phase','child,root,process.argv[2],phase'],
+ ]){const original=fs.readFileSync(path.join(root,source),'utf8');const changed=original.replace(before,after);assert.notEqual(changed,original,source);write(source,changed);assert.throws(()=>check(),/input\/caller authority changed/);write(source,original);assert.equal(check(),baseline);}
+ for(const source of ['tests/fixtures/repair-budget/legacy-review-compiler.json','tests/verification/reliability/fixtures/legacy-review-cache/engine-snapshots.ts.txt','tests/verification/reliability/fixtures/review-report-storage-original.json']){const original=fs.readFileSync(path.join(root,source),'utf8');write(source,original+'\n');assert.throws(()=>check(),/input\/caller authority changed/);write(source,original);}
+ const forged=structuredClone(boundary),record=forged.unresolvedModuleInputAuthorities.find(r=>r.source===recipes[0].source);record.sourceSha256=sha('replacement');assert.throws(()=>check(forged),/no reviewed semantic input authority/);
+ const extra=structuredClone(graph);extra.dynamicOperations.push({source:recipes[0].source,expression:'import(process.argv[9])',operation:'import(process.argv[9])'});assert.throws(()=>check(boundary,extra),/outside its semantic input recipe/);
+ const source='skills/common/plugin-runtime/foundation/observability/durable-attempts.ts',original=fs.readFileSync(path.join(root,source),'utf8');write(source,original+secret);assert.notEqual(check(),baseline);
+}));
+
+test('native replay root selector preserves explicit external and empty-string nullish cases',()=>fixture(({root,write})=>{
+ const repository=path.resolve(new URL('../..',import.meta.url).pathname),source='tests/verification/reliability/observability-replay.test.mjs',bytes=fs.readFileSync(path.join(repository,source),'utf8'),tree=ts.createSourceFile(source,bytes,ts.ScriptTarget.Latest,true);
+ const statements=tree.statements.filter(node=>ts.isVariableStatement(node));
+ const selector=statements.find(node=>node.declarationList.declarations.some(item=>item.name.getText(tree)==='sourceRoot'));
+ const loader=statements.find(node=>node.getText(tree).includes('await import'));assert(selector&&loader);
+ for(const [directory,identity]of [['candidate','candidate'],['external','external']])write(directory+'/skills/common/plugin-runtime/foundation/observability/durable-delivery.ts',`export const FileObservabilityAdmissionStore='${identity}';`);
+ const program="import path from 'node:path';import {pathToFileURL} from 'node:url';"+selector.getText(tree)+loader.getText(tree)+"console.log(JSON.stringify({sourceRoot,identity:FileObservabilityAdmissionStore}));";
+ for(const [selected,identity]of [[undefined,'candidate'],[path.join(root,'external'),'external'],['','candidate']]){const env={...process.env};if(selected===undefined)delete env.OBSERVABILITY_REPLAY_SOURCE_ROOT;else env.OBSERVABILITY_REPLAY_SOURCE_ROOT=selected;const native=spawnSync(process.execPath,['--input-type=module','-e',program],{encoding:'utf8',cwd:path.join(root,'candidate'),env});assert.equal(native.status,0,native.stderr);assert.deepEqual(JSON.parse(native.stdout),{sourceRoot:selected===undefined?path.join(root,'candidate'):selected,identity});}
+}));
