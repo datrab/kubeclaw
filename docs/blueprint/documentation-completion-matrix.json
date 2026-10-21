@@ -189,7 +189,7 @@
     },
     {
       "id": "AP09.2-ready-topics-20261020",
-      "revision": "c46b8268efe8642deb608b8067c2c7f4c7fb8ae9",
+      "revision": "ad66f324ab0273db59397d42f35d94cd4dc62cdd",
       "author": "Documentation implementation authors before review campaign",
       "reviewer": "/root/review_events (01a157c4-8ec4-7273-b286-baaaae1e8176)",
       "gateIds": [],
@@ -374,9 +374,19 @@
             "docs/site/understand/components-and-authority.md"
           ],
           "summary": "Independent ARC006 impact review explicitly preserves all original registered scopes;only separatehostobservercrossingadded,no pipeline/registry/Worker authority change."
+        },
+        {
+          "reviewer": "Independent Codex autoreview 2026-10-21 (ready, correction-final and contributor invocations)",
+          "previousReviewedRevision": "c46b8268efe8642deb608b8067c2c7f4c7fb8ae9",
+          "revision": "ad66f324ab0273db59397d42f35d94cd4dc62cdd",
+          "changedDependencies": [
+            "docs/site/extend/contracts.md"
+          ],
+          "verdict": "PASS",
+          "summary": "Independent targeted source/reader/quality review preserves original requirements, gates and execution limits. Exact adapter/confidential/cleanup corrections, current gateway client, reference ranges/placeholder and parser negative controls checked; no broader acceptance."
         }
       ],
-      "previousReviewedRevision": "08d8f917b08b3faacd0909ccbda3fa069a094a67"
+      "previousReviewedRevision": "c46b8268efe8642deb608b8067c2c7f4c7fb8ae9"
     },
     {
       "id": "AP09.4-ready-prism-topics-20261020",
@@ -510,7 +520,7 @@
     },
     {
       "id": "AP09.3-ready-worker-topics-20261020",
-      "revision": "c46b8268efe8642deb608b8067c2c7f4c7fb8ae9",
+      "revision": "ad66f324ab0273db59397d42f35d94cd4dc62cdd",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/review_worker_ready",
       "gateIds": [],
@@ -621,13 +631,23 @@
             "docs/site/understand/components-and-authority.md"
           ],
           "summary": "Independent ARC006 impact review explicitly preserves all original registered scopes;only separatehostobservercrossingadded,no pipeline/registry/Worker authority change."
+        },
+        {
+          "reviewer": "Independent Codex autoreview 2026-10-21 (ready, correction-final and contributor invocations)",
+          "previousReviewedRevision": "c46b8268efe8642deb608b8067c2c7f4c7fb8ae9",
+          "revision": "ad66f324ab0273db59397d42f35d94cd4dc62cdd",
+          "changedDependencies": [
+            "scripts/docs-check-refs.mjs"
+          ],
+          "verdict": "PASS",
+          "summary": "Independent targeted source/reader/quality review preserves original requirements, gates and execution limits. Exact adapter/confidential/cleanup corrections, current gateway client, reference ranges/placeholder and parser negative controls checked; no broader acceptance."
         }
       ],
-      "previousReviewedRevision": "08d8f917b08b3faacd0909ccbda3fa069a094a67"
+      "previousReviewedRevision": "c46b8268efe8642deb608b8067c2c7f4c7fb8ae9"
     },
     {
       "id": "AP09.7-ready-platform-topics-20261020",
-      "revision": "08d8f917b08b3faacd0909ccbda3fa069a094a67",
+      "revision": "ad66f324ab0273db59397d42f35d94cd4dc62cdd",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/review_platform_ready",
       "gateIds": [
@@ -788,13 +808,23 @@
             "docs/site/understand/platform-and-operations.md"
           ],
           "summary": "Independent targeted source/reader/quality impact review explicitly preserves the original accepted requirement/gate scope. Runtime/configuration/developer reviews combined where shared dependencies cross; full reference/publication/live exclusions retained."
+        },
+        {
+          "reviewer": "Independent Codex autoreview 2026-10-21 (ready, correction-final and contributor invocations)",
+          "previousReviewedRevision": "08d8f917b08b3faacd0909ccbda3fa069a094a67",
+          "revision": "ad66f324ab0273db59397d42f35d94cd4dc62cdd",
+          "changedDependencies": [
+            "docs/site/understand/platform-and-operations.md"
+          ],
+          "verdict": "PASS",
+          "summary": "Independent targeted source/reader/quality review preserves original requirements, gates and execution limits. Exact adapter/confidential/cleanup corrections, current gateway client, reference ranges/placeholder and parser negative controls checked; no broader acceptance."
         }
       ],
-      "previousReviewedRevision": "9370d16410bb7f7aeeb66e11d18403764074eeae"
+      "previousReviewedRevision": "08d8f917b08b3faacd0909ccbda3fa069a094a67"
     },
     {
       "id": "AP09.7-ready-data-topics-20261020",
-      "revision": "08d8f917b08b3faacd0909ccbda3fa069a094a67",
+      "revision": "ad66f324ab0273db59397d42f35d94cd4dc62cdd",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/review_data_ready",
       "gateIds": [],
@@ -896,9 +926,21 @@
             "docs/site/understand/telemetry.md"
           ],
           "summary": "Independent targeted source/reader/quality impact review explicitly preserves the original accepted requirement/gate scope. Runtime/configuration/developer reviews combined where shared dependencies cross; full reference/publication/live exclusions retained."
+        },
+        {
+          "reviewer": "Independent Codex autoreview 2026-10-21 (ready, correction-final and contributor invocations)",
+          "previousReviewedRevision": "08d8f917b08b3faacd0909ccbda3fa069a094a67",
+          "revision": "ad66f324ab0273db59397d42f35d94cd4dc62cdd",
+          "changedDependencies": [
+            "docs/site/extend/contracts.md",
+            "docs/site/understand/telemetry.md",
+            "scripts/docs-check-refs.mjs"
+          ],
+          "verdict": "PASS",
+          "summary": "Independent targeted source/reader/quality review preserves original requirements, gates and execution limits. Exact adapter/confidential/cleanup corrections, current gateway client, reference ranges/placeholder and parser negative controls checked; no broader acceptance."
         }
       ],
-      "previousReviewedRevision": "9370d16410bb7f7aeeb66e11d18403764074eeae"
+      "previousReviewedRevision": "08d8f917b08b3faacd0909ccbda3fa069a094a67"
     },
     {
       "id": "Reviewed-corrections-20261020",
@@ -1239,7 +1281,7 @@
     },
     {
       "id": "AP09-reader-developers-20261020",
-      "revision": "08d8f917b08b3faacd0909ccbda3fa069a094a67",
+      "revision": "ad66f324ab0273db59397d42f35d94cd4dc62cdd",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/review_platform_ready",
       "gateIds": [
@@ -1405,9 +1447,19 @@
             "scripts/docs-publication.mjs"
           ],
           "summary": "Independent targeted source/reader/quality impact review explicitly preserves the original accepted requirement/gate scope. Runtime/configuration/developer reviews combined where shared dependencies cross; full reference/publication/live exclusions retained."
+        },
+        {
+          "reviewer": "Independent Codex autoreview 2026-10-21 (ready, correction-final and contributor invocations)",
+          "previousReviewedRevision": "08d8f917b08b3faacd0909ccbda3fa069a094a67",
+          "revision": "ad66f324ab0273db59397d42f35d94cd4dc62cdd",
+          "changedDependencies": [
+            "docs/site/extend/contracts.md"
+          ],
+          "verdict": "PASS",
+          "summary": "Independent targeted source/reader/quality review preserves original requirements, gates and execution limits. Exact adapter/confidential/cleanup corrections, current gateway client, reference ranges/placeholder and parser negative controls checked; no broader acceptance."
         }
       ],
-      "previousReviewedRevision": "13d6f0a8326d5672f97cb42c0fc91f28da008e0d"
+      "previousReviewedRevision": "08d8f917b08b3faacd0909ccbda3fa069a094a67"
     },
     {
       "id": "AP09-reviewed-configuration-20261020",
@@ -1626,7 +1678,7 @@
     },
     {
       "id": "AP09-reviewed-maintenance-20261020",
-      "revision": "08d8f917b08b3faacd0909ccbda3fa069a094a67",
+      "revision": "ad66f324ab0273db59397d42f35d94cd4dc62cdd",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/review_data_ready",
       "gateIds": [],
@@ -1708,9 +1760,21 @@
             "scripts/docs-publication.mjs"
           ],
           "summary": "Independent targeted source/reader/quality impact review explicitly preserves the original accepted requirement/gate scope. Runtime/configuration/developer reviews combined where shared dependencies cross; full reference/publication/live exclusions retained."
+        },
+        {
+          "reviewer": "Independent Codex autoreview 2026-10-21 (ready, correction-final and contributor invocations)",
+          "previousReviewedRevision": "08d8f917b08b3faacd0909ccbda3fa069a094a67",
+          "revision": "ad66f324ab0273db59397d42f35d94cd4dc62cdd",
+          "changedDependencies": [
+            "docs/site/extend/documentation-maintenance.md",
+            "scripts/docs-check-refs.mjs",
+            "scripts/tests/docs-check-refs.test.mjs"
+          ],
+          "verdict": "PASS",
+          "summary": "Independent targeted source/reader/quality review preserves original requirements, gates and execution limits. Exact adapter/confidential/cleanup corrections, current gateway client, reference ranges/placeholder and parser negative controls checked; no broader acceptance."
         }
       ],
-      "previousReviewedRevision": "e161be417432d4ebdd22a3d84e09057df70abc0d"
+      "previousReviewedRevision": "08d8f917b08b3faacd0909ccbda3fa069a094a67"
     },
     {
       "id": "AP09-reviewed-publication-navigation-20261020",
@@ -2015,7 +2079,7 @@
     },
     {
       "id": "AP09-closeout-developer-maintenance-20261020",
-      "revision": "322ec12435c7fd5915a35213cd9d5a0986a81fc4",
+      "revision": "ad66f324ab0273db59397d42f35d94cd4dc62cdd",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/close_developer_maintenance",
       "gateIds": [],
@@ -2118,9 +2182,19 @@
           ],
           "verdict": "PASS",
           "summary": "Independent whole CLI review explicitly preserves this prior topic: every bound reader page and other dependency byte-identical; inventory change confined to complete deploy forms and additive public CLI supplement, with secret/Helm/workflow and non-command deploy facts unchanged."
+        },
+        {
+          "reviewer": "Independent Codex autoreview 2026-10-21 (ready, correction-final and contributor invocations)",
+          "previousReviewedRevision": "322ec12435c7fd5915a35213cd9d5a0986a81fc4",
+          "revision": "ad66f324ab0273db59397d42f35d94cd4dc62cdd",
+          "changedDependencies": [
+            "docs/site/extend/contracts.md"
+          ],
+          "verdict": "PASS",
+          "summary": "Independent targeted source/reader/quality review preserves original requirements, gates and execution limits. Exact adapter/confidential/cleanup corrections, current gateway client, reference ranges/placeholder and parser negative controls checked; no broader acceptance."
         }
       ],
-      "previousReviewedRevision": "08d8f917b08b3faacd0909ccbda3fa069a094a67"
+      "previousReviewedRevision": "322ec12435c7fd5915a35213cd9d5a0986a81fc4"
     },
     {
       "id": "AP09-closeout-ARC006-20261020",
@@ -2409,6 +2483,232 @@
         "Documentation/source acceptance only; no live deployment,provider credential or remote execution claim.",
         "Generic CLI drift wrapper remains blocked before CLI on existing Helm authority hash mismatch; no whole generation,publication,CI or AP09.11 gate acceptance.",
         "Internal documentation tooling and flags passed to external programs remain outside this published CLI contract."
+      ],
+      "openIssues": [],
+      "verdict": "PASS"
+    },
+    {
+      "id": "AP09-compiler-import-provider-diagnosis-20261021",
+      "revision": "ad66f324ab0273db59397d42f35d94cd4dc62cdd",
+      "author": "Documentation authors and /root correction coordinator",
+      "reviewer": "Independent Codex autoreview 2026-10-21 (ready, correction-final and contributor invocations)",
+      "gateIds": [
+        "A98-06"
+      ],
+      "requirementIds": [
+        "NVC-002",
+        "NVC-003",
+        "PLG-006",
+        "PLG-008",
+        "OPR-006"
+      ],
+      "pages": [
+        "docs/site/understand/nova-core.md",
+        "docs/site/reference/nova-project.md",
+        "docs/site/use/workflows/README.md",
+        "docs/site/understand/plugin-runtime.md",
+        "docs/site/extend/contracts.md",
+        "docs/site/reference/capabilities.md",
+        "docs/site/use/diagnose.md",
+        "docs/site/use/operate.md",
+        "docs/site/use/install.md"
+      ],
+      "sources": [
+        "skills/nova/project/cli.ts",
+        "skills/nova/project/compiler.ts",
+        "skills/nova/project/source.ts",
+        "skills/common/plugin-runtime/foundation/registry/import-audit.ts",
+        "skills/common/plugin-runtime/foundation/registry/activation.ts",
+        "skills/common/plugin-runtime/foundation/registry/capabilities.ts",
+        "skills/nova/core/telemetry/audit.ts",
+        "scripts/deploy.sh"
+      ],
+      "checks": [
+        {
+          "command": "Independent read-only topic review and affected-scope correction review",
+          "exitCode": 0,
+          "observation": "Source/reader/quality PASS for all five requirements and whole symptom-index gate. Compiler imports and 48-package registry construction succeed; 28 capability reference rows match definitions. Bash syntax: 32 diagnosis, 5 plugin, 3 first-project and 11 canonical run-control blocks."
+        },
+        {
+          "command": "node tests/verification/contracts/check-plugin-system-v2-capability-security.mjs",
+          "exitCode": 0,
+          "observation": "All28 capabilities have exact mapping and allowed/out-of-scope-denied cases."
+        },
+        {
+          "command": "node docs/site/use/workflows/examples/first-project.mjs /tmp/pr13-first-project-20261021; node --test /tmp/pr13-first-project-20261021/repository/app/greeting.test.mjs",
+          "exitCode": 0,
+          "observation": "Real maintained materializer and compiler produce8stages;executionfalse andplatformAdmissionfalse. One greeting unit test passes; no provider/run success inferred."
+        }
+      ],
+      "review": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "summary": "Closes complete compiler/admission, import audit, capability provider resolution and symptom-first safe diagnosis after independent current-source review.",
+      "limits": [
+        "Documentation and repository evidence only; no live deployment, outage, provider embedding, native isolation or production restore claim.",
+        "No global documentation/publication/Helm-generation acceptance; unsupported importer-relative resolution remains an explicit global blocker."
+      ],
+      "openIssues": [],
+      "verdict": "PASS"
+    },
+    {
+      "id": "AP09-confidential-adapter-lifecycle-20261021",
+      "revision": "ad66f324ab0273db59397d42f35d94cd4dc62cdd",
+      "author": "Documentation authors and /root correction coordinator",
+      "reviewer": "Independent Codex autoreview 2026-10-21 (ready, correction-final and contributor invocations)",
+      "gateIds": [],
+      "requirementIds": [
+        "PLG-009",
+        "PLG-011"
+      ],
+      "pages": [
+        "docs/site/understand/plugin-runtime.md",
+        "docs/site/extend/contracts.md",
+        "docs/site/use/plugins.md"
+      ],
+      "sources": [
+        "skills/nova/core/execution/authorization.ts",
+        "skills/nova/core/execution/adapter-startup.ts",
+        "skills/nova/core/execution/adapters.ts",
+        "skills/nova/core/effects/coordinator.ts",
+        "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts"
+      ],
+      "checks": [
+        {
+          "command": "Independent complete adapter topic correction review",
+          "exitCode": 0,
+          "observation": "Both whole requirements source/reader/quality PASS after explicit confidential dependency eligibility and uncertain startup/shutdown completion corrected; rollback160-166 and bounded explicit shutdown linked."
+        },
+        {
+          "command": "node tests/verification/contracts/check-plugin-system-v2-capability-security.mjs",
+          "exitCode": 0,
+          "observation": "Exact28 capability cases and provider mappings pass."
+        }
+      ],
+      "review": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "summary": "Complete grants/resource matching and executable activation documentation now agree on confidential dependency recording and cooperative cleanup limits.",
+      "limits": [
+        "Documentation and repository evidence only; no live deployment, outage, provider embedding, native isolation or production restore claim.",
+        "No global documentation/publication/Helm-generation acceptance; unsupported importer-relative resolution remains an explicit global blocker."
+      ],
+      "openIssues": [],
+      "verdict": "PASS"
+    },
+    {
+      "id": "AP09-selected-model-gateway-20261021",
+      "revision": "ad66f324ab0273db59397d42f35d94cd4dc62cdd",
+      "author": "Documentation authors and /root correction coordinator",
+      "reviewer": "Independent Codex autoreview 2026-10-21 (ready, correction-final and contributor invocations)",
+      "gateIds": [
+        "A97-03"
+      ],
+      "requirementIds": [
+        "INF-012"
+      ],
+      "pages": [
+        "docs/site/understand/platform-and-operations.md",
+        "docs/site/understand/pipeline-dependencies.md"
+      ],
+      "sources": [
+        "versions.json",
+        "docker/Dockerfile.nova",
+        "charts/kubeclaw/templates/configmap-gateway.yaml",
+        "charts/kubeclaw/values.yaml",
+        "my-values/infra/litellm-config.yaml",
+        "my-values/infra/litellm-deployment.yaml",
+        "scripts/render-litellm-deployment.mjs"
+      ],
+      "checks": [
+        {
+          "command": "Independent complete LiteLLM and selected upstream client review",
+          "exitCode": 0,
+          "observation": "Whole requirement/gate source/reader/quality PASS. OpenClaw2026.10.3 commit59cb44796b0f1f0daa0e37af8b1495abb45d9bc1 inspected in sparse upstream checkout: structured errors/status/quota/Retry-After, batch-only timeout override, retry/split/cancellation and every changed source range."
+        },
+        {
+          "command": "node scripts/docs-platform-surface-inventory.mjs --check",
+          "exitCode": 0,
+          "observation": "498 dependency signals,171 resources,42 secret refs,72 endpoints,65 outbound records,75 stores,56 events,8 Ops tools current."
+        }
+      ],
+      "review": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "summary": "Current model-gateway routing/consumer/credential/readiness/failure/recovery guide and selected embedding-client limits independently accepted.",
+      "limits": [
+        "Documentation and repository evidence only; no live deployment, outage, provider embedding, native isolation or production restore claim.",
+        "No global documentation/publication/Helm-generation acceptance; unsupported importer-relative resolution remains an explicit global blocker.",
+        "Upstream implementation review is not upstream test execution or image/source attestation."
+      ],
+      "openIssues": [],
+      "verdict": "PASS"
+    },
+    {
+      "id": "AP09-contributor-baselines-and-migrations-20261021",
+      "revision": "ad66f324ab0273db59397d42f35d94cd4dc62cdd",
+      "author": "Documentation authors and /root correction coordinator",
+      "reviewer": "Independent Codex autoreview 2026-10-21 (ready, correction-final and contributor invocations)",
+      "gateIds": [],
+      "requirementIds": [
+        "DEV-002",
+        "DEV-007",
+        "CDV-006",
+        "CDV-013"
+      ],
+      "pages": [
+        "docs/site/extend/developer-handbook.md",
+        "docs/site/extend/platform/README.md"
+      ],
+      "sources": [
+        "package.json",
+        "tsconfig.base.json",
+        "skills/common/plugin-runtime/sdk/package.json",
+        "scripts/generate-plugin-sdk-types.mjs",
+        "scripts/bootstrap-prism-tests.sh",
+        "tests/verification/contracts/check-plugin-system-v2-capability-security.mjs",
+        "skills/prism/storage/index.ts",
+        "skills/prism/storage/artifacts.ts",
+        "skills/prism/tests/storage.test.mts"
+      ],
+      "checks": [
+        {
+          "command": "Independent complete contributor topic review",
+          "exitCode": 0,
+          "observation": "All4 source/reader/quality PASS. Prepared local dependency paths are not presented as a clean-install result; environment, security/load scope, schema-first compatibility and data migration routes reviewed."
+        },
+        {
+          "command": "npm run plugin-system:sdk:check",
+          "exitCode": 0,
+          "observation": "Generated SDK byte parity passes after preparing locked json-schema-to-typescript15.0.4 in ignored local dependencies."
+        },
+        {
+          "command": "node tests/verification/contracts/check-plugin-system-v2-capability-security.mjs",
+          "exitCode": 0,
+          "observation": "28 allowed/out-of-scope capability cases pass."
+        },
+        {
+          "command": "npm run verify:prism:storage",
+          "exitCode": 0,
+          "observation": "6 tests pass;0 failures/skips. Transactional migrations, revision/artifact immutability and archival constraints checked with locked PGlite."
+        }
+      ],
+      "review": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "summary": "Closes accurate contributor setup/security guidance and SDK/data migration change procedures with previously blocked focused checks now passing.",
+      "limits": [
+        "Documentation and repository evidence only; no live deployment, outage, provider embedding, native isolation or production restore claim.",
+        "No global documentation/publication/Helm-generation acceptance; unsupported importer-relative resolution remains an explicit global blocker.",
+        "No clean npm-ci/install reproduction, whole A910-01 gate, complete old-reader migration matrix or application restore certified."
       ],
       "openIssues": [],
       "verdict": "PASS"
@@ -3245,7 +3545,7 @@
         "skills/nova/core",
         "skills/common/plugin-runtime"
       ],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "independent-topic-review-PASS",
       "contentKind": "authored",
       "generator": null,
       "automatedChecks": [
@@ -3262,7 +3562,7 @@
         "quality",
         "astra-final"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [
         {
@@ -3323,11 +3623,20 @@
       "openFindingIds": [],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L129",
       "closureDecision": {
-        "verdict": "NOT_READY",
-        "revision": "9370d16410bb7f7aeeb66e11d18403764074eeae",
-        "reason": "Relevant source/compiler check blocked by unresolved @kubeclaw/delivery-manifest-contract.",
-        "campaign": "independent-ready-topics-20261020"
-      }
+        "verdict": "PASS",
+        "revision": "ad66f324ab0273db59397d42f35d94cd4dc62cdd",
+        "reason": "Closes complete compiler/admission, import audit, capability provider resolution and symptom-first safe diagnosis after independent current-source review.",
+        "campaign": "independent-compact-closeout-20261021"
+      },
+      "closureHistory": [
+        {
+          "verdict": "NOT_READY",
+          "revision": "9370d16410bb7f7aeeb66e11d18403764074eeae",
+          "reason": "Relevant source/compiler check blocked by unresolved @kubeclaw/delivery-manifest-contract.",
+          "campaign": "independent-ready-topics-20261020"
+        }
+      ],
+      "completionRecord": "AP09-compiler-import-provider-diagnosis-20261021"
     },
     {
       "id": "NVC-003",
@@ -3342,7 +3651,7 @@
         "skills/nova/core",
         "skills/common/plugin-runtime"
       ],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "independent-topic-review-PASS",
       "contentKind": "authored",
       "generator": null,
       "automatedChecks": [
@@ -3359,7 +3668,7 @@
         "quality",
         "astra-final"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [
         {
@@ -3420,11 +3729,20 @@
       "openFindingIds": [],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L130",
       "closureDecision": {
-        "verdict": "NOT_READY",
-        "revision": "9370d16410bb7f7aeeb66e11d18403764074eeae",
-        "reason": "Relevant source/compiler check blocked by unresolved @kubeclaw/delivery-manifest-contract.",
-        "campaign": "independent-ready-topics-20261020"
-      }
+        "verdict": "PASS",
+        "revision": "ad66f324ab0273db59397d42f35d94cd4dc62cdd",
+        "reason": "Closes complete compiler/admission, import audit, capability provider resolution and symptom-first safe diagnosis after independent current-source review.",
+        "campaign": "independent-compact-closeout-20261021"
+      },
+      "closureHistory": [
+        {
+          "verdict": "NOT_READY",
+          "revision": "9370d16410bb7f7aeeb66e11d18403764074eeae",
+          "reason": "Relevant source/compiler check blocked by unresolved @kubeclaw/delivery-manifest-contract.",
+          "campaign": "independent-ready-topics-20261020"
+        }
+      ],
+      "completionRecord": "AP09-compiler-import-provider-diagnosis-20261021"
     },
     {
       "id": "NVC-004",
@@ -6053,7 +6371,7 @@
         "tests/verification/contracts/check-plugin-system-v2-capability-security.mjs",
         "tests/verification/contracts/check-plugin-system-v2-phase11.mts"
       ],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "independent-topic-review-PASS",
       "contentKind": "authored",
       "generator": null,
       "automatedChecks": [
@@ -6070,17 +6388,26 @@
         "quality",
         "astra-final"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L190",
       "closureDecision": {
-        "verdict": "NOT_READY",
-        "revision": "9370d16410bb7f7aeeb66e11d18403764074eeae",
-        "reason": "Installed-package import/activation verification blocked by same missing dependency.",
-        "campaign": "independent-ready-topics-20261020"
-      }
+        "verdict": "PASS",
+        "revision": "ad66f324ab0273db59397d42f35d94cd4dc62cdd",
+        "reason": "Closes complete compiler/admission, import audit, capability provider resolution and symptom-first safe diagnosis after independent current-source review.",
+        "campaign": "independent-compact-closeout-20261021"
+      },
+      "closureHistory": [
+        {
+          "verdict": "NOT_READY",
+          "revision": "9370d16410bb7f7aeeb66e11d18403764074eeae",
+          "reason": "Installed-package import/activation verification blocked by same missing dependency.",
+          "campaign": "independent-ready-topics-20261020"
+        }
+      ],
+      "completionRecord": "AP09-compiler-import-provider-diagnosis-20261021"
     },
     {
       "id": "PLG-007",
@@ -6137,7 +6464,7 @@
         "tests/verification/contracts/check-plugin-system-v2-capability-security.mjs",
         "tests/verification/contracts/check-plugin-system-v2-phase11.mts"
       ],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "independent-topic-review-PASS",
       "contentKind": "authored",
       "generator": null,
       "automatedChecks": [
@@ -6154,17 +6481,26 @@
         "quality",
         "astra-final"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L192",
       "closureDecision": {
-        "verdict": "NOT_READY",
-        "revision": "9370d16410bb7f7aeeb66e11d18403764074eeae",
-        "reason": "Capability-security checker stops at stale expected24 vs actual28 vocabulary.",
-        "campaign": "independent-ready-topics-20261020"
-      }
+        "verdict": "PASS",
+        "revision": "ad66f324ab0273db59397d42f35d94cd4dc62cdd",
+        "reason": "Closes complete compiler/admission, import audit, capability provider resolution and symptom-first safe diagnosis after independent current-source review.",
+        "campaign": "independent-compact-closeout-20261021"
+      },
+      "closureHistory": [
+        {
+          "verdict": "NOT_READY",
+          "revision": "9370d16410bb7f7aeeb66e11d18403764074eeae",
+          "reason": "Capability-security checker stops at stale expected24 vs actual28 vocabulary.",
+          "campaign": "independent-ready-topics-20261020"
+        }
+      ],
+      "completionRecord": "AP09-compiler-import-provider-diagnosis-20261021"
     },
     {
       "id": "PLG-009",
@@ -6183,7 +6519,7 @@
         "tests/verification/contracts/check-plugin-system-v2-capability-security.mjs",
         "tests/verification/contracts/check-plugin-system-v2-phase11.mts"
       ],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "independent-topic-review-PASS",
       "contentKind": "authored",
       "generator": null,
       "automatedChecks": [
@@ -6200,17 +6536,26 @@
         "quality",
         "astra-final"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L193",
       "closureDecision": {
-        "verdict": "NOT_READY",
-        "revision": "9370d16410bb7f7aeeb66e11d18403764074eeae",
-        "reason": "Capability-security checker stops at stale expected24 vs actual28 vocabulary.",
-        "campaign": "independent-ready-topics-20261020"
-      }
+        "verdict": "PASS",
+        "revision": "ad66f324ab0273db59397d42f35d94cd4dc62cdd",
+        "reason": "Complete grants/resource matching and executable activation documentation now agree on confidential dependency recording and cooperative cleanup limits.",
+        "campaign": "independent-compact-closeout-20261021"
+      },
+      "closureHistory": [
+        {
+          "verdict": "NOT_READY",
+          "revision": "9370d16410bb7f7aeeb66e11d18403764074eeae",
+          "reason": "Capability-security checker stops at stale expected24 vs actual28 vocabulary.",
+          "campaign": "independent-ready-topics-20261020"
+        }
+      ],
+      "completionRecord": "AP09-confidential-adapter-lifecycle-20261021"
     },
     {
       "id": "PLG-010",
@@ -6267,7 +6612,7 @@
         "tests/verification/contracts/check-plugin-system-v2-capability-security.mjs",
         "tests/verification/contracts/check-plugin-system-v2-phase11.mts"
       ],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "independent-topic-review-PASS",
       "contentKind": "authored",
       "generator": null,
       "automatedChecks": [
@@ -6284,17 +6629,26 @@
         "quality",
         "astra-final"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L195",
       "closureDecision": {
-        "verdict": "NOT_READY",
-        "revision": "9370d16410bb7f7aeeb66e11d18403764074eeae",
-        "reason": "Installed-package import/activation verification blocked by same missing dependency.",
-        "campaign": "independent-ready-topics-20261020"
-      }
+        "verdict": "PASS",
+        "revision": "ad66f324ab0273db59397d42f35d94cd4dc62cdd",
+        "reason": "Complete grants/resource matching and executable activation documentation now agree on confidential dependency recording and cooperative cleanup limits.",
+        "campaign": "independent-compact-closeout-20261021"
+      },
+      "closureHistory": [
+        {
+          "verdict": "NOT_READY",
+          "revision": "9370d16410bb7f7aeeb66e11d18403764074eeae",
+          "reason": "Installed-package import/activation verification blocked by same missing dependency.",
+          "campaign": "independent-ready-topics-20261020"
+        }
+      ],
+      "completionRecord": "AP09-confidential-adapter-lifecycle-20261021"
     },
     {
       "id": "PLG-012",
@@ -9458,7 +9812,7 @@
         "gitops/platform",
         "my-values/infra"
       ],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "independent-topic-review-PASS",
       "contentKind": "authored",
       "generator": null,
       "automatedChecks": [
@@ -9497,7 +9851,7 @@
         "quality",
         "astra-final"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [
         {
@@ -9548,11 +9902,20 @@
       "acceptanceMappingDriftObligations": "For every scoped endpoint/store/event/secret/runtime-service/Ops tool, A97-12 requires real discovery and red-on-undocumented-addition evidence; product scope also preserves change/remove/rename detection. Linking an existing checker, pinning old source or a current green baseline cannot satisfy this.",
       "acceptanceMappingCorrectionSource": "/home/node/Documents/Codex/a98-evidence/ap097-all-requirement-mapping-source-fresh/report.md",
       "closureDecision": {
-        "verdict": "FAIL",
-        "revision": "08d8f917b08b3faacd0909ccbda3fa069a094a67",
-        "reason": "Old2026.9.4 embedding-client behavioral limits still claimed current vs selected2026.10.3.",
-        "campaign": "independent-correction-closeout-20261020"
-      }
+        "verdict": "PASS",
+        "revision": "ad66f324ab0273db59397d42f35d94cd4dc62cdd",
+        "reason": "Current model-gateway routing/consumer/credential/readiness/failure/recovery guide and selected embedding-client limits independently accepted.",
+        "campaign": "independent-compact-closeout-20261021"
+      },
+      "closureHistory": [
+        {
+          "verdict": "FAIL",
+          "revision": "08d8f917b08b3faacd0909ccbda3fa069a094a67",
+          "reason": "Old2026.9.4 embedding-client behavioral limits still claimed current vs selected2026.10.3.",
+          "campaign": "independent-correction-closeout-20261020"
+        }
+      ],
+      "completionRecord": "AP09-selected-model-gateway-20261021"
     },
     {
       "id": "SEC-001",
@@ -10702,7 +11065,7 @@
         "scripts/deploy.sh",
         "skills/nova/core/telemetry/audit.ts"
       ],
-      "sourceVerification": "complete-current-Source-Reader-Quality-content-PASS-formal-gates-and-Astra-pending",
+      "sourceVerification": "independent-topic-review-PASS",
       "contentKind": "authored",
       "generator": null,
       "automatedChecks": [
@@ -10739,7 +11102,7 @@
         "quality",
         "astra-final"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [
         {
           "agent": "/root/diagnose_final_callouts_complete_source_fresh",
@@ -10896,11 +11259,20 @@
         "scope": "Maps applicable facets only. Each complete gate and all requirement criteria still need separate proof; no acceptance inferred."
       },
       "closureDecision": {
-        "verdict": "NOT_READY",
-        "revision": "13d6f0a8326d5672f97cb42c0fc91f28da008e0d",
-        "reason": "- OPR-006 NOT_READY",
-        "campaign": "independent-ready-topics-20261020"
-      }
+        "verdict": "PASS",
+        "revision": "ad66f324ab0273db59397d42f35d94cd4dc62cdd",
+        "reason": "Closes complete compiler/admission, import audit, capability provider resolution and symptom-first safe diagnosis after independent current-source review.",
+        "campaign": "independent-compact-closeout-20261021"
+      },
+      "closureHistory": [
+        {
+          "verdict": "NOT_READY",
+          "revision": "13d6f0a8326d5672f97cb42c0fc91f28da008e0d",
+          "reason": "- OPR-006 NOT_READY",
+          "campaign": "independent-ready-topics-20261020"
+        }
+      ],
+      "completionRecord": "AP09-compiler-import-provider-diagnosis-20261021"
     },
     {
       "id": "OPR-007",
@@ -14671,7 +15043,7 @@
       "pageOwner": null,
       "readerTask": "Repository-, Workspace- und Toolchain-Setup",
       "sourceDependencies": [],
-      "sourceVerification": "current-cloud-Source-FAIL-full-defining-closure-continuing",
+      "sourceVerification": "independent-topic-review-PASS",
       "contentKind": "not-in-current-map",
       "generator": null,
       "automatedChecks": [],
@@ -14699,7 +15071,7 @@
         "quality",
         "astra-final"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [
         {
@@ -14794,11 +15166,20 @@
         "limits": "No complete requirement/gate or practical acceptance; earlier static/historicalscope not transferred"
       },
       "closureDecision": {
-        "verdict": "NOT_READY",
-        "revision": "13d6f0a8326d5672f97cb42c0fc91f28da008e0d",
-        "reason": "- DEV-002 — Repository-, Workspace- und Toolchain-Setup: **NOT_READY**, SA P / RU P / Q P; H. Include-dev/cache/separate-lockfile/native/tool setup is detailed and source-consistent. No clean install was authorized/executed in this read-only batch; documented baseline SDK check cannot run with current missing `json-schema-to-typescript`. Do not certify reproducing that baseline from this unprepared checkout.",
-        "campaign": "independent-ready-topics-20261020"
-      }
+        "verdict": "PASS",
+        "revision": "ad66f324ab0273db59397d42f35d94cd4dc62cdd",
+        "reason": "Closes accurate contributor setup/security guidance and SDK/data migration change procedures with previously blocked focused checks now passing.",
+        "campaign": "independent-compact-closeout-20261021"
+      },
+      "closureHistory": [
+        {
+          "verdict": "NOT_READY",
+          "revision": "13d6f0a8326d5672f97cb42c0fc91f28da008e0d",
+          "reason": "- DEV-002 — Repository-, Workspace- und Toolchain-Setup: **NOT_READY**, SA P / RU P / Q P; H. Include-dev/cache/separate-lockfile/native/tool setup is detailed and source-consistent. No clean install was authorized/executed in this read-only batch; documented baseline SDK check cannot run with current missing `json-schema-to-typescript`. Do not certify reproducing that baseline from this unprepared checkout.",
+          "campaign": "independent-ready-topics-20261020"
+        }
+      ],
+      "completionRecord": "AP09-contributor-baselines-and-migrations-20261021"
     },
     {
       "id": "DEV-003",
@@ -15291,7 +15672,7 @@
       "pageOwner": null,
       "readerTask": "Security-, Performance- und Lastprüfung",
       "sourceDependencies": [],
-      "sourceVerification": "current-cloud-Source-FAIL-full-defining-closure-continuing",
+      "sourceVerification": "independent-topic-review-PASS",
       "contentKind": "not-in-current-map",
       "generator": null,
       "automatedChecks": [],
@@ -15319,7 +15700,7 @@
         "quality",
         "astra-final"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [
         {
@@ -15403,11 +15784,20 @@
         "limits": "No complete requirement/gate or practical acceptance; earlier static/historicalscope not transferred"
       },
       "closureDecision": {
-        "verdict": "NOT_READY",
-        "revision": "13d6f0a8326d5672f97cb42c0fc91f28da008e0d",
-        "reason": "- DEV-007 — Security-, Performance- und Lastprüfung: **NOT_READY**, SA P / RU P / Q P; H. Security/performance scope and predeclared budgets are well described, but selected capability-security checker exits before security coverage on stale `28 !== 24` cardinality. No native/scanner/load proof is invented.",
-        "campaign": "independent-ready-topics-20261020"
-      }
+        "verdict": "PASS",
+        "revision": "ad66f324ab0273db59397d42f35d94cd4dc62cdd",
+        "reason": "Closes accurate contributor setup/security guidance and SDK/data migration change procedures with previously blocked focused checks now passing.",
+        "campaign": "independent-compact-closeout-20261021"
+      },
+      "closureHistory": [
+        {
+          "verdict": "NOT_READY",
+          "revision": "13d6f0a8326d5672f97cb42c0fc91f28da008e0d",
+          "reason": "- DEV-007 — Security-, Performance- und Lastprüfung: **NOT_READY**, SA P / RU P / Q P; H. Security/performance scope and predeclared budgets are well described, but selected capability-security checker exits before security coverage on stale `28 !== 24` cardinality. No native/scanner/load proof is invented.",
+          "campaign": "independent-ready-topics-20261020"
+        }
+      ],
+      "completionRecord": "AP09-contributor-baselines-and-migrations-20261021"
     },
     {
       "id": "DEV-008",
@@ -16303,7 +16693,7 @@
       "pageOwner": null,
       "readerTask": "SDK oder öffentlichen Contract ändern",
       "sourceDependencies": [],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "independent-topic-review-PASS",
       "contentKind": "not-in-current-map",
       "generator": null,
       "automatedChecks": [],
@@ -16331,17 +16721,26 @@
         "quality",
         "astra-final"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L344",
       "closureDecision": {
-        "verdict": "NOT_READY",
-        "revision": "13d6f0a8326d5672f97cb42c0fc91f28da008e0d",
-        "reason": "- CDV-006 — SDK oder öffentlichen Contract ändern: **NOT_READY**, SA P / RU P / Q P; K. Schema-first generation, entrypoint/export ownership, closed-schema/encoding compatibility and historical fixture selection are good. SDK value tests pass; required generated-byte check is blocked by absent `json-schema-to-typescript`, so the full contributor baseline is unverified.",
-        "campaign": "independent-ready-topics-20261020"
-      }
+        "verdict": "PASS",
+        "revision": "ad66f324ab0273db59397d42f35d94cd4dc62cdd",
+        "reason": "Closes accurate contributor setup/security guidance and SDK/data migration change procedures with previously blocked focused checks now passing.",
+        "campaign": "independent-compact-closeout-20261021"
+      },
+      "closureHistory": [
+        {
+          "verdict": "NOT_READY",
+          "revision": "13d6f0a8326d5672f97cb42c0fc91f28da008e0d",
+          "reason": "- CDV-006 — SDK oder öffentlichen Contract ändern: **NOT_READY**, SA P / RU P / Q P; K. Schema-first generation, entrypoint/export ownership, closed-schema/encoding compatibility and historical fixture selection are good. SDK value tests pass; required generated-byte check is blocked by absent `json-schema-to-typescript`, so the full contributor baseline is unverified.",
+          "campaign": "independent-ready-topics-20261020"
+        }
+      ],
+      "completionRecord": "AP09-contributor-baselines-and-migrations-20261021"
     },
     {
       "id": "CDV-007",
@@ -16610,7 +17009,7 @@
       "pageOwner": null,
       "readerTask": "Datenmodell oder Migration ändern",
       "sourceDependencies": [],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "independent-topic-review-PASS",
       "contentKind": "not-in-current-map",
       "generator": null,
       "automatedChecks": [],
@@ -16638,17 +17037,26 @@
         "quality",
         "astra-final"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L351",
       "closureDecision": {
-        "verdict": "NOT_READY",
-        "revision": "13d6f0a8326d5672f97cb42c0fc91f28da008e0d",
-        "reason": "- CDV-013 — Datenmodell oder Migration ändern: **NOT_READY**, SA P / RU P / Q P; D. Source migration filenames/advisory transaction, roles, immutable content and expand/old-reader/application rollback boundaries are sound. Existing selected storage test cannot import missing `@electric-sql/pglite`; no fresh/old-schema or application restore execution is claimed.",
-        "campaign": "independent-ready-topics-20261020"
-      }
+        "verdict": "PASS",
+        "revision": "ad66f324ab0273db59397d42f35d94cd4dc62cdd",
+        "reason": "Closes accurate contributor setup/security guidance and SDK/data migration change procedures with previously blocked focused checks now passing.",
+        "campaign": "independent-compact-closeout-20261021"
+      },
+      "closureHistory": [
+        {
+          "verdict": "NOT_READY",
+          "revision": "13d6f0a8326d5672f97cb42c0fc91f28da008e0d",
+          "reason": "- CDV-013 — Datenmodell oder Migration ändern: **NOT_READY**, SA P / RU P / Q P; D. Source migration filenames/advisory transaction, roles, immutable content and expand/old-reader/application rollback boundaries are sound. Existing selected storage test cannot import missing `@electric-sql/pglite`; no fresh/old-schema or application restore execution is claimed.",
+          "campaign": "independent-ready-topics-20261020"
+        }
+      ],
+      "completionRecord": "AP09-contributor-baselines-and-migrations-20261021"
     },
     {
       "id": "REF-001",
@@ -20264,17 +20672,26 @@
       "id": "A97-03",
       "passCondition": "LiteLLM dokumentiert Routing, Modelle, Embeddings, Credentials, Consumer, Limits, Timeouts, Readiness, Fehlerzuordnung, Retry-Grenzen und Recovery gegen aktuelle Konfiguration und Clients.",
       "automaticFailure": "Modell- oder Credentialpfade werden aus Beispielen statt aus aktueller Authority abgeleitet.",
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [],
       "readerFixtureIds": [],
       "executionScenarioIds": [],
       "closureDecision": {
-        "verdict": "FAIL",
-        "revision": "9370d16410bb7f7aeeb66e11d18403764074eeae",
-        "reason": "Current embedding-client release/limits authority wrong.",
-        "campaign": "independent-ready-topics-20261020"
-      }
+        "verdict": "PASS",
+        "revision": "ad66f324ab0273db59397d42f35d94cd4dc62cdd",
+        "reason": "Current model-gateway routing/consumer/credential/readiness/failure/recovery guide and selected embedding-client limits independently accepted.",
+        "campaign": "independent-compact-closeout-20261021"
+      },
+      "closureHistory": [
+        {
+          "verdict": "FAIL",
+          "revision": "9370d16410bb7f7aeeb66e11d18403764074eeae",
+          "reason": "Current embedding-client release/limits authority wrong.",
+          "campaign": "independent-ready-topics-20261020"
+        }
+      ],
+      "completionRecord": "AP09-selected-model-gateway-20261021"
     },
     {
       "id": "A97-04",
@@ -20725,7 +21142,7 @@
       "id": "A98-06",
       "passCondition": "Der Symptomindex führt von beobachtbaren Symptomen über unterscheidende Checks zur Ursache, Stop-Regel und sicheren Recovery; er deckt Pflichtabhängigkeiten und unklare Resultate ab.",
       "automaticFailure": "Diagnose beginnt mit der angenommenen Ursache oder empfiehlt pauschales Neustarten.",
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [
         {
@@ -20792,11 +21209,20 @@
       ],
       "executionScenarioIds": [],
       "closureDecision": {
-        "verdict": "NOT_READY",
-        "revision": "13d6f0a8326d5672f97cb42c0fc91f28da008e0d",
-        "reason": "Independent operators review: Full gate scope not independently established in this batch; narrower PASSs do not imply whole-gate completion.",
-        "campaign": "independent-ready-topics-20261020"
-      }
+        "verdict": "PASS",
+        "revision": "ad66f324ab0273db59397d42f35d94cd4dc62cdd",
+        "reason": "Closes complete compiler/admission, import audit, capability provider resolution and symptom-first safe diagnosis after independent current-source review.",
+        "campaign": "independent-compact-closeout-20261021"
+      },
+      "closureHistory": [
+        {
+          "verdict": "NOT_READY",
+          "revision": "13d6f0a8326d5672f97cb42c0fc91f28da008e0d",
+          "reason": "Independent operators review: Full gate scope not independently established in this batch; narrower PASSs do not imply whole-gate completion.",
+          "campaign": "independent-ready-topics-20261020"
+        }
+      ],
+      "completionRecord": "AP09-compiler-import-provider-diagnosis-20261021"
     },
     {
       "id": "A98-07",
