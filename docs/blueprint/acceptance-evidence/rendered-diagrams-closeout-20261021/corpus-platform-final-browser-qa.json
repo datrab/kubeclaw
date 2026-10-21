@@ -1,0 +1,91 @@
+{
+  "observations": [
+    {
+      "width": 2211,
+      "page": "understand/platform-and-operations.md",
+      "id": "diagram-4dc422d67c265fd9",
+      "loaded": true,
+      "height": 836.734375,
+      "pageWidth": 320,
+      "viewport": 320,
+      "textAlternativePresent": true,
+      "questionLabel": "Which platform layers support workloads and which integrations remain optional?",
+      "keyboardScroll": true,
+      "externalNetwork": false,
+      "javaScript": false
+    },
+    {
+      "width": 1956,
+      "page": "understand/prism-data.md",
+      "id": "diagram-e8beb8435cf1a6fc",
+      "loaded": true,
+      "height": 404.375,
+      "pageWidth": 320,
+      "viewport": 320,
+      "textAlternativePresent": true,
+      "questionLabel": "Which Prism stores and event paths own design, execution and artifact data?",
+      "keyboardScroll": true,
+      "externalNetwork": false,
+      "javaScript": false
+    },
+    {
+      "width": 2211,
+      "page": "understand/platform-and-operations.md",
+      "id": "diagram-4dc422d67c265fd9",
+      "loaded": true,
+      "height": 836.734375,
+      "pageWidth": 768,
+      "viewport": 768,
+      "textAlternativePresent": true,
+      "questionLabel": "Which platform layers support workloads and which integrations remain optional?",
+      "keyboardScroll": true,
+      "externalNetwork": false,
+      "javaScript": false
+    },
+    {
+      "width": 1956,
+      "page": "understand/prism-data.md",
+      "id": "diagram-e8beb8435cf1a6fc",
+      "loaded": true,
+      "height": 404.375,
+      "pageWidth": 768,
+      "viewport": 768,
+      "textAlternativePresent": true,
+      "questionLabel": "Which Prism stores and event paths own design, execution and artifact data?",
+      "keyboardScroll": true,
+      "externalNetwork": false,
+      "javaScript": false
+    },
+    {
+      "width": 2211,
+      "page": "understand/platform-and-operations.md",
+      "id": "diagram-4dc422d67c265fd9",
+      "loaded": true,
+      "height": 836.734375,
+      "pageWidth": 1440,
+      "viewport": 1440,
+      "textAlternativePresent": true,
+      "questionLabel": "Which platform layers support workloads and which integrations remain optional?",
+      "keyboardScroll": true,
+      "externalNetwork": false,
+      "javaScript": false
+    },
+    {
+      "width": 1956,
+      "page": "understand/prism-data.md",
+      "id": "diagram-e8beb8435cf1a6fc",
+      "loaded": true,
+      "height": 404.375,
+      "pageWidth": 1440,
+      "viewport": 1440,
+      "textAlternativePresent": true,
+      "questionLabel": "Which Prism stores and event paths own design, execution and artifact data?",
+      "keyboardScroll": true,
+      "externalNetwork": false,
+      "javaScript": false
+    }
+  ],
+  "findings": [],
+  "externalNetwork": [],
+  "limit": "Actual SVG loading, widths, native keyboard horizontal scrolling and visible alternative destinations; not semantic edge or human screenreader acceptance."
+}

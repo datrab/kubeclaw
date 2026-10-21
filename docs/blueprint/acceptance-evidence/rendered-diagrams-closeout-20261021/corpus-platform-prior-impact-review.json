@@ -1,0 +1,6 @@
+{
+  "findings": [],
+  "overall_correctness": "patch is correct",
+  "overall_explanation": "Narrow SEVEN-record preservation PASS: Prism topics, platform topics, selected model gateway, complete state content, registry data path, static reader/search, and responsive reader layout. The committed changes preserve their accepted boundaries and stated limits. Corpus corrections remove unsupported dependencies; platform corrections distinguish readiness from conditional cache routing and external storage from K3s supply. Visible alternatives retain the corrected relationships, and evidence boxes distinguish inspected tests from execution. Supplied current artifact, search, source, render, and six browser observations support bounded preservation; earlier whole-site observations remain baseline evidence. Product code and CSS are unchanged. No actionable regression or security defect was found. This grants no new acceptance count or whole-platform semantic approval: PUB005/A91206 remain NOT_READY, and authority activation, human AT, fresh-user, API, runtime, and hosting acceptance remain outside scope. No files were modified and no tests, generators, product execution, or nested reviews were run.",
+  "overall_confidence": 0.93
+}

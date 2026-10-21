@@ -1,0 +1,94 @@
+[
+  {
+    "id": "AP09.4-ready-prism-topics-20261020",
+    "revision": "9370d16410bb7f7aeeb66e11d18403764074eeae",
+    "changedFiles": [
+      "docs/site/understand/prism-data.md"
+    ],
+    "summary": "Independent PASS for Prism component authority, data/revision/CAS/approval/publication/retention boundaries and developer change ownership.",
+    "limits": [
+      "Source and documentation acceptance only; no live deployment or global publication acceptance.",
+      "OPR-010 full Studio journey remains NOT_READY; not all3094 lines reviewed.",
+      "Whole-file package.json guide pin check failed; unchanged inspected Prism source claims independently verified, no aggregate guide PASS."
+    ]
+  },
+  {
+    "id": "AP09.7-ready-platform-topics-20261020",
+    "revision": "6abafbbc81a728f3ea7f12e83426c9565a72c473",
+    "changedFiles": [
+      "docs/site/understand/platform-and-operations.md"
+    ],
+    "summary": "Independent PASS for Forge/Echo/OpenClaw/Codex, infrastructure INF001..011 and seven security topics. Explicit whole-gate PASS for six named runtime dependencies and optional-layer/unsupported-fallback boundary.",
+    "limits": [
+      "Documentation/source acceptance only; no live deployment or globally green publication/CI claim.",
+      "SPC-010 Archviewer alternative and INF-012 embedding-client release remain FAIL; SPC-009 HTTP/auth execution check dependency missing.",
+      "A97-08 complete discovered trust/Secret inventory reconciliation not established; broad specialist sourcepin check failed and not treated as passed."
+    ]
+  },
+  {
+    "id": "AP09-selected-model-gateway-20261021",
+    "revision": "6abafbbc81a728f3ea7f12e83426c9565a72c473",
+    "changedFiles": [
+      "docs/site/understand/platform-and-operations.md"
+    ],
+    "summary": "Current model-gateway routing/consumer/credential/readiness/failure/recovery guide and selected embedding-client limits independently accepted.",
+    "limits": [
+      "Documentation and repository evidence only; no live deployment, outage, provider embedding, native isolation or production restore claim.",
+      "No global documentation/publication/Helm-generation acceptance; unsupported importer-relative resolution remains an explicit global blocker.",
+      "Upstream implementation review is not upstream test execution or image/source attestation."
+    ]
+  },
+  {
+    "id": "AP09-complete-state-content-20261021",
+    "revision": "078105e40a50f23983e31c136f9bd81912ae6310",
+    "changedFiles": [
+      "docs/site/understand/prism-data.md"
+    ],
+    "summary": "Whole persistence matrix/encryption, Buster physical evidence and signing/retention boundaries, complete Prism data model, and grouped backup order with supported offline Redis preparation task.",
+    "limits": [
+      "Source-backed documentation acceptance only; no deployed encryption assurance, live restore, native host, rendered site or whole global generator/drift claim.",
+      "DAT006 upstream revalidation incomplete; no new DAT006 or whole A97 storage gate acceptance."
+    ]
+  },
+  {
+    "id": "AP09-registry-data-path-20261021",
+    "revision": "6abafbbc81a728f3ea7f12e83426c9565a72c473",
+    "changedFiles": [
+      "docs/site/understand/platform-and-operations.md"
+    ],
+    "summary": "Complete Git/OCI/BuildKit/registry/mirror path with per-transition credentials, digest, limits and profile-specific retained/ephemeral failure/recovery.",
+    "limits": [
+      "Source documentation only; no live/browser/runtime/cluster/native/encryption/recovery outcome claimed.",
+      "No whole configuration/endpoint/trust/global discovery/publication/drift gate accepted."
+    ]
+  },
+  {
+    "id": "AP09-complete-static-reader-search-20261021",
+    "revision": "2febcd995924bfd05961b1c41142c401205bf39e",
+    "changedFiles": [
+      "docs/site/understand/platform-and-operations.md",
+      "docs/site/understand/prism-data.md"
+    ],
+    "summary": "Whole PUB-002: existing positive page/asset allowlists plus actual artifact-local full-text search across all167 canonical reader pages, headings and code/technical identifiers. Browser find/empty/no-JS behavior observed; code and output reviewed.",
+    "limits": [
+      "Only whole PUB-002. Ranked/synonym reader search questions in A912-04 remain unaccepted; substring full-text search is stated honestly.",
+      "No other publication gate or whole documentation package acceptance.",
+      "Local HTML/search output is not external hosting, actual cluster/runtime behavior, rendered Mermaid, source-preview or human screenreader acceptance.",
+      "Global API source/caller discovery still blocked at bundle copier; site boundary still has three unchanged Helm generated-prose diagnostics."
+    ]
+  },
+  {
+    "id": "AP09-complete-responsive-reader-layout-20261021",
+    "revision": "2febcd995924bfd05961b1c41142c401205bf39e",
+    "changedFiles": [
+      "docs/config/documentation-diagrams.json"
+    ],
+    "summary": "Whole A91207 responsive reader layout at320/768/1440: navigation,tables,code,27 registered static diagrams,callouts,search remain available without page overflow; focusable internally scrolling regions preserve full content and textual alternatives.",
+    "limits": [
+      "Whole responsive-layout gate only; PUB005/A91206 semantic diagram completeness NOT_READY:16/27 scoped supported,6system and5service proofs incomplete;capacity failures preserved.",
+      "Human screenreader/fresh-role user/hosting/live workflows/global API not accepted by automated browser or byte checks.",
+      "Native table/code/diagram internal horizontal scroll is intentional and focus/keyboard tested; no horizontal PAGE navigation.",
+      "Global bundle-copier and three stale generated Helm phrases remain open."
+    ]
+  }
+]
