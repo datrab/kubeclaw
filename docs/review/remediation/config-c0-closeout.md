@@ -1,5 +1,12 @@
 # C0: verbindlicher Abschlussindex
 
+> Historical C0 planning checkpoint (2026-10-14). Implementation was subsequently
+> [explicitly approved](config-implementation-20261014/APPROVAL.json).
+> For the active continuation read the [reset/continuation handoff](RESET-HANDOFF-20261021.md)
+> and [implementation workstate](config-implementation-workstate-20261014/WORK-STATE.json).
+> The older proposal/authorization/running labels below are preserved history,
+> not a revocation of that approval or a current claim of completed acceptance.
+
 Stand 2026-10-14. Autor: Nova. Dies ist Arbeitssteuerung, keine unabhängige
 Abnahme. C0 bleibt offen; C1–C6 sind nicht freigegeben. Keine neue Anforderung
 oder Ersatzmatrix: Original-IDs, Kriterien, Rohbelege und Historie bleiben erhalten.
