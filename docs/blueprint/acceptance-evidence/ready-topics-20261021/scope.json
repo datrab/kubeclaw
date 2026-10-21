@@ -1,0 +1,31 @@
+{
+  "accepted": [
+    "DAT-001",
+    "DAT-004",
+    "DAT-005",
+    "DAT-009",
+    "DEC-002",
+    "MNT-017",
+    "CDV-003",
+    "CDV-007",
+    "CDV-010",
+    "CDV-012"
+  ],
+  "notAcceptedByMaintenanceAuthoredReview": [
+    "MNT-001",
+    "MNT-003",
+    "MNT-004",
+    "MNT-005",
+    "MNT-006",
+    "MNT-008",
+    "MNT-009",
+    "MNT-010",
+    "MNT-011",
+    "MNT-014",
+    "MNT-015"
+  ],
+  "reason": "Only whole source/reader/quality PASSs accepted. Intermediate NOT_READY findings retained with corrections and actual final follow-up. Maintenance authored guide audit does not accept other global MNT implementation obligations. DAT006 upstream implementation retrieval incomplete; all eleven workflow requirements and A912-01 remain NOT_READY. Live/rendered/runtime claims not granted.",
+  "wholeGates": [
+    "A97-09"
+  ]
+}

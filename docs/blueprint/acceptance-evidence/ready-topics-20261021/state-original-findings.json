@@ -1,0 +1,40 @@
+{
+  "findings": [
+    {
+      "title": "[P2] Correct the physical layout of Buster evidence",
+      "body": "DAT-001/DAT-004: The matrix places evidence at `<artifactRoot>/sha256/...`, and the Buster section calls these bytes content addressed. The active default composition uses `FileEvidenceStore` (`skills/buster/engine/test-gates/runner.ts:708`), which writes `<artifactRoot>/<sanitized-attemptId>/<sanitized-evidenceId>-<basename>` and returns that file's storageUrl (`artifacts.ts:92-108`). Its artifact ID hashes attempt/evidence identity rather than content. Document this actual layout and distinguish content-digest verification from content-addressed storage. Otherwise an operator following the inventory can omit the evidence files when selecting backup contents.",
+      "priority": "P2",
+      "confidence": 0.99,
+      "category": "bug",
+      "code_location": {
+        "file_path": "docs/site/understand/data-and-state.md",
+        "line": 77
+      }
+    },
+    {
+      "title": "[P2] State encryption boundaries for the persistence matrix",
+      "body": "DAT-001 explicitly requires encryption coverage, but the matrix generally lists permissions, hashes and synchronization without identifying whether persisted bytes or backups are encrypted. These mechanisms provide different protections. For example, `skills/prism/storage/artifacts.ts` writes supplied bytes directly, `charts/prism/files/prism-backup.sh` creates an unencrypted dump and artifact copy, and `scripts/postgresql-recovery.sh` creates an unencrypted custom archive. Add per-store or clearly shared encryption boundaries: application encryption where implemented, plaintext where established by source, and storage-provider encryption as unknown unless independently verified. Include the independent credential/key authority and backup protection requirement. Preserve the existing LiteLLM field-encryption explanation.",
+      "priority": "P2",
+      "confidence": 0.97,
+      "category": "maintainability",
+      "code_location": {
+        "file_path": "docs/site/understand/data-and-state.md",
+        "line": 57
+      }
+    },
+    {
+      "title": "[P2] Bring the Redis recovery primitive into the active reader path",
+      "body": "DAT-009: The Redis backup row gives an intended restore order but no usable description or link for the available conversion procedure. The related active recovery guide likewise supplies no Redis component procedure. The concrete contract remains in `docs/_legacy-source/operations/redis-migration.md`: fenced snapshot capture, fresh destination preparation, isolated verification and separate cutover. `scripts/redis-prepare-migration.sh` specifically accepts a checksummed RDB and a nonexistent destination, loads with AOF disabled, enables AOF, and verifies restart; it does not restore an arbitrary AOF snapshot or perform cluster cutover. Move the supported primitive and its prerequisites, failure boundaries and verification receipts into the active site, and explicitly distinguish it from the still-unavailable complete operator restore. This is a documentation completeness gap, not a request for live execution.",
+      "priority": "P2",
+      "confidence": 0.96,
+      "category": "maintainability",
+      "code_location": {
+        "file_path": "docs/site/understand/data-and-state.md",
+        "line": 1063
+      }
+    }
+  ],
+  "overall_correctness": "patch is incorrect",
+  "overall_explanation": "Scoped whole-content readiness verdicts:\nDAT-001: sourceAccuracy NOT_READY; readerUsability NOT_READY; quality NOT_READY. The evidence-store layout is inaccurate and encryption coverage remains incomplete.\nDAT-004: sourceAccuracy NOT_READY; readerUsability NOT_READY; quality NOT_READY. Signing versus digest receipts, retention, compaction and backup limits are explained, but the physical evidence-store contract requires correction.\nDAT-005: sourceAccuracy PASS; readerUsability PASS; quality PASS. The page and its active Prism data guide cover the relational model, revisions, operations, preferences, approvals, publication, migration and retention boundaries.\nDAT-006: sourceAccuracy PASS for inspected repository contracts; readerUsability PASS; quality PASS. Separate ownership, deployment profiles, credentials, pool settings, startup/upgrade hazards, retention inputs and restore-verification limits are explicit. Independent retrieval of the pinned upstream implementation failed, so upstream implementation details were not fully revalidated in this audit.\nDAT-009: sourceAccuracy PASS; readerUsability NOT_READY; quality NOT_READY. Group integrity, fences, ordering and unavailable recovery guarantees are stated, but the supported Redis primitive remains outside the active reader path.\nImpact verdict: no change to previously accepted unrelated scopes is established; retain their acceptance. Findings concern the explicitly requested complete-page audit, including lines unchanged by commit 22d46485. No global gate, runtime, deployment or live-recovery acceptance is granted. Inspection only; no files modified, tests run or nested reviewers invoked.",
+  "overall_confidence": 0.87
+}

@@ -1,0 +1,29 @@
+{
+  "findings": [
+    {
+      "title": "[P2] Include the Core authorization handler in capability introduction",
+      "body": "CDV-007's ordered workflow omits a required runtime owner. Adding the vocabulary, provider, registration and grants still leaves a new capability unusable: `skills/nova/core/execution/context.ts` calls `authorizeCapabilityInvocation` before invoking the provider, and `skills/nova/core/execution/authorization.ts` rejects capabilities absent from its separate `HANDLERS` map with `CAPABILITY_HANDLER_MISSING`. Provider resource checks do not replace this boundary. Add an explicit step to implement the Core resource-matching handler and verify allowed and denied neighboring resources through the actual invocation context. Identify this source alongside the vocabulary and registry sources.",
+      "priority": "P2",
+      "confidence": 0.99,
+      "category": "maintainability",
+      "code_location": {
+        "file_path": "docs/site/extend/platform/README.md",
+        "line": 321
+      }
+    },
+    {
+      "title": "[P2] Commit the exported bundle before preparing the production tree",
+      "body": "The advertised generation sequence cannot prepare a newly exported bundle as written. `export` creates files in the working tree, but `renderContinuousEnvironment` calls `bootstrapDocuments`, whose `readCommittedBundle` in `scripts/gitops.mjs` reads the receipt, resources and release selectors with `git show` at `SOURCE_COMMIT`. An already selected revision cannot contain the newly created directory, so the immediately following `prepare` fails. Document the intervening review/commit boundary, then select the full revision containing the bundle and matching release inputs before running prepare/check. Also explain that the generated production files form a subsequent reviewed change. This is a local source prerequisite, independent of live rollout.",
+      "priority": "P2",
+      "confidence": 0.99,
+      "category": "bug",
+      "code_location": {
+        "file_path": "docs/site/extend/platform/README.md",
+        "line": 568
+      }
+    }
+  ],
+  "overall_correctness": "patch is incorrect",
+  "overall_explanation": "Scoped whole-content verdicts:\nCDV-003: sourceAccuracy PASS; readerUsability PASS; quality PASS. The effect route connects persisted records, historical identity codecs, sidecars, corruption, receipt recovery, locks/fencing, compatibility and focused reliability checks with preservation boundaries.\nCDV-007: sourceAccuracy PASS for the described contracts; readerUsability NOT_READY; quality NOT_READY. Vocabulary, grants, providers, event families, redaction, generation, roles and verification are connected, but the required Core capability authorization-handler step is missing.\nCDV-010: sourceAccuracy PASS; readerUsability PASS; quality PASS. Separate Forge/Echo routes identify stage/protocol, target/model, policy, retained results, versioning, package checks and operator deployment boundaries. Missing generic receipt recovery remains explicit rather than invented.\nCDV-012: sourceAccuracy NOT_READY; readerUsability NOT_READY; quality NOT_READY. Generated outputs, ownership, security/upgrade review and rollback limits are explained, but the export-to-prepare sequence omits the committed-bundle prerequisite required by its native consumer.\nDEC-002: sourceAccuracy PASS; readerUsability PASS; quality PASS. Preserve the accepted decision-record scope: rationale, alternatives, consequences, approval uncertainty and supersession remain explicit.\nImpact verdict: no regression to previously accepted adjacent router topics was established. The handbook, Buster and Prism guides are unchanged; their accepted scopes remain preserved. Existing data/recovery changes are outside this assessment.\nRead-only source inspection only; no edits, tests, product/live commands, delegation or nested reviewers. These verdicts grant no global, aggregate publication, runtime or live acceptance.",
+  "overall_confidence": 0.92
+}

@@ -163,6 +163,49 @@ A projected audit adds no canonical event, but is not a guarantee of unchanged
 storage. Preserve the first diagnostic and original bytes before an authorized
 inspection; never remove a live lock inode or manufacture a no-record substitute.
 
+### Change an effect identity or persisted result format
+
+1. Start at `skills/nova/core/effects/journal.ts`. Its records are `requested`,
+   `accepted`, `completed` and `completed-reference`. The enclosing hash journal
+   stores newline-terminated JSON with `sequence`, `previousHash`, `hash` and
+   `entry`. Its hash covers `JSON.stringify({sequence,previousHash,entry})`.
+   Preserve that encoding for retained records; reserializing an old record can
+   invalidate the chain even if its meaning appears unchanged.
+2. Trace `effects/identity.ts` and the SDK JSON codec. New effects use
+   `effect:json-utf16-v1:<hash>` over the portable, versioned subject. Historical
+   `effect:<hash>` uses the exact old `canonicalJson` producer algorithm.
+   Readers select and validate the stored identity; they do not relabel a
+   historical digest or substitute a new locale/collator. Preserve payload,
+   delivery ID, attempt, capability, operation, resource and dispatch-profile
+   identity checks when the same idempotency key appears again.
+3. Preserve the large-result reader before changing its writer. Results above
+   64 KiB move to `effect-results/sha256/<first-two-hex>/<remaining-hex>.json`.
+   `effect-result-reference.v1` binds digest and byte count. Existing inline
+   `completed` records and referenced results must both remain readable.
+   Test the threshold, missing/corrupt sidecar, wrong size/digest, conflicting
+   request/receipt and interrupted publication. Retain journal and sidecars as
+   one group; no automatic format migration or sidecar retirement follows.
+4. Add a new explicit version and coordinated reader/writer path if the old
+   contract cannot be retained. Do not rewrite an active run as a migration.
+   Keep genuine historical-producer fixtures, current fixtures and replay
+   rejection cases. Run the focused identity/journal checks below, then the
+   existing external-effect and lock-lifetime fixtures for coordinator changes.
+
+```sh
+set -eu
+node --test tests/verification/reliability/effect-identity-version.test.mts tests/verification/reliability/effect-journal-ownership.test.mts
+node --test tests/verification/reliability/external-effect-recovery.test.mts tests/verification/reliability/effect-lock-lifetime.test.mts
+```
+
+Require exit zero and every required assertion; retain the first identity,
+corruption, lock or reconciliation error. The external-effect fixture starts
+real child processes. Use the prepared local toolchain and fixture-owned
+workspace, not a retained production run. A local replay result does not prove
+external receipt support. Activation/removal still uses the adapter/operator
+path and the original writer fence described above.
+
+Source: [effect record and sidecar contract](https://github.com/datrab/kubeclaw/blob/1e60f5d34c9a599a334a414987a754c95dc3543f/skills/nova/core/effects/journal.ts#L1-L241), [stored identity versions](https://github.com/datrab/kubeclaw/blob/1e60f5d34c9a599a334a414987a754c95dc3543f/skills/nova/core/effects/identity.ts#L1-L48), and [hash-chain encoding](https://github.com/datrab/kubeclaw/blob/1e60f5d34c9a599a334a414987a754c95dc3543f/skills/common/plugin-runtime/foundation/observability/hash-journal.ts#L1-L30). These locators define formats, not an executed migration.
+
 **Source — stable effects, receipt recovery and journal effects**
 
 Implementation: [`idempotent_request_lock_recheck`](../../../../skills/nova/core/effects/durable-invocation.ts#L39-L66), `skills/nova/core/effects/durable-invocation.ts:39-66`. Revision: current-checkout SHA-256 `6856d2c2761cb9c8e974d0f8683e0083571ed91b25740832921d32341e70d3f2`. Implementation: [`accepted_receipt_recovery_fence`](../../../../skills/nova/core/effects/durable-invocation.ts#L88-L145), `skills/nova/core/effects/durable-invocation.ts:88-145`. Revision: current-checkout SHA-256 `6856d2c2761cb9c8e974d0f8683e0083571ed91b25740832921d32341e70d3f2`. Implementation: [`effect_identity_owner`](../../../../skills/nova/core/effects/identity.ts#L1-L45), `skills/nova/core/effects/identity.ts:1-45`. Revision: current-checkout SHA-256 `8d3e2f32b4fdb98f6159c989b41fe926fd5b518791b4b02246d633dff847bcb9`. Implementation: [`journal_lock_conditional_repair_effects`](../../../../skills/nova/core/state/journal.ts#L30-L81), `skills/nova/core/state/journal.ts:30-81`. Revision: current-checkout SHA-256 `25be25a991c93c0e523178e3c45e2f7fb15ecad6e1a03566fca241d6b27f40bf`. Implementation: [`real_CLI_fixture_child_effect`](../../../../tests/verification/reliability/external-effect-recovery.test.mts#L72-L99), `tests/verification/reliability/external-effect-recovery.test.mts:72-99`. Revision: current-checkout SHA-256 `75501024d5ef9aaac53ff4dbe7666cc528624217a3749666a2d1ea837d4d4e22`. Contract or setting: the selected boundary and configuration described in this section. Test evidence: `node --test tests/verification/reliability/external-effect-recovery.test.mts` plus changed identity fixtures; not executed for this page. Limit: implementation contracts only; no native, deployed, browser or retained-run result.
@@ -266,9 +309,88 @@ and [telemetry mechanism](../../understand/telemetry.md).
 Select changed security/provider and observer/store fixtures. The selected
 telemetry generator's `--check` still runs PATH-selected `gofmt`; non-check mode
 writes generated outputs. Require the actual producer-to-consumer denial,
-ordering, version and retirement cases. A complete new-capability or new-event
-registration/consumer/role task is not supplied by this router; assign that
-missing task before claiming the extension can be activated or safely removed.
+ordering, version and retirement cases. Use the following ordered introduction tasks before activation or removal.
+
+### Introduce a capability
+
+1. Add the closed vocabulary entry in
+   `foundation/registry/capability-vocabulary.ts`: exact capability name,
+   permitted operations, resource kinds and supported constraints. Review
+   whether the capability is confidential or Core-only. Do not make a Core-only
+   operation grantable to accommodate one plugin.
+2. Implement the provider's actual operation/resource checks. Update its
+   manifest `providesCapabilities`; update each caller registration's
+   `requiredCapabilities`. Registration alone creates neither a grant nor a
+   selected provider. Implement the matching Core authorization handler in
+   `skills/nova/core/execution/authorization.ts` and add it to `HANDLERS`.
+   `execution/context.ts` calls `authorizeCapabilityInvocation` before the
+   provider; a missing handler fails with `CAPABILITY_HANDLER_MISSING`.
+   Preserve operation, resource-kind, canonical identity and constraint checks.
+   Verify allowed and denied neighboring resources through the actual invocation
+   context; provider checks do not replace this Core boundary.
+   Trace the registry's explicit provider selection,
+   dependency-cycle checks and caller grants through
+   `foundation/registry/capabilities.ts`.
+3. Supply the selected platform policy and least-privilege resource constraints
+   through the real configuration loader. Follow [capability grants](../../reference/capabilities.md)
+   and [configuration precedence](../../reference/configuration-precedence.md).
+   Exercise the actual caller-to-provider boundary with allowed and denied
+   neighboring resources, unknown operations/names, missing grants and an
+   invalid/ambiguous provider. A manifest-only positive case is insufficient.
+4. Add the package to the intended [runtime role](../../reference/roles-and-package-ownership.md)
+   only through its role/ownership inputs. Regenerate plugin inventory and
+   catalogue through their owners; verify registration, provider and role facts.
+   Update the capability reference, resource constraints and consuming guide.
+   Security review must inspect the translated receiver authority, not only
+   whether the caller possesses a string with the right name.
+5. Run the registry, capability-runtime and capability-security checks below,
+   plus the changed provider/caller package tests. Select the specific
+   vocabulary, registration and policy drift checks when those inputs change.
+   Before removal, find all grants, provider selections, role inclusions and
+   retained runs; retire them without silently widening another provider.
+
+```sh
+set -eu
+node tests/verification/contracts/check-plugin-system-v2-registry.mjs
+node tests/verification/contracts/check-plugin-system-v2-capability-runtime.mjs
+node tests/verification/contracts/check-plugin-system-v2-capability-security.mjs
+npm run plugin-system:inventory:check
+```
+
+A missing provider, denial, resource mismatch or retained consumer stops
+activation/removal. A local green result does not install a cluster grant.
+
+### Introduce an event
+
+1. Select the actual contract family. A namespaced `plugin-domain-event.v2`
+   remains a plugin-domain event; do not insert it into the separate flat-v1
+   telemetry catalogue merely to reuse that generator.
+2. For a flat-v1 telemetry event, edit `contracts/telemetry/v1/catalog.json`
+   and add `payloads/<event-type>.schema.json`. Define required payload fields,
+   correlation, unknown-field policy, ordering and whether work ownership
+   applies. The generator reads these payloads and derives `events/` schemas,
+   TypeScript/Go representations and the contract manifest. Do not edit those
+   generated copies as the authority.
+3. Update the real producer and every selected consumer/observer. State an
+   unknown or absent consumer explicitly. Define redaction before emission,
+   duplicate handling, backpressure, persistence, retention and replay version
+   compatibility. Do not put credentials or unbounded model content in a new
+   diagnostic field. Add one real producer-to-consumer fixture and negative
+   payload/correlation/order cases, not only schema construction.
+4. Prepare the selected Go/gofmt toolchain, run
+   `node scripts/generate-telemetry-contracts.mjs`, inspect its owned outputs,
+   then run the same command with `--check`. Run
+   `node --test contracts/telemetry/v1/tests/contracts.test.mjs` and the
+   handbook's [telemetry chain](../developer-handbook.md#change-telemetry-or-derived-views)
+   for the changed producer, observer/store or derived UI path.
+5. Update event/payload, producer/consumer, error/store and telemetry guides.
+   Package the changed producer/observer in the selected roles separately from
+   capability grants. Require supported readers before activation. On removal,
+   account for retained events, checkpoints and old readers before deleting
+   payload or consumer support; an unknown observation cannot become success.
+
+Source: [vocabulary and resource checks](https://github.com/datrab/kubeclaw/blob/1e60f5d34c9a599a334a414987a754c95dc3543f/skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts#L1-L198), [provider/grant validation](https://github.com/datrab/kubeclaw/blob/1e60f5d34c9a599a334a414987a754c95dc3543f/skills/common/plugin-runtime/foundation/registry/capabilities.ts#L1-L221), [telemetry catalogue](https://github.com/datrab/kubeclaw/blob/1e60f5d34c9a599a334a414987a754c95dc3543f/contracts/telemetry/v1/catalog.json#L1-L28), and [payload-to-wire generation](https://github.com/datrab/kubeclaw/blob/1e60f5d34c9a599a334a414987a754c95dc3543f/scripts/generate-telemetry-contracts.mjs#L134-L185). The steps prescribe checks, not prior execution results. Core invocation authority: [authorization handler and failure](https://github.com/datrab/kubeclaw/blob/1e60f5d34c9a599a334a414987a754c95dc3543f/skills/nova/core/execution/authorization.ts#L116-L130).
+[Invocation context](https://github.com/datrab/kubeclaw/blob/1e60f5d34c9a599a334a414987a754c95dc3543f/skills/nova/core/execution/context.ts#L40-L54) calls that boundary before provider execution.
 
 **Source — capability denials versus event envelope and generated telemetry**
 
@@ -299,8 +421,81 @@ If a response is lost, preserve the request identity and receiving-service
 outcome; stop while it is unknown. Do not claim durable-effect recovery can
 reconcile an adapter that lacks its required receipt method. Run selected package
 and original receiving-host fixtures; use `verify:prism:native-dispatch` when that
-Control boundary changes. Complete Forge/Echo host/model/policy/version and
-lost-response procedures still need their own supported component path.
+Control boundary changes. Use the separate Forge/Echo change paths below for host, model, policy,
+version and lost-response behavior.
+
+### Change the Forge implementation path
+
+1. Read the [Forge contract and operational path](../../understand/forge.md).
+   Change `implementation-agent/src/protocol.ts`, its schemas and consumers
+   together when request/completion semantics change. Trace `src/stage.ts`
+   through active lease identity, attempt-owned workspace, dispatch, completion
+   parsing, integrated revision and retained-workspace cleanup evidence.
+   Preserve Git commit/merge authority in its owning adapter, not the model.
+2. Select `config.agent` through the compiled stage config and admitted
+   `runtime.dispatch` target. It has no Forge environment fallback.
+   `agentRole` does not override the selected target. Change host/model routing,
+   workspace/result roots, endpoint/authentication, limits and polling through
+   that target's real runtime-dispatch configuration loader. Use the
+   [OpenClaw target boundary](../../understand/openclaw.md) or the explicitly
+   selected service/API receiver; do not invent a common launch command.
+3. Build/test `@kubeclaw/plugin-implementation-agent` and
+   `@kubeclaw/plugin-runtime-dispatch`. Run
+   `node --test tests/verification/reliability/forge-workspace.test.mts tests/verification/reliability/forge-lock-wait.test.mts`
+   and the changed dispatch-profile/workspace-result fixtures. Preserve invalid
+   completion, wrong target/model, cancellation, conflicting workspace owner,
+   lost response and retained work as negative cases.
+4. For host rollout, use the actual role/package build and operator
+   [maintenance procedure](../../use/maintenance.md), with the selected pinned
+   host package/image, private target config and current credential authority.
+   Verify target identity and bounded result collection before an attempt.
+   A model name or successful harness does not install or authenticate that host.
+   After uncertainty, inspect original effect/Git/workspace evidence; do not
+   issue a second commit, merge or dispatch to manufacture a result.
+
+For the Forge package boundary above, the exact common package commands are:
+
+```sh
+set -eu
+npm run build --workspace @kubeclaw/plugin-implementation-agent
+npm test --workspace @kubeclaw/plugin-implementation-agent
+npm run build --workspace @kubeclaw/plugin-runtime-dispatch
+npm test --workspace @kubeclaw/plugin-runtime-dispatch
+```
+
+The shared checkout prerequisites remain required; a missing tool or fixture
+fails that path. Keep command output separate from a deployed-host observation.
+
+### Change the Echo review path
+
+1. Read the [Echo subject, policy and verification boundary](../../understand/echo.md).
+   Select review, repository-audit or revalidation deliberately; their defaults,
+   inputs and recovery identities differ. Trace `review/src/stage.ts`,
+   `protocol.ts`, policy resolver/contract, verification protocol, reducer and
+   report builder before changing a prompt or output field.
+2. Update types, source schemas and owning schema generators together for a
+   policy, evidence/report encoding or version change. Keep subject revisions,
+   source/context manifests, model/runtime identity, policy and report digests
+   bound. Retain old-version readers while stored reports or revalidation
+   depend on them; never edit an immutable earlier report into the new format.
+3. Use the selected stage's runtime target and admitted host/model configuration,
+   not a prompt hint. Preserve repository/artifact read grants and the absence
+   of Git write authority. Test the policy's accepted/denied and unknown
+   evidence cases, deterministic reduction, report bounds and revalidation.
+4. Run `npm run schema:check --workspace @kubeclaw/plugin-review`, the changed
+   focused contract tests and `npm test --workspace @kubeclaw/plugin-review`.
+   Its pre/post-test hooks and local harness are part of that command.
+   Run runtime-dispatch tests when host/model/endpoint behavior changes.
+   A quality/scale evaluation is a separate dataset/model route; prepare its
+   declared inputs before claiming model judgment quality.
+5. Deploy the selected role/host through the same bound operator procedure,
+   then verify an immutable review subject, exact target/model and retained
+   result through the receiving host. Keep orchestrator-required/unknown
+   outcomes blocked. Removal must account for pending jobs, stored reports,
+   earlier policy readers and revalidation consumers. No shared-adapter receipt
+   method or automatic cross-version migration is implied.
+
+Source: [Forge stage](https://github.com/datrab/kubeclaw/blob/1e60f5d34c9a599a334a414987a754c95dc3543f/skills/nova/plugins/implementation-agent/src/stage.ts#L1-L152), [Forge protocol](https://github.com/datrab/kubeclaw/blob/1e60f5d34c9a599a334a414987a754c95dc3543f/skills/nova/plugins/implementation-agent/src/protocol.ts#L1-L143), [Echo stage](https://github.com/datrab/kubeclaw/blob/1e60f5d34c9a599a334a414987a754c95dc3543f/skills/nova/plugins/review/src/stage.ts#L1-L289), [Echo check/harness ownership](https://github.com/datrab/kubeclaw/blob/1e60f5d34c9a599a334a414987a754c95dc3543f/skills/nova/plugins/review/package.json#L1-L26). Use the named package scripts for their actual complete prerequisites and effects.
 
 **Source — target admission, authenticated request and missing generic receipt route**
 
@@ -354,6 +549,70 @@ Before deployment or rollback, use the real operator maintenance/recovery path
 with original images, data, credentials and writer boundaries. An old image does
 not restore a schema or credential. Do not propose unconditional reruns of an
 operation whose partial apply or cleanup is unknown.
+
+### Regenerate the selected GitOps tree without changing its owner
+
+1. Edit authored chart/templates, selected values, role inputs and version/release
+   selectors. Do not hand-edit an immutable exported `resources.yaml` or its
+   `bundle.receipt`. `scripts/gitops-bundle.mjs` exports Buster, Prism and Nova
+   groups with resource identities and manifest digests into a new
+   `releases/gitops/<name>` directory. It refuses an existing output directory.
+2. The continuous route uses `scripts/gitops-continuous.mjs export` for its
+   selected immutable bundle. Its `prepare` derives `gitops/production`
+   application/bootstrap/selection files from that bundle, repository URL,
+   revision and configured namespaces. Export reads the authored overlays
+   selected by `gitops/production/config.json`; prepare does not rewrite them. Its `check` compares
+   those exact generated bytes; it does not prepare or apply the cluster.
+   Preserve consistent receipt, group paths, selections and image identities.
+   Continuous Applications track `main`, not a permanently pinned
+   `SOURCE_COMMIT`; unique bundle paths and reviewed promotion must keep
+   that moving branch bound to the intended immutable release.
+3. From a prepared checkout, bind `BUNDLE_DIRECTORY` to a new reviewed
+   `releases/gitops/<name>` and `REPOSITORY_URL` to the approved HTTPS repository.
+   First export the selected bundle:
+
+```sh
+set -eu
+node scripts/gitops-continuous.mjs export "$BUNDLE_DIRECTORY"
+```
+
+   Review the receipt/resources and matching authored release selectors, values
+   and configuration inputs. Commit that complete intended change before
+   preparing the production tree. Do not select an earlier commit: the native
+   `readCommittedBundle` consumer uses `git show` to read receipt, resource
+   files and release inputs at `SOURCE_COMMIT`, not the uncommitted export.
+   Record the full resulting commit containing the verified bundle and inputs.
+   From that consistent checkout, bind it and derive the next change:
+
+```sh
+set -eu
+SOURCE_COMMIT=$(git rev-parse HEAD)
+node scripts/gitops-continuous.mjs prepare "$BUNDLE_DIRECTORY" "$REPOSITORY_URL" "$SOURCE_COMMIT"
+node scripts/gitops-continuous.mjs check "$BUNDLE_DIRECTORY" "$REPOSITORY_URL" "$SOURCE_COMMIT"
+```
+
+   Review and commit the generated production files as the subsequent change.
+   These local steps do not publish a branch, activate Argo or apply workloads.
+
+4. Review the generated diff and security/upgrade consequences: service accounts,
+   RBAC, Secrets, admission, network policy, image provenance, volumes and
+   retained data; changed defaults and omitted fields need explicit review.
+   Run the handbook's chart/branch renders and release/continuous/deployment
+   tests, plus selected configuration/drift checks. Require consistent digests
+   and selections before considering preflight or rollout.
+5. Use [GitOps operation](../../use/maintenance.md#gitops-operation) for the
+   separate cluster owner/preflight/health procedure. Imperative deployment
+   rejects Argo-owned namespaces and retained tracked workloads. Deleting an
+   Application or stripping metadata does not transfer ownership. The current
+   repository has no supported in-place Helm-to-Argo takeover; stop mixed-owner
+   rollout until the platform owner supplies and verifies that separate task.
+6. Review the known continuous-health branch-versus-commit limitation before
+   interpreting readiness. Compare intended and actually resolved immutable
+   revisions, not arbitrary strings. A successful local generation/render does
+   not resolve that live gap or prove sync, rollback or data recovery.
+
+Source: [immutable bundle and receipt](https://github.com/datrab/kubeclaw/blob/1e60f5d34c9a599a334a414987a754c95dc3543f/scripts/gitops-bundle.mjs#L94-L123), [production tree generation](https://github.com/datrab/kubeclaw/blob/1e60f5d34c9a599a334a414987a754c95dc3543f/scripts/gitops-continuous.mjs#L1-L108), and [existing owner guard](https://github.com/datrab/kubeclaw/blob/1e60f5d34c9a599a334a414987a754c95dc3543f/scripts/gitops-owner.mjs#L1-L32). These are source-backed command effects, not an executed production generation or rollout.
+[Committed bundle reader](https://github.com/datrab/kubeclaw/blob/1e60f5d34c9a599a334a414987a754c95dc3543f/scripts/gitops.mjs#L30-L79) defines the intervening Git revision boundary.
 
 **Source — render inputs, real temporary Git/Helm effects and rollout classification**
 

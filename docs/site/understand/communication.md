@@ -310,8 +310,8 @@ model, then requires a complete, unambiguous run/session identity. Conflicting
 aliases or multiple candidates fail reattachment. Polling defaults to 1,000 ms,
 backs off up to 15,000 ms, and is bounded by 1,800 polls and a 1,800,000 ms
 session timeout. The owning invocation's abort/deadline further narrows this
-budget. Prompt bytes, tokenizer, reserved input, output and context token budgets
-are validated before dispatch; they are not provider-side streaming guarantees.
+budget. Before dispatch, the adapter validates prompt bytes, tokenizer, reserved input,
+output and context token budgets; these checks are not provider-side streaming guarantees.
 Before polling, spawns are serialized within each adapter activation by Gateway
 endpoint and controller session key. The promise chain has no queue-length
 ceiling. After each spawn operation it waits `spawnIntervalMs` (default 1,500 ms),
@@ -478,7 +478,7 @@ They are distinct from the envelope's 300-second execution, 10-second cleanup,
 16 MiB result-artifact and 128 MiB evidence limits. A transport timeout does not
 establish whether execution finished. The operation receipt is committed before
 evidence hydration, so a failed download must not cause a second execution.
-Completion is accepted only for the stored execution whose Worker state is
+Control accepts completion only for the stored execution whose Worker state is
 `completed`; an incompatible completion raises
 `PRISM_NATIVE_OPERATION_COMPLETION_CONFLICT`.
 
@@ -486,7 +486,7 @@ Source: [reservation, legacy-state and result binding](https://github.com/datrab
 [dispatch versus cached hydration](https://github.com/datrab/kubeclaw/blob/a721a6e69aef5900002cef1dca3d1272f7903009/skills/prism/control/native-operation.ts#L12-L31),
 [bounded Worker response](https://github.com/datrab/kubeclaw/blob/a721a6e69aef5900002cef1dca3d1272f7903009/skills/prism/control/worker-operation-transport.ts#L8-L35),
 and [transport defaults](https://github.com/datrab/kubeclaw/blob/a721a6e69aef5900002cef1dca3d1272f7903009/skills/prism/config/native-worker.ts#L4-L14).
-These are implemented recovery branches, not a record of a native restart exercise.
+The implementation contains these recovery branches; they do not record a native restart exercise.
 
 On the Worker side, reconciliation precedes launch. A sealed cached receipt is
 returned without another process. An archived process result is reconstructed
@@ -792,8 +792,8 @@ would change its identity. Do not reuse or rewrite that action to claim release.
 Reconcile an uncertain readiness commit through authenticated
 `POST /v1/demo-ready/status` with the same lease name/UID and request ID, and
 verify current committed readiness and its deadline. This controller channel
-is separate from the public preview URL. Where the product-decision feature
-is configured, authenticated, signed `accept` and `extend` decisions bind the
+is separate from the public preview URL. When the operator configures the product-decision feature, authenticated,
+signed `accept` and `extend` decisions bind the
 current subject, generation, expiry and resource version. Acceptance does not
 make the route permanent; only a valid extension chain changes the effective
 retained deadline. A disconnected, conflicting or replay-changed extension is
@@ -847,8 +847,8 @@ log budgets are the lesser of request limits and configured invoker maxima;
 there is no fresh full timeout for verification. The manifest has its own
 configured byte ceiling, checked against both declared length and streamed
 bytes, and its SHA-256 must match the requested digest and any digest header.
-Caller abort cancels both phases. A normally exited unsuccessful BuildKit
-command yields a failed build result; launch, cancellation, output-limit and
+Caller abort cancels both phases. An unsuccessful BuildKit command that exits without a launch or transport error
+yields a failed build result; launch, cancellation, output-limit and
 verification failures remain execution errors. A timed-out push may already
 have published content: inspect the immutable digest before any retry.
 

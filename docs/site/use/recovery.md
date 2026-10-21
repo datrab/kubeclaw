@@ -763,9 +763,12 @@ after retained proof. Until that product gap is closed, preserve the source,
 independent backup, keys, and native-test result; do not report application
 recovery from `POSTGRES_RECOVERY_RESTORED_APPLICATION_ACCEPTANCE_REQUIRED`.
 
-Redis has no repository-owned exact backup and isolated restore command. Use a
-Redis-owner procedure that matches the configured persistence mode or stop with
-that missing prerequisite. Do not call a PVC copy a verified Redis restore.
+Redis provides an [offline fenced-RDB-to-AOF preparation primitive](../understand/data-and-state.md#prepare-a-redis-rdb-as-a-fresh-aof-dataset),
+with selected native tools, checksum/restart receipts and explicit failure boundaries.
+It does not provide a complete cluster backup, target provisioning or cutover
+command. Use the Redis owner's bound procedure for those steps or stop at that
+missing prerequisite. Do not call an offline receipt or PVC copy a verified
+live Redis restore.
 
 ## Prism Restore
 

@@ -1,0 +1,18 @@
+{
+  "findings": [
+    {
+      "title": "[P2] Describe Redis limits as phase and file limits, not total bounds",
+      "body": "DAT-009: The claimed total bounds are stronger than the primitive implements. In `scripts/redis-prepare-migration.sh`, snapshot hashing, `redis-check-rdb`, copying and final hashing/synchronization run outside a whole-command timeout. Each server startup receives a fresh `maximum_seconds` timeout; the shared deadline is checked only in polling loops. Likewise, `ulimit -f` limits individual files, while aggregate destination size is checked after conversion, so temporary disk use can exceed `maximum_bytes`. Operators cannot rely on these settings as a maintenance deadline or disk reservation ceiling. Document the actual enforcement and require sufficient conversion headroom and an independently bounded owner procedure where total limits are necessary.",
+      "priority": "P2",
+      "confidence": 0.98,
+      "category": "bug",
+      "code_location": {
+        "file_path": "docs/site/understand/data-and-state.md",
+        "line": 1155
+      }
+    }
+  ],
+  "overall_correctness": "patch is incorrect",
+  "overall_explanation": "Scoped whole-content verdicts (sourceAccuracy / readerUsability / quality):\nDAT-001: PASS / PASS / PASS. The corrected evidence layout and shared encryption boundaries address the prior findings; storage-provider encryption and independent key authority remain explicitly unverified.\nDAT-004: PASS / PASS / PASS. Attempt/evidence-derived paths, identity versus content digest, source attestation versus result receipts, retention, compaction and backup boundaries are distinguished.\nDAT-005: PASS / PASS / PASS preserved. No regression to the previously accepted Prism model, revision, migration, retention and publication scope was established.\nDAT-006: Qualified PASS for inspected repository contracts / PASS / PASS preserved only within the prior qualification. Pinned upstream implementation remains unretrieved in this audit; no new DAT-006 acceptance is granted.\nDAT-009: NOT_READY / NOT_READY / NOT_READY. The active offline Redis procedure and recovery link resolve the previous discoverability omission, but the total time/capacity guarantee misstates the primitive's enforcement. Its isolation, receipt, failure, provisioning, cutover and rollback limitations otherwise remain explicit.\n\nScoped impact verdicts: DAT-002 PASS; DAT-003 PASS; DAT-007 PASS; DAT-008 PASS; OPR-007 PASS. Previously accepted scopes are preserved; these are impact verdicts, not renewed whole-scope acceptance. The Redis correction does not invalidate the existing safe restore boundary.\n\nMetadata-map impact: PASS, no metadata change requiring a generated-map update was established. No global persistence discovery, generation, drift, publication or unrelated-content gate is waived or accepted. Excluded communication-language and generated operator-row changes were not reassessed.\n\nRead-only source and fixture inspection only. No tests, product/live commands, edits, delegation or nested reviewers were used; no runtime or live-recovery result is claimed.",
+  "overall_confidence": 0.88
+}

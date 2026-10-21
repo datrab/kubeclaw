@@ -1,0 +1,31 @@
+{
+  "candidateParent": "1e60f5d34c9a599a334a414987a754c95dc3543f",
+  "checks": [
+    {
+      "command": "node scripts/docs-check.mjs",
+      "exitCode": 0,
+      "observation": "architecture presentation check passed (9 diagrams, 57 evidence boxes, 170 code links)\noperations evidence check passed (20 evidence boxes, 202 code links)\ndocs check passed (167 active markdown files)\n"
+    },
+    {
+      "command": "node scripts/docs-check-refs.mjs",
+      "exitCode": 0,
+      "observation": "docs reference check passed (6098 local links, 3290 local anchors, 8307 repository path refs, 31793 pinned source links)\n"
+    },
+    {
+      "command": "node scripts/docs-publication.mjs check",
+      "exitCode": 0,
+      "observation": "documentation publication passed (167 pages, 51 plugins)\n"
+    },
+    {
+      "command": "npm test --prefix tools/ops-mcp",
+      "exitCode": 0,
+      "observation": "ps-mcp@0.2.0 test\nnpm notice run node --test test/*.test.mjs\n\u2714 backend refuses to listen with absent or weak authentication (616.073919ms)\n\u2714 real HTTP backend enforces authentication, atomic rotation and namespace boundaries (534.951362ms)\n\u2714 custom namespace migration applies only project policies (126.954673ms)\n\u2714 byte limit never splits UTF-8 or expands beyond the advertised budget (2.942417ms)\n\u2714 content is not redacted and unavailable history is never called complete (0.465613ms)\n\u2714 tail saturation remains visible without assuming a full history (0.203505ms)\n\u2714 malformed target returns 400 and leaves server and authorization intact (309.714042ms)\n\u2714 old windows are valid but each window is bounded (1.284873ms)\n\u2714 lost events and peer status are never fake flows (1.081118ms)\n\u2714 exact pod filtering, saturation and summaries preserve diagnostic meaning (88.581402ms)\n\u2714 stderr and nonzero exit are returned as incomplete observation (76.607729ms)\n\u2714 stdout/stderr share a raw byte ceiling (113.447021ms)\n\u2714 timeout is explicit and releases concurrency slot (73.999372ms)\n\u2714 HTTPS verifies CA/hostname, rotates credentials, bounds requests and refuses redirects (925.821412ms)\n\u2714 local MCP lists tools while the Kubernetes credential is unavailable and reports failed reads honestly (560.365715ms)\n\u2139 tests 15\n\u2139 suites 0\n\u2139 pass 15\n\u2139 fail 0\n\u2139 cancelled 0\n\u2139 skipped 0\n\u2139 todo 0\n\u2139 duration_ms 1596.750942\n"
+    },
+    {
+      "command": "npm run docs:publication:test",
+      "exitCode": 0,
+      "observation": "ets.test.mjs scripts/tests/docs-publication-links.test.mjs\n\u2714 published reader links retain exact runnable input and example dependency bytes (6.927391ms)\n\u2714 an internal record under the reader root cannot silently enter or disappear from publication (1.184481ms)\n\u2714 unapproved artifacts inside extend/examples/minimal-stage stop publication (1.476869ms)\n\u2714 unapproved artifacts inside use/workflows/examples stop publication (1.011327ms)\n\u2714 unapproved artifacts inside use/workflows/wait-resume stop publication (0.990526ms)\n\u2714 an allowed-looking symlink cannot publish data outside the reader tree (0.915794ms)\n\u2714 publication includes exactly the registered canonical reader pages (1.220762ms)\n\u2714 missing and noncanonical reader pages stop publication (1.859578ms)\n\u2714 invalid classification cannot broaden the publication boundary (0.744419ms)\n\u2714 positive manifest preserves registered exact HTML paths and refuses unapproved input (1.312344ms)\n\u2714 positive manifest cannot launder a registered Markdown symlink (0.596436ms)\n\u2714 shared fixture guidance reaches the same canonical procedure from the operator matrix (4.875588ms)\n\u2714 anchors, images, titles and multiple links retain their original meanings (0.359749ms)\n\u2714 source citations, external routes and executable examples remain byte-identical (0.297738ms)\n\u2139 tests 14\n\u2139 suites 0\n\u2139 pass 14\n\u2139 fail 0\n\u2139 cancelled 0\n\u2139 skipped 0\n\u2139 todo 0\n\u2139 duration_ms 84.764242\n"
+    }
+  ],
+  "limits": "Source/content/local checks; no rendered HTML, live encryption/recovery/deployment or global discovery qualification."
+}

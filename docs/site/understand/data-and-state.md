@@ -73,7 +73,7 @@ has a separate Ed25519 attestation; do not treat it as a result signature.
 | Worker original output | Two raw byte files | `<journalRoot>/outputs/<attempt-key>/stdout` and `stderr` | Native host capture writes; journal sealing and recovery read | Directory `0700`, files `0600`, no-follow exclusive creation, append and `fsync`; combined byte limit; SHA-256 checked on read | Output is never silently truncated or rotated. Keep it through result sealing and any audit period. Cleanup requires proven terminal ownership. |
 | Buster remote job authority | Stored plan job, status, result, completion intent/receipt, source snapshot, and inline source archive until verified compaction | `<stateRoot>/records/store.json`; result blobs below `<stateRoot>/results/blobs/sha256/...` | Nova dispatch client and Buster HTTP service write through bounded stores; status/result/import paths read | Job ID, request digest, plan digest, source archive digest and attestation, status transition rules, result digest and receipt binding | Admission reserves result liability. Completed-job compaction is explicit and keeps source, result, and evidence authority. These file stores are not replicated databases. Back up a quiesced state root. |
 | Buster local attempts | Per-job workspace, durable attempt records, closure records, fixture journal, evidence, and report-adapter delivery state | `<runtimeRoot>/<sha256(jobId)>/`; attempts below `observability/attempts`; evidence below `artifacts/` | Buster Engine and Worker Core write; restart recovery and evidence readers read | Durable records, idempotency keys, bounded state and result sizes, attempt and claim identity | Limits come from runner admission and the resolved plan. Preserve unresolved attempts. Terminal cleanup removes the extracted repository only after the retained set is known. |
-| Buster evidence and reports | Immutable evidence bytes plus `ArtifactRefV1`, attempt/node results, normalized report results | `<artifactRoot>/sha256/...`; temporary collection under `<artifactRoot>/.staging` | Providers stage files; Buster verifies and publishes; report adapters and Nova read by reference | Containment checks, file and byte limits, media type, content digest, size, evidence ID, and result digest with receipt binding | Raw evidence and normalized report facts can both be required. There is no repository-wide automatic garbage collector or remote backup scheduler. Preserve referenced objects with results. |
+| Buster evidence and reports | Exclusively created evidence files plus `ArtifactRefV1`, attempt/node results, normalized report results | Default `FileEvidenceStore`: `<artifactRoot>/<safeName(attemptId)>/<safeName(evidenceId)>-<basename(file)>`; temporary collection under `<artifactRoot>/.staging` | Providers stage files; Buster verifies and publishes; report adapters and Nova read by reference | Containment checks, file and byte limits, media type, content digest, size, evidence ID, and result digest with receipt binding | Raw evidence and normalized report facts can both be required. There is no repository-wide automatic garbage collector or remote backup scheduler. Preserve referenced objects with results. |
 | Prism relational authority | `prism` schema and the ordered migration journal; 17 forward migrations | Prism PostgreSQL data volume; database `prism` in the Prism chart | `prism_migrator` owns schema changes; `prism_runtime` reads and changes product rows; read-only role observes | Transactions, row and advisory locks, uniqueness, foreign keys, compare-and-swap frontiers, separate credentials | Stores projects, requests, rounds, documents, revisions, directions, approvals, baselines, corpus, preferences, operations, jobs, nonces, and decisions. Forward-only migrations run once by filename. No automatic row-retention scheduler exists. |
 | Prism artifacts | Content-addressed bytes | Prism artifact PVC at `/var/lib/prism/artifacts`, objects below digest-derived paths | Control and ingestion publish; Control, Worker, renderer, and backup read | Temporary file, content digest, hard-link no-replace publication, file and directory `fsync`, no-follow reads | Default PVC request is 100 GiB. The chart keeps the PVC on removal. There is no automatic garbage collector. Database and artifacts form one backup group. |
 | Prism acquisition quarantine | Raw acquired bytes named by SHA-256 digest | Ingestion Pod `emptyDir` at `/quarantine`, limited to 4 GiB | Ingestion writes and reads; Control receives verified bytes and requests deletion | Digest naming prevents conflicting content under one name. This is one-Pod temporary state; it has no cross-Pod lock, replication, or durable-volume fence. | TTL defaults to 1 hour and is clamped to 1 minute–1 day; the reaper runs at most once a minute. Successful publication requests immediate removal. There is no backup or restore: Pod loss discards quarantine and the caller must reacquire. A missing or changed object blocks publication. Retire by the successful DELETE or TTL reaper, never as a substitute for database/artifact publication. |
@@ -438,8 +438,9 @@ Buster separates five things that have similar roles:
 4. Attempt records and evidence say what each provider did.
 5. Nova verifies the result digest and bound receipt before its one-time import.
 
-Evidence bytes are content addressed. Buster verifies containment, declared file
-identity, count, total bytes, media type, size, and digest before publication.
+The default file evidence store uses attempt/evidence-derived paths, not content
+addresses. Buster verifies containment, declared file identity, count, total
+bytes, media type, size, and digest before publication.
 Report adapters read retained evidence and add bounded normalized facts. They do
 not replace the original evidence.
 
@@ -463,6 +464,21 @@ artifacts. It keeps a receipt of that decision.
 > [Remote compaction verifies the completed job, source identity, archive digest, and retained result artifacts](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/buster/engine/test-gates/remote-plan-compaction.ts#L90-L149).
 
 The full record and failure flow is in [Buster architecture](buster.md#4-durable-admission-and-state).
+
+### Buster evidence paths are not content addresses
+
+The default runner constructs `FileEvidenceStore`. It writes evidence to
+`<artifactRoot>/<safeName(attemptId)>/<safeName(evidenceId)>-<basename(file)>`
+using exclusive creation. `safeName` replaces characters outside
+`[A-Za-z0-9._-]` with `_` and truncates to 128 characters. `artifactId` hashes
+`attemptId:evidenceId`; it does not hash content. `contentDigest` separately
+hashes the bytes, and `storageUrl` names the actual file. Keep those paths and
+references with the attempt/result backup; collecting only a guessed
+`sha256` subtree would lose evidence. Exclusive creation rejects an existing
+path; it does not supply deduplication, retry recovery or a garbage collector.
+
+Source: [default evidence writer](https://github.com/datrab/kubeclaw/blob/1e60f5d34c9a599a334a414987a754c95dc3543f/skills/buster/engine/test-gates/artifacts.ts#L1-L112) and [runner composition](https://github.com/datrab/kubeclaw/blob/1e60f5d34c9a599a334a414987a754c95dc3543f/skills/buster/engine/test-gates/runner.ts#L1-L2012). Digest-addressed remote result/import blobs and Prism artifacts retain their separate layouts.
+
 
 ## PostgreSQL Owners
 
@@ -1051,6 +1067,33 @@ remote backup or restore exercise.
 > [Adapter encoding, read selection, verification and metadata-before-blob publication](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/skills/common/plugins/artifact-store/src/adapter.ts#L38-L173).
 > [Maintained tests preserve legacy and portable checkpoints and reject same-byte relabeling](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/tests/verification/reliability/artifact-checkpoint-encoding.test.mjs#L39-L106).
 
+## Encryption is a separate boundary
+
+A digest, hash chain, file permission, database role or `fsync` does not encrypt
+stored bytes. Transport TLS does not establish encryption of a volume or backup.
+The following boundaries apply to the store matrix and its backup groups.
+
+| Matrix family | Application storage protection | Independent encryption authority |
+| --- | --- | --- |
+| Nova run, effects, observer state, waits, message delivery, remote dispatch/import and reconciliation | Repository writers serialize records and supplied blob bytes without an application encryption envelope. Private permissions, identity checks and digests protect different properties. | The operator must establish encryption for the actual filesystem/PVC and every backup destination; no provider-key or volume-encryption proof follows from these writers. |
+| Worker ownership, attempt records, input/result blobs and output spools | The native stores write record or raw output bytes, not application ciphertext. | Host/storage owner controls volume and backup protection. Keep host identity and credential recovery separate from copied files. |
+| Buster jobs, attempts, evidence and reports | File stores retain serialized records and supplied evidence bytes; content digests do not conceal them. | Storage owner must protect runtime roots, evidence and backups, including provider-supplied sensitive evidence. |
+| Prism relational data, artifacts and quarantine | Artifact publication writes supplied bytes directly. SQL permissions and transactions do not encrypt the whole database. Quarantine is temporary but can contain sensitive source bytes. | Database, PVC and node-storage owners must establish their actual at-rest policy. The application artifact store does not supply an encryption key. |
+| LiteLLM PostgreSQL | Selected LiteLLM versions encrypt certain credential fields with their master/salt-key contract; this is not whole-database or whole-backup encryption. See the detailed LiteLLM sections below. | Retain those exact keys through their independent credential authority, separately from database dumps; database/storage owners still own volume protection. |
+| Redis, telemetry and monitoring projections | AOF/RDB, diagnostic records and metrics are not an application-wide encryption boundary. A chart or product may delegate storage security to its configured provider. | Redis/telemetry/storage owners must verify the selected server, PVC and backup policy. This page does not establish provider encryption or key recovery. |
+| OpenClaw config/workspace, Ops home/workspace/Tailscale state and registry files | These volumes can contain source, credentials, tokens or device identity; a private path or Kubernetes Secret reference does not establish ciphertext at rest. | Respective service/credential owner and storage provider must establish encryption, key retention and access isolation. Never duplicate a live device identity to concurrent writers. |
+
+The Prism backup script creates a custom PostgreSQL dump and copies artifact
+bytes; the PostgreSQL recovery script also creates a custom dump. Neither adds
+an encryption envelope to the group. Protect the complete group during storage
+and transfer using the owner's approved encryption/access procedure, with keys
+retained independently. Compression, checksums and field encryption inside a
+row do not replace that protection. If the destination or its key-recovery
+policy is unknown, record that limit and stop an unattended off-host transfer;
+do not label the group encrypted.
+
+Source: [Prism supplied-byte publication](https://github.com/datrab/kubeclaw/blob/1e60f5d34c9a599a334a414987a754c95dc3543f/skills/prism/storage/artifacts.ts#L1-L68), [Prism dump and artifact group](https://github.com/datrab/kubeclaw/blob/1e60f5d34c9a599a334a414987a754c95dc3543f/charts/prism/files/prism-backup.sh#L1-L191), and [PostgreSQL recovery archive](https://github.com/datrab/kubeclaw/blob/1e60f5d34c9a599a334a414987a754c95dc3543f/scripts/postgresql-recovery.sh#L1-L196). The family-specific writers linked in the matrix define their record and blob encodings; none of these statements verifies a deployed storage provider.
+
 ## Backup Groups
 
 | Group | Include | Writer fence | Restore order | Current automation boundary |
@@ -1066,6 +1109,85 @@ remote backup or restore exercise.
 | Registry | Registry filesystem plus an inventory of retained manifests/digests and the independent client configuration | Stop pushes, garbage collection, and registry writer | Restore to an empty compatible registry; verify manifest and layer digests; perform a real pull; switch clients last | No repository backup/restore; Argo-adopted local registry has no persistent data to restore |
 | Monitoring | Prometheus TSDB, Loki store, Grafana state, and optional Alloy positions are separate groups; do not combine inconsistent live copies | Use each product's snapshot boundary or stop its writer | Restore Loki and Prometheus, then Grafana; restore positions only when their source CRI files and cutover point are known | No repository backup/restore test; metric/log loss must not block product recovery |
 | Ops | Home and workspace claims; optional Tailscale state is a separate sensitive group | Scale the StatefulSet to zero and revoke external sessions if compromise is suspected | Restore home/workspace privately; prefer new Tailscale authentication after loss; verify that bearer, GitHub, Kubernetes, and tailnet credentials come from current external authorities | No automated backup or restore test; never clone one Tailscale device state to concurrent writers |
+
+## Prepare a Redis RDB as a fresh AOF dataset
+
+The supported repository primitive is **offline RDB-to-AOF preparation**, not
+an arbitrary AOF restore or an automatic cluster cutover. Its input is one
+checksum-bound RDB from a fenced source; its output is a new private local
+directory for the selected Redis version. Keep the original release, volume,
+source snapshot, independent password authority and consumer configuration.
+Do not run this tool against the only retained copy or a destination in use.
+
+Before capture, the Redis owner must inventory and stop publishers, schedulers
+and reconciliation that could restart them. Preserve streams, consumer groups,
+pending deliveries and absolute dedup expiries. Obtain the RDB with the selected
+authenticated snapshot transport while source writes remain fenced. The existing
+migration procedure uses `CLIENT PAUSE 600000 WRITE`, a bounded 240-second
+`redis-cli --rdb` capture, then stops the source within that pause window.
+A pause alone is temporary, not an enduring fence. If the owner cannot prove
+that no newer source writes occurred, discard the candidate for cutover and
+repeat capture after restoring the fence. Retain the RDB/checksum outside the
+source-volume failure domain. An old source PVC is not proof of the latest state.
+
+For the **offline step**, use a Linux maintenance host with Bash, Node.js and
+locked repository dependencies (`js-yaml`), coreutils, `setsid`, `timeout`, and
+the actual native `redis-server`, `redis-cli` and `redis-check-rdb` binaries.
+`versions.json` selects the destination server version; a different server
+version fails admission. Supply these private, explicitly selected paths:
+
+```bash
+set -eu
+export REDIS_SERVER=/absolute/selected/redis-server
+export REDIS_CLI=/absolute/selected/redis-cli
+export REDIS_CHECK_RDB=/absolute/selected/redis-check-rdb
+# Set SNAPSHOT to the retained absolute RDB path and RDB_SHA256 to its recorded hash.
+# NEW_DATA_DIRECTORY must be an absolute canonical path that does not yet exist.
+bash scripts/redis-prepare-migration.sh "$SNAPSHOT" "$RDB_SHA256" "$NEW_DATA_DIRECTORY"
+(cd "$NEW_DATA_DIRECTORY" && sha256sum --check SHA256SUMS)
+```
+
+The tool verifies the snapshot checksum, size and RDB format before creating the
+new directory. It loads RDB with AOF disabled on loopback using a random temporary
+password, enables AOF, waits for rewrite, persists configuration, then shuts down.
+It removes the loaded RDB from the destination and verifies a second startup
+from AOF, `appendfsync always` and `noeviction`, followed by clean shutdown.
+The input RDB remains unchanged. `REDIS_MIGRATION_MAXIMUM_SECONDS` defaults to
+600. Each server start gets a fresh timeout; polling also checks a shared
+deadline. This is not a whole-command deadline. Snapshot hashing, RDB checking,
+copying, final hashing and synchronization run outside that server timeout.
+`REDIS_MIGRATION_MAXIMUM_BYTES` defaults to 21,474,836,480. It bounds input size,
+the server's individual file-growth limit and a final aggregate destination check.
+It does not cap total temporary disk use during conversion. Reserve headroom
+for source, destination, rewrite and temporary files. If the maintenance window
+requires a total deadline or capacity ceiling, the owner must supply an
+independently bounded procedure and preserve interrupted-state evidence.
+
+Success prints the new directory and produces `migration-receipt.txt` with
+`state=aof-restart-verified` and `cutover=not-performed`, plus `SHA256SUMS` for
+AOF files and the receipt. Preserve the initial output and verify checksums.
+Existing destination, invalid/mismatched checksum, wrong selected version,
+invalid RDB, deadline, size, rewrite or restart failure is a stop condition.
+An interrupted directory remains visibly incomplete; the tool refuses to
+silently overwrite or resume it. Preserve it for diagnosis and choose a fresh
+absent destination only after resolving the failure. No source credentials,
+Kubernetes mutation or client switch belong to this offline command.
+
+The Redis owner must separately provision and isolate a compatible target,
+copy and verify the full AOF manifest/files into a fresh correctly owned volume,
+retain the external password authority, and verify the selected server version,
+streams/groups/pending state, original absolute dedup expiries, lost-ACK replay
+without an extra entry, and a target restart. Render client endpoints and
+network policies for the selected release before opening access. Switch clients
+last with the old source fenced. Before new target writes, a compatible restore
+of the retained snapshot may support rollback; after new writes it is stale.
+Fence and capture the new authoritative dataset or fix forward instead of
+starting both writers or downgrading AOF in place. A copied directory, checksum
+or offline receipt proves neither Kubernetes/CSI durability nor a complete
+live restore. Stop before cluster install/cutover without the owners' bound
+provisioning, security, verification and rollback procedure.
+
+Source: [offline conversion](https://github.com/datrab/kubeclaw/blob/1e60f5d34c9a599a334a414987a754c95dc3543f/scripts/redis-prepare-migration.sh#L1-L109), [selected version](https://github.com/datrab/kubeclaw/blob/1e60f5d34c9a599a334a414987a754c95dc3543f/versions.json#L1-L147), [persistence policy](https://github.com/datrab/kubeclaw/blob/1e60f5d34c9a599a334a414987a754c95dc3543f/my-values/infra/redis-values.yaml#L1-L29), and [verification fixture](https://github.com/datrab/kubeclaw/blob/1e60f5d34c9a599a334a414987a754c95dc3543f/tests/verification/reliability/redis-migration.test.mts#L1-L86). These are inspected implementation and fixture contracts, not an execution result from this page.
 
 ## Restore Decision Rules
 
