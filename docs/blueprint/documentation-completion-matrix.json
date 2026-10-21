@@ -89,7 +89,7 @@
     },
     {
       "id": "AP09.1-ready-topics-20261020",
-      "revision": "22d46485dc8fc2818805fb7946acae0e0479a947",
+      "revision": "2f8a116e00d6d38a5cc5076b10befcabe426f9f4",
       "author": "Documentation implementation authors before review campaign",
       "reviewer": "/root/review_ready_foundations (01a157c4-a915-7bd0-9f54-0de78011b9b7)",
       "gateIds": [],
@@ -166,7 +166,7 @@
       ],
       "openIssues": [],
       "verdict": "PASS",
-      "previousReviewedRevision": "a7d0e07cacc037b94e8a45ed2f0d90bd0259b213",
+      "previousReviewedRevision": "22d46485dc8fc2818805fb7946acae0e0479a947",
       "impactReview": {
         "reviewer": "/root/review_worker_ready",
         "verdict": "PASS",
@@ -242,6 +242,22 @@
           "evidence": [
             "docs/blueprint/acceptance-evidence/private-routes-complete-20261021/private-routes-followup.json",
             "docs/blueprint/acceptance-evidence/private-routes-complete-20261021/prism-studio-pin-review.json"
+          ]
+        },
+        {
+          "reviewer": "Independent Codex autoreview: api-flow-bounded-code, vendor-refresh and api-flow-artifact scopes",
+          "previousReviewedRevision": "22d46485dc8fc2818805fb7946acae0e0479a947",
+          "revision": "2f8a116e00d6d38a5cc5076b10befcabe426f9f4",
+          "changedDependencies": [
+            "docs/site/reference/generated-documentation-map.json"
+          ],
+          "verdict": "PASS",
+          "summary": "Exact affected scope only: API-flow configuration/provider semantics, bounded reference generator and retained SDK guards, offline vendor authority repair, maintenance procedures, operator selection row, map dependencies, and reviewed pin continuation. All unchanged bound Sources retain their previous review. No global qualification or extra gate acceptance.",
+          "evidence": [
+            "docs/blueprint/acceptance-evidence/api-flow-configuration-fix-20261021/api-flow-bounded-code-review.json",
+            "docs/blueprint/acceptance-evidence/vendor-archive-refresh-20261021/vendor-refresh-review.json",
+            "docs/blueprint/acceptance-evidence/api-flow-configuration-fix-20261021/api-flow-artifact-review.json",
+            "docs/blueprint/acceptance-evidence/api-flow-configuration-fix-20261021/api-flow-final-pin-proof.json"
           ]
         }
       ]
@@ -1150,7 +1166,7 @@
     },
     {
       "id": "Reviewed-corrections-20261020",
-      "revision": "22d46485dc8fc2818805fb7946acae0e0479a947",
+      "revision": "2f8a116e00d6d38a5cc5076b10befcabe426f9f4",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/review_worker_ready",
       "gateIds": [],
@@ -1323,13 +1339,29 @@
             "docs/blueprint/acceptance-evidence/private-routes-complete-20261021/private-routes-followup.json",
             "docs/blueprint/acceptance-evidence/private-routes-complete-20261021/prism-studio-pin-review.json"
           ]
+        },
+        {
+          "reviewer": "Independent Codex autoreview: api-flow-bounded-code, vendor-refresh and api-flow-artifact scopes",
+          "previousReviewedRevision": "22d46485dc8fc2818805fb7946acae0e0479a947",
+          "revision": "2f8a116e00d6d38a5cc5076b10befcabe426f9f4",
+          "changedDependencies": [
+            "docs/site/reference/generated-documentation-map.json"
+          ],
+          "verdict": "PASS",
+          "summary": "Exact affected scope only: API-flow configuration/provider semantics, bounded reference generator and retained SDK guards, offline vendor authority repair, maintenance procedures, operator selection row, map dependencies, and reviewed pin continuation. All unchanged bound Sources retain their previous review. No global qualification or extra gate acceptance.",
+          "evidence": [
+            "docs/blueprint/acceptance-evidence/api-flow-configuration-fix-20261021/api-flow-bounded-code-review.json",
+            "docs/blueprint/acceptance-evidence/vendor-archive-refresh-20261021/vendor-refresh-review.json",
+            "docs/blueprint/acceptance-evidence/api-flow-configuration-fix-20261021/api-flow-artifact-review.json",
+            "docs/blueprint/acceptance-evidence/api-flow-configuration-fix-20261021/api-flow-final-pin-proof.json"
+          ]
         }
       ],
-      "previousReviewedRevision": "8c96fe55390c1b2f656e8ee57eeac1188a782bb7"
+      "previousReviewedRevision": "22d46485dc8fc2818805fb7946acae0e0479a947"
     },
     {
       "id": "AP09-reader-operators-20261020",
-      "revision": "3be8232a024f551f163d55f770c5fc97127d7902",
+      "revision": "2f8a116e00d6d38a5cc5076b10befcabe426f9f4",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/review_worker_ready",
       "gateIds": [
@@ -1480,9 +1512,25 @@
             "docs/blueprint/acceptance-evidence/ready-topics-20261021/state-final-review.json",
             "docs/blueprint/acceptance-evidence/ready-topics-20261021/platform-final-review.json"
           ]
+        },
+        {
+          "reviewer": "Independent Codex autoreview: api-flow-bounded-code, vendor-refresh and api-flow-artifact scopes",
+          "previousReviewedRevision": "3be8232a024f551f163d55f770c5fc97127d7902",
+          "revision": "2f8a116e00d6d38a5cc5076b10befcabe426f9f4",
+          "changedDependencies": [
+            "docs/site/use/plugins.md"
+          ],
+          "verdict": "PASS",
+          "summary": "Exact affected scope only: API-flow configuration/provider semantics, bounded reference generator and retained SDK guards, offline vendor authority repair, maintenance procedures, operator selection row, map dependencies, and reviewed pin continuation. All unchanged bound Sources retain their previous review. No global qualification or extra gate acceptance.",
+          "evidence": [
+            "docs/blueprint/acceptance-evidence/api-flow-configuration-fix-20261021/api-flow-bounded-code-review.json",
+            "docs/blueprint/acceptance-evidence/vendor-archive-refresh-20261021/vendor-refresh-review.json",
+            "docs/blueprint/acceptance-evidence/api-flow-configuration-fix-20261021/api-flow-artifact-review.json",
+            "docs/blueprint/acceptance-evidence/api-flow-configuration-fix-20261021/api-flow-final-pin-proof.json"
+          ]
         }
       ],
-      "previousReviewedRevision": "8f79e328cf216b53dc2e665896c65cbb19a2e0ce"
+      "previousReviewedRevision": "3be8232a024f551f163d55f770c5fc97127d7902"
     },
     {
       "id": "AP09-reader-workflows-20261020",
@@ -1586,7 +1634,7 @@
     },
     {
       "id": "AP09-reader-developers-20261020",
-      "revision": "3be8232a024f551f163d55f770c5fc97127d7902",
+      "revision": "2f8a116e00d6d38a5cc5076b10befcabe426f9f4",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/review_platform_ready",
       "gateIds": [
@@ -1807,13 +1855,29 @@
             "docs/blueprint/acceptance-evidence/ready-topics-20261021/state-final-review.json",
             "docs/blueprint/acceptance-evidence/ready-topics-20261021/platform-final-review.json"
           ]
+        },
+        {
+          "reviewer": "Independent Codex autoreview: api-flow-bounded-code, vendor-refresh and api-flow-artifact scopes",
+          "previousReviewedRevision": "3be8232a024f551f163d55f770c5fc97127d7902",
+          "revision": "2f8a116e00d6d38a5cc5076b10befcabe426f9f4",
+          "changedDependencies": [
+            "scripts/docs-generate.mjs"
+          ],
+          "verdict": "PASS",
+          "summary": "Exact affected scope only: API-flow configuration/provider semantics, bounded reference generator and retained SDK guards, offline vendor authority repair, maintenance procedures, operator selection row, map dependencies, and reviewed pin continuation. All unchanged bound Sources retain their previous review. No global qualification or extra gate acceptance.",
+          "evidence": [
+            "docs/blueprint/acceptance-evidence/api-flow-configuration-fix-20261021/api-flow-bounded-code-review.json",
+            "docs/blueprint/acceptance-evidence/vendor-archive-refresh-20261021/vendor-refresh-review.json",
+            "docs/blueprint/acceptance-evidence/api-flow-configuration-fix-20261021/api-flow-artifact-review.json",
+            "docs/blueprint/acceptance-evidence/api-flow-configuration-fix-20261021/api-flow-final-pin-proof.json"
+          ]
         }
       ],
-      "previousReviewedRevision": "8c96fe55390c1b2f656e8ee57eeac1188a782bb7"
+      "previousReviewedRevision": "3be8232a024f551f163d55f770c5fc97127d7902"
     },
     {
       "id": "AP09-reviewed-configuration-20261020",
-      "revision": "08d8f917b08b3faacd0909ccbda3fa069a094a67",
+      "revision": "2f8a116e00d6d38a5cc5076b10befcabe426f9f4",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/review_worker_ready",
       "gateIds": [],
@@ -1901,13 +1965,29 @@
             "scripts/docs-publication.mjs"
           ],
           "summary": "Independent targeted source/reader/quality impact review explicitly preserves the original accepted requirement/gate scope. Runtime/configuration/developer reviews combined where shared dependencies cross; full reference/publication/live exclusions retained."
+        },
+        {
+          "reviewer": "Independent Codex autoreview: api-flow-bounded-code, vendor-refresh and api-flow-artifact scopes",
+          "previousReviewedRevision": "08d8f917b08b3faacd0909ccbda3fa069a094a67",
+          "revision": "2f8a116e00d6d38a5cc5076b10befcabe426f9f4",
+          "changedDependencies": [
+            "scripts/docs-generate.mjs"
+          ],
+          "verdict": "PASS",
+          "summary": "Exact affected scope only: API-flow configuration/provider semantics, bounded reference generator and retained SDK guards, offline vendor authority repair, maintenance procedures, operator selection row, map dependencies, and reviewed pin continuation. All unchanged bound Sources retain their previous review. No global qualification or extra gate acceptance.",
+          "evidence": [
+            "docs/blueprint/acceptance-evidence/api-flow-configuration-fix-20261021/api-flow-bounded-code-review.json",
+            "docs/blueprint/acceptance-evidence/vendor-archive-refresh-20261021/vendor-refresh-review.json",
+            "docs/blueprint/acceptance-evidence/api-flow-configuration-fix-20261021/api-flow-artifact-review.json",
+            "docs/blueprint/acceptance-evidence/api-flow-configuration-fix-20261021/api-flow-final-pin-proof.json"
+          ]
         }
       ],
-      "previousReviewedRevision": "e161be417432d4ebdd22a3d84e09057df70abc0d"
+      "previousReviewedRevision": "08d8f917b08b3faacd0909ccbda3fa069a094a67"
     },
     {
       "id": "AP09-reviewed-reference-20261020",
-      "revision": "322ec12435c7fd5915a35213cd9d5a0986a81fc4",
+      "revision": "2f8a116e00d6d38a5cc5076b10befcabe426f9f4",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/review_platform_ready",
       "gateIds": [],
@@ -2022,13 +2102,29 @@
           ],
           "verdict": "PASS",
           "summary": "Independent whole CLI review explicitly preserves this prior topic: every bound reader page and other dependency byte-identical; inventory change confined to complete deploy forms and additive public CLI supplement, with secret/Helm/workflow and non-command deploy facts unchanged."
+        },
+        {
+          "reviewer": "Independent Codex autoreview: api-flow-bounded-code, vendor-refresh and api-flow-artifact scopes",
+          "previousReviewedRevision": "322ec12435c7fd5915a35213cd9d5a0986a81fc4",
+          "revision": "2f8a116e00d6d38a5cc5076b10befcabe426f9f4",
+          "changedDependencies": [
+            "scripts/docs-configuration-inventory.mjs"
+          ],
+          "verdict": "PASS",
+          "summary": "Exact affected scope only: API-flow configuration/provider semantics, bounded reference generator and retained SDK guards, offline vendor authority repair, maintenance procedures, operator selection row, map dependencies, and reviewed pin continuation. All unchanged bound Sources retain their previous review. No global qualification or extra gate acceptance.",
+          "evidence": [
+            "docs/blueprint/acceptance-evidence/api-flow-configuration-fix-20261021/api-flow-bounded-code-review.json",
+            "docs/blueprint/acceptance-evidence/vendor-archive-refresh-20261021/vendor-refresh-review.json",
+            "docs/blueprint/acceptance-evidence/api-flow-configuration-fix-20261021/api-flow-artifact-review.json",
+            "docs/blueprint/acceptance-evidence/api-flow-configuration-fix-20261021/api-flow-final-pin-proof.json"
+          ]
         }
       ],
-      "previousReviewedRevision": "08d8f917b08b3faacd0909ccbda3fa069a094a67"
+      "previousReviewedRevision": "322ec12435c7fd5915a35213cd9d5a0986a81fc4"
     },
     {
       "id": "AP09-reviewed-maintenance-20261020",
-      "revision": "8f79e328cf216b53dc2e665896c65cbb19a2e0ce",
+      "revision": "2f8a116e00d6d38a5cc5076b10befcabe426f9f4",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/review_data_ready",
       "gateIds": [],
@@ -2133,9 +2229,26 @@
           ],
           "verdict": "PASS",
           "summary": "Independent publication impact preserves original requirement/gate scopes and limits.53generated pages change only commit IDs;505cited source pairs byte-identical. Prose corrections/entry links preserve technical meaning. Derived page-map lastVerified fields use the same audited revision substitution only; ownership/routes/sources/checks byte-identical after revision normalization."
+        },
+        {
+          "reviewer": "Independent Codex autoreview: api-flow-bounded-code, vendor-refresh and api-flow-artifact scopes",
+          "previousReviewedRevision": "8f79e328cf216b53dc2e665896c65cbb19a2e0ce",
+          "revision": "2f8a116e00d6d38a5cc5076b10befcabe426f9f4",
+          "changedDependencies": [
+            "docs/site/extend/documentation-maintenance.md",
+            "scripts/docs-generate.mjs"
+          ],
+          "verdict": "PASS",
+          "summary": "Exact affected scope only: API-flow configuration/provider semantics, bounded reference generator and retained SDK guards, offline vendor authority repair, maintenance procedures, operator selection row, map dependencies, and reviewed pin continuation. All unchanged bound Sources retain their previous review. No global qualification or extra gate acceptance.",
+          "evidence": [
+            "docs/blueprint/acceptance-evidence/api-flow-configuration-fix-20261021/api-flow-bounded-code-review.json",
+            "docs/blueprint/acceptance-evidence/vendor-archive-refresh-20261021/vendor-refresh-review.json",
+            "docs/blueprint/acceptance-evidence/api-flow-configuration-fix-20261021/api-flow-artifact-review.json",
+            "docs/blueprint/acceptance-evidence/api-flow-configuration-fix-20261021/api-flow-final-pin-proof.json"
+          ]
         }
       ],
-      "previousReviewedRevision": "ad66f324ab0273db59397d42f35d94cd4dc62cdd"
+      "previousReviewedRevision": "8f79e328cf216b53dc2e665896c65cbb19a2e0ce"
     },
     {
       "id": "AP09-reviewed-publication-navigation-20261020",
@@ -2432,7 +2545,7 @@
     },
     {
       "id": "AP09-closeout-config-reference-20261020",
-      "revision": "322ec12435c7fd5915a35213cd9d5a0986a81fc4",
+      "revision": "2f8a116e00d6d38a5cc5076b10befcabe426f9f4",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/close_config_reference",
       "gateIds": [],
@@ -2527,13 +2640,29 @@
           ],
           "verdict": "PASS",
           "summary": "Independent whole CLI review explicitly preserves this prior topic: every bound reader page and other dependency byte-identical; inventory change confined to complete deploy forms and additive public CLI supplement, with secret/Helm/workflow and non-command deploy facts unchanged."
+        },
+        {
+          "reviewer": "Independent Codex autoreview: api-flow-bounded-code, vendor-refresh and api-flow-artifact scopes",
+          "previousReviewedRevision": "322ec12435c7fd5915a35213cd9d5a0986a81fc4",
+          "revision": "2f8a116e00d6d38a5cc5076b10befcabe426f9f4",
+          "changedDependencies": [
+            "scripts/docs-generate.mjs"
+          ],
+          "verdict": "PASS",
+          "summary": "Exact affected scope only: API-flow configuration/provider semantics, bounded reference generator and retained SDK guards, offline vendor authority repair, maintenance procedures, operator selection row, map dependencies, and reviewed pin continuation. All unchanged bound Sources retain their previous review. No global qualification or extra gate acceptance.",
+          "evidence": [
+            "docs/blueprint/acceptance-evidence/api-flow-configuration-fix-20261021/api-flow-bounded-code-review.json",
+            "docs/blueprint/acceptance-evidence/vendor-archive-refresh-20261021/vendor-refresh-review.json",
+            "docs/blueprint/acceptance-evidence/api-flow-configuration-fix-20261021/api-flow-artifact-review.json",
+            "docs/blueprint/acceptance-evidence/api-flow-configuration-fix-20261021/api-flow-final-pin-proof.json"
+          ]
         }
       ],
-      "previousReviewedRevision": "08d8f917b08b3faacd0909ccbda3fa069a094a67"
+      "previousReviewedRevision": "322ec12435c7fd5915a35213cd9d5a0986a81fc4"
     },
     {
       "id": "AP09-closeout-developer-maintenance-20261020",
-      "revision": "3be8232a024f551f163d55f770c5fc97127d7902",
+      "revision": "2f8a116e00d6d38a5cc5076b10befcabe426f9f4",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/close_developer_maintenance",
       "gateIds": [],
@@ -2701,9 +2830,26 @@
             "docs/blueprint/acceptance-evidence/ready-topics-20261021/state-final-review.json",
             "docs/blueprint/acceptance-evidence/ready-topics-20261021/platform-final-review.json"
           ]
+        },
+        {
+          "reviewer": "Independent Codex autoreview: api-flow-bounded-code, vendor-refresh and api-flow-artifact scopes",
+          "previousReviewedRevision": "3be8232a024f551f163d55f770c5fc97127d7902",
+          "revision": "2f8a116e00d6d38a5cc5076b10befcabe426f9f4",
+          "changedDependencies": [
+            "docs/site/use/plugins.md",
+            "scripts/docs-generate.mjs"
+          ],
+          "verdict": "PASS",
+          "summary": "Exact affected scope only: API-flow configuration/provider semantics, bounded reference generator and retained SDK guards, offline vendor authority repair, maintenance procedures, operator selection row, map dependencies, and reviewed pin continuation. All unchanged bound Sources retain their previous review. No global qualification or extra gate acceptance.",
+          "evidence": [
+            "docs/blueprint/acceptance-evidence/api-flow-configuration-fix-20261021/api-flow-bounded-code-review.json",
+            "docs/blueprint/acceptance-evidence/vendor-archive-refresh-20261021/vendor-refresh-review.json",
+            "docs/blueprint/acceptance-evidence/api-flow-configuration-fix-20261021/api-flow-artifact-review.json",
+            "docs/blueprint/acceptance-evidence/api-flow-configuration-fix-20261021/api-flow-final-pin-proof.json"
+          ]
         }
       ],
-      "previousReviewedRevision": "8c96fe55390c1b2f656e8ee57eeac1188a782bb7"
+      "previousReviewedRevision": "3be8232a024f551f163d55f770c5fc97127d7902"
     },
     {
       "id": "AP09-closeout-ARC006-20261020",
@@ -2922,7 +3068,7 @@
     },
     {
       "id": "AP09-complete-public-cli-20261020",
-      "revision": "322ec12435c7fd5915a35213cd9d5a0986a81fc4",
+      "revision": "2f8a116e00d6d38a5cc5076b10befcabe426f9f4",
       "author": "/root/review_example_publication",
       "reviewer": "/root/review_example_publication/review_cli_complete",
       "gateIds": [],
@@ -3004,7 +3150,26 @@
         "Internal documentation tooling and flags passed to external programs remain outside this published CLI contract."
       ],
       "openIssues": [],
-      "verdict": "PASS"
+      "verdict": "PASS",
+      "impactReviews": [
+        {
+          "reviewer": "Independent Codex autoreview: api-flow-bounded-code, vendor-refresh and api-flow-artifact scopes",
+          "previousReviewedRevision": "322ec12435c7fd5915a35213cd9d5a0986a81fc4",
+          "revision": "2f8a116e00d6d38a5cc5076b10befcabe426f9f4",
+          "changedDependencies": [
+            "scripts/docs-generate.mjs"
+          ],
+          "verdict": "PASS",
+          "summary": "Exact affected scope only: API-flow configuration/provider semantics, bounded reference generator and retained SDK guards, offline vendor authority repair, maintenance procedures, operator selection row, map dependencies, and reviewed pin continuation. All unchanged bound Sources retain their previous review. No global qualification or extra gate acceptance.",
+          "evidence": [
+            "docs/blueprint/acceptance-evidence/api-flow-configuration-fix-20261021/api-flow-bounded-code-review.json",
+            "docs/blueprint/acceptance-evidence/vendor-archive-refresh-20261021/vendor-refresh-review.json",
+            "docs/blueprint/acceptance-evidence/api-flow-configuration-fix-20261021/api-flow-artifact-review.json",
+            "docs/blueprint/acceptance-evidence/api-flow-configuration-fix-20261021/api-flow-final-pin-proof.json"
+          ]
+        }
+      ],
+      "previousReviewedRevision": "322ec12435c7fd5915a35213cd9d5a0986a81fc4"
     },
     {
       "id": "AP09-compiler-import-provider-diagnosis-20261021",
@@ -3117,7 +3282,7 @@
     },
     {
       "id": "AP09-confidential-adapter-lifecycle-20261021",
-      "revision": "3be8232a024f551f163d55f770c5fc97127d7902",
+      "revision": "2f8a116e00d6d38a5cc5076b10befcabe426f9f4",
       "author": "Documentation authors and /root correction coordinator",
       "reviewer": "Independent Codex autoreview 2026-10-21 (ready, correction-final and contributor invocations)",
       "gateIds": [],
@@ -3214,9 +3379,25 @@
             "docs/blueprint/acceptance-evidence/ready-topics-20261021/state-final-review.json",
             "docs/blueprint/acceptance-evidence/ready-topics-20261021/platform-final-review.json"
           ]
+        },
+        {
+          "reviewer": "Independent Codex autoreview: api-flow-bounded-code, vendor-refresh and api-flow-artifact scopes",
+          "previousReviewedRevision": "3be8232a024f551f163d55f770c5fc97127d7902",
+          "revision": "2f8a116e00d6d38a5cc5076b10befcabe426f9f4",
+          "changedDependencies": [
+            "docs/site/use/plugins.md"
+          ],
+          "verdict": "PASS",
+          "summary": "Exact affected scope only: API-flow configuration/provider semantics, bounded reference generator and retained SDK guards, offline vendor authority repair, maintenance procedures, operator selection row, map dependencies, and reviewed pin continuation. All unchanged bound Sources retain their previous review. No global qualification or extra gate acceptance.",
+          "evidence": [
+            "docs/blueprint/acceptance-evidence/api-flow-configuration-fix-20261021/api-flow-bounded-code-review.json",
+            "docs/blueprint/acceptance-evidence/vendor-archive-refresh-20261021/vendor-refresh-review.json",
+            "docs/blueprint/acceptance-evidence/api-flow-configuration-fix-20261021/api-flow-artifact-review.json",
+            "docs/blueprint/acceptance-evidence/api-flow-configuration-fix-20261021/api-flow-final-pin-proof.json"
+          ]
         }
       ],
-      "previousReviewedRevision": "8c96fe55390c1b2f656e8ee57eeac1188a782bb7"
+      "previousReviewedRevision": "3be8232a024f551f163d55f770c5fc97127d7902"
     },
     {
       "id": "AP09-selected-model-gateway-20261021",
@@ -4154,7 +4335,7 @@
     },
     {
       "id": "AP09-documentation-agent-maintenance-20261021",
-      "revision": "3be8232a024f551f163d55f770c5fc97127d7902",
+      "revision": "2f8a116e00d6d38a5cc5076b10befcabe426f9f4",
       "author": "Nova /root authored content and correction coordinator",
       "reviewer": "Independent Codex autoreview 2026-10-21 maintenance-ready-review",
       "gateIds": [],
@@ -4207,6 +4388,7 @@
         "scripts/check-site-reader-boundary.mjs",
         "scripts/docs-check-refs.mjs",
         "scripts/docs-configuration-inventory.mjs",
+        "scripts/docs-external-helm-authority-lock.json",
         "scripts/docs-generate.mjs",
         "scripts/docs-governance.mjs",
         "scripts/docs-inventory.mjs",
@@ -4215,6 +4397,7 @@
         "scripts/docs-publication.mjs",
         "scripts/docs-status.mjs",
         "scripts/docs-tree-boundary.mjs",
+        "scripts/external-helm-archives.json",
         "scripts/generate-plugin-sdk-types.mjs",
         "scripts/generate-telemetry-contracts.mjs",
         "scripts/lib/docs-publication-assets.mjs",
@@ -4229,6 +4412,8 @@
         "scripts/runtime-tool-locks.mjs",
         "scripts/scan-runtime-images.sh",
         "scripts/tests/docs-publication-assets.test.mjs",
+        "scripts/tests/vendor-external-helm-authorities.test.mjs",
+        "scripts/vendor-external-helm-authorities.mjs",
         "scripts/versions.mjs",
         "skills/buster/engine/BOUNDARIES.md",
         "skills/buster/engine/package.json",
@@ -4319,7 +4504,28 @@
       "evidence": [
         "docs/blueprint/acceptance-evidence/ready-topics-20261021/maintenance-ready-review.json",
         "docs/blueprint/acceptance-evidence/ready-topics-20261021/scope.json"
-      ]
+      ],
+      "impactReviews": [
+        {
+          "reviewer": "Independent Codex autoreview: api-flow-bounded-code, vendor-refresh and api-flow-artifact scopes",
+          "previousReviewedRevision": "3be8232a024f551f163d55f770c5fc97127d7902",
+          "revision": "2f8a116e00d6d38a5cc5076b10befcabe426f9f4",
+          "changedDependencies": [
+            "docs/site/extend/documentation-maintenance.md",
+            "scripts/docs-configuration-inventory.mjs",
+            "scripts/docs-generate.mjs"
+          ],
+          "verdict": "PASS",
+          "summary": "Exact affected scope only: API-flow configuration/provider semantics, bounded reference generator and retained SDK guards, offline vendor authority repair, maintenance procedures, operator selection row, map dependencies, and reviewed pin continuation. All unchanged bound Sources retain their previous review. No global qualification or extra gate acceptance.",
+          "evidence": [
+            "docs/blueprint/acceptance-evidence/api-flow-configuration-fix-20261021/api-flow-bounded-code-review.json",
+            "docs/blueprint/acceptance-evidence/vendor-archive-refresh-20261021/vendor-refresh-review.json",
+            "docs/blueprint/acceptance-evidence/api-flow-configuration-fix-20261021/api-flow-artifact-review.json",
+            "docs/blueprint/acceptance-evidence/api-flow-configuration-fix-20261021/api-flow-final-pin-proof.json"
+          ]
+        }
+      ],
+      "previousReviewedRevision": "3be8232a024f551f163d55f770c5fc97127d7902"
     },
     {
       "id": "AP09-specialists-whole-gate-20261021",
@@ -4439,7 +4645,7 @@
     },
     {
       "id": "AP09-complete-platform-change-content-20261021",
-      "revision": "3be8232a024f551f163d55f770c5fc97127d7902",
+      "revision": "2f8a116e00d6d38a5cc5076b10befcabe426f9f4",
       "author": "Nova /root authored content and correction coordinator",
       "reviewer": "Independent Codex autoreview 2026-10-21 platform-final-review",
       "gateIds": [],
@@ -4608,7 +4814,26 @@
       "evidence": [
         "docs/blueprint/acceptance-evidence/ready-topics-20261021/platform-final-review.json",
         "docs/blueprint/acceptance-evidence/ready-topics-20261021/scope.json"
-      ]
+      ],
+      "impactReviews": [
+        {
+          "reviewer": "Independent Codex autoreview: api-flow-bounded-code, vendor-refresh and api-flow-artifact scopes",
+          "previousReviewedRevision": "3be8232a024f551f163d55f770c5fc97127d7902",
+          "revision": "2f8a116e00d6d38a5cc5076b10befcabe426f9f4",
+          "changedDependencies": [
+            "scripts/docs-generate.mjs"
+          ],
+          "verdict": "PASS",
+          "summary": "Exact affected scope only: API-flow configuration/provider semantics, bounded reference generator and retained SDK guards, offline vendor authority repair, maintenance procedures, operator selection row, map dependencies, and reviewed pin continuation. All unchanged bound Sources retain their previous review. No global qualification or extra gate acceptance.",
+          "evidence": [
+            "docs/blueprint/acceptance-evidence/api-flow-configuration-fix-20261021/api-flow-bounded-code-review.json",
+            "docs/blueprint/acceptance-evidence/vendor-archive-refresh-20261021/vendor-refresh-review.json",
+            "docs/blueprint/acceptance-evidence/api-flow-configuration-fix-20261021/api-flow-artifact-review.json",
+            "docs/blueprint/acceptance-evidence/api-flow-configuration-fix-20261021/api-flow-final-pin-proof.json"
+          ]
+        }
+      ],
+      "previousReviewedRevision": "3be8232a024f551f163d55f770c5fc97127d7902"
     },
     {
       "id": "AP09-registry-data-path-20261021",
@@ -4925,6 +5150,571 @@
         "docs/blueprint/acceptance-evidence/registry-studio-complete-20261021/registry-profiles-final-review.json",
         "docs/blueprint/acceptance-evidence/registry-studio-complete-20261021/remaining-surfaces-review.json",
         "docs/blueprint/acceptance-evidence/registry-studio-complete-20261021/registry-profiles-correction-review.json"
+      ]
+    },
+    {
+      "id": "AP09-complete-plugin-maintenance-mechanisms-20261021",
+      "revision": "5276ecde0b50f86936e58c5de2de233e5a061e1e",
+      "author": "Nova /root documentation coordinator",
+      "reviewer": "Independent Codex autoreview 2026-10-21 plugin-mechanisms whole original MNT obligations",
+      "gateIds": [],
+      "requirementIds": [
+        "MNT-002",
+        "MNT-007",
+        "MNT-012"
+      ],
+      "pages": [
+        "docs/site/extend/plugin-catalogue/README.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw-agent-observer.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw-ops.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw-prism.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.agent-observability.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.api-flow.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.architecture-validator.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.artifact-store.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.axe.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.blueprint-sync.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.buster-quality-gate.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.case-study.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.command-runner.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.container-build.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.coverage-budget.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.delivery-lint.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.demo-auth-smoke.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.demo-handoff.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.direct-command.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.git-workspace.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.http.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.human-approval.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.implementation-agent.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.junit-report.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.kubernetes-fixture.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.lighthouse.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.lint.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.network-http.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.notification-observer.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.openapi.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.openclaw-agent-events.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.operator-messaging.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.pipeline-review.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.playwright.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.preflight-contract.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.prism-design.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.project-summary.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.redis-transport.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.remote-test-gate.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.repository-adapter.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.review.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.runtime-dispatch.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.secret-resolver.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.security-providers.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.size-budget.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.state-store.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.tailscale-exposure.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.telemetry-observer.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.telemetry-store.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.transport-publisher.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.visual.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.wait-store.md"
+      ],
+      "sources": [
+        "docs/blueprint/AP08-catalogue-guidance.json",
+        "docs/blueprint/AP08-local-verification.json",
+        "docs/blueprint/generated/ap08-extension-inventory.json",
+        "docs/generated/inventory/plugin-system.json",
+        "package.json",
+        "packaging/runtime/roles/buster.json",
+        "packaging/runtime/roles/nova.json",
+        "packaging/runtime/roles/prism.json",
+        "plugins/kubeclaw-ops/.codex-plugin/plugin.json",
+        "plugins/kubeclaw-ops/skills/troubleshoot/SKILL.md",
+        "scripts/ap08-extension-inventory.mjs",
+        "scripts/check-ap08-advanced-guides.mjs",
+        "scripts/check-ap08-choice-guide.mjs",
+        "scripts/check-ap08-effectful-guide.mjs",
+        "scripts/check-ap08-host-lifecycle-catalogue.mjs",
+        "scripts/check-ap08-minimal-plugin.mjs",
+        "scripts/check-ap08-observers.mjs",
+        "scripts/check-ap08-reader-references.mjs",
+        "scripts/docs-publication.mjs",
+        "scripts/plugin-dependency-boundaries.mjs",
+        "scripts/plugin-schema-dependencies.mjs",
+        "scripts/plugin-source-closure.mjs",
+        "scripts/plugin-system-inventory.mjs",
+        "skills/buster/plugins/api-flow/README.md",
+        "skills/buster/plugins/api-flow/package.json",
+        "skills/buster/plugins/api-flow/plugin.json",
+        "skills/buster/plugins/api-flow/schemas/config.schema.json",
+        "skills/buster/plugins/api-flow/schemas/flow.schema.json",
+        "skills/buster/plugins/api-flow/tests/live-function.test.ts",
+        "skills/buster/plugins/api-flow/tests/remediation.test.ts",
+        "skills/buster/plugins/axe/README.md",
+        "skills/buster/plugins/axe/package.json",
+        "skills/buster/plugins/axe/plugin.json",
+        "skills/buster/plugins/axe/schemas/config.schema.json",
+        "skills/buster/plugins/axe/tests/live-function.test.ts",
+        "skills/buster/plugins/container-build/README.md",
+        "skills/buster/plugins/container-build/package.json",
+        "skills/buster/plugins/container-build/plugin.json",
+        "skills/buster/plugins/container-build/schemas/config.schema.json",
+        "skills/buster/plugins/container-build/tests/deadline.test.mts",
+        "skills/buster/plugins/container-build/tests/live-function.test.ts",
+        "skills/buster/plugins/coverage-budget/README.md",
+        "skills/buster/plugins/coverage-budget/package.json",
+        "skills/buster/plugins/coverage-budget/plugin.json",
+        "skills/buster/plugins/coverage-budget/schemas/config.schema.json",
+        "skills/buster/plugins/coverage-budget/tests/live-function.test.ts",
+        "skills/buster/plugins/demo-auth-smoke/README.md",
+        "skills/buster/plugins/demo-auth-smoke/package.json",
+        "skills/buster/plugins/demo-auth-smoke/plugin.json",
+        "skills/buster/plugins/demo-auth-smoke/schemas/config.schema.json",
+        "skills/buster/plugins/direct-command/README.md",
+        "skills/buster/plugins/direct-command/package.json",
+        "skills/buster/plugins/direct-command/plugin.json",
+        "skills/buster/plugins/direct-command/schemas/config.schema.json",
+        "skills/buster/plugins/direct-command/tests/live-function.test.ts",
+        "skills/buster/plugins/http/README.md",
+        "skills/buster/plugins/http/package.json",
+        "skills/buster/plugins/http/plugin.json",
+        "skills/buster/plugins/http/schemas/config.schema.json",
+        "skills/buster/plugins/junit-report-adapter/README.md",
+        "skills/buster/plugins/junit-report-adapter/package.json",
+        "skills/buster/plugins/junit-report-adapter/plugin.json",
+        "skills/buster/plugins/junit-report-adapter/tests/adapter.test.mjs",
+        "skills/buster/plugins/junit-report-adapter/tests/live-function.test.ts",
+        "skills/buster/plugins/kubernetes-fixture/README.md",
+        "skills/buster/plugins/kubernetes-fixture/package.json",
+        "skills/buster/plugins/kubernetes-fixture/plugin.json",
+        "skills/buster/plugins/kubernetes-fixture/schemas/config.schema.json",
+        "skills/buster/plugins/kubernetes-fixture/tests/live-function.test.ts",
+        "skills/buster/plugins/lighthouse/README.md",
+        "skills/buster/plugins/lighthouse/package.json",
+        "skills/buster/plugins/lighthouse/plugin.json",
+        "skills/buster/plugins/lighthouse/schemas/config.schema.json",
+        "skills/buster/plugins/lighthouse/tests/live-function.test.ts",
+        "skills/buster/plugins/openapi/README.md",
+        "skills/buster/plugins/openapi/package.json",
+        "skills/buster/plugins/openapi/plugin.json",
+        "skills/buster/plugins/openapi/schemas/config.schema.json",
+        "skills/buster/plugins/openapi/tests/live-function.test.ts",
+        "skills/buster/plugins/openapi/tests/remediation.test.ts",
+        "skills/buster/plugins/playwright/README.md",
+        "skills/buster/plugins/playwright/package.json",
+        "skills/buster/plugins/playwright/plugin.json",
+        "skills/buster/plugins/playwright/schemas/config.schema.json",
+        "skills/buster/plugins/playwright/tests/fixture/specs/home.spec.ts",
+        "skills/buster/plugins/playwright/tests/live-function.test.ts",
+        "skills/buster/plugins/security-providers/README.md",
+        "skills/buster/plugins/security-providers/package.json",
+        "skills/buster/plugins/security-providers/plugin.json",
+        "skills/buster/plugins/security-providers/schemas/dependency.schema.json",
+        "skills/buster/plugins/security-providers/schemas/headers.schema.json",
+        "skills/buster/plugins/security-providers/schemas/image.schema.json",
+        "skills/buster/plugins/security-providers/schemas/kubernetes-policy.schema.json",
+        "skills/buster/plugins/security-providers/schemas/kubernetes-runtime.schema.json",
+        "skills/buster/plugins/security-providers/tests/database-freshness.test.mts",
+        "skills/buster/plugins/security-providers/tests/live-function.test.ts",
+        "skills/buster/plugins/size-budget/README.md",
+        "skills/buster/plugins/size-budget/package.json",
+        "skills/buster/plugins/size-budget/plugin.json",
+        "skills/buster/plugins/size-budget/schemas/config.schema.json",
+        "skills/buster/plugins/size-budget/tests/live-function.test.ts",
+        "skills/buster/plugins/tailscale-exposure/README.md",
+        "skills/buster/plugins/tailscale-exposure/package.json",
+        "skills/buster/plugins/tailscale-exposure/plugin.json",
+        "skills/buster/plugins/tailscale-exposure/schemas/config.schema.json",
+        "skills/buster/plugins/tailscale-exposure/tests/live-function.test.ts",
+        "skills/buster/plugins/visual/README.md",
+        "skills/buster/plugins/visual/package.json",
+        "skills/buster/plugins/visual/plugin.json",
+        "skills/buster/plugins/visual/schemas/config.schema.json",
+        "skills/buster/plugins/visual/tests/browser-identity.test.mjs",
+        "skills/buster/plugins/visual/tests/live-function.test.ts",
+        "skills/common/plugins/agent-observability/README.md",
+        "skills/common/plugins/agent-observability/package.json",
+        "skills/common/plugins/agent-observability/plugin.json",
+        "skills/common/plugins/agent-observability/schemas/checkpoint.schema.json",
+        "skills/common/plugins/agent-observability/schemas/config.schema.json",
+        "skills/common/plugins/agent-observability/tests/live-function.test.ts",
+        "skills/common/plugins/agent-observability/tests/observers.unit.test.mjs",
+        "skills/common/plugins/agent-observability/tests/package-boundary.test.mjs",
+        "skills/common/plugins/agent-observability/tests/parity.test.ts",
+        "skills/common/plugins/artifact-store/README.md",
+        "skills/common/plugins/artifact-store/package.json",
+        "skills/common/plugins/artifact-store/plugin.json",
+        "skills/common/plugins/artifact-store/schemas/config.schema.json",
+        "skills/common/plugins/artifact-store/tests/live-function.test.ts",
+        "skills/common/plugins/artifact-store/tests/package-boundary.test.mjs",
+        "skills/common/plugins/command-runner/README.md",
+        "skills/common/plugins/command-runner/package.json",
+        "skills/common/plugins/command-runner/plugin.json",
+        "skills/common/plugins/command-runner/schemas/config.schema.json",
+        "skills/common/plugins/command-runner/tests/live-function.test.ts",
+        "skills/common/plugins/command-runner/tests/package-boundary.test.mjs",
+        "skills/common/plugins/command-runner/tests/process-group-exit.test.ts",
+        "skills/common/plugins/command-runner/tests/process-group.test.ts",
+        "skills/common/plugins/git-workspace/README.md",
+        "skills/common/plugins/git-workspace/package.json",
+        "skills/common/plugins/git-workspace/plugin.json",
+        "skills/common/plugins/git-workspace/schemas/config.schema.json",
+        "skills/common/plugins/git-workspace/tests/live-function.test.ts",
+        "skills/common/plugins/git-workspace/tests/package-boundary.test.mjs",
+        "skills/common/plugins/git-workspace/tests/sync-disposition.test.ts",
+        "skills/common/plugins/network-http/README.md",
+        "skills/common/plugins/network-http/package.json",
+        "skills/common/plugins/network-http/plugin.json",
+        "skills/common/plugins/network-http/schemas/config.schema.json",
+        "skills/common/plugins/network-http/tests/live-function.test.ts",
+        "skills/common/plugins/network-http/tests/package-boundary.test.mjs",
+        "skills/common/plugins/network-http/tests/streaming.test.ts",
+        "skills/common/plugins/notification-observer/README.md",
+        "skills/common/plugins/notification-observer/package.json",
+        "skills/common/plugins/notification-observer/plugin.json",
+        "skills/common/plugins/notification-observer/schemas/checkpoint.schema.json",
+        "skills/common/plugins/notification-observer/schemas/config.schema.json",
+        "skills/common/plugins/notification-observer/tests/live-function.test.ts",
+        "skills/common/plugins/notification-observer/tests/observer.unit.test.mjs",
+        "skills/common/plugins/notification-observer/tests/package-boundary.test.mjs",
+        "skills/common/plugins/notification-observer/tests/parity.test.ts",
+        "skills/common/plugins/openclaw-agent-events/README.md",
+        "skills/common/plugins/openclaw-agent-events/package.json",
+        "skills/common/plugins/openclaw-agent-events/plugin.json",
+        "skills/common/plugins/openclaw-agent-events/schemas/config.schema.json",
+        "skills/common/plugins/openclaw-agent-events/tests/live-function.test.ts",
+        "skills/common/plugins/openclaw-agent-events/tests/package-boundary.test.mjs",
+        "skills/common/plugins/openclaw-agent-observer/README.md",
+        "skills/common/plugins/openclaw-agent-observer/openclaw.plugin.json",
+        "skills/common/plugins/openclaw-agent-observer/package.json",
+        "skills/common/plugins/openclaw-agent-observer/tests/clean-build.test.mjs",
+        "skills/common/plugins/openclaw-agent-observer/tests/config.test.mjs",
+        "skills/common/plugins/openclaw-agent-observer/tests/live-function.test.ts",
+        "skills/common/plugins/openclaw-agent-observer/tests/package-boundary.test.mjs",
+        "skills/common/plugins/openclaw-agent-observer/tests/remediation.test.ts",
+        "skills/common/plugins/operator-messaging/README.md",
+        "skills/common/plugins/operator-messaging/package.json",
+        "skills/common/plugins/operator-messaging/plugin.json",
+        "skills/common/plugins/operator-messaging/schemas/config.schema.json",
+        "skills/common/plugins/operator-messaging/schemas/payload.schema.json",
+        "skills/common/plugins/operator-messaging/tests/live-function.test.ts",
+        "skills/common/plugins/operator-messaging/tests/package-boundary.test.mjs",
+        "skills/common/plugins/redis-transport/README.md",
+        "skills/common/plugins/redis-transport/package.json",
+        "skills/common/plugins/redis-transport/plugin.json",
+        "skills/common/plugins/redis-transport/schemas/config.schema.json",
+        "skills/common/plugins/redis-transport/tests/live-function.test.ts",
+        "skills/common/plugins/redis-transport/tests/package-boundary.test.ts",
+        "skills/common/plugins/runtime-dispatch/README.md",
+        "skills/common/plugins/runtime-dispatch/package.json",
+        "skills/common/plugins/runtime-dispatch/plugin.json",
+        "skills/common/plugins/runtime-dispatch/schemas/config.schema.json",
+        "skills/common/plugins/runtime-dispatch/schemas/openclaw-config.schema.json",
+        "skills/common/plugins/runtime-dispatch/tests/live-function.test.ts",
+        "skills/common/plugins/runtime-dispatch/tests/package-boundary.test.mjs",
+        "skills/common/plugins/secret-resolver/README.md",
+        "skills/common/plugins/secret-resolver/package.json",
+        "skills/common/plugins/secret-resolver/plugin.json",
+        "skills/common/plugins/secret-resolver/schemas/config.schema.json",
+        "skills/common/plugins/secret-resolver/tests/live-function.test.ts",
+        "skills/common/plugins/secret-resolver/tests/package-boundary.test.mjs",
+        "skills/common/plugins/state-store/README.md",
+        "skills/common/plugins/state-store/package.json",
+        "skills/common/plugins/state-store/plugin.json",
+        "skills/common/plugins/state-store/schemas/config.schema.json",
+        "skills/common/plugins/state-store/tests/live-function.test.ts",
+        "skills/common/plugins/state-store/tests/package-boundary.test.mjs",
+        "skills/common/plugins/telemetry-observer/README.md",
+        "skills/common/plugins/telemetry-observer/package.json",
+        "skills/common/plugins/telemetry-observer/plugin.json",
+        "skills/common/plugins/telemetry-observer/schemas/checkpoint.schema.json",
+        "skills/common/plugins/telemetry-observer/schemas/config.schema.json",
+        "skills/common/plugins/telemetry-observer/tests/live-function.test.ts",
+        "skills/common/plugins/telemetry-observer/tests/package-boundary.test.mjs",
+        "skills/common/plugins/telemetry-observer/tests/parity.test.ts",
+        "skills/common/plugins/telemetry-store/README.md",
+        "skills/common/plugins/telemetry-store/package.json",
+        "skills/common/plugins/telemetry-store/plugin.json",
+        "skills/common/plugins/telemetry-store/schemas/config.schema.json",
+        "skills/common/plugins/telemetry-store/tests/live-function.test.ts",
+        "skills/common/plugins/telemetry-store/tests/package-boundary.test.mjs",
+        "skills/common/plugins/transport-publisher/README.md",
+        "skills/common/plugins/transport-publisher/package.json",
+        "skills/common/plugins/transport-publisher/plugin.json",
+        "skills/common/plugins/transport-publisher/schemas/config.schema.json",
+        "skills/common/plugins/transport-publisher/schemas/publish.schema.json",
+        "skills/common/plugins/transport-publisher/schemas/receipt.schema.json",
+        "skills/common/plugins/transport-publisher/tests/config-validation.test.mjs",
+        "skills/common/plugins/transport-publisher/tests/live-function.test.ts",
+        "skills/common/plugins/transport-publisher/tests/package-boundary.test.mjs",
+        "skills/common/plugins/wait-store/README.md",
+        "skills/common/plugins/wait-store/package.json",
+        "skills/common/plugins/wait-store/plugin.json",
+        "skills/common/plugins/wait-store/schemas/config.schema.json",
+        "skills/common/plugins/wait-store/tests/live-function.test.ts",
+        "skills/common/plugins/wait-store/tests/package-boundary.test.mjs",
+        "skills/nova/plugins/architecture-validator/README.md",
+        "skills/nova/plugins/architecture-validator/package.json",
+        "skills/nova/plugins/architecture-validator/plugin.json",
+        "skills/nova/plugins/architecture-validator/schemas/config.schema.json",
+        "skills/nova/plugins/architecture-validator/schemas/input.schema.json",
+        "skills/nova/plugins/architecture-validator/schemas/result.schema.json",
+        "skills/nova/plugins/architecture-validator/tests/live-function.test.ts",
+        "skills/nova/plugins/architecture-validator/tests/package-boundary.test.mjs",
+        "skills/nova/plugins/architecture-validator/tests/protocol.unit.test.ts",
+        "skills/nova/plugins/blueprint-sync/README.md",
+        "skills/nova/plugins/blueprint-sync/package.json",
+        "skills/nova/plugins/blueprint-sync/plugin.json",
+        "skills/nova/plugins/blueprint-sync/schemas/config.schema.json",
+        "skills/nova/plugins/blueprint-sync/schemas/input.schema.json",
+        "skills/nova/plugins/blueprint-sync/schemas/result.schema.json",
+        "skills/nova/plugins/blueprint-sync/tests/live-function.test.ts",
+        "skills/nova/plugins/blueprint-sync/tests/package-boundary.test.mjs",
+        "skills/nova/plugins/buster-quality-gate/README.md",
+        "skills/nova/plugins/buster-quality-gate/package.json",
+        "skills/nova/plugins/buster-quality-gate/plugin.json",
+        "skills/nova/plugins/buster-quality-gate/schemas/config.schema.json",
+        "skills/nova/plugins/buster-quality-gate/schemas/input.schema.json",
+        "skills/nova/plugins/buster-quality-gate/schemas/result.schema.json",
+        "skills/nova/plugins/buster-quality-gate/tests/live-function.test.ts",
+        "skills/nova/plugins/buster-quality-gate/tests/package-boundary.test.mjs",
+        "skills/nova/plugins/buster-quality-gate/tests/protocol.test.ts",
+        "skills/nova/plugins/buster-quality-gate/tests/suite-first.test.ts",
+        "skills/nova/plugins/case-study/README.md",
+        "skills/nova/plugins/case-study/package.json",
+        "skills/nova/plugins/case-study/plugin.json",
+        "skills/nova/plugins/case-study/schemas/config.schema.json",
+        "skills/nova/plugins/case-study/schemas/input.schema.json",
+        "skills/nova/plugins/case-study/schemas/result.schema.json",
+        "skills/nova/plugins/case-study/tests/live-function.test.ts",
+        "skills/nova/plugins/case-study/tests/package-boundary.test.mjs",
+        "skills/nova/plugins/case-study/tests/protocol.test.mjs",
+        "skills/nova/plugins/delivery-lint/README.md",
+        "skills/nova/plugins/delivery-lint/package.json",
+        "skills/nova/plugins/delivery-lint/plugin.json",
+        "skills/nova/plugins/delivery-lint/schemas/config.schema.json",
+        "skills/nova/plugins/delivery-lint/schemas/input.schema.json",
+        "skills/nova/plugins/delivery-lint/schemas/result.schema.json",
+        "skills/nova/plugins/delivery-lint/tests/live-function.test.ts",
+        "skills/nova/plugins/delivery-lint/tests/package-boundary.test.mjs",
+        "skills/nova/plugins/demo-handoff/README.md",
+        "skills/nova/plugins/demo-handoff/package.json",
+        "skills/nova/plugins/demo-handoff/plugin.json",
+        "skills/nova/plugins/demo-handoff/schemas/adapter.schema.json",
+        "skills/nova/plugins/demo-handoff/schemas/candidate.schema.json",
+        "skills/nova/plugins/demo-handoff/schemas/delivery.schema.json",
+        "skills/nova/plugins/demo-handoff/schemas/empty.schema.json",
+        "skills/nova/plugins/demo-handoff/schemas/ready.schema.json",
+        "skills/nova/plugins/demo-handoff/schemas/result.schema.json",
+        "skills/nova/plugins/demo-handoff/tests/compiler.test.mjs",
+        "skills/nova/plugins/demo-handoff/tests/controller-client.test.mts",
+        "skills/nova/plugins/demo-handoff/tests/handoff.test.mts",
+        "skills/nova/plugins/human-approval/README.md",
+        "skills/nova/plugins/human-approval/package.json",
+        "skills/nova/plugins/human-approval/plugin.json",
+        "skills/nova/plugins/human-approval/schemas/architecture-input.schema.json",
+        "skills/nova/plugins/human-approval/schemas/config.schema.json",
+        "skills/nova/plugins/human-approval/schemas/input.schema.json",
+        "skills/nova/plugins/human-approval/schemas/result.schema.json",
+        "skills/nova/plugins/human-approval/tests/approval.unit.test.mjs",
+        "skills/nova/plugins/human-approval/tests/live-function.test.ts",
+        "skills/nova/plugins/human-approval/tests/package-boundary.test.mjs",
+        "skills/nova/plugins/implementation-agent/README.md",
+        "skills/nova/plugins/implementation-agent/package.json",
+        "skills/nova/plugins/implementation-agent/plugin.json",
+        "skills/nova/plugins/implementation-agent/schemas/config.schema.json",
+        "skills/nova/plugins/implementation-agent/schemas/input.schema.json",
+        "skills/nova/plugins/implementation-agent/schemas/result.schema.json",
+        "skills/nova/plugins/implementation-agent/tests/live-function.test.ts",
+        "skills/nova/plugins/implementation-agent/tests/package-boundary.test.mjs",
+        "skills/nova/plugins/implementation-agent/tests/protocol.test.ts",
+        "skills/nova/plugins/lint/README.md",
+        "skills/nova/plugins/lint/package.json",
+        "skills/nova/plugins/lint/plugin.json",
+        "skills/nova/plugins/lint/schemas/adapter-config.schema.json",
+        "skills/nova/plugins/lint/schemas/config.schema.json",
+        "skills/nova/plugins/lint/schemas/input.schema.json",
+        "skills/nova/plugins/lint/schemas/result.schema.json",
+        "skills/nova/plugins/lint/tests/adapter-boundary.test.mjs",
+        "skills/nova/plugins/lint/tests/discovery.test.mjs",
+        "skills/nova/plugins/lint/tests/eslint-discipline.test.mjs",
+        "skills/nova/plugins/lint/tests/eslint-type-evidence.test.mjs",
+        "skills/nova/plugins/lint/tests/live-function.test.ts",
+        "skills/nova/plugins/lint/tests/package-boundary.test.mjs",
+        "skills/nova/plugins/lint/tests/registry-lifecycle.test.mjs",
+        "skills/nova/plugins/lint/tests/remediation.test.mjs",
+        "skills/nova/plugins/lint/tests/report-contract.test.mjs",
+        "skills/nova/plugins/lint/tests/stage.unit.test.mjs",
+        "skills/nova/plugins/pipeline-review/README.md",
+        "skills/nova/plugins/pipeline-review/package.json",
+        "skills/nova/plugins/pipeline-review/plugin.json",
+        "skills/nova/plugins/pipeline-review/schemas/config.schema.json",
+        "skills/nova/plugins/pipeline-review/schemas/evidence-config.schema.json",
+        "skills/nova/plugins/pipeline-review/schemas/input.schema.json",
+        "skills/nova/plugins/pipeline-review/schemas/result.schema.json",
+        "skills/nova/plugins/pipeline-review/tests/live-function.test.ts",
+        "skills/nova/plugins/pipeline-review/tests/package-boundary.test.mjs",
+        "skills/nova/plugins/pipeline-review/tests/protocol.test.mjs",
+        "skills/nova/plugins/preflight-contract/README.md",
+        "skills/nova/plugins/preflight-contract/package.json",
+        "skills/nova/plugins/preflight-contract/plugin.json",
+        "skills/nova/plugins/preflight-contract/schemas/config.schema.json",
+        "skills/nova/plugins/preflight-contract/schemas/input.schema.json",
+        "skills/nova/plugins/preflight-contract/schemas/result.schema.json",
+        "skills/nova/plugins/preflight-contract/schemas/source-input.schema.json",
+        "skills/nova/plugins/preflight-contract/tests/declarations.unit.test.mjs",
+        "skills/nova/plugins/preflight-contract/tests/live-function.test.ts",
+        "skills/nova/plugins/preflight-contract/tests/package-boundary.test.mjs",
+        "skills/nova/plugins/prism-design/README.md",
+        "skills/nova/plugins/prism-design/package.json",
+        "skills/nova/plugins/prism-design/plugin.json",
+        "skills/nova/plugins/prism-design/schemas/config.schema.json",
+        "skills/nova/plugins/prism-design/schemas/input.schema.json",
+        "skills/nova/plugins/prism-design/schemas/result.schema.json",
+        "skills/nova/plugins/prism-design/tests/live-function.test.ts",
+        "skills/nova/plugins/project-summary/README.md",
+        "skills/nova/plugins/project-summary/package.json",
+        "skills/nova/plugins/project-summary/plugin.json",
+        "skills/nova/plugins/project-summary/schemas/config.schema.json",
+        "skills/nova/plugins/project-summary/schemas/input.schema.json",
+        "skills/nova/plugins/project-summary/schemas/result.schema.json",
+        "skills/nova/plugins/project-summary/tests/live-function.test.ts",
+        "skills/nova/plugins/project-summary/tests/package-boundary.test.mjs",
+        "skills/nova/plugins/remote-test-gate/README.md",
+        "skills/nova/plugins/remote-test-gate/package.json",
+        "skills/nova/plugins/remote-test-gate/plugin.json",
+        "skills/nova/plugins/remote-test-gate/schemas/config.schema.json",
+        "skills/nova/plugins/remote-test-gate/schemas/evidence-config.schema.json",
+        "skills/nova/plugins/remote-test-gate/tests/evidence-projection.test.ts",
+        "skills/nova/plugins/remote-test-gate/tests/live-function.test.ts",
+        "skills/nova/plugins/repository-adapter/README.md",
+        "skills/nova/plugins/repository-adapter/package.json",
+        "skills/nova/plugins/repository-adapter/plugin.json",
+        "skills/nova/plugins/repository-adapter/schemas/config.schema.json",
+        "skills/nova/plugins/repository-adapter/tests/live-function.test.ts",
+        "skills/nova/plugins/repository-adapter/tests/package-boundary.test.mjs",
+        "skills/nova/plugins/repository-adapter/tests/path-safety.test.ts",
+        "skills/nova/plugins/review/README.md",
+        "skills/nova/plugins/review/package.json",
+        "skills/nova/plugins/review/plugin.json",
+        "skills/nova/plugins/review/schemas/config.schema.json",
+        "skills/nova/plugins/review/schemas/echo-review-verification.v1.schema.json",
+        "skills/nova/plugins/review/schemas/input.schema.json",
+        "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+        "skills/nova/plugins/review/schemas/repository-audit-input.schema.json",
+        "skills/nova/plugins/review/schemas/repository-revalidation-input.schema.json",
+        "skills/nova/plugins/review/schemas/result.schema.json",
+        "skills/nova/plugins/review/schemas/review-bundle.v1.schema.json",
+        "skills/nova/plugins/review/schemas/review-bundle.v2.schema.json",
+        "skills/nova/plugins/review/schemas/review-policy.v1.schema.json",
+        "skills/nova/plugins/review/schemas/review-policy.v2.schema.json",
+        "skills/nova/plugins/review/schemas/review-report.v1.schema.json",
+        "skills/nova/plugins/review/schemas/review-report.v2.schema.json",
+        "skills/nova/plugins/review/schemas/review-report.v3.schema.json",
+        "skills/nova/plugins/review/tests/echo-review-output.unit.test.mjs",
+        "skills/nova/plugins/review/tests/echo-review-verification.unit.test.mjs",
+        "skills/nova/plugins/review/tests/live-function.test.ts",
+        "skills/nova/plugins/review/tests/package-boundary.test.mjs",
+        "skills/nova/plugins/review/tests/protocol.unit.test.mjs",
+        "skills/nova/plugins/review/tests/remediation.test.mjs",
+        "skills/nova/plugins/review/tests/repository-audit-stage.unit.test.mjs",
+        "skills/nova/plugins/review/tests/repository-revalidation.unit.test.mjs",
+        "skills/nova/plugins/review/tests/repository-review-io.test.ts",
+        "skills/nova/plugins/review/tests/repository-review-profile.unit.test.mjs",
+        "skills/nova/plugins/review/tests/review-bundle-contract.unit.test.mjs",
+        "skills/nova/plugins/review/tests/review-bundle-snapshot.unit.test.mjs",
+        "skills/nova/plugins/review/tests/review-cluster-contract.unit.test.mjs",
+        "skills/nova/plugins/review/tests/review-cluster-identity.unit.test.mjs",
+        "skills/nova/plugins/review/tests/review-content-cache.unit.test.mjs",
+        "skills/nova/plugins/review/tests/review-context-production.unit.test.mjs",
+        "skills/nova/plugins/review/tests/review-context-selection.unit.test.mjs",
+        "skills/nova/plugins/review/tests/review-contract-parity.unit.test.mjs",
+        "skills/nova/plugins/review/tests/review-coverage.test.mts",
+        "skills/nova/plugins/review/tests/review-decision-matrix.unit.test.mjs",
+        "skills/nova/plugins/review/tests/review-evaluation-metadata.unit.test.mjs",
+        "skills/nova/plugins/review/tests/review-evidence-authority.unit.test.mjs",
+        "skills/nova/plugins/review/tests/review-evidence-encoding-independent.test.mjs",
+        "skills/nova/plugins/review/tests/review-evidence-live-locales.test.mjs",
+        "skills/nova/plugins/review/tests/review-evidence-schema-independent.test.mjs",
+        "skills/nova/plugins/review/tests/review-fact-extractors.unit.test.mjs",
+        "skills/nova/plugins/review/tests/review-governor.unit.test.mjs",
+        "skills/nova/plugins/review/tests/review-graph.unit.test.mjs",
+        "skills/nova/plugins/review/tests/review-invariants.unit.test.mjs",
+        "skills/nova/plugins/review/tests/review-map-artifacts.unit.test.mjs",
+        "skills/nova/plugins/review/tests/review-policy-contract.unit.test.mjs",
+        "skills/nova/plugins/review/tests/review-policy-profiles.unit.test.mjs",
+        "skills/nova/plugins/review/tests/review-policy-resolver.unit.test.mjs",
+        "skills/nova/plugins/review/tests/review-prompt-budget.unit.test.mjs",
+        "skills/nova/plugins/review/tests/review-proposal-preflight.unit.test.mjs",
+        "skills/nova/plugins/review/tests/review-quality-corpus.unit.test.mjs",
+        "skills/nova/plugins/review/tests/review-reducer.unit.test.mjs",
+        "skills/nova/plugins/review/tests/review-report-builder.unit.test.mjs",
+        "skills/nova/plugins/review/tests/review-report-contract.unit.test.mjs",
+        "skills/nova/plugins/review/tests/review-report-encoding.test.mjs",
+        "skills/nova/plugins/review/tests/review-scale-slicing.unit.test.mjs",
+        "skills/nova/plugins/review/tests/review-slicing.unit.test.mjs",
+        "skills/nova/plugins/review/tests/review-snapshot-inventory.unit.test.mjs",
+        "skills/nova/plugins/review/tests/review-stage-input.unit.test.mjs",
+        "skills/nova/plugins/review/tests/review-stage-verification.unit.test.mjs",
+        "skills/nova/plugins/review/tests/review-verdict-policy.unit.test.mjs",
+        "skills/nova/plugins/review/tests/review-verification-reconciliation.unit.test.mjs",
+        "skills/nova/plugins/review/tests/review-verified-findings.unit.test.mjs",
+        "skills/nova/plugins/review/tests/scalable-review-compiler.unit.test.mjs",
+        "skills/nova/plugins/review/tests/scalable-review-jobs.unit.test.mjs",
+        "skills/nova/plugins/review/tests/scalable-review-topology.unit.test.mjs",
+        "skills/nova/plugins/review/tests/scalable-review-verification.unit.test.mjs",
+        "skills/nova/plugins/review/tests/simplification-contract.unit.test.mjs",
+        "skills/nova/plugins/review/tests/simplification-fact-producer.unit.test.mjs",
+        "skills/nova/plugins/review/tests/simplification-manifest.unit.test.mjs",
+        "skills/nova/plugins/review/tests/simplification-miner.unit.test.mjs",
+        "skills/nova/plugins/review/tests/stage.unit.test.mjs",
+        "skills/prism/openclaw-plugin/README.md",
+        "skills/prism/openclaw-plugin/index.test.mjs",
+        "skills/prism/openclaw-plugin/openclaw.plugin.json",
+        "skills/prism/openclaw-plugin/package.json"
+      ],
+      "checks": [
+        {
+          "command": "node scripts/docs-publication.mjs check",
+          "exitCode": 0,
+          "observation": "documentation publication passed (167 pages, 51 plugins)"
+        },
+        {
+          "command": "node scripts/docs-governance.mjs --check",
+          "exitCode": 0,
+          "observation": "documentation governance passed (167 pages mapped)"
+        },
+        {
+          "command": "node scripts/docs-check-refs.mjs",
+          "exitCode": 0,
+          "observation": "docs reference check passed (6103 local links, 3295 local anchors, 8317 repository path refs, 31816 pinned source links)"
+        },
+        {
+          "command": "npm run plugin-system:inventory:check && npm run docs:ap08:inventory:check",
+          "exitCode": 0,
+          "observation": "npm notice run plugin-system:inventory:check\nnpm notice run node scripts/plugin-system-inventory.mjs --check\nverified plugin-system inventory (49 roots, 67 registrations)\nnpm notice run docs:ap08:inventory:check\nnpm notice run node scripts/ap08-extension-inventory.mjs --check\nverified AP08 extension inventory (51 manifests)"
+        },
+        {
+          "command": "AP08 choice/minimal/advanced/effectful/host-lifecycle/observer/reader-reference checks",
+          "exitCode": 0,
+          "observation": "npm notice run docs:ap08:choice:check\nnpm notice run node scripts/check-ap08-choice-guide.mjs\nAP08 choice-guide check passed (24 pinned source links, 12 decision scenarios)\nnpm notice run docs:ap08:minimal-plugin:check\nnpm notice run node scripts/check-ap08-minimal-plugin.mjs\n{\"ok\":true,\"journey\":\"ap08-minimal-pipeline-plugin\",\"packageTest\":\"passed\",\"roleOmission\":\"rejected\",\"roleInclusion\":\"passed\",\"activatedStages\":1,\"successFact\":\"Hello, KubeClaw!\",\"intentionalFailure\":\"failed\",\"invalidInput\":\"rejected\",\"removal\":\"stage-owner-missing\",\"retainedRunJournals\":2,\"persistenceBoundary\":\"in-memory journal; persistent recovery requires separate checks\"}\nnpm notice run docs:ap08:advanced-guides:check\nnpm notice run node scripts/check-ap08-advanced-guides.mjs\n{\"ok\":true,\"pages\":4,\"pinnedSourceLinks\":94,\"registrations\":{\"novaStages\":21,\"novaAdapters\":6,\"novaObservers\":0,\"busterTests\":17,\"busterFixtures\":2,\"busterReports\":1},\"suites\":12}\nnpm notice run docs:ap08:effectful:check\nnpm notice run node scripts/check-ap08-effectful-guide.mjs\n{\"ok\":true,\"referencePlugin\":\"kubeclaw.blueprint-sync\",\"capabilityOrder\":[\"git.sync\",\"git.commit\",\"state.append\",\"artifacts.write\"],\"duplicateAdapterInvocations\":1,\"nextEffectAfterLockRelease\":\"completed\",\"failedRetryAdapterInvocations\":1,\"acceptedWithoutReceipt\":true,\"recoveredByReceipt\":\"completed\",\"cancellation\":\"rejected\",\"persistenceBoundary\":\"memory journals; GNU flock-dependent checks reported separately\"}\nnpm notice run docs:ap08:host-lifecycle-catalogue:check\nnpm notice run node scripts/check-ap08-host-lifecycle-catalogue.mjs && node scripts/check-ap08-observers.mjs && node scripts/check-ap08-reader-references.mjs\n{\"ok\":true,\"pages\":54,\"packages\":51,\"authoredRecords\":51,\"sourceTargets\":435,\"pinnedLineLinks\":72,\"auditStatuses\":{\"locally-verified\":18,\"content-written\":33},\"localResults\":{\"passed\":18,\"unavailable\":32,\"not-run\":1}}\n{\"ok\":true,\"observers\":[\"kubeclaw.agent-observability:ingester\",\"kubeclaw.agent-observability:evidence\",\"kubeclaw.notification-observer:notifications\",\"kubeclaw.notification-observer:preview-delivery\",\"kubeclaw.telemetry-observer:telemetry\"],\"proof\":\"registry identities, role inclusion, and selected activation; no delivery claim\"}\n{\"ok\":true,\"localLinks\":878,\"pinnedLinks\":1055,\"pinnedObjects\":743,\"boundary\":\"Targets, Markdown anchors and Git source ranges only; claim semantics require reader review.\"}"
+        }
+      ],
+      "review": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "summary": "Whole mechanical generated plugin facts, roles/packages/registrations and plugin-registration drift implementation: all51 manifests/inventory rows/package pages,67 pipeline registrations,2 OpenClaw extensions and1 Codex plugin; separate editorial guidance and actual discovery/comparison mechanisms audited.",
+      "limits": [
+        "No OPL001/005 full native runtime or credential semantics acceptance.",
+        "No A910-05 artifact/owner completeness, global API/discovery/generation/drift or rendered publication gate acceptance."
+      ],
+      "openIssues": [],
+      "verdict": "PASS",
+      "evidence": [
+        "docs/blueprint/acceptance-evidence/api-flow-configuration-fix-20261021/plugin-mechanisms-review.json",
+        "docs/blueprint/acceptance-evidence/api-flow-configuration-fix-20261021/plugins-complete-review.json",
+        "docs/blueprint/acceptance-evidence/api-flow-configuration-fix-20261021/generated-closeout-scope.json",
+        "docs/blueprint/acceptance-evidence/api-flow-configuration-fix-20261021/final-check-results.json"
       ]
     }
   ],
@@ -20939,7 +21729,7 @@
       "sourceDependencies": [
         "scripts/docs-publication.mjs"
       ],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "independent-whole-mechanism-review-PASS",
       "contentKind": "generated",
       "generator": "resolve from page generation metadata",
       "automatedChecks": [
@@ -20969,12 +21759,13 @@
         "quality",
         "astra-final"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L399",
-      "closureDecision": {
+      "completionRecord": "AP09-complete-plugin-maintenance-mechanisms-20261021",
+      "previousClosureDecision": {
         "verdict": "NOT_READY",
         "revision": "e161be417432d4ebdd22a3d84e09057df70abc0d",
         "reason": "- MNT-002 — Generierte Pluginfakten — NOT_READY. Canonical: docs/site/extend/plugin-catalogue/README.md. NOT_READY: catalogue discovery/rendering implementation is substantive; relevant AP08 inventory check is stale. Full current 51-page fact/schema/guidance parity was not independently verified; no regeneration or qualification attempted.",
@@ -21180,7 +21971,7 @@
       "sourceDependencies": [
         "scripts/docs-publication.mjs"
       ],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "independent-whole-mechanism-review-PASS",
       "contentKind": "generated",
       "generator": "resolve from page generation metadata",
       "automatedChecks": [
@@ -21210,12 +22001,13 @@
         "quality",
         "astra-final"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L404",
-      "closureDecision": {
+      "completionRecord": "AP09-complete-plugin-maintenance-mechanisms-20261021",
+      "previousClosureDecision": {
         "verdict": "NOT_READY",
         "revision": "e161be417432d4ebdd22a3d84e09057df70abc0d",
         "reason": "- MNT-007 — Generierte Rollen, Packages und Registrierungen — NOT_READY. Canonical: docs/site/extend/plugin-catalogue/README.md. NOT_READY: AP08 inventory derives role inclusion and registrations from actual role/manifest files, but its current byte check is stale; complete current role/package/registration reader parity not independently closed.",
@@ -21421,7 +22213,7 @@
       "sourceDependencies": [
         "scripts/docs-publication.mjs"
       ],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "independent-whole-mechanism-review-PASS",
       "contentKind": "generated",
       "generator": "resolve from page generation metadata",
       "automatedChecks": [
@@ -21451,12 +22243,13 @@
         "quality",
         "astra-final"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L409",
-      "closureDecision": {
+      "completionRecord": "AP09-complete-plugin-maintenance-mechanisms-20261021",
+      "previousClosureDecision": {
         "verdict": "NOT_READY",
         "revision": "e161be417432d4ebdd22a3d84e09057df70abc0d",
         "reason": "- MNT-012 — Driftcheck für Plugins und Registrierungen — NOT_READY. Canonical: docs/site/extend/plugin-catalogue/README.md. NOT_READY: lint manifest Add/Change/Remove and eight semantic controls pass. This is not recursive new-package discovery or extension-class/provider/fixture/report path completeness; current AP08 inventory is stale.",
@@ -36990,12 +37783,12 @@
       "scope": "Author32Bash53Node20CJS24syntheticchecks only, noformal6scenario/live/ReaderQualityapproval."
     },
     "currentCloseout20261021": {
-      "securedSourceRevision": "6abafbbc81a728f3ea7f12e83426c9565a72c473",
-      "acceptedRequirements": 192,
+      "securedSourceRevision": "2f8a116e00d6d38a5cc5076b10befcabe426f9f4",
+      "acceptedRequirements": 195,
       "acceptedGates": 13,
-      "newRequirementsThisCampaign": 33,
+      "newRequirementsThisCampaign": 36,
       "newGatesThisCampaign": 2,
-      "nextWork": "Finish remaining plugin/configuration/event/reference and workflow requirements. Latest full script-role scan1478outputs,495unknown in184Sources; no global generation or rendered publication PASS.",
+      "nextWork": "Continue whole ready-topic reviews; resolve actual global discovery/generation, workflow and rendered publication gaps without broadening mechanical maintenance acceptance.",
       "codeCandidate": "Core fixed-module receipt plus five exact dependent role propagations independently PASS.58/58 documentation roles and52/52 custody/publication tests PASS; whole global discovery still blocked by495unknown outputs. Code candidate6abafbbc.",
       "currentGlobalBlocker": "DOCUMENTATION_TOOL_OUTPUT_ROLE_UNQUALIFIED: scripts/docs-check.mjs; current Markdown stripping/export/main guard differs from Source-owned executable role receipt.",
       "publication": "167pages51plugins pass publicationcheck and Markdownbuild; no rendered HTML/browser/search proof.",
