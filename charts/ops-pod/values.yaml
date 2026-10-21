@@ -22,8 +22,8 @@ rbac:
   # The deployment helper discovers existing platform namespaces. RoleBindings
   # must not refer to namespaces that do not exist yet.
   namespaces: [kubeclaw]
-  # Explicit application namespaces for kubectl exec from the Codex container.
-  # Independent of discovered observer namespaces; [] disables exec and its token mount.
+  # Upper bound on namespaces where the MCP may exec. Per-client grants below
+  # further restrict target labels, containers, timeout and output size.
   execNamespaces: [kubeclaw]
 argoNamespace: argocd
 defaultNamespace: kubeclaw
@@ -44,3 +44,39 @@ tailscale:
   resources:
     requests: {cpu: 25m, memory: 64Mi}
     limits: {cpu: 500m, memory: 256Mi}
+
+# Central MCP service. Credentials/TLS are provisioned by the operator bootstrap,
+# not stored in Helm values. Each client receives only its own credential.
+mcp:
+  tlsSecret: codex-ops-mcp-tls
+  caConfigMap: ops-mcp-ca
+  clients:
+    - id: codex
+      tokenSecret: codex-ops-bearer
+      namespace: kubeclaw-ops
+      podLabels: {app.kubernetes.io/name: codex-ops}
+      namespaces: [kubeclaw]
+      tools: [platform_cluster_state, platform_network_state, namespace_overview, get_pod, get_events, get_pod_logs, get_hubble_flows, get_pod_metrics, exec_pod]
+      exec:
+        - namespace: kubeclaw
+          podLabels: {app.kubernetes.io/instance: agent-buster}
+          containers: [buster-v2-runtime]
+          timeoutSeconds: 30
+          maxOutputBytes: 65536
+        - namespace: kubeclaw
+          podLabels: {app.kubernetes.io/instance: agent-nova}
+          containers: [kubeclaw, archviewer]
+          timeoutSeconds: 30
+          maxOutputBytes: 65536
+    - id: nova
+      tokenSecret: nova-ops-bearer
+      namespace: kubeclaw
+      podLabels: {app.kubernetes.io/instance: agent-nova}
+      namespaces: [kubeclaw]
+      tools: [namespace_overview, get_pod, get_events, get_pod_logs, get_pod_metrics, exec_pod]
+      exec:
+        - namespace: kubeclaw
+          podLabels: {app.kubernetes.io/instance: agent-buster}
+          containers: [buster-v2-runtime]
+          timeoutSeconds: 30
+          maxOutputBytes: 65536

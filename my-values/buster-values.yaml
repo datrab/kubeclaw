@@ -220,8 +220,6 @@ busterNamespaceBroker:
   enabled: true
   controller:
     allowedAccess:
-      - subject: kubeclaw/agent-nova
-        modes: [deployer]
       - subject: kubeclaw/agent-buster
         modes: [deployer, tester]
     allowedSourceSecrets:

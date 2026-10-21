@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 """Operator-side discovery and credential setup; never prints secret values."""
+import base64
+import tempfile
 import ipaddress
 import json
 import os
@@ -26,9 +28,46 @@ def get(kind, name, ns=None):
     text = kube(args).strip()
     return json.loads(text) if text else None
 
-def apply_secret(name, values):
+def apply_secret(name, values, target_namespace=None):
     kube(['apply', '-f', '-'], json.dumps({'apiVersion': 'v1', 'kind': 'Secret',
-         'metadata': {'name': name, 'namespace': namespace}, 'type': 'Opaque', 'stringData': values}))
+         'metadata': {'name': name, 'namespace': target_namespace or namespace}, 'type': 'Opaque', 'stringData': values}))
+
+def setup_mcp_clients():
+    # Separate credentials; Nova receives only its own token. Existing credentials
+    # are retained. Refuse ambiguous duplicates rather than silently rotate one end.
+    nova_namespace = os.environ.get('OPS_NOVA_NAMESPACE', 'kubeclaw')
+    name = 'nova-ops-bearer'
+    source = get('secret', name, namespace)
+    destination = get('secret', name, nova_namespace)
+    if source and destination and source['data']['token'] != destination['data']['token']:
+        raise SystemExit('Nova MCP credentials differ; coordinate an explicit rotation before deploying')
+    existing = source or destination
+    token = base64.b64decode(existing['data']['token']).decode() if existing else secrets.token_urlsafe(48)
+    if not source:
+        apply_secret(name, {'token': token})
+    if not destination:
+        apply_secret(name, {'token': token}, nova_namespace)
+    # Bootstrap a private service certificate. Production operators can provision
+    # this Secret through their PKI instead. No key is printed or committed.
+    release = os.environ.get('OPS_RELEASE', 'codex-ops')
+    tls_name = release + '-mcp-tls'
+    tls = get('secret', tls_name, namespace)
+    if not tls:
+        host = release + '-mcp.' + namespace + '.svc'
+        with tempfile.TemporaryDirectory(prefix='ops-mcp-tls-') as directory:
+            key, cert = Path(directory) / 'tls.key', Path(directory) / 'tls.crt'
+            subprocess.run(['openssl', 'req', '-x509', '-newkey', 'rsa:3072', '-nodes', '-days', '90',
+                '-keyout', str(key), '-out', str(cert), '-subj', '/CN=' + host,
+                '-addext', 'subjectAltName=DNS:' + host + ',DNS:' + host + '.cluster.local'],
+                check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+            apply_secret(tls_name, {'tls.key': key.read_text(), 'tls.crt': cert.read_text()})
+            certificate = cert.read_text()
+    else:
+        certificate = base64.b64decode(tls['data']['tls.crt']).decode()
+    for target in dict.fromkeys([namespace, nova_namespace]):
+        kube(['apply', '-f', '-'], json.dumps({'apiVersion': 'v1', 'kind': 'ConfigMap',
+            'metadata': {'name': 'ops-mcp-ca', 'namespace': target}, 'data': {'ca.crt': certificate}}))
+
 
 def discover():
     endpoints = get('endpoints', 'kubernetes', 'default')
@@ -69,7 +108,8 @@ def setup_secrets():
             if not value:
                 raise SystemExit(variable + ' contains an empty credential')
             apply_secret(name, {key: value})
-    print('Ops credentials prepared; existing bearer and pull credentials retained')
+    setup_mcp_clients()
+    print('Ops credentials and MCP trust prepared; existing client credentials retained')
 
 if __name__ == '__main__':
     if sys.argv[1:] == ['discover']:

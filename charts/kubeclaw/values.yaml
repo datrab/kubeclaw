@@ -433,8 +433,6 @@ busterNamespaceBroker:
       # Subjects without a namespace are resolved in the Helm release namespace.
       - subject: agent-buster
         modes: [deployer, tester]
-      - subject: agent-nova
-        modes: [deployer]
     # Only these Secrets can be copied from the release namespace into a test
     # namespace. Test-login Secrets are created separately and scoped by name.
     allowedSourceSecrets: []
@@ -551,3 +549,10 @@ busterRuntimePersistence:
   claimName: ""
   size: 64Gi
   storageClass: ""
+
+# Agents use this MCP client instead of Kubernetes credentials.
+opsMcp:
+  enabled: false
+  url: https://codex-ops-mcp.kubeclaw-ops.svc:8080/mcp
+  tokenSecret: nova-ops-bearer
+  caConfigMap: ops-mcp-ca

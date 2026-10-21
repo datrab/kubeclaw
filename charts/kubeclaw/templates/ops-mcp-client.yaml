@@ -1,0 +1,9 @@
+{{- if .Values.opsMcp.enabled }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "kubeclaw.fullname" . }}-ops-mcp-client
+data:
+  client.mjs: |
+{{ .Files.Get "files/ops-mcp-client.mjs" | indent 4 }}
+{{- end }}

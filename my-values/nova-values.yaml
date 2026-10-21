@@ -79,14 +79,14 @@ agent:
 
 serviceAccount:
   create: true
-  automount: true
+  automount: false
 
 busterNamespaceBroker:
   enabled: true
   leaseClient:
-    enabled: true
+    enabled: false
     verificationRead:
-      enabled: true
+      enabled: false
 
 archviewer:
   enabled: true
@@ -250,6 +250,13 @@ workspace:
     Exit 0 means succeeded (or compiled); exit 1 means a non-success result or error.
 
   tools: |
+    ## Cluster operations
+    Use only the central Ops MCP. No direct Kubernetes credentials or kubectl.
+    List available tools: `node /opt/ops-mcp-client/client.mjs list`
+    Call a tool: `node /opt/ops-mcp-client/client.mjs call get_pod '{"namespace":"kubeclaw","pod":"<pod-name>"}'`
+    Exec is a separate, audited MCP tool; follow its schema and target grants.
+    Never retry an exec after timeout/disconnect without checking its effects.
+
     ## Pipeline
     pipeline.ts --platform <platform.json> --project <project.json> [--compile <new-pipeline.json> | --recover <run-id> | --signal <resume-signal.json>]
     Explicit core graphs remain supported with --pipeline <pipeline.json> and
@@ -279,3 +286,9 @@ workspace:
     2. Get familiar with your enviroment
     3. Post to Discord: "🔭 Nova online." + quick summary of your enviroment
     4. Delete this file.
+
+opsMcp:
+  enabled: true
+  url: https://codex-ops-mcp.kubeclaw-ops.svc:8080/mcp
+  tokenSecret: nova-ops-bearer
+  caConfigMap: ops-mcp-ca

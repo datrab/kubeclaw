@@ -17,6 +17,7 @@ export function loadOpsMcpConfig(environment = process.env) {
   const argoNamespace = environment.ARGOCD_NAMESPACE ?? 'argocd';
   return Object.freeze({ port, host, localOnly, defaultNamespace, argoNamespace,
     namespaces: allowedNamespaces(environment.OPS_ALLOWED_NAMESPACES, defaultNamespace, argoNamespace),
+    policyFile: environment.OPS_MCP_POLICY_FILE,
     bearer: { file: environment.OPS_MCP_BEARER_TOKEN_FILE, token: environment.OPS_MCP_BEARER_TOKEN },
     allowedOrigins: new Set((environment.MCP_ALLOWED_ORIGINS ?? '').split(',').map(value => value.trim()).filter(Boolean)),
   });

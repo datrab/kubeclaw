@@ -1,0 +1,89 @@
+import { readFileSync } from 'node:fs';
+import { createHash, timingSafeEqual, randomUUID } from 'node:crypto';
+import { AsyncLocalStorage } from 'node:async_hooks';
+import { createBearerAuthorization } from './authentication.mjs';
+
+export const requestIdentity = new AsyncLocalStorage();
+export const TOOL_NAMES = ['platform_cluster_state', 'platform_network_state', 'list_argocd_applications',
+  'namespace_overview', 'get_pod', 'get_events', 'get_pod_logs', 'get_hubble_flows', 'get_pod_metrics', 'exec_pod'];
+const dns = /^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$/;
+const strings = (v, check) => Array.isArray(v) && v.every(x => typeof x === 'string' && check(x));
+const positive = (v, max) => Number.isInteger(v) && v > 0 && v <= max;
+const hash = v => createHash('sha256').update(v).digest();
+
+export function parsePolicy(text, allowedNamespaces) {
+  const value = JSON.parse(text);
+  if (!Array.isArray(value.clients) || !value.clients.length || value.clients.length > 64) throw new Error('Invalid Ops MCP client policy');
+  const ids = new Set();
+  for (const client of value.clients) {
+    if (!dns.test(client.id) || ids.has(client.id) || typeof client.tokenFile !== 'string' || !client.tokenFile.startsWith('/') ||
+        !strings(client.tools, x => TOOL_NAMES.includes(x)) ||
+        !strings(client.namespaces, x => allowedNamespaces.includes(x))) throw new Error('Invalid Ops MCP client policy');
+    ids.add(client.id);
+    if (!Array.isArray(client.exec)) throw new Error('Explicit exec grants are required (use [] to deny)');
+    for (const grant of client.exec) {
+      if (!client.namespaces.includes(grant.namespace) || !grant.podLabels || typeof grant.podLabels !== 'object' || Array.isArray(grant.podLabels) ||
+          !Object.keys(grant.podLabels).length || !Object.entries(grant.podLabels).every(([k,v]) => typeof v === 'string' && k.length > 0 && v.length > 0) ||
+          !strings(grant.containers, x => dns.test(x)) || !grant.containers.length ||
+          !positive(grant.timeoutSeconds, 120) || !positive(grant.maxOutputBytes, 65536)) throw new Error('Invalid Ops MCP exec grant');
+    }
+  }
+  return value.clients;
+}
+
+export function createAccessPolicy(config) {
+  if (!config.policyFile) {
+    // Compatibility for explicitly configured standalone observers. Exec is
+    // never enabled by the old shared bearer configuration.
+    const bearer = createBearerAuthorization(config.bearer);
+    return { ready: () => bearer.ready(), authenticate: header => bearer.authorized(header)
+      ? { id: 'legacy-observer', namespaces: config.namespaces, tools: TOOL_NAMES.filter(x => x !== 'exec_pod' && (config.localOnly || !x.startsWith('platform_'))), exec: [] } : null };
+  }
+  if (config.bearer.file || config.bearer.token) throw new Error('Do not combine a client policy with a shared bearer');
+  const load = () => {
+    const clients = parsePolicy(readFileSync(config.policyFile, 'utf8'), config.namespaces);
+    const digests = new Set();
+    return clients.map(client => {
+      const token = readFileSync(client.tokenFile, 'utf8').trim();
+      if (!/^[A-Za-z0-9._~-]{32,512}$/.test(token)) throw new Error('Invalid Ops MCP client credential');
+      const digest = hash(`Bearer ${token}`);
+      const hex = digest.toString('hex');
+      if (digests.has(hex)) throw new Error('Ops MCP clients require distinct credentials');
+      digests.add(hex);
+      return { client, digest };
+    });
+  };
+  load(); // Fail closed before listening. Reopen mounted files on each request.
+  return {
+    ready() { try { load(); return true; } catch { return false; } },
+    authenticate(header) {
+      if (typeof header !== 'string' || header.length > 519) return null;
+      try {
+        const supplied = hash(header);
+        return load().find(({ digest }) => timingSafeEqual(supplied, digest))?.client ?? null;
+      } catch { return null; }
+    },
+  };
+}
+
+export function authorizeTool(client, tool, args, argoNamespace) {
+  if (!client?.tools.includes(tool)) throw new Error('OPS_TOOL_FORBIDDEN');
+  const namespace = tool === 'list_argocd_applications' ? argoNamespace : args.namespace;
+  if (namespace && !client.namespaces.includes(namespace)) throw new Error('OPS_NAMESPACE_FORBIDDEN');
+}
+
+export function authorizeExec(client, args, pod) {
+  const grant = client.exec.find(grant => grant.namespace === args.namespace && grant.containers.includes(args.container) &&
+    Object.entries(grant.podLabels).every(([k, v]) => pod.metadata?.labels?.[k] === v));
+  if (!grant || !pod.spec?.containers?.some(c => c.name === args.container)) throw new Error('OPS_EXEC_TARGET_FORBIDDEN');
+  return { ...args, timeoutSeconds: Math.min(args.timeoutSeconds, grant.timeoutSeconds),
+    maxOutputBytes: Math.min(args.maxOutputBytes, grant.maxOutputBytes) };
+}
+
+export function audit(event) {
+  // Do not log bearer values, command arguments, output or Kubernetes bodies.
+  const context = requestIdentity.getStore();
+  console.error(JSON.stringify({ type: 'ops-mcp-audit', time: new Date().toISOString(),
+    requestId: context?.requestId, client: context?.client.id ?? 'unauthenticated', ...event }));
+}
+export function identityContext(client) { return { client, requestId: randomUUID() }; }
