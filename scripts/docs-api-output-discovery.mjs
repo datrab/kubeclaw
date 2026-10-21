@@ -1344,6 +1344,69 @@ const scriptOutputCache=new Map();
 const reviewedDiagnosticOutputSources={
   'scripts/check-site-reader-boundary.mjs':'8621bd96590bae1dbdb973ddee07be8fccf27cc66f6be0acb9d13dc71438e5c5',
 };
+// A finite original --check observation binds this API producer to its exact
+// checked artifacts. Inventory only reads the witness; it never executes the
+// producer. Changing mutable metadata cannot extend this Source-owned profile.
+const reviewedArgocdArtifactProfile=Object.freeze({
+  source:'scripts/argocd-self-management.mjs',
+  sourceSha256:'79330ccdc6c86a6a3187e538f3a11fb2ab13e97d24e7b9681b1b2a52d2fe7b26',
+  authority:'scripts/docs-api-argocd-checked-artifact-authority.json',
+  authoritySha256:'7abbde7936cf38bf53b0e3424cb5e10276ff3e1e06457a0ead6edec2eb01e31f',
+});
+export function checkedArgocdArtifactOutputs(root,source,sourceBytes) {
+  const profile=reviewedArgocdArtifactProfile;
+  if(source!==profile.source||hash(sourceBytes)!==profile.sourceSha256)return null;
+  const fail=detail=>assert.fail(`API_PRODUCT_CHECKED_ARTIFACT_UNQUALIFIED: ${source}; ${detail}; revalidate the original read-only check and review its Source-owned witness`);
+  if(!path.isAbsolute(root)||fs.realpathSync(root)!==root)fail('canonical checkout root');
+  const read=file=>{
+    if(typeof file!=='string'||path.isAbsolute(file)||file.split('/').some(part=>!part||part==='.'||part==='..')||file.includes('\\'))fail('relative input path');
+    const absolute=path.join(root,file);
+    if(!fs.existsSync(absolute)||fs.realpathSync(absolute)!==absolute||!fs.lstatSync(absolute).isFile())fail(`physical input ${file}`);
+    return fs.readFileSync(absolute);
+  };
+  const authorityBytes=read(profile.authority);
+  if(hash(authorityBytes)!==profile.authoritySha256)fail('immutable witness digest');
+  const authority=JSON.parse(authorityBytes);
+  if(authority.source!==source||authority.sourceSha256!==profile.sourceSha256||authority.observation.originalCheck.exit!==0)fail('producer observation');
+  for(const file of authority.absentPackageBoundaries){
+    try{fs.lstatSync(path.join(root,file));fail(`new package boundary ${file}`);}catch(error){if(error.code!=='ENOENT')throw error;}
+  }
+  const buffers=new Map();
+  for(const fact of authority.observation.inputsAndCheckedOutputs){
+    const bytes=read(fact.path);
+    if(hash(bytes)!==fact.sha256)fail(`changed input or checked artifact ${fact.path}`);
+    buffers.set(fact.path,bytes);
+  }
+  if(!buffers.get(source)?.equals(Buffer.from(sourceBytes)))fail('selected source snapshot');
+  const dependencies=[profile.authority,...buffers.keys()];
+  const inputDigest=hash(authorityBytes);
+  const outputs=authority.observation.outputs.map((record,index)=>{
+    const bytes=buffers.get(record.path);
+    if(!bytes||hash(bytes)!==record.outputSha256)fail(`output identity ${record.path}`);
+    const value=YAML.parse(bytes.toString('utf8'));
+    if(value?.apiVersion!==record.apiVersion||value?.kind!==record.kind||value?.metadata?.name!==record.name||hash(JSON.stringify(value))!==record.valueSha256)fail(`parsed API identity ${record.path}`);
+    return {value,context:{apiVersion:value.apiVersion,kind:value.kind,path:source,document:index,
+      sourceDigest:profile.sourceSha256,producer:'node-original-checked-artifact',profile:authority.profile,
+      sourceLine:authority.descriptor.line,artifactPath:record.path,artifactDigest:record.outputSha256,
+      inputs:dependencies,inputDigest,outputDigest:hash(JSON.stringify(value)),
+      executionLimit:'Original isolated read-only --check observation only; no producer execution by inventory, normal generation, cluster apply or general helper-mode qualification.'}};
+  });
+  return {outputs,dependencies,descriptor:authority.descriptor,witnessDigest:inputDigest};
+}
+export function assertCheckedArtifactEntryContext(graph,source) {
+  assert(graph&&!graph.edges.some(edge=>edge.target===source&&edge.source!==source)
+    &&!graph.publicEntries.some(entry=>entry.path!==entry.canonicalSource&&entry.canonicalSource===source),
+  `API_PRODUCT_CHECKED_ARTIFACT_CALLER_UNQUALIFIED: ${source}; imported or aliased entry needs its own caller qualification`);
+}
+function checkedArtifactRole(role,witness) {
+  if(!witness||role.role!=='unknown')return role;
+  const descriptor=witness.descriptor;
+  assert(role.line===descriptor.line&&role.sink===descriptor.sink&&hash(role.expression)===descriptor.expressionSha256,
+    'API_PRODUCT_CHECKED_ARTIFACT_DESCRIPTOR_UNQUALIFIED');
+  return {...role,role:'api-adapted',basis:'Source-owned-original-check-to-exact-API-artifacts',
+    checkedArtifactWitnessDigest:witness.witnessDigest,
+    dependencies:[...new Set([...role.dependencies,...witness.dependencies])]};
+}
 function assertReviewedDiagnosticOutputSources(root) {
   const registry=path.join(root,'scripts/docs-api-producer-adapter-authorities.json');
   if(!fs.existsSync(registry))return;
@@ -1361,6 +1424,12 @@ export function discoverScriptApiOutputs(root) {
   // returning cached API output.
   const validatedDocumentationTools=documentationToolSources(root);
   const executableSources=nodeOutputExecutableSources(root),executableSourceSet=new Set(executableSources);
+  // Revalidate before cache reuse, including absent package boundaries that
+  // cannot be represented by a digest of an existing dependency file.
+  const checkedArtifact=executableSourceSet.has(reviewedArgocdArtifactProfile.source)
+    ?checkedArgocdArtifactOutputs(root,reviewedArgocdArtifactProfile.source,
+      fs.readFileSync(path.join(root,reviewedArgocdArtifactProfile.source),'utf8')):null;
+  if(checkedArtifact)assertCheckedArtifactEntryContext(documentationGraphCache.get(root),reviewedArgocdArtifactProfile.source);
   const sourceInputs=walkProductSources(root,producerRoots,()=>true);
   if(fs.existsSync(path.join(root,'package.json')))sourceInputs.push('package.json');
   const inputKey=hash(JSON.stringify([documentationGraphCache.get(root).inputKey,sourceInputs.map(source=>[source,hash(fs.readFileSync(path.join(root,source)))])]));
@@ -1428,9 +1497,11 @@ export function discoverScriptApiOutputs(root) {
     const bytes=fs.readFileSync(path.join(root,source),'utf8');
     assert(!/(?:from\s*|(?:require|import)\(\s*)['"]@kubernetes\/client-node['"]/u.test(bytes),`API_PRODUCT_SCRIPT_TYPED_SDK_UNQUALIFIED: ${source}; documentation output adapter maintainers must classify the typed emitter`);
     if(/\b(?:spawnSync|execFileSync|execFile|spawn)\(\s*['"]helm['"]/u.test(bytes))assertProducerAdapterAuthority(root,[source]);
-    const outputRoles=classifyOutputRoles(source);
+    const witness=source===reviewedArgocdArtifactProfile.source?checkedArtifact:null;
+    const outputRoles=classifyOutputRoles(source).map(role=>checkedArtifactRole(role,witness));
     for(const role of outputRoles)for(const dependency of role.dependencies??[])classifiedDependencies.add(dependency);
     for(const role of outputRoles)assert(role.role!=='unknown',`API_PRODUCT_SCRIPT_OUTPUT_ROLE_UNQUALIFIED: ${source}:${role.line}: ${role.expression}`);
+    if(witness){result.push(...witness.outputs);continue;}
     if(!outputRoles.some(role=>role.role==='api')&&(!/apiVersion/u.test(bytes)||!/(?:kind\s*:|['"]kind['"]\s*:)/u.test(bytes)))continue;
     const tree=ts.createSourceFile(source,bytes,ts.ScriptTarget.Latest,true,/\.[cm]?ts$/u.test(source)?ts.ScriptKind.TS:ts.ScriptKind.JS);
     assert(!tree.parseDiagnostics.length,`API_PRODUCT_PRODUCER_PARSE_FAILED: ${source}`);
@@ -1731,10 +1802,13 @@ export function discoverScriptOutputRoleClassifications(root) {
   const sources=nodeOutputExecutableSources(root).filter(file=>!documentationTools.has(file));
   const classify=createSerializedOutputRoleClassifier(root,sources);
   const observations=discoverDeploymentNodeOutputObservations(root);
-  return sources.flatMap(source=>classify(source).flatMap(role=>{
-    // Observations are annotations on the original scanner descriptor, NOT a
-    // file-level role grant. Unknown remains unknown, including mandatory
-    // API-producer admission; callers cannot supply a role or a context label.
+  return sources.flatMap(source=>{
+    const witness=checkedArgocdArtifactOutputs(root,source,fs.readFileSync(path.join(root,source),'utf8'));
+    if(witness)assertCheckedArtifactEntryContext(documentationGraphCache.get(root),source);
+    return classify(source).map(role=>checkedArtifactRole(role,witness)).flatMap(role=>{
+    // Deployment observations alone remain annotations, never role grants.
+    // The separate Source-owned checked-artifact profile above binds one exact
+    // descriptor and API output set; all other unknown outputs stay unknown.
     const selectedOccurrences=(observations??[]).filter(observation=>
       observation.source===source&&observation.descriptor.line===role.line&&
       observation.descriptor.sink===role.sink&&observation.descriptor.expression===role.expression);
@@ -1748,7 +1822,7 @@ export function discoverScriptOutputRoleClassifications(root) {
       const {selectedOccurrences,...unqualifiedAlias}=context;
       return unqualifiedAlias;
     });
-  }));
+  });});
 }
 export function discoverNonApiOutputClassifications(root) {discoverShellApiOutputs(root);return [...(nonApiOutputClassifications.get(root)??[]),...discoverScriptOutputRoleClassifications(root).filter(role=>role.role==='non-api')];}
 export function shellRawOutputSinks(source,bytes) {

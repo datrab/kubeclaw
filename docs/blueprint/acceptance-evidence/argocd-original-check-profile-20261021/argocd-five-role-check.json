@@ -1,0 +1,11 @@
+{
+  "passed": 5,
+  "total": 5,
+  "sources": [
+    "scripts/docs-api-output-discovery.mjs",
+    "scripts/docs-api-product-scope.mjs",
+    "scripts/docs-api-reference.mjs",
+    "scripts/docs-configuration-inventory.mjs",
+    "scripts/docs-generate.mjs"
+  ]
+}

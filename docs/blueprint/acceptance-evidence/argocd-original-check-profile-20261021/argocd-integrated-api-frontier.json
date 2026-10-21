@@ -1,0 +1,6 @@
+{
+  "complete": false,
+  "code": "ERR_ASSERTION",
+  "message": "API_PRODUCT_SCRIPT_OUTPUT_ROLE_UNQUALIFIED: scripts/build-runtime-role-bundle.mjs:74: undefined",
+  "stack": "AssertionError [ERR_ASSERTION]: API_PRODUCT_SCRIPT_OUTPUT_ROLE_UNQUALIFIED: scripts/build-runtime-role-bundle.mjs:74: undefined\n    at discoverScriptApiOutputs (file:///home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/docs-api-output-discovery.mjs:1503:35)\n    at file:///home/node/.openclaw/workspace/kubeclaw-pr13-recovery/[eval1]:1:121\n    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at async node:internal/modules/esm/loader:223:26\n    at async ModuleLoader.executeModuleJob (node:internal/modules/esm/loader:220:20)\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)"
+}

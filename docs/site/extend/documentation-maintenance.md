@@ -3,9 +3,9 @@
 Status: source-described maintainer workflow; each change needs its own check and reader results
 Audience: developer, documentation maintainer, documentation agent
 Owner: documentation
-Evidence: scripts/docs-governance.mjs; scripts/docs-generate.mjs; scripts/docs-inventory.mjs; scripts/docs-configuration-inventory.mjs; scripts/check-configuration-cli-drift.mjs; scripts/check-configuration-drift-mutations.mjs; scripts/docs-platform-surface-inventory.mjs; scripts/docs-publication.mjs; scripts/docs-tree-boundary.mjs; scripts/docs-parity-transition.mjs; docs/config/documentation-tree-classification.json; docs/config/documentation-tree-baseline.json; docs/site/reference/documentation-route-registry.json; package.json; .github/workflows/docs-checks.yaml; scripts/vendor-external-helm-authorities.mjs; scripts/external-helm-archives.json; scripts/docs-external-helm-authority-lock.json; scripts/tests/vendor-external-helm-authorities.test.mjs
+Evidence: scripts/docs-governance.mjs; scripts/docs-generate.mjs; scripts/docs-inventory.mjs; scripts/docs-configuration-inventory.mjs; scripts/check-configuration-cli-drift.mjs; scripts/check-configuration-drift-mutations.mjs; scripts/docs-platform-surface-inventory.mjs; scripts/docs-publication.mjs; scripts/docs-tree-boundary.mjs; scripts/docs-parity-transition.mjs; docs/config/documentation-tree-classification.json; docs/config/documentation-tree-baseline.json; docs/site/reference/documentation-route-registry.json; package.json; .github/workflows/docs-checks.yaml; scripts/vendor-external-helm-authorities.mjs; scripts/external-helm-archives.json; scripts/docs-external-helm-authority-lock.json; scripts/tests/vendor-external-helm-authorities.test.mjs; scripts/docs-api-output-discovery.mjs; scripts/docs-api-argocd-checked-artifact-authority.json
 Applies to: authored reader pages, source-derived documentation, and their ownership and publication inputs
-Last verified: 2026-10-21; bounded plugin-schema and vendored-authority routes checked; other paths source-described, not executed
+Last verified: 2026-10-21; bounded plugin-schema, vendored-authority and original Argo artifact-check routes checked; other paths source-described, not executed
 
 ## Start with the changed behavior
 
@@ -183,6 +183,48 @@ A command listed in the map is a requirement to evaluate, not a saved result.
 The broader `docs:check` and `docs:publish-check` include additional tests and
 staging effects. Use [Documentation site and publication](../reference/documentation-site.md)
 to inspect their output and distinguish Markdown staging from rendered behavior.
+
+### Revalidate a source-owned generator artifact binding
+
+The Argo bootstrap producer remains an API producer. Its inventory adapter
+does not execute it or classify it as diagnostic output. The owning
+`scripts/docs-api-output-discovery.mjs` profile pins the exact Source and the
+complete `scripts/docs-api-argocd-checked-artifact-authority.json` snapshot.
+Changed Source, inputs, loader bytes, checked YAML, package boundaries or
+caller context stop admission. Editing the snapshot alone cannot grant a new
+producer or refresh the immutable Source-owned digest.
+
+The generator owner must first review the original entry and its complete
+import/initialization closure for the exact `--check` mode. Reuse a previous
+review only where those bytes and branches are unchanged. Normal generation,
+helper CLI modes, imported wrappers and aliased entries need separate review.
+
+Prepare a new private, canonical checkout containing byte-identical modules,
+data, checked artifacts and physical locked dependencies. Record the selected
+Node binary/version/digest and the actual ESM `js-yaml` resolution; its ESM
+bundle is not the CommonJS entry. In that private checkout, bind
+`NODE_BINARY` to the reviewed absolute binary and `PRIVATE_CHECKOUT` to its
+absolute root, then run only:
+
+```sh
+env -i PATH=/usr/local/bin:/usr/bin:/bin LANG=C.UTF-8 TZ=UTC \
+  "$NODE_BINARY" --permission --allow-fs-read="$PRIVATE_CHECKOUT" \
+  "$PRIVATE_CHECKOUT/scripts/argocd-self-management.mjs" --check
+```
+
+Do not remove `--check`, enable writes or children, or inherit Node preload or
+loader options. A failed comparison is a stop, not a successful witness.
+Filesystem permissions do not establish network isolation: the separately
+reviewed call closure must exclude network operations in this exact mode.
+
+Retain exit zero, the complete input/output byte identities, unchanged-file
+checks, actual loader identity and permission-denial controls. The current
+profile compares 21 files: five AppProjects and sixteen Applications. Preserve
+their actual identities, not only that count. Build the next snapshot from
+the observed bytes, review its Source-owned digest change independently, and
+run the adapter's mutation controls. Never copy an old success or hand-adjust
+expected hashes to clear a failure. This process proves a finite generator
+artifact correspondence, not a cluster apply or a full API inventory.
 
 ## Prove the changed meaning, not a fixed count
 

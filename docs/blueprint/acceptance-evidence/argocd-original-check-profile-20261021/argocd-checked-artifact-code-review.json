@@ -1,0 +1,6 @@
+{
+  "findings": [],
+  "overall_correctness": "patch is correct",
+  "overall_explanation": "No actionable defects found in the provided change bundle. The adapter binds admission to the exact source and authority digests, validates declared inputs and artifacts before cache reuse, rejects imported or aliased caller contexts, and preserves API-producing classification. Existing context discovery and object lookup support the new producer without losing its 21 output contexts. This verdict is limited to the checked Source profile and documentation inventory integration; it does not establish broader runtime or inventory acceptance. No tests or generators were run.",
+  "overall_confidence": 0.86
+}
