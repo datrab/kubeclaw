@@ -1,0 +1,29 @@
+{
+  "findings": [
+    {
+      "title": "P2: Complete the Prism path with exact configured workload identities",
+      "body": "COM-003 remains incomplete: the topology, matrix and restart section name workload roles but never give the exact SPIFFE identities or their configuration derivation. Operators cannot use this central path to distinguish a wrong namespace/ServiceAccount from an operation-binding failure. HEAD defines exact SANs in charts/prism/templates/configmap-worker-trust.yaml:31-35,86,107,128 and selects trust-domain/agent settings in my-values/prism-values.yaml:35-40 and my-values/nova-values.yaml:118-121. Document those identity templates and the selected configuration alongside each authenticated hop, without claiming live identity issuance. The new restart coverage does not discharge this original identity obligation.",
+      "priority": "P2",
+      "confidence": 0.94,
+      "category": "maintainability",
+      "code_location": {
+        "file_path": "docs/site/understand/communication.md",
+        "line": 379
+      }
+    },
+    {
+      "title": "P2: Include native storage and output pressure in the connection contract",
+      "body": "COM-012 still lacks actionable native pressure rules. The matrix mentions generic input/cgroup budgets, while the additions describe recovery and isolation limits without documenting native journal admission capacity or aggregate process-output overflow. HEAD skills/prism/config/native-worker.ts:73-81 defines separate ownership, input, output, journal, drain and close limits, including 32 MiB output and 64 GiB journal defaults. skills/worker/core/worker/native-attempt-journal.ts:169 reserves input plus maximum output/result space before admission; native-process-output.ts:12 stops the process with WORKER_NATIVE_OUTPUT_LIMIT. These are different from the documented 16 MiB result-artifact and 128 MiB evidence limits. Add the effective configuration sources and explain which limits reject admission, terminate the producer, or fence subsequent work; otherwise an operator cannot diagnose or safely resolve these pressure failures from the promised central matrix.",
+      "priority": "P2",
+      "confidence": 0.96,
+      "category": "maintainability",
+      "code_location": {
+        "file_path": "docs/site/understand/communication.md",
+        "line": 405
+      }
+    }
+  ],
+  "overall_correctness": "patch is incorrect",
+  "overall_explanation": "COM-003 NOT_READY: restart/result reconciliation is substantially covered, but exact configured hop identities remain absent (finding 1). COM-004 PASS: Gateway envelope, current review protocols, correlation, polling, result-import selection and unresolved cleanup match the inspected runtime-dispatch source. COM-005 PASS: invocation/result/effect/observer summaries, NDJSON isolation, cancellation, termination and error mapping match the inspected contracts and Core implementation. COM-012 NOT_READY: native admission/storage/output pressure remains incomplete (finding 2); the new observer and isolation coverage does not satisfy the whole per-connection obligation.\n\nsourceAccuracy: PASS for the inspected additions against current source, with no live execution inferred. readerUsability: NOT_READY for the missing identity and pressure diagnosis information. quality: NOT_READY for whole-obligation completeness. Observer restart and isolation tests were inspected as source only; no tests, product, rendering or cluster execution was performed.\n\nPrior accepted scopes: COM-002 impact PASS; COM-006 impact PASS; COM-007 impact PASS. The additions and metadata do not materially contradict or weaken those accepted facets. COM-001/008/009/010/011 remain open and are not accepted by this review. Native runtime/effect execution and unknown external identities remain unproven.",
+  "overall_confidence": 0.88
+}

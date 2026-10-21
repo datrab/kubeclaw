@@ -1,0 +1,18 @@
+{
+  "findings": [
+    {
+      "title": "P2: Document the actual Nova-to-Agent hop and its namespace constraints",
+      "body": "The new exact-identity table omits Nova \u2192 Prism Agent and instead lists Nova \u2192 Control, although the page's production topology explicitly routes Nova through the Agent. HEAD charts/kubeclaw/templates/configmap-worker-trust.yaml:84-100,132-159 defines that missing hop and derives its SANs from the kubeclaw release namespace. The Agent's expected Control SAN also uses that release namespace (:175-197), rather than the independently parameterized Prism namespace N shown here. Likewise, Control \u2192 Agent requires the Control namespace to satisfy the Agent ingress allowlist. Prism's novaNamespace/agentNamespace settings do not change those kubeclaw-side checks. Add the actual Nova \u2192 Agent identity pair and distinguish each chart's namespace derivation, explicitly documenting the matching-namespace constraint. Otherwise operators following this table can configure the documented identities yet fail mTLS admission, so the remaining COM-003 identity obligation is not closed.",
+      "priority": "P2",
+      "confidence": 0.98,
+      "category": "maintainability",
+      "code_location": {
+        "file_path": "docs/site/understand/communication.md",
+        "line": 387
+      }
+    }
+  ],
+  "overall_correctness": "patch is incorrect",
+  "overall_explanation": "COM-003 NOT_READY: sourceAccuracy FAIL and readerUsability/quality NOT_READY because the new identity table omits the production Nova \u2192 Agent hop and misstates cross-chart namespace derivation. Existing topology, routes, operation-store and restart coverage remain accepted; see finding.\nCOM-004 PASS: sourceAccuracy, readerUsability and quality PASS for its previously accepted whole scope; additive-section impact PASS. Gateway/result-import behavior remains consistent with current runtime-dispatch sources, including openclaw-result.ts:48-119.\nCOM-005 PASS: sourceAccuracy, readerUsability and quality PASS for its previously accepted whole scope; additive-section impact PASS. Core invocation/error mapping and observer ordering remain consistent with stage-executor.ts:123-143 and telemetry/observers.ts:41-108.\nCOM-012 PASS: sourceAccuracy, readerUsability and quality PASS for the whole timeout/retry/ordering/pressure obligation. The remaining native-pressure gap is closed: skills/prism/config/native-worker.ts:56-82 supplies the documented fallbacks; native-attempt-journal.ts:157-179 reserves capacity before new admission; native-process-output.ts:5-26 enforces aggregate output and durable-pipe pressure. Journal-quota and output-spool tests were inspected as source only.\nPrior accepted scopes: COM-002 impact PASS; COM-006 impact PASS; COM-007 impact PASS. The additions and metadata preserve those scopes. COM-001/008/009/010/011 remain open. No tests, rendering, product, cluster or native execution was performed; native runtime/effect requirements and unknown external identities remain unproven.",
+  "overall_confidence": 0.9
+}

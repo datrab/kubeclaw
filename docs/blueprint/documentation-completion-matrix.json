@@ -89,7 +89,7 @@
     },
     {
       "id": "AP09.1-ready-topics-20261020",
-      "revision": "488deafa90a629d936d078827715c85e2c705895",
+      "revision": "a7d0e07cacc037b94e8a45ed2f0d90bd0259b213",
       "author": "Documentation implementation authors before review campaign",
       "reviewer": "/root/review_ready_foundations (01a157c4-a915-7bd0-9f54-0de78011b9b7)",
       "gateIds": [],
@@ -166,7 +166,7 @@
       ],
       "openIssues": [],
       "verdict": "PASS",
-      "previousReviewedRevision": "113da57a37d25cd45f23d902728e87dcd1770f8c",
+      "previousReviewedRevision": "488deafa90a629d936d078827715c85e2c705895",
       "impactReview": {
         "reviewer": "/root/review_worker_ready",
         "verdict": "PASS",
@@ -215,12 +215,26 @@
           ],
           "verdict": "PASS",
           "summary": "Reviewed map change only updates Ops MCP verification metadata and adds its current Cilium policy dependency. Exact structural comparison confirms all other page, route, ownership and dependency records unchanged; original acceptance scopes and limitations preserved."
+        },
+        {
+          "reviewer": "Independent Codex autoreview 2026-10-21; schema-and-pin-review plus communication-fifth-review",
+          "previousReviewedRevision": "488deafa90a629d936d078827715c85e2c705895",
+          "revision": "a7d0e07cacc037b94e8a45ed2f0d90bd0259b213",
+          "changedDependencies": [
+            "docs/site/reference/generated-documentation-map.json"
+          ],
+          "verdict": "PASS",
+          "summary": "Extension citation revisions changed only to byte-identical Source; prose and ranges unchanged. Documentation map changes only communication lastVerified metadata. Whole communication review explicitly preserves COM002/006/007 scopes and does not weaken existing facets. All other bound pages/Source dependencies byte-identical; no runtime or global gate extension.",
+          "evidence": [
+            "docs/blueprint/acceptance-evidence/schema-and-pin-review-20261021.json",
+            "docs/blueprint/acceptance-evidence/communication-complete-20261021/communication-fifth-review.json"
+          ]
         }
       ]
     },
     {
       "id": "AP09.2-ready-topics-20261020",
-      "revision": "ad66f324ab0273db59397d42f35d94cd4dc62cdd",
+      "revision": "a7d0e07cacc037b94e8a45ed2f0d90bd0259b213",
       "author": "Documentation implementation authors before review campaign",
       "reviewer": "/root/review_events (01a157c4-8ec4-7273-b286-baaaae1e8176)",
       "gateIds": [],
@@ -415,9 +429,24 @@
           ],
           "verdict": "PASS",
           "summary": "Independent targeted source/reader/quality review preserves original requirements, gates and execution limits. Exact adapter/confidential/cleanup corrections, current gateway client, reference ranges/placeholder and parser negative controls checked; no broader acceptance."
+        },
+        {
+          "reviewer": "Independent Codex autoreview 2026-10-21; schema-and-pin-review plus communication-fifth-review",
+          "previousReviewedRevision": "ad66f324ab0273db59397d42f35d94cd4dc62cdd",
+          "revision": "a7d0e07cacc037b94e8a45ed2f0d90bd0259b213",
+          "changedDependencies": [
+            "docs/site/extend/README.md",
+            "docs/site/extend/contracts.md"
+          ],
+          "verdict": "PASS",
+          "summary": "Extension citation revisions changed only to byte-identical Source; prose and ranges unchanged. Documentation map changes only communication lastVerified metadata. Whole communication review explicitly preserves COM002/006/007 scopes and does not weaken existing facets. All other bound pages/Source dependencies byte-identical; no runtime or global gate extension.",
+          "evidence": [
+            "docs/blueprint/acceptance-evidence/schema-and-pin-review-20261021.json",
+            "docs/blueprint/acceptance-evidence/communication-complete-20261021/communication-fifth-review.json"
+          ]
         }
       ],
-      "previousReviewedRevision": "c46b8268efe8642deb608b8067c2c7f4c7fb8ae9"
+      "previousReviewedRevision": "ad66f324ab0273db59397d42f35d94cd4dc62cdd"
     },
     {
       "id": "AP09.4-ready-prism-topics-20261020",
@@ -875,7 +904,7 @@
     },
     {
       "id": "AP09.7-ready-data-topics-20261020",
-      "revision": "8f79e328cf216b53dc2e665896c65cbb19a2e0ce",
+      "revision": "a7d0e07cacc037b94e8a45ed2f0d90bd0259b213",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/review_data_ready",
       "gateIds": [],
@@ -999,13 +1028,28 @@
           ],
           "verdict": "PASS",
           "summary": "Independent publication impact preserves original requirement/gate scopes and limits.53generated pages change only commit IDs;505cited source pairs byte-identical. Prose corrections/entry links preserve technical meaning. Derived page-map lastVerified fields use the same audited revision substitution only; ownership/routes/sources/checks byte-identical after revision normalization."
+        },
+        {
+          "reviewer": "Independent Codex autoreview 2026-10-21; schema-and-pin-review plus communication-fifth-review",
+          "previousReviewedRevision": "8f79e328cf216b53dc2e665896c65cbb19a2e0ce",
+          "revision": "a7d0e07cacc037b94e8a45ed2f0d90bd0259b213",
+          "changedDependencies": [
+            "docs/site/extend/contracts.md",
+            "docs/site/understand/communication.md"
+          ],
+          "verdict": "PASS",
+          "summary": "Extension citation revisions changed only to byte-identical Source; prose and ranges unchanged. Documentation map changes only communication lastVerified metadata. Whole communication review explicitly preserves COM002/006/007 scopes and does not weaken existing facets. All other bound pages/Source dependencies byte-identical; no runtime or global gate extension.",
+          "evidence": [
+            "docs/blueprint/acceptance-evidence/schema-and-pin-review-20261021.json",
+            "docs/blueprint/acceptance-evidence/communication-complete-20261021/communication-fifth-review.json"
+          ]
         }
       ],
-      "previousReviewedRevision": "ad66f324ab0273db59397d42f35d94cd4dc62cdd"
+      "previousReviewedRevision": "8f79e328cf216b53dc2e665896c65cbb19a2e0ce"
     },
     {
       "id": "Reviewed-corrections-20261020",
-      "revision": "488deafa90a629d936d078827715c85e2c705895",
+      "revision": "a7d0e07cacc037b94e8a45ed2f0d90bd0259b213",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/review_worker_ready",
       "gateIds": [],
@@ -1136,9 +1180,23 @@
           ],
           "verdict": "PASS",
           "summary": "Reviewed map change only updates Ops MCP verification metadata and adds its current Cilium policy dependency. Exact structural comparison confirms all other page, route, ownership and dependency records unchanged; original acceptance scopes and limitations preserved."
+        },
+        {
+          "reviewer": "Independent Codex autoreview 2026-10-21; schema-and-pin-review plus communication-fifth-review",
+          "previousReviewedRevision": "488deafa90a629d936d078827715c85e2c705895",
+          "revision": "a7d0e07cacc037b94e8a45ed2f0d90bd0259b213",
+          "changedDependencies": [
+            "docs/site/reference/generated-documentation-map.json"
+          ],
+          "verdict": "PASS",
+          "summary": "Extension citation revisions changed only to byte-identical Source; prose and ranges unchanged. Documentation map changes only communication lastVerified metadata. Whole communication review explicitly preserves COM002/006/007 scopes and does not weaken existing facets. All other bound pages/Source dependencies byte-identical; no runtime or global gate extension.",
+          "evidence": [
+            "docs/blueprint/acceptance-evidence/schema-and-pin-review-20261021.json",
+            "docs/blueprint/acceptance-evidence/communication-complete-20261021/communication-fifth-review.json"
+          ]
         }
       ],
-      "previousReviewedRevision": "113da57a37d25cd45f23d902728e87dcd1770f8c"
+      "previousReviewedRevision": "488deafa90a629d936d078827715c85e2c705895"
     },
     {
       "id": "AP09-reader-operators-20261020",
@@ -1383,7 +1441,7 @@
     },
     {
       "id": "AP09-reader-developers-20261020",
-      "revision": "ad66f324ab0273db59397d42f35d94cd4dc62cdd",
+      "revision": "a7d0e07cacc037b94e8a45ed2f0d90bd0259b213",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/review_platform_ready",
       "gateIds": [
@@ -1559,9 +1617,24 @@
           ],
           "verdict": "PASS",
           "summary": "Independent targeted source/reader/quality review preserves original requirements, gates and execution limits. Exact adapter/confidential/cleanup corrections, current gateway client, reference ranges/placeholder and parser negative controls checked; no broader acceptance."
+        },
+        {
+          "reviewer": "Independent Codex autoreview 2026-10-21; schema-and-pin-review plus communication-fifth-review",
+          "previousReviewedRevision": "ad66f324ab0273db59397d42f35d94cd4dc62cdd",
+          "revision": "a7d0e07cacc037b94e8a45ed2f0d90bd0259b213",
+          "changedDependencies": [
+            "docs/site/extend/README.md",
+            "docs/site/extend/contracts.md"
+          ],
+          "verdict": "PASS",
+          "summary": "Extension citation revisions changed only to byte-identical Source; prose and ranges unchanged. Documentation map changes only communication lastVerified metadata. Whole communication review explicitly preserves COM002/006/007 scopes and does not weaken existing facets. All other bound pages/Source dependencies byte-identical; no runtime or global gate extension.",
+          "evidence": [
+            "docs/blueprint/acceptance-evidence/schema-and-pin-review-20261021.json",
+            "docs/blueprint/acceptance-evidence/communication-complete-20261021/communication-fifth-review.json"
+          ]
         }
       ],
-      "previousReviewedRevision": "08d8f917b08b3faacd0909ccbda3fa069a094a67"
+      "previousReviewedRevision": "ad66f324ab0273db59397d42f35d94cd4dc62cdd"
     },
     {
       "id": "AP09-reviewed-configuration-20261020",
@@ -1891,7 +1964,7 @@
     },
     {
       "id": "AP09-reviewed-publication-navigation-20261020",
-      "revision": "8f79e328cf216b53dc2e665896c65cbb19a2e0ce",
+      "revision": "a7d0e07cacc037b94e8a45ed2f0d90bd0259b213",
       "author": "Documentation implementation authors",
       "reviewer": "/root/review_publication",
       "gateIds": [
@@ -1993,9 +2066,23 @@
           ],
           "verdict": "PASS",
           "summary": "Independent publication impact preserves original requirement/gate scopes and limits.53generated pages change only commit IDs;505cited source pairs byte-identical. Prose corrections/entry links preserve technical meaning. Derived page-map lastVerified fields use the same audited revision substitution only; ownership/routes/sources/checks byte-identical after revision normalization."
+        },
+        {
+          "reviewer": "Independent Codex autoreview 2026-10-21; schema-and-pin-review plus communication-fifth-review",
+          "previousReviewedRevision": "8f79e328cf216b53dc2e665896c65cbb19a2e0ce",
+          "revision": "a7d0e07cacc037b94e8a45ed2f0d90bd0259b213",
+          "changedDependencies": [
+            "docs/site/extend/README.md"
+          ],
+          "verdict": "PASS",
+          "summary": "Extension citation revisions changed only to byte-identical Source; prose and ranges unchanged. Documentation map changes only communication lastVerified metadata. Whole communication review explicitly preserves COM002/006/007 scopes and does not weaken existing facets. All other bound pages/Source dependencies byte-identical; no runtime or global gate extension.",
+          "evidence": [
+            "docs/blueprint/acceptance-evidence/schema-and-pin-review-20261021.json",
+            "docs/blueprint/acceptance-evidence/communication-complete-20261021/communication-fifth-review.json"
+          ]
         }
       ],
-      "previousReviewedRevision": "113da57a37d25cd45f23d902728e87dcd1770f8c"
+      "previousReviewedRevision": "8f79e328cf216b53dc2e665896c65cbb19a2e0ce"
     },
     {
       "id": "AP09-closeout-runtime-20261020",
@@ -2213,7 +2300,7 @@
     },
     {
       "id": "AP09-closeout-developer-maintenance-20261020",
-      "revision": "8f79e328cf216b53dc2e665896c65cbb19a2e0ce",
+      "revision": "a7d0e07cacc037b94e8a45ed2f0d90bd0259b213",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/close_developer_maintenance",
       "gateIds": [],
@@ -2336,9 +2423,24 @@
           ],
           "verdict": "PASS",
           "summary": "Independent publication impact preserves original requirement/gate scopes and limits.53generated pages change only commit IDs;505cited source pairs byte-identical. Prose corrections/entry links preserve technical meaning. Derived page-map lastVerified fields use the same audited revision substitution only; ownership/routes/sources/checks byte-identical after revision normalization."
+        },
+        {
+          "reviewer": "Independent Codex autoreview 2026-10-21; schema-and-pin-review plus communication-fifth-review",
+          "previousReviewedRevision": "8f79e328cf216b53dc2e665896c65cbb19a2e0ce",
+          "revision": "a7d0e07cacc037b94e8a45ed2f0d90bd0259b213",
+          "changedDependencies": [
+            "docs/site/extend/README.md",
+            "docs/site/extend/contracts.md"
+          ],
+          "verdict": "PASS",
+          "summary": "Extension citation revisions changed only to byte-identical Source; prose and ranges unchanged. Documentation map changes only communication lastVerified metadata. Whole communication review explicitly preserves COM002/006/007 scopes and does not weaken existing facets. All other bound pages/Source dependencies byte-identical; no runtime or global gate extension.",
+          "evidence": [
+            "docs/blueprint/acceptance-evidence/schema-and-pin-review-20261021.json",
+            "docs/blueprint/acceptance-evidence/communication-complete-20261021/communication-fifth-review.json"
+          ]
         }
       ],
-      "previousReviewedRevision": "ad66f324ab0273db59397d42f35d94cd4dc62cdd"
+      "previousReviewedRevision": "8f79e328cf216b53dc2e665896c65cbb19a2e0ce"
     },
     {
       "id": "AP09-closeout-ARC006-20261020",
@@ -2643,7 +2745,7 @@
     },
     {
       "id": "AP09-compiler-import-provider-diagnosis-20261021",
-      "revision": "8f79e328cf216b53dc2e665896c65cbb19a2e0ce",
+      "revision": "a7d0e07cacc037b94e8a45ed2f0d90bd0259b213",
       "author": "Documentation authors and /root correction coordinator",
       "reviewer": "Independent Codex autoreview 2026-10-21 (ready, correction-final and contributor invocations)",
       "gateIds": [
@@ -2717,13 +2819,27 @@
           ],
           "verdict": "PASS",
           "summary": "Independent publication impact preserves original requirement/gate scopes and limits.53generated pages change only commit IDs;505cited source pairs byte-identical. Prose corrections/entry links preserve technical meaning. Derived page-map lastVerified fields use the same audited revision substitution only; ownership/routes/sources/checks byte-identical after revision normalization."
+        },
+        {
+          "reviewer": "Independent Codex autoreview 2026-10-21; schema-and-pin-review plus communication-fifth-review",
+          "previousReviewedRevision": "8f79e328cf216b53dc2e665896c65cbb19a2e0ce",
+          "revision": "a7d0e07cacc037b94e8a45ed2f0d90bd0259b213",
+          "changedDependencies": [
+            "docs/site/extend/contracts.md"
+          ],
+          "verdict": "PASS",
+          "summary": "Extension citation revisions changed only to byte-identical Source; prose and ranges unchanged. Documentation map changes only communication lastVerified metadata. Whole communication review explicitly preserves COM002/006/007 scopes and does not weaken existing facets. All other bound pages/Source dependencies byte-identical; no runtime or global gate extension.",
+          "evidence": [
+            "docs/blueprint/acceptance-evidence/schema-and-pin-review-20261021.json",
+            "docs/blueprint/acceptance-evidence/communication-complete-20261021/communication-fifth-review.json"
+          ]
         }
       ],
-      "previousReviewedRevision": "ad66f324ab0273db59397d42f35d94cd4dc62cdd"
+      "previousReviewedRevision": "8f79e328cf216b53dc2e665896c65cbb19a2e0ce"
     },
     {
       "id": "AP09-confidential-adapter-lifecycle-20261021",
-      "revision": "8f79e328cf216b53dc2e665896c65cbb19a2e0ce",
+      "revision": "a7d0e07cacc037b94e8a45ed2f0d90bd0259b213",
       "author": "Documentation authors and /root correction coordinator",
       "reviewer": "Independent Codex autoreview 2026-10-21 (ready, correction-final and contributor invocations)",
       "gateIds": [],
@@ -2777,9 +2893,23 @@
           ],
           "verdict": "PASS",
           "summary": "Independent publication impact preserves original requirement/gate scopes and limits.53generated pages change only commit IDs;505cited source pairs byte-identical. Prose corrections/entry links preserve technical meaning. Derived page-map lastVerified fields use the same audited revision substitution only; ownership/routes/sources/checks byte-identical after revision normalization."
+        },
+        {
+          "reviewer": "Independent Codex autoreview 2026-10-21; schema-and-pin-review plus communication-fifth-review",
+          "previousReviewedRevision": "8f79e328cf216b53dc2e665896c65cbb19a2e0ce",
+          "revision": "a7d0e07cacc037b94e8a45ed2f0d90bd0259b213",
+          "changedDependencies": [
+            "docs/site/extend/contracts.md"
+          ],
+          "verdict": "PASS",
+          "summary": "Extension citation revisions changed only to byte-identical Source; prose and ranges unchanged. Documentation map changes only communication lastVerified metadata. Whole communication review explicitly preserves COM002/006/007 scopes and does not weaken existing facets. All other bound pages/Source dependencies byte-identical; no runtime or global gate extension.",
+          "evidence": [
+            "docs/blueprint/acceptance-evidence/schema-and-pin-review-20261021.json",
+            "docs/blueprint/acceptance-evidence/communication-complete-20261021/communication-fifth-review.json"
+          ]
         }
       ],
-      "previousReviewedRevision": "ad66f324ab0273db59397d42f35d94cd4dc62cdd"
+      "previousReviewedRevision": "8f79e328cf216b53dc2e665896c65cbb19a2e0ce"
     },
     {
       "id": "AP09-selected-model-gateway-20261021",
@@ -3052,6 +3182,144 @@
       ],
       "openIssues": [],
       "verdict": "PASS"
+    },
+    {
+      "id": "AP09-communication-complete-contracts-20261021",
+      "revision": "a7d0e07cacc037b94e8a45ed2f0d90bd0259b213",
+      "author": "Nova /root communication correction coordinator",
+      "reviewer": "Independent Codex autoreview 2026-10-21; successive complete-topic audits and final native identity closure",
+      "gateIds": [],
+      "requirementIds": [
+        "COM-003",
+        "COM-004",
+        "COM-005",
+        "COM-012"
+      ],
+      "pages": [
+        "docs/site/understand/communication.md"
+      ],
+      "sources": [
+        "charts/kubeclaw/templates/archviewer.yaml",
+        "charts/kubeclaw/templates/configmap-gateway.yaml",
+        "charts/kubeclaw/templates/configmap-worker-trust.yaml",
+        "charts/kubeclaw/templates/deployment.yaml",
+        "charts/ops-pod/templates/workload.yaml",
+        "charts/prism/templates/configmap-worker-trust.yaml",
+        "charts/prism/templates/services.yaml",
+        "charts/prism/values.yaml",
+        "docker/buster-runtime-entrypoint.sh",
+        "gitops/platform/values/alloy.yaml",
+        "gitops/platform/values/prometheus.yaml",
+        "my-values/buster-values.yaml",
+        "my-values/infra/litellm-config.yaml",
+        "my-values/infra/litellm-deployment.yaml",
+        "my-values/infra/registry-local.yaml",
+        "my-values/infra/registry-mirror.yaml",
+        "my-values/nova-values.yaml",
+        "my-values/prism-values.yaml",
+        "scripts/registry-client-config.mjs",
+        "skills/buster/engine/test-gates/container-build-runtime.ts",
+        "skills/buster/engine/test-gates/network-http-runtime.ts",
+        "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json",
+        "skills/common/plugin-runtime/foundation/isolation/child.mjs",
+        "skills/common/plugin-runtime/foundation/isolation/protocol.ts",
+        "skills/common/plugin-runtime/foundation/isolation/runner.ts",
+        "skills/common/plugin-runtime/foundation/isolation/session.ts",
+        "skills/common/plugin-runtime/sdk/src/generated/contracts.ts",
+        "skills/common/plugin-runtime/sdk/src/runtime.ts",
+        "skills/common/plugins/network-http/src/adapter.ts",
+        "skills/common/plugins/notification-observer/plugin.json",
+        "skills/common/plugins/openclaw-agent-observer/src/redis-writer.ts",
+        "skills/common/plugins/redis-transport/src/adapter.ts",
+        "skills/common/plugins/redis-transport/src/resp.ts",
+        "skills/common/plugins/redis-transport/src/stream-identity.ts",
+        "skills/common/plugins/runtime-dispatch/src/adapter.ts",
+        "skills/common/plugins/runtime-dispatch/src/openclaw-cleanup.ts",
+        "skills/common/plugins/runtime-dispatch/src/openclaw-config.ts",
+        "skills/common/plugins/runtime-dispatch/src/openclaw-result.ts",
+        "skills/common/plugins/runtime-dispatch/src/openclaw-session.ts",
+        "skills/common/plugins/runtime-dispatch/src/openclaw.ts",
+        "skills/common/plugins/telemetry-observer/plugin.json",
+        "skills/nova/core/execution/adapter-invocation-phase.ts",
+        "skills/nova/core/execution/adapter-startup.ts",
+        "skills/nova/core/execution/stage-executor.ts",
+        "skills/nova/core/telemetry/observer-delivery.ts",
+        "skills/nova/core/telemetry/observer-recovery.ts",
+        "skills/nova/core/telemetry/observers.ts",
+        "skills/nova/core/test-gates/remote-dispatch.ts",
+        "skills/nova/plugins/implementation-agent/src/protocol.ts",
+        "skills/nova/plugins/prism-design/src/stage.ts",
+        "skills/nova/plugins/review/src/echo-review-contract.ts",
+        "skills/nova/plugins/review/src/echo-review-verification-contract.ts",
+        "skills/nova/plugins/review/src/protocol.ts",
+        "skills/nova/plugins/review/src/repository-revalidation-stage.ts",
+        "skills/nova/plugins/review/src/scalable-review-jobs.ts",
+        "skills/nova/plugins/review/src/scalable-review-verification.ts",
+        "skills/prism/config/native-worker.ts",
+        "skills/prism/control/agent-jobs.ts",
+        "skills/prism/control/native-operation-store.ts",
+        "skills/prism/control/native-operation.ts",
+        "skills/prism/control/worker-operation-transport.ts",
+        "skills/prism/engine/design-providers.ts",
+        "skills/prism/server/agent-attempt.ts",
+        "skills/prism/server/agent-bridge.mjs",
+        "skills/prism/server/agent-job-routes.ts",
+        "skills/prism/server/agent-job-runner.mjs",
+        "skills/prism/server/control-server.ts",
+        "skills/prism/server/ingestion.ts",
+        "skills/prism/server/internal-artifacts.ts",
+        "skills/prism/server/native-worker-host.ts",
+        "skills/prism/server/product-decisions.ts",
+        "skills/prism/server/studio-request.ts",
+        "skills/worker/core/worker/native-attempt-executor.ts",
+        "skills/worker/core/worker/native-attempt-journal.ts",
+        "skills/worker/core/worker/native-attempt-recovery.ts",
+        "skills/worker/core/worker/native-control-channel.ts",
+        "skills/worker/core/worker/native-process-output.ts",
+        "skills/worker/core/worker/trust.ts",
+        "tests/verification/reliability/redis-migration.test.mts",
+        "tools/ops-mcp/src/hubble.mjs",
+        "tools/ops-mcp/src/kubernetes.mjs"
+      ],
+      "checks": [
+        {
+          "command": "Independent whole COM003/004/005/012 content review with targeted corrected follow-ups",
+          "exitCode": 0,
+          "observation": "Each whole obligation sourceAccuracy/readerUsability/quality PASS; final review preserves prior COM002/006/007. Intermediate NOT_READY reports retained, not discarded."
+        },
+        {
+          "command": "node scripts/docs-check.mjs",
+          "exitCode": 0,
+          "observation": "167 active Markdown pages;9diagrams57evidenceboxes170code links and20operations boxes202links pass."
+        },
+        {
+          "command": "node scripts/docs-governance.mjs",
+          "exitCode": 0,
+          "observation": "167 pages mapped; only communication verification metadata changed."
+        },
+        {
+          "command": "node scripts/docs-check-refs.mjs",
+          "exitCode": 0,
+          "observation": "6088 local links,3287anchors,8302repository paths,31736pinned source links pass."
+        }
+      ],
+      "review": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "summary": "Complete Nova-Prism identity/restart/result contract, Forge/Echo dispatch/import protocol, Core invocation/isolation/abort/result and per-connection deadline/retry/order/pressure model accepted.",
+      "limits": [
+        "Documentation/source acceptance only; no executed native restart, live SPIFFE issuance/enforcement, cluster admission or runtime-effect success asserted.",
+        "COM001/008/009/010/011 remain open; no whole A97/global generation/publication/browser gate accepted."
+      ],
+      "openIssues": [],
+      "verdict": "PASS",
+      "evidence": [
+        "docs/blueprint/acceptance-evidence/communication-complete-20261021/communication-fifth-review.json",
+        "docs/blueprint/acceptance-evidence/communication-complete-20261021/communication-fourth-review.json",
+        "docs/blueprint/acceptance-evidence/communication-complete-20261021/communication-third-review-retry.json"
+      ]
     }
   ],
   "purpose": "Internal planning and observed findings; not an acceptance ledger and not reader documentation.",
@@ -7275,7 +7543,7 @@
         "charts/prism",
         "tests/verification/reliability"
       ],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "independent-topic-review-PASS",
       "contentKind": "authored",
       "generator": null,
       "automatedChecks": [
@@ -7312,7 +7580,7 @@
         "quality",
         "astra-final"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
@@ -7333,7 +7601,8 @@
       "acceptanceMappingRequiredReviews": "A97-11 requires independently selecting diagnosis/safe recovery for EVERY dependency and separately comparing ALL applicable matrix entries to current Sources; not satisfied by this mapping review. Three reviewer identities and fresh contexts remain required by contract rules.",
       "acceptanceMappingDriftObligations": "For every scoped endpoint/store/event/secret/runtime-service/Ops tool, A97-12 requires real discovery and red-on-undocumented-addition evidence; product scope also preserves change/remove/rename detection. Linking an existing checker, pinning old source or a current green baseline cannot satisfy this.",
       "acceptanceMappingCorrectionSource": "/home/node/Documents/Codex/a98-evidence/ap097-all-requirement-mapping-source-fresh/report.md",
-      "closureDecision": {
+      "completionRecord": "AP09-communication-complete-contracts-20261021",
+      "previousClosureDecision": {
         "verdict": "NOT_READY",
         "revision": "9370d16410bb7f7aeeb66e11d18403764074eeae",
         "reason": "Scoped independent review did not establish full requirement coverage; see concrete topic decision.",
@@ -7359,7 +7628,7 @@
         "tests/verification/reliability",
         "skills/common/plugins/runtime-dispatch"
       ],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "independent-topic-review-PASS",
       "contentKind": "authored",
       "generator": null,
       "automatedChecks": [
@@ -7396,7 +7665,7 @@
         "quality",
         "astra-final"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
@@ -7417,7 +7686,8 @@
       "acceptanceMappingRequiredReviews": "A97-11 requires independently selecting diagnosis/safe recovery for EVERY dependency and separately comparing ALL applicable matrix entries to current Sources; not satisfied by this mapping review. Three reviewer identities and fresh contexts remain required by contract rules.",
       "acceptanceMappingDriftObligations": "For every scoped endpoint/store/event/secret/runtime-service/Ops tool, A97-12 requires real discovery and red-on-undocumented-addition evidence; product scope also preserves change/remove/rename detection. Linking an existing checker, pinning old source or a current green baseline cannot satisfy this.",
       "acceptanceMappingCorrectionSource": "/home/node/Documents/Codex/a98-evidence/ap097-store-trust-corrected-full-mapping-source-fresh/report.md",
-      "closureDecision": {
+      "completionRecord": "AP09-communication-complete-contracts-20261021",
+      "previousClosureDecision": {
         "verdict": "NOT_READY",
         "revision": "9370d16410bb7f7aeeb66e11d18403764074eeae",
         "reason": "Scoped independent review did not establish full requirement coverage; see concrete topic decision.",
@@ -7442,7 +7712,7 @@
         "charts/prism",
         "tests/verification/reliability"
       ],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "independent-topic-review-PASS",
       "contentKind": "authored",
       "generator": null,
       "automatedChecks": [
@@ -7479,7 +7749,7 @@
         "quality",
         "astra-final"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
@@ -7500,7 +7770,8 @@
       "acceptanceMappingRequiredReviews": "A97-11 requires independently selecting diagnosis/safe recovery for EVERY dependency and separately comparing ALL applicable matrix entries to current Sources; not satisfied by this mapping review. Three reviewer identities and fresh contexts remain required by contract rules.",
       "acceptanceMappingDriftObligations": "For every scoped endpoint/store/event/secret/runtime-service/Ops tool, A97-12 requires real discovery and red-on-undocumented-addition evidence; product scope also preserves change/remove/rename detection. Linking an existing checker, pinning old source or a current green baseline cannot satisfy this.",
       "acceptanceMappingCorrectionSource": "/home/node/Documents/Codex/a98-evidence/ap097-store-trust-corrected-full-mapping-source-fresh/report.md",
-      "closureDecision": {
+      "completionRecord": "AP09-communication-complete-contracts-20261021",
+      "previousClosureDecision": {
         "verdict": "NOT_READY",
         "revision": "9370d16410bb7f7aeeb66e11d18403764074eeae",
         "reason": "Scoped independent review did not establish full requirement coverage; see concrete topic decision.",
@@ -8007,7 +8278,7 @@
         "charts/prism",
         "tests/verification/reliability"
       ],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "independent-topic-review-PASS",
       "contentKind": "authored",
       "generator": null,
       "automatedChecks": [
@@ -8042,7 +8313,7 @@
         "quality",
         "astra-final"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
@@ -8065,7 +8336,8 @@
       "acceptanceMappingRequiredReviews": "A97-11 requires independently selecting diagnosis/safe recovery for EVERY dependency and separately comparing ALL applicable matrix entries to current Sources; not satisfied by this mapping review. Three reviewer identities and fresh contexts remain required by contract rules.",
       "acceptanceMappingDriftObligations": "For every scoped endpoint/store/event/secret/runtime-service/Ops tool, A97-12 requires real discovery and red-on-undocumented-addition evidence; product scope also preserves change/remove/rename detection. Linking an existing checker, pinning old source or a current green baseline cannot satisfy this.",
       "acceptanceMappingCorrectionSource": "/home/node/Documents/Codex/a98-evidence/ap097-all-requirement-mapping-source-fresh/report.md",
-      "closureDecision": {
+      "completionRecord": "AP09-communication-complete-contracts-20261021",
+      "previousClosureDecision": {
         "verdict": "NOT_READY",
         "revision": "9370d16410bb7f7aeeb66e11d18403764074eeae",
         "reason": "Scoped independent review did not establish full requirement coverage; see concrete topic decision.",
@@ -35098,13 +35370,13 @@
       "scope": "Author32Bash53Node20CJS24syntheticchecks only, noformal6scenario/live/ReaderQualityapproval."
     },
     "currentCloseout20261021": {
-      "securedSourceRevision": "488deafa90a629d936d078827715c85e2c705895",
-      "acceptedRequirements": 175,
+      "securedSourceRevision": "a7d0e07cacc037b94e8a45ed2f0d90bd0259b213",
+      "acceptedRequirements": 179,
       "acceptedGates": 12,
-      "newRequirementsThisCampaign": 16,
+      "newRequirementsThisCampaign": 20,
       "newGatesThisCampaign": 2,
-      "nextWork": "Requalify current docs-check executable consumer after reviewed Markdown parser/main-guard change; continue global inventory generation and remaining topic/gate closures.",
-      "codeCandidate": "builtinModules literal projections reviewed and26tests pass; graph77 dynamic input operations reconciled under unchanged Source-anchored recipes; schemas regenerated,8focused dependency tests and original schema semantics pass; Ops MCP whole SPC-009 independently PASS with15local tests. Broader publication regression44/45: one expected diagnostic differs while unsafe createRequire remains rejected. No global generator PASS.",
+      "nextWork": "Finish all-public-script output classification and remaining global inventory/publication blockers; remaining communication inventory/private-route/build/trust scopes remain open.",
+      "codeCandidate": "56 Source roles reviewed;20 prior role reconciliations PASS. Python12Sources52outputs no unknown;29testsPASS. Latest output custody/publication70testsPASS, zero-argument26testsPASS. Schema transforms/concatenation guard/optional-argument guards independently PASS and remote secured ed0480ee. No global generator PASS.",
       "currentGlobalBlocker": "DOCUMENTATION_TOOL_OUTPUT_ROLE_UNQUALIFIED: scripts/docs-check.mjs; current Markdown stripping/export/main guard differs from Source-owned executable role receipt.",
       "publication": "167pages51plugins pass publicationcheck and Markdownbuild; no rendered HTML/browser/search proof.",
       "scope": "No promise of unattended running work and no completeness claim. MNT/OPL NOT_READY remains explicit.",

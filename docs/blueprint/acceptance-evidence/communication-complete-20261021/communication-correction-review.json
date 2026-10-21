@@ -1,0 +1,51 @@
+{
+  "findings": [
+    {
+      "title": "Distinguish failed cached receipts from hydratable native results",
+      "body": "The restart table directs every bound terminal result to hydration, but failed terminal receipts take a different branch. `acceptedCachedResult()` calls `acceptWorkerResult()`, which throws for any state other than `completed` (`skills/prism/control/worker-results.ts:33\u201343,46\u201357`). Consequently reservation fails before cached hydration. Initial hydration also rejects failed receipts before reading evidence (`skills/prism/control/worker-evidence.ts:6\u20138`). The existing source test explicitly checks this behavior (`skills/prism/tests/native/operation-journal.mts:97\u2013103`). Split successful and failed cached receipts and document preservation of the failure, its error mapping, and the prohibition on redispatch. This missing failure branch leaves COM-003 NOT_READY.",
+      "priority": "P2",
+      "confidence": 0.99,
+      "category": "bug",
+      "code_location": {
+        "file_path": "docs/site/understand/communication.md",
+        "line": 378
+      }
+    },
+    {
+      "title": "Qualify when collector schema and error states actually fail import",
+      "body": "\u201cCollector schema/error states fail\u201d promises an unconditional rejection that the implementation does not provide. In `skills/common/plugins/runtime-dispatch/src/openclaw-result.ts:65\u201391`, workspace/repository content takes precedence, followed by collector `structured` and non-empty `result`; only after those branches are unavailable are `schemaError` and `error` checked. A collector response containing structured output plus a schema error therefore selects structured output before the owning plugin validates it. Document that exact precedence and distinguish adapter selection from plugin validation, so readers cannot infer a collector-error veto. COM-004 remains NOT_READY.",
+      "priority": "P2",
+      "confidence": 0.99,
+      "category": "bug",
+      "code_location": {
+        "file_path": "docs/site/understand/communication.md",
+        "line": 329
+      }
+    },
+    {
+      "title": "Include Core's error-to-result mapping in the invocation model",
+      "body": "The added model lists result variants and isolation failures but never connects runtime failures to Core outcomes, an explicit COM-005 obligation. `skills/nova/core/execution/stage-executor.ts:40\u201349,128\u2013143` maps unresolved/recovery effects to `blocked/core.effect_reconciliation_required`, caller cancellation to `cancelled`, the exact `PLUGIN_ATTEMPT_TIMEOUT` error to `timed_out`, and other exceptions\u2014including result-schema validation and isolation errors\u2014to `retry/core.plugin_runtime_failed`. Thus an isolation timeout is not automatically a `timed_out` stage result. Add these mappings and the deadline/abort distinction alongside the isolation table; otherwise readers cannot determine retry versus reconciliation from the documented errors. COM-005 remains NOT_READY.",
+      "priority": "P2",
+      "confidence": 0.98,
+      "category": "maintainability",
+      "code_location": {
+        "file_path": "docs/site/understand/communication.md",
+        "line": 443
+      }
+    },
+    {
+      "title": "Document concrete observer budgets and actual queue pressure behavior",
+      "body": "The new section names policy fields without their current values, while the whole-page matrix still describes an \u201cObserver queue\u201d without explaining that `drain()` refreshes and materializes the canonical journal rather than enforcing a bounded delivery queue (`skills/nova/core/telemetry/observers.ts:69\u201377`). Current telemetry and notification registrations specify best-effort delivery, five attempts, 1,000 ms backoff and 10,000 ms per attempt (`skills/common/plugins/telemetry-observer/plugin.json:42\u201347`; `skills/common/plugins/notification-observer/plugin.json:29\u201334,50\u201355`). State those registration values separately from generic required-mode support, and explain that journal size has no queue ceiling here and failed delivery blocks that run's later events. Without concrete budgets and pressure ownership, COM-012's whole obligation remains NOT_READY.",
+      "priority": "P2",
+      "confidence": 0.97,
+      "category": "maintainability",
+      "code_location": {
+        "file_path": "docs/site/understand/communication.md",
+        "line": 460
+      }
+    }
+  ],
+  "overall_correctness": "patch is incorrect",
+  "overall_explanation": "Whole-obligation decisions: COM-003 NOT_READY (failed cached native receipt branch); COM-004 NOT_READY (collector-error precedence); COM-005 NOT_READY (Core error/outcome and deadline mapping); COM-012 NOT_READY (concrete observer budgets and queue-pressure semantics). sourceAccuracy: NOT_READY because two added recovery/import statements overstate current behavior. readerUsability: NOT_READY because readers cannot consistently determine the resulting stop/retry state or effective observer budget. quality: NOT_READY because the requested complete failure-contract coverage remains incomplete. Prior accepted scopes are preserved: COM-002 impact PASS, COM-006 impact PASS, COM-007 impact PASS; the additions and metadata do not materially weaken those existing facets. COM-001/008/009/010/011 remain explicitly open and are not accepted by this review. Inspection was source-only; no product, render, cluster, native or test execution was performed. Native runtime/effect guarantees and unknown external identities remain unproven.",
+  "overall_confidence": 0.96
+}
