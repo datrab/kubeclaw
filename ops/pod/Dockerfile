@@ -1,6 +1,6 @@
 # Version defaults are generated from versions.json; run npm run versions:sync.
 ARG OPS_NODE_BASE=node:24.21.0-alpine3.24@sha256:be80f76cf40ec8e42b9bec49f60a55e0660f30af58d3e5a25530785b30ea67e2
-ARG OPS_TOOLS_GO_BASE=golang:1.26.9-alpine3.24@sha256:3082400e369fa24d5fc60bca20edab3f6d604e0c5a690ec66b295eff4dd87ade
+ARG OPS_TOOLS_GO_BASE=golang:1.26.10-alpine3.24@sha256:9ce231b28998b32e116927c61aa5c406183061d4f3f2d61b292c88e7f6bdf7ca
 
 FROM ${OPS_TOOLS_GO_BASE} AS gh-build
 ARG TARGETARCH=amd64
