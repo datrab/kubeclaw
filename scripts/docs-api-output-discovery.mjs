@@ -150,7 +150,7 @@ const reviewedDocumentationModuleInputRecipes = [
   {
     "source": "scripts/check-core-architecture-guides.mjs",
     "semanticClass": "fixed-repository-modules",
-    "recipeSha256": "ab5fb57a7ffdf464bc13863d99a473e7777e66c955d5000d832c252ec80a9606"
+    "recipeSha256": "8e4e3fc6c40f7e453c30bdc2ef7dc087cc5a02c68bbd4d363f786d5828525c7c"
   },
   {
     "source": "scripts/check-platform-specialist-guides.mjs",

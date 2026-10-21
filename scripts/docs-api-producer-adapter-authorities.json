@@ -69107,7 +69107,7 @@
       {
         "source": "scripts/check-core-architecture-guides.mjs",
         "semanticClass": "fixed-repository-modules",
-        "sourceSha256": "05e0c0421afda55921950e88adbb005e3455111830ee0953204c1f0f0ebce01e",
+        "sourceSha256": "0d6aabeb99bd3af14f66b98226c4f75c62c10d33ffef3920ea965a2c064f7dac",
         "operations": [
           {
             "expression": "import(pathToFileURL(path.join(root,\n  'skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts')).href)",
