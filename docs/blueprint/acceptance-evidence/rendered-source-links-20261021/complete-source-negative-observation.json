@@ -1,0 +1,16 @@
+{
+  "htmlPages": 176,
+  "errors": [
+    {
+      "href": "https://github.com/datrab/kubeclaw/tree/d8c38328ae305d431574aed008c4e1333e4b49f5/skills/buster/plugin-sdk",
+      "error": "AssertionError [ERR_ASSERTION]: Source is not a tracked regular blob or tree: datrab/kubeclaw@d8c38328ae305d431574aed008c4e1333e4b49f5:skills/buster/plugin-sdk"
+    }
+  ],
+  "uniqueVerifiedLinks": 14399,
+  "uniqueSourceObjects": 3723,
+  "limit": "Primary source object/revision/line or Markdown-fragment verification only; not semantic or live-runtime acceptance.",
+  "scope": "Complete diagnostic traversal of actual392e2e5d HTML via same production verifier/default primary HTTP reader; catches errors only to collect all failures, never qualifies this run as PASS.",
+  "sourceObjectCount": 3722,
+  "upstreamObjectCount": 118,
+  "fix": "Two product-map rows shared nonexistent historical skills/buster/plugin-sdk locator; same-commit shared SDK runtime.ts actually defines TestProvider interfaces121-154 and ReportAdapter interfaces156-184. Both replacement ranges separately verified against actualGit object98efcd15a2b22a1c52c3e01ff02f31cf2a34414f."
+}
