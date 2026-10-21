@@ -4,7 +4,7 @@
   "completionRecords": [
     {
       "id": "A911-03-REF-007-20261020",
-      "revision": "8522e25d9b284e9bf1a34dedf313a806d97c28ee",
+      "revision": "2e89bce7e59009e39de32d7df2bf8c52e839d5e9",
       "author": "PR13 automation capability author",
       "reviewer": "/root/review_a91103",
       "gateIds": [
@@ -137,6 +137,19 @@
           "summary": "Capability namespace/generator facts unaffected: publisher adds only validated reader redirect inputs, not capability rendering or grants.",
           "report": "handoffs/pr13-finish-20261021/accepted-scope-preservation-8522e25d.json",
           "limit": "Existing named scope/reviewers/observations/limits retained; zero new counts or global approval."
+        },
+        {
+          "previousReviewedRevision": "8522e25d9b284e9bf1a34dedf313a806d97c28ee",
+          "revision": "2e89bce7e59009e39de32d7df2bf8c52e839d5e9",
+          "changedDependencies": [
+            "docs/site/understand/codex-integration.md"
+          ],
+          "reviewer": "/root/custody_review; /root parent actual built Reader checks",
+          "verdict": "PASS",
+          "summary": "Codex callouts retain manifest Read interface versus actual runtime grants/RBAC/credential authority; installation is not Kubernetes access. No namespace translation or safe-denial change. Fresh2e89 Reader:177canonical/187HTML/240digests/40832targets;12search;14805SourceLinks/3944objects;1834excerpts/954objects;27freshSVG with original27diagram records exact unchanged;28offline page/search observations and81source-box native noJS observations0findings/network. Exact one-line Archviewer blockquote repair separately independently reviewed; prior split-box failure retained.",
+          "report": "handoffs/pr13-finish-20261021/ee285a46-review.json",
+          "formatAddendum": "handoffs/pr13-finish-20261021/ee285a46-archviewer-format-addendum.json",
+          "limit": "Only existing named scope preserved; original author/reviewer/checks/limits retained; zero new counts or aggregate/release approval."
         }
       ],
       "previousReviewedRevision": "08d8f917b08b3faacd0909ccbda3fa069a094a67",
@@ -185,7 +198,7 @@
     },
     {
       "id": "AP09.1-ready-topics-20261020",
-      "revision": "8522e25d9b284e9bf1a34dedf313a806d97c28ee",
+      "revision": "2e89bce7e59009e39de32d7df2bf8c52e839d5e9",
       "author": "Documentation implementation authors before review campaign",
       "reviewer": "/root/review_ready_foundations (01a157c4-a915-7bd0-9f54-0de78011b9b7)",
       "gateIds": [],
@@ -490,6 +503,19 @@
           "summary": "Entry/product/status/decision authority prose unaffected. Generated map adds only reviewed docsite/error dependencies and a qualified error-section verification date; authority, owners, routes and checks unchanged.",
           "report": "handoffs/pr13-finish-20261021/accepted-scope-preservation-8522e25d.json",
           "limit": "Existing named scope/reviewers/observations/limits retained; zero new counts or global approval."
+        },
+        {
+          "previousReviewedRevision": "8522e25d9b284e9bf1a34dedf313a806d97c28ee",
+          "revision": "2e89bce7e59009e39de32d7df2bf8c52e839d5e9",
+          "changedDependencies": [
+            "docs/site/reference/generated-documentation-map.json"
+          ],
+          "reviewer": "/root/custody_review; /root parent actual built Reader checks",
+          "verdict": "PASS",
+          "summary": "Only metadata-map lastVerified copies for two deepguides changed; owner/audience/appliesTo/source dependencies and all other map facts unchanged. Entry/authority/completeness/public status rules unchanged; prior GOV002/DEC002/GOV006 limitations not erased. Fresh2e89 Reader:177canonical/187HTML/240digests/40832targets;12search;14805SourceLinks/3944objects;1834excerpts/954objects;27freshSVG with original27diagram records exact unchanged;28offline page/search observations and81source-box native noJS observations0findings/network. Exact one-line Archviewer blockquote repair separately independently reviewed; prior split-box failure retained.",
+          "report": "handoffs/pr13-finish-20261021/ee285a46-review.json",
+          "formatAddendum": "handoffs/pr13-finish-20261021/ee285a46-archviewer-format-addendum.json",
+          "limit": "Only existing named scope preserved; original author/reviewer/checks/limits retained; zero new counts or aggregate/release approval."
         }
       ],
       "revisionHistory": [
@@ -1185,7 +1211,7 @@
     },
     {
       "id": "AP09.7-ready-platform-topics-20261020",
-      "revision": "d0bb52c4d8bcf323c0ff32b95e8e3120ffa6eefb",
+      "revision": "2e89bce7e59009e39de32d7df2bf8c52e839d5e9",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/review_platform_ready",
       "gateIds": [
@@ -1414,6 +1440,22 @@
           "reviewer": "Scope-aware independent union: original topic reviewers; operator_acceptance checkpoint53; custody_review maintenance locator correction; /root independent authored package/telemetry/pin scopes",
           "verdict": "PASS",
           "summary": "Only changed dependencies preserved against the named independent topic reports and actual d0bb Reader. Original summary and limitations retained; no duplicate or aggregate/release approval."
+        },
+        {
+          "previousReviewedRevision": "d0bb52c4d8bcf323c0ff32b95e8e3120ffa6eefb",
+          "revision": "2e89bce7e59009e39de32d7df2bf8c52e839d5e9",
+          "changedDependencies": [
+            "docs/site/understand/codex-integration.md",
+            "docs/site/understand/echo.md",
+            "docs/site/understand/forge.md",
+            "docs/site/understand/openclaw.md"
+          ],
+          "reviewer": "/root/custody_review; /root parent actual built Reader checks",
+          "verdict": "PASS",
+          "summary": "Forge/Echo/OpenClaw/Codex callouts restate accepted request/configuration and authority boundaries; test links explicitly do not claim execution. No infrastructure/security/dependency policy changes or unsupported fallback promotion. Fresh2e89 Reader:177canonical/187HTML/240digests/40832targets;12search;14805SourceLinks/3944objects;1834excerpts/954objects;27freshSVG with original27diagram records exact unchanged;28offline page/search observations and81source-box native noJS observations0findings/network. Exact one-line Archviewer blockquote repair separately independently reviewed; prior split-box failure retained.",
+          "report": "handoffs/pr13-finish-20261021/ee285a46-review.json",
+          "formatAddendum": "handoffs/pr13-finish-20261021/ee285a46-archviewer-format-addendum.json",
+          "limit": "Only existing named scope preserved; original author/reviewer/checks/limits retained; zero new counts or aggregate/release approval."
         }
       ],
       "previousReviewedRevision": "8f79e328cf216b53dc2e665896c65cbb19a2e0ce",
@@ -1438,7 +1480,7 @@
     },
     {
       "id": "AP09.7-ready-data-topics-20261020",
-      "revision": "af1b987ee4d461fc6205a18553db3e21461ca203",
+      "revision": "2e89bce7e59009e39de32d7df2bf8c52e839d5e9",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/review_data_ready",
       "gateIds": [],
@@ -1677,6 +1719,19 @@
           "reviewer": "/root independent semantic delta/Reader review; workflow_acceptance exact portal correction and Buster followup; operator_acceptance nonauthor finite-code review",
           "verdict": "PASS",
           "summary": "Only exact changed dependencies independently reviewed against named reports; unchanged original scopes/limits reused. Reader6d public bytes unchanged ataf1; no duplicate topic/gate acceptance or aggregate claim. See reader-6d-scope-preservation.md and finite-context-ap08-independent.md."
+        },
+        {
+          "previousReviewedRevision": "af1b987ee4d461fc6205a18553db3e21461ca203",
+          "revision": "2e89bce7e59009e39de32d7df2bf8c52e839d5e9",
+          "changedDependencies": [
+            "docs/site/understand/telemetry.md"
+          ],
+          "reviewer": "/root/custody_review; /root parent actual built Reader checks",
+          "verdict": "PASS",
+          "summary": "Telemetry changes only equivalent filtered128-entry wording. Durable identities/stores/streams/control/retention and separate incomplete TEL002/DAT008 limits unchanged. Fresh2e89 Reader:177canonical/187HTML/240digests/40832targets;12search;14805SourceLinks/3944objects;1834excerpts/954objects;27freshSVG with original27diagram records exact unchanged;28offline page/search observations and81source-box native noJS observations0findings/network. Exact one-line Archviewer blockquote repair separately independently reviewed; prior split-box failure retained.",
+          "report": "handoffs/pr13-finish-20261021/ee285a46-review.json",
+          "formatAddendum": "handoffs/pr13-finish-20261021/ee285a46-archviewer-format-addendum.json",
+          "limit": "Only existing named scope preserved; original author/reviewer/checks/limits retained; zero new counts or aggregate/release approval."
         }
       ],
       "previousReviewedRevision": "6abafbbc81a728f3ea7f12e83426c9565a72c473",
@@ -1693,7 +1748,7 @@
     },
     {
       "id": "Reviewed-corrections-20261020",
-      "revision": "8522e25d9b284e9bf1a34dedf313a806d97c28ee",
+      "revision": "2e89bce7e59009e39de32d7df2bf8c52e839d5e9",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/review_worker_ready",
       "gateIds": [],
@@ -2019,6 +2074,19 @@
           "summary": "Unsafe-retry, admission-error and lint corrections unchanged; owner map faithfully adds the two newly reviewed topic dependencies/verification scope without resetting other-page dates.",
           "report": "handoffs/pr13-finish-20261021/accepted-scope-preservation-8522e25d.json",
           "limit": "Existing named scope/reviewers/observations/limits retained; zero new counts or global approval."
+        },
+        {
+          "previousReviewedRevision": "8522e25d9b284e9bf1a34dedf313a806d97c28ee",
+          "revision": "2e89bce7e59009e39de32d7df2bf8c52e839d5e9",
+          "changedDependencies": [
+            "docs/site/reference/generated-documentation-map.json"
+          ],
+          "reviewer": "/root/custody_review; /root parent actual built Reader checks",
+          "verdict": "PASS",
+          "summary": "Generated map has only two exact header-string substitutions. Actual prior metadata corrections, safe retry/admission diagnostics and lint facts untouched; no global freshness claim. Fresh2e89 Reader:177canonical/187HTML/240digests/40832targets;12search;14805SourceLinks/3944objects;1834excerpts/954objects;27freshSVG with original27diagram records exact unchanged;28offline page/search observations and81source-box native noJS observations0findings/network. Exact one-line Archviewer blockquote repair separately independently reviewed; prior split-box failure retained.",
+          "report": "handoffs/pr13-finish-20261021/ee285a46-review.json",
+          "formatAddendum": "handoffs/pr13-finish-20261021/ee285a46-archviewer-format-addendum.json",
+          "limit": "Only existing named scope preserved; original author/reviewer/checks/limits retained; zero new counts or aggregate/release approval."
         }
       ],
       "previousReviewedRevision": "078105e40a50f23983e31c136f9bd81912ae6310",
@@ -3844,7 +3912,7 @@
     },
     {
       "id": "AP09-closeout-runtime-20261020",
-      "revision": "d0bb52c4d8bcf323c0ff32b95e8e3120ffa6eefb",
+      "revision": "2e89bce7e59009e39de32d7df2bf8c52e839d5e9",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/close_runtime_docs",
       "gateIds": [],
@@ -4025,6 +4093,19 @@
           "reviewer": "Scope-aware independent union: original topic reviewers; operator_acceptance checkpoint53; custody_review maintenance locator correction; /root independent authored package/telemetry/pin scopes",
           "verdict": "PASS",
           "summary": "Only changed dependencies preserved against the named independent topic reports and actual d0bb Reader. Original summary and limitations retained; no duplicate or aggregate/release approval."
+        },
+        {
+          "previousReviewedRevision": "d0bb52c4d8bcf323c0ff32b95e8e3120ffa6eefb",
+          "revision": "2e89bce7e59009e39de32d7df2bf8c52e839d5e9",
+          "changedDependencies": [
+            "docs/site/understand/archviewer.md"
+          ],
+          "reviewer": "/root/custody_review; /root parent actual built Reader checks",
+          "verdict": "PASS",
+          "summary": "Archviewer remains read-only static Nova consumer, publisher absent; health bypass, Basic auth, selected network policy and live uncertainty remain explicit. No runtime/storage/Worker contract changed. Fresh2e89 Reader:177canonical/187HTML/240digests/40832targets;12search;14805SourceLinks/3944objects;1834excerpts/954objects;27freshSVG with original27diagram records exact unchanged;28offline page/search observations and81source-box native noJS observations0findings/network. Exact one-line Archviewer blockquote repair separately independently reviewed; prior split-box failure retained.",
+          "report": "handoffs/pr13-finish-20261021/ee285a46-review.json",
+          "formatAddendum": "handoffs/pr13-finish-20261021/ee285a46-archviewer-format-addendum.json",
+          "limit": "Only existing named scope preserved; original author/reviewer/checks/limits retained; zero new counts or aggregate/release approval."
         }
       ],
       "previousReviewedRevision": "3be8232a024f551f163d55f770c5fc97127d7902",
@@ -5749,7 +5830,7 @@
     },
     {
       "id": "AP09-ops-mcp-complete-contract-20261021",
-      "revision": "8c96fe55390c1b2f656e8ee57eeac1188a782bb7",
+      "revision": "2e89bce7e59009e39de32d7df2bf8c52e839d5e9",
       "author": "Nova /root documentation correction coordinator",
       "reviewer": "Independent Codex autoreview 2026-10-21 (whole-topic audit and corrected local closeout)",
       "gateIds": [],
@@ -5832,6 +5913,19 @@
             "docs/blueprint/acceptance-evidence/core-guide-byte-review-20261021.json",
             "docs/blueprint/acceptance-evidence/host-release-followup-20261021.json"
           ]
+        },
+        {
+          "previousReviewedRevision": "8c96fe55390c1b2f656e8ee57eeac1188a782bb7",
+          "revision": "2e89bce7e59009e39de32d7df2bf8c52e839d5e9",
+          "changedDependencies": [
+            "docs/site/understand/ops-mcp.md"
+          ],
+          "reviewer": "/root/custody_review; /root parent actual built Reader checks",
+          "verdict": "PASS",
+          "summary": "Ops callouts preserve bearer/origin before MCP handling, unlimited aggregate scan distinction, Hubble partial outcome, shared exec credential authority and compiled-tool/RBAC ownership. Assertions not live cluster evidence. Fresh2e89 Reader:177canonical/187HTML/240digests/40832targets;12search;14805SourceLinks/3944objects;1834excerpts/954objects;27freshSVG with original27diagram records exact unchanged;28offline page/search observations and81source-box native noJS observations0findings/network. Exact one-line Archviewer blockquote repair separately independently reviewed; prior split-box failure retained.",
+          "report": "handoffs/pr13-finish-20261021/ee285a46-review.json",
+          "formatAddendum": "handoffs/pr13-finish-20261021/ee285a46-archviewer-format-addendum.json",
+          "limit": "Only existing named scope preserved; original author/reviewer/checks/limits retained; zero new counts or aggregate/release approval."
         }
       ],
       "previousReviewedRevision": "488deafa90a629d936d078827715c85e2c705895"
@@ -6600,7 +6694,7 @@
     },
     {
       "id": "AP09-documentation-agent-maintenance-20261021",
-      "revision": "8522e25d9b284e9bf1a34dedf313a806d97c28ee",
+      "revision": "263dcf1cb0123fc68ded76d88cd9aff6dc2c5b7d",
       "author": "Nova /root authored content and correction coordinator",
       "reviewer": "Independent Codex autoreview 2026-10-21 maintenance-ready-review",
       "gateIds": [],
@@ -6967,6 +7061,18 @@
           "summary": "Maintenance guide/owned-generation procedure retained. Additive UNACCEPTED_DATA hook preserves original graph construction/entries and is not admission; exact finite serve route retains fresh source inputs, no selected importer/entry, alias/public-target/full-unresolved guards. Global discovery/generation still explicitly excluded.",
           "report": "handoffs/pr13-finish-20261021/accepted-scope-preservation-8522e25d.json",
           "limit": "Existing named scope/reviewers/observations/limits retained; zero new counts or global approval."
+        },
+        {
+          "previousReviewedRevision": "8522e25d9b284e9bf1a34dedf313a806d97c28ee",
+          "revision": "263dcf1cb0123fc68ded76d88cd9aff6dc2c5b7d",
+          "changedDependencies": [
+            "scripts/docs-api-documentation-role-custody.mjs"
+          ],
+          "reviewer": "/root/workflow_acceptance",
+          "verdict": "PASS",
+          "summary": "Original MNT017 maintenance procedure and its no-global-generator limit remain supported: exact facts/Source-input renewal changes no discovery/qualification guard or ownership procedure. Current raw facts are not global graph admission or owner-generation success.",
+          "report": "handoffs/pr13-finish-20261021/six-record-data-declaration-preservation.json",
+          "limit": "Original named scope/author/reviewer/checks/limits retained; zero new acceptance counts."
         }
       ],
       "previousReviewedRevision": "ac6de3002f7556d2975da44616c6ed220e35e189",
@@ -7051,7 +7157,7 @@
     },
     {
       "id": "AP09-specialists-whole-gate-20261021",
-      "revision": "d0bb52c4d8bcf323c0ff32b95e8e3120ffa6eefb",
+      "revision": "2e89bce7e59009e39de32d7df2bf8c52e839d5e9",
       "author": "Nova /root authored content and correction coordinator",
       "reviewer": "Independent Codex autoreview 2026-10-21 specialists-whole-gate-review",
       "gateIds": [
@@ -7182,6 +7288,24 @@
           "reviewer": "Scope-aware independent union: original topic reviewers; operator_acceptance checkpoint53; custody_review maintenance locator correction; /root independent authored package/telemetry/pin scopes",
           "verdict": "PASS",
           "summary": "Only changed dependencies preserved against the named independent topic reports and actual d0bb Reader. Original summary and limitations retained; no duplicate or aggregate/release approval."
+        },
+        {
+          "previousReviewedRevision": "d0bb52c4d8bcf323c0ff32b95e8e3120ffa6eefb",
+          "revision": "2e89bce7e59009e39de32d7df2bf8c52e839d5e9",
+          "changedDependencies": [
+            "docs/site/understand/archviewer.md",
+            "docs/site/understand/codex-integration.md",
+            "docs/site/understand/echo.md",
+            "docs/site/understand/forge.md",
+            "docs/site/understand/openclaw.md",
+            "docs/site/understand/ops-mcp.md"
+          ],
+          "reviewer": "/root/custody_review; /root parent actual built Reader checks",
+          "verdict": "PASS",
+          "summary": "All six existing connected request/configuration/failure/recovery/extension chapters are retained byte-for-byte with blockquote additions only. Evidence fields distinguish declarations/assertions from execution, no new capability or availability claim. Fresh2e89 Reader:177canonical/187HTML/240digests/40832targets;12search;14805SourceLinks/3944objects;1834excerpts/954objects;27freshSVG with original27diagram records exact unchanged;28offline page/search observations and81source-box native noJS observations0findings/network. Exact one-line Archviewer blockquote repair separately independently reviewed; prior split-box failure retained.",
+          "report": "handoffs/pr13-finish-20261021/ee285a46-review.json",
+          "formatAddendum": "handoffs/pr13-finish-20261021/ee285a46-archviewer-format-addendum.json",
+          "limit": "Only existing named scope preserved; original author/reviewer/checks/limits retained; zero new counts or aggregate/release approval."
         }
       ]
     },
@@ -9385,7 +9509,7 @@
     },
     {
       "id": "AP09-complete-static-reader-search-20261021",
-      "revision": "8522e25d9b284e9bf1a34dedf313a806d97c28ee",
+      "revision": "2e89bce7e59009e39de32d7df2bf8c52e839d5e9",
       "author": "Nova /root documentation author and implementation coordinator",
       "reviewer": "Independent Codex autoreview static-reader whole PUB-002 Source/reader-quality closeout",
       "verdict": "PASS",
@@ -9920,12 +10044,43 @@
           "summary": "Search index/text/ranking production functions unchanged. Error-page original chapter preserved with two bounded independently root-reviewed appendices; actual177-page search equality/12 questions pass. New snippets remain excluded from indexing by unchanged preview staging.",
           "report": "handoffs/pr13-finish-20261021/accepted-scope-preservation-8522e25d.json",
           "limit": "Existing named scope/reviewers/observations/limits retained; zero new counts or global approval."
+        },
+        {
+          "previousReviewedRevision": "8522e25d9b284e9bf1a34dedf313a806d97c28ee",
+          "revision": "263dcf1cb0123fc68ded76d88cd9aff6dc2c5b7d",
+          "changedDependencies": [
+            "scripts/docs-api-documentation-role-custody.mjs"
+          ],
+          "reviewer": "/root/workflow_acceptance",
+          "verdict": "PASS",
+          "summary": "Positive reader selector and full-text search functions/output remain unchanged. Exact asset closure renewal names only previously reviewed repair-retry allowlist literal and existing copy/page/asset functions; it neither executes the helper nor admits arbitrary Markdown/assets.",
+          "report": "handoffs/pr13-finish-20261021/six-record-data-declaration-preservation.json",
+          "limit": "Original named scope/author/reviewer/checks/limits retained; zero new acceptance counts."
+        },
+        {
+          "previousReviewedRevision": "263dcf1cb0123fc68ded76d88cd9aff6dc2c5b7d",
+          "revision": "2e89bce7e59009e39de32d7df2bf8c52e839d5e9",
+          "changedDependencies": [
+            "docs/site/understand/archviewer.md",
+            "docs/site/understand/codex-integration.md",
+            "docs/site/understand/echo.md",
+            "docs/site/understand/forge.md",
+            "docs/site/understand/openclaw.md",
+            "docs/site/understand/ops-mcp.md",
+            "docs/site/understand/telemetry.md"
+          ],
+          "reviewer": "/root/custody_review; /root parent actual built Reader checks",
+          "verdict": "PASS",
+          "summary": "Only canonical page prose is added/rephrased; search/asset/page selection, renderer and browser code unchanged. Semantic question paths/headings/old links retained; fresh output/search mechanical proof remains separately parent-owned, not inferred. Fresh2e89 Reader:177canonical/187HTML/240digests/40832targets;12search;14805SourceLinks/3944objects;1834excerpts/954objects;27freshSVG with original27diagram records exact unchanged;28offline page/search observations and81source-box native noJS observations0findings/network. Exact one-line Archviewer blockquote repair separately independently reviewed; prior split-box failure retained.",
+          "report": "handoffs/pr13-finish-20261021/ee285a46-review.json",
+          "formatAddendum": "handoffs/pr13-finish-20261021/ee285a46-archviewer-format-addendum.json",
+          "limit": "Only existing named scope preserved; original author/reviewer/checks/limits retained; zero new counts or aggregate/release approval."
         }
       ]
     },
     {
       "id": "AP09-search-reader-gate-20261021",
-      "revision": "8522e25d9b284e9bf1a34dedf313a806d97c28ee",
+      "revision": "263dcf1cb0123fc68ded76d88cd9aff6dc2c5b7d",
       "author": "Nova /root documentation author and implementation coordinator",
       "reviewer": "Independent Codex autoreview whole A912-04 code/evidence review plus narrow Source/Reader/Quality native-impact follow-up",
       "verdict": "PASS",
@@ -10161,12 +10316,24 @@
           "summary": "Ranking/search function, synonym authority and positive canonical index unchanged; actual22ea twelve questions pass. Purpose-custody changes do not change search behavior or invent selected execution.",
           "report": "handoffs/pr13-finish-20261021/accepted-scope-preservation-8522e25d.json",
           "limit": "Existing named scope/reviewers/observations/limits retained; zero new counts or global approval."
+        },
+        {
+          "previousReviewedRevision": "8522e25d9b284e9bf1a34dedf313a806d97c28ee",
+          "revision": "263dcf1cb0123fc68ded76d88cd9aff6dc2c5b7d",
+          "changedDependencies": [
+            "scripts/docs-api-documentation-role-custody.mjs"
+          ],
+          "reviewer": "/root/workflow_acceptance",
+          "verdict": "PASS",
+          "summary": "Ranked search index, weighting, finite synonyms and question corpus unchanged; no new source-selection or runtime claim follows from renewed role declarations. Actual22ea search proof remains applicable.",
+          "report": "handoffs/pr13-finish-20261021/six-record-data-declaration-preservation.json",
+          "limit": "Original named scope/author/reviewer/checks/limits retained; zero new acceptance counts."
         }
       ]
     },
     {
       "id": "AP09-rendered-source-bounds-gate-20261021",
-      "revision": "8522e25d9b284e9bf1a34dedf313a806d97c28ee",
+      "revision": "263dcf1cb0123fc68ded76d88cd9aff6dc2c5b7d",
       "author": "Nova /root documentation author and implementation coordinator",
       "reviewer": "Independent Codex autoreview whole A912-09 Source/Reader/Quality review and narrow changed-boundary impact review for 21 prior PASS records",
       "verdict": "PASS",
@@ -10407,6 +10574,18 @@
           "summary": "Source object/line/anchor and artifact-bound checks unchanged. New links/outputs checked by current22ea actual Source+artifact proofs; finite custody source bindings reacquire before caches, not bypass source provenance. Does not claim semantic census.",
           "report": "handoffs/pr13-finish-20261021/accepted-scope-preservation-8522e25d.json",
           "limit": "Existing named scope/reviewers/observations/limits retained; zero new counts or global approval."
+        },
+        {
+          "previousReviewedRevision": "8522e25d9b284e9bf1a34dedf313a806d97c28ee",
+          "revision": "263dcf1cb0123fc68ded76d88cd9aff6dc2c5b7d",
+          "changedDependencies": [
+            "scripts/docs-api-documentation-role-custody.mjs"
+          ],
+          "reviewer": "/root/workflow_acceptance",
+          "verdict": "PASS",
+          "summary": "Source commit/object/actual-byte/range and artifact-target functions unchanged. Renewed role/purpose inputs reference already independently reviewed publication bytes; warm-cache guards remain exact. Raw acquisition facts are not semantic all-source or module-input acceptance.",
+          "report": "handoffs/pr13-finish-20261021/six-record-data-declaration-preservation.json",
+          "limit": "Original named scope/author/reviewer/checks/limits retained; zero new acceptance counts."
         }
       ]
     },
@@ -10578,7 +10757,7 @@
     },
     {
       "id": "AP09-complete-same-source-code-preview-20261021",
-      "revision": "8522e25d9b284e9bf1a34dedf313a806d97c28ee",
+      "revision": "263dcf1cb0123fc68ded76d88cd9aff6dc2c5b7d",
       "author": "Nova /root documentation author and implementation coordinator",
       "reviewer": "Independent Codex autoreview whole PUB004 Source/Reader/Quality closeout plus narrow changed-boundary preservation for21priorPASSrecords",
       "verdict": "PASS",
@@ -10779,12 +10958,24 @@
           "summary": "Preview extraction/hash/inert rendering unchanged; new error appendices pass actual1805-excerpt/935-object verification. Six-field evidence completeness remains explicitly unaccepted; no invented preview for a directory-only source.",
           "report": "handoffs/pr13-finish-20261021/accepted-scope-preservation-8522e25d.json",
           "limit": "Existing named scope/reviewers/observations/limits retained; zero new counts or global approval."
+        },
+        {
+          "previousReviewedRevision": "8522e25d9b284e9bf1a34dedf313a806d97c28ee",
+          "revision": "263dcf1cb0123fc68ded76d88cd9aff6dc2c5b7d",
+          "changedDependencies": [
+            "scripts/docs-api-documentation-role-custody.mjs"
+          ],
+          "reviewer": "/root/workflow_acceptance",
+          "verdict": "PASS",
+          "summary": "Same-revision inert preview extraction, LF normalization, source read and browser/native-disclosure semantics unchanged. The data-only declaration does not fabricate missing Claim/Contract/Test fields, grant A91205 or replace actual Source-byte verification.",
+          "report": "handoffs/pr13-finish-20261021/six-record-data-declaration-preservation.json",
+          "limit": "Original named scope/author/reviewer/checks/limits retained; zero new acceptance counts."
         }
       ]
     },
     {
       "id": "AP09-complete-responsive-reader-layout-20261021",
-      "revision": "8522e25d9b284e9bf1a34dedf313a806d97c28ee",
+      "revision": "263dcf1cb0123fc68ded76d88cd9aff6dc2c5b7d",
       "author": "Nova /root documentation author and implementation coordinator",
       "reviewer": "Independent Codex autoreview whole A91207 responsive-layout closeout and narrow24-record prior-boundary preservation",
       "verdict": "PASS",
@@ -11067,12 +11258,24 @@
           "summary": "Renderer CSS/content/table/code/diagram regions unchanged; docsite merged sections use existing components. Actual changed-page three-width offline/noJS observations pass; old whole-corpus/human-accessibility observations remain historical, not freshly rerun.",
           "report": "handoffs/pr13-finish-20261021/accepted-scope-preservation-8522e25d.json",
           "limit": "Existing named scope/reviewers/observations/limits retained; zero new counts or global approval."
+        },
+        {
+          "previousReviewedRevision": "8522e25d9b284e9bf1a34dedf313a806d97c28ee",
+          "revision": "263dcf1cb0123fc68ded76d88cd9aff6dc2c5b7d",
+          "changedDependencies": [
+            "scripts/docs-api-documentation-role-custody.mjs"
+          ],
+          "reviewer": "/root/workflow_acceptance",
+          "verdict": "PASS",
+          "summary": "CSS/rendered responsive content and table/code/diagram behavior unchanged. Current declaration-only edits do not alter layout or affect exact22ea changed-page Reader proof; prior whole-corpus/human-accessibility limits remain historical and explicit.",
+          "report": "handoffs/pr13-finish-20261021/six-record-data-declaration-preservation.json",
+          "limit": "Original named scope/author/reviewer/checks/limits retained; zero new acceptance counts."
         }
       ]
     },
     {
       "id": "AP09-complete-source-backed-diagrams-20261021",
-      "revision": "8522e25d9b284e9bf1a34dedf313a806d97c28ee",
+      "revision": "2e89bce7e59009e39de32d7df2bf8c52e839d5e9",
       "author": "Nova /root documentation author and coordinator",
       "reviewer": "Independent Codex diagram_services whole-topic review coordinating independent source reviews; no content authorship",
       "gateIds": [
@@ -11257,6 +11460,19 @@
           "summary": "All27 complete diagram definitions/records exactly preserved and freshly rendered SVG checks pass. Redirect append does not alter question/source/owner/text-alternative semantics or imply live traffic.",
           "report": "handoffs/pr13-finish-20261021/accepted-scope-preservation-8522e25d.json",
           "limit": "Existing named scope/reviewers/observations/limits retained; zero new counts or global approval."
+        },
+        {
+          "previousReviewedRevision": "8522e25d9b284e9bf1a34dedf313a806d97c28ee",
+          "revision": "2e89bce7e59009e39de32d7df2bf8c52e839d5e9",
+          "changedDependencies": [
+            "docs/site/understand/telemetry.md"
+          ],
+          "reviewer": "/root/custody_review; /root parent actual built Reader checks",
+          "verdict": "PASS",
+          "summary": "Telemetry filter wording preserves the same projectEvent source order; diagram code, arrows, alternatives/drift ownership unchanged. No live signal/hosting/accessibility proof added. Fresh2e89 Reader:177canonical/187HTML/240digests/40832targets;12search;14805SourceLinks/3944objects;1834excerpts/954objects;27freshSVG with original27diagram records exact unchanged;28offline page/search observations and81source-box native noJS observations0findings/network. Exact one-line Archviewer blockquote repair separately independently reviewed; prior split-box failure retained.",
+          "report": "handoffs/pr13-finish-20261021/ee285a46-review.json",
+          "formatAddendum": "handoffs/pr13-finish-20261021/ee285a46-archviewer-format-addendum.json",
+          "limit": "Only existing named scope preserved; original author/reviewer/checks/limits retained; zero new counts or aggregate/release approval."
         }
       ]
     },
@@ -11716,7 +11932,7 @@
     },
     {
       "id": "AP09-complete-event-producer-consumer-catalogue-20261021",
-      "revision": "af1b987ee4d461fc6205a18553db3e21461ca203",
+      "revision": "2e89bce7e59009e39de32d7df2bf8c52e839d5e9",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/operator_acceptance",
       "gateIds": [],
@@ -11793,6 +12009,19 @@
           "reviewer": "/root independent semantic delta/Reader review; workflow_acceptance exact portal correction and Buster followup; operator_acceptance nonauthor finite-code review",
           "verdict": "PASS",
           "summary": "Only exact changed dependencies independently reviewed against named reports; unchanged original scopes/limits reused. Reader6d public bytes unchanged ataf1; no duplicate topic/gate acceptance or aggregate claim. See reader-6d-scope-preservation.md and finite-context-ap08-independent.md."
+        },
+        {
+          "previousReviewedRevision": "af1b987ee4d461fc6205a18553db3e21461ca203",
+          "revision": "2e89bce7e59009e39de32d7df2bf8c52e839d5e9",
+          "changedDependencies": [
+            "docs/site/understand/telemetry.md"
+          ],
+          "reviewer": "/root/custody_review; /root parent actual built Reader checks",
+          "verdict": "PASS",
+          "summary": "Telemetry registration/subscription counts, producer/consumer distinction and inactive asset dispositions unchanged; filtered payload field-name projection prose is equivalent and does not imply delivery/activation. Fresh2e89 Reader:177canonical/187HTML/240digests/40832targets;12search;14805SourceLinks/3944objects;1834excerpts/954objects;27freshSVG with original27diagram records exact unchanged;28offline page/search observations and81source-box native noJS observations0findings/network. Exact one-line Archviewer blockquote repair separately independently reviewed; prior split-box failure retained.",
+          "report": "handoffs/pr13-finish-20261021/ee285a46-review.json",
+          "formatAddendum": "handoffs/pr13-finish-20261021/ee285a46-archviewer-format-addendum.json",
+          "limit": "Only existing named scope preserved; original author/reviewer/checks/limits retained; zero new counts or aggregate/release approval."
         }
       ]
     },
@@ -12326,7 +12555,7 @@
     },
     {
       "id": "AP09-whole-current-communication-union-20261021-d477",
-      "revision": "d0bb52c4d8bcf323c0ff32b95e8e3120ffa6eefb",
+      "revision": "2e89bce7e59009e39de32d7df2bf8c52e839d5e9",
       "author": "Documentation authors and correction coordinator; /root/operator_acceptance for399d bounded corrections",
       "reviewer": "/root/operator_acceptance (remaining whole-topic Source and semantic Reader review); /root (independent399d corrections, finite source-pin repair and d477 HTTP-package corrections)",
       "gateIds": [
@@ -12455,12 +12684,25 @@
           "reviewer": "Scope-aware independent union: original topic reviewers; operator_acceptance checkpoint53; custody_review maintenance locator correction; /root independent authored package/telemetry/pin scopes",
           "verdict": "PASS",
           "summary": "Only changed dependencies preserved against the named independent topic reports and actual d0bb Reader. Original summary and limitations retained; no duplicate or aggregate/release approval."
+        },
+        {
+          "previousReviewedRevision": "d0bb52c4d8bcf323c0ff32b95e8e3120ffa6eefb",
+          "revision": "2e89bce7e59009e39de32d7df2bf8c52e839d5e9",
+          "changedDependencies": [
+            "docs/site/understand/openclaw.md"
+          ],
+          "reviewer": "/root/custody_review; /root parent actual built Reader checks",
+          "verdict": "PASS",
+          "summary": "OpenClaw callouts keep durable Prism uncertainty versus retry, generic HTTP versus Gateway session lifecycle, transport versus receipt/completion and bounded fixture limits. Existing Core admission failure disclosure/real-wire uncertainty untouched. Fresh2e89 Reader:177canonical/187HTML/240digests/40832targets;12search;14805SourceLinks/3944objects;1834excerpts/954objects;27freshSVG with original27diagram records exact unchanged;28offline page/search observations and81source-box native noJS observations0findings/network. Exact one-line Archviewer blockquote repair separately independently reviewed; prior split-box failure retained.",
+          "report": "handoffs/pr13-finish-20261021/ee285a46-review.json",
+          "formatAddendum": "handoffs/pr13-finish-20261021/ee285a46-archviewer-format-addendum.json",
+          "limit": "Only existing named scope preserved; original author/reviewer/checks/limits retained; zero new counts or aggregate/release approval."
         }
       ]
     },
     {
       "id": "AP09-whole-current-telemetry-union-20261021-d477",
-      "revision": "af1b987ee4d461fc6205a18553db3e21461ca203",
+      "revision": "2e89bce7e59009e39de32d7df2bf8c52e839d5e9",
       "author": "Documentation authors and correction coordinator; /root/operator_acceptance for399d bounded corrections",
       "reviewer": "/root/operator_acceptance (remaining whole-topic Source and semantic Reader review); /root (independent399d corrections, finite source-pin repair and d477 HTTP-package corrections)",
       "gateIds": [
@@ -12573,12 +12815,25 @@
           "reviewer": "/root independent semantic delta/Reader review; workflow_acceptance exact portal correction and Buster followup; operator_acceptance nonauthor finite-code review",
           "verdict": "PASS",
           "summary": "Only exact changed dependencies independently reviewed against named reports; unchanged original scopes/limits reused. Reader6d public bytes unchanged ataf1; no duplicate topic/gate acceptance or aggregate claim. See reader-6d-scope-preservation.md and finite-context-ap08-independent.md."
+        },
+        {
+          "previousReviewedRevision": "af1b987ee4d461fc6205a18553db3e21461ca203",
+          "revision": "2e89bce7e59009e39de32d7df2bf8c52e839d5e9",
+          "changedDependencies": [
+            "docs/site/understand/telemetry.md"
+          ],
+          "reviewer": "/root/custody_review; /root parent actual built Reader checks",
+          "verdict": "PASS",
+          "summary": "128-entry postfilter cap then truncated-name sorting remains exact source semantics; queues/loss/replay/retention/projection fields unchanged. Existing live and publisher-fixture limits unchanged. Fresh2e89 Reader:177canonical/187HTML/240digests/40832targets;12search;14805SourceLinks/3944objects;1834excerpts/954objects;27freshSVG with original27diagram records exact unchanged;28offline page/search observations and81source-box native noJS observations0findings/network. Exact one-line Archviewer blockquote repair separately independently reviewed; prior split-box failure retained.",
+          "report": "handoffs/pr13-finish-20261021/ee285a46-review.json",
+          "formatAddendum": "handoffs/pr13-finish-20261021/ee285a46-archviewer-format-addendum.json",
+          "limit": "Only existing named scope preserved; original author/reviewer/checks/limits retained; zero new counts or aggregate/release approval."
         }
       ]
     },
     {
       "id": "AP09-whole-independent-platform-decision-review-20261021-d477",
-      "revision": "af1b987ee4d461fc6205a18553db3e21461ca203",
+      "revision": "2e89bce7e59009e39de32d7df2bf8c52e839d5e9",
       "author": "Documentation authors and correction coordinator; /root/operator_acceptance for399d bounded corrections",
       "reviewer": "/root/operator_acceptance (remaining whole-topic Source and semantic Reader review); /root (independent399d corrections, finite source-pin repair and d477 HTTP-package corrections)",
       "gateIds": [
@@ -12836,12 +13091,26 @@
           "reviewer": "/root independent semantic delta/Reader review; workflow_acceptance exact portal correction and Buster followup; operator_acceptance nonauthor finite-code review",
           "verdict": "PASS",
           "summary": "Only exact changed dependencies independently reviewed against named reports; unchanged original scopes/limits reused. Reader6d public bytes unchanged ataf1; no duplicate topic/gate acceptance or aggregate claim. See reader-6d-scope-preservation.md and finite-context-ap08-independent.md."
+        },
+        {
+          "previousReviewedRevision": "af1b987ee4d461fc6205a18553db3e21461ca203",
+          "revision": "2e89bce7e59009e39de32d7df2bf8c52e839d5e9",
+          "changedDependencies": [
+            "docs/site/understand/openclaw.md",
+            "docs/site/understand/telemetry.md"
+          ],
+          "reviewer": "/root/custody_review; /root parent actual built Reader checks",
+          "verdict": "PASS",
+          "summary": "OpenClaw callouts and equivalent telemetry wording preserve diagnosis at original durable owner/receiver. No repeat-on-timeout, automatic session cancellation, Redis replay or deployment-readiness conclusion introduced. Fresh2e89 Reader:177canonical/187HTML/240digests/40832targets;12search;14805SourceLinks/3944objects;1834excerpts/954objects;27freshSVG with original27diagram records exact unchanged;28offline page/search observations and81source-box native noJS observations0findings/network. Exact one-line Archviewer blockquote repair separately independently reviewed; prior split-box failure retained.",
+          "report": "handoffs/pr13-finish-20261021/ee285a46-review.json",
+          "formatAddendum": "handoffs/pr13-finish-20261021/ee285a46-archviewer-format-addendum.json",
+          "limit": "Only existing named scope preserved; original author/reviewer/checks/limits retained; zero new counts or aggregate/release approval."
         }
       ]
     },
     {
       "id": "AP09-reference-network-paths-80178-20261021",
-      "revision": "80178cbaea15b80393d370269a5b6225e9fd7129",
+      "revision": "2e89bce7e59009e39de32d7df2bf8c52e839d5e9",
       "author": "Documentation authors; /root/operator_acceptance for separately independently reviewed bounded corrections",
       "reviewer": "/root/operator_acceptance (whole remaining reference topic); /root (independent399d and d477 authored corrections), /root/custody_review (unchanged Worker/package constituent scope)",
       "gateIds": [],
@@ -12951,11 +13220,26 @@
         "Runtime knip release stop remains. Publisher maintained Core fixture failure is disclosed; bounded protocol probes do not substitute for Core activation."
       ],
       "openIssues": [],
-      "verdict": "PASS"
+      "verdict": "PASS",
+      "impactReviews": [
+        {
+          "previousReviewedRevision": "80178cbaea15b80393d370269a5b6225e9fd7129",
+          "revision": "2e89bce7e59009e39de32d7df2bf8c52e839d5e9",
+          "changedDependencies": [
+            "docs/site/understand/openclaw.md"
+          ],
+          "reviewer": "/root/custody_review; /root parent actual built Reader checks",
+          "verdict": "PASS",
+          "summary": "OpenClaw endpoint/transport/config/auth bounds and durable result authority remain as before; new Source boxes distinguish generic adapter admission fixtures from target readiness. No network/runtime source changed. Fresh2e89 Reader:177canonical/187HTML/240digests/40832targets;12search;14805SourceLinks/3944objects;1834excerpts/954objects;27freshSVG with original27diagram records exact unchanged;28offline page/search observations and81source-box native noJS observations0findings/network. Exact one-line Archviewer blockquote repair separately independently reviewed; prior split-box failure retained.",
+          "report": "handoffs/pr13-finish-20261021/ee285a46-review.json",
+          "formatAddendum": "handoffs/pr13-finish-20261021/ee285a46-archviewer-format-addendum.json",
+          "limit": "Only existing named scope preserved; original author/reviewer/checks/limits retained; zero new counts or aggregate/release approval."
+        }
+      ]
     },
     {
       "id": "AP09-reference-event-payloads-80178-20261021",
-      "revision": "af1b987ee4d461fc6205a18553db3e21461ca203",
+      "revision": "2e89bce7e59009e39de32d7df2bf8c52e839d5e9",
       "author": "Documentation authors; /root/operator_acceptance for separately independently reviewed bounded corrections",
       "reviewer": "/root/operator_acceptance (whole remaining reference topic); /root (independent399d and d477 authored corrections), /root/custody_review (unchanged Worker/package constituent scope)",
       "gateIds": [
@@ -13051,6 +13335,19 @@
           "reviewer": "/root independent semantic delta/Reader review; workflow_acceptance exact portal correction and Buster followup; operator_acceptance nonauthor finite-code review",
           "verdict": "PASS",
           "summary": "Only exact changed dependencies independently reviewed against named reports; unchanged original scopes/limits reused. Reader6d public bytes unchanged ataf1; no duplicate topic/gate acceptance or aggregate claim. See reader-6d-scope-preservation.md and finite-context-ap08-independent.md."
+        },
+        {
+          "previousReviewedRevision": "af1b987ee4d461fc6205a18553db3e21461ca203",
+          "revision": "2e89bce7e59009e39de32d7df2bf8c52e839d5e9",
+          "changedDependencies": [
+            "docs/site/understand/telemetry.md"
+          ],
+          "reviewer": "/root/custody_review; /root parent actual built Reader checks",
+          "verdict": "PASS",
+          "summary": "Equivalent telemetry postfilter cap/order wording preserves exact active envelope/payload projection, while catalogue/identity/retention/inactive version references remain unchanged. No REF generation completeness or live event claim added. Fresh2e89 Reader:177canonical/187HTML/240digests/40832targets;12search;14805SourceLinks/3944objects;1834excerpts/954objects;27freshSVG with original27diagram records exact unchanged;28offline page/search observations and81source-box native noJS observations0findings/network. Exact one-line Archviewer blockquote repair separately independently reviewed; prior split-box failure retained.",
+          "report": "handoffs/pr13-finish-20261021/ee285a46-review.json",
+          "formatAddendum": "handoffs/pr13-finish-20261021/ee285a46-archviewer-format-addendum.json",
+          "limit": "Only existing named scope preserved; original author/reviewer/checks/limits retained; zero new counts or aggregate/release approval."
         }
       ]
     },
@@ -14346,7 +14643,7 @@
     }
   ],
   "purpose": "Internal planning and observed findings; not an acceptance ledger and not reader documentation.",
-  "sourceRevision": "8522e25d9b284e9bf1a34dedf313a806d97c28ee",
+  "sourceRevision": "263dcf1cb0123fc68ded76d88cd9aff6dc2c5b7d",
   "authorIdentity": "/root",
   "catalogueAuthority": "docs/blueprint/generated/ap09-catalogue.json",
   "acceptanceAuthority": "docs/blueprint/AP09-acceptance-contract.md",
@@ -47058,13 +47355,13 @@
       "runtimeStop": "RELEASE_CONFIGURATION_CHANGED:charts/kubeclaw/files/config/knip.json unchanged"
     },
     "finishCheckpoint20261021": {
-      "reviewedSourceRevision": "8522e25d9b284e9bf1a34dedf313a806d97c28ee",
+      "reviewedSourceRevision": "263dcf1cb0123fc68ded76d88cd9aff6dc2c5b7d",
       "readerRevision": "22ea0ffb9f4e30c7579b46ed7eb059a3de51ad30",
       "acceptedGates": 44,
       "acceptedRequirements": 223,
       "newGate": "A912-03",
       "preservedExistingRecords": 24,
-      "factsAcquisition": "8522 facts-only actual98JS/4nativeunexecuted/115closure DATA capture terminal0; proposed renewal/currentgraph/owner acceptance pending",
+      "factsAcquisition": "Actual98JS/4nativeunexecuted/115closure DATA independently assessed; exact9roleobject/1closure renewal Source-reviewed and installed,36nativecontrolsPASS0skip. Graph/owner qualification remains pending.",
       "limits": "Checklist only, not completion percentage, overall or runtime release approval."
     }
   },

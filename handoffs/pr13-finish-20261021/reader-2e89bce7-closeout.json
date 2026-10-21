@@ -1,0 +1,33 @@
+{
+  "revision": "2e89bce7e59009e39de32d7df2bf8c52e839d5e9",
+  "archive": {
+    "revision": "2e89bce7e59009e39de32d7df2bf8c52e839d5e9",
+    "archive": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/kubeclaw-reader-offline-2e89bce7.zip",
+    "sha256": "b6950fd712a94e96ce6060e6e256fa4c242f531a5a92813140b5de44fa212926",
+    "bytes": 7678466,
+    "members": 242,
+    "copiedAssetsSourceCompared": 19,
+    "extracted": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/offline-reader-2e89bce7",
+    "limit": "Checkpoint reader, not aggregate documentation or release acceptance."
+  },
+  "preview": {
+    "revision": "2e89bce7e59009e39de32d7df2bf8c52e839d5e9",
+    "outputsGET200ExactBytes": 240,
+    "selectedCopiedAssets": 19,
+    "home308QueryPreserved": true,
+    "headSelectedAsset200Empty": true,
+    "unselected404": true,
+    "post405": true,
+    "limit": "Actual loopback Reader preview only; empty maintained redirect registry; no deployment or release approval."
+  },
+  "browser": {
+    "pageSearchObservations": 28,
+    "sourceBoxObservations": 81,
+    "findings": [],
+    "network": []
+  },
+  "allFiveChecks": "terminal0; sourceLinks unchanged retry after retained timeout",
+  "existingScopePreservationCount": 16,
+  "newAcceptanceCounts": 0,
+  "limit": "Checkpoint only; no global runtime/release/CI/wholeA91205 approval."
+}
