@@ -234,7 +234,7 @@
     },
     {
       "id": "AP09.2-ready-topics-20261020",
-      "revision": "a7d0e07cacc037b94e8a45ed2f0d90bd0259b213",
+      "revision": "8c96fe55390c1b2f656e8ee57eeac1188a782bb7",
       "author": "Documentation implementation authors before review campaign",
       "reviewer": "/root/review_events (01a157c4-8ec4-7273-b286-baaaae1e8176)",
       "gateIds": [],
@@ -444,9 +444,24 @@
             "docs/blueprint/acceptance-evidence/schema-and-pin-review-20261021.json",
             "docs/blueprint/acceptance-evidence/communication-complete-20261021/communication-fifth-review.json"
           ]
+        },
+        {
+          "reviewer": "Independent Codex autoreview 2026-10-21; core-guide-byte-review and host-release-followup",
+          "previousReviewedRevision": "a7d0e07cacc037b94e8a45ed2f0d90bd0259b213",
+          "revision": "8c96fe55390c1b2f656e8ee57eeac1188a782bb7",
+          "changedDependencies": [
+            "docs/site/understand/nova-core.md",
+            "docs/site/understand/plugin-runtime.md"
+          ],
+          "verdict": "PASS",
+          "summary": "Source URLs/evidence headers only:125cited Source files checked; only capability-security test differs, strengthening exact28-capability provider and case parity with four added cases; original native test passes. Core checker retains exact current/pinned byte guard. MCP/handbook citation endpoints exclude only blank line51, retaining all assertions. Existing whole content scopes preserved, no runtime/host-kernel/global/gate qualification. Other bound dependencies byte-identical.",
+          "evidence": [
+            "docs/blueprint/acceptance-evidence/core-guide-byte-review-20261021.json",
+            "docs/blueprint/acceptance-evidence/host-release-followup-20261021.json"
+          ]
         }
       ],
-      "previousReviewedRevision": "ad66f324ab0273db59397d42f35d94cd4dc62cdd"
+      "previousReviewedRevision": "a7d0e07cacc037b94e8a45ed2f0d90bd0259b213"
     },
     {
       "id": "AP09.4-ready-prism-topics-20261020",
@@ -580,7 +595,7 @@
     },
     {
       "id": "AP09.3-ready-worker-topics-20261020",
-      "revision": "8f79e328cf216b53dc2e665896c65cbb19a2e0ce",
+      "revision": "8c96fe55390c1b2f656e8ee57eeac1188a782bb7",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/review_worker_ready",
       "gateIds": [],
@@ -711,9 +726,23 @@
           ],
           "verdict": "PASS",
           "summary": "Independent publication impact preserves original requirement/gate scopes and limits.53generated pages change only commit IDs;505cited source pairs byte-identical. Prose corrections/entry links preserve technical meaning. Derived page-map lastVerified fields use the same audited revision substitution only; ownership/routes/sources/checks byte-identical after revision normalization."
+        },
+        {
+          "reviewer": "Independent Codex autoreview 2026-10-21; core-guide-byte-review and host-release-followup",
+          "previousReviewedRevision": "8f79e328cf216b53dc2e665896c65cbb19a2e0ce",
+          "revision": "8c96fe55390c1b2f656e8ee57eeac1188a782bb7",
+          "changedDependencies": [
+            "docs/site/understand/worker-core.md"
+          ],
+          "verdict": "PASS",
+          "summary": "Source URLs/evidence headers only:125cited Source files checked; only capability-security test differs, strengthening exact28-capability provider and case parity with four added cases; original native test passes. Core checker retains exact current/pinned byte guard. MCP/handbook citation endpoints exclude only blank line51, retaining all assertions. Existing whole content scopes preserved, no runtime/host-kernel/global/gate qualification. Other bound dependencies byte-identical.",
+          "evidence": [
+            "docs/blueprint/acceptance-evidence/core-guide-byte-review-20261021.json",
+            "docs/blueprint/acceptance-evidence/host-release-followup-20261021.json"
+          ]
         }
       ],
-      "previousReviewedRevision": "ad66f324ab0273db59397d42f35d94cd4dc62cdd"
+      "previousReviewedRevision": "8f79e328cf216b53dc2e665896c65cbb19a2e0ce"
     },
     {
       "id": "AP09.7-ready-platform-topics-20261020",
@@ -1049,7 +1078,7 @@
     },
     {
       "id": "Reviewed-corrections-20261020",
-      "revision": "a7d0e07cacc037b94e8a45ed2f0d90bd0259b213",
+      "revision": "8c96fe55390c1b2f656e8ee57eeac1188a782bb7",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/review_worker_ready",
       "gateIds": [],
@@ -1194,9 +1223,23 @@
             "docs/blueprint/acceptance-evidence/schema-and-pin-review-20261021.json",
             "docs/blueprint/acceptance-evidence/communication-complete-20261021/communication-fifth-review.json"
           ]
+        },
+        {
+          "reviewer": "Independent Codex autoreview 2026-10-21; core-guide-byte-review and host-release-followup",
+          "previousReviewedRevision": "a7d0e07cacc037b94e8a45ed2f0d90bd0259b213",
+          "revision": "8c96fe55390c1b2f656e8ee57eeac1188a782bb7",
+          "changedDependencies": [
+            "scripts/check-core-architecture-guides.mjs"
+          ],
+          "verdict": "PASS",
+          "summary": "Source URLs/evidence headers only:125cited Source files checked; only capability-security test differs, strengthening exact28-capability provider and case parity with four added cases; original native test passes. Core checker retains exact current/pinned byte guard. MCP/handbook citation endpoints exclude only blank line51, retaining all assertions. Existing whole content scopes preserved, no runtime/host-kernel/global/gate qualification. Other bound dependencies byte-identical.",
+          "evidence": [
+            "docs/blueprint/acceptance-evidence/core-guide-byte-review-20261021.json",
+            "docs/blueprint/acceptance-evidence/host-release-followup-20261021.json"
+          ]
         }
       ],
-      "previousReviewedRevision": "488deafa90a629d936d078827715c85e2c705895"
+      "previousReviewedRevision": "a7d0e07cacc037b94e8a45ed2f0d90bd0259b213"
     },
     {
       "id": "AP09-reader-operators-20261020",
@@ -1441,7 +1484,7 @@
     },
     {
       "id": "AP09-reader-developers-20261020",
-      "revision": "a7d0e07cacc037b94e8a45ed2f0d90bd0259b213",
+      "revision": "8c96fe55390c1b2f656e8ee57eeac1188a782bb7",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/review_platform_ready",
       "gateIds": [
@@ -1632,9 +1675,24 @@
             "docs/blueprint/acceptance-evidence/schema-and-pin-review-20261021.json",
             "docs/blueprint/acceptance-evidence/communication-complete-20261021/communication-fifth-review.json"
           ]
+        },
+        {
+          "reviewer": "Independent Codex autoreview 2026-10-21; core-guide-byte-review and host-release-followup",
+          "previousReviewedRevision": "a7d0e07cacc037b94e8a45ed2f0d90bd0259b213",
+          "revision": "8c96fe55390c1b2f656e8ee57eeac1188a782bb7",
+          "changedDependencies": [
+            "docs/site/extend/developer-handbook.md",
+            "scripts/check-core-architecture-guides.mjs"
+          ],
+          "verdict": "PASS",
+          "summary": "Source URLs/evidence headers only:125cited Source files checked; only capability-security test differs, strengthening exact28-capability provider and case parity with four added cases; original native test passes. Core checker retains exact current/pinned byte guard. MCP/handbook citation endpoints exclude only blank line51, retaining all assertions. Existing whole content scopes preserved, no runtime/host-kernel/global/gate qualification. Other bound dependencies byte-identical.",
+          "evidence": [
+            "docs/blueprint/acceptance-evidence/core-guide-byte-review-20261021.json",
+            "docs/blueprint/acceptance-evidence/host-release-followup-20261021.json"
+          ]
         }
       ],
-      "previousReviewedRevision": "ad66f324ab0273db59397d42f35d94cd4dc62cdd"
+      "previousReviewedRevision": "a7d0e07cacc037b94e8a45ed2f0d90bd0259b213"
     },
     {
       "id": "AP09-reviewed-configuration-20261020",
@@ -1964,7 +2022,7 @@
     },
     {
       "id": "AP09-reviewed-publication-navigation-20261020",
-      "revision": "a7d0e07cacc037b94e8a45ed2f0d90bd0259b213",
+      "revision": "8c96fe55390c1b2f656e8ee57eeac1188a782bb7",
       "author": "Documentation implementation authors",
       "reviewer": "/root/review_publication",
       "gateIds": [
@@ -2080,13 +2138,27 @@
             "docs/blueprint/acceptance-evidence/schema-and-pin-review-20261021.json",
             "docs/blueprint/acceptance-evidence/communication-complete-20261021/communication-fifth-review.json"
           ]
+        },
+        {
+          "reviewer": "Independent Codex autoreview 2026-10-21; core-guide-byte-review and host-release-followup",
+          "previousReviewedRevision": "a7d0e07cacc037b94e8a45ed2f0d90bd0259b213",
+          "revision": "8c96fe55390c1b2f656e8ee57eeac1188a782bb7",
+          "changedDependencies": [
+            "docs/site/extend/developer-handbook.md"
+          ],
+          "verdict": "PASS",
+          "summary": "Source URLs/evidence headers only:125cited Source files checked; only capability-security test differs, strengthening exact28-capability provider and case parity with four added cases; original native test passes. Core checker retains exact current/pinned byte guard. MCP/handbook citation endpoints exclude only blank line51, retaining all assertions. Existing whole content scopes preserved, no runtime/host-kernel/global/gate qualification. Other bound dependencies byte-identical.",
+          "evidence": [
+            "docs/blueprint/acceptance-evidence/core-guide-byte-review-20261021.json",
+            "docs/blueprint/acceptance-evidence/host-release-followup-20261021.json"
+          ]
         }
       ],
-      "previousReviewedRevision": "8f79e328cf216b53dc2e665896c65cbb19a2e0ce"
+      "previousReviewedRevision": "a7d0e07cacc037b94e8a45ed2f0d90bd0259b213"
     },
     {
       "id": "AP09-closeout-runtime-20261020",
-      "revision": "8f79e328cf216b53dc2e665896c65cbb19a2e0ce",
+      "revision": "8c96fe55390c1b2f656e8ee57eeac1188a782bb7",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/close_runtime_docs",
       "gateIds": [],
@@ -2193,9 +2265,23 @@
           ],
           "verdict": "PASS",
           "summary": "Independent publication impact preserves original requirement/gate scopes and limits.53generated pages change only commit IDs;505cited source pairs byte-identical. Prose corrections/entry links preserve technical meaning. Derived page-map lastVerified fields use the same audited revision substitution only; ownership/routes/sources/checks byte-identical after revision normalization."
+        },
+        {
+          "reviewer": "Independent Codex autoreview 2026-10-21; core-guide-byte-review and host-release-followup",
+          "previousReviewedRevision": "8f79e328cf216b53dc2e665896c65cbb19a2e0ce",
+          "revision": "8c96fe55390c1b2f656e8ee57eeac1188a782bb7",
+          "changedDependencies": [
+            "docs/site/understand/worker-core.md"
+          ],
+          "verdict": "PASS",
+          "summary": "Source URLs/evidence headers only:125cited Source files checked; only capability-security test differs, strengthening exact28-capability provider and case parity with four added cases; original native test passes. Core checker retains exact current/pinned byte guard. MCP/handbook citation endpoints exclude only blank line51, retaining all assertions. Existing whole content scopes preserved, no runtime/host-kernel/global/gate qualification. Other bound dependencies byte-identical.",
+          "evidence": [
+            "docs/blueprint/acceptance-evidence/core-guide-byte-review-20261021.json",
+            "docs/blueprint/acceptance-evidence/host-release-followup-20261021.json"
+          ]
         }
       ],
-      "previousReviewedRevision": "c46b8268efe8642deb608b8067c2c7f4c7fb8ae9"
+      "previousReviewedRevision": "8f79e328cf216b53dc2e665896c65cbb19a2e0ce"
     },
     {
       "id": "AP09-closeout-config-reference-20261020",
@@ -2300,7 +2386,7 @@
     },
     {
       "id": "AP09-closeout-developer-maintenance-20261020",
-      "revision": "a7d0e07cacc037b94e8a45ed2f0d90bd0259b213",
+      "revision": "8c96fe55390c1b2f656e8ee57eeac1188a782bb7",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/close_developer_maintenance",
       "gateIds": [],
@@ -2438,9 +2524,23 @@
             "docs/blueprint/acceptance-evidence/schema-and-pin-review-20261021.json",
             "docs/blueprint/acceptance-evidence/communication-complete-20261021/communication-fifth-review.json"
           ]
+        },
+        {
+          "reviewer": "Independent Codex autoreview 2026-10-21; core-guide-byte-review and host-release-followup",
+          "previousReviewedRevision": "a7d0e07cacc037b94e8a45ed2f0d90bd0259b213",
+          "revision": "8c96fe55390c1b2f656e8ee57eeac1188a782bb7",
+          "changedDependencies": [
+            "docs/site/extend/developer-handbook.md"
+          ],
+          "verdict": "PASS",
+          "summary": "Source URLs/evidence headers only:125cited Source files checked; only capability-security test differs, strengthening exact28-capability provider and case parity with four added cases; original native test passes. Core checker retains exact current/pinned byte guard. MCP/handbook citation endpoints exclude only blank line51, retaining all assertions. Existing whole content scopes preserved, no runtime/host-kernel/global/gate qualification. Other bound dependencies byte-identical.",
+          "evidence": [
+            "docs/blueprint/acceptance-evidence/core-guide-byte-review-20261021.json",
+            "docs/blueprint/acceptance-evidence/host-release-followup-20261021.json"
+          ]
         }
       ],
-      "previousReviewedRevision": "8f79e328cf216b53dc2e665896c65cbb19a2e0ce"
+      "previousReviewedRevision": "a7d0e07cacc037b94e8a45ed2f0d90bd0259b213"
     },
     {
       "id": "AP09-closeout-ARC006-20261020",
@@ -2745,7 +2845,7 @@
     },
     {
       "id": "AP09-compiler-import-provider-diagnosis-20261021",
-      "revision": "a7d0e07cacc037b94e8a45ed2f0d90bd0259b213",
+      "revision": "8c96fe55390c1b2f656e8ee57eeac1188a782bb7",
       "author": "Documentation authors and /root correction coordinator",
       "reviewer": "Independent Codex autoreview 2026-10-21 (ready, correction-final and contributor invocations)",
       "gateIds": [
@@ -2833,13 +2933,28 @@
             "docs/blueprint/acceptance-evidence/schema-and-pin-review-20261021.json",
             "docs/blueprint/acceptance-evidence/communication-complete-20261021/communication-fifth-review.json"
           ]
+        },
+        {
+          "reviewer": "Independent Codex autoreview 2026-10-21; core-guide-byte-review and host-release-followup",
+          "previousReviewedRevision": "a7d0e07cacc037b94e8a45ed2f0d90bd0259b213",
+          "revision": "8c96fe55390c1b2f656e8ee57eeac1188a782bb7",
+          "changedDependencies": [
+            "docs/site/understand/nova-core.md",
+            "docs/site/understand/plugin-runtime.md"
+          ],
+          "verdict": "PASS",
+          "summary": "Source URLs/evidence headers only:125cited Source files checked; only capability-security test differs, strengthening exact28-capability provider and case parity with four added cases; original native test passes. Core checker retains exact current/pinned byte guard. MCP/handbook citation endpoints exclude only blank line51, retaining all assertions. Existing whole content scopes preserved, no runtime/host-kernel/global/gate qualification. Other bound dependencies byte-identical.",
+          "evidence": [
+            "docs/blueprint/acceptance-evidence/core-guide-byte-review-20261021.json",
+            "docs/blueprint/acceptance-evidence/host-release-followup-20261021.json"
+          ]
         }
       ],
-      "previousReviewedRevision": "8f79e328cf216b53dc2e665896c65cbb19a2e0ce"
+      "previousReviewedRevision": "a7d0e07cacc037b94e8a45ed2f0d90bd0259b213"
     },
     {
       "id": "AP09-confidential-adapter-lifecycle-20261021",
-      "revision": "a7d0e07cacc037b94e8a45ed2f0d90bd0259b213",
+      "revision": "8c96fe55390c1b2f656e8ee57eeac1188a782bb7",
       "author": "Documentation authors and /root correction coordinator",
       "reviewer": "Independent Codex autoreview 2026-10-21 (ready, correction-final and contributor invocations)",
       "gateIds": [],
@@ -2907,9 +3022,23 @@
             "docs/blueprint/acceptance-evidence/schema-and-pin-review-20261021.json",
             "docs/blueprint/acceptance-evidence/communication-complete-20261021/communication-fifth-review.json"
           ]
+        },
+        {
+          "reviewer": "Independent Codex autoreview 2026-10-21; core-guide-byte-review and host-release-followup",
+          "previousReviewedRevision": "a7d0e07cacc037b94e8a45ed2f0d90bd0259b213",
+          "revision": "8c96fe55390c1b2f656e8ee57eeac1188a782bb7",
+          "changedDependencies": [
+            "docs/site/understand/plugin-runtime.md"
+          ],
+          "verdict": "PASS",
+          "summary": "Source URLs/evidence headers only:125cited Source files checked; only capability-security test differs, strengthening exact28-capability provider and case parity with four added cases; original native test passes. Core checker retains exact current/pinned byte guard. MCP/handbook citation endpoints exclude only blank line51, retaining all assertions. Existing whole content scopes preserved, no runtime/host-kernel/global/gate qualification. Other bound dependencies byte-identical.",
+          "evidence": [
+            "docs/blueprint/acceptance-evidence/core-guide-byte-review-20261021.json",
+            "docs/blueprint/acceptance-evidence/host-release-followup-20261021.json"
+          ]
         }
       ],
-      "previousReviewedRevision": "8f79e328cf216b53dc2e665896c65cbb19a2e0ce"
+      "previousReviewedRevision": "a7d0e07cacc037b94e8a45ed2f0d90bd0259b213"
     },
     {
       "id": "AP09-selected-model-gateway-20261021",
@@ -2976,7 +3105,7 @@
     },
     {
       "id": "AP09-contributor-baselines-and-migrations-20261021",
-      "revision": "ad66f324ab0273db59397d42f35d94cd4dc62cdd",
+      "revision": "8c96fe55390c1b2f656e8ee57eeac1188a782bb7",
       "author": "Documentation authors and /root correction coordinator",
       "reviewer": "Independent Codex autoreview 2026-10-21 (ready, correction-final and contributor invocations)",
       "gateIds": [],
@@ -3035,7 +3164,24 @@
         "No clean npm-ci/install reproduction, whole A910-01 gate, complete old-reader migration matrix or application restore certified."
       ],
       "openIssues": [],
-      "verdict": "PASS"
+      "verdict": "PASS",
+      "impactReviews": [
+        {
+          "reviewer": "Independent Codex autoreview 2026-10-21; core-guide-byte-review and host-release-followup",
+          "previousReviewedRevision": "ad66f324ab0273db59397d42f35d94cd4dc62cdd",
+          "revision": "8c96fe55390c1b2f656e8ee57eeac1188a782bb7",
+          "changedDependencies": [
+            "docs/site/extend/developer-handbook.md"
+          ],
+          "verdict": "PASS",
+          "summary": "Source URLs/evidence headers only:125cited Source files checked; only capability-security test differs, strengthening exact28-capability provider and case parity with four added cases; original native test passes. Core checker retains exact current/pinned byte guard. MCP/handbook citation endpoints exclude only blank line51, retaining all assertions. Existing whole content scopes preserved, no runtime/host-kernel/global/gate qualification. Other bound dependencies byte-identical.",
+          "evidence": [
+            "docs/blueprint/acceptance-evidence/core-guide-byte-review-20261021.json",
+            "docs/blueprint/acceptance-evidence/host-release-followup-20261021.json"
+          ]
+        }
+      ],
+      "previousReviewedRevision": "ad66f324ab0273db59397d42f35d94cd4dc62cdd"
     },
     {
       "id": "AP09-install-maintenance-project-entry-20261021",
@@ -3113,7 +3259,7 @@
     },
     {
       "id": "AP09-ops-mcp-complete-contract-20261021",
-      "revision": "488deafa90a629d936d078827715c85e2c705895",
+      "revision": "8c96fe55390c1b2f656e8ee57eeac1188a782bb7",
       "author": "Nova /root documentation correction coordinator",
       "reviewer": "Independent Codex autoreview 2026-10-21 (whole-topic audit and corrected local closeout)",
       "gateIds": [],
@@ -3181,7 +3327,24 @@
         "No whole A97 or global generation/publication/browser gate accepted; historical/runtime input metadata does not qualify effects."
       ],
       "openIssues": [],
-      "verdict": "PASS"
+      "verdict": "PASS",
+      "impactReviews": [
+        {
+          "reviewer": "Independent Codex autoreview 2026-10-21; core-guide-byte-review and host-release-followup",
+          "previousReviewedRevision": "488deafa90a629d936d078827715c85e2c705895",
+          "revision": "8c96fe55390c1b2f656e8ee57eeac1188a782bb7",
+          "changedDependencies": [
+            "docs/site/understand/ops-mcp.md"
+          ],
+          "verdict": "PASS",
+          "summary": "Source URLs/evidence headers only:125cited Source files checked; only capability-security test differs, strengthening exact28-capability provider and case parity with four added cases; original native test passes. Core checker retains exact current/pinned byte guard. MCP/handbook citation endpoints exclude only blank line51, retaining all assertions. Existing whole content scopes preserved, no runtime/host-kernel/global/gate qualification. Other bound dependencies byte-identical.",
+          "evidence": [
+            "docs/blueprint/acceptance-evidence/core-guide-byte-review-20261021.json",
+            "docs/blueprint/acceptance-evidence/host-release-followup-20261021.json"
+          ]
+        }
+      ],
+      "previousReviewedRevision": "488deafa90a629d936d078827715c85e2c705895"
     },
     {
       "id": "AP09-communication-complete-contracts-20261021",
@@ -35370,13 +35533,13 @@
       "scope": "Author32Bash53Node20CJS24syntheticchecks only, noformal6scenario/live/ReaderQualityapproval."
     },
     "currentCloseout20261021": {
-      "securedSourceRevision": "a7d0e07cacc037b94e8a45ed2f0d90bd0259b213",
+      "securedSourceRevision": "8c96fe55390c1b2f656e8ee57eeac1188a782bb7",
       "acceptedRequirements": 179,
       "acceptedGates": 12,
       "newRequirementsThisCampaign": 20,
       "newGatesThisCampaign": 2,
-      "nextWork": "Finish all-public-script output classification and remaining global inventory/publication blockers; remaining communication inventory/private-route/build/trust scopes remain open.",
-      "codeCandidate": "56 Source roles reviewed;20 prior role reconciliations PASS. Python12Sources52outputs no unknown;29testsPASS. Latest output custody/publication70testsPASS, zero-argument26testsPASS. Schema transforms/concatenation guard/optional-argument guards independently PASS and remote secured ed0480ee. No global generator PASS.",
+      "nextWork": "Independently review native-contract partitions and qualify remaining actual API producer/input closures. All-script baseline1478outputs577unknown223Sources; candidate106receipt renewals61Sources are NOT blanket approval. Coverage proceeds through extension/catalogue/core checks; Prism source repinning remains next coverage blocker.",
+      "codeCandidate": "Remote communication closure179/261contents12/89gates. Core check3pages226links125Source files passes;28-capability native security test passes. Release-specific3Source ranges retain exact independent evidence and two CLI negative controls reject mismatches. Global API/generation/publication still unproven.",
       "currentGlobalBlocker": "DOCUMENTATION_TOOL_OUTPUT_ROLE_UNQUALIFIED: scripts/docs-check.mjs; current Markdown stripping/export/main guard differs from Source-owned executable role receipt.",
       "publication": "167pages51plugins pass publicationcheck and Markdownbuild; no rendered HTML/browser/search proof.",
       "scope": "No promise of unattended running work and no completeness claim. MNT/OPL NOT_READY remains explicit.",
