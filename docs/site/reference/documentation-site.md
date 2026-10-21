@@ -3,9 +3,9 @@
 Status: implemented local static reader; external hosting and broader live acceptance remain separate
 Audience: operator, plugin author, developer, documentation maintainer
 Owner: documentation
-Evidence: scripts/docs-publication.mjs; scripts/docs-reader/diagrams.mjs; scripts/docs-reader/check-diagrams.mjs; scripts/tests/docs-reader-diagrams.test.mjs; docs/config/documentation-diagrams.json; scripts/docs-reader/metadata.mjs; scripts/lib/docs-publication-assets.mjs; scripts/lib/docs-publication-links.mjs; scripts/docs-reader/renderer.mjs; scripts/docs-reader/package.json; scripts/docs-reader/package-lock.json; scripts/tests/docs-reader.test.mjs; scripts/docs-reader/check-artifact.mjs; scripts/docs-reader/check-search.mjs; scripts/docs-reader/search-questions.json; scripts/docs-reader/check-source-links.mjs; scripts/docs-reader/source-links.mjs; scripts/docs-reader/source-previews.mjs; scripts/docs-reader/check-source-previews.mjs; scripts/tests/docs-reader-source-previews.test.mjs; scripts/tests/docs-reader-source-links.test.mjs; scripts/docs-governance.mjs; scripts/docs-check-refs.mjs; scripts/check-site-reader-boundary.mjs; docs/config/documentation-tree-classification.json; docs/site/reference/documentation-route-registry.json; package.json; .github/workflows/docs-checks.yaml; scripts/docs-reader/redirects.mjs; scripts/docs-reader/serve.mjs; scripts/tests/docs-reader-redirects.test.mjs; scripts/tests/docs-reader-redirects.browser.mjs
+Evidence: scripts/docs-reader/page-records.mjs; scripts/tests/docs-reader-page-records.test.mjs; docs/config/documentation-publication-manifest.json; docs/site/reference/generated-documentation-map.json; scripts/docs-publication.mjs; scripts/docs-reader/diagrams.mjs; scripts/docs-reader/check-diagrams.mjs; scripts/tests/docs-reader-diagrams.test.mjs; docs/config/documentation-diagrams.json; scripts/docs-reader/metadata.mjs; scripts/lib/docs-publication-assets.mjs; scripts/lib/docs-publication-links.mjs; scripts/docs-reader/renderer.mjs; scripts/docs-reader/package.json; scripts/docs-reader/package-lock.json; scripts/tests/docs-reader.test.mjs; scripts/docs-reader/check-artifact.mjs; scripts/docs-reader/check-search.mjs; scripts/docs-reader/search-questions.json; scripts/docs-reader/check-source-links.mjs; scripts/docs-reader/source-links.mjs; scripts/docs-reader/source-previews.mjs; scripts/docs-reader/check-source-previews.mjs; scripts/tests/docs-reader-source-previews.test.mjs; scripts/tests/docs-reader-source-links.test.mjs; scripts/docs-governance.mjs; scripts/docs-check-refs.mjs; scripts/check-site-reader-boundary.mjs; docs/config/documentation-tree-classification.json; docs/site/reference/documentation-route-registry.json; package.json; .github/workflows/docs-checks.yaml; scripts/docs-reader/redirects.mjs; scripts/docs-reader/serve.mjs; scripts/tests/docs-reader-redirects.test.mjs; scripts/tests/docs-reader-redirects.browser.mjs
 Applies to: positively selected repository reader pages and the local HTML publication artifact
-Last verified: source, original 167-page build, parser tests, and rendered local links checked on 2026-10-21; browser observations have their own recorded scope
+Last verified: source, original 167-page build, parser tests, and rendered local links checked on 2026-10-21; browser observations have their own recorded scope; machine-readable page bindings source and isolated fixture tests checked on 2026-10-21, not a complete production-build result
 
 ## Find the explanation before the source
 
@@ -116,6 +116,57 @@ New pages need their classification and metadata before a publication check.
 Use the [maintenance workflow](../extend/documentation-maintenance.md) rather
 than editing the generated map by hand.
 
+### Machine-readable page bindings
+
+`reader-manifest.json` includes `pageRecords`, with one record for every
+positively selected page. Each record binds its repository Markdown path,
+artifact HTML route, artifact-local canonical URL, committed Source bytes,
+actual HTML byte count and SHA-256, declared source dependencies, and applicable
+registered redirects. The existing home entry point is a separate redirect
+kind, not invented route history. A redirect binding includes its actual
+fallback output hash. The mapping also binds the shared reader CSS, reader
+script and redirect script to their Source-owned bytes.
+
+The mapping reads declarations from the generated ownership map through its
+normal JSON interface. It does not infer a complete implementation, citation,
+installed-dependency or build-input closure. A repository-file dependency hashes
+its exact committed file bytes. A repository-directory dependency identifies its
+Git tree object and hashes that object's bytes, not concatenated working-tree
+files. The verifier rejects masking Git index flags within the declared scopes and
+compares both index and worktree with the recorded revision. It does not clear
+those flags or require undeclared paths to be clean. Ignored installed files
+are outside that committed-Source binding.
+External reference declarations remain explicit, unacquired references with no
+invented content hash. The four authority records bind the publication manifest,
+ownership map, route registry and known-route baseline at the build revision.
+
+An artifact-local canonical URL such as `/reference/documentation-site.html`
+identifies a file in this reader; it does not claim a deployment origin. The
+mapping records only declared redirects. An empty real registry remains empty.
+The mapping does not change the JavaScript/no-script redirect limits below.
+
+The artifact checker compares these bindings with the same revision's Source
+objects and current declared repository paths, actual output bytes, the current
+route declarations and exact Source-owned fallback/shared files. Keep the source
+checkout available. To check an artifact outside the default staging directory,
+pass its output root and, if different, the source checkout explicitly:
+
+```bash
+node scripts/docs-reader/check-artifact.mjs /path/to/reader-artifact /path/to/source-checkout
+```
+
+Source or output drift stops verification; renewing an output digest alone does
+not renew its page binding. Normal artifact checking requires these records even when a build report is
+missing. Isolated renderer-test callers may explicitly select
+`--legacy-renderer-fixture` before the output argument to check an unmapped
+fixture. That mode is not production acceptance: it refuses a production build
+report without records and still verifies any records present. The owning
+`docs-reader-page-records.test.mjs` fixtures compare two outputs from identical
+committed inputs and exercise rejected collisions, escaping paths, Source drift
+and hash-renewed output changes. Those fixture results do not establish two
+identical full production builds; compare complete original builds with the same
+source, dependencies and tools before claiming that broader result.
+
 ## Routes, links, and static use
 
 The publication manifest owns actual HTML paths: the home page is
@@ -203,7 +254,7 @@ not prove that this network-dependent verification ran.
 Check the maintained reader components and the isolated redirect fixtures:
 
 ```sh
-node --test scripts/tests/docs-reader.test.mjs scripts/tests/docs-reader-source-links.test.mjs scripts/tests/docs-reader-source-previews.test.mjs scripts/tests/docs-reader-diagrams.test.mjs scripts/tests/docs-reader-redirects.test.mjs
+node --test scripts/tests/docs-reader.test.mjs scripts/tests/docs-reader-page-records.test.mjs scripts/tests/docs-reader-source-links.test.mjs scripts/tests/docs-reader-source-previews.test.mjs scripts/tests/docs-reader-diagrams.test.mjs scripts/tests/docs-reader-redirects.test.mjs
 node scripts/tests/docs-reader-redirects.browser.mjs
 ```
 Prepare the selected route's additional tools and source revision through the

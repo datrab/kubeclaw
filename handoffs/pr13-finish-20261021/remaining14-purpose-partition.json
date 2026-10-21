@@ -1,0 +1,426 @@
+{
+  "status": "CONSERVATIVE_INDEPENDENT_STATIC_14_ROOT_30_HISTORICAL_SLOT_PARTITION_NO_QUALIFICATION",
+  "headAtReport": "ed6e886dabe4f4ba78173893d7ab2aed79545452",
+  "sources": [
+    {
+      "source": "skills/buster/engine/test-gates/exposure-generation.ts",
+      "sha256": "cbaed4e6debf9e225c0c5aab51ecc8383bed69ff3b5dc4f7fe7c18a0ee02a360",
+      "lineCount": 62,
+      "entireActualRootRead": true,
+      "historicalBytesEqual": true,
+      "purpose": "Bounded annotation string-array serializer; surrounding exposure API remains API",
+      "writeReadValidatorBoundary": "exposurePredecessors parses prior annotation, checks ownerstring/previousarray\u226464/allitemsstrings\u2264256/noNUL, closes lineage length and JSON.stringify only stringarray. No object resource root can be constructed at return36. Other helper ownedReleaseAction returns actual kubectlJSONpatch command text, not execution here.",
+      "actualCallerReceiver": "exposure-handoff.ts38 and tailscale-exposure-runtime.ts215 place exactencodedlineage into annotation of mergepatch; runtime218\u2013219/230\u2013231 issues actual BusterNamespaceLease PATCH.",
+      "nextFiniteStep": "Candidate exact selectedserializer+annotation receiver contract, not wholefile/stringarray exemption; bind originalidentity/generation/predecessor guards and actual APIpatch receiver. APIcaller request and ownedReleaseAction must not become nonAPI by proximity.",
+      "historicalUnknownSlots": [
+        {
+          "historicalLine": 36,
+          "historicalSink": "return",
+          "historicalExpression": null,
+          "disposition": "NARROW_STRING_ARRAY_CANDIDATE_NOT_QUALIFIED",
+          "basis": "Source/caller/receiver proof in owningrow; not currentclassification observation"
+        }
+      ]
+    },
+    {
+      "source": "skills/buster/engine/test-gates/runner.ts",
+      "sha256": "d6695dc52cd1919a88f7feed8051a543bdd9cee260b95afb829cbcee6f254919",
+      "lineCount": 2012,
+      "entireActualRootRead": true,
+      "historicalBytesEqual": true,
+      "purpose": "Generic provider evidence copying: API-capable/UNKNOWN, not a metadata-array publication",
+      "writeReadValidatorBoundary": "Full2012lines read.1263errorCandidates/1283stagedFiles are validated evidence declaration lists chosen fromprovider result by onError/resulttypes; stageEvidenceFiles reads actualproviderfiles and writes their complete content. Declaration type/path/mediaType/size/containment guards do not validate filepayload domain. FileEvidenceStore similarly stores arbitrarybytes; provider output.value genericJSON and input artifactbytes remain opaque.",
+      "actualCallerReceiver": "artifacts.ts complete112lines read: stageEvidenceFiles\u2192readContainedFile\u2192writeFilecontent and FileEvidenceStore.store. Runner creates ownedattemptcopy/providerexecution, collects references/reports then WorkerAttemptExecutor/durablestore; grants are distinct.",
+      "nextFiniteStep": "Retain copying as API-capable/UNKNOWN. Existing nativeFileWriterCapability inputParameter declarations is NOT the copiedpayload; do not qualify it from arraymetadata shape or AUTHORcontract. Any finite storage capability extension must trace actualread source and preserve opaque caller content, not erase resources or grant apply. No testfixture blanketroute.",
+      "historicalUnknownSlots": [
+        {
+          "historicalLine": 1263,
+          "historicalSink": "native-file-writer-call",
+          "historicalExpression": "errorCandidates",
+          "disposition": "API_CAPABLE_OR_UNKNOWN_RETAINED",
+          "basis": "Source/caller/receiver proof in owningrow; not currentclassification observation"
+        },
+        {
+          "historicalLine": 1283,
+          "historicalSink": "native-file-writer-call",
+          "historicalExpression": "stagedFiles",
+          "disposition": "API_CAPABLE_OR_UNKNOWN_RETAINED",
+          "basis": "Source/caller/receiver proof in owningrow; not currentclassification observation"
+        }
+      ]
+    },
+    {
+      "source": "skills/common/plugin-runtime/foundation/observability/durable-attempts.ts",
+      "sha256": "4c0fe1e20bafcddcb21997eb56de19dfcb1ceedeaf0df134c1c19b48781da750",
+      "lineCount": 808,
+      "entireActualRootRead": true,
+      "historicalBytesEqual": true,
+      "purpose": "Closed attempt-store envelope with opaque result/evidence content; whole-slot unqualified",
+      "writeReadValidatorBoundary": "Full808lines. #writeState239 calls #checkSize first; encodeAttemptState+assertAttemptReplay close rootkeys/version/counts, projection references are bound to actualjournal/result/evidence/closure. However WorkerSpecialistResult.values is genericJsonObject and evidencebytes are arbitrary. Metadata envelope closure does not sanitize those payloads. durableBlob writes original evidencebytes separately.",
+      "actualCallerReceiver": "attempt-projection.ts113\u2013153, attempt-replay.ts65\u201393, replayObject exactkeys; Workercontract values jsonObject permits arbitraryJson. Buster runner persists actualevidence/result; Nova reconciler reads snapshot and imports completion only with identity/closure.",
+      "nextFiniteStep": "Possible exact metadata-envelope projection/caller context only if opaque fields remain APIcapable/UNKNOWN. Keep entireencodeAttemptState slot UNKNOWN until this mixedvalue custody is modeled; never generic schemaVersion\u2192nonAPI. Preserve original projection/replay and checkpoint/retirement Sourceproof, no live/native permission.",
+      "historicalUnknownSlots": [
+        {
+          "historicalLine": 239,
+          "historicalSink": "native-file-writer-call",
+          "historicalExpression": "encodeAttemptState(state,this.#projections)",
+          "disposition": "API_CAPABLE_OR_UNKNOWN_RETAINED",
+          "basis": "Source/caller/receiver proof in owningrow; not currentclassification observation"
+        }
+      ]
+    },
+    {
+      "source": "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts",
+      "sha256": "5624aa2b5f980a373ab30fdf012dee1346418ac3b2537244475f2a496d3766a0",
+      "lineCount": 840,
+      "entireActualRootRead": true,
+      "historicalBytesEqual": true,
+      "purpose": "Generic exported writer plus mixed outbox/admission states: no filewide nonAPI",
+      "writeReadValidatorBoundary": "Full840lines. writeDurableState(value:unknown)173 canonicallywrites arbitraryvalue totemp/fsync/rename. readDurableState genericJSON. Outbox validates new producerRecord but oldstate fromgenericread is spread/persisted without exactroot validation at388/427/435. Admission506/546/633/669/796 uses exact assertAdmissionReplay envelope, but producerRecord.payload is schema{} and quarantine carriesrawBase64. Genericstate and embeddedopaque payload not proven nonAPI.",
+      "actualCallerReceiver": "Exports are used by attempt/ownership/reconciliation and genericdurable-recordstores; actualProducerOutbox/admission ACK/cursor/gap/retirement readers preserve typedprotocol. Existing currentwriter capability binds inputParameter value, not semantics.",
+      "nextFiniteStep": "Preserve exportedwriter APIcapability/UNKNOWN and everycaller. Separate exactclosedmetadata subrecords/ACKs from unresolvedraw/JSONcarrier fields; no storage or canonicalJson waiver. Nonexactoutbox readroot is a concrete stop even when record envelope isvalidated.",
+      "historicalUnknownSlots": [
+        {
+          "historicalLine": 173,
+          "historicalSink": "file-stream.write",
+          "historicalExpression": null,
+          "disposition": "API_CAPABLE_OR_UNKNOWN_RETAINED",
+          "basis": "Source/caller/receiver proof in owningrow; not currentclassification observation"
+        },
+        {
+          "historicalLine": 388,
+          "historicalSink": "native-file-writer-call",
+          "historicalExpression": "candidate",
+          "disposition": "API_CAPABLE_OR_UNKNOWN_RETAINED",
+          "basis": "Source/caller/receiver proof in owningrow; not currentclassification observation"
+        },
+        {
+          "historicalLine": 427,
+          "historicalSink": "native-file-writer-call",
+          "historicalExpression": "state",
+          "disposition": "API_CAPABLE_OR_UNKNOWN_RETAINED",
+          "basis": "Source/caller/receiver proof in owningrow; not currentclassification observation"
+        },
+        {
+          "historicalLine": 435,
+          "historicalSink": "native-file-writer-call",
+          "historicalExpression": "state",
+          "disposition": "API_CAPABLE_OR_UNKNOWN_RETAINED",
+          "basis": "Source/caller/receiver proof in owningrow; not currentclassification observation"
+        },
+        {
+          "historicalLine": 506,
+          "historicalSink": "native-file-writer-call",
+          "historicalExpression": "state",
+          "disposition": "API_CAPABLE_OR_UNKNOWN_RETAINED",
+          "basis": "Source/caller/receiver proof in owningrow; not currentclassification observation"
+        },
+        {
+          "historicalLine": 546,
+          "historicalSink": "native-file-writer-call",
+          "historicalExpression": "candidate",
+          "disposition": "API_CAPABLE_OR_UNKNOWN_RETAINED",
+          "basis": "Source/caller/receiver proof in owningrow; not currentclassification observation"
+        },
+        {
+          "historicalLine": 633,
+          "historicalSink": "native-file-writer-call",
+          "historicalExpression": "candidate",
+          "disposition": "API_CAPABLE_OR_UNKNOWN_RETAINED",
+          "basis": "Source/caller/receiver proof in owningrow; not currentclassification observation"
+        },
+        {
+          "historicalLine": 669,
+          "historicalSink": "native-file-writer-call",
+          "historicalExpression": "candidate",
+          "disposition": "API_CAPABLE_OR_UNKNOWN_RETAINED",
+          "basis": "Source/caller/receiver proof in owningrow; not currentclassification observation"
+        },
+        {
+          "historicalLine": 796,
+          "historicalSink": "native-file-writer-call",
+          "historicalExpression": "candidate",
+          "disposition": "API_CAPABLE_OR_UNKNOWN_RETAINED",
+          "basis": "Source/caller/receiver proof in owningrow; not currentclassification observation"
+        }
+      ]
+    },
+    {
+      "source": "skills/common/plugin-runtime/foundation/observability/durable-records.ts",
+      "sha256": "c9a0c42b8cdd3a2f188ec38a3cab5270d0f032444801626ea2c6860e534582dd",
+      "lineCount": 308,
+      "entireActualRootRead": true,
+      "historicalBytesEqual": true,
+      "purpose": "Generic record payload/blob store, not closed domain payload",
+      "writeReadValidatorBoundary": "Full308lines. append<T>/transition<T> accept arbitrarypayload, canonicalize/digest then store; generic read<T> preservespayload. assertDurableRecordReplay checks header/digest/sequences but assertStoreFormat does NOT reject extra rootkeys; candidate108/218 spread state. retire171 builds fixedroot but retains active genericpayloads/intent.evidence. Blob290 writes inputbytes unchanged; bounds/digest/collision/durability are not semanticpayload validation.",
+      "actualCallerReceiver": "NativeFixtureJournal uses records andblobs then validates domain snapshot; artifact-store adapter, transport-publisher, messaging, telemetry use genericstore. Existing full fourutility/staticpurpose proof reused only unchanged journal/typevalidation distinction.",
+      "nextFiniteStep": "All fourhistoricalslots remain APIcapable/UNKNOWN aswholevalues. Add only exact Source-owned declaration capability/caller projections if needed; generic<T>/digest/owner/type doesnot prove nonAPI. Reject unrelatedSource/provenance or operationreceipt refresh as priorutilityguard requires.",
+      "historicalUnknownSlots": [
+        {
+          "historicalLine": 290,
+          "historicalSink": "file-stream.write",
+          "historicalExpression": null,
+          "disposition": "API_CAPABLE_OR_UNKNOWN_RETAINED",
+          "basis": "Source/caller/receiver proof in owningrow; not currentclassification observation"
+        },
+        {
+          "historicalLine": 108,
+          "historicalSink": "native-file-writer-call",
+          "historicalExpression": "candidate",
+          "disposition": "API_CAPABLE_OR_UNKNOWN_RETAINED",
+          "basis": "Source/caller/receiver proof in owningrow; not currentclassification observation"
+        },
+        {
+          "historicalLine": 171,
+          "historicalSink": "native-file-writer-call",
+          "historicalExpression": "candidate",
+          "disposition": "API_CAPABLE_OR_UNKNOWN_RETAINED",
+          "basis": "Source/caller/receiver proof in owningrow; not currentclassification observation"
+        },
+        {
+          "historicalLine": 218,
+          "historicalSink": "native-file-writer-call",
+          "historicalExpression": "candidate",
+          "disposition": "API_CAPABLE_OR_UNKNOWN_RETAINED",
+          "basis": "Source/caller/receiver proof in owningrow; not currentclassification observation"
+        }
+      ]
+    },
+    {
+      "source": "skills/common/plugins/runtime-dispatch/src/openclaw-result.ts",
+      "sha256": "38290ff080cc31a5465f911bf8adaf1d7d82c1c0a019914d088a5dd6c35b9643",
+      "lineCount": 116,
+      "entireActualRootRead": true,
+      "historicalBytesEqual": true,
+      "purpose": "Raw result JSON/text forwarding: four actual publicwriter calls remain API/UNKNOWN",
+      "writeReadValidatorBoundary": "Full116lines reread. parseJsonText accepts anyJSON (including fenced/extractedobject);70originalreadresultcontent,82JSON.stringify(state.structured),88collectorresulttext,97terminalassistanttext each persistResult. Sessionidentity/protocolspecific attachRuntimeEvidence addsfields but doesnot reject root apiVersion/kind. Historicalworklist has3UNKNOWNslots; fourth82existsinunchangedSource, not a newlyobservedclassifier failure.",
+      "actualCallerReceiver": "result-persistence.ts originalnofollowimmutablecontainedwriter remains generic; openclaw.ts293 read\u2192outputbudget\u2192returns result toadaptercaller. Earlier independentlyreviewed fourutility Source/caller consumer scope reused only exactunchangedfiles, genericAUTHORcallcontract ignored for payload authority.",
+      "nextFiniteStep": "Keep allfour API/UNKNOWN; do not narrow based on resultfilename, successfulJSONparse, sessionterminalstate, protocol or repositoryRoot. Any eventual domainvalidator is separate and occurs after thispublication; cannot retroactivelyqualify rawwrite.",
+      "historicalUnknownSlots": [
+        {
+          "historicalLine": 70,
+          "historicalSink": "native-file-writer-call",
+          "historicalExpression": "export function readResult(root: string, relative: string, maximumBytes = 1_048_576): string | undefined {\n  const components = parts(relative);\n  let directory = openRoot(root);\n  try {\n    for (const component of components.slice(0, -1)) {\n      const next = descend(directory, component, false); fs.closeSync(directory); directory = next;\n    }\n    const descriptor = fs.openSync(`${anchor(directory)}/${components.at(-1)!}`, fs.constants.O_RDONLY | fs.constants.O_NOFOLLOW | fs.constants.O_NONBLOCK);\n    try {\n      const stat = fs.fstatSync(descriptor);\n      if (!stat.isFile() || stat.size > maximumBytes) throw new Error('OPENCLAW_RESULT_SIZE_INVALID');\n      const bytes = Buffer.alloc(stat.size + 1);\n      const count = fs.readSync(descriptor, bytes, 0, bytes.length, 0);\n      if (count !== stat.size) throw new Error('OPENCLAW_RESULT_CHANGED_DURING_READ');\n      return new TextDecoder('utf-8', { fatal: true }).decode(bytes.subarray(0, count));\n    } finally { fs.closeSync(descriptor); }\n  } catch (error) {\n    if ((error as NodeJS.ErrnoException).code === 'ENOENT') return undefined;\n    throw failure(error);\n  } finally { fs.closeSync(directory); }\n}",
+          "disposition": "API_CAPABLE_OR_UNKNOWN_RETAINED",
+          "basis": "Source/caller/receiver proof in owningrow; not currentclassification observation"
+        },
+        {
+          "historicalLine": 88,
+          "historicalSink": "native-file-writer-call",
+          "historicalExpression": "parseJsonText(content)",
+          "disposition": "API_CAPABLE_OR_UNKNOWN_RETAINED",
+          "basis": "Source/caller/receiver proof in owningrow; not currentclassification observation"
+        },
+        {
+          "historicalLine": 97,
+          "historicalSink": "native-file-writer-call",
+          "historicalExpression": "parseJsonText(content)",
+          "disposition": "API_CAPABLE_OR_UNKNOWN_RETAINED",
+          "basis": "Source/caller/receiver proof in owningrow; not currentclassification observation"
+        }
+      ]
+    },
+    {
+      "source": "skills/nova/core/observability/reconciler.ts",
+      "sha256": "61c65951f07d04e1767fdc3114a473183ed5b968ef8d68f665b4ec5d0661dd71",
+      "lineCount": 396,
+      "entireActualRootRead": true,
+      "historicalBytesEqual": true,
+      "purpose": "Fixed plan envelope, arbitrary typedattempt array: further caller proof needed",
+      "writeReadValidatorBoundary": "Full396lines. persistNovaObservabilityPlan338\u2013353 constructsfixedroot schemaVersion/runId/attempts clone and checks only peritemrunId. Extra attemptfields can survive. Recovery reader validates limitedplan/attempt fields then reconciler validates ownership/counts/expiry/resultidentity/closure. No exact closedattempt shape before filewrite. Journalreconciliation records include Workerresult opaquevalues separately.",
+      "actualCallerReceiver": "Exported core/src/index.ts78; only discovered direct calls in check-pipeline-observability-nova-reconciliation.mts155/169, no productionpersistencecaller found in current skills tree. ReconcileRecovery itself consumes reconciliation-plan.json.",
+      "nextFiniteStep": "Whole snapshot slot remains UNKNOWN pending actual callerconstructor/closedattempt proof; no TypeScriptinterface or schemaVersion waiver. Fixed outermetadata can be represented separately without erasing nestedunknownfields or inventing a currentproductioncaller.",
+      "historicalUnknownSlots": [
+        {
+          "historicalLine": 350,
+          "historicalSink": "native-file-writer-call",
+          "historicalExpression": "snapshot",
+          "disposition": "API_CAPABLE_OR_UNKNOWN_RETAINED",
+          "basis": "Source/caller/receiver proof in owningrow; not currentclassification observation"
+        }
+      ]
+    },
+    {
+      "source": "skills/nova/plugins/review/scripts/generate-bundle-schema.mjs",
+      "sha256": "672c9b2e8551e6a6962f975f7efdce8e2e69e329aa4d671aa6a9b5371e227d02",
+      "lineCount": 41,
+      "entireActualRootRead": true,
+      "historicalBytesEqual": true,
+      "purpose": "Finite JSON Schema artifact generator, not KubernetesAPI generator",
+      "writeReadValidatorBoundary": "Full41lines. Imports fixedreviewBundleSchema/portable variant; closed helper constructs JSONschema shapes. Writesfixedschemas review-bundle.v1/v2; loads checked-in review-report.v2schema then changes exactlyid/reportversion/governorversion and writesreview-report.v3. --check exactcomparesalloutputs. Rawreportjson input is not genericallyvalidated by generator; it is knownpassiveSource input needing binding.",
+      "actualCallerReceiver": "review package schema:generate/schema:check chain realcommands; review-bundle-contract closedSchema constructors and runtime validators use correspondingdomaincontracts. No APIapply consumer identified.",
+      "nextFiniteStep": "Candidate exact schema-output/receiver contract with bound originalschema/constants and fullreport.v2bytes, not arbitraryJSONcopier. No generic .schema.json/nonAPI by filename and no assumption schema check means model/clustertruth.",
+      "historicalUnknownSlots": [
+        {
+          "historicalLine": 40,
+          "historicalSink": "fs.writeFileSync",
+          "historicalExpression": "text",
+          "disposition": "NARROW_BOUND_SCHEMA_ARTIFACT_CANDIDATE_NOT_QUALIFIED",
+          "basis": "Source/caller/receiver proof in owningrow; not currentclassification observation"
+        }
+      ]
+    },
+    {
+      "source": "skills/nova/project_setup/tools/progress-scaffold.ts",
+      "sha256": "ccb59cfb186e4d0917290f8f75a61644da2fdfb0e03694ece51995cb70ee3a2f",
+      "lineCount": 177,
+      "entireActualRootRead": true,
+      "historicalBytesEqual": true,
+      "purpose": "Mixed closedprogress constructor and rawpipeline pair: wholepair API/UNKNOWN",
+      "writeReadValidatorBoundary": "Full177lines reread plus completevalidation/values helpers and Corepipeline reader. scaffoldToProgress returns progress from fixedkeyconstructor/omitEmpty, but pipeline:scaffold.pipeline unchanged. validatePipeline checks project and selectedscope/lint fields without closingtopkeys. Core loadPipelineTestScope/readPublishedPair validates publicationintegrity/project/selectedcollections, not allrootkeys.",
+      "actualCallerReceiver": "Actualpackage progress:scaffold; CLIgitrepo/.swarm/path guards and fixednames progress.json/pipeline.json. Scaffoldpublication owningtest read full includessecondtargetfailure/SIGKILL/corruption/symlink/concurrentgeneration; these establish pairintegrity intent, not payloaddomain/nonAPI.",
+      "nextFiniteStep": "ConcreteSourcecountermodel: addapiVersion/kind tootherwisevalid scaffold.pipeline, leave project/modules/gates andexistingchecks unchanged; both validatePipeline and downstreamCore fieldselector ignore these keys and publishJsonPair receives them. No productfunction executed toclaim this. Preserve wholepair UNKNOWN/API; any precise configoccurrence must bind realconstructor+receiver and explicitly retain foreignpayload, never genericAUTHORcallreceipt.",
+      "historicalUnknownSlots": [
+        {
+          "historicalLine": 142,
+          "historicalSink": "native-file-writer-call",
+          "historicalExpression": "[progress,pipeline]",
+          "disposition": "API_CAPABLE_OR_UNKNOWN_RETAINED",
+          "basis": "Source/caller/receiver proof in owningrow; not currentclassification observation"
+        }
+      ]
+    },
+    {
+      "source": "skills/prism/integration/engine-cache-capture.mts",
+      "sha256": "1427dd5a2f3c6d68b6f2565881e1280c323dddc127f236345463d2e0311f8847",
+      "lineCount": 41,
+      "entireActualRootRead": true,
+      "historicalBytesEqual": true,
+      "purpose": "RealChromium integration capture fixture, not inert/module execution authority",
+      "writeReadValidatorBoundary": "Full41lines. ActualPrismEngine rendering20controlleddocumentvariants; requiresnamechromium, screenshotPNGprefix, retainedscreenshot/ARIAbuffers copied throughgenericartifactstore; verifiescache budgets and reopenbytes. Rootselectedunder skills/integration is not a /tests exclusion.",
+      "actualCallerReceiver": "CompleteEngineindex/render-operation read: validateddesign/renderinput\u2192renderHtml\u2192ownedChromium page.screenshotPNG andARIA; content-addressedstore exactgenericput/get read. No explicit root/subpackage command for this exactfilename found; engine-capture-retention is a different file.",
+      "nextFiniteStep": "Could qualify exact screenshot/ARIAfixtureoutput occurrences only after complete originalbrowser/fixture/entrycustody, not from PNG3-byteassertion or integrationfilename. Keep currentUNKNOWN/nativeprerequisite; no Chrome execution, runtimeentry or blanket testrole.",
+      "historicalUnknownSlots": [
+        {
+          "historicalLine": 31,
+          "historicalSink": "native-file-writer-call",
+          "historicalExpression": "screenshot.subarray(1, 4)",
+          "disposition": "REAL_CAPTURE_FIXTURE_REQUIRES_FURTHER_NATIVE_SOURCE_CUSTODY",
+          "basis": "Source/caller/receiver proof in owningrow; not currentclassification observation"
+        }
+      ]
+    },
+    {
+      "source": "skills/prism/integration/worker-concurrent-resource-attribution.mts",
+      "sha256": "7e548fe5e063bcc985200553cc6a26e0fe56296afdb26d3511214caf5460b51f",
+      "lineCount": 93,
+      "entireActualRootRead": true,
+      "historicalBytesEqual": true,
+      "purpose": "Realnativeworker integration with closed local input constructor",
+      "writeReadValidatorBoundary": "Full93lines. input Buffer JSON.stringify of fixedroot document/view/state/viewport fromfixture; writesstore, exposesownedloopbackGET and nativeWorkerHarness, POSTs actualenvelope, burnsrealPBKDF2CPU then checkskernelreceiptCPUattribution. Genericartifactstore remains arbitrarybytes; this oneinputSourceconstructor is closed.",
+      "actualCallerReceiver": "Root package verify:prism:native-worker and Prism test:worker:native explicitlyinvoke thisexactfile. ContentAddressedArtifactStore.put/get+internal-artifacts POST reader; worker-envelope builds v3protocol\u2014not Kubernetesresource. Nativeharness/worker/kernel prerequisites independent.",
+      "nextFiniteStep": "Candidate exactfixtureinput constructor/receiver occurrence; separate originalnativeentry/harness custody required for testpurpose. No unsupported/nativeexecution PASS, no fakefixtures and no wholeartifactstore authority from thisoneclosedinput.",
+      "historicalUnknownSlots": [
+        {
+          "historicalLine": 27,
+          "historicalSink": "native-file-writer-call",
+          "historicalExpression": "createHash('sha256').update(input)",
+          "disposition": "EXACT_FIXTURE_INPUT_CANDIDATE_NATIVE_ENTRY_UNQUALIFIED",
+          "basis": "Source/caller/receiver proof in owningrow; not currentclassification observation"
+        }
+      ]
+    },
+    {
+      "source": "skills/prism/server/bootstrap-database.ts",
+      "sha256": "4cacc0a24266f58196bd6f6a74abeeb4f7bb95f833312fe691e9f6c0a76d28ee",
+      "lineCount": 20,
+      "entireActualRootRead": true,
+      "historicalBytesEqual": true,
+      "purpose": "Finite retry diagnostic inside realdatabasebootstrap",
+      "writeReadValidatorBoundary": "Full20lines. code = String(error.code) then retryableCodes membership fixes sixadmittedcodes; attempt bounded1..maximumAttempts60, configcapturesfixedtimeouts/retrydelay. Diagnosticdoesnotuse rawerror.message. Body reallyconnectsPG and rolesbootstrap changesdatabaseprivileges transactionally.",
+      "actualCallerReceiver": "Complete databasebootstrapconfig and database-roles read; charts/prism/templates/jobs.yaml30 starts originalNodebootstrap; helper SQL authentication/grant/bootstrap effects not executed.",
+      "nextFiniteStep": "Candidate exact stderrstatement/finitecode+numericproducer contract; do not turn entiredatabasebootstrap/pgmodule into nonAPIexecution allowance. Preserve exhaustion/rethrow/finaladmin.end andliveDB prerequisite.",
+      "historicalUnknownSlots": [
+        {
+          "historicalLine": 15,
+          "historicalSink": "process.stderr.write",
+          "historicalExpression": "`PostgreSQL is not ready (${code}); retrying bootstrap (${attempt}/${config.maximumAttempts})\\n`",
+          "disposition": "NARROW_FINITE_DIAGNOSTIC_CANDIDATE_NOT_QUALIFIED",
+          "basis": "Source/caller/receiver proof in owningrow; not currentclassification observation"
+        }
+      ]
+    },
+    {
+      "source": "skills/prism/server/ingestion.ts",
+      "sha256": "bbee6795991e601600e6442927e483bcd5a87c798b66a42ed5606bb496354717",
+      "lineCount": 97,
+      "entireActualRootRead": true,
+      "historicalBytesEqual": true,
+      "purpose": "Rawquarantinecontent write and unconstrainederror forwarding",
+      "writeReadValidatorBoundary": "Full97lines. Publicweb HTTPS/DNSpin/redirect/6MBcap, uploadedbase64integrity, allowedmediatypes include application/json; validateSource doesnot constrain JSONcontent.77writeFile stores entire acquiredbytes byhash.20console.error forwards arbitrary cleanupError afterfixedprefix; same sourcehas requestFailed structuredstderr separate. RawJSONsource can be Kubernetesresource; noK8sapply here.",
+      "actualCallerReceiver": "Dockerfile.prism-ingestion CMD starts realservice; corpusvalidateSource handlesnetwork/sourceintent, not bodydomain. POSTsource\u2192quarantine thenbase64response/normalizedfields; DELETE/TTLcleanup mutatequarantine.",
+      "nextFiniteStep": "Rawwrite stays APIcapable/UNKNOWN; hash/mediatype/SVGcheck not payloadschema. Errorobjectconsole remains UNKNOWN absent exact diagnosticserializationcontract; not allerrors harmless by name. Preserve realnetwork/storage/cleanup auth and noSourceexecutiongrant.",
+      "historicalUnknownSlots": [
+        {
+          "historicalLine": 20,
+          "historicalSink": "console.error",
+          "historicalExpression": null,
+          "disposition": "API_CAPABLE_OR_UNKNOWN_RETAINED",
+          "basis": "Source/caller/receiver proof in owningrow; not currentclassification observation"
+        },
+        {
+          "historicalLine": 20,
+          "historicalSink": "console.error",
+          "historicalExpression": null,
+          "disposition": "API_CAPABLE_OR_UNKNOWN_RETAINED",
+          "basis": "Source/caller/receiver proof in owningrow; not currentclassification observation"
+        },
+        {
+          "historicalLine": 77,
+          "historicalSink": "fs.writeFileSync",
+          "historicalExpression": null,
+          "disposition": "API_CAPABLE_OR_UNKNOWN_RETAINED",
+          "basis": "Source/caller/receiver proof in owningrow; not currentclassification observation"
+        }
+      ]
+    },
+    {
+      "source": "skills/worker/core/worker/ownership-store.ts",
+      "sha256": "d784b4196a6103a0ad1e1eaa086640d89ea3205db74be0b0d569045183d20b79",
+      "lineCount": 171,
+      "entireActualRootRead": true,
+      "historicalBytesEqual": true,
+      "purpose": "Closed validated worker ownership metadata writer candidate",
+      "writeReadValidatorBoundary": "Full171lines plus completeownership-state and native-resource-observation validator. #read decodesexactv1/v2root and exactrecords/identities/bindings; constructordefaultclosedroot. reserveconstructsfixedrecord; transitionvalidatedexpected+CAS+whitelistedphase/changes; finalObservation exact7fields fixedunit, boolean andsafeintegercounters. #write169sizebounds then genericwriter calledonlytheseprivatepaths. No genericarbitraryJSONpayload inthisschema.",
+      "actualCallerReceiver": "ExportedWorkerCorelibrary/native-worker-ownership coordinator usesstore tobindhost/reserve/transition; reliability ownership/observationtests namedactualcallers. Storecommentexplicitlystatephase is not kernelproof; nativeobservationvalidator not kernelexecution.",
+      "nextFiniteStep": "Strong finite exactcaller/domainmetadata contract candidate for private#write/validatedstate; bind complete decoder/transition/nativevalidation and original genericwriteDurableState Source. Keep genericwriter APIcapability and no arbitraryothercaller/mutableAUTHOR metadata promotion.",
+      "historicalUnknownSlots": [
+        {
+          "historicalLine": 169,
+          "historicalSink": "native-file-writer-call",
+          "historicalExpression": "state",
+          "disposition": "NARROW_CLOSED_DOMAIN_STATE_CANDIDATE_NOT_QUALIFIED",
+          "basis": "Source/caller/receiver proof in owningrow; not currentclassification observation"
+        }
+      ]
+    }
+  ],
+  "staticCountermodels": [
+    {
+      "owner": "progress-scaffold",
+      "statement": "Otherwisevalid scaffold.pipeline plus apiVersion/kind survives field checks and is returned unchanged to publishJsonPair; Core fieldselector doesnotcloseroot.",
+      "proofFiles": [
+        "skills/nova/project_setup/tools/progress-scaffold-validation.ts",
+        "skills/nova/core/test-gates/pipeline.ts"
+      ],
+      "execution": "None; explicit Source logic only"
+    },
+    {
+      "owner": "durable-record/outbox state",
+      "statement": "Extra apiVersion/kind root keys not rejected by assertStoreFormat/genericoutboxread; append/transition/ACK spreadorwriteexistingstate preserves them.",
+      "proofFiles": [
+        "skills/common/plugin-runtime/foundation/observability/record-retirement.ts",
+        "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts"
+      ],
+      "execution": "None; explicit Source logic only"
+    }
+  ],
+  "limits": [
+    "Historical14roots/30UNKNOWNslots onlyworklist; no currentclassifier/graph/censusresult isasserted",
+    "All14wholeSourcebytes checked equal historical; full actualroot bodies read. Targeted unchanged fourutility/retirement/communication/worker-topic proofs reused only exactunchanged scope, not225hashes assemantics",
+    "Unknownnestedworker/producer/recordpayloads remaincapable even when envelopeexact; canonicalization/digest/typename/immutablepublication isnot a nonAPI proof",
+    "RawOpenClawfourthpersistResult82 noted as existingSource path absenthistorical3UNKNOWNrows, not a newlyobservedclassification",
+    "No module/product import, execution, producer/owner/currentDATA/native/network/test/graph acquisition, main/role/register/datawrites",
+    "Onlyscratchreport generation; currentreleaseconfiguration stop and originalnativeprerequisites remain. No global/gate/wholecensus PASS"
+  ]
+}

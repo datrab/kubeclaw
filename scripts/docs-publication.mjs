@@ -17,6 +17,7 @@ import { rebaseMarkdownLinks } from './lib/docs-publication-links.mjs';
 import { publicationMetadata } from './docs-reader/metadata.mjs';
 import { pinnedReaderRouteBaseline } from './docs-reader/redirects.mjs';
 import { buildReader } from './docs-reader/renderer.mjs';
+import { appendReaderPageRecords } from './docs-reader/page-records.mjs';
 import { prepareSourcePreviews } from './docs-reader/source-previews.mjs';
 import { prepareDiagramPages } from './docs-reader/diagrams.mjs';
 
@@ -1094,13 +1095,14 @@ async function build() {
   copyPublicationAssets(siteRoot, outputRoot, assets);
   const previews = await prepareSourcePreviews(readerPages, root);
   const diagrams = await prepareDiagramPages(previews.pages, readJson(path.join(root, 'docs/config/documentation-diagrams.json')));
-  const reader = buildReader({ outputRoot, pages: diagrams.pages, generatedAssets: diagrams.assets, diagramManifest: diagrams.manifest, sourcePreviews: previews.manifest, assets, revision, redirectRegistry: readJson(path.join(siteRoot, 'reference/documentation-route-registry.json')), routeBaseline: pinnedReaderRouteBaseline(root), sourceLink: target => {
+  let reader = buildReader({ outputRoot, pages: diagrams.pages, generatedAssets: diagrams.assets, diagramManifest: diagrams.manifest, sourcePreviews: previews.manifest, assets, revision, redirectRegistry: readJson(path.join(siteRoot, 'reference/documentation-route-registry.json')), routeBaseline: pinnedReaderRouteBaseline(root), sourceLink: target => {
     const relative = path.posix.normalize(`docs/site/${target}`);
     if (relative.startsWith('../') || path.posix.isAbsolute(relative)) throw new Error(`Reader source escapes repository: ${target}`);
     const pinned = execFileSync('git', ['-C', root, 'show', `${revision}:${relative}`], { maxBuffer: 32 * 1024 * 1024 });
     if (!pinned.equals(fs.readFileSync(path.join(root, relative)))) throw new Error(`Reader source differs from publication revision: ${relative}`);
     return `${base}/${relative}`;
   } });
+  reader = appendReaderPageRecords({ repositoryRoot: root, outputRoot, manifest: reader });
   const report = {
     schemaVersion: 'kubeclaw-docs-publication.v1',
     revision,

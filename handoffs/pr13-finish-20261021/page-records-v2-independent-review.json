@@ -1,0 +1,171 @@
+{
+  "scope": "Frozen A91211 v2 ten-target candidate, bounded original whole-family plus coherent F1/F2 remediation",
+  "verdict": "PASS_BOUNDED_IMPLEMENTATION_AND_CONTENT",
+  "review": {
+    "Source": "PASS",
+    "semanticReader": "PASS",
+    "Quality": "PASS"
+  },
+  "openFindings": [],
+  "resolvedFindings": [
+    "F1: independent cached revision comparison and finite H-only index entry check reject hidden and index-only drift without changing index/flags.",
+    "F2: production default always requires pageRecords; legacy fixture compatibility is explicit caller-owned, still validates existing records and all old artifact guards."
+  ],
+  "targets": [
+    {
+      "path": "scripts/docs-publication.mjs",
+      "kind": "changed",
+      "sha256": "29d0305b4b4ad0de7fcea5810372e700b4b2a4d810e8cce22fbdd2bfd964cda8",
+      "bytes": 80767,
+      "lines": 1140,
+      "baselineSha256": "3b22ff66706c132c96a3b3ba39c7c2d043d314336d46660d94e7481c0f0ef360",
+      "v1Sha256": "29d0305b4b4ad0de7fcea5810372e700b4b2a4d810e8cce22fbdd2bfd964cda8",
+      "changedFromV1": false,
+      "hashVerified": true,
+      "actualChangedFromV1": false
+    },
+    {
+      "path": "scripts/docs-reader/check-artifact.mjs",
+      "kind": "changed",
+      "sha256": "7f4e8cb928a5fba48bbd590e5349ce6247264f9cae1935a1e3679ae54c1a2a67",
+      "bytes": 3677,
+      "lines": 65,
+      "baselineSha256": "bb5a1e754b4c34254f2bdd75765e196b9c5c49aa0122b22baa6bc63491480838",
+      "v1Sha256": "f26de3e24a319b1048c5d3061f0c8d0fe1784588bc0fe0b488736bd191b355e1",
+      "changedFromV1": true,
+      "hashVerified": true,
+      "actualChangedFromV1": true
+    },
+    {
+      "path": "docs/site/reference/documentation-site.md",
+      "kind": "changed",
+      "sha256": "c0c4b55949be05d571aa4ea5b353c5ab479caeafd3ebbcdeb70ebec0ca10a1e0",
+      "bytes": 29517,
+      "lines": 433,
+      "baselineSha256": "4f418aa28e32443300e50431ba9a80552a5bbcb96d2a58821316e6b1821300d8",
+      "v1Sha256": "12429787eaedc3830fb5e1fdefc9361397509c43b71390025802b9ebca84cad0",
+      "changedFromV1": true,
+      "hashVerified": true,
+      "actualChangedFromV1": true
+    },
+    {
+      "path": "scripts/docs-reader/redirects.mjs",
+      "kind": "changed",
+      "sha256": "0b186c9da87055e1a13afb0aace0b72e04099c3ed49879a422ca3acbbe778caf",
+      "bytes": 9719,
+      "lines": 88,
+      "baselineSha256": "bdeb3d97575e9e8116fc5d07eb2fd359aeac3a5ae824d0521e688ff187e43a60",
+      "v1Sha256": "0b186c9da87055e1a13afb0aace0b72e04099c3ed49879a422ca3acbbe778caf",
+      "changedFromV1": false,
+      "hashVerified": true,
+      "actualChangedFromV1": false
+    },
+    {
+      "path": "scripts/docs-reader/renderer.mjs",
+      "kind": "changed",
+      "sha256": "a0bf02d079637cf862fe0a40bbc34e4bfbd982c58126e347d8aea079047abd87",
+      "bytes": 21223,
+      "lines": 205,
+      "baselineSha256": "9e87c023a29932f35c9c0ca5169c7c4cc39953a849e31b206e6f431bf91acf2b",
+      "v1Sha256": "a0bf02d079637cf862fe0a40bbc34e4bfbd982c58126e347d8aea079047abd87",
+      "changedFromV1": false,
+      "hashVerified": true,
+      "actualChangedFromV1": false
+    },
+    {
+      "path": ".github/workflows/docs-checks.yaml",
+      "kind": "changed",
+      "sha256": "96e54e68a99450a6b4cdd1568cd4309cf290ee54f8b368efa76b032f2c7b48b4",
+      "bytes": 8731,
+      "lines": 172,
+      "baselineSha256": "f44033eb4877618d34c65fb292a33f88f8dddb3dbe7c471439328f81f57ac2c5",
+      "v1Sha256": "96e54e68a99450a6b4cdd1568cd4309cf290ee54f8b368efa76b032f2c7b48b4",
+      "changedFromV1": false,
+      "hashVerified": true,
+      "actualChangedFromV1": false
+    },
+    {
+      "path": "scripts/tests/docs-reader.test.mjs",
+      "kind": "changed",
+      "sha256": "abd6a6431110a7b8a1486bbbce4648a118d31fe6f517813c4d9d6ed2e6177e28",
+      "bytes": 11985,
+      "lines": 155,
+      "baselineSha256": "8bce959de317c8cc39f4848b0405357e457b8073cfab761b44426ecf3ffe4716",
+      "v1Sha256": "8bce959de317c8cc39f4848b0405357e457b8073cfab761b44426ecf3ffe4716",
+      "changedFromV1": true,
+      "hashVerified": true,
+      "actualChangedFromV1": true
+    },
+    {
+      "path": "scripts/tests/docs-reader-redirects.test.mjs",
+      "kind": "changed",
+      "sha256": "4d08e2533bda82a536a9c61ab27a3fca94939a484a5a2154e012ff9507f26155",
+      "bytes": 10601,
+      "lines": 54,
+      "baselineSha256": "dec1ca9dcfb5ca80adeb661ff57350029df06d3690794d3194cff8d406c4c646",
+      "v1Sha256": "dec1ca9dcfb5ca80adeb661ff57350029df06d3690794d3194cff8d406c4c646",
+      "changedFromV1": true,
+      "hashVerified": true,
+      "actualChangedFromV1": true
+    },
+    {
+      "path": "scripts/docs-reader/page-records.mjs",
+      "kind": "new",
+      "sha256": "6268501ef047b13e0794950a85d57e2c7aaf54e85a16d77ca8c1263237691a2f",
+      "bytes": 11080,
+      "lines": 170,
+      "baselineSha256": null,
+      "v1Sha256": "15d857520e008305e9b649eb10ff02c0ad4ff9637aeee62cd4c55d7afdf3b96c",
+      "changedFromV1": true,
+      "hashVerified": true,
+      "actualChangedFromV1": true
+    },
+    {
+      "path": "scripts/tests/docs-reader-page-records.test.mjs",
+      "kind": "new",
+      "sha256": "0333fffb872837af59396ff47dafb1401a87b00627d96de524e9322e12f15d83",
+      "bytes": 15845,
+      "lines": 113,
+      "baselineSha256": null,
+      "v1Sha256": "fce2bc91f1c1760cd98818e7f790e0e0f39a92ba177abacdf9b12ac5f5a67db1",
+      "changedFromV1": true,
+      "hashVerified": true,
+      "actualChangedFromV1": true
+    }
+  ],
+  "checks": [
+    {
+      "command": "Original five-suite node --test command from v1 report, against separate frozen v2",
+      "exit": 0,
+      "observation": "62/62PASS,0skip; page-records-v2-independent-tests.txt."
+    },
+    {
+      "command": "node page-records-v2-independent-indexflags-probe.mjs",
+      "exit": 0,
+      "observation": "Exact original four counterexamples now reject; original v1 probe/results preserved."
+    },
+    {
+      "command": "node page-records-v2-independent-production-sentinel-probe.mjs",
+      "exit": 0,
+      "observation": "Mapped production CLI0; removing both pageRecords and build-report now CLI1 missing pageRecords."
+    },
+    {
+      "command": "node page-records-v2-independent-extra-controls.mjs",
+      "exit": 0,
+      "observation": "Eight additional controls PASS: unchanged masked direct file with flag retained, staged-added/physically-absent member, staged-deleted/physically-restored member, normal positive after index restored, three malformed CLI selections, normal production positive."
+    },
+    {
+      "command": "Independent SHA256 packet and original-evidence comparison",
+      "exit": 0,
+      "observation": "All10targethashes; both complete packet manifests; original six independent evidence files unchanged; exactly6targets changed from v1,4unchanged."
+    }
+  ],
+  "retainedFailure": "First additional probe launch failed ENOENT restoring a file after git rm removed its now-empty parent directory; corrected only the independent fixture restoration to use its directory-creating writer. No candidate source or guard changed; first probe source retained as page-records-v2-independent-extra-controls-first.mjs.",
+  "reuse": "Full original page-records-independent-review.md/json unchanged scopes, with F1/F2 superseded only by this explicit new evidence. Four unchanged shipping targets and original declaration/route/hash/consumer limits retained.",
+  "limits": [
+    "No main/register/frozen-candidate writes; only separate independent probes/reports and disposable real Git fixtures.",
+    "No original full production publisher/generator/currentDATA acquisition or two clean production builds; no gate/currentgraph/global/hosting/runtime acceptance.",
+    "semanticReader PASS is claim/procedure/context usability, not newly rendered production artifact proof.",
+    "Copied metadata-all-pages test sees only candidate documentation-site page; integrated original full-corpus suite remains parent-owned."
+  ]
+}

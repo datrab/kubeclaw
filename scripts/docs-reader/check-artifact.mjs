@@ -3,8 +3,14 @@ import fs from 'node:fs';
 import path from 'node:path';
 import crypto from 'node:crypto';
 import { parse } from 'parse5';
+import { fileURLToPath } from 'node:url';
+import { verifyReaderPageRecords } from './page-records.mjs';
 
-const root = path.resolve(process.argv[2] ?? '.tmp/docs-publication');
+const args = process.argv.slice(2);
+const legacyRendererFixture = args[0] === '--legacy-renderer-fixture';
+if (legacyRendererFixture) args.shift();
+assert(args.length <= 2 && args.every(value => !value.startsWith('--')), 'Usage: check-artifact.mjs [--legacy-renderer-fixture] [output-root] [source-checkout]');
+const root = path.resolve(args[0] ?? '.tmp/docs-publication');
 const manifest = JSON.parse(fs.readFileSync(path.join(root, 'reader-manifest.json'), 'utf8'));
 assert.equal(manifest.schemaVersion, 'kubeclaw-reader-artifact.v1');
 const records = new Map();
@@ -50,5 +56,10 @@ for (const [page, { links }] of records) {
     if (url.hash && records.has(target)) assert(records.get(target).ids.has(decodeURIComponent(url.hash.slice(1))), `Missing rendered fragment: ${page}: ${link}`);
     localLinks++;
   }
+}
+if (legacyRendererFixture && manifest.pageRecords === undefined) {
+  assert(!fs.existsSync(path.join(root, 'build-report.json')), 'Legacy renderer fixture mode cannot omit production pageRecords');
+} else {
+  verifyReaderPageRecords({ outputRoot: root, repositoryRoot: path.resolve(args[1] ?? fileURLToPath(new URL('../../', import.meta.url))), manifest });
 }
 console.log(JSON.stringify({ selectedPages: manifest.pageCount, htmlPages: records.size, localLinks, verifiedOutputDigests: paths.size }));

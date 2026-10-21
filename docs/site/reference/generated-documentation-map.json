@@ -2010,8 +2010,12 @@
       "audience": "operator, plugin author, developer, documentation maintainer",
       "owner": "documentation",
       "appliesTo": "positively selected repository reader pages and the local HTML publication artifact",
-      "lastVerified": "source, original 167-page build, parser tests, and rendered local links checked on 2026-10-21; browser observations have their own recorded scope",
+      "lastVerified": "source, original 167-page build, parser tests, and rendered local links checked on 2026-10-21; browser observations have their own recorded scope; machine-readable page bindings source and isolated fixture tests checked on 2026-10-21, not a complete production-build result",
       "sourceDependencies": [
+        "scripts/docs-reader/page-records.mjs",
+        "scripts/tests/docs-reader-page-records.test.mjs",
+        "docs/config/documentation-publication-manifest.json",
+        "docs/site/reference/generated-documentation-map.json",
         "scripts/docs-publication.mjs",
         "scripts/docs-reader/diagrams.mjs",
         "scripts/docs-reader/check-diagrams.mjs",

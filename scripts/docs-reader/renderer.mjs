@@ -119,8 +119,7 @@ function shell({ title, body, nav, toc = '', prefix, revision }) {
 ${toc ? `<aside aria-label="On this page"><strong>On this page</strong>${toc}</aside>` : ''}</div></body></html>\n`;
 }
 
-// Inputs come only from the publication selector; this never walks the repository.
-export function buildReader({ outputRoot, pages, assets, revision, sourceLink, sourcePreviews, generatedAssets = [], diagramManifest, redirectRegistry, routeBaseline }) {
+export function readerOutputLayout({pages, assets, generatedAssets = []}) {
   const routes = new Map(pages.map(p => [p.relative, `/${p.relative.slice(0, -3)}.html`]));
   const allAssets = [...assets, ...generatedAssets.map(asset => asset.path)];
   if (new Set(allAssets).size !== allAssets.length) throw new Error('Generated diagram asset collides with a selected asset');
@@ -130,6 +129,15 @@ export function buildReader({ outputRoot, pages, assets, revision, sourceLink, s
     for (let dir = path.posix.dirname(asset); dir !== '.'; dir = path.posix.dirname(dir)) directories.add(dir);
   }
   for (const dir of directories) routes.set(dir, routes.get(`${dir}/README.md`) ?? `/${dir}/index.html`);
+  const htmlOutputs = [...pages.map(page => routes.get(page.relative).slice(1)),
+    ...[...directories].filter(dir => !routes.has(`${dir}/README.md`)).map(dir => `${dir}/index.html`),
+    'search.html', 'index.html'];
+  return {routes, allAssets, directories, htmlOutputs};
+}
+
+// Inputs come only from the publication selector; this never walks the repository.
+export function buildReader({ outputRoot, pages, assets, revision, sourceLink, sourcePreviews, generatedAssets = [], diagramManifest, redirectRegistry, routeBaseline }) {
+  const {routes, allAssets, directories} = readerOutputLayout({pages, assets, generatedAssets});
   const allowedAssets = new Set(allAssets);
   const rendered = pages.map(p => ({ ...p, ...renderReaderMarkdown(p.text, p.relative, routes, allowedAssets, sourceLink), searchHtml: p.searchSourceText === undefined ? undefined : renderReaderMarkdown(p.searchSourceText, p.relative, routes, allowedAssets, sourceLink).html }));
   const outputs = [];
@@ -162,8 +170,7 @@ export function buildReader({ outputRoot, pages, assets, revision, sourceLink, s
   // Script loading also supports a locally opened artifact without a fetch server.
   const index = rendered.map(p => ({ title: p.title, headings: p.headings.map(h => h.label), route: routes.get(p.relative).slice(1), text: sanitizeHtml(p.searchHtml ?? p.html, { allowedTags: [], allowedAttributes: {} }).replace(/&(?:amp|lt|gt|quot);/gu, s => ({ '&amp;': '&', '&lt;': '<', '&gt;': '>', '&quot;': '"' })[s]).replace(/\s+/gu, ' ') }));
   write('search-index.js', `window.kubeclawSearchIndex=${JSON.stringify(index).replace(/</gu, '\\u003c')};\n`);
-  write('reader.css', readerCss);
-  write('reader.js', readerScript);
+  for (const asset of readerSharedAssets()) write(asset.path, asset.text);
   write('index.html', redirectRegistry ? readerRedirectPage({href:'README.html',script:'reader-redirect.js',stylesheet:'reader.css',reason:'Open the canonical documentation home.'}) : `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="refresh" content="0;url=README.html"><title>KubeClaw Documentation</title></head><body><a href="README.html">Open KubeClaw Documentation</a></body></html>\n`);
   if (diagramManifest) write('diagram-manifest.json', `${JSON.stringify(diagramManifest, null, 2)}\n`);
   if (sourcePreviews) write('source-previews.json', `${JSON.stringify(sourcePreviews, null, 2)}\n`);
@@ -175,6 +182,9 @@ export function buildReader({ outputRoot, pages, assets, revision, sourceLink, s
   }
   return manifest;
 }
+
+// The builder and read-only artifact verifier share the exact Source-owned bytes.
+export function readerSharedAssets() { return [{path: 'reader.css', text: readerCss}, {path: 'reader.js', text: readerScript}]; }
 
 const readerCss = `:root{color-scheme:light;--ink:#1c2024;--muted:#60646c;--line:#d9d9e0;--accent:#005cbe}*{box-sizing:border-box}body{margin:0;color:var(--ink);background:#fff;font:16px/1.65 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}a{color:var(--accent);text-underline-offset:3px}a:hover{text-decoration-thickness:2px}a:focus-visible,summary:focus-visible,input:focus-visible,button:focus-visible,table:focus-visible,pre:focus-visible,.diagram-scroll:focus-visible{outline:3px solid var(--accent);outline-offset:3px}.skip{position:fixed;top:-100px;left:16px;background:#fff;padding:8px 16px;z-index:5}.skip:focus{top:8px}header{min-height:72px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:20px;padding:16px 32px}header a{font-size:14px}.brand{color:var(--ink);text-decoration:none;font-size:20px;font-weight:700}.brand span{font-size:14px;font-weight:400;color:var(--muted);margin-left:12px}.layout{display:grid;grid-template-columns:256px minmax(0,1fr) 200px;max-width:1600px;margin:auto}.navigation{padding:24px 20px;border-right:1px solid var(--line);min-width:0}.navigation summary{font-size:14px;font-weight:600;cursor:pointer}.navigation nav{margin-top:24px}.navigation section{margin:0 0 24px}.navigation h2{font-size:12px;letter-spacing:.06em;text-transform:uppercase;margin:0 0 8px;color:var(--muted)}.navigation ul,aside ul{list-style:none;margin:0;padding:0}.navigation li{margin:2px 0}.navigation a{display:block;padding:6px 8px;font-size:13px;line-height:1.4;color:var(--muted);text-decoration:none;border-radius:4px;overflow-wrap:anywhere}.navigation a:hover{background:#f0f0f3;color:var(--ink)}.navigation a[aria-current]{background:#f0f0f3;color:var(--accent);font-weight:600}main{min-width:0;padding:48px 40px;max-width:100%}article{max-width:76ch;margin:auto;overflow-wrap:anywhere}h1{font-size:32px;line-height:1.2;letter-spacing:-.025em;margin:0 0 28px}h2{font-size:24px;line-height:1.3;letter-spacing:-.015em;margin:40px 0 16px}h3{font-size:19px;line-height:1.4;margin:32px 0 12px}h1,h2,h3,h4,[id]{scroll-margin-top:24px}p,ul,ol{margin:0 0 20px}li>p{margin-bottom:8px}code,pre{font:14px/1.6 ui-monospace,SFMono-Regular,Consolas,monospace}code{background:#f0f0f3;border-radius:3px;padding:2px 4px}pre{background:#f6f7f9;border:1px solid var(--line);border-radius:6px;padding:20px;overflow:auto;white-space:pre;max-width:100%}pre code{background:none;padding:0}table{display:block;overflow:auto;max-width:100%;border-collapse:collapse;font-size:14px;margin:24px 0}th,td{text-align:left;vertical-align:top;padding:12px;border:1px solid var(--line);min-width:120px}th{background:#f6f7f9;font-weight:600}blockquote{margin:24px 0;padding:8px 20px;border-left:3px solid var(--line);color:var(--muted)}details:not(.navigation){margin:20px 0;padding:12px;border:1px solid var(--line)}summary{cursor:pointer}img{max-width:100%;height:auto}.documentation-diagram{margin:24px 0}.diagram-scroll{max-width:100%;overflow:auto;border:1px solid var(--line);padding:12px}.diagram-scroll img{max-width:none;display:block}figcaption{font-size:14px;margin-top:12px;color:var(--muted)}aside{padding:48px 20px;font-size:12px;line-height:1.5}aside strong{font-size:12px}aside li{margin:12px 0}aside a{color:var(--muted);text-decoration:none}footer{font-size:12px;color:var(--muted);border-top:1px solid var(--line);margin-top:48px;padding-top:20px}label{display:block;font-weight:600;margin-bottom:8px}.search-controls{display:flex;gap:8px}input{min-width:0;flex:1;padding:12px;border:1px solid #80838d;border-radius:4px;font:inherit}button{padding:12px 20px;border:0;border-radius:4px;background:var(--accent);color:#fff;font:inherit;cursor:pointer}#search-results{padding-left:24px}#search-results li{margin-bottom:24px}#search-results p{font-size:14px;color:var(--muted)}@media(min-width:1000px){.navigation{max-height:calc(100vh - 8px);overflow:auto;position:sticky;top:0;align-self:start}aside{max-height:100vh;overflow:auto;position:sticky;top:0;align-self:start}}@media(max-width:1100px){.layout{grid-template-columns:240px minmax(0,1fr)}aside{display:none}main{padding:36px 28px}}@media(max-width:700px){header{padding:16px;gap:12px;flex-wrap:wrap}.brand span{display:block;margin:0}.layout{display:block}.navigation{border-right:0;border-bottom:1px solid var(--line);padding:16px}.navigation nav{max-height:40vh;overflow:auto}main{padding:32px 16px}h1{font-size:28px}h2{font-size:22px}pre{padding:12px}.search-controls{flex-wrap:wrap}input{width:100%}}@media print{header,.navigation,aside,footer,.skip{display:none}.layout{display:block}main{padding:0}pre,table{white-space:pre-wrap;overflow:visible}a{color:inherit}}\n`;
 

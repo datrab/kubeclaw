@@ -18,7 +18,10 @@ function ids(html){const found=new Set();function visit(n){const a=Object.fromEn
 
 // Explicit pages come from publicationPages, never an extension scan. Baseline
 // is the existing pinned known-route authority, not evidence of deployed URLs.
-export function compileReaderRedirects({outputRoot,pages,registry,baseline}){
+export function compileReaderRedirects(options){return readerRedirectPlan(options,false);}
+// Validate a previously emitted fallback without writing or relaxing emit guards.
+export function verifyReaderRedirects(options){assert(Array.isArray(options.reservedOutputs),'Readonly redirect verification requires the renderer output layout');return readerRedirectPlan(options,true);}
+function readerRedirectPlan({outputRoot,pages,registry,baseline,reservedOutputs},verifyExisting){
  assert.equal(registry.schemaVersion,'kubeclaw-documentation-routes.v1');assert(Array.isArray(registry.redirects));
  const canonical=new Map(),current=[];
  for(const page of pages){
@@ -32,6 +35,10 @@ export function compileReaderRedirects({outputRoot,pages,registry,baseline}){
  // loops in the governance route vocabulary before files are emitted.
  assert(canonical.has('/README.html'),'Positive reader home is required for the existing index bootstrap');
  assertRouteContinuity(baseline,current,registry);
+ if(verifyExisting){
+  const home=path.join(outputRoot,'index.html');assert.equal(fs.realpathSync(home),home,'Nonphysical existing home output');assert(fs.statSync(home).isFile());
+  assert.equal(fs.readFileSync(home,'utf8'),readerRedirectPage({href:'README.html',script:'reader-redirect.js',stylesheet:'reader.css',reason:'Open the canonical documentation home.'}),'Existing home differs from source-owned fallback');
+ }
  const redirects=[],sources=new Set(),outputPaths=new Set();
  for(const entry of registry.redirects){
   localRoute(entry.from);localRoute(entry.to);assert(!canonical.has(entry.from),'Redirect source is canonical');
@@ -41,7 +48,15 @@ export function compileReaderRedirects({outputRoot,pages,registry,baseline}){
   assert(Array.isArray(entry.preservedFragments),'Redirect must declare reviewed preservedFragments, including an explicit empty list');
   assert(new Set(entry.preservedFragments).size===entry.preservedFragments.length,'Duplicate retained fragment');
   for(const fragment of entry.preservedFragments)assert(typeof fragment==='string'&&fragment&&target.ids.has(fragment),'Redirect would lose a declared original fragment: '+fragment);
-  const output=outputFor(entry.from);assert(!outputPaths.has(output),'Duplicate static redirect output');outputPaths.add(output);assert(!fs.existsSync(path.join(outputRoot,output)),'Redirect output collides with existing publication');
+  const output=outputFor(entry.from);assert(!outputPaths.has(output),'Duplicate static redirect output');outputPaths.add(output);if(verifyExisting){
+   assert(!reservedOutputs.includes(output),'Redirect output collides with reserved renderer output');
+   // Read-only verification of a previously emitted exact fallback. The normal
+   // compiler/writer still rejects every existing output collision.
+   const file=path.join(outputRoot,output),directory=path.posix.dirname(output);
+   assert.equal(fs.realpathSync(file),file,'Nonphysical existing redirect output');assert(fs.statSync(file).isFile());
+   const expected=readerRedirectPage({href:path.posix.relative(directory,target.html.slice(1)),script:path.posix.relative(directory,'reader-redirect.js'),stylesheet:path.posix.relative(directory,'reader.css'),reason:entry.reason});
+   assert.equal(fs.readFileSync(file,'utf8'),expected,'Existing redirect differs from source-owned fallback');
+  }else assert(!fs.existsSync(path.join(outputRoot,output)),'Redirect output collides with existing publication');
   redirects.push({from:entry.from,to:target.html,output,canonicalUrl:target.html,reason:entry.reason,preservedFragments:[...entry.preservedFragments].sort()});
  }
  return {schemaVersion:'kubeclaw-reader-redirects.v1',entryPoint:{from:'/',to:'/README.html',output:'index.html'},redirects:redirects.sort((a,b)=>a.from.localeCompare(b.from)),staticNoJavaScriptLimit:'No automatic static redirect without JavaScript: native meta refresh drops an incoming opaque fragment. Follow the canonical link and retain any original fragment manually.'};

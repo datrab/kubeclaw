@@ -1,0 +1,140 @@
+{
+  "scope": "Frozen eight-target A91211 author candidate; implementation/content review, not whole gate or production determinism acceptance",
+  "verdict": "NOT_READY",
+  "review": {
+    "Source": "NOT_READY: F1/F2",
+    "semanticReader": "NOT_READY only for unconditional verification claims affected by F1/F2; remaining chapter task/content preservation PASS",
+    "Quality": "NOT_READY: missing meaningful negatives F1/F2; existing 56 tests PASS"
+  },
+  "findings": [
+    {
+      "id": "F1",
+      "severity": "P2",
+      "target": "scripts/docs-reader/page-records.mjs:51-58",
+      "title": "Declared Source drift guard trusts Git index suppression and misses index-only drift",
+      "observation": "Actual normal verifyReaderPageRecords succeeds after changing physical src/tree/item.txt while marking its index entry assume-unchanged or skip-worktree. It also succeeds for direct file and tree-member staged changes when physical worktree bytes are restored to the committed bytes; git diff revision is empty but git diff --cached revision lists the changed entry.",
+      "evidence": "page-records-independent-indexflags-probe.mjs/.json",
+      "repair": "Keep finite declared-path acquisition. Independently compare the index to the selected revision (cached diff), and reject masking assume-unchanged/skip-worktree flags on tracked entries under declared scopes, or verify those actual physical descendants through a finite Git-owned entry census. Do not mutate/clear user index flags or infer a global closure. Add maintained file/tree staged-restored and both hidden-tree-drift negative controls."
+    },
+    {
+      "id": "F2",
+      "severity": "P2",
+      "target": "scripts/docs-reader/check-artifact.mjs:56-58",
+      "title": "Normal production checker can silently downgrade to fixture mode when both unbound sentinels are removed",
+      "observation": "A genuine appendReaderPageRecords artifact passes the normal CLI. Delete pageRecords and build-report.json, preserving all output bytes/hashes, then the same normal CLI again exits0. Production record omission is detected only when the optional build-report file remains.",
+      "evidence": "page-records-independent-production-sentinel-probe.mjs/.json",
+      "repair": "Make normal production artifact verification require pageRecords by default. Preserve legacy isolated renderer fixtures through an explicit fixture-only test/API/CLI mode selected by their caller, not artifact-controlled absence of both files. Add an actual CLI negative deleting both fields/files; retain a separately explicit legacy-fixture positive."
+    }
+  ],
+  "hashManifest": "page-records-independent-hashes.json",
+  "frozenTargets": [
+    {
+      "path": "scripts/docs-publication.mjs",
+      "kind": "changed",
+      "sha256": "29d0305b4b4ad0de7fcea5810372e700b4b2a4d810e8cce22fbdd2bfd964cda8",
+      "bytes": 80767,
+      "lines": 1140,
+      "baselineSha256": "3b22ff66706c132c96a3b3ba39c7c2d043d314336d46660d94e7481c0f0ef360",
+      "candidateHashVerified": true,
+      "currentMainEqualsBaseline": true
+    },
+    {
+      "path": "scripts/docs-reader/check-artifact.mjs",
+      "kind": "changed",
+      "sha256": "f26de3e24a319b1048c5d3061f0c8d0fe1784588bc0fe0b488736bd191b355e1",
+      "bytes": 3272,
+      "lines": 59,
+      "baselineSha256": "bb5a1e754b4c34254f2bdd75765e196b9c5c49aa0122b22baa6bc63491480838",
+      "candidateHashVerified": true,
+      "currentMainEqualsBaseline": true
+    },
+    {
+      "path": "docs/site/reference/documentation-site.md",
+      "kind": "changed",
+      "sha256": "12429787eaedc3830fb5e1fdefc9361397509c43b71390025802b9ebca84cad0",
+      "bytes": 29072,
+      "lines": 427,
+      "baselineSha256": "4f418aa28e32443300e50431ba9a80552a5bbcb96d2a58821316e6b1821300d8",
+      "candidateHashVerified": true,
+      "currentMainEqualsBaseline": true
+    },
+    {
+      "path": "scripts/docs-reader/redirects.mjs",
+      "kind": "changed",
+      "sha256": "0b186c9da87055e1a13afb0aace0b72e04099c3ed49879a422ca3acbbe778caf",
+      "bytes": 9719,
+      "lines": 88,
+      "baselineSha256": "bdeb3d97575e9e8116fc5d07eb2fd359aeac3a5ae824d0521e688ff187e43a60",
+      "candidateHashVerified": true,
+      "currentMainEqualsBaseline": true
+    },
+    {
+      "path": "scripts/docs-reader/renderer.mjs",
+      "kind": "changed",
+      "sha256": "a0bf02d079637cf862fe0a40bbc34e4bfbd982c58126e347d8aea079047abd87",
+      "bytes": 21223,
+      "lines": 205,
+      "baselineSha256": "9e87c023a29932f35c9c0ca5169c7c4cc39953a849e31b206e6f431bf91acf2b",
+      "candidateHashVerified": true,
+      "currentMainEqualsBaseline": true
+    },
+    {
+      "path": ".github/workflows/docs-checks.yaml",
+      "kind": "changed",
+      "sha256": "96e54e68a99450a6b4cdd1568cd4309cf290ee54f8b368efa76b032f2c7b48b4",
+      "bytes": 8731,
+      "lines": 172,
+      "baselineSha256": "f44033eb4877618d34c65fb292a33f88f8dddb3dbe7c471439328f81f57ac2c5",
+      "candidateHashVerified": true,
+      "currentMainEqualsBaseline": true
+    },
+    {
+      "path": "scripts/docs-reader/page-records.mjs",
+      "kind": "new",
+      "sha256": "15d857520e008305e9b649eb10ff02c0ad4ff9637aeee62cd4c55d7afdf3b96c",
+      "bytes": 10572,
+      "lines": 164,
+      "baselineSha256": null,
+      "candidateHashVerified": true,
+      "absentFromMain": true
+    },
+    {
+      "path": "scripts/tests/docs-reader-page-records.test.mjs",
+      "kind": "new",
+      "sha256": "fce2bc91f1c1760cd98818e7f790e0e0f39a92ba177abacdf9b12ac5f5a67db1",
+      "bytes": 12133,
+      "lines": 79,
+      "baselineSha256": null,
+      "candidateHashVerified": true,
+      "absentFromMain": true
+    }
+  ],
+  "checks": [
+    {
+      "command": "node --test scripts/tests/docs-reader-page-records.test.mjs scripts/tests/docs-reader.test.mjs scripts/tests/docs-reader-redirects.test.mjs scripts/tests/docs-publication-assets.test.mjs scripts/tests/docs-publication-links.test.mjs",
+      "exit": 0,
+      "observation": "Independently rerun56/56PASS,0skip; raw page-records-independent-tests.txt."
+    },
+    {
+      "command": "node page-records-independent-indexflags-probe.mjs",
+      "exit": 0,
+      "observation": "Four genuine normal-API counterexamples: two hidden physical tree changes and two staged-restored index changes are accepted unexpectedly."
+    },
+    {
+      "command": "node page-records-independent-production-sentinel-probe.mjs",
+      "exit": 0,
+      "observation": "Original complete artifact CLI0; after deleting pageRecords+build-report CLI0 unexpectedly."
+    },
+    {
+      "command": "Independent SHA256 comparison",
+      "exit": 0,
+      "observation": "All8target hashes+all11packet hashes verified;6existing target baselines exact currentmain,2newtargets absent;8unchanged supporting modules/tests exact main."
+    }
+  ],
+  "limits": [
+    "No main, register, candidate or product Source writes. Only new independent scratch reports/probes and disposable Git fixtures.",
+    "No production publisher/generator/currentDATA acquisition, provider/cluster/model execution or full two-build claim.",
+    "No global/gate PASS; parent owns original integrated clean production builds, current facts/graph/purpose, full Reader validation.",
+    "Prior publication/redirect semantic reviews reused only for exact unchanged support; author failed attempts remain failures."
+  ]
+}

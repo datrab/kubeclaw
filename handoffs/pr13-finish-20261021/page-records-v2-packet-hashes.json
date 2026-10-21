@@ -1,0 +1,14 @@
+{
+  "candidate.patch": "53c7bd7034bd2e017243ca969dd7e28ed70a18358a4628c7225487bbb7450ef9",
+  "candidate-hashes.json": "b06085ff5ed23e40e9409dd25d248a3ae7db1cf156d1fbce795a17ae120dca8d",
+  "F1-F2-only.patch": "25ae51e78196ef7b078a1e88d2fd10a2bc2db2c4029f4266dd7461a14389c430",
+  "baseline.json": "d3e6ff21d37f67dc2eb2044c921a627a2f4dd46191532351b4d76be200e1d9e4",
+  "author-report.md": "ee1f26f883294c856ca34a8dcfb25bcd9d4b03a61d2322d7d476bafa911bb3eb",
+  "correction-addendum.md": "378ca1224f443d47307de7118e10bed6ee5a6cabeaa339f14fd991221b12718d",
+  "v2-native-tests-first.txt": "bec820712403c1021412c969679820a22e87c0f8826cb388527e9ed166bfa89c",
+  "v2-native-tests-final.txt": "649e5f8f3268cf951d0627c58697b0ed7fa1b28e737b406e72a8bcc7575a60ba",
+  "v2-syntax-checks.json": "17b3544c0a899419d151b73fc6a433535613d82f4d84136e6f1b5468951f5ced",
+  "v2-reader-boundary.txt": "6a951d3f7f7bb6899fc71c1efe04ee785aeb6dfda86cfa31172193d5e93c8f89",
+  "v2-patch-check.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "prior-independent-evidence-hashes.json": "f84a0c68a27921703db019db2b3ff22b22b3bdecfd81019cc314ae0d04541563"
+}

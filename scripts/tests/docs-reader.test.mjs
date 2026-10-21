@@ -74,7 +74,7 @@ test('artifact checker rejects changed output bytes and a digest-consistent brok
   t.after(() => fs.rmSync(root, { recursive: true, force: true }));
   const checker = fileURLToPath(new URL('../docs-reader/check-artifact.mjs', import.meta.url));
   const options = { outputRoot: root, pages: [{ relative: 'README.md', text: '# Home\n\n[Task](#task)\n\n## Task\n' }], assets: [], revision: 'b'.repeat(40) };
-  const check = () => spawnSync(process.execPath, [checker, root], { encoding: 'utf8' });
+  const check = () => spawnSync(process.execPath, [checker, '--legacy-renderer-fixture', root], { encoding: 'utf8' });
   buildReader(options);
   assert.equal(check().status, 0);
   fs.appendFileSync(path.join(root, 'README.html'), '<p>changed</p>');
@@ -149,7 +149,7 @@ test('derived SVG assets stay locally linked, hashed and bounded by the static S
   const result = buildReader(options);
   assert(result.outputs.some(item => item.path === asset.path)); assert(result.outputs.some(item => item.path === 'diagram-manifest.json'));
   const html = fs.readFileSync(path.join(root, 'README.html'), 'utf8'); assert(html.includes('class="diagram-scroll"')); assert(html.includes('aria-label="How does input flow?"'));
-  const checker = fileURLToPath(new URL('../docs-reader/check-artifact.mjs', import.meta.url)); assert.equal(spawnSync(process.execPath, [checker, root]).status, 0);
+  const checker = fileURLToPath(new URL('../docs-reader/check-artifact.mjs', import.meta.url)); assert.equal(spawnSync(process.execPath, [checker, '--legacy-renderer-fixture', root]).status, 0);
   assert.throws(() => buildReader({ ...options, generatedAssets: [{ ...asset, path: '../unsafe.svg' }] }));
   assert.throws(() => buildReader({ ...options, generatedAssets: [{ ...asset, text: asset.text.replace('</svg>', '<script>run()</script></svg>') }] }));
 });
