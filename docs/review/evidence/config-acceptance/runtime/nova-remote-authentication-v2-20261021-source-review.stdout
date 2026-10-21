@@ -1,0 +1,13 @@
+autoreview target: local
+branch: master
+engine: codex
+tools: on
+web_search: off
+bundle: 122219 chars
+codex thread: 01a15fa5-437d-72e1-aeef-cac432ab3aa5
+codex turn started
+{"findings":[],"overall_correctness":"patch is correct","overall_explanation":"The three-file delta requires exact explicit authentication modes for v2 and rejects proxy token locators before gate creation while preserving v1 implicit-bearer compatibility. The added tests exercise HTTP bearer/proxy/bearer behavior after deleting both configuration files, and the existing v2 fixture now explicitly selects bearer. No actionable defects found. Review was based on the supplied sources; tests were not executed by the reviewer.","overall_confidence":0.98}
+codex usage: input_tokens=41338 cached_input_tokens=0 output_tokens=140 reasoning_output_tokens=22
+autoreview clean: no accepted/actionable findings reported
+overall: patch is correct (0.98)
+The three-file delta requires exact explicit authentication modes for v2 and rejects proxy token locators before gate creation while preserving v1 implicit-bearer compatibility. The added tests exercise HTTP bearer/proxy/bearer behavior after deleting both configuration files, and the existing v2 fixture now explicitly selects bearer. No actionable defects found. Review was based on the supplied sources; tests were not executed by the reviewer.

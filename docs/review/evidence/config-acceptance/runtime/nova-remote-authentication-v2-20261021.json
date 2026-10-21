@@ -1,0 +1,121 @@
+{
+  "schemaVersion": "config-bounded-execution-observation.v1",
+  "observedAt": "2026-10-21T18:09:50.640529+00:00",
+  "settingId": "RT-NOVA-REMOTE-AUTHENTICATION",
+  "relatedOriginalCases": [
+    "RT-NOVA-REMOTE-AUTHENTICATION-STANDALONE19-VAL",
+    "RT-NOVA-REMOTE-AUTHENTICATION-STANDALONE19-AB",
+    "RT-NOVA-REMOTE-AUTHENTICATION-STANDALONE19-MUTANT"
+  ],
+  "sourceCommit": "dc3a104cabb2e7711997c346677fbeb40ce014f9",
+  "sourceFiles": [
+    {
+      "path": "skills/nova/core/test-gates/runtime-config.ts",
+      "sha256": "e1c83384344e77113de00340330ca11306e9c36a1721d2d4b2e2d170e79eecd9"
+    },
+    {
+      "path": "tests/verification/reliability/nova-source-central-policy.test.mts",
+      "sha256": "11d17cd8d0940ea343c156569a4f22b3dd053a4f018f9025417a72068e5266a5"
+    },
+    {
+      "path": "docs/operations/operator-configuration.md",
+      "sha256": "6abcfffc09ab3f874bb1c4546a7a064a675fa01f93b776bcb3154348dfaa2b44"
+    }
+  ],
+  "qualification": "Bounded standalone v2 discriminator/unused-author correction only. Related original cases are NOT promoted: complete central-entry delivery, caller/registration/instance/module binding, restart recovery/fixed Eval and native acceptance remain open. Closed v1/defaulting and programmatic legacy factory are preserved, not claimed migrated.",
+  "commands": [
+    {
+      "argv": [
+        "node",
+        "--test",
+        "--test-concurrency=1",
+        "tests/verification/reliability/nova-source-central-policy.test.mts",
+        "tests/verification/reliability/nova-source-acquisition-policy.test.mts",
+        "tests/verification/reliability/nova-store-boundaries.test.mts"
+      ],
+      "exitCode": 0,
+      "tests": 14,
+      "passed": 14,
+      "failed": 0,
+      "skipped": 0,
+      "raw": "nova-remote-authentication-v2-20261021-regressions.stdout"
+    },
+    {
+      "argv": [
+        "node",
+        "tests/verification/contracts/check-pipeline-remote-runtime-config.mts"
+      ],
+      "exitCode": 0,
+      "raw": "nova-remote-authentication-v2-20261021-original-contract.stdout"
+    },
+    {
+      "argv": [
+        "node_modules/.bin/tsc",
+        "--noEmit",
+        "-p",
+        "skills/nova/tsconfig.json"
+      ],
+      "exitCode": 0,
+      "stdout": "empty",
+      "stderr": "empty"
+    }
+  ],
+  "observedBehavior": "Actual committed Git acquisition and real HTTP submission; explicit bearer sends Authorization, explicit loopback SPIFFE proxy omits Authorization, retained A sends bearer again after current runtime and Core files deleted. Expected HTTP400 is a controlled receiving rejection, NOT successful native plan execution. Missing/malformed modes and proxy token locators reject before state creation.",
+  "mutants": [
+    {
+      "mutant": "original-fallback",
+      "exitCode": 1,
+      "killedFor": "Missing expected exception at original productive loader",
+      "command": [
+        "node",
+        "--test",
+        "--test-name-pattern=v2 requires an exact authentication mode",
+        "tests/verification/reliability/nova-source-central-policy.test.mts"
+      ],
+      "sourceSha256": "c7cf8c276c3cd28bd226258e8894679866dddbc6df7cdc22eed27ddcc1637fad"
+    },
+    {
+      "mutant": "ignored-proxy-token",
+      "exitCode": 1,
+      "killedFor": "Missing expected exception at original productive loader",
+      "command": [
+        "node",
+        "--test",
+        "--test-name-pattern=v2 requires an exact authentication mode",
+        "tests/verification/reliability/nova-source-central-policy.test.mts"
+      ],
+      "sourceSha256": "27f133ac3ec55da68be5a45b843dc9ca765f1f6896667fb52e3e41ecf3bd9064"
+    }
+  ],
+  "restoration": "Candidate source restored exactly before 14/14 original and behavioral regressions; no assertions removed.",
+  "independentSourceReview": {
+    "findings": [],
+    "overall_correctness": "patch is correct",
+    "overall_explanation": "The three-file delta requires exact explicit authentication modes for v2 and rejects proxy token locators before gate creation while preserving v1 implicit-bearer compatibility. The added tests exercise HTTP bearer/proxy/bearer behavior after deleting both configuration files, and the existing v2 fixture now explicitly selects bearer. No actionable defects found. Review was based on the supplied sources; tests were not executed by the reviewer.",
+    "overall_confidence": 0.98
+  },
+  "reviewCommand": "autoreview --mode local --engine codex --no-web-search; bounded exact three-file snapshot plus complete adjacent-source context; CODEX_HOME set to installed reviewer runtime",
+  "reviewLimits": "One successful source review, no actionable findings. Reviewer did not execute tests or grant native/whole acceptance. Initial wrong-root untracked bundle was rejected as input-too-large before review; exact bounded retry repaired scope, not code.",
+  "logs": [
+    {
+      "path": "nova-remote-authentication-v2-20261021-regressions.stdout",
+      "sha256": "4b12dec27a5aac372c640caee2dc04b77add61601b3a4228a060a64fae05baed"
+    },
+    {
+      "path": "nova-remote-authentication-v2-20261021-original-contract.stdout",
+      "sha256": "7dc7517ae2ea1a1ba9577264af74303fbbbd2de31974e9a14f75b71d663bf1a1"
+    },
+    {
+      "path": "nova-remote-authentication-v2-20261021-mutant-original-fallback.stdout",
+      "sha256": "38fd2b9bd10262d7d1e5002c5cdf5a9bf51bff5f12eb586c45379afbdf432c6f"
+    },
+    {
+      "path": "nova-remote-authentication-v2-20261021-mutant-proxy-token.stdout",
+      "sha256": "426f21b56b2a0ead83262a19ad2dfb69b752d85e1ac7941c9316e09c74a1c724"
+    },
+    {
+      "path": "nova-remote-authentication-v2-20261021-source-review.stdout",
+      "sha256": "47af32851fb42e6058233f5677880f47b78dcd19d4eaa53700893c42681890aa"
+    }
+  ]
+}

@@ -2,7 +2,7 @@
   "updatedAt": "2026-10-21T17:53:07.114239+00:00",
   "revision": "4b1a92a6b6cf9d1e66928ce924a3620f3dba2751",
   "phase": "CONFIG_EXTERNALIZATION",
-  "status": "HISTORICAL_VISUAL_PACKAGE_CLOSURE_REPAIRED_PUBLISHED_CI_PENDING",
+  "status": "RUNTIME_AUTH_V2_VERIFIED_AWAITING_SINGLE_BATCH_PUBLICATION",
   "implementedPhases": [],
   "implementationAccepted": false,
   "scopeUnchanged": "FULL C1-C6; 2409 fields, 6845 cases, 50 requirements",
@@ -82578,6 +82578,49 @@
     "nextAction": "Collect real exact-head CI; verify original shard2/shard4 and native-reliability at new full SHA. If native still fails, obtain hosted original logs and diagnose without weakening actual accounted Linux assertions. Full native/C0-C6 remains OPEN.",
     "executionDiagnostic": {
       "acceptanceJoinInitialRead": "KeyError id: nested checklist shape; corrected and exact canonical join successfully persisted; no ongoing scheduler failure"
+    }
+  },
+  "interactiveResume20261021T1759": {
+    "observedAt": "2026-10-21T18:08:21.527870+00:00",
+    "baseHead": "2f46411bfa59d2410bd8903d2f7160a5509fbe16",
+    "localHead": "dc3a104cabb2e7711997c346677fbeb40ce014f9",
+    "writer": "interactive main; shared nonblocking flock; supervisor notified read-only",
+    "documentationRepair": {
+      "commit": "49c7da4eb",
+      "restoredFiles": 18,
+      "archiveByteIdentical": true,
+      "bytes": 493079,
+      "verification": "Exact publication export: unchanged Markdown check1639; generated docs, reference checks3805links/814paths, coverage and2boundary tests PASS",
+      "evidence": "/home/node/.openclaw/workspace/tmp/config-resume-1759-oct21/restored-documents.json"
+    },
+    "runtimeRepair": {
+      "commit": "dc3a104ca",
+      "inventoryId": "RT-NOVA-REMOTE-AUTHENTICATION",
+      "scope": "Explicit v2 authentication discriminator and proxy token-author rejection; closed v1 compatibility unchanged. Not full central owner/registration/instance/module migration.",
+      "tests": "14/14 original/behavioral tests PASS; original remote runtime config contract PASS; Nova original tsc PASS; both real semantic mutants killed; restored baseline PASS",
+      "review": "One bounded independent autoreview clean; source-only review, not reviewer-executed/native acceptance. Initial incorrectly scoped bundle exceeded input limit; corrected bounded exact-source snapshot once; not a code finding or review loop.",
+      "reviewReport": "/home/node/.openclaw/workspace/tmp/config-resume-1759-oct21/auth-review-bounded.json",
+      "publishedEvidence": "docs/review/evidence/config-acceptance/runtime/nova-remote-authentication-v2-20261021.json"
+    },
+    "fullDelivery": "CMP-C1-DELIVERY remains not-run/incomplete; v10 direct source/caller and boot/output activation gates deliberately closed. No pass from schema/source readback.",
+    "native": "Existing hosted native-reliability collected, no duplicate launch. Original selected CONFIG remote plan and deployed Buster registry/provider identity still unresolved. Mounted Nova bundle is2c636491391330c3137162ff0afc0b108b0c91a5, not PR18; no native PASS inferred.",
+    "publication": "pending once healthy original head CI settles; avoid cancelling current native work",
+    "next": "Collect current original native/remaining CI; fix actual failures. Then publish verified batch and verify exact remote SHA/CI. Continue full v10 source/caller/boot and original native selected-plan closure; preserve2409/6845 scope.",
+    "nativeHostedOriginal": {
+      "head": "2f46411bfa59d2410bd8903d2f7160a5509fbe16",
+      "jobUrl": "https://github.com/datrab/kubeclaw/actions/runs/39648139111/job/119389840157",
+      "tests": 163,
+      "passed": 163,
+      "failed": 0,
+      "skipped": 0,
+      "qualification": "Complete existing hosted native reliability roster only. Not the selected CONFIG remote/native plan or full C0-C6 acceptance.",
+      "priorFailure": {
+        "jobUrl": "https://github.com/datrab/kubeclaw/actions/runs/39636772947/job/119349307910",
+        "tests": 163,
+        "passed": 102,
+        "failed": 61,
+        "reason": "Every failed assertion reports historical visual source fixture size; retained historical fixture b4aa135 repairs this unchanged source identity. Current original suite confirms163/163."
+      }
     }
   }
 }
