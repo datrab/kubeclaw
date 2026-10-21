@@ -3,6 +3,12 @@
 # Keep volume references aligned with the selected Buster base values.
 nodeSelector:
   kubernetes.io/hostname: ax41-production
+busterRuntimeStartupFix: true
+busterApiEgress:
+  - cidr: 10.43.0.1/32
+    port: 443
+  - cidr: 100.97.157.101/32
+    port: 6443
 podAnnotations:
   kubeclaw.dev/native-worker-role: buster
   kubeclaw.dev/native-worker-policy: b16f8b792c92629ba761597ccc38bc5056d135072d1bed2da2e88e1c0022c6af

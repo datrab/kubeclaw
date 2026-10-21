@@ -63,6 +63,7 @@ jobs:
       - name: Validate Buster persistent storage manifests
         if: ${{ !cancelled() && steps.dependencies.outcome == 'success' }}
         run: |
+          node --test tests/verification/deployment/ax41-buster-overlay.test.mjs
           node tests/verification/deployment/check-role-chart.mjs
           node tests/verification/deployment/check-deployment-truth.mjs
           helm lint charts/kubeclaw -f my-values/buster-values.yaml -f tests/fixtures/helm/runtime-registry.yaml

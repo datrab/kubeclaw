@@ -86,6 +86,20 @@ processes. It does not accept a test-double boundary.
 
 ## Common Failures
 
+Pinned Buster images can fail before opening the plan API when their restricted
+supervisor recursively changes ownership of builder-owned private result
+directories. `busterRuntimeStartupFix: true` mounts a chart-owned launcher that
+changes only that exact handoff in a temporary copy of the image entrypoint.
+Existing job stores and run archives are never traversed or rewritten. Already
+corrected entrypoints are accepted; unknown ownership contracts fail closed.
+The AX41 overlay enables this compatibility fix without rebuilding images.
+
+`busterApiEgress` lists individual API service/backend IPv4 addresses and ports.
+The AX41 entries cover the service on 443 and its node backend on 6443, because
+network policy can evaluate traffic after Service DNAT. The policy selects only
+the Buster release and its namespace controller, retains their existing RBAC,
+and does not grant other nodes, ports, or workloads access.
+
 Registry activation failures indicate invalid package, provider, trust, or
 grant configuration.
 

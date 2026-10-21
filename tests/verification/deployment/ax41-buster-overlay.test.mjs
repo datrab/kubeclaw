@@ -20,6 +20,14 @@ test('AX41 Buster uses a bounded browser child without replacing runtime image o
  const runtime=pod.spec.containers.find(c=>c.name===original.name);
  assert.equal(runtime.image,original.image);
  assert.deepEqual(runtime.resources,overlay.busterRuntimeResources);
+ assert.deepEqual(runtime.command,['/usr/bin/tini','--','/bin/sh','/etc/buster-startup/launcher.sh']);
+ assert.match(pod.metadata.annotations['checksum/buster-runtime-startup'],/^[a-f0-9]{64}$/);
+ assert.equal(runtime.volumeMounts.find(m=>m.name==='buster-runtime-startup').readOnly,true);
+ const startup=docs.find(d=>d.kind==='ConfigMap'&&d.metadata.name==='agent-buster-runtime-startup');
+ assert.equal(startup.data['launcher.sh'],fs.readFileSync('charts/kubeclaw/files/buster-runtime-launcher.sh','utf8'));
+ const api=docs.find(d=>d.kind==='NetworkPolicy'&&d.metadata.name==='agent-buster-kubernetes-api');
+ assert.deepEqual(api.spec.podSelector.matchLabels,{'app.kubernetes.io/name':'kubeclaw','app.kubernetes.io/instance':'agent-buster','kubeclaw/role':'buster'});
+ assert.deepEqual(api.spec.egress.map(rule=>[rule.to[0].ipBlock.cidr,rule.ports[0].port]),[['10.43.0.1/32',443],['100.97.157.101/32',6443]]);
  assert.deepEqual(runtime.env.find(e=>e.name==='BUSTER_V2_TOKEN'),original.env.find(e=>e.name==='BUSTER_V2_TOKEN'));
  const registry=JSON.parse(runtime.env.find(e=>e.name==='KUBECLAW_REGISTRY_CONFIG').value);
  assert.equal(registry.registry.transport,'http-lab');

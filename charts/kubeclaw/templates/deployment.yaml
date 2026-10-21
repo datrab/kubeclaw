@@ -26,6 +26,9 @@ spec:
       annotations:
         checksum/config: {{ include (print $.Template.BasePath "/configmap-gateway.yaml") . | sha256sum }}
         checksum/swarm-config: {{ include (print $.Template.BasePath "/configmap-swarm-config.yaml") . | sha256sum }}
+        {{- if and (eq .Values.agentRole "buster") .Values.busterRuntimeStartupFix }}
+        checksum/buster-runtime-startup: {{ include (print $.Template.BasePath "/configmap-buster-startup.yaml") . | sha256sum }}
+        {{- end }}
         {{- if .Values.workerTrust.spiffe.enabled }}
         checksum/worker-trust: {{ index ((include (print $.Template.BasePath "/configmap-worker-trust.yaml") .) | fromYaml).data "envoy.yaml" | sha256sum }}
         {{- end }}
@@ -1662,6 +1665,11 @@ spec:
           {{- end }}
         - name: runtime-config
           emptyDir: {}
+        {{- if and (eq .Values.agentRole "buster") .Values.busterRuntimeStartupFix }}
+        - name: buster-runtime-startup
+          configMap:
+            name: {{ include "kubeclaw.fullname" . }}-runtime-startup
+        {{- end }}
         - name: workspace
           {{- if .Values.persistence.workspace.enabled }}
           persistentVolumeClaim:

@@ -379,6 +379,12 @@ serviceAccount:
 # trusted controller creates/deletes ephemeral test namespaces and binds Buster's
 # ServiceAccount only inside those namespaces.
 
+# Opt-in startup compatibility for pinned Buster runtime images. No image build
+# or recursive ownership mutation of existing results is required.
+busterRuntimeStartupFix: false
+# Exact API service/backend destinations, before and after Service DNAT.
+busterApiEgress: []
+
 busterNamespaceBroker:
   enabled: false
   # Grants the agent ServiceAccount permission to request ephemeral test
