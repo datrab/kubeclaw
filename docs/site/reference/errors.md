@@ -521,9 +521,9 @@ when deciding what a positive path probe leaves unproved.
 > **Test evidence:** No maintained standalone test suite for this inspected
 > pair was found. Eight author-owned non-live controls exercised the original
 > validator/renderer (including Pending-Pod acceptance and missing-UID rejection).
-> Two separate reviewer-owned controls confirmed equivalent normalized endpoint
-> spellings are accepted and coercive non-string identity values reach missing-
-> token `ENOENT` before HTTPS. These are bounded controls, not an invented test
+> Two separate reviewer-owned controls confirmed that the validator accepts
+> equivalent endpoint spellings and that coercive non-string identities reach
+> missing-token `ENOENT` before HTTPS. These are bounded controls, not an invented test
 > suite or a live request result.
 >
 > **Revision:** `cfc97be096908c1193877d054bb80662120f1eca`; linked program and
