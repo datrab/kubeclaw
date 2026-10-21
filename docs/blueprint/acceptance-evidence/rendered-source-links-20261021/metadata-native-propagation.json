@@ -1,0 +1,375 @@
+{
+  "baseline": "24633d42",
+  "changedPublisherStatements": [
+    "build",
+    "new static metadata formatter import"
+  ],
+  "renewals": [
+    {
+      "source": "scripts/docs-publication.mjs",
+      "previous": "70d68f75fba9a329b9c722da1ef28460f333b9e28b44afebea24ad77a60a4a67",
+      "current": "633a1fba9f2d17f8f7e1a176943e79fe54e794bc5ed065cfcceb29c95e39418f",
+      "previousSelectors": [
+        {
+          "expressionSha256": "642a385862ed880edc80cb8a73cbf73bf2ac79160d0c9e79057bb32457274f76"
+        },
+        {
+          "expressionSha256": "d45150f1844f2301bba1aa7f5f64e6afb11a56405d851a2581ff2f4047a949fb"
+        },
+        {
+          "expressionSha256": "4204ef97b15dbad1d93cbfed9b3e8c3f5569e5c9ebe85d5883325ee6ead18f29"
+        },
+        {
+          "expressionSha256": "c6a24e6c079dbdd5fec57fee81e203c4f941bd13cf0ccae67b284d598a3507e5"
+        },
+        {
+          "expressionSha256": "e22de70d0bb8dcc735fccb5d1d7d729ed93d07d8d1f4fef200ed4fc7c165c887"
+        },
+        {
+          "expressionSha256": "727f773302bc6f4faa10afbd55e617925c6decd17999bfcb956ba6f87477718e"
+        },
+        {
+          "expressionSha256": "57c31fef7fd09adea5a63521d1e38f0047d058e6ebc39359a06992b7ea3561ac"
+        },
+        {
+          "expressionSha256": "65491b3548072ab7a580463371049edc85fe58fd9c1d1459d1f26e39c10e7ca7"
+        },
+        {
+          "expressionSha256": "2f12af5443d5036be4bc11a35f7889b8a084186361b1534a7951ad714731109b"
+        },
+        {
+          "expressionSha256": "bee5355a5433f9e5c725b65906bf37615f4b205d7e842347e2e6f1da207a3102"
+        },
+        {
+          "expressionSha256": "7682cc93857cfe42187c32a27789ca231dbaf2b2dd82438310d526b6e4b8af62"
+        },
+        {
+          "expressionSha256": "3ee8d2a86bce7e184b5af248ec43d200a4568fffed75f64bcaa16b36a9d516a7"
+        },
+        {
+          "expressionSha256": "7f78fba2053ebaa024b06b246d76d95e8ab3c6eba91e8b602530191ffa264f9d"
+        },
+        {
+          "expressionSha256": "5614341553720863663420155ef5926e32d0618b2dbc8437e021d081baf85c3b"
+        },
+        {
+          "expressionSha256": "ad71e2ef067ad76e91242d31aa2eb7bc97f19e1a6e78800dbbf064f7345c4f9d"
+        },
+        {
+          "expressionSha256": "bf67a1197a8863e8a99a69c8403188d1944a2254c2771fbd969bf20388d64ec0"
+        },
+        {
+          "expressionSha256": "d7daf9332ea623bdd1bd45c64a09120cce23e61039141d63da162bd75ffad70c"
+        },
+        {
+          "expressionSha256": "fb393494b41f58200dd072fe5f475b739c33f02322e177f7be0c4c0c0abcb414"
+        },
+        {
+          "expressionSha256": "2b90f1892075e476edac54e49eb6a4617ea822dde137421d30f4b16fe5b1f7d5"
+        },
+        {
+          "expressionSha256": "1a1bbd89063e3aaf2c874583e7d500d8b0865f5c9d8fd8a905ec131bacf83782"
+        },
+        {
+          "expressionSha256": "0ccd0687f00733cd9d7ba2de8dcfa5b48aa208d2a91d4fc128ff0194839819b7"
+        },
+        {
+          "expressionSha256": "967573157d8a0118a9b81842abb29015d82a1e83f6d2d055d56e848e4def640e"
+        },
+        {
+          "expressionSha256": "99a8a8a7117b1395e3a209cdc8ba5a70424687458932bc4dc8a7b6e59ff53868"
+        },
+        {
+          "expressionSha256": "113f0af17fdf683cf360ab9d03b7eff1b572d3475e83119031d47ee4331621aa"
+        },
+        {
+          "expressionSha256": "2948024387391b149bf95db8466bc244e8c0bb1f158e0fbf6b9ba730c29aa67e"
+        },
+        {
+          "expressionSha256": "03d2a219590952d6856d98e14bda9af22b335224727810743d0a4d3cba8b1a3d"
+        },
+        {
+          "expressionSha256": "56acaca28eb35ec48c2e12a8daa77923718c9240cca4790cba0a10d4624c910a"
+        },
+        {
+          "expressionSha256": "ad73ca8dd2be89150d9ce0f13eae68ebf5fc6eae24f81e521b6223459d4a6005"
+        },
+        {
+          "expressionSha256": "c911664f1383262f472f293bf37442ecc966e75f7783f63641e87892a5d649c8"
+        },
+        {
+          "expressionSha256": "b503b81286a97e017d755c5e14ad003e09df2ca9431a979d10916c5e012b1637"
+        },
+        {
+          "expressionSha256": "dc5bf2c9acda51f78c758008b8c689eb67e56d00abd66e41a000a4c4cf589aee"
+        },
+        {
+          "expressionSha256": "954a9046025e559744f02bce3e529459a8532b55473d577a2bf3f51678799150"
+        },
+        {
+          "expressionSha256": "5a987c5d013be6b33356f9597163728d4fcc58a64acf58358047d5de6e4e3b72"
+        },
+        {
+          "expressionSha256": "456fa2069bd36b9358e3edad3b86a51c35db37694c545b071547f9aa81b0b735"
+        },
+        {
+          "expressionSha256": "f82ad64727d9ea72105c364f30ad778c815b296123b94c44f188159b4a748d62"
+        },
+        {
+          "expressionSha256": "8d1faed33fda3249bd689f1cfa1fecb13651800ca91b280bf981f2a4d4b05563"
+        },
+        {
+          "expressionSha256": "30e086693ae7677827737ce740f1b68f6f8a63afc7c323dbda307ed6fe2bcb46"
+        },
+        {
+          "expressionSha256": "77e4a2851e56069c2acd853b145c333e5905f241f9d03636c5b9756014598b45"
+        },
+        {
+          "expressionSha256": "882a2a6ed9395c6210f33cb627b5ebaad3c610c9ab6b297ad09e20170e41124e"
+        },
+        {
+          "expressionSha256": "087c06fb05f5be388319068b1da79adfda421f18e80b451cc30facd1f5fd65ba"
+        },
+        {
+          "expressionSha256": "d8894d8eaab1ffad77821997a8c0c42a368c4108397b730136b665fcb57eb1d6"
+        },
+        {
+          "expressionSha256": "0c07d5c689b4e48cfa546e3f4be6056b06b0a07cbc7b16a08901bef75afef919"
+        }
+      ],
+      "selectorReceipt": [
+        {
+          "expressionSha256": "642a385862ed880edc80cb8a73cbf73bf2ac79160d0c9e79057bb32457274f76"
+        },
+        {
+          "expressionSha256": "d45150f1844f2301bba1aa7f5f64e6afb11a56405d851a2581ff2f4047a949fb"
+        },
+        {
+          "expressionSha256": "4204ef97b15dbad1d93cbfed9b3e8c3f5569e5c9ebe85d5883325ee6ead18f29"
+        },
+        {
+          "expressionSha256": "c6a24e6c079dbdd5fec57fee81e203c4f941bd13cf0ccae67b284d598a3507e5"
+        },
+        {
+          "expressionSha256": "e22de70d0bb8dcc735fccb5d1d7d729ed93d07d8d1f4fef200ed4fc7c165c887"
+        },
+        {
+          "expressionSha256": "727f773302bc6f4faa10afbd55e617925c6decd17999bfcb956ba6f87477718e"
+        },
+        {
+          "expressionSha256": "57c31fef7fd09adea5a63521d1e38f0047d058e6ebc39359a06992b7ea3561ac"
+        },
+        {
+          "expressionSha256": "65491b3548072ab7a580463371049edc85fe58fd9c1d1459d1f26e39c10e7ca7"
+        },
+        {
+          "expressionSha256": "2f12af5443d5036be4bc11a35f7889b8a084186361b1534a7951ad714731109b"
+        },
+        {
+          "expressionSha256": "bee5355a5433f9e5c725b65906bf37615f4b205d7e842347e2e6f1da207a3102"
+        },
+        {
+          "expressionSha256": "7682cc93857cfe42187c32a27789ca231dbaf2b2dd82438310d526b6e4b8af62"
+        },
+        {
+          "expressionSha256": "3ee8d2a86bce7e184b5af248ec43d200a4568fffed75f64bcaa16b36a9d516a7"
+        },
+        {
+          "expressionSha256": "7f78fba2053ebaa024b06b246d76d95e8ab3c6eba91e8b602530191ffa264f9d"
+        },
+        {
+          "expressionSha256": "5614341553720863663420155ef5926e32d0618b2dbc8437e021d081baf85c3b"
+        },
+        {
+          "expressionSha256": "ad71e2ef067ad76e91242d31aa2eb7bc97f19e1a6e78800dbbf064f7345c4f9d"
+        },
+        {
+          "expressionSha256": "bf67a1197a8863e8a99a69c8403188d1944a2254c2771fbd969bf20388d64ec0"
+        },
+        {
+          "expressionSha256": "d7daf9332ea623bdd1bd45c64a09120cce23e61039141d63da162bd75ffad70c"
+        },
+        {
+          "expressionSha256": "fb393494b41f58200dd072fe5f475b739c33f02322e177f7be0c4c0c0abcb414"
+        },
+        {
+          "expressionSha256": "2b90f1892075e476edac54e49eb6a4617ea822dde137421d30f4b16fe5b1f7d5"
+        },
+        {
+          "expressionSha256": "1a1bbd89063e3aaf2c874583e7d500d8b0865f5c9d8fd8a905ec131bacf83782"
+        },
+        {
+          "expressionSha256": "0ccd0687f00733cd9d7ba2de8dcfa5b48aa208d2a91d4fc128ff0194839819b7"
+        },
+        {
+          "expressionSha256": "967573157d8a0118a9b81842abb29015d82a1e83f6d2d055d56e848e4def640e"
+        },
+        {
+          "expressionSha256": "99a8a8a7117b1395e3a209cdc8ba5a70424687458932bc4dc8a7b6e59ff53868"
+        },
+        {
+          "expressionSha256": "113f0af17fdf683cf360ab9d03b7eff1b572d3475e83119031d47ee4331621aa"
+        },
+        {
+          "expressionSha256": "2948024387391b149bf95db8466bc244e8c0bb1f158e0fbf6b9ba730c29aa67e"
+        },
+        {
+          "expressionSha256": "03d2a219590952d6856d98e14bda9af22b335224727810743d0a4d3cba8b1a3d"
+        },
+        {
+          "expressionSha256": "56acaca28eb35ec48c2e12a8daa77923718c9240cca4790cba0a10d4624c910a"
+        },
+        {
+          "expressionSha256": "ad73ca8dd2be89150d9ce0f13eae68ebf5fc6eae24f81e521b6223459d4a6005"
+        },
+        {
+          "expressionSha256": "c911664f1383262f472f293bf37442ecc966e75f7783f63641e87892a5d649c8"
+        },
+        {
+          "expressionSha256": "b503b81286a97e017d755c5e14ad003e09df2ca9431a979d10916c5e012b1637"
+        },
+        {
+          "expressionSha256": "dc5bf2c9acda51f78c758008b8c689eb67e56d00abd66e41a000a4c4cf589aee"
+        },
+        {
+          "expressionSha256": "954a9046025e559744f02bce3e529459a8532b55473d577a2bf3f51678799150"
+        },
+        {
+          "expressionSha256": "5a987c5d013be6b33356f9597163728d4fcc58a64acf58358047d5de6e4e3b72"
+        },
+        {
+          "expressionSha256": "0ef694c529d40b222ae8af951fe8bf027a3928f8474630b5ed62e59a8ad6b4f9"
+        },
+        {
+          "expressionSha256": "456fa2069bd36b9358e3edad3b86a51c35db37694c545b071547f9aa81b0b735"
+        },
+        {
+          "expressionSha256": "f82ad64727d9ea72105c364f30ad778c815b296123b94c44f188159b4a748d62"
+        },
+        {
+          "expressionSha256": "8d1faed33fda3249bd689f1cfa1fecb13651800ca91b280bf981f2a4d4b05563"
+        },
+        {
+          "expressionSha256": "30e086693ae7677827737ce740f1b68f6f8a63afc7c323dbda307ed6fe2bcb46"
+        },
+        {
+          "expressionSha256": "77e4a2851e56069c2acd853b145c333e5905f241f9d03636c5b9756014598b45"
+        },
+        {
+          "expressionSha256": "882a2a6ed9395c6210f33cb627b5ebaad3c610c9ab6b297ad09e20170e41124e"
+        },
+        {
+          "expressionSha256": "087c06fb05f5be388319068b1da79adfda421f18e80b451cc30facd1f5fd65ba"
+        },
+        {
+          "expressionSha256": "d8894d8eaab1ffad77821997a8c0c42a368c4108397b730136b665fcb57eb1d6"
+        },
+        {
+          "expressionSha256": "0c07d5c689b4e48cfa546e3f4be6056b06b0a07cbc7b16a08901bef75afef919"
+        }
+      ],
+      "selectorsChanged": true,
+      "authorityInputsUnchanged": true,
+      "priorFactsExactlyReconstructed": true,
+      "addedNativeFacts": [
+        {
+          "source": "scripts/docs-publication.mjs",
+          "kind": "ImportDeclaration",
+          "symbol": "<operation>",
+          "sha256": "0ef694c529d40b222ae8af951fe8bf027a3928f8474630b5ed62e59a8ad6b4f9"
+        },
+        {
+          "source": "scripts/docs-reader/metadata.mjs",
+          "kind": "FunctionDeclaration",
+          "symbol": "publicationMetadata",
+          "sha256": "5daa0db31607e1130dabab8673fc3a3ef3e65af1343f6ba9771ef4124c660f15"
+        },
+        {
+          "source": "scripts/docs-reader/metadata.mjs",
+          "kind": "ImportDeclaration",
+          "symbol": "<operation>",
+          "sha256": "55299f4098c257de7ea601c7b947a2a31e0b4f6cbf2845fea763332f19184163"
+        }
+      ]
+    }
+  ],
+  "unchanged": [
+    "scripts/docs-ap09-catalogue.mjs",
+    "scripts/docs-api-output-discovery.mjs",
+    "scripts/docs-api-output-role-classification.mjs",
+    "scripts/docs-api-product-scope.mjs",
+    "scripts/docs-api-receiver-coverage.mjs",
+    "scripts/docs-api-reference.mjs",
+    "scripts/docs-api-schema-authorities.mjs",
+    "scripts/docs-argo-receiver-contracts.mjs",
+    "scripts/docs-blueprint-generate.mjs",
+    "scripts/docs-buster-authored-unknown-field-contracts.mjs",
+    "scripts/docs-buster-lease-receiver-contracts.mjs",
+    "scripts/docs-check-coverage.mjs",
+    "scripts/docs-check-refs.mjs",
+    "scripts/docs-check.mjs",
+    "scripts/docs-cilium-receiver-contracts.mjs",
+    "scripts/docs-clusterspiffeid-selected-receiver-contracts.mjs",
+    "scripts/docs-configuration-inventory.mjs",
+    "scripts/docs-generate-core.mjs",
+    "scripts/docs-generate.mjs",
+    "scripts/docs-governance.mjs",
+    "scripts/docs-inventory.mjs",
+    "scripts/docs-kubernetes-admission-receiver-contracts.mjs",
+    "scripts/docs-kubernetes-admission-status-contracts.mjs",
+    "scripts/docs-kubernetes-apps-receiver-contracts.mjs",
+    "scripts/docs-kubernetes-auth-delete-receiver-contracts.mjs",
+    "scripts/docs-kubernetes-cluster-configuration-receiver-contracts.mjs",
+    "scripts/docs-kubernetes-core-receiver-contracts.mjs",
+    "scripts/docs-kubernetes-envelope-receiver-contracts.mjs",
+    "scripts/docs-kubernetes-identity-secret-receiver-contracts.mjs",
+    "scripts/docs-kubernetes-metadata-receiver-contracts.mjs",
+    "scripts/docs-kubernetes-namespace-isolation-receiver-contracts.mjs",
+    "scripts/docs-kubernetes-network-receiver-contracts.mjs",
+    "scripts/docs-kubernetes-node-workloads-receiver-contracts.mjs",
+    "scripts/docs-kubernetes-pv-selected-receiver-contracts.mjs",
+    "scripts/docs-kubernetes-webhook-selected-receiver-contracts.mjs",
+    "scripts/docs-kubernetes-workload-receiver-contracts.mjs",
+    "scripts/docs-lint-policy-reference.mjs",
+    "scripts/docs-local-helm-authorities.mjs",
+    "scripts/docs-parity-batches.mjs",
+    "scripts/docs-parity-check.mjs",
+    "scripts/docs-parity-extract.mjs",
+    "scripts/docs-parity-review-assignments.mjs",
+    "scripts/docs-parity-status.mjs",
+    "scripts/docs-parity-transition.mjs",
+    "scripts/docs-platform-surface-inventory.mjs",
+    "scripts/docs-prometheus-selected-receiver-contracts.mjs",
+    "scripts/docs-runtime-consumer-contracts.mjs",
+    "scripts/docs-secret-inventory.mjs",
+    "scripts/docs-status.mjs",
+    "scripts/docs-tree-boundary.mjs",
+    "scripts/docs-yaml-field-authorities.mjs",
+    "scripts/docs-yaml-inventory.mjs",
+    "scripts/docs-sdk-reference.mjs",
+    "scripts/docs-reader/renderer.mjs",
+    "scripts/docs-reader/check-artifact.mjs",
+    "scripts/docs-reader/check-search.mjs",
+    "scripts/docs-reader/source-links.mjs",
+    "scripts/docs-reader/check-source-links.mjs"
+  ],
+  "newRoles": [
+    {
+      "source": "scripts/docs-reader/metadata.mjs",
+      "recipe": {
+        "role": "documentation-consumer",
+        "consumer": "First documentation page metadata header formatting only. Authored evidence links and document examples stay inert and unchanged; repository evidence paths are resolved by the caller against committed Git objects. No product API submission or runtime effects are qualified.",
+        "selectors": [
+          {
+            "expressionSha256": "5daa0db31607e1130dabab8673fc3a3ef3e65af1343f6ba9771ef4124c660f15"
+          },
+          {
+            "expressionSha256": "55299f4098c257de7ea601c7b947a2a31e0b4f6cbf2845fea763332f19184163"
+          }
+        ],
+        "factsDigest": "0c86abe719d8e56f6c93979dfd03949a5646d6f91be899308badcc36de401293",
+        "authorityInputs": []
+      }
+    }
+  ]
+}

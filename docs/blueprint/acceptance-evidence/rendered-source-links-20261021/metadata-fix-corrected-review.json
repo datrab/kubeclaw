@@ -1,0 +1,18 @@
+{
+  "findings": [
+    {
+      "title": "[P2] Recognize the existing Source inventory metadata field",
+      "body": "The metadata allowlist excludes `Source inventory:`, which occurs between `Evidence:` and `Evidence revision:` in `docs/site/reference/buster-error-codes.md`. Because these fields are contiguous and the regex requires a blank line after its match, the entire header fails to match. Publishing that existing page now leaves its repository Evidence path unlinked and skips committed Git evidence selection, whereas the previous implementation converted it. Support this existing metadata field while preserving the body, and add a regression using that header layout.",
+      "priority": "P2",
+      "confidence": 0.99,
+      "category": "regression",
+      "code_location": {
+        "file_path": "scripts/docs-reader/metadata.mjs",
+        "line": 6
+      }
+    }
+  ],
+  "overall_correctness": "patch is incorrect",
+  "overall_explanation": "The blank-separated metadata correction handles the decision/status layout, but another existing header layout still bypasses formatting entirely because Source inventory is missing from the recognized fields. Review was limited to read-only inspection; no tests or runtime commands were run.",
+  "overall_confidence": 0.98
+}

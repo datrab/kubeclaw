@@ -4194,6 +4194,9 @@ export const documentationExecutableRoleRecipes = {
         "expressionSha256": "5a987c5d013be6b33356f9597163728d4fcc58a64acf58358047d5de6e4e3b72"
       },
       {
+        "expressionSha256": "0ef694c529d40b222ae8af951fe8bf027a3928f8474630b5ed62e59a8ad6b4f9"
+      },
+      {
         "expressionSha256": "456fa2069bd36b9358e3edad3b86a51c35db37694c545b071547f9aa81b0b735"
       },
       {
@@ -4221,7 +4224,7 @@ export const documentationExecutableRoleRecipes = {
         "expressionSha256": "0c07d5c689b4e48cfa546e3f4be6056b06b0a07cbc7b16a08901bef75afef919"
       }
     ],
-    "factsDigest": "70d68f75fba9a329b9c722da1ef28460f333b9e28b44afebea24ad77a60a4a67",
+    "factsDigest": "633a1fba9f2d17f8f7e1a176943e79fe54e794bc5ed065cfcceb29c95e39418f",
     "authorityInputs": []
   },
   "scripts/docs-runtime-consumer-contracts.mjs": {
@@ -5591,6 +5594,21 @@ export const documentationExecutableRoleRecipes = {
       }
     ],
     "factsDigest": "0e119ef0c9d93c542393a91afc8290da9a1d08c1e0739dade4ec6eb75f6904dd",
+    "authorityInputs": []
+  }
+,
+  "scripts/docs-reader/metadata.mjs": {
+    "role": "documentation-consumer",
+    "consumer": "First documentation page metadata header formatting only. Authored evidence links and document examples stay inert and unchanged; repository evidence paths are resolved by the caller against committed Git objects. No product API submission or runtime effects are qualified.",
+    "selectors": [
+      {
+        "expressionSha256": "5daa0db31607e1130dabab8673fc3a3ef3e65af1343f6ba9771ef4124c660f15"
+      },
+      {
+        "expressionSha256": "55299f4098c257de7ea601c7b947a2a31e0b4f6cbf2845fea763332f19184163"
+      }
+    ],
+    "factsDigest": "0c86abe719d8e56f6c93979dfd03949a5646d6f91be899308badcc36de401293",
     "authorityInputs": []
   }
 };

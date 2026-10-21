@@ -7,6 +7,7 @@ import crypto from 'node:crypto';
 import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { parse } from 'parse5';
+import { publicationMetadata } from '../docs-reader/metadata.mjs';
 import { buildReader, renderReaderMarkdown, searchReaderPages } from '../docs-reader/renderer.mjs';
 
 test('search ranks declared reader synonyms, headings and technical IDs without admitting missing or internal pages', () => {
@@ -100,4 +101,43 @@ test('artifact checker rejects changed output bytes and a digest-consistent brok
   const missingScript = check();
   assert.notEqual(missingScript.status, 0);
   assert.match(missingScript.stderr, /missing\.js/u);
+});
+
+test('publication transforms only the first metadata header and never evidence prose or executable examples', () => {
+  const body = '\n## Procedure\n\nEvidence: [Chart](https://example.test/source),\n\n```md\nEvidence: example.json\nLast verified: generated during publication\n```\n';
+  const input = '# Page\n\nStatus: implemented\nAudience: operator\nOwner: platform\nEvidence: source.go; source-directory\nApplies to: local\nLast verified: generated during publication\n' + body;
+  const selected = [];
+  const actual = publicationMetadata(input, 'a'.repeat(40), item => { selected.push(item); return `https://example.test/${item}`; });
+  assert.deepEqual(selected, ['source.go', 'source-directory']);
+  assert.match(actual, /Evidence: \[source.go\]\(https:\/\/example.test\/source.go\); \[source-directory\]\(https:\/\/example.test\/source-directory\)/u);
+  assert.match(actual, new RegExp(`Last verified: ${'a'.repeat(40)}`));
+  assert(actual.endsWith(body));
+});
+
+test('authored metadata links stay intact and documents without a metadata header remain unchanged', () => {
+  const text = '# Page\n\nStatus: implemented\nEvidence: [Existing](https://example.test/exact); https://example.test/other\nLast verified: yesterday\n\nBody.\n';
+  const actual = publicationMetadata(text, 'b'.repeat(40), () => { throw new Error('not a repository path'); });
+  assert.match(actual, /Evidence: \[Existing\]\(https:\/\/example.test\/exact\); \[https:\/\/example.test\/other\]\(https:\/\/example.test\/other\)/u);
+  assert.equal(publicationMetadata('# Example\n\nEvidence: fixture\n', 'b'.repeat(40), () => { throw new Error('not metadata'); }), '# Example\n\nEvidence: fixture\n');
+});
+
+// Existing decision/status pages use blank-line-separated metadata fields.
+test('publication recognizes the existing spaced metadata header without consuming the body', () => {
+  const body = '\n## Decision\n\nEvidence: this is prose, not a path\n';
+  const input = '# Decision\n\nStatus: implemented\n\nAudience: maintainer\n\nOwner: platform\n\nEvidence: source.go\n\nLast verified: generated during publication\n' + body;
+  const actual = publicationMetadata(input, 'c'.repeat(40), item => `https://example.test/${item}`);
+  assert.match(actual, /Evidence: \[source.go\]\(https:\/\/example.test\/source.go\)/u);
+  assert.match(actual, new RegExp(`Last verified: ${'c'.repeat(40)}`));
+  assert(actual.endsWith(body));
+});
+
+test('publication recognizes metadata on every existing reader page, including source-inventory fields', () => {
+  const root = fileURLToPath(new URL('../../docs/site/', import.meta.url));
+  function pages(dir) { return fs.readdirSync(dir, { withFileTypes: true }).flatMap(item => item.isDirectory() ? pages(path.join(dir, item.name)) : item.name.endsWith('.md') ? [path.join(dir, item.name)] : []); }
+  for (const file of pages(root)) {
+    const text = fs.readFileSync(file, 'utf8').replace(/^Last verified: .+$/mu, 'Last verified: generated during publication');
+    const actual = publicationMetadata(text, 'd'.repeat(40), item => `https://example.test/${item}`);
+    assert.match(actual, new RegExp(`Last verified: ${'d'.repeat(40)}`), file);
+    assert(!actual.includes('Last verified: generated during publication'), file);
+  }
 });

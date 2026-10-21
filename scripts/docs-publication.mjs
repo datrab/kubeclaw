@@ -14,6 +14,7 @@ import { invocationDependencyBoundaries } from './plugin-dependency-boundaries.m
 import { markdownInlineLinks, stripMarkdownCodeAndRawHtml } from './lib/docs-markdown-anchors.mjs';
 import { publicationAssets, copyPublicationAssets, publicationPages, publicationManifest } from './lib/docs-publication-assets.mjs';
 import { rebaseMarkdownLinks } from './lib/docs-publication-links.mjs';
+import { publicationMetadata } from './docs-reader/metadata.mjs';
 import { buildReader } from './docs-reader/renderer.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -1076,19 +1077,12 @@ function build() {
     const relative = path.relative(siteRoot, file);
     const target = path.join(outputRoot, relative);
     let text = fs.readFileSync(file, 'utf8');
-    text = text.replace(/^Evidence: (.+)$/gmu, (_all, evidence) => {
-      if (evidence.includes('**')) return `Evidence: ${evidence}`;
-      const links = evidence.split(';').map((item) => item.trim()).map((item) => item.includes(' every ') || item.startsWith('every ')
-        ? item
-        : (() => {
-          const entry = git('ls-tree', '-z', revision, '--', item);
-          const selected = /^(100644|100755|040000) (blob|tree) [a-f0-9]{40}\t([^\0]+)\0$/u.exec(entry);
-          if (!selected || selected[3] !== item) throw new Error(`Evidence is not a committed regular file or directory: ${item}`);
-          return `[${item}](${remoteBase()}/${selected[2]}/${revision}/${item})`;
-        })());
-      return `Evidence: ${links.join('; ')}`;
+    text = publicationMetadata(text, revision, item => {
+      const entry = git('ls-tree', '-z', revision, '--', item);
+      const selected = /^(100644|100755|040000) (blob|tree) [a-f0-9]{40}\t([^\0]+)\0$/u.exec(entry);
+      if (!selected || selected[3] !== item) throw new Error(`Evidence is not a committed regular file or directory: ${item}`);
+      return `${remoteBase()}/${selected[2]}/${revision}/${item}`;
     });
-    text = text.replace(/^Last verified: generated during publication$/mu, `Last verified: ${revision}`);
     fs.mkdirSync(path.dirname(target), { recursive: true });
     fs.writeFileSync(target, text);
     readerPages.push({ relative: relative.split(path.sep).join('/'), text });

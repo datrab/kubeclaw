@@ -1944,6 +1944,7 @@
       "lastVerified": "source, original 167-page build, parser tests, and rendered local links checked on 2026-10-21; browser observations have their own recorded scope",
       "sourceDependencies": [
         "scripts/docs-publication.mjs",
+        "scripts/docs-reader/metadata.mjs",
         "scripts/lib/docs-publication-assets.mjs",
         "scripts/lib/docs-publication-links.mjs",
         "scripts/docs-reader/renderer.mjs",

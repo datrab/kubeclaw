@@ -1,0 +1,18 @@
+{
+  "findings": [
+    {
+      "title": "[P2] Handle existing metadata headers with blank lines between fields",
+      "body": "The new pattern stops the metadata block at the first blank line. Existing published pages such as `docs/site/decisions/core-and-plugins.md` and `docs/site/status/acceptance.md` separate every metadata field with a blank line, so only their `Status` line is captured. Their actual `Evidence` metadata consequently remains plain repository paths instead of receiving the committed Git links produced before this change. Support these existing header layouts while still stopping before body content, and add a regression case using one of them.",
+      "priority": "P2",
+      "confidence": 0.99,
+      "category": "regression",
+      "code_location": {
+        "file_path": "scripts/docs-reader/metadata.mjs",
+        "line": 6
+      }
+    }
+  ],
+  "overall_correctness": "patch is incorrect",
+  "overall_explanation": "The scoped formatter fixes the global replacement problem, but skips Evidence metadata in existing pages whose header fields are separated by blank lines. Review was limited to the dirty change and read-only inspection; no tests or build commands were run.",
+  "overall_confidence": 0.97
+}

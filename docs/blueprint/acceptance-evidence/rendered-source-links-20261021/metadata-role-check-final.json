@@ -1,0 +1,10 @@
+[
+  {
+    "source": "scripts/docs-publication.mjs",
+    "result": "PASS"
+  },
+  {
+    "source": "scripts/docs-reader/metadata.mjs",
+    "result": "PASS"
+  }
+]
