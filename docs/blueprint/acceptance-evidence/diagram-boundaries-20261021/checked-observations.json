@@ -1,0 +1,440 @@
+{
+  "schemaVersion": "kubeclaw-diagram-boundary-closeout.v1",
+  "codeRevision": "c0584fc0d31edf5b38f0744c8fabb263f8afdcbe",
+  "scope": "Four corrected diagram0 boundaries only;20of27individualdiagrams supported after independent wholeONEauthority-map Source composition. No new content or gate count.",
+  "initialEightDiagramReview": {
+    "findings": [],
+    "overall_correctness": "patch is correct",
+    "overall_explanation": "All eight ee6af55a page hashes match the dataset. Verdicts concern source semantics only; incomplete inspection is not evidence of falsity. No diagram earns PASS; connections not fully traced remain NOT_READY.\n\ndf5ab3f6a317ad1b NOT_READY: Plugin runtime→Prism activation remains unproved. 13bff0a:packaging/runtime/roles/prism.json declares packages/plugins, while skills/prism/runtime.ts:1-3 only re-exports modules. Packaging supplies no activation proof; other handoffs were not fully retraced.\n\n4dc422d67c265fd9 NOT_READY: preserve the corrected mirror/client and external-CSI boundaries. Remaining missing proof includes Cilium→network policy enforcement, Tailscale→private routes, LiteLLM→Vertex, Discord→runtime and monitoring→runtime through selected upstream implementations. No all-edge approval.\n\n894c4ee28dace602 NOT_READY: Worker→DB is incorrectly unconditional (finding). 569f7b4:charts/prism/templates/workloads.yaml:90-138 and my-values/prism-agent-values.yaml:45-85 establish configuration, not all executions. OpenClaw→LiteLLM/OpenAI, LiteLLM→Vertex and Discord→Nova/Buster lack completed upstream traces here.\n\n865c11cbad4bc6f0 NOT_READY: 569f7b4:gitops/platform/values/alloy.yaml declares discovery→file→CRI parse→Loki, and values/prometheus.yaml declares Loki's Grafana datasource. Metric endpoints→Prometheus and Prometheus→Grafana still require selected kube-prometheus-stack 91.4.0 source; Alloy 1.12.1 mounting/discovery dependency contracts and Events→Observers→File/Redis were not fully inspected.\n\n11b058604e7e4129 NOT_READY: adapter→Kubernetes Secret is mislabeled (finding). 13bff0a:skills/nova/core/execution/context.ts:44-58 and authorization.ts:62-67 support bounded invocation. SPIRE→each role issuance and policy→each role require completed selected upstream/caller traces; remaining edges were not fully inspected.\n\ne9adf15cb5cf80b6 NOT_READY: mirror→BuildKit lacks its configuration condition (finding). 85e73b1:scripts/registry-client-config.mjs:66-89 is decisive. LiteLLM→DB, Buster→Tailscale and Prism→approved Core result remain without completed execution traces; other edges were not fully inspected.\n\n9b919d5135916a43 NOT_READY: 4e52c727:skills/prism/pipeline-adapter/index.ts:20-56 constructs downstream values; adapter→Buster/Forge execution was not established. Worker binding→Engine is visible at engine/worker-binding.ts:15-42, but ingestion→external source and the remaining Control/worker/artifact/baseline chains were not fully traced.\n\n6e2b51e2c5b4e58e NOT_READY: f99aecbb build-images.yaml:70-157, code-release.mjs:6-25, verify-release-source.mjs:12-47 and deployment-release.mjs:157-195 support several producer/check transitions. Selection→actual deployment→container/bundle observation lacks a completed selected caller/observer trace. No runtime activation, domain effect, tests, live results or broader gate acceptance is inferred.\n\nIgnored 3 out-of-scope finding(s) outside the reviewed change.",
+    "overall_confidence": 0.91
+  },
+  "rawFindingsIncludingHistoricallyOutOfScope": {
+    "findings": [
+      {
+        "title": "P2: Make the pipeline mirror connection conditional on client configuration",
+        "body": "The solid mirror→BuildKit connection omits a required condition. At pinned revision 85e73b1885f04a9494f388cf6622ad0bde2db447, charts/kubeclaw/values.yaml:55-58 explicitly defaults to no mirror; scripts/registry-client-config.mjs:66-74,83-89 adds docker.io routing only when a mirror endpoint is supplied. The runtime entrypoint consumes that generated configuration (docker/buster-runtime-entrypoint.sh:11-29). Deploying or probing the mirror therefore does not establish this connection. Make it conditional on explicit client configuration, update its visible alternative, and qualify the statement that every solid dependency is verified.",
+        "priority": "P2",
+        "confidence": 0.99,
+        "category": "bug",
+        "code_location": {
+          "file_path": "docs/site/understand/pipeline-dependencies.md",
+          "line": 72
+        }
+      },
+      {
+        "title": "P2: Limit the Worker database connection to HMAC authentication",
+        "body": "The selected protected deployment does not execute the depicted Worker→PostgreSQL connection. At 569f7b4933d4859cc67c80ddf40d5154ffd95ce5, skills/prism/server/worker.ts:22-24 constructs WorkerNonceDatabase only in the HMAC branch. worker-service.ts:23,57,80 likewise closes, authenticates against, and checks that database only for HMAC. Supplying DATABASE_URL in the chart does not activate a database consumer in SPIFFE mode. Remove this edge from the selected SPIFFE map or label it explicitly as the alternative HMAC nonce-store dependency, and update the text alternative.",
+        "priority": "P2",
+        "confidence": 0.98,
+        "category": "bug",
+        "code_location": {
+          "file_path": "docs/site/understand/deployment-and-trust.md",
+          "line": 42
+        }
+      },
+      {
+        "title": "P2: Show the secret adapter's environment boundary accurately",
+        "body": "This edge depicts the capability adapter accessing a Kubernetes Secret, but the selected implementation resolves logical names through a configured environment mapping and reads process.env. At 13bff0a18a64e74f2cbbaa1978e746fcdeff0c10, skills/common/plugins/secret-resolver/plugin.json selects src/adapter.ts, whose lines 3-19 contain that complete resolution path. Nova's allowedNames check (skills/nova/core/execution/authorization.ts:64) limits logical names; it is not Kubernetes Secret API authorization. Relabel the destination as mapped environment credentials, showing Kubernetes Secret injection as a separate deployment boundary if needed, and update the alternative table.",
+        "priority": "P2",
+        "confidence": 0.97,
+        "category": "bug",
+        "code_location": {
+          "file_path": "docs/site/understand/security-and-trust.md",
+          "line": 77
+        }
+      }
+    ],
+    "overall_correctness": "patch is incorrect",
+    "overall_explanation": "All eight ee6af55a page hashes match the dataset. Verdicts concern source semantics only; incomplete inspection is not evidence of falsity. No diagram earns PASS; connections not fully traced remain NOT_READY.\n\ndf5ab3f6a317ad1b NOT_READY: Plugin runtime→Prism activation remains unproved. 13bff0a:packaging/runtime/roles/prism.json declares packages/plugins, while skills/prism/runtime.ts:1-3 only re-exports modules. Packaging supplies no activation proof; other handoffs were not fully retraced.\n\n4dc422d67c265fd9 NOT_READY: preserve the corrected mirror/client and external-CSI boundaries. Remaining missing proof includes Cilium→network policy enforcement, Tailscale→private routes, LiteLLM→Vertex, Discord→runtime and monitoring→runtime through selected upstream implementations. No all-edge approval.\n\n894c4ee28dace602 NOT_READY: Worker→DB is incorrectly unconditional (finding). 569f7b4:charts/prism/templates/workloads.yaml:90-138 and my-values/prism-agent-values.yaml:45-85 establish configuration, not all executions. OpenClaw→LiteLLM/OpenAI, LiteLLM→Vertex and Discord→Nova/Buster lack completed upstream traces here.\n\n865c11cbad4bc6f0 NOT_READY: 569f7b4:gitops/platform/values/alloy.yaml declares discovery→file→CRI parse→Loki, and values/prometheus.yaml declares Loki's Grafana datasource. Metric endpoints→Prometheus and Prometheus→Grafana still require selected kube-prometheus-stack 91.4.0 source; Alloy 1.12.1 mounting/discovery dependency contracts and Events→Observers→File/Redis were not fully inspected.\n\n11b058604e7e4129 NOT_READY: adapter→Kubernetes Secret is mislabeled (finding). 13bff0a:skills/nova/core/execution/context.ts:44-58 and authorization.ts:62-67 support bounded invocation. SPIRE→each role issuance and policy→each role require completed selected upstream/caller traces; remaining edges were not fully inspected.\n\ne9adf15cb5cf80b6 NOT_READY: mirror→BuildKit lacks its configuration condition (finding). 85e73b1:scripts/registry-client-config.mjs:66-89 is decisive. LiteLLM→DB, Buster→Tailscale and Prism→approved Core result remain without completed execution traces; other edges were not fully inspected.\n\n9b919d5135916a43 NOT_READY: 4e52c727:skills/prism/pipeline-adapter/index.ts:20-56 constructs downstream values; adapter→Buster/Forge execution was not established. Worker binding→Engine is visible at engine/worker-binding.ts:15-42, but ingestion→external source and the remaining Control/worker/artifact/baseline chains were not fully traced.\n\n6e2b51e2c5b4e58e NOT_READY: f99aecbb build-images.yaml:70-157, code-release.mjs:6-25, verify-release-source.mjs:12-47 and deployment-release.mjs:157-195 support several producer/check transitions. Selection→actual deployment→container/bundle observation lacks a completed selected caller/observer trace. No runtime activation, domain effect, tests, live results or broader gate acceptance is inferred.",
+    "overall_confidence": 0.91
+  },
+  "fourCorrectionReview": {
+    "findings": [],
+    "overall_correctness": "patch is correct",
+    "overall_explanation": "The four bounded corrections match the inspected pinned sources: mirror routing requires explicit client configuration; the SPIFFE Worker does not construct or use the HMAC nonce database; secret resolution reads mapped process environment; and Prism packaging declarations do not establish plugin activation. Diagram alternatives agree with these corrections, and all four registry hashes match the exact updated Mermaid fence contents. Evidence boxes distinguish source inspection from execution and avoid claiming live access or broader approval. The three supplied raw findings are resolved within this scope. This verdict does not approve remaining diagram connections, establish whole-Source PASS, or change the existing 19/27 supported count. No tests were executed.",
+    "overall_confidence": 0.96
+  },
+  "wholeAuthoritySourceComposition": {
+    "findings": [],
+    "overall_correctness": "patch is correct",
+    "overall_explanation": "Whole ONE diagram Source PASS: components-and-authority.md diagram 0 at 69a7b036. All 14 current connections are covered: the 13 unchanged relationships retain the supplied original-source proofs, and the corrected dotted Prism role manifest→Prism relationship is supported by the original prism.json declarations, inspected directly. Its label establishes packaging only, without claiming activation. The visible alternative preserves all directions and conditions; owner and reader question remain consistent. No actionable defect found within this scope. This verdict excludes other diagrams, rendering, tests, live execution, publication, and broader approval.",
+    "overall_confidence": 0.97
+  },
+  "authorityCompositionPreservedAfterLanguageFix": {
+    "historicalReviewedDiagramRevision": "69a7b036",
+    "currentDiagramExactFenceIdentical": true,
+    "delta": "Two passive Limit sentences rewritten in active voice; no diagram/question/owner/Source relationship changed. Worker evidence links the actual HMAC/SPIFFE readiness test;Source-inspected, not executed."
+  },
+  "artifact": {
+    "selectedPages": 167,
+    "htmlPages": 177,
+    "localLinks": 36952,
+    "verifiedOutputDigests": 209
+  },
+  "freshDiagrams": {
+    "pages": 167,
+    "diagrams": 27,
+    "freshRenderHashesMatched": 27,
+    "localOnly": true,
+    "limit": "Source/owner/question/visible alternative routing, static SVG and deterministic render checks only; not per-edge semantic or human screenreader acceptance."
+  },
+  "previews": {
+    "pages": 167,
+    "sourceBoxes": 400,
+    "boxesWithPreviews": 397,
+    "excerpts": 1692,
+    "uniqueSourceObjects": 886,
+    "limit": "Exact linked source and rendered excerpt verification; no semantic claim or test/runtime result inferred."
+  },
+  "sourceLinks": {
+    "htmlPages": 177,
+    "uniqueVerifiedLinks": 14464,
+    "uniqueSourceObjects": 3739,
+    "limit": "Primary source object/revision/line or Markdown-fragment verification only; not semantic or live-runtime acceptance."
+  },
+  "fullSourceLinkReceipt": {
+    "path": "source-link-receipt.json.gz",
+    "sha256": "faa8435430636861ab6d8417ce7034d0f50ca5ab290b7ec7a1c266f379a90c05",
+    "uncompressedSha256": "5c5d6bdec85ce1f55a202af1202a931be6e34f45ff9f493a71b30b61695e9270",
+    "uncompressedBytes": 1357552
+  },
+  "search": {
+    "indexedCanonicalPages": 167,
+    "internalArtifacts": 0,
+    "readerQuestionsPassed": 12,
+    "observed": [
+      {
+        "query": "disaster recovery",
+        "expectedRoute": "use/recovery.html",
+        "observedTopThree": [
+          "use/recovery.html",
+          "understand/data-and-state.html",
+          "status/open-issues.html"
+        ]
+      },
+      {
+        "query": "backup restore",
+        "expectedRoute": "use/recovery.html",
+        "observedTopThree": [
+          "use/recovery.html",
+          "understand/data-and-state.html",
+          "understand/prism-data.html"
+        ]
+      },
+      {
+        "query": "install platform",
+        "expectedRoute": "use/install.html",
+        "observedTopThree": [
+          "use/install.html",
+          "status/roadmap.html",
+          "reference/pipeline-platform.html"
+        ]
+      },
+      {
+        "query": "troubleshoot incident",
+        "expectedRoute": "use/diagnose.html",
+        "observedTopThree": [
+          "use/diagnose.html"
+        ]
+      },
+      {
+        "query": "create first plugin",
+        "expectedRoute": "extend/first-plugin.html",
+        "observedTopThree": [
+          "extend/first-plugin.html",
+          "use/plugins.html",
+          "reference/plugin-configuration.html"
+        ]
+      },
+      {
+        "query": "change core",
+        "expectedRoute": "extend/developer-handbook.html",
+        "observedTopThree": [
+          "extend/developer-handbook.html",
+          "understand/nova-core.html",
+          "extend/platform/buster.html"
+        ]
+      },
+      {
+        "query": "settings overrides",
+        "expectedRoute": "reference/configuration-precedence.html",
+        "observedTopThree": [
+          "reference/configuration-precedence.html",
+          "decisions/test-gate.html",
+          "reference/helm-values.html"
+        ]
+      },
+      {
+        "query": "package ownership",
+        "expectedRoute": "reference/roles-and-package-ownership.html",
+        "observedTopThree": [
+          "reference/roles-and-package-ownership.html",
+          "understand/plugin-runtime.html",
+          "extend/developer-handbook.html"
+        ]
+      },
+      {
+        "query": "first pipeline compile",
+        "expectedRoute": "use/workflows/README.html",
+        "observedTopThree": [
+          "use/workflows/README.html",
+          "extend/first-plugin.html",
+          "reference/pipeline-json.html"
+        ]
+      },
+      {
+        "query": "remove plugins",
+        "expectedRoute": "use/plugins.html",
+        "observedTopThree": [
+          "use/plugins.html",
+          "understand/openclaw.html",
+          "extend/lint.html"
+        ]
+      },
+      {
+        "query": "prism studio",
+        "expectedRoute": "use/prism-studio.html",
+        "observedTopThree": [
+          "use/prism-studio.html",
+          "extend/platform/prism.html",
+          "understand/prism-runtime.html"
+        ]
+      },
+      {
+        "query": "minimumLinePercent",
+        "expectedRoute": "reference/plugin-configuration.html",
+        "observedTopThree": [
+          "reference/plugin-configuration.html",
+          "extend/plugin-catalogue/kubeclaw.coverage-budget.html",
+          "reference/buster-provider-configuration.html"
+        ]
+      }
+    ]
+  },
+  "browser": {
+    "observations": [
+      {
+        "width": 320,
+        "page": "understand/components-and-authority.md",
+        "id": "diagram-df5ab3f6a317ad1b",
+        "loaded": true,
+        "imageWidth": 1662,
+        "imageHeight": 596.859375,
+        "pageWidth": 320,
+        "viewport": 320,
+        "textAlternativePresent": true,
+        "questionLabel": "Which components control a run and which components return bounded facts?",
+        "keyboardScroll": true,
+        "externalNetwork": false,
+        "javaScript": false
+      },
+      {
+        "width": 320,
+        "page": "understand/deployment-and-trust.md",
+        "id": "diagram-894c4ee28dace602",
+        "loaded": true,
+        "imageWidth": 2907,
+        "imageHeight": 605.171875,
+        "pageWidth": 320,
+        "viewport": 320,
+        "textAlternativePresent": true,
+        "questionLabel": "Which protected connections join Nova, Buster and the Prism runtime?",
+        "keyboardScroll": true,
+        "externalNetwork": false,
+        "javaScript": false
+      },
+      {
+        "width": 320,
+        "page": "understand/pipeline-dependencies.md",
+        "id": "diagram-e9adf15cb5cf80b6",
+        "loaded": true,
+        "imageWidth": 2362,
+        "imageHeight": 572.8125,
+        "pageWidth": 320,
+        "viewport": 320,
+        "textAlternativePresent": true,
+        "questionLabel": "Which data and infrastructure dependencies support the complete pipeline path?",
+        "keyboardScroll": true,
+        "externalNetwork": false,
+        "javaScript": false
+      },
+      {
+        "width": 320,
+        "page": "understand/security-and-trust.md",
+        "id": "diagram-11b058604e7e4129",
+        "loaded": true,
+        "imageWidth": 2099,
+        "imageHeight": 583.484375,
+        "pageWidth": 320,
+        "viewport": 320,
+        "textAlternativePresent": true,
+        "questionLabel": "Where are identity, transport, policy and credential trust boundaries enforced?",
+        "keyboardScroll": true,
+        "externalNetwork": false,
+        "javaScript": false
+      },
+      {
+        "width": 768,
+        "page": "understand/components-and-authority.md",
+        "id": "diagram-df5ab3f6a317ad1b",
+        "loaded": true,
+        "imageWidth": 1662,
+        "imageHeight": 596.859375,
+        "pageWidth": 768,
+        "viewport": 768,
+        "textAlternativePresent": true,
+        "questionLabel": "Which components control a run and which components return bounded facts?",
+        "keyboardScroll": true,
+        "externalNetwork": false,
+        "javaScript": false
+      },
+      {
+        "width": 768,
+        "page": "understand/deployment-and-trust.md",
+        "id": "diagram-894c4ee28dace602",
+        "loaded": true,
+        "imageWidth": 2907,
+        "imageHeight": 605.171875,
+        "pageWidth": 768,
+        "viewport": 768,
+        "textAlternativePresent": true,
+        "questionLabel": "Which protected connections join Nova, Buster and the Prism runtime?",
+        "keyboardScroll": true,
+        "externalNetwork": false,
+        "javaScript": false
+      },
+      {
+        "width": 768,
+        "page": "understand/pipeline-dependencies.md",
+        "id": "diagram-e9adf15cb5cf80b6",
+        "loaded": true,
+        "imageWidth": 2362,
+        "imageHeight": 572.8125,
+        "pageWidth": 768,
+        "viewport": 768,
+        "textAlternativePresent": true,
+        "questionLabel": "Which data and infrastructure dependencies support the complete pipeline path?",
+        "keyboardScroll": true,
+        "externalNetwork": false,
+        "javaScript": false
+      },
+      {
+        "width": 768,
+        "page": "understand/security-and-trust.md",
+        "id": "diagram-11b058604e7e4129",
+        "loaded": true,
+        "imageWidth": 2099,
+        "imageHeight": 583.484375,
+        "pageWidth": 768,
+        "viewport": 768,
+        "textAlternativePresent": true,
+        "questionLabel": "Where are identity, transport, policy and credential trust boundaries enforced?",
+        "keyboardScroll": true,
+        "externalNetwork": false,
+        "javaScript": false
+      },
+      {
+        "width": 1440,
+        "page": "understand/components-and-authority.md",
+        "id": "diagram-df5ab3f6a317ad1b",
+        "loaded": true,
+        "imageWidth": 1662,
+        "imageHeight": 596.859375,
+        "pageWidth": 1440,
+        "viewport": 1440,
+        "textAlternativePresent": true,
+        "questionLabel": "Which components control a run and which components return bounded facts?",
+        "keyboardScroll": true,
+        "externalNetwork": false,
+        "javaScript": false
+      },
+      {
+        "width": 1440,
+        "page": "understand/deployment-and-trust.md",
+        "id": "diagram-894c4ee28dace602",
+        "loaded": true,
+        "imageWidth": 2907,
+        "imageHeight": 605.171875,
+        "pageWidth": 1440,
+        "viewport": 1440,
+        "textAlternativePresent": true,
+        "questionLabel": "Which protected connections join Nova, Buster and the Prism runtime?",
+        "keyboardScroll": true,
+        "externalNetwork": false,
+        "javaScript": false
+      },
+      {
+        "width": 1440,
+        "page": "understand/pipeline-dependencies.md",
+        "id": "diagram-e9adf15cb5cf80b6",
+        "loaded": true,
+        "imageWidth": 2362,
+        "imageHeight": 572.8125,
+        "pageWidth": 1440,
+        "viewport": 1440,
+        "textAlternativePresent": true,
+        "questionLabel": "Which data and infrastructure dependencies support the complete pipeline path?",
+        "keyboardScroll": true,
+        "externalNetwork": false,
+        "javaScript": false
+      },
+      {
+        "width": 1440,
+        "page": "understand/security-and-trust.md",
+        "id": "diagram-11b058604e7e4129",
+        "loaded": true,
+        "imageWidth": 2099,
+        "imageHeight": 583.484375,
+        "pageWidth": 1440,
+        "viewport": 1440,
+        "textAlternativePresent": true,
+        "questionLabel": "Where are identity, transport, policy and credential trust boundaries enforced?",
+        "keyboardScroll": true,
+        "externalNetwork": false,
+        "javaScript": false
+      }
+    ],
+    "findings": [],
+    "externalNetwork": [],
+    "limit": "Actual SVG loading, widths, native keyboard horizontal scrolling and visible alternative destinations; not semantic edge or human screenreader acceptance."
+  },
+  "browserProducerAsInertSource": "import fs from'node:fs';import path from'node:path';import crypto from'node:crypto';import{createRequire}from'node:module';import{pathToFileURL}from'node:url';const root='/home/node/.openclaw/workspace/kubeclaw-pr13-recovery',scratch='/home/node/.openclaw/workspace/tmp/pr13-graph-closeout-20261021',artifact=root+'/.tmp/docs-publication',require=createRequire(root+'/package.json'),{chromium}=require('playwright'),manifest=JSON.parse(fs.readFileSync(artifact+'/diagram-manifest.json')),observations=[],findings=[],network=[],images=scratch+'/four-boundaries-browser-images';fs.mkdirSync(images,{recursive:true});const browser=await chromium.launch({headless:true,args:['--no-sandbox']});\ntry{for(const width of[320,768,1440]){const context=await browser.newContext({javaScriptEnabled:false,offline:true,hasTouch:true,reducedMotion:'reduce',viewport:{width,height:1000}});await context.route(/^https?:/u,route=>{network.push(route.request().url());return route.abort();});const page=await context.newPage();for(const d of manifest.diagrams.filter(d=>['diagram-df5ab3f6a317ad1b','diagram-894c4ee28dace602','diagram-11b058604e7e4129','diagram-e9adf15cb5cf80b6'].includes(d.id))){await page.goto(pathToFileURL(path.join(artifact,d.page.replace(/\\.md$/u,'.html'))).href);const image=page.getByRole('img',{name:d.readerQuestion,exact:true});await image.waitFor({state:'visible'});const state=await image.evaluate(img=>({loaded:img.complete&&img.naturalWidth>0,imageWidth:img.getBoundingClientRect().width,imageHeight:img.getBoundingClientRect().height,pageWidth:document.documentElement.scrollWidth,viewport:innerWidth}));const region=image.locator('..');await region.focus();const label=await region.getAttribute('aria-label');const alternative=page.locator(`[id=\"${d.id}-text\"]`);if(!state.loaded||state.pageWidth>width+1||label!==d.readerQuestion||!await alternative.count()||await region.getAttribute('tabindex')!=='0')findings.push({width,page:d.page,id:d.id,...state,label});const before=await region.evaluate(e=>e.scrollLeft);await page.keyboard.press('ArrowRight');await page.waitForTimeout(80);const scroll=await region.evaluate(e=>({position:e.scrollLeft,max:e.scrollWidth-e.clientWidth}));if(scroll.max>4&&scroll.position<=before)findings.push({id:d.id,width,keyboardHorizontalScroll:'did not move',scroll});observations.push({width,page:d.page,id:d.id,...state,textAlternativePresent:true,questionLabel:label,keyboardScroll:scroll.max>4?scroll.position>before:'not needed',externalNetwork:false,javaScript:false});if(width===320&&['diagram-df5ab3f6a317ad1b','diagram-894c4ee28dace602','diagram-11b058604e7e4129','diagram-e9adf15cb5cf80b6'].includes(d.id))await region.screenshot({path:images+'/'+d.id+'-mobile.png'});}await context.close();}\nconst context=await browser.newContext({javaScriptEnabled:false,offline:true});const page=await context.newPage();for(const d of manifest.diagrams.filter(d=>['diagram-df5ab3f6a317ad1b','diagram-894c4ee28dace602','diagram-11b058604e7e4129','diagram-e9adf15cb5cf80b6'].includes(d.id))){await page.setViewportSize({width:Math.min(8000,d.width+20),height:Math.min(2500,d.height+20)});await page.goto(pathToFileURL(path.join(artifact,'README.html')).href);await page.setContent('<!doctype html><html><head><meta charset=\"utf-8\"></head><body style=\"margin:0;background:white\"><img style=\"display:block\" width=\"'+d.width+'\" height=\"'+d.height+'\" src=\"'+pathToFileURL(path.join(artifact,'diagrams',d.id+'.svg')).href+'\"></body></html>');await page.waitForFunction(()=>document.querySelector('img')?.complete&&document.querySelector('img').naturalWidth>0);await page.screenshot({path:images+'/'+d.id+'-full.png',fullPage:true});}await context.close();}catch(error){findings.push({error:String(error),stack:error.stack});}finally{await browser.close();fs.writeFileSync(scratch+'/four-boundaries-browser-qa.json',JSON.stringify({observations,findings,externalNetwork:network,limit:'Actual SVG loading, widths, native keyboard horizontal scrolling and visible alternative destinations; not semantic edge or human screenreader acceptance.'},null,2)+'\\n');}if(observations.length!==12)throw new Error(`Expected12 actual diagram/width observations, got ${observations.length}`);if(findings.length||network.length)process.exitCode=1;\n",
+  "visualInspection": [
+    {
+      "path": "diagram-df5ab3f6a317ad1b-full.png",
+      "sha256": "166291f123fc9c3bd6734801e582a9c2beaf758a850c95d6f99583e88f13b859",
+      "visuallyInspected": true
+    },
+    {
+      "path": "diagram-894c4ee28dace602-full.png",
+      "sha256": "463178993580256dc2771f0e2b6c73161a9b8c92dbc8bafb3cacaac8df398914",
+      "visuallyInspected": true
+    },
+    {
+      "path": "diagram-11b058604e7e4129-full.png",
+      "sha256": "f53f423f041eaca571f380065c67910a22d77524dedbafb1e1c43f034a79ee5e",
+      "visuallyInspected": true
+    },
+    {
+      "path": "diagram-e9adf15cb5cf80b6-full.png",
+      "sha256": "038bffd11472479a637dc3a4397c3c9b7bda9e1b0b279d753ddb70d255dc1c3e",
+      "visuallyInspected": true
+    },
+    {
+      "path": "diagram-894c4ee28dace602-mobile.png",
+      "sha256": "1aeac56f549b8a9a34f2447905e6a646692e1ed0c8dcf00565194a552a8f0cea",
+      "visuallyInspected": true
+    },
+    {
+      "path": "diagram-11b058604e7e4129-mobile.png",
+      "sha256": "f7418d80b65dae81063336d15e5e4c826f83b0e572a8f7b30ac46617784e23ab",
+      "visuallyInspected": true
+    }
+  ],
+  "checks": {
+    "build": "built 167 publication pages for c0584fc0d31edf5b38f0744c8fabb263f8afdcbe\n",
+    "docs": "architecture presentation check passed (9 diagrams, 61 evidence boxes, 185 code links)\noperations evidence check passed (20 evidence boxes, 202 code links)\ndocs check passed (167 active markdown files)\n",
+    "references": "docs reference check passed (6032 local links, 3284 local anchors, 8341 repository path refs, 31931 pinned source links)\n"
+  },
+  "limits": "20/27 is a diagram Source count, not an acceptance percentage. Seven incomplete Source graphs, wholePUB005/A91206, human screen-reader/fresh-user/live runtime checks remain NOT_READY. Existing501page/81diagram/27fallback/9axe observations are historical e28 baseline, not newly rerun. Current12width observations are scoped to four changeddiagrams. No producttests executed by theseSource corrections. GlobalAPI copier91 and three stale generatedHelm phrases stay open. Counts203/261,17/89 unchanged."
+}

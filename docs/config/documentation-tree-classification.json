@@ -8539,6 +8539,78 @@
       "introducedAfterBaseline": true
     },
     {
+      "path": "docs/blueprint/acceptance-evidence/diagram-boundaries-20261021/checked-observations.json",
+      "class": "internal-documentation-input",
+      "purpose": "Bounded diagram-source correction, retained negative findings, scoped reader observations or review provenance; no public/runtime/whole-gate authority.",
+      "originalPath": "docs/blueprint/acceptance-evidence/diagram-boundaries-20261021/checked-observations.json",
+      "expectedPath": "docs/blueprint/acceptance-evidence/diagram-boundaries-20261021/checked-observations.json",
+      "introducedAfterBaseline": true
+    },
+    {
+      "path": "docs/blueprint/acceptance-evidence/diagram-boundaries-20261021/diagram-11b058604e7e4129-full.png",
+      "class": "internal-documentation-input",
+      "purpose": "Bounded diagram-source correction, retained negative findings, scoped reader observations or review provenance; no public/runtime/whole-gate authority.",
+      "originalPath": "docs/blueprint/acceptance-evidence/diagram-boundaries-20261021/diagram-11b058604e7e4129-full.png",
+      "expectedPath": "docs/blueprint/acceptance-evidence/diagram-boundaries-20261021/diagram-11b058604e7e4129-full.png",
+      "introducedAfterBaseline": true
+    },
+    {
+      "path": "docs/blueprint/acceptance-evidence/diagram-boundaries-20261021/diagram-11b058604e7e4129-mobile.png",
+      "class": "internal-documentation-input",
+      "purpose": "Bounded diagram-source correction, retained negative findings, scoped reader observations or review provenance; no public/runtime/whole-gate authority.",
+      "originalPath": "docs/blueprint/acceptance-evidence/diagram-boundaries-20261021/diagram-11b058604e7e4129-mobile.png",
+      "expectedPath": "docs/blueprint/acceptance-evidence/diagram-boundaries-20261021/diagram-11b058604e7e4129-mobile.png",
+      "introducedAfterBaseline": true
+    },
+    {
+      "path": "docs/blueprint/acceptance-evidence/diagram-boundaries-20261021/diagram-894c4ee28dace602-full.png",
+      "class": "internal-documentation-input",
+      "purpose": "Bounded diagram-source correction, retained negative findings, scoped reader observations or review provenance; no public/runtime/whole-gate authority.",
+      "originalPath": "docs/blueprint/acceptance-evidence/diagram-boundaries-20261021/diagram-894c4ee28dace602-full.png",
+      "expectedPath": "docs/blueprint/acceptance-evidence/diagram-boundaries-20261021/diagram-894c4ee28dace602-full.png",
+      "introducedAfterBaseline": true
+    },
+    {
+      "path": "docs/blueprint/acceptance-evidence/diagram-boundaries-20261021/diagram-894c4ee28dace602-mobile.png",
+      "class": "internal-documentation-input",
+      "purpose": "Bounded diagram-source correction, retained negative findings, scoped reader observations or review provenance; no public/runtime/whole-gate authority.",
+      "originalPath": "docs/blueprint/acceptance-evidence/diagram-boundaries-20261021/diagram-894c4ee28dace602-mobile.png",
+      "expectedPath": "docs/blueprint/acceptance-evidence/diagram-boundaries-20261021/diagram-894c4ee28dace602-mobile.png",
+      "introducedAfterBaseline": true
+    },
+    {
+      "path": "docs/blueprint/acceptance-evidence/diagram-boundaries-20261021/diagram-df5ab3f6a317ad1b-full.png",
+      "class": "internal-documentation-input",
+      "purpose": "Bounded diagram-source correction, retained negative findings, scoped reader observations or review provenance; no public/runtime/whole-gate authority.",
+      "originalPath": "docs/blueprint/acceptance-evidence/diagram-boundaries-20261021/diagram-df5ab3f6a317ad1b-full.png",
+      "expectedPath": "docs/blueprint/acceptance-evidence/diagram-boundaries-20261021/diagram-df5ab3f6a317ad1b-full.png",
+      "introducedAfterBaseline": true
+    },
+    {
+      "path": "docs/blueprint/acceptance-evidence/diagram-boundaries-20261021/diagram-e9adf15cb5cf80b6-full.png",
+      "class": "internal-documentation-input",
+      "purpose": "Bounded diagram-source correction, retained negative findings, scoped reader observations or review provenance; no public/runtime/whole-gate authority.",
+      "originalPath": "docs/blueprint/acceptance-evidence/diagram-boundaries-20261021/diagram-e9adf15cb5cf80b6-full.png",
+      "expectedPath": "docs/blueprint/acceptance-evidence/diagram-boundaries-20261021/diagram-e9adf15cb5cf80b6-full.png",
+      "introducedAfterBaseline": true
+    },
+    {
+      "path": "docs/blueprint/acceptance-evidence/diagram-boundaries-20261021/prior-record-preservation-review.json",
+      "class": "internal-documentation-input",
+      "purpose": "Bounded diagram-source correction, retained negative findings, scoped reader observations or review provenance; no public/runtime/whole-gate authority.",
+      "originalPath": "docs/blueprint/acceptance-evidence/diagram-boundaries-20261021/prior-record-preservation-review.json",
+      "expectedPath": "docs/blueprint/acceptance-evidence/diagram-boundaries-20261021/prior-record-preservation-review.json",
+      "introducedAfterBaseline": true
+    },
+    {
+      "path": "docs/blueprint/acceptance-evidence/diagram-boundaries-20261021/source-link-receipt.json.gz",
+      "class": "internal-documentation-input",
+      "purpose": "Bounded diagram-source correction, retained negative findings, scoped reader observations or review provenance; no public/runtime/whole-gate authority.",
+      "originalPath": "docs/blueprint/acceptance-evidence/diagram-boundaries-20261021/source-link-receipt.json.gz",
+      "expectedPath": "docs/blueprint/acceptance-evidence/diagram-boundaries-20261021/source-link-receipt.json.gz",
+      "introducedAfterBaseline": true
+    },
+    {
       "path": "docs/blueprint/acceptance-evidence/finished-reader-closeout-20261021/check-results.json",
       "class": "internal-documentation-input",
       "purpose": "Internal bounded Source/Reader/Quality acceptance evidence for finished-reader-closeout-20261021; retained for its specific review/provenance/negative controls, not publication or runtime permission.",
