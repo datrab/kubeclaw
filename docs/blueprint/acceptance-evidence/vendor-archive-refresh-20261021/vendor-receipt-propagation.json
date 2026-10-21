@@ -1,0 +1,81 @@
+{
+  "source": "scripts/vendor-external-helm-authorities.mjs",
+  "sha256": "077c8136790d759262609f716ab6c77b0049d19bb7e2208c27a7c3733d6a96f8",
+  "invocationsUnchanged": true,
+  "selectedDiagnostics": [
+    {
+      "source": "scripts/vendor-external-helm-authorities.mjs",
+      "sink": "console.log",
+      "expression": "`external Helm authority snapshots are current (${inventoryFields.length} exact fields across ${Object.keys(lock.charts).length} charts)`",
+      "previous": "71f666318ec45c857151eae71c8997a38038f22adb4dfe00cbd355eb094fb66c",
+      "current": "909834015c632dd93a4564ea920055b11343af6a046243d4ab9911eefad380fa"
+    }
+  ],
+  "documentationRoles": [
+    {
+      "source": "scripts/docs-configuration-inventory.mjs",
+      "previous": "6b19575df5e2c693272e200942a49c0236cbba6dc55a278709a943b623086505",
+      "current": "e787f4d86d737cc94237bbcb14278629d23af5fa5f282cd81bec018f253c5f5f",
+      "previousAuthorityInputs": [
+        {
+          "path": "scripts/vendor-external-helm-authorities.mjs",
+          "canonical": "scripts/vendor-external-helm-authorities.mjs",
+          "sha256": "eb77cec7c02faa985610941fd34ae9bfd7aba6f8f4449e70afee130979494174"
+        }
+      ],
+      "authorityInputs": [
+        {
+          "path": "scripts/vendor-external-helm-authorities.mjs",
+          "canonical": "scripts/vendor-external-helm-authorities.mjs",
+          "sha256": "077c8136790d759262609f716ab6c77b0049d19bb7e2208c27a7c3733d6a96f8"
+        }
+      ],
+      "selectorsUnchanged": true,
+      "priorNativeFactsExactlyReconstructed": true,
+      "nativeInputChanges": [
+        {
+          "source": "scripts/external-helm-authority-snapshots.json",
+          "previous": "63a606c4da53fbe98972d1da70718834d9e22aefb3685f1a2144993bdba79ba6",
+          "current": "5ed46a00578b5ae30ed6a2a5e02c401c9ca235aac69524f43144ec3b9d4482fc"
+        }
+      ],
+      "changedChildInputs": [
+        {
+          "path": "scripts/vendor-external-helm-authorities.mjs",
+          "canonical": "scripts/vendor-external-helm-authorities.mjs",
+          "sha256": "077c8136790d759262609f716ab6c77b0049d19bb7e2208c27a7c3733d6a96f8"
+        }
+      ]
+    },
+    {
+      "source": "scripts/docs-yaml-field-authorities.mjs",
+      "previous": "71f43af88105052fc287ebc199aaaf487a3480d95fd0c0d1336b0d0b54f8debe",
+      "current": "c73c59abf882671e2e0bd5555e73ce80a1a67cafeccb9489924b95b2674a7a57",
+      "previousAuthorityInputs": [
+        {
+          "path": "scripts/docs-yaml-field-authorities.mjs",
+          "canonical": "scripts/docs-yaml-field-authorities.mjs",
+          "sha256": "80208318a343c0f57cfa61a82c87bc236e14015daed7df63c0b9702959e9a567"
+        }
+      ],
+      "authorityInputs": [
+        {
+          "path": "scripts/docs-yaml-field-authorities.mjs",
+          "canonical": "scripts/docs-yaml-field-authorities.mjs",
+          "sha256": "80208318a343c0f57cfa61a82c87bc236e14015daed7df63c0b9702959e9a567"
+        }
+      ],
+      "selectorsUnchanged": true,
+      "priorNativeFactsExactlyReconstructed": true,
+      "nativeInputChanges": [
+        {
+          "source": "scripts/external-helm-authority-snapshots.json",
+          "previous": "63a606c4da53fbe98972d1da70718834d9e22aefb3685f1a2144993bdba79ba6",
+          "current": "5ed46a00578b5ae30ed6a2a5e02c401c9ca235aac69524f43144ec3b9d4482fc"
+        }
+      ],
+      "changedChildInputs": []
+    }
+  ],
+  "limits": "Source/purpose/receipt updates only; no API inventory or runtime effects qualification"
+}

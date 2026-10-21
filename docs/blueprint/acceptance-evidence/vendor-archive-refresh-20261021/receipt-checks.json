@@ -1,0 +1,15 @@
+{
+  "checks": [
+    {
+      "command": "node --test scripts/tests/api-output-node-entry-custody.test.mjs scripts/tests/api-output-publication.test.mjs",
+      "exitCode": 0,
+      "observation": "t\":0,\"stdout\":\"{\\\"apiVersion\\\":\\\"v1\\\",\\\"kind\\\":\\\"Secret\\\",\\\"metadata\\\":{\\\"name\\\":\\\"ordinary-transfer\\\"}}\\n\",\"stderr\":\"\"}}]}\n\u2714 CommonJS extensionless file order matches native and prior candidate changes invalidate cache (205.569851ms)\n\u2139 {\"witnesses\":[{\"native\":{\"exit\":0,\"stdout\":\"{\\\"apiVersion\\\":\\\"v1\\\",\\\"kind\\\":\\\"Secret\\\",\\\"metadata\\\":{\\\"name\\\":\\\"ordinary-transfer\\\"}}\\n\",\"stderr\":\"\"},\"exactNative\":{\"exit\":0,\"stdout\":\"{\\\"apiVersion\\\":\\\"v1\\\",\\\"kind\\\":\\\"Secret\\\",\\\"metadata\\\":{\\\"name\\\":\\\"native-argument\\\"}}\",\"stderr\":\"\"},\"passive\":{\"exit\":0,\"stdout\":\"\"},\"directory\":{\"exit\":0,\"stdout\":\"{\\\"apiVersion\\\":\\\"v1\\\",\\\"kind\\\":\\\"Secret\\\",\\\"metadata\\\":{\\\"name\\\":\\\"ordinary-transfer\\\"}}\\n\"}}]}\n\u2714 every excluded consumer keeps actual terminal and initializer custody before cache reuse (103.620482ms)\n\u2714 outside-root explicit package entry cannot acquire reviewed static metadata transitively (292.918806ms)\n\u2139 tests 52\n\u2139 suites 0\n\u2139 pass 52\n\u2139 fail 0\n\u2139 cancelled 0\n\u2139 skipped 0\n\u2139 todo 0\n\u2139 duration_ms 67667.543696\n"
+    },
+    {
+      "command": "assertDocumentationExecutableRole all58 recipes",
+      "exitCode": 0,
+      "observation": "58/58 selected Source/native purpose receipts pass, including updated passive input and vendor literal child."
+    }
+  ],
+  "limits": "Receipt/purpose preservation only, no complete API or original runtime effect qualification."
+}

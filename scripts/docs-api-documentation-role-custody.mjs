@@ -1840,12 +1840,12 @@ export const documentationExecutableRoleRecipes = {
         "expressionSha256": "7602a8f927b47cd0b4b4f2501bccd41bb8e4e4ea43e571cf4bce62f3c3717191"
       }
     ],
-    "factsDigest": "6b19575df5e2c693272e200942a49c0236cbba6dc55a278709a943b623086505",
+    "factsDigest": "e787f4d86d737cc94237bbcb14278629d23af5fa5f282cd81bec018f253c5f5f",
     "authorityInputs": [
       {
         "path": "scripts/vendor-external-helm-authorities.mjs",
         "canonical": "scripts/vendor-external-helm-authorities.mjs",
-        "sha256": "eb77cec7c02faa985610941fd34ae9bfd7aba6f8f4449e70afee130979494174"
+        "sha256": "077c8136790d759262609f716ab6c77b0049d19bb7e2208c27a7c3733d6a96f8"
       }
     ]
   },
@@ -5179,7 +5179,7 @@ export const documentationExecutableRoleRecipes = {
         "expressionSha256": "520146a636ccf57daa764f71f496104417ab1d6a81be3be40392324777928280"
       }
     ],
-    "factsDigest": "71f43af88105052fc287ebc199aaaf487a3480d95fd0c0d1336b0d0b54f8debe",
+    "factsDigest": "c73c59abf882671e2e0bd5555e73ce80a1a67cafeccb9489924b95b2674a7a57",
     "authorityInputs": [
       {
         "path": "scripts/docs-yaml-field-authorities.mjs",
