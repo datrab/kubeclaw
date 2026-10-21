@@ -241,7 +241,7 @@
       "index": 0,
       "readerQuestion": "How do source inputs become selected runtime code and image identities?",
       "owner": "documentation; release owners select artifacts and workload owners verify deployment",
-      "sourceSha256": "a11e41e9804e010bb92ec3a8423dc7cdc70ceeb7c31ae442665e1b567f0796e2",
+      "sourceSha256": "4cacd80cac766544cd3925a36fb0d7417bb99a777581b3c474447332d408dc8a",
       "textAlternative": "The existing text alternative immediately following this diagram; retained visibly in publication."
     }
   ]

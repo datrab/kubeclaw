@@ -5,7 +5,7 @@ Audience: release maintainer, platform operator, security operator
 Owner: release engineering and platform operations
 Evidence: versions.json; releases/ops-images.json; scripts/deploy.sh
 Applies to: current release-selection and deployment contracts
-Last verified: 2026-10-11; local projection, snippet and synthetic teardown checks only; no live upgrade, rotation or retirement result is available
+Last verified: 2026-10-11 prior local checks; local selection rejection and synthetic bundle-manifest reader checks on 2026-10-21; no live upgrade, rotation, retirement, or bundle observation
 
 ## Objective
 
@@ -566,10 +566,14 @@ image-build commit. Record both. If `releases/runtime-code.json` is selected,
 record its separate code-bundle commit and run/attempt too. Code bundles are
 archives loaded by the agent; they are not container images.
 
-The current checkout has no `releases/runtime-images.json`. Stop runtime
-installation until the release owner accepts a selection. The release maintainer performs
-this task in `github.com/datrab/kubeclaw`, or the explicitly approved repository
-whose receipts and image references the environment uses:
+The current checkout contains runtime image and code receipts and generated values.
+The read-only selection check rejects their current configuration at
+`RELEASE_CONFIGURATION_CHANGED: charts/kubeclaw/files/config/knip.json`.
+This first failure does not establish whether later checks would pass.
+Stop runtime installation and resolve the selection through the release owner.
+Do not rewrite the receipts or weaken the configuration check.
+The release maintainer performs this task in `github.com/datrab/kubeclaw`, or the
+explicitly approved repository whose receipts and image references the environment uses:
 
 1. Open **Actions → Build Runtime Images And Skill Bundles**. Select one
    [successful run on `main`, triggered by `push` or `workflow_dispatch`](https://github.com/datrab/kubeclaw/blob/b6e4a0d774434b8c39b2575322436e3fba708914/.github/workflows/promote-runtime.yaml#L43-L53). Record
@@ -810,12 +814,225 @@ Use this order unless a component guide requires a narrower sequence:
 9. Deploy Prism database and application changes in their declared order.
 10. Run component smoke and native data checks.
 11. Run worker-trust positive and negative checks when trust changed.
-12. Compare running image IDs and active bundle commits.
+12. Compare running image identities and the [observed bundle-manifest identity](#observe-active-role-bundle-manifest-identity) with the accepted receipts.
 13. Reopen admission.
 14. Retain the old release until the observation window ends.
 
 Do not combine a CNI migration with an unrelated application upgrade.
 [Single-node CNI cutover and rollback](../status/open-issues.md#concrete-single-node-cni-cutover-and-independent-rollback-remain-unproved) tracks the missing proof.
+
+## Observe Active Role Bundle-Manifest Identity
+
+Use this read-only observation after the selected deployment, before reopening
+admission. Complete [release acquisition](#acquire-a-reviewed-runtime-selection)
+and the separate [container identity check](diagnose.md#bind-the-fault-window-to-object-lifetimes) first.
+The current checkout's stored selection fails configuration verification, so the
+reader stops before any cluster operation here. The procedure does not repair it.
+
+This reader supports only the `kubeclaw` chart's role-gateway profile:
+`nova` uses the Nova image, `buster` uses the Buster gateway image, and `prism`
+uses the Prism agent image. It does not identify code bundles in Prism Control,
+Prism Worker, arbitrary Pods, or an unsupported manifest mount.
+
+Use one explicit kubeconfig, context, namespace, Pod UID, and named container.
+Get those identities from the prior independent observation; do not choose a
+replacement Pod automatically after a failure. The credentials must permit
+Pod reads and execution of the fixed reader in that container. The procedure
+runs only `kubectl get` and `kubectl exec`; it does not apply, delete, or restart resources.
+
+Use the already acquired local role archive, not an unverified download.
+The program checks its hash against the selected code receipt. It then reads
+that archive's manifest without extracting files. It checks the Pod's selected
+image, main/init configuration, completed init, and read-only manifest mount.
+It hashes the actual manifest in the named container and compares it with the
+accepted archive. The same Pod and container lifetime must remain before and
+after that read. A container `imageID` remains a recorded runtime identity,
+not a universal OCI digest normalization.
+
+The result deliberately distinguishes three facts: the local archive hash,
+the init's configured archive hash, and the observed manifest's byte hash.
+The init checks the downloaded archive hash and copies the manifest into the
+shared runtime-config volume. The main container mounts that volume read-only.
+The reader does not observe the old compressed archive inside the running
+container, verify every active payload file, or prove which modules the process
+loaded. Those result fields stay `false`; do not turn this observation into
+runtime, rollout, security, or application acceptance.
+
+Run from the accepted selection checkout with Node, GNU tar, and the selected
+kubectl available. The local reader caps its in-memory archive snapshot at
+256 MiB and the manifest at 2 MiB. These are reader budgets, not bundle-format limits.
+Use a fresh private result directory. Keep raw Pod configuration out of shared logs.
+
+```bash
+set -euo pipefail
+umask 077
+bundle_role='<nova|buster|prism>'
+bundle_archive='<absolute-path-to-reviewed-role-archive>'
+bundle_kubeconfig='<absolute-kubeconfig-path>'
+bundle_context='<exact-context>'
+bundle_namespace='<namespace>'
+bundle_pod='<observed-pod-name>'
+bundle_container='<named-role-gateway-container>'
+bundle_uid='<previously-observed-pod-uid>'
+bundle_observation_dir=$(mktemp -d)
+node --input-type=module - "$bundle_role" "$bundle_archive" "$bundle_kubeconfig" \
+  "$bundle_context" "$bundle_namespace" "$bundle_pod" "$bundle_container" "$bundle_uid" \
+  > "$bundle_observation_dir/bundle-manifest-identity.json" <<'ACTIVE_BUNDLE_READER'
+import fs from 'node:fs';
+import path from 'node:path';
+import { createHash } from 'node:crypto';
+import { execFileSync } from 'node:child_process';
+import { pathToFileURL } from 'node:url';
+
+const requireObservation = (condition, code) => {
+  if (!condition) throw new Error(`ACTIVE_BUNDLE_${code}`);
+};
+const sha256 = bytes => createHash('sha256').update(bytes).digest('hex');
+
+export function observeActiveRoleBundle({ selection, role, archive, kubeconfig,
+  context, namespace, podName, containerName, expectedUid, kubectl = 'kubectl' }) {
+  const slot = new Map([['nova', 'nova'], ['buster', 'buster-gateway'], ['prism', 'prism-agent']]).get(role);
+  requireObservation(slot && selection?.images?.[slot], 'ROLE_IMAGE_SELECTION_REQUIRED');
+  const code = selection.code, bundle = code?.bundles?.[role];
+  requireObservation(/^[a-f0-9]{40}$/u.test(code?.commit ?? '')
+    && /^[a-f0-9]{64}$/u.test(bundle?.sha256 ?? '')
+    && bundle?.contractVersion === 'v2', 'CODE_SELECTION_REQUIRED');
+  requireObservation(kubeconfig && context && expectedUid, 'EXPLICIT_AUTHORITY_REQUIRED');
+  for (const value of [namespace, podName, containerName]) {
+    requireObservation(typeof value === 'string' && /^[a-z0-9][a-z0-9.-]*$/u.test(value), 'EXPLICIT_TARGET_REQUIRED');
+  }
+  // Hash and inspect the same in-memory archive, not two mutable file reads.
+  requireObservation(fs.statSync(archive).size <= 256 * 1024 * 1024, 'LOCAL_ARCHIVE_READER_LIMIT');
+  const archiveBytes = fs.readFileSync(archive);
+  requireObservation(sha256(archiveBytes) === bundle.sha256, 'ACCEPTED_ARCHIVE_HASH_MISMATCH');
+  const expectedBytes = execFileSync('tar', ['-xOzf', '-', `${role}-${code.commit}/manifest.json`],
+    { input: archiveBytes, maxBuffer: 2 * 1024 * 1024, stdio: ['pipe', 'pipe', 'pipe'] });
+  const expected = JSON.parse(expectedBytes.toString('utf8'));
+  requireObservation(expected.schemaVersion === 'pipeline-runtime-bundle.v1'
+    && expected.bundleKind === 'app-skills-package-set'
+    && expected.role === role && expected.commit === code.commit
+    && expected.contractVersion === bundle.contractVersion, 'ACCEPTED_MANIFEST_MISMATCH');
+
+  const prefix = [`--kubeconfig=${path.resolve(kubeconfig)}`, `--context=${context}`, `--namespace=${namespace}`];
+  const read = args => execFileSync(kubectl, [...prefix, ...args],
+    { encoding: 'utf8', maxBuffer: 16 * 1024 * 1024, stdio: ['ignore', 'pipe', 'pipe'] });
+  const literalEnvironment = (container, name) => {
+    const entries = (container.env ?? []).filter(entry => entry.name === name);
+    requireObservation(entries.length === 1 && typeof entries[0].value === 'string'
+      && !entries[0].valueFrom, 'LITERAL_PROFILE_ENV_REQUIRED');
+    return entries[0].value;
+  };
+  const snapshot = () => {
+    const pod = JSON.parse(read(['get', 'pod', podName, '-o', 'json']));
+    requireObservation(pod.metadata?.uid === expectedUid && pod.metadata?.name === podName
+      && pod.metadata?.namespace === namespace && !pod.metadata.deletionTimestamp, 'POD_IDENTITY_CHANGED');
+    const mains = (pod.spec?.containers ?? []).filter(item => item.name === containerName);
+    const inits = (pod.spec?.initContainers ?? []).filter(item => item.name === 'init-setup');
+    const statuses = (pod.status?.containerStatuses ?? []).filter(item => item.name === containerName);
+    const initStatuses = (pod.status?.initContainerStatuses ?? []).filter(item => item.name === 'init-setup');
+    requireObservation(mains.length === 1 && inits.length === 1
+      && statuses.length === 1 && initStatuses.length === 1, 'EXACT_CONTAINERS_REQUIRED');
+    const main = mains[0], init = inits[0], status = statuses[0], initStatus = initStatuses[0];
+    requireObservation(main.image === selection.images[slot] && init.image === selection.images[slot], 'REQUESTED_IMAGE_MISMATCH');
+    requireObservation(status.state?.running && status.containerID && status.imageID
+      && Number.isSafeInteger(status.restartCount) && initStatus.state?.terminated?.exitCode === 0
+      && initStatus.containerID && initStatus.imageID, 'RUNNING_CONTAINER_AND_COMPLETED_INIT_REQUIRED');
+    for (const [name, value] of Object.entries({ KUBECLAW_CODE_BUNDLE_ENABLED: 'true',
+      KUBECLAW_CODE_BUNDLE_AGENT: role, KUBECLAW_CODE_BUNDLE_EXPECTED_COMMIT: code.commit,
+      KUBECLAW_CODE_BUNDLE_CONTRACT_VERSION: bundle.contractVersion,
+      KUBECLAW_CODE_BUNDLE_MANIFEST: '/runtime-config/code-bundle-manifest.json' })) {
+      requireObservation(literalEnvironment(main, name) === value, 'MAIN_PROFILE_MISMATCH');
+    }
+    for (const [name, value] of Object.entries({ CODE_BUNDLE_ENABLED: 'true', CODE_BUNDLE_ARCHIVE_URL: bundle.url,
+      CODE_BUNDLE_SHA256: bundle.sha256, CODE_BUNDLE_EXPECTED_COMMIT: code.commit,
+      CODE_BUNDLE_CONTRACT_VERSION: bundle.contractVersion, AGENT_NAME: role })) {
+      requireObservation(literalEnvironment(init, name) === value, 'INIT_PROFILE_MISMATCH');
+    }
+    const manifestMount = (main.volumeMounts ?? []).filter(item => item.mountPath === '/runtime-config');
+    const initMount = (init.volumeMounts ?? []).filter(item => item.mountPath === '/runtime-config');
+    requireObservation(manifestMount.length === 1 && initMount.length === 1
+      && manifestMount[0].readOnly === true && manifestMount[0].name === initMount[0].name
+      && !manifestMount[0].subPath && !initMount[0].subPath, 'READONLY_SHARED_MANIFEST_PROFILE_REQUIRED');
+    const volume = (pod.spec.volumes ?? []).filter(item => item.name === manifestMount[0].name);
+    requireObservation(volume.length === 1 && volume[0].emptyDir, 'INIT_MANIFEST_VOLUME_REQUIRED');
+    return { uid: pod.metadata.uid, podName, namespace, containerName, requestedImage: main.image,
+      imageID: status.imageID, containerID: status.containerID, restartCount: status.restartCount,
+      startedAt: status.state.running.startedAt ?? null, initContainerID: initStatus.containerID, initImageID: initStatus.imageID,
+      initFinishedAt: initStatus.state.terminated.finishedAt ?? null };
+  };
+  const before = snapshot();
+  const remoteProgram = `
+    const fs = require('node:fs'), crypto = require('node:crypto');
+    try {
+      const file = process.argv[1];
+      if (fs.realpathSync(file) !== file || !fs.lstatSync(file).isFile()
+        || fs.statSync(file).size > 2 * 1024 * 1024) throw new Error();
+      const bytes = fs.readFileSync(file), manifest = JSON.parse(bytes.toString('utf8'));
+      process.stdout.write(JSON.stringify({ schemaVersion: manifest.schemaVersion,
+        bundleKind: manifest.bundleKind, role: manifest.role, commit: manifest.commit,
+        contractVersion: manifest.contractVersion,
+        manifestSha256: crypto.createHash('sha256').update(bytes).digest('hex') }));
+    } catch { process.stderr.write('ACTIVE_BUNDLE_MANIFEST_READ_FAILED'); process.exitCode = 1; }
+  `;
+  const observed = JSON.parse(read(['exec', podName, '-c', containerName, '--', 'node', '-e', remoteProgram,
+    '/runtime-config/code-bundle-manifest.json']));
+  requireObservation(observed.schemaVersion === expected.schemaVersion && observed.bundleKind === expected.bundleKind
+    && observed.role === role && observed.commit === code.commit && observed.contractVersion === bundle.contractVersion
+    && observed.manifestSha256 === sha256(expectedBytes), 'OBSERVED_MANIFEST_MISMATCH');
+  const after = snapshot();
+  requireObservation(JSON.stringify(before) === JSON.stringify(after), 'CONTAINER_CHANGED_DURING_OBSERVATION');
+  return { schemaVersion: 'kubeclaw-active-bundle-manifest-observation.v1', context, ...after,
+    role, codeCommit: code.commit, contractVersion: bundle.contractVersion,
+    sourceRunId: code.sourceRunId, sourceRunAttempt: code.sourceRunAttempt,
+    acceptedArchiveSha256: bundle.sha256, localArchiveHashVerified: true,
+    initConfiguredArchiveHashMatches: true, observedManifestSha256: observed.manifestSha256,
+    manifestMatchesAcceptedArchive: true, liveArchiveBytesObserved: false,
+    fullActivePayloadVerified: false, loadedModuleIdentityProven: false };
+}
+
+if (process.argv[1] === '-') {
+  try {
+    const [role, archive, kubeconfig, context, namespace, podName, containerName, expectedUid] = process.argv.slice(2);
+    const { selectedRelease } = await import(pathToFileURL(path.resolve('scripts/updates/deployment-release.mjs')).href);
+    const selection = selectedRelease(process.cwd(), 'runtime');
+    const observation = observeActiveRoleBundle({ selection, role, archive, kubeconfig,
+      context, namespace, podName, containerName, expectedUid });
+    console.log(JSON.stringify(observation, null, 2));
+  } catch (error) {
+    const message = typeof error?.message === 'string' && /^ACTIVE_BUNDLE_[A-Z_]+$/u.test(error.message)
+      ? error.message : 'ACTIVE_BUNDLE_SELECTION_OR_READER_FAILED';
+    console.error(message); process.exitCode = 1;
+  }
+}
+ACTIVE_BUNDLE_READER
+```
+
+On exit zero, retain the result with the change record and the accepted receipt's
+source run and attempt. The report contains only selected identities and hashes,
+not the complete Pod environment or bundle manifest. A changed UID, container,
+restart count, requested image, reserved configuration, or manifest causes rejection.
+Do not reopen admission on a rejected observation or rerun against another Pod
+without establishing that new identity separately.
+
+`ACTIVE_BUNDLE_SELECTION_OR_READER_FAILED` does not prove a missing receipt.
+It can also mean configuration drift, an unavailable tool, malformed input, or
+another local reader failure. Recheck the read-only selection and tool prerequisites.
+A specific `ACTIVE_BUNDLE_*_MISMATCH` or profile failure identifies the failed
+comparison; it does not authorize changing the selected receipt or live workload.
+
+> **Source evidence — bundle identity observation boundaries**
+>
+> **Claim:** The reader compares one observed role manifest with the locally accepted archive and records the same container lifetime on both sides.
+>
+> **Implementation:** [The init checks the archive hash and copies the manifest](https://github.com/datrab/kubeclaw/blob/2384072a8103b187a588862b90784868ce3661b2/charts/kubeclaw/templates/deployment.yaml#L1090-L1157); [the main container mounts runtime-config read-only](https://github.com/datrab/kubeclaw/blob/2384072a8103b187a588862b90784868ce3661b2/charts/kubeclaw/templates/deployment.yaml#L1485-L1495).
+>
+> **Contract or setting:** [selectedRelease preserves configuration and code-selection checks](https://github.com/datrab/kubeclaw/blob/2384072a8103b187a588862b90784868ce3661b2/scripts/updates/deployment-release.mjs#L32-L44); [the code receipt binds role, archive hash, contract, and source run](https://github.com/datrab/kubeclaw/blob/2384072a8103b187a588862b90784868ce3661b2/scripts/updates/code-release.mjs#L6-L18).
+>
+> **Test evidence:** Local synthetic fixture checks cover all three roles, identity changes, incorrect manifests, input/configuration failures, and selection stops. No cluster result follows from those fixtures.
+>
+> **Revision:** `2384072a8103b187a588862b90784868ce3661b2`.
+>
+> **Limit:** Manifest identity is not active archive-byte observation, a full payload check, or loaded-module identity. The current release-configuration rejection remains a stop.
 
 ## Stateless Role Upgrade
 

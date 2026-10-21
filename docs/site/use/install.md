@@ -1,6 +1,6 @@
 # Plan and Install
 
-Status: source-backed deployment path; current runtime selection is absent, so a new runtime installation must stop before mutation
+Status: source-backed deployment path; stored runtime selection fails current configuration verification, so installation must stop before mutation
 Audience: Kubernetes platform operator, security operator
 Owner: platform operations
 Evidence: scripts/deploy.sh; docs/generated/inventory/deploy-script.json

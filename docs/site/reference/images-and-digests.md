@@ -5,7 +5,7 @@ Audience: release maintainer, platform operator, developer
 Owner: documentation; release owners select artifacts and workload owners verify deployment
 Evidence: versions.json; .github/workflows/build-images.yaml; .github/workflows/build-ops-mcp.yaml; scripts/updates/deployment-release.mjs; scripts/updates/oci-image-identity.mjs; scripts/updates/code-release.mjs
 Applies to: ten runtime and two Ops image slots, three separate role bundles, and named release/deployment readers
-Last verified: 2026-10-15; current source and local selection files checked; no registry, build, deployment or container observed
+Last verified: 2026-10-15 source review; local receipt presence and first configuration rejection rechecked on 2026-10-21; no remote build, deployment, or container observed
 
 ## Choose the task and authority
 
@@ -32,22 +32,27 @@ For the actual procedures, use [Maintenance](../use/maintenance.md),
 [Recovery](../use/recovery.md). A reference table does not replace those
 procedures' identity, credential, tool, source and writer-fence prerequisites.
 
-## Current local selection: runtime missing, Ops present
+## Current local selection: stored receipts require revalidation
 
-In the source state described here, `releases/runtime-images.json`,
-`releases/runtime-code.json`, and runtime values for `nova`, `buster`,
-`prism-agent` and `prism` are absent. Runtime installation must stop until the
-release owner accepts a genuine selection through the existing
+The checkout contains `releases/runtime-images.json`, `releases/runtime-code.json`,
+and generated runtime values for `nova`, `buster`, `prism-agent`, and `prism`.
+File presence does not establish a usable selection for the current configuration.
+The read-only `selectedRelease(root, 'runtime')` check stops at
+`RELEASE_CONFIGURATION_CHANGED: charts/kubeclaw/files/config/knip.json`.
+This is the first observed failure, not an exhaustive drift list.
+
+Runtime installation must stop until the release owner resolves that mismatch
+through the existing
 [release acquisition procedure](../use/maintenance.md#acquire-a-reviewed-runtime-selection).
-Do not invent digests, manufacture a receipt, use a private tag workaround or
-copy development `my-values` as if it were an accepted runtime release.
+Do not rewrite stored receipts, substitute development values, or bypass the
+configuration verifier to make the selection pass.
 
 [Ops image receipt](../../../releases/ops-images.json) and
 [Ops generated values](../../../releases/values/ops.yaml) are present. These
 are local stored data. Their presence is not a current remote workflow-run,
 source-configuration, registry or live-Pod verification result.
 An image-only selection can be readable without a code receipt, but that does
-not create the missing runtime image selection in this checkout.
+not make the stored runtime selection valid for the current configuration.
 
 **Source — complete family validation and fail-closed selection:**
 [validateReleaseReceipt / selectedRelease](../../../scripts/updates/deployment-release.mjs#L8-L43) (`scripts/updates/deployment-release.mjs:8-43`, current-checkout SHA-256 `87d7c5e64c9718aba77a259611a760666f05626379dd2cc3f218b75869ed9ac3`).
@@ -106,7 +111,7 @@ flowchart LR
   Verify --> Select[Deployment selection]
   Select --> Values[Source-bound values and validated overlays]
   Values --> Deploy[Selected deployment path]
-  Deploy --> Observe[Actual container and bundle observation]
+  Deploy --> Observe[Container and bundle-manifest identity observation]
 ```
 
 **Text alternative to the diagram**
@@ -125,13 +130,15 @@ Each row names a directed connection. Labels preserve the diagram’s conditions
 | Source run and receipt verification | Directed connection | Deployment selection |
 | Deployment selection | Directed connection | Source-bound values and validated overlays |
 | Source-bound values and validated overlays | Directed connection | Selected deployment path |
-| Selected deployment path | Directed connection | Actual container and bundle observation |
+| Selected deployment path | Directed connection | Container and bundle-manifest identity observation |
 
 
 Text: the image producer and code-bundle producer can publish independently.
 Only compatible selected inputs proceed through receipt/source checks to a
 selection. Values/render validation precedes the selected deployment path.
-Actual container, active bundle and application observations remain separate.
+Container identity, persisted bundle-manifest identity, and application behavior remain separate observations.
+The final step uses the [active role bundle-manifest reader](../use/maintenance.md#observe-active-role-bundle-manifest-identity).
+That reader compares the observed manifest with an accepted archive; it does not prove loaded module identity.
 A graph edge is a source-described dependency, not a successful-run claim.
 
 ## Twelve first-party image slots
@@ -329,7 +336,7 @@ exclusion or permission to substitute them.
 Actual builder platform, remote run/assets, provenance signatures, layer bytes,
 current cluster/Pod/CRI relations, active bundle and original application/data
 behavior were not observed. Current local Ops data is not remotely reverified;
-runtime selection remains absent. The new manuscript does not repair an older
+the stored runtime selection fails current configuration verification. This reference does not repair an older
 generic imageID comparison into a universal OCI normalization algorithm.
 
 Keep source changes connected to the existing maintenance and reader ownership
