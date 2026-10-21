@@ -4,7 +4,7 @@
   "completionRecords": [
     {
       "id": "A911-03-REF-007-20261020",
-      "revision": "a531ba490cd23cf0d064fe01ebc68ce56da20d79",
+      "revision": "8f775411fdd8e0232bdd45135accb61f23768f0b",
       "author": "PR13 automation capability author",
       "reviewer": "/root/review_a91103",
       "gateIds": [
@@ -62,6 +62,11 @@
           "command": "Independent whole PUB004 and narrow 21-record changed-boundary review with current original88tests/fullSource/preview/browser observations",
           "exitCode": 0,
           "observation": "180output hashes matched,all1660excerpts freshlyverified;unchanged priorsemantic/runtime boundaries. docs/blueprint/acceptance-evidence/source-preview-closeout-20261021/whole-content-and-prior-impact-review.json"
+        },
+        {
+          "command": "Independent whole A91207 and narrow24-record changed-boundary review; original91tests and final actual Source/preview/SVG/browser proof",
+          "exitCode": 0,
+          "observation": "209output hashes,27freshSVGhashes,1660fresh excerpts; prior scoped facts and limits preserved without whole semantic/runtime reapproval. docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/whole-layout-and-prior-impact-review.json"
         }
       ],
       "review": {
@@ -125,12 +130,20 @@
             "scripts/docs-publication.mjs"
           ],
           "review": "docs/blueprint/acceptance-evidence/source-preview-closeout-20261021/whole-content-and-prior-impact-review.json"
+        },
+        {
+          "revision": "a531ba490cd23cf0d064fe01ebc68ce56da20d79",
+          "reason": "Independent whole A91207 responsive-layout and narrow changed-Source/Reader/Quality impact: registered static SVG, source-owned questions/owners/alternatives, exact native custody, two independently verified semantic corrections and final actual artifact checks. Previous facts and limits preserved, not broadly re-approved.",
+          "changedFiles": [
+            "scripts/docs-publication.mjs"
+          ],
+          "review": "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/whole-layout-and-prior-impact-review.json"
         }
       ]
     },
     {
       "id": "AP09.1-ready-topics-20261020",
-      "revision": "a531ba490cd23cf0d064fe01ebc68ce56da20d79",
+      "revision": "8f775411fdd8e0232bdd45135accb61f23768f0b",
       "author": "Documentation implementation authors before review campaign",
       "reviewer": "/root/review_ready_foundations (01a157c4-a915-7bd0-9f54-0de78011b9b7)",
       "gateIds": [],
@@ -212,6 +225,11 @@
           "command": "Independent whole PUB004 and narrow 21-record changed-boundary review with current original88tests/fullSource/preview/browser observations",
           "exitCode": 0,
           "observation": "180output hashes matched,all1660excerpts freshlyverified;unchanged priorsemantic/runtime boundaries. docs/blueprint/acceptance-evidence/source-preview-closeout-20261021/whole-content-and-prior-impact-review.json"
+        },
+        {
+          "command": "Independent whole A91207 and narrow24-record changed-boundary review; original91tests and final actual Source/preview/SVG/browser proof",
+          "exitCode": 0,
+          "observation": "209output hashes,27freshSVGhashes,1660fresh excerpts; prior scoped facts and limits preserved without whole semantic/runtime reapproval. docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/whole-layout-and-prior-impact-review.json"
         }
       ],
       "review": {
@@ -389,6 +407,15 @@
             "scripts/docs-publication.mjs"
           ],
           "review": "docs/blueprint/acceptance-evidence/source-preview-closeout-20261021/whole-content-and-prior-impact-review.json"
+        },
+        {
+          "revision": "a531ba490cd23cf0d064fe01ebc68ce56da20d79",
+          "reason": "Independent whole A91207 responsive-layout and narrow changed-Source/Reader/Quality impact: registered static SVG, source-owned questions/owners/alternatives, exact native custody, two independently verified semantic corrections and final actual artifact checks. Previous facts and limits preserved, not broadly re-approved.",
+          "changedFiles": [
+            "docs/site/reference/generated-documentation-map.json",
+            "scripts/docs-publication.mjs"
+          ],
+          "review": "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/whole-layout-and-prior-impact-review.json"
         }
       ]
     },
@@ -755,7 +782,7 @@
     },
     {
       "id": "AP09.3-ready-worker-topics-20261020",
-      "revision": "8c96fe55390c1b2f656e8ee57eeac1188a782bb7",
+      "revision": "8f775411fdd8e0232bdd45135accb61f23768f0b",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/review_worker_ready",
       "gateIds": [],
@@ -830,6 +857,11 @@
           "command": "Independent Worker topic and scoped reader review",
           "exitCode": 0,
           "observation": "11 named requirements source/reader/quality PASS; focused17 links,3anchors,2repo refs,91pinned links passed."
+        },
+        {
+          "command": "Independent whole A91207 and narrow24-record changed-boundary review; original91tests and final actual Source/preview/SVG/browser proof",
+          "exitCode": 0,
+          "observation": "209output hashes,27freshSVGhashes,1660fresh excerpts; prior scoped facts and limits preserved without whole semantic/runtime reapproval. docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/whole-layout-and-prior-impact-review.json"
         }
       ],
       "review": {
@@ -902,7 +934,17 @@
           ]
         }
       ],
-      "previousReviewedRevision": "8f79e328cf216b53dc2e665896c65cbb19a2e0ce"
+      "previousReviewedRevision": "8f79e328cf216b53dc2e665896c65cbb19a2e0ce",
+      "revisionHistory": [
+        {
+          "revision": "8c96fe55390c1b2f656e8ee57eeac1188a782bb7",
+          "reason": "Independent whole A91207 responsive-layout and narrow changed-Source/Reader/Quality impact: registered static SVG, source-owned questions/owners/alternatives, exact native custody, two independently verified semantic corrections and final actual artifact checks. Previous facts and limits preserved, not broadly re-approved.",
+          "changedFiles": [
+            "docs/site/understand/worker-core.md"
+          ],
+          "review": "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/whole-layout-and-prior-impact-review.json"
+        }
+      ]
     },
     {
       "id": "AP09.7-ready-platform-topics-20261020",
@@ -1312,7 +1354,7 @@
     },
     {
       "id": "Reviewed-corrections-20261020",
-      "revision": "a531ba490cd23cf0d064fe01ebc68ce56da20d79",
+      "revision": "8f775411fdd8e0232bdd45135accb61f23768f0b",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/review_worker_ready",
       "gateIds": [],
@@ -1406,6 +1448,11 @@
           "command": "Independent whole PUB004 and narrow 21-record changed-boundary review with current original88tests/fullSource/preview/browser observations",
           "exitCode": 0,
           "observation": "180output hashes matched,all1660excerpts freshlyverified;unchanged priorsemantic/runtime boundaries. docs/blueprint/acceptance-evidence/source-preview-closeout-20261021/whole-content-and-prior-impact-review.json"
+        },
+        {
+          "command": "Independent whole A91207 and narrow24-record changed-boundary review; original91tests and final actual Source/preview/SVG/browser proof",
+          "exitCode": 0,
+          "observation": "209output hashes,27freshSVGhashes,1660fresh excerpts; prior scoped facts and limits preserved without whole semantic/runtime reapproval. docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/whole-layout-and-prior-impact-review.json"
         }
       ],
       "review": {
@@ -1588,12 +1635,20 @@
             "docs/site/reference/generated-documentation-map.json"
           ],
           "review": "docs/blueprint/acceptance-evidence/source-preview-closeout-20261021/whole-content-and-prior-impact-review.json"
+        },
+        {
+          "revision": "a531ba490cd23cf0d064fe01ebc68ce56da20d79",
+          "reason": "Independent whole A91207 responsive-layout and narrow changed-Source/Reader/Quality impact: registered static SVG, source-owned questions/owners/alternatives, exact native custody, two independently verified semantic corrections and final actual artifact checks. Previous facts and limits preserved, not broadly re-approved.",
+          "changedFiles": [
+            "docs/site/reference/generated-documentation-map.json"
+          ],
+          "review": "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/whole-layout-and-prior-impact-review.json"
         }
       ]
     },
     {
       "id": "AP09-reader-operators-20261020",
-      "revision": "a531ba490cd23cf0d064fe01ebc68ce56da20d79",
+      "revision": "8f775411fdd8e0232bdd45135accb61f23768f0b",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/review_worker_ready",
       "gateIds": [
@@ -1707,6 +1762,11 @@
           "command": "Independent whole PUB004 and narrow 21-record changed-boundary review with current original88tests/fullSource/preview/browser observations",
           "exitCode": 0,
           "observation": "180output hashes matched,all1660excerpts freshlyverified;unchanged priorsemantic/runtime boundaries. docs/blueprint/acceptance-evidence/source-preview-closeout-20261021/whole-content-and-prior-impact-review.json"
+        },
+        {
+          "command": "Independent whole A91207 and narrow24-record changed-boundary review; original91tests and final actual Source/preview/SVG/browser proof",
+          "exitCode": 0,
+          "observation": "209output hashes,27freshSVGhashes,1660fresh excerpts; prior scoped facts and limits preserved without whole semantic/runtime reapproval. docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/whole-layout-and-prior-impact-review.json"
         }
       ],
       "review": {
@@ -1803,6 +1863,14 @@
             "scripts/docs-publication.mjs"
           ],
           "review": "docs/blueprint/acceptance-evidence/source-preview-closeout-20261021/whole-content-and-prior-impact-review.json"
+        },
+        {
+          "revision": "a531ba490cd23cf0d064fe01ebc68ce56da20d79",
+          "reason": "Independent whole A91207 responsive-layout and narrow changed-Source/Reader/Quality impact: registered static SVG, source-owned questions/owners/alternatives, exact native custody, two independently verified semantic corrections and final actual artifact checks. Previous facts and limits preserved, not broadly re-approved.",
+          "changedFiles": [
+            "scripts/docs-publication.mjs"
+          ],
+          "review": "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/whole-layout-and-prior-impact-review.json"
         }
       ]
     },
@@ -1908,7 +1976,7 @@
     },
     {
       "id": "AP09-reader-developers-20261020",
-      "revision": "a531ba490cd23cf0d064fe01ebc68ce56da20d79",
+      "revision": "8f775411fdd8e0232bdd45135accb61f23768f0b",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/review_platform_ready",
       "gateIds": [
@@ -2064,6 +2132,11 @@
           "command": "Independent whole PUB004 and narrow 21-record changed-boundary review with current original88tests/fullSource/preview/browser observations",
           "exitCode": 0,
           "observation": "180output hashes matched,all1660excerpts freshlyverified;unchanged priorsemantic/runtime boundaries. docs/blueprint/acceptance-evidence/source-preview-closeout-20261021/whole-content-and-prior-impact-review.json"
+        },
+        {
+          "command": "Independent whole A91207 and narrow24-record changed-boundary review; original91tests and final actual Source/preview/SVG/browser proof",
+          "exitCode": 0,
+          "observation": "209output hashes,27freshSVGhashes,1660fresh excerpts; prior scoped facts and limits preserved without whole semantic/runtime reapproval. docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/whole-layout-and-prior-impact-review.json"
         }
       ],
       "review": {
@@ -2220,12 +2293,21 @@
             "scripts/docs-publication.mjs"
           ],
           "review": "docs/blueprint/acceptance-evidence/source-preview-closeout-20261021/whole-content-and-prior-impact-review.json"
+        },
+        {
+          "revision": "a531ba490cd23cf0d064fe01ebc68ce56da20d79",
+          "reason": "Independent whole A91207 responsive-layout and narrow changed-Source/Reader/Quality impact: registered static SVG, source-owned questions/owners/alternatives, exact native custody, two independently verified semantic corrections and final actual artifact checks. Previous facts and limits preserved, not broadly re-approved.",
+          "changedFiles": [
+            ".github/workflows/docs-checks.yaml",
+            "scripts/docs-publication.mjs"
+          ],
+          "review": "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/whole-layout-and-prior-impact-review.json"
         }
       ]
     },
     {
       "id": "AP09-reviewed-configuration-20261020",
-      "revision": "a531ba490cd23cf0d064fe01ebc68ce56da20d79",
+      "revision": "8f775411fdd8e0232bdd45135accb61f23768f0b",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/review_worker_ready",
       "gateIds": [],
@@ -2301,6 +2383,11 @@
           "command": "Independent whole PUB004 and narrow 21-record changed-boundary review with current original88tests/fullSource/preview/browser observations",
           "exitCode": 0,
           "observation": "180output hashes matched,all1660excerpts freshlyverified;unchanged priorsemantic/runtime boundaries. docs/blueprint/acceptance-evidence/source-preview-closeout-20261021/whole-content-and-prior-impact-review.json"
+        },
+        {
+          "command": "Independent whole A91207 and narrow24-record changed-boundary review; original91tests and final actual Source/preview/SVG/browser proof",
+          "exitCode": 0,
+          "observation": "209output hashes,27freshSVGhashes,1660fresh excerpts; prior scoped facts and limits preserved without whole semantic/runtime reapproval. docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/whole-layout-and-prior-impact-review.json"
         }
       ],
       "review": {
@@ -2387,12 +2474,20 @@
             "scripts/docs-publication.mjs"
           ],
           "review": "docs/blueprint/acceptance-evidence/source-preview-closeout-20261021/whole-content-and-prior-impact-review.json"
+        },
+        {
+          "revision": "a531ba490cd23cf0d064fe01ebc68ce56da20d79",
+          "reason": "Independent whole A91207 responsive-layout and narrow changed-Source/Reader/Quality impact: registered static SVG, source-owned questions/owners/alternatives, exact native custody, two independently verified semantic corrections and final actual artifact checks. Previous facts and limits preserved, not broadly re-approved.",
+          "changedFiles": [
+            "scripts/docs-publication.mjs"
+          ],
+          "review": "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/whole-layout-and-prior-impact-review.json"
         }
       ]
     },
     {
       "id": "AP09-reviewed-reference-20261020",
-      "revision": "a531ba490cd23cf0d064fe01ebc68ce56da20d79",
+      "revision": "8f775411fdd8e0232bdd45135accb61f23768f0b",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/review_platform_ready",
       "gateIds": [],
@@ -2485,6 +2580,11 @@
           "command": "Independent whole PUB004 and narrow 21-record changed-boundary review with current original88tests/fullSource/preview/browser observations",
           "exitCode": 0,
           "observation": "180output hashes matched,all1660excerpts freshlyverified;unchanged priorsemantic/runtime boundaries. docs/blueprint/acceptance-evidence/source-preview-closeout-20261021/whole-content-and-prior-impact-review.json"
+        },
+        {
+          "command": "Independent whole A91207 and narrow24-record changed-boundary review; original91tests and final actual Source/preview/SVG/browser proof",
+          "exitCode": 0,
+          "observation": "209output hashes,27freshSVGhashes,1660fresh excerpts; prior scoped facts and limits preserved without whole semantic/runtime reapproval. docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/whole-layout-and-prior-impact-review.json"
         }
       ],
       "review": {
@@ -2582,12 +2682,20 @@
             "scripts/docs-publication.mjs"
           ],
           "review": "docs/blueprint/acceptance-evidence/source-preview-closeout-20261021/whole-content-and-prior-impact-review.json"
+        },
+        {
+          "revision": "a531ba490cd23cf0d064fe01ebc68ce56da20d79",
+          "reason": "Independent whole A91207 responsive-layout and narrow changed-Source/Reader/Quality impact: registered static SVG, source-owned questions/owners/alternatives, exact native custody, two independently verified semantic corrections and final actual artifact checks. Previous facts and limits preserved, not broadly re-approved.",
+          "changedFiles": [
+            "scripts/docs-publication.mjs"
+          ],
+          "review": "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/whole-layout-and-prior-impact-review.json"
         }
       ]
     },
     {
       "id": "AP09-reviewed-maintenance-20261020",
-      "revision": "a531ba490cd23cf0d064fe01ebc68ce56da20d79",
+      "revision": "8f775411fdd8e0232bdd45135accb61f23768f0b",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/review_data_ready",
       "gateIds": [],
@@ -2654,6 +2762,11 @@
           "command": "Independent whole PUB004 and narrow 21-record changed-boundary review with current original88tests/fullSource/preview/browser observations",
           "exitCode": 0,
           "observation": "180output hashes matched,all1660excerpts freshlyverified;unchanged priorsemantic/runtime boundaries. docs/blueprint/acceptance-evidence/source-preview-closeout-20261021/whole-content-and-prior-impact-review.json"
+        },
+        {
+          "command": "Independent whole A91207 and narrow24-record changed-boundary review; original91tests and final actual Source/preview/SVG/browser proof",
+          "exitCode": 0,
+          "observation": "209output hashes,27freshSVGhashes,1660fresh excerpts; prior scoped facts and limits preserved without whole semantic/runtime reapproval. docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/whole-layout-and-prior-impact-review.json"
         }
       ],
       "review": {
@@ -2783,12 +2896,20 @@
             "scripts/docs-publication.mjs"
           ],
           "review": "docs/blueprint/acceptance-evidence/source-preview-closeout-20261021/whole-content-and-prior-impact-review.json"
+        },
+        {
+          "revision": "a531ba490cd23cf0d064fe01ebc68ce56da20d79",
+          "reason": "Independent whole A91207 responsive-layout and narrow changed-Source/Reader/Quality impact: registered static SVG, source-owned questions/owners/alternatives, exact native custody, two independently verified semantic corrections and final actual artifact checks. Previous facts and limits preserved, not broadly re-approved.",
+          "changedFiles": [
+            "scripts/docs-publication.mjs"
+          ],
+          "review": "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/whole-layout-and-prior-impact-review.json"
         }
       ]
     },
     {
       "id": "AP09-reviewed-publication-navigation-20261020",
-      "revision": "a531ba490cd23cf0d064fe01ebc68ce56da20d79",
+      "revision": "8f775411fdd8e0232bdd45135accb61f23768f0b",
       "author": "Documentation implementation authors",
       "reviewer": "/root/review_publication",
       "gateIds": [
@@ -2848,6 +2969,11 @@
           "command": "Independent whole PUB004 and narrow 21-record changed-boundary review with current original88tests/fullSource/preview/browser observations",
           "exitCode": 0,
           "observation": "180output hashes matched,all1660excerpts freshlyverified;unchanged priorsemantic/runtime boundaries. docs/blueprint/acceptance-evidence/source-preview-closeout-20261021/whole-content-and-prior-impact-review.json"
+        },
+        {
+          "command": "Independent whole A91207 and narrow24-record changed-boundary review; original91tests and final actual Source/preview/SVG/browser proof",
+          "exitCode": 0,
+          "observation": "209output hashes,27freshSVGhashes,1660fresh excerpts; prior scoped facts and limits preserved without whole semantic/runtime reapproval. docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/whole-layout-and-prior-impact-review.json"
         }
       ],
       "review": {
@@ -3008,12 +3134,21 @@
             "scripts/docs-publication.mjs"
           ],
           "review": "docs/blueprint/acceptance-evidence/source-preview-closeout-20261021/whole-content-and-prior-impact-review.json"
+        },
+        {
+          "revision": "a531ba490cd23cf0d064fe01ebc68ce56da20d79",
+          "reason": "Independent whole A91207 responsive-layout and narrow changed-Source/Reader/Quality impact: registered static SVG, source-owned questions/owners/alternatives, exact native custody, two independently verified semantic corrections and final actual artifact checks. Previous facts and limits preserved, not broadly re-approved.",
+          "changedFiles": [
+            "docs/site/reference/documentation-site.md",
+            "scripts/docs-publication.mjs"
+          ],
+          "review": "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/whole-layout-and-prior-impact-review.json"
         }
       ]
     },
     {
       "id": "AP09-closeout-runtime-20261020",
-      "revision": "078105e40a50f23983e31c136f9bd81912ae6310",
+      "revision": "8f775411fdd8e0232bdd45135accb61f23768f0b",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/close_runtime_docs",
       "gateIds": [],
@@ -3085,6 +3220,11 @@
           "command": "Independent runtime source/reader and impact review",
           "exitCode": 0,
           "observation": "6 complete requirement PASSs;97 local links checked;old accepted scopes preserved separately."
+        },
+        {
+          "command": "Independent whole A91207 and narrow24-record changed-boundary review; original91tests and final actual Source/preview/SVG/browser proof",
+          "exitCode": 0,
+          "observation": "209output hashes,27freshSVGhashes,1660fresh excerpts; prior scoped facts and limits preserved without whole semantic/runtime reapproval. docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/whole-layout-and-prior-impact-review.json"
         }
       ],
       "review": {
@@ -3167,11 +3307,21 @@
           ]
         }
       ],
-      "previousReviewedRevision": "3be8232a024f551f163d55f770c5fc97127d7902"
+      "previousReviewedRevision": "3be8232a024f551f163d55f770c5fc97127d7902",
+      "revisionHistory": [
+        {
+          "revision": "078105e40a50f23983e31c136f9bd81912ae6310",
+          "reason": "Independent whole A91207 responsive-layout and narrow changed-Source/Reader/Quality impact: registered static SVG, source-owned questions/owners/alternatives, exact native custody, two independently verified semantic corrections and final actual artifact checks. Previous facts and limits preserved, not broadly re-approved.",
+          "changedFiles": [
+            "docs/site/understand/worker-core.md"
+          ],
+          "review": "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/whole-layout-and-prior-impact-review.json"
+        }
+      ]
     },
     {
       "id": "AP09-closeout-config-reference-20261020",
-      "revision": "a531ba490cd23cf0d064fe01ebc68ce56da20d79",
+      "revision": "8f775411fdd8e0232bdd45135accb61f23768f0b",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/close_config_reference",
       "gateIds": [],
@@ -3256,6 +3406,11 @@
           "command": "Independent whole PUB004 and narrow 21-record changed-boundary review with current original88tests/fullSource/preview/browser observations",
           "exitCode": 0,
           "observation": "180output hashes matched,all1660excerpts freshlyverified;unchanged priorsemantic/runtime boundaries. docs/blueprint/acceptance-evidence/source-preview-closeout-20261021/whole-content-and-prior-impact-review.json"
+        },
+        {
+          "command": "Independent whole A91207 and narrow24-record changed-boundary review; original91tests and final actual Source/preview/SVG/browser proof",
+          "exitCode": 0,
+          "observation": "209output hashes,27freshSVGhashes,1660fresh excerpts; prior scoped facts and limits preserved without whole semantic/runtime reapproval. docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/whole-layout-and-prior-impact-review.json"
         }
       ],
       "review": {
@@ -3340,12 +3495,20 @@
             "scripts/docs-publication.mjs"
           ],
           "review": "docs/blueprint/acceptance-evidence/source-preview-closeout-20261021/whole-content-and-prior-impact-review.json"
+        },
+        {
+          "revision": "a531ba490cd23cf0d064fe01ebc68ce56da20d79",
+          "reason": "Independent whole A91207 responsive-layout and narrow changed-Source/Reader/Quality impact: registered static SVG, source-owned questions/owners/alternatives, exact native custody, two independently verified semantic corrections and final actual artifact checks. Previous facts and limits preserved, not broadly re-approved.",
+          "changedFiles": [
+            "scripts/docs-publication.mjs"
+          ],
+          "review": "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/whole-layout-and-prior-impact-review.json"
         }
       ]
     },
     {
       "id": "AP09-closeout-developer-maintenance-20261020",
-      "revision": "a531ba490cd23cf0d064fe01ebc68ce56da20d79",
+      "revision": "8f775411fdd8e0232bdd45135accb61f23768f0b",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/close_developer_maintenance",
       "gateIds": [],
@@ -3438,6 +3601,11 @@
           "command": "Independent whole PUB004 and narrow 21-record changed-boundary review with current original88tests/fullSource/preview/browser observations",
           "exitCode": 0,
           "observation": "180output hashes matched,all1660excerpts freshlyverified;unchanged priorsemantic/runtime boundaries. docs/blueprint/acceptance-evidence/source-preview-closeout-20261021/whole-content-and-prior-impact-review.json"
+        },
+        {
+          "command": "Independent whole A91207 and narrow24-record changed-boundary review; original91tests and final actual Source/preview/SVG/browser proof",
+          "exitCode": 0,
+          "observation": "209output hashes,27freshSVGhashes,1660fresh excerpts; prior scoped facts and limits preserved without whole semantic/runtime reapproval. docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/whole-layout-and-prior-impact-review.json"
         }
       ],
       "review": {
@@ -3589,6 +3757,14 @@
             "scripts/docs-publication.mjs"
           ],
           "review": "docs/blueprint/acceptance-evidence/source-preview-closeout-20261021/whole-content-and-prior-impact-review.json"
+        },
+        {
+          "revision": "a531ba490cd23cf0d064fe01ebc68ce56da20d79",
+          "reason": "Independent whole A91207 responsive-layout and narrow changed-Source/Reader/Quality impact: registered static SVG, source-owned questions/owners/alternatives, exact native custody, two independently verified semantic corrections and final actual artifact checks. Previous facts and limits preserved, not broadly re-approved.",
+          "changedFiles": [
+            "scripts/docs-publication.mjs"
+          ],
+          "review": "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/whole-layout-and-prior-impact-review.json"
         }
       ]
     },
@@ -5084,7 +5260,7 @@
     },
     {
       "id": "AP09-decision-record-content-20261021",
-      "revision": "a531ba490cd23cf0d064fe01ebc68ce56da20d79",
+      "revision": "8f775411fdd8e0232bdd45135accb61f23768f0b",
       "author": "Nova /root authored content and correction coordinator",
       "reviewer": "Independent Codex autoreview 2026-10-21 platform-ready-review",
       "gateIds": [],
@@ -5153,6 +5329,11 @@
           "command": "Independent whole PUB004 and narrow 21-record changed-boundary review with current original88tests/fullSource/preview/browser observations",
           "exitCode": 0,
           "observation": "180output hashes matched,all1660excerpts freshlyverified;unchanged priorsemantic/runtime boundaries. docs/blueprint/acceptance-evidence/source-preview-closeout-20261021/whole-content-and-prior-impact-review.json"
+        },
+        {
+          "command": "Independent whole A91207 and narrow24-record changed-boundary review; original91tests and final actual Source/preview/SVG/browser proof",
+          "exitCode": 0,
+          "observation": "209output hashes,27freshSVGhashes,1660fresh excerpts; prior scoped facts and limits preserved without whole semantic/runtime reapproval. docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/whole-layout-and-prior-impact-review.json"
         }
       ],
       "review": {
@@ -5194,12 +5375,20 @@
             "scripts/docs-publication.mjs"
           ],
           "review": "docs/blueprint/acceptance-evidence/source-preview-closeout-20261021/whole-content-and-prior-impact-review.json"
+        },
+        {
+          "revision": "a531ba490cd23cf0d064fe01ebc68ce56da20d79",
+          "reason": "Independent whole A91207 responsive-layout and narrow changed-Source/Reader/Quality impact: registered static SVG, source-owned questions/owners/alternatives, exact native custody, two independently verified semantic corrections and final actual artifact checks. Previous facts and limits preserved, not broadly re-approved.",
+          "changedFiles": [
+            "scripts/docs-publication.mjs"
+          ],
+          "review": "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/whole-layout-and-prior-impact-review.json"
         }
       ]
     },
     {
       "id": "AP09-documentation-agent-maintenance-20261021",
-      "revision": "a531ba490cd23cf0d064fe01ebc68ce56da20d79",
+      "revision": "8f775411fdd8e0232bdd45135accb61f23768f0b",
       "author": "Nova /root authored content and correction coordinator",
       "reviewer": "Independent Codex autoreview 2026-10-21 maintenance-ready-review",
       "gateIds": [],
@@ -5394,6 +5583,11 @@
           "command": "Independent whole PUB004 and narrow 21-record changed-boundary review with current original88tests/fullSource/preview/browser observations",
           "exitCode": 0,
           "observation": "180output hashes matched,all1660excerpts freshlyverified;unchanged priorsemantic/runtime boundaries. docs/blueprint/acceptance-evidence/source-preview-closeout-20261021/whole-content-and-prior-impact-review.json"
+        },
+        {
+          "command": "Independent whole A91207 and narrow24-record changed-boundary review; original91tests and final actual Source/preview/SVG/browser proof",
+          "exitCode": 0,
+          "observation": "209output hashes,27freshSVGhashes,1660fresh excerpts; prior scoped facts and limits preserved without whole semantic/runtime reapproval. docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/whole-layout-and-prior-impact-review.json"
         }
       ],
       "review": {
@@ -5527,6 +5721,20 @@
             "scripts/docs-reader/source-links.mjs"
           ],
           "review": "docs/blueprint/acceptance-evidence/source-preview-closeout-20261021/whole-content-and-prior-impact-review.json"
+        },
+        {
+          "revision": "a531ba490cd23cf0d064fe01ebc68ce56da20d79",
+          "reason": "Independent whole A91207 responsive-layout and narrow changed-Source/Reader/Quality impact: registered static SVG, source-owned questions/owners/alternatives, exact native custody, two independently verified semantic corrections and final actual artifact checks. Previous facts and limits preserved, not broadly re-approved.",
+          "changedFiles": [
+            ".github/workflows/docs-checks.yaml",
+            "docs/site/reference/documentation-site.md",
+            "scripts/docs-publication.mjs",
+            "scripts/docs-reader/package-lock.json",
+            "scripts/docs-reader/package.json",
+            "scripts/docs-reader/renderer.mjs",
+            "scripts/tests/docs-reader.test.mjs"
+          ],
+          "review": "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/whole-layout-and-prior-impact-review.json"
         }
       ]
     },
@@ -5648,7 +5856,7 @@
     },
     {
       "id": "AP09-complete-platform-change-content-20261021",
-      "revision": "a531ba490cd23cf0d064fe01ebc68ce56da20d79",
+      "revision": "8f775411fdd8e0232bdd45135accb61f23768f0b",
       "author": "Nova /root authored content and correction coordinator",
       "reviewer": "Independent Codex autoreview 2026-10-21 platform-final-review",
       "gateIds": [],
@@ -5821,6 +6029,11 @@
           "command": "Independent whole PUB004 and narrow 21-record changed-boundary review with current original88tests/fullSource/preview/browser observations",
           "exitCode": 0,
           "observation": "180output hashes matched,all1660excerpts freshlyverified;unchanged priorsemantic/runtime boundaries. docs/blueprint/acceptance-evidence/source-preview-closeout-20261021/whole-content-and-prior-impact-review.json"
+        },
+        {
+          "command": "Independent whole A91207 and narrow24-record changed-boundary review; original91tests and final actual Source/preview/SVG/browser proof",
+          "exitCode": 0,
+          "observation": "209output hashes,27freshSVGhashes,1660fresh excerpts; prior scoped facts and limits preserved without whole semantic/runtime reapproval. docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/whole-layout-and-prior-impact-review.json"
         }
       ],
       "review": {
@@ -5909,6 +6122,15 @@
             "scripts/docs-publication.mjs"
           ],
           "review": "docs/blueprint/acceptance-evidence/source-preview-closeout-20261021/whole-content-and-prior-impact-review.json"
+        },
+        {
+          "revision": "a531ba490cd23cf0d064fe01ebc68ce56da20d79",
+          "reason": "Independent whole A91207 responsive-layout and narrow changed-Source/Reader/Quality impact: registered static SVG, source-owned questions/owners/alternatives, exact native custody, two independently verified semantic corrections and final actual artifact checks. Previous facts and limits preserved, not broadly re-approved.",
+          "changedFiles": [
+            ".github/workflows/docs-checks.yaml",
+            "scripts/docs-publication.mjs"
+          ],
+          "review": "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/whole-layout-and-prior-impact-review.json"
         }
       ]
     },
@@ -6231,7 +6453,7 @@
     },
     {
       "id": "AP09-complete-plugin-maintenance-mechanisms-20261021",
-      "revision": "a531ba490cd23cf0d064fe01ebc68ce56da20d79",
+      "revision": "8f775411fdd8e0232bdd45135accb61f23768f0b",
       "author": "Nova /root documentation coordinator",
       "reviewer": "Independent Codex autoreview 2026-10-21 plugin-mechanisms whole original MNT obligations",
       "gateIds": [],
@@ -6788,6 +7010,11 @@
           "command": "Independent whole PUB004 and narrow 21-record changed-boundary review with current original88tests/fullSource/preview/browser observations",
           "exitCode": 0,
           "observation": "180output hashes matched,all1660excerpts freshlyverified;unchanged priorsemantic/runtime boundaries. docs/blueprint/acceptance-evidence/source-preview-closeout-20261021/whole-content-and-prior-impact-review.json"
+        },
+        {
+          "command": "Independent whole A91207 and narrow24-record changed-boundary review; original91tests and final actual Source/preview/SVG/browser proof",
+          "exitCode": 0,
+          "observation": "209output hashes,27freshSVGhashes,1660fresh excerpts; prior scoped facts and limits preserved without whole semantic/runtime reapproval. docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/whole-layout-and-prior-impact-review.json"
         }
       ],
       "review": {
@@ -6854,6 +7081,14 @@
             "scripts/docs-publication.mjs"
           ],
           "review": "docs/blueprint/acceptance-evidence/source-preview-closeout-20261021/whole-content-and-prior-impact-review.json"
+        },
+        {
+          "revision": "a531ba490cd23cf0d064fe01ebc68ce56da20d79",
+          "reason": "Independent whole A91207 responsive-layout and narrow changed-Source/Reader/Quality impact: registered static SVG, source-owned questions/owners/alternatives, exact native custody, two independently verified semantic corrections and final actual artifact checks. Previous facts and limits preserved, not broadly re-approved.",
+          "changedFiles": [
+            "scripts/docs-publication.mjs"
+          ],
+          "review": "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/whole-layout-and-prior-impact-review.json"
         }
       ]
     },
@@ -6997,7 +7232,7 @@
     },
     {
       "id": "AP09-complete-publication-reference-navigation-20261021",
-      "revision": "a531ba490cd23cf0d064fe01ebc68ce56da20d79",
+      "revision": "8f775411fdd8e0232bdd45135accb61f23768f0b",
       "author": "Nova /root documentation author and correction coordinator",
       "reviewer": "Independent Codex autoreview whole finished-reader-topics and LiteLLM audits with correction-final follow-up",
       "gateIds": [],
@@ -7125,6 +7360,11 @@
           "command": "Independent whole PUB004 and narrow 21-record changed-boundary review with current original88tests/fullSource/preview/browser observations",
           "exitCode": 0,
           "observation": "180output hashes matched,all1660excerpts freshlyverified;unchanged priorsemantic/runtime boundaries. docs/blueprint/acceptance-evidence/source-preview-closeout-20261021/whole-content-and-prior-impact-review.json"
+        },
+        {
+          "command": "Independent whole A91207 and narrow24-record changed-boundary review; original91tests and final actual Source/preview/SVG/browser proof",
+          "exitCode": 0,
+          "observation": "209output hashes,27freshSVGhashes,1660fresh excerpts; prior scoped facts and limits preserved without whole semantic/runtime reapproval. docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/whole-layout-and-prior-impact-review.json"
         }
       ],
       "review": {
@@ -7185,12 +7425,22 @@
             "scripts/docs-publication.mjs"
           ],
           "review": "docs/blueprint/acceptance-evidence/source-preview-closeout-20261021/whole-content-and-prior-impact-review.json"
+        },
+        {
+          "revision": "a531ba490cd23cf0d064fe01ebc68ce56da20d79",
+          "reason": "Independent whole A91207 responsive-layout and narrow changed-Source/Reader/Quality impact: registered static SVG, source-owned questions/owners/alternatives, exact native custody, two independently verified semantic corrections and final actual artifact checks. Previous facts and limits preserved, not broadly re-approved.",
+          "changedFiles": [
+            ".github/workflows/docs-checks.yaml",
+            "docs/site/reference/documentation-site.md",
+            "scripts/docs-publication.mjs"
+          ],
+          "review": "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/whole-layout-and-prior-impact-review.json"
         }
       ]
     },
     {
       "id": "AP09-complete-developer-reader-contracts-20261021",
-      "revision": "a531ba490cd23cf0d064fe01ebc68ce56da20d79",
+      "revision": "8f775411fdd8e0232bdd45135accb61f23768f0b",
       "author": "Nova /root documentation author and correction coordinator",
       "reviewer": "Independent Codex autoreview whole finished-reader-topics and LiteLLM audits with correction-final follow-up",
       "gateIds": [],
@@ -7429,6 +7679,11 @@
           "command": "Independent whole PUB004 and narrow 21-record changed-boundary review with current original88tests/fullSource/preview/browser observations",
           "exitCode": 0,
           "observation": "180output hashes matched,all1660excerpts freshlyverified;unchanged priorsemantic/runtime boundaries. docs/blueprint/acceptance-evidence/source-preview-closeout-20261021/whole-content-and-prior-impact-review.json"
+        },
+        {
+          "command": "Independent whole A91207 and narrow24-record changed-boundary review; original91tests and final actual Source/preview/SVG/browser proof",
+          "exitCode": 0,
+          "observation": "209output hashes,27freshSVGhashes,1660fresh excerpts; prior scoped facts and limits preserved without whole semantic/runtime reapproval. docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/whole-layout-and-prior-impact-review.json"
         }
       ],
       "review": {
@@ -7485,12 +7740,21 @@
             "scripts/docs-publication.mjs"
           ],
           "review": "docs/blueprint/acceptance-evidence/source-preview-closeout-20261021/whole-content-and-prior-impact-review.json"
+        },
+        {
+          "revision": "a531ba490cd23cf0d064fe01ebc68ce56da20d79",
+          "reason": "Independent whole A91207 responsive-layout and narrow changed-Source/Reader/Quality impact: registered static SVG, source-owned questions/owners/alternatives, exact native custody, two independently verified semantic corrections and final actual artifact checks. Previous facts and limits preserved, not broadly re-approved.",
+          "changedFiles": [
+            ".github/workflows/docs-checks.yaml",
+            "scripts/docs-publication.mjs"
+          ],
+          "review": "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/whole-layout-and-prior-impact-review.json"
         }
       ]
     },
     {
       "id": "AP09-complete-static-reader-search-20261021",
-      "revision": "a531ba490cd23cf0d064fe01ebc68ce56da20d79",
+      "revision": "8f775411fdd8e0232bdd45135accb61f23768f0b",
       "author": "Nova /root documentation author and implementation coordinator",
       "reviewer": "Independent Codex autoreview static-reader whole PUB-002 Source/reader-quality closeout",
       "verdict": "PASS",
@@ -7736,6 +8000,11 @@
           "command": "Independent whole PUB004 and narrow 21-record changed-boundary review with current original88tests/fullSource/preview/browser observations",
           "exitCode": 0,
           "observation": "180output hashes matched,all1660excerpts freshlyverified;unchanged priorsemantic/runtime boundaries. docs/blueprint/acceptance-evidence/source-preview-closeout-20261021/whole-content-and-prior-impact-review.json"
+        },
+        {
+          "command": "Independent whole A91207 and narrow24-record changed-boundary review; original91tests and final actual Source/preview/SVG/browser proof",
+          "exitCode": 0,
+          "observation": "209output hashes,27freshSVGhashes,1660fresh excerpts; prior scoped facts and limits preserved without whole semantic/runtime reapproval. docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/whole-layout-and-prior-impact-review.json"
         }
       ],
       "limits": [
@@ -7784,12 +8053,28 @@
             "scripts/docs-reader/source-links.mjs"
           ],
           "review": "docs/blueprint/acceptance-evidence/source-preview-closeout-20261021/whole-content-and-prior-impact-review.json"
+        },
+        {
+          "revision": "a531ba490cd23cf0d064fe01ebc68ce56da20d79",
+          "reason": "Independent whole A91207 responsive-layout and narrow changed-Source/Reader/Quality impact: registered static SVG, source-owned questions/owners/alternatives, exact native custody, two independently verified semantic corrections and final actual artifact checks. Previous facts and limits preserved, not broadly re-approved.",
+          "changedFiles": [
+            "docs/site/reference/documentation-site.md",
+            "docs/site/understand/prism-runtime.md",
+            "docs/site/understand/worker-core.md",
+            "scripts/docs-api-documentation-role-custody.mjs",
+            "scripts/docs-publication.mjs",
+            "scripts/docs-reader/package-lock.json",
+            "scripts/docs-reader/package.json",
+            "scripts/docs-reader/renderer.mjs",
+            "scripts/tests/docs-reader.test.mjs"
+          ],
+          "review": "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/whole-layout-and-prior-impact-review.json"
         }
       ]
     },
     {
       "id": "AP09-search-reader-gate-20261021",
-      "revision": "a531ba490cd23cf0d064fe01ebc68ce56da20d79",
+      "revision": "8f775411fdd8e0232bdd45135accb61f23768f0b",
       "author": "Nova /root documentation author and implementation coordinator",
       "reviewer": "Independent Codex autoreview whole A912-04 code/evidence review plus narrow Source/Reader/Quality native-impact follow-up",
       "verdict": "PASS",
@@ -7851,6 +8136,11 @@
           "command": "Independent whole PUB004 and narrow 21-record changed-boundary review with current original88tests/fullSource/preview/browser observations",
           "exitCode": 0,
           "observation": "180output hashes matched,all1660excerpts freshlyverified;unchanged priorsemantic/runtime boundaries. docs/blueprint/acceptance-evidence/source-preview-closeout-20261021/whole-content-and-prior-impact-review.json"
+        },
+        {
+          "command": "Independent whole A91207 and narrow24-record changed-boundary review; original91tests and final actual Source/preview/SVG/browser proof",
+          "exitCode": 0,
+          "observation": "209output hashes,27freshSVGhashes,1660fresh excerpts; prior scoped facts and limits preserved without whole semantic/runtime reapproval. docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/whole-layout-and-prior-impact-review.json"
         }
       ],
       "limits": [
@@ -7881,12 +8171,24 @@
             "scripts/docs-reader/renderer.mjs"
           ],
           "review": "docs/blueprint/acceptance-evidence/source-preview-closeout-20261021/whole-content-and-prior-impact-review.json"
+        },
+        {
+          "revision": "a531ba490cd23cf0d064fe01ebc68ce56da20d79",
+          "reason": "Independent whole A91207 responsive-layout and narrow changed-Source/Reader/Quality impact: registered static SVG, source-owned questions/owners/alternatives, exact native custody, two independently verified semantic corrections and final actual artifact checks. Previous facts and limits preserved, not broadly re-approved.",
+          "changedFiles": [
+            ".github/workflows/docs-checks.yaml",
+            "docs/site/reference/documentation-site.md",
+            "scripts/docs-api-documentation-role-custody.mjs",
+            "scripts/docs-reader/renderer.mjs",
+            "scripts/tests/docs-reader.test.mjs"
+          ],
+          "review": "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/whole-layout-and-prior-impact-review.json"
         }
       ]
     },
     {
       "id": "AP09-rendered-source-bounds-gate-20261021",
-      "revision": "a531ba490cd23cf0d064fe01ebc68ce56da20d79",
+      "revision": "8f775411fdd8e0232bdd45135accb61f23768f0b",
       "author": "Nova /root documentation author and implementation coordinator",
       "reviewer": "Independent Codex autoreview whole A912-09 Source/Reader/Quality review and narrow changed-boundary impact review for 21 prior PASS records",
       "verdict": "PASS",
@@ -7959,6 +8261,11 @@
           "command": "Independent whole PUB004 and narrow 21-record changed-boundary review with current original88tests/fullSource/preview/browser observations",
           "exitCode": 0,
           "observation": "180output hashes matched,all1660excerpts freshlyverified;unchanged priorsemantic/runtime boundaries. docs/blueprint/acceptance-evidence/source-preview-closeout-20261021/whole-content-and-prior-impact-review.json"
+        },
+        {
+          "command": "Independent whole A91207 and narrow24-record changed-boundary review; original91tests and final actual Source/preview/SVG/browser proof",
+          "exitCode": 0,
+          "observation": "209output hashes,27freshSVGhashes,1660fresh excerpts; prior scoped facts and limits preserved without whole semantic/runtime reapproval. docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/whole-layout-and-prior-impact-review.json"
         }
       ],
       "limits": [
@@ -7982,12 +8289,25 @@
             "scripts/docs-reader/source-links.mjs"
           ],
           "review": "docs/blueprint/acceptance-evidence/source-preview-closeout-20261021/whole-content-and-prior-impact-review.json"
+        },
+        {
+          "revision": "a531ba490cd23cf0d064fe01ebc68ce56da20d79",
+          "reason": "Independent whole A91207 responsive-layout and narrow changed-Source/Reader/Quality impact: registered static SVG, source-owned questions/owners/alternatives, exact native custody, two independently verified semantic corrections and final actual artifact checks. Previous facts and limits preserved, not broadly re-approved.",
+          "changedFiles": [
+            ".github/workflows/docs-checks.yaml",
+            "docs/site/reference/documentation-site.md",
+            "scripts/docs-api-documentation-role-custody.mjs",
+            "scripts/docs-publication.mjs",
+            "scripts/docs-reader/renderer.mjs",
+            "scripts/tests/docs-reader.test.mjs"
+          ],
+          "review": "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/whole-layout-and-prior-impact-review.json"
         }
       ]
     },
     {
       "id": "AP09-complete-static-offline-fallback-20261021",
-      "revision": "a531ba490cd23cf0d064fe01ebc68ce56da20d79",
+      "revision": "8f775411fdd8e0232bdd45135accb61f23768f0b",
       "author": "Nova /root documentation author and implementation coordinator",
       "reviewer": "Independent Codex autoreview whole PUB-006/A912-10 Source/Reader/Quality closeout, inspecting original obligation, actual browser provenance and critical task prose",
       "verdict": "PASS",
@@ -8048,6 +8368,11 @@
           "command": "Independent whole PUB004 and narrow 21-record changed-boundary review with current original88tests/fullSource/preview/browser observations",
           "exitCode": 0,
           "observation": "180output hashes matched,all1660excerpts freshlyverified;unchanged priorsemantic/runtime boundaries. docs/blueprint/acceptance-evidence/source-preview-closeout-20261021/whole-content-and-prior-impact-review.json"
+        },
+        {
+          "command": "Independent whole A91207 and narrow24-record changed-boundary review; original91tests and final actual Source/preview/SVG/browser proof",
+          "exitCode": 0,
+          "observation": "209output hashes,27freshSVGhashes,1660fresh excerpts; prior scoped facts and limits preserved without whole semantic/runtime reapproval. docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/whole-layout-and-prior-impact-review.json"
         }
       ],
       "limits": [
@@ -8067,12 +8392,22 @@
             "scripts/docs-reader/renderer.mjs"
           ],
           "review": "docs/blueprint/acceptance-evidence/source-preview-closeout-20261021/whole-content-and-prior-impact-review.json"
+        },
+        {
+          "revision": "a531ba490cd23cf0d064fe01ebc68ce56da20d79",
+          "reason": "Independent whole A91207 responsive-layout and narrow changed-Source/Reader/Quality impact: registered static SVG, source-owned questions/owners/alternatives, exact native custody, two independently verified semantic corrections and final actual artifact checks. Previous facts and limits preserved, not broadly re-approved.",
+          "changedFiles": [
+            "docs/site/reference/documentation-site.md",
+            "scripts/docs-publication.mjs",
+            "scripts/docs-reader/renderer.mjs"
+          ],
+          "review": "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/whole-layout-and-prior-impact-review.json"
         }
       ]
     },
     {
       "id": "AP09-complete-same-source-code-preview-20261021",
-      "revision": "a531ba490cd23cf0d064fe01ebc68ce56da20d79",
+      "revision": "8f775411fdd8e0232bdd45135accb61f23768f0b",
       "author": "Nova /root documentation author and implementation coordinator",
       "reviewer": "Independent Codex autoreview whole PUB004 Source/Reader/Quality closeout plus narrow changed-boundary preservation for21priorPASSrecords",
       "verdict": "PASS",
@@ -8138,6 +8473,11 @@
           "command": "Original custody/publication/Argo/reader/Source/preview test suites and workflow-trust checks",
           "exitCode": 0,
           "observation": "88/88originaltests+7/7workflowtrust PASS. Historicalvsworktree,inertscript,CRLF,missing/symlink/range/mutableSHA/cache/fencedexample controls;digest-consistent alteredcode rejected.4exactnative renewals/56unchanged/2newDocPurposes;6actualguardsPASS."
+        },
+        {
+          "command": "Independent whole A91207 and narrow24-record changed-boundary review; original91tests and final actual Source/preview/SVG/browser proof",
+          "exitCode": 0,
+          "observation": "209output hashes,27freshSVGhashes,1660fresh excerpts; prior scoped facts and limits preserved without whole semantic/runtime reapproval. docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/whole-layout-and-prior-impact-review.json"
         }
       ],
       "limits": [
@@ -8146,6 +8486,137 @@
         "ThreeSource boxes containingonlydirectory/named-anchor references remain ordinarylinks, not fake code previews.",
         "No diagram/layoutgate, humanScreenReader, freshuser, hosting, globalAPI or productruntime approval.",
         "GlobalAPIbundlecopier74 andthreeunchangedstaleHelmphrases stayopen."
+      ],
+      "openIssues": [],
+      "revisionHistory": [
+        {
+          "revision": "a531ba490cd23cf0d064fe01ebc68ce56da20d79",
+          "reason": "Independent whole A91207 responsive-layout and narrow changed-Source/Reader/Quality impact: registered static SVG, source-owned questions/owners/alternatives, exact native custody, two independently verified semantic corrections and final actual artifact checks. Previous facts and limits preserved, not broadly re-approved.",
+          "changedFiles": [
+            ".github/workflows/docs-checks.yaml",
+            "docs/site/reference/documentation-site.md",
+            "scripts/docs-api-documentation-role-custody.mjs",
+            "scripts/docs-publication.mjs",
+            "scripts/docs-reader/renderer.mjs"
+          ],
+          "review": "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/whole-layout-and-prior-impact-review.json"
+        }
+      ]
+    },
+    {
+      "id": "AP09-complete-responsive-reader-layout-20261021",
+      "revision": "8f775411fdd8e0232bdd45135accb61f23768f0b",
+      "author": "Nova /root documentation author and implementation coordinator",
+      "reviewer": "Independent Codex autoreview whole A91207 responsive-layout closeout and narrow24-record prior-boundary preservation",
+      "verdict": "PASS",
+      "requirementIds": [],
+      "gateIds": [
+        "A912-07"
+      ],
+      "pages": [
+        "docs/site/reference/documentation-site.md",
+        "docs/site/understand/prism-runtime.md",
+        "docs/site/understand/worker-core.md"
+      ],
+      "sources": [
+        "scripts/docs-publication.mjs",
+        "scripts/docs-reader/renderer.mjs",
+        "scripts/docs-reader/diagrams.mjs",
+        "scripts/docs-reader/check-diagrams.mjs",
+        "scripts/docs-reader/source-previews.mjs",
+        "scripts/docs-reader/source-links.mjs",
+        "scripts/docs-reader/package.json",
+        "scripts/docs-reader/package-lock.json",
+        "scripts/tests/docs-reader-diagrams.test.mjs",
+        "scripts/tests/docs-reader.test.mjs",
+        "scripts/docs-api-documentation-role-custody.mjs",
+        "docs/config/documentation-diagrams.json",
+        ".github/workflows/docs-checks.yaml",
+        "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corrected-axe-observations.json",
+        "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corrected-browser-harness-provenance.json",
+        "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corrected-browser-observations.json",
+        "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corrected-diagram-manifest.json",
+        "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corrected-images/diagram-0f029c30e10c4448-full.png",
+        "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corrected-images/diagram-0f4497fd43eef4ed-full.png",
+        "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corrected-images/diagram-103d8eadfc4cc651-full.png",
+        "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corrected-images/diagram-103d8eadfc4cc651-mobile.png",
+        "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corrected-images/diagram-11b058604e7e4129-full.png",
+        "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corrected-images/diagram-3040be06a2ca5b14-full.png",
+        "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corrected-images/diagram-3b52a062e077e074-full.png",
+        "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corrected-images/diagram-3bcb1bfe88a28c51-full.png",
+        "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corrected-images/diagram-4dc422d67c265fd9-full.png",
+        "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corrected-images/diagram-5b05df08c6d4de49-full.png",
+        "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corrected-images/diagram-605a76cab20cfebf-full.png",
+        "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corrected-images/diagram-605a76cab20cfebf-mobile.png",
+        "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corrected-images/diagram-6802ba43c34d2052-full.png",
+        "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corrected-images/diagram-6e2b51e2c5b4e58e-full.png",
+        "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corrected-images/diagram-72c587181952cb2f-full.png",
+        "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corrected-images/diagram-72c587181952cb2f-mobile.png",
+        "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corrected-images/diagram-865c11cbad4bc6f0-full.png",
+        "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corrected-images/diagram-894c4ee28dace602-full.png",
+        "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corrected-images/diagram-9546393698719b4f-full.png",
+        "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corrected-images/diagram-9b919d5135916a43-full.png",
+        "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corrected-images/diagram-a7fdace370992a64-full.png",
+        "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corrected-images/diagram-aa13d9d4c599db83-full.png",
+        "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corrected-images/diagram-be26288d618208c0-full.png",
+        "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corrected-images/diagram-df5ab3f6a317ad1b-full.png",
+        "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corrected-images/diagram-dfc5314e0b82b354-full.png",
+        "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corrected-images/diagram-dfc5314e0b82b354-mobile.png",
+        "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corrected-images/diagram-e1d664febf645813-full.png",
+        "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corrected-images/diagram-e8beb8435cf1a6fc-full.png",
+        "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corrected-images/diagram-e9adf15cb5cf80b6-full.png",
+        "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corrected-images/diagram-ea45cd168e3309e3-full.png",
+        "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corrected-images/diagram-fa17e8be474839f8-full.png",
+        "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corrected-images/diagram-fa17e8be474839f8-mobile.png",
+        "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corrected-output-observations.json",
+        "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corrected-reader-manifest.json",
+        "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corrected-source-observations.json",
+        "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corrected-whole-reader-observations.json",
+        "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/diagram-code-review.json",
+        "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/diagram-dependency-audit-patched.json",
+        "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/diagram-dependency-audit.json",
+        "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/diagram-four-role-check.json",
+        "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/diagram-native-baseline-difference.json",
+        "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/diagram-native-propagation.json",
+        "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/diagram-reference-lock.json",
+        "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/initial-semantic-review.json",
+        "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/precommit-observations.json",
+        "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/prior-source-impact-records.json",
+        "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/prism-readability-correction-review.json",
+        "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/semantic-correction-source-observations.json",
+        "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/semantic-review-capacity-failures.json",
+        "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/system-and-confirmed-corrections-review.json",
+        "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/whole-layout-and-prior-impact-review.json"
+      ],
+      "summary": "Whole A91207 responsive reader layout at320/768/1440: navigation,tables,code,27 registered static diagrams,callouts,search remain available without page overflow; focusable internally scrolling regions preserve full content and textual alternatives.",
+      "review": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS",
+        "report": "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/whole-layout-and-prior-impact-review.json"
+      },
+      "checks": [
+        {
+          "command": "Actual committed e28bfec5 build and artifact/search/Source/preview/fresh-diagram verification",
+          "exitCode": 0,
+          "observation": "167canonical,177HTML,209hashes,36952localtargets;12searchquestions;14428Source locators/3730objects;1660excerpts/874objects;27freshSVGhashes matched."
+        },
+        {
+          "command": "Retained whole-reader/offline and all-diagram browser harnesses with exact source provenance",
+          "exitCode": 0,
+          "observation": "501page×width checks,81diagram×width/native keyboard checks,27role/offline/search observations,9axe checks;0findings/0externalrequests. Full natural diagrams and mobile viewports retained."
+        },
+        {
+          "command": "Original91custody/publication/reader tests and7workflowtrust checks; changed-doc/registry checks and code/correction reviews",
+          "exitCode": 0,
+          "observation": "91/91+7/7PASS;2precise native receipt renewals/60unchanged/2newDocroles;isolated lock source-input separately accounted. Root package/lock unchanged. Scoped semantic corrections independently clean."
+        }
+      ],
+      "limits": [
+        "Whole responsive-layout gate only; PUB005/A91206 semantic diagram completeness NOT_READY:16/27 scoped supported,6system and5service proofs incomplete;capacity failures preserved.",
+        "Human screenreader/fresh-role user/hosting/live workflows/global API not accepted by automated browser or byte checks.",
+        "Native table/code/diagram internal horizontal scroll is intentional and focus/keyboard tested; no horizontal PAGE navigation.",
+        "Global bundle-copier and three stale generated Helm phrases remain open."
       ],
       "openIssues": []
     }
@@ -28762,11 +29233,18 @@
       "id": "A912-07",
       "passCondition": "Mobile, Tablet und Desktop bestehen definierte Layoutprüfungen für Navigation, Tabellen, Code, Diagramme, Callouts und Suche ohne Informationsverlust oder horizontale Seitennavigation.",
       "automaticFailure": "Nur Screenshots der Startseite oder visuelle Einzelprüfung.",
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [],
       "readerFixtureIds": [],
-      "executionScenarioIds": []
+      "executionScenarioIds": [],
+      "completionRecord": "AP09-complete-responsive-reader-layout-20261021",
+      "closureDecision": {
+        "verdict": "PASS",
+        "revision": "8f775411fdd8e0232bdd45135accb61f23768f0b",
+        "reason": "Whole A91207 responsive reader layout at320/768/1440: navigation,tables,code,27 registered static diagrams,callouts,search remain available without page overflow; focusable internally scrolling regions preserve full content and textual alternatives.",
+        "completionRecord": "AP09-complete-responsive-reader-layout-20261021"
+      }
     },
     {
       "id": "A912-08",
@@ -40284,50 +40762,40 @@
       "scope": "Author32Bash53Node20CJS24syntheticchecks only, noformal6scenario/live/ReaderQualityapproval."
     },
     "currentCloseout20261021": {
-      "securedSourceRevision": "a531ba490cd23cf0d064fe01ebc68ce56da20d79",
+      "securedSourceRevision": "8f775411fdd8e0232bdd45135accb61f23768f0b",
       "acceptedRequirements": 203,
-      "acceptedGates": 16,
+      "acceptedGates": 17,
       "newRequirementsThisCampaign": 44,
-      "newGatesThisCampaign": 5,
-      "nextWork": "Canonical six-field evidence-box contract A91205 stillopen;actual rendered diagrams withSource/owner/text alternatives PUB005/A91206 next concrete presentation boundary. Keep approved layout. Globalbuild-runtime-role-bundle.mjs:74 andthreeunchangedHelmphrases block broadermechanical closure.58contents/73gates unwaived.",
+      "newGatesThisCampaign": 6,
+      "nextWork": "58contents/72gates open:11diagram Source scopes incomplete;PUB005/A91206 NOT_READY;A91205 six-field format/global API bundle copier/three stale Helm texts remain. Preserve approved reader design.",
       "codeCandidate": "912bbbd4: inertSource excerpts, exactSource/MD/HTMLreceipts,freshCLIcheck,unchangedoriginalsearch;88/88testsPASS,4preciserenewals/56unchanged/2newDocroles.",
       "currentGlobalBlocker": "API_PRODUCT_SCRIPT_OUTPUT_ROLE_UNQUALIFIED: scripts/build-runtime-role-bundle.mjs:74; copied opaque package/dependency payloads and caller-context coverage.",
-      "publication": "WholePUB002/PUB004/PUB006,A91204/A91209/A91210accepted. Current1660same-source excerpts/390boxes/874objects;180outputhashes/14419Source locators/3726objects.501page×width+27journey/search+9expandedpreview+9axe checks PASS. NoA91205/screenreader/diagramvisual/liveclaim.",
-      "scope": "203/261contents,16/89gates. Preserve negative/historical evidence; same-source previews and static reader proofs separate from runtime effects.",
+      "publication": "Registered static SVG diagrams with explicit reader questions,owner,hashes,visible text alternatives;27fresh render matches and 209output hashes.501page+81diagram+27fallback+9axe checks. No whole semantic, humanAT or runtime approval.",
+      "scope": "203/261contents,17/89gates. A91207 responsive layout only; retained negative semantic/history boundaries.",
       "owner": "Nova, continuing the authorized PR13 request from Raven on2026-10-21",
       "workingTree": "Expected clean after checkpoint; verify before continuation. Never use obsolete dirty kubeclaw-documentation-cloud checkout as the current PR13 source.",
       "checkout": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery",
       "remoteBranch": "refs/heads/docs/documentation-overhaul",
       "review": {
-        "report": "docs/blueprint/acceptance-evidence/source-preview-closeout-20261021/whole-content-and-prior-impact-review.json",
-        "result": "Clean wholePUB004 Source/Reader/Quality and narrow21recordpreservation verdict.",
-        "limit": "NoA91205 orotherpublication/runtimeglobalapproval."
+        "report": "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/whole-layout-and-prior-impact-review.json",
+        "result": "Whole A91207 and narrow24-record preservation clean.",
+        "limit": "PUB005/A91206 and humanAT/globalAPI not awarded."
       },
       "checks": [
         {
-          "command": "node scripts/docs-publication.mjs build && node --max-old-space-size=4096 scripts/docs-reader/check-artifact.mjs && node scripts/docs-reader/check-search.mjs",
+          "command": "Actual committed e28bfec5 build and artifact/search/Source/preview/fresh-diagram verification",
           "exitCode": 0,
-          "observation": "Committed912bbbd4:167canonical/176HTML/180digests/36698localtargets;12searchquestions PASS. Originalpositivepage/asset selection retained;previewcode excludedfromsearch."
+          "observation": "167canonical,177HTML,209hashes,36952localtargets;12searchquestions;14428Source locators/3730objects;1660excerpts/874objects;27freshSVGhashes matched."
         },
         {
-          "command": "node --max-old-space-size=4096 scripts/docs-reader/check-source-previews.mjs",
+          "command": "Retained whole-reader/offline and all-diagram browser harnesses with exact source provenance",
           "exitCode": 0,
-          "observation": "All1660actualHTMLexcerpts matchfreshcommittedGit/fixedprimaryHTTPSbytes;874objects,390Sourceboxes. Explicitrangesfull;barefilesfirst80orfewerlabelled. Rawsource SHA andLF-displayexcerpthash distinct. MDinputs/artifacthashes/positivepage-set bound."
+          "observation": "501page×width checks,81diagram×width/native keyboard checks,27role/offline/search observations,9axe checks;0findings/0externalrequests. Full natural diagrams and mobile viewports retained."
         },
         {
-          "command": "node --max-old-space-size=4096 scripts/docs-reader/check-source-links.mjs",
+          "command": "Original91custody/publication/reader tests and7workflowtrust checks; changed-doc/registry checks and code/correction reviews",
           "exitCode": 0,
-          "observation": "14419Source locators/3726objects/176actualHTML,including118upstreamfiles/11repos;0stderr."
-        },
-        {
-          "command": "Actual retained preview-widget, expanded-axe and full static/offline browser harnesses",
-          "exitCode": 0,
-          "observation": "501page×width and27criticaljourney/search checks,9expandednoJS/offlinepreview browser/text/nativeSpace checks,9expandedpreviewaxeWCAG2A/AA/2.1AA analyses;0findings/0external browserrequests. HumanScreenReader/fresh-person/all-diagramvisual not claimed."
-        },
-        {
-          "command": "Original custody/publication/Argo/reader/Source/preview test suites and workflow-trust checks",
-          "exitCode": 0,
-          "observation": "88/88originaltests+7/7workflowtrust PASS. Historicalvsworktree,inertscript,CRLF,missing/symlink/range/mutableSHA/cache/fencedexample controls;digest-consistent alteredcode rejected.4exactnative renewals/56unchanged/2newDocPurposes;6actualguardsPASS."
+          "observation": "91/91+7/7PASS;2precise native receipt renewals/60unchanged/2newDocroles;isolated lock source-input separately accounted. Root package/lock unchanged. Scoped semantic corrections independently clean."
         }
       ]
     }
