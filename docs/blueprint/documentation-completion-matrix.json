@@ -760,7 +760,7 @@
     },
     {
       "id": "AP09.7-ready-platform-topics-20261020",
-      "revision": "8f79e328cf216b53dc2e665896c65cbb19a2e0ce",
+      "revision": "6abafbbc81a728f3ea7f12e83426c9565a72c473",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/review_platform_ready",
       "gateIds": [
@@ -941,13 +941,27 @@
           ],
           "verdict": "PASS",
           "summary": "Independent publication impact preserves original requirement/gate scopes and limits.53generated pages change only commit IDs;505cited source pairs byte-identical. Prose corrections/entry links preserve technical meaning. Derived page-map lastVerified fields use the same audited revision substitution only; ownership/routes/sources/checks byte-identical after revision normalization."
+        },
+        {
+          "reviewer": "Independent Codex autoreview 2026-10-21 registry-profiles-final-review",
+          "previousReviewedRevision": "8f79e328cf216b53dc2e665896c65cbb19a2e0ce",
+          "revision": "6abafbbc81a728f3ea7f12e83426c9565a72c473",
+          "changedDependencies": [
+            "docs/site/understand/platform-and-operations.md"
+          ],
+          "verdict": "PASS",
+          "summary": "Both writable-registry profiles remain in scope. Endpoint, dependency, storage/capacity and recovery contracts now agree with direct RWOP/Recreate and active Argo ephemeral/delete-enabled/NodePort selections. Whole COM010 final review explicitly preserves A9702 all six dependency families and A9704, all other named prior content and A9703; no global/runtime/browser qualification.",
+          "evidence": [
+            "docs/blueprint/acceptance-evidence/registry-studio-complete-20261021/registry-profiles-final-review.json",
+            "docs/blueprint/acceptance-evidence/registry-studio-complete-20261021/checks.json"
+          ]
         }
       ],
-      "previousReviewedRevision": "ad66f324ab0273db59397d42f35d94cd4dc62cdd"
+      "previousReviewedRevision": "8f79e328cf216b53dc2e665896c65cbb19a2e0ce"
     },
     {
       "id": "AP09.7-ready-data-topics-20261020",
-      "revision": "3be8232a024f551f163d55f770c5fc97127d7902",
+      "revision": "6abafbbc81a728f3ea7f12e83426c9565a72c473",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/review_data_ready",
       "gateIds": [],
@@ -1116,9 +1130,23 @@
             "docs/blueprint/acceptance-evidence/ready-topics-20261021/state-final-review.json",
             "docs/blueprint/acceptance-evidence/ready-topics-20261021/platform-final-review.json"
           ]
+        },
+        {
+          "reviewer": "Independent Codex autoreview 2026-10-21 registry-profiles-final-review",
+          "previousReviewedRevision": "3be8232a024f551f163d55f770c5fc97127d7902",
+          "revision": "6abafbbc81a728f3ea7f12e83426c9565a72c473",
+          "changedDependencies": [
+            "docs/site/understand/communication.md"
+          ],
+          "verdict": "PASS",
+          "summary": "Both writable-registry profiles remain in scope. Endpoint, dependency, storage/capacity and recovery contracts now agree with direct RWOP/Recreate and active Argo ephemeral/delete-enabled/NodePort selections. Whole COM010 final review explicitly preserves A9702 all six dependency families and A9704, all other named prior content and A9703; no global/runtime/browser qualification.",
+          "evidence": [
+            "docs/blueprint/acceptance-evidence/registry-studio-complete-20261021/registry-profiles-final-review.json",
+            "docs/blueprint/acceptance-evidence/registry-studio-complete-20261021/checks.json"
+          ]
         }
       ],
-      "previousReviewedRevision": "22d46485dc8fc2818805fb7946acae0e0479a947"
+      "previousReviewedRevision": "3be8232a024f551f163d55f770c5fc97127d7902"
     },
     {
       "id": "Reviewed-corrections-20261020",
@@ -3192,7 +3220,7 @@
     },
     {
       "id": "AP09-selected-model-gateway-20261021",
-      "revision": "8f79e328cf216b53dc2e665896c65cbb19a2e0ce",
+      "revision": "6abafbbc81a728f3ea7f12e83426c9565a72c473",
       "author": "Documentation authors and /root correction coordinator",
       "reviewer": "Independent Codex autoreview 2026-10-21 (ready, correction-final and contributor invocations)",
       "gateIds": [
@@ -3249,9 +3277,24 @@
           ],
           "verdict": "PASS",
           "summary": "Independent publication impact preserves original requirement/gate scopes and limits.53generated pages change only commit IDs;505cited source pairs byte-identical. Prose corrections/entry links preserve technical meaning. Derived page-map lastVerified fields use the same audited revision substitution only; ownership/routes/sources/checks byte-identical after revision normalization."
+        },
+        {
+          "reviewer": "Independent Codex autoreview 2026-10-21 registry-profiles-final-review",
+          "previousReviewedRevision": "8f79e328cf216b53dc2e665896c65cbb19a2e0ce",
+          "revision": "6abafbbc81a728f3ea7f12e83426c9565a72c473",
+          "changedDependencies": [
+            "docs/site/understand/pipeline-dependencies.md",
+            "docs/site/understand/platform-and-operations.md"
+          ],
+          "verdict": "PASS",
+          "summary": "Both writable-registry profiles remain in scope. Endpoint, dependency, storage/capacity and recovery contracts now agree with direct RWOP/Recreate and active Argo ephemeral/delete-enabled/NodePort selections. Whole COM010 final review explicitly preserves A9702 all six dependency families and A9704, all other named prior content and A9703; no global/runtime/browser qualification.",
+          "evidence": [
+            "docs/blueprint/acceptance-evidence/registry-studio-complete-20261021/registry-profiles-final-review.json",
+            "docs/blueprint/acceptance-evidence/registry-studio-complete-20261021/checks.json"
+          ]
         }
       ],
-      "previousReviewedRevision": "ad66f324ab0273db59397d42f35d94cd4dc62cdd"
+      "previousReviewedRevision": "8f79e328cf216b53dc2e665896c65cbb19a2e0ce"
     },
     {
       "id": "AP09-contributor-baselines-and-migrations-20261021",
@@ -3513,7 +3556,7 @@
     },
     {
       "id": "AP09-communication-complete-contracts-20261021",
-      "revision": "3be8232a024f551f163d55f770c5fc97127d7902",
+      "revision": "6abafbbc81a728f3ea7f12e83426c9565a72c473",
       "author": "Nova /root communication correction coordinator",
       "reviewer": "Independent Codex autoreview 2026-10-21; successive complete-topic audits and final native identity closure",
       "gateIds": [],
@@ -3677,13 +3720,27 @@
             "docs/blueprint/acceptance-evidence/ready-topics-20261021/state-final-review.json",
             "docs/blueprint/acceptance-evidence/ready-topics-20261021/platform-final-review.json"
           ]
+        },
+        {
+          "reviewer": "Independent Codex autoreview 2026-10-21 registry-profiles-final-review",
+          "previousReviewedRevision": "3be8232a024f551f163d55f770c5fc97127d7902",
+          "revision": "6abafbbc81a728f3ea7f12e83426c9565a72c473",
+          "changedDependencies": [
+            "docs/site/understand/communication.md"
+          ],
+          "verdict": "PASS",
+          "summary": "Both writable-registry profiles remain in scope. Endpoint, dependency, storage/capacity and recovery contracts now agree with direct RWOP/Recreate and active Argo ephemeral/delete-enabled/NodePort selections. Whole COM010 final review explicitly preserves A9702 all six dependency families and A9704, all other named prior content and A9703; no global/runtime/browser qualification.",
+          "evidence": [
+            "docs/blueprint/acceptance-evidence/registry-studio-complete-20261021/registry-profiles-final-review.json",
+            "docs/blueprint/acceptance-evidence/registry-studio-complete-20261021/checks.json"
+          ]
         }
       ],
-      "previousReviewedRevision": "22d46485dc8fc2818805fb7946acae0e0479a947"
+      "previousReviewedRevision": "3be8232a024f551f163d55f770c5fc97127d7902"
     },
     {
       "id": "AP09-private-routes-complete-20261021",
-      "revision": "3be8232a024f551f163d55f770c5fc97127d7902",
+      "revision": "6abafbbc81a728f3ea7f12e83426c9565a72c473",
       "author": "Nova /root private route correction coordinator",
       "reviewer": "Independent Codex autoreview 2026-10-21 whole private-route content and retained readiness follow-up",
       "gateIds": [],
@@ -3841,9 +3898,23 @@
             "docs/blueprint/acceptance-evidence/ready-topics-20261021/state-final-review.json",
             "docs/blueprint/acceptance-evidence/ready-topics-20261021/platform-final-review.json"
           ]
+        },
+        {
+          "reviewer": "Independent Codex autoreview 2026-10-21 registry-profiles-final-review",
+          "previousReviewedRevision": "3be8232a024f551f163d55f770c5fc97127d7902",
+          "revision": "6abafbbc81a728f3ea7f12e83426c9565a72c473",
+          "changedDependencies": [
+            "docs/site/understand/communication.md"
+          ],
+          "verdict": "PASS",
+          "summary": "Both writable-registry profiles remain in scope. Endpoint, dependency, storage/capacity and recovery contracts now agree with direct RWOP/Recreate and active Argo ephemeral/delete-enabled/NodePort selections. Whole COM010 final review explicitly preserves A9702 all six dependency families and A9704, all other named prior content and A9703; no global/runtime/browser qualification.",
+          "evidence": [
+            "docs/blueprint/acceptance-evidence/registry-studio-complete-20261021/registry-profiles-final-review.json",
+            "docs/blueprint/acceptance-evidence/registry-studio-complete-20261021/checks.json"
+          ]
         }
       ],
-      "previousReviewedRevision": "22d46485dc8fc2818805fb7946acae0e0479a947"
+      "previousReviewedRevision": "3be8232a024f551f163d55f770c5fc97127d7902"
     },
     {
       "id": "AP09-complete-state-content-20261021",
@@ -4537,6 +4608,323 @@
       "evidence": [
         "docs/blueprint/acceptance-evidence/ready-topics-20261021/platform-final-review.json",
         "docs/blueprint/acceptance-evidence/ready-topics-20261021/scope.json"
+      ]
+    },
+    {
+      "id": "AP09-registry-data-path-20261021",
+      "revision": "6abafbbc81a728f3ea7f12e83426c9565a72c473",
+      "author": "Nova /root authored guide and selected registry profile correction coordinator",
+      "reviewer": "Independent Codex autoreview 2026-10-21 remaining-surfaces and registry-profiles-final",
+      "gateIds": [],
+      "requirementIds": [
+        "COM-010"
+      ],
+      "pages": [
+        "docs/site/understand/communication.md",
+        "docs/site/understand/pipeline-dependencies.md",
+        "docs/site/understand/platform-and-operations.md"
+      ],
+      "sources": [
+        "charts/kubeclaw/templates/archviewer.yaml",
+        "charts/kubeclaw/templates/configmap-gateway.yaml",
+        "charts/kubeclaw/templates/configmap-worker-trust.yaml",
+        "charts/kubeclaw/templates/deployment.yaml",
+        "charts/kubeclaw/values.yaml",
+        "charts/ops-pod/templates/rbac.yaml",
+        "charts/ops-pod/templates/workload.yaml",
+        "charts/ops-pod/values.yaml",
+        "charts/prism/templates/configmap-worker-trust.yaml",
+        "charts/prism/templates/postgresql.yaml",
+        "charts/prism/templates/services.yaml",
+        "charts/prism/templates/workloads.yaml",
+        "charts/prism/values.yaml",
+        "cmd/buster-namespace-controller/demo-product.go",
+        "cmd/buster-namespace-controller/demo-readiness-lifecycle.go",
+        "cmd/buster-namespace-controller/demo-readiness.go",
+        "cmd/buster-namespace-controller/demo-retention.go",
+        "cmd/buster-namespace-controller/main.go",
+        "docker/Dockerfile.buster-runtime",
+        "docker/archviewer.nginx.conf",
+        "docker/buster-runtime-entrypoint.sh",
+        "gitops/platform/bootstrap/registry-local.yaml",
+        "gitops/platform/litellm/resources.yaml",
+        "gitops/platform/registry-local/resources.yaml",
+        "gitops/platform/values/alloy.yaml",
+        "gitops/platform/values/loki.yaml",
+        "gitops/platform/values/postgresql.yaml",
+        "gitops/platform/values/prometheus.yaml",
+        "gitops/platform/values/redis.yaml",
+        "gitops/platform/values/tailscale-operator.yaml",
+        "my-values/buster-values.yaml",
+        "my-values/infra/argocd-tailscale-ingress.yaml",
+        "my-values/infra/argocd-values.yaml",
+        "my-values/infra/cilium-values.yaml",
+        "my-values/infra/litellm-config.yaml",
+        "my-values/infra/litellm-deployment.yaml",
+        "my-values/infra/network-policies.yaml",
+        "my-values/infra/registry-local.yaml",
+        "my-values/infra/registry-mirror.yaml",
+        "my-values/nova-values.yaml",
+        "my-values/prism-agent-values.yaml",
+        "my-values/prism-values.yaml",
+        "packaging/runtime/roles/buster.json",
+        "packaging/runtime/roles/nova.json",
+        "scripts/argocd-self-management.mjs",
+        "scripts/deploy-cilium.sh",
+        "scripts/deploy.sh",
+        "scripts/platform-services.mjs",
+        "scripts/registry-client-config.mjs",
+        "scripts/render-litellm-deployment.mjs",
+        "scripts/render-registry-local.mjs",
+        "skills/buster/engine/test-gates/container-build-runtime.ts",
+        "skills/buster/engine/test-gates/exposure-generation.ts",
+        "skills/buster/engine/test-gates/network-http-runtime.ts",
+        "skills/buster/engine/test-gates/tailscale-exposure-runtime.ts",
+        "skills/buster/plugins/tailscale-exposure/plugin.json",
+        "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json",
+        "skills/common/plugin-runtime/foundation/isolation/child.mjs",
+        "skills/common/plugin-runtime/foundation/isolation/protocol.ts",
+        "skills/common/plugin-runtime/foundation/isolation/runner.ts",
+        "skills/common/plugin-runtime/foundation/isolation/session.ts",
+        "skills/common/plugin-runtime/sdk/src/generated/contracts.ts",
+        "skills/common/plugin-runtime/sdk/src/runtime.ts",
+        "skills/common/plugins/network-http/src/adapter.ts",
+        "skills/common/plugins/notification-observer/plugin.json",
+        "skills/common/plugins/openclaw-agent-observer/src/redis-writer.ts",
+        "skills/common/plugins/operator-messaging/src/adapter.ts",
+        "skills/common/plugins/operator-messaging/src/config.ts",
+        "skills/common/plugins/redis-transport/src/adapter.ts",
+        "skills/common/plugins/redis-transport/src/resp.ts",
+        "skills/common/plugins/redis-transport/src/stream-identity.ts",
+        "skills/common/plugins/runtime-dispatch/src/adapter.ts",
+        "skills/common/plugins/runtime-dispatch/src/openclaw-cleanup.ts",
+        "skills/common/plugins/runtime-dispatch/src/openclaw-config.ts",
+        "skills/common/plugins/runtime-dispatch/src/openclaw-result.ts",
+        "skills/common/plugins/runtime-dispatch/src/openclaw-session.ts",
+        "skills/common/plugins/runtime-dispatch/src/openclaw.ts",
+        "skills/common/plugins/telemetry-observer/plugin.json",
+        "skills/nova/core/execution/adapter-invocation-phase.ts",
+        "skills/nova/core/execution/adapter-startup.ts",
+        "skills/nova/core/execution/engine-run.ts",
+        "skills/nova/core/execution/stage-executor.ts",
+        "skills/nova/core/telemetry/observer-delivery.ts",
+        "skills/nova/core/telemetry/observer-recovery.ts",
+        "skills/nova/core/telemetry/observers.ts",
+        "skills/nova/core/test-gates/remote-dispatch.ts",
+        "skills/nova/pipeline.ts",
+        "skills/nova/plugins/implementation-agent/src/protocol.ts",
+        "skills/nova/plugins/prism-design/src/stage.ts",
+        "skills/nova/plugins/review/src/echo-review-contract.ts",
+        "skills/nova/plugins/review/src/echo-review-verification-contract.ts",
+        "skills/nova/plugins/review/src/protocol.ts",
+        "skills/nova/plugins/review/src/repository-revalidation-stage.ts",
+        "skills/nova/plugins/review/src/scalable-review-jobs.ts",
+        "skills/nova/plugins/review/src/scalable-review-verification.ts",
+        "skills/nova/project/demo.ts",
+        "skills/prism/config/native-worker.ts",
+        "skills/prism/control/agent-jobs.ts",
+        "skills/prism/control/native-operation-store.ts",
+        "skills/prism/control/native-operation.ts",
+        "skills/prism/control/worker-operation-transport.ts",
+        "skills/prism/engine/design-providers.ts",
+        "skills/prism/server/agent-attempt.ts",
+        "skills/prism/server/agent-bridge.mjs",
+        "skills/prism/server/agent-job-routes.ts",
+        "skills/prism/server/agent-job-runner.mjs",
+        "skills/prism/server/control-server.ts",
+        "skills/prism/server/ingestion.ts",
+        "skills/prism/server/internal-artifacts.ts",
+        "skills/prism/server/native-worker-host.ts",
+        "skills/prism/server/product-decisions.ts",
+        "skills/prism/server/studio-request.ts",
+        "skills/worker/core/worker/native-attempt-executor.ts",
+        "skills/worker/core/worker/native-attempt-journal.ts",
+        "skills/worker/core/worker/native-attempt-recovery.ts",
+        "skills/worker/core/worker/native-control-channel.ts",
+        "skills/worker/core/worker/native-process-output.ts",
+        "skills/worker/core/worker/trust.ts",
+        "tests/verification/reliability/redis-migration.test.mts",
+        "tools/ops-mcp/src/hubble.mjs",
+        "tools/ops-mcp/src/kubernetes.mjs",
+        "versions.json"
+      ],
+      "checks": [
+        {
+          "command": "node scripts/docs-check-refs.mjs",
+          "exitCode": 0,
+          "observation": "docs reference check passed (6103 local links, 3295 local anchors, 8310 repository path refs, 31799 pinned source links)"
+        },
+        {
+          "command": "node scripts/docs-check.mjs",
+          "exitCode": 0,
+          "observation": "architecture presentation check passed (9 diagrams, 57 evidence boxes, 172 code links)\noperations evidence check passed (20 evidence boxes, 202 code links)\ndocs check passed (167 active markdown files)"
+        },
+        {
+          "command": "node scripts/docs-publication.mjs check",
+          "exitCode": 0,
+          "observation": "documentation publication passed (167 pages, 51 plugins)"
+        },
+        {
+          "command": "Independent whole COM010 and OPR010 source/reader/quality review, corrected profile follow-ups",
+          "exitCode": 0,
+          "observation": "Both whole obligations PASS; intermediate NOT_READY preserved and all affected prior scopes explicitly retained."
+        }
+      ],
+      "review": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "summary": "Complete Git/OCI/BuildKit/registry/mirror path with per-transition credentials, digest, limits and profile-specific retained/ephemeral failure/recovery.",
+      "limits": [
+        "Source documentation only; no live/browser/runtime/cluster/native/encryption/recovery outcome claimed.",
+        "No whole configuration/endpoint/trust/global discovery/publication/drift gate accepted."
+      ],
+      "openIssues": [],
+      "verdict": "PASS",
+      "evidence": [
+        "docs/blueprint/acceptance-evidence/registry-studio-complete-20261021/registry-profiles-final-review.json",
+        "docs/blueprint/acceptance-evidence/registry-studio-complete-20261021/remaining-surfaces-review.json",
+        "docs/blueprint/acceptance-evidence/registry-studio-complete-20261021/registry-profiles-correction-review.json"
+      ]
+    },
+    {
+      "id": "AP09-studio-complete-journey-20261021",
+      "revision": "6abafbbc81a728f3ea7f12e83426c9565a72c473",
+      "author": "Nova /root authored guide and selected registry profile correction coordinator",
+      "reviewer": "Independent Codex autoreview 2026-10-21 remaining-surfaces and registry-profiles-final",
+      "gateIds": [],
+      "requirementIds": [
+        "OPR-010"
+      ],
+      "pages": [
+        "docs/site/use/prism-studio.md"
+      ],
+      "sources": [
+        "charts/kubeclaw/templates/buster-namespace-lease-crd.yaml",
+        "charts/kubeclaw/templates/configmap-gateway.yaml",
+        "charts/kubeclaw/templates/deployment.yaml",
+        "charts/kubeclaw/values.yaml",
+        "charts/prism/templates/services.yaml",
+        "charts/prism/templates/workloads.yaml",
+        "charts/prism/values.schema.json",
+        "charts/prism/values.yaml",
+        "cmd/buster-namespace-controller/main.go",
+        "contracts/prism/v1/src/baseline-archive.ts",
+        "docker/Dockerfile.prism-worker",
+        "my-values/prism-agent-values.yaml",
+        "package-lock.json",
+        "package.json",
+        "scripts/bootstrap-prism-tests.sh",
+        "scripts/deploy.sh",
+        "skills/common/plugin-runtime/foundation/observability/hash-journal.ts",
+        "skills/common/plugins/operator-messaging/src/adapter.ts",
+        "skills/common/plugins/operator-messaging/src/payload.ts",
+        "skills/common/plugins/operator-messaging/tests/live-function.test.ts",
+        "skills/common/plugins/wait-store/src/adapter.ts",
+        "skills/nova/core/cli.ts",
+        "skills/nova/core/execution/adapters.ts",
+        "skills/nova/core/execution/effect-recovery.ts",
+        "skills/nova/core/execution/engine-run.ts",
+        "skills/nova/core/execution/engine-snapshots.ts",
+        "skills/nova/core/execution/run-decisions.ts",
+        "skills/nova/core/lifecycle/reducer.ts",
+        "skills/nova/core/state/file-mutex.ts",
+        "skills/nova/core/state/journal.ts",
+        "skills/nova/core/telemetry/audit.ts",
+        "skills/nova/plugins/prism-design/schemas/config.schema.json",
+        "skills/nova/plugins/prism-design/src/archive.ts",
+        "skills/nova/plugins/prism-design/src/stage.ts",
+        "skills/prism/config/native-worker.ts",
+        "skills/prism/control/agent-admission.ts",
+        "skills/prism/control/design-generations.ts",
+        "skills/prism/control/direction-decisions.ts",
+        "skills/prism/control/native-operation-store.ts",
+        "skills/prism/control/preferences.ts",
+        "skills/prism/control/product-decisions.ts",
+        "skills/prism/domain/index.ts",
+        "skills/prism/evaluation/index.ts",
+        "skills/prism/openclaw-plugin/index.mjs",
+        "skills/prism/package.json",
+        "skills/prism/pipeline-adapter/index.ts",
+        "skills/prism/server/agent-job-routes.ts",
+        "skills/prism/server/agent-job-runner.mjs",
+        "skills/prism/server/control-config.ts",
+        "skills/prism/server/control-server.ts",
+        "skills/prism/server/native-worker-execution.ts",
+        "skills/prism/server/native-worker-host.ts",
+        "skills/prism/server/studio-config.ts",
+        "skills/prism/server/worker-config.ts",
+        "skills/prism/server/worker-lifecycle.ts",
+        "skills/prism/server/worker-readiness.ts",
+        "skills/prism/server/worker-service.ts",
+        "skills/prism/server/worker.ts",
+        "skills/prism/storage/artifacts.ts",
+        "skills/prism/storage/index.ts",
+        "skills/prism/storage/migrations/001_prism.sql",
+        "skills/prism/studio/agent-revision-client.ts",
+        "skills/prism/studio/app.tsx",
+        "skills/prism/studio/design-round-client.ts",
+        "skills/prism/studio/dev-fixture.ts",
+        "skills/prism/studio/flows.ts",
+        "skills/prism/studio/playwright.config.mjs",
+        "skills/prism/studio/preview-assets.ts",
+        "skills/prism/studio/preview.ts",
+        "skills/prism/studio/puck-adapter.ts",
+        "skills/prism/studio/puck-config.tsx",
+        "skills/prism/studio/tests/studio.spec.mjs",
+        "skills/prism/studio/vite.config.ts",
+        "skills/prism/tests/agent-revision-client.test.mts",
+        "skills/prism/tests/control-decisions.test.mts",
+        "skills/prism/tests/design-round-client.test.mts",
+        "skills/prism/tests/worker-readiness-chart.test.mts",
+        "skills/prism/tests/worker-readiness.test.mts",
+        "skills/worker/core/worker/native-worker-ownership.ts",
+        "spikes/prism/mobile-editor/package-lock.json",
+        "spikes/prism/mobile-editor/package.json",
+        "spikes/prism/mobile-editor/playwright.config.mjs",
+        "spikes/prism/preview-isolation/package-lock.json",
+        "spikes/prism/preview-isolation/package.json",
+        "spikes/prism/preview-isolation/playwright.config.mjs"
+      ],
+      "checks": [
+        {
+          "command": "node scripts/docs-check-refs.mjs",
+          "exitCode": 0,
+          "observation": "docs reference check passed (6103 local links, 3295 local anchors, 8310 repository path refs, 31799 pinned source links)"
+        },
+        {
+          "command": "node scripts/docs-check.mjs",
+          "exitCode": 0,
+          "observation": "architecture presentation check passed (9 diagrams, 57 evidence boxes, 172 code links)\noperations evidence check passed (20 evidence boxes, 202 code links)\ndocs check passed (167 active markdown files)"
+        },
+        {
+          "command": "node scripts/docs-publication.mjs check",
+          "exitCode": 0,
+          "observation": "documentation publication passed (167 pages, 51 plugins)"
+        },
+        {
+          "command": "Independent whole COM010 and OPR010 source/reader/quality review, corrected profile follow-ups",
+          "exitCode": 0,
+          "observation": "Both whole obligations PASS; intermediate NOT_READY preserved and all affected prior scopes explicitly retained."
+        }
+      ],
+      "review": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "summary": "Complete source-level Studio operator/user journey: admission, rounds, selection, exact revision, preview/evaluation/approval, render/publication/export and Nova handoff; stale/concurrent/uncertain outcomes and unsupported routes explicit.",
+      "limits": [
+        "Source documentation only; no live/browser/runtime/cluster/native/encryption/recovery outcome claimed.",
+        "No whole configuration/endpoint/trust/global discovery/publication/drift gate accepted."
+      ],
+      "openIssues": [],
+      "verdict": "PASS",
+      "evidence": [
+        "docs/blueprint/acceptance-evidence/registry-studio-complete-20261021/registry-profiles-final-review.json",
+        "docs/blueprint/acceptance-evidence/registry-studio-complete-20261021/remaining-surfaces-review.json",
+        "docs/blueprint/acceptance-evidence/registry-studio-complete-20261021/registry-profiles-correction-review.json"
       ]
     }
   ],
@@ -9331,7 +9719,7 @@
         "charts/prism",
         "tests/verification/reliability"
       ],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "independent-topic-review-PASS",
       "contentKind": "authored",
       "generator": null,
       "automatedChecks": [
@@ -9369,7 +9757,7 @@
         "quality",
         "astra-final"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
@@ -9389,7 +9777,8 @@
       "acceptanceMappingRequiredReviews": "A97-11 requires independently selecting diagnosis/safe recovery for EVERY dependency and separately comparing ALL applicable matrix entries to current Sources; not satisfied by this mapping review. Three reviewer identities and fresh contexts remain required by contract rules.",
       "acceptanceMappingDriftObligations": "For every scoped endpoint/store/event/secret/runtime-service/Ops tool, A97-12 requires real discovery and red-on-undocumented-addition evidence; product scope also preserves change/remove/rename detection. Linking an existing checker, pinning old source or a current green baseline cannot satisfy this.",
       "acceptanceMappingCorrectionSource": "/home/node/Documents/Codex/a98-evidence/ap097-all-requirement-mapping-source-fresh/report.md",
-      "closureDecision": {
+      "completionRecord": "AP09-registry-data-path-20261021",
+      "previousClosureDecision": {
         "verdict": "NOT_READY",
         "revision": "9370d16410bb7f7aeeb66e11d18403764074eeae",
         "reason": "Scoped independent review did not establish full requirement coverage; see concrete topic decision.",
@@ -13736,7 +14125,7 @@
         "charts/prism",
         "scripts/deploy.sh"
       ],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "independent-topic-review-PASS",
       "contentKind": "authored",
       "generator": null,
       "automatedChecks": [
@@ -13753,7 +14142,7 @@
         "quality",
         "astra-final"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [
         {
@@ -13792,7 +14181,8 @@
         "A98-PRISM-REASONING-EMBEDDING-ROUTES"
       ],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L270",
-      "closureDecision": {
+      "completionRecord": "AP09-studio-complete-journey-20261021",
+      "previousClosureDecision": {
         "verdict": "NOT_READY",
         "revision": "9370d16410bb7f7aeeb66e11d18403764074eeae",
         "reason": "Full3094-line Studio journey independent review incomplete.",
@@ -36600,13 +36990,13 @@
       "scope": "Author32Bash53Node20CJS24syntheticchecks only, noformal6scenario/live/ReaderQualityapproval."
     },
     "currentCloseout20261021": {
-      "securedSourceRevision": "3be8232a024f551f163d55f770c5fc97127d7902",
-      "acceptedRequirements": 190,
+      "securedSourceRevision": "6abafbbc81a728f3ea7f12e83426c9565a72c473",
+      "acceptedRequirements": 192,
       "acceptedGates": 13,
-      "newRequirementsThisCampaign": 20,
+      "newRequirementsThisCampaign": 33,
       "newGatesThisCampaign": 2,
-      "nextWork": "Continue independent whole workflow/ready-topic reviews and concrete corrections. Global configuration/discovery/publication/rendered-output/drift blockers remain explicit and unwaived.",
-      "codeCandidate": "Remote communication closure179/261contents12/89gates. Core check3pages226links125Source files passes;28-capability native security test passes. Release-specific3Source ranges retain exact independent evidence and two CLI negative controls reject mismatches. Global API/generation/publication still unproven.",
+      "nextWork": "Finish remaining plugin/configuration/event/reference and workflow requirements. Latest full script-role scan1478outputs,495unknown in184Sources; no global generation or rendered publication PASS.",
+      "codeCandidate": "Core fixed-module receipt plus five exact dependent role propagations independently PASS.58/58 documentation roles and52/52 custody/publication tests PASS; whole global discovery still blocked by495unknown outputs. Code candidate6abafbbc.",
       "currentGlobalBlocker": "DOCUMENTATION_TOOL_OUTPUT_ROLE_UNQUALIFIED: scripts/docs-check.mjs; current Markdown stripping/export/main guard differs from Source-owned executable role receipt.",
       "publication": "167pages51plugins pass publicationcheck and Markdownbuild; no rendered HTML/browser/search proof.",
       "scope": "No promise of unattended running work and no completeness claim. MNT/OPL NOT_READY remains explicit.",
