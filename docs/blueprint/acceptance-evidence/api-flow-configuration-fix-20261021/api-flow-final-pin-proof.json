@@ -1,0 +1,27 @@
+{
+  "sourceRevision": "57cdceb926e6e84335df921c926be548933fc1bd",
+  "artifacts": {
+    "docs/generated/inventory/configuration-schemas.json": {
+      "revisionNormalizedSha256": "e2d57b9aa6eaffa42744c1d9a0158276d8384b295e32ab8165baeff56778cdfc",
+      "matchesIndependentlyReviewedBytesExceptPins": true
+    },
+    "docs/site/reference/plugin-configuration.md": {
+      "revisionNormalizedSha256": "95530c04edb5695f5a24df0ff6887946df59eb98c551231aef3776db3afa94ee",
+      "matchesIndependentlyReviewedBytesExceptPins": true
+    },
+    "docs/site/use/plugins.md": {
+      "revisionNormalizedSha256": "ed97c2bbc22afb4110de63d7e6ca0e299822a68111f3cdf39e16fdab814b1092",
+      "matchesIndependentlyReviewedBytesExceptPins": true
+    },
+    "docs/site/reference/generated-documentation-map.json": {
+      "revisionNormalizedSha256": "87a559605f5588682f8136ddbf803fa8e8431f4a8747edfdf85271517d2881a4",
+      "matchesIndependentlyReviewedBytesExceptPins": true
+    }
+  },
+  "referenceLinksVerified": 3148,
+  "referenceFilesVerified": 252,
+  "allWholeSourceBytesMatchCurrent": true,
+  "allLineBoundsValid": true,
+  "sharedRevisionLockUnchanged": true,
+  "limits": "Exact continuation of independently reviewed data/prose; only full Git pin tokens changed. No runtime or global generator qualification."
+}

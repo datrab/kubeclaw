@@ -1,0 +1,12 @@
+{
+  "review": "api-flow-artifact-review.json",
+  "pinContinuationProof": "api-flow-final-pin-proof.json",
+  "generatedPages": [
+    "docs/site/reference/plugin-configuration.md",
+    "docs/site/use/plugins.md"
+  ],
+  "limits": [
+    "Bounded schema-family generation and mechanical plugin maintenance only. No global generator, runtime, rendered browser publication, OPL001/005 or whole additional gate acceptance."
+  ],
+  "sourceRevision": "57cdceb926e6e84335df921c926be548933fc1bd"
+}

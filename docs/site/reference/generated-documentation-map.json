@@ -284,7 +284,7 @@
       "audience": "developer, documentation maintainer, documentation agent",
       "owner": "documentation",
       "appliesTo": "authored reader pages, source-derived documentation, and their ownership and publication inputs",
-      "lastVerified": "implementation behavior checked on 2026-10-15; no generation, check, mutation test, or reader exercise asserted",
+      "lastVerified": "2026-10-21; bounded plugin-schema and vendored-authority routes checked; other paths source-described, not executed",
       "sourceDependencies": [
         "scripts/docs-governance.mjs",
         "scripts/docs-generate.mjs",
@@ -300,7 +300,11 @@
         "docs/config/documentation-tree-baseline.json",
         "docs/site/reference/documentation-route-registry.json",
         "package.json",
-        ".github/workflows/docs-checks.yaml"
+        ".github/workflows/docs-checks.yaml",
+        "scripts/vendor-external-helm-authorities.mjs",
+        "scripts/external-helm-archives.json",
+        "scripts/docs-external-helm-authority-lock.json",
+        "scripts/tests/vendor-external-helm-authorities.test.mjs"
       ],
       "checks": [
         "npm run docs:governance:check",
