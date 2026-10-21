@@ -3110,13 +3110,14 @@
       "status": "implemented with explicit model and repository evidence limits",
       "audience": "pipeline operator, Echo maintainer, policy author, security reviewer",
       "owner": "Echo maintainers",
-      "appliesTo": "review, repository-audit, and repository-revalidation stages; separate `kubeclaw.validate.architecture` package section",
+      "appliesTo": "review, repository-audit, and repository-revalidation stages; separate `kubeclaw.validate.architecture` package section; repository adapter `kubeclaw.repository-adapter:repository`",
       "lastVerified": "source, schema, manifest, and focused test inspection on 2026-09-20; added package sections source/test checked 2026-10-21 only; original other-scope verification date unchanged; no new live dependency claim",
       "sourceDependencies": [
         "skills/nova/plugins/review/src",
         "skills/nova/plugins/review/schemas",
         "skills/nova/plugins/review/tests",
-        "skills/nova/plugins/architecture-validator"
+        "skills/nova/plugins/architecture-validator",
+        "skills/nova/plugins/repository-adapter"
       ],
       "checks": [
         "npm run docs:governance:check",

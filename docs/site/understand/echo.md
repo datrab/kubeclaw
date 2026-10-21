@@ -3,9 +3,9 @@
 Status: implemented with explicit model and repository evidence limits
 Audience: pipeline operator, Echo maintainer, policy author, security reviewer
 Owner: Echo maintainers
-Evidence: skills/nova/plugins/review/src; skills/nova/plugins/review/schemas; skills/nova/plugins/review/tests; skills/nova/plugins/architecture-validator
+Evidence: skills/nova/plugins/review/src; skills/nova/plugins/review/schemas; skills/nova/plugins/review/tests; skills/nova/plugins/architecture-validator; skills/nova/plugins/repository-adapter
 Evidence revision: `569f7b4933d4859cc67c80ddf40d5154ffd95ce5`
-Applies to: review, repository-audit, and repository-revalidation stages; separate `kubeclaw.validate.architecture` package section
+Applies to: review, repository-audit, and repository-revalidation stages; separate `kubeclaw.validate.architecture` package section; repository adapter `kubeclaw.repository-adapter:repository`
 Last verified: source, schema, manifest, and focused test inspection on 2026-09-20; added package sections source/test checked 2026-10-21 only; original other-scope verification date unchanged; no new live dependency claim
 
 ## Purpose And Decision Boundary
@@ -274,3 +274,156 @@ Source: [registration and grants](https://github.com/datrab/kubeclaw/blob/569f7b
 [request protocol](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/architecture-validator/src/protocol.ts#L1-L52),
 [closed parser and contradiction rules](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/architecture-validator/src/output.ts#L1-L60); [closed parser and contradiction rules (continued 2)](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/architecture-validator/src/output.ts#L61-L83),
 and [source verification, outcomes and artifact](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/architecture-validator/src/stage.ts#L1-L60).
+
+## Repository Adapter: Mutable Reads And Attempt-Bound Git Evidence
+
+`kubeclaw.repository-adapter:repository` provides `git.repository.read`; it
+registers no stage or observer and requires no delegated capability. It is the
+repository reader used by Echo and deterministic stages, not a Git writer,
+repository sandbox, or arbitrary command interface. The host needs Git for
+revision operations, Linux `/proc/self/fd` for descriptor-protected mutable
+reads, and OS read access to the protected checkout and its ancestors.
+
+### Configuration, activation and authority
+
+The closed configuration requires `repositoryRoot`. The root must resolve to
+its canonical absolute identity without a symlink substitution; activation
+rejects a symlink root or a path whose real identity differs from its resolved
+path. Optional `maxFileBytes` defaults to 4 MiB and `maxChangedPaths` to 2,048;
+both must be positive safe integers. Optional `expectedHead` is a full lowercase
+40- or 64-hex Git object ID. It constrains **freeze**, not mutable `read_text`,
+and does not automatically freeze HEAD at activation. `ready()` checks that the
+root is a directory; it does not prove a valid Git repository, clean checkout,
+readable requested file, or functioning remote service. There is no network or
+secret configuration in this adapter.
+
+Core must authorize the caller and the `git.repository.path` resource under
+its `allowedPrefixes` grant. A payload's `allowedPrefixes` is an additional
+operation scope, not a replacement capability grant. The adapter dispatches
+only the operations below. All enter through a pre-call cancellation check;
+non-confidential invocations also assert the current execution fence. The
+adapter itself checks the capability/operation, while Core owns resource/grant
+admission. Supplying a pathname or revision proof never grants Git mutation.
+
+### Supported operations and returned evidence
+
+| Operation | Required selection and result |
+| --- | --- |
+| `read_text` | Resource canonical ID is one repository-relative path. Reads the **current working tree**, returning requested path, decoded content and UTF-8 content byte count; no commit, object ID or frozen proof is returned. |
+| `freeze_head` | Payload optionally names `ref` (default `HEAD`), exact canonical `repositoryRoot`, and `requireClean`. Resolves the ref to a commit, checks configured expectedHead, and returns head plus an attempt-bound proof; echoes canonical repository identity only when requested. |
+| `verify_ancestry` | Full `base`, proven `head` and `proof`; returns base/head and `ancestryVerified: true` only if base is an ancestor. |
+| `changed_manifest` | Base, proven head and one to 128 unique allowed prefixes; returns sorted changed paths with added/modified/deleted/renamed/copied/type_changed status and a canonical manifest digest. Scoped rename/copy edges become an addition or deletion when only the relevant side is in scope. Count is bounded by maxChangedPaths. |
+| `read_revision_text` | Resource path, proven head, allowed prefixes; optional maxBytes cannot exceed configured maxFileBytes. Returns path/head/object ID/content/byte size/content SHA-256, with optional regular-file mode. Expected object ID and size, when supplied, must match before reading. |
+| `changed_line_ranges` | Resource path, base and proven head; returns added-side inclusive line ranges from zero-context deterministic text diff plus digest. Deleted-only ranges add no new-side range. Requires ancestry; no payload allowed-prefix filter is applied by this method, so resource grant admission remains essential. |
+| `list_revision_paths` | Proven head, allowed prefixes, optional maxPaths; returns sorted tracked paths and digest. Default maxPaths is maxChangedPaths × 8, valid range 1–65,536. |
+| `inventory_revision` | Proven head, allowed prefixes, optional maxPaths; returns sorted path/object ID/Git mode/byte-size records and digest. Default maxPaths is maxChangedPaths × 8, valid range 1–1,000,000. Gitlinks retain commit identity/mode and size zero; inventory is not proof that an entry is readable regular text. |
+| `find_revision_references` | Proven head, allowed prefixes, one to 256 unique sourcePaths, optional maxPaths (default 256, range 1–4,096). Returns sorted unique caller/source pairs and digest. Candidate scan ceiling is 32,768. It checks relative JS/TS import/export/require/dynamic-import forms, including supported extension/index alternatives; this is not a complete cross-language, alias-aware dependency graph. |
+
+Allowed prefix `.` means the whole repository for these payload scopes; other
+prefixes match the exact path or descendants. Paths reject absolute names,
+colon, backslash, controls, and empty/dot/traversal segments. Revision operations
+use fixed Git argv, not a caller-supplied command. Full object IDs are required
+for base/head; only freeze resolves a declared symbolic ref.
+
+### Mutable bytes are not a frozen review subject
+
+Mutable `read_text` first checks existing components and canonicalizes allowed
+internal symlinks. An external or dangling link is forbidden even when a leaf
+beyond it is missing; an ordinary missing internal leaf is instead not found.
+It then opens the canonical path through Linux directory descriptors with
+`O_DIRECTORY|O_NOFOLLOW` and `/proc/self/fd`, and the final file with no-follow,
+nonblocking flags. It requires a regular file and checks size before and after
+one descriptor read. The descriptor chain prevents a later directory-to-link
+swap redirecting that read. It is **not** a complete sandbox against moving
+the authorized root/ancestor itself, nor a content snapshot against same-size
+concurrent writes. Protect those locations and stop writers when consistency
+requires it. Mutable decoding uses Node's UTF-8 replacement behavior, unlike
+revision reads' fatal UTF-8 decoding; use the frozen byte/digest contract for
+immutable review evidence, not a mutable read as a substitute.
+
+Freeze happens when called, including commits made after adapter activation.
+`requireClean: true` rejects tracked or untracked working-tree changes; omission
+does not request cleanliness. Its optional repository identity must equal the
+configured canonical root. The returned proof is HMAC-bound to the current
+adapter instance's private random key, exact head and Core attempt ID. Another
+attempt, another instance after restart, forged proof, or substituted head
+cannot reuse it. It is not a persisted repository approval or a transferable
+Git credential. Subsequent reads keep that proven commit even if live HEAD
+moves. Preserve the original subject identity rather than refreezing a newer
+commit and calling it the same evidence.
+
+For source approval, `read_revision_text` with `requireRegularFile: true`
+requires Git mode 100644 or 100755 and returns it. Without that selector a Git
+symlink blob is text containing its target, not a followed working-tree path.
+An inventory object ID/size followed by matching `expectedObjectId` and
+`expectedSizeBytes` binds the selected blob; malformed UTF-8, non-blob objects,
+oversized files or mismatched identities stop the read. Consumer checks still
+bind these bytes to its review subject; inventory/digest alone is not approval.
+
+### Failure, recovery and change procedure
+
+| Trigger | Effect and safe action |
+| --- | --- |
+| Missing/symlink/replaced root, path traversal or escaped/dangling parent | Activation/read rejects, commonly `REPOSITORY_PATH_FORBIDDEN`. Restore the protected authorized root/path; never widen it to read the rejected target. |
+| Missing leaf, directory/non-regular mutable file, oversize or changing size | `REPOSITORY_FILE_NOT_FOUND`, `REPOSITORY_NOT_A_FILE`, `REPOSITORY_FILE_TOO_LARGE`, or `REPOSITORY_FILE_CHANGED_DURING_READ`. Correct the path/input or quiesce its owner before a new read; no partial successful result exists. |
+| Expected head differs, dirty source, wrong repository identity | `REPOSITORY_HEAD_MISMATCH`, `REVIEW_SOURCE_DIRTY`, or `REVIEW_REPOSITORY_IDENTITY_INVALID`. Stop subject admission; select the intended clean commit through its owner, not by deleting proof checks. |
+| Invalid/other-attempt proof, non-ancestor base, wrong blob identity/size/mode | `REPOSITORY_REVISION_PROOF_INVALID`, `REPOSITORY_BASE_NOT_ANCESTOR`, `REPOSITORY_OBJECT_ID_MISMATCH`, `REPOSITORY_FILE_SIZE_MISMATCH`, or `REVIEW_SOURCE_NOT_REGULAR`. Preserve the original subject; correct producer/consumer binding. An unchanged retry is not a repair. |
+| Invalid scope/limit, too many paths/references, malformed inventory/diff or invalid UTF-8 | Reject instead of truncating into apparent complete evidence. Narrow the declared scope or review a compatible bound; preserve the error. Do not treat incomplete coverage as empty success. |
+| Cancelled before invocation | `ADAPTER_CANCELLED`; mutable reads also recheck after reading. Revision operations execute synchronous Git calls and have no adapter-specific abortable child/deadline loop; entry cancellation is not proof that an active Git subprocess was interrupted. |
+
+These errors propagate to Core or the calling stage; this adapter returns no
+`StageResult` and does not choose retry, wait, approval, or lifecycle completion.
+It has no private durable store, automatic retry, resume cursor, writer or
+retained subprocess. In-memory proof keys disappear with the instance. Git
+objects/checkout are the source authority; Core effects and consumer artifacts
+are the retained execution evidence. Shutdown is empty and does not delete
+repository data. Drain dependent pinned runs before changing root/expectedHead
+or replacing this package; retain Git revisions and review artifacts until
+no recovery/consumer still needs them. Use the [plugin lifecycle](../use/plugins.md)
+and [effect recovery rules](../extend/effectful-plugin.md); removal is not
+repository cleanup or revocation of an already-created review artifact.
+
+A successful maintained path is freeze → scoped manifest/inventory → exact
+object-ID/size revision read. Moving HEAD after freeze still reads the captured
+commit. A negative path changes the proof/head or attempt and must reject;
+an outside/dangling symlink must reject before misclassifying its leaf as absent.
+Run `npm test --prefix skills/nova/plugins/repository-adapter` for package
+boundary, real Git/file operation and path-safety fixtures. These controlled
+local checks do not prove a deployed caller, remote repository or live approval.
+
+To change an operation, update its dispatch entry, RevisionReader/parser or
+mutable descriptor code, capability vocabulary/authorization if authority
+changes, schemas where configuration changes, SDK/consumer contracts and
+fixtures together. Preserve deterministic sorting, exact identity/digests,
+source-approval mode and fail-closed budgets. Compile with the actual provider
+and minimum caller grant, then exercise positive and negative controlled reads
+before activation. Do not replace descriptor safety with a string-prefix
+check or turn a reference-search heuristic into a completeness guarantee.
+
+> [Registration and capability](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/repository-adapter/plugin.json#L1-L19)
+
+> [Closed configuration](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/repository-adapter/schemas/config.schema.json#L1-L12)
+
+> [Activation and operation dispatch](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/repository-adapter/src/adapter.ts#L1-L60)
+
+> [Activation and operation dispatch (continued 2)](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/repository-adapter/src/adapter.ts#L61-L91)
+
+> [Descriptor-protected mutable reads](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/repository-adapter/src/repository-file.ts#L1-L60)
+
+> [Descriptor-protected mutable reads (continued 2)](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/repository-adapter/src/repository-file.ts#L61-L63)
+
+> [Frozen identity and supported revision operations](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/repository-adapter/src/revision-reader.ts#L1-L60)
+
+> [Frozen identity and supported revision operations (continued 2)](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/repository-adapter/src/revision-reader.ts#L61-L120)
+
+> [Frozen identity and supported revision operations (continued 3)](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/repository-adapter/src/revision-reader.ts#L121-L180)
+
+> [Frozen identity and supported revision operations (continued 4)](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/repository-adapter/src/revision-reader.ts#L181-L240)
+
+> [Frozen identity and supported revision operations (continued 5)](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/repository-adapter/src/revision-reader.ts#L241-L300)
+
+> [Frozen identity and supported revision operations (continued 6)](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/repository-adapter/src/revision-reader.ts#L301-L331)
+
+> [Inventory, object modes and reference matching](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/repository-adapter/src/revision-parsers.ts#L1-L60)
+
+> [Inventory, object modes and reference matching (continued 2)](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/repository-adapter/src/revision-parsers.ts#L61-L71)
