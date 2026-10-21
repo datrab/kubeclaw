@@ -89,7 +89,7 @@ function fixture(t, program, settings, namespace = 'test-one') {
   const entry = path.join(root, 'bundle/pipeline.config.json'); writeTestPipeline(entry, documents);
   const loaded = captureSwarmSettings(entry, busterRuntimeSelection(documents));
   const policy = loaded.components['buster-engine'].settings.clusterInvokers;
-  const sources = capabilitySources({}, new Set([capability]), {});
+  const sources = capabilitySources({ clusterBindings: { controllerNamespace: 'controller' } }, new Set([capability]), {});
   const options = { allowedCapabilities: new Set([capability]), ...kubernetesRuntimeSecurityOptions(
     sources.kubernetesRuntimeSecurityEnabled, policy, clusterRuntimeBinding({ controllerNamespace: 'controller' }, policy)) };
   options.kubernetesRuntimeSecurity.allowedNamespacePrefixes = [...options.kubernetesRuntimeSecurity.allowedNamespacePrefixes];
@@ -165,7 +165,7 @@ for (const [field, values] of Object.entries(invalid)) for (const value of value
   });
 }
 for (const legacy of [null, {}, defaults(), 'invalid']) test(`retired RuntimeSecurity object ${JSON.stringify(legacy)}`, () => {
-  assert.throws(() => validateRuntimeRoot({ schemaVersion: 'buster-remote-plan-runtime.v1', kubernetesRuntimeSecurity: legacy }),
+  assert.throws(() => validateRuntimeRoot({ schemaVersion: 'buster-remote-plan-runtime.v1', tarExecutable: '/usr/bin/tar', kubernetesRuntimeSecurity: legacy }),
     { message: 'SWARM_CONFIG_LEGACY_OVERRIDE:kubernetesRuntimeSecurity' });
 });
 
