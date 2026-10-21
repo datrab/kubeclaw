@@ -89,7 +89,7 @@
     },
     {
       "id": "AP09.1-ready-topics-20261020",
-      "revision": "a7d0e07cacc037b94e8a45ed2f0d90bd0259b213",
+      "revision": "22d46485dc8fc2818805fb7946acae0e0479a947",
       "author": "Documentation implementation authors before review campaign",
       "reviewer": "/root/review_ready_foundations (01a157c4-a915-7bd0-9f54-0de78011b9b7)",
       "gateIds": [],
@@ -166,7 +166,7 @@
       ],
       "openIssues": [],
       "verdict": "PASS",
-      "previousReviewedRevision": "488deafa90a629d936d078827715c85e2c705895",
+      "previousReviewedRevision": "a7d0e07cacc037b94e8a45ed2f0d90bd0259b213",
       "impactReview": {
         "reviewer": "/root/review_worker_ready",
         "verdict": "PASS",
@@ -228,6 +228,20 @@
           "evidence": [
             "docs/blueprint/acceptance-evidence/schema-and-pin-review-20261021.json",
             "docs/blueprint/acceptance-evidence/communication-complete-20261021/communication-fifth-review.json"
+          ]
+        },
+        {
+          "reviewer": "Independent Codex autoreview 2026-10-21 private-routes-followup and Prism source-pin audit",
+          "previousReviewedRevision": "a7d0e07cacc037b94e8a45ed2f0d90bd0259b213",
+          "revision": "22d46485dc8fc2818805fb7946acae0e0479a947",
+          "changedDependencies": [
+            "docs/site/reference/generated-documentation-map.json"
+          ],
+          "verdict": "PASS",
+          "summary": "Whole COM009 final review preserves COM002/003/004/005/006/007/012. Prism source pin review establishes all 262 cited ranges unchanged and only docs-script additions in package.json; map changes only respective lastVerified metadata, no requirement/dependency/check/gate change. Source-only scope, no runtime or global acceptance.",
+          "evidence": [
+            "docs/blueprint/acceptance-evidence/private-routes-complete-20261021/private-routes-followup.json",
+            "docs/blueprint/acceptance-evidence/private-routes-complete-20261021/prism-studio-pin-review.json"
           ]
         }
       ]
@@ -933,7 +947,7 @@
     },
     {
       "id": "AP09.7-ready-data-topics-20261020",
-      "revision": "a7d0e07cacc037b94e8a45ed2f0d90bd0259b213",
+      "revision": "22d46485dc8fc2818805fb7946acae0e0479a947",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/review_data_ready",
       "gateIds": [],
@@ -1072,13 +1086,27 @@
             "docs/blueprint/acceptance-evidence/schema-and-pin-review-20261021.json",
             "docs/blueprint/acceptance-evidence/communication-complete-20261021/communication-fifth-review.json"
           ]
+        },
+        {
+          "reviewer": "Independent Codex autoreview 2026-10-21 private-routes-followup and Prism source-pin audit",
+          "previousReviewedRevision": "a7d0e07cacc037b94e8a45ed2f0d90bd0259b213",
+          "revision": "22d46485dc8fc2818805fb7946acae0e0479a947",
+          "changedDependencies": [
+            "docs/site/understand/communication.md"
+          ],
+          "verdict": "PASS",
+          "summary": "Whole COM009 final review preserves COM002/003/004/005/006/007/012. Prism source pin review establishes all 262 cited ranges unchanged and only docs-script additions in package.json; map changes only respective lastVerified metadata, no requirement/dependency/check/gate change. Source-only scope, no runtime or global acceptance.",
+          "evidence": [
+            "docs/blueprint/acceptance-evidence/private-routes-complete-20261021/private-routes-followup.json",
+            "docs/blueprint/acceptance-evidence/private-routes-complete-20261021/prism-studio-pin-review.json"
+          ]
         }
       ],
-      "previousReviewedRevision": "8f79e328cf216b53dc2e665896c65cbb19a2e0ce"
+      "previousReviewedRevision": "a7d0e07cacc037b94e8a45ed2f0d90bd0259b213"
     },
     {
       "id": "Reviewed-corrections-20261020",
-      "revision": "8c96fe55390c1b2f656e8ee57eeac1188a782bb7",
+      "revision": "22d46485dc8fc2818805fb7946acae0e0479a947",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/review_worker_ready",
       "gateIds": [],
@@ -1237,9 +1265,23 @@
             "docs/blueprint/acceptance-evidence/core-guide-byte-review-20261021.json",
             "docs/blueprint/acceptance-evidence/host-release-followup-20261021.json"
           ]
+        },
+        {
+          "reviewer": "Independent Codex autoreview 2026-10-21 private-routes-followup and Prism source-pin audit",
+          "previousReviewedRevision": "8c96fe55390c1b2f656e8ee57eeac1188a782bb7",
+          "revision": "22d46485dc8fc2818805fb7946acae0e0479a947",
+          "changedDependencies": [
+            "docs/site/reference/generated-documentation-map.json"
+          ],
+          "verdict": "PASS",
+          "summary": "Whole COM009 final review preserves COM002/003/004/005/006/007/012. Prism source pin review establishes all 262 cited ranges unchanged and only docs-script additions in package.json; map changes only respective lastVerified metadata, no requirement/dependency/check/gate change. Source-only scope, no runtime or global acceptance.",
+          "evidence": [
+            "docs/blueprint/acceptance-evidence/private-routes-complete-20261021/private-routes-followup.json",
+            "docs/blueprint/acceptance-evidence/private-routes-complete-20261021/prism-studio-pin-review.json"
+          ]
         }
       ],
-      "previousReviewedRevision": "a7d0e07cacc037b94e8a45ed2f0d90bd0259b213"
+      "previousReviewedRevision": "8c96fe55390c1b2f656e8ee57eeac1188a782bb7"
     },
     {
       "id": "AP09-reader-operators-20261020",
@@ -3348,7 +3390,7 @@
     },
     {
       "id": "AP09-communication-complete-contracts-20261021",
-      "revision": "a7d0e07cacc037b94e8a45ed2f0d90bd0259b213",
+      "revision": "22d46485dc8fc2818805fb7946acae0e0479a947",
       "author": "Nova /root communication correction coordinator",
       "reviewer": "Independent Codex autoreview 2026-10-21; successive complete-topic audits and final native identity closure",
       "gateIds": [],
@@ -3482,6 +3524,169 @@
         "docs/blueprint/acceptance-evidence/communication-complete-20261021/communication-fifth-review.json",
         "docs/blueprint/acceptance-evidence/communication-complete-20261021/communication-fourth-review.json",
         "docs/blueprint/acceptance-evidence/communication-complete-20261021/communication-third-review-retry.json"
+      ],
+      "impactReviews": [
+        {
+          "reviewer": "Independent Codex autoreview 2026-10-21 private-routes-followup and Prism source-pin audit",
+          "previousReviewedRevision": "a7d0e07cacc037b94e8a45ed2f0d90bd0259b213",
+          "revision": "22d46485dc8fc2818805fb7946acae0e0479a947",
+          "changedDependencies": [
+            "docs/site/understand/communication.md"
+          ],
+          "verdict": "PASS",
+          "summary": "Whole COM009 final review preserves COM002/003/004/005/006/007/012. Prism source pin review establishes all 262 cited ranges unchanged and only docs-script additions in package.json; map changes only respective lastVerified metadata, no requirement/dependency/check/gate change. Source-only scope, no runtime or global acceptance.",
+          "evidence": [
+            "docs/blueprint/acceptance-evidence/private-routes-complete-20261021/private-routes-followup.json",
+            "docs/blueprint/acceptance-evidence/private-routes-complete-20261021/prism-studio-pin-review.json"
+          ]
+        }
+      ],
+      "previousReviewedRevision": "a7d0e07cacc037b94e8a45ed2f0d90bd0259b213"
+    },
+    {
+      "id": "AP09-private-routes-complete-20261021",
+      "revision": "22d46485dc8fc2818805fb7946acae0e0479a947",
+      "author": "Nova /root private route correction coordinator",
+      "reviewer": "Independent Codex autoreview 2026-10-21 whole private-route content and retained readiness follow-up",
+      "gateIds": [],
+      "requirementIds": [
+        "COM-009"
+      ],
+      "pages": [
+        "docs/site/understand/communication.md"
+      ],
+      "sources": [
+        "charts/kubeclaw/templates/archviewer.yaml",
+        "charts/kubeclaw/templates/configmap-gateway.yaml",
+        "charts/kubeclaw/templates/configmap-worker-trust.yaml",
+        "charts/kubeclaw/templates/deployment.yaml",
+        "charts/ops-pod/templates/workload.yaml",
+        "charts/ops-pod/values.yaml",
+        "charts/prism/templates/configmap-worker-trust.yaml",
+        "charts/prism/templates/services.yaml",
+        "charts/prism/values.yaml",
+        "cmd/buster-namespace-controller/demo-product.go",
+        "cmd/buster-namespace-controller/demo-readiness-lifecycle.go",
+        "cmd/buster-namespace-controller/demo-readiness.go",
+        "cmd/buster-namespace-controller/demo-retention.go",
+        "cmd/buster-namespace-controller/main.go",
+        "docker/archviewer.nginx.conf",
+        "docker/buster-runtime-entrypoint.sh",
+        "gitops/platform/values/alloy.yaml",
+        "gitops/platform/values/prometheus.yaml",
+        "my-values/buster-values.yaml",
+        "my-values/infra/argocd-tailscale-ingress.yaml",
+        "my-values/infra/argocd-values.yaml",
+        "my-values/infra/litellm-config.yaml",
+        "my-values/infra/litellm-deployment.yaml",
+        "my-values/infra/registry-local.yaml",
+        "my-values/infra/registry-mirror.yaml",
+        "my-values/nova-values.yaml",
+        "my-values/prism-values.yaml",
+        "scripts/registry-client-config.mjs",
+        "skills/buster/engine/test-gates/container-build-runtime.ts",
+        "skills/buster/engine/test-gates/exposure-generation.ts",
+        "skills/buster/engine/test-gates/network-http-runtime.ts",
+        "skills/buster/engine/test-gates/tailscale-exposure-runtime.ts",
+        "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json",
+        "skills/common/plugin-runtime/foundation/isolation/child.mjs",
+        "skills/common/plugin-runtime/foundation/isolation/protocol.ts",
+        "skills/common/plugin-runtime/foundation/isolation/runner.ts",
+        "skills/common/plugin-runtime/foundation/isolation/session.ts",
+        "skills/common/plugin-runtime/sdk/src/generated/contracts.ts",
+        "skills/common/plugin-runtime/sdk/src/runtime.ts",
+        "skills/common/plugins/network-http/src/adapter.ts",
+        "skills/common/plugins/notification-observer/plugin.json",
+        "skills/common/plugins/openclaw-agent-observer/src/redis-writer.ts",
+        "skills/common/plugins/redis-transport/src/adapter.ts",
+        "skills/common/plugins/redis-transport/src/resp.ts",
+        "skills/common/plugins/redis-transport/src/stream-identity.ts",
+        "skills/common/plugins/runtime-dispatch/src/adapter.ts",
+        "skills/common/plugins/runtime-dispatch/src/openclaw-cleanup.ts",
+        "skills/common/plugins/runtime-dispatch/src/openclaw-config.ts",
+        "skills/common/plugins/runtime-dispatch/src/openclaw-result.ts",
+        "skills/common/plugins/runtime-dispatch/src/openclaw-session.ts",
+        "skills/common/plugins/runtime-dispatch/src/openclaw.ts",
+        "skills/common/plugins/telemetry-observer/plugin.json",
+        "skills/nova/core/execution/adapter-invocation-phase.ts",
+        "skills/nova/core/execution/adapter-startup.ts",
+        "skills/nova/core/execution/stage-executor.ts",
+        "skills/nova/core/telemetry/observer-delivery.ts",
+        "skills/nova/core/telemetry/observer-recovery.ts",
+        "skills/nova/core/telemetry/observers.ts",
+        "skills/nova/core/test-gates/remote-dispatch.ts",
+        "skills/nova/plugins/implementation-agent/src/protocol.ts",
+        "skills/nova/plugins/prism-design/src/stage.ts",
+        "skills/nova/plugins/review/src/echo-review-contract.ts",
+        "skills/nova/plugins/review/src/echo-review-verification-contract.ts",
+        "skills/nova/plugins/review/src/protocol.ts",
+        "skills/nova/plugins/review/src/repository-revalidation-stage.ts",
+        "skills/nova/plugins/review/src/scalable-review-jobs.ts",
+        "skills/nova/plugins/review/src/scalable-review-verification.ts",
+        "skills/nova/project/demo.ts",
+        "skills/prism/config/native-worker.ts",
+        "skills/prism/control/agent-jobs.ts",
+        "skills/prism/control/native-operation-store.ts",
+        "skills/prism/control/native-operation.ts",
+        "skills/prism/control/worker-operation-transport.ts",
+        "skills/prism/engine/design-providers.ts",
+        "skills/prism/server/agent-attempt.ts",
+        "skills/prism/server/agent-bridge.mjs",
+        "skills/prism/server/agent-job-routes.ts",
+        "skills/prism/server/agent-job-runner.mjs",
+        "skills/prism/server/control-server.ts",
+        "skills/prism/server/ingestion.ts",
+        "skills/prism/server/internal-artifacts.ts",
+        "skills/prism/server/native-worker-host.ts",
+        "skills/prism/server/product-decisions.ts",
+        "skills/prism/server/studio-request.ts",
+        "skills/worker/core/worker/native-attempt-executor.ts",
+        "skills/worker/core/worker/native-attempt-journal.ts",
+        "skills/worker/core/worker/native-attempt-recovery.ts",
+        "skills/worker/core/worker/native-control-channel.ts",
+        "skills/worker/core/worker/native-process-output.ts",
+        "skills/worker/core/worker/trust.ts",
+        "tests/verification/reliability/redis-migration.test.mts",
+        "tools/ops-mcp/src/hubble.mjs",
+        "tools/ops-mcp/src/kubernetes.mjs"
+      ],
+      "checks": [
+        {
+          "command": "Independent whole COM009 content review and corrected retained-readiness follow-up",
+          "exitCode": 0,
+          "observation": "Source accuracy, reader usability and quality PASS; prior seven communication scopes preserved."
+        },
+        {
+          "command": "node scripts/docs-check.mjs",
+          "exitCode": 0,
+          "observation": "167 active pages; diagram and code-evidence checks pass."
+        },
+        {
+          "command": "node scripts/docs-governance.mjs",
+          "exitCode": 0,
+          "observation": "167 pages mapped; lastVerified metadata refreshed."
+        },
+        {
+          "command": "node scripts/docs-check-refs.mjs",
+          "exitCode": 0,
+          "observation": "6088 local links,3287anchors,8302repository paths,31767 pinned Source links pass."
+        }
+      ],
+      "review": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "summary": "Complete selected private-route inventory, TLS/auth/ACL boundary, broker lease/generation/CAS/rollback, committed demo readiness retained owner/deadline/status/product-extension and cleanup lifecycle. Outbound-only optional Ops SOCKS distinguished from inbound publication.",
+      "limits": [
+        "Source documentation acceptance only; no live Tailnet/DNS/TLS/ACL/header issuance, reachability or runtime execution established.",
+        "No COM001/008/010/011 or whole package/global gate acceptance."
+      ],
+      "openIssues": [],
+      "verdict": "PASS",
+      "evidence": [
+        "docs/blueprint/acceptance-evidence/private-routes-complete-20261021/private-routes-content-review.json",
+        "docs/blueprint/acceptance-evidence/private-routes-complete-20261021/private-routes-followup.json"
       ]
     }
   ],
@@ -8192,7 +8397,7 @@
         "charts/prism",
         "tests/verification/reliability"
       ],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "independent-topic-review-PASS",
       "contentKind": "authored",
       "generator": null,
       "automatedChecks": [
@@ -8229,7 +8434,7 @@
         "quality",
         "astra-final"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
@@ -8250,7 +8455,8 @@
       "acceptanceMappingRequiredReviews": "A97-11 requires independently selecting diagnosis/safe recovery for EVERY dependency and separately comparing ALL applicable matrix entries to current Sources; not satisfied by this mapping review. Three reviewer identities and fresh contexts remain required by contract rules.",
       "acceptanceMappingDriftObligations": "For every scoped endpoint/store/event/secret/runtime-service/Ops tool, A97-12 requires real discovery and red-on-undocumented-addition evidence; product scope also preserves change/remove/rename detection. Linking an existing checker, pinning old source or a current green baseline cannot satisfy this.",
       "acceptanceMappingCorrectionSource": "/home/node/Documents/Codex/a98-evidence/ap097-all-requirement-mapping-source-fresh/report.md",
-      "closureDecision": {
+      "completionRecord": "AP09-private-routes-complete-20261021",
+      "previousClosureDecision": {
         "verdict": "NOT_READY",
         "revision": "9370d16410bb7f7aeeb66e11d18403764074eeae",
         "reason": "Scoped independent review did not establish full requirement coverage; see concrete topic decision.",
@@ -35533,12 +35739,12 @@
       "scope": "Author32Bash53Node20CJS24syntheticchecks only, noformal6scenario/live/ReaderQualityapproval."
     },
     "currentCloseout20261021": {
-      "securedSourceRevision": "8c96fe55390c1b2f656e8ee57eeac1188a782bb7",
-      "acceptedRequirements": 179,
+      "securedSourceRevision": "22d46485dc8fc2818805fb7946acae0e0479a947",
+      "acceptedRequirements": 180,
       "acceptedGates": 12,
       "newRequirementsThisCampaign": 20,
       "newGatesThisCampaign": 2,
-      "nextWork": "Independently review native-contract partitions and qualify remaining actual API producer/input closures. All-script baseline1478outputs577unknown223Sources; candidate106receipt renewals61Sources are NOT blanket approval. Coverage proceeds through extension/catalogue/core checks; Prism source repinning remains next coverage blocker.",
+      "nextWork": "Independent whole-topic review of remaining finished authored content and eligible whole gates; fix concrete content defects. Global inventory, publication, reader and runtime boundaries remain unwaived.",
       "codeCandidate": "Remote communication closure179/261contents12/89gates. Core check3pages226links125Source files passes;28-capability native security test passes. Release-specific3Source ranges retain exact independent evidence and two CLI negative controls reject mismatches. Global API/generation/publication still unproven.",
       "currentGlobalBlocker": "DOCUMENTATION_TOOL_OUTPUT_ROLE_UNQUALIFIED: scripts/docs-check.mjs; current Markdown stripping/export/main guard differs from Source-owned executable role receipt.",
       "publication": "167pages51plugins pass publicationcheck and Markdownbuild; no rendered HTML/browser/search proof.",
