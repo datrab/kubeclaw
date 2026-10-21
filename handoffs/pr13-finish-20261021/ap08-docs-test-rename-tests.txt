@@ -1,0 +1,15 @@
+✔ only the two original metadata slots qualify; no fabricated receipt or runtime/module/apply grant (44.7603ms)
+✔ warm receipt revalidation rejects changed checker/caller writes a resource instead (8.143924ms)
+✔ warm receipt revalidation rejects resource-shaped plugin fixture (2.345349ms)
+✔ warm receipt revalidation rejects resource-shaped package fixture (2.269147ms)
+✔ warm receipt revalidation rejects changed ownership consumer interprets a different key (4.996475ms)
+✔ warm receipt revalidation rejects same-byte consumer redirected through an alias (1.985159ms)
+✔ selected source snapshot cannot borrow current physical-source custody (1.61602ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 410.329735

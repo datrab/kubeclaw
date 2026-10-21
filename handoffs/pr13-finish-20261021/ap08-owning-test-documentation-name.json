@@ -1,0 +1,14 @@
+{
+  "oldPath": "scripts/tests/minimal-plugin-fixture-output-custody.test.mjs",
+  "newPath": "scripts/tests/docs-minimal-plugin-fixture-output-custody.test.mjs",
+  "sameBytes": true,
+  "sha256": "fbcbc5722e3edab63d91c1df1df1f457244601f79d988f34f19f290ce6e783e9",
+  "owningTests": {
+    "pass": 7,
+    "fail": 0,
+    "skip": 0
+  },
+  "firstFailure": "Canonical reader plugin.json incorrectly reached as runtime executable input because new documentation-custody test lacked existing docs- namespace.",
+  "fix": "Byte-identical filename correction into existing scripts/tests/docs-* namespace. No tree/discovery/role guard change or new exception. Actual tree owner now terminal0; fresh check follows.",
+  "scope": "Same dirname/relative imports/fixture root; no basename use or product input promotion."
+}

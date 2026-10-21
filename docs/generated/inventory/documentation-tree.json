@@ -53353,7 +53353,7 @@
         "scripts/tests/docs-source-freshness.test.mjs"
       ],
       "indirectExecutableConsumers": [],
-      "sha256": "e1c2f96001462071a360d8ea06c81e9ce9c6fd6a89923bf05f4b2a407678a702"
+      "sha256": "bf9a95c5e83987928b0f861a760e7aedd66cfea92b33101c588d91a97ff5fafe"
     },
     {
       "path": "docs/blueprint/documentation-parity-contract.md",
@@ -54851,6 +54851,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "token": "docs/config/documentation-publication-manifest.json",
+          "inputUse": false
+        },
+        {
           "sourcePath": "handoffs/pr13-finish-20261021/deepguide-integration-review.md",
           "token": "docs/config/documentation-publication-manifest.json",
           "inputUse": false
@@ -54882,6 +54887,7 @@
         }
       ],
       "executableConsumers": [
+        "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
         "scripts/tests/docs-reader-source-previews.test.mjs"
       ],
       "indirectExecutableConsumers": [],
@@ -55166,6 +55172,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "token": "docs/config/documentation-tree-classification.json",
+          "inputUse": false
+        },
+        {
           "sourcePath": "handoffs/pr13-finish-20261021/deepguide-integration-review.md",
           "token": "docs/config/documentation-tree-classification.json",
           "inputUse": false
@@ -55247,6 +55258,7 @@
         }
       ],
       "executableConsumers": [
+        "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
         "scripts/tests/docs-parity-batches.test.mjs",
         "scripts/tests/docs-parity-check.test.mjs",
         "scripts/tests/docs-parity-extract.test.mjs",
@@ -55363,6 +55375,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "token": "docs/config/platform-surface-map.json",
+          "inputUse": false
+        },
+        {
           "sourcePath": "handoffs/pr13-finish-20261021/operator-platform-acceptance.md",
           "token": "docs/config/platform-surface-map.json",
           "inputUse": false
@@ -55389,6 +55406,7 @@
         }
       ],
       "executableConsumers": [
+        "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
         "handoffs/pr13-finish-20261021/operator-platform-completion-records.json",
         "scripts/check-platform-specialist-guides.mjs",
         "scripts/check-platform-surface-drift-mutations.mjs"
@@ -56827,6 +56845,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "handoffs/pr13-finish-20261021/tree-42-after-test-name.txt",
+          "token": "docs/generated/inventory/documentation-tree.json",
+          "inputUse": false
+        },
+        {
           "sourcePath": "scripts/docs-tree-boundary.mjs",
           "token": "docs/generated/inventory/documentation-tree.json",
           "inputUse": false
@@ -56838,6 +56861,7 @@
         }
       ],
       "executableConsumers": [
+        "handoffs/pr13-finish-20261021/tree-42-after-test-name.txt",
         "scripts/tests/docs-tree-boundary.test.mjs"
       ],
       "indirectExecutableConsumers": [],
@@ -57117,6 +57141,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "token": "docs/generated/inventory/platform-surfaces.json",
+          "inputUse": false
+        },
+        {
           "sourcePath": "handoffs/pr13-finish-20261021/operator-platform-acceptance.md",
           "token": "docs/generated/inventory/platform-surfaces.json",
           "inputUse": false
@@ -57144,6 +57173,7 @@
       ],
       "executableConsumers": [
         ".codex/handoffs/documentation-cloud/worktree-files.json",
+        "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
         "handoffs/pr13-finish-20261021/operator-platform-completion-records.json",
         "scripts/check-platform-surface-drift-mutations.mjs"
       ],
@@ -155392,6 +155422,12 @@
       ],
       "indirectExecutableConsumers": [
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
           "via": [
             "docs/config/documentation-publication-manifest.json"
@@ -155507,6 +155543,12 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
           "via": [
@@ -155628,6 +155670,12 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
           "via": [
@@ -155775,6 +155823,12 @@
       "executableConsumers": [],
       "indirectExecutableConsumers": [
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
           "via": [
             "docs/config/documentation-publication-manifest.json"
@@ -155886,6 +155940,12 @@
       "executableConsumers": [],
       "indirectExecutableConsumers": [
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
           "via": [
             "docs/config/documentation-publication-manifest.json"
@@ -155996,6 +156056,12 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
           "via": [
@@ -156128,6 +156194,12 @@
       "executableConsumers": [],
       "indirectExecutableConsumers": [
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
           "via": [
             "docs/config/documentation-publication-manifest.json"
@@ -156244,6 +156316,12 @@
       "executableConsumers": [],
       "indirectExecutableConsumers": [
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
           "via": [
             "docs/config/documentation-publication-manifest.json"
@@ -156359,6 +156437,12 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
           "via": [
@@ -156538,6 +156622,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "token": "docs/site/extend/README.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "handoffs/pr13-finish-20261021/deepguide-integration-review.md",
           "token": "docs/site/extend/README.md",
           "inputUse": false
@@ -156604,6 +156693,7 @@
         }
       ],
       "executableConsumers": [
+        "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
         "handoffs/pr13-reset-20261021/whole-diagram-record-inputs.json",
         "scripts/check-buster-guides.mjs",
         "scripts/check-extension-class-drift.mjs",
@@ -156612,6 +156702,12 @@
         "scripts/tests/docs-tree-boundary.test.mjs"
       ],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
           "via": [
@@ -156721,6 +156817,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "token": "docs/site/extend/buster.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "scripts/ap08-review-scope.mjs",
           "token": "docs/site/extend/buster.md",
           "inputUse": false
@@ -156747,9 +156848,16 @@
         }
       ],
       "executableConsumers": [
+        "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
         "scripts/check-buster-guides.mjs"
       ],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
           "via": [
@@ -156909,6 +157017,12 @@
       ],
       "indirectExecutableConsumers": [
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
           "via": [
             "docs/config/documentation-publication-manifest.json"
@@ -156960,6 +157074,12 @@
       "executableConsumers": [],
       "indirectExecutableConsumers": [
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
           "via": [
             "docs/config/documentation-publication-manifest.json"
@@ -157007,6 +157127,12 @@
         "handoffs/pr13-finish-20261021/style-and-scope-preservation-independent.json"
       ],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
           "via": [
@@ -157060,6 +157186,12 @@
         "handoffs/pr13-finish-20261021/style-and-scope-preservation-independent.json"
       ],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
           "via": [
@@ -157262,6 +157394,12 @@
       ],
       "indirectExecutableConsumers": [
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
           "via": [
             "docs/config/documentation-publication-manifest.json"
@@ -157372,6 +157510,12 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
           "via": [
@@ -157526,6 +157670,12 @@
       ],
       "indirectExecutableConsumers": [
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
           "via": [
             "docs/config/documentation-publication-manifest.json"
@@ -157559,12 +157709,29 @@
           "inputUse": false
         },
         {
+          "sourcePath": "handoffs/pr13-finish-20261021/finite-context-ap08-independent.md",
+          "token": "docs/site/extend/examples/minimal-stage/package.json",
+          "inputUse": false
+        },
+        {
           "sourcePath": "scripts/ap08-review-scope.mjs",
+          "token": "docs/site/extend/examples/minimal-stage/package.json",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "scripts/docs-minimal-plugin-fixture-output-custody.mjs",
+          "token": "docs/site/extend/examples/minimal-stage/package.json",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "scripts/tests/docs-minimal-plugin-fixture-output-custody.test.mjs",
           "token": "docs/site/extend/examples/minimal-stage/package.json",
           "inputUse": false
         }
       ],
-      "executableConsumers": [],
+      "executableConsumers": [
+        "scripts/tests/docs-minimal-plugin-fixture-output-custody.test.mjs"
+      ],
       "indirectExecutableConsumers": [],
       "sha256": "858afd76f0e8f9d21fac54b22cb409b5c11effd93b5530c91eb40bc4b9907a39"
     },
@@ -157603,12 +157770,35 @@
           "inputUse": false
         },
         {
+          "sourcePath": "handoffs/pr13-finish-20261021/finite-context-ap08-independent.md",
+          "token": "docs/site/extend/examples/minimal-stage/plugin.json",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "handoffs/pr13-finish-20261021/tree-42-before-test-name.txt",
+          "token": "docs/site/extend/examples/minimal-stage/plugin.json",
+          "inputUse": false
+        },
+        {
           "sourcePath": "scripts/ap08-review-scope.mjs",
           "token": "docs/site/extend/examples/minimal-stage/plugin.json",
           "inputUse": false
+        },
+        {
+          "sourcePath": "scripts/docs-minimal-plugin-fixture-output-custody.mjs",
+          "token": "docs/site/extend/examples/minimal-stage/plugin.json",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "scripts/tests/docs-minimal-plugin-fixture-output-custody.test.mjs",
+          "token": "docs/site/extend/examples/minimal-stage/plugin.json",
+          "inputUse": true
         }
       ],
-      "executableConsumers": [],
+      "executableConsumers": [
+        "handoffs/pr13-finish-20261021/tree-42-before-test-name.txt",
+        "scripts/tests/docs-minimal-plugin-fixture-output-custody.test.mjs"
+      ],
       "indirectExecutableConsumers": [],
       "sha256": "ffcd1ea2b759081d86a9812ea05b37a347ce13bd1a68a2640bf1e0a29146bd73"
     },
@@ -157974,6 +158164,12 @@
       "executableConsumers": [],
       "indirectExecutableConsumers": [
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
           "via": [
             "docs/config/documentation-publication-manifest.json"
@@ -158094,6 +158290,12 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
           "via": [
@@ -158223,6 +158425,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "token": "docs/site/extend/lint.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "handoffs/pr13-finish-20261021/six-guide-independent-review.md",
           "token": "docs/site/extend/lint.md",
           "inputUse": false
@@ -158254,11 +158461,18 @@
         }
       ],
       "executableConsumers": [
+        "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
         "handoffs/pr13-finish-20261021/style-and-scope-preservation-independent.json",
         "handoffs/pr13-reset-20261021/whole-diagram-record-inputs.json",
         "scripts/check-platform-specialist-guides.mjs"
       ],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
           "via": [
@@ -158411,6 +158625,12 @@
       "executableConsumers": [],
       "indirectExecutableConsumers": [
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
           "via": [
             "docs/config/documentation-publication-manifest.json"
@@ -158553,6 +158773,12 @@
         "handoffs/pr13-finish-20261021/workflow-developer-completion-records.json"
       ],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
           "via": [
@@ -158697,6 +158923,12 @@
         "scripts/check-buster-guides.mjs"
       ],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
           "via": [
@@ -158892,6 +159124,12 @@
       ],
       "indirectExecutableConsumers": [
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
           "via": [
             "docs/config/documentation-publication-manifest.json"
@@ -159050,6 +159288,12 @@
       ],
       "indirectExecutableConsumers": [
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
           "via": [
             "docs/config/documentation-publication-manifest.json"
@@ -159176,6 +159420,12 @@
       "executableConsumers": [],
       "indirectExecutableConsumers": [
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
           "via": [
             "docs/config/documentation-publication-manifest.json"
@@ -159291,6 +159541,12 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
           "via": [
@@ -159423,6 +159679,12 @@
       "executableConsumers": [],
       "indirectExecutableConsumers": [
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
           "via": [
             "docs/config/documentation-publication-manifest.json"
@@ -159548,6 +159810,12 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
           "via": [
@@ -159675,6 +159943,12 @@
       "executableConsumers": [],
       "indirectExecutableConsumers": [
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
           "via": [
             "docs/config/documentation-publication-manifest.json"
@@ -159800,6 +160074,12 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
           "via": [
@@ -159927,6 +160207,12 @@
       "executableConsumers": [],
       "indirectExecutableConsumers": [
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
           "via": [
             "docs/config/documentation-publication-manifest.json"
@@ -160052,6 +160338,12 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
           "via": [
@@ -160179,6 +160471,12 @@
       "executableConsumers": [],
       "indirectExecutableConsumers": [
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
           "via": [
             "docs/config/documentation-publication-manifest.json"
@@ -160304,6 +160602,12 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
           "via": [
@@ -160431,6 +160735,12 @@
       "executableConsumers": [],
       "indirectExecutableConsumers": [
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
           "via": [
             "docs/config/documentation-publication-manifest.json"
@@ -160556,6 +160866,12 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
           "via": [
@@ -160683,6 +160999,12 @@
       "executableConsumers": [],
       "indirectExecutableConsumers": [
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
           "via": [
             "docs/config/documentation-publication-manifest.json"
@@ -160808,6 +161130,12 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
           "via": [
@@ -160935,6 +161263,12 @@
       "executableConsumers": [],
       "indirectExecutableConsumers": [
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
           "via": [
             "docs/config/documentation-publication-manifest.json"
@@ -161055,6 +161389,12 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
           "via": [
@@ -161184,6 +161524,12 @@
       ],
       "indirectExecutableConsumers": [
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
           "via": [
             "docs/config/documentation-publication-manifest.json"
@@ -161310,6 +161656,12 @@
       "executableConsumers": [],
       "indirectExecutableConsumers": [
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
           "via": [
             "docs/config/documentation-publication-manifest.json"
@@ -161435,6 +161787,12 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
           "via": [
@@ -161567,6 +161925,12 @@
       "executableConsumers": [],
       "indirectExecutableConsumers": [
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
           "via": [
             "docs/config/documentation-publication-manifest.json"
@@ -161698,6 +162062,12 @@
       "executableConsumers": [],
       "indirectExecutableConsumers": [
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
           "via": [
             "docs/config/documentation-publication-manifest.json"
@@ -161823,6 +162193,12 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
           "via": [
@@ -161950,6 +162326,12 @@
       "executableConsumers": [],
       "indirectExecutableConsumers": [
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
           "via": [
             "docs/config/documentation-publication-manifest.json"
@@ -162076,6 +162458,12 @@
       "executableConsumers": [],
       "indirectExecutableConsumers": [
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
           "via": [
             "docs/config/documentation-publication-manifest.json"
@@ -162201,6 +162589,12 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
           "via": [
@@ -162381,6 +162775,12 @@
       ],
       "indirectExecutableConsumers": [
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
           "via": [
             "docs/config/documentation-publication-manifest.json"
@@ -162506,6 +162906,12 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
           "via": [
@@ -162633,6 +163039,12 @@
       "executableConsumers": [],
       "indirectExecutableConsumers": [
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
           "via": [
             "docs/config/documentation-publication-manifest.json"
@@ -162758,6 +163170,12 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
           "via": [
@@ -162885,6 +163303,12 @@
       "executableConsumers": [],
       "indirectExecutableConsumers": [
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
           "via": [
             "docs/config/documentation-publication-manifest.json"
@@ -163010,6 +163434,12 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
           "via": [
@@ -163137,6 +163567,12 @@
       "executableConsumers": [],
       "indirectExecutableConsumers": [
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
           "via": [
             "docs/config/documentation-publication-manifest.json"
@@ -163263,6 +163699,12 @@
       "executableConsumers": [],
       "indirectExecutableConsumers": [
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
           "via": [
             "docs/config/documentation-publication-manifest.json"
@@ -163388,6 +163830,12 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
           "via": [
@@ -163520,6 +163968,12 @@
       "executableConsumers": [],
       "indirectExecutableConsumers": [
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
           "via": [
             "docs/config/documentation-publication-manifest.json"
@@ -163651,6 +164105,12 @@
       "executableConsumers": [],
       "indirectExecutableConsumers": [
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
           "via": [
             "docs/config/documentation-publication-manifest.json"
@@ -163776,6 +164236,12 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
           "via": [
@@ -163903,6 +164369,12 @@
       "executableConsumers": [],
       "indirectExecutableConsumers": [
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
           "via": [
             "docs/config/documentation-publication-manifest.json"
@@ -164028,6 +164500,12 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
           "via": [
@@ -164155,6 +164633,12 @@
       "executableConsumers": [],
       "indirectExecutableConsumers": [
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
           "via": [
             "docs/config/documentation-publication-manifest.json"
@@ -164280,6 +164764,12 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
           "via": [
@@ -164407,6 +164897,12 @@
       "executableConsumers": [],
       "indirectExecutableConsumers": [
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
           "via": [
             "docs/config/documentation-publication-manifest.json"
@@ -164532,6 +165028,12 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
           "via": [
@@ -164659,6 +165161,12 @@
       "executableConsumers": [],
       "indirectExecutableConsumers": [
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
           "via": [
             "docs/config/documentation-publication-manifest.json"
@@ -164784,6 +165292,12 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
           "via": [
@@ -164911,6 +165425,12 @@
       "executableConsumers": [],
       "indirectExecutableConsumers": [
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
           "via": [
             "docs/config/documentation-publication-manifest.json"
@@ -165036,6 +165556,12 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
           "via": [
@@ -165163,6 +165689,12 @@
       "executableConsumers": [],
       "indirectExecutableConsumers": [
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
           "via": [
             "docs/config/documentation-publication-manifest.json"
@@ -165288,6 +165820,12 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
           "via": [
@@ -165415,6 +165953,12 @@
       "executableConsumers": [],
       "indirectExecutableConsumers": [
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
           "via": [
             "docs/config/documentation-publication-manifest.json"
@@ -165540,6 +166084,12 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
           "via": [
@@ -165717,6 +166267,12 @@
       "executableConsumers": [],
       "indirectExecutableConsumers": [
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
           "via": [
             "docs/config/documentation-publication-manifest.json"
@@ -165882,6 +166438,12 @@
       ],
       "indirectExecutableConsumers": [
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
           "via": [
             "docs/config/documentation-publication-manifest.json"
@@ -166016,6 +166578,12 @@
       ],
       "indirectExecutableConsumers": [
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
           "via": [
             "docs/config/documentation-publication-manifest.json"
@@ -166131,6 +166699,12 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
           "via": [
@@ -166372,6 +166946,12 @@
         "tests/verification/contracts/check-worker-trust-documentation.mts"
       ],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "scripts/check-suite-migration-workflow.mjs",
           "via": [
@@ -167497,6 +168077,12 @@
       "executableConsumers": [],
       "indirectExecutableConsumers": [
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
           "via": [
             "docs/config/documentation-publication-manifest.json"
@@ -167830,6 +168416,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "handoffs/pr13-finish-20261021/A99-07-after-pin-completion-record-corrected.json",
+          "token": "docs/site/reference/buster-provider-configuration.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "scripts/check-buster-guides.mjs",
           "token": "docs/site/reference/buster-provider-configuration.md",
           "inputUse": false
@@ -167867,12 +168458,19 @@
       ],
       "executableConsumers": [
         "handoffs/pr13-finish-20261021/a99-01-completion-record.json",
+        "handoffs/pr13-finish-20261021/A99-07-after-pin-completion-record-corrected.json",
         "scripts/check-buster-guides.mjs",
         "scripts/check-provider-registration-drift.mjs",
         "scripts/generate-buster-provider-reference.mjs",
         "scripts/tests/docs-tree-boundary.test.mjs"
       ],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "scripts/check-suite-migration-workflow.mjs",
           "via": [
@@ -169120,6 +169718,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "handoffs/pr13-finish-20261021/A99-07-after-pin-completion-record-corrected.json",
+          "token": "docs/site/reference/buster-runtime-configuration.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "scripts/check-buster-guides.mjs",
           "token": "docs/site/reference/buster-runtime-configuration.md",
           "inputUse": false
@@ -169141,10 +169744,17 @@
         }
       ],
       "executableConsumers": [
+        "handoffs/pr13-finish-20261021/A99-07-after-pin-completion-record-corrected.json",
         "scripts/check-buster-guides.mjs",
         "scripts/check-suite-migration-workflow.mjs"
       ],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "scripts/check-suite-migration-workflow.mjs",
           "via": [
@@ -169540,6 +170150,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "handoffs/pr13-finish-20261021/A99-07-after-pin-completion-record-corrected.json",
+          "token": "docs/site/reference/buster-suites.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "scripts/check-buster-guides.mjs",
           "token": "docs/site/reference/buster-suites.md",
           "inputUse": false
@@ -169597,6 +170212,7 @@
       ],
       "executableConsumers": [
         "handoffs/pr13-finish-20261021/a99-01-completion-record.json",
+        "handoffs/pr13-finish-20261021/A99-07-after-pin-completion-record-corrected.json",
         "scripts/check-buster-guides.mjs",
         "scripts/check-fixture-registration-drift.mjs",
         "scripts/check-report-registration-drift.mjs",
@@ -169604,6 +170220,12 @@
         "scripts/tests/docs-tree-boundary.test.mjs"
       ],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "scripts/check-suite-migration-workflow.mjs",
           "via": [
@@ -170902,6 +171524,12 @@
       ],
       "indirectExecutableConsumers": [
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
           "via": [
             "docs/config/documentation-publication-manifest.json"
@@ -171075,6 +171703,12 @@
         "scripts/check-configuration-drift-mutations.mjs"
       ],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
           "via": [
@@ -171270,6 +171904,12 @@
       ],
       "indirectExecutableConsumers": [
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
           "via": [
             "docs/config/documentation-publication-manifest.json"
@@ -171385,6 +172025,12 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
           "via": [
@@ -171527,6 +172173,12 @@
       "executableConsumers": [],
       "indirectExecutableConsumers": [
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
           "via": [
             "docs/config/documentation-publication-manifest.json"
@@ -171668,6 +172320,12 @@
       "executableConsumers": [],
       "indirectExecutableConsumers": [
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
           "via": [
             "docs/config/documentation-publication-manifest.json"
@@ -171784,6 +172442,12 @@
       "executableConsumers": [],
       "indirectExecutableConsumers": [
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
           "via": [
             "docs/config/documentation-publication-manifest.json"
@@ -171877,6 +172541,16 @@
           "inputUse": false
         },
         {
+          "sourcePath": "handoffs/pr13-finish-20261021/contracts-notification-routing-independent-source.json",
+          "token": "docs/site/reference/contracts.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "handoffs/pr13-finish-20261021/reader-6d-scope-preservation.json",
+          "token": "docs/site/reference/contracts.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "scripts/docs-ap09-catalogue.mjs",
           "token": "docs/site/reference/contracts.md",
           "inputUse": false
@@ -171887,8 +172561,17 @@
           "inputUse": false
         }
       ],
-      "executableConsumers": [],
+      "executableConsumers": [
+        "handoffs/pr13-finish-20261021/contracts-notification-routing-independent-source.json",
+        "handoffs/pr13-finish-20261021/reader-6d-scope-preservation.json"
+      ],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
           "via": [
@@ -171896,7 +172579,7 @@
           ]
         }
       ],
-      "sha256": "a1f2c4ee8506b8d9582543988ef8795b73c39c54951b3892c46835961f849ed7"
+      "sha256": "12b033270df858c2a6adb4f1ce160c447dc075f54dfb05f806e5a1458df7384e"
     },
     {
       "path": "docs/site/reference/documentation-governance.md",
@@ -172045,6 +172728,12 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
           "via": [
@@ -172330,6 +173019,12 @@
       ],
       "indirectExecutableConsumers": [
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
           "via": [
             "docs/config/documentation-publication-manifest.json"
@@ -172487,6 +173182,12 @@
         "handoffs/pr13-finish-20261021/operator-platform-completion-records.json"
       ],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
           "via": [
@@ -172673,6 +173374,12 @@
       ],
       "indirectExecutableConsumers": [
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
           "via": [
             "docs/config/documentation-publication-manifest.json"
@@ -172784,6 +173491,12 @@
       "executableConsumers": [],
       "indirectExecutableConsumers": [
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
           "via": [
             "docs/config/documentation-publication-manifest.json"
@@ -172884,6 +173597,12 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
           "via": [
@@ -173113,6 +173832,16 @@
           "inputUse": false
         },
         {
+          "sourcePath": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "token": "docs/site/reference/generated-documentation-map.json",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "handoffs/pr13-finish-20261021/reader-6d-scope-preservation.json",
+          "token": "docs/site/reference/generated-documentation-map.json",
+          "inputUse": false
+        },
+        {
           "sourcePath": "handoffs/pr13-reset-20261021/metadata-preservation-review.md",
           "token": "docs/site/reference/generated-documentation-map.json",
           "inputUse": false
@@ -173123,9 +173852,12 @@
           "inputUse": false
         }
       ],
-      "executableConsumers": [],
+      "executableConsumers": [
+        "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+        "handoffs/pr13-finish-20261021/reader-6d-scope-preservation.json"
+      ],
       "indirectExecutableConsumers": [],
-      "sha256": "7dc6e196f9aa343d01da12c0d2e840919bf1bd4b510def46519b0daeafd0b93d"
+      "sha256": "2f106e8153227b57a886757d0c5c4a5971b50bc7a3ec0f23dc9d10fb99289813"
     },
     {
       "path": "docs/site/reference/glossary.md",
@@ -173256,6 +173988,12 @@
         ".codex/handoffs/documentation-cloud/evidence-index.json"
       ],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
           "via": [
@@ -173448,6 +174186,12 @@
       ],
       "indirectExecutableConsumers": [
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
           "via": [
             "docs/config/documentation-publication-manifest.json"
@@ -173589,6 +174333,12 @@
       "executableConsumers": [],
       "indirectExecutableConsumers": [
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
           "via": [
             "docs/config/documentation-publication-manifest.json"
@@ -173716,6 +174466,12 @@
         "handoffs/pr13-reset-20261021/whole-diagram-record-inputs.json"
       ],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
           "via": [
@@ -173865,6 +174621,12 @@
       ],
       "indirectExecutableConsumers": [
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
           "via": [
             "docs/config/documentation-publication-manifest.json"
@@ -173998,6 +174760,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "token": "docs/site/reference/lint-policy.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "scripts/check-platform-specialist-guides.mjs",
           "token": "docs/site/reference/lint-policy.md",
           "inputUse": true
@@ -174014,9 +174781,16 @@
         }
       ],
       "executableConsumers": [
+        "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
         "scripts/check-platform-specialist-guides.mjs"
       ],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
           "via": [
@@ -174150,6 +174924,12 @@
         "scripts/check-platform-specialist-guides.mjs"
       ],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
           "via": [
@@ -174324,6 +175104,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "token": "docs/site/reference/nova-project.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "handoffs/pr13-finish-20261021/six-guide-independent-review.md",
           "token": "docs/site/reference/nova-project.md",
           "inputUse": false
@@ -174366,11 +175151,18 @@
       ],
       "executableConsumers": [
         "handoffs/pr13-finish-20261021/a99-01-completion-record.json",
+        "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
         "handoffs/pr13-finish-20261021/style-and-scope-preservation-independent.json",
         "handoffs/pr13-finish-20261021/workflow-developer-completion-records.json",
         "scripts/check-suite-migration-workflow.mjs"
       ],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
           "via": [
@@ -174495,6 +175287,12 @@
       ],
       "indirectExecutableConsumers": [
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
           "via": [
             "docs/config/documentation-publication-manifest.json"
@@ -174598,6 +175396,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "token": "docs/site/reference/pipeline-json.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "handoffs/pr13-finish-20261021/workflow-developer-acceptance.md",
           "token": "docs/site/reference/pipeline-json.md",
           "inputUse": false
@@ -174630,10 +175433,17 @@
       ],
       "executableConsumers": [
         "handoffs/pr13-finish-20261021/a99-01-completion-record.json",
+        "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
         "handoffs/pr13-finish-20261021/workflow-developer-completion-records.json",
         "handoffs/pr13-finish-20261021/workflow-parent-smallfix-preservation.json"
       ],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
           "via": [
@@ -174775,6 +175585,12 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
           "via": [
@@ -174940,6 +175756,12 @@
         "scripts/check-platform-specialist-guides.mjs"
       ],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
           "via": [
@@ -175129,6 +175951,12 @@
         "scripts/tests/docs-source-freshness.test.mjs"
       ],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
           "via": [
@@ -175329,6 +176157,12 @@
       ],
       "indirectExecutableConsumers": [
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
           "via": [
             "docs/config/documentation-publication-manifest.json"
@@ -175495,6 +176329,12 @@
       "executableConsumers": [],
       "indirectExecutableConsumers": [
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
           "via": [
             "docs/config/documentation-publication-manifest.json"
@@ -175625,6 +176465,12 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
           "via": [
@@ -175793,6 +176639,12 @@
         "scripts/check-contract-drift.mjs"
       ],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
           "via": [
@@ -175989,6 +176841,12 @@
       ],
       "indirectExecutableConsumers": [
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
           "via": [
             "docs/config/documentation-publication-manifest.json"
@@ -176184,6 +177042,12 @@
           ]
         },
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "scripts/check-operator-task-registry.mjs",
           "via": [
             "docs/operator-tasks.json"
@@ -176324,6 +177188,12 @@
       ],
       "indirectExecutableConsumers": [
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
           "via": [
             "docs/config/documentation-publication-manifest.json"
@@ -176454,6 +177324,12 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
           "via": [
@@ -176611,6 +177487,12 @@
       "executableConsumers": [],
       "indirectExecutableConsumers": [
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
           "via": [
             "docs/config/documentation-publication-manifest.json"
@@ -176726,6 +177608,12 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
           "via": [
@@ -176922,6 +177810,12 @@
       ],
       "indirectExecutableConsumers": [
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
           "via": [
             "docs/config/documentation-publication-manifest.json"
@@ -177063,6 +177957,12 @@
       "executableConsumers": [],
       "indirectExecutableConsumers": [
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
           "via": [
             "docs/config/documentation-publication-manifest.json"
@@ -177203,6 +178103,12 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
           "via": [
@@ -177389,6 +178295,12 @@
       ],
       "indirectExecutableConsumers": [
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
           "via": [
             "docs/config/documentation-publication-manifest.json"
@@ -177556,6 +178468,12 @@
         "scripts/check-platform-specialist-guides.mjs"
       ],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
           "via": [
@@ -177728,6 +178646,12 @@
       ],
       "indirectExecutableConsumers": [
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
           "via": [
             "docs/config/documentation-publication-manifest.json"
@@ -177846,6 +178770,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "token": "docs/site/understand/archviewer.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "handoffs/pr13-finish-20261021/style-and-scope-preservation-independent.json",
           "token": "docs/site/understand/archviewer.md",
           "inputUse": false
@@ -177867,10 +178796,17 @@
         }
       ],
       "executableConsumers": [
+        "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
         "handoffs/pr13-finish-20261021/style-and-scope-preservation-independent.json",
         "scripts/check-platform-specialist-guides.mjs"
       ],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
           "via": [
@@ -178015,6 +178951,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "token": "docs/site/understand/buster-namespace-controller.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "handoffs/pr13-finish-20261021/workflow-parent-smallfix-preservation.json",
           "token": "docs/site/understand/buster-namespace-controller.md",
           "inputUse": false
@@ -178041,11 +178982,18 @@
         }
       ],
       "executableConsumers": [
+        "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
         "handoffs/pr13-finish-20261021/workflow-parent-smallfix-preservation.json",
         "handoffs/pr13-reset-20261021/whole-diagram-record-inputs.json",
         "scripts/check-buster-guides.mjs"
       ],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
           "via": [
@@ -178155,6 +179103,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "handoffs/pr13-finish-20261021/A99-07-after-pin-completion-record-corrected.json",
+          "token": "docs/site/understand/buster.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "handoffs/pr13-reset-20261021/whole-diagram-record-inputs.json",
           "token": "docs/site/understand/buster.md",
           "inputUse": false
@@ -178176,10 +179129,17 @@
         }
       ],
       "executableConsumers": [
+        "handoffs/pr13-finish-20261021/A99-07-after-pin-completion-record-corrected.json",
         "handoffs/pr13-reset-20261021/whole-diagram-record-inputs.json",
         "scripts/check-buster-guides.mjs"
       ],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
           "via": [
@@ -178293,6 +179253,12 @@
         "scripts/check-platform-specialist-guides.mjs"
       ],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
           "via": [
@@ -178477,6 +179443,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "token": "docs/site/understand/communication.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "handoffs/pr13-finish-20261021/operator-platform-completion-records.json",
           "token": "docs/site/understand/communication.md",
           "inputUse": false
@@ -178513,12 +179484,25 @@
         }
       ],
       "executableConsumers": [
+        "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
         "handoffs/pr13-finish-20261021/operator-platform-completion-records.json",
         "handoffs/pr13-finish-20261021/style-and-scope-preservation-independent.json",
         "handoffs/pr13-reset-20261021/whole-diagram-record-inputs.json",
         "scripts/check-platform-specialist-guides.mjs"
       ],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/platform-surface-map.json"
+          ]
+        },
         {
           "executableSource": "handoffs/pr13-finish-20261021/operator-platform-completion-records.json",
           "via": [
@@ -178712,6 +179696,12 @@
       ],
       "indirectExecutableConsumers": [
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
           "via": [
             "docs/config/documentation-publication-manifest.json"
@@ -178875,6 +179865,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "token": "docs/site/understand/data-and-state.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "handoffs/pr13-finish-20261021/operator-platform-completion-records.json",
           "token": "docs/site/understand/data-and-state.md",
           "inputUse": false
@@ -178902,11 +179897,24 @@
       ],
       "executableConsumers": [
         ".codex/handoffs/documentation-cloud/evidence-index.json",
+        "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
         "handoffs/pr13-finish-20261021/operator-platform-completion-records.json",
         "handoffs/pr13-finish-20261021/style-and-scope-preservation-independent.json",
         "scripts/check-platform-specialist-guides.mjs"
       ],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/platform-surface-map.json"
+          ]
+        },
         {
           "executableSource": "handoffs/pr13-finish-20261021/operator-platform-completion-records.json",
           "via": [
@@ -179150,6 +180158,12 @@
       ],
       "indirectExecutableConsumers": [
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
           "via": [
             "docs/config/documentation-publication-manifest.json"
@@ -179248,6 +180262,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "token": "docs/site/understand/echo.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "handoffs/pr13-finish-20261021/six-guide-independent-review.md",
           "token": "docs/site/understand/echo.md",
           "inputUse": false
@@ -179269,9 +180288,16 @@
         }
       ],
       "executableConsumers": [
+        "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
         "scripts/check-platform-specialist-guides.mjs"
       ],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
           "via": [
@@ -179371,6 +180397,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "token": "docs/site/understand/forge.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "handoffs/pr13-finish-20261021/six-guide-independent-review.md",
           "token": "docs/site/understand/forge.md",
           "inputUse": false
@@ -179392,9 +180423,16 @@
         }
       ],
       "executableConsumers": [
+        "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
         "scripts/check-platform-specialist-guides.mjs"
       ],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
           "via": [
@@ -179561,6 +180599,12 @@
       ],
       "indirectExecutableConsumers": [
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
           "via": [
             "docs/config/documentation-publication-manifest.json"
@@ -179684,6 +180728,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "token": "docs/site/understand/openclaw.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "handoffs/pr13-finish-20261021/generic-publisher-package-sections-author.md",
           "token": "docs/site/understand/openclaw.md",
           "inputUse": false
@@ -179705,9 +180754,16 @@
         }
       ],
       "executableConsumers": [
+        "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
         "scripts/check-platform-specialist-guides.mjs"
       ],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
           "via": [
@@ -179871,6 +180927,18 @@
         "scripts/check-platform-specialist-guides.mjs"
       ],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/platform-surface-map.json"
+          ]
+        },
         {
           "executableSource": "handoffs/pr13-finish-20261021/operator-platform-completion-records.json",
           "via": [
@@ -180043,6 +181111,12 @@
       ],
       "indirectExecutableConsumers": [
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
           "via": [
             "docs/config/documentation-publication-manifest.json"
@@ -180211,6 +181285,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "token": "docs/site/understand/platform-and-operations.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "handoffs/pr13-finish-20261021/operator-platform-completion-records.json",
           "token": "docs/site/understand/platform-and-operations.md",
           "inputUse": false
@@ -180315,6 +181394,7 @@
         ".codex/handoffs/documentation-cloud/evidence-index.json",
         "charts/kubeclaw/templates/_registry-clients.tpl",
         "docker/buster-runtime-entrypoint.sh",
+        "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
         "handoffs/pr13-finish-20261021/operator-platform-completion-records.json",
         "handoffs/pr13-finish-20261021/style-and-scope-preservation-independent.json",
         "handoffs/pr13-reset-20261021/whole-diagram-record-inputs.json",
@@ -180328,6 +181408,18 @@
         "scripts/registry-client-config.mjs"
       ],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/platform-surface-map.json"
+          ]
+        },
         {
           "executableSource": "handoffs/pr13-finish-20261021/operator-platform-completion-records.json",
           "via": [
@@ -180495,6 +181587,12 @@
         "scripts/check-core-architecture-guides.mjs"
       ],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
           "via": [
@@ -180664,6 +181762,12 @@
         "scripts/check-prism-guides.mjs"
       ],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
           "via": [
@@ -180839,6 +181943,12 @@
       ],
       "indirectExecutableConsumers": [
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
           "via": [
             "docs/config/documentation-publication-manifest.json"
@@ -181002,6 +182112,12 @@
         "scripts/check-prism-guides.mjs"
       ],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
           "via": [
@@ -181207,6 +182323,12 @@
       ],
       "indirectExecutableConsumers": [
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
           "via": [
             "docs/config/documentation-publication-manifest.json"
@@ -181352,6 +182474,12 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
           "via": [
@@ -181506,6 +182634,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "token": "docs/site/understand/security-and-trust.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "handoffs/pr13-finish-20261021/operator-platform-completion-records.json",
           "token": "docs/site/understand/security-and-trust.md",
           "inputUse": false
@@ -181547,11 +182680,24 @@
         }
       ],
       "executableConsumers": [
+        "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
         "handoffs/pr13-finish-20261021/operator-platform-completion-records.json",
         "handoffs/pr13-reset-20261021/whole-diagram-record-inputs.json",
         "scripts/check-platform-specialist-guides.mjs"
       ],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/platform-surface-map.json"
+          ]
+        },
         {
           "executableSource": "handoffs/pr13-finish-20261021/operator-platform-completion-records.json",
           "via": [
@@ -181729,12 +182875,27 @@
           "inputUse": false
         },
         {
+          "sourcePath": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "token": "docs/site/understand/telemetry.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "handoffs/pr13-finish-20261021/contracts-notification-routing-independent-source.json",
+          "token": "docs/site/understand/telemetry.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "handoffs/pr13-finish-20261021/operator-platform-completion-records.json",
           "token": "docs/site/understand/telemetry.md",
           "inputUse": false
         },
         {
           "sourcePath": "handoffs/pr13-finish-20261021/platform-corrections-author-report.md",
+          "token": "docs/site/understand/telemetry.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "handoffs/pr13-finish-20261021/reader-6d-scope-preservation.json",
           "token": "docs/site/understand/telemetry.md",
           "inputUse": false
         },
@@ -181765,11 +182926,26 @@
         }
       ],
       "executableConsumers": [
+        "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+        "handoffs/pr13-finish-20261021/contracts-notification-routing-independent-source.json",
         "handoffs/pr13-finish-20261021/operator-platform-completion-records.json",
+        "handoffs/pr13-finish-20261021/reader-6d-scope-preservation.json",
         "handoffs/pr13-reset-20261021/whole-diagram-record-inputs.json",
         "scripts/check-platform-specialist-guides.mjs"
       ],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/platform-surface-map.json"
+          ]
+        },
         {
           "executableSource": "handoffs/pr13-finish-20261021/operator-platform-completion-records.json",
           "via": [
@@ -181795,7 +182971,7 @@
           ]
         }
       ],
-      "sha256": "b372b976176d3b03de3978b9b6e2a52b8a36c5a63f57759d22b06da731f74a1b"
+      "sha256": "d3dcaaca4eddebe51582429da2bd459deb5b6087fbac2e7decd01315a73caad8"
     },
     {
       "path": "docs/site/understand/worker-core.md",
@@ -181907,6 +183083,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "token": "docs/site/understand/worker-core.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "handoffs/pr13-finish-20261021/six-guide-independent-review.md",
           "token": "docs/site/understand/worker-core.md",
           "inputUse": false
@@ -181943,12 +183124,19 @@
         }
       ],
       "executableConsumers": [
+        "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
         "handoffs/pr13-finish-20261021/style-and-scope-preservation-independent.json",
         "handoffs/pr13-reset-20261021/whole-diagram-record-inputs.json",
         "scripts/check-core-architecture-guides.mjs",
         "tests/verification/contracts/check-worker-trust-documentation.mts"
       ],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
           "via": [
@@ -182077,6 +183265,12 @@
         "tests/verification/contracts/check-worker-trust-documentation.mts"
       ],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
           "via": [
@@ -182258,6 +183452,12 @@
       ],
       "indirectExecutableConsumers": [
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
           "via": [
             "docs/config/documentation-publication-manifest.json"
@@ -182424,6 +183624,12 @@
           "executableSource": ".codex/handoffs/documentation-cloud/evidence-index.json",
           "via": [
             "docs/operator-tasks.json"
+          ]
+        },
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
           ]
         },
         {
@@ -182620,6 +183826,12 @@
           "executableSource": ".codex/handoffs/documentation-cloud/evidence-index.json",
           "via": [
             "docs/operator-tasks.json"
+          ]
+        },
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
           ]
         },
         {
@@ -182828,6 +184040,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "docs/site/use/workflows/README.md",
+          "token": "docs/site/use/diagnose.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "scripts/check-platform-specialist-guides.mjs",
           "token": "docs/site/use/diagnose.md",
           "inputUse": true
@@ -182857,6 +184074,12 @@
           "executableSource": ".codex/handoffs/documentation-cloud/evidence-index.json",
           "via": [
             "docs/operator-tasks.json"
+          ]
+        },
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
           ]
         },
         {
@@ -183115,6 +184338,12 @@
           ]
         },
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "scripts/check-operator-task-registry.mjs",
           "via": [
             "docs/operator-tasks.json"
@@ -183330,6 +184559,12 @@
           "executableSource": ".codex/handoffs/documentation-cloud/evidence-index.json",
           "via": [
             "docs/operator-tasks.json"
+          ]
+        },
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
           ]
         },
         {
@@ -183592,6 +184827,12 @@
           ]
         },
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "scripts/check-operator-task-registry.mjs",
           "via": [
             "docs/operator-tasks.json"
@@ -183752,6 +184993,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "docs/site/use/workflows/README.md",
+          "token": "docs/site/use/plugins.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "scripts/docs-ap09-catalogue.mjs",
           "token": "docs/site/use/plugins.md",
           "inputUse": false
@@ -183780,6 +185026,12 @@
           "executableSource": ".codex/handoffs/documentation-cloud/evidence-index.json",
           "via": [
             "docs/operator-tasks.json"
+          ]
+        },
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
           ]
         },
         {
@@ -183996,6 +185248,12 @@
           ]
         },
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "scripts/check-operator-task-registry.mjs",
           "via": [
             "docs/operator-tasks.json"
@@ -184176,6 +185434,12 @@
         "scripts/check-operator-task-registry.mjs"
       ],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
           "via": [
@@ -184425,6 +185689,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "docs/site/use/workflows/README.md",
+          "token": "docs/site/use/recovery.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "handoffs/pr13-finish-20261021/operator-platform-completion-records.json",
           "token": "docs/site/use/recovery.md",
           "inputUse": false
@@ -184459,6 +185728,12 @@
           "executableSource": ".codex/handoffs/documentation-cloud/evidence-index.json",
           "via": [
             "docs/operator-tasks.json"
+          ]
+        },
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
           ]
         },
         {
@@ -184655,6 +185930,12 @@
           ]
         },
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "scripts/check-operator-task-registry.mjs",
           "via": [
             "docs/operator-tasks.json"
@@ -184755,7 +186036,27 @@
           "inputUse": false
         },
         {
+          "sourcePath": "handoffs/pr13-finish-20261021/A99-07-after-pin-completion-record-corrected.json",
+          "token": "docs/site/use/workflows/README.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "token": "docs/site/use/workflows/README.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "handoffs/pr13-finish-20261021/contracts-notification-routing-independent-source.json",
+          "token": "docs/site/use/workflows/README.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "handoffs/pr13-finish-20261021/deepguide-integration-review.md",
+          "token": "docs/site/use/workflows/README.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "handoffs/pr13-finish-20261021/reader-6d-scope-preservation.json",
           "token": "docs/site/use/workflows/README.md",
           "inputUse": false
         },
@@ -184770,8 +186071,19 @@
           "inputUse": false
         }
       ],
-      "executableConsumers": [],
+      "executableConsumers": [
+        "handoffs/pr13-finish-20261021/A99-07-after-pin-completion-record-corrected.json",
+        "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+        "handoffs/pr13-finish-20261021/contracts-notification-routing-independent-source.json",
+        "handoffs/pr13-finish-20261021/reader-6d-scope-preservation.json"
+      ],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
           "via": [
@@ -184779,7 +186091,7 @@
           ]
         }
       ],
-      "sha256": "6a786225aa2ab2e62dd73b0b37d05295b0c3523bfb347409c91ac71ac081a55f"
+      "sha256": "70f31ea0fc50ef12181a13bfa14489287cfa44246f4643b9097241108826151b"
     },
     {
       "path": "docs/site/use/workflows/buster-suite.md",
@@ -184936,6 +186248,21 @@
           "inputUse": false
         },
         {
+          "sourcePath": "handoffs/pr13-finish-20261021/A99-07-after-pin-completion-record-corrected.json",
+          "token": "docs/site/use/workflows/buster-suite.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "handoffs/pr13-finish-20261021/contracts-notification-routing-independent-source.json",
+          "token": "docs/site/use/workflows/buster-suite.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "handoffs/pr13-finish-20261021/reader-6d-scope-preservation.json",
+          "token": "docs/site/use/workflows/buster-suite.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "scripts/check-buster-guides.mjs",
           "token": "docs/site/use/workflows/buster-suite.md",
           "inputUse": false
@@ -184957,10 +186284,19 @@
         }
       ],
       "executableConsumers": [
+        "handoffs/pr13-finish-20261021/A99-07-after-pin-completion-record-corrected.json",
+        "handoffs/pr13-finish-20261021/contracts-notification-routing-independent-source.json",
+        "handoffs/pr13-finish-20261021/reader-6d-scope-preservation.json",
         "scripts/check-buster-guides.mjs",
         "scripts/check-platform-specialist-guides.mjs"
       ],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
           "via": [
@@ -184968,7 +186304,7 @@
           ]
         }
       ],
-      "sha256": "5a5dd30f186393ca2d296ed740d4de4b7df7834aceb21e590c24d09be6a5ee02"
+      "sha256": "4cb1553b8425f3d9335a68e86028df85ab165585a0c2465437a558935892a70c"
     },
     {
       "path": "docs/site/use/workflows/examples/buster-fixture-matrix-report.pipeline.json",
@@ -185015,12 +186351,18 @@
           "inputUse": false
         },
         {
+          "sourcePath": "handoffs/pr13-finish-20261021/A99-07-after-pin-completion-record-corrected.json",
+          "token": "docs/site/use/workflows/examples/buster-fixture-matrix-report.pipeline.json",
+          "inputUse": false
+        },
+        {
           "sourcePath": "scripts/check-buster-guides.mjs",
           "token": "docs/site/use/workflows/examples/buster-fixture-matrix-report.pipeline.json",
           "inputUse": false
         }
       ],
       "executableConsumers": [
+        "handoffs/pr13-finish-20261021/A99-07-after-pin-completion-record-corrected.json",
         "scripts/check-buster-guides.mjs"
       ],
       "indirectExecutableConsumers": [],
@@ -185360,6 +186702,12 @@
       "executableConsumers": [],
       "indirectExecutableConsumers": [
         {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
+        {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
           "via": [
             "docs/config/documentation-publication-manifest.json"
@@ -185412,6 +186760,12 @@
         "handoffs/pr13-finish-20261021/style-and-scope-preservation-independent.json"
       ],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
           "via": [
@@ -185570,6 +186924,12 @@
         "handoffs/pr13-finish-20261021/workflow-developer-completion-records.json"
       ],
       "indirectExecutableConsumers": [
+        {
+          "executableSource": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.json",
+          "via": [
+            "docs/config/documentation-publication-manifest.json"
+          ]
+        },
         {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
           "via": [

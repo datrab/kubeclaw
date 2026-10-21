@@ -1,0 +1,25 @@
+{
+  "testSha256": "fbcbc5722e3edab63d91c1df1df1f457244601f79d988f34f19f290ce6e783e9",
+  "byteIdentical": true,
+  "basenameUsedInBody": false,
+  "packageEntryOrGlob": false,
+  "callerCensusCount": 997,
+  "callerCensusDigest": "241e30ba49df0a19d582e2ad90ea2b42069cc3c97a01d69231428f4c2f482d7c",
+  "bothTestPathsExcludedFromCallerCensus": true,
+  "bothPathsAbsentSelectedGraph": true,
+  "noNewGraphEntryBasis": "Same tests directory excluded; no literal package entry or glob, no Source import/finite module path references to either basename; same extension/directory and no new alias",
+  "receipts": [
+    {
+      "source": "scripts/bundle-values-field.mjs",
+      "occurrences": 6,
+      "canonicalRole": "unknown",
+      "apiApplyAuthorized": false
+    },
+    {
+      "source": "scripts/buster-resource-overlay.mjs",
+      "occurrences": 2,
+      "canonicalRole": "unknown",
+      "apiApplyAuthorized": false
+    }
+  ]
+}

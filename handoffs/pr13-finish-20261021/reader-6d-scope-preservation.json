@@ -1,0 +1,276 @@
+{
+  "revision": "af1b987ee4d461fc6205a18553db3e21461ca203",
+  "readerRevision": "6d2cdeedbafba26e99e11cfd1793f25b15f4388a",
+  "preservedRecordCount": 23,
+  "impacts": [
+    {
+      "id": "AP09.1-ready-topics-20261020",
+      "previousReviewedRevision": "d0bb52c4d8bcf323c0ff32b95e8e3120ffa6eefb",
+      "revision": "af1b987ee4d461fc6205a18553db3e21461ca203",
+      "changedDependencies": [
+        "docs/site/reference/generated-documentation-map.json"
+      ],
+      "reviewer": "/root independent semantic delta/Reader review; workflow_acceptance exact portal correction and Buster followup; operator_acceptance nonauthor finite-code review",
+      "verdict": "PASS",
+      "summary": "Only exact changed dependencies independently reviewed against named reports; unchanged original scopes/limits reused. Reader6d public bytes unchanged ataf1; no duplicate topic/gate acceptance or aggregate claim. See reader-6d-scope-preservation.md and finite-context-ap08-independent.md."
+    },
+    {
+      "id": "AP09.7-ready-data-topics-20261020",
+      "previousReviewedRevision": "d0bb52c4d8bcf323c0ff32b95e8e3120ffa6eefb",
+      "revision": "af1b987ee4d461fc6205a18553db3e21461ca203",
+      "changedDependencies": [
+        "docs/site/understand/telemetry.md"
+      ],
+      "reviewer": "/root independent semantic delta/Reader review; workflow_acceptance exact portal correction and Buster followup; operator_acceptance nonauthor finite-code review",
+      "verdict": "PASS",
+      "summary": "Only exact changed dependencies independently reviewed against named reports; unchanged original scopes/limits reused. Reader6d public bytes unchanged ataf1; no duplicate topic/gate acceptance or aggregate claim. See reader-6d-scope-preservation.md and finite-context-ap08-independent.md."
+    },
+    {
+      "id": "Reviewed-corrections-20261020",
+      "previousReviewedRevision": "d0bb52c4d8bcf323c0ff32b95e8e3120ffa6eefb",
+      "revision": "af1b987ee4d461fc6205a18553db3e21461ca203",
+      "changedDependencies": [
+        "docs/site/reference/generated-documentation-map.json",
+        "docs/site/use/workflows/buster-suite.md"
+      ],
+      "reviewer": "/root independent semantic delta/Reader review; workflow_acceptance exact portal correction and Buster followup; operator_acceptance nonauthor finite-code review",
+      "verdict": "PASS",
+      "summary": "Only exact changed dependencies independently reviewed against named reports; unchanged original scopes/limits reused. Reader6d public bytes unchanged ataf1; no duplicate topic/gate acceptance or aggregate claim. See reader-6d-scope-preservation.md and finite-context-ap08-independent.md."
+    },
+    {
+      "id": "AP09-reader-workflows-20261020",
+      "previousReviewedRevision": "d0bb52c4d8bcf323c0ff32b95e8e3120ffa6eefb",
+      "revision": "af1b987ee4d461fc6205a18553db3e21461ca203",
+      "changedDependencies": [
+        "docs/site/use/workflows/README.md",
+        "docs/site/use/workflows/buster-suite.md",
+        "scripts/check-buster-guides.mjs"
+      ],
+      "reviewer": "/root independent semantic delta/Reader review; workflow_acceptance exact portal correction and Buster followup; operator_acceptance nonauthor finite-code review",
+      "verdict": "PASS",
+      "summary": "Only exact changed dependencies independently reviewed against named reports; unchanged original scopes/limits reused. Reader6d public bytes unchanged ataf1; no duplicate topic/gate acceptance or aggregate claim. See reader-6d-scope-preservation.md and finite-context-ap08-independent.md."
+    },
+    {
+      "id": "AP09-reviewed-publication-navigation-20261020",
+      "previousReviewedRevision": "d0bb52c4d8bcf323c0ff32b95e8e3120ffa6eefb",
+      "revision": "af1b987ee4d461fc6205a18553db3e21461ca203",
+      "changedDependencies": [
+        "docs/site/use/workflows/README.md"
+      ],
+      "reviewer": "/root independent semantic delta/Reader review; workflow_acceptance exact portal correction and Buster followup; operator_acceptance nonauthor finite-code review",
+      "verdict": "PASS",
+      "summary": "Only exact changed dependencies independently reviewed against named reports; unchanged original scopes/limits reused. Reader6d public bytes unchanged ataf1; no duplicate topic/gate acceptance or aggregate claim. See reader-6d-scope-preservation.md and finite-context-ap08-independent.md."
+    },
+    {
+      "id": "AP09-first-project-example-20261020",
+      "previousReviewedRevision": "d0bb52c4d8bcf323c0ff32b95e8e3120ffa6eefb",
+      "revision": "af1b987ee4d461fc6205a18553db3e21461ca203",
+      "changedDependencies": [
+        "docs/site/use/workflows/README.md"
+      ],
+      "reviewer": "/root independent semantic delta/Reader review; workflow_acceptance exact portal correction and Buster followup; operator_acceptance nonauthor finite-code review",
+      "verdict": "PASS",
+      "summary": "Only exact changed dependencies independently reviewed against named reports; unchanged original scopes/limits reused. Reader6d public bytes unchanged ataf1; no duplicate topic/gate acceptance or aggregate claim. See reader-6d-scope-preservation.md and finite-context-ap08-independent.md."
+    },
+    {
+      "id": "AP09-compiler-import-provider-diagnosis-20261021",
+      "previousReviewedRevision": "d0bb52c4d8bcf323c0ff32b95e8e3120ffa6eefb",
+      "revision": "af1b987ee4d461fc6205a18553db3e21461ca203",
+      "changedDependencies": [
+        "docs/site/use/workflows/README.md"
+      ],
+      "reviewer": "/root independent semantic delta/Reader review; workflow_acceptance exact portal correction and Buster followup; operator_acceptance nonauthor finite-code review",
+      "verdict": "PASS",
+      "summary": "Only exact changed dependencies independently reviewed against named reports; unchanged original scopes/limits reused. Reader6d public bytes unchanged ataf1; no duplicate topic/gate acceptance or aggregate claim. See reader-6d-scope-preservation.md and finite-context-ap08-independent.md."
+    },
+    {
+      "id": "AP09-install-maintenance-project-entry-20261021",
+      "previousReviewedRevision": "d0bb52c4d8bcf323c0ff32b95e8e3120ffa6eefb",
+      "revision": "af1b987ee4d461fc6205a18553db3e21461ca203",
+      "changedDependencies": [
+        "docs/site/use/workflows/README.md"
+      ],
+      "reviewer": "/root independent semantic delta/Reader review; workflow_acceptance exact portal correction and Buster followup; operator_acceptance nonauthor finite-code review",
+      "verdict": "PASS",
+      "summary": "Only exact changed dependencies independently reviewed against named reports; unchanged original scopes/limits reused. Reader6d public bytes unchanged ataf1; no duplicate topic/gate acceptance or aggregate claim. See reader-6d-scope-preservation.md and finite-context-ap08-independent.md."
+    },
+    {
+      "id": "AP09-documentation-agent-maintenance-20261021",
+      "previousReviewedRevision": "d0bb52c4d8bcf323c0ff32b95e8e3120ffa6eefb",
+      "revision": "af1b987ee4d461fc6205a18553db3e21461ca203",
+      "changedDependencies": [
+        "scripts/docs-api-output-discovery.mjs"
+      ],
+      "reviewer": "/root independent semantic delta/Reader review; workflow_acceptance exact portal correction and Buster followup; operator_acceptance nonauthor finite-code review",
+      "verdict": "PASS",
+      "summary": "Only exact changed dependencies independently reviewed against named reports; unchanged original scopes/limits reused. Reader6d public bytes unchanged ataf1; no duplicate topic/gate acceptance or aggregate claim. See reader-6d-scope-preservation.md and finite-context-ap08-independent.md."
+    },
+    {
+      "id": "AP09-complete-static-reader-search-20261021",
+      "previousReviewedRevision": "d0bb52c4d8bcf323c0ff32b95e8e3120ffa6eefb",
+      "revision": "af1b987ee4d461fc6205a18553db3e21461ca203",
+      "changedDependencies": [
+        "docs/site/reference/contracts.md",
+        "docs/site/understand/telemetry.md",
+        "docs/site/use/workflows/README.md",
+        "docs/site/use/workflows/buster-suite.md",
+        "scripts/docs-api-documentation-role-custody.mjs"
+      ],
+      "reviewer": "/root independent semantic delta/Reader review; workflow_acceptance exact portal correction and Buster followup; operator_acceptance nonauthor finite-code review",
+      "verdict": "PASS",
+      "summary": "Only exact changed dependencies independently reviewed against named reports; unchanged original scopes/limits reused. Reader6d public bytes unchanged ataf1; no duplicate topic/gate acceptance or aggregate claim. See reader-6d-scope-preservation.md and finite-context-ap08-independent.md."
+    },
+    {
+      "id": "AP09-search-reader-gate-20261021",
+      "previousReviewedRevision": "d0bb52c4d8bcf323c0ff32b95e8e3120ffa6eefb",
+      "revision": "af1b987ee4d461fc6205a18553db3e21461ca203",
+      "changedDependencies": [
+        "scripts/docs-api-documentation-role-custody.mjs"
+      ],
+      "reviewer": "/root independent semantic delta/Reader review; workflow_acceptance exact portal correction and Buster followup; operator_acceptance nonauthor finite-code review",
+      "verdict": "PASS",
+      "summary": "Only exact changed dependencies independently reviewed against named reports; unchanged original scopes/limits reused. Reader6d public bytes unchanged ataf1; no duplicate topic/gate acceptance or aggregate claim. See reader-6d-scope-preservation.md and finite-context-ap08-independent.md."
+    },
+    {
+      "id": "AP09-rendered-source-bounds-gate-20261021",
+      "previousReviewedRevision": "d0bb52c4d8bcf323c0ff32b95e8e3120ffa6eefb",
+      "revision": "af1b987ee4d461fc6205a18553db3e21461ca203",
+      "changedDependencies": [
+        "scripts/docs-api-documentation-role-custody.mjs"
+      ],
+      "reviewer": "/root independent semantic delta/Reader review; workflow_acceptance exact portal correction and Buster followup; operator_acceptance nonauthor finite-code review",
+      "verdict": "PASS",
+      "summary": "Only exact changed dependencies independently reviewed against named reports; unchanged original scopes/limits reused. Reader6d public bytes unchanged ataf1; no duplicate topic/gate acceptance or aggregate claim. See reader-6d-scope-preservation.md and finite-context-ap08-independent.md."
+    },
+    {
+      "id": "AP09-complete-static-offline-fallback-20261021",
+      "previousReviewedRevision": "d0bb52c4d8bcf323c0ff32b95e8e3120ffa6eefb",
+      "revision": "af1b987ee4d461fc6205a18553db3e21461ca203",
+      "changedDependencies": [
+        "docs/site/use/workflows/README.md"
+      ],
+      "reviewer": "/root independent semantic delta/Reader review; workflow_acceptance exact portal correction and Buster followup; operator_acceptance nonauthor finite-code review",
+      "verdict": "PASS",
+      "summary": "Only exact changed dependencies independently reviewed against named reports; unchanged original scopes/limits reused. Reader6d public bytes unchanged ataf1; no duplicate topic/gate acceptance or aggregate claim. See reader-6d-scope-preservation.md and finite-context-ap08-independent.md."
+    },
+    {
+      "id": "AP09-complete-same-source-code-preview-20261021",
+      "previousReviewedRevision": "d0bb52c4d8bcf323c0ff32b95e8e3120ffa6eefb",
+      "revision": "af1b987ee4d461fc6205a18553db3e21461ca203",
+      "changedDependencies": [
+        "scripts/docs-api-documentation-role-custody.mjs"
+      ],
+      "reviewer": "/root independent semantic delta/Reader review; workflow_acceptance exact portal correction and Buster followup; operator_acceptance nonauthor finite-code review",
+      "verdict": "PASS",
+      "summary": "Only exact changed dependencies independently reviewed against named reports; unchanged original scopes/limits reused. Reader6d public bytes unchanged ataf1; no duplicate topic/gate acceptance or aggregate claim. See reader-6d-scope-preservation.md and finite-context-ap08-independent.md."
+    },
+    {
+      "id": "AP09-complete-responsive-reader-layout-20261021",
+      "previousReviewedRevision": "d0bb52c4d8bcf323c0ff32b95e8e3120ffa6eefb",
+      "revision": "af1b987ee4d461fc6205a18553db3e21461ca203",
+      "changedDependencies": [
+        "scripts/docs-api-documentation-role-custody.mjs"
+      ],
+      "reviewer": "/root independent semantic delta/Reader review; workflow_acceptance exact portal correction and Buster followup; operator_acceptance nonauthor finite-code review",
+      "verdict": "PASS",
+      "summary": "Only exact changed dependencies independently reviewed against named reports; unchanged original scopes/limits reused. Reader6d public bytes unchanged ataf1; no duplicate topic/gate acceptance or aggregate claim. See reader-6d-scope-preservation.md and finite-context-ap08-independent.md."
+    },
+    {
+      "id": "AP09-complete-source-backed-diagrams-20261021",
+      "previousReviewedRevision": "d0bb52c4d8bcf323c0ff32b95e8e3120ffa6eefb",
+      "revision": "af1b987ee4d461fc6205a18553db3e21461ca203",
+      "changedDependencies": [
+        "docs/site/understand/telemetry.md"
+      ],
+      "reviewer": "/root independent semantic delta/Reader review; workflow_acceptance exact portal correction and Buster followup; operator_acceptance nonauthor finite-code review",
+      "verdict": "PASS",
+      "summary": "Only exact changed dependencies independently reviewed against named reports; unchanged original scopes/limits reused. Reader6d public bytes unchanged ataf1; no duplicate topic/gate acceptance or aggregate claim. See reader-6d-scope-preservation.md and finite-context-ap08-independent.md."
+    },
+    {
+      "id": "AP09-complete-event-producer-consumer-catalogue-20261021",
+      "previousReviewedRevision": "d0bb52c4d8bcf323c0ff32b95e8e3120ffa6eefb",
+      "revision": "af1b987ee4d461fc6205a18553db3e21461ca203",
+      "changedDependencies": [
+        "docs/site/understand/telemetry.md"
+      ],
+      "reviewer": "/root independent semantic delta/Reader review; workflow_acceptance exact portal correction and Buster followup; operator_acceptance nonauthor finite-code review",
+      "verdict": "PASS",
+      "summary": "Only exact changed dependencies independently reviewed against named reports; unchanged original scopes/limits reused. Reader6d public bytes unchanged ataf1; no duplicate topic/gate acceptance or aggregate claim. See reader-6d-scope-preservation.md and finite-context-ap08-independent.md."
+    },
+    {
+      "id": "AP09-whole-current-telemetry-union-20261021-d477",
+      "previousReviewedRevision": "d0bb52c4d8bcf323c0ff32b95e8e3120ffa6eefb",
+      "revision": "af1b987ee4d461fc6205a18553db3e21461ca203",
+      "changedDependencies": [
+        "docs/site/understand/telemetry.md"
+      ],
+      "reviewer": "/root independent semantic delta/Reader review; workflow_acceptance exact portal correction and Buster followup; operator_acceptance nonauthor finite-code review",
+      "verdict": "PASS",
+      "summary": "Only exact changed dependencies independently reviewed against named reports; unchanged original scopes/limits reused. Reader6d public bytes unchanged ataf1; no duplicate topic/gate acceptance or aggregate claim. See reader-6d-scope-preservation.md and finite-context-ap08-independent.md."
+    },
+    {
+      "id": "AP09-whole-independent-platform-decision-review-20261021-d477",
+      "previousReviewedRevision": "d0bb52c4d8bcf323c0ff32b95e8e3120ffa6eefb",
+      "revision": "af1b987ee4d461fc6205a18553db3e21461ca203",
+      "changedDependencies": [
+        "docs/site/understand/telemetry.md"
+      ],
+      "reviewer": "/root independent semantic delta/Reader review; workflow_acceptance exact portal correction and Buster followup; operator_acceptance nonauthor finite-code review",
+      "verdict": "PASS",
+      "summary": "Only exact changed dependencies independently reviewed against named reports; unchanged original scopes/limits reused. Reader6d public bytes unchanged ataf1; no duplicate topic/gate acceptance or aggregate claim. See reader-6d-scope-preservation.md and finite-context-ap08-independent.md."
+    },
+    {
+      "id": "AP09-reference-event-payloads-80178-20261021",
+      "previousReviewedRevision": "80178cbaea15b80393d370269a5b6225e9fd7129",
+      "revision": "af1b987ee4d461fc6205a18553db3e21461ca203",
+      "changedDependencies": [
+        "docs/site/understand/telemetry.md"
+      ],
+      "reviewer": "/root independent semantic delta/Reader review; workflow_acceptance exact portal correction and Buster followup; operator_acceptance nonauthor finite-code review",
+      "verdict": "PASS",
+      "summary": "Only exact changed dependencies independently reviewed against named reports; unchanged original scopes/limits reused. Reader6d public bytes unchanged ataf1; no duplicate topic/gate acceptance or aggregate claim. See reader-6d-scope-preservation.md and finite-context-ap08-independent.md."
+    },
+    {
+      "id": "FLW017-demo-supported-contract-and-live-gap-20261021",
+      "previousReviewedRevision": "d0bb52c4d8bcf323c0ff32b95e8e3120ffa6eefb",
+      "revision": "af1b987ee4d461fc6205a18553db3e21461ca203",
+      "changedDependencies": [
+        "docs/site/use/workflows/README.md"
+      ],
+      "reviewer": "/root independent semantic delta/Reader review; workflow_acceptance exact portal correction and Buster followup; operator_acceptance nonauthor finite-code review",
+      "verdict": "PASS",
+      "summary": "Only exact changed dependencies independently reviewed against named reports; unchanged original scopes/limits reused. Reader6d public bytes unchanged ataf1; no duplicate topic/gate acceptance or aggregate claim. See reader-6d-scope-preservation.md and finite-context-ap08-independent.md."
+    },
+    {
+      "id": "A99-09-whole-workflow-security-content-20261021",
+      "previousReviewedRevision": "d0bb52c4d8bcf323c0ff32b95e8e3120ffa6eefb",
+      "revision": "af1b987ee4d461fc6205a18553db3e21461ca203",
+      "changedDependencies": [
+        "docs/site/use/workflows/buster-suite.md"
+      ],
+      "reviewer": "/root independent semantic delta/Reader review; workflow_acceptance exact portal correction and Buster followup; operator_acceptance nonauthor finite-code review",
+      "verdict": "PASS",
+      "summary": "Only exact changed dependencies independently reviewed against named reports; unchanged original scopes/limits reused. Reader6d public bytes unchanged ataf1; no duplicate topic/gate acceptance or aggregate claim. See reader-6d-scope-preservation.md and finite-context-ap08-independent.md."
+    },
+    {
+      "id": "FLW006-local-core-same-run-audit-artifact-telemetry-20261021",
+      "previousReviewedRevision": "d0bb52c4d8bcf323c0ff32b95e8e3120ffa6eefb",
+      "revision": "af1b987ee4d461fc6205a18553db3e21461ca203",
+      "changedDependencies": [
+        "docs/site/use/workflows/README.md"
+      ],
+      "reviewer": "/root independent semantic delta/Reader review; workflow_acceptance exact portal correction and Buster followup; operator_acceptance nonauthor finite-code review",
+      "verdict": "PASS",
+      "summary": "Only exact changed dependencies independently reviewed against named reports; unchanged original scopes/limits reused. Reader6d public bytes unchanged ataf1; no duplicate topic/gate acceptance or aggregate claim. See reader-6d-scope-preservation.md and finite-context-ap08-independent.md."
+    }
+  ],
+  "newGates": [
+    "A99-07"
+  ],
+  "newRequirements": [
+    "REF-010",
+    "FLW-010",
+    "FLW-014"
+  ],
+  "overallAccepted": false
+}

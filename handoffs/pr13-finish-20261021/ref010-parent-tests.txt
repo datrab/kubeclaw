@@ -1,0 +1,115 @@
+{"mode":"produce","locale":"en-US","profile":"prism.baseline-archive.v2","artifactId":"artifact:sha256:4b4fb74d9d5b2f9a3b0dcc13662e3be7a6b484d9c1668c79c6942e17a3c5633a","digest":"sha256:4b4fb74d9d5b2f9a3b0dcc13662e3be7a6b484d9c1668c79c6942e17a3c5633a","sizeBytes":5455,"bundleDigest":"sha256:4b4dbc9b57f7052243a0be4d38b5396a0be9e2d21388cbfad9b9ca102db08389","historicalBytesIdentical":false}
+{"mode":"consume","locale":"en-US","artifactId":"artifact:sha256:4b4fb74d9d5b2f9a3b0dcc13662e3be7a6b484d9c1668c79c6942e17a3c5633a","bundleDigest":"sha256:4b4dbc9b57f7052243a0be4d38b5396a0be9e2d21388cbfad9b9ca102db08389","imported":true,"error":null,"unchangedCasBytes":true}
+{"mode":"consume","locale":"da-DK","artifactId":"artifact:sha256:4b4fb74d9d5b2f9a3b0dcc13662e3be7a6b484d9c1668c79c6942e17a3c5633a","bundleDigest":"sha256:4b4dbc9b57f7052243a0be4d38b5396a0be9e2d21388cbfad9b9ca102db08389","imported":true,"error":null,"unchangedCasBytes":true}
+{"mode":"consume","locale":"tr-TR","artifactId":"artifact:sha256:4b4fb74d9d5b2f9a3b0dcc13662e3be7a6b484d9c1668c79c6942e17a3c5633a","bundleDigest":"sha256:4b4dbc9b57f7052243a0be4d38b5396a0be9e2d21388cbfad9b9ca102db08389","imported":true,"error":null,"unchangedCasBytes":true}
+{"mode":"consume","locale":"sv-SE","artifactId":"artifact:sha256:4b4fb74d9d5b2f9a3b0dcc13662e3be7a6b484d9c1668c79c6942e17a3c5633a","bundleDigest":"sha256:4b4dbc9b57f7052243a0be4d38b5396a0be9e2d21388cbfad9b9ca102db08389","imported":true,"error":null,"unchangedCasBytes":true}
+{"mode":"produce","locale":"da-DK","profile":"prism.baseline-archive.v2","artifactId":"artifact:sha256:4b4fb74d9d5b2f9a3b0dcc13662e3be7a6b484d9c1668c79c6942e17a3c5633a","digest":"sha256:4b4fb74d9d5b2f9a3b0dcc13662e3be7a6b484d9c1668c79c6942e17a3c5633a","sizeBytes":5455,"bundleDigest":"sha256:4b4dbc9b57f7052243a0be4d38b5396a0be9e2d21388cbfad9b9ca102db08389","historicalBytesIdentical":false}
+{"mode":"consume","locale":"en-US","artifactId":"artifact:sha256:4b4fb74d9d5b2f9a3b0dcc13662e3be7a6b484d9c1668c79c6942e17a3c5633a","bundleDigest":"sha256:4b4dbc9b57f7052243a0be4d38b5396a0be9e2d21388cbfad9b9ca102db08389","imported":true,"error":null,"unchangedCasBytes":true}
+{"mode":"consume","locale":"da-DK","artifactId":"artifact:sha256:4b4fb74d9d5b2f9a3b0dcc13662e3be7a6b484d9c1668c79c6942e17a3c5633a","bundleDigest":"sha256:4b4dbc9b57f7052243a0be4d38b5396a0be9e2d21388cbfad9b9ca102db08389","imported":true,"error":null,"unchangedCasBytes":true}
+{"mode":"consume","locale":"tr-TR","artifactId":"artifact:sha256:4b4fb74d9d5b2f9a3b0dcc13662e3be7a6b484d9c1668c79c6942e17a3c5633a","bundleDigest":"sha256:4b4dbc9b57f7052243a0be4d38b5396a0be9e2d21388cbfad9b9ca102db08389","imported":true,"error":null,"unchangedCasBytes":true}
+{"mode":"consume","locale":"sv-SE","artifactId":"artifact:sha256:4b4fb74d9d5b2f9a3b0dcc13662e3be7a6b484d9c1668c79c6942e17a3c5633a","bundleDigest":"sha256:4b4dbc9b57f7052243a0be4d38b5396a0be9e2d21388cbfad9b9ca102db08389","imported":true,"error":null,"unchangedCasBytes":true}
+{"mode":"produce","locale":"tr-TR","profile":"prism.baseline-archive.v2","artifactId":"artifact:sha256:4b4fb74d9d5b2f9a3b0dcc13662e3be7a6b484d9c1668c79c6942e17a3c5633a","digest":"sha256:4b4fb74d9d5b2f9a3b0dcc13662e3be7a6b484d9c1668c79c6942e17a3c5633a","sizeBytes":5455,"bundleDigest":"sha256:4b4dbc9b57f7052243a0be4d38b5396a0be9e2d21388cbfad9b9ca102db08389","historicalBytesIdentical":false}
+{"mode":"consume","locale":"en-US","artifactId":"artifact:sha256:4b4fb74d9d5b2f9a3b0dcc13662e3be7a6b484d9c1668c79c6942e17a3c5633a","bundleDigest":"sha256:4b4dbc9b57f7052243a0be4d38b5396a0be9e2d21388cbfad9b9ca102db08389","imported":true,"error":null,"unchangedCasBytes":true}
+{"mode":"consume","locale":"da-DK","artifactId":"artifact:sha256:4b4fb74d9d5b2f9a3b0dcc13662e3be7a6b484d9c1668c79c6942e17a3c5633a","bundleDigest":"sha256:4b4dbc9b57f7052243a0be4d38b5396a0be9e2d21388cbfad9b9ca102db08389","imported":true,"error":null,"unchangedCasBytes":true}
+{"mode":"consume","locale":"tr-TR","artifactId":"artifact:sha256:4b4fb74d9d5b2f9a3b0dcc13662e3be7a6b484d9c1668c79c6942e17a3c5633a","bundleDigest":"sha256:4b4dbc9b57f7052243a0be4d38b5396a0be9e2d21388cbfad9b9ca102db08389","imported":true,"error":null,"unchangedCasBytes":true}
+{"mode":"consume","locale":"sv-SE","artifactId":"artifact:sha256:4b4fb74d9d5b2f9a3b0dcc13662e3be7a6b484d9c1668c79c6942e17a3c5633a","bundleDigest":"sha256:4b4dbc9b57f7052243a0be4d38b5396a0be9e2d21388cbfad9b9ca102db08389","imported":true,"error":null,"unchangedCasBytes":true}
+{"mode":"produce","locale":"sv-SE","profile":"prism.baseline-archive.v2","artifactId":"artifact:sha256:4b4fb74d9d5b2f9a3b0dcc13662e3be7a6b484d9c1668c79c6942e17a3c5633a","digest":"sha256:4b4fb74d9d5b2f9a3b0dcc13662e3be7a6b484d9c1668c79c6942e17a3c5633a","sizeBytes":5455,"bundleDigest":"sha256:4b4dbc9b57f7052243a0be4d38b5396a0be9e2d21388cbfad9b9ca102db08389","historicalBytesIdentical":false}
+{"mode":"consume","locale":"en-US","artifactId":"artifact:sha256:4b4fb74d9d5b2f9a3b0dcc13662e3be7a6b484d9c1668c79c6942e17a3c5633a","bundleDigest":"sha256:4b4dbc9b57f7052243a0be4d38b5396a0be9e2d21388cbfad9b9ca102db08389","imported":true,"error":null,"unchangedCasBytes":true}
+{"mode":"consume","locale":"da-DK","artifactId":"artifact:sha256:4b4fb74d9d5b2f9a3b0dcc13662e3be7a6b484d9c1668c79c6942e17a3c5633a","bundleDigest":"sha256:4b4dbc9b57f7052243a0be4d38b5396a0be9e2d21388cbfad9b9ca102db08389","imported":true,"error":null,"unchangedCasBytes":true}
+{"mode":"consume","locale":"tr-TR","artifactId":"artifact:sha256:4b4fb74d9d5b2f9a3b0dcc13662e3be7a6b484d9c1668c79c6942e17a3c5633a","bundleDigest":"sha256:4b4dbc9b57f7052243a0be4d38b5396a0be9e2d21388cbfad9b9ca102db08389","imported":true,"error":null,"unchangedCasBytes":true}
+{"mode":"consume","locale":"sv-SE","artifactId":"artifact:sha256:4b4fb74d9d5b2f9a3b0dcc13662e3be7a6b484d9c1668c79c6942e17a3c5633a","bundleDigest":"sha256:4b4dbc9b57f7052243a0be4d38b5396a0be9e2d21388cbfad9b9ca102db08389","imported":true,"error":null,"unchangedCasBytes":true}
+{"mode":"produce","locale":"en-US","profile":"prism.baseline-archive.v1","artifactId":"artifact:sha256:49ffe3fa46b07f0ec8a1b5e541fac9fe176202cfeea1c4428aae8223b97a33b5","digest":"sha256:49ffe3fa46b07f0ec8a1b5e541fac9fe176202cfeea1c4428aae8223b97a33b5","sizeBytes":5280,"bundleDigest":"sha256:5446301154d2d1428a09b1baf6373f809b4f0f9f1bb5b8e968970e008cea44c0","historicalBytesIdentical":true}
+(node:616118) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+{"mode":"consume","locale":"en-US","artifactId":"artifact:sha256:49ffe3fa46b07f0ec8a1b5e541fac9fe176202cfeea1c4428aae8223b97a33b5","bundleDigest":"sha256:5446301154d2d1428a09b1baf6373f809b4f0f9f1bb5b8e968970e008cea44c0","imported":true,"error":null,"unchangedCasBytes":true}
+{"mode":"consume","locale":"da-DK","artifactId":"artifact:sha256:49ffe3fa46b07f0ec8a1b5e541fac9fe176202cfeea1c4428aae8223b97a33b5","bundleDigest":"sha256:5446301154d2d1428a09b1baf6373f809b4f0f9f1bb5b8e968970e008cea44c0","imported":false,"error":"PRISM_ARCHIVE_BUNDLE_DIGEST_MISMATCH","unchangedCasBytes":true}
+{"mode":"produce","locale":"da-DK","profile":"prism.baseline-archive.v1","artifactId":"artifact:sha256:e1384296123370270acbedeac9f2f620b40a1de3f5f99cd05cf76d6b7048d41d","digest":"sha256:e1384296123370270acbedeac9f2f620b40a1de3f5f99cd05cf76d6b7048d41d","sizeBytes":5280,"bundleDigest":"sha256:c79c6d15b13d478b1acba20f93a8cb86139af540273fc3114135cc77607f7845","historicalBytesIdentical":true}
+(node:616302) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+{"mode":"consume","locale":"da-DK","artifactId":"artifact:sha256:e1384296123370270acbedeac9f2f620b40a1de3f5f99cd05cf76d6b7048d41d","bundleDigest":"sha256:c79c6d15b13d478b1acba20f93a8cb86139af540273fc3114135cc77607f7845","imported":true,"error":null,"unchangedCasBytes":true}
+{"mode":"consume","locale":"en-US","artifactId":"artifact:sha256:e1384296123370270acbedeac9f2f620b40a1de3f5f99cd05cf76d6b7048d41d","bundleDigest":"sha256:c79c6d15b13d478b1acba20f93a8cb86139af540273fc3114135cc77607f7845","imported":false,"error":"PRISM_ARCHIVE_BUNDLE_DIGEST_MISMATCH","unchangedCasBytes":true}
+✔ original production assembler and real CAS/import preserve v1 bytes and cross native locales with explicit v2 (5630.621146ms)
+✔ v2 closed checksum codec is exact UTF16 JSON and domain-bound, not legacy retagging or a generic fallback (15.393261ms)
+{"rejected":"unknown archive","originalCasUnchanged":true,"mutatedCasUnchanged":true}
+{"rejected":"mixed archive v1 manifest v2","originalCasUnchanged":true,"mutatedCasUnchanged":true}
+{"rejected":"mixed archive v2 manifest v1","originalCasUnchanged":true,"mutatedCasUnchanged":true}
+{"rejected":"missing manifest encoding","originalCasUnchanged":true,"mutatedCasUnchanged":true}
+{"rejected":"unknown manifest encoding","originalCasUnchanged":true,"mutatedCasUnchanged":true}
+{"rejected":"missing checksum encoding","originalCasUnchanged":true,"mutatedCasUnchanged":true}
+{"rejected":"unknown checksum encoding","originalCasUnchanged":true,"mutatedCasUnchanged":true}
+{"rejected":"missing checksum schema","originalCasUnchanged":true,"mutatedCasUnchanged":true}
+{"rejected":"unknown checksum schema","originalCasUnchanged":true,"mutatedCasUnchanged":true}
+{"rejected":"unknown checksum field","originalCasUnchanged":true,"mutatedCasUnchanged":true}
+{"rejected":"wrong algorithm","originalCasUnchanged":true,"mutatedCasUnchanged":true}
+{"rejected":"modified checksum","originalCasUnchanged":true,"mutatedCasUnchanged":true}
+{"rejected":"modified content","originalCasUnchanged":true,"mutatedCasUnchanged":true}
+{"rejected":"missing member","originalCasUnchanged":true,"mutatedCasUnchanged":true}
+{"rejected":"extra member","originalCasUnchanged":true,"mutatedCasUnchanged":true}
+{"rejected":"duplicate member","originalCasUnchanged":true,"mutatedCasUnchanged":true}
+{"rejected":"embedded manifest mismatch","originalCasUnchanged":true,"mutatedCasUnchanged":true}
+{"rejected":"unsafe path","originalCasUnchanged":true,"mutatedCasUnchanged":true}
+{"rejected":"binary encoding","originalCasUnchanged":true,"mutatedCasUnchanged":true}
+{"rejected":"file type","originalCasUnchanged":true,"mutatedCasUnchanged":true}
+{"rejected":"manifest assets","originalCasUnchanged":true,"mutatedCasUnchanged":true}
+{"rejected":"required file reference","originalCasUnchanged":true,"mutatedCasUnchanged":true}
+{"rejected":"manifest revision","originalCasUnchanged":true,"mutatedCasUnchanged":true}
+{"reorderedChecksumMap":"same v2 identity","originalCasUnchanged":true}
+✔ original importer retains approval, member, metadata, tag and corruption gates against actual CAS bytes (544.151992ms)
+✔ original size/member gates reject before unsafe transport acceptance (21.792448ms)
+{"semanticRejected":"document project","realCasUnchanged":true}
+{"semanticRejected":"document revision","realCasUnchanged":true}
+{"semanticRejected":"preview image digest","realCasUnchanged":true}
+{"semanticRejected":"preview ARIA digest","realCasUnchanged":true}
+{"semanticRejected":"preview unknown state","realCasUnchanged":true}
+{"semanticRejected":"preview unknown view","realCasUnchanged":true}
+{"semanticRejected":"preview image member","realCasUnchanged":true}
+{"semanticRejected":"preview ARIA member","realCasUnchanged":true}
+✔ original semantic document and preview gates reject self-consistently hashed archives from the production assembler (163.54701ms)
+✔ completed orchestrator_required wait resumes at every original completion/projection prefix (5237.753533ms)
+✔ completed wait wait resumes at every original completion/projection prefix (4668.832789ms)
+✔ completed retry wait resumes at every original completion/projection prefix (4176.721428ms)
+✔ expired explicit wait remains rejected when only completion is durable (697.718601ms)
+✔ Delivery-Lint result projection is repaired once before real dependent artifact reads (6802.570085ms)
+{"proof":"original-human-approval-http-receipt-local-issuer-authorized-resume","httpPosts":1,"coreStatus":"succeeded","attempts":["wait","passed"],"deliveryRecords":2,"deliveryBytes":10137,"projectionImplemented":false,"externalAuthenticationProved":false}
+✔ original human approval, real signed HTTP receipt and issuer-authorized Core resume supply distinct causal attempts (9971.505243ms)
+✔ independent conflicting original signal idempotency key cannot authorize projection even under another waitId (4715.374966ms)
+✔ independent original wait fence preserves immutable operator scope despite caller mutation across await (5307.450119ms)
+{"proof":"genuine-historical-approval-retained-after-original-expiry","timeoutMinutes":1,"originalHistoryUnchanged":true,"posts":1}
+✔ independent genuinely resolved historical wait remains eligible after original one-minute expiry without clock replacement (62299.772183ms)
+✔ separate finite cache profile has canonical SDK/Foundation parity and never invokes getters (2.842644ms)
+✔ context profile selection rejects absent/present Proxy and getters before any trap or field access (0.459622ms)
+✔ genuine v4 writer requires both profiles; legacy version/profile combinations reject after rehash (58.840212ms)
+✔ v2 owns strict JSON and both inner digests; profile mismatch is an error, never a miss (3.705166ms)
+{"boundary":"direct owners only","en":"en-US","cs":"cs-CZ","portable":{"policy":"sha256:6e5ebe5e2d895aeea96acf75b313e2e54efc18ef5d83771e9e13634f7acb34c1","sources":[{"kind":"built_in","digest":"sha256:790c161d02be982701239fdf51ee7c754e56eba638cdf8718cfc94fd6c87d837"},{"kind":"settings_file","digest":"sha256:6e5ebe5e2d895aeea96acf75b313e2e54efc18ef5d83771e9e13634f7acb34c1"}],"facts":{"kind":"simplification-facts","digest":"sha256:df922bc6ac4f75b240c5872e8cd009a601682cb422aa27cfa083170dda50f1db","content":"{\"facts\":[{\"basis\":\"load at source offset 0 only forwards the same parameters to repository.load and returns its result.\",\"confidence\":\"high\",\"estimatedNetLocReduction\":1,\"factId\":\"forwarding.f2acff6092d962bd\",\"path\":\"src/service.ts\",\"ruleId\":\"SIM002\",\"smallestReplacement\":\"Call repository.load directly unless load owns a documented policy or compatibility boundary.\",\"symbol\":\"load\"}],\"revision\":{\"base\":\"1111111111111111111111111111111111111111\",\"changedManifestDigest\":\"sha256:de710ca7d8ae2863f99f1f0dfea413648c9d7e58bbe6b392017b081647e2a919\",\"head\":\"2222222222222222222222222222222222222222\"},\"schemaVersion\":\"simplification-facts.v1\"}","encoding":"kubeclaw-json.utf16.v1"},"manifest":{"kind":"simplification-candidates","digest":"sha256:e52e513764193494acb483841c705d89fd8a7220f9f329b982c04488c0de5a24","content":"{\"candidates\":[{\"basis\":\"load at source offset 0 only forwards the same parameters to repository.load and returns its result.\",\"candidateId\":\"sha256:45b96711fb96c5e58986827d0ce1d3c3711658a1f74abaeed2d54355cc891995\",\"category\":\"shrink\",\"confidence\":\"high\",\"estimatedNetLocReduction\":1,\"path\":\"src/service.ts\",\"ruleId\":\"SIM002\",\"smallestReplacement\":\"Call repository.load directly unless load owns a documented policy or compatibility boundary.\",\"source\":{\"digest\":\"sha256:df922bc6ac4f75b240c5872e8cd009a601682cb422aa27cfa083170dda50f1db\",\"factId\":\"forwarding.f2acff6092d962bd\",\"kind\":\"simplification-facts\"},\"symbol\":\"load\"}],\"diagnostics\":[],\"registryVersion\":\"simplification-rules.v1\",\"revision\":{\"base\":\"1111111111111111111111111111111111111111\",\"changedManifestDigest\":\"sha256:de710ca7d8ae2863f99f1f0dfea413648c9d7e58bbe6b392017b081647e2a919\",\"head\":\"2222222222222222222222222222222222222222\"},\"schemaVersion\":\"simplification-candidate-manifest.v1\"}","encoding":"kubeclaw-json.utf16.v1"},"candidateIds":["sha256:45b96711fb96c5e58986827d0ce1d3c3711658a1f74abaeed2d54355cc891995"]}}
+✔ protocol snapshot owner guards reject Proxy/getter before any new bundle reflection (1.864338ms)
+✔ explicit policy provenance verifies every source, rejects cloned and mismatched authority, and retains omitted API bytes (8.345108ms)
+✔ policy owner rejects Proxy/getter/exotic JSON before invoking traps or accessors (0.397551ms)
+✔ generated evidence keeps v1 values and candidate IDs, with separately verified byte codec and mode-bound private certificate (39.256802ms)
+✔ reduction certifier keeps old public shape and binds the expected policy mode privately (5.357429ms)
+✔ actual stored-candidate parser consumers check evidence bytes and mode, not the private producer certificate (12.387403ms)
+✔ direct original policy and evidence owners in genuine en/cs processes are portable only under explicit mode (not a Core lifecycle gate) (431.059177ms)
+{"phase":"produce","locale":"en_US.UTF-8","status":0,"stdout":"{\"phase\":\"produce\",\"locale\":\"en-US\",\"summaryDigest\":\"sha256:63d0d45fbab73e83d531ed85a32ce5c1f655c9e6e7c3d4dbec6c2a24a7dcec9c\",\"bundleDigest\":\"sha256:8d926ce67fd4bc06a6265e40fd13bee868cccdb0db7581ba0ffc71a8133ca436\",\"actualCore\":true,\"actualArtifactStore\":true,\"artifactContractFixture\":true,\"freshPolicyProduction\":false}\n","stderr":""}
+{"phase":"read-en","locale":"en_US.UTF-8","status":0,"stdout":"{\"phase\":\"read-en\",\"locale\":\"en-US\",\"summaryDigest\":\"sha256:63d0d45fbab73e83d531ed85a32ce5c1f655c9e6e7c3d4dbec6c2a24a7dcec9c\",\"samePersistedDigest\":true,\"actualCore\":true,\"actualArtifactStore\":true,\"wrongModeAndEncodingRejected\":true,\"providerExecution\":false}\n","stderr":""}
+{"phase":"read-cs","locale":"cs_CZ.UTF-8","status":0,"stdout":"{\"phase\":\"read-cs\",\"locale\":\"cs-CZ\",\"summaryDigest\":\"sha256:63d0d45fbab73e83d531ed85a32ce5c1f655c9e6e7c3d4dbec6c2a24a7dcec9c\",\"samePersistedDigest\":true,\"actualCore\":true,\"actualArtifactStore\":true,\"wrongModeAndEncodingRejected\":true,\"providerExecution\":false}\n","stderr":""}
+✔ original Summary consumes exact new semantic artifacts through Core/ArtifactStore in en and cs (15131.820578ms)
+✔ Summary semantic reader rejects proxy/getter, partial and unknown version pairs (13.43542ms)
+✔ finite canonical profile: SDK and original Foundation validator agree without executing getters (2.141436ms)
+✔ new original snapshot writes bind required profile; rehashed malformed/future/downgraded contracts reject (15.282828ms)
+✔ profile is bound after budget reservation and excluded from actual model task without changing accounting (766.88378ms)
+✔ concurrent durable reservations converge and survive reopening (47.088166ms)
+✔ caller mutation after reserve starts cannot change persisted identity (20.014621ms)
+✔ metadata lifecycle is fenced and disposed identities cannot execute again (129.419191ms)
+✔ unresolved ownership preserves diagnosis and blocks generation replacement (43.088142ms)
+✔ record quota fails atomically without losing existing ownership (25.587716ms)
+✔ corrupt persisted ownership fails without overwriting the record (18.482032ms)
+✔ abandoned admission preserves replay identity and requires a failure diagnosis (57.952479ms)
+✔ supervisor holds a separate real kernel lock and SIGKILL releases it without erasing reservations (397.233734ms)
+✔ native recovery rejects ordinary directories before exposing admission or modifying existing ownership (23.411339ms)
+ℹ tests 39
+ℹ suites 0
+ℹ pass 39
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 82953.755632

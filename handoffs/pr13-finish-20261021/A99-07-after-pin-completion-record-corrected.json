@@ -1,0 +1,58 @@
+{
+  "id": "A99-07-representative-buster-workflow-content-20261021",
+  "revision": "6d2cdeedbafba26e99e11cfd1793f25b15f4388a",
+  "author": "existing Buster workflow authors; package citation repair independently reviewed by root",
+  "reviewer": "/root/workflow_acceptance",
+  "gateIds": [
+    "A99-07"
+  ],
+  "requirementIds": [],
+  "verdict": "PASS",
+  "review": {
+    "sourceAccuracy": "PASS",
+    "readerUsability": "PASS",
+    "quality": "PASS"
+  },
+  "openIssues": [],
+  "pages": [
+    "docs/site/use/workflows/README.md",
+    "docs/site/use/workflows/buster-suite.md",
+    "docs/site/reference/buster-suites.md",
+    "docs/site/reference/buster-provider-configuration.md",
+    "docs/site/reference/buster-runtime-configuration.md",
+    "docs/site/understand/buster.md"
+  ],
+  "sources": [
+    "scripts/check-buster-guides.mjs",
+    "docs/site/use/workflows/examples/buster-fixture-matrix-report.pipeline.json",
+    "skills/nova/core/test-gates/resolver.ts",
+    "skills/nova/core/test-gates/remote-result-import.ts",
+    "skills/buster/engine/test-gates/remote-plan-http.ts",
+    "skills/buster/engine/test-gates/runner.ts",
+    "tests/verification/contracts/check-pipeline-phase8-vertical.mts"
+  ],
+  "checks": [
+    {
+      "command": "node scripts/check-buster-guides.mjs",
+      "exitCode": 0,
+      "observation": "Root witnessed whole check terminal0 after exact allowed immutable package pin repair:9pages12suites19providers1665sourcepins180whole objects6requirements. Maintained JSON actually loaded through pipeline scope loader then resolved against discovered current shipped provider/report packages and suite templates; assertions preserve fixture, HTTP matrix, typed checked-manifest/deployment links and JUnit binding."
+    },
+    {
+      "command": "Source/reader full gate traversal plus unchanged valid earlier complete Buster workflow review",
+      "exitCode": 0,
+      "observation": "Re-read current complete workflow, maintained complete JSON and actual checker resolution block. Reused unchanged full source/reader review of suite/fixture/provider/report/evidence/result-import mechanisms; full-byte pin validation establishes those cited sources unchanged. Resolved pin defect no longer blocks this gate."
+    },
+    {
+      "command": "git diff eb265a54..6d2cdeed -- docs/site/use/workflows/README.md",
+      "exitCode": 0,
+      "observation": "Only intervening blank line removed; continuous task table restored. Gate Buster procedure/JSON/product/checker source unchanged; no runtime renewal inferred."
+    }
+  ],
+  "summary": "Whole representative workflow documentation connects a complete real suite/checked-manifest/Kubernetes-fixture/HTTP-matrix/JUnit declaration and actual installed registry resolution to source-attested dispatch, real provider/report execution path, exact result verification and digest-bound evidence import. The complete template explicitly identifies image/catalog-command substitutions and deployment prerequisites; production commands identify owning checkout, same project/plan/run, raw-preservation-before-audit, result interpretation, failed boundaries and recovery/cleanup. Separate native vertical proof command has exact expected remote/direct-command/JUnit/LCOV result and explicit scope; neither resolver green nor HTTP acceptance becomes a quality verdict.",
+  "limits": [
+    "Documentation-content PASS under compact contract1\u20134, NOT a claim that full fixture+matrix+deployment chain actually ran. Template and local vertical proof have separate explicit scopes; image and command placeholders require operator resolution and real broker authority.",
+    "Root exact pin repair review is reused; author of repair does not selfaccept its source changes. No new phase8 execution claimed. This follow-up only resolves historical required-check blocker on whole A99-07.",
+    "No A99-06/11/12, FLW-001/012/013 or runtime/release acceptance inferred. Other maintained workflow composition failures remain separately tracked.",
+    "Corrected metadata also removes a mistaken nonexistent understand/buster-suites.md locator; actual owning suite reference is reference/buster-suites.md, included. All listed current pages/sources individually checked as real tracked files."
+  ]
+}
