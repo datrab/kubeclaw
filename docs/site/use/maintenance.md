@@ -913,12 +913,17 @@ Use a fresh private result directory. Keep raw Pod configuration out of shared l
 
 ```bash
 set -euo pipefail
+assert_cluster_binding || exit 126
 umask 077
 bundle_role='<nova|buster|prism>'
 bundle_archive='<absolute-path-to-reviewed-role-archive>'
-bundle_kubeconfig='<absolute-kubeconfig-path>'
-bundle_context='<exact-context>'
-bundle_namespace='<namespace>'
+bundle_kubeconfig="$KUBECONFIG"
+bundle_context="$EXPECTED_CONTEXT"
+case "$bundle_role" in
+  nova|buster) bundle_namespace="$NAMESPACE" ;;
+  prism) bundle_namespace="$PRISM_NAMESPACE" ;;
+  *) exit 126 ;;
+esac
 bundle_pod='<observed-pod-name>'
 bundle_container='<named-role-gateway-container>'
 bundle_uid='<previously-observed-pod-uid>'
