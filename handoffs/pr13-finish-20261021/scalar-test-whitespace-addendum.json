@@ -1,0 +1,14 @@
+{
+  "file": "scripts/tests/deployment-scalar-occurrence-custody.test.mjs",
+  "change": "remove exactly one trailing newline byte; no other bytes changed",
+  "oldSha256": "740b78c452aa04359cbff3a392c34856282dc6d60ecfa964e1ebc50c287878d2",
+  "newSha256": "d43017ac759bc19b497d3c6373eaf122d7399fa66e2caf201a52b01431da1bec",
+  "oldBytes": 11573,
+  "newBytes": 11572,
+  "parsedStatementCount": 24,
+  "astStatementTextsEqual": true,
+  "parseDiagnostics": 0,
+  "callerCensusMember": false,
+  "selectedGraphMember": false,
+  "sourceOrEffectSemanticsChanged": false
+}

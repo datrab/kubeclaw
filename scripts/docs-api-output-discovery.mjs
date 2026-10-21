@@ -1,3 +1,5 @@
+import {minimalPluginFixtureOutputCustody, minimalPluginFixtureOutputRole} from './docs-minimal-plugin-fixture-output-custody.mjs';
+import {deploymentScalarOccurrenceCustody, selectedDeploymentScalarOccurrences} from './docs-deployment-scalar-occurrence-custody.mjs';
 import {deploymentConfigOutputCustody, deploymentConfigOutputRole} from './docs-deployment-config-output-custody.mjs';
 import {runtimeBundleCopyCustody, runtimeBundleCopyRole} from './docs-runtime-bundle-copy-custody.mjs';
 import {deploymentNodeOutputOccurrences} from './docs-api-deployment-node-occurrences.mjs';
@@ -712,6 +714,14 @@ function nodeOutputExecutableSources(root) {
   const registry=path.join(root,'scripts/docs-api-producer-adapter-authorities.json');
   const boundary=fs.existsSync(registry)?JSON.parse(fs.readFileSync(registry,'utf8')).documentationToolBoundary??{}:{};
   return documentationModuleGraph(root,packageBytes,boundary).executableSources;
+}
+// Read-only analysis metadata, not an admission receipt or execution authority.
+// Keep cache objects private: callers receive frozen copied graph surfaces.
+export function discoverScriptInputGraph(root) {
+  nodeOutputExecutableSources(root);
+  const graph=documentationGraphCache.get(root);
+  const freeze=value=>{if(value&&typeof value==='object'){Object.values(value).forEach(freeze);Object.freeze(value);}return value;};
+  return freeze(JSON.parse(JSON.stringify({closureSources:graph.closureSources,edges:graph.edges,publicEntries:graph.publicEntries})));
 }
 function publicNodeSourceContexts(root,source,context) {
   const graph=documentationGraphCache.get(root),contexts=[context];
@@ -1440,9 +1450,15 @@ export function discoverScriptApiOutputs(root) {
   const configSource='scripts/bundle-override-values.mjs';
   const configOutput=executableSourceSet.has(configSource)
     ?deploymentConfigOutputCustody(root,configSource,fs.readFileSync(path.join(root,configSource))):null;
+  const minimalPluginSource='scripts/check-ap08-minimal-plugin.mjs';
+  const minimalPlugin=executableSourceSet.has(minimalPluginSource)
+    ?minimalPluginFixtureOutputCustody(root,minimalPluginSource,fs.readFileSync(path.join(root,minimalPluginSource))):null;
+  const scalarSources=['scripts/bundle-values-field.mjs','scripts/buster-resource-overlay.mjs'];
+  const scalarOccurrences=new Map(scalarSources.filter(source=>executableSourceSet.has(source)).map(source=>
+    [source,deploymentScalarOccurrenceCustody(root,source,fs.readFileSync(path.join(root,source)),documentationGraphCache.get(root))]));
   const sourceInputs=walkProductSources(root,producerRoots,()=>true);
   if(fs.existsSync(path.join(root,'package.json')))sourceInputs.push('package.json');
-  const inputKey=hash(JSON.stringify([documentationGraphCache.get(root).inputKey,bundleCopy?.inputDigest??null,configOutput?.inputDigest??null,sourceInputs.map(source=>[source,hash(fs.readFileSync(path.join(root,source)))])]));
+  const inputKey=hash(JSON.stringify([documentationGraphCache.get(root).inputKey,bundleCopy?.inputDigest??null,configOutput?.inputDigest??null,minimalPlugin?.inputDigest??null,[...scalarOccurrences].map(([source,receipt])=>[source,receipt.inputDigest]),sourceInputs.map(source=>[source,hash(fs.readFileSync(path.join(root,source)))])]));
   const cached=scriptOutputCache.get(root);
   if(cached?.inputKey===inputKey&&cached.dependencies.every(([source,digest])=>fs.existsSync(path.join(root,source))&&hash(fs.readFileSync(path.join(root,source)))===digest))return cached.result;
   const classifiedDependencies=new Set();
@@ -1508,9 +1524,14 @@ export function discoverScriptApiOutputs(root) {
     assert(!/(?:from\s*|(?:require|import)\(\s*)['"]@kubernetes\/client-node['"]/u.test(bytes),`API_PRODUCT_SCRIPT_TYPED_SDK_UNQUALIFIED: ${source}; documentation output adapter maintainers must classify the typed emitter`);
     if(/\b(?:spawnSync|execFileSync|execFile|spawn)\(\s*['"]helm['"]/u.test(bytes))assertProducerAdapterAuthority(root,[source]);
     const witness=source===reviewedArgocdArtifactProfile.source?checkedArtifact:null;
-    const outputRoles=classifyOutputRoles(source).map(role=>checkedArtifactRole(role,witness)).map(role=>runtimeBundleCopyRole(role,source===bundleSource?bundleCopy:null)).map(role=>deploymentConfigOutputRole(role,source===configSource?configOutput:null));
+    const outputRoles=classifyOutputRoles(source).map(role=>checkedArtifactRole(role,witness)).map(role=>runtimeBundleCopyRole(role,source===bundleSource?bundleCopy:null)).map(role=>deploymentConfigOutputRole(role,source===configSource?configOutput:null)).map(role=>minimalPluginFixtureOutputRole(role,source===minimalPluginSource?minimalPlugin:null));
     for(const role of outputRoles)for(const dependency of role.dependencies??[])classifiedDependencies.add(dependency);
-    for(const role of outputRoles)assert(role.role!=='unknown',`API_PRODUCT_SCRIPT_OUTPUT_ROLE_UNQUALIFIED: ${source}:${role.line}: ${role.expression}`);
+    // A canonical traversal seed is not proof of a bare CLI invocation. The
+    // separate receipts cover only the original captured configuration uses; public
+    // canonical output classification remains unknown, and new uses stop.
+    for(const role of outputRoles)assert(scalarOccurrences.has(source)
+      ?selectedDeploymentScalarOccurrences(role,scalarOccurrences.get(source)):role.role!=='unknown',
+      `API_PRODUCT_SCRIPT_OUTPUT_ROLE_UNQUALIFIED: ${source}:${role.line}: ${role.expression}`);
     if(witness){result.push(...witness.outputs);continue;}
     if(!outputRoles.some(role=>role.role==='api')&&(!/apiVersion/u.test(bytes)||!/(?:kind\s*:|['"]kind['"]\s*:)/u.test(bytes)))continue;
     const tree=ts.createSourceFile(source,bytes,ts.ScriptTarget.Latest,true,/\.[cm]?ts$/u.test(source)?ts.ScriptKind.TS:ts.ScriptKind.JS);
@@ -1812,21 +1833,28 @@ export function discoverScriptOutputRoleClassifications(root) {
   const sources=nodeOutputExecutableSources(root).filter(file=>!documentationTools.has(file));
   const classify=createSerializedOutputRoleClassifier(root,sources);
   const observations=discoverDeploymentNodeOutputObservations(root);
+  const scalarSources=['scripts/bundle-values-field.mjs','scripts/buster-resource-overlay.mjs'];
+  const scalarOccurrences=new Map(scalarSources.filter(source=>sources.includes(source)).map(source=>
+    [source,deploymentScalarOccurrenceCustody(root,source,fs.readFileSync(path.join(root,source)),documentationGraphCache.get(root))]));
   return sources.flatMap(source=>{
     const witness=checkedArgocdArtifactOutputs(root,source,fs.readFileSync(path.join(root,source),'utf8'));
     if(witness)assertCheckedArtifactEntryContext(documentationGraphCache.get(root),source);
     const bundleCopy=runtimeBundleCopyCustody(root,source,fs.readFileSync(path.join(root,source)));
     const configOutput=deploymentConfigOutputCustody(root,source,fs.readFileSync(path.join(root,source)));
-    return classify(source).map(role=>checkedArtifactRole(role,witness)).map(role=>runtimeBundleCopyRole(role,bundleCopy)).map(role=>deploymentConfigOutputRole(role,configOutput)).flatMap(role=>{
+    const minimalPlugin=minimalPluginFixtureOutputCustody(root,source,fs.readFileSync(path.join(root,source)));
+    return classify(source).map(role=>checkedArtifactRole(role,witness)).map(role=>runtimeBundleCopyRole(role,bundleCopy)).map(role=>deploymentConfigOutputRole(role,configOutput)).map(role=>minimalPluginFixtureOutputRole(role,minimalPlugin)).flatMap(role=>{
     // Deployment observations alone remain annotations, never role grants.
     // The separate Source-owned checked-artifact profile above binds one exact
     // descriptor and API output set; all other unknown outputs stay unknown.
     const selectedOccurrences=(observations??[]).filter(observation=>
       observation.source===source&&observation.descriptor.line===role.line&&
       observation.descriptor.sink===role.sink&&observation.descriptor.expression===role.expression);
+    const qualifiedScalarUses=scalarOccurrences.has(source)?selectedDeploymentScalarOccurrences(role,scalarOccurrences.get(source)):null;
+    if(scalarOccurrences.has(source))assert(qualifiedScalarUses,`DEPLOYMENT_SCALAR_OCCURRENCE_UNQUALIFIED: ${source}; canonical stdout must remain unknown`);
     const context={...role,path:source,sourceDigest:hash(fs.readFileSync(path.join(root,source))),
       dependencyDigests:Object.fromEntries(role.dependencies.map(file=>[file,hash(fs.readFileSync(path.join(root,file)))])),
-      ...(selectedOccurrences.length?{selectedOccurrences}:{} )};
+      ...(selectedOccurrences.length?{selectedOccurrences}:{} ),
+      ...(qualifiedScalarUses?{qualifiedScalarUses,standaloneOutputRole:'unknown'}:{})};
     // Alias/public-entry contexts have a different invocation identity. The
     // selected deployment evidence cannot travel across that boundary.
     return publicNodeSourceContexts(root,source,context).map(context=>{

@@ -1,0 +1,11 @@
+{
+  "source": "scripts/check-buster-guides.mjs",
+  "oldFactsDigest": "e2e65135374728343fe5c8838988d61cc23dd4ee1f646e03865e795d6edbb3c7",
+  "newFactsDigest": "f1e3ec77e6febb3347c0a96d5d7c7db3547edd5c17c7efe3cba57ad5b718bfe8",
+  "selectors": [
+    {
+      "expression": "`Buster guides verified: ${specifications.length} pages, ${suites.length} suites, ${providerCount} providers, ${sourceLinks} pinned links, ${checkedSources.size} revision-bound source files, ${Object.keys(requirementMarkers).length} requirements.`"
+    }
+  ],
+  "review": "One additional source revision plus matching guide link; whole current package bytes equal4dc3; original diagnostic remains fixed prefix and numeric counts; selectors/guard/consumer unchanged"
+}

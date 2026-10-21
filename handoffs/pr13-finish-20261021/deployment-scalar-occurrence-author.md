@@ -1,0 +1,43 @@
+# Exact deployment context occurrences — final author handoff; independent review required
+
+This supersedes the earlier raw-only/23-test handoff. Neither helper receives a global non-API output role. Both actual canonical public classifications remain UNKNOWN; only genuine source-bound deployment caller/capture/typed-receiver occurrences qualify. No source, module import, CLI execution, API apply, release or deployment permission is awarded.
+
+## Complete finite producer/caller/consumer scope
+
+bundle-values-field.mjs: complete13-line original producer, overlay→base selection, codeBundle[field]/optional key, absent/null/empty omission, string validation and raw stdout reviewed. Exactly six quoted captures in deploy.sh (1341/1345/1358;1680/1684/1696) flow into actual fixed codeBundle JSON serialization and quoted values/URL/Secret argument receivers. Actual direct original CLI emits a complete API-shaped string; it remains globally UNKNOWN. Actual original shell capture+append preserves that same string inside one codeBundle configuration value, not an API root or second document.
+
+buster-resource-overlay.mjs: complete original producer, public function and guarded CLI reviewed with real base/overlay inputs, unique runtime-container selector, allowed resources/request/limit keys, quantity validation, JSON serialization and exact Helm consumer. Only public return21 and stdout26 descriptors, both observed at quoted deploy capture1390, qualify as the single --set-json argument extraContainers[index].resources=<JSON>. Index is derived from actual selected base/overlay container order. No image, environment, volume or arbitrary API document is copied. Original maintained CLI tests cover empty output, changing selected index, zero lexical quantity, invalid resource-shaped keys/embedded YAML/newline quantity/missing runtime. Zero is lexical acceptance, not resource viability. Original AX41 Helm template tests independently demonstrate resource-only overrides preserving runtime image/credentials/volume semantics, not live deployment.
+
+Reuse existing deploymentNodeOutputOccurrences and physical source/dependency graph; no general scalar/template interpreter. Only prototype graph's exact old whole package pin d19ba8... is renewed to actual4ab1... after comparison to original e94655cb: all non-script/dependency/lock fields unchanged, documentation commands only; no new native helper entry. Whole deploy/three-helper/js-yaml package+ESM bytes and absent nearer package/module boundaries remain enforced.
+
+## Caller census, selected closure and graph/cache custody
+
+Private WeakSet receipts are recursively frozen. Copying receipt/descriptor metadata cannot qualify a role. Canonical role MUST remain unknown, with exact line/sink/expression or expression SHA. Bare native package entries, imported or aliased helper entries, changed source/caller/receiver/dependency/package scopes STOP. Root source enumeration is analysis, not proof of a standalone invocation or execution authority.
+
+The declared product/workflow executable-caller domain has996 physical-byte/membership facts across11existing product roots plus .github/workflows, with existing vendor/dist/test/fixture exclusions. This is NOT an all-repository executable census. A second independent binding covers the actual selected graph closure:1239 complete physical source-byte/membership facts, including357 facts outside the declared census (selected test/fixture modules, SDK/other roots and passive JSON). Only the same two explicit recursive Source trust anchors are omitted; ordinary documentation custody still protects them. Actual selected graph membership/bytes are recomputed before use, so an excluded-path executable newly selected by an actual import/native entry cannot inherit old capture custody. Unreferenced docs/test assets acquire no execution/output authority; all ordinary module/capability/publication guards remain. Source-owned expected census digest a0fadec3cc926dd90c7e3ca91a5c25f31a875f94b41e6aae9fc19e690945fe03; selected graph digest2f6c3603f5603984bd78594e73181226f412d0c339237b2bbde26fbdfdbcf046. Genuine rosters retained in deployment-scalar-caller-census.json/deployment-context-selected-graph.json.
+
+New discoverScriptInputGraph accessor runs the unchanged actual graph builder and returns only recursively frozen deep-copied closureSources/edges/publicEntries metadata. It exposes no cache object or admission receipt and adds no capability/output authority. Owning tests acquire this actual primary graph, copy all genuine selected bytes plus declared caller census, and use isolated filesystem mutations; they do not synthesize accepted graph inventories or execute copied untrusted sources.
+
+Both actual API-discovery and public role-classification routes acquire fresh contextual custody before cache/role reuse. API cache key includes source+receipt inputDigest, which binds both censuses and actual observations. Public role rows remain unknown and merely attach qualifiedScalarUses. Non-profile unknown outputs retain original STOP behavior.
+
+## Terminal evidence and remaining limits
+
+26/26 tests PASS, zero fail/skip: deployment-context-settled-tests.txt. New owning tests cover genuine warm occurrence receipt reuse; source/caller/pipe/new computed caller/new package entry/alias/nearer package/shadow dependency negatives; actual imported/aliased helper graph rejection; copied receipts and nested metadata mutation; selected excluded-test byte mutation and new docs closure membership; original direct CLI/API-shaped stdout; actual original capture→append; exact resource return/stdout descriptors and changed --set-json receiver. Prior config-custody and original serializer/YAML-reader tests remain included. AX41 original Helm template tests2/2 PASS, zero skip: buster-resource-original-tests.txt.
+
+Whole current owner generation with verified Go env advanced past BOTH helpers and selected closure, then STOPPED at API_PRODUCT_SCRIPT_OUTPUT_ROLE_UNQUALIFIED:scripts/check-ap08-minimal-plugin.mjs:176 JSON.stringify(probeManifest); local-helm-deployment-contexts-candidate.txt. Global API output cache warm-success is NOT claimed because no successful complete discovery result exists yet. The guard is wired before any cache return, but this is not a fabricated global execution witness.
+
+A full-source arbitrary temporary-root actual-discovery attempt was correctly blocked by the existing exact compiler-root prerequisite (canonical dependency root), not bypassed. Retained failed deployment-context-final-tests.txt/final-tests2.txt identify that unsuitable fixture; it was removed, not accepted or hidden as a passing profile test. Earlier no-profile minimal excluded-path probes exposed the need for the selected-closure supplement; those failed logs are retained as counterexamples. Supported-root exact restored pre-cache actual caller probe results are reported separately when terminal.
+
+65-role finite scan found60 unchanged and exactly5 expected transitive fact changes (discovery/product-scope/reference/configuration-inventory/docs-generate); only those facts and exact discovery operation selectors (125→130, with two existing expression identities updated) renewed. No guards, primitive collectors, unrelated65-role facts, source-revision pins or producer/runtime code changed. The MNT017 committed80178 preservation report excludes all this dirty work; new Source acceptance requires parent/operator independent review.
+
+## Candidate whole-file SHA256s
+
+helper7e2bd3184867f7d4c795636f219bcc80900c8c7d9c307c67473f20b78800b8e7
+owning test740b78c452aa04359cbff3a392c34856282dc6d60ecfa964e1ebc50c287878d2
+discovery35fdedaf344dd745d45648c2139bd6db67ce667998226c7deb6a4fbc586cd11f
+deployment graphb88c35e715cc588d00d777e3fe6119c48ec10e2eb0a741210864386180c84edd
+role custodyaa246a10494dcf40d84e07899412c0bbc47b7f4c31d27d911e508d71df334f31
+
+## Supported-root actual-route probe terminal
+
+Verified-Go probe terminal exit0, deployment-context-actual-caller-probe.json and deployment-context-actual-caller-probe-verified-go.txt. Both docs and scripts/tests newly selected computed callers STOP: import routes at contextual caller-census guard, native package entries at exact compiler package foundation guard. Unreferenced excluded files acquire no authority and leave exact AP08 baseline stop; restoring each route recovers the exact original stop. All three unique paths removed; original package SHA4ab1e90c... independently verified restored. No successful global API-cache warm is claimed. Whole five-file candidate snapshot retained under deployment-context-reviewed-candidate before authorized next AP08 work modifies integration/census bindings.

@@ -1,0 +1,41 @@
+✔ actual append preserves quote strings without changing YAML document structure (34.545838ms)
+✔ actual append preserves backslash strings without changing YAML document structure (44.408564ms)
+✔ actual append preserves multiline strings without changing YAML document structure (29.047155ms)
+✔ actual append preserves document-like strings without changing YAML document structure (55.228026ms)
+✔ actual serializer omits absent auth and preserves default key (63.353037ms)
+✔ actual serializer fails without partial stdout when mandatory arguments are missing (41.54703ms)
+✔ actual bundle YAML helper preserves folded strings, selected-key precedence and fail-closed parse behavior (337.805412ms)
+✔ only original configuration-fragment slot gains role; no module, apply or fabricated-receipt grant (34.789634ms)
+✔ real warm script-output cache rejects changed source becoming an API document (42.487945ms)
+✔ real warm cache rejects changed caller/consumer scripts/deploy.sh (22.239848ms)
+✔ real warm cache rejects changed caller/consumer charts/kubeclaw/templates/deployment.yaml (20.103783ms)
+✔ new unrelated raw-string producer is not covered by the fixed fragment role (19.868647ms)
+✔ canonical stdout remains UNKNOWN while only six genuine consumer occurrences are qualified (675.182642ms)
+✔ warm occurrence custody rejects changed source (525.389898ms)
+✔ warm occurrence custody rejects changed caller or pipe receiver (749.866164ms)
+✔ warm occurrence custody rejects changed new computed caller (594.102384ms)
+✔ warm occurrence custody rejects changed new public package entry (596.465345ms)
+✔ warm occurrence custody rejects changed new filesystem alias (548.401036ms)
+✔ warm occurrence custody rejects changed new package boundary (678.628611ms)
+✔ warm occurrence custody rejects changed new shadowing dependency (775.291184ms)
+✔ new imported or aliased entry does not borrow original captured-use receipts (499.959387ms)
+✔ warm occurrence custody binds selected excluded test bytes and newly selected docs membership (808.833566ms)
+✔ actual direct CLI can emit an API-shaped string: it receives no global non-API role (82.822553ms)
+✔ actual original capture and append preserve an API-shaped scalar as one configuration value (83.026698ms)
+✔ resource assignment return and stdout stay unknown outside their single --set-json capture (535.184972ms)
+✔ actual resource CLI emits only the selected resource assignment and rejects document-shaped quantities (302.187855ms)
+✔ only the two original metadata slots qualify; no fabricated receipt or runtime/module/apply grant (47.121705ms)
+✔ warm receipt revalidation rejects changed checker/caller writes a resource instead (2.70049ms)
+✔ warm receipt revalidation rejects resource-shaped plugin fixture (2.282849ms)
+✔ warm receipt revalidation rejects resource-shaped package fixture (1.9361ms)
+✔ warm receipt revalidation rejects changed ownership consumer interprets a different key (1.937051ms)
+✔ warm receipt revalidation rejects same-byte consumer redirected through an alias (1.90995ms)
+✔ selected source snapshot cannot borrow current physical-source custody (1.414637ms)
+ℹ tests 33
+ℹ suites 0
+ℹ pass 33
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 23969.171109

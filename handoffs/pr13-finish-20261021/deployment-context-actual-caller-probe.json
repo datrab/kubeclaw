@@ -1,0 +1,35 @@
+{
+  "sourcePackageSha256": "4ab1e90c2259aeb96acfdc877e5a9eed330f605abff46d7eca85faded0f020c3",
+  "scope": "Actual supported recovery root pre-cache rejection; global cache warm-success NOT claimed because existing AP08 producer is still unknown",
+  "checks": [
+    {
+      "selected": "docs/pr13-custody-excluded-probe.mjs",
+      "route": "import",
+      "ok": false,
+      "diagnostic": "DEPLOYMENT_SCALAR_OCCURRENCE_UNQUALIFIED: scripts/bundle-values-field.mjs; changed/new executable caller census"
+    },
+    {
+      "selected": "docs/pr13-custody-excluded-probe.mjs",
+      "route": "package-entry",
+      "ok": false,
+      "diagnostic": "DOCUMENTATION_TOOL_GRAPH_UNQUALIFIED: root compiler resolution: foundation bytes package.json"
+    },
+    {
+      "selected": "scripts/tests/pr13-custody-excluded-probe.mjs",
+      "route": "import",
+      "ok": false,
+      "diagnostic": "DEPLOYMENT_SCALAR_OCCURRENCE_UNQUALIFIED: scripts/bundle-values-field.mjs; changed/new executable caller census"
+    },
+    {
+      "selected": "scripts/tests/pr13-custody-excluded-probe.mjs",
+      "route": "package-entry",
+      "ok": false,
+      "diagnostic": "DOCUMENTATION_TOOL_GRAPH_UNQUALIFIED: root compiler resolution: foundation bytes package.json"
+    }
+  ],
+  "baseline": {
+    "ok": false,
+    "diagnostic": "API_PRODUCT_SCRIPT_OUTPUT_ROLE_UNQUALIFIED: scripts/check-ap08-minimal-plugin.mjs:176: JSON.stringify(probeManifest)"
+  },
+  "restoredPackageSha256": "4ab1e90c2259aeb96acfdc877e5a9eed330f605abff46d7eca85faded0f020c3"
+}

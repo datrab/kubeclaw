@@ -1,0 +1,29 @@
+✔ canonical stdout remains UNKNOWN while only six genuine consumer occurrences are qualified (607.487354ms)
+✔ warm occurrence custody rejects changed source (524.687534ms)
+✔ warm occurrence custody rejects changed caller or pipe receiver (554.702083ms)
+✔ warm occurrence custody rejects changed new computed caller (572.367272ms)
+✔ warm occurrence custody rejects changed new public package entry (592.223128ms)
+✔ warm occurrence custody rejects changed new filesystem alias (549.93718ms)
+✔ warm occurrence custody rejects changed new package boundary (569.067996ms)
+✔ warm occurrence custody rejects changed new shadowing dependency (592.393642ms)
+✔ new imported or aliased entry does not borrow original captured-use receipts (343.087198ms)
+✔ warm occurrence custody binds selected excluded test bytes and newly selected docs membership (629.818574ms)
+✔ actual direct CLI can emit an API-shaped string: it receives no global non-API role (88.666712ms)
+✔ actual original capture and append preserve an API-shaped scalar as one configuration value (84.088003ms)
+✔ resource assignment return and stdout stay unknown outside their single --set-json capture (512.449286ms)
+✔ actual resource CLI emits only the selected resource assignment and rejects document-shaped quantities (313.741466ms)
+✔ only the two original metadata slots qualify; no fabricated receipt or runtime/module/apply grant (49.655179ms)
+✔ warm receipt revalidation rejects changed checker/caller writes a resource instead (8.826849ms)
+✔ warm receipt revalidation rejects resource-shaped plugin fixture (2.218598ms)
+✔ warm receipt revalidation rejects resource-shaped package fixture (2.118055ms)
+✔ warm receipt revalidation rejects changed ownership consumer interprets a different key (2.223548ms)
+✔ warm receipt revalidation rejects same-byte consumer redirected through an alias (2.058753ms)
+✔ selected source snapshot cannot borrow current physical-source custody (1.475099ms)
+ℹ tests 21
+ℹ suites 0
+ℹ pass 21
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 22914.357963

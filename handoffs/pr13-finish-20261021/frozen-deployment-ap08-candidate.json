@@ -1,0 +1,33 @@
+{
+  "status": "FROZEN author candidate pending independent parent acceptance",
+  "files": {
+    "scripts/docs-api-deployment-scalar-graph.mjs": "b88c35e715cc588d00d777e3fe6119c48ec10e2eb0a741210864386180c84edd",
+    "scripts/docs-api-documentation-role-custody.mjs": "f0220b18d59c982d0446c5bbbd91baae414b2e7a2f1e73abcac31d70e05b2e54",
+    "scripts/docs-api-output-discovery.mjs": "e2809c4e243ce7c204f607d7620ef5db7c17ec9387ff7d7df458abb6c534c485",
+    "scripts/docs-api-producer-adapter-authorities.json": "d443c5c201d0a7f30f0fce62fa48027b17759eb8b3d8143d28dd457e55f97262",
+    "scripts/docs-deployment-scalar-occurrence-custody.mjs": "c9e6f2af42cf6ffded5ce1629669cc0023e3d65ac8adb961dc2c6105bca198f1",
+    "scripts/docs-minimal-plugin-fixture-output-custody.mjs": "86c09c6a0fd31f2e19eb88d8863a220afa198b87eaaf57fb5e08db4be4723dd6",
+    "scripts/tests/deployment-scalar-occurrence-custody.test.mjs": "740b78c452aa04359cbff3a392c34856282dc6d60ecfa964e1ebc50c287878d2",
+    "scripts/tests/minimal-plugin-fixture-output-custody.test.mjs": "fbcbc5722e3edab63d91c1df1df1f457244601f79d988f34f19f290ce6e783e9"
+  },
+  "callerCensusCount": 997,
+  "selectedGraphCount": 1240,
+  "ordinaryFacts": {
+    "unchanged": 60,
+    "changed": 5,
+    "discoverySelectors": 131
+  },
+  "lastOwningTests": {
+    "pass": 33,
+    "fail": 0,
+    "skipped": 0,
+    "limit": "before final parent Buster literal-only successor bindings; independent parent final rerun pending"
+  },
+  "lastOwnerStop": "API_PRODUCT_SCRIPT_OUTPUT_ROLE_UNQUALIFIED:scripts/check-capability-drift-mutations.mjs:48",
+  "otherRetainedNativeStop": "OUTPUT_ROLE_CLOSED_WRITER_PROJECTION_UNQUALIFIED:scripts/observability-retirement/files.mjs",
+  "globalOutputCacheWarmSuccessClaimed": false,
+  "nextCapabilityScopeOnTree": false,
+  "finalSuccessorScope": "Parent Buster source revision locator change plus exact diagnostic operation fact renewal; two contextual bindings and five transitive facts renewed; no source functions/guards/selectors changed in final step",
+  "callerCensusDigest": "241e30ba49df0a19d582e2ad90ea2b42069cc3c97a01d69231428f4c2f482d7c",
+  "selectedGraphDigest": "2e92d2cbf7e5992baa69d04181e30449c6d8e70ef926bf3b0bf9a32a454350ac"
+}
