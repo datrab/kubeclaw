@@ -1,9 +1,10 @@
 // Compile-only ABI coverage: installed source observations must not become boot grants.
-import { capturePipelineV10BootSource, receivePipelineV10BootSource,
+import { capturePipelineV10BootSource, capturePipelineV10BusterRuntimeSource, receivePipelineV10BootSource,
   type PipelineBootCapture, type PipelineV10BootSource } from '../../../../skills/common/plugin-runtime/foundation/config/pipeline-boot.mjs';
 
 type Installed = ReturnType<typeof capturePipelineV10BootSource>;
 type Received = ReturnType<typeof receivePipelineV10BootSource>;
+type Runtime = Awaited<ReturnType<typeof capturePipelineV10BusterRuntimeSource>>;
 type Assert<T extends true> = T;
 type IsAssignable<A, B> = [A] extends [B] ? true : false;
 export type SourceWireABI = Assert<IsAssignable<Received, PipelineV10BootSource>>;
@@ -13,3 +14,6 @@ export type NoBootGrant = Assert<IsAssignable<Installed, PipelineBootCapture> ex
 export type RetainedLifetime = Assert<IsAssignable<Pick<Installed, 'assertCurrent' | 'close'>,
   { assertCurrent(): void; close(): void }>>;
 export type NoWireLifetime = Assert<'assertCurrent' extends keyof Received ? false : true>;
+export type RuntimeSourceABI = Assert<IsAssignable<Runtime, Installed>>;
+export type RuntimeActivationDenied = Assert<IsAssignable<Runtime['runtimeSource']['activationAllowed'], false>>;
+export type RuntimeNoBootGrant = Assert<IsAssignable<Runtime, PipelineBootCapture> extends false ? true : false>;

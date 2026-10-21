@@ -481,6 +481,24 @@ export function receivePipelineV10BootSource(wires, inputs, services, callerId, 
  * Caller composition is held separately; no received wire selects authority.
  */
 export function capturePipelineV10BootSource(expectedFile, systemRoot, callerId, packageRoot, runtimeSurface, services) {
+  return captureV10Source(expectedFile, systemRoot, callerId, packageRoot, runtimeSurface, services);
+}
+
+/** Receive physical runtime.v2 against the SAME retained installed generation.
+ * This joins source policy, not native/credential authorization or activation.
+ * The runtime file is separately delivered; it cannot choose its caller/profile.
+ */
+export async function capturePipelineV10BusterRuntimeSource(expectedFile, systemRoot, packageRoot, runtimeSurface, services) {
+  // Hold the caller composition before loading the versioned receiver. Legacy
+  // boot must not require its unrelated registry/Quality package dependencies.
+  services = structuredClone(services);
+  const runtimeFile = path.join(systemRoot, 'runtime/buster-runtime.json');
+  const { inspectPipelineV10BusterRuntimeSourceIdentity } = await import('./pipeline-v10-receiver.ts');
+  return captureV10Source(expectedFile, systemRoot, 'buster-runtime', packageRoot, runtimeSurface, services,
+    runtimeFile, inspectPipelineV10BusterRuntimeSourceIdentity);
+}
+
+function captureV10Source(expectedFile, systemRoot, callerId, packageRoot, runtimeSurface, services, runtimeFile, inspectRuntime) {
   services = structuredClone(services);
   for (const directory of [systemRoot, packageRoot]) {
     if (typeof directory !== 'string' || !path.isAbsolute(directory) || path.resolve(directory) !== directory
@@ -541,6 +559,19 @@ export function capturePipelineV10BootSource(expectedFile, systemRoot, callerId,
     const owner = service.role === 'buster'
       ? JSON.parse(read(path.join(systemRoot, 'selections', `${callerId}.buster.json`))) : null;
     const received = receivePipelineV10BootSource({ expected, image, selection, owner }, inputs, services, callerId, packageDigest);
+    let runtimeSource;
+    if (runtimeFile !== undefined) {
+      // The receiver fixes the runtime locator inside the same system tree.
+      // Retain its directories too, not only the open file descriptor.
+      const ancestors = [];
+      for (let parent = path.dirname(runtimeFile); parent !== systemRoot; parent = path.dirname(parent)) {
+        ancestors.push(parent);
+      }
+      for (const ancestor of ancestors.reverse()) directory(ancestor);
+      const bytes = read(runtimeFile, received.owner.settings.preparation.maximumInputBytes);
+      runtimeSource = inspectRuntime({ role: service.role,
+        callerId, serviceInstanceId: service.serviceInstanceId }, bytes, inputs);
+    }
     const foundation = receipt.packages.find(record => record.id === 'plugin-foundation');
     const sdk = receipt.packages.find(record => record.id === 'plugin-sdk');
     if (fs.realpathSync(fileURLToPath(import.meta.url)) !== path.join(packageRoot, foundation.target, 'config/pipeline-boot.mjs')) {
@@ -557,6 +588,7 @@ export function capturePipelineV10BootSource(expectedFile, systemRoot, callerId,
     }
     assertCurrent();
     return Object.freeze({ ...received, inputGenerationSha256: inputs.inputGenerationSha256,
-      sourceMemberCount: inputs.members.length, installedPackageRoot: packageRoot, assertCurrent, close });
+      sourceMemberCount: inputs.members.length, installedPackageRoot: packageRoot,
+      ...(runtimeSource === undefined ? {} : { runtimeSource }), assertCurrent, close });
   } catch (error) { close(); throw error; }
 }

@@ -25,7 +25,7 @@ function sealDirectories(directory) {
 const jsonBytes = value => Buffer.from(`${JSON.stringify(value, null, 2)}\n`);
 
 /** Shared role/release producer: explicit authored tuples only; no environment profile selector. */
-export async function materializePipelineGeneration({ authorRoot, packageRoot, output, services, publisher }) {
+export async function materializePipelineGeneration({ authorRoot, packageRoot, output, services, publisher, busterRuntimeSource }) {
   for (const directory of [authorRoot, packageRoot, output]) {
     if (typeof directory !== 'string' || !path.isAbsolute(directory) || path.resolve(directory) !== directory) throw new Error('PIPELINE_MATERIALIZATION_PATH_INVALID');
   }
@@ -34,6 +34,10 @@ export async function materializePipelineGeneration({ authorRoot, packageRoot, o
   // Installed imports yield below; never reread mutable caller-owned tuples
   // after validating a different composition or selecting its source policy.
   services = structuredClone(services);
+  if (busterRuntimeSource !== undefined) {
+    if (!(busterRuntimeSource instanceof Uint8Array)) throw new Error('PIPELINE_V10_RUNTIME_BYTES_REQUIRED');
+    busterRuntimeSource = Buffer.from(busterRuntimeSource);
+  }
   if (fs.existsSync(output)) throw new Error('PIPELINE_GENERATION_EXISTS');
   const observations = [];
   let stage, inputCapture;
@@ -71,6 +75,9 @@ export async function materializePipelineGeneration({ authorRoot, packageRoot, o
     verifyInstalledRuntimeBundle(receipt, packageRoot, receipt.role, receipt.runtimeSurface, observations);
     const inputSource = capturePipelineMaterializerInputSource(authorRoot);
     inputCapture = inputSource.declared?.capture;
+    if (busterRuntimeSource !== undefined && (inputSource.rootSchemaVersion !== 'pipeline-entry.v10' || receipt.role !== 'buster')) {
+      throw new Error('PIPELINE_V10_RUNTIME_CALLER_REQUIRED');
+    }
     // Validate the complete release composition before source/caller admission.
     // A valid first tuple must not hide a missing, duplicated or foreign caller.
     const callers = new Set();
@@ -160,14 +167,16 @@ export async function materializePipelineGeneration({ authorRoot, packageRoot, o
       // Exercise the real installed reader on the distinct physical v2 layout,
       // not only an in-memory wire. No v1 output/verified Swarm capture or
       // publication is authorized by this staged source observation.
-      const { capturePipelineV10BootSource } = await import(pathToFileURL(path.join(directory, 'pipeline-boot.mjs')).href);
+      const { capturePipelineV10BootSource, capturePipelineV10BusterRuntimeSource } = await import(pathToFileURL(path.join(directory, 'pipeline-boot.mjs')).href);
       const parent = path.dirname(output);
       if (fs.realpathSync(parent) !== parent || !fs.lstatSync(parent).isDirectory()) throw new Error('PIPELINE_GENERATION_PARENT_INVALID');
       stage = fs.mkdtempSync(path.join(parent, '.pipeline-stage-'));
-      await stagePipelineV10BootSource(stage, inputCapture, services, packageBytes, directory);
+      await stagePipelineV10BootSource(stage, inputCapture, services, packageBytes, directory, busterRuntimeSource);
       for (const service of services) {
-        const captured = capturePipelineV10BootSource(path.join(stage, 'expected', service.callerId, 'expected-delivery.json'),
-          path.join(stage, 'system'), service.callerId, packageRoot, receipt.runtimeSurface, services);
+        const expectedFile = path.join(stage, 'expected', service.callerId, 'expected-delivery.json');
+        const captured = service.callerId === 'buster-runtime' && busterRuntimeSource !== undefined
+          ? await capturePipelineV10BusterRuntimeSource(expectedFile, path.join(stage, 'system'), packageRoot, receipt.runtimeSurface, services)
+          : capturePipelineV10BootSource(expectedFile, path.join(stage, 'system'), service.callerId, packageRoot, receipt.runtimeSurface, services);
         try { captured.assertCurrent(); inputCapture.assertCurrent(); }
         finally { captured.close(); }
       }
@@ -245,15 +254,27 @@ export async function materializePipelineGeneration({ authorRoot, packageRoot, o
 /** Shared physical v2 output route, used by the real role materializer before
  * source admission. It only stages bytes: no publisher or activation grant.
  */
-export async function stagePipelineV10BootSource(stage, inputs, services, packageBytes, installedConfigDirectory) {
+export async function stagePipelineV10BootSource(stage, inputs, services, packageBytes, installedConfigDirectory, busterRuntimeSource) {
   services = structuredClone(services);
   packageBytes = Buffer.from(packageBytes);
+  if (busterRuntimeSource !== undefined) {
+    if (!(busterRuntimeSource instanceof Uint8Array)) throw new Error('PIPELINE_V10_RUNTIME_BYTES_REQUIRED');
+    busterRuntimeSource = Buffer.from(busterRuntimeSource);
+  }
   if (!path.isAbsolute(stage) || path.resolve(stage) !== stage || fs.realpathSync(stage) !== stage
     || !fs.lstatSync(stage).isDirectory()) throw new Error('PIPELINE_GENERATION_PARENT_INVALID');
   const { createPipelineV10ImageReceipt, createPipelineV10ServiceSelection,
     createBusterV10SelectedOwnerProjection, createPipelineV10ExpectedDelivery } =
     await import(pathToFileURL(path.join(installedConfigDirectory, 'pipeline-generation.ts')).href);
   const image = createPipelineV10ImageReceipt(inputs, services, hash(packageBytes));
+  if (busterRuntimeSource !== undefined) {
+    const service = services.find(value => value.callerId === 'buster-runtime');
+    if (!service || services.some(value => value.role !== 'buster')) throw new Error('PIPELINE_V10_RUNTIME_CALLER_REQUIRED');
+    const { inspectPipelineV10BusterRuntimeSourceIdentity } = await import(pathToFileURL(path.join(installedConfigDirectory, 'pipeline-v10-receiver.ts')).href);
+    inspectPipelineV10BusterRuntimeSourceIdentity({ role: service.role, callerId: service.callerId,
+      serviceInstanceId: service.serviceInstanceId }, busterRuntimeSource, inputs);
+    write(stage, 'system/runtime/buster-runtime.json', busterRuntimeSource);
+  }
   for (const member of inputs.members) write(stage, `system/${member.relativePath}`, inputs.read(member.relativePath));
   write(stage, 'system/package-receipt.json', packageBytes);
   write(stage, 'system/image-receipt.json', jsonBytes(image));

@@ -74,3 +74,10 @@ export function capturePipelineV10BootSource(expectedFile: string, systemRoot: s
     assertCurrent: () => void;
     close: () => void;
   }>;
+
+/** Physical runtime.v2 readback, still not PipelineBootCapture/native authority. */
+export function capturePipelineV10BusterRuntimeSource(expectedFile: string, systemRoot: string,
+  packageRoot: string, runtimeSurface: string, services: readonly SwarmSelection[]):
+  Promise<ReturnType<typeof capturePipelineV10BootSource> & Readonly<{
+    runtimeSource: ReturnType<typeof import('./pipeline-v10-receiver.ts').inspectPipelineV10BusterRuntimeSourceIdentity>;
+  }>>;
