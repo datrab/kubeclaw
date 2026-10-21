@@ -1,0 +1,68 @@
+{
+  "artifactRevision": "e28bfec5fa33e6587f23a31b09201bbb6271c27f",
+  "remoteAcceptanceBefore": "203/261 contents;16/89 gates at5172d6ca",
+  "scope": "A912-07 responsive layout only;PUB005/A91206 semantic completeness NOT_READY.16/27 scoped source supported;6 system and5 service proofs incomplete;two capacity failures retained.",
+  "checks": {
+    "diagram-final-static-offline-layout-qa.json": {
+      "artifactRevision": "e28bfec5fa33e6587f23a31b09201bbb6271c27f",
+      "readerManifestSha256": "5f0a7820aeb36c5a534d53c4aa07c37cf56fa243098678f6dcf4f33cb335ad3a",
+      "pages": 167,
+      "viewportChecks": 501,
+      "networkAttempts": [],
+      "findings": [],
+      "limits": [
+        "Browser/DOM/native keyboard checks, not a fresh-context user study, human screenreader or product execution.",
+        "These whole-site DOM/layout observations do not themselves approve each rendered diagram visually or semantically; separate actual SVG checks cover those boundaries."
+      ],
+      "fileSha256": "dd58646c0d94e28d142c4c93223cb0287dc46041c7b120d4dcff1a3e294a717e"
+    },
+    "diagram-final-sources.json": {
+      "htmlPages": 177,
+      "uniqueVerifiedLinks": 14428,
+      "uniqueSourceObjects": 3730,
+      "limit": "Primary source object/revision/line or Markdown-fragment verification only; not semantic or live-runtime acceptance.",
+      "fileSha256": "1b4dc94298f73a3cf20d3490708e0f1141e0a77d889a69f72352281f01e78ec6"
+    },
+    "diagram-final-browser-qa.json": {
+      "findings": [],
+      "externalNetwork": [],
+      "limit": "Actual SVG loading, widths, native keyboard horizontal scrolling and visible alternative destinations; not semantic edge or human screenreader acceptance.",
+      "fileSha256": "b811963eeca1286749abbeb28104a98d5c1bcb7487d456f14e1849fb7bfc21d3"
+    },
+    "diagram-final-axe.json": {
+      "findings": [],
+      "limit": "Automated axe on nine diagram-containing reader pages; not human screenreader or whole-site accessibility acceptance.",
+      "fileSha256": "a33f2ff2562cf701780e6e25c34c87b671d472c3190690e16964892ff76b8343"
+    },
+    "diagram-final-fresh-render.json": {
+      "pages": 167,
+      "diagrams": 27,
+      "freshRenderHashesMatched": 27,
+      "localOnly": true,
+      "limit": "Source/owner/question/visible alternative routing, static SVG and deterministic render checks only; not per-edge semantic or human screenreader acceptance.",
+      "fileSha256": "505892816951e48a2c5aaa74a869f3c76f7e96e0c212ab87b60c9c1a1cec6308"
+    },
+    "diagram-final-search.json": {
+      "indexedCanonicalPages": 167,
+      "internalArtifacts": 0,
+      "readerQuestionsPassed": 12,
+      "fileSha256": "0fbb88b646b0d6b1f9db71ea572f05d4a55cad2eb1a3354f12276377a34fd425"
+    },
+    "diagram-final-artifact.json": {
+      "selectedPages": 167,
+      "htmlPages": 177,
+      "localLinks": 36952,
+      "verifiedOutputDigests": 209,
+      "fileSha256": "177bbc5bfb0d4a87221b78e0ff7b89bd1a566605432f3dbc7a4192b137c571df"
+    },
+    "diagram-final-previews.json": {
+      "pages": 167,
+      "sourceBoxes": 393,
+      "boxesWithPreviews": 390,
+      "excerpts": 1660,
+      "uniqueSourceObjects": 874,
+      "limit": "Exact linked source and rendered excerpt verification; no semantic claim or test/runtime result inferred.",
+      "fileSha256": "4828fe7b7da2cb682bedd901d28acf539bc6e4952ee184f3071e19449783ee86"
+    }
+  }
+}

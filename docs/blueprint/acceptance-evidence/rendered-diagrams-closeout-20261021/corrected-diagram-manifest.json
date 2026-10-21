@@ -1,0 +1,1135 @@
+{
+  "schemaVersion": "kubeclaw-rendered-diagrams.v1",
+  "toolchain": {
+    "mermaid": "12.2.0",
+    "chromium": "151.0.7922.34",
+    "modules": [
+      {
+        "path": "chunks/mermaid.esm.min/chunk-3KU6CYTB.mjs",
+        "sha256": "00edcfae1102c086d7d7c0f69e03bb9e66d341c2d7bbd4a60a60ec6127e40007"
+      },
+      {
+        "path": "chunks/mermaid.esm.min/chunk-4GHFHL4L.mjs",
+        "sha256": "396c335a6630a82ef77635b7014b65d6b3095e72da420e7946a6a5c88f6d3c7e"
+      },
+      {
+        "path": "chunks/mermaid.esm.min/chunk-674HQBI4.mjs",
+        "sha256": "78a14415742410cd85c530442d1fbc121550f42ae99e0618150e0920314f5ff3"
+      },
+      {
+        "path": "chunks/mermaid.esm.min/chunk-7P5HNUOW.mjs",
+        "sha256": "d0aa9958356deea20cadbccb3e2d1283ddbc955aa7ccf8a707f673f2dbda8d5e"
+      },
+      {
+        "path": "chunks/mermaid.esm.min/chunk-BOZ75642.mjs",
+        "sha256": "258c1f8a5e8fc1cc5edfd343779c9c50f0bf8932a6e7fa67aa2d174283b617fa"
+      },
+      {
+        "path": "chunks/mermaid.esm.min/chunk-D36F7FYG.mjs",
+        "sha256": "6fa5cda64a6227731eb422b312aaff0070f0986097e8d94354ac6101a25c398b"
+      },
+      {
+        "path": "chunks/mermaid.esm.min/chunk-DXAG4NAJ.mjs",
+        "sha256": "c907572175ed48fd9471e38ed333fc3b2edaadf482839998b2f57079d318902a"
+      },
+      {
+        "path": "chunks/mermaid.esm.min/chunk-F6PIGZHG.mjs",
+        "sha256": "7a600c611d09d8a05cd2e6f96f13901d9ba27576fc21c77e63668af1005cd163"
+      },
+      {
+        "path": "chunks/mermaid.esm.min/chunk-FNR2RGIF.mjs",
+        "sha256": "8d7c420d9526ab350be333dbf743e91354691a6481275e64f1db7549db4dba05"
+      },
+      {
+        "path": "chunks/mermaid.esm.min/chunk-FWWDAFD2.mjs",
+        "sha256": "6599aa9fff9fe86e90eb3cc860483ee0910e5fa029e6336895aeb38e5b58bbe8"
+      },
+      {
+        "path": "chunks/mermaid.esm.min/chunk-GDOATIN3.mjs",
+        "sha256": "0613e167b74c7f000549b95541b971a1ec378792a71beed86196c60a1fce0700"
+      },
+      {
+        "path": "chunks/mermaid.esm.min/chunk-GHI2JMQX.mjs",
+        "sha256": "46d67e0fa2bf1579a00d9565db7e0cadcfe7ee3a4449aad4cec62d9cd52f3f28"
+      },
+      {
+        "path": "chunks/mermaid.esm.min/chunk-IER4RZHT.mjs",
+        "sha256": "068959b1dfcb8d26bcbfd1e34ad922467d0590eae06cec62f29cb5a285f8748a"
+      },
+      {
+        "path": "chunks/mermaid.esm.min/chunk-KJ5T2YZX.mjs",
+        "sha256": "88af19a0945746df13d4c25164c83d47cca25f24485412c982d70122b16a5283"
+      },
+      {
+        "path": "chunks/mermaid.esm.min/chunk-KTS5TP6K.mjs",
+        "sha256": "0ae23b8e2fb9297d068a8b1f745bc2b08a55320dfb0db90711863b7d74ba2f86"
+      },
+      {
+        "path": "chunks/mermaid.esm.min/chunk-L2B47AAZ.mjs",
+        "sha256": "57b417baaff19ed1a3383bf327d39247c0c4aa876dc433e09f708d2e5950b71a"
+      },
+      {
+        "path": "chunks/mermaid.esm.min/chunk-LGKD3V67.mjs",
+        "sha256": "4bfc3262830f618555cfa3403a7773939d4ad11af2e36db796ac11f8ee726a92"
+      },
+      {
+        "path": "chunks/mermaid.esm.min/chunk-MFYRHTYG.mjs",
+        "sha256": "907abf3f3c54b58e7577c4bd6a3cfa18a9978110765843cd0d46748d6db4e748"
+      },
+      {
+        "path": "chunks/mermaid.esm.min/chunk-MIE3LDYP.mjs",
+        "sha256": "5d4f7c6773b99ffca185401cf164d111ab304d05709d933c10ce47a1e06d5188"
+      },
+      {
+        "path": "chunks/mermaid.esm.min/chunk-MMC4O45A.mjs",
+        "sha256": "9a375b48e696b59371d6535c26cf4ce73a759911d6af71d0ca60ef4526c944c5"
+      },
+      {
+        "path": "chunks/mermaid.esm.min/chunk-QVIEFLGF.mjs",
+        "sha256": "5ad0557882607c7b100c33722714c62832a84feb26d79a7151fdbe4680f2165b"
+      },
+      {
+        "path": "chunks/mermaid.esm.min/chunk-SDIBIOXT.mjs",
+        "sha256": "c927a4a7d111b376cddf6c30a73bc2366a6fa1be145ca69abdead4c55d24fb4f"
+      },
+      {
+        "path": "chunks/mermaid.esm.min/chunk-TRWJJ4LR.mjs",
+        "sha256": "f8c3550fd5eb5367d48a3cae5479eb75053e90e13cec92712331951f9cc5cab7"
+      },
+      {
+        "path": "chunks/mermaid.esm.min/chunk-XGFVAD2T.mjs",
+        "sha256": "e9826d66fac551f54b354d1499ad41b94136845c3d833ebdd9da1c597b077204"
+      },
+      {
+        "path": "chunks/mermaid.esm.min/chunk-XUG7IRDC.mjs",
+        "sha256": "1d906b46af61082cb43f6d3bc1a903b7108975c7a66606b6cf52d46d2670647e"
+      },
+      {
+        "path": "chunks/mermaid.esm.min/chunk-YX6CVSZ3.mjs",
+        "sha256": "940039393be1f982148fd4dfc998b4512fba3ae556b7d75d86b3d831992e9315"
+      },
+      {
+        "path": "chunks/mermaid.esm.min/chunk-ZZ52EIBP.mjs",
+        "sha256": "05866f9f6191141f83fd225d0ae8071873cdd24f94e8b99023cd3401ad4a12a8"
+      },
+      {
+        "path": "chunks/mermaid.esm.min/elk-7HBNN7NY.mjs",
+        "sha256": "ae6173b625cc1ad5ac674fb95065c58235d07e9b184ae3265a447d1acf1c91fa"
+      },
+      {
+        "path": "chunks/mermaid.esm.min/flowDiagram-KMDKLPNL.mjs",
+        "sha256": "0130c02c9cbea5f095c5318affd4a840a17f35652beaa0ff1ff085532d0eef32"
+      },
+      {
+        "path": "chunks/mermaid.esm.min/sequenceDiagram-OV7DSCPC.mjs",
+        "sha256": "7eb32f7cac87fe60c149f14824e4b31dbe6c0898f152dd30fcd382823e0d46ff"
+      },
+      {
+        "path": "chunks/mermaid.esm.min/stateDiagram-v2-PVXPCO6V.mjs",
+        "sha256": "fc40c5b8600e2cc3462be10f72aaa997bdda89568d5b3d82d84fc1cf3d19933c"
+      },
+      {
+        "path": "mermaid.esm.min.mjs",
+        "sha256": "dae3440dd5a4adecf76cfd2951c7a69523df3237f110dd186bebbd55f6038c9d"
+      }
+    ],
+    "packageLockSha256": "890b91848d80d461c1376d47ade69ed5d53fd70cdbcbdaee08a66a58b2248443",
+    "config": "strict/htmlLabels=false/deterministicIds/neutral theme/Arial sans-serif"
+  },
+  "pages": [
+    {
+      "path": "README.md",
+      "sourceMarkdownSha256": "377f9b7f72f4d15c6e0b4f9fde06dc4d31d00776440feded39c4fba5cd21902f"
+    },
+    {
+      "path": "decisions/README.md",
+      "sourceMarkdownSha256": "91a9f26667f53a41b16fd4516e9278840a791b2ce851859195265dec5ff25b3c"
+    },
+    {
+      "path": "decisions/acceptance.md",
+      "sourceMarkdownSha256": "ac9f3c64152d09db1bacb28ba608a27f729ba8ba7981b45f8f72e49a28644b27"
+    },
+    {
+      "path": "decisions/core-and-plugins.md",
+      "sourceMarkdownSha256": "da18df059bee882166d1da1597bb27d13b14d31ec4faaaad759bc27322f3e5ed"
+    },
+    {
+      "path": "decisions/echo.md",
+      "sourceMarkdownSha256": "5e47d1acaf98c1a1f038ca5dfed9c79acd3f2f22c7ae25353d26fe8a55add3fc"
+    },
+    {
+      "path": "decisions/implementation.md",
+      "sourceMarkdownSha256": "8c8adc59a50c046fe232cf32c8e83f43823a0d60b30b2083a66ca31686c5f066"
+    },
+    {
+      "path": "decisions/prism.md",
+      "sourceMarkdownSha256": "d712164d32dd692df80306b12442ce289592e495d69ee9a09a74cae58988be1e"
+    },
+    {
+      "path": "decisions/runtime-and-operations.md",
+      "sourceMarkdownSha256": "74594aacc3f199158901846ffa12b20fb5e327b9d62ad43d04c23f58faf86e67"
+    },
+    {
+      "path": "decisions/test-gate.md",
+      "sourceMarkdownSha256": "e8678fa5be4f004ac6031b073d10377052cba0b19ffb9085428ebbad650fdf43"
+    },
+    {
+      "path": "extend/README.md",
+      "sourceMarkdownSha256": "ed2f83b8379e3db878ce9dfdb3af614bb0998fa173ac974e42bbcc76e6911b1c"
+    },
+    {
+      "path": "extend/buster.md",
+      "sourceMarkdownSha256": "8508aabb15dc316967ff169014b89d281692b4963aebd081d74fcbb6752dca09"
+    },
+    {
+      "path": "extend/contracts.md",
+      "sourceMarkdownSha256": "b91f963ba712789a97f9091a4e12a56765b8294d926e66ab24852973f8d07766"
+    },
+    {
+      "path": "extend/developer-handbook.md",
+      "sourceMarkdownSha256": "5ac4e23875a360f5dca046ae48b3c1c606e932dfc63c3abe8bb4bc1eb7309e22"
+    },
+    {
+      "path": "extend/documentation-maintenance.md",
+      "sourceMarkdownSha256": "6bf2df4cff3b10a39c37d5c82df7049d0c57ef09e2ccf56630251fbce68da8fe"
+    },
+    {
+      "path": "extend/effectful-plugin.md",
+      "sourceMarkdownSha256": "cedbe76ae599552ff3c688be2bc9895c461cbb320e59adb1c1f38352e740c880"
+    },
+    {
+      "path": "extend/first-plugin.md",
+      "sourceMarkdownSha256": "6647b2f5d04d33d757b1e8e765a80701c2337cce67cfdcc8b63e47d0374ee4e5"
+    },
+    {
+      "path": "extend/host-and-engine.md",
+      "sourceMarkdownSha256": "4f5ab2e2c981bbf8cca5cfa12761090b086adb62f941aa5abb8753345ff2d747"
+    },
+    {
+      "path": "extend/lint.md",
+      "sourceMarkdownSha256": "5acb57778c294e3183edf52a92819996e0e25167cbcc83e978b8157a622e90ed"
+    },
+    {
+      "path": "extend/nova.md",
+      "sourceMarkdownSha256": "afc7523753716ba1bc82a87b341150344b293bea57952b512652ad9c916c8813"
+    },
+    {
+      "path": "extend/platform/README.md",
+      "sourceMarkdownSha256": "1cc526e672ca91c454b82e52e02dedf89ae20ebfe64faff385156b4fa68488d9"
+    },
+    {
+      "path": "extend/platform/buster.md",
+      "sourceMarkdownSha256": "1acc1431ae63619c3c58a7c716a4e7306cb45ba566f9071a7cedc2e4e80365cb"
+    },
+    {
+      "path": "extend/platform/prism.md",
+      "sourceMarkdownSha256": "13716b7a79c2dd0ce53b3803a8ce81b682b379e489dd96f1b19dc69d3e88c9ba"
+    },
+    {
+      "path": "extend/plugin-catalogue/README.md",
+      "sourceMarkdownSha256": "64a3dab3ba6936228ed9ce92454e2a5267cdc9ae9acae6098a9f09d1957659fc"
+    },
+    {
+      "path": "extend/plugin-catalogue/kubeclaw-agent-observer.md",
+      "sourceMarkdownSha256": "3075d198262238007b5bcd9ab4bddbab63a1226b9cfb99867c607852a37a8695"
+    },
+    {
+      "path": "extend/plugin-catalogue/kubeclaw-ops.md",
+      "sourceMarkdownSha256": "0ba740fa752f617f929d7a15c76589cc0d06b296e5077f2fc52e6dd21c0fc6dc"
+    },
+    {
+      "path": "extend/plugin-catalogue/kubeclaw-prism.md",
+      "sourceMarkdownSha256": "3ce791705fd973d25f4af8307bea7e87b63478660ffbdb262225f039bcb63428"
+    },
+    {
+      "path": "extend/plugin-catalogue/kubeclaw.agent-observability.md",
+      "sourceMarkdownSha256": "9875273a3e49ac3ec20b1b6b495058763229299de10d940e613dff0edd021b40"
+    },
+    {
+      "path": "extend/plugin-catalogue/kubeclaw.api-flow.md",
+      "sourceMarkdownSha256": "daf8439a8ab24ca7ad234133708dd81c3b12053bc60728875f2a33554da9aeb2"
+    },
+    {
+      "path": "extend/plugin-catalogue/kubeclaw.architecture-validator.md",
+      "sourceMarkdownSha256": "24ee1d37297407fe83424563e46d98eecfc4b2890bb16df1f4d705cdbf3a6aa8"
+    },
+    {
+      "path": "extend/plugin-catalogue/kubeclaw.artifact-store.md",
+      "sourceMarkdownSha256": "1e055507e91c2ab692dd0be55a17662babe9cdc79fc960bd4c81350814703295"
+    },
+    {
+      "path": "extend/plugin-catalogue/kubeclaw.axe.md",
+      "sourceMarkdownSha256": "62aed2a093bdf02c20724be0962eab946c9d4b8c47c1feabebd4f3e607f3faf3"
+    },
+    {
+      "path": "extend/plugin-catalogue/kubeclaw.blueprint-sync.md",
+      "sourceMarkdownSha256": "413794f66304a81fae9780b00631d2af7f66928698174a08449deddb17b44c57"
+    },
+    {
+      "path": "extend/plugin-catalogue/kubeclaw.buster-quality-gate.md",
+      "sourceMarkdownSha256": "8e8b81291a3ac3b1251cba71c42a812dfb877395954796f1c1f47592a4c62e59"
+    },
+    {
+      "path": "extend/plugin-catalogue/kubeclaw.case-study.md",
+      "sourceMarkdownSha256": "9f95c055f03ae9e595bf72f2be6654b060f45c3f2b312d3bcb02d219ad6bf044"
+    },
+    {
+      "path": "extend/plugin-catalogue/kubeclaw.command-runner.md",
+      "sourceMarkdownSha256": "2a7cf612ca3a5c71075344b6e0d0faedbd2e4ab0297e4e5e25d72c489b788d40"
+    },
+    {
+      "path": "extend/plugin-catalogue/kubeclaw.container-build.md",
+      "sourceMarkdownSha256": "4eb4256c449873f0d020711a93bab65d29ed5d6e63bae786697615bd886c8490"
+    },
+    {
+      "path": "extend/plugin-catalogue/kubeclaw.coverage-budget.md",
+      "sourceMarkdownSha256": "8f2a4d5286ef4dfb8a00556242b2c85a0823c12472c22b3ddb93fba59fbf3e15"
+    },
+    {
+      "path": "extend/plugin-catalogue/kubeclaw.delivery-lint.md",
+      "sourceMarkdownSha256": "cfb0b592cb15d14bdc3f2adde4444a72ac5aba7df679b447e38e3beccbe228b6"
+    },
+    {
+      "path": "extend/plugin-catalogue/kubeclaw.demo-auth-smoke.md",
+      "sourceMarkdownSha256": "f50ef346741a66d74753cc8e4160de3c3f827d75800b582970a3b8258b6dccbf"
+    },
+    {
+      "path": "extend/plugin-catalogue/kubeclaw.demo-handoff.md",
+      "sourceMarkdownSha256": "d27a68f3ec0dccdaec8ce901edb0024139ac9ed2daeb79dc42911db37aaea2d7"
+    },
+    {
+      "path": "extend/plugin-catalogue/kubeclaw.direct-command.md",
+      "sourceMarkdownSha256": "053f944ed1fd09abeb55490829f99bddae6fb36b62bc3b8cd956150aad46f320"
+    },
+    {
+      "path": "extend/plugin-catalogue/kubeclaw.git-workspace.md",
+      "sourceMarkdownSha256": "37dac79016ced3b52f177dfc7434c3fd46db3c8f8fbcc9efa2e1fbb255130e40"
+    },
+    {
+      "path": "extend/plugin-catalogue/kubeclaw.http.md",
+      "sourceMarkdownSha256": "5c452da5168e84d161aefde1b1a6e301bac69b2ad45a18b50cec988a47f0be64"
+    },
+    {
+      "path": "extend/plugin-catalogue/kubeclaw.human-approval.md",
+      "sourceMarkdownSha256": "3b89c1a490f23f022af0610b82ad94eb4e9df57ceeb88dc78c14a411147301a2"
+    },
+    {
+      "path": "extend/plugin-catalogue/kubeclaw.implementation-agent.md",
+      "sourceMarkdownSha256": "f6d0c32bbf242a78af6e987ef51c8ec601de240a6bc4473e60d5b043d5367058"
+    },
+    {
+      "path": "extend/plugin-catalogue/kubeclaw.junit-report.md",
+      "sourceMarkdownSha256": "367466d1f43296fc9b743986f12923463c41e0a1d72a2d49bbfceb75b4e2bdd2"
+    },
+    {
+      "path": "extend/plugin-catalogue/kubeclaw.kubernetes-fixture.md",
+      "sourceMarkdownSha256": "5f959f079c4c06963a90c046a172b20824199f2b897616b8e73f96f56e4a6e14"
+    },
+    {
+      "path": "extend/plugin-catalogue/kubeclaw.lighthouse.md",
+      "sourceMarkdownSha256": "e0b48558da59cbb08758ca3413c0525dea5a5f34a0121d50b2a6b03d0e91943d"
+    },
+    {
+      "path": "extend/plugin-catalogue/kubeclaw.lint.md",
+      "sourceMarkdownSha256": "33c87cf476138e645b10903d5f4f6c81ed84b36bd83f0027d246c6bbb1150719"
+    },
+    {
+      "path": "extend/plugin-catalogue/kubeclaw.network-http.md",
+      "sourceMarkdownSha256": "11fbece7ba26b66dccc9ada1cea7817da72425f5593084bf83c7d46ed4f649f6"
+    },
+    {
+      "path": "extend/plugin-catalogue/kubeclaw.notification-observer.md",
+      "sourceMarkdownSha256": "664a0dd11e457a17d81fb9a541445bb684be8b4360ce62f84c083adaad2a19e6"
+    },
+    {
+      "path": "extend/plugin-catalogue/kubeclaw.openapi.md",
+      "sourceMarkdownSha256": "4c0d18d68a84d523962cd92200f95a114ae3758677fc85dd967c1bff468a40f4"
+    },
+    {
+      "path": "extend/plugin-catalogue/kubeclaw.openclaw-agent-events.md",
+      "sourceMarkdownSha256": "65c91b2e69bac751bd61faa9c455b65f06a83be101fc8a7e521ed49b73dba971"
+    },
+    {
+      "path": "extend/plugin-catalogue/kubeclaw.operator-messaging.md",
+      "sourceMarkdownSha256": "d64ccab00a6795f05570f8f0ab4901a83fcab0db76c0aadaa397df0394911913"
+    },
+    {
+      "path": "extend/plugin-catalogue/kubeclaw.pipeline-review.md",
+      "sourceMarkdownSha256": "f4744d663403dca9b49c07cb3c2270e4d9b4d600605e7d32f234f83ac7a4cafc"
+    },
+    {
+      "path": "extend/plugin-catalogue/kubeclaw.playwright.md",
+      "sourceMarkdownSha256": "855f61550bc0e4a5e6a625b67cb282478b1a778022c97710d8279f0bc0239ab7"
+    },
+    {
+      "path": "extend/plugin-catalogue/kubeclaw.preflight-contract.md",
+      "sourceMarkdownSha256": "112fb0c88ca8d431fc26060181af607ac44a0121c9ba1cb311495936116a23ca"
+    },
+    {
+      "path": "extend/plugin-catalogue/kubeclaw.prism-design.md",
+      "sourceMarkdownSha256": "cf2f90cf61261585dc56e5de211bc6651d108ca206aa7068940faf084f1054b1"
+    },
+    {
+      "path": "extend/plugin-catalogue/kubeclaw.project-summary.md",
+      "sourceMarkdownSha256": "c5d1d81aa75008528fee85c5c36d8b98191d1470caec5fa58faead09832c95ac"
+    },
+    {
+      "path": "extend/plugin-catalogue/kubeclaw.redis-transport.md",
+      "sourceMarkdownSha256": "ccb2f5a17271aa9e79079365d3161164945da46889cb5c99b6de6f185ef55133"
+    },
+    {
+      "path": "extend/plugin-catalogue/kubeclaw.remote-test-gate.md",
+      "sourceMarkdownSha256": "1c9d3e4e5074870ec9ed411e90093000acb4d413be56d002b518b772a809ba31"
+    },
+    {
+      "path": "extend/plugin-catalogue/kubeclaw.repository-adapter.md",
+      "sourceMarkdownSha256": "195f8296d0c6120548942f60afb993b1deb3398a63670dac94baf6bc9ffc06f5"
+    },
+    {
+      "path": "extend/plugin-catalogue/kubeclaw.review.md",
+      "sourceMarkdownSha256": "a63336b8d8e16d6c4385434f55e447c56be414f37c5e24952b3e6be706077291"
+    },
+    {
+      "path": "extend/plugin-catalogue/kubeclaw.runtime-dispatch.md",
+      "sourceMarkdownSha256": "5b413fbcf8eba6a20833a960f83b598908c114e434e4e61a522308e47963f5ba"
+    },
+    {
+      "path": "extend/plugin-catalogue/kubeclaw.secret-resolver.md",
+      "sourceMarkdownSha256": "af1586edc90cc8fe476aced39aec41fbc6148d3d047ee9f146cb6a36cafb3dc2"
+    },
+    {
+      "path": "extend/plugin-catalogue/kubeclaw.security-providers.md",
+      "sourceMarkdownSha256": "b8416d24b3fd4c524db1d052e3eb65e8fff5c6ae2402c552997e8bbcc66de971"
+    },
+    {
+      "path": "extend/plugin-catalogue/kubeclaw.size-budget.md",
+      "sourceMarkdownSha256": "a09bcd6a7d82f6287af62c99532e302eba99981b9d220a60744b969f98eb515e"
+    },
+    {
+      "path": "extend/plugin-catalogue/kubeclaw.state-store.md",
+      "sourceMarkdownSha256": "0c82fc9c960fefdbd749e5cb2c09f839810ddbb667520bf0bfa0e20b71785977"
+    },
+    {
+      "path": "extend/plugin-catalogue/kubeclaw.tailscale-exposure.md",
+      "sourceMarkdownSha256": "c22e1fd736a100ed50e2fdd9d80cd572fd4d9798e0aba56467ec53f95dfe6225"
+    },
+    {
+      "path": "extend/plugin-catalogue/kubeclaw.telemetry-observer.md",
+      "sourceMarkdownSha256": "a0b49c4cf4d8ced22babbab1578cc7d8b4ef5db026c8402ebab7058fe54e5dca"
+    },
+    {
+      "path": "extend/plugin-catalogue/kubeclaw.telemetry-store.md",
+      "sourceMarkdownSha256": "5a49518d4d77dacb453aa6c806600f75b675760efd96227e36c1b71acedfa0a6"
+    },
+    {
+      "path": "extend/plugin-catalogue/kubeclaw.transport-publisher.md",
+      "sourceMarkdownSha256": "aed271b2a55b17c807a2ac680809399cb0c7bd21ab52341d66f8564d70aefeaa"
+    },
+    {
+      "path": "extend/plugin-catalogue/kubeclaw.visual.md",
+      "sourceMarkdownSha256": "f96fb8b04daceb32d2ad13e0c4bc28a7a63bbd8619964d954605dcadc8c46e09"
+    },
+    {
+      "path": "extend/plugin-catalogue/kubeclaw.wait-store.md",
+      "sourceMarkdownSha256": "1e777626171120835af7879224e42f2ede9268ec5b8b7997e95022ac01c4d51a"
+    },
+    {
+      "path": "extend/testing.md",
+      "sourceMarkdownSha256": "c5dd5d7c9ffb55713d413f1429c6ebb2ed33193eedde4370fa477c56adf18d9f"
+    },
+    {
+      "path": "product-surfaces.md",
+      "sourceMarkdownSha256": "fefa0ee0019c03d777968d03396b1ff5e420f184feb3e802ac7f11a9e2a0304a"
+    },
+    {
+      "path": "reference/README.md",
+      "sourceMarkdownSha256": "62a37e5cda6550de01d741e4a4d56bcc5cc7c2be5fd6e94c230d08cb65b2121f"
+    },
+    {
+      "path": "reference/api-object-updates.md",
+      "sourceMarkdownSha256": "9f334f34859ab6eba1704ea10b597b7b9c152a0e6cb98838271b50af15895fdf"
+    },
+    {
+      "path": "reference/buster-error-codes.md",
+      "sourceMarkdownSha256": "b28253a384a6e250c9afec3265311c22b2fc4e4d96d901a4e09d0aff235de765"
+    },
+    {
+      "path": "reference/buster-namespace-lease.md",
+      "sourceMarkdownSha256": "842e8d6f35871a01520df1e0bf2b633d8731fa80becdd31e674d33d87777b593"
+    },
+    {
+      "path": "reference/buster-provider-configuration.md",
+      "sourceMarkdownSha256": "0344fd960383c1bd41a5b2b58dff9320cfaf12844d352b3d6a08cff3af66de30"
+    },
+    {
+      "path": "reference/buster-runtime-configuration.md",
+      "sourceMarkdownSha256": "c2389b4e534bf4cbc2d481ee25f9fee629f1790443b478181f77e830dffe663d"
+    },
+    {
+      "path": "reference/buster-suites.md",
+      "sourceMarkdownSha256": "1745f409fb6d5575d68ab888421d2ae7a6c30e2769256463c5bfbd8ec8db2a27"
+    },
+    {
+      "path": "reference/capabilities.md",
+      "sourceMarkdownSha256": "4a9c98866180d2e1070409332667eae9dbe75f3e33a1aca825abae15485c6719"
+    },
+    {
+      "path": "reference/cli.md",
+      "sourceMarkdownSha256": "35fa5cd6bcfd126610d3562088bf96a47d3d0e06d3cae51b657978ee9c0b4c70"
+    },
+    {
+      "path": "reference/configuration-change-impact.md",
+      "sourceMarkdownSha256": "38a8a46aec20cbf322c94c235cb4c9207cb452250fec9202154ee92259a91481"
+    },
+    {
+      "path": "reference/configuration-compatibility.md",
+      "sourceMarkdownSha256": "ea88e1f2bdab4c77c8ae2be3ef03dbccd1344e472d011e1791c3eefcf349a2ce"
+    },
+    {
+      "path": "reference/configuration-errors.md",
+      "sourceMarkdownSha256": "5e71a5197dca09dd730bb2fd4f99d6fa7166c4618d4ea984fa6a1e88aad017b1"
+    },
+    {
+      "path": "reference/configuration-precedence.md",
+      "sourceMarkdownSha256": "50d2d8344bbf78ab8b4762ddab3e14d02c4f9eace0a68e9e94de2b94cf7b5996"
+    },
+    {
+      "path": "reference/configuration.md",
+      "sourceMarkdownSha256": "2287ddb3348bb033d27660384c7ba447e87a170b7271ad0dd765f18c3d1c1e0d"
+    },
+    {
+      "path": "reference/contracts.md",
+      "sourceMarkdownSha256": "fa14c393eee98db43553417351c80d6d5e2323dd161b41a388778ac35550006b"
+    },
+    {
+      "path": "reference/documentation-governance.md",
+      "sourceMarkdownSha256": "20f054390442cdec4328c283de597d96b249a20167f543c1ab81cc9f3945bcec"
+    },
+    {
+      "path": "reference/documentation-site.md",
+      "sourceMarkdownSha256": "5f7060524813266b8f8926d75272e48cdcfa8f90e3361ac5cda151731eac6414"
+    },
+    {
+      "path": "reference/endpoints.md",
+      "sourceMarkdownSha256": "424deed0f8164aba4aa0e06a014a54041578b76f9c74647d47ade34d1dda9e42"
+    },
+    {
+      "path": "reference/environment-variables.md",
+      "sourceMarkdownSha256": "1117e6ea47a3c7f5205263f80f064dcd53ac8d9c292643bbd157f330e23c16ab"
+    },
+    {
+      "path": "reference/errors.md",
+      "sourceMarkdownSha256": "90fe3e0cbb50667f62d7ef33da0d564a45e6b0f0117e71cfdc9e2a9ce6e1a23d"
+    },
+    {
+      "path": "reference/events.md",
+      "sourceMarkdownSha256": "cbd20157c6e64d3b808e4e797995c2408aa3b1b45f31bd57c452d449d4a7088b"
+    },
+    {
+      "path": "reference/glossary.md",
+      "sourceMarkdownSha256": "f04bd615431e2bc10c04a2e68e97f90df8addc1dc8b6ba80ec22ba5226b28413"
+    },
+    {
+      "path": "reference/helm-values.md",
+      "sourceMarkdownSha256": "8a68e8d4c3b352e963509e73bf843701df5f13c3d080b5eeff99486bcf9058fb"
+    },
+    {
+      "path": "reference/host-and-prism-configuration.md",
+      "sourceMarkdownSha256": "a61e8ed591ecfa8aade0ae701e7b7b10ed3556a4cb591612d4cf74a1b96ed85c"
+    },
+    {
+      "path": "reference/images-and-digests.md",
+      "sourceMarkdownSha256": "87114dd1de7b4d8856b141dcb4539be34d00b58ccbd3f14de279baf822af329f"
+    },
+    {
+      "path": "reference/lint-policy-generated.md",
+      "sourceMarkdownSha256": "d5e962b6c0c3490f9b92f4539cea093c81b79f7dba358b58712f1ae545623eda"
+    },
+    {
+      "path": "reference/lint-policy.md",
+      "sourceMarkdownSha256": "8b99ab907178869e0c166a5ca1a3b527f1a78be14f7300b2334005671c2d2415"
+    },
+    {
+      "path": "reference/lint-rules.md",
+      "sourceMarkdownSha256": "76072488488acfecac153370ef2c08db899013b239a21bb6a2f5951fbd8d1915"
+    },
+    {
+      "path": "reference/nova-project.md",
+      "sourceMarkdownSha256": "978f837cd5ef1cc4b84914adb95c2d0cbf204792df1a2cdf45fbcc0f944c8e5a"
+    },
+    {
+      "path": "reference/pipeline-definition.md",
+      "sourceMarkdownSha256": "3bfbc86531ec13072214654012e3cba35d62e57fdd73e1f7cff559030745c2d7"
+    },
+    {
+      "path": "reference/pipeline-json.md",
+      "sourceMarkdownSha256": "dd1607536d6c501b93b06acfa7f1fa30e0cb459e1103bc14a14a0d93c24959b3"
+    },
+    {
+      "path": "reference/pipeline-platform.md",
+      "sourceMarkdownSha256": "f563ed0c4fdd54d1a7a33c74c91bd818a317ec2b91263fdbb421c3ac23ca6803"
+    },
+    {
+      "path": "reference/platform-surfaces-generated.md",
+      "sourceMarkdownSha256": "e15dae6e340961d09f1c0a7a654ea6351933b1c2d88fcb2c66de1225e56502e0"
+    },
+    {
+      "path": "reference/plugin-configuration.md",
+      "sourceMarkdownSha256": "893f956e64f0edd0deef7aa394458ceb40a2734e8e1e1714164472fd408ecbae"
+    },
+    {
+      "path": "reference/project-pipeline-publication.md",
+      "sourceMarkdownSha256": "55268db8078fcaa79dbfc3b8dcfe93ef97c0d3de1bda596348a199eda6c44ecd"
+    },
+    {
+      "path": "reference/roles-and-package-ownership.md",
+      "sourceMarkdownSha256": "9428a5f54063c63d3e995a192a7f9583e7a65e8ac84d930c3dc91e7ef7018462"
+    },
+    {
+      "path": "reference/schemas.md",
+      "sourceMarkdownSha256": "96784d9b9057a3f967bbea56b58042bb8c15135a074b654d3285f3908b66157e"
+    },
+    {
+      "path": "reference/sdk-exports.md",
+      "sourceMarkdownSha256": "702df96603d7108ccc9ea3244cba2ad8173dbc1f22298f564f17486ffe8775af"
+    },
+    {
+      "path": "reference/sdk.md",
+      "sourceMarkdownSha256": "1ddaf07e0336c6f67fd5ed33a1185abc766edcc3f957c5494a682e2d34667592"
+    },
+    {
+      "path": "reference/secrets.md",
+      "sourceMarkdownSha256": "728affce94348a9ca679fd293648e779bfda611fb20ec54258e496c4ca6bd44e"
+    },
+    {
+      "path": "reference/service-routing.md",
+      "sourceMarkdownSha256": "5404111ca248f44007b539c10aaac81ae7d3abb2c07723ca5a6fd84e2d24025e"
+    },
+    {
+      "path": "reference/stores-and-retention.md",
+      "sourceMarkdownSha256": "a798803ce98908a04ca2515fa0e7b67cf2b8dcde2142dbf0f7526314ed37e35f"
+    },
+    {
+      "path": "reference/verification-commands.md",
+      "sourceMarkdownSha256": "34f797c403ace8f84cbc1af50973efd5bf0ab9a5dfe868dbe1b80c2d56228da6"
+    },
+    {
+      "path": "reference/worker-profiles-and-roles.md",
+      "sourceMarkdownSha256": "37a06dec67c69d4b5f74ca5b478b6beb30c88e3b63da2fb04b84e9a8967f3b6b"
+    },
+    {
+      "path": "reference/workflows.md",
+      "sourceMarkdownSha256": "741f118c8070b38e9e626612b815eef7f4ba5a5160eefc8556dbd73c3409454f"
+    },
+    {
+      "path": "status/acceptance.md",
+      "sourceMarkdownSha256": "d2276bc5c42708277159a4283352de3d150b36c030eb3a8d0665e5f42de688df"
+    },
+    {
+      "path": "status/current.md",
+      "sourceMarkdownSha256": "264b946dbf7c32473b43e460c8129a92477985cf9ec5968995c76912b5c43b7d"
+    },
+    {
+      "path": "status/open-issues.md",
+      "sourceMarkdownSha256": "d0802852c331fdcf67449ef5e2970193dfbe4a8dc4663c3f0941880eceb75154"
+    },
+    {
+      "path": "status/roadmap.md",
+      "sourceMarkdownSha256": "10606b2da376c37f4f7afb943b5f23cef4365cd928452e5e1aa30651c102bda6"
+    },
+    {
+      "path": "understand/README.md",
+      "sourceMarkdownSha256": "f7ec3e7c2f87534ae40b4f29ce4fe97413c6d22912ea232c7103b9a85ae5693f"
+    },
+    {
+      "path": "understand/archviewer.md",
+      "sourceMarkdownSha256": "95c17cf90585eb1c962ef1cae71f7281327583d1671994c53c596baa2e2b759a"
+    },
+    {
+      "path": "understand/buster-namespace-controller.md",
+      "sourceMarkdownSha256": "5a87ea1497403a8b16b0439ded47c0b2077c9d06781a6defa1a5eadf109771b8"
+    },
+    {
+      "path": "understand/buster.md",
+      "sourceMarkdownSha256": "aa32883e4a0b77a9aeacdcbc72d7ee39080383043cbf3b2718dcc571f565d531"
+    },
+    {
+      "path": "understand/codex-integration.md",
+      "sourceMarkdownSha256": "1aab75a1da42cc3bbcd87611eb589f683a4cc5b1eb9d483bb3ffa852c4360458"
+    },
+    {
+      "path": "understand/communication.md",
+      "sourceMarkdownSha256": "6d1aa483d7576718845c83ac4603cccbbd43ff8a364c6ee6018009f0bbe2b8f4"
+    },
+    {
+      "path": "understand/components-and-authority.md",
+      "sourceMarkdownSha256": "f2800163e843df6660523ced17c2f845868c4d26aa8a3d156857acd2bc4f27c2"
+    },
+    {
+      "path": "understand/data-and-state.md",
+      "sourceMarkdownSha256": "0f5ff09d4d2251dc1389e4182061dee025bcd7e318c6e99fcdff96d57b508b1c"
+    },
+    {
+      "path": "understand/deployment-and-trust.md",
+      "sourceMarkdownSha256": "b2f3fbce0dc28a3bf94c5e5b255a657080ec6c00802f219512d28fe189d94b7d"
+    },
+    {
+      "path": "understand/echo.md",
+      "sourceMarkdownSha256": "85b491e830a6cf45f1ffb52c4f400fbb0dda296cf7a408cfc4308a515d99eec0"
+    },
+    {
+      "path": "understand/forge.md",
+      "sourceMarkdownSha256": "d1e56ccc7c80019fa71faeda1bd74d17ee7edc90140094e118fa2f6b8e205e7f"
+    },
+    {
+      "path": "understand/nova-core.md",
+      "sourceMarkdownSha256": "4b50fc0570daf8f0949b3044e4f9a39d4d6dec35d94bd2e869b4a244ebae1e65"
+    },
+    {
+      "path": "understand/openclaw.md",
+      "sourceMarkdownSha256": "146689fc1203850ba4028b4d5dfd4ba0dc5c4347ebbfde5865a723c920c88f4d"
+    },
+    {
+      "path": "understand/ops-mcp.md",
+      "sourceMarkdownSha256": "93d2fc18d361991f001ac22a5f72793160eda2094ebd5047d7f047321374ce3c"
+    },
+    {
+      "path": "understand/pipeline-dependencies.md",
+      "sourceMarkdownSha256": "b6831b822474360216f5e1e7c2655ee4c1e4f75bb825a0d06988be849ede18e4"
+    },
+    {
+      "path": "understand/platform-and-operations.md",
+      "sourceMarkdownSha256": "c2efa83d23d108e7ed39f86aeecdd8243a3e607b70251a83d407f3a944d324a9"
+    },
+    {
+      "path": "understand/plugin-runtime.md",
+      "sourceMarkdownSha256": "1de98eca4acf53bc073724b71c487efb4466aa2673e5392986bd09cea7ceb27f"
+    },
+    {
+      "path": "understand/prism-data.md",
+      "sourceMarkdownSha256": "3e46100c036ceb85db4157e0f8f235a2437cde75b96769e369436c29f7ed07ff"
+    },
+    {
+      "path": "understand/prism-runtime.md",
+      "sourceMarkdownSha256": "54a4cf6f3d095bd505ff82429bb73048030baae180be1ab8f355c5b528f56993"
+    },
+    {
+      "path": "understand/prism.md",
+      "sourceMarkdownSha256": "0160f08042f8163a606e82711437245857a0e1cd72582bdb65d17ef7727cd8ed"
+    },
+    {
+      "path": "understand/request-state-recovery.md",
+      "sourceMarkdownSha256": "4960a72bdfe935174128255c0dfd43d8cb9656895f6ea9b58d66b21e526fa122"
+    },
+    {
+      "path": "understand/request-to-result.md",
+      "sourceMarkdownSha256": "678da1d2d40b9ad47550e491f7fc67328d1f06fb1c89e8be8eaa81c1d572f9eb"
+    },
+    {
+      "path": "understand/security-and-trust.md",
+      "sourceMarkdownSha256": "930fb890b1c8cc92d99ffc0f41bb17d84edc1cca42a7ad1110aa79785e5ebf27"
+    },
+    {
+      "path": "understand/telemetry.md",
+      "sourceMarkdownSha256": "530e247959f285e46507f07fa2c37364b73abfe0032b670798667b7658fd5c7c"
+    },
+    {
+      "path": "understand/worker-core.md",
+      "sourceMarkdownSha256": "87b9215b724985a74ec71baa9507b0b22b56bfdf0fab61631e4f95e9242ab423"
+    },
+    {
+      "path": "understand/worker-trust.md",
+      "sourceMarkdownSha256": "acba5c3a01dddc5d197915db2f0bb2b59adc38ee06c0602a35d06037aa1623cb"
+    },
+    {
+      "path": "use/README.md",
+      "sourceMarkdownSha256": "d3fa91c95db03e9596f8e239236b62ec9153f93dfc9bce0ed3d0b06e2767eb13"
+    },
+    {
+      "path": "use/capacity.md",
+      "sourceMarkdownSha256": "73ef4871938336e59921f2cca0d818e75645e6757185d1e66d2e13a161179644"
+    },
+    {
+      "path": "use/demo-delivery.md",
+      "sourceMarkdownSha256": "f3388542aa504819e701d80a99d3a282b7b7124d8fc4b4ccf44d591a5056df60"
+    },
+    {
+      "path": "use/diagnose.md",
+      "sourceMarkdownSha256": "f0fd1864c1152a454067df9eb7c5836f4e245d08e7a9351eefa6dec613b0a12e"
+    },
+    {
+      "path": "use/install.md",
+      "sourceMarkdownSha256": "b356223d5bfee40caa69c1caff46356b4906e63f0d68f8854f6b7f59b6f205fa"
+    },
+    {
+      "path": "use/maintenance.md",
+      "sourceMarkdownSha256": "72c3511b118fa86582da55b79fc8390cf3ad3b5a94ac6adf5d1fa565f707e169"
+    },
+    {
+      "path": "use/operate.md",
+      "sourceMarkdownSha256": "8dd5ce8298483a53f6be28f6fd5f0943672602802f8bf4c7cd00713b24e361e6"
+    },
+    {
+      "path": "use/plugins.md",
+      "sourceMarkdownSha256": "d6ef2510b5be47468ef074bcd59251f7384f1112ebd2130df5199b16d46fbe86"
+    },
+    {
+      "path": "use/prism-studio.md",
+      "sourceMarkdownSha256": "bb813017685dda7461259c20894acdd419a9e171a0ec1ac7cd9b01f500a4bdf9"
+    },
+    {
+      "path": "use/quickstart.md",
+      "sourceMarkdownSha256": "b09e854c9da67b5cfcd94de642d3587153edd825e12fd178ea397595772420dd"
+    },
+    {
+      "path": "use/recovery.md",
+      "sourceMarkdownSha256": "328d514787baf08e71a26bdb7f51371ce941e79878394a3315b84f31ab43cc26"
+    },
+    {
+      "path": "use/worker-trust.md",
+      "sourceMarkdownSha256": "bf8b6381d124fc67e1e96645776947715eca51618cc8eae8fd06960f7e0bb64a"
+    },
+    {
+      "path": "use/workflows/README.md",
+      "sourceMarkdownSha256": "08146f07b60115501ed81bd2575d1c5946670d6e1af793ccabf6beb48012cca5"
+    },
+    {
+      "path": "use/workflows/buster-suite.md",
+      "sourceMarkdownSha256": "9ffb4ea8af780b6c565c3903a2641f376f3faa3cc6bf5e84db2e2309e23e478a"
+    },
+    {
+      "path": "use/workflows/kubernetes-fixture.md",
+      "sourceMarkdownSha256": "ba51460cf0c12aff377aef3352bc30dd33de0974161110f0e49d84e0d8f83d4c"
+    },
+    {
+      "path": "use/workflows/wait-resume.md",
+      "sourceMarkdownSha256": "4d013688d8b8cbf5a7c402d452a25fe17e91d2047348d23d01893a9fea7271e1"
+    }
+  ],
+  "diagrams": [
+    {
+      "id": "diagram-be26288d618208c0",
+      "page": "extend/README.md",
+      "index": 0,
+      "readerQuestion": "Which extension point should I choose for a proposed change?",
+      "owner": "plugin-foundation",
+      "sourceSha256": "2ec8302db70443ecb139358c90a03d9a39ce099809e37e44e14f7763961368fb",
+      "textAlternative": "The existing text alternative immediately following this diagram; retained visibly in publication.",
+      "svgSha256": "a4ca9f04efbc75cb0f07fdd33784bfe18ce29342b6c3a9e7e19bfa6da01651ef",
+      "width": 1523,
+      "height": 1671
+    },
+    {
+      "id": "diagram-9546393698719b4f",
+      "page": "extend/lint.md",
+      "index": 0,
+      "readerQuestion": "How does a lint request reach the selected engine and its governed result?",
+      "owner": "lint",
+      "sourceSha256": "71dd19957a0e8280b3c947bb2e1e9b27dcd8d732e024e92a4584d3285a8fdee0",
+      "textAlternative": "The existing text alternative immediately following this diagram; retained visibly in publication.",
+      "svgSha256": "075228366c7baadd9b98411e60cff688d60b1a4b0c95c8d8d67631f5ac63a9ac",
+      "width": 2413,
+      "height": 225
+    },
+    {
+      "id": "diagram-6e2b51e2c5b4e58e",
+      "page": "reference/images-and-digests.md",
+      "index": 0,
+      "readerQuestion": "How do source inputs become selected runtime code and image identities?",
+      "owner": "documentation; release owners select artifacts and workload owners verify deployment",
+      "sourceSha256": "a11e41e9804e010bb92ec3a8423dc7cdc70ceeb7c31ae442665e1b567f0796e2",
+      "textAlternative": "The existing text alternative immediately following this diagram; retained visibly in publication.",
+      "svgSha256": "bf08ed6c5a2992d03a55ce1e78ecb081ff42f46c5d5469fa5d002741c43bb755",
+      "width": 1956,
+      "height": 216
+    },
+    {
+      "id": "diagram-aa13d9d4c599db83",
+      "page": "understand/buster-namespace-controller.md",
+      "index": 0,
+      "readerQuestion": "How does a namespace request become controlled Kubernetes workloads?",
+      "owner": "buster",
+      "sourceSha256": "53eb2d6825d794bea8817ee9b4efffa9af48e766ecbe86e23a0d442da8a6996f",
+      "textAlternative": "The existing text alternative immediately following this diagram; retained visibly in publication.",
+      "svgSha256": "921cb3e1bffe8d0f7d48a081812351d73070e59da93ef83a0cbbec46b9cb7165",
+      "width": 471,
+      "height": 1448
+    },
+    {
+      "id": "diagram-6802ba43c34d2052",
+      "page": "understand/buster.md",
+      "index": 0,
+      "readerQuestion": "How does a resolved Buster plan become remote execution and verified result evidence?",
+      "owner": "buster",
+      "sourceSha256": "4ec5f1a5fe7df132faaf898d4ac11e4ab152ffe3957472dbe76485044fa71eb4",
+      "textAlternative": "The existing text alternative immediately following this diagram; retained visibly in publication.",
+      "svgSha256": "91291432aafd816d9402a8727abd39b89e86f65cffcdc1cc411325e5576d3e98",
+      "width": 2259,
+      "height": 1119
+    },
+    {
+      "id": "diagram-a7fdace370992a64",
+      "page": "understand/communication.md",
+      "index": 0,
+      "readerQuestion": "Which transports connect a Prism request to models, workers and event ingestion?",
+      "owner": "runtime and platform maintainers",
+      "sourceSha256": "d387f883b56deb3ad292cb8069330f438a511fe3e54140e359ce3b6acccdc4ef",
+      "textAlternative": "The existing text alternative immediately following this diagram; retained visibly in publication.",
+      "svgSha256": "a02660a69925271bc6cc19f456650ef980895dd7a0807d8415e73bb3b3dd5a16",
+      "width": 2724,
+      "height": 417
+    },
+    {
+      "id": "diagram-df5ab3f6a317ad1b",
+      "page": "understand/components-and-authority.md",
+      "index": 0,
+      "readerQuestion": "Which components control a run and which components return bounded facts?",
+      "owner": "platform architecture",
+      "sourceSha256": "3055085c9491cbf037f0336f5387501250125d0b2e055fe844e3a7a7d8a2e603",
+      "textAlternative": "The existing text alternative immediately following this diagram; retained visibly in publication.",
+      "svgSha256": "bd1bd5206250402b3e36d51dfcc186526e33a20cb6a266a178a8377ff7e13985",
+      "width": 1422,
+      "height": 602
+    },
+    {
+      "id": "diagram-ea45cd168e3309e3",
+      "page": "understand/components-and-authority.md",
+      "index": 1,
+      "readerQuestion": "What is packaged in the Nova role and what remains canonical Nova Core authority?",
+      "owner": "platform architecture",
+      "sourceSha256": "4b9cf421aa7f3f80185c0672601d1ae128e2c580375c5e49b1b10a329e1caec3",
+      "textAlternative": "The existing text alternative immediately following this diagram; retained visibly in publication.",
+      "svgSha256": "b3aa284e528fb74e8b5aad0038d1dc74c9a774d260ec25d1e705e8abf1e2a685",
+      "width": 504,
+      "height": 653
+    },
+    {
+      "id": "diagram-5b05df08c6d4de49",
+      "page": "understand/components-and-authority.md",
+      "index": 2,
+      "readerQuestion": "How do registration, activation, context and adapter calls constrain one stage?",
+      "owner": "platform architecture",
+      "sourceSha256": "a02fdbf8a503f6bc18952fc7ed81b730369df9cfe0abcff83bd456161ff3eb26",
+      "textAlternative": "The existing text alternative immediately following this diagram; retained visibly in publication.",
+      "svgSha256": "58884df93350b185f37fa8a64c36886bfe06de4ceb4828195bee6ca34297cadb",
+      "width": 2512,
+      "height": 190
+    },
+    {
+      "id": "diagram-894c4ee28dace602",
+      "page": "understand/deployment-and-trust.md",
+      "index": 0,
+      "readerQuestion": "Which protected connections join Nova, Buster and the Prism runtime?",
+      "owner": "platform architecture and operations",
+      "sourceSha256": "900f6b9f8bf1aa50d63def58affe720862a26e819be4b9c13334e0868b4a3618",
+      "textAlternative": "The existing text alternative immediately following this diagram; retained visibly in publication.",
+      "svgSha256": "9705582a91053fb63b001085203ac0670b4260b6a13e4ac7040e542204cdeeb3",
+      "width": 3062,
+      "height": 460
+    },
+    {
+      "id": "diagram-0f4497fd43eef4ed",
+      "page": "understand/deployment-and-trust.md",
+      "index": 1,
+      "readerQuestion": "Which component owns each durable store and artifact boundary?",
+      "owner": "platform architecture and operations",
+      "sourceSha256": "26d7660631323baf314e3621c36bd095ea8bacfdce608b68911fa5961873fe08",
+      "textAlternative": "The existing text alternative immediately following this diagram; retained visibly in publication.",
+      "svgSha256": "2db3e7c50e08826ca40c2fca14d551dec5b5f0628407e8e76667f227b1abcb28",
+      "width": 986,
+      "height": 756
+    },
+    {
+      "id": "diagram-dfc5314e0b82b354",
+      "page": "understand/nova-core.md",
+      "index": 0,
+      "readerQuestion": "How does project input become a fixed definition, run snapshot and durable lifecycle evidence?",
+      "owner": "Nova maintainers",
+      "sourceSha256": "f11f3aa884b6ad428c583bf46650791b13300c96c7773535de2b2e3c7ebaec5b",
+      "textAlternative": "The existing text alternative immediately following this diagram; retained visibly in publication.",
+      "svgSha256": "be5ba6165be2598a529be82aee5bfeb29bc169563983b690cbe45b7159bbde30",
+      "width": 2616,
+      "height": 210
+    },
+    {
+      "id": "diagram-e9adf15cb5cf80b6",
+      "page": "understand/pipeline-dependencies.md",
+      "index": 0,
+      "readerQuestion": "Which data and infrastructure dependencies support the complete pipeline path?",
+      "owner": "platform architecture and pipeline owners",
+      "sourceSha256": "678d2a16813bfd173d9ba7a25758263014f23810374c98e47fe06e7b272fe967",
+      "textAlternative": "The existing text alternative immediately following this diagram; retained visibly in publication.",
+      "svgSha256": "6632c79a19921469ad1230c9f3b179c66c22b0444faaac025b1eac892076c0b6",
+      "width": 2362,
+      "height": 569
+    },
+    {
+      "id": "diagram-4dc422d67c265fd9",
+      "page": "understand/platform-and-operations.md",
+      "index": 0,
+      "readerQuestion": "Which platform layers support workloads and which integrations remain optional?",
+      "owner": "platform architecture and operations",
+      "sourceSha256": "7efc03d785b75d867cbb6a6135b575ee5b1522cd55f72b2f7c84dc7b0ab06ddd",
+      "textAlternative": "The existing text alternative immediately following this diagram; retained visibly in publication.",
+      "svgSha256": "913f972c6d39cacf71eafcc42b06b68671c28bff3b7441b332f4da11af621186",
+      "width": 2155,
+      "height": 826
+    },
+    {
+      "id": "diagram-e1d664febf645813",
+      "page": "understand/plugin-runtime.md",
+      "index": 0,
+      "readerQuestion": "How are plugin discovery, activation, invocation and external effects separated?",
+      "owner": "plugin-runtime maintainers",
+      "sourceSha256": "c768d35e14ff2f88260a608c5118572a874d02b17a3700ab37976903d096a14d",
+      "textAlternative": "The existing text alternative immediately following this diagram; retained visibly in publication.",
+      "svgSha256": "bd129ad489d60ad1b6641ec2fa2cb0502b817881749d6cf7fdbb3a05972b618c",
+      "width": 2396,
+      "height": 118
+    },
+    {
+      "id": "diagram-e8beb8435cf1a6fc",
+      "page": "understand/prism-data.md",
+      "index": 0,
+      "readerQuestion": "Which Prism stores and event paths own design, execution and artifact data?",
+      "owner": "Prism maintainers",
+      "sourceSha256": "a541d3c7c5c034a4784f1e59655372798775c02cfb28d8de7a5ef22f89cf81e8",
+      "textAlternative": "The existing text alternative immediately following this diagram; retained visibly in publication.",
+      "svgSha256": "5193aa0c84366adea7fcec80360605e0e15a1cff9f27b89030dbed0f7f085bc7",
+      "width": 2216,
+      "height": 307
+    },
+    {
+      "id": "diagram-72c587181952cb2f",
+      "page": "understand/prism-runtime.md",
+      "index": 0,
+      "readerQuestion": "Which Prism runtime components hand work and results to one another?",
+      "owner": "Prism maintainers",
+      "sourceSha256": "ac26f16876c2336afa80f805fa92e417071cf2fb9924f46a57b823f45b96bcc4",
+      "textAlternative": "The existing text alternative immediately following this diagram; retained visibly in publication.",
+      "svgSha256": "1ce3fbb2c645c01dd195794800a83b68c893f6c19bcd2b426453955102f56139",
+      "width": 2019,
+      "height": 818
+    },
+    {
+      "id": "diagram-103d8eadfc4cc651",
+      "page": "understand/prism-runtime.md",
+      "index": 1,
+      "readerQuestion": "Which handoffs carry a design request from Studio to a recorded result?",
+      "owner": "Prism maintainers",
+      "sourceSha256": "c9450e366402e788fa61b6fbdc8672f00fbd06c06ba6c002d9ccd9b7b3722706",
+      "textAlternative": "The existing text alternative immediately following this diagram; retained visibly in publication.",
+      "svgSha256": "559ff3fda35b432f8792be45354e35a21464a6c7dac21ebcbdfb157efe6f4313",
+      "width": 1749,
+      "height": 999
+    },
+    {
+      "id": "diagram-9b919d5135916a43",
+      "page": "understand/prism.md",
+      "index": 0,
+      "readerQuestion": "Which handoffs carry one request through Prism and back to its caller?",
+      "owner": "Prism maintainers",
+      "sourceSha256": "05a85528b7f19cb14bf25945f4144aa7bcc3b80b49b3f88a43f166a91be59fda",
+      "textAlternative": "The existing text alternative immediately following this diagram; retained visibly in publication.",
+      "svgSha256": "e691bf558d4ad513372703c3f3aebc277b73e06547521d6c12549550031d7102",
+      "width": 1556,
+      "height": 666
+    },
+    {
+      "id": "diagram-3bcb1bfe88a28c51",
+      "page": "understand/request-state-recovery.md",
+      "index": 0,
+      "readerQuestion": "How do normal project stages hand off implementation, review, tests and delivery?",
+      "owner": "Nova Core",
+      "sourceSha256": "9e1388cbda95e76125097ca38033e37d5b64fbc0345de06f127873e13b8b56d9",
+      "textAlternative": "The existing text alternative immediately following this diagram; retained visibly in publication.",
+      "svgSha256": "78f63d5d4b45b1163abfc74c0475b91d0dfbe088d5f6f32702a0463cbd530362",
+      "width": 1686,
+      "height": 963
+    },
+    {
+      "id": "diagram-3040be06a2ca5b14",
+      "page": "understand/request-state-recovery.md",
+      "index": 1,
+      "readerQuestion": "How do stage outcomes lead to retry, waiting, repair or terminal failure?",
+      "owner": "Nova Core",
+      "sourceSha256": "6349cdbb95de97788029bbfd0150b21cffa493160a25a750ed1eb008c37f31a7",
+      "textAlternative": "The existing text alternative immediately following this diagram; retained visibly in publication.",
+      "svgSha256": "7553f6659429483a5df949722e08960c9e9f8bec2b8a3f63911ce4cb8d0c740c",
+      "width": 1858,
+      "height": 941
+    },
+    {
+      "id": "diagram-11b058604e7e4129",
+      "page": "understand/security-and-trust.md",
+      "index": 0,
+      "readerQuestion": "Where are identity, transport, policy and credential trust boundaries enforced?",
+      "owner": "platform security and runtime maintainers",
+      "sourceSha256": "a88eb76c65b3c44af54288ff5e03aa387d46545bdb7df5606a60f2eaea1e2c12",
+      "textAlternative": "The existing text alternative immediately following this diagram; retained visibly in publication.",
+      "svgSha256": "fb4e1e9289fa7832367cae150d5e5c3a32b219ffde26e8eb6bba7170290871b5",
+      "width": 2036,
+      "height": 587
+    },
+    {
+      "id": "diagram-3b52a062e077e074",
+      "page": "understand/telemetry.md",
+      "index": 0,
+      "readerQuestion": "Where do active telemetry producers send their supported event data?",
+      "owner": "observability maintainers",
+      "sourceSha256": "95197ebf9b9f766e37566c8b0ffbb8cceb985e311a595a9eb3c5f9275244076a",
+      "textAlternative": "The existing text alternative immediately following this diagram; retained visibly in publication.",
+      "svgSha256": "6d8ae529ad6dee265a77b38e8712bd3ebcb9f0bb632e1d7d19f583bf5d9972f5",
+      "width": 1516,
+      "height": 314
+    },
+    {
+      "id": "diagram-0f029c30e10c4448",
+      "page": "understand/telemetry.md",
+      "index": 1,
+      "readerQuestion": "How does the OpenClaw agent-observability v1 path deliver its events?",
+      "owner": "observability maintainers",
+      "sourceSha256": "71e99d7f8e525b11857246175c66d5a9898d3f54378721b60ffda9cc6792bd97",
+      "textAlternative": "The existing text alternative immediately following this diagram; retained visibly in publication.",
+      "svgSha256": "2eaed1ee5e8eb2681c7358cbce8054305285a15f1bbd835e37eb1b791fc91608",
+      "width": 1529,
+      "height": 314
+    },
+    {
+      "id": "diagram-865c11cbad4bc6f0",
+      "page": "understand/telemetry.md",
+      "index": 2,
+      "readerQuestion": "How do deployed metrics and logs reach their configured storage and query services?",
+      "owner": "observability maintainers",
+      "sourceSha256": "9759b8bbf09bb81aecaa1776d7e2939a6fda4674135451c4b3d80709244bfc08",
+      "textAlternative": "The existing text alternative immediately following this diagram; retained visibly in publication.",
+      "svgSha256": "10bc96c8c5bd7d1b2c58a605fb4979fd11873dc64295003d22ebecbb7be5a478",
+      "width": 1234,
+      "height": 359
+    },
+    {
+      "id": "diagram-605a76cab20cfebf",
+      "page": "understand/worker-core.md",
+      "index": 0,
+      "readerQuestion": "Which ordered handoffs prepare, execute and clean up one Worker attempt?",
+      "owner": "Worker Core maintainers",
+      "sourceSha256": "081b30dad305f3906583b6b2b8f37a49e64a9a9c4b5c2c6767b7e9ee7157f224",
+      "textAlternative": "The existing text alternative immediately following this diagram; retained visibly in publication.",
+      "svgSha256": "345c2af1bd8b9493336fb8433cd6650cdad9dda273ce91838c8be49aaf14a3e7",
+      "width": 1773,
+      "height": 759
+    },
+    {
+      "id": "diagram-fa17e8be474839f8",
+      "page": "understand/worker-core.md",
+      "index": 1,
+      "readerQuestion": "Which Worker allocation states permit progress, cleanup or an unresolved stop?",
+      "owner": "Worker Core maintainers",
+      "sourceSha256": "377fe01957389e64aa887c1aac5935f8b1e8405845c0aa180bf581bf683da8a1",
+      "textAlternative": "The existing text alternative immediately following this diagram; retained visibly in publication.",
+      "svgSha256": "b21964580231710171c5d1b896099ddbd49041fc9d140c10e3b926904ff7af4e",
+      "width": 855,
+      "height": 802
+    }
+  ]
+}
