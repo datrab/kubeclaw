@@ -1,0 +1,707 @@
+{
+  "baseline": "5172d6ca",
+  "changes": [
+    {
+      "source": "scripts/docs-publication.mjs",
+      "symbol": "build",
+      "kind": "FunctionDeclaration",
+      "previous": "409ad058b40259d4e4e939ee031203ff5884fafcf09c2a94b2843b87b6044ff1",
+      "current": "0a193484eab52d943cad89a9cfea2b42f545b814e88c40c558d987d02fe002fb"
+    },
+    {
+      "source": "scripts/docs-reader/renderer.mjs",
+      "symbol": "renderReaderMarkdown",
+      "kind": "FunctionDeclaration",
+      "previous": "0a99af47ae0607c1b4b3ffab4b46a549a92a30de0d907b197975ee3faa2132a0",
+      "current": "7493dab5a47e6cca4a4777dc981b015a897aabd9abcb72d0f1b5511022393bd3"
+    },
+    {
+      "source": "scripts/docs-reader/renderer.mjs",
+      "symbol": "buildReader",
+      "kind": "FunctionDeclaration",
+      "previous": "b687dba0528dd3c2ac2c1373e2b6d1153fa7af9803ec3637b9f0ea59449048b0",
+      "current": "9ed6727329e45351bd7043a496c9b595794b8ff490d8877111a37e775c981491"
+    },
+    {
+      "source": "scripts/docs-reader/renderer.mjs",
+      "symbol": "readerCss",
+      "kind": "FirstStatement",
+      "previous": "074ea6ba3f3ef9944a164b0bbe2ea4c1292e46358a118a1cd1b1efd889a8b1c8",
+      "current": "6749b3ac003cdbc1aff8903de9dac06197900f37742b4f140913a0a36f81bf0b"
+    }
+  ],
+  "added": [
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "ImportDeclaration",
+      "sha256": "9ba341f1e5c7f3be4b86a028f5afd8a6c320cb7e0e316a6199d3969d62b46119"
+    },
+    {
+      "source": "scripts/docs-reader/renderer.mjs",
+      "kind": "ImportDeclaration",
+      "sha256": "36087d3c92600d99f8bafb5540394aeb4140680ee81b3de6b206bfc6ee17bf36"
+    }
+  ],
+  "newDataInput": {
+    "source": "scripts/docs-reader/package-lock.json",
+    "kind": "source-input",
+    "basis": "New diagram toolchain records its isolated lock; exact old publisher reconstruction with temporarily restored original publisher/renderer matches accepted receipt and has no prior lock fact."
+  },
+  "renewals": [
+    {
+      "source": "scripts/docs-publication.mjs",
+      "previous": "8979a3b0f8d6dcf708bea9de86d37de86279bfec6d018d9c8c15e33af0315a1e",
+      "current": "d176237ac5db34eb2123878198c389a6f93935d2b9ca1b380cd2ee7903e8403a",
+      "previousSelectors": [
+        {
+          "expressionSha256": "642a385862ed880edc80cb8a73cbf73bf2ac79160d0c9e79057bb32457274f76"
+        },
+        {
+          "expressionSha256": "d45150f1844f2301bba1aa7f5f64e6afb11a56405d851a2581ff2f4047a949fb"
+        },
+        {
+          "expressionSha256": "4204ef97b15dbad1d93cbfed9b3e8c3f5569e5c9ebe85d5883325ee6ead18f29"
+        },
+        {
+          "expressionSha256": "c6a24e6c079dbdd5fec57fee81e203c4f941bd13cf0ccae67b284d598a3507e5"
+        },
+        {
+          "expressionSha256": "e22de70d0bb8dcc735fccb5d1d7d729ed93d07d8d1f4fef200ed4fc7c165c887"
+        },
+        {
+          "expressionSha256": "727f773302bc6f4faa10afbd55e617925c6decd17999bfcb956ba6f87477718e"
+        },
+        {
+          "expressionSha256": "57c31fef7fd09adea5a63521d1e38f0047d058e6ebc39359a06992b7ea3561ac"
+        },
+        {
+          "expressionSha256": "65491b3548072ab7a580463371049edc85fe58fd9c1d1459d1f26e39c10e7ca7"
+        },
+        {
+          "expressionSha256": "2f12af5443d5036be4bc11a35f7889b8a084186361b1534a7951ad714731109b"
+        },
+        {
+          "expressionSha256": "bee5355a5433f9e5c725b65906bf37615f4b205d7e842347e2e6f1da207a3102"
+        },
+        {
+          "expressionSha256": "7682cc93857cfe42187c32a27789ca231dbaf2b2dd82438310d526b6e4b8af62"
+        },
+        {
+          "expressionSha256": "3ee8d2a86bce7e184b5af248ec43d200a4568fffed75f64bcaa16b36a9d516a7"
+        },
+        {
+          "expressionSha256": "7f78fba2053ebaa024b06b246d76d95e8ab3c6eba91e8b602530191ffa264f9d"
+        },
+        {
+          "expressionSha256": "5614341553720863663420155ef5926e32d0618b2dbc8437e021d081baf85c3b"
+        },
+        {
+          "expressionSha256": "ad71e2ef067ad76e91242d31aa2eb7bc97f19e1a6e78800dbbf064f7345c4f9d"
+        },
+        {
+          "expressionSha256": "bf67a1197a8863e8a99a69c8403188d1944a2254c2771fbd969bf20388d64ec0"
+        },
+        {
+          "expressionSha256": "d7daf9332ea623bdd1bd45c64a09120cce23e61039141d63da162bd75ffad70c"
+        },
+        {
+          "expressionSha256": "fb393494b41f58200dd072fe5f475b739c33f02322e177f7be0c4c0c0abcb414"
+        },
+        {
+          "expressionSha256": "2b90f1892075e476edac54e49eb6a4617ea822dde137421d30f4b16fe5b1f7d5"
+        },
+        {
+          "expressionSha256": "1a1bbd89063e3aaf2c874583e7d500d8b0865f5c9d8fd8a905ec131bacf83782"
+        },
+        {
+          "expressionSha256": "0ccd0687f00733cd9d7ba2de8dcfa5b48aa208d2a91d4fc128ff0194839819b7"
+        },
+        {
+          "expressionSha256": "967573157d8a0118a9b81842abb29015d82a1e83f6d2d055d56e848e4def640e"
+        },
+        {
+          "expressionSha256": "99a8a8a7117b1395e3a209cdc8ba5a70424687458932bc4dc8a7b6e59ff53868"
+        },
+        {
+          "expressionSha256": "113f0af17fdf683cf360ab9d03b7eff1b572d3475e83119031d47ee4331621aa"
+        },
+        {
+          "expressionSha256": "2948024387391b149bf95db8466bc244e8c0bb1f158e0fbf6b9ba730c29aa67e"
+        },
+        {
+          "expressionSha256": "03d2a219590952d6856d98e14bda9af22b335224727810743d0a4d3cba8b1a3d"
+        },
+        {
+          "expressionSha256": "56acaca28eb35ec48c2e12a8daa77923718c9240cca4790cba0a10d4624c910a"
+        },
+        {
+          "expressionSha256": "ad73ca8dd2be89150d9ce0f13eae68ebf5fc6eae24f81e521b6223459d4a6005"
+        },
+        {
+          "expressionSha256": "c911664f1383262f472f293bf37442ecc966e75f7783f63641e87892a5d649c8"
+        },
+        {
+          "expressionSha256": "b503b81286a97e017d755c5e14ad003e09df2ca9431a979d10916c5e012b1637"
+        },
+        {
+          "expressionSha256": "dc5bf2c9acda51f78c758008b8c689eb67e56d00abd66e41a000a4c4cf589aee"
+        },
+        {
+          "expressionSha256": "954a9046025e559744f02bce3e529459a8532b55473d577a2bf3f51678799150"
+        },
+        {
+          "expressionSha256": "d716f9bb26d8c5cc118b74aa49cff43c50c56198ddaafe8ea288d73dd3be693e"
+        },
+        {
+          "expressionSha256": "5a987c5d013be6b33356f9597163728d4fcc58a64acf58358047d5de6e4e3b72"
+        },
+        {
+          "expressionSha256": "0ef694c529d40b222ae8af951fe8bf027a3928f8474630b5ed62e59a8ad6b4f9"
+        },
+        {
+          "expressionSha256": "456fa2069bd36b9358e3edad3b86a51c35db37694c545b071547f9aa81b0b735"
+        },
+        {
+          "expressionSha256": "f82ad64727d9ea72105c364f30ad778c815b296123b94c44f188159b4a748d62"
+        },
+        {
+          "expressionSha256": "8d1faed33fda3249bd689f1cfa1fecb13651800ca91b280bf981f2a4d4b05563"
+        },
+        {
+          "expressionSha256": "30e086693ae7677827737ce740f1b68f6f8a63afc7c323dbda307ed6fe2bcb46"
+        },
+        {
+          "expressionSha256": "77e4a2851e56069c2acd853b145c333e5905f241f9d03636c5b9756014598b45"
+        },
+        {
+          "expressionSha256": "882a2a6ed9395c6210f33cb627b5ebaad3c610c9ab6b297ad09e20170e41124e"
+        },
+        {
+          "expressionSha256": "087c06fb05f5be388319068b1da79adfda421f18e80b451cc30facd1f5fd65ba"
+        },
+        {
+          "expressionSha256": "d8894d8eaab1ffad77821997a8c0c42a368c4108397b730136b665fcb57eb1d6"
+        },
+        {
+          "expressionSha256": "0c07d5c689b4e48cfa546e3f4be6056b06b0a07cbc7b16a08901bef75afef919"
+        }
+      ],
+      "selectorReceipt": [
+        {
+          "expressionSha256": "642a385862ed880edc80cb8a73cbf73bf2ac79160d0c9e79057bb32457274f76"
+        },
+        {
+          "expressionSha256": "d45150f1844f2301bba1aa7f5f64e6afb11a56405d851a2581ff2f4047a949fb"
+        },
+        {
+          "expressionSha256": "4204ef97b15dbad1d93cbfed9b3e8c3f5569e5c9ebe85d5883325ee6ead18f29"
+        },
+        {
+          "expressionSha256": "c6a24e6c079dbdd5fec57fee81e203c4f941bd13cf0ccae67b284d598a3507e5"
+        },
+        {
+          "expressionSha256": "e22de70d0bb8dcc735fccb5d1d7d729ed93d07d8d1f4fef200ed4fc7c165c887"
+        },
+        {
+          "expressionSha256": "727f773302bc6f4faa10afbd55e617925c6decd17999bfcb956ba6f87477718e"
+        },
+        {
+          "expressionSha256": "57c31fef7fd09adea5a63521d1e38f0047d058e6ebc39359a06992b7ea3561ac"
+        },
+        {
+          "expressionSha256": "65491b3548072ab7a580463371049edc85fe58fd9c1d1459d1f26e39c10e7ca7"
+        },
+        {
+          "expressionSha256": "2f12af5443d5036be4bc11a35f7889b8a084186361b1534a7951ad714731109b"
+        },
+        {
+          "expressionSha256": "bee5355a5433f9e5c725b65906bf37615f4b205d7e842347e2e6f1da207a3102"
+        },
+        {
+          "expressionSha256": "7682cc93857cfe42187c32a27789ca231dbaf2b2dd82438310d526b6e4b8af62"
+        },
+        {
+          "expressionSha256": "3ee8d2a86bce7e184b5af248ec43d200a4568fffed75f64bcaa16b36a9d516a7"
+        },
+        {
+          "expressionSha256": "7f78fba2053ebaa024b06b246d76d95e8ab3c6eba91e8b602530191ffa264f9d"
+        },
+        {
+          "expressionSha256": "5614341553720863663420155ef5926e32d0618b2dbc8437e021d081baf85c3b"
+        },
+        {
+          "expressionSha256": "ad71e2ef067ad76e91242d31aa2eb7bc97f19e1a6e78800dbbf064f7345c4f9d"
+        },
+        {
+          "expressionSha256": "bf67a1197a8863e8a99a69c8403188d1944a2254c2771fbd969bf20388d64ec0"
+        },
+        {
+          "expressionSha256": "d7daf9332ea623bdd1bd45c64a09120cce23e61039141d63da162bd75ffad70c"
+        },
+        {
+          "expressionSha256": "fb393494b41f58200dd072fe5f475b739c33f02322e177f7be0c4c0c0abcb414"
+        },
+        {
+          "expressionSha256": "2b90f1892075e476edac54e49eb6a4617ea822dde137421d30f4b16fe5b1f7d5"
+        },
+        {
+          "expressionSha256": "1a1bbd89063e3aaf2c874583e7d500d8b0865f5c9d8fd8a905ec131bacf83782"
+        },
+        {
+          "expressionSha256": "0ccd0687f00733cd9d7ba2de8dcfa5b48aa208d2a91d4fc128ff0194839819b7"
+        },
+        {
+          "expressionSha256": "967573157d8a0118a9b81842abb29015d82a1e83f6d2d055d56e848e4def640e"
+        },
+        {
+          "expressionSha256": "99a8a8a7117b1395e3a209cdc8ba5a70424687458932bc4dc8a7b6e59ff53868"
+        },
+        {
+          "expressionSha256": "113f0af17fdf683cf360ab9d03b7eff1b572d3475e83119031d47ee4331621aa"
+        },
+        {
+          "expressionSha256": "2948024387391b149bf95db8466bc244e8c0bb1f158e0fbf6b9ba730c29aa67e"
+        },
+        {
+          "expressionSha256": "03d2a219590952d6856d98e14bda9af22b335224727810743d0a4d3cba8b1a3d"
+        },
+        {
+          "expressionSha256": "56acaca28eb35ec48c2e12a8daa77923718c9240cca4790cba0a10d4624c910a"
+        },
+        {
+          "expressionSha256": "ad73ca8dd2be89150d9ce0f13eae68ebf5fc6eae24f81e521b6223459d4a6005"
+        },
+        {
+          "expressionSha256": "c911664f1383262f472f293bf37442ecc966e75f7783f63641e87892a5d649c8"
+        },
+        {
+          "expressionSha256": "b503b81286a97e017d755c5e14ad003e09df2ca9431a979d10916c5e012b1637"
+        },
+        {
+          "expressionSha256": "dc5bf2c9acda51f78c758008b8c689eb67e56d00abd66e41a000a4c4cf589aee"
+        },
+        {
+          "expressionSha256": "954a9046025e559744f02bce3e529459a8532b55473d577a2bf3f51678799150"
+        },
+        {
+          "expressionSha256": "9ba341f1e5c7f3be4b86a028f5afd8a6c320cb7e0e316a6199d3969d62b46119"
+        },
+        {
+          "expressionSha256": "d716f9bb26d8c5cc118b74aa49cff43c50c56198ddaafe8ea288d73dd3be693e"
+        },
+        {
+          "expressionSha256": "5a987c5d013be6b33356f9597163728d4fcc58a64acf58358047d5de6e4e3b72"
+        },
+        {
+          "expressionSha256": "0ef694c529d40b222ae8af951fe8bf027a3928f8474630b5ed62e59a8ad6b4f9"
+        },
+        {
+          "expressionSha256": "456fa2069bd36b9358e3edad3b86a51c35db37694c545b071547f9aa81b0b735"
+        },
+        {
+          "expressionSha256": "f82ad64727d9ea72105c364f30ad778c815b296123b94c44f188159b4a748d62"
+        },
+        {
+          "expressionSha256": "8d1faed33fda3249bd689f1cfa1fecb13651800ca91b280bf981f2a4d4b05563"
+        },
+        {
+          "expressionSha256": "30e086693ae7677827737ce740f1b68f6f8a63afc7c323dbda307ed6fe2bcb46"
+        },
+        {
+          "expressionSha256": "77e4a2851e56069c2acd853b145c333e5905f241f9d03636c5b9756014598b45"
+        },
+        {
+          "expressionSha256": "882a2a6ed9395c6210f33cb627b5ebaad3c610c9ab6b297ad09e20170e41124e"
+        },
+        {
+          "expressionSha256": "087c06fb05f5be388319068b1da79adfda421f18e80b451cc30facd1f5fd65ba"
+        },
+        {
+          "expressionSha256": "d8894d8eaab1ffad77821997a8c0c42a368c4108397b730136b665fcb57eb1d6"
+        },
+        {
+          "expressionSha256": "0c07d5c689b4e48cfa546e3f4be6056b06b0a07cbc7b16a08901bef75afef919"
+        }
+      ],
+      "selectorsChanged": true,
+      "authorityInputsUnchanged": true,
+      "priorFactsExactlyReconstructed": true,
+      "changedStatements": [
+        {
+          "source": "scripts/docs-publication.mjs",
+          "symbol": "build",
+          "kind": "FunctionDeclaration",
+          "previous": "409ad058b40259d4e4e939ee031203ff5884fafcf09c2a94b2843b87b6044ff1",
+          "current": "0a193484eab52d943cad89a9cfea2b42f545b814e88c40c558d987d02fe002fb"
+        },
+        {
+          "source": "scripts/docs-reader/renderer.mjs",
+          "symbol": "readerCss",
+          "kind": "FirstStatement",
+          "previous": "074ea6ba3f3ef9944a164b0bbe2ea4c1292e46358a118a1cd1b1efd889a8b1c8",
+          "current": "6749b3ac003cdbc1aff8903de9dac06197900f37742b4f140913a0a36f81bf0b"
+        },
+        {
+          "source": "scripts/docs-reader/renderer.mjs",
+          "symbol": "buildReader",
+          "kind": "FunctionDeclaration",
+          "previous": "b687dba0528dd3c2ac2c1373e2b6d1153fa7af9803ec3637b9f0ea59449048b0",
+          "current": "9ed6727329e45351bd7043a496c9b595794b8ff490d8877111a37e775c981491"
+        },
+        {
+          "source": "scripts/docs-reader/renderer.mjs",
+          "symbol": "renderReaderMarkdown",
+          "kind": "FunctionDeclaration",
+          "previous": "0a99af47ae0607c1b4b3ffab4b46a549a92a30de0d907b197975ee3faa2132a0",
+          "current": "7493dab5a47e6cca4a4777dc981b015a897aabd9abcb72d0f1b5511022393bd3"
+        }
+      ],
+      "addedNativeFacts": [
+        {
+          "source": "scripts/docs-publication.mjs",
+          "kind": "ImportDeclaration",
+          "symbol": "<operation>",
+          "sha256": "9ba341f1e5c7f3be4b86a028f5afd8a6c320cb7e0e316a6199d3969d62b46119"
+        },
+        {
+          "source": "scripts/docs-reader/diagrams.mjs",
+          "kind": "FirstStatement",
+          "symbol": "escape",
+          "sha256": "a37507e8f7f59ffc9d922dfcfc18b502f063b6e5d66029d94dbe937ca8e3ee64"
+        },
+        {
+          "source": "scripts/docs-reader/diagrams.mjs",
+          "kind": "FirstStatement",
+          "symbol": "hash",
+          "sha256": "b0eaa75bb6c21da082a7355668a37371bde470750b3377fc7544d332b96c5caa"
+        },
+        {
+          "source": "scripts/docs-reader/diagrams.mjs",
+          "kind": "FirstStatement",
+          "symbol": "require",
+          "sha256": "e310387da120fb977763441b914c43619a4b2b4bf5f39ad8d4f31dc5a7d3e399"
+        },
+        {
+          "source": "scripts/docs-reader/diagrams.mjs",
+          "kind": "FirstStatement",
+          "symbol": "svgTags",
+          "sha256": "35d2e7de9420b9be3206742fecd8e7aadd1b60410cc543d7b72750e4d915df48"
+        },
+        {
+          "source": "scripts/docs-reader/diagrams.mjs",
+          "kind": "FunctionDeclaration",
+          "symbol": "collectDocumentationDiagrams",
+          "sha256": "f510c475d31f83779a18f116f1402ec57424e54cf83bb81b474537cbf19b429b"
+        },
+        {
+          "source": "scripts/docs-reader/diagrams.mjs",
+          "kind": "FunctionDeclaration",
+          "symbol": "prepareDiagramPages",
+          "sha256": "bf5c601cbd6a4e33d3c8c67d104c2a4e68437f092e03f77b3ee68ace263eb5d7"
+        },
+        {
+          "source": "scripts/docs-reader/diagrams.mjs",
+          "kind": "FunctionDeclaration",
+          "symbol": "renderDocumentationDiagrams",
+          "sha256": "9083e04ce07878021e771b940a8dab2b4f8f120211e3eb4ee6e85130d0b66c49"
+        },
+        {
+          "source": "scripts/docs-reader/diagrams.mjs",
+          "kind": "FunctionDeclaration",
+          "symbol": "validateDiagramSvg",
+          "sha256": "ba11b9c7fbc72bf6e5e5dc56d85e07e7f858c3e0a7dff28efec869da12d3ebb8"
+        },
+        {
+          "source": "scripts/docs-reader/package-lock.json",
+          "kind": "source-input",
+          "sha256": "890b91848d80d461c1376d47ade69ed5d53fd70cdbcbdaee08a66a58b2248443"
+        },
+        {
+          "source": "scripts/docs-reader/renderer.mjs",
+          "kind": "ImportDeclaration",
+          "symbol": "<operation>",
+          "sha256": "36087d3c92600d99f8bafb5540394aeb4140680ee81b3de6b206bfc6ee17bf36"
+        }
+      ]
+    },
+    {
+      "source": "scripts/docs-reader/renderer.mjs",
+      "previous": "e1e54ed489ab0c6887b611653fec25f7c41ca8504c1f9ce4edb79ded0412f557",
+      "current": "2386be0735e64b69b778e7bf78821a7097b0ab1a4b4032adc9f75ddfeaf47de9",
+      "previousSelectors": [
+        {
+          "expressionSha256": "f05d29332cd38f9e82b894523362ba3ed37cb2df35c3ec89540a4eea4cb7fa5a"
+        },
+        {
+          "expressionSha256": "b687dba0528dd3c2ac2c1373e2b6d1153fa7af9803ec3637b9f0ea59449048b0"
+        },
+        {
+          "expressionSha256": "451127a16af5d7ebcdbfa0db3e5689b3d718475c40249b981f294b10563cc27e"
+        },
+        {
+          "expressionSha256": "0a99af47ae0607c1b4b3ffab4b46a549a92a30de0d907b197975ee3faa2132a0"
+        },
+        {
+          "expressionSha256": "e4211203018f0f300d9a24ac9ba61658dcf61ff3837b71b04b2a9c3168886caa"
+        },
+        {
+          "expressionSha256": "fb393494b41f58200dd072fe5f475b739c33f02322e177f7be0c4c0c0abcb414"
+        },
+        {
+          "expressionSha256": "490f49f3f4a26c8d9b1ff787519d3f83f71e42b2f6ab5119a80dba54ce7c23d9"
+        },
+        {
+          "expressionSha256": "967573157d8a0118a9b81842abb29015d82a1e83f6d2d055d56e848e4def640e"
+        },
+        {
+          "expressionSha256": "99a8a8a7117b1395e3a209cdc8ba5a70424687458932bc4dc8a7b6e59ff53868"
+        },
+        {
+          "expressionSha256": "113f0af17fdf683cf360ab9d03b7eff1b572d3475e83119031d47ee4331621aa"
+        },
+        {
+          "expressionSha256": "a8f4a33a10aae288aa40261ebcb69edbb3fe6b6c39d95db46299784eaedda1e2"
+        },
+        {
+          "expressionSha256": "a603125c590536011643fa933d79921834f3425c4dad8458fc2bece3ab881f25"
+        }
+      ],
+      "selectorReceipt": [
+        {
+          "expressionSha256": "f05d29332cd38f9e82b894523362ba3ed37cb2df35c3ec89540a4eea4cb7fa5a"
+        },
+        {
+          "expressionSha256": "9ed6727329e45351bd7043a496c9b595794b8ff490d8877111a37e775c981491"
+        },
+        {
+          "expressionSha256": "451127a16af5d7ebcdbfa0db3e5689b3d718475c40249b981f294b10563cc27e"
+        },
+        {
+          "expressionSha256": "7493dab5a47e6cca4a4777dc981b015a897aabd9abcb72d0f1b5511022393bd3"
+        },
+        {
+          "expressionSha256": "e4211203018f0f300d9a24ac9ba61658dcf61ff3837b71b04b2a9c3168886caa"
+        },
+        {
+          "expressionSha256": "fb393494b41f58200dd072fe5f475b739c33f02322e177f7be0c4c0c0abcb414"
+        },
+        {
+          "expressionSha256": "490f49f3f4a26c8d9b1ff787519d3f83f71e42b2f6ab5119a80dba54ce7c23d9"
+        },
+        {
+          "expressionSha256": "967573157d8a0118a9b81842abb29015d82a1e83f6d2d055d56e848e4def640e"
+        },
+        {
+          "expressionSha256": "99a8a8a7117b1395e3a209cdc8ba5a70424687458932bc4dc8a7b6e59ff53868"
+        },
+        {
+          "expressionSha256": "113f0af17fdf683cf360ab9d03b7eff1b572d3475e83119031d47ee4331621aa"
+        },
+        {
+          "expressionSha256": "a8f4a33a10aae288aa40261ebcb69edbb3fe6b6c39d95db46299784eaedda1e2"
+        },
+        {
+          "expressionSha256": "a603125c590536011643fa933d79921834f3425c4dad8458fc2bece3ab881f25"
+        },
+        {
+          "expressionSha256": "36087d3c92600d99f8bafb5540394aeb4140680ee81b3de6b206bfc6ee17bf36"
+        }
+      ],
+      "selectorsChanged": true,
+      "authorityInputsUnchanged": true,
+      "priorFactsExactlyReconstructed": true,
+      "changedStatements": [
+        {
+          "source": "scripts/docs-reader/renderer.mjs",
+          "symbol": "readerCss",
+          "kind": "FirstStatement",
+          "previous": "074ea6ba3f3ef9944a164b0bbe2ea4c1292e46358a118a1cd1b1efd889a8b1c8",
+          "current": "6749b3ac003cdbc1aff8903de9dac06197900f37742b4f140913a0a36f81bf0b"
+        },
+        {
+          "source": "scripts/docs-reader/renderer.mjs",
+          "symbol": "buildReader",
+          "kind": "FunctionDeclaration",
+          "previous": "b687dba0528dd3c2ac2c1373e2b6d1153fa7af9803ec3637b9f0ea59449048b0",
+          "current": "9ed6727329e45351bd7043a496c9b595794b8ff490d8877111a37e775c981491"
+        },
+        {
+          "source": "scripts/docs-reader/renderer.mjs",
+          "symbol": "renderReaderMarkdown",
+          "kind": "FunctionDeclaration",
+          "previous": "0a99af47ae0607c1b4b3ffab4b46a549a92a30de0d907b197975ee3faa2132a0",
+          "current": "7493dab5a47e6cca4a4777dc981b015a897aabd9abcb72d0f1b5511022393bd3"
+        }
+      ],
+      "addedNativeFacts": [
+        {
+          "source": "scripts/docs-reader/diagrams.mjs",
+          "kind": "FirstStatement",
+          "symbol": "svgTags",
+          "sha256": "35d2e7de9420b9be3206742fecd8e7aadd1b60410cc543d7b72750e4d915df48"
+        },
+        {
+          "source": "scripts/docs-reader/diagrams.mjs",
+          "kind": "FunctionDeclaration",
+          "symbol": "validateDiagramSvg",
+          "sha256": "ba11b9c7fbc72bf6e5e5dc56d85e07e7f858c3e0a7dff28efec869da12d3ebb8"
+        },
+        {
+          "source": "scripts/docs-reader/renderer.mjs",
+          "kind": "ImportDeclaration",
+          "symbol": "<operation>",
+          "sha256": "36087d3c92600d99f8bafb5540394aeb4140680ee81b3de6b206bfc6ee17bf36"
+        }
+      ]
+    }
+  ],
+  "unchanged": [
+    "scripts/docs-ap09-catalogue.mjs",
+    "scripts/docs-api-output-discovery.mjs",
+    "scripts/docs-api-output-role-classification.mjs",
+    "scripts/docs-api-product-scope.mjs",
+    "scripts/docs-api-receiver-coverage.mjs",
+    "scripts/docs-api-reference.mjs",
+    "scripts/docs-api-schema-authorities.mjs",
+    "scripts/docs-argo-receiver-contracts.mjs",
+    "scripts/docs-blueprint-generate.mjs",
+    "scripts/docs-buster-authored-unknown-field-contracts.mjs",
+    "scripts/docs-buster-lease-receiver-contracts.mjs",
+    "scripts/docs-check-coverage.mjs",
+    "scripts/docs-check-refs.mjs",
+    "scripts/docs-check.mjs",
+    "scripts/docs-cilium-receiver-contracts.mjs",
+    "scripts/docs-clusterspiffeid-selected-receiver-contracts.mjs",
+    "scripts/docs-configuration-inventory.mjs",
+    "scripts/docs-generate-core.mjs",
+    "scripts/docs-generate.mjs",
+    "scripts/docs-governance.mjs",
+    "scripts/docs-inventory.mjs",
+    "scripts/docs-kubernetes-admission-receiver-contracts.mjs",
+    "scripts/docs-kubernetes-admission-status-contracts.mjs",
+    "scripts/docs-kubernetes-apps-receiver-contracts.mjs",
+    "scripts/docs-kubernetes-auth-delete-receiver-contracts.mjs",
+    "scripts/docs-kubernetes-cluster-configuration-receiver-contracts.mjs",
+    "scripts/docs-kubernetes-core-receiver-contracts.mjs",
+    "scripts/docs-kubernetes-envelope-receiver-contracts.mjs",
+    "scripts/docs-kubernetes-identity-secret-receiver-contracts.mjs",
+    "scripts/docs-kubernetes-metadata-receiver-contracts.mjs",
+    "scripts/docs-kubernetes-namespace-isolation-receiver-contracts.mjs",
+    "scripts/docs-kubernetes-network-receiver-contracts.mjs",
+    "scripts/docs-kubernetes-node-workloads-receiver-contracts.mjs",
+    "scripts/docs-kubernetes-pv-selected-receiver-contracts.mjs",
+    "scripts/docs-kubernetes-webhook-selected-receiver-contracts.mjs",
+    "scripts/docs-kubernetes-workload-receiver-contracts.mjs",
+    "scripts/docs-lint-policy-reference.mjs",
+    "scripts/docs-local-helm-authorities.mjs",
+    "scripts/docs-parity-batches.mjs",
+    "scripts/docs-parity-check.mjs",
+    "scripts/docs-parity-extract.mjs",
+    "scripts/docs-parity-review-assignments.mjs",
+    "scripts/docs-parity-status.mjs",
+    "scripts/docs-parity-transition.mjs",
+    "scripts/docs-platform-surface-inventory.mjs",
+    "scripts/docs-prometheus-selected-receiver-contracts.mjs",
+    "scripts/docs-runtime-consumer-contracts.mjs",
+    "scripts/docs-secret-inventory.mjs",
+    "scripts/docs-status.mjs",
+    "scripts/docs-tree-boundary.mjs",
+    "scripts/docs-yaml-field-authorities.mjs",
+    "scripts/docs-yaml-inventory.mjs",
+    "scripts/docs-sdk-reference.mjs",
+    "scripts/docs-reader/check-artifact.mjs",
+    "scripts/docs-reader/check-search.mjs",
+    "scripts/docs-reader/source-links.mjs",
+    "scripts/docs-reader/check-source-links.mjs",
+    "scripts/docs-reader/metadata.mjs",
+    "scripts/docs-reader/source-previews.mjs",
+    "scripts/docs-reader/check-source-previews.mjs"
+  ],
+  "newRoles": [
+    {
+      "source": "scripts/docs-reader/diagrams.mjs",
+      "recipe": {
+        "role": "documentation-consumer",
+        "consumer": "Positive-selected documentation diagram registry, strictly validated inert SVG output and exact Source/question/owner/toolchain/HTML receipts. A private loopback server forwards only canonical pinned Mermaid tool distribution modules to the network-blocked build browser, recording actual served bytes. This is a documentation rendering tool, never forwarded product API source or a runtime-effects/sandbox grant.",
+        "selectors": [
+          {
+            "expressionSha256": "80eff684b8d71f813670ca566b2cdabb5a7deff19cafae640f9913a218f6f9eb"
+          },
+          {
+            "expressionSha256": "bf5c601cbd6a4e33d3c8c67d104c2a4e68437f092e03f77b3ee68ace263eb5d7"
+          },
+          {
+            "expressionSha256": "9083e04ce07878021e771b940a8dab2b4f8f120211e3eb4ee6e85130d0b66c49"
+          },
+          {
+            "expressionSha256": "6e2adaa2f0b2d67577f76d1fd4e440ecdb2fb78b8fefdb2f79ffbad207db9088"
+          },
+          {
+            "expressionSha256": "f510c475d31f83779a18f116f1402ec57424e54cf83bb81b474537cbf19b429b"
+          },
+          {
+            "expressionSha256": "ba11b9c7fbc72bf6e5e5dc56d85e07e7f858c3e0a7dff28efec869da12d3ebb8"
+          },
+          {
+            "expressionSha256": "490f49f3f4a26c8d9b1ff787519d3f83f71e42b2f6ab5119a80dba54ce7c23d9"
+          },
+          {
+            "expressionSha256": "3bd42e15e5427f946b98b898212af900ed0a4068cff03a37aa2ce1d3a081f2ec"
+          },
+          {
+            "expressionSha256": "967573157d8a0118a9b81842abb29015d82a1e83f6d2d055d56e848e4def640e"
+          },
+          {
+            "expressionSha256": "99a8a8a7117b1395e3a209cdc8ba5a70424687458932bc4dc8a7b6e59ff53868"
+          },
+          {
+            "expressionSha256": "6dee6c38cf4c5eb693e5aa9d21e655dc54bb550c6d15578821beb40411741def"
+          },
+          {
+            "expressionSha256": "113f0af17fdf683cf360ab9d03b7eff1b572d3475e83119031d47ee4331621aa"
+          },
+          {
+            "expressionSha256": "913a57dbbfc8be28932075d6a2d4a702d8cac0ea6d4a8f5130674166f7b21c2a"
+          },
+          {
+            "expressionSha256": "0ab07792d7e4a100ecbab3c056feb76434e17a484a69c89acd3b1033f6ac1059"
+          },
+          {
+            "expressionSha256": "c30e84214b1cdc48f8eeec4aa8ec24a0e4a082f4156b74ae4303f5672502f3ca"
+          }
+        ],
+        "factsDigest": "58858a394573816e5962e3c6f49d7c4319d34fa2777cee4a6ac75faa74b802c3",
+        "authorityInputs": []
+      }
+    },
+    {
+      "source": "scripts/docs-reader/check-diagrams.mjs",
+      "recipe": {
+        "role": "documentation-consumer",
+        "consumer": "Positive-selected documentation diagram registry, strictly validated inert SVG output and exact Source/question/owner/toolchain/HTML receipts. A private loopback server forwards only canonical pinned Mermaid tool distribution modules to the network-blocked build browser, recording actual served bytes. This is a documentation rendering tool, never forwarded product API source or a runtime-effects/sandbox grant.",
+        "selectors": [
+          {
+            "expressionSha256": "dc85c523677408f8089ac2d077eabb6a62cafba3d9b4133a750b859576ee0ab8"
+          },
+          {
+            "expressionSha256": "aa7721257dc2ce2b36f73a03ebe8cec51eabd3337198f0a74e4484b77b450b65"
+          },
+          {
+            "expressionSha256": "0ae7249e084863282b89874d60bd001f820fa183df471265bf52ec6a0b0dd9c0"
+          },
+          {
+            "expressionSha256": "c911664f1383262f472f293bf37442ecc966e75f7783f63641e87892a5d649c8"
+          },
+          {
+            "expressionSha256": "df2d673338012d84c77b1d5840322000f2b43f2d2e463ec49e363f7460700b7d"
+          },
+          {
+            "expressionSha256": "46caa22b51c2ea13a5b68c857fd5e3225e9c9da1f0c65aa38971d4dd63685def"
+          }
+        ],
+        "factsDigest": "7998544440ed1a06fe8021b3e8caccd65fea46e30f15b71ccfd14150e87d83bc",
+        "authorityInputs": []
+      }
+    }
+  ]
+}

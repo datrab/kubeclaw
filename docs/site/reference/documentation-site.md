@@ -3,7 +3,7 @@
 Status: implemented local static reader; external hosting and broader live acceptance remain separate
 Audience: operator, plugin author, developer, documentation maintainer
 Owner: documentation
-Evidence: scripts/docs-publication.mjs; scripts/docs-reader/metadata.mjs; scripts/lib/docs-publication-assets.mjs; scripts/lib/docs-publication-links.mjs; scripts/docs-reader/renderer.mjs; scripts/docs-reader/package.json; scripts/docs-reader/package-lock.json; scripts/tests/docs-reader.test.mjs; scripts/docs-reader/check-artifact.mjs; scripts/docs-reader/check-search.mjs; scripts/docs-reader/search-questions.json; scripts/docs-reader/check-source-links.mjs; scripts/docs-reader/source-links.mjs; scripts/docs-reader/source-previews.mjs; scripts/docs-reader/check-source-previews.mjs; scripts/tests/docs-reader-source-previews.test.mjs; scripts/tests/docs-reader-source-links.test.mjs; scripts/docs-governance.mjs; scripts/docs-check-refs.mjs; scripts/check-site-reader-boundary.mjs; docs/config/documentation-tree-classification.json; docs/site/reference/documentation-route-registry.json; package.json; .github/workflows/docs-checks.yaml
+Evidence: scripts/docs-publication.mjs; scripts/docs-reader/diagrams.mjs; scripts/docs-reader/check-diagrams.mjs; scripts/tests/docs-reader-diagrams.test.mjs; docs/config/documentation-diagrams.json; scripts/docs-reader/metadata.mjs; scripts/lib/docs-publication-assets.mjs; scripts/lib/docs-publication-links.mjs; scripts/docs-reader/renderer.mjs; scripts/docs-reader/package.json; scripts/docs-reader/package-lock.json; scripts/tests/docs-reader.test.mjs; scripts/docs-reader/check-artifact.mjs; scripts/docs-reader/check-search.mjs; scripts/docs-reader/search-questions.json; scripts/docs-reader/check-source-links.mjs; scripts/docs-reader/source-links.mjs; scripts/docs-reader/source-previews.mjs; scripts/docs-reader/check-source-previews.mjs; scripts/tests/docs-reader-source-previews.test.mjs; scripts/tests/docs-reader-source-links.test.mjs; scripts/docs-governance.mjs; scripts/docs-check-refs.mjs; scripts/check-site-reader-boundary.mjs; docs/config/documentation-tree-classification.json; docs/site/reference/documentation-route-registry.json; package.json; .github/workflows/docs-checks.yaml
 Applies to: positively selected repository reader pages and the local HTML publication artifact
 Last verified: source, original 167-page build, parser tests, and rendered local links checked on 2026-10-21; browser observations have their own recorded scope
 
@@ -148,9 +148,23 @@ under a URL prefix. Tables and code blocks scroll within their content region.
 The mobile navigation uses a native disclosure; keyboard users have a visible
 skip link and focus indicators. The reader uses system fonts and no remote assets.
 
-Mermaid source blocks remain code in this renderer; their adjacent written
-explanations are the static alternative. This is not a rendered-diagram or
-interactive-architecture acceptance. External source links still require network
+The build renders registered Mermaid definitions as local static SVG images.
+Each figure states its reader question and owner, links to the adjacent text
+explanation, and retains the definition in a native **Diagram source** disclosure.
+A wide diagram scrolls inside its keyboard-focusable region rather than making
+the whole page scroll sideways. The source hash and owner must match
+`docs/config/documentation-diagrams.json`; an unregistered or changed definition
+stops the build until its owner reviews and updates that record.
+
+Rendering uses the locked Mermaid package and Playwright Chromium at build time.
+The browser loads only that local package distribution; the SVG validator rejects
+active markup and external resources. `diagram-manifest.json` records source
+hashes, reader questions, owners, output hashes, and the actual renderer toolchain.
+The diagram checker compares actual figures and SVGs with a fresh deterministic
+render. Parser success and matching bytes are not approval of every edge,
+optional path, error boundary or visual interpretation. Those require review.
+No Mermaid runtime, browser installation or JavaScript is required to read the
+built graphics and their written alternatives offline. External source links still require network
 access. Local reading does not execute the published runnable examples.
 
 ## Check and stage a local copy
@@ -160,7 +174,8 @@ Install the isolated, locked reader dependencies before checking or building:
 
 ```sh
 npm ci --prefix scripts/docs-reader --ignore-scripts
-node --test scripts/tests/docs-reader.test.mjs scripts/tests/docs-reader-source-links.test.mjs scripts/tests/docs-reader-source-previews.test.mjs
+npx --no-install playwright install --with-deps chromium
+node --test scripts/tests/docs-reader.test.mjs scripts/tests/docs-reader-source-links.test.mjs scripts/tests/docs-reader-source-previews.test.mjs scripts/tests/docs-reader-diagrams.test.mjs
 ```
 Prepare the selected route's additional tools and source revision through the
 [handbook prerequisites](../extend/developer-handbook.md#add-tools-and-credentials-only-for-the-selected-route).
@@ -187,6 +202,7 @@ node --max-old-space-size=4096 scripts/docs-reader/check-artifact.mjs
 node scripts/docs-reader/check-search.mjs
 node --max-old-space-size=4096 scripts/docs-reader/check-source-links.mjs
 node --max-old-space-size=4096 scripts/docs-reader/check-source-previews.mjs
+node --max-old-space-size=4096 scripts/docs-reader/check-diagrams.mjs
 ```
 
 These are instructions, not a record of successful execution for this page.

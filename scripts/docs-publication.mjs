@@ -17,6 +17,7 @@ import { rebaseMarkdownLinks } from './lib/docs-publication-links.mjs';
 import { publicationMetadata } from './docs-reader/metadata.mjs';
 import { buildReader } from './docs-reader/renderer.mjs';
 import { prepareSourcePreviews } from './docs-reader/source-previews.mjs';
+import { prepareDiagramPages } from './docs-reader/diagrams.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const siteRoot = path.join(root, 'docs', 'site');
@@ -1091,7 +1092,8 @@ async function build() {
   const assets = publicationAssets(siteRoot);
   copyPublicationAssets(siteRoot, outputRoot, assets);
   const previews = await prepareSourcePreviews(readerPages, root);
-  const reader = buildReader({ outputRoot, pages: previews.pages, sourcePreviews: previews.manifest, assets, revision, sourceLink: target => {
+  const diagrams = await prepareDiagramPages(previews.pages, readJson(path.join(root, 'docs/config/documentation-diagrams.json')));
+  const reader = buildReader({ outputRoot, pages: diagrams.pages, generatedAssets: diagrams.assets, diagramManifest: diagrams.manifest, sourcePreviews: previews.manifest, assets, revision, sourceLink: target => {
     const relative = path.posix.normalize(`docs/site/${target}`);
     if (relative.startsWith('../') || path.posix.isAbsolute(relative)) throw new Error(`Reader source escapes repository: ${target}`);
     const pinned = execFileSync('git', ['-C', root, 'show', `${revision}:${relative}`], { maxBuffer: 32 * 1024 * 1024 });

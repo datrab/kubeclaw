@@ -4191,6 +4191,9 @@ export const documentationExecutableRoleRecipes = {
         "expressionSha256": "954a9046025e559744f02bce3e529459a8532b55473d577a2bf3f51678799150"
       },
       {
+        "expressionSha256": "9ba341f1e5c7f3be4b86a028f5afd8a6c320cb7e0e316a6199d3969d62b46119"
+      },
+      {
         "expressionSha256": "d716f9bb26d8c5cc118b74aa49cff43c50c56198ddaafe8ea288d73dd3be693e"
       },
       {
@@ -4227,7 +4230,7 @@ export const documentationExecutableRoleRecipes = {
         "expressionSha256": "0c07d5c689b4e48cfa546e3f4be6056b06b0a07cbc7b16a08901bef75afef919"
       }
     ],
-    "factsDigest": "8979a3b0f8d6dcf708bea9de86d37de86279bfec6d018d9c8c15e33af0315a1e",
+    "factsDigest": "d176237ac5db34eb2123878198c389a6f93935d2b9ca1b380cd2ee7903e8403a",
     "authorityInputs": []
   },
   "scripts/docs-runtime-consumer-contracts.mjs": {
@@ -5391,13 +5394,13 @@ export const documentationExecutableRoleRecipes = {
         "expressionSha256": "f05d29332cd38f9e82b894523362ba3ed37cb2df35c3ec89540a4eea4cb7fa5a"
       },
       {
-        "expressionSha256": "b687dba0528dd3c2ac2c1373e2b6d1153fa7af9803ec3637b9f0ea59449048b0"
+        "expressionSha256": "9ed6727329e45351bd7043a496c9b595794b8ff490d8877111a37e775c981491"
       },
       {
         "expressionSha256": "451127a16af5d7ebcdbfa0db3e5689b3d718475c40249b981f294b10563cc27e"
       },
       {
-        "expressionSha256": "0a99af47ae0607c1b4b3ffab4b46a549a92a30de0d907b197975ee3faa2132a0"
+        "expressionSha256": "7493dab5a47e6cca4a4777dc981b015a897aabd9abcb72d0f1b5511022393bd3"
       },
       {
         "expressionSha256": "e4211203018f0f300d9a24ac9ba61658dcf61ff3837b71b04b2a9c3168886caa"
@@ -5422,9 +5425,12 @@ export const documentationExecutableRoleRecipes = {
       },
       {
         "expressionSha256": "a603125c590536011643fa933d79921834f3425c4dad8458fc2bece3ab881f25"
+      },
+      {
+        "expressionSha256": "36087d3c92600d99f8bafb5540394aeb4140680ee81b3de6b206bfc6ee17bf36"
       }
     ],
-    "factsDigest": "e1e54ed489ab0c6887b611653fec25f7c41ca8504c1f9ce4edb79ded0412f557",
+    "factsDigest": "2386be0735e64b69b778e7bf78821a7097b0ab1a4b4032adc9f75ddfeaf47de9",
     "authorityInputs": []
   },
   "scripts/docs-reader/check-artifact.mjs": {
@@ -5692,6 +5698,86 @@ export const documentationExecutableRoleRecipes = {
       }
     ],
     "factsDigest": "7a249dadbf54e0083cf47853ac1761b532d07e3ab66388b7fcadfb6686df8486",
+    "authorityInputs": []
+  }
+,
+  "scripts/docs-reader/diagrams.mjs": {
+    "role": "documentation-consumer",
+    "consumer": "Positive-selected documentation diagram registry, strictly validated inert SVG output and exact Source/question/owner/toolchain/HTML receipts. A private loopback server forwards only canonical pinned Mermaid tool distribution modules to the network-blocked build browser, recording actual served bytes. This is a documentation rendering tool, never forwarded product API source or a runtime-effects/sandbox grant.",
+    "selectors": [
+      {
+        "expressionSha256": "80eff684b8d71f813670ca566b2cdabb5a7deff19cafae640f9913a218f6f9eb"
+      },
+      {
+        "expressionSha256": "bf5c601cbd6a4e33d3c8c67d104c2a4e68437f092e03f77b3ee68ace263eb5d7"
+      },
+      {
+        "expressionSha256": "9083e04ce07878021e771b940a8dab2b4f8f120211e3eb4ee6e85130d0b66c49"
+      },
+      {
+        "expressionSha256": "6e2adaa2f0b2d67577f76d1fd4e440ecdb2fb78b8fefdb2f79ffbad207db9088"
+      },
+      {
+        "expressionSha256": "f510c475d31f83779a18f116f1402ec57424e54cf83bb81b474537cbf19b429b"
+      },
+      {
+        "expressionSha256": "ba11b9c7fbc72bf6e5e5dc56d85e07e7f858c3e0a7dff28efec869da12d3ebb8"
+      },
+      {
+        "expressionSha256": "490f49f3f4a26c8d9b1ff787519d3f83f71e42b2f6ab5119a80dba54ce7c23d9"
+      },
+      {
+        "expressionSha256": "3bd42e15e5427f946b98b898212af900ed0a4068cff03a37aa2ce1d3a081f2ec"
+      },
+      {
+        "expressionSha256": "967573157d8a0118a9b81842abb29015d82a1e83f6d2d055d56e848e4def640e"
+      },
+      {
+        "expressionSha256": "99a8a8a7117b1395e3a209cdc8ba5a70424687458932bc4dc8a7b6e59ff53868"
+      },
+      {
+        "expressionSha256": "6dee6c38cf4c5eb693e5aa9d21e655dc54bb550c6d15578821beb40411741def"
+      },
+      {
+        "expressionSha256": "113f0af17fdf683cf360ab9d03b7eff1b572d3475e83119031d47ee4331621aa"
+      },
+      {
+        "expressionSha256": "913a57dbbfc8be28932075d6a2d4a702d8cac0ea6d4a8f5130674166f7b21c2a"
+      },
+      {
+        "expressionSha256": "0ab07792d7e4a100ecbab3c056feb76434e17a484a69c89acd3b1033f6ac1059"
+      },
+      {
+        "expressionSha256": "c30e84214b1cdc48f8eeec4aa8ec24a0e4a082f4156b74ae4303f5672502f3ca"
+      }
+    ],
+    "factsDigest": "58858a394573816e5962e3c6f49d7c4319d34fa2777cee4a6ac75faa74b802c3",
+    "authorityInputs": []
+  },
+  "scripts/docs-reader/check-diagrams.mjs": {
+    "role": "documentation-consumer",
+    "consumer": "Positive-selected documentation diagram registry, strictly validated inert SVG output and exact Source/question/owner/toolchain/HTML receipts. A private loopback server forwards only canonical pinned Mermaid tool distribution modules to the network-blocked build browser, recording actual served bytes. This is a documentation rendering tool, never forwarded product API source or a runtime-effects/sandbox grant.",
+    "selectors": [
+      {
+        "expressionSha256": "dc85c523677408f8089ac2d077eabb6a62cafba3d9b4133a750b859576ee0ab8"
+      },
+      {
+        "expressionSha256": "aa7721257dc2ce2b36f73a03ebe8cec51eabd3337198f0a74e4484b77b450b65"
+      },
+      {
+        "expressionSha256": "0ae7249e084863282b89874d60bd001f820fa183df471265bf52ec6a0b0dd9c0"
+      },
+      {
+        "expressionSha256": "c911664f1383262f472f293bf37442ecc966e75f7783f63641e87892a5d649c8"
+      },
+      {
+        "expressionSha256": "df2d673338012d84c77b1d5840322000f2b43f2d2e463ec49e363f7460700b7d"
+      },
+      {
+        "expressionSha256": "46caa22b51c2ea13a5b68c857fd5e3225e9c9da1f0c65aa38971d4dd63685def"
+      }
+    ],
+    "factsDigest": "7998544440ed1a06fe8021b3e8caccd65fea46e30f15b71ccfd14150e87d83bc",
     "authorityInputs": []
   }
 };

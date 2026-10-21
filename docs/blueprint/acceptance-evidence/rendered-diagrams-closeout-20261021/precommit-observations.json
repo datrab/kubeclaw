@@ -1,0 +1,595 @@
+{
+  "scope": "Code/registry/strictSVG/prototype/nativeinput and regressions only; actual committed reader build, freshRender, browser visuals and semantic edge review follow. No PUB005/A91206 acceptance yet.",
+  "prototype": {
+    "observations": [
+      {
+        "page": "docs/site/extend/README.md",
+        "index": 0,
+        "id": "diagram-d348dcad6806a8a3",
+        "bytes": 51609,
+        "sha256": "cf72f389266872325131134eef7009ea7857e3c40ad21b42bb39c7f50cdb0ea2",
+        "foreignObject": false,
+        "script": false
+      },
+      {
+        "page": "docs/site/extend/lint.md",
+        "index": 0,
+        "id": "diagram-0b0dfc95978cd9d5",
+        "bytes": 26918,
+        "sha256": "a9daaf58b630650f8915e1098cfd8555f0a7088375b7e068ab933396ba253323",
+        "foreignObject": false,
+        "script": false
+      },
+      {
+        "page": "docs/site/understand/worker-core.md",
+        "index": 0,
+        "id": "diagram-c608421108851fe0",
+        "bytes": 33968,
+        "sha256": "eae726192a5fa25a7a2cb15c635806c73da31ddd634b64d8338fb2163eca95f6",
+        "foreignObject": false,
+        "script": false
+      },
+      {
+        "page": "docs/site/understand/worker-core.md",
+        "index": 1,
+        "id": "diagram-5ee108c9ff3e6c37",
+        "bytes": 25055,
+        "sha256": "e5593c1e00c5ba4d7927050eb619deece9f6a05573889f28e202b6f2fb2a0310",
+        "foreignObject": false,
+        "script": false
+      },
+      {
+        "page": "docs/site/understand/components-and-authority.md",
+        "index": 0,
+        "id": "diagram-8f2efaf658bf5fd7",
+        "bytes": 36612,
+        "sha256": "c63822807a6d9e4802e481a1f3276444fa32a8356bed368603ebcffe9ef995c9",
+        "foreignObject": false,
+        "script": false
+      },
+      {
+        "page": "docs/site/understand/components-and-authority.md",
+        "index": 1,
+        "id": "diagram-d0f7aad06350ff09",
+        "bytes": 24987,
+        "sha256": "5a46eda7808a2c2ab9085fd8dafd35a265de4715b1e42a8238b378ad85d0e4b5",
+        "foreignObject": false,
+        "script": false
+      },
+      {
+        "page": "docs/site/understand/components-and-authority.md",
+        "index": 2,
+        "id": "diagram-d399eb6d56c2d2ca",
+        "bytes": 34427,
+        "sha256": "42d4d6ac27e547a3e1825c27aee47034d3fe8f098ec0f68a1ce0c039d3342455",
+        "foreignObject": false,
+        "script": false
+      },
+      {
+        "page": "docs/site/understand/nova-core.md",
+        "index": 0,
+        "id": "diagram-821692bad9ddacd4",
+        "bytes": 31289,
+        "sha256": "23f434edd6482bdd65a3f7ea5a3b4255177a95dd792c819b127b2e0e2a41ec22",
+        "foreignObject": false,
+        "script": false
+      },
+      {
+        "page": "docs/site/understand/prism-runtime.md",
+        "index": 0,
+        "id": "diagram-28d2b173b9ead9ec",
+        "bytes": 40879,
+        "sha256": "90537baef210569e9c0bb84cb6de957be030eed6ff85c311a0c5ba8a7c5e31a8",
+        "foreignObject": false,
+        "script": false
+      },
+      {
+        "page": "docs/site/understand/prism-runtime.md",
+        "index": 1,
+        "id": "diagram-cfc1855cb235ace3",
+        "bytes": 36379,
+        "sha256": "bca8bf0e4966d73a7880a1df6aaa15ed98adba58098eecd972a66a23df1b4a3e",
+        "foreignObject": false,
+        "script": false
+      },
+      {
+        "page": "docs/site/understand/buster.md",
+        "index": 0,
+        "id": "diagram-3b0289c56fc93d2a",
+        "bytes": 37783,
+        "sha256": "afa39e08f447e47e7b78df2d0a65671b5b07ac71e48915f6382b6d6ad36db179",
+        "foreignObject": false,
+        "script": false
+      },
+      {
+        "page": "docs/site/understand/platform-and-operations.md",
+        "index": 0,
+        "id": "diagram-f8349bee858320db",
+        "bytes": 50791,
+        "sha256": "7aa5c9bc4977152079e66a0c7c0597254971241abd03c903ff707dbbc5b859d6",
+        "foreignObject": false,
+        "script": false
+      },
+      {
+        "page": "docs/site/understand/plugin-runtime.md",
+        "index": 0,
+        "id": "diagram-7bd6c10537dc1c0a",
+        "bytes": 25619,
+        "sha256": "079e0f2459b4e17f0a91964a9d792eefa8787ae5759847c7345b73e34c52096a",
+        "foreignObject": false,
+        "script": false
+      },
+      {
+        "page": "docs/site/understand/deployment-and-trust.md",
+        "index": 0,
+        "id": "diagram-65a8a6d8e8566a76",
+        "bytes": 54148,
+        "sha256": "37a1df01b5100040fdda3f6f7bc7aa8eacffa900eec0a03e6c1d43ab5e39655d",
+        "foreignObject": false,
+        "script": false
+      },
+      {
+        "page": "docs/site/understand/deployment-and-trust.md",
+        "index": 1,
+        "id": "diagram-d16858a8daed4904",
+        "bytes": 31661,
+        "sha256": "0c6d68f71aceb22b5b585936ecb52cd8f9d254287f15b55ca2bc9580ad22f338",
+        "foreignObject": false,
+        "script": false
+      },
+      {
+        "page": "docs/site/understand/telemetry.md",
+        "index": 0,
+        "id": "diagram-7a1d36af68ab454f",
+        "bytes": 25195,
+        "sha256": "70ad00695ca11d629f7d3f781882384e0852c32e07900bf5cc80ade637f06d93",
+        "foreignObject": false,
+        "script": false
+      },
+      {
+        "page": "docs/site/understand/telemetry.md",
+        "index": 1,
+        "id": "diagram-87a9e27d893511ac",
+        "bytes": 25996,
+        "sha256": "efc05b8af5c25d135d56ded25f17c2491eea87d76420e8dfca98cfa8b66b76e6",
+        "foreignObject": false,
+        "script": false
+      },
+      {
+        "page": "docs/site/understand/telemetry.md",
+        "index": 2,
+        "id": "diagram-34c4f5e13304d5e2",
+        "bytes": 24962,
+        "sha256": "d8d1688d7556c97fbbb4e32b4ffc8260b63cd749f4152b7b5d16e938930a5bed",
+        "foreignObject": false,
+        "script": false
+      },
+      {
+        "page": "docs/site/understand/security-and-trust.md",
+        "index": 0,
+        "id": "diagram-d8f0b2d704e8bed8",
+        "bytes": 46819,
+        "sha256": "79fc7ce346ec796f3b2389c829750cdea9b5876618c395a52f16402dd9c538dc",
+        "foreignObject": false,
+        "script": false
+      },
+      {
+        "page": "docs/site/understand/request-state-recovery.md",
+        "index": 0,
+        "id": "diagram-6f61b499a6256639",
+        "bytes": 35292,
+        "sha256": "a5a40433ff3447cfde338e48b3ed7dc1af95708f0316a3da560feeb38d541dd3",
+        "foreignObject": false,
+        "script": false
+      },
+      {
+        "page": "docs/site/understand/request-state-recovery.md",
+        "index": 1,
+        "id": "diagram-4db41ccb7b95981f",
+        "bytes": 43569,
+        "sha256": "c16fbdb4c9d9d03f66d9fdb4fbaf6bf465775f9314410388de88065cd9fbad40",
+        "foreignObject": false,
+        "script": false
+      },
+      {
+        "page": "docs/site/understand/pipeline-dependencies.md",
+        "index": 0,
+        "id": "diagram-f229305f89bfc131",
+        "bytes": 40555,
+        "sha256": "869d9bb6e7e7584707f9d9128cac67aef826d9ea81375a4720f72ca36c723bba",
+        "foreignObject": false,
+        "script": false
+      },
+      {
+        "page": "docs/site/understand/prism-data.md",
+        "index": 0,
+        "id": "diagram-bdf3411e41039825",
+        "bytes": 34745,
+        "sha256": "411dd4ff103d40bdc4e17c32cc9531d716d5637d2d3cd60ae7d392758d063d1e",
+        "foreignObject": false,
+        "script": false
+      },
+      {
+        "page": "docs/site/understand/prism.md",
+        "index": 0,
+        "id": "diagram-02d432bdc7c3fea4",
+        "bytes": 35823,
+        "sha256": "78304214c72b1c46b34d7f5cf746bb0953c02ee06f952103e212911996632251",
+        "foreignObject": false,
+        "script": false
+      },
+      {
+        "page": "docs/site/understand/buster-namespace-controller.md",
+        "index": 0,
+        "id": "diagram-19c970fdc9450cbd",
+        "bytes": 32055,
+        "sha256": "b89f60b1b65150bce6ff6e0acfe1d01f2f87130d7072c0d4005933699486756c",
+        "foreignObject": false,
+        "script": false
+      },
+      {
+        "page": "docs/site/understand/communication.md",
+        "index": 0,
+        "id": "diagram-09ad8782f0166236",
+        "bytes": 38329,
+        "sha256": "0f0aeea5892dd3556100d698ab6bd47912eb52f39f0912d046dfe693e845ad10",
+        "foreignObject": false,
+        "script": false
+      },
+      {
+        "page": "docs/site/reference/images-and-digests.md",
+        "index": 0,
+        "id": "diagram-d1fe218ac431ac2b",
+        "bytes": 28822,
+        "sha256": "f3e8fce8bb0bb750a1d8cf6cba95e50dbf8ab546328675f18cb842ca4dd8af15",
+        "foreignObject": false,
+        "script": false
+      }
+    ],
+    "failures": [],
+    "externalNetwork": []
+  },
+  "registeredModule": {
+    "schemaVersion": "kubeclaw-rendered-diagrams.v1",
+    "toolchain": {
+      "mermaid": "12.2.0",
+      "chromium": "151.0.7922.34",
+      "config": "strict/htmlLabels=false/deterministicIds/neutral theme/Arial sans-serif"
+    },
+    "diagrams": [
+      {
+        "id": "diagram-be26288d618208c0",
+        "page": "extend/README.md",
+        "index": 0,
+        "readerQuestion": "Which extension point should I choose for a proposed change?",
+        "owner": "plugin-foundation",
+        "sourceSha256": "2ec8302db70443ecb139358c90a03d9a39ce099809e37e44e14f7763961368fb",
+        "textAlternative": "The existing text alternative immediately following this diagram; retained visibly in publication.",
+        "svgSha256": "a4ca9f04efbc75cb0f07fdd33784bfe18ce29342b6c3a9e7e19bfa6da01651ef",
+        "width": 1523,
+        "height": 1671
+      },
+      {
+        "id": "diagram-9546393698719b4f",
+        "page": "extend/lint.md",
+        "index": 0,
+        "readerQuestion": "How does a lint request reach the selected engine and its governed result?",
+        "owner": "lint",
+        "sourceSha256": "71dd19957a0e8280b3c947bb2e1e9b27dcd8d732e024e92a4584d3285a8fdee0",
+        "textAlternative": "The existing text alternative immediately following this diagram; retained visibly in publication.",
+        "svgSha256": "075228366c7baadd9b98411e60cff688d60b1a4b0c95c8d8d67631f5ac63a9ac",
+        "width": 2413,
+        "height": 225
+      },
+      {
+        "id": "diagram-6e2b51e2c5b4e58e",
+        "page": "reference/images-and-digests.md",
+        "index": 0,
+        "readerQuestion": "How do source inputs become selected runtime code and image identities?",
+        "owner": "documentation; release owners select artifacts and workload owners verify deployment",
+        "sourceSha256": "a11e41e9804e010bb92ec3a8423dc7cdc70ceeb7c31ae442665e1b567f0796e2",
+        "textAlternative": "The existing text alternative immediately following this diagram; retained visibly in publication.",
+        "svgSha256": "bf08ed6c5a2992d03a55ce1e78ecb081ff42f46c5d5469fa5d002741c43bb755",
+        "width": 1956,
+        "height": 216
+      },
+      {
+        "id": "diagram-aa13d9d4c599db83",
+        "page": "understand/buster-namespace-controller.md",
+        "index": 0,
+        "readerQuestion": "How does a namespace request become controlled Kubernetes workloads?",
+        "owner": "buster",
+        "sourceSha256": "53eb2d6825d794bea8817ee9b4efffa9af48e766ecbe86e23a0d442da8a6996f",
+        "textAlternative": "The existing text alternative immediately following this diagram; retained visibly in publication.",
+        "svgSha256": "921cb3e1bffe8d0f7d48a081812351d73070e59da93ef83a0cbbec46b9cb7165",
+        "width": 471,
+        "height": 1448
+      },
+      {
+        "id": "diagram-6802ba43c34d2052",
+        "page": "understand/buster.md",
+        "index": 0,
+        "readerQuestion": "How does a resolved Buster plan become remote execution and verified result evidence?",
+        "owner": "buster",
+        "sourceSha256": "4ec5f1a5fe7df132faaf898d4ac11e4ab152ffe3957472dbe76485044fa71eb4",
+        "textAlternative": "The existing text alternative immediately following this diagram; retained visibly in publication.",
+        "svgSha256": "91291432aafd816d9402a8727abd39b89e86f65cffcdc1cc411325e5576d3e98",
+        "width": 2259,
+        "height": 1119
+      },
+      {
+        "id": "diagram-a7fdace370992a64",
+        "page": "understand/communication.md",
+        "index": 0,
+        "readerQuestion": "Which transports connect a Prism request to models, workers and event ingestion?",
+        "owner": "runtime and platform maintainers",
+        "sourceSha256": "d387f883b56deb3ad292cb8069330f438a511fe3e54140e359ce3b6acccdc4ef",
+        "textAlternative": "The existing text alternative immediately following this diagram; retained visibly in publication.",
+        "svgSha256": "a02660a69925271bc6cc19f456650ef980895dd7a0807d8415e73bb3b3dd5a16",
+        "width": 2724,
+        "height": 417
+      },
+      {
+        "id": "diagram-df5ab3f6a317ad1b",
+        "page": "understand/components-and-authority.md",
+        "index": 0,
+        "readerQuestion": "Which components control a run and which components return bounded facts?",
+        "owner": "platform architecture",
+        "sourceSha256": "3055085c9491cbf037f0336f5387501250125d0b2e055fe844e3a7a7d8a2e603",
+        "textAlternative": "The existing text alternative immediately following this diagram; retained visibly in publication.",
+        "svgSha256": "bd1bd5206250402b3e36d51dfcc186526e33a20cb6a266a178a8377ff7e13985",
+        "width": 1422,
+        "height": 602
+      },
+      {
+        "id": "diagram-ea45cd168e3309e3",
+        "page": "understand/components-and-authority.md",
+        "index": 1,
+        "readerQuestion": "What is packaged in the Nova role and what remains canonical Nova Core authority?",
+        "owner": "platform architecture",
+        "sourceSha256": "4b9cf421aa7f3f80185c0672601d1ae128e2c580375c5e49b1b10a329e1caec3",
+        "textAlternative": "The existing text alternative immediately following this diagram; retained visibly in publication.",
+        "svgSha256": "b3aa284e528fb74e8b5aad0038d1dc74c9a774d260ec25d1e705e8abf1e2a685",
+        "width": 504,
+        "height": 653
+      },
+      {
+        "id": "diagram-5b05df08c6d4de49",
+        "page": "understand/components-and-authority.md",
+        "index": 2,
+        "readerQuestion": "How do registration, activation, context and adapter calls constrain one stage?",
+        "owner": "platform architecture",
+        "sourceSha256": "a02fdbf8a503f6bc18952fc7ed81b730369df9cfe0abcff83bd456161ff3eb26",
+        "textAlternative": "The existing text alternative immediately following this diagram; retained visibly in publication.",
+        "svgSha256": "58884df93350b185f37fa8a64c36886bfe06de4ceb4828195bee6ca34297cadb",
+        "width": 2512,
+        "height": 190
+      },
+      {
+        "id": "diagram-894c4ee28dace602",
+        "page": "understand/deployment-and-trust.md",
+        "index": 0,
+        "readerQuestion": "Which protected connections join Nova, Buster and the Prism runtime?",
+        "owner": "platform architecture and operations",
+        "sourceSha256": "900f6b9f8bf1aa50d63def58affe720862a26e819be4b9c13334e0868b4a3618",
+        "textAlternative": "The existing text alternative immediately following this diagram; retained visibly in publication.",
+        "svgSha256": "9705582a91053fb63b001085203ac0670b4260b6a13e4ac7040e542204cdeeb3",
+        "width": 3062,
+        "height": 460
+      },
+      {
+        "id": "diagram-0f4497fd43eef4ed",
+        "page": "understand/deployment-and-trust.md",
+        "index": 1,
+        "readerQuestion": "Which component owns each durable store and artifact boundary?",
+        "owner": "platform architecture and operations",
+        "sourceSha256": "26d7660631323baf314e3621c36bd095ea8bacfdce608b68911fa5961873fe08",
+        "textAlternative": "The existing text alternative immediately following this diagram; retained visibly in publication.",
+        "svgSha256": "2db3e7c50e08826ca40c2fca14d551dec5b5f0628407e8e76667f227b1abcb28",
+        "width": 986,
+        "height": 756
+      },
+      {
+        "id": "diagram-dfc5314e0b82b354",
+        "page": "understand/nova-core.md",
+        "index": 0,
+        "readerQuestion": "How does project input become a fixed definition, run snapshot and durable lifecycle evidence?",
+        "owner": "Nova maintainers",
+        "sourceSha256": "f11f3aa884b6ad428c583bf46650791b13300c96c7773535de2b2e3c7ebaec5b",
+        "textAlternative": "The existing text alternative immediately following this diagram; retained visibly in publication.",
+        "svgSha256": "be5ba6165be2598a529be82aee5bfeb29bc169563983b690cbe45b7159bbde30",
+        "width": 2616,
+        "height": 210
+      },
+      {
+        "id": "diagram-e9adf15cb5cf80b6",
+        "page": "understand/pipeline-dependencies.md",
+        "index": 0,
+        "readerQuestion": "Which data and infrastructure dependencies support the complete pipeline path?",
+        "owner": "platform architecture and pipeline owners",
+        "sourceSha256": "678d2a16813bfd173d9ba7a25758263014f23810374c98e47fe06e7b272fe967",
+        "textAlternative": "The existing text alternative immediately following this diagram; retained visibly in publication.",
+        "svgSha256": "6632c79a19921469ad1230c9f3b179c66c22b0444faaac025b1eac892076c0b6",
+        "width": 2362,
+        "height": 569
+      },
+      {
+        "id": "diagram-4dc422d67c265fd9",
+        "page": "understand/platform-and-operations.md",
+        "index": 0,
+        "readerQuestion": "Which platform layers support workloads and which integrations remain optional?",
+        "owner": "platform architecture and operations",
+        "sourceSha256": "7efc03d785b75d867cbb6a6135b575ee5b1522cd55f72b2f7c84dc7b0ab06ddd",
+        "textAlternative": "The existing text alternative immediately following this diagram; retained visibly in publication.",
+        "svgSha256": "913f972c6d39cacf71eafcc42b06b68671c28bff3b7441b332f4da11af621186",
+        "width": 2155,
+        "height": 826
+      },
+      {
+        "id": "diagram-e1d664febf645813",
+        "page": "understand/plugin-runtime.md",
+        "index": 0,
+        "readerQuestion": "How are plugin discovery, activation, invocation and external effects separated?",
+        "owner": "plugin-runtime maintainers",
+        "sourceSha256": "c768d35e14ff2f88260a608c5118572a874d02b17a3700ab37976903d096a14d",
+        "textAlternative": "The existing text alternative immediately following this diagram; retained visibly in publication.",
+        "svgSha256": "bd129ad489d60ad1b6641ec2fa2cb0502b817881749d6cf7fdbb3a05972b618c",
+        "width": 2396,
+        "height": 118
+      },
+      {
+        "id": "diagram-e8beb8435cf1a6fc",
+        "page": "understand/prism-data.md",
+        "index": 0,
+        "readerQuestion": "Which Prism stores and event paths own design, execution and artifact data?",
+        "owner": "Prism maintainers",
+        "sourceSha256": "a541d3c7c5c034a4784f1e59655372798775c02cfb28d8de7a5ef22f89cf81e8",
+        "textAlternative": "The existing text alternative immediately following this diagram; retained visibly in publication.",
+        "svgSha256": "5193aa0c84366adea7fcec80360605e0e15a1cff9f27b89030dbed0f7f085bc7",
+        "width": 2216,
+        "height": 307
+      },
+      {
+        "id": "diagram-72c587181952cb2f",
+        "page": "understand/prism-runtime.md",
+        "index": 0,
+        "readerQuestion": "Which Prism runtime components hand work and results to one another?",
+        "owner": "Prism maintainers",
+        "sourceSha256": "29280289e119d0c86cf1468b220dfb74c74509f84727eb70fcee3c3d8407badd",
+        "textAlternative": "The existing text alternative immediately following this diagram; retained visibly in publication.",
+        "svgSha256": "070518a2ffb6501cfa5c1691792fd03619bc1e3d2627ab615a06f10e8b34b97b",
+        "width": 1819,
+        "height": 730
+      },
+      {
+        "id": "diagram-103d8eadfc4cc651",
+        "page": "understand/prism-runtime.md",
+        "index": 1,
+        "readerQuestion": "Which handoffs carry a design request from Studio to a recorded result?",
+        "owner": "Prism maintainers",
+        "sourceSha256": "c9450e366402e788fa61b6fbdc8672f00fbd06c06ba6c002d9ccd9b7b3722706",
+        "textAlternative": "The existing text alternative immediately following this diagram; retained visibly in publication.",
+        "svgSha256": "559ff3fda35b432f8792be45354e35a21464a6c7dac21ebcbdfb157efe6f4313",
+        "width": 1749,
+        "height": 999
+      },
+      {
+        "id": "diagram-9b919d5135916a43",
+        "page": "understand/prism.md",
+        "index": 0,
+        "readerQuestion": "Which handoffs carry one request through Prism and back to its caller?",
+        "owner": "Prism maintainers",
+        "sourceSha256": "05a85528b7f19cb14bf25945f4144aa7bcc3b80b49b3f88a43f166a91be59fda",
+        "textAlternative": "The existing text alternative immediately following this diagram; retained visibly in publication.",
+        "svgSha256": "e691bf558d4ad513372703c3f3aebc277b73e06547521d6c12549550031d7102",
+        "width": 1556,
+        "height": 666
+      },
+      {
+        "id": "diagram-3bcb1bfe88a28c51",
+        "page": "understand/request-state-recovery.md",
+        "index": 0,
+        "readerQuestion": "How do normal project stages hand off implementation, review, tests and delivery?",
+        "owner": "Nova Core",
+        "sourceSha256": "9e1388cbda95e76125097ca38033e37d5b64fbc0345de06f127873e13b8b56d9",
+        "textAlternative": "The existing text alternative immediately following this diagram; retained visibly in publication.",
+        "svgSha256": "78f63d5d4b45b1163abfc74c0475b91d0dfbe088d5f6f32702a0463cbd530362",
+        "width": 1686,
+        "height": 963
+      },
+      {
+        "id": "diagram-3040be06a2ca5b14",
+        "page": "understand/request-state-recovery.md",
+        "index": 1,
+        "readerQuestion": "How do stage outcomes lead to retry, waiting, repair or terminal failure?",
+        "owner": "Nova Core",
+        "sourceSha256": "6349cdbb95de97788029bbfd0150b21cffa493160a25a750ed1eb008c37f31a7",
+        "textAlternative": "The existing text alternative immediately following this diagram; retained visibly in publication.",
+        "svgSha256": "7553f6659429483a5df949722e08960c9e9f8bec2b8a3f63911ce4cb8d0c740c",
+        "width": 1858,
+        "height": 941
+      },
+      {
+        "id": "diagram-11b058604e7e4129",
+        "page": "understand/security-and-trust.md",
+        "index": 0,
+        "readerQuestion": "Where are identity, transport, policy and credential trust boundaries enforced?",
+        "owner": "platform security and runtime maintainers",
+        "sourceSha256": "a88eb76c65b3c44af54288ff5e03aa387d46545bdb7df5606a60f2eaea1e2c12",
+        "textAlternative": "The existing text alternative immediately following this diagram; retained visibly in publication.",
+        "svgSha256": "fb4e1e9289fa7832367cae150d5e5c3a32b219ffde26e8eb6bba7170290871b5",
+        "width": 2036,
+        "height": 587
+      },
+      {
+        "id": "diagram-3b52a062e077e074",
+        "page": "understand/telemetry.md",
+        "index": 0,
+        "readerQuestion": "Where do active telemetry producers send their supported event data?",
+        "owner": "observability maintainers",
+        "sourceSha256": "95197ebf9b9f766e37566c8b0ffbb8cceb985e311a595a9eb3c5f9275244076a",
+        "textAlternative": "The existing text alternative immediately following this diagram; retained visibly in publication.",
+        "svgSha256": "6d8ae529ad6dee265a77b38e8712bd3ebcb9f0bb632e1d7d19f583bf5d9972f5",
+        "width": 1516,
+        "height": 314
+      },
+      {
+        "id": "diagram-0f029c30e10c4448",
+        "page": "understand/telemetry.md",
+        "index": 1,
+        "readerQuestion": "How does the OpenClaw agent-observability v1 path deliver its events?",
+        "owner": "observability maintainers",
+        "sourceSha256": "71e99d7f8e525b11857246175c66d5a9898d3f54378721b60ffda9cc6792bd97",
+        "textAlternative": "The existing text alternative immediately following this diagram; retained visibly in publication.",
+        "svgSha256": "2eaed1ee5e8eb2681c7358cbce8054305285a15f1bbd835e37eb1b791fc91608",
+        "width": 1529,
+        "height": 314
+      },
+      {
+        "id": "diagram-865c11cbad4bc6f0",
+        "page": "understand/telemetry.md",
+        "index": 2,
+        "readerQuestion": "How do deployed metrics and logs reach their configured storage and query services?",
+        "owner": "observability maintainers",
+        "sourceSha256": "9759b8bbf09bb81aecaa1776d7e2939a6fda4674135451c4b3d80709244bfc08",
+        "textAlternative": "The existing text alternative immediately following this diagram; retained visibly in publication.",
+        "svgSha256": "10bc96c8c5bd7d1b2c58a605fb4979fd11873dc64295003d22ebecbb7be5a478",
+        "width": 1234,
+        "height": 359
+      },
+      {
+        "id": "diagram-605a76cab20cfebf",
+        "page": "understand/worker-core.md",
+        "index": 0,
+        "readerQuestion": "Which ordered handoffs prepare, execute and clean up one Worker attempt?",
+        "owner": "Worker Core maintainers",
+        "sourceSha256": "081b30dad305f3906583b6b2b8f37a49e64a9a9c4b5c2c6767b7e9ee7157f224",
+        "textAlternative": "The existing text alternative immediately following this diagram; retained visibly in publication.",
+        "svgSha256": "345c2af1bd8b9493336fb8433cd6650cdad9dda273ce91838c8be49aaf14a3e7",
+        "width": 1773,
+        "height": 759
+      },
+      {
+        "id": "diagram-fa17e8be474839f8",
+        "page": "understand/worker-core.md",
+        "index": 1,
+        "readerQuestion": "Which Worker allocation states permit progress, cleanup or an unresolved stop?",
+        "owner": "Worker Core maintainers",
+        "sourceSha256": "4b8cdabcd972066bb94c5dea6dfbdbefc5dca61279dfabd125a2194b7a0c9fc7",
+        "textAlternative": "The existing text alternative immediately following this diagram; retained visibly in publication.",
+        "svgSha256": "619f8123a105cb679ab28dc47a9d8289420269e93e8d716427c1d2ae8b589257",
+        "width": 480,
+        "height": 580
+      }
+    ]
+  },
+  "checks": {
+    "diagram-full-regressions.log": "\u2714 sink location discovery conservatively retains classified writers without assigning roles (91.524349ms)\n\u2714 Ops Helm source checksum stays a hash-check input, not a generic Docker writer exemption (22.779015ms)\n\u2714 live-check diagnostic roles bind complete readonly source and cannot be refreshed into API output (1073.087646ms)\n\u2714 auxiliary Python receipts distinguish AST, policy-probe and JSON-RPC metadata from API writers (389.353694ms)\n\u2714 node module builtin-name projections preserve API discovery and reject loader escapes (47.877338ms)\n\u2714 current documentation checker role binds exported link parser, helper and guarded invocation (496.259361ms)\n\u2714 native ESM keeps actual .js authority, explicit .ts neighbors, creation and removal custody (90.827402ms)\n\u2714 scalar and guard exemptions revoke direct and captured caller-time binding writes (187.925991ms)\n\u2714 reached initialization effects and caller writes bind facts, unused siblings remain passive (2.418281ms)\n\u2714 heredoc closure uses exact << and tab-only <<- native boundaries (68.811016ms)\n\u2714 finite command custody selects actual argv and final fd0, not quoted or commented neighbors (1.026685ms)\n\u2714 outside-root public main, exports, bin and actual Node commands independently publish finite closure (213.18967ms)\n\u2714 caller-only change, deletion and re-creation cannot reuse transformed custody (92.140365ms)\n\u2714 same-line API to native transition revokes transaction shell facts (405.206395ms)\n\u2714 actual reached validator format and schema installation authority is present in finite facts (115.597257ms)\n\u2714 finite heredoc fd duplication and legacy substitutions agree with actual native consumption (38.207784ms)\n\u2714 guarded array aliases and unsupported post-proof calls cannot retain a stale scalar-array exemption (56.27253ms)\n\u2714 package argv distinguishes passive quoted mentions from actual inline Node programs (47.250992ms)\n\u2714 two source-bound resolver terminals classify only source-location metadata (164.089631ms)\n\u2714 source/archive compiler metadata binds both callers, extraction branch, package mapping and helper transfer (107.120883ms)\n\u2714 historical environment roots classify only bound operations and retain current executable source facts (98.739041ms)\n\u2714 native historical from selector really follows external root, not scanner checkout identity (385.789105ms)\n\u2714 six native replay recipes bind archive, overlay, caller and exact loader branches without fixture exclusion (580.702283ms)\n\u2714 native replay root selector preserves explicit external and empty-string nullish cases (344.73593ms)\n\u2714 Worker resource schema generator receipts retain schema inputs and reject refreshed API output (81.943588ms)\n\u2714 zero-argument scalar method calls remain conservative without crashing classification (2.264828ms)\n\u2714 the exact PV receiver is excluded through reviewed documentation authority and check-prefix entrypoints (64.628811ms)\n\u2714 missing qualification cannot silently retain a registered PV exemption (55.909761ms)\n\u2714 PV source changes, API emission and unknown writers invalidate the frozen recipe even after digest refresh (197.689548ms)\n\u2714 refreshing both static Source digest and operation recipe cannot authorize a new output capability (89.503908ms)\n\u2714 static Source protection does not require an absent exemption in a public producer checkout (9.895419ms)\n\u2714 captured bearer authentication binds its selected Codex container and Secret volume even after caching (1104.422367ms)\n\u2714 changed documentation edge aliases, removed edges and renamed modules invalidate the reviewed graph (130.637696ms)\n\u2714 direct, transitive, re-exported and require product consumers cannot use the qualified documentation source (296.161603ms)\n\u2714 Node module loader capabilities and call/apply forwarding invalidate cached documentation qualification (1195.840556ms)\n\u2714 unsupported loader custody and builtin Promise continuations cannot disappear from the graph (789.362858ms)\n\u2714 binding admission and awaited builtin Promise aliases preserve capability custody (448.56936ms)\n\u2714 refreshable unresolved-operation fingerprints cannot authorize a public dynamic consumer (36.344797ms)\n\u2714 reviewed finite module authority binds primary Source and selected input custody independently of fingerprints (208.156853ms)\n\u2714 finite selected module closure binds every local bridge and canonical dependency across cache hits (1795.273475ms)\n\u2714 caller authority changes reject independently of incomplete mutable consumer exemptions (99.226524ms)\n\u2714 package aliases and public symlink exposure are part of consumer invalidation (84.587515ms)\n\u2714 unresolved relevant dynamic imports and changed documentation loaders fail closed (49.186411ms)\n\u2714 documentation invocation names confer no exemption on new API producers or unknown publishers (57.075241ms)\n\u2714 generic conservative producer semantics remain intact outside the qualified graph (30.766816ms)\n\u2714 node:module named admission is finite across actual and unknown exports before any transfer (1213.240389ms)\n\u2714 canonical finite seeds resolve actual siblings and bind alias retargeting without forbidding safe symlinks (1426.633635ms)\n\u2714 every supported JS and TS executable class keeps canonical seed, closure and cache custody (3170.684447ms)\n\u2714 CommonJS fallback inputs are scanned at first transfer and changed bridge-only success cannot survive (1019.805721ms)\n\u2714 passive JSON follows canonical loader semantics and native or unsupported transfers fail intrinsically (1325.508229ms)\n\u2714 new executable formats retain public output discovery and unknown publication checks (53.867259ms)\n\u2714 synthetic native tests bind their actual Source and caller and cannot acquire product reachability (870.706419ms)\n\u2714 a transferred CommonJS fallback producer is discovered without treating arbitrary data files as executables (32.610003ms)\n\u2714 new executable classes share cycle, root, canonical-retarget and containment admission (1185.680931ms)\n\u2714 createRequire retains exact current-module base or rejects foreign and bound factory custody (1245.190664ms)\n\u2139 [{\"registryMode\":\"absent\",\"acquisition\":\"createRequire(import.meta.url)\",\"native\":{\"exit\":0,\"stdout\":\"{\\\"apiVersion\\\":\\\"v1\\\",\\\"kind\\\":\\\"Secret\\\",\\\"metadata\\\":{\\\"name\\\":\\\"ordinary-transfer\\\"}}\\n\"},\"emitter\":\"tools/p.txt\",\"passiveAfterCache\":true},{\"registryMode\":\"absent\",\"acquisition\":\"createRequire.call(null,import.meta.url)\",\"native\":{\"exit\":0,\"stdout\":\"{\\\"apiVersion\\\":\\\"v1\\\",\\\"kind\\\":\\\"Secret\\\",\\\"metadata\\\":{\\\"name\\\":\\\"ordinary-transfer\\\"}}\\n\"},\"emitter\":\"tools/p.txt\",\"passiveAfterCache\":true},{\"registryMode\":\"absent\",\"acquisition\":\"createRequire.apply(null,[import.meta.url])\",\"native\":{\"exit\":0,\"stdout\":\"{\\\"apiVersion\\\":\\\"v1\\\",\\\"kind\\\":\\\"Secret\\\",\\\"metadata\\\":{\\\"name\\\":\\\"ordinary-transfer\\\"}}\\n\"},\"emitter\":\"tools/p.txt\",\"passiveAfterCache\":true},{\"registryMode\":\"absent\",\"acquisition\":\"factory(import.meta.url)\",\"native\":{\"exit\":0,\"stdout\":\"{\\\"apiVersion\\\":\\\"v1\\\",\\\"kind\\\":\\\"Secret\\\",\\\"metadata\\\":{\\\"name\\\":\\\"ordinary-transfer\\\"}}\\n\"},\"emitter\":\"tools/p.txt\",\"passiveAfterCache\":true},{\"registryMode\":\"empty\",\"acquisition\":\"createRequire(import.meta.url)\",\"native\":{\"exit\":0,\"stdout\":\"{\\\"apiVersion\\\":\\\"v1\\\",\\\"kind\\\":\\\"Secret\\\",\\\"metadata\\\":{\\\"name\\\":\\\"ordinary-transfer\\\"}}\\n\"},\"emitter\":\"tools/p.txt\",\"passiveAfterCache\":true},{\"registryMode\":\"empty\",\"acquisition\":\"createRequire.call(null,import.meta.url)\",\"native\":{\"exit\":0,\"stdout\":\"{\\\"apiVersion\\\":\\\"v1\\\",\\\"kind\\\":\\\"Secret\\\",\\\"metadata\\\":{\\\"name\\\":\\\"ordinary-transfer\\\"}}\\n\"},\"emitter\":\"tools/p.txt\",\"passiveAfterCache\":true},{\"registryMode\":\"empty\",\"acquisition\":\"createRequire.apply(null,[import.meta.url])\",\"native\":{\"exit\":0,\"stdout\":\"{\\\"apiVersion\\\":\\\"v1\\\",\\\"kind\\\":\\\"Secret\\\",\\\"metadata\\\":{\\\"name\\\":\\\"ordinary-transfer\\\"}}\\n\"},\"emitter\":\"tools/p.txt\",\"passiveAfterCache\":true},{\"registryMode\":\"empty\",\"acquisition\":\"factory(import.meta.url)\",\"native\":{\"exit\":0,\"stdout\":\"{\\\"apiVersion\\\":\\\"v1\\\",\\\"kind\\\":\\\"Secret\\\",\\\"metadata\\\":{\\\"name\\\":\\\"ordinary-transfer\\\"}}\\n\"},\"emitter\":\"tools/p.txt\",\"passiveAfterCache\":true},{\"registryMode\":\"absent\",\"acquisition\":\"createRequire(__dirname+'/../examples/anchor.cjs')\",\"native\":{\"exit\":0,\"stdout\":\"{\\\"apiVersion\\\":\\\"v1\\\",\\\"kind\\\":\\\"Secret\\\",\\\"metadata\\\":{\\\"name\\\":\\\"ordinary-transfer\\\"}}\\n\"},\"sourceBoundRejection\":true},{\"registryMode\":\"absent\",\"acquisition\":\"createRequire.call(null,__dirname+'/../examples/anchor.cjs')\",\"native\":{\"exit\":0,\"stdout\":\"{\\\"apiVersion\\\":\\\"v1\\\",\\\"kind\\\":\\\"Secret\\\",\\\"metadata\\\":{\\\"name\\\":\\\"ordinary-transfer\\\"}}\\n\"},\"sourceBoundRejection\":true},{\"registryMode\":\"absent\",\"acquisition\":\"createRequire.apply(null,[__dirname+'/../examples/anchor.cjs'])\",\"native\":{\"exit\":0,\"stdout\":\"{\\\"apiVersion\\\":\\\"v1\\\",\\\"kind\\\":\\\"Secret\\\",\\\"metadata\\\":{\\\"name\\\":\\\"ordinary-transfer\\\"}}\\n\"},\"sourceBoundRejection\":true},{\"registryMode\":\"absent\",\"acquisition\":\"createRequire.bind(null,__dirname+'/../examples/anchor.cjs')()\",\"native\":{\"exit\":0,\"stdout\":\"{\\\"apiVersion\\\":\\\"v1\\\",\\\"kind\\\":\\\"Secret\\\",\\\"metadata\\\":{\\\"name\\\":\\\"ordinary-transfer\\\"}}\\n\"},\"sourceBoundRejection\":true},{\"registryMode\":\"absent\",\"acquisition\":\"factory(__dirname+'/../examples/anchor.cjs')\",\"native\":{\"exit\":0,\"stdout\":\"{\\\"apiVersion\\\":\\\"v1\\\",\\\"kind\\\":\\\"Secret\\\",\\\"metadata\\\":{\\\"name\\\":\\\"ordinary-transfer\\\"}}\\n\"},\"sourceBoundRejection\":true},{\"registryMode\":\"absent\",\"acquisition\":\"createRequire(__filename)\",\"native\":{\"exit\":0,\"stdout\":\"{\\\"apiVersion\\\":\\\"v1\\\",\\\"kind\\\":\\\"Secret\\\",\\\"metadata\\\":{\\\"name\\\":\\\"ordinary-transfer\\\"}}\\n\"},\"sourceBoundRejection\":true},{\"registryMode\":\"empty\",\"acquisition\":\"createRequire(__dirname+'/../examples/anchor.cjs')\",\"native\":{\"exit\":0,\"stdout\":\"{\\\"apiVersion\\\":\\\"v1\\\",\\\"kind\\\":\\\"Secret\\\",\\\"metadata\\\":{\\\"name\\\":\\\"ordinary-transfer\\\"}}\\n\"},\"sourceBoundRejection\":true},{\"registryMode\":\"empty\",\"acquisition\":\"createRequire.call(null,__dirname+'/../examples/anchor.cjs')\",\"native\":{\"exit\":0,\"stdout\":\"{\\\"apiVersion\\\":\\\"v1\\\",\\\"kind\\\":\\\"Secret\\\",\\\"metadata\\\":{\\\"name\\\":\\\"ordinary-transfer\\\"}}\\n\"},\"sourceBoundRejection\":true},{\"registryMode\":\"empty\",\"acquisition\":\"createRequire.apply(null,[__dirname+'/../examples/anchor.cjs'])\",\"native\":{\"exit\":0,\"stdout\":\"{\\\"apiVersion\\\":\\\"v1\\\",\\\"kind\\\":\\\"Secret\\\",\\\"metadata\\\":{\\\"name\\\":\\\"ordinary-transfer\\\"}}\\n\"},\"sourceBoundRejection\":true},{\"registryMode\":\"empty\",\"acquisition\":\"createRequire.bind(null,__dirname+'/../examples/anchor.cjs')()\",\"native\":{\"exit\":0,\"stdout\":\"{\\\"apiVersion\\\":\\\"v1\\\",\\\"kind\\\":\\\"Secret\\\",\\\"metadata\\\":{\\\"name\\\":\\\"ordinary-transfer\\\"}}\\n\"},\"sourceBoundRejection\":true},{\"registryMode\":\"empty\",\"acquisition\":\"factory(__dirname+'/../examples/anchor.cjs')\",\"native\":{\"exit\":0,\"stdout\":\"{\\\"apiVersion\\\":\\\"v1\\\",\\\"kind\\\":\\\"Secret\\\",\\\"metadata\\\":{\\\"name\\\":\\\"ordinary-transfer\\\"}}\\n\"},\"sourceBoundRejection\":true},{\"registryMode\":\"empty\",\"acquisition\":\"createRequire(__filename)\",\"native\":{\"exit\":0,\"stdout\":\"{\\\"apiVersion\\\":\\\"v1\\\",\\\"kind\\\":\\\"Secret\\\",\\\"metadata\\\":{\\\"name\\\":\\\"ordinary-transfer\\\"}}\\n\"},\"sourceBoundRejection\":true},{\"acquisition\":\"createRequire(base)\",\"native\":{\"exit\":0,\"stdout\":\"{\\\"apiVersion\\\":\\\"v1\\\",\\\"kind\\\":\\\"Secret\\\",\\\"metadata\\\":{\\\"name\\\":\\\"ordinary-transfer\\\"}}\\n\"},\"sourceBoundRejection\":true},{\"acquisition\":\"createRequire(new URL(import.meta.url))\",\"native\":{\"exit\":0,\"stdout\":\"{\\\"apiVersion\\\":\\\"v1\\\",\\\"kind\\\":\\\"Secret\\\",\\\"metadata\\\":{\\\"name\\\":\\\"ordinary-transfer\\\"}}\\n\"},\"sourceBoundRejection\":true},{\"acquisition\":\"createRequire.bind(null)(import.meta.url)\",\"native\":{\"exit\":0,\"stdout\":\"{\\\"apiVersion\\\":\\\"v1\\\",\\\"kind\\\":\\\"Secret\\\",\\\"metadata\\\":{\\\"name\\\":\\\"ordinary-transfer\\\"}}\\n\"},\"sourceBoundRejection\":true},{\"acquisition\":\"bound()\",\"native\":{\"exit\":0,\"stdout\":\"{\\\"apiVersion\\\":\\\"v1\\\",\\\"kind\\\":\\\"Secret\\\",\\\"metadata\\\":{\\\"name\\\":\\\"ordinary-transfer\\\"}}\\n\"},\"sourceBoundRejection\":true}]\n\u2714 ordinary checkout discovers transferred CommonJS fallback outputs and rejects changed publications without exemptions (788.473735ms)\n\u2139 {\"witnesses\":[{\"registryMode\":\"absent\",\"source\":\"tools/producer.yaml\",\"gateway\":\"require('./producer.yaml');\\n\",\"literalNative\":{\"exit\":0,\"stdout\":\"{\\\"apiVersion\\\":\\\"v1\\\",\\\"kind\\\":\\\"Secret\\\",\\\"metadata\\\":{\\\"name\\\":\\\"ordinary-transfer\\\"}}\\n\",\"stderr\":\"\"},\"changedNative\":{\"exit\":0,\"stdout\":\"{\\\"apiVersion\\\":\\\"v1\\\",\\\"kind\\\":\\\"Secret\\\",\\\"metadata\\\":{\\\"name\\\":\\\"native-argument\\\"}}\",\"stderr\":\"\"}},{\"registryMode\":\"absent\",\"source\":\"tools/producer.txt\",\"gateway\":\"require('./producer.txt');\\n\",\"literalNative\":{\"exit\":0,\"stdout\":\"{\\\"apiVersion\\\":\\\"v1\\\",\\\"kind\\\":\\\"Secret\\\",\\\"metadata\\\":{\\\"name\\\":\\\"ordinary-transfer\\\"}}\\n\",\"stderr\":\"\"},\"changedNative\":{\"exit\":0,\"stdout\":\"{\\\"apiVersion\\\":\\\"v1\\\",\\\"kind\\\":\\\"Secret\\\",\\\"metadata\\\":{\\\"name\\\":\\\"native-argument\\\"}}\",\"stderr\":\"\"}},{\"registryMode\":\"absent\",\"source\":\"tools/producer\",\"gateway\":\"require('./producer');\\n\",\"literalNative\":{\"exit\":0,\"stdout\":\"{\\\"apiVersion\\\":\\\"v1\\\",\\\"kind\\\":\\\"Secret\\\",\\\"metadata\\\":{\\\"name\\\":\\\"ordinary-transfer\\\"}}\\n\",\"stderr\":\"\"},\"changedNative\":{\"exit\":0,\"stdout\":\"{\\\"apiVersion\\\":\\\"v1\\\",\\\"kind\\\":\\\"Secret\\\",\\\"metadata\\\":{\\\"name\\\":\\\"native-argument\\\"}}\",\"stderr\":\"\"}},{\"registryMode\":\"absent\",\"source\":\"tools/.json\",\"gateway\":\"require('./.json');\\n\",\"literalNative\":{\"exit\":0,\"stdout\":\"{\\\"apiVersion\\\":\\\"v1\\\",\\\"kind\\\":\\\"Secret\\\",\\\"metadata\\\":{\\\"name\\\":\\\"ordinary-transfer\\\"}}\\n\",\"stderr\":\"\"},\"changedNative\":{\"exit\":0,\"stdout\":\"{\\\"apiVersion\\\":\\\"v1\\\",\\\"kind\\\":\\\"Secret\\\",\\\"metadata\\\":{\\\"name\\\":\\\"native-argument\\\"}}\",\"stderr\":\"\"}},{\"registryMode\":\"absent\",\"source\":\"examples/producer.yaml\",\"gateway\":\"require('../examples/producer.yaml');\\n\",\"literalNative\":{\"exit\":0,\"stdout\":\"{\\\"apiVersion\\\":\\\"v1\\\",\\\"kind\\\":\\\"Secret\\\",\\\"metadata\\\":{\\\"name\\\":\\\"ordinary-transfer\\\"}}\\n\",\"stderr\":\"\"},\"changedNative\":{\"exit\":0,\"stdout\":\"{\\\"apiVersion\\\":\\\"v1\\\",\\\"kind\\\":\\\"Secret\\\",\\\"metadata\\\":{\\\"name\\\":\\\"native-argument\\\"}}\",\"stderr\":\"\"}},{\"registryMode\":\"empty\",\"source\":\"tools/producer.yaml\",\"gateway\":\"require('./producer.yaml');\\n\",\"literalNative\":{\"exit\":0,\"stdout\":\"{\\\"apiVersion\\\":\\\"v1\\\",\\\"kind\\\":\\\"Secret\\\",\\\"metadata\\\":{\\\"name\\\":\\\"ordinary-transfer\\\"}}\\n\",\"stderr\":\"\"},\"changedNative\":{\"exit\":0,\"stdout\":\"{\\\"apiVersion\\\":\\\"v1\\\",\\\"kind\\\":\\\"Secret\\\",\\\"metadata\\\":{\\\"name\\\":\\\"native-argument\\\"}}\",\"stderr\":\"\"}},{\"registryMode\":\"empty\",\"source\":\"tools/producer.txt\",\"gateway\":\"require('./producer.txt');\\n\",\"literalNative\":{\"exit\":0,\"stdout\":\"{\\\"apiVersion\\\":\\\"v1\\\",\\\"kind\\\":\\\"Secret\\\",\\\"metadata\\\":{\\\"name\\\":\\\"ordinary-transfer\\\"}}\\n\",\"stderr\":\"\"},\"changedNative\":{\"exit\":0,\"stdout\":\"{\\\"apiVersion\\\":\\\"v1\\\",\\\"kind\\\":\\\"Secret\\\",\\\"metadata\\\":{\\\"name\\\":\\\"native-argument\\\"}}\",\"stderr\":\"\"}},{\"registryMode\":\"empty\",\"source\":\"tools/producer\",\"gateway\":\"require('./producer');\\n\",\"literalNative\":{\"exit\":0,\"stdout\":\"{\\\"apiVersion\\\":\\\"v1\\\",\\\"kind\\\":\\\"Secret\\\",\\\"metadata\\\":{\\\"name\\\":\\\"ordinary-transfer\\\"}}\\n\",\"stderr\":\"\"},\"changedNative\":{\"exit\":0,\"stdout\":\"{\\\"apiVersion\\\":\\\"v1\\\",\\\"kind\\\":\\\"Secret\\\",\\\"metadata\\\":{\\\"name\\\":\\\"native-argument\\\"}}\",\"stderr\":\"\"}},{\"registryMode\":\"empty\",\"source\":\"tools/.json\",\"gateway\":\"require('./.json');\\n\",\"literalNative\":{\"exit\":0,\"stdout\":\"{\\\"apiVersion\\\":\\\"v1\\\",\\\"kind\\\":\\\"Secret\\\",\\\"metadata\\\":{\\\"name\\\":\\\"ordinary-transfer\\\"}}\\n\",\"stderr\":\"\"},\"changedNative\":{\"exit\":0,\"stdout\":\"{\\\"apiVersion\\\":\\\"v1\\\",\\\"kind\\\":\\\"Secret\\\",\\\"metadata\\\":{\\\"name\\\":\\\"native-argument\\\"}}\",\"stderr\":\"\"}},{\"registryMode\":\"empty\",\"source\":\"examples/producer.yaml\",\"gateway\":\"require('../examples/producer.yaml');\\n\",\"literalNative\":{\"exit\":0,\"stdout\":\"{\\\"apiVersion\\\":\\\"v1\\\",\\\"kind\\\":\\\"Secret\\\",\\\"metadata\\\":{\\\"name\\\":\\\"ordinary-transfer\\\"}}\\n\",\"stderr\":\"\"},\"changedNative\":{\"exit\":0,\"stdout\":\"{\\\"apiVersion\\\":\\\"v1\\\",\\\"kind\\\":\\\"Secret\\\",\\\"metadata\\\":{\\\"name\\\":\\\"native-argument\\\"}}\",\"stderr\":\"\"}}]}\n\u2714 ordinary closure binds canonical transfer targets, cycles and receiving cache independently of a registry (100.478667ms)\n\u2714 ordinary canonical JSON stays passive, executable admissions and unknown loaders fail closed without metadata records (26.499079ms)\n\u2714 public file entries retain canonical execution, lines and source custody across retarget and removal (462.816794ms)\n\u2139 {\"witnesses\":[{\"entry\":\"my-values/linked.mjs\",\"actual\":\"tools/actual/entry.cjs\",\"native\":{\"exit\":0,\"stdout\":\"canonical-sibling\\n{\\\"apiVersion\\\":\\\"v1\\\",\\\"kind\\\":\\\"Secret\\\",\\\"metadata\\\":{\\\"name\\\":\\\"ordinary-transfer\\\"}}\\n\"},\"retargeted\":{\"apiVersion\":\"v1\",\"kind\":\"Secret\",\"path\":\"my-values/linked.mjs\",\"document\":0,\"sourceDigest\":\"08eaf3521ffc5eafe5b3ffde4a7566f6120b88328b55ffa4288cc15a08315be8\",\"producer\":\"script-shape\",\"line\":2,\"outputDigest\":\"bd987d8e517097ea9a347248026382ffc2a11c4178bfa421992fe3ecef34fe84\",\"inputs\":[],\"inputDigest\":\"4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945\",\"expressions\":[],\"canonicalSource\":\"tools/replacement/entry.cjs\",\"entrySource\":\"tools/replacement/entry.cjs\",\"entrySourceDigest\":\"08eaf3521ffc5eafe5b3ffde4a7566f6120b88328b55ffa4288cc15a08315be8\"},\"changedNative\":{\"exit\":0,\"stdout\":\"replacement-sibling\\n{\\\"apiVersion\\\":\\\"v1\\\",\\\"kind\\\":\\\"Secret\\\",\\\"metadata\\\":{\\\"name\\\":\\\"ordinary-transfer\\\"}}\\n\"}},{\"entry\":\"my-values/linked.cjs\",\"actual\":\"tools/actual/entry.cjs\",\"native\":{\"exit\":0,\"stdout\":\"canonical-sibling\\n{\\\"apiVersion\\\":\\\"v1\\\",\\\"kind\\\":\\\"Secret\\\",\\\"metadata\\\":{\\\"name\\\":\\\"ordinary-transfer\\\"}}\\n\"},\"retargeted\":{\"apiVersion\":\"v1\",\"kind\":\"Secret\",\"path\":\"my-values/linked.cjs\",\"document\":0,\"sourceDigest\":\"08eaf3521ffc5eafe5b3ffde4a7566f6120b88328b55ffa4288cc15a08315be8\",\"producer\":\"script-shape\",\"line\":2,\"outputDigest\":\"bd987d8e517097ea9a347248026382ffc2a11c4178bfa421992fe3ecef34fe84\",\"inputs\":[],\"inputDigest\":\"4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945\",\"expressions\":[],\"canonicalSource\":\"tools/replacement/entry.cjs\",\"entrySource\":\"tools/replacement/entry.cjs\",\"entrySourceDigest\":\"08eaf3521ffc5eafe5b3ffde4a7566f6120b88328b55ffa4288cc15a08315be8\"},\"changedNative\":{\"exit\":0,\"stdout\":\"replacement-sibling\\n{\\\"apiVersion\\\":\\\"v1\\\",\\\"kind\\\":\\\"Secret\\\",\\\"metadata\\\":{\\\"name\\\":\\\"ordinary-transfer\\\"}}\\n\"}},{\"entry\":\"my-values/linked.mts\",\"actual\":\"tools/actual/entry.cjs\",\"native\":{\"exit\":0,\"stdout\":\"canonical-sibling\\n{\\\"apiVersion\\\":\\\"v1\\\",\\\"kind\\\":\\\"Secret\\\",\\\"metadata\\\":{\\\"name\\\":\\\"ordinary-transfer\\\"}}\\n\"},\"retargeted\":{\"apiVersion\":\"v1\",\"kind\":\"Secret\",\"path\":\"my-values/linked.mts\",\"document\":0,\"sourceDigest\":\"08eaf3521ffc5eafe5b3ffde4a7566f6120b88328b55ffa4288cc15a08315be8\",\"producer\":\"script-shape\",\"line\":2,\"outputDigest\":\"bd987d8e517097ea9a347248026382ffc2a11c4178bfa421992fe3ecef34fe84\",\"inputs\":[],\"inputDigest\":\"4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945\",\"expressions\":[],\"canonicalSource\":\"tools/replacement/entry.cjs\",\"entrySource\":\"tools/replacement/entry.cjs\",\"entrySourceDigest\":\"08eaf3521ffc5eafe5b3ffde4a7566f6120b88328b55ffa4288cc15a08315be8\"},\"changedNative\":{\"exit\":0,\"stdout\":\"replacement-sibling\\n{\\\"apiVersion\\\":\\\"v1\\\",\\\"kind\\\":\\\"Secret\\\",\\\"metadata\\\":{\\\"name\\\":\\\"ordinary-transfer\\\"}}\\n\"}},{\"entry\":\"my-values/linked.cts\",\"actual\":\"tools/actual/entry.cjs\",\"native\":{\"exit\":0,\"stdout\":\"canonical-sibling\\n{\\\"apiVersion\\\":\\\"v1\\\",\\\"kind\\\":\\\"Secret\\\",\\\"metadata\\\":{\\\"name\\\":\\\"ordinary-transfer\\\"}}\\n\"},\"retargeted\":{\"apiVersion\":\"v1\",\"kind\":\"Secret\",\"path\":\"my-values/linked.cts\",\"document\":0,\"sourceDigest\":\"08eaf3521ffc5eafe5b3ffde4a7566f6120b88328b55ffa4288cc15a08315be8\",\"producer\":\"script-shape\",\"line\":2,\"outputDigest\":\"bd987d8e517097ea9a347248026382ffc2a11c4178bfa421992fe3ecef34fe84\",\"inputs\":[],\"inputDigest\":\"4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945\",\"expressions\":[],\"canonicalSource\":\"tools/replacement/entry.cjs\",\"entrySource\":\"tools/replacement/entry.cjs\",\"entrySourceDigest\":\"08eaf3521ffc5eafe5b3ffde4a7566f6120b88328b55ffa4288cc15a08315be8\"},\"changedNative\":{\"exit\":0,\"stdout\":\"replacement-sibling\\n{\\\"apiVersion\\\":\\\"v1\\\",\\\"kind\\\":\\\"Secret\\\",\\\"metadata\\\":{\\\"name\\\":\\\"ordinary-transfer\\\"}}\\n\"}},{\"entry\":\"my-values/linked.yaml\",\"actual\":\"tools/actual/entry.cjs\",\"native\":{\"exit\":0,\"stdout\":\"canonical-sibling\\n{\\\"apiVersion\\\":\\\"v1\\\",\\\"kind\\\":\\\"Secret\\\",\\\"metadata\\\":{\\\"name\\\":\\\"ordinary-transfer\\\"}}\\n\"},\"retargeted\":{\"apiVersion\":\"v1\",\"kind\":\"Secret\",\"path\":\"my-values/linked.yaml\",\"document\":0,\"sourceDigest\":\"08eaf3521ffc5eafe5b3ffde4a7566f6120b88328b55ffa4288cc15a08315be8\",\"producer\":\"script-shape\",\"line\":2,\"outputDigest\":\"bd987d8e517097ea9a347248026382ffc2a11c4178bfa421992fe3ecef34fe84\",\"inputs\":[],\"inputDigest\":\"4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945\",\"expressions\":[],\"canonicalSource\":\"tools/replacement/entry.cjs\",\"entrySource\":\"tools/replacement/entry.cjs\",\"entrySourceDigest\":\"08eaf3521ffc5eafe5b3ffde4a7566f6120b88328b55ffa4288cc15a08315be8\"},\"changedNative\":{\"exit\":0,\"stdout\":\"replacement-sibling\\n{\\\"apiVersion\\\":\\\"v1\\\",\\\"kind\\\":\\\"Secret\\\",\\\"metadata\\\":{\\\"name\\\":\\\"ordinary-transfer\\\"}}\\n\"}}]}\n\u2714 public directory entries carry canonical emitter and caller provenance through transferred modules (47.537791ms)\n\u2714 reference citations use actual canonical emitter lines while displaying the public entry surface (12.822554ms)\n\u2714 selection consumers bind multiple canonical emitters and public caller custody independently (12032.257365ms)\n\u2139 {\"native\":{\"exit\":0,\"stdout\":\"{\\\"apiVersion\\\":\\\"v1\\\",\\\"kind\\\":\\\"ConfigMap\\\",\\\"metadata\\\":{\\\"name\\\":\\\"first\\\"}}\\n{\\\"apiVersion\\\":\\\"v1\\\",\\\"kind\\\":\\\"ConfigMap\\\",\\\"metadata\\\":{\\\"name\\\":\\\"second\\\"}}\\n\",\"stderr\":\"\"},\"provenance\":[{\"reason\":\"authored-resource-field\",\"path\":\"my-values/linked.mjs\",\"document\":0,\"fieldPath\":\"$.metadata.name\",\"sourceDigest\":\"0c99b6749f28d2784a9136336b574cc2a240ed51154e54d741b61e0ecc2dc758\",\"canonicalSource\":\"tools/actual/first.cjs\",\"entrySource\":\"tools/actual/gateway.cjs\",\"entrySourceDigest\":\"489cebb83dabf74e9ccc999a6a6cd5e8de1d090b0895356c6223a62141b16e07\",\"line\":1},{\"reason\":\"authored-resource-field\",\"path\":\"my-values/linked.mjs\",\"document\":0,\"fieldPath\":\"$.metadata.name\",\"sourceDigest\":\"e1d3be43f85e4a0f849bc4e3191e888ab2dc3e057e509d53d3f3f111bc2f523c\",\"canonicalSource\":\"tools/actual/second.cjs\",\"entrySource\":\"tools/actual/gateway.cjs\",\"entrySourceDigest\":\"489cebb83dabf74e9ccc999a6a6cd5e8de1d090b0895356c6223a62141b16e07\",\"line\":1}]}\n\u2714 intrinsic CommonJS module loaders retain ordinary outputs, roles and actual product consumers (1437.447462ms)\n\u2139 {\"witnesses\":[{\"mode\":\"absent\",\"name\":\"direct\",\"gateway\":\"module.require('../examples/producer.txt');\",\"native\":{\"exit\":0,\"stdout\":\"{\\\"apiVersion\\\":\\\"v1\\\",\\\"kind\\\":\\\"Secret\\\",\\\"metadata\\\":{\\\"name\\\":\\\"ordinary-transfer\\\"}}\\n\"},\"changed\":{\"exit\":0,\"stdout\":\"{\\\"apiVersion\\\":\\\"v1\\\",\\\"kind\\\":\\\"Secret\\\",\\\"metadata\\\":{\\\"name\\\":\\\"native-argument\\\"}}\"}},{\"mode\":\"absent\",\"name\":\"topVar\",\"gateway\":\"var module;module.require('../examples/producer.txt');\",\"native\":{\"exit\":0,\"stdout\":\"{\\\"apiVersion\\\":\\\"v1\\\",\\\"kind\\\":\\\"Secret\\\",\\\"metadata\\\":{\\\"name\\\":\\\"ordinary-transfer\\\"}}\\n\"},\"changed\":{\"exit\":0,\"stdout\":\"{\\\"apiVersion\\\":\\\"v1\\\",\\\"kind\\\":\\\"Secret\\\",\\\"metadata\\\":{\\\"name\\\":\\\"native-argument\\\"}}\"}},{\"mode\":\"absent\",\"name\":\"selfVar\",\"gateway\":\"var module=module;module.require('../examples/producer.txt');\",\"native\":{\"exit\":0,\"stdout\":\"{\\\"apiVersion\\\":\\\"v1\\\",\\\"kind\\\":\\\"Secret\\\",\\\"metadata\\\":{\\\"name\\\":\\\"ordinary-transfer\\\"}}\\n\"},\"changed\":{\"exit\":0,\"stdout\":\"{\\\"apiVersion\\\":\\\"v1\\\",\\\"kind\\\":\\\"Secret\\\",\\\"metadata\\\":{\\\"name\\\":\\\"native-argument\\\"}}\"}},{\"mode\":\"absent\",\"name\":\"alias\",\"gateway\":\"const m=module;m.require('../examples/producer.txt');\",\"native\":{\"exit\":0,\"stdout\":\"{\\\"apiVersion\\\":\\\"v1\\\",\\\"kind\\\":\\\"Secret\\\",\\\"metadata\\\":{\\\"name\\\":\\\"ordinary-transfer\\\"}}\\n\"},\"changed\":{\"exit\":0,\"stdout\":\"{\\\"apiVersion\\\":\\\"v1\\\",\\\"kind\\\":\\\"Secret\\\",\\\"metadata\\\":{\\\"name\\\":\\\"native-argument\\\"}}\"}},{\"mode\":\"absent\",\"name\":\"bound\",\"gateway\":\"const loader=module.require.bind(module);loader('../examples/producer.txt');\",\"native\":{\"exit\":0,\"stdout\":\"{\\\"apiVersion\\\":\\\"v1\\\",\\\"kind\\\":\\\"Secret\\\",\\\"metadata\\\":{\\\"name\\\":\\\"ordinary-transfer\\\"}}\\n\"},\"changed\":{\"exit\":0,\"stdout\":\"{\\\"apiVersion\\\":\\\"v1\\\",\\\"kind\\\":\\\"Secret\\\",\\\"metadata\\\":{\\\"name\\\":\\\"native-argument\\\"}}\"}},{\"mode\":\"absent\",\"name\":\"computed\",\"gateway\":\"module['require']('../examples/producer.txt');\",\"native\":{\"exit\":0,\"stdout\":\"{\\\"apiVersion\\\":\\\"v1\\\",\\\"kind\\\":\\\"Secret\\\",\\\"metadata\\\":{\\\"name\\\":\\\"ordinary-transfer\\\"}}\\n\"},\"changed\":{\"exit\":0,\"stdout\":\"{\\\"apiVersion\\\":\\\"v1\\\",\\\"kind\\\":\\\"Secret\\\",\\\"metadata\\\":{\\\"name\\\":\\\"native-argument\\\"}}\"}},{\"mode\":\"absent\",\"name\":\"projected\",\"gateway\":\"const {require:r}=module;r.call(module,'../examples/producer.txt');\",\"native\":{\"exit\":0,\"stdout\":\"{\\\"apiVersion\\\":\\\"v1\\\",\\\"kind\\\":\\\"Secret\\\",\\\"metadata\\\":{\\\"name\\\":\\\"ordinary-transfer\\\"}}\\n\"},\"changed\":{\"exit\":0,\"stdout\":\"{\\\"apiVersion\\\":\\\"v1\\\",\\\"kind\\\":\\\"Secret\\\",\\\"metadata\\\":{\\\"name\\\":\\\"native-argument\\\"}}\"}},{\"mode\":\"absent\",\"name\":\"apply\",\"gateway\":\"const m=module;m.require.apply(m,['../examples/producer.txt']);\",\"native\":{\"exit\":0,\"stdout\":\"{\\\"apiVersion\\\":\\\"v1\\\",\\\"kind\\\":\\\"Secret\\\",\\\"metadata\\\":{\\\"name\\\":\\\"ordinary-transfer\\\"}}\\n\"},\"changed\":{\"exit\":0,\"stdout\":\"{\\\"apiVersion\\\":\\\"v1\\\",\\\"kind\\\":\\\"Secret\\\",\\\"metadata\\\":{\\\"name\\\":\\\"native-argument\\\"}}\"}},{\"mode\":\"empty\",\"name\":\"direct\",\"gateway\":\"module.require('../examples/producer.txt');\",\"native\":{\"exit\":0,\"stdout\":\"{\\\"apiVersion\\\":\\\"v1\\\",\\\"kind\\\":\\\"Secret\\\",\\\"metadata\\\":{\\\"name\\\":\\\"ordinary-transfer\\\"}}\\n\"},\"changed\":{\"exit\":0,\"stdout\":\"{\\\"apiVersion\\\":\\\"v1\\\",\\\"kind\\\":\\\"Secret\\\",\\\"metadata\\\":{\\\"name\\\":\\\"native-argument\\\"}}\"}},{\"mode\":\"empty\",\"name\":\"topVar\",\"gateway\":\"var module;module.require('../examples/producer.txt');\",\"native\":{\"exit\":0,\"stdout\":\"{\\\"apiVersion\\\":\\\"v1\\\",\\\"kind\\\":\\\"Secret\\\",\\\"metadata\\\":{\\\"name\\\":\\\"ordinary-transfer\\\"}}\\n\"},\"changed\":{\"exit\":0,\"stdout\":\"{\\\"apiVersion\\\":\\\"v1\\\",\\\"kind\\\":\\\"Secret\\\",\\\"metadata\\\":{\\\"name\\\":\\\"native-argument\\\"}}\"}},{\"mode\":\"empty\",\"name\":\"selfVar\",\"gateway\":\"var module=module;module.require('../examples/producer.txt');\",\"native\":{\"exit\":0,\"stdout\":\"{\\\"apiVersion\\\":\\\"v1\\\",\\\"kind\\\":\\\"Secret\\\",\\\"metadata\\\":{\\\"name\\\":\\\"ordinary-transfer\\\"}}\\n\"},\"changed\":{\"exit\":0,\"stdout\":\"{\\\"apiVersion\\\":\\\"v1\\\",\\\"kind\\\":\\\"Secret\\\",\\\"metadata\\\":{\\\"name\\\":\\\"native-argument\\\"}}\"}},{\"mode\":\"empty\",\"name\":\"alias\",\"gateway\":\"const m=module;m.require('../examples/producer.txt');\",\"native\":{\"exit\":0,\"stdout\":\"{\\\"apiVersion\\\":\\\"v1\\\",\\\"kind\\\":\\\"Secret\\\",\\\"metadata\\\":{\\\"name\\\":\\\"ordinary-transfer\\\"}}\\n\"},\"changed\":{\"exit\":0,\"stdout\":\"{\\\"apiVersion\\\":\\\"v1\\\",\\\"kind\\\":\\\"Secret\\\",\\\"metadata\\\":{\\\"name\\\":\\\"native-argument\\\"}}\"}},{\"mode\":\"empty\",\"name\":\"bound\",\"gateway\":\"const loader=module.require.bind(module);loader('../examples/producer.txt');\",\"native\":{\"exit\":0,\"stdout\":\"{\\\"apiVersion\\\":\\\"v1\\\",\\\"kind\\\":\\\"Secret\\\",\\\"metadata\\\":{\\\"name\\\":\\\"ordinary-transfer\\\"}}\\n\"},\"changed\":{\"exit\":0,\"stdout\":\"{\\\"apiVersion\\\":\\\"v1\\\",\\\"kind\\\":\\\"Secret\\\",\\\"metadata\\\":{\\\"name\\\":\\\"native-argument\\\"}}\"}},{\"mode\":\"empty\",\"name\":\"computed\",\"gateway\":\"module['require']('../examples/producer.txt');\",\"native\":{\"exit\":0,\"stdout\":\"{\\\"apiVersion\\\":\\\"v1\\\",\\\"kind\\\":\\\"Secret\\\",\\\"metadata\\\":{\\\"name\\\":\\\"ordinary-transfer\\\"}}\\n\"},\"changed\":{\"exit\":0,\"stdout\":\"{\\\"apiVersion\\\":\\\"v1\\\",\\\"kind\\\":\\\"Secret\\\",\\\"metadata\\\":{\\\"name\\\":\\\"native-argument\\\"}}\"}},{\"mode\":\"empty\",\"name\":\"projected\",\"gateway\":\"const {require:r}=module;r.call(module,'../examples/producer.txt');\",\"native\":{\"exit\":0,\"stdout\":\"{\\\"apiVersion\\\":\\\"v1\\\",\\\"kind\\\":\\\"Secret\\\",\\\"metadata\\\":{\\\"name\\\":\\\"ordinary-transfer\\\"}}\\n\"},\"changed\":{\"exit\":0,\"stdout\":\"{\\\"apiVersion\\\":\\\"v1\\\",\\\"kind\\\":\\\"Secret\\\",\\\"metadata\\\":{\\\"name\\\":\\\"native-argument\\\"}}\"}},{\"mode\":\"empty\",\"name\":\"apply\",\"gateway\":\"const m=module;m.require.apply(m,['../examples/producer.txt']);\",\"native\":{\"exit\":0,\"stdout\":\"{\\\"apiVersion\\\":\\\"v1\\\",\\\"kind\\\":\\\"Secret\\\",\\\"metadata\\\":{\\\"name\\\":\\\"ordinary-transfer\\\"}}\\n\"},\"changed\":{\"exit\":0,\"stdout\":\"{\\\"apiVersion\\\":\\\"v1\\\",\\\"kind\\\":\\\"Secret\\\",\\\"metadata\\\":{\\\"name\\\":\\\"native-argument\\\"}}\"}}]}\n\u2714 intrinsic module runtime operands and capability escapes reject while passive exports and foreign bindings remain data (329.775939ms)\n\u2139 {\"witnesses\":[{\"gateway\":\"module.require(process.argv[2]);\",\"native\":{\"exit\":0,\"stdout\":\"{\\\"apiVersion\\\":\\\"v1\\\",\\\"kind\\\":\\\"Secret\\\",\\\"metadata\\\":{\\\"name\\\":\\\"ordinary-transfer\\\"}}\\n\"}},{\"gateway\":\"module.require.call({id:__filename,filename:__filename,paths:[]},'../examples/producer.txt');\",\"native\":{\"exit\":0,\"stdout\":\"{\\\"apiVersion\\\":\\\"v1\\\",\\\"kind\\\":\\\"Secret\\\",\\\"metadata\\\":{\\\"name\\\":\\\"ordinary-transfer\\\"}}\\n\"}},{\"gateway\":\"const m=module;m['require'](process.argv[2]);\",\"native\":{\"exit\":0,\"stdout\":\"{\\\"apiVersion\\\":\\\"v1\\\",\\\"kind\\\":\\\"Secret\\\",\\\"metadata\\\":{\\\"name\\\":\\\"ordinary-transfer\\\"}}\\n\"}},{\"gateway\":\"const r=module.require.bind(module);r(process.argv[2]);\",\"native\":{\"exit\":0,\"stdout\":\"{\\\"apiVersion\\\":\\\"v1\\\",\\\"kind\\\":\\\"Secret\\\",\\\"metadata\\\":{\\\"name\\\":\\\"ordinary-transfer\\\"}}\\n\"}},{\"gateway\":\"const key=process.argv[2];module[key]('../examples/producer.txt');\",\"native\":{\"exit\":0,\"stdout\":\"{\\\"apiVersion\\\":\\\"v1\\\",\\\"kind\\\":\\\"Secret\\\",\\\"metadata\\\":{\\\"name\\\":\\\"ordinary-transfer\\\"}}\\n\"}},{\"gateway\":\"const holder={m:module};holder.m.require('../examples/producer.txt');\",\"native\":{\"exit\":0,\"stdout\":\"{\\\"apiVersion\\\":\\\"v1\\\",\\\"kind\\\":\\\"Secret\\\",\\\"metadata\\\":{\\\"name\\\":\\\"ordinary-transfer\\\"}}\\n\"}},{\"gateway\":\"function pass(m){m.require('../examples/producer.txt');}pass(module);\",\"native\":{\"exit\":0,\"stdout\":\"{\\\"apiVersion\\\":\\\"v1\\\",\\\"kind\\\":\\\"Secret\\\",\\\"metadata\\\":{\\\"name\\\":\\\"ordinary-transfer\\\"}}\\n\"}},{\"gateway\":\"const {require:r}=module;const bound=r.bind(module);const box={r:bound};box.r('../examples/producer.txt');\",\"native\":{\"exit\":0,\"stdout\":\"{\\\"apiVersion\\\":\\\"v1\\\",\\\"kind\\\":\\\"Secret\\\",\\\"metadata\\\":{\\\"name\\\":\\\"ordinary-transfer\\\"}}\\n\"}}]}\n\u2714 own package exact exports and subpaths bind canonical transfers and reject unsupported self authority (461.748232ms)\n\u2139 {\"witnesses\":[{\"name\":\"main\",\"specifier\":\"review-package\",\"exports\":\"./examples/producer.txt\",\"native\":{\"exit\":0,\"stdout\":\"{\\\"apiVersion\\\":\\\"v1\\\",\\\"kind\\\":\\\"Secret\\\",\\\"metadata\\\":{\\\"name\\\":\\\"ordinary-transfer\\\"}}\\n\"},\"changed\":{\"exit\":0,\"stdout\":\"{\\\"apiVersion\\\":\\\"v1\\\",\\\"kind\\\":\\\"Secret\\\",\\\"metadata\\\":{\\\"name\\\":\\\"native-argument\\\"}}\"}},{\"name\":\"object\",\"specifier\":\"review-package\",\"exports\":{\".\":\"./examples/producer.txt\"},\"native\":{\"exit\":0,\"stdout\":\"{\\\"apiVersion\\\":\\\"v1\\\",\\\"kind\\\":\\\"Secret\\\",\\\"metadata\\\":{\\\"name\\\":\\\"ordinary-transfer\\\"}}\\n\"},\"changed\":{\"exit\":0,\"stdout\":\"{\\\"apiVersion\\\":\\\"v1\\\",\\\"kind\\\":\\\"Secret\\\",\\\"metadata\\\":{\\\"name\\\":\\\"native-argument\\\"}}\"}},{\"name\":\"subpath\",\"specifier\":\"review-package/producer\",\"exports\":{\"./producer\":\"./examples/producer.txt\"},\"native\":{\"exit\":0,\"stdout\":\"{\\\"apiVersion\\\":\\\"v1\\\",\\\"kind\\\":\\\"Secret\\\",\\\"metadata\\\":{\\\"name\\\":\\\"ordinary-transfer\\\"}}\\n\"},\"changed\":{\"exit\":0,\"stdout\":\"{\\\"apiVersion\\\":\\\"v1\\\",\\\"kind\\\":\\\"Secret\\\",\\\"metadata\\\":{\\\"name\\\":\\\"native-argument\\\"}}\"}},{\"name\":\"scoped\",\"specifier\":\"@review/package/producer\",\"exports\":{\"./producer\":\"./examples/producer.txt\"},\"native\":{\"exit\":0,\"stdout\":\"{\\\"apiVersion\\\":\\\"v1\\\",\\\"kind\\\":\\\"Secret\\\",\\\"metadata\\\":{\\\"name\\\":\\\"ordinary-transfer\\\"}}\\n\"},\"changed\":{\"exit\":0,\"stdout\":\"{\\\"apiVersion\\\":\\\"v1\\\",\\\"kind\\\":\\\"Secret\\\",\\\"metadata\\\":{\\\"name\\\":\\\"native-argument\\\"}}\"}},{\"name\":\"conditional\",\"specifier\":\"review-package\",\"exports\":{\".\":{\"require\":\"./examples/producer.txt\",\"default\":\"./examples/producer.txt\"}},\"unsupported\":true,\"native\":{\"exit\":0,\"stdout\":\"{\\\"apiVersion\\\":\\\"v1\\\",\\\"kind\\\":\\\"Secret\\\",\\\"metadata\\\":{\\\"name\\\":\\\"ordinary-transfer\\\"}}\\n\"}},{\"name\":\"array\",\"specifier\":\"review-package\",\"exports\":{\".\":[\"./examples/producer.txt\"]},\"unsupported\":true,\"native\":{\"exit\":0,\"stdout\":\"{\\\"apiVersion\\\":\\\"v1\\\",\\\"kind\\\":\\\"Secret\\\",\\\"metadata\\\":{\\\"name\\\":\\\"ordinary-transfer\\\"}}\\n\"}},{\"name\":\"wildcard\",\"specifier\":\"review-package/producer\",\"exports\":{\"./*\":\"./examples/*.txt\"},\"unsupported\":true,\"native\":{\"exit\":0,\"stdout\":\"{\\\"apiVersion\\\":\\\"v1\\\",\\\"kind\\\":\\\"Secret\\\",\\\"metadata\\\":{\\\"name\\\":\\\"ordinary-transfer\\\"}}\\n\"}}]}\n\u2714 intrinsic module and own package transfers enforce the same immutable PV public caller authority (603.875431ms)\n\u2139 {\"witnesses\":[{\"name\":\"direct\",\"body\":\"console.log((module.require('../scripts/docs-kubernetes-pv-selected-receiver-contracts.mjs')).receiverContracts.length);\",\"native\":{\"exit\":0,\"stdout\":\"7\\n\",\"stderr\":\"\"}},{\"name\":\"topVar\",\"body\":\"var module;console.log((module.require('../scripts/docs-kubernetes-pv-selected-receiver-contracts.mjs')).receiverContracts.length);\",\"native\":{\"exit\":0,\"stdout\":\"7\\n\",\"stderr\":\"\"}},{\"name\":\"selfVar\",\"body\":\"var module=module;console.log((module.require('../scripts/docs-kubernetes-pv-selected-receiver-contracts.mjs')).receiverContracts.length);\",\"native\":{\"exit\":0,\"stdout\":\"7\\n\",\"stderr\":\"\"}},{\"name\":\"alias\",\"body\":\"const m=module;console.log((m.require('../scripts/docs-kubernetes-pv-selected-receiver-contracts.mjs')).receiverContracts.length);\",\"native\":{\"exit\":0,\"stdout\":\"7\\n\",\"stderr\":\"\"}},{\"name\":\"bound\",\"body\":\"const loader=module.require.bind(module);console.log((loader('../scripts/docs-kubernetes-pv-selected-receiver-contracts.mjs')).receiverContracts.length);\",\"native\":{\"exit\":0,\"stdout\":\"7\\n\",\"stderr\":\"\"}},{\"name\":\"computed\",\"body\":\"console.log((module['require']('../scripts/docs-kubernetes-pv-selected-receiver-contracts.mjs')).receiverContracts.length);\",\"native\":{\"exit\":0,\"stdout\":\"7\\n\",\"stderr\":\"\"}},{\"name\":\"projected\",\"body\":\"const {require:r}=module;console.log((r.call(module,'../scripts/docs-kubernetes-pv-selected-receiver-contracts.mjs')).receiverContracts.length);\",\"native\":{\"exit\":0,\"stdout\":\"7\\n\",\"stderr\":\"\"}},{\"name\":\"apply\",\"body\":\"const m=module;console.log((m.require.apply(m,['../scripts/docs-kubernetes-pv-selected-receiver-contracts.mjs'])).receiverContracts.length);\",\"native\":{\"exit\":0,\"stdout\":\"7\\n\",\"stderr\":\"\"}},{\"subpath\":\".\",\"native\":{\"exit\":0,\"stdout\":\"7\\n\"}},{\"subpath\":\"./receivers\",\"native\":{\"exit\":0,\"stdout\":\"7\\n\"}}]}\n\u2714 block var aliases retain function/module loader custody and lexical foreign shadows stay passive (292.301922ms)\n\u2139 {\"witnesses\":[{\"body\":\"if(true){var m=module;}m.require('../examples/p.txt');\",\"native\":{\"exit\":0,\"stdout\":\"{\\\"apiVersion\\\":\\\"v1\\\",\\\"kind\\\":\\\"Secret\\\",\\\"metadata\\\":{\\\"name\\\":\\\"ordinary-transfer\\\"}}\\n\",\"stderr\":\"\"}},{\"body\":\"if(true){var r=module.require.bind(module);}r('../examples/p.txt');\",\"native\":{\"exit\":0,\"stdout\":\"{\\\"apiVersion\\\":\\\"v1\\\",\\\"kind\\\":\\\"Secret\\\",\\\"metadata\\\":{\\\"name\\\":\\\"ordinary-transfer\\\"}}\\n\",\"stderr\":\"\"}},{\"body\":\"function run(){if(true){var m=module;}m.require('../examples/p.txt');}run();\",\"native\":{\"exit\":0,\"stdout\":\"{\\\"apiVersion\\\":\\\"v1\\\",\\\"kind\\\":\\\"Secret\\\",\\\"metadata\\\":{\\\"name\\\":\\\"ordinary-transfer\\\"}}\\n\",\"stderr\":\"\"}},{\"body\":\"function run(){if(true){var r=module.require.bind(module);}r('../examples/p.txt');}run();\",\"native\":{\"exit\":0,\"stdout\":\"{\\\"apiVersion\\\":\\\"v1\\\",\\\"kind\\\":\\\"Secret\\\",\\\"metadata\\\":{\\\"name\\\":\\\"ordinary-transfer\\\"}}\\n\",\"stderr\":\"\"}}]}\n\u2714 nearest package scopes bind self exports and missing boundaries invalidate cached closure (74.188334ms)\n\u2139 {\"witnesses\":[{\"native\":{\"exit\":0,\"stdout\":\"{\\\"apiVersion\\\":\\\"v1\\\",\\\"kind\\\":\\\"Secret\\\",\\\"metadata\\\":{\\\"name\\\":\\\"ordinary-transfer\\\"}}\\n\",\"stderr\":\"\"}}]}\n\u2714 CommonJS extensionless file order matches native and prior candidate changes invalidate cache (161.645792ms)\n\u2139 {\"witnesses\":[{\"native\":{\"exit\":0,\"stdout\":\"{\\\"apiVersion\\\":\\\"v1\\\",\\\"kind\\\":\\\"Secret\\\",\\\"metadata\\\":{\\\"name\\\":\\\"ordinary-transfer\\\"}}\\n\",\"stderr\":\"\"},\"exactNative\":{\"exit\":0,\"stdout\":\"{\\\"apiVersion\\\":\\\"v1\\\",\\\"kind\\\":\\\"Secret\\\",\\\"metadata\\\":{\\\"name\\\":\\\"native-argument\\\"}}\",\"stderr\":\"\"},\"passive\":{\"exit\":0,\"stdout\":\"\"},\"directory\":{\"exit\":0,\"stdout\":\"{\\\"apiVersion\\\":\\\"v1\\\",\\\"kind\\\":\\\"Secret\\\",\\\"metadata\\\":{\\\"name\\\":\\\"ordinary-transfer\\\"}}\\n\"}}]}\n\u2714 every excluded consumer keeps actual terminal and initializer custody before cache reuse (78.475852ms)\n\u2714 outside-root explicit package entry cannot acquire reviewed static metadata transitively (230.945123ms)\n\u2714 original checked-artifact witness retains API objects and rejects changed authority or inputs (208.377937ms)\n\u2714 checked producer observation does not qualify imported or aliased entry contexts (0.966095ms)\n\u2714 diagram discovery binds each selected source to an explicit reader question, owner and source bytes (7.606852ms)\n\u2714 static SVG validation rejects active markup, external resources and broken actual presentation references (50.145795ms)\n\u2714 exact local commit/regular-source/range checks reject missing, symlink and out-of-bounds evidence (118.331686ms)\n\u2714 upstream source is checked once per exact object; named anchors and line ranges use the actual returned bytes (86.321508ms)\n\u2714 only canonical full-revision GitHub source locators enter primary-source verification (0.983255ms)\n\u2714 preview shows the linked historical committed lines, never newer worktree bytes or executable HTML (102.218849ms)\n\u2714 preview rejects absent, symlink, mutable-revision and out-of-bounds sources (139.404888ms)\n\u2714 all excerpts of one upstream object use the same returned source bytes while unrelated examples remain untouched (76.310585ms)\n\u2714 actual artifact verifier rejects digest-consistent changed source excerpts and keeps preview code out of search (119.68215ms)\n\u2714 search ranks declared reader synonyms, headings and technical IDs without admitting missing or internal pages (47.177141ms)\n\u2714 real Markdown constructs retain canonical heading fragments, links, examples and safe disclosures (23.117273ms)\n\u2714 artifact is deterministic, searchable, positive-selected and bound to exact rendered output bytes (17.867791ms)\n\u2714 artifact checker rejects changed output bytes and a digest-consistent broken fragment (509.776873ms)\n\u2714 publication transforms only the first metadata header and never evidence prose or executable examples (4.78712ms)\n\u2714 authored metadata links stay intact and documents without a metadata header remain unchanged (0.40251ms)\n\u2714 publication recognizes the existing spaced metadata header without consuming the body (0.292727ms)\n\u2714 publication recognizes metadata on every existing reader page, including source-inventory fields (171.564059ms)\n\u2714 derived SVG assets stay locally linked, hashed and bounded by the static SVG validator (84.452491ms)\n\u2139 tests 91\n\u2139 suites 0\n\u2139 pass 91\n\u2139 fail 0\n\u2139 cancelled 0\n\u2139 skipped 0\n\u2139 todo 0\n\u2139 duration_ms 37303.233233\n",
+    "diagram-focused-tests.log": "\u2714 diagram discovery binds each selected source to an explicit reader question, owner and source bytes (29.24055ms)\n\u2714 static SVG validation rejects active markup, external resources and broken actual presentation references (9.302399ms)\n\u2714 exact local commit/regular-source/range checks reject missing, symlink and out-of-bounds evidence (96.936277ms)\n\u2714 upstream source is checked once per exact object; named anchors and line ranges use the actual returned bytes (45.661432ms)\n\u2714 only canonical full-revision GitHub source locators enter primary-source verification (0.596266ms)\n\u2714 preview shows the linked historical committed lines, never newer worktree bytes or executable HTML (87.162757ms)\n\u2714 preview rejects absent, symlink, mutable-revision and out-of-bounds sources (93.186861ms)\n\u2714 all excerpts of one upstream object use the same returned source bytes while unrelated examples remain untouched (29.458136ms)\n\u2714 actual artifact verifier rejects digest-consistent changed source excerpts and keeps preview code out of search (70.711614ms)\n\u2714 search ranks declared reader synonyms, headings and technical IDs without admitting missing or internal pages (2.34568ms)\n\u2714 real Markdown constructs retain canonical heading fragments, links, examples and safe disclosures (19.766287ms)\n\u2714 artifact is deterministic, searchable, positive-selected and bound to exact rendered output bytes (16.331749ms)\n\u2714 artifact checker rejects changed output bytes and a digest-consistent broken fragment (244.966665ms)\n\u2714 publication transforms only the first metadata header and never evidence prose or executable examples (4.602628ms)\n\u2714 authored metadata links stay intact and documents without a metadata header remain unchanged (0.40345ms)\n\u2714 publication recognizes the existing spaced metadata header without consuming the body (0.326439ms)\n\u2714 publication recognizes metadata on every existing reader page, including source-inventory fields (179.066154ms)\n\u2714 derived SVG assets stay locally linked, hashed and bounded by the static SVG validator (67.755708ms)\n\u2139 tests 18\n\u2139 suites 0\n\u2139 pass 18\n\u2139 fail 0\n\u2139 cancelled 0\n\u2139 skipped 0\n\u2139 todo 0\n\u2139 duration_ms 863.34971\n",
+    "diagram-workflow-trust.log": "\u2714 docs checks run for every pull request and main-branch push (0.840991ms)\n\u2714 parsed job guards keep PRs and non-main dispatches read-only (0.942553ms)\n\u2714 read-only jobs publish only diagnostic reports and cannot persist credentials or pass release artifacts forward (0.495492ms)\n\u2714 trusted publication rebuilds source and retains digest smoke and receipt authority (0.327008ms)\n\u2714 trusted docs check before a scoped main-only commit and consume no validation artifacts (0.370689ms)\n\u2714 pull-request drift detection covers every generator output and new untracked output (0.185755ms)\n\u2714 every external action in the two entrypoints is commit pinned (0.259507ms)\n\u2139 tests 7\n\u2139 suites 0\n\u2139 pass 7\n\u2139 fail 0\n\u2139 cancelled 0\n\u2139 skipped 0\n\u2139 todo 0\n\u2139 duration_ms 106.379893\n",
+    "diagram-workflow-yaml.log": "{\"ok\":true,\"files\":[\".github/workflows/docs-checks.yaml\"]}\n",
+    "diagram-docs-check.log": "architecture presentation check passed (9 diagrams, 57 evidence boxes, 172 code links)\noperations evidence check passed (20 evidence boxes, 202 code links)\ndocs check passed (167 active markdown files)\n"
+  },
+  "nativeScope": "2exactrenewals/60unchanged/2newDocPurposeRoles,4currentguardsPASS. Newisolatedlock source-input explicitly accounted for; exactoldpublisher/renderer restoration matchedacceptedbaseline beforecounterfactual. No API/runtime/sandbox grant.",
+  "dependencyScope": "Rootpackage/lock untouched. IsolatedMermaid12.2.0 added; existingSanitizer2.17.0 patched2.18.1,actualnpmaudit0. Older actualadvisories retained, not suppressed."
+}

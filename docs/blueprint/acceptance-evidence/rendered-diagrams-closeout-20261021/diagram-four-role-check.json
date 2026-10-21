@@ -1,0 +1,18 @@
+[
+  {
+    "source": "scripts/docs-publication.mjs",
+    "result": "PASS"
+  },
+  {
+    "source": "scripts/docs-reader/renderer.mjs",
+    "result": "PASS"
+  },
+  {
+    "source": "scripts/docs-reader/diagrams.mjs",
+    "result": "PASS"
+  },
+  {
+    "source": "scripts/docs-reader/check-diagrams.mjs",
+    "result": "PASS"
+  }
+]

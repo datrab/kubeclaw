@@ -1,0 +1,248 @@
+{
+  "schemaVersion": "kubeclaw-documentation-diagrams.v1",
+  "diagrams": [
+    {
+      "id": "diagram-be26288d618208c0",
+      "page": "extend/README.md",
+      "index": 0,
+      "readerQuestion": "Which extension point should I choose for a proposed change?",
+      "owner": "plugin-foundation",
+      "sourceSha256": "2ec8302db70443ecb139358c90a03d9a39ce099809e37e44e14f7763961368fb",
+      "textAlternative": "The existing text alternative immediately following this diagram; retained visibly in publication."
+    },
+    {
+      "id": "diagram-9546393698719b4f",
+      "page": "extend/lint.md",
+      "index": 0,
+      "readerQuestion": "How does a lint request reach the selected engine and its governed result?",
+      "owner": "lint",
+      "sourceSha256": "71dd19957a0e8280b3c947bb2e1e9b27dcd8d732e024e92a4584d3285a8fdee0",
+      "textAlternative": "The existing text alternative immediately following this diagram; retained visibly in publication."
+    },
+    {
+      "id": "diagram-605a76cab20cfebf",
+      "page": "understand/worker-core.md",
+      "index": 0,
+      "readerQuestion": "Which ordered handoffs prepare, execute and clean up one Worker attempt?",
+      "owner": "Worker Core maintainers",
+      "sourceSha256": "081b30dad305f3906583b6b2b8f37a49e64a9a9c4b5c2c6767b7e9ee7157f224",
+      "textAlternative": "The existing text alternative immediately following this diagram; retained visibly in publication."
+    },
+    {
+      "id": "diagram-fa17e8be474839f8",
+      "page": "understand/worker-core.md",
+      "index": 1,
+      "readerQuestion": "Which Worker allocation states permit progress, cleanup or an unresolved stop?",
+      "owner": "Worker Core maintainers",
+      "sourceSha256": "4b8cdabcd972066bb94c5dea6dfbdbefc5dca61279dfabd125a2194b7a0c9fc7",
+      "textAlternative": "The existing text alternative immediately following this diagram; retained visibly in publication."
+    },
+    {
+      "id": "diagram-df5ab3f6a317ad1b",
+      "page": "understand/components-and-authority.md",
+      "index": 0,
+      "readerQuestion": "Which components control a run and which components return bounded facts?",
+      "owner": "platform architecture",
+      "sourceSha256": "3055085c9491cbf037f0336f5387501250125d0b2e055fe844e3a7a7d8a2e603",
+      "textAlternative": "The existing text alternative immediately following this diagram; retained visibly in publication."
+    },
+    {
+      "id": "diagram-ea45cd168e3309e3",
+      "page": "understand/components-and-authority.md",
+      "index": 1,
+      "readerQuestion": "What is packaged in the Nova role and what remains canonical Nova Core authority?",
+      "owner": "platform architecture",
+      "sourceSha256": "4b9cf421aa7f3f80185c0672601d1ae128e2c580375c5e49b1b10a329e1caec3",
+      "textAlternative": "The existing text alternative immediately following this diagram; retained visibly in publication."
+    },
+    {
+      "id": "diagram-5b05df08c6d4de49",
+      "page": "understand/components-and-authority.md",
+      "index": 2,
+      "readerQuestion": "How do registration, activation, context and adapter calls constrain one stage?",
+      "owner": "platform architecture",
+      "sourceSha256": "a02fdbf8a503f6bc18952fc7ed81b730369df9cfe0abcff83bd456161ff3eb26",
+      "textAlternative": "The existing text alternative immediately following this diagram; retained visibly in publication."
+    },
+    {
+      "id": "diagram-dfc5314e0b82b354",
+      "page": "understand/nova-core.md",
+      "index": 0,
+      "readerQuestion": "How does project input become a fixed definition, run snapshot and durable lifecycle evidence?",
+      "owner": "Nova maintainers",
+      "sourceSha256": "f11f3aa884b6ad428c583bf46650791b13300c96c7773535de2b2e3c7ebaec5b",
+      "textAlternative": "The existing text alternative immediately following this diagram; retained visibly in publication."
+    },
+    {
+      "id": "diagram-72c587181952cb2f",
+      "page": "understand/prism-runtime.md",
+      "index": 0,
+      "readerQuestion": "Which Prism runtime components hand work and results to one another?",
+      "owner": "Prism maintainers",
+      "sourceSha256": "29280289e119d0c86cf1468b220dfb74c74509f84727eb70fcee3c3d8407badd",
+      "textAlternative": "The existing text alternative immediately following this diagram; retained visibly in publication."
+    },
+    {
+      "id": "diagram-103d8eadfc4cc651",
+      "page": "understand/prism-runtime.md",
+      "index": 1,
+      "readerQuestion": "Which handoffs carry a design request from Studio to a recorded result?",
+      "owner": "Prism maintainers",
+      "sourceSha256": "c9450e366402e788fa61b6fbdc8672f00fbd06c06ba6c002d9ccd9b7b3722706",
+      "textAlternative": "The existing text alternative immediately following this diagram; retained visibly in publication."
+    },
+    {
+      "id": "diagram-6802ba43c34d2052",
+      "page": "understand/buster.md",
+      "index": 0,
+      "readerQuestion": "How does a resolved Buster plan become remote execution and verified result evidence?",
+      "owner": "buster",
+      "sourceSha256": "4ec5f1a5fe7df132faaf898d4ac11e4ab152ffe3957472dbe76485044fa71eb4",
+      "textAlternative": "The existing text alternative immediately following this diagram; retained visibly in publication."
+    },
+    {
+      "id": "diagram-4dc422d67c265fd9",
+      "page": "understand/platform-and-operations.md",
+      "index": 0,
+      "readerQuestion": "Which platform layers support workloads and which integrations remain optional?",
+      "owner": "platform architecture and operations",
+      "sourceSha256": "7efc03d785b75d867cbb6a6135b575ee5b1522cd55f72b2f7c84dc7b0ab06ddd",
+      "textAlternative": "The existing text alternative immediately following this diagram; retained visibly in publication."
+    },
+    {
+      "id": "diagram-e1d664febf645813",
+      "page": "understand/plugin-runtime.md",
+      "index": 0,
+      "readerQuestion": "How are plugin discovery, activation, invocation and external effects separated?",
+      "owner": "plugin-runtime maintainers",
+      "sourceSha256": "c768d35e14ff2f88260a608c5118572a874d02b17a3700ab37976903d096a14d",
+      "textAlternative": "The existing text alternative immediately following this diagram; retained visibly in publication."
+    },
+    {
+      "id": "diagram-894c4ee28dace602",
+      "page": "understand/deployment-and-trust.md",
+      "index": 0,
+      "readerQuestion": "Which protected connections join Nova, Buster and the Prism runtime?",
+      "owner": "platform architecture and operations",
+      "sourceSha256": "900f6b9f8bf1aa50d63def58affe720862a26e819be4b9c13334e0868b4a3618",
+      "textAlternative": "The existing text alternative immediately following this diagram; retained visibly in publication."
+    },
+    {
+      "id": "diagram-0f4497fd43eef4ed",
+      "page": "understand/deployment-and-trust.md",
+      "index": 1,
+      "readerQuestion": "Which component owns each durable store and artifact boundary?",
+      "owner": "platform architecture and operations",
+      "sourceSha256": "26d7660631323baf314e3621c36bd095ea8bacfdce608b68911fa5961873fe08",
+      "textAlternative": "The existing text alternative immediately following this diagram; retained visibly in publication."
+    },
+    {
+      "id": "diagram-3b52a062e077e074",
+      "page": "understand/telemetry.md",
+      "index": 0,
+      "readerQuestion": "Where do active telemetry producers send their supported event data?",
+      "owner": "observability maintainers",
+      "sourceSha256": "95197ebf9b9f766e37566c8b0ffbb8cceb985e311a595a9eb3c5f9275244076a",
+      "textAlternative": "The existing text alternative immediately following this diagram; retained visibly in publication."
+    },
+    {
+      "id": "diagram-0f029c30e10c4448",
+      "page": "understand/telemetry.md",
+      "index": 1,
+      "readerQuestion": "How does the OpenClaw agent-observability v1 path deliver its events?",
+      "owner": "observability maintainers",
+      "sourceSha256": "71e99d7f8e525b11857246175c66d5a9898d3f54378721b60ffda9cc6792bd97",
+      "textAlternative": "The existing text alternative immediately following this diagram; retained visibly in publication."
+    },
+    {
+      "id": "diagram-865c11cbad4bc6f0",
+      "page": "understand/telemetry.md",
+      "index": 2,
+      "readerQuestion": "How do deployed metrics and logs reach their configured storage and query services?",
+      "owner": "observability maintainers",
+      "sourceSha256": "9759b8bbf09bb81aecaa1776d7e2939a6fda4674135451c4b3d80709244bfc08",
+      "textAlternative": "The existing text alternative immediately following this diagram; retained visibly in publication."
+    },
+    {
+      "id": "diagram-11b058604e7e4129",
+      "page": "understand/security-and-trust.md",
+      "index": 0,
+      "readerQuestion": "Where are identity, transport, policy and credential trust boundaries enforced?",
+      "owner": "platform security and runtime maintainers",
+      "sourceSha256": "a88eb76c65b3c44af54288ff5e03aa387d46545bdb7df5606a60f2eaea1e2c12",
+      "textAlternative": "The existing text alternative immediately following this diagram; retained visibly in publication."
+    },
+    {
+      "id": "diagram-3bcb1bfe88a28c51",
+      "page": "understand/request-state-recovery.md",
+      "index": 0,
+      "readerQuestion": "How do normal project stages hand off implementation, review, tests and delivery?",
+      "owner": "Nova Core",
+      "sourceSha256": "9e1388cbda95e76125097ca38033e37d5b64fbc0345de06f127873e13b8b56d9",
+      "textAlternative": "The existing text alternative immediately following this diagram; retained visibly in publication."
+    },
+    {
+      "id": "diagram-3040be06a2ca5b14",
+      "page": "understand/request-state-recovery.md",
+      "index": 1,
+      "readerQuestion": "How do stage outcomes lead to retry, waiting, repair or terminal failure?",
+      "owner": "Nova Core",
+      "sourceSha256": "6349cdbb95de97788029bbfd0150b21cffa493160a25a750ed1eb008c37f31a7",
+      "textAlternative": "The existing text alternative immediately following this diagram; retained visibly in publication."
+    },
+    {
+      "id": "diagram-e9adf15cb5cf80b6",
+      "page": "understand/pipeline-dependencies.md",
+      "index": 0,
+      "readerQuestion": "Which data and infrastructure dependencies support the complete pipeline path?",
+      "owner": "platform architecture and pipeline owners",
+      "sourceSha256": "678d2a16813bfd173d9ba7a25758263014f23810374c98e47fe06e7b272fe967",
+      "textAlternative": "The existing text alternative immediately following this diagram; retained visibly in publication."
+    },
+    {
+      "id": "diagram-e8beb8435cf1a6fc",
+      "page": "understand/prism-data.md",
+      "index": 0,
+      "readerQuestion": "Which Prism stores and event paths own design, execution and artifact data?",
+      "owner": "Prism maintainers",
+      "sourceSha256": "a541d3c7c5c034a4784f1e59655372798775c02cfb28d8de7a5ef22f89cf81e8",
+      "textAlternative": "The existing text alternative immediately following this diagram; retained visibly in publication."
+    },
+    {
+      "id": "diagram-9b919d5135916a43",
+      "page": "understand/prism.md",
+      "index": 0,
+      "readerQuestion": "Which handoffs carry one request through Prism and back to its caller?",
+      "owner": "Prism maintainers",
+      "sourceSha256": "05a85528b7f19cb14bf25945f4144aa7bcc3b80b49b3f88a43f166a91be59fda",
+      "textAlternative": "The existing text alternative immediately following this diagram; retained visibly in publication."
+    },
+    {
+      "id": "diagram-aa13d9d4c599db83",
+      "page": "understand/buster-namespace-controller.md",
+      "index": 0,
+      "readerQuestion": "How does a namespace request become controlled Kubernetes workloads?",
+      "owner": "buster",
+      "sourceSha256": "53eb2d6825d794bea8817ee9b4efffa9af48e766ecbe86e23a0d442da8a6996f",
+      "textAlternative": "The existing text alternative immediately following this diagram; retained visibly in publication."
+    },
+    {
+      "id": "diagram-a7fdace370992a64",
+      "page": "understand/communication.md",
+      "index": 0,
+      "readerQuestion": "Which transports connect a Prism request to models, workers and event ingestion?",
+      "owner": "runtime and platform maintainers",
+      "sourceSha256": "d387f883b56deb3ad292cb8069330f438a511fe3e54140e359ce3b6acccdc4ef",
+      "textAlternative": "The existing text alternative immediately following this diagram; retained visibly in publication."
+    },
+    {
+      "id": "diagram-6e2b51e2c5b4e58e",
+      "page": "reference/images-and-digests.md",
+      "index": 0,
+      "readerQuestion": "How do source inputs become selected runtime code and image identities?",
+      "owner": "documentation; release owners select artifacts and workload owners verify deployment",
+      "sourceSha256": "a11e41e9804e010bb92ec3a8423dc7cdc70ceeb7c31ae442665e1b567f0796e2",
+      "textAlternative": "The existing text alternative immediately following this diagram; retained visibly in publication."
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "version": "mermaid12.2.0",
+  "primarySources": [
+    "https://mermaid.js.org/config/usage.html",
+    "https://mermaid.js.org/config/schema-docs/config.html"
+  ],
+  "decisions": [
+    "Keep all27existing diagram definitions/adjacent text; no new architecture views.",
+    "Neutral existing reader palette and offline DejaVu Sans; deterministic IDs and Source-specific seed.",
+    "Build-time SVG only, no runtime Mermaid or network; native scrollable view with visible text alternative and preserved source.",
+    "Strict rendering security, htmlLabelsfalse; reject scripts/foreignObject/external references in SVG.",
+    "Explicit reader question/owner/source hash registry for everydiagram.",
+    "Actual edge/meaning/visual review required separately; successful parsing is not diagram acceptance."
+  ]
+}

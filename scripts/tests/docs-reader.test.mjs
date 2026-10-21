@@ -141,3 +141,15 @@ test('publication recognizes metadata on every existing reader page, including s
     assert(!actual.includes('Last verified: generated during publication'), file);
   }
 });
+
+test('derived SVG assets stay locally linked, hashed and bounded by the static SVG validator', t => {
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'reader-diagram-')); t.after(() => fs.rmSync(root, { recursive: true, force: true }));
+  const asset = { path: 'diagrams/diagram-1234567890abcdef.svg', text: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 50"><text x="5" y="10">Input</text></svg>' };
+  const options = { outputRoot: root, pages: [{ relative: 'README.md', text: '# Reader\n\n<figure class="documentation-diagram"><div class="diagram-scroll" tabindex="0" role="region" aria-label="How does input flow?"><img src="diagrams/diagram-1234567890abcdef.svg" width="100" height="50" alt="Input flow"></div><figcaption>Text alternative follows.</figcaption></figure>\n' }], assets: [], generatedAssets: [asset], diagramManifest: { schemaVersion: 'fixture' }, revision: 'a'.repeat(40) };
+  const result = buildReader(options);
+  assert(result.outputs.some(item => item.path === asset.path)); assert(result.outputs.some(item => item.path === 'diagram-manifest.json'));
+  const html = fs.readFileSync(path.join(root, 'README.html'), 'utf8'); assert(html.includes('class="diagram-scroll"')); assert(html.includes('aria-label="How does input flow?"'));
+  const checker = fileURLToPath(new URL('../docs-reader/check-artifact.mjs', import.meta.url)); assert.equal(spawnSync(process.execPath, [checker, root]).status, 0);
+  assert.throws(() => buildReader({ ...options, generatedAssets: [{ ...asset, path: '../unsafe.svg' }] }));
+  assert.throws(() => buildReader({ ...options, generatedAssets: [{ ...asset, text: asset.text.replace('</svg>', '<script>run()</script></svg>') }] }));
+});
