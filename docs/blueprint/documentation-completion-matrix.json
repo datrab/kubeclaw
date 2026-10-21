@@ -3916,7 +3916,7 @@
     },
     {
       "id": "AP09-buster-lease-reference-20261020",
-      "revision": "113da57a37d25cd45f23d902728e87dcd1770f8c",
+      "revision": "2febcd995924bfd05961b1c41142c401205bf39e",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/review_first_project",
       "gateIds": [],
@@ -3928,24 +3928,26 @@
         "docs/site/reference/buster-namespace-lease.md"
       ],
       "sources": [
-        "charts/kubeclaw/templates/buster-namespace-lease-crd.yaml",
         "charts/kubeclaw/templates/buster-namespace-controller.yaml",
         "charts/kubeclaw/templates/buster-namespace-fence.yaml",
+        "charts/kubeclaw/templates/buster-namespace-lease-crd.yaml",
         "charts/kubeclaw/values.yaml",
-        "scripts/docs-buster-lease-receiver-contracts.mjs",
-        "scripts/tests/buster-lease-receiver.test.mjs",
-        "skills/buster/engine/test-gates/kubernetes-fixture-runtime.ts",
-        "cmd/buster-namespace-controller/main.go",
         "cmd/buster-namespace-controller/demo-credentials.go",
-        "cmd/buster-namespace-controller/demo-readiness.go",
-        "cmd/buster-namespace-controller/demo-readiness-sources.go",
-        "cmd/buster-namespace-controller/demo-readiness-lifecycle.go",
-        "cmd/buster-namespace-controller/demo-retention.go",
         "cmd/buster-namespace-controller/demo-product.go",
+        "cmd/buster-namespace-controller/demo-readiness-lifecycle.go",
+        "cmd/buster-namespace-controller/demo-readiness-sources.go",
+        "cmd/buster-namespace-controller/demo-readiness.go",
+        "cmd/buster-namespace-controller/demo-retention.go",
         "cmd/buster-namespace-controller/exposure-generation.go",
+        "cmd/buster-namespace-controller/main.go",
+        "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/namespace-final-output-observations.json",
+        "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/namespace-prior-impact-review.json",
+        "scripts/docs-buster-lease-receiver-contracts.mjs",
+        "scripts/docs-governance.mjs",
+        "scripts/tests/buster-lease-receiver.test.mjs",
         "scripts/tests/docs-publication-assets.test.mjs",
         "scripts/tests/docs-publication-links.test.mjs",
-        "scripts/docs-governance.mjs"
+        "skills/buster/engine/test-gates/kubernetes-fixture-runtime.ts"
       ],
       "checks": [
         {
@@ -3967,6 +3969,11 @@
           "command": "node scripts/docs-governance.mjs --check",
           "exitCode": 0,
           "observation": "167pagesmapped;maponlyaddsnewreference and acceptedfirstprojectmetadata."
+        },
+        {
+          "command": "Independent narrow three-record namespace source/search/layout preservation and current actual reader checkers",
+          "exitCode": 0,
+          "observation": "209output hashes;27freshSVGhashes;1667exactSourceexcerpts;three namespace widths/nativekeyboard/noJS/offline without findings. docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/namespace-prior-impact-review.json"
         }
       ],
       "review": {
@@ -3981,7 +3988,17 @@
         "StandardObjectMeta remains upstream;renderedpolicy andcontrollerfallbacks areseparatefromshippedtemplate values."
       ],
       "openIssues": [],
-      "verdict": "PASS"
+      "verdict": "PASS",
+      "revisionHistory": [
+        {
+          "revision": "113da57a37d25cd45f23d902728e87dcd1770f8c",
+          "changedFiles": [
+            "docs/site/understand/buster-namespace-controller.md"
+          ],
+          "review": "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/namespace-prior-impact-review.json",
+          "reason": "Narrow independent preservation only: same pinned namespace implementation, corrected initial credential/exposure ordering and distinct expiry/deletion finalizer paths; current actual artifact/search/Source/preview/fresh-render and three-width namespace browser proof. Existing accepted facts and limits retained; no broad historical reapproval."
+        }
+      ]
     },
     {
       "id": "AP09-complete-public-cli-20261020",
@@ -7754,7 +7771,7 @@
     },
     {
       "id": "AP09-complete-static-reader-search-20261021",
-      "revision": "8f775411fdd8e0232bdd45135accb61f23768f0b",
+      "revision": "2febcd995924bfd05961b1c41142c401205bf39e",
       "author": "Nova /root documentation author and implementation coordinator",
       "reviewer": "Independent Codex autoreview static-reader whole PUB-002 Source/reader-quality closeout",
       "verdict": "PASS",
@@ -7932,6 +7949,8 @@
         "docs/site/use/workflows/wait-resume.md"
       ],
       "sources": [
+        "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/namespace-final-output-observations.json",
+        "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/namespace-prior-impact-review.json",
         "docs/blueprint/acceptance-evidence/static-reader-closeout-20261021/committed-reader-observation.json",
         "docs/blueprint/acceptance-evidence/static-reader-closeout-20261021/reader-closeout-review.json",
         "docs/config/documentation-publication-manifest.json",
@@ -8005,6 +8024,11 @@
           "command": "Independent whole A91207 and narrow24-record changed-boundary review; original91tests and final actual Source/preview/SVG/browser proof",
           "exitCode": 0,
           "observation": "209output hashes,27freshSVGhashes,1660fresh excerpts; prior scoped facts and limits preserved without whole semantic/runtime reapproval. docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/whole-layout-and-prior-impact-review.json"
+        },
+        {
+          "command": "Independent narrow three-record namespace source/search/layout preservation and current actual reader checkers",
+          "exitCode": 0,
+          "observation": "209output hashes;27freshSVGhashes;1667exactSourceexcerpts;three namespace widths/nativekeyboard/noJS/offline without findings. docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/namespace-prior-impact-review.json"
         }
       ],
       "limits": [
@@ -8069,6 +8093,14 @@
             "scripts/tests/docs-reader.test.mjs"
           ],
           "review": "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/whole-layout-and-prior-impact-review.json"
+        },
+        {
+          "revision": "8f775411fdd8e0232bdd45135accb61f23768f0b",
+          "changedFiles": [
+            "docs/site/understand/buster-namespace-controller.md"
+          ],
+          "review": "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/namespace-prior-impact-review.json",
+          "reason": "Narrow independent preservation only: same pinned namespace implementation, corrected initial credential/exposure ordering and distinct expiry/deletion finalizer paths; current actual artifact/search/Source/preview/fresh-render and three-width namespace browser proof. Existing accepted facts and limits retained; no broad historical reapproval."
         }
       ]
     },
@@ -8505,7 +8537,7 @@
     },
     {
       "id": "AP09-complete-responsive-reader-layout-20261021",
-      "revision": "8f775411fdd8e0232bdd45135accb61f23768f0b",
+      "revision": "2febcd995924bfd05961b1c41142c401205bf39e",
       "author": "Nova /root documentation author and implementation coordinator",
       "reviewer": "Independent Codex autoreview whole A91207 responsive-layout closeout and narrow24-record prior-boundary preservation",
       "verdict": "PASS",
@@ -8519,18 +8551,6 @@
         "docs/site/understand/worker-core.md"
       ],
       "sources": [
-        "scripts/docs-publication.mjs",
-        "scripts/docs-reader/renderer.mjs",
-        "scripts/docs-reader/diagrams.mjs",
-        "scripts/docs-reader/check-diagrams.mjs",
-        "scripts/docs-reader/source-previews.mjs",
-        "scripts/docs-reader/source-links.mjs",
-        "scripts/docs-reader/package.json",
-        "scripts/docs-reader/package-lock.json",
-        "scripts/tests/docs-reader-diagrams.test.mjs",
-        "scripts/tests/docs-reader.test.mjs",
-        "scripts/docs-api-documentation-role-custody.mjs",
-        "docs/config/documentation-diagrams.json",
         ".github/workflows/docs-checks.yaml",
         "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corrected-axe-observations.json",
         "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corrected-browser-harness-provenance.json",
@@ -8580,13 +8600,27 @@
         "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/diagram-native-propagation.json",
         "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/diagram-reference-lock.json",
         "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/initial-semantic-review.json",
+        "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/namespace-final-output-observations.json",
+        "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/namespace-prior-impact-review.json",
         "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/precommit-observations.json",
         "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/prior-source-impact-records.json",
         "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/prism-readability-correction-review.json",
         "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/semantic-correction-source-observations.json",
         "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/semantic-review-capacity-failures.json",
         "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/system-and-confirmed-corrections-review.json",
-        "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/whole-layout-and-prior-impact-review.json"
+        "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/whole-layout-and-prior-impact-review.json",
+        "docs/config/documentation-diagrams.json",
+        "scripts/docs-api-documentation-role-custody.mjs",
+        "scripts/docs-publication.mjs",
+        "scripts/docs-reader/check-diagrams.mjs",
+        "scripts/docs-reader/diagrams.mjs",
+        "scripts/docs-reader/package-lock.json",
+        "scripts/docs-reader/package.json",
+        "scripts/docs-reader/renderer.mjs",
+        "scripts/docs-reader/source-links.mjs",
+        "scripts/docs-reader/source-previews.mjs",
+        "scripts/tests/docs-reader-diagrams.test.mjs",
+        "scripts/tests/docs-reader.test.mjs"
       ],
       "summary": "Whole A91207 responsive reader layout at320/768/1440: navigation,tables,code,27 registered static diagrams,callouts,search remain available without page overflow; focusable internally scrolling regions preserve full content and textual alternatives.",
       "review": {
@@ -8610,6 +8644,11 @@
           "command": "Original91custody/publication/reader tests and7workflowtrust checks; changed-doc/registry checks and code/correction reviews",
           "exitCode": 0,
           "observation": "91/91+7/7PASS;2precise native receipt renewals/60unchanged/2newDocroles;isolated lock source-input separately accounted. Root package/lock unchanged. Scoped semantic corrections independently clean."
+        },
+        {
+          "command": "Independent narrow three-record namespace source/search/layout preservation and current actual reader checkers",
+          "exitCode": 0,
+          "observation": "209output hashes;27freshSVGhashes;1667exactSourceexcerpts;three namespace widths/nativekeyboard/noJS/offline without findings. docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/namespace-prior-impact-review.json"
         }
       ],
       "limits": [
@@ -8618,7 +8657,17 @@
         "Native table/code/diagram internal horizontal scroll is intentional and focus/keyboard tested; no horizontal PAGE navigation.",
         "Global bundle-copier and three stale generated Helm phrases remain open."
       ],
-      "openIssues": []
+      "openIssues": [],
+      "revisionHistory": [
+        {
+          "revision": "8f775411fdd8e0232bdd45135accb61f23768f0b",
+          "changedFiles": [
+            "docs/config/documentation-diagrams.json"
+          ],
+          "review": "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/namespace-prior-impact-review.json",
+          "reason": "Narrow independent preservation only: same pinned namespace implementation, corrected initial credential/exposure ordering and distinct expiry/deletion finalizer paths; current actual artifact/search/Source/preview/fresh-render and three-width namespace browser proof. Existing accepted facts and limits retained; no broad historical reapproval."
+        }
+      ]
     }
   ],
   "purpose": "Internal planning and observed findings; not an acceptance ledger and not reader documentation.",
@@ -40762,7 +40811,7 @@
       "scope": "Author32Bash53Node20CJS24syntheticchecks only, noformal6scenario/live/ReaderQualityapproval."
     },
     "currentCloseout20261021": {
-      "securedSourceRevision": "8f775411fdd8e0232bdd45135accb61f23768f0b",
+      "securedSourceRevision": "2febcd995924bfd05961b1c41142c401205bf39e",
       "acceptedRequirements": 203,
       "acceptedGates": 17,
       "newRequirementsThisCampaign": 44,
@@ -40771,15 +40820,15 @@
       "codeCandidate": "912bbbd4: inertSource excerpts, exactSource/MD/HTMLreceipts,freshCLIcheck,unchangedoriginalsearch;88/88testsPASS,4preciserenewals/56unchanged/2newDocroles.",
       "currentGlobalBlocker": "API_PRODUCT_SCRIPT_OUTPUT_ROLE_UNQUALIFIED: scripts/build-runtime-role-bundle.mjs:74; copied opaque package/dependency payloads and caller-context coverage.",
       "publication": "Registered static SVG diagrams with explicit reader questions,owner,hashes,visible text alternatives;27fresh render matches and 209output hashes.501page+81diagram+27fallback+9axe checks. No whole semantic, humanAT or runtime approval.",
-      "scope": "203/261contents,17/89gates. A91207 responsive layout only; retained negative semantic/history boundaries.",
+      "scope": "203/261contents,17/89gates; no new count from scoped diagram correction.",
       "owner": "Nova, continuing the authorized PR13 request from Raven on2026-10-21",
       "workingTree": "Expected clean after checkpoint; verify before continuation. Never use obsolete dirty kubeclaw-documentation-cloud checkout as the current PR13 source.",
       "checkout": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery",
       "remoteBranch": "refs/heads/docs/documentation-overhaul",
       "review": {
-        "report": "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/whole-layout-and-prior-impact-review.json",
-        "result": "Whole A91207 and narrow24-record preservation clean.",
-        "limit": "PUB005/A91206 and humanAT/globalAPI not awarded."
+        "report": "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/namespace-prior-impact-review.json",
+        "result": "PASS narrow three-record changed-boundary preservation; prior complete A91207 retained.",
+        "limit": "No new whole diagram/humanAT/globalAPI/live approval."
       },
       "checks": [
         {
@@ -40797,7 +40846,8 @@
           "exitCode": 0,
           "observation": "91/91+7/7PASS;2precise native receipt renewals/60unchanged/2newDocroles;isolated lock source-input separately accounted. Root package/lock unchanged. Scoped semantic corrections independently clean."
         }
-      ]
+      ],
+      "diagramSourceProgress": "17/27 individual diagrams supported in documented pinned-source scope. Six system and four service edge proofs remain incomplete; wholePUB005/A91206 NOT_READY. Namespace initial provisioning vs Ready and TTL vs explicit deletion finalizer paths independently corrected; broad capacity failures retained."
     }
   },
   "productBoundaries": [
