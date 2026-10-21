@@ -222,7 +222,8 @@ PostgreSQL or the artifact store.
 | Ops MCP | `/healthz`, `/mcp` on loopback 8080; outbound `GET {kubernetesApiPath}` over configured API HTTPS origin | Shared MCP bearer and optional Origin allowlist; projected Kubernetes bearer, CA, and RBAC | Logs 64 KiB; Kubernetes 8 MiB/10 s; Hubble 2 MiB raw/12 s and 192 KiB compact flows array; metadata and the encoded MCP response are additional. See [the complete Ops MCP contract](ops-mcp.md). |
 | Archviewer | `/healthz`, static document paths on 3456 | Tailnet route plus Basic auth for documents | No directory listing; 401/403/404 fail closed. |
 | OCI registry | `/v2/` and OCI blob/manifest routes | Anonymous HTTP in the current lab service | Not suitable as the final production registry security posture. |
-| Local registry | `registry-local:5001` Service to container port 5000, `/v2/` health and OCI routes | Anonymous in the current lab | ReadWriteOncePod storage and one Recreate writer; no TLS or registry authentication. |
+| Direct retained-storage registry | `registry-local:5001` ClusterIP Service to container 5000, `/v2/` and OCI routes; selected namespace | Anonymous HTTP lab; no TLS or registry authentication | Explicit ReadWriteOncePod PVC and Recreate writer; delete/upload purging disabled. PVC survival and independent backup are separate. |
+| GitOps-adopted ephemeral registry | `registry-local.kubeclaw.svc:5001` to container 5000; NodePort 30051; `/v2/` and OCI routes | Anonymous HTTP lab; no TLS or registry authentication | No persistent data volume; deletion enabled. Pod replacement can lose all content; use the [profile-specific recovery boundary](#select-the-actual-writable-registry-profile). |
 | Docker Hub mirror | `registry-mirror:5000`, `/v2/` and pull-through OCI routes | Cluster network boundary; upstream Docker Hub policy applies | Cache is not source authority; a running mirror does not configure clients. |
 | Redis | `redis-master.kubeclaw.svc.cluster.local:6379` | Password; optional TLS is adapter-specific | Streams and dedup keys are bounded transport state, not canonical run state. |
 | Prism PostgreSQL | `prism-postgresql:5432` | Four chart-managed database identities and NetworkPolicy | Domain transactions stop when unavailable; restore database and artifact set to one recovery point. |
@@ -861,6 +862,45 @@ Docker Hub pulls on port 5000. A cache hit does not prove that a locally built
 image exists, and a pushed local image does not prove that clients use the
 mirror. Generated node, BuildKit, and runtime client configuration must select
 the correct endpoint explicitly.
+
+#### Select the actual writable-registry profile
+
+The same Service name does not imply the same retained image store. Both
+checked-in local profiles use anonymous HTTP; neither is an authenticated
+production registry. Select and record the actual profile before push, pull,
+restart, backup or recovery.
+
+| Selected path | Client endpoint and server image | Storage and recovery boundary |
+| --- | --- | --- |
+| Direct retained-storage lab template: `my-values/infra/registry-local.yaml`, rendered by `scripts/render-registry-local.mjs` | ClusterIP Service `registry-local` port 5001 to container 5000 in the operator-selected namespace; template image `registry:3.0.0` | Explicit storage class/capacity and `registry-local-data` ReadWriteOncePod PVC; Recreate deployment and separate writer/GC exclusion. This retains bytes through Pod replacement only while the selected PVC/storage survives. The image tag is not an immutable image digest. |
+| Existing GitOps adoption: `gitops/platform/registry-local/resources.yaml`, selected by `scripts/argocd-self-management.mjs` | `registry-local.kubeclaw.svc:5001` to container 5000, plus NodePort `<node-address>:30051`; image `registry:2` with IfNotPresent | No PVC or mounted persistent data volume; deletion is enabled. The writable container layer is ephemeral; Pod replacement can lose every manifest and layer. Neither the image tag nor Service readiness proves retained image availability. |
+
+The Argo bootstrap Application selects the GitOps path above; it does not
+render or adopt the retained-storage lab template. The direct renderer rejects
+an existing deployment without the expected data mount with
+`REGISTRY_EPHEMERAL_MIGRATION_REQUIRED`. Do not apply an empty PVC over an
+existing writable container layer or overwrite Argo ownership to bypass this
+boundary. Storage migration and ownership transfer require separate authorized
+procedures with retained original bytes and a verified rollback boundary.
+Deleting the retained PVC can also lose data according to its actual provider
+and reclaim policy; the repository does not establish an off-host backup.
+
+After loss of the ephemeral registry, running nodes may still cache some image
+content. That cache is neither a complete registry backup nor proof of a fresh
+pull. A prior successful push/manifest check proves only the earlier observation.
+Restore a verified independent copy of the exact manifest and all referenced
+layers if one exists, then verify the immutable digest and an uncached consuming
+node pull. Otherwise the owner must rebuild and publish through the original
+source/build-context/toolchain authority and verify the resulting digest.
+A rebuild need not reproduce the old digest. If it differs, use a new admitted
+release/result identity; do not relabel it as the earlier successful artifact.
+Keep unavailable old digests blocked instead of retrying pulls indefinitely.
+A Docker Hub mirror hit cannot reconstruct privately built missing content.
+
+Source: [direct storage template](https://github.com/datrab/kubeclaw/blob/d7f822c3cddd97e637aeca47f1cd49e87164ff87/my-values/infra/registry-local.yaml#L1-L106).
+[Direct renderer admission](https://github.com/datrab/kubeclaw/blob/d7f822c3cddd97e637aeca47f1cd49e87164ff87/scripts/render-registry-local.mjs#L21-L49) rejects the ephemeral predecessor.
+[GitOps selected workload and ports](https://github.com/datrab/kubeclaw/blob/d7f822c3cddd97e637aeca47f1cd49e87164ff87/gitops/platform/registry-local/resources.yaml#L1-L53) define the nonpersistent profile.
+[Argo source selection](https://github.com/datrab/kubeclaw/blob/d7f822c3cddd97e637aeca47f1cd49e87164ff87/scripts/argocd-self-management.mjs#L145-L158) chooses that separate directory.
 
 > **Source evidence — content and route wiring**
 >

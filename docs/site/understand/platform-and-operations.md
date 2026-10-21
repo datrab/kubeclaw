@@ -310,7 +310,7 @@ supplies a credential value after the non-secret endpoint has been selected.
 | LiteLLM PostgreSQL | Stop LiteLLM-dependent requests. Do not recreate keys or models from memory. | Restore and verify the database and encryption inputs, then run one authenticated configured model or embedding request. |
 | Prism PostgreSQL | Stop Prism mutations and agent admission. Do not construct current revision or job state from artifacts alone. | Restore the matched database-and-artifact recovery group, run migrations, verify Control readiness, and reconcile durable operations. |
 | Git origin | Stop a new clone or missing-object fetch. Do not replace the required commit with a newer branch head. | Restore access to the same commit, verify its object bytes, and continue with the recorded revision. |
-| Writable OCI registry | Stop push, manifest verification, and any pull that is not already proved locally. Do not change the expected digest. | Restore the retained registry, check whether the expected digest exists, then prove authenticated push/read/pull as applicable. |
+| Writable OCI registry | Stop push, manifest verification, and any pull that is not already proved locally. Do not change the expected digest. | Identify the profile. Restore verified retained content when available; after ephemeral loss use the [exact-content or new-release path](communication.md#select-the-actual-writable-registry-profile). Verify digest and fresh pull; never infer retained bytes from Service readiness. |
 | Docker Hub mirror | A cold upstream pull and the current role readiness check can stop. A cached digest can remain usable, but the cache is not source authority. | Restore the same route or atomically select an approved upstream route in both generated client configuration and role readiness. Prove a cold digest-pinned pull. |
 | Rootless BuildKit | Stop the build node. Do not treat a BuildKit process exit as proof that no manifest was pushed. | Check the registry by expected digest, repair host/rootless/socket prerequisites, start one worker, then resume with the same attempt identity. |
 | Tailscale | Stop private entry or the exposure consumer. Do not allocate a second route when the prior lease outcome is unknown. | Reconcile the exact Ingress or lease generation, restore OAuth/ACL/DNS/TLS, and prove the intended client path before reuse. |
@@ -386,10 +386,21 @@ features. It deletes the probe afterward and reports a cleanup failure.
 
 ## Writable Local OCI Registry
 
-`registry-local` is an anonymous HTTP laboratory service. It is not the future
-production registry design. The service listens inside the cluster, exposes
-port 5001 to clients, stores blobs on one retained volume, disables delete and
-upload purging, and uses a single `Recreate` replica.
+`registry-local` has two anonymous HTTP laboratory profiles. Neither is the
+future production registry design. Both expose Service port 5001 to container
+5000. Select the [actual profile and recovery boundary](communication.md#select-the-actual-writable-registry-profile)
+before maintenance:
+
+- The direct rendered template uses a selected ReadWriteOncePod PVC and one
+  `Recreate` replica. It disables deletion and upload purging. Pod replacement
+  retains bytes only while that PVC and its provider storage survive.
+- The active Argo adoption selects `gitops/platform/registry-local/resources.yaml`,
+  not that template. It uses `registry:2`, adds NodePort 30051, enables deletion
+  and mounts no persistent data volume. Pod replacement can lose every image.
+
+Neither profile provides an off-host image backup. Their image tags do not
+establish immutable server image digests. A cache on one consuming node does
+not restore the registry or prove an uncached pull.
 
 The explicit `http-lab` transport name prevents an operator from mistaking
 plain HTTP for ordinary production HTTPS. Credentials are forbidden on that
@@ -401,12 +412,25 @@ alerts, and negative access tests. That work remains on the roadmap.
 continue. New pushes, manifest verification, and pulls that need the registry
 stop. Do not change an expected digest to bypass an outage.
 
-**Capacity behavior:** Delete is disabled, so space does not recover
-automatically. Measure the volume, stop writers before storage repair, and use a
-registry-aware backup or garbage-collection procedure. Do not remove blob files
-directly.
+**Capacity behavior:** The direct retained profile disables deletion; it does
+not recover space automatically. Its owned maintenance procedure requires
+exclusive writer/garbage-collector access. The ephemeral GitOps profile enables
+deletion but supplies no persistent volume or verified backup/collector
+procedure. Deletion is not a retention or recovery guarantee. Measure actual
+storage, preserve the complete content group, and stop writers before repair.
+Do not remove blob files directly or apply a retained-storage manifest over the
+existing ephemeral workload.
+
+**Recovery:** First identify the selected profile. Restore a verified retained
+registry group when available. After ephemeral loss, follow the
+[exact-content restore or rebuilt-new-release boundary](communication.md#select-the-actual-writable-registry-profile).
+An earlier push receipt does not recreate missing manifests/layers. Verify the
+expected digest and a fresh consuming-node pull before resuming dependent work.
 
 > **Source evidence — explicit laboratory limits**
+>
+> [The Argo-selected workload has no data volume and enables deletion](https://github.com/datrab/kubeclaw/blob/d7f822c3cddd97e637aeca47f1cd49e87164ff87/gitops/platform/registry-local/resources.yaml#L1-L53).
+> [Its bootstrap Application selects that separate directory](https://github.com/datrab/kubeclaw/blob/d7f822c3cddd97e637aeca47f1cd49e87164ff87/gitops/platform/bootstrap/registry-local.yaml#L1-L24).
 >
 > [The manifest declares anonymous HTTP and one retained writer](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/my-values/infra/registry-local.yaml#L1-L55).
 >
@@ -787,7 +811,9 @@ Use this order because each later layer needs behavior from the earlier layer.
 3. Restore required Secrets without printing their values.
 4. Restore SPIRE and its Workload API when protected routes are enabled.
 5. Restore Redis and each separately owned PostgreSQL service.
-6. Restore the writable registry and verify its content before new builds.
+6. Recover the selected writable-registry profile and verify its content.
+   Ephemeral loss requires independent exact content or a newly admitted release;
+   neither a healthy Service nor an earlier push receipt restores bytes.
 7. Start Buster and its rootless BuildKit worker.
 8. Start LiteLLM when enabled and verify the selected route, not only `/health`.
 9. Start Nova, Buster, Prism, and their protected proxies.
@@ -809,7 +835,7 @@ process does not prove that Vertex credentials or quota permit one embedding.
 | Redis unavailable | Transport and projections stop. | Nova, Worker, Buster, and Prism owner records. | Restore Redis, then replay or reconcile from owners. |
 | Either PostgreSQL owner unavailable | LiteLLM or Prism state operations stop according to the failed database. | Nova/Buster state and the unaffected database owner. | Restore the correct database and its credentials; never cross-restore the two owners. |
 | Git origin unavailable | A new clone or missing-object fetch stops. | Exact commits already present in verified workspaces. | Restore the recorded revision; do not substitute a moving branch head. |
-| Writable registry unavailable | New push, verification, or cold pull stops. | Existing immutable digests and node-local images. | Restore registry and verify manifests. |
+| Writable registry unavailable | New push, verification, or cold pull stops. | Expected digest identities and available node-local bytes; the ephemeral profile may have lost registry content. | Use the selected-profile recovery rule; verify manifest/layers and a fresh pull. |
 | Pull-through mirror unavailable | Cache acceleration stops. | Upstream registry and digest pins. | Bypass only through an approved client configuration. |
 | BuildKit unavailable | Container builds stop. | Source snapshot and prior image artifacts. | Inspect BuildKit startup and host prerequisites. |
 | Tailscale unavailable | Private entry and exposure routes fail. | Cluster-local services and owner state. | Restore operator identity and route readiness. |

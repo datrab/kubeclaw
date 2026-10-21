@@ -1,0 +1,21 @@
+{
+  "checks": [
+    {
+      "command": "node scripts/docs-check-refs.mjs",
+      "exitCode": 0,
+      "observation": "docs reference check passed (6103 local links, 3295 local anchors, 8310 repository path refs, 31799 pinned source links)"
+    },
+    {
+      "command": "node scripts/docs-check.mjs",
+      "exitCode": 0,
+      "observation": "architecture presentation check passed (9 diagrams, 57 evidence boxes, 172 code links)\noperations evidence check passed (20 evidence boxes, 202 code links)\ndocs check passed (167 active markdown files)"
+    },
+    {
+      "command": "node scripts/docs-publication.mjs check",
+      "exitCode": 0,
+      "observation": "documentation publication passed (167 pages, 51 plugins)"
+    }
+  ],
+  "structuralCorrections": "Bootstrap citation end26 corrected to actual EOF24; same Source/claim. Quote continuation repaired in existing source-evidence box, no source/claim change. Relevant structural and reference checks PASS.",
+  "limits": "Documentation/source only; no global generation, browser, native host, live Tailnet/registry restore or cluster acceptance."
+}

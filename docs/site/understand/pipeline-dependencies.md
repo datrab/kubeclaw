@@ -251,8 +251,14 @@ The mirror cannot replace the writable registry.
 The writable registry cannot silently act as the public mirror.
 Their trust, retention, and failure behavior differ.
 
-The checked-in `registry-local` service is an anonymous HTTP lab implementation.
-It proves storage and image-lifetime mechanics, but it is not an authenticated production registry.
+The checked-in `registry-local` profiles are anonymous HTTP lab implementations.
+The direct renderer selects a ReadWriteOncePod-backed template; the active
+GitOps adoption selects a separate ephemeral `registry:2` workload without a PVC.
+Pod replacement in that GitOps profile can lose every manifest and layer.
+The two profiles also differ in Service exposure: GitOps adds NodePort 30051.
+Use the [profile, endpoint and recovery table](communication.md#select-the-actual-writable-registry-profile)
+before choosing backup, restart or image-pull recovery. Neither profile proves
+an authenticated production registry or an off-host image backup.
 The complete secure path needs an authenticated HTTPS registry through the same client contract.
 The [roadmap](../status/roadmap.md#production-grade-local-oci-registry) defines that replacement and its acceptance conditions.
 
@@ -299,7 +305,8 @@ A graph can expose a temporary Kubernetes fixture and return a typed HTTPS endpo
 An HTTP provider can then test that endpoint.
 
 The second use is private human or operator access.
-Prism Studio, Argo CD, and the Ops Pod can use private routes.
+Prism Studio and Argo CD can publish private routes.
+The optional Ops Tailscale sidecar provides outbound SOCKS access, not an inbound publication.
 Those routes do not own pipeline state.
 
 Tailscale is mandatory in the showcase deployment.
