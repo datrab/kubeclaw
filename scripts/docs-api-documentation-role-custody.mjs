@@ -26421,3 +26421,22 @@ export function reviewedImporterRelativeResolutionMetadata(root,source,bytes,tre
  if(!record||factory.getText(tree)!==record.factorySyntax||factory.parent?.parent?.getText(tree)!==record.terminalSyntax)fail('factory owner/terminal');
  return frozenRecipes({...record,terminalSha256:syntaxSha256(record.terminalSyntax)});
 }
+
+// Two audited importer-relative .resolve calls produce source-location metadata,
+// not executable module values or API bodies. This is operation classification,
+// not execution of Node's resolver and not a file/caller/fixture exemption.
+export function reviewedImporterResolutionOperation(root, source, bytes, tree, factory, recordDependency = () => {}) {
+  const metadata = reviewedImporterRelativeResolutionMetadata(root, source, bytes, tree, factory, recordDependency);
+  // The existing recipe binds the entire source, its source-reading helper,
+  // caller commands, both owner bodies, map guards, and immediate terminals.
+  // Changed maps, consumers, imports or extra factories therefore fail closed.
+  assert(['resolveRuntimeHelper', 'resolveSafeContract'].includes(metadata.owner),
+    'DOCUMENTATION_TOOL_GRAPH_UNQUALIFIED: unsupported resolution metadata owner');
+  return frozenRecipes({ ...metadata, operationQualification: {
+    role: 'resolution-only-source-location',
+    terminalSha256: metadata.terminalSha256,
+    sourceSha256: metadata.sourceSha256,
+    runtimeAcquisitionAuthorized: false,
+    remainingEffectsQualified: false,
+  } });
+}

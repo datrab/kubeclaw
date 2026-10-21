@@ -3,6 +3,8 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import test from 'node:test';
+import ts from 'typescript';
+import {reviewedImporterResolutionOperation} from '../docs-api-documentation-role-custody.mjs';
 import {spawnSync} from 'node:child_process';
 import {createHash} from 'node:crypto';
 import {discoverScriptApiOutputs,discoverScriptOutputRoleClassifications,discoverTransformedApiOutputs,discoverShellApiOutputs,producerAdapterOperationRecipe,shellRawOutputSinks,shellRawOutputOperationRecipe} from '../docs-api-output-discovery.mjs';
@@ -97,4 +99,36 @@ test('package argv distinguishes passive quoted mentions from actual inline Node
  assert.throws(discover,/GRAPH_UNQUALIFIED.*package.json.*run:inline.*inline or loader/);
  write('package.json',JSON.stringify({scripts:{'run:actual':"env MODE=fixture node 'examples/p.mjs'"}}));
  assert.equal(discover()[0].context.path,'examples/p.mjs');
+}));
+
+
+test('two source-bound resolver terminals classify only source-location metadata',()=>fixture(({root,write})=>{
+ const repository=path.resolve(new URL('../..',import.meta.url).pathname);
+ const source='tests/verification/contracts/check-plugin-system-v2-boundaries.mjs';
+ const dependencies=[source,'tests/verification/lib/module-graph.mjs','package.json'];
+ for(const file of dependencies)write(file,fs.readFileSync(path.join(repository,file),'utf8'));
+ const bytes=fs.readFileSync(path.join(root,source),'utf8');
+ const qualify=(input=bytes)=>{
+  const tree=ts.createSourceFile(source,input,ts.ScriptTarget.Latest,true,ts.ScriptKind.JS),factories=[];
+  const visit=node=>{if(ts.isCallExpression(node)&&ts.isIdentifier(node.expression)&&node.expression.text==='createRequire')factories.push(node);ts.forEachChild(node,visit);};visit(tree);
+  const recorded=new Set();
+  const result=factories.map(factory=>reviewedImporterResolutionOperation(root,source,input,tree,factory,file=>recorded.add(file)));
+  assert.deepEqual([...recorded].sort(),[...dependencies].sort());return result;
+ };
+ const result=qualify();assert.deepEqual(result.map(x=>x.owner),['resolveRuntimeHelper','resolveSafeContract']);
+ for(const item of result){assert.equal(item.operationQualification.role,'resolution-only-source-location');assert.equal(item.runtimeAcquisitionAuthorized,false);assert.equal(item.scannerAdmissionAuthorized,false);assert.equal(item.operationQualification.remainingEffectsQualified,false);assert.equal(Object.isFrozen(item),true);}
+ // Any changed producer, map, caller, consumer or loader flow needs a fresh
+ // source decision; refreshing a mutable boundary inventory cannot grant it.
+ for(const [before,after]of [
+  ['createRequire(pathToFileURL(importer)).resolve(specifier)','createRequire(pathToFileURL(importer))(specifier)'],
+  ['.resolve(specifier)','.resolve(specifier, {})'],
+  ['.resolve(specifier)',"['resolve'](specifier)"],
+  ['const expected = helperEntries.get(specifier);','const expected = helperEntries.get(specifier) || importer;'],
+  ['return { file, root: path.dirname(file), contract: true, helpers: true, helper: true };','return import(file);'],
+  ["from 'node:module'","from './foreign-module.mjs'"],
+  ['function resolveRuntimeHelper(specifier, importer, helperEntries) {','function resolveRuntimeHelper(specifier, importer, helperEntries, createRequire) {'],
+  ['const core = await import','const extra = createRequire(import.meta.url);\nconst core = await import'],
+ ]){assert(bytes.includes(before),before);assert.throws(()=>qualify(bytes.replace(before,after)),/RESOLUTION_METADATA_UNQUALIFIED|DOCUMENTATION_TOOL_GRAPH_UNQUALIFIED/);}
+ const helper='tests/verification/lib/module-graph.mjs',original=fs.readFileSync(path.join(root,helper),'utf8');write(helper,original+'\nexport const addedLoader = true;\n');assert.throws(()=>qualify(),/bound bytes/);write(helper,original);
+ const manifest=JSON.parse(fs.readFileSync(path.join(root,'package.json'),'utf8'));manifest.scripts['verify:migration:package-boundaries']+=' --import ./foreign-loader.mjs';write('package.json',JSON.stringify(manifest));assert.throws(()=>qualify(),/bound bytes/);
 }));

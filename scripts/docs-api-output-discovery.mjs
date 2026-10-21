@@ -10,7 +10,7 @@ import { spawnSync } from 'node:child_process';
 import YAML from 'yaml';
 import ts from 'typescript';
 import { shellHeredocCustody, shellCommandAcquisitions, shellNativeNodeEntries } from './docs-shell-source-custody.mjs';
-import { assertDocumentationExecutableRole, qualifiedRootNodeHarnessSources, expandReviewedNodePackageGlob, reviewedRootSelectedCompilerCapability, rootSelectedCompilerTarget, reviewedImporterRelativeResolutionMetadata } from './docs-api-documentation-role-custody.mjs';
+import { assertDocumentationExecutableRole, qualifiedRootNodeHarnessSources, expandReviewedNodePackageGlob, reviewedRootSelectedCompilerCapability, rootSelectedCompilerTarget, reviewedImporterResolutionOperation } from './docs-api-documentation-role-custody.mjs';
 import { createSerializedOutputRoleClassifier } from './docs-api-output-role-classification.mjs';
 
 const isRootSelectedCompilerCapability=value=>value?.kind==='root-selected-compiler-require';
@@ -35,6 +35,76 @@ const reviewedNodeModuleNamedImports=new Set(['createRequire','Module','default'
 // authority requires a Source-reviewed recipe change here, not a JSON digest
 // refresh. These recipes never permit unsupported capability custody.
 const reviewedDocumentationModuleInputRecipes = [
+  {
+    "source": "tests/verification/contracts/check-plugin-system-v2-phase11.mts",
+    "semanticClass": "fixed-repository-root-module-contract-check",
+    "recipeSha256": "09a03c7d5ec635368cea2243eacf5bc145495b389069f062b210cad05b0e7515"
+  },
+  {
+    "source": "tests/verification/contracts/check-plugin-system-v2-external-engine.mjs",
+    "semanticClass": "fixed-repository-module-contract-check",
+    "recipeSha256": "d30ec0ee8565b7455b5fffb6ff771b436ba752796e4692d35308c3037d2f35ea"
+  },
+  {
+    "source": "tests/verification/contracts/check-plugin-system-v2-isolation.mjs",
+    "semanticClass": "fixed-repository-module-contract-check",
+    "recipeSha256": "c49321afa50ff33a43c15bcb6134a65c62a7b7028a3857162d0d22bc65adf30d"
+  },
+  {
+    "source": "tests/verification/contracts/check-plugin-system-v2-capability-security.mjs",
+    "semanticClass": "fixed-repository-core-contract-check",
+    "recipeSha256": "bd22f3f4a596f18e88ff3e3e57af3658ca9e2c606b60409c6e739508a6747342"
+  },
+  {
+    "source": "tests/verification/contracts/check-plugin-system-v2-phase6.mjs",
+    "semanticClass": "fixed-repository-core-contract-check",
+    "recipeSha256": "fb97054aa6e17d7e2afd4e583de5108c89409ccb42fd6eea4b2eedd4b08cdd43"
+  },
+  {
+    "source": "tests/verification/contracts/check-plugin-system-v2-phase7.mjs",
+    "semanticClass": "fixed-repository-core-contract-check",
+    "recipeSha256": "a5ce2a5348461db8559f97e4f07ac5c7163eaf23a1e2ab859dae8fbc452445d4"
+  },
+  {
+    "source": "tests/verification/contracts/check-plugin-system-v2-capability-runtime.mjs",
+    "semanticClass": "fixed-repository-core-contract-check",
+    "recipeSha256": "4de487eac11a767cc3471c1803dc7b4c94f4912a42600077bb54503e92600f7d"
+  },
+  {
+    "source": "tests/verification/contracts/check-plugin-system-v2-e2e.mjs",
+    "semanticClass": "fixed-repository-core-contract-check",
+    "recipeSha256": "11831f8c1fa462ec7ed1a5c2de25f83a2d8cd6e3874733546450a704f69d1d44"
+  },
+  {
+    "source": "tests/verification/contracts/check-plugin-system-v2-import-safety.mjs",
+    "semanticClass": "fixed-repository-core-contract-check",
+    "recipeSha256": "d6e1ef8e7431dda795f32c437475d0777d4d83b3c65aa454586b467256ca7c2d"
+  },
+  {
+    "source": "tests/verification/contracts/check-plugin-system-v2-installation.mjs",
+    "semanticClass": "fixed-repository-core-contract-check",
+    "recipeSha256": "0d72467387b25971fbe81565d85c29527f222fa539401e47b6526de6ce4fae80"
+  },
+  {
+    "source": "tests/verification/contracts/check-plugin-system-v2-lifecycle.mjs",
+    "semanticClass": "fixed-repository-core-contract-check",
+    "recipeSha256": "9373f5cce77ac5553c030807613792ba82a2c82a2a452db67e167819fd5b6f24"
+  },
+  {
+    "source": "tests/verification/contracts/check-plugin-system-v2-platform-config.mjs",
+    "semanticClass": "fixed-repository-core-contract-check",
+    "recipeSha256": "5ce0605a9d81d4afd66eb004d4a75e49636c8742e7289a45ada76cf474d0d5fc"
+  },
+  {
+    "source": "tests/verification/contracts/check-plugin-system-v2-registry.mjs",
+    "semanticClass": "fixed-repository-core-contract-check",
+    "recipeSha256": "fcff4d8b68f697454e431a0393da48a6c42397275dd00cf485ea1bb840badc12"
+  },
+  {
+    "source": "tests/verification/contracts/check-plugin-system-v2-boundaries.mjs",
+    "semanticClass": "fixed-repository-core-contract-check",
+    "recipeSha256": "633ea8b341014f00d6f9310e1cb8b3ba1b22e6402b0e25039f816cc5b3b96884"
+  },
   {
     "source": "tests/verification/contracts/check-pipeline-visual-legacy-comparison.mts",
     "semanticClass": "fixed-git-legacy-visual-temp-module",
@@ -122,7 +192,7 @@ function documentationModuleInputAuthority(root,boundary,graph) {
     assert(!operation.unqualifiedCapabilityTransfer,`DOCUMENTATION_TOOL_GRAPH_UNQUALIFIED: ${operation.source}; unsupported ${operation.capability} custody: ${operation.expression}`);
     const recipe=recipes.find(recipe=>recipe.source===operation.source);
     const anchor=reviewedDocumentationModuleInputRecipes.find(anchor=>anchor.source===operation.source&&anchor.semanticClass===recipe?.semanticClass);
-    assert(anchor&&hash(JSON.stringify(recipe))===anchor.recipeSha256,`DOCUMENTATION_TOOL_GRAPH_UNQUALIFIED: ${operation.source}; unresolved operation has no reviewed semantic input authority`);
+    assert(anchor&&hash(JSON.stringify(recipe))===anchor.recipeSha256,`DOCUMENTATION_TOOL_GRAPH_UNQUALIFIED: ${operation.source}; unresolved operation has no reviewed semantic input authority: ${operation.expression}`);
     assert(recipe.operations.some(selected=>selected.expression===operation.expression&&selected.operationSha256===hash(operation.operation)),`DOCUMENTATION_TOOL_GRAPH_UNQUALIFIED: ${operation.source}; operation is outside its semantic input recipe`);
     const inputs=[{path:recipe.source,sha256:recipe.sourceSha256},...recipe.authorityInputs];
     for(const input of inputs) {
@@ -137,6 +207,18 @@ function documentationModuleInputAuthority(root,boundary,graph) {
       assert(!(boundary.qualifications??[]).some(record=>record.source===canonical),`DOCUMENTATION_TOOL_PUBLIC_CONSUMER_UNQUALIFIED: ${operation.source}; selected module resolves to qualified metadata: ${selected}`);
       facts.push({path:selected,canonical,sha256:hash(fs.readFileSync(file))});
     }
+  }
+  for(const operation of graph.resolutionOnlyOperations??[]) {
+    const metadata=operation.metadata,qualification=metadata.operationQualification;
+    assert(metadata.kind==='importer-relative-resolution-only-metadata'
+      &&qualification?.role==='resolution-only-source-location'
+      &&qualification.terminalSha256===metadata.terminalSha256
+      &&qualification.sourceSha256===metadata.sourceSha256
+      &&qualification.runtimeAcquisitionAuthorized===false
+      &&qualification.remainingEffectsQualified===false,
+      `DOCUMENTATION_TOOL_GRAPH_UNQUALIFIED: ${operation.source}; invalid resolution-operation qualification`);
+    facts.push({source:operation.source,sourceSha256:metadata.sourceSha256,
+      owner:metadata.owner,terminalSha256:metadata.terminalSha256,qualification});
   }
   for(const dependency of graph.installedFoundationDependencies??[]) {
     assert(dependency.capabilityKind==='root-selected-compiler-require'&&dependency.runtimeAcquisitionAuthorized===false,`DOCUMENTATION_TOOL_GRAPH_UNQUALIFIED: installed foundation boundary`);
@@ -302,7 +384,7 @@ function documentationModuleGraph(root,packageBytes,boundary={}) {
   const cacheInputs=[...inputs];
   if(cached)for(const source of cached.closureSources)if(!files.includes(source)&&fs.existsSync(path.join(root,source))){canonicalDependency(source);cacheInputs.push([source,fs.readFileSync(path.join(root,source))]);}
   const reusable=reusableDocumentationGraph(cached,cacheInputs);if(reusable)return reusable;
-  const edges=[],installedFoundationDependencies=[],installedFoundationDependencyPaths=new Set(),dynamicOperations=[],unresolvedLocalOperations=[],aliases=[...directoryAliases,...rootAliases,...seedAliases],dependencyPaths=new Set([...seedPaths,...rootPaths]);
+  const edges=[],installedFoundationDependencies=[],installedFoundationDependencyPaths=new Set(),dynamicOperations=[],resolutionOnlyOperations=[],unresolvedLocalOperations=[],aliases=[...directoryAliases,...rootAliases,...seedAliases],dependencyPaths=new Set([...seedPaths,...rootPaths]);
   // The calling module's nearest package is the sole self-reference authority.
   // Missing intervening package files are cache inputs too: adding a boundary
   // must invalidate an already admitted closure.
@@ -438,7 +520,7 @@ function documentationModuleGraph(root,packageBytes,boundary={}) {
           // alias, bound argument, or computed URL and resolve its loads here.
           const forwarding=propertyOf(node.expression);
           const base=forwarding==='call'?node.arguments[1]:forwarding==='apply'&&node.arguments[1]&&ts.isArrayLiteralExpression(node.arguments[1])&&!node.arguments[1].elements.some(ts.isSpreadElement)?node.arguments[1].elements[0]:node.arguments[0];
-          if(forwarding!=='call'&&forwarding!=='apply'&&forwarding!=='bind'&&capability==='create-require'&&!(base&&ts.isPropertyAccessExpression(base)&&base.name.text==='url'&&ts.isMetaProperty(base.expression)))return source==='tests/verification/contracts/check-plugin-system-v2-boundaries.mjs'?reviewedImporterRelativeResolutionMetadata(root,source,bytes,tree,node,dependency=>dependencyPaths.add(dependency)):reviewedRootSelectedCompilerCapability(source,bytes,tree,node);
+          if(forwarding!=='call'&&forwarding!=='apply'&&forwarding!=='bind'&&capability==='create-require'&&!(base&&ts.isPropertyAccessExpression(base)&&base.name.text==='url'&&ts.isMetaProperty(base.expression)))return source==='tests/verification/contracts/check-plugin-system-v2-boundaries.mjs'?reviewedImporterResolutionOperation(root,source,bytes,tree,node,dependency=>dependencyPaths.add(dependency)):reviewedRootSelectedCompilerCapability(source,bytes,tree,node);
           assert(forwarding!=='bind'&&capability!=='create-require-forwarder'&&base&&ts.isPropertyAccessExpression(base)&&base.name.text==='url'&&ts.isMetaProperty(base.expression)&&base.expression.keywordToken===ts.SyntaxKind.ImportKeyword&&base.expression.name.text==='meta',`DOCUMENTATION_TOOL_GRAPH_UNQUALIFIED: ${source}; unsupported createRequire factory base: ${node.getText(tree)}; expected exact import.meta.url`);
           return 'require';
         }
@@ -501,7 +583,16 @@ function documentationModuleGraph(root,packageBytes,boundary={}) {
     function visit(node) {
       if(ts.isExportDeclaration(node)&&node.moduleSpecifier&&['module','node:module'].includes(literal(node.moduleSpecifier)))dynamicOperations.push({source,expression:node.getText(tree),operation:node.getText(tree),hints:[],unqualifiedCapabilityTransfer:true,capability:'node-module-export'});
       const capability=loaderCapability(node);
-      if(isImporterResolutionMetadata(capability))dynamicOperations.push({source,expression:node.parent.parent.getText(tree),operation:node.parent.parent.getText(tree),hints:[],unqualifiedCapabilityTransfer:true,capability:'importer-relative-resolution-effects-unqualified',resolutionOnlyMetadata:capability});
+      if(isImporterResolutionMetadata(capability)) {
+        const qualification=capability.operationQualification;
+        if(qualification?.role==='resolution-only-source-location'
+          &&qualification.terminalSha256===capability.terminalSha256
+          &&qualification.sourceSha256===capability.sourceSha256
+          &&qualification.runtimeAcquisitionAuthorized===false
+          &&qualification.remainingEffectsQualified===false) {
+          resolutionOnlyOperations.push({source,expression:node.parent.parent.getText(tree),metadata:capability});
+        } else dynamicOperations.push({source,expression:node.parent.parent.getText(tree),operation:node.parent.parent.getText(tree),hints:[],unqualifiedCapabilityTransfer:true,capability:'importer-relative-resolution-effects-unqualified',resolutionOnlyMetadata:capability});
+      }
       if(capability&&!capabilityCustodyQualified(node,capability))dynamicOperations.push({source,expression:node.getText(tree),operation:node.parent?.getText(tree)??node.getText(tree),hints:[],unqualifiedCapabilityTransfer:true,capability});
       let argument,kind;
       if((ts.isImportDeclaration(node)||ts.isExportDeclaration(node))&&node.moduleSpecifier){argument=node.moduleSpecifier;kind=ts.isImportDeclaration(node)?'import':'re-export';}
@@ -539,7 +630,7 @@ function documentationModuleGraph(root,packageBytes,boundary={}) {
     }}
   }
   dynamicOperations.push(...unresolvedLocalOperations.filter(operation=>finiteClosure.has(operation.source)));
-  const graph={inputKey:graphKey(inputs,dependencyPaths,installedFoundationDependencies),edges,installedFoundationDependencies,installedFoundationDependencyPaths:[...installedFoundationDependencyPaths].sort(),dynamicOperations,aliases,publicEntries,closureSources:[...files],executableSources:files.filter(source=>sourceClasses.get(source)!=='passive-json'),dependencyPaths:[...dependencyPaths]};documentationGraphCache.set(root,graph);return graph;
+  const graph={inputKey:graphKey(inputs,dependencyPaths,installedFoundationDependencies),edges,installedFoundationDependencies,installedFoundationDependencyPaths:[...installedFoundationDependencyPaths].sort(),dynamicOperations,resolutionOnlyOperations,aliases,publicEntries,closureSources:[...files],executableSources:files.filter(source=>sourceClasses.get(source)!=='passive-json'),dependencyPaths:[...dependencyPaths]};documentationGraphCache.set(root,graph);return graph;
 }
 const documentationEdgeOrder=(a,b)=>a.source.localeCompare(b.source)||a.target.localeCompare(b.target)||a.kind.localeCompare(b.kind)||a.operation.localeCompare(b.operation);
 // A mutable registry records reviewed facts; it cannot authorize a new output

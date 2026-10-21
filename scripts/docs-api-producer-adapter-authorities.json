@@ -68943,6 +68943,357 @@
           ]
         },
         "authorityInputs": []
+      },
+      {
+        "source": "tests/verification/contracts/check-plugin-system-v2-boundaries.mjs",
+        "semanticClass": "fixed-repository-core-contract-check",
+        "sourceSha256": "1f260d6fba7913e7939c025277acb2bd4ca11f2626f0ee37ccc03580c5f88ddb",
+        "operations": [
+          {
+            "expression": "import(pathToFileURL(path.resolve('skills/nova/core/src/index.ts')).href)",
+            "operationSha256": "889d35a5cff7b6cfb752b6cf89f7b7ff27f8807ccca483ee4edb8a57743fdc5b"
+          }
+        ],
+        "inputConstraints": {
+          "root": "repository cwd selected by bound native package caller; static source classification, not runtime loading",
+          "modulePaths": [
+            "skills/nova/core/src/index.ts"
+          ]
+        },
+        "authorityInputs": [
+          {
+            "path": "tests/verification/lib/module-graph.mjs",
+            "sha256": "00036fa99dd7400998d583771d67278b626dda02d14f7c6b4be85137fcf8ae86"
+          },
+          {
+            "path": "package.json",
+            "sha256": "602c41b16a66c10ba9e7385ddb12bb9e1cf9227183374acbe987198640ed4cab"
+          }
+        ]
+      },
+      {
+        "source": "tests/verification/contracts/check-plugin-system-v2-capability-runtime.mjs",
+        "semanticClass": "fixed-repository-core-contract-check",
+        "sourceSha256": "a95d89e760798856fc01c20c5e22458812f6748d4c15b6c8b649deef8381cab6",
+        "operations": [
+          {
+            "expression": "import(pathToFileURL(path.resolve('skills/nova/core/src/index.ts')).href)",
+            "operationSha256": "889d35a5cff7b6cfb752b6cf89f7b7ff27f8807ccca483ee4edb8a57743fdc5b"
+          }
+        ],
+        "inputConstraints": {
+          "root": "repository cwd selected by bound native package caller; static source classification, not runtime loading",
+          "modulePaths": [
+            "skills/nova/core/src/index.ts"
+          ]
+        },
+        "authorityInputs": [
+          {
+            "path": "package.json",
+            "sha256": "602c41b16a66c10ba9e7385ddb12bb9e1cf9227183374acbe987198640ed4cab"
+          }
+        ]
+      },
+      {
+        "source": "tests/verification/contracts/check-plugin-system-v2-e2e.mjs",
+        "semanticClass": "fixed-repository-core-contract-check",
+        "sourceSha256": "262e63020acc361a9c5e47bff4408414a1d49d73e12b35da93f25697b91a5fc1",
+        "operations": [
+          {
+            "expression": "import(pathToFileURL(path.resolve('skills/nova/core/src/index.ts')).href)",
+            "operationSha256": "889d35a5cff7b6cfb752b6cf89f7b7ff27f8807ccca483ee4edb8a57743fdc5b"
+          }
+        ],
+        "inputConstraints": {
+          "root": "repository cwd selected by bound native package caller; static source classification, not runtime loading",
+          "modulePaths": [
+            "skills/nova/core/src/index.ts"
+          ]
+        },
+        "authorityInputs": [
+          {
+            "path": "package.json",
+            "sha256": "602c41b16a66c10ba9e7385ddb12bb9e1cf9227183374acbe987198640ed4cab"
+          }
+        ]
+      },
+      {
+        "source": "tests/verification/contracts/check-plugin-system-v2-import-safety.mjs",
+        "semanticClass": "fixed-repository-core-contract-check",
+        "sourceSha256": "a65c62186340e0c95f7a6371bc58ce48cb00ee69e60589a076a5638987b3ccd3",
+        "operations": [
+          {
+            "expression": "import(pathToFileURL(path.resolve('skills/nova/core/src/index.ts')).href)",
+            "operationSha256": "889d35a5cff7b6cfb752b6cf89f7b7ff27f8807ccca483ee4edb8a57743fdc5b"
+          }
+        ],
+        "inputConstraints": {
+          "root": "repository cwd selected by bound native package caller; static source classification, not runtime loading",
+          "modulePaths": [
+            "skills/nova/core/src/index.ts"
+          ]
+        },
+        "authorityInputs": [
+          {
+            "path": "package.json",
+            "sha256": "602c41b16a66c10ba9e7385ddb12bb9e1cf9227183374acbe987198640ed4cab"
+          }
+        ]
+      },
+      {
+        "source": "tests/verification/contracts/check-plugin-system-v2-installation.mjs",
+        "semanticClass": "fixed-repository-core-contract-check",
+        "sourceSha256": "728dfa855640d0988c7da2fd63496006626de30e180f73a7d22de59439d771b4",
+        "operations": [
+          {
+            "expression": "import(pathToFileURL(path.resolve('skills/nova/core/src/index.ts')).href)",
+            "operationSha256": "889d35a5cff7b6cfb752b6cf89f7b7ff27f8807ccca483ee4edb8a57743fdc5b"
+          },
+          {
+            "expression": "import(\n  pathToFileURL(path.resolve('skills/common/plugin-runtime/foundation/registry/digest.ts')).href\n)",
+            "operationSha256": "09e8c611e647b7be6bac31e7ea09ff64f59a566d17ffe07bc4aa3744d0b4e6d0"
+          }
+        ],
+        "inputConstraints": {
+          "root": "repository cwd selected by bound native package caller; static source classification, not runtime loading",
+          "modulePaths": [
+            "skills/nova/core/src/index.ts",
+            "skills/common/plugin-runtime/foundation/registry/digest.ts"
+          ]
+        },
+        "authorityInputs": [
+          {
+            "path": "package.json",
+            "sha256": "602c41b16a66c10ba9e7385ddb12bb9e1cf9227183374acbe987198640ed4cab"
+          }
+        ]
+      },
+      {
+        "source": "tests/verification/contracts/check-plugin-system-v2-lifecycle.mjs",
+        "semanticClass": "fixed-repository-core-contract-check",
+        "sourceSha256": "fb7e0fa9c7198047423710cf304e260fd0a3354c2d9309b7307362bdb2c980bf",
+        "operations": [
+          {
+            "expression": "import(pathToFileURL(path.resolve('skills/nova/core/src/index.ts')).href)",
+            "operationSha256": "889d35a5cff7b6cfb752b6cf89f7b7ff27f8807ccca483ee4edb8a57743fdc5b"
+          }
+        ],
+        "inputConstraints": {
+          "root": "repository cwd selected by bound native package caller; static source classification, not runtime loading",
+          "modulePaths": [
+            "skills/nova/core/src/index.ts"
+          ]
+        },
+        "authorityInputs": [
+          {
+            "path": "package.json",
+            "sha256": "602c41b16a66c10ba9e7385ddb12bb9e1cf9227183374acbe987198640ed4cab"
+          }
+        ]
+      },
+      {
+        "source": "tests/verification/contracts/check-plugin-system-v2-platform-config.mjs",
+        "semanticClass": "fixed-repository-core-contract-check",
+        "sourceSha256": "99738b9cf1161f814a29cd259595e18f37c7c878d3d2098300d8bb041662c2c7",
+        "operations": [
+          {
+            "expression": "import(pathToFileURL(path.resolve('skills/nova/core/src/index.ts')).href)",
+            "operationSha256": "889d35a5cff7b6cfb752b6cf89f7b7ff27f8807ccca483ee4edb8a57743fdc5b"
+          }
+        ],
+        "inputConstraints": {
+          "root": "repository cwd selected by bound native package caller; static source classification, not runtime loading",
+          "modulePaths": [
+            "skills/nova/core/src/index.ts"
+          ]
+        },
+        "authorityInputs": [
+          {
+            "path": "package.json",
+            "sha256": "602c41b16a66c10ba9e7385ddb12bb9e1cf9227183374acbe987198640ed4cab"
+          }
+        ]
+      },
+      {
+        "source": "tests/verification/contracts/check-plugin-system-v2-registry.mjs",
+        "semanticClass": "fixed-repository-core-contract-check",
+        "sourceSha256": "85bca16cfef54d9479cf4443119d2b061909ac19a603e216dc101f8f64cfd4dd",
+        "operations": [
+          {
+            "expression": "import(pathToFileURL(path.resolve('skills/nova/core/src/index.ts')).href)",
+            "operationSha256": "889d35a5cff7b6cfb752b6cf89f7b7ff27f8807ccca483ee4edb8a57743fdc5b"
+          }
+        ],
+        "inputConstraints": {
+          "root": "repository cwd selected by bound native package caller; static source classification, not runtime loading",
+          "modulePaths": [
+            "skills/nova/core/src/index.ts"
+          ]
+        },
+        "authorityInputs": [
+          {
+            "path": "package.json",
+            "sha256": "602c41b16a66c10ba9e7385ddb12bb9e1cf9227183374acbe987198640ed4cab"
+          }
+        ]
+      },
+      {
+        "source": "tests/verification/contracts/check-plugin-system-v2-capability-security.mjs",
+        "semanticClass": "fixed-repository-core-contract-check",
+        "sourceSha256": "9dd563ddbfa0c5d41bea7dc9d524ee9906e2f8e62f4d8fb661206df2efa53ed7",
+        "operations": [
+          {
+            "expression": "import(pathToFileURL(\n  path.resolve('skills/nova/core/src/index.ts'),\n).href)",
+            "operationSha256": "b85b66f28ec93d86b284c9485cc97218a276d56c1d52ecdba20d9496b0dc0567"
+          }
+        ],
+        "inputConstraints": {
+          "root": "repository cwd selected by bound native package caller; static source classification, not runtime loading",
+          "modulePaths": [
+            "skills/nova/core/src/index.ts"
+          ]
+        },
+        "authorityInputs": [
+          {
+            "path": "package.json",
+            "sha256": "602c41b16a66c10ba9e7385ddb12bb9e1cf9227183374acbe987198640ed4cab"
+          }
+        ]
+      },
+      {
+        "source": "tests/verification/contracts/check-plugin-system-v2-phase6.mjs",
+        "semanticClass": "fixed-repository-core-contract-check",
+        "sourceSha256": "26499c11e9fdd8742a9b47cd1c3b000458b3fc250b64d16df9ea1b39cf5a58fa",
+        "operations": [
+          {
+            "expression": "import(pathToFileURL(\n  path.resolve('skills/nova/core/src/index.ts'),\n).href)",
+            "operationSha256": "b85b66f28ec93d86b284c9485cc97218a276d56c1d52ecdba20d9496b0dc0567"
+          },
+          {
+            "expression": "import(pathToFileURL(\n  path.resolve('skills/nova/core/execution/engine-snapshots.ts'),\n).href)",
+            "operationSha256": "a361f79337e54dad60f0661742503a0dea562ed2a3057aea521f0202911a4b36"
+          },
+          {
+            "expression": "import(pathToFileURL(\n  path.resolve('skills/nova/core/execution/run-root.ts'),\n).href)",
+            "operationSha256": "a85f1967d10e57cf675ab004087ec646d216f590fcd6365bbfd387cd43eb1387"
+          }
+        ],
+        "inputConstraints": {
+          "root": "repository cwd selected by bound native package caller; static source classification, not runtime loading",
+          "modulePaths": [
+            "skills/nova/core/src/index.ts",
+            "skills/nova/core/execution/engine-snapshots.ts",
+            "skills/nova/core/execution/run-root.ts"
+          ]
+        },
+        "authorityInputs": [
+          {
+            "path": "package.json",
+            "sha256": "602c41b16a66c10ba9e7385ddb12bb9e1cf9227183374acbe987198640ed4cab"
+          }
+        ]
+      },
+      {
+        "source": "tests/verification/contracts/check-plugin-system-v2-phase7.mjs",
+        "semanticClass": "fixed-repository-core-contract-check",
+        "sourceSha256": "c2807725e1f6f00a0a5d134b6c0707d3c495d3b3b5231bba9e8d056c073da089",
+        "operations": [
+          {
+            "expression": "import(pathToFileURL(\n  path.resolve('skills/nova/core/src/index.ts'),\n).href)",
+            "operationSha256": "b85b66f28ec93d86b284c9485cc97218a276d56c1d52ecdba20d9496b0dc0567"
+          }
+        ],
+        "inputConstraints": {
+          "root": "repository cwd selected by bound native package caller; static source classification, not runtime loading",
+          "modulePaths": [
+            "skills/nova/core/src/index.ts"
+          ]
+        },
+        "authorityInputs": [
+          {
+            "path": "package.json",
+            "sha256": "602c41b16a66c10ba9e7385ddb12bb9e1cf9227183374acbe987198640ed4cab"
+          }
+        ]
+      },
+      {
+        "source": "tests/verification/contracts/check-plugin-system-v2-external-engine.mjs",
+        "semanticClass": "fixed-repository-module-contract-check",
+        "sourceSha256": "cc5bd5cb37876e9ceca3492e4ce738be6f710a0c5eaa01d20aaed68e1a242a07",
+        "operations": [
+          {
+            "expression": "import(\n  pathToFileURL(path.resolve('skills/nova/core/execution/engine.ts')).href\n)",
+            "operationSha256": "f64cf53adb48ac6df52464b11d33b0d49d24ff81e68419d5e64ee090fbd49ce9"
+          },
+          {
+            "expression": "import(\n  pathToFileURL(path.resolve('skills/common/plugin-runtime/foundation/registry/digest.ts')).href\n)",
+            "operationSha256": "09e8c611e647b7be6bac31e7ea09ff64f59a566d17ffe07bc4aa3744d0b4e6d0"
+          }
+        ],
+        "inputConstraints": {
+          "root": "repository cwd selected by bound native package caller; static source classification, not runtime loading",
+          "modulePaths": [
+            "skills/nova/core/execution/engine.ts",
+            "skills/common/plugin-runtime/foundation/registry/digest.ts"
+          ]
+        },
+        "authorityInputs": [
+          {
+            "path": "package.json",
+            "sha256": "602c41b16a66c10ba9e7385ddb12bb9e1cf9227183374acbe987198640ed4cab"
+          }
+        ]
+      },
+      {
+        "source": "tests/verification/contracts/check-plugin-system-v2-isolation.mjs",
+        "semanticClass": "fixed-repository-module-contract-check",
+        "sourceSha256": "263f5fa0b7c41393b0782d8e626bea9cec831d0aef61eb8e23506e6fcc4b7e9d",
+        "operations": [
+          {
+            "expression": "import(\n  pathToFileURL(path.resolve('skills/common/plugin-runtime/foundation/isolation/runner.ts')).href\n)",
+            "operationSha256": "970ec726dbfbda48b319202cbd6750df8d566a1179ecda67fe75c126a4c95ec2"
+          }
+        ],
+        "inputConstraints": {
+          "root": "repository cwd selected by bound native package caller; static source classification, not runtime loading",
+          "modulePaths": [
+            "skills/common/plugin-runtime/foundation/isolation/runner.ts"
+          ]
+        },
+        "authorityInputs": [
+          {
+            "path": "package.json",
+            "sha256": "602c41b16a66c10ba9e7385ddb12bb9e1cf9227183374acbe987198640ed4cab"
+          }
+        ]
+      },
+      {
+        "source": "tests/verification/contracts/check-plugin-system-v2-phase11.mts",
+        "semanticClass": "fixed-repository-root-module-contract-check",
+        "sourceSha256": "a2d4dfd0e0f5695ecadf537161cf811af5c139494a64a6b917ea1167bb287a70",
+        "operations": [
+          {
+            "expression": "import(pathToFileURL(path.join(\n  root,\n  'skills/nova/core/src/index.ts',\n)).href)",
+            "operationSha256": "e8f74385e9785e6694c345674762012783894301e8062b9d6af395441b289d9f"
+          },
+          {
+            "expression": "import(pathToFileURL(path.join(\n  root,\n  'skills/common/plugin-runtime/foundation/registry/digest.ts',\n)).href)",
+            "operationSha256": "8e830b795402c27f33e62db6373b497b35d4387e649e198d3d200d84e5289872"
+          }
+        ],
+        "inputConstraints": {
+          "root": "const root = path.resolve('.'); before imports; native package caller repository cwd",
+          "modulePaths": [
+            "skills/nova/core/src/index.ts",
+            "skills/common/plugin-runtime/foundation/registry/digest.ts"
+          ]
+        },
+        "authorityInputs": [
+          {
+            "path": "package.json",
+            "sha256": "602c41b16a66c10ba9e7385ddb12bb9e1cf9227183374acbe987198640ed4cab"
+          }
+        ]
       }
     ]
   }
