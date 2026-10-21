@@ -187,17 +187,17 @@
         {
           "key": "existingSecret",
           "value": "openclaw-shared-secrets",
-          "line": 47
+          "line": 48
         },
         {
           "key": "secretName",
           "value": "openclaw-shared-secrets",
-          "line": 61
+          "line": 62
         },
         {
           "key": "secretName",
           "value": "git-deploy-key-buster",
-          "line": 68
+          "line": 73
         }
       ]
     },
