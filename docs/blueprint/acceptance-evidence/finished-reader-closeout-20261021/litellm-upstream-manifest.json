@@ -1,0 +1,132 @@
+[
+  {
+    "revision": "16f6d924530c1cf2dc94b3e83c86a4632aefb7c0",
+    "path": "litellm/proxy/common_utils/encrypt_decrypt_utils.py",
+    "url": "https://raw.githubusercontent.com/BerriAI/litellm/16f6d924530c1cf2dc94b3e83c86a4632aefb7c0/litellm/proxy/common_utils/encrypt_decrypt_utils.py",
+    "sha256": "539dff3fd56974a466c3730ff7e1c7159b686786c2faae1c4fc628ba97ca715f",
+    "bytes": 9564,
+    "lines": 245,
+    "boundsValid": true,
+    "localPath": "/home/node/.openclaw/workspace/tmp/pr13-graph-closeout-20261021/litellm-upstream/16f6d924530c1cf2dc94b3e83c86a4632aefb7c0/litellm/proxy/common_utils/encrypt_decrypt_utils.py"
+  },
+  {
+    "revision": "16f6d924530c1cf2dc94b3e83c86a4632aefb7c0",
+    "path": "litellm/proxy/proxy_cli.py",
+    "url": "https://raw.githubusercontent.com/BerriAI/litellm/16f6d924530c1cf2dc94b3e83c86a4632aefb7c0/litellm/proxy/proxy_cli.py",
+    "sha256": "ab2c1458fccac714d183d88e49af25d6cc59d3351de03aa1160b1addd8bac621",
+    "bytes": 60980,
+    "lines": 1512,
+    "boundsValid": true,
+    "localPath": "/home/node/.openclaw/workspace/tmp/pr13-graph-closeout-20261021/litellm-upstream/16f6d924530c1cf2dc94b3e83c86a4632aefb7c0/litellm/proxy/proxy_cli.py"
+  },
+  {
+    "revision": "16f6d924530c1cf2dc94b3e83c86a4632aefb7c0",
+    "path": "litellm/proxy/proxy_server.py",
+    "url": "https://raw.githubusercontent.com/BerriAI/litellm/16f6d924530c1cf2dc94b3e83c86a4632aefb7c0/litellm/proxy/proxy_server.py",
+    "sha256": "0a33c833d0f269e16bb15d388dac7ea1967c202922765d5f0a81851c33c013de",
+    "bytes": 802967,
+    "lines": 19169,
+    "boundsValid": true,
+    "localPath": "/home/node/.openclaw/workspace/tmp/pr13-graph-closeout-20261021/litellm-upstream/16f6d924530c1cf2dc94b3e83c86a4632aefb7c0/litellm/proxy/proxy_server.py"
+  },
+  {
+    "revision": "16f6d924530c1cf2dc94b3e83c86a4632aefb7c0",
+    "path": "schema.prisma",
+    "url": "https://raw.githubusercontent.com/BerriAI/litellm/16f6d924530c1cf2dc94b3e83c86a4632aefb7c0/schema.prisma",
+    "sha256": "e2a9e2f5f5247a566f1cb8221fd75a488be81e71f2a0daef70a0b7d05558eaf8",
+    "bytes": 68166,
+    "lines": 1672,
+    "boundsValid": true,
+    "localPath": "/home/node/.openclaw/workspace/tmp/pr13-graph-closeout-20261021/litellm-upstream/16f6d924530c1cf2dc94b3e83c86a4632aefb7c0/schema.prisma"
+  },
+  {
+    "revision": "7d5b6456baaf8be6ac1a60db2b710566b5344adf",
+    "path": "litellm-proxy-extras/litellm_proxy_extras/utils.py",
+    "url": "https://raw.githubusercontent.com/BerriAI/litellm/7d5b6456baaf8be6ac1a60db2b710566b5344adf/litellm-proxy-extras/litellm_proxy_extras/utils.py",
+    "sha256": "67ec1c9f2c50d1bc1e410b62ca2c6fd835c4ee0a20438b0913a6be71611cfbc5",
+    "bytes": 55949,
+    "lines": 1272,
+    "boundsValid": true,
+    "localPath": "/home/node/.openclaw/workspace/tmp/pr13-graph-closeout-20261021/litellm-upstream/7d5b6456baaf8be6ac1a60db2b710566b5344adf/litellm-proxy-extras/litellm_proxy_extras/utils.py"
+  },
+  {
+    "revision": "7d5b6456baaf8be6ac1a60db2b710566b5344adf",
+    "path": "litellm/litellm_core_utils/duration_parser.py",
+    "url": "https://raw.githubusercontent.com/BerriAI/litellm/7d5b6456baaf8be6ac1a60db2b710566b5344adf/litellm/litellm_core_utils/duration_parser.py",
+    "sha256": "c221af0f06a57013acdfe26948253ee79a775fc0c1e2f2ffb3c55ead35876d2f",
+    "bytes": 14128,
+    "lines": 381,
+    "boundsValid": true,
+    "localPath": "/home/node/.openclaw/workspace/tmp/pr13-graph-closeout-20261021/litellm-upstream/7d5b6456baaf8be6ac1a60db2b710566b5344adf/litellm/litellm_core_utils/duration_parser.py"
+  },
+  {
+    "revision": "7d5b6456baaf8be6ac1a60db2b710566b5344adf",
+    "path": "litellm/proxy/common_utils/encrypt_decrypt_utils.py",
+    "url": "https://raw.githubusercontent.com/BerriAI/litellm/7d5b6456baaf8be6ac1a60db2b710566b5344adf/litellm/proxy/common_utils/encrypt_decrypt_utils.py",
+    "sha256": "5a4eb0a8e639bbdf94c045d87668f7eadf55db06c84f3b6ec3651bc60ad2939d",
+    "bytes": 8092,
+    "lines": 205,
+    "boundsValid": true,
+    "localPath": "/home/node/.openclaw/workspace/tmp/pr13-graph-closeout-20261021/litellm-upstream/7d5b6456baaf8be6ac1a60db2b710566b5344adf/litellm/proxy/common_utils/encrypt_decrypt_utils.py"
+  },
+  {
+    "revision": "7d5b6456baaf8be6ac1a60db2b710566b5344adf",
+    "path": "litellm/proxy/db/db_transaction_queue/spend_log_cleanup.py",
+    "url": "https://raw.githubusercontent.com/BerriAI/litellm/7d5b6456baaf8be6ac1a60db2b710566b5344adf/litellm/proxy/db/db_transaction_queue/spend_log_cleanup.py",
+    "sha256": "08f82c5f008c0812f7b6a997468a48c50a898fe093918aaf3e4cc493bd0fe678",
+    "bytes": 31799,
+    "lines": 687,
+    "boundsValid": true,
+    "localPath": "/home/node/.openclaw/workspace/tmp/pr13-graph-closeout-20261021/litellm-upstream/7d5b6456baaf8be6ac1a60db2b710566b5344adf/litellm/proxy/db/db_transaction_queue/spend_log_cleanup.py"
+  },
+  {
+    "revision": "7d5b6456baaf8be6ac1a60db2b710566b5344adf",
+    "path": "litellm/proxy/db/prisma_client.py",
+    "url": "https://raw.githubusercontent.com/BerriAI/litellm/7d5b6456baaf8be6ac1a60db2b710566b5344adf/litellm/proxy/db/prisma_client.py",
+    "sha256": "a3870ef8a1a25738b00dc9c9f41365b4d5160874279c7baf873253cc15cd1fc5",
+    "bytes": 41996,
+    "lines": 992,
+    "boundsValid": true,
+    "localPath": "/home/node/.openclaw/workspace/tmp/pr13-graph-closeout-20261021/litellm-upstream/7d5b6456baaf8be6ac1a60db2b710566b5344adf/litellm/proxy/db/prisma_client.py"
+  },
+  {
+    "revision": "7d5b6456baaf8be6ac1a60db2b710566b5344adf",
+    "path": "litellm/proxy/management_endpoints/model_management_endpoints.py",
+    "url": "https://raw.githubusercontent.com/BerriAI/litellm/7d5b6456baaf8be6ac1a60db2b710566b5344adf/litellm/proxy/management_endpoints/model_management_endpoints.py",
+    "sha256": "8af427a4b1d28c9eaeb64583860c5e4dd8c7ac2b35a7d9d113ae5bd150646b12",
+    "bytes": 115674,
+    "lines": 2746,
+    "boundsValid": true,
+    "localPath": "/home/node/.openclaw/workspace/tmp/pr13-graph-closeout-20261021/litellm-upstream/7d5b6456baaf8be6ac1a60db2b710566b5344adf/litellm/proxy/management_endpoints/model_management_endpoints.py"
+  },
+  {
+    "revision": "7d5b6456baaf8be6ac1a60db2b710566b5344adf",
+    "path": "litellm/proxy/proxy_cli.py",
+    "url": "https://raw.githubusercontent.com/BerriAI/litellm/7d5b6456baaf8be6ac1a60db2b710566b5344adf/litellm/proxy/proxy_cli.py",
+    "sha256": "bb00bb0a1ea2f00dd48137dadd2aa338d2808a22b320d079d18c9ea9d893fe3a",
+    "bytes": 58483,
+    "lines": 1461,
+    "boundsValid": true,
+    "localPath": "/home/node/.openclaw/workspace/tmp/pr13-graph-closeout-20261021/litellm-upstream/7d5b6456baaf8be6ac1a60db2b710566b5344adf/litellm/proxy/proxy_cli.py"
+  },
+  {
+    "revision": "7d5b6456baaf8be6ac1a60db2b710566b5344adf",
+    "path": "litellm/proxy/proxy_server.py",
+    "url": "https://raw.githubusercontent.com/BerriAI/litellm/7d5b6456baaf8be6ac1a60db2b710566b5344adf/litellm/proxy/proxy_server.py",
+    "sha256": "1f8463080146109ee16d36c4b3d350d65c45155eab1d5be7a67ee721a4a85ef6",
+    "bytes": 771951,
+    "lines": 18494,
+    "boundsValid": true,
+    "localPath": "/home/node/.openclaw/workspace/tmp/pr13-graph-closeout-20261021/litellm-upstream/7d5b6456baaf8be6ac1a60db2b710566b5344adf/litellm/proxy/proxy_server.py"
+  },
+  {
+    "revision": "7d5b6456baaf8be6ac1a60db2b710566b5344adf",
+    "path": "schema.prisma",
+    "url": "https://raw.githubusercontent.com/BerriAI/litellm/7d5b6456baaf8be6ac1a60db2b710566b5344adf/schema.prisma",
+    "sha256": "7b438bbeba36aacc3e9a73335f396320606ae66d5a4239645ac6fc9b8493c070",
+    "bytes": 67340,
+    "lines": 1662,
+    "boundsValid": true,
+    "localPath": "/home/node/.openclaw/workspace/tmp/pr13-graph-closeout-20261021/litellm-upstream/7d5b6456baaf8be6ac1a60db2b710566b5344adf/schema.prisma"
+  }
+]

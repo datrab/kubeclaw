@@ -1,0 +1,242 @@
+{
+  "results": [
+    {
+      "source": "scripts/docs-ap09-catalogue.mjs",
+      "pass": true
+    },
+    {
+      "source": "scripts/docs-api-output-discovery.mjs",
+      "pass": true
+    },
+    {
+      "source": "scripts/docs-api-output-role-classification.mjs",
+      "pass": true
+    },
+    {
+      "source": "scripts/docs-api-product-scope.mjs",
+      "pass": true
+    },
+    {
+      "source": "scripts/docs-api-receiver-coverage.mjs",
+      "pass": true
+    },
+    {
+      "source": "scripts/docs-api-reference.mjs",
+      "pass": true
+    },
+    {
+      "source": "scripts/docs-api-schema-authorities.mjs",
+      "pass": true
+    },
+    {
+      "source": "scripts/docs-argo-receiver-contracts.mjs",
+      "pass": true
+    },
+    {
+      "source": "scripts/docs-blueprint-generate.mjs",
+      "pass": true
+    },
+    {
+      "source": "scripts/docs-buster-authored-unknown-field-contracts.mjs",
+      "pass": true
+    },
+    {
+      "source": "scripts/docs-buster-lease-receiver-contracts.mjs",
+      "pass": true
+    },
+    {
+      "source": "scripts/docs-check-coverage.mjs",
+      "pass": true
+    },
+    {
+      "source": "scripts/docs-check-refs.mjs",
+      "pass": true
+    },
+    {
+      "source": "scripts/docs-check.mjs",
+      "pass": true
+    },
+    {
+      "source": "scripts/docs-cilium-receiver-contracts.mjs",
+      "pass": true
+    },
+    {
+      "source": "scripts/docs-clusterspiffeid-selected-receiver-contracts.mjs",
+      "pass": true
+    },
+    {
+      "source": "scripts/docs-configuration-inventory.mjs",
+      "pass": true
+    },
+    {
+      "source": "scripts/docs-generate-core.mjs",
+      "pass": true
+    },
+    {
+      "source": "scripts/docs-generate.mjs",
+      "pass": true
+    },
+    {
+      "source": "scripts/docs-governance.mjs",
+      "pass": true
+    },
+    {
+      "source": "scripts/docs-inventory.mjs",
+      "pass": true
+    },
+    {
+      "source": "scripts/docs-kubernetes-admission-receiver-contracts.mjs",
+      "pass": true
+    },
+    {
+      "source": "scripts/docs-kubernetes-admission-status-contracts.mjs",
+      "pass": true
+    },
+    {
+      "source": "scripts/docs-kubernetes-apps-receiver-contracts.mjs",
+      "pass": true
+    },
+    {
+      "source": "scripts/docs-kubernetes-auth-delete-receiver-contracts.mjs",
+      "pass": true
+    },
+    {
+      "source": "scripts/docs-kubernetes-cluster-configuration-receiver-contracts.mjs",
+      "pass": true
+    },
+    {
+      "source": "scripts/docs-kubernetes-core-receiver-contracts.mjs",
+      "pass": true
+    },
+    {
+      "source": "scripts/docs-kubernetes-envelope-receiver-contracts.mjs",
+      "pass": true
+    },
+    {
+      "source": "scripts/docs-kubernetes-identity-secret-receiver-contracts.mjs",
+      "pass": true
+    },
+    {
+      "source": "scripts/docs-kubernetes-metadata-receiver-contracts.mjs",
+      "pass": true
+    },
+    {
+      "source": "scripts/docs-kubernetes-namespace-isolation-receiver-contracts.mjs",
+      "pass": true
+    },
+    {
+      "source": "scripts/docs-kubernetes-network-receiver-contracts.mjs",
+      "pass": true
+    },
+    {
+      "source": "scripts/docs-kubernetes-node-workloads-receiver-contracts.mjs",
+      "pass": true
+    },
+    {
+      "source": "scripts/docs-kubernetes-pv-selected-receiver-contracts.mjs",
+      "pass": true
+    },
+    {
+      "source": "scripts/docs-kubernetes-webhook-selected-receiver-contracts.mjs",
+      "pass": true
+    },
+    {
+      "source": "scripts/docs-kubernetes-workload-receiver-contracts.mjs",
+      "pass": true
+    },
+    {
+      "source": "scripts/docs-lint-policy-reference.mjs",
+      "pass": true
+    },
+    {
+      "source": "scripts/docs-local-helm-authorities.mjs",
+      "pass": true
+    },
+    {
+      "source": "scripts/docs-parity-batches.mjs",
+      "pass": true
+    },
+    {
+      "source": "scripts/docs-parity-check.mjs",
+      "pass": true
+    },
+    {
+      "source": "scripts/docs-parity-extract.mjs",
+      "pass": true
+    },
+    {
+      "source": "scripts/docs-parity-review-assignments.mjs",
+      "pass": true
+    },
+    {
+      "source": "scripts/docs-parity-status.mjs",
+      "pass": true
+    },
+    {
+      "source": "scripts/docs-parity-transition.mjs",
+      "pass": true
+    },
+    {
+      "source": "scripts/docs-platform-surface-inventory.mjs",
+      "pass": true
+    },
+    {
+      "source": "scripts/docs-prometheus-selected-receiver-contracts.mjs",
+      "pass": true
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "pass": true
+    },
+    {
+      "source": "scripts/docs-runtime-consumer-contracts.mjs",
+      "pass": true
+    },
+    {
+      "source": "scripts/docs-secret-inventory.mjs",
+      "pass": true
+    },
+    {
+      "source": "scripts/docs-status.mjs",
+      "pass": true
+    },
+    {
+      "source": "scripts/docs-tree-boundary.mjs",
+      "pass": true
+    },
+    {
+      "source": "scripts/docs-yaml-field-authorities.mjs",
+      "pass": true
+    },
+    {
+      "source": "scripts/docs-yaml-inventory.mjs",
+      "pass": true
+    },
+    {
+      "source": "scripts/docs-sdk-reference.mjs",
+      "pass": true
+    },
+    {
+      "source": "scripts/docs-api-go-output-role-adapter.go",
+      "role": "documentation-parser-adapter",
+      "pass": true
+    },
+    {
+      "source": "scripts/docs-api-go-output-shapes.go",
+      "role": "documentation-parser-adapter",
+      "pass": true
+    },
+    {
+      "source": "scripts/docs-api-python-output-adapter.py",
+      "role": "documentation-parser-adapter",
+      "pass": true
+    },
+    {
+      "source": "scripts/docs-api-python-ast-v1.py",
+      "role": "documentation-parser-adapter",
+      "pass": true
+    }
+  ],
+  "passed": 58,
+  "total": 58
+}

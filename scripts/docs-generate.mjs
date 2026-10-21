@@ -60,18 +60,28 @@ if (updateSourceRevision) {
     purpose: 'Pins generated reader evidence to the commit that contains all cited source and documentation authorities. Update this lock only after a source commit and before the separate generated-reference commit.',
   }, null, 2)}\n`);
 }
+// Completion records describe a review of source bytes; they are not product
+// or generator inputs. Keeping them in freshness would force a new pin after
+// every acceptance update. Neither input reads nor public citations may turn
+// these excluded records into an authority (guards below).
+function isCompletionRecord(sourcePath) {
+  const relative = path.relative(root, path.resolve(root, sourcePath)).split(path.sep).join('/');
+  return relative === 'docs/blueprint/documentation-completion-matrix.json'
+    || (relative.startsWith('docs/blueprint/acceptance-evidence/') && relative.endsWith('.json'));
+}
+
 if (root === gitRoot) {
   const generatedPrefixes = ['docs/generated/', 'docs/site/'];
   const changed = execFileSync('git', ['diff', '--name-only', sourceRevision, '--', '.'], {
     cwd: gitRoot,
     encoding: 'utf8',
   }).trim().split('\n').filter(Boolean)
-    .filter((sourcePath) => !generatedPrefixes.some((prefix) => sourcePath.startsWith(prefix)));
+    .filter((sourcePath) => !generatedPrefixes.some((prefix) => sourcePath.startsWith(prefix)) && !isCompletionRecord(sourcePath));
   const untracked = execFileSync('git', ['ls-files', '--others', '--exclude-standard'], {
     cwd: gitRoot,
     encoding: 'utf8',
   }).trim().split('\n').filter(Boolean)
-    .filter((sourcePath) => !generatedPrefixes.some((prefix) => sourcePath.startsWith(prefix)));
+    .filter((sourcePath) => !generatedPrefixes.some((prefix) => sourcePath.startsWith(prefix)) && !isCompletionRecord(sourcePath));
   const mismatches = [...new Set([...changed, ...untracked])].sort();
   if (mismatches.length) {
     throw new Error(`documentation source revision does not match the current source tree: ${mismatches.slice(0, 20).join(', ')}`);
@@ -87,6 +97,7 @@ function sourceLineCount(sourcePath) {
 }
 
 function pinnedSourceUrl(sourcePath, startLine, endLine = startLine) {
+  if (isCompletionRecord(sourcePath)) throw new Error(`completion record is not a documentation source authority: ${sourcePath}`);
   const start = Math.max(1, startLine);
   const end = Math.max(start, Math.min(endLine, start + maximumSourceLinkLines - 1));
   return `https://github.com/datrab/kubeclaw/blob/${sourceRevision}/${sourcePath}#L${start}-L${end}`;
@@ -117,6 +128,7 @@ function evidenceLine(sourcePath) {
 }
 
 function readJson(relPath) {
+  if (isCompletionRecord(relPath)) throw new Error(`completion record is not a documentation generator input: ${relPath}`);
   return JSON.parse(fs.readFileSync(path.join(root, relPath), 'utf8'));
 }
 

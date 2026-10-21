@@ -434,7 +434,7 @@
       "audience": "platform developers, component maintainers, contract and UI authors",
       "owner": "developer experience maintainers; each component owner retains implementation authority",
       "appliesTo": "Nova, Worker, Foundation, SDK, capability/event, integration, UI, deployment and durable-data changes; Buster and Prism details remain in their own guides",
-      "lastVerified": "2026-10-15; named current source bytes and script definitions inspected, not executed",
+      "lastVerified": "2026-10-21; named source ranges pinned to their inspected Git revision; no execution result inferred",
       "sourceDependencies": [
         "package.json",
         "skills/prism/package.json",

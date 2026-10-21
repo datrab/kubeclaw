@@ -1943,7 +1943,7 @@ export const documentationExecutableRoleRecipes = {
         "expressionSha256": "cba76d80649d6ce8d92897a224d01ee9877a1807a9de9e765cdad79d29f912ce"
       }
     ],
-    "factsDigest": "eb1576887e0cf2e9799e850d2b8e78070b022f1067fe29016f26ac4c97749416",
+    "factsDigest": "d600aadd11c13708e6e9c2fa408ada6f5d54c91eed78e7ca029d2785e36b9c1f",
     "authorityInputs": []
   },
   "scripts/docs-governance.mjs": {
@@ -6150,7 +6150,7 @@ const reviewedRootSelectedCompilerRecipe=frozenRecipes({
 });
 const reviewedSdkGeneratorRecipe=frozenRecipes({
   "source": "scripts/docs-generate.mjs",
-  "sourceSha256": "6613603360000ba2c50777ab6c6c83c2f58f5b8af1cff5a9439a8ecad9a89e95",
+  "sourceSha256": "aad4c1a16b693443bdd5ff1f663f59659c1a5da74efb62e65ae0b049f74a500e",
   "importSyntax": "import { generateSdkReference } from './docs-sdk-reference.mjs';",
   "importSha256": "e15b85ac5924f3161910eefb87c17408769991d84095ccba953a05da09af2e12",
   "targetSourceSha256": "0b9a68256214b05289a60355a536526bcfca823c0d95cf763ba5c461a0921b1a",
@@ -6164,7 +6164,7 @@ const reviewedSdkGeneratorRecipe=frozenRecipes({
   },
   "rootRevisionPrerequisites": [
     "root=path.resolve(option(--root,process.cwd())); exact canonical worktree root only for this proposed profile. Detached allow flag/env mode requires separate receipt; do not inherit observation.",
-    "Generator current40hex sourceRevision must identify existing local commit and match all non-generated tracked/untracked sources; source lock/selected inputs actual bytes and Git caller process are qualification inputs.",
+    "Generator current40hex sourceRevision must identify existing local commit and match all non-generated tracked/untracked product and generator sources; exact internal completion JSON records are excluded and forbidden as generator inputs or pinned authority; source lock/selected inputs actual bytes and Git caller process are qualification inputs.",
     "option fallback evaluation is eager: sourceRevision lock read occurs even explicit --revision; absent lock evaluates git rev-parse HEAD fallback even explicit --revision. git cat-file/show-toplevel/diff/ls-files calls are genuine child inputs/effects.",
     "--update-source-revision writes lock before subsequent freshness guard. It rejects --check but is not admitted by read-only acquisition witness; source commit and separate generated revision prerequisites apply."
   ],

@@ -1,0 +1,6 @@
+{
+  "findings": [],
+  "overall_correctness": "patch is correct",
+  "overall_explanation": "The change narrowly excludes the specified completion JSON records from source freshness while preserving checks for product, configuration, schema, and executable sources. Normalized path guards prevent those records from becoming JSON inputs or pinned citation authorities. The regression test covers the intended acceptance cycle and rejection boundaries. No actionable defect was identified in the scoped changes. Tests were not run.",
+  "overall_confidence": 0.88
+}

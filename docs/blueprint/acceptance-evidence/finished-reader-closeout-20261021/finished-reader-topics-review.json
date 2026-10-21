@@ -1,0 +1,18 @@
+{
+  "findings": [
+    {
+      "title": "[P2] Reconcile the platform router's source bindings with the current handbook",
+      "body": "PUB-003 remains NOT_READY: this evidence block identifies handbook lines 1475\u20131516 as the chart/GitOps procedure and declares current-checkout SHA-256 `c0d4232c\u2026`, but the handbook at both the carrier commit and current HEAD hashes to `6a03109c\u2026`. Those lines now describe telemetry; the chart/GitOps section starts at line 1521. Other router blocks repeat the obsolete handbook binding. The anchor resolves, so link/range existence checks cannot establish that the stated evidence matches its source. Reconcile the affected ranges and digests with the actual handbook, or cite an explicit historical revision containing the claimed bytes and explain its applicability.",
+      "priority": "P2",
+      "confidence": 0.99,
+      "category": "maintainability",
+      "code_location": {
+        "file_path": "docs/site/extend/platform/README.md",
+        "line": 619
+      }
+    }
+  ],
+  "overall_correctness": "patch is incorrect",
+  "overall_explanation": "Scoped sourceAccuracy / readerUsability / quality verdicts:\nPUB-003: NOT_READY / NOT_READY / NOT_READY. Resolving links do not repair the concrete obsolete source bindings identified above.\nPUB-009: PASS / PASS / PASS. No remaining conflicting legacy instruction path was established; catalogue maintenance links lead to the canonical procedure.\nQUA-008: PASS / PASS / PASS for the authored reader contract. Extension selection, minimal/effectful journeys and host lifecycle boundaries distinguish local exercises from unavailable deployed procedures.\nQUA-009: NOT_READY / PASS / NOT_READY because the platform reader path retains inaccurate source bindings. The substantive lifecycle, capability/event, Forge/Echo and GitOps change procedures address the earlier omissions; those earlier findings are not repeated.\n\nRead-only source inspection only. No tests, generators, nested reviewers or live commands were run. Parent execution records were not treated as this review's execution evidence. No whole-gate, rendered-site, deployment or live acceptance is granted.",
+  "overall_confidence": 0.87
+}

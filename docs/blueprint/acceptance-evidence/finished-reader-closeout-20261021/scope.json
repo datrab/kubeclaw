@@ -1,0 +1,22 @@
+{
+  "newWholeRequirements": [
+    "DAT-006",
+    "PUB-003",
+    "PUB-009",
+    "QUA-008",
+    "QUA-009"
+  ],
+  "sourceCorrection": "Internal completion JSON is excluded from Source freshness but denied as generator input or pinned Source authority; original real CLI fixture exercises unchanged page bytes and true source denials.",
+  "documentationCorrection": "Unsubstantiated OCI layer equality replaced with explicit reported-revision/source-inspection boundary; actual four-platform registry digest chain retained. Platform Source bindings pinned to inspected Git revision instead of stale current-checkout hashes.",
+  "limits": [
+    "No image layer equality, signature, live decryption/migration/recovery or full project run.",
+    "No rendered publication, global API inventory/generator/drift or new whole gate acceptance."
+  ],
+  "reviewChain": [
+    "litellm-whole-review.json",
+    "finished-reader-topics-review.json",
+    "ready-correction-final-review.json",
+    "source-freshness-review.json",
+    "freshness-receipt-review.json"
+  ]
+}

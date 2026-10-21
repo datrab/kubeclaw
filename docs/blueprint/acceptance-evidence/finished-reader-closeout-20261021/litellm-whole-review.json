@@ -1,0 +1,18 @@
+{
+  "findings": [
+    {
+      "title": "[P2] Retain proof of the OCI file comparison or qualify the claim",
+      "body": "The page asserts that selected filesystem-layer files matched official Git source for both architectures, and later reports completed registry/file-digest comparisons. The retained `docs/review/evidence/litellm-pinned-provenance.json` explicitly says \"No image layers downloaded or executed\" and covers only the direct index. The fixture provenance establishes source-derived schema/crypto inputs, while the newly supplied upstream manifest establishes raw Git file hashes; neither proves layer-to-source equality. No retained comparison covering both indexes and architectures was located. Link the actual retained comparison with platform/layer digests, extracted paths and corresponding source hashes, or qualify these statements as source inspection with image-file equality unverified. Publisher revision metadata alone cannot establish the claimed byte identity.",
+      "priority": "P2",
+      "confidence": 0.94,
+      "category": "maintainability",
+      "code_location": {
+        "file_path": "docs/site/understand/data-and-state.md",
+        "line": 858
+      }
+    }
+  ],
+  "overall_correctness": "patch is incorrect",
+  "overall_explanation": "Whole current DAT-006 verdict: sourceAccuracy NOT_READY; readerUsability PASS; quality NOT_READY. The supplied complete upstream files match their manifest hashes. Inspection supports the documented schema ownership, credential/encryption behavior, pool precedence, conditional retention, migration writes and startup failure distinctions. Local deployment profiles, backup policy, recovery script, render assertions and native recovery harness support the stated repository contracts and explicit application-recovery limits. However, the asserted OCI-layer byte comparison lacks traceable retained proof in the inspected evidence and must be substantiated or qualified before acceptance.\n\nThe correction is confined to DAT-006 provenance claims; no correction to previously accepted unrelated data topics was established. Prior intermediate NOT_READY reports remain retained and are not superseded by this assessment. No files were modified, tests or product/live commands executed, or nested reviewers invoked. No global generator, publication, deployment, decryption, migration or live-recovery acceptance is granted.",
+  "overall_confidence": 0.9
+}

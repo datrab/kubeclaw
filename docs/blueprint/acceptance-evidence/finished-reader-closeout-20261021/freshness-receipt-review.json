@@ -1,0 +1,6 @@
+{
+  "findings": [],
+  "overall_correctness": "patch is correct",
+  "overall_explanation": "The Source/native documentation-purpose update preserves the hardcoded SDK import, target, owner-body, call and result-slot guards. The whole-source SHA matches the current generator. The retained propagation proof binds independent baseline facts to the previous immutable recipe, preserves selectors and child authorities, and reconstructs the old digest using native ordering. Completion-record input and citation denials remain intact alongside product/source freshness guards. No actionable defect was found in this scoped closeout. This verdict grants no runtime-effect authorization, generated-byte acceptance or new gate qualification. No tests or generators were run; unrelated citation corrections were excluded.",
+  "overall_confidence": 0.91
+}

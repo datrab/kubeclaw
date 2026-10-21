@@ -855,12 +855,15 @@ The revision labels are in the
 [GitOps amd64 configuration](https://ghcr.io/v2/berriai/litellm/blobs/sha256:c175e926e4b0e8328885696165f40e28bb763c7384e4c9c55235e3cdfb78a0c7),
 and [GitOps arm64 configuration](https://ghcr.io/v2/berriai/litellm/blobs/sha256:27852540a0b41e0150d72f51bfbad3be449fb26e8067456c5e6bc3c74b004356).
 
-Selected schema, migration, startup, model-storage, and encryption files from
-those layers matched the official Git source at the reported revisions for
-both architectures. This establishes the inspected file bytes. It does not
-establish a verified publisher signature, complete runtime equivalence, or a
-successful database restore. The two profiles have different schema and
-migration files; do not treat them as interchangeable application versions.
+The linked schema, migration, startup, model-storage, and encryption contracts
+below were inspected in the official Git source at those reported revisions.
+The registry index, platform manifest, and configuration digests were checked
+for both architectures. Their revision labels identify the reported source;
+they do not prove that filesystem-layer files equal that source. Image-layer
+file equality and a publisher signature remain unverified. Before an upgrade
+or restore, the application owner must validate the exact selected image and
+its schema and migration behavior in isolation. The two profiles report
+different schema and migration versions; do not treat them as interchangeable.
 
 ### Rows and encryption inputs
 
@@ -949,15 +952,16 @@ compatible recovery group first.
 > **Claim:** The selected files implement the schema, encryption selection, and
 > startup migration behavior described above.
 > **Implementation:** The commit-pinned upstream functions and schema linked
-> beside each mechanism; their selected OCI-layer bytes matched both architectures.
+> beside each mechanism, inspected at the revisions reported by the image configurations.
 > **Contract or setting:** The two deployment image digests, external `litellm-secrets`,
 > gateway configuration, and startup arguments determine the selected profile.
-> **Test evidence:** Registry and file-digest comparisons completed; no upstream
-> test, image execution, encryption round trip, or application restore was run.
+> **Test evidence:** Registry index, platform manifest, configuration digests, and
+> downloaded Git source hashes were checked. No filesystem layers, upstream tests,
+> image execution, encryption round trip, or application restore were checked.
 > **Revision:** Direct `7d5b6456baaf8be6ac1a60db2b710566b5344adf`;
 > GitOps `16f6d924530c1cf2dc94b3e83c86a4632aefb7c0`.
 > **Limit:** The linked implementation does not establish a verified publisher signature,
-> deployed Secret values, effective stored settings, or live recovery.
+> image-file equality, deployed Secret values, effective stored settings, or live recovery.
 
 ### Deployment profiles are not the same capacity contract
 
