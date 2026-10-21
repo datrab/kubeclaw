@@ -109,7 +109,7 @@ An additional required repair beyond a category's exhausted budget becomes `Need
 
 **Parallel isolated work; serialized shared Git integration.** Independent modules use separate authorized worktrees; dependencies must pass mandatory checks before dependents start. Configure maximum concurrency, serialize short shared integrations, and treat ordinary lock contention as controlled contention. Check the actual integrated revision cumulatively.
 
-**Rationale/consequence:** parallel implementation must not create competing repository authority or validate an unmerged approximation. **Alternatives:** none separately recorded. This product rule does not request new documentation branches.
+**Rationale/consequence:** parallel implementation must not create competing repository authority or validate an unmerged approximation. **Alternatives:** none separately recorded.
 
 ## D06
 

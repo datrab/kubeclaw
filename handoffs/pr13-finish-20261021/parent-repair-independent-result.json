@@ -1,0 +1,50 @@
+{
+  "source": "24a3fa0b316160187f23b02aeac8b2c60bb6e527",
+  "originalScenarios": {
+    "status": "verified-core-retry-repair-rehearsal",
+    "scope": "trusted TEST checker stages; actual Core, native Git, file journals and artifact store; not a product implementation project",
+    "observations": [
+      {
+        "scenario": "mixed",
+        "status": "succeeded",
+        "sourceAttempts": 5,
+        "technicalRetries": 1,
+        "repairCategories": [
+          "lint",
+          "review",
+          "test"
+        ],
+        "eventCount": 132
+      },
+      {
+        "scenario": "technical-exhausted",
+        "status": "blocked",
+        "sourceAttempts": 2,
+        "technicalRetries": 1,
+        "repairCategories": [],
+        "eventCount": 21
+      },
+      {
+        "scenario": "extra-order",
+        "status": "blocked",
+        "sourceAttempts": 4,
+        "technicalRetries": 0,
+        "repairCategories": [
+          "lint",
+          "lint",
+          "lint"
+        ],
+        "eventCount": 98
+      }
+    ]
+  },
+  "intentNegative": "EEXIST before command/runtime state; every original regular-file byte unchanged",
+  "captureNegative": "verify1 missing original pre-invalid raw capture, exact restoration verify0",
+  "archive": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/parent-repair-original-evidence.tar.gz",
+  "archiveSha256": "804bc5af1532150d9a6b7f23f0b0936bcd3f3e128f08289f77c3e0d2ae5df632",
+  "regularEvidenceFiles": 359,
+  "archiveLimit": "Original regular-file runtime/config/command/raw-capture/Git/artifact evidence; copied plugin directories and dependency aliases excluded; original Source pinned by commit, archive links not followed.",
+  "dependencyPreparation": "Previous independent fresh npm ci; exact whole package+lock unchanged; no shared external node_modules symlink",
+  "trackedWorktree": "",
+  "ownedCleanup": "both0"
+}
