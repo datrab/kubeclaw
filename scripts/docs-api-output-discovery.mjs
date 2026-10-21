@@ -35,6 +35,10 @@ const reviewedNodeModuleNamedImports=new Set(['createRequire','Module','default'
 // authority requires a Source-reviewed recipe change here, not a JSON digest
 // refresh. These recipes never permit unsupported capability custody.
 const reviewedDocumentationModuleInputRecipes = [
+  {"source":"tests/verification/historical-branch-acceptance/delivery-manifest-v3-compiler-recovery-independent.test.mjs","semanticClass":"historical-environment-root-module-input-metadata","recipeSha256":"a180c18bd5fba57de5610daf697df8d8ec1f3e0582f2d8d3e6088ca1b8344307"},
+  {"source":"tests/verification/historical-branch-acceptance/delivery-manifest-v3-contract-independent.test.mjs","semanticClass":"historical-environment-root-module-input-metadata","recipeSha256":"dd8f9502a9dde911d4991e6c853a7d2104f2e2eaafb9ac1c864652ac89a93a1a"},
+  {"source":"tests/verification/historical-branch-acceptance/delivery-manifest-v3-summary-mode-independent.test.mjs","semanticClass":"historical-environment-root-module-input-metadata","recipeSha256":"51f0abb6784cd9c5082b8ab4dd35a0abd907f1464cb94b7a70870d9ea045b842"},
+  {"source":"tests/verification/historical-branch-acceptance/delivery-manifest-v2-reader-corpus-child.mjs","semanticClass":"historical-environment-root-module-input-metadata","recipeSha256":"4f193f19b9df7e26d0d5a42e1de2b81c87e3b0602823248e7727a040f0dd9ad8"},
   {"source":"tests/verification/contracts/check-project-compiler.mts","semanticClass":"caller-bound-project-compiler-source-or-archive-metadata","recipeSha256":"881542ff85033cc56db9faf7b334e15818cf49a1f76faf55f8b86ef0898d83b4"},
   {"source":"tests/verification/contracts/project-legacy-import-cases.mts","semanticClass":"caller-bound-project-compiler-source-or-archive-metadata","recipeSha256":"c079b8a7b9c9aadf304a47bdad13dc1d5227517a13b3296ca75c389f2238ea79"},
   {

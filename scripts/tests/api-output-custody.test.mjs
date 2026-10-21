@@ -176,3 +176,33 @@ test('source/archive compiler metadata binds both callers, extraction branch, pa
  const compiler='skills/nova/project/compiler.ts';write(compiler,fs.readFileSync(path.join(root,compiler),'utf8')+secret);
  assert.notEqual(check(),baseline);
 }));
+
+test('historical environment roots classify only bound operations and retain current executable source facts',()=>fixture(({root,write})=>{
+ const repository=path.resolve(new URL('../..',import.meta.url).pathname);
+ const boundary=JSON.parse(fs.readFileSync(path.join(repository,'scripts/docs-api-producer-adapter-authorities.json'))).documentationToolBoundary;
+ const recipes=boundary.unresolvedModuleInputAuthorities.filter(r=>r.semanticClass==='historical-environment-root-module-input-metadata');assert.equal(recipes.length,4);
+ for(const source of new Set(recipes.flatMap(r=>[r.source,...r.authorityInputs.map(x=>x.path),...r.inputConstraints.modulePaths])))write(source,fs.readFileSync(path.join(repository,source),'utf8'));
+ const graph={dynamicOperations:[],resolutionOnlyOperations:[]};
+ for(const recipe of recipes){
+  const bytes=fs.readFileSync(path.join(root,recipe.source),'utf8'),tree=ts.createSourceFile(recipe.source,bytes,ts.ScriptTarget.Latest,true);
+  const visit=node=>{if(ts.isCallExpression(node)&&node.expression.kind===ts.SyntaxKind.ImportKeyword&&!ts.isStringLiteralLike(node.arguments[0]))graph.dynamicOperations.push({source:recipe.source,expression:node.getText(tree),operation:node.getText(tree)});ts.forEachChild(node,visit);};visit(tree);
+  assert.equal(recipe.inputConstraints.runtimeAcquisitionAuthorized,false);assert.match(recipe.inputConstraints.selectedCheckoutBinding,/NOT authenticated/);
+ }
+ assert.equal(graph.dynamicOperations.length,5);
+ const check=(input=boundary,operations=graph)=>documentationModuleInputAuthority(root,input,operations),baseline=check();
+ for(const recipe of recipes){const original=fs.readFileSync(path.join(root,recipe.source),'utf8');write(recipe.source,original.replace('process.env.KUBECLAW_REVIEW_SOURCE_ROOT','process.env.FOREIGN_SOURCE_ROOT'));assert.throws(()=>check(),/input\/caller authority changed/);write(recipe.source,original);}
+ const parent='tests/verification/historical-branch-acceptance/delivery-manifest-v2-reader-corpus-independent.test.mjs',original=fs.readFileSync(path.join(root,parent),'utf8');write(parent,original.replace('child.pathname, encoding','child.pathname, process.argv[2]'));assert.throws(()=>check(),/input\/caller authority changed/);write(parent,original);
+ const forged=structuredClone(boundary),record=forged.unresolvedModuleInputAuthorities.find(r=>r.source===recipes[0].source);record.inputConstraints.modulePaths=['external/compiler.ts'];assert.throws(()=>check(forged),/no reviewed semantic input authority/);
+ const extra=structuredClone(graph);extra.dynamicOperations.push({source:recipes[0].source,expression:'import(process.env.UNKNOWN_MODULE)',operation:'import(process.env.UNKNOWN_MODULE)'});assert.throws(()=>check(boundary,extra),/outside its semantic input recipe/);
+ const compiler='skills/nova/project/compiler.ts',before=fs.readFileSync(path.join(root,compiler),'utf8');write(compiler,before+secret);assert.notEqual(check(),baseline);write(compiler,before);assert.equal(check(),baseline);
+ fs.rmSync(path.join(root,compiler));assert.throws(()=>check(),/finite selected module missing/);
+}));
+
+test('native historical from selector really follows external root, not scanner checkout identity',()=>fixture(({root,write})=>{
+ const repository=path.resolve(new URL('../..',import.meta.url).pathname),source='tests/verification/historical-branch-acceptance/delivery-manifest-v3-compiler-recovery-independent.test.mjs';
+ const bytes=fs.readFileSync(path.join(repository,source),'utf8'),tree=ts.createSourceFile(source,bytes,ts.ScriptTarget.Latest,true);
+ const declaration=tree.statements.find(node=>ts.isVariableStatement(node)&&node.declarationList.declarations.some(item=>item.name.getText(tree)==='from'));assert(declaration);
+ write('candidate/skills/nova/project/compiler.ts',"export const identity='candidate';");write('baseline/skills/nova/project/compiler.ts',"export const identity='external-baseline';");
+ const program="import path from 'node:path';import {pathToFileURL} from 'node:url';"+declaration.getText(tree)+"console.log((await from(process.argv[1], 'skills/nova/project/compiler.ts')).identity);";
+ for(const [directory,expected]of [['candidate','candidate'],['baseline','external-baseline']]){const native=spawnSync(process.execPath,['--input-type=module','-e',program,path.join(root,directory)],{encoding:'utf8'});assert.equal(native.status,0,native.stderr);assert.equal(native.stdout.trim(),expected);}
+}));

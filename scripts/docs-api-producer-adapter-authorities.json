@@ -69467,6 +69467,178 @@
             "sha256": "a267131773e51316a9c1e5e6939951b4a5db4dd6c24ebea80effc208d8bafe14"
           }
         ]
+      },
+      {
+        "source": "tests/verification/historical-branch-acceptance/delivery-manifest-v3-compiler-recovery-independent.test.mjs",
+        "semanticClass": "historical-environment-root-module-input-metadata",
+        "sourceSha256": "6f3aae5e461e83a016199184daa7c109ce96f5b825ab88c8b7b5db031f235c42",
+        "operations": [
+          {
+            "expression": "import(pathToFileURL(path.join(root, relative)).href)",
+            "operationSha256": "5d42ff2dc06c25c59aaa847164193273f4fa8a9a3643059d3f5e6b2941c6c666"
+          }
+        ],
+        "inputConstraints": {
+          "root": "Absolute KUBECLAW_REVIEW_SOURCE_ROOT; compiler/recovery additionally uses absolute KUBECLAW_REVIEW_BASELINE_ROOT. path.isAbsolute assertions do NOT establish frozen checkout identity or equality with scanner root.",
+          "modulePaths": [
+            "skills/nova/project/compiler.ts",
+            "skills/nova/project/recovery.ts",
+            "skills/nova/core/execution/engine-snapshots.ts",
+            "skills/nova/core/execution/run-root.ts",
+            "tests/verification/reliability/project-source-fixture.mjs"
+          ],
+          "qualificationScope": "Passive selected-source/input/caller metadata only. No historical test, fixture-purpose exclusion, external checkout byte custody, import initialization, native execution or AP qualification.",
+          "runtimeAcquisitionAuthorized": false,
+          "caller": "package.json scripts.test:historical-branch-acceptance invokes node --test tests/verification/historical-branch-acceptance/*.test.mjs; explicitly historical group, not default current reliability. Reader child launched by sibling reader test with native execPath, URL.pathname and inherited environment plus explicit locale/source/proof settings.",
+          "selector": "from(root,relative) arrow has six literal calls: source/compiler, baseline/compiler, source/recovery, source/engine-snapshots, source/run-root, source/project-source-fixture. Dynamic import @kubeclaw/plugin-sdk is a separate literal package input. Full source pin binds arrow and all calls.",
+          "selectedCheckoutBinding": "modulePaths describe corresponding current checkout sources for ordinary executable/API discovery, NOT authenticated sourceRoot or baselineRoot runtime acquisitions. External historical compiler and dependencies are neither acquired nor assigned current source identity. Current sources are not inert or excluded.",
+          "dataInputs": [
+            "sourceRoot/skills/nova/plugins/project-summary/schemas/input.schema.json"
+          ],
+          "unqualifiedEffects": [
+            "Static and dynamic imports and transitive initialization, environment/root/loader identity and caller execution; absolute-path assertions are not containment, byte authentication or frozen-source validation.",
+            "Compiler baseline equality, registry/fixture construction, artifact-store activation/writes/reads, temporary filesystem mutation/snapshot corruption, schema compilation, all assertions and finally cleanup as present in exact selected source remain unqualified.",
+            "Reader child JSON proof reads and result/error serialization, parent native child launches and locale behavior remain unqualified. No historical proof is reconstructed or executed by this metadata recipe."
+          ]
+        },
+        "authorityInputs": [
+          {
+            "path": "package.json",
+            "sha256": "602c41b16a66c10ba9e7385ddb12bb9e1cf9227183374acbe987198640ed4cab"
+          },
+          {
+            "path": "tests/verification/historical-branch-acceptance/README.md",
+            "sha256": "bdb41a1c068779f38c51348c8a32958c067b747921e2b7a7f7bee59e933e6ca5"
+          }
+        ]
+      },
+      {
+        "source": "tests/verification/historical-branch-acceptance/delivery-manifest-v3-contract-independent.test.mjs",
+        "semanticClass": "historical-environment-root-module-input-metadata",
+        "sourceSha256": "573d504f01ab0a1b5980b605aa1bdb5b6d359831d61d8b9bb83ccacce35c888f",
+        "operations": [
+          {
+            "expression": "import(pathToFileURL(path.join(\n  sourceRoot,\n  'contracts/delivery-manifest/v3/src/index.ts',\n)).href)",
+            "operationSha256": "bc194707b2f64513567be034e7717326a916b7be55ee523bf8dfbe97761439fa"
+          }
+        ],
+        "inputConstraints": {
+          "root": "Absolute KUBECLAW_REVIEW_SOURCE_ROOT; compiler/recovery additionally uses absolute KUBECLAW_REVIEW_BASELINE_ROOT. path.isAbsolute assertions do NOT establish frozen checkout identity or equality with scanner root.",
+          "modulePaths": [
+            "contracts/delivery-manifest/v3/src/index.ts"
+          ],
+          "qualificationScope": "Passive selected-source/input/caller metadata only. No historical test, fixture-purpose exclusion, external checkout byte custody, import initialization, native execution or AP qualification.",
+          "runtimeAcquisitionAuthorized": false,
+          "caller": "package.json scripts.test:historical-branch-acceptance invokes node --test tests/verification/historical-branch-acceptance/*.test.mjs; explicitly historical group, not default current reliability. Reader child launched by sibling reader test with native execPath, URL.pathname and inherited environment plus explicit locale/source/proof settings.",
+          "selector": "Literal module suffixes joined to ambient sourceRoot then pathToFileURL(...).href; whole source pin binds environment admission and exact expressions.",
+          "selectedCheckoutBinding": "modulePaths describe corresponding current checkout sources for ordinary executable/API discovery, NOT authenticated sourceRoot or baselineRoot runtime acquisitions. External historical compiler and dependencies are neither acquired nor assigned current source identity. Current sources are not inert or excluded.",
+          "dataInputs": [
+            "sourceRoot/contracts/delivery-manifest/v3/schemas/delivery-manifest.v3.schema.json",
+            "sourceRoot/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json"
+          ],
+          "unqualifiedEffects": [
+            "Static and dynamic imports and transitive initialization, environment/root/loader identity and caller execution; absolute-path assertions are not containment, byte authentication or frozen-source validation.",
+            "Compiler baseline equality, registry/fixture construction, artifact-store activation/writes/reads, temporary filesystem mutation/snapshot corruption, schema compilation, all assertions and finally cleanup as present in exact selected source remain unqualified.",
+            "Reader child JSON proof reads and result/error serialization, parent native child launches and locale behavior remain unqualified. No historical proof is reconstructed or executed by this metadata recipe."
+          ]
+        },
+        "authorityInputs": [
+          {
+            "path": "package.json",
+            "sha256": "602c41b16a66c10ba9e7385ddb12bb9e1cf9227183374acbe987198640ed4cab"
+          },
+          {
+            "path": "tests/verification/historical-branch-acceptance/README.md",
+            "sha256": "bdb41a1c068779f38c51348c8a32958c067b747921e2b7a7f7bee59e933e6ca5"
+          }
+        ]
+      },
+      {
+        "source": "tests/verification/historical-branch-acceptance/delivery-manifest-v3-summary-mode-independent.test.mjs",
+        "semanticClass": "historical-environment-root-module-input-metadata",
+        "sourceSha256": "b8ea71bdd4e72a44c59c2c3f3eb42a4ab4a45c3e8b63ce6f2ea0b58407fd5e18",
+        "operations": [
+          {
+            "expression": "import(pathToFileURL(path.join(sourceRoot, 'skills/nova/plugins/project-summary/src/summary.ts')).href)",
+            "operationSha256": "cdef21f91d925aa2a8ed8528a82220ca5caf4768d494fc5877698817cc09ef5e"
+          },
+          {
+            "expression": "import(pathToFileURL(path.join(sourceRoot, 'skills/common/plugins/artifact-store/src/adapter.ts')).href)",
+            "operationSha256": "7bba4a2304fed4843e5928e450612b774fab9a8c5c261c22da60fc03609c38c4"
+          }
+        ],
+        "inputConstraints": {
+          "root": "Absolute KUBECLAW_REVIEW_SOURCE_ROOT; compiler/recovery additionally uses absolute KUBECLAW_REVIEW_BASELINE_ROOT. path.isAbsolute assertions do NOT establish frozen checkout identity or equality with scanner root.",
+          "modulePaths": [
+            "skills/nova/plugins/project-summary/src/summary.ts",
+            "skills/common/plugins/artifact-store/src/adapter.ts"
+          ],
+          "qualificationScope": "Passive selected-source/input/caller metadata only. No historical test, fixture-purpose exclusion, external checkout byte custody, import initialization, native execution or AP qualification.",
+          "runtimeAcquisitionAuthorized": false,
+          "caller": "package.json scripts.test:historical-branch-acceptance invokes node --test tests/verification/historical-branch-acceptance/*.test.mjs; explicitly historical group, not default current reliability. Reader child launched by sibling reader test with native execPath, URL.pathname and inherited environment plus explicit locale/source/proof settings.",
+          "selector": "Literal module suffixes joined to ambient sourceRoot then pathToFileURL(...).href; whole source pin binds environment admission and exact expressions.",
+          "selectedCheckoutBinding": "modulePaths describe corresponding current checkout sources for ordinary executable/API discovery, NOT authenticated sourceRoot or baselineRoot runtime acquisitions. External historical compiler and dependencies are neither acquired nor assigned current source identity. Current sources are not inert or excluded.",
+          "dataInputs": [],
+          "unqualifiedEffects": [
+            "Static and dynamic imports and transitive initialization, environment/root/loader identity and caller execution; absolute-path assertions are not containment, byte authentication or frozen-source validation.",
+            "Compiler baseline equality, registry/fixture construction, artifact-store activation/writes/reads, temporary filesystem mutation/snapshot corruption, schema compilation, all assertions and finally cleanup as present in exact selected source remain unqualified.",
+            "Reader child JSON proof reads and result/error serialization, parent native child launches and locale behavior remain unqualified. No historical proof is reconstructed or executed by this metadata recipe."
+          ]
+        },
+        "authorityInputs": [
+          {
+            "path": "package.json",
+            "sha256": "602c41b16a66c10ba9e7385ddb12bb9e1cf9227183374acbe987198640ed4cab"
+          },
+          {
+            "path": "tests/verification/historical-branch-acceptance/README.md",
+            "sha256": "bdb41a1c068779f38c51348c8a32958c067b747921e2b7a7f7bee59e933e6ca5"
+          }
+        ]
+      },
+      {
+        "source": "tests/verification/historical-branch-acceptance/delivery-manifest-v2-reader-corpus-child.mjs",
+        "semanticClass": "historical-environment-root-module-input-metadata",
+        "sourceSha256": "d03d5e86b2b7a50acad0b45c261636e8e782fa9e3110c4e53b9154e259d2e6ed",
+        "operations": [
+          {
+            "expression": "import(pathToFileURL(path.join(sourceRoot, 'contracts/delivery-manifest/v3/src/index.ts')).href)",
+            "operationSha256": "d6ddff8a241b1bac8b6d908fe181b3155c25265ee3d95b564431ecac804ddaec"
+          }
+        ],
+        "inputConstraints": {
+          "root": "Absolute KUBECLAW_REVIEW_SOURCE_ROOT; compiler/recovery additionally uses absolute KUBECLAW_REVIEW_BASELINE_ROOT. path.isAbsolute assertions do NOT establish frozen checkout identity or equality with scanner root.",
+          "modulePaths": [
+            "contracts/delivery-manifest/v3/src/index.ts"
+          ],
+          "qualificationScope": "Passive selected-source/input/caller metadata only. No historical test, fixture-purpose exclusion, external checkout byte custody, import initialization, native execution or AP qualification.",
+          "runtimeAcquisitionAuthorized": false,
+          "caller": "package.json scripts.test:historical-branch-acceptance invokes node --test tests/verification/historical-branch-acceptance/*.test.mjs; explicitly historical group, not default current reliability. Reader child launched by sibling reader test with native execPath, URL.pathname and inherited environment plus explicit locale/source/proof settings.",
+          "selector": "Literal module suffixes joined to ambient sourceRoot then pathToFileURL(...).href; whole source pin binds environment admission and exact expressions.",
+          "selectedCheckoutBinding": "modulePaths describe corresponding current checkout sources for ordinary executable/API discovery, NOT authenticated sourceRoot or baselineRoot runtime acquisitions. External historical compiler and dependencies are neither acquired nor assigned current source identity. Current sources are not inert or excluded.",
+          "dataInputs": [
+            "KUBECLAW_REVIEW_V2_PROOF_ROOT/producer-proof.json; absolute proofRoot assertion only, no revision/digest/corpus authenticity validation. Child argv2 portable chooses portableV2ReaderContractRef, otherwise storedArtifactRef."
+          ],
+          "unqualifiedEffects": [
+            "Static and dynamic imports and transitive initialization, environment/root/loader identity and caller execution; absolute-path assertions are not containment, byte authentication or frozen-source validation.",
+            "Compiler baseline equality, registry/fixture construction, artifact-store activation/writes/reads, temporary filesystem mutation/snapshot corruption, schema compilation, all assertions and finally cleanup as present in exact selected source remain unqualified.",
+            "Reader child JSON proof reads and result/error serialization, parent native child launches and locale behavior remain unqualified. No historical proof is reconstructed or executed by this metadata recipe."
+          ]
+        },
+        "authorityInputs": [
+          {
+            "path": "package.json",
+            "sha256": "602c41b16a66c10ba9e7385ddb12bb9e1cf9227183374acbe987198640ed4cab"
+          },
+          {
+            "path": "tests/verification/historical-branch-acceptance/README.md",
+            "sha256": "bdb41a1c068779f38c51348c8a32958c067b747921e2b7a7f7bee59e933e6ca5"
+          },
+          {
+            "path": "tests/verification/historical-branch-acceptance/delivery-manifest-v2-reader-corpus-independent.test.mjs",
+            "sha256": "9c451f69559d32b556e34e7f0afc47a7dcca0c9333cbaa7dc20967f1eca05b0f"
+          }
+        ]
       }
     ]
   }
