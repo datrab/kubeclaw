@@ -1,0 +1,1248 @@
+{
+  "status": "authored refinement; no runtime/independent acceptance",
+  "expectedWrapperCount": 32,
+  "recipes": {
+    "P": {
+      "scope": "project declared groups",
+      "task": {
+        "path": "tests/verification/reliability/project-source-fixture.mjs",
+        "sha256": "d6ac7fa313a98893c1f2247c6863d8460c14fcaff4418fadd17c386ec7566b72"
+      },
+      "membership": [
+        {
+          "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/binding/project-membership-03/current-membership-review-false.json",
+          "sha256": "8351219c8b0d9fe6d51e461c678d9d8ddc1bfa8d33d845fa625014c68404cd5e"
+        },
+        {
+          "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/binding/project-membership-03/current-membership-review-true.json",
+          "sha256": "13d94203cb8a8fa1ba7d1d17e016d79107e61e3e931f385e09602200a1311c6b"
+        }
+      ],
+      "profile": "CORE-A full referenced profile; eligible module policy exact source-owner pairs from Provider adoption/SA02; compiler anchors R only",
+      "firstReceiver": "graph/membership/run snapshot before StageExecutor skipped/start, observers and first dispatch",
+      "sourceIdentities": [
+        {
+          "path": "skills/nova/project/compiler.ts",
+          "sha256": "9d8ccdb3a1ccc56c58c1ec510aed54473f7db6d4135d28b2e265bbf90d7f1ef5"
+        },
+        {
+          "path": "skills/nova/project/source.ts",
+          "sha256": "f652f5bda01a9a39ea7015ddbf12867ff81f989b0fbe2e0cadcff1a4b4ae2cd0"
+        },
+        {
+          "path": "skills/nova/project/coverage.ts",
+          "sha256": "6ad22387d588ec783ddfd12a45d1aea735785f3a065254d0fc00b1820ee01f2b"
+        },
+        {
+          "path": "skills/nova/project/demo.ts",
+          "sha256": "fa1aeed1f47f817fde79905a97b565191be5e4279b83ee8752c36f45531aa566"
+        },
+        {
+          "path": "skills/nova/core/execution/stage-executor.ts",
+          "sha256": "4c846993c679c9ce663f7dda0e8de78fd26101e83948dd17211e62f83ea2eafb"
+        }
+      ],
+      "witnessSpec": "RESIDUAL-BINDING-RECIPES.md",
+      "result": "not-run",
+      "reviewerConfirmation": null
+    },
+    "G": {
+      "scope": "explicit authenticated free graph",
+      "task": {
+        "path": "tests/verification/reliability/attempt-projection-recovery.test.mjs",
+        "sha256": "039f4419d937614542bbf74088bbc5b4d02e0e0ed8952772050e08a3343aae1b"
+      },
+      "membership": "actual complete completed-wait fixture graph, explicit future one-group declaration covering review; two-group case explicitly extends graph with second declared stage",
+      "profile": "exact platform(root) and full stage execution/config/input from same source; test-only registration does not prove native agent effect",
+      "firstReceiver": "explicit graph/membership validation -> persisted closure -> StageExecutor",
+      "sourceIdentities": [
+        {
+          "path": "skills/nova/core/execution/engine-run.ts",
+          "sha256": "eca97e2a488bd31d597c0dd71cd9971beffc9a5dc94fad1dbccf8867aa8f4819"
+        },
+        {
+          "path": "skills/nova/core/execution/pipeline-loop.ts",
+          "sha256": "129a77125e5d88a118b9d3cefb06d1bedf734924cabd32be607063a33d985530"
+        },
+        {
+          "path": "skills/nova/core/execution/engine-snapshots.ts",
+          "sha256": "50dfe92e656875658b7604f30012f8493564729473f6ddd65b64960ecf9946fd"
+        }
+      ],
+      "witnessSpec": "RESIDUAL-BINDING-RECIPES.md",
+      "result": "not-run",
+      "reviewerConfirmation": null
+    },
+    "JN": {
+      "scope": "Prism native standalone J",
+      "task": "original render artifact/request/operation/input digest/idempotency key, authentic accepted Control row and WorkerEnvelopeV3",
+      "profileBody": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-17/active-component-semantic-bodies.json",
+        "sha256": "d7d402e328eab25d1d61cbfd70861bdde8d700090d94aad63f35c3057bdc688b",
+        "pointer": "/rows/18/body"
+      },
+      "firstReceiver": "reserveNativePrismOperation original attempt before requestWorkerResult/host; exact current stored attempt wins",
+      "sourceIdentities": [
+        {
+          "path": "skills/prism/server/control-context.ts",
+          "sha256": "2444e6f0f22860aea6f109c984be4747a13421da2d33dd738ef7c29b71f04d02"
+        },
+        {
+          "path": "skills/prism/control/native-operation.ts",
+          "sha256": "1c394e56baaddf1a338f4194e26391333a490f53278e12aeda70a1924a4486ac"
+        },
+        {
+          "path": "skills/prism/control/native-operation-store.ts",
+          "sha256": "da764d081570b56a5579652033f4cbc0e2623ced3d1b62e0dc8945978f1e77a9"
+        },
+        {
+          "path": "skills/prism/engine/worker-envelope.ts",
+          "sha256": "56ddb558742228e8c828b98b83916dcdcd1c46f355f2061bfc0c4bdac0290941"
+        },
+        {
+          "path": "skills/prism/server/native-worker-host.ts",
+          "sha256": "485118712479bd2991724c4787acb4bf111ddd56866d0d584f608482a3b4ba34"
+        },
+        {
+          "path": "skills/prism/server/worker-operation.ts",
+          "sha256": "1987bd75921ce43775dc43e0a83e776be7624d6a1dc510ed572fdfce02c57471"
+        }
+      ],
+      "witnessSpec": "RESIDUAL-BINDING-RECIPES.md",
+      "result": "not-run",
+      "reviewerConfirmation": null,
+      "completeTaskSource": {
+        "inputConstructor": {
+          "path": "skills/prism/integration/worker-concurrent-resource-attribution.mts",
+          "sha256": "cb128d51018d0388b914c9d36859620992e310ca53b181d60cf5c4b1c536a423",
+          "coordinates": "module input Buffer.from(JSON.stringify(...)), lines17-22; exact render artifact and envelope lines60-70"
+        },
+        "document": {
+          "path": "contracts/prism/v1/fixtures/minimal-web.json",
+          "sha256": "716e4beaf38dc49be48fdca6da5c2f0ca53e55692a3f1cbb7200879247e049e5"
+        },
+        "nativePolicy": {
+          "path": "skills/prism/tests/native/resource-policy.mts",
+          "sha256": "87a51b65935045a98f9992ed8b6360f45100760d8cb4d9a8c05c123e2a718d1b"
+        },
+        "value": "document=entire minimal-web fixture; view=home,state=default,viewport=wide; original server-produced artifact digest/size/URL and render request captured before reserve",
+        "qualification": "Use real original Control reservation/transport, never controlled artifact server or test harness as proof of installed native identity. No native run here."
+      }
+    },
+    "JA": {
+      "scope": "Prism external agent standalone J",
+      "task": "actual authenticated design-set/revise original preference generation/request/session; stored attempt_envelope/fence",
+      "profile": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/stand/config/engines/prism-agent.config.json",
+        "sha256": "b6309c71d73c87a5598f00f2f16612c4b8bed2d705da84ca782459b4d5902f39"
+      },
+      "profileA": "/profiles/standard",
+      "profileB": "/profiles/runtime",
+      "firstReceiver": "claimAgentJob transaction before AgentProcess; no running requeue; NeedsNova for uncertainty",
+      "sourceIdentities": [
+        {
+          "path": "skills/prism/control/agent-admission.ts",
+          "sha256": "e54b1502044c54a674dffe22895b1530fdf415e292a984569f90ecafe07f99b5"
+        },
+        {
+          "path": "skills/prism/control/agent-jobs.ts",
+          "sha256": "ff62ef04432ebb67c700c4a25103a0477096f588c2cc3f34f3fab0b776860334"
+        },
+        {
+          "path": "skills/prism/server/agent-job-runner.mjs",
+          "sha256": "f97926e67b1737be717db6a549ca60920232b7fbd2da23f73c0a15597c331bfb"
+        },
+        {
+          "path": "skills/prism/server/agent-attempt.ts",
+          "sha256": "3e27552ab5cbc3d1c357df81a3ba92b5928feaeb4df36d054c174b9c2f7d0de8"
+        }
+      ],
+      "witnessSpec": "RESIDUAL-BINDING-RECIPES.md",
+      "result": "not-run",
+      "reviewerConfirmation": null,
+      "completeTaskSource": {
+        "acceptedRoundConstructor": {
+          "path": "skills/prism/tests/agent-jobs.test.mts",
+          "sha256": "bb6ff7ce6f1df432e50f4d92bd563388b0037737b9e91d1d96dff3fe3b289110",
+          "coordinates": "setup -> startDesignRound -> admit/enqueueAgentJob, lines24-31"
+        },
+        "httpAdmission": {
+          "path": "skills/prism/tests/agent-job-http.test.mts",
+          "sha256": "293dd48bee6175d1eb467694e0a473ab3e86fe09a08ca9862cb5e8cc8e6c26fd",
+          "coordinates": "actual HTTP job routes fixture original preference round/claim/fence"
+        },
+        "document": {
+          "path": "contracts/prism/v1/fixtures/minimal-web.json",
+          "sha256": "716e4beaf38dc49be48fdca6da5c2f0ca53e55692a3f1cbb7200879247e049e5"
+        },
+        "qualification": "Source task/preference/claim constructor reused; PGlite does not prove production PG/live peer authentication; Node exit0 fixture is not gateway/model positive. Later launcher native positive needs actual installed main/profile/source/grants."
+      }
+    },
+    "BJ": {
+      "scope": "whole Buster plan/fixture J",
+      "task": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/current-original-case-contexts.json",
+        "sha256": "c1e0dc99a3aa57aeef5034eb3b906fb26d9614f8bac08eef5d1cc65f456140ea"
+      },
+      "profile": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/buster-remote-plan-profile-01/service10-field-contracts.json",
+        "sha256": "ac38fb4786d72884c3d2840dbebefc9b3e6b0fb6e4748970ba803e1866c29f43"
+      },
+      "firstReceiver": "original staged admission/store/source closure before extract/invoker/first provider; same J through fixture cleanup/shutdown",
+      "sourceIdentities": [
+        {
+          "path": "skills/buster/engine/test-gates/remote-prepared-execution.ts",
+          "sha256": "832631872e86addc6ae98516f63c191e403675b679c795ad3d47a2fdb8350dde"
+        },
+        {
+          "path": "skills/buster/engine/test-gates/remote-plan-service.ts",
+          "sha256": "e375000b0e256497409276093ad5375c32285475c87a33d337bef3124be456b7"
+        },
+        {
+          "path": "skills/buster/engine/test-gates/runner.ts",
+          "sha256": "8db6fb069648014e1cfb2c63f33de1382219279b1358a76a15a1936e3b80732a"
+        },
+        {
+          "path": "skills/buster/engine/test-gates/runner-setup.ts",
+          "sha256": "ad0a216f45ecb0196ab96f1a653643f450748f9e61850691892104b1114a91c3"
+        }
+      ],
+      "witnessSpec": "RESIDUAL-BINDING-RECIPES.md",
+      "result": "not-run",
+      "reviewerConfirmation": null
+    },
+    "BC": {
+      "scope": "startup preparation cleanup separate J/M preserving original failed effect",
+      "task": "original failed O envelope/result + gate inode/device/UID + effects + reservation + predecessor association/result archive, exact per-wrapper priorState",
+      "profileBody": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-17/active-component-semantic-bodies.json",
+        "sha256": "d7d402e328eab25d1d61cbfd70861bdde8d700090d94aad63f35c3057bdc688b",
+        "pointer": "/rows/185/body"
+      },
+      "firstReceiver": "actual root lifetime fence before reserveCleanup -> actual stored association -> execute/recover cleanup",
+      "sourceIdentities": [
+        {
+          "path": "skills/buster/engine/test-gates/preparation-supervisor.ts",
+          "sha256": "2a0c6e615d2b156ffad8be308613c7b16fa83daf8faf9ef393cc6e81b701f8ad"
+        },
+        {
+          "path": "skills/buster/engine/test-gates/preparation-cleanup.ts",
+          "sha256": "192c1954407e294483ea08389220eab128052ba57e9b7a72b26fcb768d608bc1"
+        },
+        {
+          "path": "skills/buster/engine/test-gates/preparation-cleanup-binding.ts",
+          "sha256": "454c3f6a5a41e179776eddda24ff7a89e9ac959558cfb8343f6334861fc93901"
+        },
+        {
+          "path": "skills/buster/engine/test-gates/preparation-cleanup-execution.ts",
+          "sha256": "7f68045db88cfea003fb204b06c61b5cef0d48ff0bb416fa060dceeb33249365"
+        },
+        {
+          "path": "skills/buster/engine/test-gates/preparation-cleanup-validation.ts",
+          "sha256": "8cc3b8d59fb38bcb04b6549a05bb7c95f153f7f603405724f84a9385a45ce134"
+        },
+        {
+          "path": "skills/worker/core/worker/native-cleanup-reconciliation.ts",
+          "sha256": "9cfc04ab25b0eecea23b75b9dcdbb4b87f87854c8b00b7346e7eafa33a0118f4"
+        }
+      ],
+      "witnessSpec": "RESIDUAL-BINDING-RECIPES.md",
+      "result": "not-run",
+      "reviewerConfirmation": null
+    },
+    "RA": {
+      "scope": "run-stable adapter/observer R",
+      "task": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/field-activation-partition-02/residual-local-core-task.json",
+        "sha256": "0c55e6927db7edf3124cd2a50c84f2522da15206c2b2bcc195214c96468b35ea"
+      },
+      "profile": "complete Core-A platform actual enabled registrations and exact source policy-field-instance-case refs; no per-event latest lookup",
+      "membershipRule": "graph stage owners + exact platform.observers keys + activeAdapters + resolved capability dependencies; each original manifest/registration/kind/package/config/grant admitted",
+      "firstReceiver": "prepareRuntime/registry before activate/start; same R before every skipped/start/effect/terminal/recovery flush",
+      "sourceIdentities": [
+        {
+          "path": "skills/nova/core/execution/engine-runtime.ts",
+          "sha256": "96c8e5964977cc9287897a63db0f102ff915e9a2ebd3c3ca87ed47b7dde81613"
+        },
+        {
+          "path": "skills/nova/core/execution/adapters.ts",
+          "sha256": "30332f9d2d360b32a13e6f2795f83c90297346eb892b4d9346d5e61ed9d60d5b"
+        },
+        {
+          "path": "skills/nova/core/execution/adapter-startup.ts",
+          "sha256": "ec0ee03f9b740865da79e9ba558fc9447f0354ecd14b4e36eedc5320edac34f0"
+        },
+        {
+          "path": "skills/nova/core/telemetry/observers.ts",
+          "sha256": "b46b9a70b190bf8541d96188221a63acc1e9c03ff6204a9e94b37c944306aafd"
+        },
+        {
+          "path": "skills/nova/core/telemetry/observer-delivery.ts",
+          "sha256": "d80f67ca85cafee41eb41d228be7a8d3aff820b556ccf21efa6f0a9845afd1fc"
+        },
+        {
+          "path": "skills/nova/core/telemetry/observer-recovery.ts",
+          "sha256": "9d97600debff727243d62fbad6c4a4616b056a4e4afb1098e1e19bbaa5f3edcb"
+        },
+        {
+          "path": "skills/common/plugins/telemetry-observer/plugin.json",
+          "sha256": "e8f47d3fe54481f200935675f1899a29fe428b636060e5cf61756958044221b6"
+        },
+        {
+          "path": "skills/common/plugins/telemetry-observer/src/observer.ts",
+          "sha256": "21abca7f49d39ccb085bac5aa152c3e2fd7b5b477d7fbc897785a8750854b71c"
+        },
+        {
+          "path": "skills/common/plugins/telemetry-store/plugin.json",
+          "sha256": "77c3f887ed4068b00a3d3a3019c5257b9a9a7c397c5d94a2bc21095b5481b848"
+        },
+        {
+          "path": "skills/common/plugins/telemetry-store/src/adapter.ts",
+          "sha256": "f5a3ff64dce028471c800e9a5da01bcc3a405f26b1e68ccdd8e78cd54e00fb13"
+        },
+        {
+          "path": "tests/fixtures/plugin-system-v2/graph-plugin/plugin.json",
+          "sha256": "f40a0848bdd7ab7e5d57ea2609400b1721ee913853e32c245710e32582321e63"
+        },
+        {
+          "path": "tests/fixtures/plugin-system-v2/graph-plugin/dist/observer.js",
+          "sha256": "e4129e3600bdbd122b6a2110200c64312b99baf7507930d34ec832c31caaa2be"
+        }
+      ],
+      "witnessSpec": "RESIDUAL-BINDING-RECIPES.md",
+      "result": "not-run",
+      "reviewerConfirmation": null,
+      "completeProfileA": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/field-activation-partition-02/residual-core-owner-fixtures.json",
+        "sha256": "fdb835742047da448782c7917820effb84799c05e9f585cdbedfb9b58f37461b",
+        "pointer": "/profiles/local-A"
+      },
+      "completeProfileB": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/field-activation-partition-02/residual-core-owner-fixtures.json",
+        "sha256": "fdb835742047da448782c7917820effb84799c05e9f585cdbedfb9b58f37461b",
+        "pointer": "/profiles/local-B-lock"
+      },
+      "exactMembers": {
+        "observers": [
+          "kubeclaw.telemetry-observer:telemetry",
+          "test.graph-plugin:lifecycle-recorder"
+        ],
+        "adapters": [
+          "kubeclaw.telemetry-store:telemetry"
+        ],
+        "stage": "test.graph-plugin:generic"
+      },
+      "requiredObserverControl": "Actual manifest required lifecycle-recorder maxAttempts1/backoff0/timeout5000; journalPath parent regular-file yields actual fs error; restore directory, recover A. This exercises Core required-delivery, not native notification.",
+      "productionEffectControl": "Actual telemetry-observer {} -> telemetry-store full explicit root/byte/record/store limits/allowedEventPrefixes; real durable telemetry/lock/effect/checkpoint journals, no mocked Core/adapter/provider",
+      "nativeObserverLimits": "remote notification/operator effects retain genuine roster/grant inputs and reviewed per-member policy, not satisfied by test observer"
+    }
+  },
+  "cases": [
+    {
+      "id": "C5-COMPLETE-ORIGINAL-FIRST",
+      "originalWrapper": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/field-activation-partition-01/future-binding-case-joins.json",
+        "sha256": "b3c38ad1418d3c41f415c0a2b29d081b1f7c4b47854bb3d17dd0b74e06923de2",
+        "pointer": "/cases/0"
+      },
+      "originalBodySha256": "b55dbef7d656cfa8e633338764f1ba666adf91907e61f65d8a567f678f39bf00",
+      "canonicalBridgeIds": [
+        "CMP-C5-BIND"
+      ],
+      "originalCommandAndScenario": "Read originalProposedBody or originalBody at that exact wrapper; unchanged action/prior/expected observer/command are mandatory, not replaced by this join.",
+      "unitRecipeRefs": [
+        "P",
+        "G",
+        "JN",
+        "JA",
+        "BJ",
+        "BC",
+        "RA"
+      ],
+      "unitApplicability": {
+        "P": "applicable at exact receiver; original scenario retained, specialize owner/task/prior/observer with named unit recipe",
+        "G": "applicable at exact receiver; original scenario retained, specialize owner/task/prior/observer with named unit recipe",
+        "JN": "applicable at exact receiver; original scenario retained, specialize owner/task/prior/observer with named unit recipe",
+        "JA": "applicable at exact receiver; original scenario retained, specialize owner/task/prior/observer with named unit recipe",
+        "BJ": "applicable at exact receiver; original scenario retained, specialize owner/task/prior/observer with named unit recipe",
+        "BC": "applicable at exact receiver; original scenario retained, specialize owner/task/prior/observer with named unit recipe",
+        "RA": "applicable at exact receiver; original scenario retained, specialize owner/task/prior/observer with named unit recipe"
+      },
+      "result": "not-run",
+      "reviewerConfirmation": null
+    },
+    {
+      "id": "C5-COMPLETE-NEXT-MODULE",
+      "originalWrapper": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/field-activation-partition-01/future-binding-case-joins.json",
+        "sha256": "b3c38ad1418d3c41f415c0a2b29d081b1f7c4b47854bb3d17dd0b74e06923de2",
+        "pointer": "/cases/1"
+      },
+      "originalBodySha256": "a00fc45e0ee7d86475a7ea4bbb8300cdebe652f334e8304fae41e32ef0d0e605",
+      "canonicalBridgeIds": [
+        "CMP-C5-BIND"
+      ],
+      "originalCommandAndScenario": "Read originalProposedBody or originalBody at that exact wrapper; unchanged action/prior/expected observer/command are mandatory, not replaced by this join.",
+      "unitRecipeRefs": [
+        "P",
+        "G",
+        "JN",
+        "JA",
+        "BJ",
+        "BC",
+        "RA"
+      ],
+      "unitApplicability": {
+        "P": "applicable at exact receiver; original scenario retained, specialize owner/task/prior/observer with named unit recipe",
+        "G": "applicable at exact receiver; original scenario retained, specialize owner/task/prior/observer with named unit recipe",
+        "JN": "applicable at exact receiver; original scenario retained, specialize owner/task/prior/observer with named unit recipe",
+        "JA": "applicable at exact receiver; original scenario retained, specialize owner/task/prior/observer with named unit recipe",
+        "BJ": "applicable at exact receiver; original scenario retained, specialize owner/task/prior/observer with named unit recipe",
+        "BC": "applicable at exact receiver; original scenario retained, specialize owner/task/prior/observer with named unit recipe",
+        "RA": "incompatible for same R adapter/observer: B may not change it at next M; reject retarget; separate admitted new R required. Preserve original next-M effect for eligible P/G policies."
+      },
+      "result": "not-run",
+      "reviewerConfirmation": null
+    },
+    {
+      "id": "C5-COMPLETE-FIXED-EVAL",
+      "originalWrapper": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/field-activation-partition-01/future-binding-case-joins.json",
+        "sha256": "b3c38ad1418d3c41f415c0a2b29d081b1f7c4b47854bb3d17dd0b74e06923de2",
+        "pointer": "/cases/2"
+      },
+      "originalBodySha256": "e23b04c2e8e4bca742e725b8e99b3757ab12113af648d484c20765173829899d",
+      "canonicalBridgeIds": [
+        "CMP-C5-BIND"
+      ],
+      "originalCommandAndScenario": "Read originalProposedBody or originalBody at that exact wrapper; unchanged action/prior/expected observer/command are mandatory, not replaced by this join.",
+      "unitRecipeRefs": [
+        "P",
+        "G",
+        "JN",
+        "JA",
+        "BJ",
+        "BC",
+        "RA"
+      ],
+      "unitApplicability": {
+        "P": "applicable at exact receiver; original scenario retained, specialize owner/task/prior/observer with named unit recipe",
+        "G": "applicable at exact receiver; original scenario retained, specialize owner/task/prior/observer with named unit recipe",
+        "JN": "applicable at exact receiver; original scenario retained, specialize owner/task/prior/observer with named unit recipe",
+        "JA": "applicable at exact receiver; original scenario retained, specialize owner/task/prior/observer with named unit recipe",
+        "BJ": "applicable at exact receiver; original scenario retained, specialize owner/task/prior/observer with named unit recipe",
+        "BC": "applicable at exact receiver; original scenario retained, specialize owner/task/prior/observer with named unit recipe",
+        "RA": "applicable at exact receiver; original scenario retained, specialize owner/task/prior/observer with named unit recipe"
+      },
+      "result": "not-run",
+      "reviewerConfirmation": null
+    },
+    {
+      "id": "C5-COMPLETE-R-S-H-INCOMPATIBLE",
+      "originalWrapper": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/field-activation-partition-01/future-binding-case-joins.json",
+        "sha256": "b3c38ad1418d3c41f415c0a2b29d081b1f7c4b47854bb3d17dd0b74e06923de2",
+        "pointer": "/cases/3"
+      },
+      "originalBodySha256": "1fe939ff5712979c1251bd4c135d850baf585bce540c6a91016d432659e89daa",
+      "canonicalBridgeIds": [
+        "CMP-C5-BIND"
+      ],
+      "originalCommandAndScenario": "Read originalProposedBody or originalBody at that exact wrapper; unchanged action/prior/expected observer/command are mandatory, not replaced by this join.",
+      "unitRecipeRefs": [
+        "P",
+        "G",
+        "JN",
+        "JA",
+        "BJ",
+        "BC",
+        "RA"
+      ],
+      "unitApplicability": {
+        "P": "applicable at exact receiver; original scenario retained, specialize owner/task/prior/observer with named unit recipe",
+        "G": "applicable at exact receiver; original scenario retained, specialize owner/task/prior/observer with named unit recipe",
+        "JN": "applicable at exact receiver; original scenario retained, specialize owner/task/prior/observer with named unit recipe",
+        "JA": "applicable at exact receiver; original scenario retained, specialize owner/task/prior/observer with named unit recipe",
+        "BJ": "applicable at exact receiver; original scenario retained, specialize owner/task/prior/observer with named unit recipe",
+        "BC": "applicable at exact receiver; original scenario retained, specialize owner/task/prior/observer with named unit recipe",
+        "RA": "applicable at exact receiver; original scenario retained, specialize owner/task/prior/observer with named unit recipe"
+      },
+      "result": "not-run",
+      "reviewerConfirmation": null
+    },
+    {
+      "id": "C5-COMPLETE-MEMBERSHIP",
+      "originalWrapper": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/field-activation-partition-01/future-binding-case-joins.json",
+        "sha256": "b3c38ad1418d3c41f415c0a2b29d081b1f7c4b47854bb3d17dd0b74e06923de2",
+        "pointer": "/cases/4"
+      },
+      "originalBodySha256": "c207d1af50842738e84a750d9dc1cd35e7e349206d5dec7fe086a28d138582d4",
+      "canonicalBridgeIds": [
+        "CMP-C5-BIND"
+      ],
+      "originalCommandAndScenario": "Read originalProposedBody or originalBody at that exact wrapper; unchanged action/prior/expected observer/command are mandatory, not replaced by this join.",
+      "unitRecipeRefs": [
+        "P",
+        "G",
+        "JN",
+        "JA",
+        "BJ",
+        "BC",
+        "RA"
+      ],
+      "unitApplicability": {
+        "P": "applicable at exact receiver; original scenario retained, specialize owner/task/prior/observer with named unit recipe",
+        "G": "applicable at exact receiver; original scenario retained, specialize owner/task/prior/observer with named unit recipe",
+        "JN": "exact original plan/order/claim/task membership applies; do not pretend compiler stage-group syntax exists on native wire. Cross-request/fixture/claim binding rejects at named original admission.",
+        "JA": "exact original plan/order/claim/task membership applies; do not pretend compiler stage-group syntax exists on native wire. Cross-request/fixture/claim binding rejects at named original admission.",
+        "BJ": "exact original plan/order/claim/task membership applies; do not pretend compiler stage-group syntax exists on native wire. Cross-request/fixture/claim binding rejects at named original admission.",
+        "BC": "exact original plan/order/claim/task membership applies; do not pretend compiler stage-group syntax exists on native wire. Cross-request/fixture/claim binding rejects at named original admission.",
+        "RA": "applicable at exact receiver; original scenario retained, specialize owner/task/prior/observer with named unit recipe"
+      },
+      "result": "not-run",
+      "reviewerConfirmation": null
+    },
+    {
+      "id": "C5-COMPLETE-PRE-BIND-CRASH",
+      "originalWrapper": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/field-activation-partition-01/future-binding-case-joins.json",
+        "sha256": "b3c38ad1418d3c41f415c0a2b29d081b1f7c4b47854bb3d17dd0b74e06923de2",
+        "pointer": "/cases/5"
+      },
+      "originalBodySha256": "96c9b85c9ed6dd9c2fae4c3ffa804c4476f2178d23150727b905925254f23263",
+      "canonicalBridgeIds": [
+        "CMP-C5-BIND"
+      ],
+      "originalCommandAndScenario": "Read originalProposedBody or originalBody at that exact wrapper; unchanged action/prior/expected observer/command are mandatory, not replaced by this join.",
+      "unitRecipeRefs": [
+        "P",
+        "G",
+        "JN",
+        "JA",
+        "BJ",
+        "BC",
+        "RA"
+      ],
+      "unitApplicability": {
+        "P": "applicable at exact receiver; original scenario retained, specialize owner/task/prior/observer with named unit recipe",
+        "G": "applicable at exact receiver; original scenario retained, specialize owner/task/prior/observer with named unit recipe",
+        "JN": "applicable at exact receiver; original scenario retained, specialize owner/task/prior/observer with named unit recipe",
+        "JA": "applicable at exact receiver; original scenario retained, specialize owner/task/prior/observer with named unit recipe",
+        "BJ": "applicable at exact receiver; original scenario retained, specialize owner/task/prior/observer with named unit recipe",
+        "BC": "applicable at exact receiver; original scenario retained, specialize owner/task/prior/observer with named unit recipe",
+        "RA": "applicable at exact receiver; original scenario retained, specialize owner/task/prior/observer with named unit recipe"
+      },
+      "result": "not-run",
+      "reviewerConfirmation": null
+    },
+    {
+      "id": "C5-COMPLETE-POST-BIND-CRASH",
+      "originalWrapper": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/field-activation-partition-01/future-binding-case-joins.json",
+        "sha256": "b3c38ad1418d3c41f415c0a2b29d081b1f7c4b47854bb3d17dd0b74e06923de2",
+        "pointer": "/cases/6"
+      },
+      "originalBodySha256": "babf3d3b02357f64928c59530df3c2ab6ed93741901db619baaa85371488ce38",
+      "canonicalBridgeIds": [
+        "CMP-C5-BIND"
+      ],
+      "originalCommandAndScenario": "Read originalProposedBody or originalBody at that exact wrapper; unchanged action/prior/expected observer/command are mandatory, not replaced by this join.",
+      "unitRecipeRefs": [
+        "P",
+        "G",
+        "JN",
+        "JA",
+        "BJ",
+        "BC",
+        "RA"
+      ],
+      "unitApplicability": {
+        "P": "applicable at exact receiver; original scenario retained, specialize owner/task/prior/observer with named unit recipe",
+        "G": "applicable at exact receiver; original scenario retained, specialize owner/task/prior/observer with named unit recipe",
+        "JN": "applicable at exact receiver; original scenario retained, specialize owner/task/prior/observer with named unit recipe",
+        "JA": "applicable at exact receiver; original scenario retained, specialize owner/task/prior/observer with named unit recipe",
+        "BJ": "applicable at exact receiver; original scenario retained, specialize owner/task/prior/observer with named unit recipe",
+        "BC": "applicable at exact receiver; original scenario retained, specialize owner/task/prior/observer with named unit recipe",
+        "RA": "applicable at exact receiver; original scenario retained, specialize owner/task/prior/observer with named unit recipe"
+      },
+      "result": "not-run",
+      "reviewerConfirmation": null
+    },
+    {
+      "id": "C5-COMPLETE-POST-DISPATCH-CRASH",
+      "originalWrapper": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/field-activation-partition-01/future-binding-case-joins.json",
+        "sha256": "b3c38ad1418d3c41f415c0a2b29d081b1f7c4b47854bb3d17dd0b74e06923de2",
+        "pointer": "/cases/7"
+      },
+      "originalBodySha256": "314fde943f78b02bb058cc8f13e0b16a632ef721ed2fd4657f32491d3e0f8818",
+      "canonicalBridgeIds": [
+        "CMP-C5-BIND"
+      ],
+      "originalCommandAndScenario": "Read originalProposedBody or originalBody at that exact wrapper; unchanged action/prior/expected observer/command are mandatory, not replaced by this join.",
+      "unitRecipeRefs": [
+        "P",
+        "G",
+        "JN",
+        "JA",
+        "BJ",
+        "BC",
+        "RA"
+      ],
+      "unitApplicability": {
+        "P": "applicable at exact receiver; original scenario retained, specialize owner/task/prior/observer with named unit recipe",
+        "G": "applicable at exact receiver; original scenario retained, specialize owner/task/prior/observer with named unit recipe",
+        "JN": "applicable at exact receiver; original scenario retained, specialize owner/task/prior/observer with named unit recipe",
+        "JA": "applicable at exact receiver; original scenario retained, specialize owner/task/prior/observer with named unit recipe",
+        "BJ": "applicable at exact receiver; original scenario retained, specialize owner/task/prior/observer with named unit recipe",
+        "BC": "applicable at exact receiver; original scenario retained, specialize owner/task/prior/observer with named unit recipe",
+        "RA": "applicable at exact receiver; original scenario retained, specialize owner/task/prior/observer with named unit recipe"
+      },
+      "result": "not-run",
+      "reviewerConfirmation": null
+    },
+    {
+      "id": "C5-COMPLETE-CONCURRENT-PUBLISH",
+      "originalWrapper": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/field-activation-partition-01/future-binding-case-joins.json",
+        "sha256": "b3c38ad1418d3c41f415c0a2b29d081b1f7c4b47854bb3d17dd0b74e06923de2",
+        "pointer": "/cases/8"
+      },
+      "originalBodySha256": "71d98f643d87fd515d28ac88f12ced5bcbc7ccf2952b8d892bda6fabffb8669d",
+      "canonicalBridgeIds": [
+        "CMP-C5-BIND"
+      ],
+      "originalCommandAndScenario": "Read originalProposedBody or originalBody at that exact wrapper; unchanged action/prior/expected observer/command are mandatory, not replaced by this join.",
+      "unitRecipeRefs": [
+        "P",
+        "G",
+        "JN",
+        "JA",
+        "BJ",
+        "BC",
+        "RA"
+      ],
+      "unitApplicability": {
+        "P": "applicable at exact receiver; original scenario retained, specialize owner/task/prior/observer with named unit recipe",
+        "G": "applicable at exact receiver; original scenario retained, specialize owner/task/prior/observer with named unit recipe",
+        "JN": "applicable at exact receiver; original scenario retained, specialize owner/task/prior/observer with named unit recipe",
+        "JA": "applicable at exact receiver; original scenario retained, specialize owner/task/prior/observer with named unit recipe",
+        "BJ": "applicable at exact receiver; original scenario retained, specialize owner/task/prior/observer with named unit recipe",
+        "BC": "applicable at exact receiver; original scenario retained, specialize owner/task/prior/observer with named unit recipe",
+        "RA": "applicable at exact receiver; original scenario retained, specialize owner/task/prior/observer with named unit recipe"
+      },
+      "result": "not-run",
+      "reviewerConfirmation": null
+    },
+    {
+      "id": "C5-COMPLETE-LEASE-LOSS",
+      "originalWrapper": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/field-activation-partition-01/future-binding-case-joins.json",
+        "sha256": "b3c38ad1418d3c41f415c0a2b29d081b1f7c4b47854bb3d17dd0b74e06923de2",
+        "pointer": "/cases/9"
+      },
+      "originalBodySha256": "1d2c0ade510c195e5429cadb9af2ca4df4568f2f6f3420b32c7169a82b1316a8",
+      "canonicalBridgeIds": [
+        "CMP-C5-BIND"
+      ],
+      "originalCommandAndScenario": "Read originalProposedBody or originalBody at that exact wrapper; unchanged action/prior/expected observer/command are mandatory, not replaced by this join.",
+      "unitRecipeRefs": [
+        "P",
+        "G",
+        "JN",
+        "JA",
+        "BJ",
+        "BC",
+        "RA"
+      ],
+      "unitApplicability": {
+        "P": "applicable at exact receiver; original scenario retained, specialize owner/task/prior/observer with named unit recipe",
+        "G": "applicable at exact receiver; original scenario retained, specialize owner/task/prior/observer with named unit recipe",
+        "JN": "applicable at exact receiver; original scenario retained, specialize owner/task/prior/observer with named unit recipe",
+        "JA": "applicable at exact receiver; original scenario retained, specialize owner/task/prior/observer with named unit recipe",
+        "BJ": "applicable at exact receiver; original scenario retained, specialize owner/task/prior/observer with named unit recipe",
+        "BC": "applicable at exact receiver; original scenario retained, specialize owner/task/prior/observer with named unit recipe",
+        "RA": "applicable at exact receiver; original scenario retained, specialize owner/task/prior/observer with named unit recipe"
+      },
+      "result": "not-run",
+      "reviewerConfirmation": null
+    },
+    {
+      "id": "C5-COMPLETE-JOURNAL-ACCOUNTING",
+      "originalWrapper": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/field-activation-partition-01/future-binding-case-joins.json",
+        "sha256": "b3c38ad1418d3c41f415c0a2b29d081b1f7c4b47854bb3d17dd0b74e06923de2",
+        "pointer": "/cases/10"
+      },
+      "originalBodySha256": "2850b7ec07fd4d23aee666c30d50a2aff259fed5876b403b08ffeea659d92298",
+      "canonicalBridgeIds": [
+        "CMP-C5-BIND"
+      ],
+      "originalCommandAndScenario": "Read originalProposedBody or originalBody at that exact wrapper; unchanged action/prior/expected observer/command are mandatory, not replaced by this join.",
+      "unitRecipeRefs": [
+        "P",
+        "G",
+        "JN",
+        "JA",
+        "BJ",
+        "BC",
+        "RA"
+      ],
+      "unitApplicability": {
+        "P": "applicable at exact receiver; original scenario retained, specialize owner/task/prior/observer with named unit recipe",
+        "G": "applicable at exact receiver; original scenario retained, specialize owner/task/prior/observer with named unit recipe",
+        "JN": "not same journal transport: Control DB transactional claim/result is authoritative; filesystem journal byte/first-directory oracle belongs P/G/RA/BC and is NOT claimed by Prism. Native artifact durability remains separately required by original component cases.",
+        "JA": "not same journal transport: Control DB transactional claim/result is authoritative; filesystem journal byte/first-directory oracle belongs P/G/RA/BC and is NOT claimed by Prism. Native artifact durability remains separately required by original component cases.",
+        "BJ": "applicable at exact receiver; original scenario retained, specialize owner/task/prior/observer with named unit recipe",
+        "BC": "applicable at exact receiver; original scenario retained, specialize owner/task/prior/observer with named unit recipe",
+        "RA": "applicable at exact receiver; original scenario retained, specialize owner/task/prior/observer with named unit recipe"
+      },
+      "result": "not-run",
+      "reviewerConfirmation": null
+    },
+    {
+      "id": "C5-COMPLETE-FIRST-DIRECTORY",
+      "originalWrapper": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/field-activation-partition-01/future-binding-case-joins.json",
+        "sha256": "b3c38ad1418d3c41f415c0a2b29d081b1f7c4b47854bb3d17dd0b74e06923de2",
+        "pointer": "/cases/11"
+      },
+      "originalBodySha256": "483a62dbd8ab48b5991d5808310826d330cb23c90a0be1f47b5fa21372923309",
+      "canonicalBridgeIds": [
+        "CMP-C5-BIND"
+      ],
+      "originalCommandAndScenario": "Read originalProposedBody or originalBody at that exact wrapper; unchanged action/prior/expected observer/command are mandatory, not replaced by this join.",
+      "unitRecipeRefs": [
+        "P",
+        "G",
+        "JN",
+        "JA",
+        "BJ",
+        "BC",
+        "RA"
+      ],
+      "unitApplicability": {
+        "P": "applicable at exact receiver; original scenario retained, specialize owner/task/prior/observer with named unit recipe",
+        "G": "applicable at exact receiver; original scenario retained, specialize owner/task/prior/observer with named unit recipe",
+        "JN": "not same journal transport: Control DB transactional claim/result is authoritative; filesystem journal byte/first-directory oracle belongs P/G/RA/BC and is NOT claimed by Prism. Native artifact durability remains separately required by original component cases.",
+        "JA": "not same journal transport: Control DB transactional claim/result is authoritative; filesystem journal byte/first-directory oracle belongs P/G/RA/BC and is NOT claimed by Prism. Native artifact durability remains separately required by original component cases.",
+        "BJ": "applicable at exact receiver; original scenario retained, specialize owner/task/prior/observer with named unit recipe",
+        "BC": "applicable at exact receiver; original scenario retained, specialize owner/task/prior/observer with named unit recipe",
+        "RA": "applicable at exact receiver; original scenario retained, specialize owner/task/prior/observer with named unit recipe"
+      },
+      "result": "not-run",
+      "reviewerConfirmation": null
+    },
+    {
+      "id": "C5-COMPLETE-OBSERVER-DELIVERY",
+      "originalWrapper": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/field-activation-partition-01/future-binding-case-joins.json",
+        "sha256": "b3c38ad1418d3c41f415c0a2b29d081b1f7c4b47854bb3d17dd0b74e06923de2",
+        "pointer": "/cases/12"
+      },
+      "originalBodySha256": "fb753b4d97f844a5304a99a8bf0c86517f5a154fb24d3a8792da99b97e544b28",
+      "canonicalBridgeIds": [
+        "CMP-C5-BIND"
+      ],
+      "originalCommandAndScenario": "Read originalProposedBody or originalBody at that exact wrapper; unchanged action/prior/expected observer/command are mandatory, not replaced by this join.",
+      "unitRecipeRefs": [
+        "P",
+        "G",
+        "JN",
+        "JA",
+        "BJ",
+        "BC",
+        "RA"
+      ],
+      "unitApplicability": {
+        "P": "applicable at exact receiver; original scenario retained, specialize owner/task/prior/observer with named unit recipe",
+        "G": "applicable at exact receiver; original scenario retained, specialize owner/task/prior/observer with named unit recipe",
+        "JN": "applicable at exact receiver; original scenario retained, specialize owner/task/prior/observer with named unit recipe",
+        "JA": "applicable at exact receiver; original scenario retained, specialize owner/task/prior/observer with named unit recipe",
+        "BJ": "applicable at exact receiver; original scenario retained, specialize owner/task/prior/observer with named unit recipe",
+        "BC": "applicable at exact receiver; original scenario retained, specialize owner/task/prior/observer with named unit recipe",
+        "RA": "applicable at exact receiver; original scenario retained, specialize owner/task/prior/observer with named unit recipe"
+      },
+      "result": "not-run",
+      "reviewerConfirmation": null
+    },
+    {
+      "id": "C5-COMPLETE-SECRET-REVISION",
+      "originalWrapper": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/field-activation-partition-01/future-binding-case-joins.json",
+        "sha256": "b3c38ad1418d3c41f415c0a2b29d081b1f7c4b47854bb3d17dd0b74e06923de2",
+        "pointer": "/cases/13"
+      },
+      "originalBodySha256": "013f1f442fc10e5191c531d5282dbe50f9a99f6f918933498a74ab937e77b319",
+      "canonicalBridgeIds": [
+        "CMP-C5-BIND"
+      ],
+      "originalCommandAndScenario": "Read originalProposedBody or originalBody at that exact wrapper; unchanged action/prior/expected observer/command are mandatory, not replaced by this join.",
+      "unitRecipeRefs": [
+        "P",
+        "G",
+        "JN",
+        "JA",
+        "BJ",
+        "BC",
+        "RA"
+      ],
+      "unitApplicability": {
+        "P": "applicable at exact receiver; original scenario retained, specialize owner/task/prior/observer with named unit recipe",
+        "G": "applicable at exact receiver; original scenario retained, specialize owner/task/prior/observer with named unit recipe",
+        "JN": "applicable at exact receiver; original scenario retained, specialize owner/task/prior/observer with named unit recipe",
+        "JA": "applicable at exact receiver; original scenario retained, specialize owner/task/prior/observer with named unit recipe",
+        "BJ": "applicable at exact receiver; original scenario retained, specialize owner/task/prior/observer with named unit recipe",
+        "BC": "applicable at exact receiver; original scenario retained, specialize owner/task/prior/observer with named unit recipe",
+        "RA": "applicable at exact receiver; original scenario retained, specialize owner/task/prior/observer with named unit recipe"
+      },
+      "result": "not-run",
+      "reviewerConfirmation": null
+    },
+    {
+      "id": "C5-COMPLETE-PHYSICAL-STORE",
+      "originalWrapper": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/field-activation-partition-01/future-binding-case-joins.json",
+        "sha256": "b3c38ad1418d3c41f415c0a2b29d081b1f7c4b47854bb3d17dd0b74e06923de2",
+        "pointer": "/cases/14"
+      },
+      "originalBodySha256": "3f065ff59f5bfdff2cc3a50cbaea88007a397e7fae2c54661e6bd17f9d4f41f4",
+      "canonicalBridgeIds": [
+        "CMP-C5-BIND"
+      ],
+      "originalCommandAndScenario": "Read originalProposedBody or originalBody at that exact wrapper; unchanged action/prior/expected observer/command are mandatory, not replaced by this join.",
+      "unitRecipeRefs": [
+        "P",
+        "G",
+        "JN",
+        "JA",
+        "BJ",
+        "BC",
+        "RA"
+      ],
+      "unitApplicability": {
+        "P": "applicable at exact receiver; original scenario retained, specialize owner/task/prior/observer with named unit recipe",
+        "G": "applicable at exact receiver; original scenario retained, specialize owner/task/prior/observer with named unit recipe",
+        "JN": "applicable at exact receiver; original scenario retained, specialize owner/task/prior/observer with named unit recipe",
+        "JA": "applicable at exact receiver; original scenario retained, specialize owner/task/prior/observer with named unit recipe",
+        "BJ": "applicable at exact receiver; original scenario retained, specialize owner/task/prior/observer with named unit recipe",
+        "BC": "applicable at exact receiver; original scenario retained, specialize owner/task/prior/observer with named unit recipe",
+        "RA": "applicable at exact receiver; original scenario retained, specialize owner/task/prior/observer with named unit recipe"
+      },
+      "result": "not-run",
+      "reviewerConfirmation": null
+    },
+    {
+      "id": "C5-COMPLETE-CLEANUP-REFERENCE",
+      "originalWrapper": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/field-activation-partition-01/future-binding-case-joins.json",
+        "sha256": "b3c38ad1418d3c41f415c0a2b29d081b1f7c4b47854bb3d17dd0b74e06923de2",
+        "pointer": "/cases/15"
+      },
+      "originalBodySha256": "671389afb526782978e8a587288ad45aadbe169ccdab8a541f6a93f5f522bf9b",
+      "canonicalBridgeIds": [
+        "CMP-C5-BIND"
+      ],
+      "originalCommandAndScenario": "Read originalProposedBody or originalBody at that exact wrapper; unchanged action/prior/expected observer/command are mandatory, not replaced by this join.",
+      "unitRecipeRefs": [
+        "P",
+        "G",
+        "JN",
+        "JA",
+        "BJ",
+        "BC",
+        "RA"
+      ],
+      "unitApplicability": {
+        "P": "applicable at exact receiver; original scenario retained, specialize owner/task/prior/observer with named unit recipe",
+        "G": "applicable at exact receiver; original scenario retained, specialize owner/task/prior/observer with named unit recipe",
+        "JN": "applicable at exact receiver; original scenario retained, specialize owner/task/prior/observer with named unit recipe",
+        "JA": "applicable at exact receiver; original scenario retained, specialize owner/task/prior/observer with named unit recipe",
+        "BJ": "applicable at exact receiver; original scenario retained, specialize owner/task/prior/observer with named unit recipe",
+        "BC": "applicable at exact receiver; original scenario retained, specialize owner/task/prior/observer with named unit recipe",
+        "RA": "applicable at exact receiver; original scenario retained, specialize owner/task/prior/observer with named unit recipe"
+      },
+      "result": "not-run",
+      "reviewerConfirmation": null
+    },
+    {
+      "id": "C5-COMPLETE-LEGACY",
+      "originalWrapper": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/field-activation-partition-01/future-binding-case-joins.json",
+        "sha256": "b3c38ad1418d3c41f415c0a2b29d081b1f7c4b47854bb3d17dd0b74e06923de2",
+        "pointer": "/cases/16"
+      },
+      "originalBodySha256": "836b7ee873ae3a2a1f28abd4af497c665eda26293944ebae5546dbd21df7b767",
+      "canonicalBridgeIds": [
+        "CMP-C5-BIND"
+      ],
+      "originalCommandAndScenario": "Read originalProposedBody or originalBody at that exact wrapper; unchanged action/prior/expected observer/command are mandatory, not replaced by this join.",
+      "unitRecipeRefs": [
+        "P",
+        "G",
+        "JN",
+        "JA",
+        "BJ",
+        "BC",
+        "RA"
+      ],
+      "unitApplicability": {
+        "P": "applicable at exact receiver; original scenario retained, specialize owner/task/prior/observer with named unit recipe",
+        "G": "applicable at exact receiver; original scenario retained, specialize owner/task/prior/observer with named unit recipe",
+        "JN": "applicable at exact receiver; original scenario retained, specialize owner/task/prior/observer with named unit recipe",
+        "JA": "applicable at exact receiver; original scenario retained, specialize owner/task/prior/observer with named unit recipe",
+        "BJ": "applicable at exact receiver; original scenario retained, specialize owner/task/prior/observer with named unit recipe",
+        "BC": "applicable at exact receiver; original scenario retained, specialize owner/task/prior/observer with named unit recipe",
+        "RA": "applicable at exact receiver; original scenario retained, specialize owner/task/prior/observer with named unit recipe"
+      },
+      "result": "not-run",
+      "reviewerConfirmation": null
+    },
+    {
+      "id": "C5-COMPLETE-ADMIN-UPGRADE",
+      "originalWrapper": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/field-activation-partition-01/future-binding-case-joins.json",
+        "sha256": "b3c38ad1418d3c41f415c0a2b29d081b1f7c4b47854bb3d17dd0b74e06923de2",
+        "pointer": "/cases/17"
+      },
+      "originalBodySha256": "3eac37bce3126be5f6799e0c863efc8aeec05429b346c87fca1440af40247d25",
+      "canonicalBridgeIds": [
+        "CMP-C5-BIND"
+      ],
+      "originalCommandAndScenario": "Read originalProposedBody or originalBody at that exact wrapper; unchanged action/prior/expected observer/command are mandatory, not replaced by this join.",
+      "unitRecipeRefs": [
+        "P",
+        "G",
+        "JN",
+        "JA",
+        "BJ",
+        "BC",
+        "RA"
+      ],
+      "unitApplicability": {
+        "P": "applicable at exact receiver; original scenario retained, specialize owner/task/prior/observer with named unit recipe",
+        "G": "applicable at exact receiver; original scenario retained, specialize owner/task/prior/observer with named unit recipe",
+        "JN": "no invented Nova admin-upgrade authority over standalone owner: keep authentic original captured package/schema; new code requires separate admitted generation and original native history compatibility",
+        "JA": "no invented Nova admin-upgrade authority over standalone owner: keep authentic original captured package/schema; new code requires separate admitted generation and original native history compatibility",
+        "BJ": "no invented Nova admin-upgrade authority over standalone owner: keep authentic original captured package/schema; new code requires separate admitted generation and original native history compatibility",
+        "BC": "no invented Nova admin-upgrade authority over standalone owner: keep authentic original captured package/schema; new code requires separate admitted generation and original native history compatibility",
+        "RA": "applicable at exact receiver; original scenario retained, specialize owner/task/prior/observer with named unit recipe"
+      },
+      "result": "not-run",
+      "reviewerConfirmation": null
+    },
+    {
+      "id": "C5-COMPLETE-MUTATION",
+      "originalWrapper": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/field-activation-partition-01/future-binding-case-joins.json",
+        "sha256": "b3c38ad1418d3c41f415c0a2b29d081b1f7c4b47854bb3d17dd0b74e06923de2",
+        "pointer": "/cases/18"
+      },
+      "originalBodySha256": "6e5305ecfa0f63856c8598759d1d8ce566da196c9c4ce33398637635dba32795",
+      "canonicalBridgeIds": [
+        "CMP-C5-BIND"
+      ],
+      "originalCommandAndScenario": "Read originalProposedBody or originalBody at that exact wrapper; unchanged action/prior/expected observer/command are mandatory, not replaced by this join.",
+      "unitRecipeRefs": [
+        "P",
+        "G",
+        "JN",
+        "JA",
+        "BJ",
+        "BC",
+        "RA"
+      ],
+      "unitApplicability": {
+        "P": "applicable at exact receiver; original scenario retained, specialize owner/task/prior/observer with named unit recipe",
+        "G": "applicable at exact receiver; original scenario retained, specialize owner/task/prior/observer with named unit recipe",
+        "JN": "applicable at exact receiver; original scenario retained, specialize owner/task/prior/observer with named unit recipe",
+        "JA": "applicable at exact receiver; original scenario retained, specialize owner/task/prior/observer with named unit recipe",
+        "BJ": "applicable at exact receiver; original scenario retained, specialize owner/task/prior/observer with named unit recipe",
+        "BC": "applicable at exact receiver; original scenario retained, specialize owner/task/prior/observer with named unit recipe",
+        "RA": "applicable at exact receiver; original scenario retained, specialize owner/task/prior/observer with named unit recipe"
+      },
+      "result": "not-run",
+      "reviewerConfirmation": null
+    },
+    {
+      "id": "CMP-C5-PREPARATION-CLEANUP-BEFORE-BIND",
+      "originalWrapper": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/field-activation-partition-01/future-binding-case-joins.json",
+        "sha256": "b3c38ad1418d3c41f415c0a2b29d081b1f7c4b47854bb3d17dd0b74e06923de2",
+        "pointer": "/cases/19"
+      },
+      "originalBodySha256": "d92a50f9d8ef7bef48ffe03645b96cd9303ae375bc9fbc64dafab6a0615ebae4",
+      "canonicalBridgeIds": [],
+      "originalCommandAndScenario": "Read originalProposedBody or originalBody at that exact wrapper; unchanged action/prior/expected observer/command are mandatory, not replaced by this join.",
+      "unitRecipeRefs": [
+        "BC"
+      ],
+      "unitApplicability": {
+        "BC": "applicable at exact receiver; original scenario retained, specialize owner/task/prior/observer with named unit recipe"
+      },
+      "result": "not-run",
+      "reviewerConfirmation": null
+    },
+    {
+      "id": "CMP-C5-PREPARATION-CLEANUP-AFTER-BIND",
+      "originalWrapper": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/field-activation-partition-01/future-binding-case-joins.json",
+        "sha256": "b3c38ad1418d3c41f415c0a2b29d081b1f7c4b47854bb3d17dd0b74e06923de2",
+        "pointer": "/cases/20"
+      },
+      "originalBodySha256": "47a146f00359970fdc13f61c3b310821191db176e34a7b013c046d8fbcfe6365",
+      "canonicalBridgeIds": [],
+      "originalCommandAndScenario": "Read originalProposedBody or originalBody at that exact wrapper; unchanged action/prior/expected observer/command are mandatory, not replaced by this join.",
+      "unitRecipeRefs": [
+        "BC"
+      ],
+      "unitApplicability": {
+        "BC": "applicable at exact receiver; original scenario retained, specialize owner/task/prior/observer with named unit recipe"
+      },
+      "result": "not-run",
+      "reviewerConfirmation": null
+    },
+    {
+      "id": "CMP-C5-PREPARATION-CLEANUP-PARALLEL-PUBLISH",
+      "originalWrapper": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/field-activation-partition-01/future-binding-case-joins.json",
+        "sha256": "b3c38ad1418d3c41f415c0a2b29d081b1f7c4b47854bb3d17dd0b74e06923de2",
+        "pointer": "/cases/21"
+      },
+      "originalBodySha256": "54d2f40332c6259ceb83c8184d28ddf04cb083c2d24f4519f6653b5486748891",
+      "canonicalBridgeIds": [],
+      "originalCommandAndScenario": "Read originalProposedBody or originalBody at that exact wrapper; unchanged action/prior/expected observer/command are mandatory, not replaced by this join.",
+      "unitRecipeRefs": [
+        "BC"
+      ],
+      "unitApplicability": {
+        "BC": "applicable at exact receiver; original scenario retained, specialize owner/task/prior/observer with named unit recipe"
+      },
+      "result": "not-run",
+      "reviewerConfirmation": null
+    },
+    {
+      "id": "CMP-C5-PREPARATION-CLEANUP-INVALID-PUBLISH",
+      "originalWrapper": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/field-activation-partition-01/future-binding-case-joins.json",
+        "sha256": "b3c38ad1418d3c41f415c0a2b29d081b1f7c4b47854bb3d17dd0b74e06923de2",
+        "pointer": "/cases/22"
+      },
+      "originalBodySha256": "4fc0167045c59881173aebd0a6f561a55b382e4f2061c20f24765e2225263972",
+      "canonicalBridgeIds": [],
+      "originalCommandAndScenario": "Read originalProposedBody or originalBody at that exact wrapper; unchanged action/prior/expected observer/command are mandatory, not replaced by this join.",
+      "unitRecipeRefs": [
+        "BC"
+      ],
+      "unitApplicability": {
+        "BC": "applicable at exact receiver; original scenario retained, specialize owner/task/prior/observer with named unit recipe"
+      },
+      "result": "not-run",
+      "reviewerConfirmation": null
+    },
+    {
+      "id": "CMP-C5-PREPARATION-CLEANUP-STARTED-RECOVERY",
+      "originalWrapper": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/field-activation-partition-01/future-binding-case-joins.json",
+        "sha256": "b3c38ad1418d3c41f415c0a2b29d081b1f7c4b47854bb3d17dd0b74e06923de2",
+        "pointer": "/cases/23"
+      },
+      "originalBodySha256": "fcd2eedb1545c638f04eb06f122d5af2d5e49a669811ec00b79f54ab2a746451",
+      "canonicalBridgeIds": [],
+      "originalCommandAndScenario": "Read originalProposedBody or originalBody at that exact wrapper; unchanged action/prior/expected observer/command are mandatory, not replaced by this join.",
+      "unitRecipeRefs": [
+        "BC"
+      ],
+      "unitApplicability": {
+        "BC": "applicable at exact receiver; original scenario retained, specialize owner/task/prior/observer with named unit recipe"
+      },
+      "result": "not-run",
+      "reviewerConfirmation": null
+    },
+    {
+      "id": "CMP-C5-PREPARATION-CLEANUP-QUIESCENT-RETRY",
+      "originalWrapper": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/field-activation-partition-01/future-binding-case-joins.json",
+        "sha256": "b3c38ad1418d3c41f415c0a2b29d081b1f7c4b47854bb3d17dd0b74e06923de2",
+        "pointer": "/cases/24"
+      },
+      "originalBodySha256": "cb30831b9cc484d2d4bfedf80ce0de528a30f756d41a101cea8ecb0b138d8442",
+      "canonicalBridgeIds": [],
+      "originalCommandAndScenario": "Read originalProposedBody or originalBody at that exact wrapper; unchanged action/prior/expected observer/command are mandatory, not replaced by this join.",
+      "unitRecipeRefs": [
+        "BC"
+      ],
+      "unitApplicability": {
+        "BC": "applicable at exact receiver; original scenario retained, specialize owner/task/prior/observer with named unit recipe"
+      },
+      "result": "not-run",
+      "reviewerConfirmation": null
+    },
+    {
+      "id": "CMP-C5-PREPARATION-CLEANUP-UNCERTAIN-RETRY",
+      "originalWrapper": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/field-activation-partition-01/future-binding-case-joins.json",
+        "sha256": "b3c38ad1418d3c41f415c0a2b29d081b1f7c4b47854bb3d17dd0b74e06923de2",
+        "pointer": "/cases/25"
+      },
+      "originalBodySha256": "00b92cfc07d5b04226282e9086f0b7badcc409ba0f3962c9bfb544545b77b2a9",
+      "canonicalBridgeIds": [],
+      "originalCommandAndScenario": "Read originalProposedBody or originalBody at that exact wrapper; unchanged action/prior/expected observer/command are mandatory, not replaced by this join.",
+      "unitRecipeRefs": [
+        "BC"
+      ],
+      "unitApplicability": {
+        "BC": "applicable at exact receiver; original scenario retained, specialize owner/task/prior/observer with named unit recipe"
+      },
+      "result": "not-run",
+      "reviewerConfirmation": null
+    },
+    {
+      "id": "CMP-C5-PREPARATION-CLEANUP-RECEIPT-EFFECT",
+      "originalWrapper": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/field-activation-partition-01/future-binding-case-joins.json",
+        "sha256": "b3c38ad1418d3c41f415c0a2b29d081b1f7c4b47854bb3d17dd0b74e06923de2",
+        "pointer": "/cases/26"
+      },
+      "originalBodySha256": "1da69e663ebe7ec0c21c0205ddad202c786965e95b5056c2b3b0a79d671c9071",
+      "canonicalBridgeIds": [],
+      "originalCommandAndScenario": "Read originalProposedBody or originalBody at that exact wrapper; unchanged action/prior/expected observer/command are mandatory, not replaced by this join.",
+      "unitRecipeRefs": [
+        "BC"
+      ],
+      "unitApplicability": {
+        "BC": "applicable at exact receiver; original scenario retained, specialize owner/task/prior/observer with named unit recipe"
+      },
+      "result": "not-run",
+      "reviewerConfirmation": null
+    },
+    {
+      "id": "CMP-C5-PREPARATION-CLEANUP-PROJECTION",
+      "originalWrapper": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/field-activation-partition-01/future-binding-case-joins.json",
+        "sha256": "b3c38ad1418d3c41f415c0a2b29d081b1f7c4b47854bb3d17dd0b74e06923de2",
+        "pointer": "/cases/27"
+      },
+      "originalBodySha256": "5332b972d3c60893b6da9dd96c7b34144a36c9682471c65f28c8811c799592c2",
+      "canonicalBridgeIds": [],
+      "originalCommandAndScenario": "Read originalProposedBody or originalBody at that exact wrapper; unchanged action/prior/expected observer/command are mandatory, not replaced by this join.",
+      "unitRecipeRefs": [
+        "BC"
+      ],
+      "unitApplicability": {
+        "BC": "applicable at exact receiver; original scenario retained, specialize owner/task/prior/observer with named unit recipe"
+      },
+      "result": "not-run",
+      "reviewerConfirmation": null
+    },
+    {
+      "id": "CMP-C5-PREPARATION-CLEANUP-FIXED-EVAL",
+      "originalWrapper": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/field-activation-partition-01/future-binding-case-joins.json",
+        "sha256": "b3c38ad1418d3c41f415c0a2b29d081b1f7c4b47854bb3d17dd0b74e06923de2",
+        "pointer": "/cases/28"
+      },
+      "originalBodySha256": "7a6d44faf512092b25f8a0eb9c2160e683e80e2746ec6666b3745908ee5ef145",
+      "canonicalBridgeIds": [],
+      "originalCommandAndScenario": "Read originalProposedBody or originalBody at that exact wrapper; unchanged action/prior/expected observer/command are mandatory, not replaced by this join.",
+      "unitRecipeRefs": [
+        "BC"
+      ],
+      "unitApplicability": {
+        "BC": "applicable at exact receiver; original scenario retained, specialize owner/task/prior/observer with named unit recipe"
+      },
+      "result": "not-run",
+      "reviewerConfirmation": null
+    },
+    {
+      "id": "CMP-C5-PREPARATION-CLEANUP-SUCCESS-RELEASE",
+      "originalWrapper": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/field-activation-partition-01/future-binding-case-joins.json",
+        "sha256": "b3c38ad1418d3c41f415c0a2b29d081b1f7c4b47854bb3d17dd0b74e06923de2",
+        "pointer": "/cases/29"
+      },
+      "originalBodySha256": "b48cc39e543feac557e167e1c562975fb6edb3202975c70214533627e9c2d22b",
+      "canonicalBridgeIds": [],
+      "originalCommandAndScenario": "Read originalProposedBody or originalBody at that exact wrapper; unchanged action/prior/expected observer/command are mandatory, not replaced by this join.",
+      "unitRecipeRefs": [
+        "BC"
+      ],
+      "unitApplicability": {
+        "BC": "applicable at exact receiver; original scenario retained, specialize owner/task/prior/observer with named unit recipe"
+      },
+      "result": "not-run",
+      "reviewerConfirmation": null
+    },
+    {
+      "id": "CMP-C5-PREPARATION-CLEANUP-RELEASE-REPLAY",
+      "originalWrapper": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/field-activation-partition-01/future-binding-case-joins.json",
+        "sha256": "b3c38ad1418d3c41f415c0a2b29d081b1f7c4b47854bb3d17dd0b74e06923de2",
+        "pointer": "/cases/30"
+      },
+      "originalBodySha256": "c1cde8a465f626f6c14ac44f3c42c7b1bc4ea424c4297cdf217bb05b2ed92d6d",
+      "canonicalBridgeIds": [],
+      "originalCommandAndScenario": "Read originalProposedBody or originalBody at that exact wrapper; unchanged action/prior/expected observer/command are mandatory, not replaced by this join.",
+      "unitRecipeRefs": [
+        "BC"
+      ],
+      "unitApplicability": {
+        "BC": "applicable at exact receiver; original scenario retained, specialize owner/task/prior/observer with named unit recipe"
+      },
+      "result": "not-run",
+      "reviewerConfirmation": null
+    },
+    {
+      "id": "CMP-C5-PREPARATION-CLEANUP-HISTORY-CAPACITY",
+      "originalWrapper": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/field-activation-partition-01/future-binding-case-joins.json",
+        "sha256": "b3c38ad1418d3c41f415c0a2b29d081b1f7c4b47854bb3d17dd0b74e06923de2",
+        "pointer": "/cases/31"
+      },
+      "originalBodySha256": "4a67d51bfb03da52d114cab72c877cfc58323c30de82a2e5b61366434f05b165",
+      "canonicalBridgeIds": [],
+      "originalCommandAndScenario": "Read originalProposedBody or originalBody at that exact wrapper; unchanged action/prior/expected observer/command are mandatory, not replaced by this join.",
+      "unitRecipeRefs": [
+        "BC"
+      ],
+      "unitApplicability": {
+        "BC": "applicable at exact receiver; original scenario retained, specialize owner/task/prior/observer with named unit recipe"
+      },
+      "result": "not-run",
+      "reviewerConfirmation": null
+    }
+  ],
+  "reviewedDependencies": [
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-02/README.md",
+      "sha256": "36bc2bdd387cf9a5343fea6443dd6a27a253c95575840edafb45bca57290aa86"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/buster-remote-plan-profile-01/future-service-case-plans.json",
+      "sha256": "f7379b439b056669fa83729036744cf87c04d73415963da67c0b2c833c42c76b"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/provider-field-dependency-adoption-01/new-processing-policy-bindings.json",
+      "sha256": "7990705dcb3b6ba486d3a38bd582f5be5838b92c8cfc004f8db6a10700ecff30"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/four-source-boundary-contracts-01/future-case-contracts.json",
+      "sha256": "11cca32cef0f2e72ea19bf201acf435b832126238ab3e4c3f95f1784ca108d95"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/field-activation-partition-02/policy-field-instance-case-joins.json",
+      "sha256": "4263329f0e155cd33bd7ea8e412a6e4f95bff404c3c8edf6d626812b79ab92ad"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-agent-role-binding-02/reading-precedence.json",
+      "sha256": "489358fb6a60f24cd0852cad4b6cdf4832d21bc358a245f76343a3714e9338ba"
+    }
+  ],
+  "dormant": {
+    "resolveTestPlan": "export/test-only producer; imported complete plan admission does not install resolver service",
+    "OpenAICompatibleDesignProvider": "actual host constructs DeterministicDesignProvider; no productive model/secret timeout/prompt effect acceptance",
+    "fourSourceExports": "reuse exact reviewed four-source contracts; no declared installed writer/provider roster is manufactured"
+  },
+  "invariants": "Whole profile/task/source/grant/claim/deadline/counters; source-specific wrong/missing/original-A recovery/fixedEval rules in each recipe; no generic bridge waives original member EFFECT/VAL/MUT."
+}

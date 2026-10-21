@@ -1,0 +1,318 @@
+{
+  "qualification": "author proposal only; existing field/case bodies unchanged",
+  "selection": {
+    "entry": "config/pipeline.config.json#/novaCoreSelection",
+    "exactRequiredKeys": [
+      "role",
+      "instanceId",
+      "ownerPath",
+      "profileId"
+    ],
+    "role": "nova",
+    "ownerPath": "nova/core.config.json",
+    "owner": "config/nova/core.config.json",
+    "schema": {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/field-activation-partition-02/nova-core-owner.schema.json",
+      "sha256": "0f2d4023cfd469de3ecb2efddf1cd943f6979eaf9ae1ba64f75cf6148101eed7"
+    },
+    "legacy": "new start competing --platform rejects even equal; original historical closure retained"
+  },
+  "anchors": [
+    {
+      "id": "RT-COMPILER-REPAIRBUDGET-CATEGORIES-LINT",
+      "originalFieldMap": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/field-activation-partition-02/field-map.json",
+        "sha256": "860e60b25b8640d04af6e567fe936309d7e48bbb8edd238a051bf8c1b924b6e0",
+        "pointer": "/fields/996"
+      },
+      "originalCaseIds": [
+        "RT-COMPILER-REPAIRBUDGET-CATEGORIES-LINT-MISSING",
+        "RT-COMPILER-REPAIRBUDGET-CATEGORIES-LINT-ALT",
+        "RT-COMPILER-REPAIRBUDGET-CATEGORIES-LINT-MUTANT",
+        "RT-COMPILER-REPAIRBUDGET-CATEGORIES-LINT-CURRENT-SOURCE-DEFINITION"
+      ],
+      "scope": [
+        "R"
+      ],
+      "result": "not-run",
+      "reviewStatus": "author-proposed; fresh independent review required",
+      "soleAuthor": "config/nova/core.config.json#/profiles/<novaCoreSelection.profileId>/settings/projectCompiler/repairBudget/categories/lint",
+      "schema": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime/batch-11-project-compiler/owned-compiler.schema.json",
+        "sha256": "a2023c0d780e578e19753dec3061059eb4c9dea84bd9b5c4c4e4dc25d1925617",
+        "pointer": "/properties/projectCompiler/properties/repairBudget/properties/categories/properties/lint"
+      },
+      "completeA": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime/batch-11-project-compiler/owned-compiler-controls.json",
+        "sha256": "4126dd9aa3fa21ddb46f7154ef2add1e417155f6ffced51323b3ee6e35ad6862",
+        "pointer": "/enabled"
+      },
+      "completeBRecipe": {
+        "base": "CORE-A whole Core owner profile",
+        "replaceOnly": "/settings/projectCompiler/repairBudget/categories/lint",
+        "A": 2,
+        "B": 1,
+        "allOtherFields": "byte-identical resolved full profile, fixed review-enabled branch; separate R run only"
+      },
+      "fullCoreProfileSource": {
+        "path": "tests/verification/reliability/nova-dispatch-projection.test.mjs",
+        "sha256": "501bd977c14b12b1af01d75fe7e3b0667e6735386993b417c2a0cab07cda007d"
+      },
+      "futureCases": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime/batch-11-project-compiler/future-cases.json",
+        "sha256": "4f688431a8077fb4733999ad08dca127656d7d5ff0e74bcc00187a7a012b1117",
+        "pointer": "/0"
+      },
+      "productiveRecipe": "RESIDUAL-BINDING-RECIPES.md#named-anchor-witnesses-and-limits",
+      "targetReceiving": "compileProject owned policy -> moduleStages exact derived graph -> graph-repair-budget -> repairDisposition -> original charged ledger",
+      "missingWrong": "delete selected leaf or substitute wrong selected Core role/profile/schema; reject before compile/source/adapter effects",
+      "recovery": "R original graph+categories+repairLedger+authorized orders/retries/deadlines; B cannot replenish",
+      "fixedEval": "CORE-A R and every derived graph/group retain original A"
+    },
+    {
+      "id": "RT-COMPILER-REPAIRBUDGET-MAXIMUMORCHESTRATORORDERS",
+      "originalFieldMap": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/field-activation-partition-02/field-map.json",
+        "sha256": "860e60b25b8640d04af6e567fe936309d7e48bbb8edd238a051bf8c1b924b6e0",
+        "pointer": "/fields/999"
+      },
+      "originalCaseIds": [
+        "RT-COMPILER-REPAIRBUDGET-MAXIMUMORCHESTRATORORDERS-MISSING",
+        "RT-COMPILER-REPAIRBUDGET-MAXIMUMORCHESTRATORORDERS-ALT",
+        "RT-COMPILER-REPAIRBUDGET-MAXIMUMORCHESTRATORORDERS-MUTANT",
+        "RT-COMPILER-REPAIRBUDGET-MAXIMUMORCHESTRATORORDERS-CURRENT-SOURCE-DEFINITION"
+      ],
+      "scope": [
+        "R"
+      ],
+      "result": "not-run",
+      "reviewStatus": "author-proposed; fresh independent review required",
+      "soleAuthor": "config/nova/core.config.json#/profiles/<novaCoreSelection.profileId>/settings/projectCompiler/repairBudget/maximumOrchestratorOrders",
+      "schema": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime/batch-11-project-compiler/owned-compiler.schema.json",
+        "sha256": "a2023c0d780e578e19753dec3061059eb4c9dea84bd9b5c4c4e4dc25d1925617",
+        "pointer": "/properties/projectCompiler/properties/repairBudget/properties/maximumOrchestratorOrders"
+      },
+      "completeA": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime/batch-11-project-compiler/owned-compiler-controls.json",
+        "sha256": "4126dd9aa3fa21ddb46f7154ef2add1e417155f6ffced51323b3ee6e35ad6862",
+        "pointer": "/enabled"
+      },
+      "completeBRecipe": {
+        "base": "CORE-A whole Core owner profile",
+        "replaceOnly": "/settings/projectCompiler/repairBudget/maximumOrchestratorOrders",
+        "A": 1,
+        "B": 0,
+        "allOtherFields": "byte-identical resolved full profile, fixed review-enabled branch; separate R run only"
+      },
+      "fullCoreProfileSource": {
+        "path": "tests/verification/reliability/nova-dispatch-projection.test.mjs",
+        "sha256": "501bd977c14b12b1af01d75fe7e3b0667e6735386993b417c2a0cab07cda007d"
+      },
+      "futureCases": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime/batch-11-project-compiler/future-cases.json",
+        "sha256": "4f688431a8077fb4733999ad08dca127656d7d5ff0e74bcc00187a7a012b1117",
+        "pointer": "/3"
+      },
+      "productiveRecipe": "RESIDUAL-BINDING-RECIPES.md#named-anchor-witnesses-and-limits",
+      "targetReceiving": "compileProject owned policy -> moduleStages exact derived graph -> graph-repair-budget -> repairDisposition -> original charged ledger",
+      "missingWrong": "delete selected leaf or substitute wrong selected Core role/profile/schema; reject before compile/source/adapter effects",
+      "recovery": "R original graph+categories+repairLedger+authorized orders/retries/deadlines; B cannot replenish",
+      "fixedEval": "CORE-A R and every derived graph/group retain original A"
+    },
+    {
+      "id": "RT-PLATFORM-EFFECTLOCKTTLMS",
+      "originalFieldMap": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/field-activation-partition-02/field-map.json",
+        "sha256": "860e60b25b8640d04af6e567fe936309d7e48bbb8edd238a051bf8c1b924b6e0",
+        "pointer": "/fields/1255"
+      },
+      "originalCaseIds": [
+        "RT-PLATFORM-EFFECTLOCKTTLMS-MISSING",
+        "RT-PLATFORM-EFFECTLOCKTTLMS-ALT",
+        "RT-PLATFORM-EFFECTLOCKTTLMS-MUTANT"
+      ],
+      "scope": [
+        "R",
+        "S",
+        "H"
+      ],
+      "result": "not-run",
+      "reviewStatus": "author-proposed; fresh independent review required",
+      "soleAuthor": "config/nova/core.config.json#/profiles/<novaCoreSelection.profileId>/settings/platform/effectLockTtlMs",
+      "schema": {
+        "path": "skills/common/plugin-runtime/foundation/config/platform.schema.json",
+        "sha256": "c68af77b9afa7d1f52caad68c3a083cd8b9555c9fb2401ef14c2071a63aecc58",
+        "pointer": "/properties/effectLockTtlMs"
+      },
+      "completeARecipe": {
+        "wholeOwner": {
+          "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/field-activation-partition-02/residual-core-owner-fixtures.json",
+          "sha256": "fdb835742047da448782c7917820effb84799c05e9f585cdbedfb9b58f37461b",
+          "pointer": "/profiles/local-A"
+        },
+        "selectedProfile": "local-A",
+        "task": {
+          "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/field-activation-partition-02/residual-local-core-task.json",
+          "sha256": "0c55e6927db7edf3124cd2a50c84f2522da15206c2b2bcc195214c96468b35ea",
+          "pointer": "/definition"
+        },
+        "exactTTL": 300000,
+        "effect": "actual telemetry observer -> telemetry-store -> actual Core durable effect lock; required test observer only controls failure notification"
+      },
+      "completeBRecipe": {
+        "wholeOwner": {
+          "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/field-activation-partition-02/residual-core-owner-fixtures.json",
+          "sha256": "fdb835742047da448782c7917820effb84799c05e9f585cdbedfb9b58f37461b",
+          "pointer": "/profiles/local-B-lock"
+        },
+        "selectedProfile": "local-B-lock",
+        "exactTTL": 150000,
+        "scope": "separate R run; started A/fixedEval remain A"
+      },
+      "productiveReceiver": "Nova engine-runtime createAdapterRuntime -> EffectCoordinator(lockTtlMs) -> executeEffect -> FileResourceLockManager.acquire; never Buster platform import",
+      "retentionDelta": "New Core closure must retain platform TTL with source/owner/schema/profile; current runtime.configuration omits it. Original locks/claim/effects remain source of ownership; no live-lock stealing from TTL expiry alone.",
+      "wrongMissing": "missing/wrong-type TTL rejects whole selected Core before activation; mismatched historical closure rejects before any adapter effect",
+      "fixedEval": "A lock policy and original acquisition/deadline retained"
+    },
+    {
+      "id": "CMP-worker-core-localRuntime.replayLimit",
+      "originalFieldMap": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/field-activation-partition-02/field-map.json",
+        "sha256": "860e60b25b8640d04af6e567fe936309d7e48bbb8edd238a051bf8c1b924b6e0",
+        "pointer": "/fields/157"
+      },
+      "originalCaseIds": [
+        "CMP-C1-DELIVERY",
+        "CMP-C1-MUT",
+        "CMP-C5-BIND",
+        "CMP-C1-VAL-worker-core",
+        "CMP-C1-EFFECT-worker-core",
+        "CMP-C1-EFFECT-worker-core-localRuntime.replayLimit",
+        "CMP-C0-COMPLETE-PROFILES",
+        "CMP-C0-REFINED-COMPLETE-PROFILES",
+        "CMP-C0-CORE-ADDITIONAL-CONTRACTS",
+        "CMP-C0-REFINED-PROFILES-ICD-CORRECTED"
+      ],
+      "scope": [
+        "R",
+        "S",
+        "H"
+      ],
+      "result": "not-run",
+      "reviewStatus": "author-proposed; fresh independent review required",
+      "componentBody": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-17/active-component-semantic-bodies.json",
+        "sha256": "d7d402e328eab25d1d61cbfd70861bdde8d700090d94aad63f35c3057bdc688b",
+        "pointer": "/rows/257/body"
+      },
+      "soleAuthor": "config/components/worker-core.config.json#/profiles/<explicitSelectedProfile>/settings/localRuntime/replayLimit",
+      "schema": {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-15/schemas/C1/worker-core.schema.json",
+        "sha256": "8bd4f48d6beadab9e3c011663dac18e3361f1d6eab0b3ffa3bd1bcb0af6eff3c",
+        "pointer": "/properties/profiles/additionalProperties/properties/settings/properties/localRuntime/properties/replayLimit",
+        "exactBody": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1000000
+        }
+      },
+      "completeA": {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-15/fixtures/C1-A/config/components/worker-core.config.json",
+        "sha256": "84224851477a26746dc00a20bd612be68a0302ba6f89b1cb7b3a3494fe996150",
+        "selectedProfile": "local-A",
+        "fieldPointer": "/profiles/local-A/settings/localRuntime/replayLimit",
+        "exactValue": 65536,
+        "ownerDocumentContract": "pipeline-component.v2",
+        "owner": "worker-core",
+        "selectedWholeProfileSha256": "01c8482a4464e7fe4831396125769423b9a2b4715d8367872cf4e819133b5fe1",
+        "wholeOwnerDocumentSha256": "dc70356bdeaab74789650f739f9904e99f475dcbb441b39d3e099593b50e11f9"
+      },
+      "completeB": null,
+      "productiveRecipe": "RESIDUAL-BINDING-RECIPES.md#named-anchor-witnesses-and-limits",
+      "completeBRecipe": {
+        "base": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-15/fixtures/C1-A/config/components/worker-core.config.json",
+          "sha256": "84224851477a26746dc00a20bd612be68a0302ba6f89b1cb7b3a3494fe996150",
+          "selectedProfile": "local-A",
+          "fieldPointer": "/profiles/local-A/settings/localRuntime/replayLimit",
+          "exactValue": 65536,
+          "ownerDocumentContract": "pipeline-component.v2",
+          "owner": "worker-core",
+          "selectedWholeProfileSha256": "01c8482a4464e7fe4831396125769423b9a2b4715d8367872cf4e819133b5fe1",
+          "wholeOwnerDocumentSha256": "dc70356bdeaab74789650f739f9904e99f475dcbb441b39d3e099593b50e11f9"
+        },
+        "replaceOnly": "/profiles/local-A/settings/localRuntime/replayLimit",
+        "value": 32768,
+        "allOtherWholeOwnerFields": "unchanged",
+        "scope": "fresh independent LocalWorkerRuntime; no M switch"
+      },
+      "receiver": "runner-setup configuredWorkerRuntime -> LocalWorkerRuntime.runAttempt retained acceptedAttemptIds",
+      "priorState": "32768 distinct valid nonexpired completed IDs in B vs A; capacity free; then 65536 A, same fixed claim-expiry interval",
+      "wrongMissing": "strict worker-core schema plus wrong owner/profile/claim; earlier duplicate/expired controls retained",
+      "recovery": "original replay identities/claim expiries survive active R; explicit durable retention/reconciliation migration required, current map alone is not persistent proof",
+      "fixedEval": "same original A runtime policy/retained IDs"
+    },
+    {
+      "id": "AUTH-PRISM-CACHE-maximumInFlight",
+      "originalFieldMap": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/field-activation-partition-02/field-map.json",
+        "sha256": "860e60b25b8640d04af6e567fe936309d7e48bbb8edd238a051bf8c1b924b6e0",
+        "pointer": "/fields/2302"
+      },
+      "originalCaseIds": [
+        "AUTH-PRISM-CACHE-maximumInFlight-EFFECT",
+        "AUTH-PRISM-CACHE-C0-TYPED-PROFILES"
+      ],
+      "scope": [
+        "J"
+      ],
+      "result": "not-run",
+      "reviewStatus": "author-proposed; fresh independent review required",
+      "componentBody": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-17/active-component-semantic-bodies.json",
+        "sha256": "d7d402e328eab25d1d61cbfd70861bdde8d700090d94aad63f35c3057bdc688b",
+        "pointer": "/rows/28/body"
+      },
+      "soleAuthor": "config/components/prism-execution.config.json#/profiles/<explicitSelectedProfile>/settings/engine/cache/maximumInFlight",
+      "schema": {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-15/schemas/C3/prism-execution.schema.json",
+        "sha256": "c6dfe88a3518f6819f5840b7e6739796c6fc0e6a0711ab1fc42cf19df4e76cbe",
+        "pointer": "/properties/profiles/additionalProperties/properties/settings/properties/engine/properties/cache/properties/maximumInFlight",
+        "exactBody": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 4
+        }
+      },
+      "completeA": {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-15/fixtures/variants/AUTH-PRISM-CACHE-maximumInFlight/A/prism-execution.config.json",
+        "sha256": "225d2d31235f0996196da2f2b7d25a0605d59087427b997ab487d648ddf89ce3",
+        "selectedProfile": "local-A",
+        "fieldPointer": "/profiles/local-A/settings/engine/cache/maximumInFlight",
+        "exactValue": 4,
+        "ownerDocumentContract": "pipeline-component.v3",
+        "owner": "prism-execution",
+        "selectedWholeProfileSha256": "83bbf88670f147b75d56a158f9710e3718b61e439759c897aa4562f46032981b",
+        "wholeOwnerDocumentSha256": "7fc679d0ccfeb47307099dd0045f133618149e652987eaa376580e8712e4c35e"
+      },
+      "completeB": {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-15/fixtures/variants/AUTH-PRISM-CACHE-maximumInFlight/B/prism-execution.config.json",
+        "sha256": "54bae3581e49c5da8767b8a2b6bf44736f22dde99ec2a175d5a93f13df2a72d6",
+        "selectedProfile": "local-A",
+        "fieldPointer": "/profiles/local-A/settings/engine/cache/maximumInFlight",
+        "exactValue": 2,
+        "ownerDocumentContract": "pipeline-component.v3",
+        "owner": "prism-execution",
+        "selectedWholeProfileSha256": "97730ab04b345df65f25aac219354c50221b130b535108f1247379063094efc4",
+        "wholeOwnerDocumentSha256": "42f22cea740a1b75f86dab7f8c609b0987479ee48449bfbbe184a160274039e1"
+      },
+      "productiveRecipe": "RESIDUAL-BINDING-RECIPES.md#named-anchor-witnesses-and-limits",
+      "effectApplicability": "UNSUPPORTED productive 4-vs-2 concurrent-key contrast: one dedicated host + one guarded execute. Original EFFECT remains not-run/unresolved applicability, not waived.",
+      "receiver": "native-worker-host main -> one WorkerAttemptExecutor -> PrismWorkerOperation execute once -> PrismEngine cache",
+      "wrongMissing": "whole selected owner missing/wrong cache node rejects before host; library-only multi-key test cannot satisfy productive EFFECT",
+      "recovery": "J original cache/owner closure; no shared-cache service created",
+      "fixedEval": "A4 remains original J, B2 separate new J only"
+    }
+  ]
+}

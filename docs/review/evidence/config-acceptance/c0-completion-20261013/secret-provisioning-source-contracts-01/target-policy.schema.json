@@ -1,0 +1,166 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "secret-provisioning-policy.v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "namespace",
+    "sourceNamespace",
+    "operatorNamespace",
+    "operatorSecretName",
+    "setupMode",
+    "overwrite",
+    "components",
+    "sops",
+    "genericGeneration",
+    "attestationGeneration",
+    "fixtureProofBytes",
+    "ghcr",
+    "databaseNamespaceRewrite",
+    "completion"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": "secret-provisioning-policy.v1"
+    },
+    "namespace": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 63,
+      "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$"
+    },
+    "sourceNamespace": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 63,
+      "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$"
+    },
+    "operatorNamespace": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 63,
+      "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$"
+    },
+    "operatorSecretName": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 253,
+      "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?(\\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*$"
+    },
+    "setupMode": {
+      "enum": [
+        "auto",
+        "interactive",
+        "noninteractive"
+      ]
+    },
+    "overwrite": {
+      "type": "boolean"
+    },
+    "components": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "postgresql",
+        "litellm",
+        "tailscale"
+      ],
+      "properties": {
+        "postgresql": {
+          "type": "boolean"
+        },
+        "litellm": {
+          "type": "boolean"
+        },
+        "tailscale": {
+          "type": "boolean"
+        }
+      }
+    },
+    "sops": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "mode"
+          ],
+          "properties": {
+            "mode": {
+              "const": "disabled"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "mode",
+            "installationRef"
+          ],
+          "properties": {
+            "mode": {
+              "const": "selected-installation-ref"
+            },
+            "installationRef": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/-]*$"
+            }
+          }
+        }
+      ]
+    },
+    "genericGeneration": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "entropyBytes",
+        "encoding"
+      ],
+      "properties": {
+        "entropyBytes": {
+          "const": 32
+        },
+        "encoding": {
+          "enum": [
+            "hex",
+            "base64"
+          ]
+        }
+      }
+    },
+    "attestationGeneration": {
+      "const": "Ed25519"
+    },
+    "fixtureProofBytes": {
+      "const": 32
+    },
+    "ghcr": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "server",
+        "email"
+      ],
+      "properties": {
+        "server": {
+          "const": "ghcr.io"
+        },
+        "email": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Explicit source email metadata; no invented stricter email grammar than actual Docker/kubectl consumer. Original task/provider input and byte ceilings apply."
+        }
+      }
+    },
+    "databaseNamespaceRewrite": {
+      "const": "parsed-exact-postgresql-host-only"
+    },
+    "completion": {
+      "const": "all-enabled-required-targets-verified"
+    }
+  }
+}
