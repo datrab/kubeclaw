@@ -1,0 +1,222 @@
+{
+  "scope": "Nonauthor six-record current declaration impact ONLY; zero new gate/requirement counts",
+  "reviewBaseRevision": "dc90bae53b4f1e95784bf33997cf98ba5d7d3faa",
+  "candidateSourcePath": "scripts/docs-api-documentation-role-custody.mjs",
+  "candidateSourceSha256": "5b83577c8bf98f4fbbe5ec8deff2558735c4506df9a7514a592c859a4ab0fa6e",
+  "note": "Installed uncommitted exact candidate; final commit binding belongs to root. Not a claim that candidate bytes are committed at base revision.",
+  "reviewer": "/root/workflow_acceptance",
+  "structureChecks": {
+    "changedRoleObjects": 9,
+    "unchangedRoleObjects": 93,
+    "changedClosureMembers": 1,
+    "unchangedClosureMembers": 114,
+    "exactProposalApplied": true,
+    "allGuardAndSelectorFunctionBytesUnchanged": true,
+    "allNodeEntryCallersReceiptsAndWildcardsUnchanged": true,
+    "nativeReceiptObjectsUnchanged": true
+  },
+  "parentDataEvidence": {
+    "report": "postfreeze-facts-assessment/parent-review.json",
+    "assessment": "postfreeze-facts-assessment/assessment-and-proposal.json",
+    "JSObserved": 98,
+    "nativeUnexecuted": 4,
+    "closureData": 115,
+    "meaning": "Root independent actual-data verification reused; not independently reacquired here and not original code/purpose acceptance from hashes."
+  },
+  "installedTestEvidence": {
+    "path": "postfreeze-renewal-installed-tests.txt",
+    "terminalSummary": {
+      "tests": 36,
+      "pass": 36,
+      "fail": 0,
+      "skipped": 0,
+      "cancelled": 0
+    },
+    "toolExitCode": 0,
+    "attribution": "Root installed execution; reviewer read whole terminal log, did not rerun.",
+    "command": "node --test scripts/tests/docs-reader-purpose-routing.test.mjs scripts/tests/docs-documentation-purpose-routing.test.mjs scripts/tests/api-output-node-entry-custody.test.mjs",
+    "rootExecutionMetadata": {
+      "session": 49026,
+      "terminalChunk": "060146",
+      "exitCode": 0,
+      "processOutstanding": false
+    }
+  },
+  "records": [
+    {
+      "id": "AP09-documentation-agent-maintenance-20261021",
+      "previousReviewedRevision": "8522e25d9b284e9bf1a34dedf313a806d97c28ee",
+      "originalAuthor": "Nova /root authored content and correction coordinator",
+      "originalReviewer": "Independent Codex autoreview 2026-10-21 maintenance-ready-review",
+      "gateIds": [],
+      "requirementIds": [
+        "MNT-017"
+      ],
+      "originalSummary": "Whole central documentation-agent maintenance contract: discovery, impact, owned generation, review, reader probe and safe retirement.",
+      "originalLimits": [
+        "Source-backed documentation acceptance only; no deployed encryption assurance, live restore, native host, rendered site or whole global generator/drift claim.",
+        "Other MNT global discovery/generator/drift obligations are NOT accepted from this authored maintenance guide audit; see scope.json."
+      ],
+      "changedDependencies": [
+        "scripts/docs-api-documentation-role-custody.mjs"
+      ],
+      "reason": "Original MNT017 maintenance procedure and its no-global-generator limit remain supported: exact facts/Source-input renewal changes no discovery/qualification guard or ownership procedure. Current raw facts are not global graph admission or owner-generation success.",
+      "proposedDisposition": "PRESERVE_ORIGINAL_SCOPE",
+      "review": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "openIssues": []
+    },
+    {
+      "id": "AP09-complete-static-reader-search-20261021",
+      "previousReviewedRevision": "8522e25d9b284e9bf1a34dedf313a806d97c28ee",
+      "originalAuthor": "Nova /root documentation author and implementation coordinator",
+      "originalReviewer": "Independent Codex autoreview static-reader whole PUB-002 Source/reader-quality closeout",
+      "gateIds": [],
+      "requirementIds": [
+        "PUB-002"
+      ],
+      "originalSummary": "Whole PUB-002: existing positive page/asset allowlists plus actual artifact-local full-text search across all167 canonical reader pages, headings and code/technical identifiers. Browser find/empty/no-JS behavior observed; code and output reviewed.",
+      "originalLimits": [
+        "Only whole PUB-002. Ranked/synonym reader search questions in A912-04 remain unaccepted; substring full-text search is stated honestly.",
+        "No other publication gate or whole documentation package acceptance.",
+        "Local HTML/search output is not external hosting, actual cluster/runtime behavior, rendered Mermaid, source-preview or human screenreader acceptance.",
+        "Global API source/caller discovery still blocked at bundle copier; site boundary still has three unchanged Helm generated-prose diagnostics."
+      ],
+      "changedDependencies": [
+        "scripts/docs-api-documentation-role-custody.mjs"
+      ],
+      "reason": "Positive reader selector and full-text search functions/output remain unchanged. Exact asset closure renewal names only previously reviewed repair-retry allowlist literal and existing copy/page/asset functions; it neither executes the helper nor admits arbitrary Markdown/assets.",
+      "proposedDisposition": "PRESERVE_ORIGINAL_SCOPE",
+      "review": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "openIssues": []
+    },
+    {
+      "id": "AP09-search-reader-gate-20261021",
+      "previousReviewedRevision": "8522e25d9b284e9bf1a34dedf313a806d97c28ee",
+      "originalAuthor": "Nova /root documentation author and implementation coordinator",
+      "originalReviewer": "Independent Codex autoreview whole A912-04 code/evidence review plus narrow Source/Reader/Quality native-impact follow-up",
+      "gateIds": [
+        "A912-04"
+      ],
+      "requirementIds": [],
+      "originalSummary": "Whole A912-04: canonical search index includes all167pages, headings and technical IDs, finite reader synonyms and weighted upper results. Twelve defined reader questions find expected route among top3 in actual browser at320/768/1440; exact positive-manifest equality excludes internal artifacts.",
+      "originalLimits": [
+        "Whole A912-04 only; finite declared reader synonyms, not universal semantic or natural-language search.",
+        "No other publication gate, all-page/human-screenreader, rendered-Mermaid/source-preview/externalhosting acceptance.",
+        "Global API bundle input/caller closure and three unchanged generated Helm-language diagnostics remain open."
+      ],
+      "changedDependencies": [
+        "scripts/docs-api-documentation-role-custody.mjs"
+      ],
+      "reason": "Ranked search index, weighting, finite synonyms and question corpus unchanged; no new source-selection or runtime claim follows from renewed role declarations. Actual22ea search proof remains applicable.",
+      "proposedDisposition": "PRESERVE_ORIGINAL_SCOPE",
+      "review": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "openIssues": []
+    },
+    {
+      "id": "AP09-rendered-source-bounds-gate-20261021",
+      "previousReviewedRevision": "8522e25d9b284e9bf1a34dedf313a806d97c28ee",
+      "originalAuthor": "Nova /root documentation author and implementation coordinator",
+      "originalReviewer": "Independent Codex autoreview whole A912-09 Source/Reader/Quality review and narrow changed-boundary impact review for 21 prior PASS records",
+      "gateIds": [
+        "A912-09"
+      ],
+      "requirementIds": [],
+      "originalSummary": "Whole A912-09: repository references and actual hash-verified built HTML links, anchors, assets and routes checked, plus full Source commit/type/actual-byte/line-or-Markdown-anchor validation.167 canonical pages,176HTML,179digests,36698localtargets,14401Source locators/3723objects including118primary upstream files across11repositories.",
+      "originalLimits": [
+        "Exact source location/object/type/byte/range checks, not semantic correctness of every claim, signatures, live runtime or hosting.",
+        "Local Source objects were observed in actual Git; GitHub reachability follows pushed ancestors, not a substituted upstream HTTP proof.",
+        "Native documentation purposes preserve source/caller identity and do not waive the global API bundle-copier boundary.",
+        "Whole A912-09 only; remaining publication/accessibility/diagram/preview/full-workflow gates not automatically accepted.",
+        "Three unchanged stale generated Helm phrases and global API bundle input/caller gap remain open."
+      ],
+      "changedDependencies": [
+        "scripts/docs-api-documentation-role-custody.mjs"
+      ],
+      "reason": "Source commit/object/actual-byte/range and artifact-target functions unchanged. Renewed role/purpose inputs reference already independently reviewed publication bytes; warm-cache guards remain exact. Raw acquisition facts are not semantic all-source or module-input acceptance.",
+      "proposedDisposition": "PRESERVE_ORIGINAL_SCOPE",
+      "review": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "openIssues": []
+    },
+    {
+      "id": "AP09-complete-same-source-code-preview-20261021",
+      "previousReviewedRevision": "8522e25d9b284e9bf1a34dedf313a806d97c28ee",
+      "originalAuthor": "Nova /root documentation author and implementation coordinator",
+      "originalReviewer": "Independent Codex autoreview whole PUB004 Source/Reader/Quality closeout plus narrow changed-boundary preservation for21priorPASSrecords",
+      "gateIds": [],
+      "requirementIds": [
+        "PUB-004"
+      ],
+      "originalSummary": "Whole PUB004: general same-source component automatically pairs immutable source links with exact same-revision inert code inside original evidence boxes.1660excerpts/390boxes/874objects across53pages;fresh-source and actualbrowser/text/native-disclosure proof.",
+      "originalLimits": [
+        "WholePUB004 only; A91205 all-six-field canonical format not established for every older evidence box and remains unaccepted.",
+        "Preserves originalclaims/contracts/tests/limits; missing author evidence not fabricated and source snippets do not prove live or semantic correctness.",
+        "ThreeSource boxes containingonlydirectory/named-anchor references remain ordinarylinks, not fake code previews.",
+        "No diagram/layoutgate, humanScreenReader, freshuser, hosting, globalAPI or productruntime approval.",
+        "GlobalAPIbundlecopier74 andthreeunchangedstaleHelmphrases stayopen."
+      ],
+      "changedDependencies": [
+        "scripts/docs-api-documentation-role-custody.mjs"
+      ],
+      "reason": "Same-revision inert preview extraction, LF normalization, source read and browser/native-disclosure semantics unchanged. The data-only declaration does not fabricate missing Claim/Contract/Test fields, grant A91205 or replace actual Source-byte verification.",
+      "proposedDisposition": "PRESERVE_ORIGINAL_SCOPE",
+      "review": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "openIssues": []
+    },
+    {
+      "id": "AP09-complete-responsive-reader-layout-20261021",
+      "previousReviewedRevision": "8522e25d9b284e9bf1a34dedf313a806d97c28ee",
+      "originalAuthor": "Nova /root documentation author and implementation coordinator",
+      "originalReviewer": "Independent Codex autoreview whole A91207 responsive-layout closeout and narrow24-record prior-boundary preservation",
+      "gateIds": [
+        "A912-07"
+      ],
+      "requirementIds": [],
+      "originalSummary": "Whole A91207 responsive reader layout at320/768/1440: navigation,tables,code,27 registered static diagrams,callouts,search remain available without page overflow; focusable internally scrolling regions preserve full content and textual alternatives.",
+      "originalLimits": [
+        "Whole responsive-layout gate only; PUB005/A91206 semantic diagram completeness NOT_READY:16/27 scoped supported,6system and5service proofs incomplete;capacity failures preserved.",
+        "Human screenreader/fresh-role user/hosting/live workflows/global API not accepted by automated browser or byte checks.",
+        "Native table/code/diagram internal horizontal scroll is intentional and focus/keyboard tested; no horizontal PAGE navigation.",
+        "Global bundle-copier and three stale generated Helm phrases remain open."
+      ],
+      "changedDependencies": [
+        "scripts/docs-api-documentation-role-custody.mjs"
+      ],
+      "reason": "CSS/rendered responsive content and table/code/diagram behavior unchanged. Current declaration-only edits do not alter layout or affect exact22ea changed-page Reader proof; prior whole-corpus/human-accessibility limits remain historical and explicit.",
+      "proposedDisposition": "PRESERVE_ORIGINAL_SCOPE",
+      "review": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "openIssues": []
+    }
+  ],
+  "limits": [
+    "No re-review/acceptance of100old recipe meanings or native4 execution.",
+    "No global graph/module-input/current inventory/owner-generation/CI/runtime/release grant.",
+    "30/31and44/45 historical failures remain failures; later facts do not rewrite them.",
+    "Prior report accepted-scope-preservation-8522e25d and exact22ea Reader continue to supply underlying Source/usability/quality scopes; this candidate changes no reader/public source content.",
+    "No main writes/imports/tests/acquisition by this reviewer."
+  ],
+  "verdict": "PASS_PRESERVE_SIX_ORIGINAL_SCOPES_ONLY"
+}

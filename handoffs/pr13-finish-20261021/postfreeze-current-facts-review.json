@@ -1,0 +1,374 @@
+{
+  "status": "INDEPENDENT_ACTUAL_DATA_ASSESSMENT_PASS_BOUNDED; AUTHOR_RENEWAL_PROPOSAL_REQUIRES_ROOT_REVIEW",
+  "revision": "8522e25d9b284e9bf1a34dedf313a806d97c28ee",
+  "manifestSha256": "8102ec306ac08ab2fda52ca4826ed95f3f8ed9da094e279b3df503fd0667f551",
+  "facts": {
+    "rows": 102,
+    "JSObserved": 98,
+    "nativeNotExecuted": [
+      "scripts/docs-api-go-output-role-adapter.go",
+      "scripts/docs-api-go-output-shapes.go",
+      "scripts/docs-api-python-output-adapter.py",
+      "scripts/docs-api-python-ast-v1.py"
+    ],
+    "failedDerivations": 0,
+    "changedRows": [
+      {
+        "source": "scripts/docs-api-output-discovery.mjs",
+        "fields": [
+          "selectors",
+          "factsDigest"
+        ]
+      },
+      {
+        "source": "scripts/docs-api-product-scope.mjs",
+        "fields": [
+          "factsDigest"
+        ]
+      },
+      {
+        "source": "scripts/docs-api-reference.mjs",
+        "fields": [
+          "factsDigest"
+        ]
+      },
+      {
+        "source": "scripts/docs-configuration-inventory.mjs",
+        "fields": [
+          "factsDigest"
+        ]
+      },
+      {
+        "source": "scripts/docs-generate.mjs",
+        "fields": [
+          "factsDigest"
+        ]
+      },
+      {
+        "source": "scripts/docs-publication.mjs",
+        "fields": [
+          "selectors",
+          "factsDigest"
+        ]
+      },
+      {
+        "source": "scripts/docs-reader/renderer.mjs",
+        "fields": [
+          "selectors",
+          "factsDigest"
+        ]
+      },
+      {
+        "source": "scripts/check-capability-drift-mutations.mjs",
+        "fields": [
+          "purposeInputs"
+        ]
+      },
+      {
+        "source": "scripts/check-capability-swarm-boundary.mjs",
+        "fields": [
+          "authorityInputs",
+          "purposeInputs"
+        ]
+      }
+    ],
+    "unchangedJSRows": 89,
+    "nativeChildCount": 0,
+    "repeatAndAllContextCloseoutsEqual": true
+  },
+  "preservation": {
+    "other93roleObjectsUnchanged": true,
+    "allNativeReceiptsUnchanged": true,
+    "other114closureMembersUnchanged": true,
+    "allNodeEntryCallersAndReceiptsUnchanged": true,
+    "allGuardAndSelectorImplementationBytesUnchanged": true,
+    "onlySelectedDataFieldEdits": 17
+  },
+  "reviewBasis": [
+    "Seven actual operation-fact changes: earlier five transitive consumers plus independently reviewed publication/renderer redirect integration. Exact selectors change only discovery/publication/renderer.",
+    "Two stale purpose inputs and one child authority reference only independently reviewed current scripts/docs-publication.mjs bytes; no new child path or caller.",
+    "Asset closure adds exact repair-retry literal, shifts existing function positions by one; five other selected operation syntax hashes identical. Preserve unselected publicationManifest definition outside this receipt."
+  ],
+  "limits": [
+    "No rerun or main write",
+    "Acquisition and root data-review proposal only; no native/owner/module-input/graph/CI/Reader/runtime acceptance",
+    "Prior30/31 and44/45 NOTPASS remain historical, not overwritten",
+    "Graph/npm bootstrap remains excluded; later Source changes need their own actual consumed-input assessment"
+  ],
+  "roleUpdates": [
+    {
+      "source": "scripts/docs-api-output-discovery.mjs",
+      "fields": [
+        "selectors",
+        "factsDigest"
+      ]
+    },
+    {
+      "source": "scripts/docs-api-product-scope.mjs",
+      "fields": [
+        "factsDigest"
+      ]
+    },
+    {
+      "source": "scripts/docs-api-reference.mjs",
+      "fields": [
+        "factsDigest"
+      ]
+    },
+    {
+      "source": "scripts/docs-configuration-inventory.mjs",
+      "fields": [
+        "factsDigest"
+      ]
+    },
+    {
+      "source": "scripts/docs-generate.mjs",
+      "fields": [
+        "factsDigest"
+      ]
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "fields": [
+        "selectors",
+        "factsDigest"
+      ]
+    },
+    {
+      "source": "scripts/docs-reader/renderer.mjs",
+      "fields": [
+        "selectors",
+        "factsDigest"
+      ]
+    },
+    {
+      "source": "scripts/check-capability-drift-mutations.mjs",
+      "fields": [
+        "purposeInputs"
+      ]
+    },
+    {
+      "source": "scripts/check-capability-swarm-boundary.mjs",
+      "fields": [
+        "authorityInputs",
+        "purposeInputs"
+      ]
+    }
+  ],
+  "closureUpdate": {
+    "source": "scripts/lib/docs-publication-assets.mjs",
+    "kind": "selected-operative-definition",
+    "purpose": "Independently reviewed exact positive reader-asset selection, no Markdown wildcard or source execution. One added repair-retry example asset literal preserves all prior selections; public page/asset/copy producers retain their original bounds. Omitted definitions are not newly qualified by this range receipt; the separate publicationManifest operation is bound by its actual consumer facts.",
+    "units": [
+      {
+        "symbol": "ImportDeclaration",
+        "kind": "ImportDeclaration",
+        "startLine": 1,
+        "endLine": 1,
+        "syntaxSha256": "99a8a8a7117b1395e3a209cdc8ba5a70424687458932bc4dc8a7b6e59ff53868"
+      },
+      {
+        "symbol": "ImportDeclaration",
+        "kind": "ImportDeclaration",
+        "startLine": 2,
+        "endLine": 2,
+        "syntaxSha256": "113f0af17fdf683cf360ab9d03b7eff1b572d3475e83119031d47ee4331621aa"
+      },
+      {
+        "symbol": "files",
+        "kind": "FirstStatement",
+        "startLine": 6,
+        "endLine": 26,
+        "syntaxSha256": "39f4b8a1c4f4a34b503257af91c226e8320a52b345450202e97fa07641954b46"
+      },
+      {
+        "symbol": "publicationPages",
+        "kind": "FunctionDeclaration",
+        "startLine": 28,
+        "endLine": 63,
+        "syntaxSha256": "164b6ce1b1f18d3b52707c356b9386c5d025ff91ada984810eaa772420741fb7"
+      },
+      {
+        "symbol": "publicationAssets",
+        "kind": "FunctionDeclaration",
+        "startLine": 65,
+        "endLine": 83,
+        "syntaxSha256": "949d411f82d86d4626bcfc8f0ccc4f16b58c23449a453707791e871d2bb7cde1"
+      },
+      {
+        "symbol": "copyPublicationAssets",
+        "kind": "FunctionDeclaration",
+        "startLine": 85,
+        "endLine": 91,
+        "syntaxSha256": "88bdfde2064ff986bade55d9f049315219c539d17c1de0bfd088e619d579d633"
+      }
+    ],
+    "ranges": [
+      {
+        "startLine": 1,
+        "endLine": 91,
+        "sha256": "d9ed4a888cc7c6095e72185ac06569f8331afde2ec5ccb6889ce875dc73c9396"
+      }
+    ],
+    "initialization": [
+      {
+        "kind": "ImportDeclaration",
+        "syntaxSha256": "99a8a8a7117b1395e3a209cdc8ba5a70424687458932bc4dc8a7b6e59ff53868"
+      },
+      {
+        "kind": "ImportDeclaration",
+        "syntaxSha256": "113f0af17fdf683cf360ab9d03b7eff1b572d3475e83119031d47ee4331621aa"
+      },
+      {
+        "kind": "FirstStatement",
+        "syntaxSha256": "39f4b8a1c4f4a34b503257af91c226e8320a52b345450202e97fa07641954b46"
+      }
+    ]
+  },
+  "actualOuterTerminals": [
+    {
+      "index": 0,
+      "argv": [
+        "/usr/bin/git",
+        "rev-parse",
+        "HEAD"
+      ],
+      "cwd": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery",
+      "returncode": 0,
+      "signal": null,
+      "streams": {
+        "stdout.bin": {
+          "bytes": 41,
+          "sha256": "77192535d052e989b64b31b56f6315d987a676f6bc0f7a463cb55e0e2dc16755"
+        },
+        "stderr.bin": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      }
+    },
+    {
+      "index": 1,
+      "argv": [
+        "/usr/bin/git",
+        "status",
+        "--porcelain=v1",
+        "--untracked-files=all"
+      ],
+      "cwd": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery",
+      "returncode": 0,
+      "signal": null,
+      "streams": {
+        "stdout.bin": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stderr.bin": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      }
+    },
+    {
+      "index": 2,
+      "argv": [
+        "/usr/local/bin/node",
+        "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/postfreeze-acquisition-packet/capture.mjs",
+        "--root",
+        "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery",
+        "--revision",
+        "8522e25d9b284e9bf1a34dedf313a806d97c28ee",
+        "--manifest",
+        "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/postfreeze-acquisition-packet/eager-resolution-roster.reviewed-facts.json",
+        "--manifest-sha256",
+        "8102ec306ac08ab2fda52ca4826ed95f3f8ed9da094e279b3df503fd0667f551",
+        "--output",
+        "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/postfreeze-facts-8522e25d-v3/node",
+        "--mode",
+        "facts"
+      ],
+      "cwd": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery",
+      "returncode": 0,
+      "signal": null,
+      "streams": {
+        "stdout.bin": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stderr.bin": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      }
+    },
+    {
+      "index": 3,
+      "argv": [
+        "/usr/bin/git",
+        "rev-parse",
+        "HEAD"
+      ],
+      "cwd": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery",
+      "returncode": 0,
+      "signal": null,
+      "streams": {
+        "stdout.bin": {
+          "bytes": 41,
+          "sha256": "77192535d052e989b64b31b56f6315d987a676f6bc0f7a463cb55e0e2dc16755"
+        },
+        "stderr.bin": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      }
+    },
+    {
+      "index": 4,
+      "argv": [
+        "/usr/bin/git",
+        "status",
+        "--porcelain=v1",
+        "--untracked-files=all"
+      ],
+      "cwd": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery",
+      "returncode": 0,
+      "signal": null,
+      "streams": {
+        "stdout.bin": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stderr.bin": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      }
+    }
+  ],
+  "parentReview": {
+    "verdict": "PASS_EXACT_DATA_DELTA_ONLY",
+    "reviewer": "root independent candidate/data review",
+    "captureRevision": "8522e25d9b284e9bf1a34dedf313a806d97c28ee",
+    "JSObserved": 98,
+    "nativeUnexecuted": 4,
+    "changedRoleObjects": 9,
+    "unchangedRoleObjects": 93,
+    "changedClosureMembers": 1,
+    "unchangedClosureMembers": 114,
+    "guardSelectorImplementationUnchanged": true,
+    "initialParentVerification": "First comparator wrongly expected each field-scoped prior to equal the whole recipe; corrected comparator verifies exact field prior plus complete expected resulting objects and unchanged implementation. Actual data was not rerun or changed.",
+    "limits": [
+      "Semantic purpose comes from named original Source reviews and current exact changed-expression review, not hash equality alone",
+      "No graph/module-input/owner/runtime/release acceptance",
+      "All30/31and44/45historicalfailures remain failures"
+    ]
+  },
+  "installedChecks": {
+    "command": "node --test scripts/tests/docs-reader-purpose-routing.test.mjs scripts/tests/docs-documentation-purpose-routing.test.mjs scripts/tests/api-output-node-entry-custody.test.mjs",
+    "exitCode": 0,
+    "tests": 36,
+    "pass": 36,
+    "skip": 0,
+    "terminalSession": 49026
+  }
+}
