@@ -43,6 +43,14 @@ export function loadProductionNovaTestGate(
     'maximumResponseBytes', 'maximumResultBytes', 'maximumArchiveBytes', 'maximumArchiveStoreBytes',
     'maximumEvidenceBytes', 'maximumEvidenceStoreBytes', 'recordLimits'], 'root');
   if (!selectedVersion && value.schemaVersion !== 'nova-remote-test-gate-runtime.v1') throw new Error('NOVA_REMOTE_CONFIG_VERSION_INVALID');
+  // The migrated reader requires an authored mode. Keep implicit bearer only
+  // in the closed v1 decoder; invalid v2 values cannot select that old policy.
+  if (selectedVersion && value.authentication !== 'bearer' && value.authentication !== 'spiffe-proxy') {
+    throw new Error('NOVA_REMOTE_CONFIG_INVALID:authentication');
+  }
+  if (selectedVersion && value.authentication === 'spiffe-proxy' && Object.hasOwn(value, 'tokenEnvironmentVariable')) {
+    throw new Error('NOVA_REMOTE_CONFIG_INVALID:tokenEnvironmentVariable');
+  }
   if (selectedVersion) {
     const selection = object(value.corePolicySelection, 'corePolicySelection');
     assertKnownKeys(selection, ['file', 'profile'], 'corePolicySelection');
@@ -70,7 +78,8 @@ export function loadProductionNovaTestGate(
     'sourceAuthority', 'stateRoot']) {
     if (typeof value[name] !== 'string' || value[name].length === 0) throw new Error(`NOVA_REMOTE_CONFIG_INVALID:${name}`);
   }
-  const authentication = value.authentication === 'spiffe-proxy' ? 'spiffe-proxy' : 'bearer';
+  const authentication = selectedVersion ? value.authentication as 'bearer' | 'spiffe-proxy'
+    : value.authentication === 'spiffe-proxy' ? 'spiffe-proxy' : 'bearer';
   let tokenName: string | undefined;
   let token: string | undefined;
   if (authentication === 'bearer') {

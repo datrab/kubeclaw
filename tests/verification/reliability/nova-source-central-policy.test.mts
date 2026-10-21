@@ -16,7 +16,7 @@ function fixture(t: any) {
  const repository=path.join(root,'repository');fs.mkdirSync(repository);
  const git=(...args:string[])=>execFileSync('git',['-C',repository,...args]);git('init','-q');fs.writeFileSync(path.join(repository,'README'),'source');git('add','.');git('-c','user.name=Test','-c','user.email=test@example.invalid','commit','-qm','source');
  const environment={ TEST_TOKEN:'x'.repeat(32), TEST_KEY:crypto.generateKeyPairSync('ed25519').privateKey.export({format:'pem',type:'pkcs8'}).toString() };
- const config:any={schemaVersion:'nova-remote-test-gate-runtime.v2',corePolicySelection:{file:'./core.json',profile:'selected'},endpoint:'http://127.0.0.1:1',tokenEnvironmentVariable:'TEST_TOKEN',sourceAttestationPrivateKeyEnvironmentVariable:'TEST_KEY',sourceAuthority:'nova:central',stateRoot:'./state',pollMilliseconds:10,maximumResponseBytes:100000,maximumResultBytes:100000,maximumArchiveBytes:100000,maximumArchiveStoreBytes:1000000,maximumEvidenceBytes:100000,maximumEvidenceStoreBytes:1000000,recordLimits:{maximumRecords:100,maximumBytes:1000000,maximumRecordBytes:100000}};
+ const config:any={schemaVersion:'nova-remote-test-gate-runtime.v2',authentication:'bearer',corePolicySelection:{file:'./core.json',profile:'selected'},endpoint:'http://127.0.0.1:1',tokenEnvironmentVariable:'TEST_TOKEN',sourceAttestationPrivateKeyEnvironmentVariable:'TEST_KEY',sourceAuthority:'nova:central',stateRoot:'./state',pollMilliseconds:10,maximumResponseBytes:100000,maximumResultBytes:100000,maximumArchiveBytes:100000,maximumArchiveStoreBytes:1000000,maximumEvidenceBytes:100000,maximumEvidenceStoreBytes:1000000,recordLimits:{maximumRecords:100,maximumBytes:1000000,maximumRecordBytes:100000}};
  const file=path.join(root,'runtime.json'),core=path.join(root,'core.json');
  const publish=(maximumMetadataBytes:number)=>fs.writeFileSync(core,JSON.stringify({schemaVersion:'nova-core-runtime-policy.v1',profiles:{selected:{settings:{...TEST_CORE_POLICY,sourceAcquisition:{...TEST_CORE_POLICY.sourceAcquisition,maximumMetadataBytes}}}}}));
  const runtime=()=>fs.writeFileSync(file,JSON.stringify(config));runtime();publish(65536);
@@ -59,6 +59,44 @@ test('real remote gate CLI consumes v2 central selection before spawning dispatc
  const f=fixture(t);f.publish(1);const job=path.join(f.root,'job.json');fs.writeFileSync(job,JSON.stringify({...f.input,grants:Object.fromEntries(f.input.grants)}));
  const result=spawnSync(process.execPath,['skills/nova/core/test-gates/remote-gate-cli.ts','--config',f.file,'--job',job,'--timeout-ms','3000'],{encoding:'utf8',env:{...process.env,...f.environment},timeout:10000});
  assert.equal(result.status,1,result.stderr);assert.match(result.stderr,/NOVA_SOURCE_ARCHIVE_SIZE_EXCEEDED/);assert(!result.error);
+});
+
+test('v2 requires an exact authentication mode and rejects an unused proxy token author before state creation',t=>{
+ const f=fixture(t);
+ for(const authentication of [undefined,null,false,0,'','Bearer','unknown',{},[]]){
+  fs.writeFileSync(f.file,JSON.stringify({...f.config,authentication}));
+  assert.throws(()=>loadProductionNovaTestGate(f.file,f.environment),/^Error: NOVA_REMOTE_CONFIG_INVALID:authentication$/);
+  assert.equal(fs.existsSync(path.join(f.root,'state')),false);
+ }
+ for(const tokenEnvironmentVariable of [null,'','TEST_TOKEN','MISSING_TOKEN']){
+  fs.writeFileSync(f.file,JSON.stringify({...f.config,authentication:'spiffe-proxy',tokenEnvironmentVariable}));
+  assert.throws(()=>loadProductionNovaTestGate(f.file,f.environment),/^Error: NOVA_REMOTE_CONFIG_INVALID:tokenEnvironmentVariable$/);
+  assert.equal(fs.existsSync(path.join(f.root,'state')),false);
+ }
+ f.runtime();assert.doesNotThrow(()=>loadProductionNovaTestGate(f.file,f.environment));
+ const legacy={...f.config,schemaVersion:'nova-remote-test-gate-runtime.v1'};
+ delete legacy.corePolicySelection;delete legacy.authentication;
+ fs.writeFileSync(f.file,JSON.stringify(legacy));
+ assert.doesNotThrow(()=>loadProductionNovaTestGate(f.file,f.environment),'closed v1 keeps its original implicit bearer');
+});
+
+test('v2 bearer/proxy A/B/A uses the real HTTP transport and retained A does not reload the selected mode',async t=>{
+ const f=fixture(t);const headers:(string|undefined)[]=[];
+ const server=http.createServer((req,res)=>{
+  headers.push(req.headers.authorization);req.resume();
+  res.writeHead(400,{'content-type':'application/json'});res.end('{"error":"test.expected-rejection"}');
+ });
+ await new Promise<void>(resolve=>server.listen(0,'127.0.0.1',resolve));
+ t.after(()=>new Promise<void>(resolve=>server.close(()=>resolve())));
+ f.config.endpoint=`http://127.0.0.1:${(server.address() as {port:number}).port}`;f.runtime();
+ const a=loadProductionNovaTestGate(f.file,f.environment);
+ f.config.authentication='spiffe-proxy';delete f.config.tokenEnvironmentVariable;f.runtime();
+ const b=loadProductionNovaTestGate(f.file,{TEST_KEY:f.environment.TEST_KEY});
+ fs.unlinkSync(f.file);fs.unlinkSync(f.core);
+ await assert.rejects(a.execute(f.input),/NOVA_REMOTE_PLAN_HTTP_400/);
+ await assert.rejects(b.execute({...f.input,idempotencyKey:'central:proxy'}),/NOVA_REMOTE_PLAN_HTTP_400/);
+ await assert.rejects(a.execute({...f.input,idempotencyKey:'central:bearer-restored'}),/NOVA_REMOTE_PLAN_HTTP_400/);
+ assert.deepEqual(headers,[`Bearer ${f.environment.TEST_TOKEN}`,undefined,`Bearer ${f.environment.TEST_TOKEN}`]);
 });
 
 

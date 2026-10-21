@@ -685,6 +685,11 @@ For the standalone remote-gate CLI, opt into
 `corePolicySelection: {"file":"<central-core-file>","profile":"standard"}`
 to its runtime document. Relative owner paths resolve from that runtime file,
 not the process working directory. No source budget is authored inline there.
+V2 also requires explicit `authentication: "bearer"` or `"spiffe-proxy"`.
+Bearer requires the existing token environment-variable locator; proxy mode
+forbids `tokenEnvironmentVariable`, even if equal-valued or unused. Missing,
+unknown or malformed modes fail before creating gate state, rather than selecting
+bearer implicitly. The closed v1 reader retains its original behavior.
 The selected Core profile's `settings.sourceAcquisition` owns `timeoutMs`,
 `maximumMetadataBytes`, `maximumStderrCharacters`, `cleanupTimeoutMs`,
 `forceKillAfterMs`, and `pollIntervalMs`. Defaults formerly in source processing
