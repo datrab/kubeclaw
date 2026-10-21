@@ -1,0 +1,168 @@
+{
+  "codeRevision": "9baf558387be06bf1a306fb28fb2f02521ca73d1",
+  "buildCommand": "node scripts/docs-publication.mjs build",
+  "artifactCheckCommand": "node --max-old-space-size=4096 scripts/docs-reader/check-artifact.mjs",
+  "actualArtifactCheck": {
+    "selectedPages": 167,
+    "htmlPages": 176,
+    "localLinks": 36523,
+    "verifiedOutputDigests": 179
+  },
+  "buildReport": {
+    "schemaVersion": "kubeclaw-docs-publication.v1",
+    "revision": "9baf558387be06bf1a306fb28fb2f02521ca73d1",
+    "sourceManifestSha256": "af172dd3d424323555924b3b5f3d74b1d123500853b4b923f35fd6aa78093f25",
+    "pageCount": 167,
+    "readerManifest": "reader-manifest.json",
+    "renderedPageCount": 167,
+    "assetPaths": [
+      "extend/examples/minimal-stage/package.json",
+      "extend/examples/minimal-stage/plugin.json",
+      "extend/examples/minimal-stage/schemas/config.schema.json",
+      "extend/examples/minimal-stage/schemas/input.schema.json",
+      "extend/examples/minimal-stage/schemas/result.schema.json",
+      "extend/examples/minimal-stage/src/stage.js",
+      "extend/examples/minimal-stage/tests/stage.test.mjs",
+      "extend/examples/platform-change-nova-lifecycle.json",
+      "reference/documentation-route-registry.json",
+      "reference/generated-documentation-map.json",
+      "use/workflows/examples/buster-fixture-matrix-report.pipeline.json",
+      "use/workflows/examples/first-project.mjs",
+      "use/workflows/examples/request-trace-redis-unavailable.json",
+      "use/workflows/examples/request-trace-success.json",
+      "use/workflows/wait-resume/approval.pipeline.json",
+      "use/workflows/wait-resume/platform.template.json",
+      "use/workflows/wait-resume/signal.template.json"
+    ],
+    "pluginCount": 51,
+    "pageDigest": "533ca52860bfab07b5fe1962803eeacf7f790f629e5e935d64b79c00809794b6",
+    "checks": [
+      "metadata",
+      "controlled-language",
+      "links",
+      "reader-journeys",
+      "plugin-coverage",
+      "release-pinned-evidence",
+      "documentation-ownership-map",
+      "route-registry"
+    ]
+  },
+  "readerManifestSha256": "153998ac349404af9f6ce70eca96910ddada30dab687d0dc643f2b8d10f961ca",
+  "browserObservation": {
+    "observations": [
+      {
+        "width": 1440,
+        "route": "/README.html",
+        "status": 200,
+        "overflow": false,
+        "axeViolations": 0
+      },
+      {
+        "width": 1440,
+        "route": "/use/quickstart.html",
+        "status": 200,
+        "overflow": false,
+        "axeViolations": 0
+      },
+      {
+        "width": 1440,
+        "route": "/extend/first-plugin.html",
+        "status": 200,
+        "overflow": false,
+        "axeViolations": 0
+      },
+      {
+        "width": 1440,
+        "route": "/search.html",
+        "status": 200,
+        "overflow": false,
+        "axeViolations": 0
+      },
+      {
+        "width": 1440,
+        "search": "4 pages found. Showing up to 50."
+      },
+      {
+        "width": 768,
+        "route": "/README.html",
+        "status": 200,
+        "overflow": false,
+        "axeViolations": 0
+      },
+      {
+        "width": 768,
+        "route": "/use/quickstart.html",
+        "status": 200,
+        "overflow": false,
+        "axeViolations": 0
+      },
+      {
+        "width": 768,
+        "route": "/extend/first-plugin.html",
+        "status": 200,
+        "overflow": false,
+        "axeViolations": 0
+      },
+      {
+        "width": 768,
+        "route": "/search.html",
+        "status": 200,
+        "overflow": false,
+        "axeViolations": 0
+      },
+      {
+        "width": 768,
+        "search": "4 pages found. Showing up to 50."
+      },
+      {
+        "width": 320,
+        "route": "/README.html",
+        "status": 200,
+        "overflow": false,
+        "axeViolations": 0
+      },
+      {
+        "width": 320,
+        "route": "/use/quickstart.html",
+        "status": 200,
+        "overflow": false,
+        "axeViolations": 0
+      },
+      {
+        "width": 320,
+        "route": "/extend/first-plugin.html",
+        "status": 200,
+        "overflow": false,
+        "axeViolations": 0
+      },
+      {
+        "width": 320,
+        "route": "/search.html",
+        "status": 200,
+        "overflow": false,
+        "axeViolations": 0
+      },
+      {
+        "width": 320,
+        "search": "4 pages found. Showing up to 50."
+      },
+      {
+        "noJavaScriptNavigation": "PASS",
+        "skipKeyboard": "PASS"
+      }
+    ],
+    "findings": []
+  },
+  "browserSourceReceipt": "browser-qa-source.json",
+  "screenshots": {
+    "320": "3ac1e5c4a1e8a762bfc97570dd25d89764a126796626502f57855285ab992066",
+    "768": "a93c4b9367150fb048841ae20000c176881d5027a314992186fc45524cc4e201",
+    "1440": "825c7ad44e1af436b720d4e55352e5323418e7bd6c8e57050276a098594d3b03"
+  },
+  "limits": [
+    "Original committed CLI build; screenshots manually inspected, CSS and fonts actually loaded.",
+    "No full browser coverage of all167pages; all176HTML outputs did receive complete static local-target/fragment and digest checks.",
+    "No human screen-reader trial, rendered Mermaid, Source preview, externalhosting or full globalAPI qualification.",
+    "Historical site-boundary diagnostics3 unchanged generatedHelm prose; original checker unmodified."
+  ]
+}
