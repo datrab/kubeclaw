@@ -15,7 +15,7 @@
     "scripts/updates/node_modules/js-yaml"
   ],
   "observation": {
-    "sourceRevision": "2f719b1028c0140a5168cc8e6ec1c0964e06c7e2",
+    "sourceRevision": "4dc3ff5829f3298a4d04148216e4e7da9b20c49b",
     "sourceEffectReview": "argocd-original-check-source-review.json",
     "node": {
       "path": "/usr/local/bin/node",
@@ -24,8 +24,8 @@
     },
     "argv": [
       "--permission",
-      "--allow-fs-read=/tmp/argocd-original-readonly-46KVvH",
-      "/tmp/argocd-original-readonly-46KVvH/scripts/argocd-self-management.mjs",
+      "--allow-fs-read=/tmp/argocd-original-readonly-gGjkPr",
+      "/tmp/argocd-original-readonly-gGjkPr/scripts/argocd-self-management.mjs",
       "--check"
     ],
     "environment": {
@@ -33,7 +33,7 @@
       "LANG": "C.UTF-8",
       "TZ": "UTC"
     },
-    "loaderResolution": "file:///tmp/argocd-original-readonly-46KVvH/node_modules/js-yaml/dist/js-yaml.mjs",
+    "loaderResolution": "file:///tmp/argocd-original-readonly-gGjkPr/node_modules/js-yaml/dist/js-yaml.mjs",
     "jsYamlVersion": "4.3.1",
     "originalCheck": {
       "exit": 0,
@@ -223,8 +223,8 @@
       },
       {
         "path": "package.json",
-        "sha256": "602c41b16a66c10ba9e7385ddb12bb9e1cf9227183374acbe987198640ed4cab",
-        "bytes": 53534,
+        "sha256": "4ab1e90c2259aeb96acfdc877e5a9eed330f605abff46d7eca85faded0f020c3",
+        "bytes": 53756,
         "kind": "loader-input"
       },
       {

@@ -1,3 +1,4 @@
+import {deploymentConfigOutputCustody, deploymentConfigOutputRole} from './docs-deployment-config-output-custody.mjs';
 import {runtimeBundleCopyCustody, runtimeBundleCopyRole} from './docs-runtime-bundle-copy-custody.mjs';
 import {deploymentNodeOutputOccurrences} from './docs-api-deployment-node-occurrences.mjs';
 import {observerMaterializedSourceState, canonicalObserverDocumentationSource, resolveObserverDocumentationImport} from './docs-api-observer-materialized-source.mjs';
@@ -36,87 +37,87 @@ const reviewedNodeModuleNamedImports=new Set(['createRequire','Module','default'
 // authority requires a Source-reviewed recipe change here, not a JSON digest
 // refresh. These recipes never permit unsupported capability custody.
 const reviewedDocumentationModuleInputRecipes = [
-  {"source":"tests/verification/reliability/observability-replay.test.mjs","semanticClass":"native-reliability-replay-selected-module-metadata","recipeSha256":"7b941730bf3d35bc3564dcadf0c4d7a25e60e652338d589164985a1cdae04f8e"},
-  {"source":"tests/verification/reliability/review-cache-legacy-prefix.test.mjs","semanticClass":"native-reliability-replay-selected-module-metadata","recipeSha256":"7078054483cdd6d2f7d4df77e25ea35fd332d0a7679bd945ff2ee90c24ebff9e"},
-  {"source":"tests/verification/reliability/review-evidence-compiler-recovery.test.mjs","semanticClass":"native-reliability-replay-selected-module-metadata","recipeSha256":"fe0f2f5f299a77fcb3e36f1a11174da7f57c64727ceafd691ca9c1d18a67797f"},
-  {"source":"tests/verification/reliability/review-report-compiler-recovery.test.mjs","semanticClass":"native-reliability-replay-selected-module-metadata","recipeSha256":"5a5b28fefe306787766b16875909378e1cc2983a4b77f44240894e60ab24d7e2"},
-  {"source":"tests/verification/reliability/review-report-locale-child.mjs","semanticClass":"native-reliability-replay-selected-module-metadata","recipeSha256":"0018eff92167e11517d112365a26560c94ad0b55c7603fb5ef0786cc89ed6ead"},
-  {"source":"tests/verification/reliability/runtime-dispatch-native-profile.test.mjs","semanticClass":"native-reliability-replay-selected-module-metadata","recipeSha256":"7c41e68da44f659b4d6e40c4dfe47916542d1b731ba9542ef2af947c804de21f"},
-  {"source":"tests/verification/historical-branch-acceptance/delivery-manifest-v3-compiler-recovery-independent.test.mjs","semanticClass":"historical-environment-root-module-input-metadata","recipeSha256":"a180c18bd5fba57de5610daf697df8d8ec1f3e0582f2d8d3e6088ca1b8344307"},
-  {"source":"tests/verification/historical-branch-acceptance/delivery-manifest-v3-contract-independent.test.mjs","semanticClass":"historical-environment-root-module-input-metadata","recipeSha256":"dd8f9502a9dde911d4991e6c853a7d2104f2e2eaafb9ac1c864652ac89a93a1a"},
-  {"source":"tests/verification/historical-branch-acceptance/delivery-manifest-v3-summary-mode-independent.test.mjs","semanticClass":"historical-environment-root-module-input-metadata","recipeSha256":"51f0abb6784cd9c5082b8ab4dd35a0abd907f1464cb94b7a70870d9ea045b842"},
-  {"source":"tests/verification/historical-branch-acceptance/delivery-manifest-v2-reader-corpus-child.mjs","semanticClass":"historical-environment-root-module-input-metadata","recipeSha256":"4f193f19b9df7e26d0d5a42e1de2b81c87e3b0602823248e7727a040f0dd9ad8"},
-  {"source":"tests/verification/contracts/check-project-compiler.mts","semanticClass":"caller-bound-project-compiler-source-or-archive-metadata","recipeSha256":"881542ff85033cc56db9faf7b334e15818cf49a1f76faf55f8b86ef0898d83b4"},
-  {"source":"tests/verification/contracts/project-legacy-import-cases.mts","semanticClass":"caller-bound-project-compiler-source-or-archive-metadata","recipeSha256":"c079b8a7b9c9aadf304a47bdad13dc1d5227517a13b3296ca75c389f2238ea79"},
+  {"source":"tests/verification/reliability/observability-replay.test.mjs","semanticClass":"native-reliability-replay-selected-module-metadata","recipeSha256":"8d9f863836f788f635bf723e924e5d948b0444884281fb9b16b0ebde214636c0"},
+  {"source":"tests/verification/reliability/review-cache-legacy-prefix.test.mjs","semanticClass":"native-reliability-replay-selected-module-metadata","recipeSha256":"6f413bf1ad81995e4e20a560d9b4ef1f6d91fae4be1a8a393f13f64b6f2ac459"},
+  {"source":"tests/verification/reliability/review-evidence-compiler-recovery.test.mjs","semanticClass":"native-reliability-replay-selected-module-metadata","recipeSha256":"544a1caf48d4998475035c62113ba70ecc962cdd5edcdc9c87c48096ba4d3219"},
+  {"source":"tests/verification/reliability/review-report-compiler-recovery.test.mjs","semanticClass":"native-reliability-replay-selected-module-metadata","recipeSha256":"f35b84c7ecf59fa24c96205036f9338343f3df38315fff7ca1d81d76fcc624be"},
+  {"source":"tests/verification/reliability/review-report-locale-child.mjs","semanticClass":"native-reliability-replay-selected-module-metadata","recipeSha256":"2a6bea6008709eec7c819d830305a529b229080de18320c039e9d412866edce6"},
+  {"source":"tests/verification/reliability/runtime-dispatch-native-profile.test.mjs","semanticClass":"native-reliability-replay-selected-module-metadata","recipeSha256":"b973349c3579793c20fb2e2cf1f25f5b6e0aa7e40b7677908ff5287b49a6a0ae"},
+  {"source":"tests/verification/historical-branch-acceptance/delivery-manifest-v3-compiler-recovery-independent.test.mjs","semanticClass":"historical-environment-root-module-input-metadata","recipeSha256":"ebea539060c95d3a3063954832a7e5b471d0b95b57b44c54e2dfc1ebf979088c"},
+  {"source":"tests/verification/historical-branch-acceptance/delivery-manifest-v3-contract-independent.test.mjs","semanticClass":"historical-environment-root-module-input-metadata","recipeSha256":"d9462d1b9d03294905247d000641821df2da02e21ebdb00eb5667484beae19ce"},
+  {"source":"tests/verification/historical-branch-acceptance/delivery-manifest-v3-summary-mode-independent.test.mjs","semanticClass":"historical-environment-root-module-input-metadata","recipeSha256":"023b1562b0e551d475a2c7297f5be712897c09f6fdb5b8e5536639f200c26184"},
+  {"source":"tests/verification/historical-branch-acceptance/delivery-manifest-v2-reader-corpus-child.mjs","semanticClass":"historical-environment-root-module-input-metadata","recipeSha256":"5c2172b21621127ca4f7cb4b3b6da70a32802f9b113cd1ba084db8b11ed9b00f"},
+  {"source":"tests/verification/contracts/check-project-compiler.mts","semanticClass":"caller-bound-project-compiler-source-or-archive-metadata","recipeSha256":"3fa355ffbf821a33853363fe08130ed0abab5105b7bcc42fe6c1095b8b50954d"},
+  {"source":"tests/verification/contracts/project-legacy-import-cases.mts","semanticClass":"caller-bound-project-compiler-source-or-archive-metadata","recipeSha256":"b406032ae4d8d0fbd57baa826adf0be60a49a247b962d223af54760c9a706a78"},
   {
     "source": "tests/verification/contracts/check-plugin-system-v2-phase11.mts",
     "semanticClass": "fixed-repository-root-module-contract-check",
-    "recipeSha256": "09a03c7d5ec635368cea2243eacf5bc145495b389069f062b210cad05b0e7515"
+    "recipeSha256": "a58ab41552271a655e1dddd2c1ded8c251464074281866bb4f85d4c68071efe9"
   },
   {
     "source": "tests/verification/contracts/check-plugin-system-v2-external-engine.mjs",
     "semanticClass": "fixed-repository-module-contract-check",
-    "recipeSha256": "d30ec0ee8565b7455b5fffb6ff771b436ba752796e4692d35308c3037d2f35ea"
+    "recipeSha256": "1f6adaedfae5fbe6c392b426c04219c2d5e70a66b2e761154e46414bc8611f22"
   },
   {
     "source": "tests/verification/contracts/check-plugin-system-v2-isolation.mjs",
     "semanticClass": "fixed-repository-module-contract-check",
-    "recipeSha256": "c49321afa50ff33a43c15bcb6134a65c62a7b7028a3857162d0d22bc65adf30d"
+    "recipeSha256": "dea2d41fc21cf1602acf8a884c5b07eb3086b05d8a8948987864b9b11ec96e93"
   },
   {
     "source": "tests/verification/contracts/check-plugin-system-v2-capability-security.mjs",
     "semanticClass": "fixed-repository-core-contract-check",
-    "recipeSha256": "bd22f3f4a596f18e88ff3e3e57af3658ca9e2c606b60409c6e739508a6747342"
+    "recipeSha256": "f5f87b689af79ed00e5afba7b8ffde66811d038532dc15ccea11cd547104a00c"
   },
   {
     "source": "tests/verification/contracts/check-plugin-system-v2-phase6.mjs",
     "semanticClass": "fixed-repository-core-contract-check",
-    "recipeSha256": "fb97054aa6e17d7e2afd4e583de5108c89409ccb42fd6eea4b2eedd4b08cdd43"
+    "recipeSha256": "50a330ffcf89823cfe4073edc70dc769f5cd73f1b2a5a4e9bbef73b1828f9b29"
   },
   {
     "source": "tests/verification/contracts/check-plugin-system-v2-phase7.mjs",
     "semanticClass": "fixed-repository-core-contract-check",
-    "recipeSha256": "a5ce2a5348461db8559f97e4f07ac5c7163eaf23a1e2ab859dae8fbc452445d4"
+    "recipeSha256": "0197bfab3de682becd99840673bd2e271b25b83031d6acd9b89e009803d29220"
   },
   {
     "source": "tests/verification/contracts/check-plugin-system-v2-capability-runtime.mjs",
     "semanticClass": "fixed-repository-core-contract-check",
-    "recipeSha256": "4de487eac11a767cc3471c1803dc7b4c94f4912a42600077bb54503e92600f7d"
+    "recipeSha256": "a838751fac47f3d710901b8c5c57f30dc271c628fa7dfdc9181e04f61f93c147"
   },
   {
     "source": "tests/verification/contracts/check-plugin-system-v2-e2e.mjs",
     "semanticClass": "fixed-repository-core-contract-check",
-    "recipeSha256": "11831f8c1fa462ec7ed1a5c2de25f83a2d8cd6e3874733546450a704f69d1d44"
+    "recipeSha256": "29989142d2f407428fc85ea920a8d8f459f8c83e91e8f436230f8bf450b4c653"
   },
   {
     "source": "tests/verification/contracts/check-plugin-system-v2-import-safety.mjs",
     "semanticClass": "fixed-repository-core-contract-check",
-    "recipeSha256": "d6e1ef8e7431dda795f32c437475d0777d4d83b3c65aa454586b467256ca7c2d"
+    "recipeSha256": "fde9b0d36e787b7234b4b1b94f7b0b3dff3bf608a6f89735138d47f5f7d1fa8f"
   },
   {
     "source": "tests/verification/contracts/check-plugin-system-v2-installation.mjs",
     "semanticClass": "fixed-repository-core-contract-check",
-    "recipeSha256": "0d72467387b25971fbe81565d85c29527f222fa539401e47b6526de6ce4fae80"
+    "recipeSha256": "093c25ea32613a16df2f92f493576eb4e84691fa79da1d6f33a5f7a050c7b6f1"
   },
   {
     "source": "tests/verification/contracts/check-plugin-system-v2-lifecycle.mjs",
     "semanticClass": "fixed-repository-core-contract-check",
-    "recipeSha256": "9373f5cce77ac5553c030807613792ba82a2c82a2a452db67e167819fd5b6f24"
+    "recipeSha256": "6b0c13bed5e3b4da54f4fabefa642f9ed7a0a13b9d06a6884104911c707672bf"
   },
   {
     "source": "tests/verification/contracts/check-plugin-system-v2-platform-config.mjs",
     "semanticClass": "fixed-repository-core-contract-check",
-    "recipeSha256": "5ce0605a9d81d4afd66eb004d4a75e49636c8742e7289a45ada76cf474d0d5fc"
+    "recipeSha256": "6104a9831dabb65aaec6ed5064bfffe077819304b0633028a01943da8defbd52"
   },
   {
     "source": "tests/verification/contracts/check-plugin-system-v2-registry.mjs",
     "semanticClass": "fixed-repository-core-contract-check",
-    "recipeSha256": "fcff4d8b68f697454e431a0393da48a6c42397275dd00cf485ea1bb840badc12"
+    "recipeSha256": "6c834fe123c032a9d848c23174d62b9f4d025b8d2f7335f14a416fa8cab2bc79"
   },
   {
     "source": "tests/verification/contracts/check-plugin-system-v2-boundaries.mjs",
     "semanticClass": "fixed-repository-core-contract-check",
-    "recipeSha256": "633ea8b341014f00d6f9310e1cb8b3ba1b22e6402b0e25039f816cc5b3b96884"
+    "recipeSha256": "a5d333ab32d8b8ded2a9ac5071d54d4a79cfea7a78e9acecb78f34bbdd623613"
   },
   {
     "source": "tests/verification/contracts/check-pipeline-visual-legacy-comparison.mts",
@@ -1352,7 +1353,7 @@ const reviewedArgocdArtifactProfile=Object.freeze({
   source:'scripts/argocd-self-management.mjs',
   sourceSha256:'79330ccdc6c86a6a3187e538f3a11fb2ab13e97d24e7b9681b1b2a52d2fe7b26',
   authority:'scripts/docs-api-argocd-checked-artifact-authority.json',
-  authoritySha256:'7abbde7936cf38bf53b0e3424cb5e10276ff3e1e06457a0ead6edec2eb01e31f',
+  authoritySha256:'6fd8f7e67a865129f9274575fc81477cda1ea6f0f68baac5b5904c896da23d76',
 });
 export function checkedArgocdArtifactOutputs(root,source,sourceBytes) {
   const profile=reviewedArgocdArtifactProfile;
@@ -1436,9 +1437,12 @@ export function discoverScriptApiOutputs(root) {
   const bundleSource='scripts/build-runtime-role-bundle.mjs';
   const bundleCopy=executableSourceSet.has(bundleSource)
     ?runtimeBundleCopyCustody(root,bundleSource,fs.readFileSync(path.join(root,bundleSource))):null;
+  const configSource='scripts/bundle-override-values.mjs';
+  const configOutput=executableSourceSet.has(configSource)
+    ?deploymentConfigOutputCustody(root,configSource,fs.readFileSync(path.join(root,configSource))):null;
   const sourceInputs=walkProductSources(root,producerRoots,()=>true);
   if(fs.existsSync(path.join(root,'package.json')))sourceInputs.push('package.json');
-  const inputKey=hash(JSON.stringify([documentationGraphCache.get(root).inputKey,bundleCopy?.inputDigest??null,sourceInputs.map(source=>[source,hash(fs.readFileSync(path.join(root,source)))])]));
+  const inputKey=hash(JSON.stringify([documentationGraphCache.get(root).inputKey,bundleCopy?.inputDigest??null,configOutput?.inputDigest??null,sourceInputs.map(source=>[source,hash(fs.readFileSync(path.join(root,source)))])]));
   const cached=scriptOutputCache.get(root);
   if(cached?.inputKey===inputKey&&cached.dependencies.every(([source,digest])=>fs.existsSync(path.join(root,source))&&hash(fs.readFileSync(path.join(root,source)))===digest))return cached.result;
   const classifiedDependencies=new Set();
@@ -1504,7 +1508,7 @@ export function discoverScriptApiOutputs(root) {
     assert(!/(?:from\s*|(?:require|import)\(\s*)['"]@kubernetes\/client-node['"]/u.test(bytes),`API_PRODUCT_SCRIPT_TYPED_SDK_UNQUALIFIED: ${source}; documentation output adapter maintainers must classify the typed emitter`);
     if(/\b(?:spawnSync|execFileSync|execFile|spawn)\(\s*['"]helm['"]/u.test(bytes))assertProducerAdapterAuthority(root,[source]);
     const witness=source===reviewedArgocdArtifactProfile.source?checkedArtifact:null;
-    const outputRoles=classifyOutputRoles(source).map(role=>checkedArtifactRole(role,witness)).map(role=>runtimeBundleCopyRole(role,source===bundleSource?bundleCopy:null));
+    const outputRoles=classifyOutputRoles(source).map(role=>checkedArtifactRole(role,witness)).map(role=>runtimeBundleCopyRole(role,source===bundleSource?bundleCopy:null)).map(role=>deploymentConfigOutputRole(role,source===configSource?configOutput:null));
     for(const role of outputRoles)for(const dependency of role.dependencies??[])classifiedDependencies.add(dependency);
     for(const role of outputRoles)assert(role.role!=='unknown',`API_PRODUCT_SCRIPT_OUTPUT_ROLE_UNQUALIFIED: ${source}:${role.line}: ${role.expression}`);
     if(witness){result.push(...witness.outputs);continue;}
@@ -1812,7 +1816,8 @@ export function discoverScriptOutputRoleClassifications(root) {
     const witness=checkedArgocdArtifactOutputs(root,source,fs.readFileSync(path.join(root,source),'utf8'));
     if(witness)assertCheckedArtifactEntryContext(documentationGraphCache.get(root),source);
     const bundleCopy=runtimeBundleCopyCustody(root,source,fs.readFileSync(path.join(root,source)));
-    return classify(source).map(role=>checkedArtifactRole(role,witness)).map(role=>runtimeBundleCopyRole(role,bundleCopy)).flatMap(role=>{
+    const configOutput=deploymentConfigOutputCustody(root,source,fs.readFileSync(path.join(root,source)));
+    return classify(source).map(role=>checkedArtifactRole(role,witness)).map(role=>runtimeBundleCopyRole(role,bundleCopy)).map(role=>deploymentConfigOutputRole(role,configOutput)).flatMap(role=>{
     // Deployment observations alone remain annotations, never role grants.
     // The separate Source-owned checked-artifact profile above binds one exact
     // descriptor and API output set; all other unknown outputs stay unknown.

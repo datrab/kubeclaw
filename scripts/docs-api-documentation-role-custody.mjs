@@ -310,10 +310,10 @@ export const documentationExecutableRoleRecipes = {
         "expressionSha256": "5a61aace8ba69be1179466f6c1b6ff69114de4d3bc786724ce21f78f06627702"
       },
       {
-        "expressionSha256": "799ffbd3cbbd4b3197c3b3711d63cb8ef6b250cb361da158f8d028f080eb2c9f"
+        "expressionSha256": "00ab851ccbafe1b07e20ddc58d40488cab7dc36cf175984e3dda362023560e8e"
       },
       {
-        "expressionSha256": "c28ef70d58b61a3cec18bbbbfa5f44f3367de89ef65a92e154205e912988d906"
+        "expressionSha256": "efaaa7172c5624be545942cac4b8a4bd9cdf5edd948352a7c45657373ea89a22"
       },
       {
         "expressionSha256": "02922e8453bb5e7401332bbcf78311f6606627413665ef7b4c9d42b8df130b7a"
@@ -436,6 +436,9 @@ export const documentationExecutableRoleRecipes = {
         "expressionSha256": "abfcad28ec14344e651d5f0983b24be76635f7dc84460622b29987c2a7f15ad3"
       },
       {
+        "expressionSha256": "c2865402a65517e0f02b00d28ebaf49bc1d00800b90da4637b6306f32fd2215e"
+      },
+      {
         "expressionSha256": "b9d1f42f39a860e02ab45713d7df5a68d7c9949896c32f36667ec929e706a1e4"
       },
       {
@@ -556,7 +559,7 @@ export const documentationExecutableRoleRecipes = {
         "expressionSha256": "328f8dd702f5cb8ccffb9ae17cc3d577e76cd8ec81456fffa49b452e908adb55"
       }
     ],
-    "factsDigest": "dfbec66cdac9a8e4871733f163d841a2393740e35452fadabaef882df219de6f",
+    "factsDigest": "602108c0141a9b0d3a1b8182df89a9904872dc45429143efa0c44436771152b6",
     "authorityInputs": [
       {
         "path": "scripts/docs-api-go-output-role-adapter.go",
@@ -774,7 +777,7 @@ export const documentationExecutableRoleRecipes = {
         "expressionSha256": "041aa7206a41cf5c3bdd66f61797f9b67c06085f6d0076ce1f84e2a9c8d57db8"
       }
     ],
-    "factsDigest": "de80e3362fddcd3ec990e63ea044bea2cf24255ca83a0b04ac45ea87e70d8cf4",
+    "factsDigest": "b42fb87162d73e485b1036a5b48383ba9bbb64b7f155cfcd9a0481a1f26077a3",
     "authorityInputs": []
   },
   "scripts/docs-api-python-output-adapter.py": {
@@ -1053,7 +1056,7 @@ export const documentationExecutableRoleRecipes = {
         "expressionSha256": "9efac25cb0d8a53fc3a31aec649afa2cd99102c34366428833c403eccaef3fbe"
       }
     ],
-    "factsDigest": "8fdd8a3e8cba87c8ae97ec48a1f70ca06f898d51a6802b507aa2be4a19b00de4",
+    "factsDigest": "80d30850d48ad9fb4b293418788c062529ac600e2526e3dce1681f198fb4cdf1",
     "authorityInputs": []
   },
   "scripts/docs-api-schema-authorities.mjs": {
@@ -1849,7 +1852,7 @@ export const documentationExecutableRoleRecipes = {
         "expressionSha256": "7602a8f927b47cd0b4b4f2501bccd41bb8e4e4ea43e571cf4bce62f3c3717191"
       }
     ],
-    "factsDigest": "35d0a6cea777241fe43558a2c4ec42d6409e3103ed925ef94572671628596e0f",
+    "factsDigest": "04714458083ba0237c4fbe70e516c02d5d2982bac9d1a724e62bbe2963859627",
     "authorityInputs": [
       {
         "path": "scripts/vendor-external-helm-authorities.mjs",
@@ -1952,7 +1955,7 @@ export const documentationExecutableRoleRecipes = {
         "expressionSha256": "cba76d80649d6ce8d92897a224d01ee9877a1807a9de9e765cdad79d29f912ce"
       }
     ],
-    "factsDigest": "0a5bedaf3a1c6e6533f8bfbd086ca62de4b6960cb49d4932857ee8b9bb688e73",
+    "factsDigest": "cff6fa21f0349f342b747cd617a7eb27568951d928173a36f453ba29e74b90b0",
     "authorityInputs": []
   },
   "scripts/docs-governance.mjs": {
@@ -27017,7 +27020,7 @@ const reviewedImporterResolutionRecipe={
     },
     {
       "source": "package.json",
-      "sha256": "602c41b16a66c10ba9e7385ddb12bb9e1cf9227183374acbe987198640ed4cab"
+      "sha256": "4ab1e90c2259aeb96acfdc877e5a9eed330f605abff46d7eca85faded0f020c3"
     }
   ],
   "operations": [
@@ -27091,7 +27094,7 @@ const reviewedImporterResolutionRecipe={
     },
     "package": {
       "path": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/package.json",
-      "sha256": "602c41b16a66c10ba9e7385ddb12bb9e1cf9227183374acbe987198640ed4cab"
+      "sha256": "4ab1e90c2259aeb96acfdc877e5a9eed330f605abff46d7eca85faded0f020c3"
     },
     "method": "Exact literal native source caller search plus npm run literal edge inventory; no claim to parse dynamic shell commands or authorize execution",
     "independentBoundaryDecision": {
