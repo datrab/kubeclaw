@@ -387,6 +387,15 @@ export function readSwarmBundle(file: string | undefined, selection?: SwarmSelec
       const candidate = {} as Record<Owner, unknown>;
       for (const owner of owners) candidate[owner] = readDocument(path.join(generationDirectory, 'components', `${owner}.config.json`), observations);
       preflightPipelineV10Owners(document, candidate);
+      // v10 retains the versioned Worker's real preparation/Prism consumers.
+      // A structurally valid legacy owner subset must not omit that peer,
+      // even while the complete source/caller admission gate remains closed.
+      if (['prism-control', 'prism-worker', 'buster-preparation'].includes(selection.callerId)) {
+        const required = (candidate['worker-core'] as ComponentAuthor).schemaVersion === 'pipeline-component.v3';
+        if (selection.bindings.some(binding => binding.owner === 'worker-core') !== required) {
+          throw new Error('WORKER_CORE_VERSIONED_SELECTION_REQUIRED');
+        }
+      }
       preflightPipelineV10Plugins(document, generationDirectory, observations, candidate);
       preflightPipelineV10Infrastructure(document, candidate, relative => {
         const file = path.join(path.dirname(generationDirectory), relative);

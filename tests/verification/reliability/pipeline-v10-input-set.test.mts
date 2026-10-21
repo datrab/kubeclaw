@@ -124,6 +124,29 @@ test('direct v10 loader retains full original sources and exact caller bindings 
   assert.throws(() => readSwarmBundle(entry, selection), /PIPELINE_V10_SOURCE_RECEIVING_REQUIRED/);
 });
 
+test('direct v10 consumers require their versioned WorkerCore peer before source admission', async t => {
+  const { readSwarmBundle } = await import('../../../skills/common/plugin-runtime/foundation/config/swarm-bundle.ts');
+  const root = tree(t), entry = path.join(root, 'config/pipeline.config.json');
+  const document = JSON.parse(rootBytes.toString());
+  for (const callerId of ['prism-control', 'prism-worker', 'buster-preparation'] as const) {
+    const role = callerId.startsWith('prism-') ? 'prism' as const : 'buster' as const;
+    const primary = callerId === 'buster-preparation' ? 'buster-engine' : callerId;
+    const instance = callerId === 'buster-preparation' ? 'fixture.service.buster-runtime'
+      : document.bindings.find((b: any) => b.role === role && b.owner === primary).instanceId;
+    const consumed = callerId === 'prism-control' ? ['prism-control', 'prism-execution', 'worker-core']
+      : callerId === 'prism-worker' ? ['prism-worker', 'prism-control', 'prism-execution', 'worker-core']
+      : ['buster-engine', 'worker-core'];
+    const bindings = document.bindings.filter((b: any) => b.role === role && b.instanceId === instance && consumed.includes(b.owner))
+      .map(({ owner, instanceId, profileId }: any) => ({ owner, instanceId, profileId }));
+    const selection = { role, callerId, serviceInstanceId: instance, bindings };
+    assert.throws(() => readSwarmBundle(entry, { ...selection,
+      bindings: bindings.filter((b: any) => b.owner !== 'worker-core') }), /WORKER_CORE_VERSIONED_SELECTION_REQUIRED/);
+    if (bindings.some((b: any) => b.owner === 'worker-core')) {
+      assert.throws(() => readSwarmBundle(entry, selection), /PIPELINE_V10_SOURCE_RECEIVING_REQUIRED/);
+    }
+  }
+});
+
 test('EXISTING real role materializer enumerates all v10 inputs before source denial and emits no legacy outputs', async t => {
   const { execFileSync } = await import('node:child_process');
   const { materializePipelineGeneration } = await import('../../../scripts/updates/pipeline-generation.mjs');
