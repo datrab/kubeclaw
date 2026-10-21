@@ -44,6 +44,7 @@ litellm:
 
 discord:
   enabled: true
+  requireMention: false
   existingSecret: "openclaw-shared-secrets"
   existingSecretKey: "discordToken-buster"
   channelId: "1473692599125540985"
@@ -63,6 +64,10 @@ discordWebhook:
 
 agent:
   project: "clawdeck"
+  model:
+    primary: "openai/gpt-6.1-sol"
+    fallbacks:
+      - "openai/gpt-5.6-sol"
   git:
     enabled: true
     secretName: "git-deploy-key-buster"
