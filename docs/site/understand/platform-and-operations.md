@@ -6,7 +6,7 @@ Owner: platform architecture and operations
 Evidence: scripts/deploy.sh; scripts/platform-services.mjs; charts/ops-pod; gitops/platform; my-values/infra
 Evidence revision: `13bff0a18a64e74f2cbbaa1978e746fcdeff0c10`
 Applies to: current Kubernetes platform and its supported deployment paths
-Last verified: 2026-09-21
+Last verified: 2026-09-21; diagram mirror/storage ownership boundaries rechecked against the same pinned source on 2026-10-21; no live platform result
 
 ## Purpose
 
@@ -64,7 +64,7 @@ probe can reach a registry or mirror that BuildKit does not use.
 flowchart TB
     Host[Linux host and independent recovery access] --> K3s[K3s control plane and nodes]
     K3s --> DNS[Cluster DNS]
-    K3s --> Storage[CSI and StorageClasses]
+    Storage[External CSI and selected StorageClasses] -->|separately provisioned for cluster| K3s
     K3s --> Scheduler[Scheduling and capacity]
     Cilium[Cilium: current supported secured path] --> Network[Pod network and policy boundary]
     Flannel[Flannel: unproved fallback] -. future alternative .-> Network
@@ -75,7 +75,8 @@ flowchart TB
     Network --> Runtime
     Redis[(Redis)] --> Runtime
     Registry[(Writable OCI registry)] --> Buster[Buster and BuildKit]
-    Mirror[(Docker Hub mirror)] -->|current readiness and pull cache| Buster
+    Mirror[(Docker Hub mirror)] -->|current Buster readiness only| Buster
+    Mirror -.->|pull cache after explicit client configuration| Buster
     Tail[Tailscale operator] --> Entry[Private human and test routes]
     Lite[LiteLLM] --> Vertex[Vertex embedding provider]
     Runtime --> OpenAI[Managed OpenAI reasoning route]
@@ -84,8 +85,9 @@ flowchart TB
     Monitor[Monitoring stack] -. observes .-> Runtime
 ```
 
-Text version: the host supports K3s. K3s supplies scheduling, DNS, storage, and
-the network used by workloads. Cilium owns the Pod network in the supported
+Text version: the host supports K3s. K3s supplies scheduling and DNS for
+workloads. Independently provisioned CSI drivers and selected StorageClasses
+supply their storage boundary. Cilium owns the Pod network in the supported
 secured deployment. Flannel is an architectural alternative only. Argo CD can
 own deployment reconciliation. Redis, registries, BuildKit, Tailscale,
 PostgreSQL, and LiteLLM support selected runtime paths. Monitoring and the Ops
@@ -99,24 +101,45 @@ Each row names a directed connection. Labels preserve the diagram’s conditions
 | --- | --- | --- |
 | Linux host and independent recovery access | Directed connection | K3s control plane and nodes |
 | K3s control plane and nodes | Directed connection | Cluster DNS |
-| K3s control plane and nodes | Directed connection | CSI and StorageClasses |
+| External CSI and selected StorageClasses | Directed connection — separately provisioned for cluster | K3s control plane and nodes |
 | K3s control plane and nodes | Directed connection | Scheduling and capacity |
 | Cilium: current supported secured path | Directed connection | Pod network and policy boundary |
 | Flannel: unproved fallback | Dotted relationship — future alternative | Pod network and policy boundary |
 | Argo CD | Directed connection — declared desired state | K3s control plane and nodes |
 | Cluster DNS | Directed connection | Nova, Buster, and Prism |
-| CSI and StorageClasses | Directed connection | Nova, Buster, and Prism |
+| External CSI and selected StorageClasses | Directed connection | Nova, Buster, and Prism |
 | Scheduling and capacity | Directed connection | Nova, Buster, and Prism |
 | Pod network and policy boundary | Directed connection | Nova, Buster, and Prism |
 | Redis | Directed connection | Nova, Buster, and Prism |
 | Writable OCI registry | Directed connection | Buster and BuildKit |
-| Docker Hub mirror | Directed connection — current readiness and pull cache | Buster and BuildKit |
+| Docker Hub mirror | Directed connection — current Buster readiness only | Buster and BuildKit |
+| Docker Hub mirror | Dotted relationship — pull cache after explicit client configuration | Buster and BuildKit |
 | Tailscale operator | Directed connection | Private human and test routes |
 | LiteLLM | Directed connection | Vertex embedding provider |
 | Nova, Buster, and Prism | Directed connection | Managed OpenAI reasoning route |
 | Discord bot and webhook APIs | Directed connection | Nova, Buster, and Prism |
 | Ops Pod | Directed connection — read and optional bounded exec | K3s control plane and nodes |
 | Monitoring stack | Dotted relationship — observes | Nova, Buster, and Prism |
+
+The solid mirror connection represents Buster's selected readiness probe, not
+BuildKit client routing. The dotted pull-cache connection requires explicit
+client configuration. Installing the cache configures no client. Storage is an
+independent platform prerequisite, not a capability supplied merely by installing
+K3s. An operator must provide the driver and choose a suitable StorageClass.
+
+> **Source evidence — selected readiness and external storage**
+>
+> **Claim:** The default mirror probe does not select a BuildKit pull-cache route. External CSI adoption and StorageClass selection are separate from K3s installation.
+>
+> **Implementation:** [Readiness selects registry probes](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/charts/kubeclaw/values.yaml#L345-L349). [Storage adoption uses an independent upstream chart](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/scripts/platform-services.mjs#L1-L40).
+>
+> **Contract or setting:** [Registry-client endpoints start empty](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/charts/kubeclaw/values.yaml#L47-L59). [Only an explicit mirror adds client routing](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/scripts/registry-client-config.mjs#L57-L74).
+>
+> **Test evidence:** [An explicit contract generates matching BuildKit and node mirror routes](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/tests/verification/deployment/registry-client-config.test.mjs#L16-L25). This inspected test does not establish deployed routing or storage readiness.
+>
+> **Revision:** `13bff0a18a64e74f2cbbaa1978e746fcdeff0c10`
+>
+> **Limit:** Source declarations do not prove a reachable cache, effective client configuration, installed CSI driver or working persistent volume. Check each selected deployment separately.
 
 ## Host and K3s Boundary
 

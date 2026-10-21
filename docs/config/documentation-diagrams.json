@@ -106,7 +106,7 @@
       "index": 0,
       "readerQuestion": "Which platform layers support workloads and which integrations remain optional?",
       "owner": "platform architecture and operations",
-      "sourceSha256": "7efc03d785b75d867cbb6a6135b575ee5b1522cd55f72b2f7c84dc7b0ab06ddd",
+      "sourceSha256": "9a43ba6d7729478ca293d3ff75aa1dd494b83765c30ca3aca1a13d0545481b36",
       "textAlternative": "The existing text alternative immediately following this diagram; retained visibly in publication."
     },
     {
@@ -205,7 +205,7 @@
       "index": 0,
       "readerQuestion": "Which Prism stores and event paths own design, execution and artifact data?",
       "owner": "Prism maintainers",
-      "sourceSha256": "a541d3c7c5c034a4784f1e59655372798775c02cfb28d8de7a5ef22f89cf81e8",
+      "sourceSha256": "92c04b6dbd0206baf63aa30facb027b9c3c68ba418fe82e4fbe2107081e19850",
       "textAlternative": "The existing text alternative immediately following this diagram; retained visibly in publication."
     },
     {

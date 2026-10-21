@@ -1,0 +1,29 @@
+{
+  "findings": [
+    {
+      "title": "P2: Qualify the unsupported retrieval-to-round connection",
+      "body": "At b2b85d4c8d3174aa41507cde77637227bb709e1e, corpus search returns items and a coverage gap to its caller (skills/prism/server/control-server.ts:861\u2013886). Round creation instead snapshots the active request and preferences (skills/prism/control/design-generations.ts:32\u201340); the generation prompt consumes those inputs without retrieving corpus results (skills/prism/server/agent-prompt.mjs:5\u201320). These sources establish retrieval availability, but not the depicted retrieval-to-round handoff. Even as a relationship diagram, this edge claims an implemented dependency without identifying a consumer. Remove it or explicitly mark it as an optional integration requiring separate source proof. The adjacent statement that retrieval 'can supply' material does not establish that linkage.",
+      "priority": "P2",
+      "confidence": 0.94,
+      "category": "bug",
+      "code_location": {
+        "file_path": "docs/site/understand/prism-data.md",
+        "line": 42
+      }
+    },
+    {
+      "title": "P2: Distinguish optional corpus artifact references from implemented storage",
+      "body": "The artifact-store-to-corpus arrow suggests the implemented corpus depends on retained CAS objects. At the pinned revision, ingestion verifies acquisition bytes, stores normalized metadata and source_content_digest, then deletes the quarantine acquisition (skills/prism/server/control-server.ts:822\u2013841). The corpus INSERT does not populate source_artifact_id or analysis_artifact_id (skills/prism/corpus/index.ts:111\u2013131). Those columns merely exist as nullable schema fields (skills/prism/storage/migrations/001_prism.sql:44\u201350). Unlike architecture requests and baseline bundles, this path does not write corpus bytes to the content-addressed artifact store. Remove the edge or label it explicitly as an optional schema reference that current ingestion leaves unset.",
+      "priority": "P2",
+      "confidence": 0.98,
+      "category": "bug",
+      "code_location": {
+        "file_path": "docs/site/understand/prism-data.md",
+        "line": 46
+      }
+    }
+  ],
+  "overall_correctness": "patch is incorrect",
+  "overall_explanation": "ONE diagram diagram-e8beb8435cf1a6fc: NOT_READY. Read-only inspection used actual Git objects at b2b85d4c8d3174aa41507cde77637227bb709e1e. Below, paths are relative to skills/prism/. These are relationship/dependency edges, not a chronological state machine; adjacent prose explicitly separates approval from publication.\n\nPer-edge Source proof:\n1. Project\u2192Request: storage/migrations/006_design_request.sql:3\u201310, project ownership FK.\n2. Request\u2192Round: storage/migrations/013_design_round.sql:1\u20134,19, request ownership and nullable current-round pointer.\n3. Round\u2192Three directions: storage/index.ts:151\u2013175, validated three-item result, round binding and transactional persistence; not guaranteed for unfinished/failed rounds.\n4. Direction\u2192Document: storage/index.ts:164\u2013172, direction references its created document; relational direction, not creation order.\n5. Document\u2192Revision: storage/migrations/001_prism.sql:15\u201322 and storage/index.ts:270\u2013290, inserted revision plus guarded current pointer.\n6. Revision\u2192Approval: server/control-server.ts:539\u2013563, current revision bound to approval after quality/warning and active-request checks; optional decision.\n7. Approval\u2192Baseline: server/control-server.ts:598\u2013629,778\u2013790, matching revision/digest/architecture, quality, accepted warnings and selected direction required; approval alone does not publish.\n8. Baseline\u2192Bundle: server/control-server.ts:775\u2013790, record references stored bundle ID and digest.\n9. Preference events\u2192Snapshot: control/preference-snapshot.ts:15\u201328, policy-filtered eligible events and effective profile, possibly empty.\n10. Snapshot\u2192Round: control/design-generations.ts:36\u201340 and storage/migrations/013_design_round.sql:1\u20134, same generation/round identity, created transactionally.\n11. Corpus\u2192Retrieval: corpus/index.ts:170\u2013184, active current revisions filtered by design-use rights and expiry; results may be empty.\n12. Retrieval\u2192Round: unsupported implemented linkage; first finding.\n13. Document\u2192Renderer: server/control-server.ts:693\u2013712, approved document passed for each view/state/viewport with capture enabled.\n14. Renderer\u2192Bundle: server/control-server.ts:713\u2013729,747\u2013758, capture/ARIA output included in archive only after evidence and accessibility checks; failures abort publication.\n15. Artifact store\u2192Request: server/control-server.ts:305\u2013320, stored architecture ID/digest referenced by request; storage dependency, not ownership of request rows.\n16. Artifact store\u2192Corpus: optional schema fields only; contradicted as current ingestion/storage dependency, second finding.\n17. Artifact store\u2192Bundle: server/control-server.ts:753\u2013776 and storage/artifacts.ts:43\u201358, assembled archive persisted under content-derived identity.\n\nNo tests, generators, product execution, nested review, SVG-hash inference or browser acceptance used. No global acceptance established; PUB005/A91206 remain NOT_READY pending all 27 diagrams.",
+  "overall_confidence": 0.95
+}

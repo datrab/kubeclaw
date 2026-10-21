@@ -6,7 +6,7 @@ Owner: Prism maintainers
 Evidence: contracts/prism/v1; skills/prism; charts/prism
 Evidence revision: `b2b85d4c8d3174aa41507cde77637227bb709e1e`
 Applies to: prism.design-document.v1, the current Prism services, and the Prism PostgreSQL schema
-Last verified: source, schema, migration, chart, and test inspection on 2026-09-19; backup behavior checked against the cited implementation on 2026-10-17; no live restore result is established
+Last verified: source, schema, migration, chart, and test inspection on 2026-09-19; backup behavior checked against the cited implementation on 2026-10-17; no live restore result is established; diagram corpus/generation boundaries rechecked against the same pinned source on 2026-10-21
 
 ## Purpose
 
@@ -39,11 +39,9 @@ flowchart LR
     Preference[Preference events] --> Snapshot[Generation snapshot]
     Snapshot --> Round
     Corpus[Governed corpus] --> Retrieval[Rights-filtered retrieval]
-    Retrieval --> Round
     Document --> Renderer[Renderer and browser capture]
     Renderer --> Bundle
     ArtifactStore[Content-addressed artifact store] --> Request
-    ArtifactStore --> Corpus
     ArtifactStore --> Bundle
 ```
 
@@ -64,11 +62,9 @@ Each row names a directed connection. Labels preserve the diagram’s conditions
 | Preference events | Directed connection | Generation snapshot |
 | Generation snapshot | Directed connection | Design round |
 | Governed corpus | Directed connection | Rights-filtered retrieval |
-| Rights-filtered retrieval | Directed connection | Design round |
 | Design document | Directed connection | Renderer and browser capture |
 | Renderer and browser capture | Directed connection | Content-addressed bundle |
 | Content-addressed artifact store | Directed connection | Design request |
-| Content-addressed artifact store | Directed connection | Governed corpus |
 | Content-addressed artifact store | Directed connection | Content-addressed bundle |
 
 
@@ -76,7 +72,10 @@ Text version: A project owns design requests. The active request owns the
 current design round. A round produces three direction records and three
 documents. Each document points to its current immutable revision. Preference
 events become a fixed generation snapshot before generation starts. Corpus
-retrieval can supply governed reference material. A matching approval permits
+search returns governed reference material to its caller. The shipped round
+generation path does not automatically consume those search results. Current
+corpus ingestion stores normalized metadata and source-content digests, not
+source bytes in the content-addressed artifact store. A matching approval permits
 Prism to render every view, state, and viewport and publish one
 content-addressed baseline bundle.
 
@@ -85,6 +84,20 @@ content-addressed baseline bundle.
 > [The first migration defines projects, documents, revisions, directions, baselines, corpus records, preferences, engine operations, and approvals](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/storage/migrations/001_prism.sql#L1-L74).
 >
 > [The round migration binds a round to its request, preference generation, parent round, source document, and source revision](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/storage/migrations/013_design_round.sql#L1-L22).
+
+> **Source evidence — corpus and generation boundaries**
+>
+> **Claim:** Corpus search is available to a caller, but the shipped round-generation prompt does not consume its results automatically. Corpus ingestion does not populate retained artifact references.
+>
+> **Implementation:** [Search returns items and coverage information](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/server/control-server.ts#L843-L886). [Ingestion stores metadata and cleans acquisition quarantine](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/server/control-server.ts#L822-L841).
+>
+> **Contract or setting:** [Round creation snapshots the active request and preferences](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/control/design-generations.ts#L32-L40). [The generation prompt uses those inputs](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/server/agent-prompt.mjs#L5-L20). [Corpus persistence omits artifact references](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/corpus/index.ts#L111-L131).
+>
+> **Test evidence:** [Analysis-only material stays out of design retrieval](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/tests/corpus.test.mts#L53-L74). This inspected test does not establish a generation consumer or retained source files.
+>
+> **Revision:** `b2b85d4c8d3174aa41507cde77637227bb709e1e`
+>
+> **Limit:** Nullable artifact-reference columns permit a schema relationship; their existence does not prove current ingestion populates them. A separate retrieval integration needs its own producer-to-consumer evidence.
 
 ## Four Forms of Truth
 

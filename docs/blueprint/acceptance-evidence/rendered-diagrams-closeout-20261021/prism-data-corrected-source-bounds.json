@@ -1,0 +1,510 @@
+{
+  "uniqueVerifiedLinks": 96,
+  "uniqueSourceObjects": 56,
+  "primarySources": [
+    {
+      "repository": "datrab/kubeclaw",
+      "revision": "b2b85d4c8d3174aa41507cde77637227bb709e1e",
+      "file": "charts/prism/files/prism-backup.sh",
+      "kind": "blob",
+      "gitObject": "9253633f8547dd168869149b26d5aea755c0253f",
+      "bytes": 9246,
+      "sha256": "6823dff4e65d056a82676d7970474921d55cd9573960a82344f15dd0eeaffece"
+    },
+    {
+      "repository": "datrab/kubeclaw",
+      "revision": "b2b85d4c8d3174aa41507cde77637227bb709e1e",
+      "file": "charts/prism/templates/backup.yaml",
+      "kind": "blob",
+      "gitObject": "ac9529a0fd38b064c719a2b2e80e91311fd93078",
+      "bytes": 4635,
+      "sha256": "8b22353f1a790233a269e462ee52fd72d8fc1faec73885f7fbe5ffddf0e7a406"
+    },
+    {
+      "repository": "datrab/kubeclaw",
+      "revision": "b2b85d4c8d3174aa41507cde77637227bb709e1e",
+      "file": "charts/prism/templates/workloads.yaml",
+      "kind": "blob",
+      "gitObject": "93e2b41ce149a4a803fb7ffbc5c51223507c2380",
+      "bytes": 14332,
+      "sha256": "9bb2865f5d232b2cc5fac39259c8957e573decc891d2c9b25d7554da01148739"
+    },
+    {
+      "repository": "datrab/kubeclaw",
+      "revision": "b2b85d4c8d3174aa41507cde77637227bb709e1e",
+      "file": "charts/prism/values.yaml",
+      "kind": "blob",
+      "gitObject": "f52ea0c4ea6a0c5744738a4e878b0c2e9d953982",
+      "bytes": 3474,
+      "sha256": "add69f96f117b8faed83b42133b7804eacca58ef850ef7428ea039842028d298"
+    },
+    {
+      "repository": "datrab/kubeclaw",
+      "revision": "b2b85d4c8d3174aa41507cde77637227bb709e1e",
+      "file": "contracts/prism/v1/schemas/prism-v1.schema.json",
+      "kind": "blob",
+      "gitObject": "addf026ffb4944337471c84aac9bdf1655852498",
+      "bytes": 25800,
+      "sha256": "7e8e248ffbc3753ee462d8e4f1d8de98499c02df94f07f0bcfc28367886bf99b"
+    },
+    {
+      "repository": "datrab/kubeclaw",
+      "revision": "b2b85d4c8d3174aa41507cde77637227bb709e1e",
+      "file": "contracts/prism/v1/src/baseline-archive.ts",
+      "kind": "blob",
+      "gitObject": "3bda578d071c70956ed210ed185c13fe1558f77c",
+      "bytes": 5924,
+      "sha256": "7017d8472863ec34449a725300f5c92707aa3dce13371f5e982621cce9b25237"
+    },
+    {
+      "repository": "datrab/kubeclaw",
+      "revision": "b2b85d4c8d3174aa41507cde77637227bb709e1e",
+      "file": "contracts/prism/v1/src/complexity.ts",
+      "kind": "blob",
+      "gitObject": "61055376e84f1f84c224761c62408706d31d0a10",
+      "bytes": 3283,
+      "sha256": "041bfa7037f86afaf6f9667bc90a07db4fe088924dcb3e7ef650841dfd1c60df"
+    },
+    {
+      "repository": "datrab/kubeclaw",
+      "revision": "b2b85d4c8d3174aa41507cde77637227bb709e1e",
+      "file": "contracts/prism/v1/src/document-semantics.ts",
+      "kind": "blob",
+      "gitObject": "b154bbf852ad2d385e823900518d8a7ae0ed3674",
+      "bytes": 7054,
+      "sha256": "0a467d617890be691aaff6eb114b4acbb5de4efca55a5888879b7518a7f4cef2"
+    },
+    {
+      "repository": "datrab/kubeclaw",
+      "revision": "b2b85d4c8d3174aa41507cde77637227bb709e1e",
+      "file": "contracts/prism/v1/src/node-catalog.ts",
+      "kind": "blob",
+      "gitObject": "2ced0c5640aed5767b61cbf3471c79aa7ffac515",
+      "bytes": 11592,
+      "sha256": "6c005e8a54eb395677727023fe8bb659c223cd252baac6d1e628112172127104"
+    },
+    {
+      "repository": "datrab/kubeclaw",
+      "revision": "b2b85d4c8d3174aa41507cde77637227bb709e1e",
+      "file": "skills/prism/config/database-bootstrap.ts",
+      "kind": "blob",
+      "gitObject": "d0b37fb886d734375cfd99127067a14cf36f91de",
+      "bytes": 628,
+      "sha256": "23b7078c1fe9304ab60d0fa7742dc5fe543a75da8a3367bb508a9ce8dc649625"
+    },
+    {
+      "repository": "datrab/kubeclaw",
+      "revision": "b2b85d4c8d3174aa41507cde77637227bb709e1e",
+      "file": "skills/prism/control/agent-jobs.ts",
+      "kind": "blob",
+      "gitObject": "13e4321d4a4e458de2ef31bf93ff396a615031da",
+      "bytes": 8860,
+      "sha256": "ff62ef04432ebb67c700c4a25103a0477096f588c2cc3f34f3fab0b776860334"
+    },
+    {
+      "repository": "datrab/kubeclaw",
+      "revision": "b2b85d4c8d3174aa41507cde77637227bb709e1e",
+      "file": "skills/prism/control/design-generations.ts",
+      "kind": "blob",
+      "gitObject": "54c97a3afdb11faee2a723df6bf549bfb61dc7a3",
+      "bytes": 8962,
+      "sha256": "cd32799fdb1eacbaf40c968b101badcfbedc0f8ce9b12ab045e82ae2e632cbfd"
+    },
+    {
+      "repository": "datrab/kubeclaw",
+      "revision": "b2b85d4c8d3174aa41507cde77637227bb709e1e",
+      "file": "skills/prism/control/direction-decisions.ts",
+      "kind": "blob",
+      "gitObject": "e0febc20cb55c97fb986dcd9d8edae27b72f3530",
+      "bytes": 5313,
+      "sha256": "fe2067cb0421585e4622e0fad38da7960689b0de92c75d8a71f576177ccf972c"
+    },
+    {
+      "repository": "datrab/kubeclaw",
+      "revision": "b2b85d4c8d3174aa41507cde77637227bb709e1e",
+      "file": "skills/prism/control/native-operation-store.ts",
+      "kind": "blob",
+      "gitObject": "65b0ad59c2eba031f829db7e0bf4790dfb3ce64f",
+      "bytes": 4884,
+      "sha256": "da764d081570b56a5579652033f4cbc0e2623ced3d1b62e0dc8945978f1e77a9"
+    },
+    {
+      "repository": "datrab/kubeclaw",
+      "revision": "b2b85d4c8d3174aa41507cde77637227bb709e1e",
+      "file": "skills/prism/control/pipeline-preference-subject.ts",
+      "kind": "blob",
+      "gitObject": "8d7154c140ff8a8c9118bd3e7a3a42617f453737",
+      "bytes": 659,
+      "sha256": "ded8597750c0e6fb3de823cceb31ecbbff7ece03143f4cdd30037ceff0a77eb3"
+    },
+    {
+      "repository": "datrab/kubeclaw",
+      "revision": "b2b85d4c8d3174aa41507cde77637227bb709e1e",
+      "file": "skills/prism/control/preference-snapshot.ts",
+      "kind": "blob",
+      "gitObject": "6c9c8e0674d0e799d5a804e91eecbcaa1e443897",
+      "bytes": 3844,
+      "sha256": "e0ac8ed987149afdbc7775d05dd4a31175b57189272d0b92de6301d775288ed2"
+    },
+    {
+      "repository": "datrab/kubeclaw",
+      "revision": "b2b85d4c8d3174aa41507cde77637227bb709e1e",
+      "file": "skills/prism/corpus/index.ts",
+      "kind": "blob",
+      "gitObject": "96340effa7a583d270237bc3a424af8ed9dd76bc",
+      "bytes": 10549,
+      "sha256": "99ee5eee2282734c9df492c5ac1219903b9680f3dff37f3c513bfa4cff2c6343"
+    },
+    {
+      "repository": "datrab/kubeclaw",
+      "revision": "b2b85d4c8d3174aa41507cde77637227bb709e1e",
+      "file": "skills/prism/directions/index.ts",
+      "kind": "blob",
+      "gitObject": "9554eb54f83d63241a5956ae1718bccd05626c2b",
+      "bytes": 3026,
+      "sha256": "8f787b1ec48c8a0b876f754260d2702ae1c65bc8f2a031b897a989bcb8b973eb"
+    },
+    {
+      "repository": "datrab/kubeclaw",
+      "revision": "b2b85d4c8d3174aa41507cde77637227bb709e1e",
+      "file": "skills/prism/domain/index.ts",
+      "kind": "blob",
+      "gitObject": "ae786d20ca23e46872438866c8a0d09966a5f606",
+      "bytes": 6665,
+      "sha256": "710ff6fd047d301aef22477cb8cdecfd1fe1c9bd224c069abc6af9d805462838"
+    },
+    {
+      "repository": "datrab/kubeclaw",
+      "revision": "b2b85d4c8d3174aa41507cde77637227bb709e1e",
+      "file": "skills/prism/engine/render-operation.ts",
+      "kind": "blob",
+      "gitObject": "c6768c89e389f4dd2d2f55181322729de0752189",
+      "bytes": 5941,
+      "sha256": "63b95de9640f47bce2b04e929232e0f7dd617c11ba08152f8e428db6a601d501"
+    },
+    {
+      "repository": "datrab/kubeclaw",
+      "revision": "b2b85d4c8d3174aa41507cde77637227bb709e1e",
+      "file": "skills/prism/evaluation/index.ts",
+      "kind": "blob",
+      "gitObject": "c5a1ad88a40a3cd540b338e5718d7a90061bf7d7",
+      "bytes": 7095,
+      "sha256": "3c05396fdea1ada5bcc32fa5f45215e9ff2492f73e3c3987a4c0eb994a68416a"
+    },
+    {
+      "repository": "datrab/kubeclaw",
+      "revision": "b2b85d4c8d3174aa41507cde77637227bb709e1e",
+      "file": "skills/prism/integration/corpus-pool.mts",
+      "kind": "blob",
+      "gitObject": "ab0a58d17f14c7dcbca7473f15d0af12765b5f4e",
+      "bytes": 6694,
+      "sha256": "993e49c853527500253108753d94178855a6ef019203ac8dd1b012e50de6d8c7"
+    },
+    {
+      "repository": "datrab/kubeclaw",
+      "revision": "b2b85d4c8d3174aa41507cde77637227bb709e1e",
+      "file": "skills/prism/preferences/index.ts",
+      "kind": "blob",
+      "gitObject": "fea35f108d9d94995c64d6388393ffe1b83a2c8d",
+      "bytes": 4330,
+      "sha256": "2a86ae6f5c2fb5e0bc0b6dc2f60a6f7c3dad1d2695e1bde2cf9e00b6134b6c7d"
+    },
+    {
+      "repository": "datrab/kubeclaw",
+      "revision": "b2b85d4c8d3174aa41507cde77637227bb709e1e",
+      "file": "skills/prism/renderer/index.ts",
+      "kind": "blob",
+      "gitObject": "c01cc9adbc33615e3a18a49cf98454a6a9e6a1e4",
+      "bytes": 16368,
+      "sha256": "a96197346ae06317f68b5dd3fd68de35bb02780af6d17e2f7ac5683f17751552"
+    },
+    {
+      "repository": "datrab/kubeclaw",
+      "revision": "b2b85d4c8d3174aa41507cde77637227bb709e1e",
+      "file": "skills/prism/server/agent-prompt.mjs",
+      "kind": "blob",
+      "gitObject": "3652bcd537d192efd0c4f7c37d3ee391f7f1fc89",
+      "bytes": 1451,
+      "sha256": "3bcd6b4b2bb25d82c9ec767a03fd08ea1c17420eca3ce1742410359ed2d1aea9"
+    },
+    {
+      "repository": "datrab/kubeclaw",
+      "revision": "b2b85d4c8d3174aa41507cde77637227bb709e1e",
+      "file": "skills/prism/server/bootstrap-database.ts",
+      "kind": "blob",
+      "gitObject": "e90e8550f1ab1689299205e32365b0ba6057bc0a",
+      "bytes": 1161,
+      "sha256": "4cacc0a24266f58196bd6f6a74abeeb4f7bb95f833312fe691e9f6c0a76d28ee"
+    },
+    {
+      "repository": "datrab/kubeclaw",
+      "revision": "b2b85d4c8d3174aa41507cde77637227bb709e1e",
+      "file": "skills/prism/server/control-server.ts",
+      "kind": "blob",
+      "gitObject": "bef6ec7be1134d4155cef249b146045a54bac9f0",
+      "bytes": 51376,
+      "sha256": "c165fb6b20bc6b608ae2bc859f52fc5700856e6cea3798916df921dcac5ce8ac"
+    },
+    {
+      "repository": "datrab/kubeclaw",
+      "revision": "b2b85d4c8d3174aa41507cde77637227bb709e1e",
+      "file": "skills/prism/server/control.ts",
+      "kind": "blob",
+      "gitObject": "0b1870100a82c084f2814c1616f5a007cca99380",
+      "bytes": 419,
+      "sha256": "b99be63fc90f0096a6acfef54c26c86b247ae7b1ad85066df064abca60600cd3"
+    },
+    {
+      "repository": "datrab/kubeclaw",
+      "revision": "b2b85d4c8d3174aa41507cde77637227bb709e1e",
+      "file": "skills/prism/server/database-roles.ts",
+      "kind": "blob",
+      "gitObject": "0cd6a025437446be4cfcd779f27f94146ad5f4dd",
+      "bytes": 3805,
+      "sha256": "f9b1b0048c2cc881969e33d7db58a74293a311079a50c8d391827996eaf5ae3a"
+    },
+    {
+      "repository": "datrab/kubeclaw",
+      "revision": "b2b85d4c8d3174aa41507cde77637227bb709e1e",
+      "file": "skills/prism/server/ingestion.ts",
+      "kind": "blob",
+      "gitObject": "8e5e18e63cb9224fa87b04ad30363137c18b3cac",
+      "bytes": 9159,
+      "sha256": "bbee6795991e601600e6442927e483bcd5a87c798b66a42ed5606bb496354717"
+    },
+    {
+      "repository": "datrab/kubeclaw",
+      "revision": "b2b85d4c8d3174aa41507cde77637227bb709e1e",
+      "file": "skills/prism/server/internal-artifacts.ts",
+      "kind": "blob",
+      "gitObject": "6411199968f5fc4cc382139d504a3ea54dc527c5",
+      "bytes": 2865,
+      "sha256": "16750a5eecea51781dc67e271cfc331550f1a0a03460917133226cd9c975dab8"
+    },
+    {
+      "repository": "datrab/kubeclaw",
+      "revision": "b2b85d4c8d3174aa41507cde77637227bb709e1e",
+      "file": "skills/prism/server/internal-auth.ts",
+      "kind": "blob",
+      "gitObject": "57d1670ec13fc88b0acd2f8eb8c703d61cca8054",
+      "bytes": 2756,
+      "sha256": "e0662a6b5237bc081fa346a35739fd2a388bdf20e93fff88ab866f8839b3fc72"
+    },
+    {
+      "repository": "datrab/kubeclaw",
+      "revision": "b2b85d4c8d3174aa41507cde77637227bb709e1e",
+      "file": "skills/prism/server/worker-readiness.ts",
+      "kind": "blob",
+      "gitObject": "24a882b1d3cfd73049b784c2c4e12dc6804f6fc2",
+      "bytes": 5105,
+      "sha256": "b760fe315ee28b214d1309cb6ac85e16256581168d1bb27070de29ac956d233e"
+    },
+    {
+      "repository": "datrab/kubeclaw",
+      "revision": "b2b85d4c8d3174aa41507cde77637227bb709e1e",
+      "file": "skills/prism/storage/artifacts.ts",
+      "kind": "blob",
+      "gitObject": "82fb8ac096f7d5838c059099410f4f7f69594cf7",
+      "bytes": 3467,
+      "sha256": "8177fe9d5199d1af866a2ad7d5d7fdfa82b99b0fe6df5b7f0c3c04e96536ef1f"
+    },
+    {
+      "repository": "datrab/kubeclaw",
+      "revision": "b2b85d4c8d3174aa41507cde77637227bb709e1e",
+      "file": "skills/prism/storage/index.ts",
+      "kind": "blob",
+      "gitObject": "fc2c62bbccebc13085a08bb8aed8cd1f5998434f",
+      "bytes": 14427,
+      "sha256": "e5105909e5f1abf1eb2178270dd63d1b8e2aa337177dcb620b6ae43199a3a199"
+    },
+    {
+      "repository": "datrab/kubeclaw",
+      "revision": "b2b85d4c8d3174aa41507cde77637227bb709e1e",
+      "file": "skills/prism/storage/migrations/001_prism.sql",
+      "kind": "blob",
+      "gitObject": "5475858bf85ea2f908f38e959ae42b30be5de88b",
+      "bytes": 6593,
+      "sha256": "02f48a7e783b74fded50a0bc626d418b532515fe9e5456c0a22735a991ee1c41"
+    },
+    {
+      "repository": "datrab/kubeclaw",
+      "revision": "b2b85d4c8d3174aa41507cde77637227bb709e1e",
+      "file": "skills/prism/storage/migrations/002_engine_operation_results.sql",
+      "kind": "blob",
+      "gitObject": "83545316a99a5d4ed91dcb087adc7969d4652b7f",
+      "bytes": 155,
+      "sha256": "46e1a7a4600589b51616abda14e878c7cd8ae83210e297b7f7512bd12d3e9a79"
+    },
+    {
+      "repository": "datrab/kubeclaw",
+      "revision": "b2b85d4c8d3174aa41507cde77637227bb709e1e",
+      "file": "skills/prism/storage/migrations/003_worker_nonce.sql",
+      "kind": "blob",
+      "gitObject": "dfa55d06d88111b8ee16beca78cd2cc71012ca3e",
+      "bytes": 327,
+      "sha256": "55af2848fecbd3d99fbe819a2eb2d0f3bc155efbb5b1b483765121a4c1c40768"
+    },
+    {
+      "repository": "datrab/kubeclaw",
+      "revision": "b2b85d4c8d3174aa41507cde77637227bb709e1e",
+      "file": "skills/prism/storage/migrations/004_approval_warnings.sql",
+      "kind": "blob",
+      "gitObject": "c81cd04e14a0f4eb3f31206e34d46526f8291a57",
+      "bytes": 111,
+      "sha256": "ac18eb41f1e54be046b0b1088723173c922b1ad71465762d958790b72398f6b0"
+    },
+    {
+      "repository": "datrab/kubeclaw",
+      "revision": "b2b85d4c8d3174aa41507cde77637227bb709e1e",
+      "file": "skills/prism/storage/migrations/005_direction_source.sql",
+      "kind": "blob",
+      "gitObject": "4398ac7127149ca8b38a55a164043026ab99d057",
+      "bytes": 432,
+      "sha256": "fbbdb69288fa15e5f0e7b436f0852614b63cca5c28c02a09b1d2e65690abff01"
+    },
+    {
+      "repository": "datrab/kubeclaw",
+      "revision": "b2b85d4c8d3174aa41507cde77637227bb709e1e",
+      "file": "skills/prism/storage/migrations/006_design_request.sql",
+      "kind": "blob",
+      "gitObject": "a3d157cdec0939d6dd175d74d8c07e942de5dcf6",
+      "bytes": 972,
+      "sha256": "45e2eea130015a7e7050ecdc1488b3461ce6187c6ce920682c4e78d52cf3f09e"
+    },
+    {
+      "repository": "datrab/kubeclaw",
+      "revision": "b2b85d4c8d3174aa41507cde77637227bb709e1e",
+      "file": "skills/prism/storage/migrations/007_direction_evidence.sql",
+      "kind": "blob",
+      "gitObject": "5fa36e52b9eb609a64a9b575ce04fcd0547de3a3",
+      "bytes": 98,
+      "sha256": "0cbe2ea9f673b90ed2a4841451eef96b2df16a5441475d91ee1bf6a314bb1adc"
+    },
+    {
+      "repository": "datrab/kubeclaw",
+      "revision": "b2b85d4c8d3174aa41507cde77637227bb709e1e",
+      "file": "skills/prism/storage/migrations/008_document_request_binding.sql",
+      "kind": "blob",
+      "gitObject": "ac43d64cdb5fcdf84bf1105ce84a550606e0c931",
+      "bytes": 223,
+      "sha256": "7713052490c58a4142f3827e7e563ecb5cab38b0a6c6af708a9920f1dd551067"
+    },
+    {
+      "repository": "datrab/kubeclaw",
+      "revision": "b2b85d4c8d3174aa41507cde77637227bb709e1e",
+      "file": "skills/prism/storage/migrations/009_corpus_source_evidence.sql",
+      "kind": "blob",
+      "gitObject": "6a2b9113d6d2d17517b2f2a86cbd87507c3d731d",
+      "bytes": 386,
+      "sha256": "1cd18eeb435a35e3106dd2acc613e5990b7e8534cba99de81e9028a022a01a88"
+    },
+    {
+      "repository": "datrab/kubeclaw",
+      "revision": "b2b85d4c8d3174aa41507cde77637227bb709e1e",
+      "file": "skills/prism/storage/migrations/010_direction_unsourced_uniqueness.sql",
+      "kind": "blob",
+      "gitObject": "6e2379ceb40f027c51d05e4e2b7cea10b206953b",
+      "bytes": 1352,
+      "sha256": "d1b10f5a6cf161b2f4ae1a1f33ac226422b41a1c793099347cd19b423209865e"
+    },
+    {
+      "repository": "datrab/kubeclaw",
+      "revision": "b2b85d4c8d3174aa41507cde77637227bb709e1e",
+      "file": "skills/prism/storage/migrations/011_preference_wire_ids.sql",
+      "kind": "blob",
+      "gitObject": "e0da6b0895c6a6197576f75bcd6c3b03ad3971bc",
+      "bytes": 617,
+      "sha256": "af2e24bbfca75d7b6e3094af9535fd808ffe5afc65b51964b6ff58cc689693a4"
+    },
+    {
+      "repository": "datrab/kubeclaw",
+      "revision": "b2b85d4c8d3174aa41507cde77637227bb709e1e",
+      "file": "skills/prism/storage/migrations/012_preference_generation.sql",
+      "kind": "blob",
+      "gitObject": "817bc411ac6185018ab4b574697a605d196213b6",
+      "bytes": 475,
+      "sha256": "91417f8f983fcf4f666037619780155d89eda796707832cbd5a27d7c5051596c"
+    },
+    {
+      "repository": "datrab/kubeclaw",
+      "revision": "b2b85d4c8d3174aa41507cde77637227bb709e1e",
+      "file": "skills/prism/storage/migrations/013_design_round.sql",
+      "kind": "blob",
+      "gitObject": "87c424437ffcd966b98c623539ebccbfc2e4d20d",
+      "bytes": 1138,
+      "sha256": "ad72bfc7d76495b6ceac25460dd7aef9bb8db333c80baea0f3bf055d5c48ef04"
+    },
+    {
+      "repository": "datrab/kubeclaw",
+      "revision": "b2b85d4c8d3174aa41507cde77637227bb709e1e",
+      "file": "skills/prism/storage/migrations/014_agent_jobs.sql",
+      "kind": "blob",
+      "gitObject": "a4f3a0eb92db3c93d3518f6d07660d0c39ed78ff",
+      "bytes": 1563,
+      "sha256": "723f518c0a9fc8d80f5b0191c36834e061ab74871067ea77830262fc6fac450a"
+    },
+    {
+      "repository": "datrab/kubeclaw",
+      "revision": "b2b85d4c8d3174aa41507cde77637227bb709e1e",
+      "file": "skills/prism/storage/migrations/015_product_decisions.sql",
+      "kind": "blob",
+      "gitObject": "1cb0c9bf6a89c692f270665cd832f6028c25f5cd",
+      "bytes": 755,
+      "sha256": "69c0c7aa95ecd70cf5599eccdc35ff9ed01de83fd9be31c7ddda06473696993d"
+    },
+    {
+      "repository": "datrab/kubeclaw",
+      "revision": "b2b85d4c8d3174aa41507cde77637227bb709e1e",
+      "file": "skills/prism/storage/migrations/016_preference_legacy_insert_compatibility.sql",
+      "kind": "blob",
+      "gitObject": "d1901cd60c196fb208265b95cee9956d491e9791",
+      "bytes": 643,
+      "sha256": "df76fa398d9506c26eea9d05dfb1ac1f2af8d3b36b6e9549ff3abad1b7a5cbbf"
+    },
+    {
+      "repository": "datrab/kubeclaw",
+      "revision": "b2b85d4c8d3174aa41507cde77637227bb709e1e",
+      "file": "skills/prism/storage/migrations/017_native_operation_identity.sql",
+      "kind": "blob",
+      "gitObject": "fa02e1cce945fce50e100c7e63ef6a1d5426e2c4",
+      "bytes": 1451,
+      "sha256": "184d4e576b0175f828384ae2a5b0cea727cc6161d6528fb9b54ef7bd25d5e754"
+    },
+    {
+      "repository": "datrab/kubeclaw",
+      "revision": "b2b85d4c8d3174aa41507cde77637227bb709e1e",
+      "file": "skills/prism/storage/product-decisions.ts",
+      "kind": "blob",
+      "gitObject": "f6848da6655ef1db42912c2a83beb6640ab2fa16",
+      "bytes": 2644,
+      "sha256": "522e30f6c1e668e145b05b055dcc9d4ca4226df8f4b1183e0918f4f99183c174"
+    },
+    {
+      "repository": "datrab/kubeclaw",
+      "revision": "b2b85d4c8d3174aa41507cde77637227bb709e1e",
+      "file": "skills/prism/studio/preview-assets.ts",
+      "kind": "blob",
+      "gitObject": "0a629ce0ff76effdfb2c326496d35fd24109e2fa",
+      "bytes": 3291,
+      "sha256": "94b27166a5c76ec23705852bac3828b077abce2eb5a05f2059c2efef8324fbdd"
+    },
+    {
+      "repository": "datrab/kubeclaw",
+      "revision": "b2b85d4c8d3174aa41507cde77637227bb709e1e",
+      "file": "skills/prism/tests/corpus.test.mts",
+      "kind": "blob",
+      "gitObject": "45d4482f4a1dd3589b57c514fbb59dd06dea531e",
+      "bytes": 3825,
+      "sha256": "4eb46c91c2ada8e2ff3f9255017820bba55adc8ab5cfebb34bdd0a80a92f9639"
+    },
+    {
+      "repository": "datrab/kubeclaw",
+      "revision": "b2b85d4c8d3174aa41507cde77637227bb709e1e",
+      "file": "tests/verification/contracts/check-prism-postgres-transactions.mts",
+      "kind": "blob",
+      "gitObject": "8406f9f4d7c28eaa5c62858a2400c60e6ec97a4e",
+      "bytes": 7791,
+      "sha256": "85e8fab3340bffd4fe2693f75b8af0a5fe053d3662e018d78aace337aaa2e860"
+    }
+  ]
+}

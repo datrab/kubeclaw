@@ -1,0 +1,375 @@
+{
+  "uniqueVerifiedLinks": 71,
+  "uniqueSourceObjects": 41,
+  "primarySources": [
+    {
+      "repository": "datrab/kubeclaw",
+      "revision": "13bff0a18a64e74f2cbbaa1978e746fcdeff0c10",
+      "file": "charts/kubeclaw/templates/configmap-gateway.yaml",
+      "kind": "blob",
+      "gitObject": "cc30cbaf30a6dca0db986506f8bdf15203bb5e44",
+      "bytes": 8810,
+      "sha256": "5c4f01f31a922e6fd6a05bbaaec8befeef72c9ed3936d4fd2260729de180ab7f"
+    },
+    {
+      "repository": "datrab/kubeclaw",
+      "revision": "13bff0a18a64e74f2cbbaa1978e746fcdeff0c10",
+      "file": "charts/kubeclaw/templates/deployment.yaml",
+      "kind": "blob",
+      "gitObject": "6ccb596716864eaa30c9ee7945e8deac8f2d2707",
+      "bytes": 84927,
+      "sha256": "c3ae70104722a56b8f2922cb150af612a0393756e901bcd59ed6e2952d17db9f"
+    },
+    {
+      "repository": "datrab/kubeclaw",
+      "revision": "13bff0a18a64e74f2cbbaa1978e746fcdeff0c10",
+      "file": "charts/kubeclaw/values.yaml",
+      "kind": "blob",
+      "gitObject": "3df4916342a026c6ddd8975f9231a28b7b17d519",
+      "bytes": 18721,
+      "sha256": "6c01336c19d20edc4a99528d115f9f2a9a69a8536cd60ccd65994622d0ca3ad3"
+    },
+    {
+      "repository": "datrab/kubeclaw",
+      "revision": "13bff0a18a64e74f2cbbaa1978e746fcdeff0c10",
+      "file": "charts/ops-pod/templates/rbac.yaml",
+      "kind": "blob",
+      "gitObject": "ed9e6332e3017c8cfba82067196fccc75e2dec31",
+      "bytes": 2875,
+      "sha256": "103ed540a9b71ca0fdde5d693e5e4d07b2943910e79116bbd7206d528668874b"
+    },
+    {
+      "repository": "datrab/kubeclaw",
+      "revision": "13bff0a18a64e74f2cbbaa1978e746fcdeff0c10",
+      "file": "charts/ops-pod/templates/workload.yaml",
+      "kind": "blob",
+      "gitObject": "69c5d9c6507804801916bf046a164f08d227330e",
+      "bytes": 7436,
+      "sha256": "3471a815948e99e52b03b7952f1076c9d21afddbd24b62c37e1c848b7a129d58"
+    },
+    {
+      "repository": "datrab/kubeclaw",
+      "revision": "13bff0a18a64e74f2cbbaa1978e746fcdeff0c10",
+      "file": "charts/ops-pod/values.yaml",
+      "kind": "blob",
+      "gitObject": "c2a600c8ee96d065d32243dc63fac2ff20e2f73a",
+      "bytes": 1463,
+      "sha256": "9f1d58dfe213f13169fdd9f983878b688d5f42fcf9f5283e31eed329e82b8c79"
+    },
+    {
+      "repository": "datrab/kubeclaw",
+      "revision": "13bff0a18a64e74f2cbbaa1978e746fcdeff0c10",
+      "file": "charts/prism/templates/workloads.yaml",
+      "kind": "blob",
+      "gitObject": "93e2b41ce149a4a803fb7ffbc5c51223507c2380",
+      "bytes": 14332,
+      "sha256": "9bb2865f5d232b2cc5fac39259c8957e573decc891d2c9b25d7554da01148739"
+    },
+    {
+      "repository": "datrab/kubeclaw",
+      "revision": "13bff0a18a64e74f2cbbaa1978e746fcdeff0c10",
+      "file": "docker/buster-runtime-entrypoint.sh",
+      "kind": "blob",
+      "gitObject": "bf9876115543d818b07ede3b8a98ea95d8e72b8c",
+      "bytes": 16021,
+      "sha256": "52d6ca506ccf98a4c83409ab305a6c280b4f8f19721ccbb06354f8332c8d4bbb"
+    },
+    {
+      "repository": "datrab/kubeclaw",
+      "revision": "13bff0a18a64e74f2cbbaa1978e746fcdeff0c10",
+      "file": "docker/Dockerfile.buster-runtime",
+      "kind": "blob",
+      "gitObject": "f9dc1b677caa3c4a6a0e2c0b04c16e7023aee934",
+      "bytes": 8898,
+      "sha256": "a312398adeaf6addfd875940cbe04cd4bc53611fb8f26422020fe290d7fcc27c"
+    },
+    {
+      "repository": "datrab/kubeclaw",
+      "revision": "13bff0a18a64e74f2cbbaa1978e746fcdeff0c10",
+      "file": "gitops/platform/litellm/resources.yaml",
+      "kind": "blob",
+      "gitObject": "4b5c7c3156aca97951675ef37c41b89e76c54c37",
+      "bytes": 1857,
+      "sha256": "faf5a32f91568604ee1726ac60a58c7490fb95802d61a0019171006423474637"
+    },
+    {
+      "repository": "datrab/kubeclaw",
+      "revision": "13bff0a18a64e74f2cbbaa1978e746fcdeff0c10",
+      "file": "gitops/platform/values/alloy.yaml",
+      "kind": "blob",
+      "gitObject": "30b21a0e1e56518933ea3246dc90c5e0717961e1",
+      "bytes": 3913,
+      "sha256": "29e18d6d49210bfe193f21e43aaac00ecea5bacc3175d7f3efe7d8be6d1b2c61"
+    },
+    {
+      "repository": "datrab/kubeclaw",
+      "revision": "13bff0a18a64e74f2cbbaa1978e746fcdeff0c10",
+      "file": "gitops/platform/values/loki.yaml",
+      "kind": "blob",
+      "gitObject": "341ae3e1e86d672a2f03f0d8210ac9b2f6535be9",
+      "bytes": 788,
+      "sha256": "7795a3ee39b969422b037d546a5ffbf0ab5152e8310772fb46b216d661332e76"
+    },
+    {
+      "repository": "datrab/kubeclaw",
+      "revision": "13bff0a18a64e74f2cbbaa1978e746fcdeff0c10",
+      "file": "gitops/platform/values/postgresql.yaml",
+      "kind": "blob",
+      "gitObject": "ee93fa9f332772c6fd727e575806ea47276b0b21",
+      "bytes": 673,
+      "sha256": "6e317137b18b6888c99d872a9cd58509aeb1ebf77b001d42eaab448f2bcddb7b"
+    },
+    {
+      "repository": "datrab/kubeclaw",
+      "revision": "13bff0a18a64e74f2cbbaa1978e746fcdeff0c10",
+      "file": "gitops/platform/values/prometheus.yaml",
+      "kind": "blob",
+      "gitObject": "3d2635bf6ddda1604eebeee33c0d2fdbb0b69a32",
+      "bytes": 1303,
+      "sha256": "4fd5cddf6469e535f6d44a4903eef8781218cbbc2f65595cddf58ce3a1270509"
+    },
+    {
+      "repository": "datrab/kubeclaw",
+      "revision": "13bff0a18a64e74f2cbbaa1978e746fcdeff0c10",
+      "file": "gitops/platform/values/redis.yaml",
+      "kind": "blob",
+      "gitObject": "dc4147fd9176785b5e1afdce8223ac39c918849b",
+      "bytes": 509,
+      "sha256": "e0523d1b0ca368d5567e9be9275c6a8ce54793315d346805b41b8979bb69d8ca"
+    },
+    {
+      "repository": "datrab/kubeclaw",
+      "revision": "13bff0a18a64e74f2cbbaa1978e746fcdeff0c10",
+      "file": "gitops/platform/values/tailscale-operator.yaml",
+      "kind": "blob",
+      "gitObject": "e23f6058d5378cae04ebbab58a5691511f404f05",
+      "bytes": 463,
+      "sha256": "6cc7ea4c8f9b0c29eb35d040dad23e9ecd4ac324bf8993e9bd43b2f8be5a160b"
+    },
+    {
+      "repository": "datrab/kubeclaw",
+      "revision": "13bff0a18a64e74f2cbbaa1978e746fcdeff0c10",
+      "file": "my-values/buster-values.yaml",
+      "kind": "blob",
+      "gitObject": "63eac0e5ee48d2849c614ff9265492b5750c8efc",
+      "bytes": 7808,
+      "sha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
+    },
+    {
+      "repository": "datrab/kubeclaw",
+      "revision": "13bff0a18a64e74f2cbbaa1978e746fcdeff0c10",
+      "file": "my-values/infra/cilium-values.yaml",
+      "kind": "blob",
+      "gitObject": "5b12d6c931d72fdbb493e180115c8d4abb88e2b2",
+      "bytes": 1807,
+      "sha256": "19461be990b66c6484150f9f3dbd96140cd063f63b37b351d464510e98cff5e6"
+    },
+    {
+      "repository": "datrab/kubeclaw",
+      "revision": "13bff0a18a64e74f2cbbaa1978e746fcdeff0c10",
+      "file": "my-values/infra/litellm-config.yaml",
+      "kind": "blob",
+      "gitObject": "d8a769f0b2e78bef713cbc89a500989597ab27da",
+      "bytes": 377,
+      "sha256": "70356ac84fef937d6cfad5ea54583a16342784d8299406e155524128542baa6d"
+    },
+    {
+      "repository": "datrab/kubeclaw",
+      "revision": "13bff0a18a64e74f2cbbaa1978e746fcdeff0c10",
+      "file": "my-values/infra/litellm-deployment.yaml",
+      "kind": "blob",
+      "gitObject": "f55d3b051e3b775f8fa85465e9742ffb7fe99290",
+      "bytes": 2700,
+      "sha256": "21136d7cc63b549db0d9e1f3a32d449c5bf3c2644790d144d47d476372c56bab"
+    },
+    {
+      "repository": "datrab/kubeclaw",
+      "revision": "13bff0a18a64e74f2cbbaa1978e746fcdeff0c10",
+      "file": "my-values/infra/network-policies.yaml",
+      "kind": "blob",
+      "gitObject": "2a77503dc310044f1337f6e3626c061d54981303",
+      "bytes": 9754,
+      "sha256": "a42018fe382e389077f4ed373c4ae54ebfd7e46a639b5360215cd80948823d79"
+    },
+    {
+      "repository": "datrab/kubeclaw",
+      "revision": "13bff0a18a64e74f2cbbaa1978e746fcdeff0c10",
+      "file": "my-values/infra/registry-local.yaml",
+      "kind": "blob",
+      "gitObject": "98e41ef49297da411f7261ad473c718f310234f2",
+      "bytes": 2508,
+      "sha256": "966ab5af3851d5a6f9305d8819574301ca78d6c20f6d19074d078bf3b8e28d53"
+    },
+    {
+      "repository": "datrab/kubeclaw",
+      "revision": "13bff0a18a64e74f2cbbaa1978e746fcdeff0c10",
+      "file": "my-values/infra/registry-mirror.yaml",
+      "kind": "blob",
+      "gitObject": "3f74e87e65f54f552d885bd0de778a15c9dfb99a",
+      "bytes": 2571,
+      "sha256": "383c470fb991a43aa9dfc1634d2399c53a1e77c19f37d5bb4b8bc0d26ef207f5"
+    },
+    {
+      "repository": "datrab/kubeclaw",
+      "revision": "13bff0a18a64e74f2cbbaa1978e746fcdeff0c10",
+      "file": "my-values/nova-values.yaml",
+      "kind": "blob",
+      "gitObject": "ad2ef8a55ea3ab6ed95ae655db983bd4300700b7",
+      "bytes": 10170,
+      "sha256": "7978c02748ae0c210e777e88b0db005871b16ba48d8d6ebc77bc2202d2d6ce4a"
+    },
+    {
+      "repository": "datrab/kubeclaw",
+      "revision": "13bff0a18a64e74f2cbbaa1978e746fcdeff0c10",
+      "file": "my-values/prism-agent-values.yaml",
+      "kind": "blob",
+      "gitObject": "3aac2b6881bc5728213ed74407938ab01a1ae1d4",
+      "bytes": 3981,
+      "sha256": "5ff81cee48e035c74e67694c57dea8a2ee66ce5ca5015c6b15cd6ae352c2936a"
+    },
+    {
+      "repository": "datrab/kubeclaw",
+      "revision": "13bff0a18a64e74f2cbbaa1978e746fcdeff0c10",
+      "file": "scripts/argocd-self-management.mjs",
+      "kind": "blob",
+      "gitObject": "5dbbd183202fb23c3b8360013fe7d538fd667e98",
+      "bytes": 11327,
+      "sha256": "79330ccdc6c86a6a3187e538f3a11fb2ab13e97d24e7b9681b1b2a52d2fe7b26"
+    },
+    {
+      "repository": "datrab/kubeclaw",
+      "revision": "13bff0a18a64e74f2cbbaa1978e746fcdeff0c10",
+      "file": "scripts/deploy-cilium.sh",
+      "kind": "blob",
+      "gitObject": "8ef52bfcd65d0c350f33ce21bab57f83a8dc0f29",
+      "bytes": 3428,
+      "sha256": "8b6a6bf4fa028f4f5f76adfe50783adae20024d92f06deb515a4e8c854b13b03"
+    },
+    {
+      "repository": "datrab/kubeclaw",
+      "revision": "13bff0a18a64e74f2cbbaa1978e746fcdeff0c10",
+      "file": "scripts/deploy.sh",
+      "kind": "blob",
+      "gitObject": "c95e392eee550cfafe7ec4068f670e45fe2dae81",
+      "bytes": 147452,
+      "sha256": "d5c0871f84d3524969dd8b9bb0f72631aa39a4884eda50437d9061cab515447f"
+    },
+    {
+      "repository": "datrab/kubeclaw",
+      "revision": "13bff0a18a64e74f2cbbaa1978e746fcdeff0c10",
+      "file": "scripts/platform-services.mjs",
+      "kind": "blob",
+      "gitObject": "2f7e6db511b1343c2102a3f564de072c24bc9216",
+      "bytes": 3953,
+      "sha256": "8318de0a9d541e7729ea7851989dc804455fddef32ec4f3a47fd18bdcc326ead"
+    },
+    {
+      "repository": "datrab/kubeclaw",
+      "revision": "13bff0a18a64e74f2cbbaa1978e746fcdeff0c10",
+      "file": "scripts/registry-client-config.mjs",
+      "kind": "blob",
+      "gitObject": "466b1275227a77a505210287c0672bb426de7922",
+      "bytes": 7526,
+      "sha256": "51d00a4883b7e0e9bb63b4e490b4dad1f512053956b116b4a2da9d9d7d1fe210"
+    },
+    {
+      "repository": "datrab/kubeclaw",
+      "revision": "13bff0a18a64e74f2cbbaa1978e746fcdeff0c10",
+      "file": "scripts/render-litellm-deployment.mjs",
+      "kind": "blob",
+      "gitObject": "30290c46cda2d8fa2a3c61df77cbb03abfd8a4f6",
+      "bytes": 1416,
+      "sha256": "036f4658360318ba7d503edb15fff1b7e1590dc5a42b34c20fbceab9c0181c9c"
+    },
+    {
+      "repository": "datrab/kubeclaw",
+      "revision": "13bff0a18a64e74f2cbbaa1978e746fcdeff0c10",
+      "file": "skills/common/plugins/operator-messaging/src/adapter.ts",
+      "kind": "blob",
+      "gitObject": "d23551fcba09563de21fbeadb10f8ac090da531e",
+      "bytes": 8102,
+      "sha256": "a6d719a5e69b401a0696af9a74dcf358015cdc57bfa062cca0514c54410b3785"
+    },
+    {
+      "repository": "datrab/kubeclaw",
+      "revision": "13bff0a18a64e74f2cbbaa1978e746fcdeff0c10",
+      "file": "skills/common/plugins/operator-messaging/src/config.ts",
+      "kind": "blob",
+      "gitObject": "1aeb5b8bb4f9f970fdbef6a71dafd4b85844be11",
+      "bytes": 5731,
+      "sha256": "0fc5440d5519c03c463073e95baeaf8206cfdf37cbd55bf0f70aaf45dd4a95c1"
+    },
+    {
+      "repository": "datrab/kubeclaw",
+      "revision": "13bff0a18a64e74f2cbbaa1978e746fcdeff0c10",
+      "file": "tests/verification/deployment/registry-client-config.test.mjs",
+      "kind": "blob",
+      "gitObject": "12ec03aaa431ed047039b65244a7d87ac71101b9",
+      "bytes": 9165,
+      "sha256": "899b1cc7f9032e26165569c8dace78190252780a11d120c85d8d0ace05e6b3cf"
+    },
+    {
+      "repository": "datrab/kubeclaw",
+      "revision": "7994a51e16bc752357c3a801190b12b7d6a191a4",
+      "file": "charts/kubeclaw/templates/configmap-gateway.yaml",
+      "kind": "blob",
+      "gitObject": "990eb833e793d22f04db659b6d53e34bad4a8077",
+      "bytes": 9655,
+      "sha256": "7282446c984679ad226222708c98d716c310686bfb39d8dd75a1ccd32af3feda"
+    },
+    {
+      "repository": "datrab/kubeclaw",
+      "revision": "7994a51e16bc752357c3a801190b12b7d6a191a4",
+      "file": "versions.json",
+      "kind": "blob",
+      "gitObject": "61a3f3fc113d72e5cf71d913972ad13d2c55a4ee",
+      "bytes": 7603,
+      "sha256": "04281d9b2addd93073bd548293ea9ba6e1d88c2a18fff0f34cbdbc14ca7fe2c1"
+    },
+    {
+      "repository": "datrab/kubeclaw",
+      "revision": "d7f822c3cddd97e637aeca47f1cd49e87164ff87",
+      "file": "gitops/platform/bootstrap/registry-local.yaml",
+      "kind": "blob",
+      "gitObject": "b690222eca0b129abea40a85083f1c896d7a6c61",
+      "bytes": 626,
+      "sha256": "8218528022125386b1c9c86f0bf07c2e2f8856d9689d47ad8eca3d252e766e7b"
+    },
+    {
+      "repository": "datrab/kubeclaw",
+      "revision": "d7f822c3cddd97e637aeca47f1cd49e87164ff87",
+      "file": "gitops/platform/registry-local/resources.yaml",
+      "kind": "blob",
+      "gitObject": "62a3eb11e4bbdd9da9ac5f589ab77de26c26e7e5",
+      "bytes": 1150,
+      "sha256": "f728da90b05f3185afce2d7de85484ff4bab8f29e7db88d797ce1dcbf78916a7"
+    },
+    {
+      "repository": "datrab/kubeclaw",
+      "revision": "f99aecbb00cb399b46dfbbeb3ddb375fba6218e7",
+      "file": "charts/kubeclaw/templates/configmap-gateway.yaml",
+      "kind": "blob",
+      "gitObject": "990eb833e793d22f04db659b6d53e34bad4a8077",
+      "bytes": 9655,
+      "sha256": "7282446c984679ad226222708c98d716c310686bfb39d8dd75a1ccd32af3feda"
+    },
+    {
+      "repository": "datrab/kubeclaw",
+      "revision": "f99aecbb00cb399b46dfbbeb3ddb375fba6218e7",
+      "file": "charts/kubeclaw/values.yaml",
+      "kind": "blob",
+      "gitObject": "ef8a9e2d6b719e79d0eee6fee67b79738c5573a3",
+      "bytes": 18869,
+      "sha256": "2bff3214d88e912445b1c435b6353cfb438cd5184124b3eb0cc9f7394dfc05aa"
+    },
+    {
+      "repository": "datrab/kubeclaw",
+      "revision": "f99aecbb00cb399b46dfbbeb3ddb375fba6218e7",
+      "file": "my-values/nova-values.yaml",
+      "kind": "blob",
+      "gitObject": "c239397551cc2264b4d4fd48e14da413996203cd",
+      "bytes": 10271,
+      "sha256": "1704ad41236dbc9ea8c210c8d3e360189f9623ca65d1ca70eac23901d770ff7e"
+    }
+  ]
+}

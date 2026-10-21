@@ -1,0 +1,29 @@
+{
+  "findings": [
+    {
+      "title": "[P2] Separate mirror readiness from unselected pull-cache routing",
+      "body": "The newly registered diagram presents Mirror \u2192 Buster/BuildKit as \u201ccurrent readiness and pull cache,\u201d although only readiness is selected. At pinned commit 13bff0a18a64e74f2cbbaa1978e746fcdeff0c10, charts/kubeclaw/values.yaml:47\u201359 leaves registry-client endpoints empty, while :345\u2013349 independently selects registry readiness probes. scripts/registry-client-config.mjs:57\u201374 adds Docker Hub routing only when an explicit mirror is supplied; my-values/infra/registry-mirror.yaml:4\u20137 explicitly warns that deploying the cache configures no client. The same page's dependency table correctly explains this distinction. Publishing the combined edge implies a selected BuildKit cache path that the source contradicts. Label the current edge readiness-only and represent pull caching as conditional on explicit client configuration, preserving that condition in the text alternative.",
+      "priority": "P2",
+      "confidence": 0.99,
+      "category": "bug",
+      "code_location": {
+        "file_path": "docs/config/documentation-diagrams.json",
+        "line": 109
+      }
+    },
+    {
+      "title": "[P2] Distinguish external storage provisioning from K3s services",
+      "body": "The registered graph's K3s \u2192 \u201cCSI and StorageClasses\u201d edge, reinforced by \u201cK3s supplies ... storage\u201d in its text alternative, conflates cluster services with separately supplied storage contracts. At pinned commit 13bff0a18a64e74f2cbbaa1978e746fcdeff0c10, scripts/platform-services.mjs:1\u20135 and :23\u201339 explicitly adopt an existing, independently synchronized SMB CSI chart from its own upstream repository. This is not evidence that K3s supplies that driver or a suitable StorageClass. The page itself requires an existing cluster and an operator-selected StorageClass. Represent CSI/StorageClass provisioning as an external prerequisite supporting workloads, with K3s hosting/consuming it, so readers do not infer that cluster installation satisfies retained-volume prerequisites.",
+      "priority": "P2",
+      "confidence": 0.95,
+      "category": "bug",
+      "code_location": {
+        "file_path": "docs/config/documentation-diagrams.json",
+        "line": 109
+      }
+    }
+  ],
+  "overall_correctness": "patch is incorrect",
+  "overall_explanation": "NOT_READY for diagram-4dc422d67c265fd9 only. The literal graph contains 20 arrows, not 23. Two source contradictions prevent semantic closeout: selected mirror routing and K3s ownership of external storage. Read-only git-show inspection of full pinned objects supports the bounded configuration relationships for Redis (charts/kubeclaw/values.yaml:226\u2013232), managed reasoning (:210\u2013213), LiteLLM \u2192 Vertex (my-values/infra/litellm-config.yaml:1\u20137), bounded Ops access (charts/ops-pod/templates/rbac.yaml:9\u201340,63\u201391), and monitoring observation (gitops/platform/values/alloy.yaml:30\u201345). These demonstrate declarations, not live availability or enforcement. Host \u2192 K3s remains an existing-platform prerequisite, not implemented host bootstrap. Flannel's dotted future alternative must remain explicitly unsupported; Argo and monitoring remain optional. Complete primary-contract proof for every remaining arrow, including K3s DNS/scheduler supply, was not established in this review; those edges are not awarded acceptance. No tests, generators, product execution, edits, nested reviews, broader diagram acceptance, or global gates were performed or awarded.",
+  "overall_confidence": 0.95
+}
