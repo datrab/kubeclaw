@@ -4,7 +4,7 @@
   "completionRecords": [
     {
       "id": "A911-03-REF-007-20261020",
-      "revision": "287a0f0e46bd373fce8f7a605599e3b9a66cd867",
+      "revision": "a531ba490cd23cf0d064fe01ebc68ce56da20d79",
       "author": "PR13 automation capability author",
       "reviewer": "/root/review_a91103",
       "gateIds": [
@@ -57,6 +57,11 @@
           "command": "Independent rendered-Source whole gate and narrow 21-record Source/Reader/Quality impact review; original 84-test custody/publication/adapter/reader/Source run",
           "exitCode": 0,
           "observation": "Changed Source boundaries preserve previous facts and limits. Complete actual built output and Source bytes verified; not broader historical semantic/runtime approval. docs/blueprint/acceptance-evidence/rendered-source-links-20261021/rendered-source-gate-review.json"
+        },
+        {
+          "command": "Independent whole PUB004 and narrow 21-record changed-boundary review with current original88tests/fullSource/preview/browser observations",
+          "exitCode": 0,
+          "observation": "180output hashes matched,all1660excerpts freshlyverified;unchanged priorsemantic/runtime boundaries. docs/blueprint/acceptance-evidence/source-preview-closeout-20261021/whole-content-and-prior-impact-review.json"
         }
       ],
       "review": {
@@ -112,12 +117,20 @@
             "scripts/docs-publication.mjs"
           ],
           "review": "docs/blueprint/acceptance-evidence/rendered-source-links-20261021/rendered-source-gate-review.json"
+        },
+        {
+          "revision": "287a0f0e46bd373fce8f7a605599e3b9a66cd867",
+          "reason": "Independent whole PUB004 and narrow changed-Source/Reader/Quality impact: inert same-revision previews, fresh excerpt receipts and current actual reader/Source/browser rerun. Previous facts and limits preserved, not broadly re-approved.",
+          "changedFiles": [
+            "scripts/docs-publication.mjs"
+          ],
+          "review": "docs/blueprint/acceptance-evidence/source-preview-closeout-20261021/whole-content-and-prior-impact-review.json"
         }
       ]
     },
     {
       "id": "AP09.1-ready-topics-20261020",
-      "revision": "287a0f0e46bd373fce8f7a605599e3b9a66cd867",
+      "revision": "a531ba490cd23cf0d064fe01ebc68ce56da20d79",
       "author": "Documentation implementation authors before review campaign",
       "reviewer": "/root/review_ready_foundations (01a157c4-a915-7bd0-9f54-0de78011b9b7)",
       "gateIds": [],
@@ -194,6 +207,11 @@
           "command": "Independent rendered-Source whole gate and narrow 21-record Source/Reader/Quality impact review; original 84-test custody/publication/adapter/reader/Source run",
           "exitCode": 0,
           "observation": "Changed Source boundaries preserve previous facts and limits. Complete actual built output and Source bytes verified; not broader historical semantic/runtime approval. docs/blueprint/acceptance-evidence/rendered-source-links-20261021/rendered-source-gate-review.json"
+        },
+        {
+          "command": "Independent whole PUB004 and narrow 21-record changed-boundary review with current original88tests/fullSource/preview/browser observations",
+          "exitCode": 0,
+          "observation": "180output hashes matched,all1660excerpts freshlyverified;unchanged priorsemantic/runtime boundaries. docs/blueprint/acceptance-evidence/source-preview-closeout-20261021/whole-content-and-prior-impact-review.json"
         }
       ],
       "review": {
@@ -362,6 +380,15 @@
             "scripts/docs-publication.mjs"
           ],
           "review": "docs/blueprint/acceptance-evidence/rendered-source-links-20261021/rendered-source-gate-review.json"
+        },
+        {
+          "revision": "287a0f0e46bd373fce8f7a605599e3b9a66cd867",
+          "reason": "Independent whole PUB004 and narrow changed-Source/Reader/Quality impact: inert same-revision previews, fresh excerpt receipts and current actual reader/Source/browser rerun. Previous facts and limits preserved, not broadly re-approved.",
+          "changedFiles": [
+            "docs/site/reference/generated-documentation-map.json",
+            "scripts/docs-publication.mjs"
+          ],
+          "review": "docs/blueprint/acceptance-evidence/source-preview-closeout-20261021/whole-content-and-prior-impact-review.json"
         }
       ]
     },
@@ -1285,7 +1312,7 @@
     },
     {
       "id": "Reviewed-corrections-20261020",
-      "revision": "287a0f0e46bd373fce8f7a605599e3b9a66cd867",
+      "revision": "a531ba490cd23cf0d064fe01ebc68ce56da20d79",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/review_worker_ready",
       "gateIds": [],
@@ -1374,6 +1401,11 @@
           "command": "Independent rendered-Source whole gate and narrow 21-record Source/Reader/Quality impact review; original 84-test custody/publication/adapter/reader/Source run",
           "exitCode": 0,
           "observation": "Changed Source boundaries preserve previous facts and limits. Complete actual built output and Source bytes verified; not broader historical semantic/runtime approval. docs/blueprint/acceptance-evidence/rendered-source-links-20261021/rendered-source-gate-review.json"
+        },
+        {
+          "command": "Independent whole PUB004 and narrow 21-record changed-boundary review with current original88tests/fullSource/preview/browser observations",
+          "exitCode": 0,
+          "observation": "180output hashes matched,all1660excerpts freshlyverified;unchanged priorsemantic/runtime boundaries. docs/blueprint/acceptance-evidence/source-preview-closeout-20261021/whole-content-and-prior-impact-review.json"
         }
       ],
       "review": {
@@ -1548,12 +1580,20 @@
             "docs/site/reference/generated-documentation-map.json"
           ],
           "review": "docs/blueprint/acceptance-evidence/rendered-source-links-20261021/rendered-source-gate-review.json"
+        },
+        {
+          "revision": "287a0f0e46bd373fce8f7a605599e3b9a66cd867",
+          "reason": "Independent whole PUB004 and narrow changed-Source/Reader/Quality impact: inert same-revision previews, fresh excerpt receipts and current actual reader/Source/browser rerun. Previous facts and limits preserved, not broadly re-approved.",
+          "changedFiles": [
+            "docs/site/reference/generated-documentation-map.json"
+          ],
+          "review": "docs/blueprint/acceptance-evidence/source-preview-closeout-20261021/whole-content-and-prior-impact-review.json"
         }
       ]
     },
     {
       "id": "AP09-reader-operators-20261020",
-      "revision": "287a0f0e46bd373fce8f7a605599e3b9a66cd867",
+      "revision": "a531ba490cd23cf0d064fe01ebc68ce56da20d79",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/review_worker_ready",
       "gateIds": [
@@ -1662,6 +1702,11 @@
           "command": "Independent rendered-Source whole gate and narrow 21-record Source/Reader/Quality impact review; original 84-test custody/publication/adapter/reader/Source run",
           "exitCode": 0,
           "observation": "Changed Source boundaries preserve previous facts and limits. Complete actual built output and Source bytes verified; not broader historical semantic/runtime approval. docs/blueprint/acceptance-evidence/rendered-source-links-20261021/rendered-source-gate-review.json"
+        },
+        {
+          "command": "Independent whole PUB004 and narrow 21-record changed-boundary review with current original88tests/fullSource/preview/browser observations",
+          "exitCode": 0,
+          "observation": "180output hashes matched,all1660excerpts freshlyverified;unchanged priorsemantic/runtime boundaries. docs/blueprint/acceptance-evidence/source-preview-closeout-20261021/whole-content-and-prior-impact-review.json"
         }
       ],
       "review": {
@@ -1750,6 +1795,14 @@
             "scripts/docs-publication.mjs"
           ],
           "review": "docs/blueprint/acceptance-evidence/rendered-source-links-20261021/rendered-source-gate-review.json"
+        },
+        {
+          "revision": "287a0f0e46bd373fce8f7a605599e3b9a66cd867",
+          "reason": "Independent whole PUB004 and narrow changed-Source/Reader/Quality impact: inert same-revision previews, fresh excerpt receipts and current actual reader/Source/browser rerun. Previous facts and limits preserved, not broadly re-approved.",
+          "changedFiles": [
+            "scripts/docs-publication.mjs"
+          ],
+          "review": "docs/blueprint/acceptance-evidence/source-preview-closeout-20261021/whole-content-and-prior-impact-review.json"
         }
       ]
     },
@@ -1855,7 +1908,7 @@
     },
     {
       "id": "AP09-reader-developers-20261020",
-      "revision": "287a0f0e46bd373fce8f7a605599e3b9a66cd867",
+      "revision": "a531ba490cd23cf0d064fe01ebc68ce56da20d79",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/review_platform_ready",
       "gateIds": [
@@ -2006,6 +2059,11 @@
           "command": "Independent rendered-Source whole gate and narrow 21-record Source/Reader/Quality impact review; original 84-test custody/publication/adapter/reader/Source run",
           "exitCode": 0,
           "observation": "Changed Source boundaries preserve previous facts and limits. Complete actual built output and Source bytes verified; not broader historical semantic/runtime approval. docs/blueprint/acceptance-evidence/rendered-source-links-20261021/rendered-source-gate-review.json"
+        },
+        {
+          "command": "Independent whole PUB004 and narrow 21-record changed-boundary review with current original88tests/fullSource/preview/browser observations",
+          "exitCode": 0,
+          "observation": "180output hashes matched,all1660excerpts freshlyverified;unchanged priorsemantic/runtime boundaries. docs/blueprint/acceptance-evidence/source-preview-closeout-20261021/whole-content-and-prior-impact-review.json"
         }
       ],
       "review": {
@@ -2153,12 +2211,21 @@
             "scripts/docs-publication.mjs"
           ],
           "review": "docs/blueprint/acceptance-evidence/rendered-source-links-20261021/rendered-source-gate-review.json"
+        },
+        {
+          "revision": "287a0f0e46bd373fce8f7a605599e3b9a66cd867",
+          "reason": "Independent whole PUB004 and narrow changed-Source/Reader/Quality impact: inert same-revision previews, fresh excerpt receipts and current actual reader/Source/browser rerun. Previous facts and limits preserved, not broadly re-approved.",
+          "changedFiles": [
+            ".github/workflows/docs-checks.yaml",
+            "scripts/docs-publication.mjs"
+          ],
+          "review": "docs/blueprint/acceptance-evidence/source-preview-closeout-20261021/whole-content-and-prior-impact-review.json"
         }
       ]
     },
     {
       "id": "AP09-reviewed-configuration-20261020",
-      "revision": "287a0f0e46bd373fce8f7a605599e3b9a66cd867",
+      "revision": "a531ba490cd23cf0d064fe01ebc68ce56da20d79",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/review_worker_ready",
       "gateIds": [],
@@ -2229,6 +2296,11 @@
           "command": "Independent rendered-Source whole gate and narrow 21-record Source/Reader/Quality impact review; original 84-test custody/publication/adapter/reader/Source run",
           "exitCode": 0,
           "observation": "Changed Source boundaries preserve previous facts and limits. Complete actual built output and Source bytes verified; not broader historical semantic/runtime approval. docs/blueprint/acceptance-evidence/rendered-source-links-20261021/rendered-source-gate-review.json"
+        },
+        {
+          "command": "Independent whole PUB004 and narrow 21-record changed-boundary review with current original88tests/fullSource/preview/browser observations",
+          "exitCode": 0,
+          "observation": "180output hashes matched,all1660excerpts freshlyverified;unchanged priorsemantic/runtime boundaries. docs/blueprint/acceptance-evidence/source-preview-closeout-20261021/whole-content-and-prior-impact-review.json"
         }
       ],
       "review": {
@@ -2307,12 +2379,20 @@
             "scripts/docs-publication.mjs"
           ],
           "review": "docs/blueprint/acceptance-evidence/rendered-source-links-20261021/rendered-source-gate-review.json"
+        },
+        {
+          "revision": "287a0f0e46bd373fce8f7a605599e3b9a66cd867",
+          "reason": "Independent whole PUB004 and narrow changed-Source/Reader/Quality impact: inert same-revision previews, fresh excerpt receipts and current actual reader/Source/browser rerun. Previous facts and limits preserved, not broadly re-approved.",
+          "changedFiles": [
+            "scripts/docs-publication.mjs"
+          ],
+          "review": "docs/blueprint/acceptance-evidence/source-preview-closeout-20261021/whole-content-and-prior-impact-review.json"
         }
       ]
     },
     {
       "id": "AP09-reviewed-reference-20261020",
-      "revision": "287a0f0e46bd373fce8f7a605599e3b9a66cd867",
+      "revision": "a531ba490cd23cf0d064fe01ebc68ce56da20d79",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/review_platform_ready",
       "gateIds": [],
@@ -2400,6 +2480,11 @@
           "command": "Independent rendered-Source whole gate and narrow 21-record Source/Reader/Quality impact review; original 84-test custody/publication/adapter/reader/Source run",
           "exitCode": 0,
           "observation": "Changed Source boundaries preserve previous facts and limits. Complete actual built output and Source bytes verified; not broader historical semantic/runtime approval. docs/blueprint/acceptance-evidence/rendered-source-links-20261021/rendered-source-gate-review.json"
+        },
+        {
+          "command": "Independent whole PUB004 and narrow 21-record changed-boundary review with current original88tests/fullSource/preview/browser observations",
+          "exitCode": 0,
+          "observation": "180output hashes matched,all1660excerpts freshlyverified;unchanged priorsemantic/runtime boundaries. docs/blueprint/acceptance-evidence/source-preview-closeout-20261021/whole-content-and-prior-impact-review.json"
         }
       ],
       "review": {
@@ -2489,12 +2574,20 @@
             "scripts/docs-publication.mjs"
           ],
           "review": "docs/blueprint/acceptance-evidence/rendered-source-links-20261021/rendered-source-gate-review.json"
+        },
+        {
+          "revision": "287a0f0e46bd373fce8f7a605599e3b9a66cd867",
+          "reason": "Independent whole PUB004 and narrow changed-Source/Reader/Quality impact: inert same-revision previews, fresh excerpt receipts and current actual reader/Source/browser rerun. Previous facts and limits preserved, not broadly re-approved.",
+          "changedFiles": [
+            "scripts/docs-publication.mjs"
+          ],
+          "review": "docs/blueprint/acceptance-evidence/source-preview-closeout-20261021/whole-content-and-prior-impact-review.json"
         }
       ]
     },
     {
       "id": "AP09-reviewed-maintenance-20261020",
-      "revision": "287a0f0e46bd373fce8f7a605599e3b9a66cd867",
+      "revision": "a531ba490cd23cf0d064fe01ebc68ce56da20d79",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/review_data_ready",
       "gateIds": [],
@@ -2556,6 +2649,11 @@
           "command": "Independent rendered-Source whole gate and narrow 21-record Source/Reader/Quality impact review; original 84-test custody/publication/adapter/reader/Source run",
           "exitCode": 0,
           "observation": "Changed Source boundaries preserve previous facts and limits. Complete actual built output and Source bytes verified; not broader historical semantic/runtime approval. docs/blueprint/acceptance-evidence/rendered-source-links-20261021/rendered-source-gate-review.json"
+        },
+        {
+          "command": "Independent whole PUB004 and narrow 21-record changed-boundary review with current original88tests/fullSource/preview/browser observations",
+          "exitCode": 0,
+          "observation": "180output hashes matched,all1660excerpts freshlyverified;unchanged priorsemantic/runtime boundaries. docs/blueprint/acceptance-evidence/source-preview-closeout-20261021/whole-content-and-prior-impact-review.json"
         }
       ],
       "review": {
@@ -2677,12 +2775,20 @@
             "scripts/docs-publication.mjs"
           ],
           "review": "docs/blueprint/acceptance-evidence/rendered-source-links-20261021/rendered-source-gate-review.json"
+        },
+        {
+          "revision": "287a0f0e46bd373fce8f7a605599e3b9a66cd867",
+          "reason": "Independent whole PUB004 and narrow changed-Source/Reader/Quality impact: inert same-revision previews, fresh excerpt receipts and current actual reader/Source/browser rerun. Previous facts and limits preserved, not broadly re-approved.",
+          "changedFiles": [
+            "scripts/docs-publication.mjs"
+          ],
+          "review": "docs/blueprint/acceptance-evidence/source-preview-closeout-20261021/whole-content-and-prior-impact-review.json"
         }
       ]
     },
     {
       "id": "AP09-reviewed-publication-navigation-20261020",
-      "revision": "287a0f0e46bd373fce8f7a605599e3b9a66cd867",
+      "revision": "a531ba490cd23cf0d064fe01ebc68ce56da20d79",
       "author": "Documentation implementation authors",
       "reviewer": "/root/review_publication",
       "gateIds": [
@@ -2737,6 +2843,11 @@
           "command": "Independent rendered-Source whole gate and narrow 21-record Source/Reader/Quality impact review; original 84-test custody/publication/adapter/reader/Source run",
           "exitCode": 0,
           "observation": "Changed Source boundaries preserve previous facts and limits. Complete actual built output and Source bytes verified; not broader historical semantic/runtime approval. docs/blueprint/acceptance-evidence/rendered-source-links-20261021/rendered-source-gate-review.json"
+        },
+        {
+          "command": "Independent whole PUB004 and narrow 21-record changed-boundary review with current original88tests/fullSource/preview/browser observations",
+          "exitCode": 0,
+          "observation": "180output hashes matched,all1660excerpts freshlyverified;unchanged priorsemantic/runtime boundaries. docs/blueprint/acceptance-evidence/source-preview-closeout-20261021/whole-content-and-prior-impact-review.json"
         }
       ],
       "review": {
@@ -2888,6 +2999,15 @@
             "scripts/docs-publication.mjs"
           ],
           "review": "docs/blueprint/acceptance-evidence/rendered-source-links-20261021/rendered-source-gate-review.json"
+        },
+        {
+          "revision": "287a0f0e46bd373fce8f7a605599e3b9a66cd867",
+          "reason": "Independent whole PUB004 and narrow changed-Source/Reader/Quality impact: inert same-revision previews, fresh excerpt receipts and current actual reader/Source/browser rerun. Previous facts and limits preserved, not broadly re-approved.",
+          "changedFiles": [
+            "docs/site/reference/documentation-site.md",
+            "scripts/docs-publication.mjs"
+          ],
+          "review": "docs/blueprint/acceptance-evidence/source-preview-closeout-20261021/whole-content-and-prior-impact-review.json"
         }
       ]
     },
@@ -3051,7 +3171,7 @@
     },
     {
       "id": "AP09-closeout-config-reference-20261020",
-      "revision": "287a0f0e46bd373fce8f7a605599e3b9a66cd867",
+      "revision": "a531ba490cd23cf0d064fe01ebc68ce56da20d79",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/close_config_reference",
       "gateIds": [],
@@ -3131,6 +3251,11 @@
           "command": "Independent rendered-Source whole gate and narrow 21-record Source/Reader/Quality impact review; original 84-test custody/publication/adapter/reader/Source run",
           "exitCode": 0,
           "observation": "Changed Source boundaries preserve previous facts and limits. Complete actual built output and Source bytes verified; not broader historical semantic/runtime approval. docs/blueprint/acceptance-evidence/rendered-source-links-20261021/rendered-source-gate-review.json"
+        },
+        {
+          "command": "Independent whole PUB004 and narrow 21-record changed-boundary review with current original88tests/fullSource/preview/browser observations",
+          "exitCode": 0,
+          "observation": "180output hashes matched,all1660excerpts freshlyverified;unchanged priorsemantic/runtime boundaries. docs/blueprint/acceptance-evidence/source-preview-closeout-20261021/whole-content-and-prior-impact-review.json"
         }
       ],
       "review": {
@@ -3207,12 +3332,20 @@
             "scripts/docs-publication.mjs"
           ],
           "review": "docs/blueprint/acceptance-evidence/rendered-source-links-20261021/rendered-source-gate-review.json"
+        },
+        {
+          "revision": "287a0f0e46bd373fce8f7a605599e3b9a66cd867",
+          "reason": "Independent whole PUB004 and narrow changed-Source/Reader/Quality impact: inert same-revision previews, fresh excerpt receipts and current actual reader/Source/browser rerun. Previous facts and limits preserved, not broadly re-approved.",
+          "changedFiles": [
+            "scripts/docs-publication.mjs"
+          ],
+          "review": "docs/blueprint/acceptance-evidence/source-preview-closeout-20261021/whole-content-and-prior-impact-review.json"
         }
       ]
     },
     {
       "id": "AP09-closeout-developer-maintenance-20261020",
-      "revision": "287a0f0e46bd373fce8f7a605599e3b9a66cd867",
+      "revision": "a531ba490cd23cf0d064fe01ebc68ce56da20d79",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/close_developer_maintenance",
       "gateIds": [],
@@ -3300,6 +3433,11 @@
           "command": "Independent rendered-Source whole gate and narrow 21-record Source/Reader/Quality impact review; original 84-test custody/publication/adapter/reader/Source run",
           "exitCode": 0,
           "observation": "Changed Source boundaries preserve previous facts and limits. Complete actual built output and Source bytes verified; not broader historical semantic/runtime approval. docs/blueprint/acceptance-evidence/rendered-source-links-20261021/rendered-source-gate-review.json"
+        },
+        {
+          "command": "Independent whole PUB004 and narrow 21-record changed-boundary review with current original88tests/fullSource/preview/browser observations",
+          "exitCode": 0,
+          "observation": "180output hashes matched,all1660excerpts freshlyverified;unchanged priorsemantic/runtime boundaries. docs/blueprint/acceptance-evidence/source-preview-closeout-20261021/whole-content-and-prior-impact-review.json"
         }
       ],
       "review": {
@@ -3443,6 +3581,14 @@
             "scripts/docs-publication.mjs"
           ],
           "review": "docs/blueprint/acceptance-evidence/rendered-source-links-20261021/rendered-source-gate-review.json"
+        },
+        {
+          "revision": "287a0f0e46bd373fce8f7a605599e3b9a66cd867",
+          "reason": "Independent whole PUB004 and narrow changed-Source/Reader/Quality impact: inert same-revision previews, fresh excerpt receipts and current actual reader/Source/browser rerun. Previous facts and limits preserved, not broadly re-approved.",
+          "changedFiles": [
+            "scripts/docs-publication.mjs"
+          ],
+          "review": "docs/blueprint/acceptance-evidence/source-preview-closeout-20261021/whole-content-and-prior-impact-review.json"
         }
       ]
     },
@@ -4938,7 +5084,7 @@
     },
     {
       "id": "AP09-decision-record-content-20261021",
-      "revision": "287a0f0e46bd373fce8f7a605599e3b9a66cd867",
+      "revision": "a531ba490cd23cf0d064fe01ebc68ce56da20d79",
       "author": "Nova /root authored content and correction coordinator",
       "reviewer": "Independent Codex autoreview 2026-10-21 platform-ready-review",
       "gateIds": [],
@@ -5002,6 +5148,11 @@
           "command": "Independent rendered-Source whole gate and narrow 21-record Source/Reader/Quality impact review; original 84-test custody/publication/adapter/reader/Source run",
           "exitCode": 0,
           "observation": "Changed Source boundaries preserve previous facts and limits. Complete actual built output and Source bytes verified; not broader historical semantic/runtime approval. docs/blueprint/acceptance-evidence/rendered-source-links-20261021/rendered-source-gate-review.json"
+        },
+        {
+          "command": "Independent whole PUB004 and narrow 21-record changed-boundary review with current original88tests/fullSource/preview/browser observations",
+          "exitCode": 0,
+          "observation": "180output hashes matched,all1660excerpts freshlyverified;unchanged priorsemantic/runtime boundaries. docs/blueprint/acceptance-evidence/source-preview-closeout-20261021/whole-content-and-prior-impact-review.json"
         }
       ],
       "review": {
@@ -5035,12 +5186,20 @@
             "scripts/docs-publication.mjs"
           ],
           "review": "docs/blueprint/acceptance-evidence/rendered-source-links-20261021/rendered-source-gate-review.json"
+        },
+        {
+          "revision": "287a0f0e46bd373fce8f7a605599e3b9a66cd867",
+          "reason": "Independent whole PUB004 and narrow changed-Source/Reader/Quality impact: inert same-revision previews, fresh excerpt receipts and current actual reader/Source/browser rerun. Previous facts and limits preserved, not broadly re-approved.",
+          "changedFiles": [
+            "scripts/docs-publication.mjs"
+          ],
+          "review": "docs/blueprint/acceptance-evidence/source-preview-closeout-20261021/whole-content-and-prior-impact-review.json"
         }
       ]
     },
     {
       "id": "AP09-documentation-agent-maintenance-20261021",
-      "revision": "287a0f0e46bd373fce8f7a605599e3b9a66cd867",
+      "revision": "a531ba490cd23cf0d064fe01ebc68ce56da20d79",
       "author": "Nova /root authored content and correction coordinator",
       "reviewer": "Independent Codex autoreview 2026-10-21 maintenance-ready-review",
       "gateIds": [],
@@ -5106,12 +5265,14 @@
         "scripts/docs-reader/check-artifact.mjs",
         "scripts/docs-reader/check-search.mjs",
         "scripts/docs-reader/check-source-links.mjs",
+        "scripts/docs-reader/check-source-previews.mjs",
         "scripts/docs-reader/metadata.mjs",
         "scripts/docs-reader/package-lock.json",
         "scripts/docs-reader/package.json",
         "scripts/docs-reader/renderer.mjs",
         "scripts/docs-reader/search-questions.json",
         "scripts/docs-reader/source-links.mjs",
+        "scripts/docs-reader/source-previews.mjs",
         "scripts/docs-status.mjs",
         "scripts/docs-tree-boundary.mjs",
         "scripts/external-helm-archives.json",
@@ -5132,6 +5293,7 @@
         "scripts/tests/argocd-checked-artifacts.test.mjs",
         "scripts/tests/docs-publication-assets.test.mjs",
         "scripts/tests/docs-reader-source-links.test.mjs",
+        "scripts/tests/docs-reader-source-previews.test.mjs",
         "scripts/tests/docs-reader.test.mjs",
         "scripts/tests/docs-source-freshness.test.mjs",
         "scripts/tests/vendor-external-helm-authorities.test.mjs",
@@ -5227,6 +5389,11 @@
           "command": "Independent rendered-Source whole gate and narrow 21-record Source/Reader/Quality impact review; original 84-test custody/publication/adapter/reader/Source run",
           "exitCode": 0,
           "observation": "Changed Source boundaries preserve previous facts and limits. Complete actual built output and Source bytes verified; not broader historical semantic/runtime approval. docs/blueprint/acceptance-evidence/rendered-source-links-20261021/rendered-source-gate-review.json"
+        },
+        {
+          "command": "Independent whole PUB004 and narrow 21-record changed-boundary review with current original88tests/fullSource/preview/browser observations",
+          "exitCode": 0,
+          "observation": "180output hashes matched,all1660excerpts freshlyverified;unchanged priorsemantic/runtime boundaries. docs/blueprint/acceptance-evidence/source-preview-closeout-20261021/whole-content-and-prior-impact-review.json"
         }
       ],
       "review": {
@@ -5348,6 +5515,18 @@
             "scripts/tests/docs-reader.test.mjs"
           ],
           "review": "docs/blueprint/acceptance-evidence/rendered-source-links-20261021/rendered-source-gate-review.json"
+        },
+        {
+          "revision": "287a0f0e46bd373fce8f7a605599e3b9a66cd867",
+          "reason": "Independent whole PUB004 and narrow changed-Source/Reader/Quality impact: inert same-revision previews, fresh excerpt receipts and current actual reader/Source/browser rerun. Previous facts and limits preserved, not broadly re-approved.",
+          "changedFiles": [
+            ".github/workflows/docs-checks.yaml",
+            "docs/site/reference/documentation-site.md",
+            "scripts/docs-publication.mjs",
+            "scripts/docs-reader/renderer.mjs",
+            "scripts/docs-reader/source-links.mjs"
+          ],
+          "review": "docs/blueprint/acceptance-evidence/source-preview-closeout-20261021/whole-content-and-prior-impact-review.json"
         }
       ]
     },
@@ -5469,7 +5648,7 @@
     },
     {
       "id": "AP09-complete-platform-change-content-20261021",
-      "revision": "287a0f0e46bd373fce8f7a605599e3b9a66cd867",
+      "revision": "a531ba490cd23cf0d064fe01ebc68ce56da20d79",
       "author": "Nova /root authored content and correction coordinator",
       "reviewer": "Independent Codex autoreview 2026-10-21 platform-final-review",
       "gateIds": [],
@@ -5637,6 +5816,11 @@
           "command": "Independent rendered-Source whole gate and narrow 21-record Source/Reader/Quality impact review; original 84-test custody/publication/adapter/reader/Source run",
           "exitCode": 0,
           "observation": "Changed Source boundaries preserve previous facts and limits. Complete actual built output and Source bytes verified; not broader historical semantic/runtime approval. docs/blueprint/acceptance-evidence/rendered-source-links-20261021/rendered-source-gate-review.json"
+        },
+        {
+          "command": "Independent whole PUB004 and narrow 21-record changed-boundary review with current original88tests/fullSource/preview/browser observations",
+          "exitCode": 0,
+          "observation": "180output hashes matched,all1660excerpts freshlyverified;unchanged priorsemantic/runtime boundaries. docs/blueprint/acceptance-evidence/source-preview-closeout-20261021/whole-content-and-prior-impact-review.json"
         }
       ],
       "review": {
@@ -5716,6 +5900,15 @@
             "scripts/docs-publication.mjs"
           ],
           "review": "docs/blueprint/acceptance-evidence/rendered-source-links-20261021/rendered-source-gate-review.json"
+        },
+        {
+          "revision": "287a0f0e46bd373fce8f7a605599e3b9a66cd867",
+          "reason": "Independent whole PUB004 and narrow changed-Source/Reader/Quality impact: inert same-revision previews, fresh excerpt receipts and current actual reader/Source/browser rerun. Previous facts and limits preserved, not broadly re-approved.",
+          "changedFiles": [
+            ".github/workflows/docs-checks.yaml",
+            "scripts/docs-publication.mjs"
+          ],
+          "review": "docs/blueprint/acceptance-evidence/source-preview-closeout-20261021/whole-content-and-prior-impact-review.json"
         }
       ]
     },
@@ -6038,7 +6231,7 @@
     },
     {
       "id": "AP09-complete-plugin-maintenance-mechanisms-20261021",
-      "revision": "287a0f0e46bd373fce8f7a605599e3b9a66cd867",
+      "revision": "a531ba490cd23cf0d064fe01ebc68ce56da20d79",
       "author": "Nova /root documentation coordinator",
       "reviewer": "Independent Codex autoreview 2026-10-21 plugin-mechanisms whole original MNT obligations",
       "gateIds": [],
@@ -6590,6 +6783,11 @@
           "command": "Independent rendered-Source whole gate and narrow 21-record Source/Reader/Quality impact review; original 84-test custody/publication/adapter/reader/Source run",
           "exitCode": 0,
           "observation": "Changed Source boundaries preserve previous facts and limits. Complete actual built output and Source bytes verified; not broader historical semantic/runtime approval. docs/blueprint/acceptance-evidence/rendered-source-links-20261021/rendered-source-gate-review.json"
+        },
+        {
+          "command": "Independent whole PUB004 and narrow 21-record changed-boundary review with current original88tests/fullSource/preview/browser observations",
+          "exitCode": 0,
+          "observation": "180output hashes matched,all1660excerpts freshlyverified;unchanged priorsemantic/runtime boundaries. docs/blueprint/acceptance-evidence/source-preview-closeout-20261021/whole-content-and-prior-impact-review.json"
         }
       ],
       "review": {
@@ -6648,6 +6846,14 @@
             "scripts/docs-publication.mjs"
           ],
           "review": "docs/blueprint/acceptance-evidence/rendered-source-links-20261021/rendered-source-gate-review.json"
+        },
+        {
+          "revision": "287a0f0e46bd373fce8f7a605599e3b9a66cd867",
+          "reason": "Independent whole PUB004 and narrow changed-Source/Reader/Quality impact: inert same-revision previews, fresh excerpt receipts and current actual reader/Source/browser rerun. Previous facts and limits preserved, not broadly re-approved.",
+          "changedFiles": [
+            "scripts/docs-publication.mjs"
+          ],
+          "review": "docs/blueprint/acceptance-evidence/source-preview-closeout-20261021/whole-content-and-prior-impact-review.json"
         }
       ]
     },
@@ -6791,7 +6997,7 @@
     },
     {
       "id": "AP09-complete-publication-reference-navigation-20261021",
-      "revision": "287a0f0e46bd373fce8f7a605599e3b9a66cd867",
+      "revision": "a531ba490cd23cf0d064fe01ebc68ce56da20d79",
       "author": "Nova /root documentation author and correction coordinator",
       "reviewer": "Independent Codex autoreview whole finished-reader-topics and LiteLLM audits with correction-final follow-up",
       "gateIds": [],
@@ -6914,6 +7120,11 @@
           "command": "Independent rendered-Source whole gate and narrow 21-record Source/Reader/Quality impact review; original 84-test custody/publication/adapter/reader/Source run",
           "exitCode": 0,
           "observation": "Changed Source boundaries preserve previous facts and limits. Complete actual built output and Source bytes verified; not broader historical semantic/runtime approval. docs/blueprint/acceptance-evidence/rendered-source-links-20261021/rendered-source-gate-review.json"
+        },
+        {
+          "command": "Independent whole PUB004 and narrow 21-record changed-boundary review with current original88tests/fullSource/preview/browser observations",
+          "exitCode": 0,
+          "observation": "180output hashes matched,all1660excerpts freshlyverified;unchanged priorsemantic/runtime boundaries. docs/blueprint/acceptance-evidence/source-preview-closeout-20261021/whole-content-and-prior-impact-review.json"
         }
       ],
       "review": {
@@ -6964,12 +7175,22 @@
             "scripts/docs-publication.mjs"
           ],
           "review": "docs/blueprint/acceptance-evidence/rendered-source-links-20261021/rendered-source-gate-review.json"
+        },
+        {
+          "revision": "287a0f0e46bd373fce8f7a605599e3b9a66cd867",
+          "reason": "Independent whole PUB004 and narrow changed-Source/Reader/Quality impact: inert same-revision previews, fresh excerpt receipts and current actual reader/Source/browser rerun. Previous facts and limits preserved, not broadly re-approved.",
+          "changedFiles": [
+            ".github/workflows/docs-checks.yaml",
+            "docs/site/reference/documentation-site.md",
+            "scripts/docs-publication.mjs"
+          ],
+          "review": "docs/blueprint/acceptance-evidence/source-preview-closeout-20261021/whole-content-and-prior-impact-review.json"
         }
       ]
     },
     {
       "id": "AP09-complete-developer-reader-contracts-20261021",
-      "revision": "287a0f0e46bd373fce8f7a605599e3b9a66cd867",
+      "revision": "a531ba490cd23cf0d064fe01ebc68ce56da20d79",
       "author": "Nova /root documentation author and correction coordinator",
       "reviewer": "Independent Codex autoreview whole finished-reader-topics and LiteLLM audits with correction-final follow-up",
       "gateIds": [],
@@ -7203,6 +7424,11 @@
           "command": "Independent rendered-Source whole gate and narrow 21-record Source/Reader/Quality impact review; original 84-test custody/publication/adapter/reader/Source run",
           "exitCode": 0,
           "observation": "Changed Source boundaries preserve previous facts and limits. Complete actual built output and Source bytes verified; not broader historical semantic/runtime approval. docs/blueprint/acceptance-evidence/rendered-source-links-20261021/rendered-source-gate-review.json"
+        },
+        {
+          "command": "Independent whole PUB004 and narrow 21-record changed-boundary review with current original88tests/fullSource/preview/browser observations",
+          "exitCode": 0,
+          "observation": "180output hashes matched,all1660excerpts freshlyverified;unchanged priorsemantic/runtime boundaries. docs/blueprint/acceptance-evidence/source-preview-closeout-20261021/whole-content-and-prior-impact-review.json"
         }
       ],
       "review": {
@@ -7250,12 +7476,21 @@
             "scripts/docs-publication.mjs"
           ],
           "review": "docs/blueprint/acceptance-evidence/rendered-source-links-20261021/rendered-source-gate-review.json"
+        },
+        {
+          "revision": "287a0f0e46bd373fce8f7a605599e3b9a66cd867",
+          "reason": "Independent whole PUB004 and narrow changed-Source/Reader/Quality impact: inert same-revision previews, fresh excerpt receipts and current actual reader/Source/browser rerun. Previous facts and limits preserved, not broadly re-approved.",
+          "changedFiles": [
+            ".github/workflows/docs-checks.yaml",
+            "scripts/docs-publication.mjs"
+          ],
+          "review": "docs/blueprint/acceptance-evidence/source-preview-closeout-20261021/whole-content-and-prior-impact-review.json"
         }
       ]
     },
     {
       "id": "AP09-complete-static-reader-search-20261021",
-      "revision": "287a0f0e46bd373fce8f7a605599e3b9a66cd867",
+      "revision": "a531ba490cd23cf0d064fe01ebc68ce56da20d79",
       "author": "Nova /root documentation author and implementation coordinator",
       "reviewer": "Independent Codex autoreview static-reader whole PUB-002 Source/reader-quality closeout",
       "verdict": "PASS",
@@ -7442,18 +7677,21 @@
         "scripts/docs-reader/check-artifact.mjs",
         "scripts/docs-reader/check-search.mjs",
         "scripts/docs-reader/check-source-links.mjs",
+        "scripts/docs-reader/check-source-previews.mjs",
         "scripts/docs-reader/metadata.mjs",
         "scripts/docs-reader/package-lock.json",
         "scripts/docs-reader/package.json",
         "scripts/docs-reader/renderer.mjs",
         "scripts/docs-reader/search-questions.json",
         "scripts/docs-reader/source-links.mjs",
+        "scripts/docs-reader/source-previews.mjs",
         "scripts/lib/docs-markdown-anchors.mjs",
         "scripts/lib/docs-publication-assets.mjs",
         "scripts/lib/docs-publication-links.mjs",
         "scripts/tests/docs-publication-assets.test.mjs",
         "scripts/tests/docs-publication-links.test.mjs",
         "scripts/tests/docs-reader-source-links.test.mjs",
+        "scripts/tests/docs-reader-source-previews.test.mjs",
         "scripts/tests/docs-reader.test.mjs"
       ],
       "summary": "Whole PUB-002: existing positive page/asset allowlists plus actual artifact-local full-text search across all167 canonical reader pages, headings and code/technical identifiers. Browser find/empty/no-JS behavior observed; code and output reviewed.",
@@ -7493,6 +7731,11 @@
           "command": "Independent rendered-Source whole gate and narrow 21-record Source/Reader/Quality impact review; original 84-test custody/publication/adapter/reader/Source run",
           "exitCode": 0,
           "observation": "Changed Source boundaries preserve previous facts and limits. Complete actual built output and Source bytes verified; not broader historical semantic/runtime approval. docs/blueprint/acceptance-evidence/rendered-source-links-20261021/rendered-source-gate-review.json"
+        },
+        {
+          "command": "Independent whole PUB004 and narrow 21-record changed-boundary review with current original88tests/fullSource/preview/browser observations",
+          "exitCode": 0,
+          "observation": "180output hashes matched,all1660excerpts freshlyverified;unchanged priorsemantic/runtime boundaries. docs/blueprint/acceptance-evidence/source-preview-closeout-20261021/whole-content-and-prior-impact-review.json"
         }
       ],
       "limits": [
@@ -7529,12 +7772,24 @@
             "scripts/tests/docs-reader.test.mjs"
           ],
           "review": "docs/blueprint/acceptance-evidence/rendered-source-links-20261021/rendered-source-gate-review.json"
+        },
+        {
+          "revision": "287a0f0e46bd373fce8f7a605599e3b9a66cd867",
+          "reason": "Independent whole PUB004 and narrow changed-Source/Reader/Quality impact: inert same-revision previews, fresh excerpt receipts and current actual reader/Source/browser rerun. Previous facts and limits preserved, not broadly re-approved.",
+          "changedFiles": [
+            "docs/site/reference/documentation-site.md",
+            "scripts/docs-api-documentation-role-custody.mjs",
+            "scripts/docs-publication.mjs",
+            "scripts/docs-reader/renderer.mjs",
+            "scripts/docs-reader/source-links.mjs"
+          ],
+          "review": "docs/blueprint/acceptance-evidence/source-preview-closeout-20261021/whole-content-and-prior-impact-review.json"
         }
       ]
     },
     {
       "id": "AP09-search-reader-gate-20261021",
-      "revision": "287a0f0e46bd373fce8f7a605599e3b9a66cd867",
+      "revision": "a531ba490cd23cf0d064fe01ebc68ce56da20d79",
       "author": "Nova /root documentation author and implementation coordinator",
       "reviewer": "Independent Codex autoreview whole A912-04 code/evidence review plus narrow Source/Reader/Quality native-impact follow-up",
       "verdict": "PASS",
@@ -7591,6 +7846,11 @@
           "command": "Independent rendered-Source whole gate and narrow 21-record Source/Reader/Quality impact review; original 84-test custody/publication/adapter/reader/Source run",
           "exitCode": 0,
           "observation": "Changed Source boundaries preserve previous facts and limits. Complete actual built output and Source bytes verified; not broader historical semantic/runtime approval. docs/blueprint/acceptance-evidence/rendered-source-links-20261021/rendered-source-gate-review.json"
+        },
+        {
+          "command": "Independent whole PUB004 and narrow 21-record changed-boundary review with current original88tests/fullSource/preview/browser observations",
+          "exitCode": 0,
+          "observation": "180output hashes matched,all1660excerpts freshlyverified;unchanged priorsemantic/runtime boundaries. docs/blueprint/acceptance-evidence/source-preview-closeout-20261021/whole-content-and-prior-impact-review.json"
         }
       ],
       "limits": [
@@ -7610,12 +7870,23 @@
             "scripts/tests/docs-reader.test.mjs"
           ],
           "review": "docs/blueprint/acceptance-evidence/rendered-source-links-20261021/rendered-source-gate-review.json"
+        },
+        {
+          "revision": "287a0f0e46bd373fce8f7a605599e3b9a66cd867",
+          "reason": "Independent whole PUB004 and narrow changed-Source/Reader/Quality impact: inert same-revision previews, fresh excerpt receipts and current actual reader/Source/browser rerun. Previous facts and limits preserved, not broadly re-approved.",
+          "changedFiles": [
+            ".github/workflows/docs-checks.yaml",
+            "docs/site/reference/documentation-site.md",
+            "scripts/docs-api-documentation-role-custody.mjs",
+            "scripts/docs-reader/renderer.mjs"
+          ],
+          "review": "docs/blueprint/acceptance-evidence/source-preview-closeout-20261021/whole-content-and-prior-impact-review.json"
         }
       ]
     },
     {
       "id": "AP09-rendered-source-bounds-gate-20261021",
-      "revision": "287a0f0e46bd373fce8f7a605599e3b9a66cd867",
+      "revision": "a531ba490cd23cf0d064fe01ebc68ce56da20d79",
       "author": "Nova /root documentation author and implementation coordinator",
       "reviewer": "Independent Codex autoreview whole A912-09 Source/Reader/Quality review and narrow changed-boundary impact review for 21 prior PASS records",
       "verdict": "PASS",
@@ -7631,27 +7902,30 @@
         "docs/site/extend/plugin-catalogue/kubeclaw-ops.md"
       ],
       "sources": [
-        "scripts/docs-publication.mjs",
-        "scripts/docs-reader/renderer.mjs",
-        "scripts/docs-reader/metadata.mjs",
-        "scripts/docs-reader/source-links.mjs",
-        "scripts/docs-reader/check-source-links.mjs",
-        "scripts/docs-reader/check-artifact.mjs",
-        "scripts/docs-reader/check-search.mjs",
-        "scripts/lib/docs-publication-assets.mjs",
-        "scripts/lib/docs-markdown-anchors.mjs",
-        "scripts/docs-check-refs.mjs",
-        "scripts/tests/docs-reader.test.mjs",
-        "scripts/tests/docs-reader-source-links.test.mjs",
-        "scripts/docs-api-documentation-role-custody.mjs",
-        "docs/config/documentation-publication-manifest.json",
         ".github/workflows/docs-checks.yaml",
-        "docs/blueprint/acceptance-evidence/rendered-source-links-20261021/rendered-source-gate-review.json",
         "docs/blueprint/acceptance-evidence/rendered-source-links-20261021/committed-output-observation.json",
+        "docs/blueprint/acceptance-evidence/rendered-source-links-20261021/metadata-native-propagation.json",
         "docs/blueprint/acceptance-evidence/rendered-source-links-20261021/primary-source-observation.json",
         "docs/blueprint/acceptance-evidence/rendered-source-links-20261021/rendered-output-manifest.json",
-        "docs/blueprint/acceptance-evidence/rendered-source-links-20261021/metadata-native-propagation.json",
-        "docs/blueprint/acceptance-evidence/rendered-source-links-20261021/source-link-native-propagation.json"
+        "docs/blueprint/acceptance-evidence/rendered-source-links-20261021/rendered-source-gate-review.json",
+        "docs/blueprint/acceptance-evidence/rendered-source-links-20261021/source-link-native-propagation.json",
+        "docs/config/documentation-publication-manifest.json",
+        "scripts/docs-api-documentation-role-custody.mjs",
+        "scripts/docs-check-refs.mjs",
+        "scripts/docs-publication.mjs",
+        "scripts/docs-reader/check-artifact.mjs",
+        "scripts/docs-reader/check-search.mjs",
+        "scripts/docs-reader/check-source-links.mjs",
+        "scripts/docs-reader/check-source-previews.mjs",
+        "scripts/docs-reader/metadata.mjs",
+        "scripts/docs-reader/renderer.mjs",
+        "scripts/docs-reader/source-links.mjs",
+        "scripts/docs-reader/source-previews.mjs",
+        "scripts/lib/docs-markdown-anchors.mjs",
+        "scripts/lib/docs-publication-assets.mjs",
+        "scripts/tests/docs-reader-source-links.test.mjs",
+        "scripts/tests/docs-reader-source-previews.test.mjs",
+        "scripts/tests/docs-reader.test.mjs"
       ],
       "summary": "Whole A912-09: repository references and actual hash-verified built HTML links, anchors, assets and routes checked, plus full Source commit/type/actual-byte/line-or-Markdown-anchor validation.167 canonical pages,176HTML,179digests,36698localtargets,14401Source locators/3723objects including118primary upstream files across11repositories.",
       "review": {
@@ -7680,6 +7954,11 @@
           "command": "node --test scripts/tests/api-output-custody.test.mjs scripts/tests/api-output-publication.test.mjs scripts/tests/argocd-checked-artifacts.test.mjs scripts/tests/docs-reader.test.mjs scripts/tests/docs-reader-source-links.test.mjs",
           "exitCode": 0,
           "observation": "84/84PASS including actual missing/symlink/type/range/revision/origin negative controls, primary-byte fragment caching, digest-consistent broken rendered fragment/script, and all167real metadata headers."
+        },
+        {
+          "command": "Independent whole PUB004 and narrow 21-record changed-boundary review with current original88tests/fullSource/preview/browser observations",
+          "exitCode": 0,
+          "observation": "180output hashes matched,all1660excerpts freshlyverified;unchanged priorsemantic/runtime boundaries. docs/blueprint/acceptance-evidence/source-preview-closeout-20261021/whole-content-and-prior-impact-review.json"
         }
       ],
       "limits": [
@@ -7689,11 +7968,26 @@
         "Whole A912-09 only; remaining publication/accessibility/diagram/preview/full-workflow gates not automatically accepted.",
         "Three unchanged stale generated Helm phrases and global API bundle input/caller gap remain open."
       ],
-      "openIssues": []
+      "openIssues": [],
+      "revisionHistory": [
+        {
+          "revision": "287a0f0e46bd373fce8f7a605599e3b9a66cd867",
+          "reason": "Independent whole PUB004 and narrow changed-Source/Reader/Quality impact: inert same-revision previews, fresh excerpt receipts and current actual reader/Source/browser rerun. Previous facts and limits preserved, not broadly re-approved.",
+          "changedFiles": [
+            ".github/workflows/docs-checks.yaml",
+            "docs/site/reference/documentation-site.md",
+            "scripts/docs-api-documentation-role-custody.mjs",
+            "scripts/docs-publication.mjs",
+            "scripts/docs-reader/renderer.mjs",
+            "scripts/docs-reader/source-links.mjs"
+          ],
+          "review": "docs/blueprint/acceptance-evidence/source-preview-closeout-20261021/whole-content-and-prior-impact-review.json"
+        }
+      ]
     },
     {
       "id": "AP09-complete-static-offline-fallback-20261021",
-      "revision": "27697506234b1c33252fd7fe2acfb746c909f49f",
+      "revision": "a531ba490cd23cf0d064fe01ebc68ce56da20d79",
       "author": "Nova /root documentation author and implementation coordinator",
       "reviewer": "Independent Codex autoreview whole PUB-006/A912-10 Source/Reader/Quality closeout, inspecting original obligation, actual browser provenance and critical task prose",
       "verdict": "PASS",
@@ -7713,16 +8007,19 @@
         "docs/site/use/workflows/README.md"
       ],
       "sources": [
-        "scripts/docs-reader/renderer.mjs",
-        "scripts/docs-reader/metadata.mjs",
-        "scripts/docs-publication.mjs",
-        "scripts/lib/docs-publication-assets.mjs",
-        "docs/config/documentation-publication-manifest.json",
-        "docs/blueprint/acceptance-evidence/static-offline-fallback-20261021/browser-observations.json",
-        "docs/blueprint/acceptance-evidence/static-offline-fallback-20261021/browser-harness-and-provenance.json",
-        "docs/blueprint/acceptance-evidence/static-offline-fallback-20261021/independent-closeout-review.json",
         "docs/blueprint/acceptance-evidence/rendered-source-links-20261021/committed-output-observation.json",
-        "docs/blueprint/acceptance-evidence/rendered-source-links-20261021/rendered-output-manifest.json"
+        "docs/blueprint/acceptance-evidence/rendered-source-links-20261021/rendered-output-manifest.json",
+        "docs/blueprint/acceptance-evidence/static-offline-fallback-20261021/browser-harness-and-provenance.json",
+        "docs/blueprint/acceptance-evidence/static-offline-fallback-20261021/browser-observations.json",
+        "docs/blueprint/acceptance-evidence/static-offline-fallback-20261021/independent-closeout-review.json",
+        "docs/config/documentation-publication-manifest.json",
+        "scripts/docs-publication.mjs",
+        "scripts/docs-reader/check-source-previews.mjs",
+        "scripts/docs-reader/metadata.mjs",
+        "scripts/docs-reader/renderer.mjs",
+        "scripts/docs-reader/source-previews.mjs",
+        "scripts/lib/docs-publication-assets.mjs",
+        "scripts/tests/docs-reader-source-previews.test.mjs"
       ],
       "summary": "Whole PUB-006/A912-10: actual local-file reader keeps critical content/instructions, navigation, native disclosures and explicit search fallback usable without JavaScript, external network, hover or normal color palette. Optional local search works offline. Architecture interaction remains optional, not invented for acceptance.",
       "review": {
@@ -7746,6 +8043,11 @@
           "command": "Retained committed build/hash/Source verification and84-test original regressions, reused because production inputs unchanged",
           "exitCode": 0,
           "observation": "Whole A91209 proof preserved:167canonical/176HTML/179digests/36698localtargets/14401Source locators;currentreader files/outputhashes independentlymatched. No redundant rebuild/test of unchanged code."
+        },
+        {
+          "command": "Independent whole PUB004 and narrow 21-record changed-boundary review with current original88tests/fullSource/preview/browser observations",
+          "exitCode": 0,
+          "observation": "180output hashes matched,all1660excerpts freshlyverified;unchanged priorsemantic/runtime boundaries. docs/blueprint/acceptance-evidence/source-preview-closeout-20261021/whole-content-and-prior-impact-review.json"
         }
       ],
       "limits": [
@@ -7753,6 +8055,97 @@
         "No fresh-person user study or human screenreader trial; no PUB007/A91208 acceptance.",
         "Mermaid remains static code plus text alternative; no rendered visual interpretation or A91206/A91207 promotion from DOM metrics.",
         "Whole PUB006/A91210 only; all other runtime/globalAPI/hosting/publication boundaries preserved."
+      ],
+      "openIssues": [],
+      "revisionHistory": [
+        {
+          "revision": "27697506234b1c33252fd7fe2acfb746c909f49f",
+          "reason": "Independent whole PUB004 and narrow changed-Source/Reader/Quality impact: inert same-revision previews, fresh excerpt receipts and current actual reader/Source/browser rerun. Previous facts and limits preserved, not broadly re-approved.",
+          "changedFiles": [
+            "docs/site/reference/documentation-site.md",
+            "scripts/docs-publication.mjs",
+            "scripts/docs-reader/renderer.mjs"
+          ],
+          "review": "docs/blueprint/acceptance-evidence/source-preview-closeout-20261021/whole-content-and-prior-impact-review.json"
+        }
+      ]
+    },
+    {
+      "id": "AP09-complete-same-source-code-preview-20261021",
+      "revision": "a531ba490cd23cf0d064fe01ebc68ce56da20d79",
+      "author": "Nova /root documentation author and implementation coordinator",
+      "reviewer": "Independent Codex autoreview whole PUB004 Source/Reader/Quality closeout plus narrow changed-boundary preservation for21priorPASSrecords",
+      "verdict": "PASS",
+      "requirementIds": [
+        "PUB-004"
+      ],
+      "gateIds": [],
+      "pages": [
+        "docs/site/reference/documentation-site.md"
+      ],
+      "sources": [
+        "scripts/docs-publication.mjs",
+        "scripts/docs-reader/renderer.mjs",
+        "scripts/docs-reader/source-links.mjs",
+        "scripts/docs-reader/source-previews.mjs",
+        "scripts/docs-reader/check-source-previews.mjs",
+        "scripts/docs-reader/check-source-links.mjs",
+        "scripts/docs-reader/check-artifact.mjs",
+        "scripts/docs-reader/check-search.mjs",
+        "scripts/tests/docs-reader-source-previews.test.mjs",
+        "scripts/docs-api-documentation-role-custody.mjs",
+        "docs/config/documentation-publication-manifest.json",
+        ".github/workflows/docs-checks.yaml",
+        "docs/blueprint/acceptance-evidence/source-preview-closeout-20261021/whole-content-and-prior-impact-review.json",
+        "docs/blueprint/acceptance-evidence/source-preview-closeout-20261021/committed-preview-observations.json",
+        "docs/blueprint/acceptance-evidence/source-preview-closeout-20261021/rendered-output-manifest.json",
+        "docs/blueprint/acceptance-evidence/source-preview-closeout-20261021/rendered-source-preview-manifest.json",
+        "docs/blueprint/acceptance-evidence/source-preview-closeout-20261021/widget-browser-observations.json",
+        "docs/blueprint/acceptance-evidence/source-preview-closeout-20261021/whole-reader-offline-observations.json",
+        "docs/blueprint/acceptance-evidence/source-preview-closeout-20261021/expanded-preview-axe-observations.json",
+        "docs/blueprint/acceptance-evidence/source-preview-closeout-20261021/primary-source-observations.json",
+        "docs/blueprint/acceptance-evidence/source-preview-closeout-20261021/preview-native-propagation.json"
+      ],
+      "summary": "Whole PUB004: general same-source component automatically pairs immutable source links with exact same-revision inert code inside original evidence boxes.1660excerpts/390boxes/874objects across53pages;fresh-source and actualbrowser/text/native-disclosure proof.",
+      "review": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS",
+        "report": "docs/blueprint/acceptance-evidence/source-preview-closeout-20261021/whole-content-and-prior-impact-review.json"
+      },
+      "checks": [
+        {
+          "command": "node scripts/docs-publication.mjs build && node --max-old-space-size=4096 scripts/docs-reader/check-artifact.mjs && node scripts/docs-reader/check-search.mjs",
+          "exitCode": 0,
+          "observation": "Committed912bbbd4:167canonical/176HTML/180digests/36698localtargets;12searchquestions PASS. Originalpositivepage/asset selection retained;previewcode excludedfromsearch."
+        },
+        {
+          "command": "node --max-old-space-size=4096 scripts/docs-reader/check-source-previews.mjs",
+          "exitCode": 0,
+          "observation": "All1660actualHTMLexcerpts matchfreshcommittedGit/fixedprimaryHTTPSbytes;874objects,390Sourceboxes. Explicitrangesfull;barefilesfirst80orfewerlabelled. Rawsource SHA andLF-displayexcerpthash distinct. MDinputs/artifacthashes/positivepage-set bound."
+        },
+        {
+          "command": "node --max-old-space-size=4096 scripts/docs-reader/check-source-links.mjs",
+          "exitCode": 0,
+          "observation": "14419Source locators/3726objects/176actualHTML,including118upstreamfiles/11repos;0stderr."
+        },
+        {
+          "command": "Actual retained preview-widget, expanded-axe and full static/offline browser harnesses",
+          "exitCode": 0,
+          "observation": "501page×width and27criticaljourney/search checks,9expandednoJS/offlinepreview browser/text/nativeSpace checks,9expandedpreviewaxeWCAG2A/AA/2.1AA analyses;0findings/0external browserrequests. HumanScreenReader/fresh-person/all-diagramvisual not claimed."
+        },
+        {
+          "command": "Original custody/publication/Argo/reader/Source/preview test suites and workflow-trust checks",
+          "exitCode": 0,
+          "observation": "88/88originaltests+7/7workflowtrust PASS. Historicalvsworktree,inertscript,CRLF,missing/symlink/range/mutableSHA/cache/fencedexample controls;digest-consistent alteredcode rejected.4exactnative renewals/56unchanged/2newDocPurposes;6actualguardsPASS."
+        }
+      ],
+      "limits": [
+        "WholePUB004 only; A91205 all-six-field canonical format not established for every older evidence box and remains unaccepted.",
+        "Preserves originalclaims/contracts/tests/limits; missing author evidence not fabricated and source snippets do not prove live or semantic correctness.",
+        "ThreeSource boxes containingonlydirectory/named-anchor references remain ordinarylinks, not fake code previews.",
+        "No diagram/layoutgate, humanScreenReader, freshuser, hosting, globalAPI or productruntime approval.",
+        "GlobalAPIbundlecopier74 andthreeunchangedstaleHelmphrases stayopen."
       ],
       "openIssues": []
     }
@@ -23475,19 +23868,28 @@
         "quality",
         "astra-final"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L387",
       "closureDecision": {
-        "verdict": "FAIL",
-        "revision": "e161be417432d4ebdd22a3d84e09057df70abc0d",
-        "reason": "- PUB-004 FAIL: publisher builds Markdown and Evidence links, not code previews fetched from the same linked revision. sourceEvidenceLink checks selected catalogue snippets; this is not the required general rendered code-evidence box. Page truthfully says absent.",
-        "requiresAffectedRereview": true,
-        "currentScopeNote": "Historical integrated review; later scoped fixes and first-project example are separately accepted. Remaining whole requirement needs affected re-review, not automatic promotion.",
-        "campaign": "independent-ready-topics-20261020"
-      }
+        "verdict": "PASS",
+        "revision": "a531ba490cd23cf0d064fe01ebc68ce56da20d79",
+        "reason": "Whole PUB004: general same-source component automatically pairs immutable source links with exact same-revision inert code inside original evidence boxes.1660excerpts/390boxes/874objects across53pages;fresh-source and actualbrowser/text/native-disclosure proof.",
+        "completionRecord": "AP09-complete-same-source-code-preview-20261021"
+      },
+      "closureHistory": [
+        {
+          "verdict": "FAIL",
+          "revision": "e161be417432d4ebdd22a3d84e09057df70abc0d",
+          "reason": "- PUB-004 FAIL: publisher builds Markdown and Evidence links, not code previews fetched from the same linked revision. sourceEvidenceLink checks selected catalogue snippets; this is not the required general rendered code-evidence box. Page truthfully says absent.",
+          "requiresAffectedRereview": true,
+          "currentScopeNote": "Historical integrated review; later scoped fixes and first-project example are separately accepted. Remaining whole requirement needs affected re-review, not automatic promotion.",
+          "campaign": "independent-ready-topics-20261020"
+        }
+      ],
+      "completionRecord": "AP09-complete-same-source-code-preview-20261021"
     },
     {
       "id": "PUB-005",
@@ -39882,40 +40284,50 @@
       "scope": "Author32Bash53Node20CJS24syntheticchecks only, noformal6scenario/live/ReaderQualityapproval."
     },
     "currentCloseout20261021": {
-      "securedSourceRevision": "27697506234b1c33252fd7fe2acfb746c909f49f",
-      "acceptedRequirements": 202,
+      "securedSourceRevision": "a531ba490cd23cf0d064fe01ebc68ce56da20d79",
+      "acceptedRequirements": 203,
       "acceptedGates": 16,
-      "newRequirementsThisCampaign": 43,
+      "newRequirementsThisCampaign": 44,
       "newGatesThisCampaign": 5,
-      "nextWork": "Same-revision build-read code previews (PUB004/A91205) and actual rendered diagrams with source/owner/text alternatives (PUB005/A91206) remain unimplemented or unaccepted. Inspect owning representation before implementation; keep user-approved reader layout. Global build-runtime-role-bundle.mjs:74 and three stale Helm phrases remain open.59contents/73gates unwaived.",
-      "codeCandidate": "Unchanged ef68977e reader artifact;no production code/allowlist/nativepurpose changes for evidence-only fallback closeout.",
+      "nextWork": "Canonical six-field evidence-box contract A91205 stillopen;actual rendered diagrams withSource/owner/text alternatives PUB005/A91206 next concrete presentation boundary. Keep approved layout. Globalbuild-runtime-role-bundle.mjs:74 andthreeunchangedHelmphrases block broadermechanical closure.58contents/73gates unwaived.",
+      "codeCandidate": "912bbbd4: inertSource excerpts, exactSource/MD/HTMLreceipts,freshCLIcheck,unchangedoriginalsearch;88/88testsPASS,4preciserenewals/56unchanged/2newDocroles.",
       "currentGlobalBlocker": "API_PRODUCT_SCRIPT_OUTPUT_ROLE_UNQUALIFIED: scripts/build-runtime-role-bundle.mjs:74; copied opaque package/dependency payloads and caller-context coverage.",
-      "publication": "Whole PUB002/PUB006/A91204/A91209/A91210 accepted.501offline static page×width checks;4criticalrolejourneys×3widths;12local-file offline search questions.27journey/search observations,0findings/0external requests. No humanScreenReader/rendereddiagram/freshuser/livehosting claim.",
-      "scope": "202/261contents,16/89gates. Source projection and local reader fallback kept separate from live product effects.",
+      "publication": "WholePUB002/PUB004/PUB006,A91204/A91209/A91210accepted. Current1660same-source excerpts/390boxes/874objects;180outputhashes/14419Source locators/3726objects.501page×width+27journey/search+9expandedpreview+9axe checks PASS. NoA91205/screenreader/diagramvisual/liveclaim.",
+      "scope": "203/261contents,16/89gates. Preserve negative/historical evidence; same-source previews and static reader proofs separate from runtime effects.",
       "owner": "Nova, continuing the authorized PR13 request from Raven on2026-10-21",
       "workingTree": "Expected clean after checkpoint; verify before continuation. Never use obsolete dirty kubeclaw-documentation-cloud checkout as the current PR13 source.",
       "checkout": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery",
       "remoteBranch": "refs/heads/docs/documentation-overhaul",
       "review": {
-        "report": "docs/blueprint/acceptance-evidence/static-offline-fallback-20261021/independent-closeout-review.json",
-        "result": "Clean wholePUB006/A91210 Source/Reader/Quality verdict, actual browser/output hashes matched and critical task prose inspected.",
-        "limit": "Not broader historical, product execution, freshperson/screenreader or rendereddiagram/layoutgate approval."
+        "report": "docs/blueprint/acceptance-evidence/source-preview-closeout-20261021/whole-content-and-prior-impact-review.json",
+        "result": "Clean wholePUB004 Source/Reader/Quality and narrow21recordpreservation verdict.",
+        "limit": "NoA91205 orotherpublication/runtimeglobalapproval."
       },
       "checks": [
         {
-          "command": "Actual retained Chromium151/Playwright1.62.1 static-offline-layout-qa source with local portable fonts/libraries",
+          "command": "node scripts/docs-publication.mjs build && node --max-old-space-size=4096 scripts/docs-reader/check-artifact.mjs && node scripts/docs-reader/check-search.mjs",
           "exitCode": 0,
-          "observation": "Same actual ef68977e reader artifact/manifestSHA2ec1f19d3f0d73bdcad69059b25ee3d252078c0eb91bd71d6398a3ba48c54738.501checks=167pages×320/768/1440;CSSloaded,nohorizontal pageoverflow;1275tables/765codeblocks/603callouts/27staticMermaid blocks perviewport retained.0findings/0externalnetwork attempts."
+          "observation": "Committed912bbbd4:167canonical/176HTML/180digests/36698localtargets;12searchquestions PASS. Originalpositivepage/asset selection retained;previewcode excludedfromsearch."
         },
         {
-          "command": "Actual file:// critical role/native-keyboard fallback journeys with appJavaScript/network disabled,touch-nohover,reducedmotion and forcedcolors",
+          "command": "node --max-old-space-size=4096 scripts/docs-reader/check-source-previews.mjs",
           "exitCode": 0,
-          "observation": "Operator,plugin,platform,pipeline task routes×3widths retain readable prerequisites/commands/limits;nativeTab+Enter skip,focused-linkEnter navigation,Space disclosures.3noJSsearch notices/native-navfall backs.12optionalJSlocal-file search questions expectedTop3.27journey/search observations PASS;no product command executed."
+          "observation": "All1660actualHTMLexcerpts matchfreshcommittedGit/fixedprimaryHTTPSbytes;874objects,390Sourceboxes. Explicitrangesfull;barefilesfirst80orfewerlabelled. Rawsource SHA andLF-displayexcerpthash distinct. MDinputs/artifacthashes/positivepage-set bound."
         },
         {
-          "command": "Retained committed build/hash/Source verification and84-test original regressions, reused because production inputs unchanged",
+          "command": "node --max-old-space-size=4096 scripts/docs-reader/check-source-links.mjs",
           "exitCode": 0,
-          "observation": "Whole A91209 proof preserved:167canonical/176HTML/179digests/36698localtargets/14401Source locators;currentreader files/outputhashes independentlymatched. No redundant rebuild/test of unchanged code."
+          "observation": "14419Source locators/3726objects/176actualHTML,including118upstreamfiles/11repos;0stderr."
+        },
+        {
+          "command": "Actual retained preview-widget, expanded-axe and full static/offline browser harnesses",
+          "exitCode": 0,
+          "observation": "501page×width and27criticaljourney/search checks,9expandednoJS/offlinepreview browser/text/nativeSpace checks,9expandedpreviewaxeWCAG2A/AA/2.1AA analyses;0findings/0external browserrequests. HumanScreenReader/fresh-person/all-diagramvisual not claimed."
+        },
+        {
+          "command": "Original custody/publication/Argo/reader/Source/preview test suites and workflow-trust checks",
+          "exitCode": 0,
+          "observation": "88/88originaltests+7/7workflowtrust PASS. Historicalvsworktree,inertscript,CRLF,missing/symlink/range/mutableSHA/cache/fencedexample controls;digest-consistent alteredcode rejected.4exactnative renewals/56unchanged/2newDocPurposes;6actualguardsPASS."
         }
       ]
     }
