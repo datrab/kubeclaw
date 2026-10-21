@@ -50,3 +50,27 @@ export function materializeBusterBootSourceArchive(receipt: Parameters<typeof re
   packageRoot: string; systemRoot: string; readerRoot: string;
   expectedReceipt: PipelineBootCapture['bootProvenance']['expectedReceipt'];
 }>;
+
+/** Full-input source observation only; deliberately not PipelineBootCapture. */
+export type PipelineV10BootSource = Readonly<{
+  expected: ReturnType<typeof import('./pipeline-generation.ts').receivePipelineV10ExpectedDelivery>;
+  image: ReturnType<typeof import('./pipeline-generation.ts').receivePipelineV10ImageReceipt>;
+  selection: ReturnType<typeof import('./pipeline-generation.ts').receivePipelineV10ServiceSelection>;
+  owner: ReturnType<typeof import('./pipeline-generation.ts').receiveBusterV10SelectedOwnerProjection> | null;
+  activationAllowed: false;
+}>;
+export function receivePipelineV10BootSource(
+  wires: Readonly<{ expected: unknown; image: unknown; selection: unknown; owner: unknown }>,
+  inputs: ReturnType<typeof import('./pipeline-input-set.ts').capturePipelineInputSet>,
+  services: readonly SwarmSelection[], callerId: SwarmSelection['callerId'],
+  packageReceiptDigest: `sha256:${string}`,
+): PipelineV10BootSource;
+export function capturePipelineV10BootSource(expectedFile: string, systemRoot: string,
+  callerId: SwarmSelection['callerId'], packageRoot: string, runtimeSurface: string,
+  services: readonly SwarmSelection[]): PipelineV10BootSource & Readonly<{
+    inputGenerationSha256: string;
+    sourceMemberCount: number;
+    installedPackageRoot: string;
+    assertCurrent: () => void;
+    close: () => void;
+  }>;
