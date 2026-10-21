@@ -1,0 +1,6 @@
+{
+  "findings": [],
+  "overall_correctness": "patch is correct",
+  "overall_explanation": "Code/purpose PASS for the one-line tar change. Complete original/current script and ordinary configuration-inventory caller inspected. --no-same-owner avoids restoring upstream ownership without changing extracted content bytes, permission options, extraction destination, archive SHA/size checks, values/schema digests, source selection, or artifact comparisons. Ordinary verification still creates private temporary extraction files and cleans them up; --refresh retains explicit acquisition and artifact writes. Selected artifacts serve documentation authority and console output is diagnostic, not deployment API submission. No checks or live execution performed. Separate propagation remains required for the vendor Source entry in scripts/docs-api-producer-adapter-authorities.json (sha256, operationDigest, operationRecipe and selected console.log native factsDigest/roleConsumerEvidence), plus scripts/docs-api-documentation-role-custody.mjs's configuration-inventory authorityInputs vendor hash and dependent factsDigest. Those receipts are not approved here. Excludes the three generated API-flow files, earlier role metadata acceptance, global generator, A91108, runtime, rendered, and requirements acceptance.",
+  "overall_confidence": 0.96
+}

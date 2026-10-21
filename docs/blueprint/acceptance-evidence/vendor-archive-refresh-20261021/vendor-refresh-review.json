@@ -1,0 +1,6 @@
+{
+  "findings": [],
+  "overall_correctness": "patch is correct",
+  "overall_explanation": "PASS for the selected vendor code, Source/native output purpose, and affected maintenance guidance. The offline refresh derives the complete snapshot from validated vendored inputs, preserves the shared manifest, and runs ordinary verification afterward. Acquisition preserves other owners\u2019 records. The snapshot diff changes only archiveManifestSha256; existing maintenance procedures remain intact. The fixture exercises the original CLI and distinguishes offline extraction from simulated acquisition. No tests or generators were executed during this review. Source/native registry and child-authority receipts, including scripts/docs-api-producer-adapter-authorities.json, retain prior vendor source and require subsequent exact regeneration; their refresh and broader acceptance are outside this verdict.",
+  "overall_confidence": 0.9
+}

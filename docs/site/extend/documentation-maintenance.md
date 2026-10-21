@@ -3,9 +3,9 @@
 Status: source-described maintainer workflow; each change needs its own check and reader results
 Audience: developer, documentation maintainer, documentation agent
 Owner: documentation
-Evidence: scripts/docs-governance.mjs; scripts/docs-generate.mjs; scripts/docs-inventory.mjs; scripts/docs-configuration-inventory.mjs; scripts/check-configuration-cli-drift.mjs; scripts/check-configuration-drift-mutations.mjs; scripts/docs-platform-surface-inventory.mjs; scripts/docs-publication.mjs; scripts/docs-tree-boundary.mjs; scripts/docs-parity-transition.mjs; docs/config/documentation-tree-classification.json; docs/config/documentation-tree-baseline.json; docs/site/reference/documentation-route-registry.json; package.json; .github/workflows/docs-checks.yaml
+Evidence: scripts/docs-governance.mjs; scripts/docs-generate.mjs; scripts/docs-inventory.mjs; scripts/docs-configuration-inventory.mjs; scripts/check-configuration-cli-drift.mjs; scripts/check-configuration-drift-mutations.mjs; scripts/docs-platform-surface-inventory.mjs; scripts/docs-publication.mjs; scripts/docs-tree-boundary.mjs; scripts/docs-parity-transition.mjs; docs/config/documentation-tree-classification.json; docs/config/documentation-tree-baseline.json; docs/site/reference/documentation-route-registry.json; package.json; .github/workflows/docs-checks.yaml; scripts/vendor-external-helm-authorities.mjs; scripts/external-helm-archives.json; scripts/docs-external-helm-authority-lock.json; scripts/tests/vendor-external-helm-authorities.test.mjs
 Applies to: authored reader pages, source-derived documentation, and their ownership and publication inputs
-Last verified: implementation behavior checked on 2026-10-15; no generation, check, mutation test, or reader exercise asserted
+Last verified: 2026-10-21; bounded plugin-schema and vendored-authority routes checked; other paths source-described, not executed
 
 ## Start with the changed behavior
 
@@ -147,6 +147,22 @@ or qualify the other inventories. Use `--check` for a read-only comparison of
 that same selected page. The separate publication generator owns the catalogue
 and operator matrix; regenerate those after the schema inventory succeeds.
 A bounded success is not a global generation PASS.
+
+The schema comparison also verifies extracted external Helm authorities. If the
+approved vendored archive manifest changed but its extracted snapshot is stale,
+use `node scripts/vendor-external-helm-authorities.mjs --refresh-extracted`.
+This verifies the existing manifest, archives, selected values/schema bytes and
+writes only the extracted snapshot/checksum pair. It performs no chart pull and
+keeps additional shared archive entries. Ordinary verification still extracts
+into private temporary files; it is not a whole-filesystem read-only operation.
+Use `--refresh` only for the separate locked-chart acquisition task. That mode
+preserves validated existing entries owned by other consumers. Missing or
+checksum-invalid shared inputs require repair before either refresh; do not
+patch their digests or remove another consumer's chart record.
+Run `node --test scripts/tests/vendor-external-helm-authorities.test.mjs`
+after changing this tool. It executes the unmodified original CLI in an isolated
+fixture, checks offline behavior, checksum rejection and shared-entry preservation.
+Its online acquisition is a local fixture, not a successful external chart pull.
 
 The common stable sequence is:
 

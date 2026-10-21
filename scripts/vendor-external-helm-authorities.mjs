@@ -10,6 +10,8 @@ import { yamlFieldPathTokens } from './yaml-field-path.mjs';
 
 const root = process.cwd();
 const refresh = process.argv.includes('--refresh');
+const refreshExtracted = process.argv.includes('--refresh-extracted');
+assert(!(refresh && refreshExtracted), 'select either --refresh or --refresh-extracted');
 const artifactPath = path.join(root, 'scripts/external-helm-authority-snapshots.json');
 const checksumPath = path.join(root, 'scripts/external-helm-authority-snapshots.sha256');
 const lockPath = path.join(root, 'scripts/docs-external-helm-authority-lock.json');
@@ -100,7 +102,7 @@ function extractChart(key, chart, archive, directory) {
   assert.equal(sha256(archiveBytes), chart.archiveSha256, `${key}: archive digest differs from the checked-in lock`);
   const extracted = path.join(directory, 'extracted');
   fs.mkdirSync(extracted);
-  const untarred = spawnSync('tar', ['-xzf', archive, '-C', extracted], { encoding: 'utf8' });
+  const untarred = spawnSync('tar', ['--no-same-owner', '-xzf', archive, '-C', extracted], { encoding: 'utf8' });
   if (untarred.status !== 0) throw new Error(`${key}: chart extraction failed: ${untarred.stderr}`);
   const children = fs.readdirSync(extracted).map((name) => path.join(extracted, name)).filter((candidate) => fs.statSync(candidate).isDirectory());
   assert.equal(children.length, 1, `${key}: archive does not contain one chart directory`);
@@ -188,10 +190,34 @@ function deriveArtifact(archiveManifest) {
   return `${JSON.stringify(stable(output), null, 2)}\n`;
 }
 
+function readArchiveManifest() {
+  assert(fs.existsSync(archiveManifestPath) && fs.existsSync(archiveManifestChecksumPath),
+    'vendored external Helm archive manifest is missing; prepare the approved archive inputs first');
+  const bytes = fs.readFileSync(archiveManifestPath);
+  const [expected, name] = fs.readFileSync(archiveManifestChecksumPath, 'utf8').trim().split(/\s+/u);
+  assert.equal(name, path.basename(archiveManifestPath), 'external Helm archive checksum names the wrong manifest');
+  assert.equal(sha256(bytes), expected, 'external Helm archive manifest bytes changed');
+  const manifest = JSON.parse(bytes);
+  assert.equal(manifest.version, 1, 'unsupported external Helm archive manifest version');
+  assert(manifest.charts && typeof manifest.charts === 'object' && !Array.isArray(manifest.charts),
+    'external Helm archive manifest needs chart records');
+  return manifest;
+}
+
+function refreshExtractedArtifact(manifest = readArchiveManifest()) {
+  const bytes = deriveArtifact(manifest);
+  fs.writeFileSync(artifactPath, bytes);
+  fs.writeFileSync(checksumPath, `${sha256(bytes)}  ${path.basename(artifactPath)}\n`);
+}
+
 function refreshArtifact() {
   fs.mkdirSync(archiveDirectory, { recursive: true });
   const temporaryRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'kubeclaw-external-helm-download-'));
-  const manifest = { version: 1, generatedBy: 'scripts/vendor-external-helm-authorities.mjs --refresh', charts: {} };
+  // Other documentation consumers can own additional vendored chart entries.
+  // Retain them; this refresh replaces only coordinates governed by this lock.
+  const prior = fs.existsSync(archiveManifestPath) || fs.existsSync(archiveManifestChecksumPath)
+    ? readArchiveManifest() : null;
+  const manifest = { version: 1, generatedBy: 'scripts/vendor-external-helm-authorities.mjs --refresh', charts: { ...(prior?.charts ?? {}) } };
   try {
     for (const [key, chart] of Object.entries(lock.charts)) {
       const directory = path.join(temporaryRoot, key);
@@ -216,19 +242,12 @@ function refreshArtifact() {
   const manifestBytes = `${JSON.stringify(stable(manifest), null, 2)}\n`;
   fs.writeFileSync(archiveManifestPath, manifestBytes);
   fs.writeFileSync(archiveManifestChecksumPath, `${sha256(manifestBytes)}  ${path.basename(archiveManifestPath)}\n`);
-  const bytes = deriveArtifact(manifest);
-  fs.writeFileSync(artifactPath, bytes);
-  fs.writeFileSync(checksumPath, `${sha256(bytes)}  ${path.basename(artifactPath)}\n`);
+  refreshExtractedArtifact(manifest);
 }
 
 function checkArtifact() {
   assert(fs.existsSync(artifactPath) && fs.existsSync(checksumPath), 'external Helm extracted authority artifact is missing; run with --refresh');
-  assert(fs.existsSync(archiveManifestPath) && fs.existsSync(archiveManifestChecksumPath), 'vendored external Helm archive manifest is missing; run with --refresh');
-  const manifestBytes = fs.readFileSync(archiveManifestPath);
-  const [manifestExpected, manifestName] = fs.readFileSync(archiveManifestChecksumPath, 'utf8').trim().split(/\s+/u);
-  assert.equal(manifestName, path.basename(archiveManifestPath), 'external Helm archive checksum names the wrong manifest');
-  assert.equal(sha256(manifestBytes), manifestExpected, 'external Helm archive manifest bytes changed');
-  const archiveManifest = JSON.parse(manifestBytes);
+  const archiveManifest = readArchiveManifest();
   const bytes = fs.readFileSync(artifactPath);
   const artifact = JSON.parse(bytes);
   const [expected, name] = fs.readFileSync(checksumPath, 'utf8').trim().split(/\s+/u);
@@ -261,4 +280,5 @@ function checkArtifact() {
 }
 
 if (refresh) refreshArtifact();
+else if (refreshExtracted) refreshExtractedArtifact();
 checkArtifact();

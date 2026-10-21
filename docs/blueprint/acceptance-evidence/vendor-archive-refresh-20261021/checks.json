@@ -1,0 +1,24 @@
+{
+  "checks": [
+    {
+      "command": "node scripts/vendor-external-helm-authorities.mjs --refresh-extracted",
+      "exitCode": 0,
+      "observation": "external Helm authority snapshots are current (269 exact fields across 12 charts)"
+    },
+    {
+      "command": "node scripts/docs-configuration-inventory.mjs --schemas-only --check",
+      "exitCode": 0,
+      "observation": "Configuration documentation inventory is current."
+    },
+    {
+      "command": "node --test scripts/tests/vendor-external-helm-authorities.test.mjs",
+      "exitCode": 0,
+      "observation": "\u2714 original vendor CLI refreshes offline and preserves other archive owners (349.664402ms)\n\u2139 tests 1\n\u2139 suites 0\n\u2139 pass 1\n\u2139 fail 0\n\u2139 cancelled 0\n\u2139 skipped 0\n\u2139 todo 0\n\u2139 duration_ms 414.024769"
+    }
+  ],
+  "artifactSemanticDifference": [
+    "archiveManifestSha256"
+  ],
+  "preserved": "All chart/field/template contents identical; offline original producer refresh derives current shared manifest link and checksum. Additional spire-crds entry retained.",
+  "limits": "Fixture online acquisition is simulated, not live Helm pull. Ordinary check writes private temporary extraction files. No global generation, filesystem read-only, runtime or API completeness qualification."
+}
