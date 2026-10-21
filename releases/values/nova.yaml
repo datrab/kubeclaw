@@ -29,13 +29,13 @@ imagePullSecrets:
 codeBundle:
   enabled: true
   archiveUrl: >-
-    https://github.com/datrab/kubeclaw/releases/download/code-bundles-39492026683-1/nova-00d108cce7ed43eda15640d97f17bccead4d5895.tgz
-  expectedCommit: 00d108cce7ed43eda15640d97f17bccead4d5895
+    https://github.com/datrab/kubeclaw/releases/download/code-bundles-39581128822-1/nova-31db0e8d029389b0aceb3bc9cf8aed1b6575168d.tgz
+  expectedCommit: 31db0e8d029389b0aceb3bc9cf8aed1b6575168d
   contractVersion: v2
   auth:
     existingSecret: github-bundle-reader
     existingSecretKey: token
-  sha256: c0f99f4c805885e9ad4bc9b48293a06a21122b653852962f31ae5635b7751a02
+  sha256: e53ff3b37f171d8489df7d05338d06a6bf9d52e018b43a745998673784c45ade
 auth:
   existingSecret: openclaw-shared-secrets
   existingSecretKey: gatewayToken-nova
