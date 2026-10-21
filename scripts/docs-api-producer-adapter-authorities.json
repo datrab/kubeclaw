@@ -69294,6 +69294,179 @@
             "sha256": "602c41b16a66c10ba9e7385ddb12bb9e1cf9227183374acbe987198640ed4cab"
           }
         ]
+      },
+      {
+        "source": "tests/verification/contracts/check-project-compiler.mts",
+        "semanticClass": "caller-bound-project-compiler-source-or-archive-metadata",
+        "sourceSha256": "802846a68eced2141516765b573c090138ae3c85669cd7349324cb37b1ecfbf1",
+        "operations": [
+          {
+            "expression": "import(pathToFileURL(compilerFile).href)",
+            "operationSha256": "b6469708ec3764fbc4218b5f069a97125f3b5bd4d491ad4166b8fdbe8c9d5914"
+          }
+        ],
+        "inputConstraints": {
+          "root": "path.resolve('.') from ambient cwd, NOT runtime-enforced equality with scanner root",
+          "modulePaths": [
+            "skills/nova/project/compiler.ts"
+          ],
+          "qualificationScope": "Exact caller/branch/input-source metadata only. NOT test purpose exclusion, archive authenticity, module initialization, child effects, successful execution or AP acceptance.",
+          "runtimeAcquisitionAuthorized": false,
+          "callerBranches": [
+            {
+              "caller": "package.json scripts.verify:test-gate:coverage and pipeline-reliability.yaml Validate project compiler and installed stage contracts",
+              "selection": "No positional archive: runtime=root/skills/nova; compilerFile=runtime/project/compiler.ts."
+            },
+            {
+              "caller": "pipeline-reliability.yaml Assemble production role packages",
+              "selection": "package-agent-skill-bundle.sh nova dist/nova-${GITHUB_SHA}.tgz ${GITHUB_SHA}, then check-project-compiler.mts dist/nova-${GITHUB_SHA}.tgz. Truthy archive: tar extraction, assert one root entry, runtime=extracted/entry/skills; compilerFile=runtime/packages/nova-project/compiler.ts."
+            },
+            {
+              "caller": "check-project-compiler.mts -> checkLegacyProjectImport({ project, platformFile, temporary, runtime, compilerFile })",
+              "selection": "Helper imports same compilerFile and sibling legacy-import.ts. Full caller and helper bytes bind argument transfer and all helper call sites."
+            }
+          ],
+          "archiveSourceMapping": {
+            "packageId": "nova-project",
+            "source": "skills/nova/project",
+            "target": "skills/packages/nova-project",
+            "authority": "Nova role includes nova-project; node-package kind maps through builder copySelection to skills/packages/<id>. Ordinary source modules and their local closure remain executable discovery inputs.",
+            "enforcedRuntimeArchiveIdentity": false
+          },
+          "unqualifiedEffects": [
+            "Any external CLI archive argument remains ambient executable input: tar input bytes, executable, extraction containment, symlinks, entry type, module identity and dependencies are NOT validated by this scanner recipe. Single-entry count is not archive authenticity.",
+            "Builder/source mapping is a pinned static observation, not proof of an archive build or equality of extracted bytes to checkout. Arbitrary archive code is not admitted as a finite source or exempted.",
+            "Static imports, compiler and legacy module initialization, test assertions, registry discovery, all temporary filesystem and git mutations, child pipeline CLI launches and cleanup remain unqualified.",
+            "Cwd, environment, Node loader, package installation and actual native caller execution are not established. Recipes do not authorize new import expressions or changed callers."
+          ]
+        },
+        "authorityInputs": [
+          {
+            "path": "tests/verification/contracts/project-legacy-import-cases.mts",
+            "sha256": "4060a873b329ae2ed994f01a5f0f1f13fa0e6fe882be9b2bed6b9be98d1610e6"
+          },
+          {
+            "path": "package.json",
+            "sha256": "602c41b16a66c10ba9e7385ddb12bb9e1cf9227183374acbe987198640ed4cab"
+          },
+          {
+            "path": ".github/workflows/pipeline-reliability.yaml",
+            "sha256": "e338f143d87d8fcbf16830fdf82a0f7a9396f53376a780f4076ee4fb5e87ac4a"
+          },
+          {
+            "path": "scripts/package-agent-skill-bundle.sh",
+            "sha256": "dc4cc8626b5b303d2c28085bab83adf090932b4f31b0b4355a6dc188ac0a562c"
+          },
+          {
+            "path": "scripts/build-runtime-role-bundle.mjs",
+            "sha256": "0e20765fdcc03f09b884aba805e6733f42e63c494d39a11827b2fda5c9bd6ef9"
+          },
+          {
+            "path": "scripts/check-runtime-role-manifests.mjs",
+            "sha256": "521f14214afa42f7651ef81eca689f206cf3bc63c1c9edeb2376037dfba7d80c"
+          },
+          {
+            "path": "packaging/runtime/package-ownership.json",
+            "sha256": "0723d0a55eba3fdcc6c041132616db3330c3397db6a24f1d0abbf874bd28cab8"
+          },
+          {
+            "path": "packaging/runtime/roles/nova.json",
+            "sha256": "1c9de75dde812cb7ac118cfc074aa3a57bef7f428b789f11e9051ea713f0dc23"
+          },
+          {
+            "path": "skills/nova/project/package.json",
+            "sha256": "a267131773e51316a9c1e5e6939951b4a5db4dd6c24ebea80effc208d8bafe14"
+          }
+        ]
+      },
+      {
+        "source": "tests/verification/contracts/project-legacy-import-cases.mts",
+        "semanticClass": "caller-bound-project-compiler-source-or-archive-metadata",
+        "sourceSha256": "4060a873b329ae2ed994f01a5f0f1f13fa0e6fe882be9b2bed6b9be98d1610e6",
+        "operations": [
+          {
+            "expression": "import(pathToFileURL(compilerFile).href)",
+            "operationSha256": "c815a74930036ebc80dcfeb50f1ee4d286b26fd811cb7c471b48948493f3da6b"
+          },
+          {
+            "expression": "import(pathToFileURL(path.join(path.dirname(compilerFile), 'legacy-import.ts')).href)",
+            "operationSha256": "c815a74930036ebc80dcfeb50f1ee4d286b26fd811cb7c471b48948493f3da6b"
+          }
+        ],
+        "inputConstraints": {
+          "root": "path.resolve('.') from ambient cwd, NOT runtime-enforced equality with scanner root",
+          "modulePaths": [
+            "skills/nova/project/compiler.ts",
+            "skills/nova/project/legacy-import.ts"
+          ],
+          "qualificationScope": "Exact caller/branch/input-source metadata only. NOT test purpose exclusion, archive authenticity, module initialization, child effects, successful execution or AP acceptance.",
+          "runtimeAcquisitionAuthorized": false,
+          "callerBranches": [
+            {
+              "caller": "package.json scripts.verify:test-gate:coverage and pipeline-reliability.yaml Validate project compiler and installed stage contracts",
+              "selection": "No positional archive: runtime=root/skills/nova; compilerFile=runtime/project/compiler.ts."
+            },
+            {
+              "caller": "pipeline-reliability.yaml Assemble production role packages",
+              "selection": "package-agent-skill-bundle.sh nova dist/nova-${GITHUB_SHA}.tgz ${GITHUB_SHA}, then check-project-compiler.mts dist/nova-${GITHUB_SHA}.tgz. Truthy archive: tar extraction, assert one root entry, runtime=extracted/entry/skills; compilerFile=runtime/packages/nova-project/compiler.ts."
+            },
+            {
+              "caller": "check-project-compiler.mts -> checkLegacyProjectImport({ project, platformFile, temporary, runtime, compilerFile })",
+              "selection": "Helper imports same compilerFile and sibling legacy-import.ts. Full caller and helper bytes bind argument transfer and all helper call sites."
+            }
+          ],
+          "archiveSourceMapping": {
+            "packageId": "nova-project",
+            "source": "skills/nova/project",
+            "target": "skills/packages/nova-project",
+            "authority": "Nova role includes nova-project; node-package kind maps through builder copySelection to skills/packages/<id>. Ordinary source modules and their local closure remain executable discovery inputs.",
+            "enforcedRuntimeArchiveIdentity": false
+          },
+          "unqualifiedEffects": [
+            "Any external CLI archive argument remains ambient executable input: tar input bytes, executable, extraction containment, symlinks, entry type, module identity and dependencies are NOT validated by this scanner recipe. Single-entry count is not archive authenticity.",
+            "Builder/source mapping is a pinned static observation, not proof of an archive build or equality of extracted bytes to checkout. Arbitrary archive code is not admitted as a finite source or exempted.",
+            "Static imports, compiler and legacy module initialization, test assertions, registry discovery, all temporary filesystem and git mutations, child pipeline CLI launches and cleanup remain unqualified.",
+            "Cwd, environment, Node loader, package installation and actual native caller execution are not established. Recipes do not authorize new import expressions or changed callers."
+          ]
+        },
+        "authorityInputs": [
+          {
+            "path": "tests/verification/contracts/check-project-compiler.mts",
+            "sha256": "802846a68eced2141516765b573c090138ae3c85669cd7349324cb37b1ecfbf1"
+          },
+          {
+            "path": "package.json",
+            "sha256": "602c41b16a66c10ba9e7385ddb12bb9e1cf9227183374acbe987198640ed4cab"
+          },
+          {
+            "path": ".github/workflows/pipeline-reliability.yaml",
+            "sha256": "e338f143d87d8fcbf16830fdf82a0f7a9396f53376a780f4076ee4fb5e87ac4a"
+          },
+          {
+            "path": "scripts/package-agent-skill-bundle.sh",
+            "sha256": "dc4cc8626b5b303d2c28085bab83adf090932b4f31b0b4355a6dc188ac0a562c"
+          },
+          {
+            "path": "scripts/build-runtime-role-bundle.mjs",
+            "sha256": "0e20765fdcc03f09b884aba805e6733f42e63c494d39a11827b2fda5c9bd6ef9"
+          },
+          {
+            "path": "scripts/check-runtime-role-manifests.mjs",
+            "sha256": "521f14214afa42f7651ef81eca689f206cf3bc63c1c9edeb2376037dfba7d80c"
+          },
+          {
+            "path": "packaging/runtime/package-ownership.json",
+            "sha256": "0723d0a55eba3fdcc6c041132616db3330c3397db6a24f1d0abbf874bd28cab8"
+          },
+          {
+            "path": "packaging/runtime/roles/nova.json",
+            "sha256": "1c9de75dde812cb7ac118cfc074aa3a57bef7f428b789f11e9051ea713f0dc23"
+          },
+          {
+            "path": "skills/nova/project/package.json",
+            "sha256": "a267131773e51316a9c1e5e6939951b4a5db4dd6c24ebea80effc208d8bafe14"
+          }
+        ]
       }
     ]
   }

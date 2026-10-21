@@ -35,6 +35,8 @@ const reviewedNodeModuleNamedImports=new Set(['createRequire','Module','default'
 // authority requires a Source-reviewed recipe change here, not a JSON digest
 // refresh. These recipes never permit unsupported capability custody.
 const reviewedDocumentationModuleInputRecipes = [
+  {"source":"tests/verification/contracts/check-project-compiler.mts","semanticClass":"caller-bound-project-compiler-source-or-archive-metadata","recipeSha256":"881542ff85033cc56db9faf7b334e15818cf49a1f76faf55f8b86ef0898d83b4"},
+  {"source":"tests/verification/contracts/project-legacy-import-cases.mts","semanticClass":"caller-bound-project-compiler-source-or-archive-metadata","recipeSha256":"c079b8a7b9c9aadf304a47bdad13dc1d5227517a13b3296ca75c389f2238ea79"},
   {
     "source": "tests/verification/contracts/check-plugin-system-v2-phase11.mts",
     "semanticClass": "fixed-repository-root-module-contract-check",
@@ -186,7 +188,7 @@ const reviewedDocumentationModuleInputRecipes = [
     "recipeSha256": "9a2f6a0acee7925512c0ed9cc9f244a82f52fa284fa19f98fee16a32015bd928"
   }
 ];
-function documentationModuleInputAuthority(root,boundary,graph) {
+export function documentationModuleInputAuthority(root,boundary,graph) {
   const recipes=boundary.unresolvedModuleInputAuthorities??[],facts=[];
   for(const operation of graph.dynamicOperations) {
     assert(!operation.unqualifiedCapabilityTransfer,`DOCUMENTATION_TOOL_GRAPH_UNQUALIFIED: ${operation.source}; unsupported ${operation.capability} custody: ${operation.expression}`);

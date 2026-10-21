@@ -7,7 +7,7 @@ import ts from 'typescript';
 import {reviewedImporterResolutionOperation} from '../docs-api-documentation-role-custody.mjs';
 import {spawnSync} from 'node:child_process';
 import {createHash} from 'node:crypto';
-import {discoverScriptApiOutputs,discoverScriptOutputRoleClassifications,discoverTransformedApiOutputs,discoverShellApiOutputs,producerAdapterOperationRecipe,shellRawOutputSinks,shellRawOutputOperationRecipe} from '../docs-api-output-discovery.mjs';
+import {documentationModuleInputAuthority,discoverScriptApiOutputs,discoverScriptOutputRoleClassifications,discoverTransformedApiOutputs,discoverShellApiOutputs,producerAdapterOperationRecipe,shellRawOutputSinks,shellRawOutputOperationRecipe} from '../docs-api-output-discovery.mjs';
 import {classifySerializedOutputRoles,deriveNativeOperationFacts,nativeOperationFactDigest} from '../docs-api-output-role-classification.mjs';
 import {shellHeredocCustody,shellCommandAcquisitions} from '../docs-shell-source-custody.mjs';
 const sha=value=>createHash('sha256').update(value).digest('hex');
@@ -131,4 +131,48 @@ test('two source-bound resolver terminals classify only source-location metadata
  ]){assert(bytes.includes(before),before);assert.throws(()=>qualify(bytes.replace(before,after)),/RESOLUTION_METADATA_UNQUALIFIED|DOCUMENTATION_TOOL_GRAPH_UNQUALIFIED/);}
  const helper='tests/verification/lib/module-graph.mjs',original=fs.readFileSync(path.join(root,helper),'utf8');write(helper,original+'\nexport const addedLoader = true;\n');assert.throws(()=>qualify(),/bound bytes/);write(helper,original);
  const manifest=JSON.parse(fs.readFileSync(path.join(root,'package.json'),'utf8'));manifest.scripts['verify:migration:package-boundaries']+=' --import ./foreign-loader.mjs';write('package.json',JSON.stringify(manifest));assert.throws(()=>qualify(),/bound bytes/);
+}));
+
+test('source/archive compiler metadata binds both callers, extraction branch, package mapping and helper transfer',()=>fixture(({root,write})=>{
+ const repository=path.resolve(new URL('../..',import.meta.url).pathname);
+ const boundary=JSON.parse(fs.readFileSync(path.join(repository,'scripts/docs-api-producer-adapter-authorities.json'))).documentationToolBoundary;
+ const selected=boundary.unresolvedModuleInputAuthorities.filter(r=>r.semanticClass==='caller-bound-project-compiler-source-or-archive-metadata');
+ assert.equal(selected.length,2);
+ const inputs=new Set(selected.flatMap(r=>[r.source,...r.authorityInputs.map(x=>x.path),...r.inputConstraints.modulePaths]));
+ for(const source of inputs)write(source,fs.readFileSync(path.join(repository,source),'utf8'));
+ const graph={dynamicOperations:[],resolutionOnlyOperations:[]};
+ for(const recipe of selected){
+  const bytes=fs.readFileSync(path.join(root,recipe.source),'utf8'),tree=ts.createSourceFile(recipe.source,bytes,ts.ScriptTarget.Latest,true);
+  const visit=node=>{if(ts.isCallExpression(node)&&node.expression.kind===ts.SyntaxKind.ImportKeyword){let owner=node;for(let parent=node.parent;parent;parent=parent.parent)if(ts.isFunctionDeclaration(parent))owner=parent;graph.dynamicOperations.push({source:recipe.source,expression:node.getText(tree),operation:owner.getText(tree)});}ts.forEachChild(node,visit);};visit(tree);
+  assert.equal(recipe.inputConstraints.runtimeAcquisitionAuthorized,false);
+  assert.equal(recipe.inputConstraints.archiveSourceMapping.enforcedRuntimeArchiveIdentity,false);
+ }
+ assert.equal(graph.dynamicOperations.length,3);
+ const check=(input=boundary,operations=graph)=>documentationModuleInputAuthority(root,input,operations);
+ const baseline=check();assert.match(baseline,/^[a-f0-9]{64}$/u);
+ for(const [source,before,after]of [
+  ['tests/verification/contracts/check-project-compiler.mts','const archive = process.argv[2]','const archive = process.argv[3]'],
+  ['tests/verification/contracts/check-project-compiler.mts','temporary, runtime, compilerFile','temporary, runtime, compilerFile: process.argv[4]'],
+  ['tests/verification/contracts/project-legacy-import-cases.mts',"'legacy-import.ts'","'foreign.ts'"],
+  ['scripts/build-runtime-role-bundle.mjs',"'skills/packages'","'skills/foreign'"],
+  ['packaging/runtime/package-ownership.json','"source": "skills/nova/project"','"source": "skills/foreign/project"'],
+  ['.github/workflows/pipeline-reliability.yaml','dist/nova-${GITHUB_SHA}.tgz','dist/foreign-${GITHUB_SHA}.tgz'],
+  ['package.json','node tests/verification/contracts/check-project-compiler.mts','node tests/verification/contracts/check-project-compiler.mts external.tgz'],
+ ]){
+  const original=fs.readFileSync(path.join(root,source),'utf8');assert(original.includes(before),source);write(source,original.replace(before,after));
+  assert.throws(()=>check(),/input\/caller authority changed/);write(source,original);assert.equal(check(),baseline);
+ }
+ // Mutable inventory refresh cannot bless an unknown archive operand, new
+ // loader expression or new claim that extracted bytes are trusted modules.
+ const forged=structuredClone(boundary),record=forged.unresolvedModuleInputAuthorities.find(r=>r.source===selected[0].source);
+ record.inputConstraints.archiveSourceMapping.enforcedRuntimeArchiveIdentity=true;
+ assert.throws(()=>check(forged),/no reviewed semantic input authority/);
+ const extra=structuredClone(graph);extra.dynamicOperations.push({source:selected[0].source,expression:'import(process.argv[4])',operation:'import(process.argv[4])'});
+ assert.throws(()=>check(boundary,extra),/outside its semantic input recipe/);
+ const changed=structuredClone(graph);changed.dynamicOperations[1].operation+='\nimport(process.argv[4]);';
+ assert.throws(()=>check(boundary,changed),/outside its semantic input recipe/);
+ // Real source bytes are dependency facts, not pinned inert fixtures. Their
+ // mutations invalidate facts instead of retaining a cached metadata result.
+ const compiler='skills/nova/project/compiler.ts';write(compiler,fs.readFileSync(path.join(root,compiler),'utf8')+secret);
+ assert.notEqual(check(),baseline);
 }));
