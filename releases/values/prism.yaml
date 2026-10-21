@@ -1,20 +1,20 @@
-# Generated from release fc2cd5b73c78cb12aac4fceaf23ac0b64b8eff90 and byte-matched source configuration; do not edit.
+# Generated from release dbf8b9fe99ebc572baa09e800fa5ee30d98f8318 and byte-matched source configuration; do not edit.
 images:
   control:
     repository: ghcr.io/datrab/kubeclaw-prism-control
-    digest: sha256:c72b91cc64280ee20502186d2f838739f82e7a3d94f8c5d8c136ab606d7b9db1
+    digest: sha256:b66d9f0bb1e548f686fcef7b9fb6559323fa7451baf57cce958a7c22136f1758
     pullPolicy: IfNotPresent
   studio:
     repository: ghcr.io/datrab/kubeclaw-prism-studio
-    digest: sha256:82a49fc7714180e269162d5d284fb2c6a23c4d903cc7798b2b0998daad757236
+    digest: sha256:30de882b618c724515371ed9323d7c4e893b7d06d4a57ff830056e64e4eb2e47
     pullPolicy: IfNotPresent
   worker:
     repository: ghcr.io/datrab/kubeclaw-prism-worker
-    digest: sha256:21cf7a7a1ab2015e84aa4b82c1169720857e842d20eba37d425891436ba6930d
+    digest: sha256:29e661caadc019b74ff10d4aed011e40b6a842dc412884ea102077837114575a
     pullPolicy: IfNotPresent
   ingestion:
     repository: ghcr.io/datrab/kubeclaw-prism-ingestion
-    digest: sha256:1ddcfdc8aaf7e48a646e1e7dffd431ab250bd05148aff88be5f90fde59b586ad
+    digest: sha256:e68d914f2d9afc7a1dab0047ab4b57bb73d395505b195b453d8373d077b8f813
     pullPolicy: IfNotPresent
 imagePullSecrets:
   - name: ghcr-secret

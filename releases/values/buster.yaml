@@ -1,4 +1,4 @@
-# Generated from release fc2cd5b73c78cb12aac4fceaf23ac0b64b8eff90 and byte-matched source configuration; do not edit.
+# Generated from release dbf8b9fe99ebc572baa09e800fa5ee30d98f8318 and byte-matched source configuration; do not edit.
 agentRole: buster
 gateway:
   startupDoctor:
@@ -30,7 +30,7 @@ initSetup:
       memory: 8Gi
 image:
   repository: ghcr.io/datrab/kubeclaw-buster-gateway
-  digest: sha256:abffa4dda820550ad69c67999b26ba8be1884c4600c3a2cd326424071812ce6c
+  digest: sha256:4a9b942eeafbd7a8b41306d2f8ec5e11be6ce492fc079e4ba5d3e1ea29e9a761
   tag: ''
   pullPolicy: IfNotPresent
 imagePullSecrets:
@@ -38,13 +38,13 @@ imagePullSecrets:
 codeBundle:
   enabled: true
   archiveUrl: >-
-    https://github.com/datrab/kubeclaw/releases/download/code-bundles-39581128822-1/buster-31db0e8d029389b0aceb3bc9cf8aed1b6575168d.tgz
-  expectedCommit: 31db0e8d029389b0aceb3bc9cf8aed1b6575168d
+    https://github.com/datrab/kubeclaw/releases/download/code-bundles-39623175348-1/buster-dbf8b9fe99ebc572baa09e800fa5ee30d98f8318.tgz
+  expectedCommit: dbf8b9fe99ebc572baa09e800fa5ee30d98f8318
   contractVersion: v2
   auth:
     existingSecret: github-bundle-reader
     existingSecretKey: token
-  sha256: 38e04b2075f4ca8c16a5bd96c23a0f55bf0b23b7ffba2c0437bea105491e008d
+  sha256: cd5ec36be0f7c11636d3d86ff521c1420a97750f4369eff5142e7a7e46d8350b
 auth:
   existingSecret: openclaw-shared-secrets
   existingSecretKey: gatewayToken-buster
@@ -53,6 +53,7 @@ litellm:
   existingSecretKey: litellmApiKey
 discord:
   enabled: true
+  requireMention: false
   existingSecret: openclaw-shared-secrets
   existingSecretKey: discordToken-buster
   channelId: '1473692599125540985'
@@ -69,6 +70,10 @@ discordWebhook:
   secretKey: discordWebhook
 agent:
   project: clawdeck
+  model:
+    primary: openai/gpt-6.1-sol
+    fallbacks:
+      - openai/gpt-5.6-sol
   git:
     enabled: true
     secretName: git-deploy-key-buster
@@ -87,7 +92,7 @@ service:
       targetPort: buster-plan
 extraContainers:
   - name: buster-v2-runtime
-    image: ghcr.io/datrab/kubeclaw-buster-runtime@sha256:bdffca01610c68cb55041bdeb44add21e8877f71693e0e6033ae03d0a8c2255e
+    image: ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5413e3f76d9c588607eea3933672f4a6662380ae962a60b898bed616ff1726f6
     imagePullPolicy: Always
     env:
       - name: BUSTER_V2_TOKEN
@@ -234,7 +239,7 @@ busterNamespaceBroker:
       - prism-test-ghcr
     image:
       repository: ghcr.io/datrab/kubeclaw-namespace-controller
-      digest: sha256:74f241144e013e47300412e2078b1cb7b31fc90136667c1b33a06f2e4716d6c8
+      digest: sha256:0ca365db3dbe30c55e972d640cd055338766be5429c4435e849329508eadbde0
       tag: ''
       pullPolicy: IfNotPresent
 resources:
