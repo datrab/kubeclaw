@@ -1,0 +1,64 @@
+{
+  "readerRevision": "22ea0ffb9f4e30c7579b46ed7eb059a3de51ad30",
+  "currentSourceRevision": "8522e25d9b284e9bf1a34dedf313a806d97c28ee",
+  "inputs": [
+    {
+      "path": "scripts/docs-reader/redirects.mjs",
+      "sha256": "bdeb3d97575e9e8116fc5d07eb2fd359aeac3a5ae824d0521e688ff187e43a60",
+      "equalsReviewedCandidateAnd22ea": true
+    },
+    {
+      "path": "scripts/docs-reader/serve.mjs",
+      "sha256": "15d8bfea45c90d2f2d7380e18e2190498c4ca9f64259f651354418782195e834",
+      "equalsReviewedCandidateAnd22ea": true
+    },
+    {
+      "path": "scripts/tests/docs-reader-redirects.test.mjs",
+      "sha256": "dec1ca9dcfb5ca80adeb661ff57350029df06d3690794d3194cff8d406c4c646",
+      "equalsReviewedCandidateAnd22ea": true
+    },
+    {
+      "path": "scripts/tests/docs-reader-redirects.browser.mjs",
+      "sha256": "4c0f4fdc4112201b289172c21e4123bbb976718dd10cfd7e3ba8390542f3bcec",
+      "equalsReviewedCandidateAnd22ea": true
+    },
+    {
+      "path": "scripts/docs-reader/renderer.mjs",
+      "sha256": "9e87c023a29932f35c9c0ca5169c7c4cc39953a849e31b206e6f431bf91acf2b",
+      "equalsReviewedCandidateAnd22ea": true
+    },
+    {
+      "path": "scripts/docs-publication.mjs",
+      "sha256": "3b22ff66706c132c96a3b3ba39c7c2d043d314336d46660d94e7481c0f0ef360",
+      "equalsReviewedCandidateAnd22ea": true
+    },
+    {
+      "path": ".github/workflows/docs-checks.yaml",
+      "sha256": "f44033eb4877618d34c65fb292a33f88f8dddb3dbe7c471439328f81f57ac2c5",
+      "equalsReviewedCandidateAnd22ea": true
+    },
+    {
+      "path": "docs/site/reference/documentation-site.md",
+      "sha256": "4f418aa28e32443300e50431ba9a80552a5bbcb96d2a58821316e6b1821300d8",
+      "equalsReviewedCandidateAnd22ea": true
+    }
+  ],
+  "renderedPage": {
+    "path": "reference/documentation-site.html",
+    "sha256": "47fa9a76004535899ede727fbc3e6c4a9faf6394045e893ff99eaae951e2e6f6",
+    "bytes": 52672
+  },
+  "changedSinceReader": [
+    "A\thandoffs/pr13-finish-20261021/postfreeze-projection-independent-review.json",
+    "A\thandoffs/pr13-finish-20261021/postfreeze-projection-independent-review.md",
+    "A\thandoffs/pr13-finish-20261021/reader-22ea-closeout.md",
+    "A\thandoffs/pr13-finish-20261021/reader-four-purpose-applicability.json",
+    "A\thandoffs/pr13-finish-20261021/reader-four-purpose-applicability.md",
+    "A\thandoffs/pr13-finish-20261021/reader-purpose-parent-review.md",
+    "A\thandoffs/pr13-finish-20261021/reader-purpose-repair-author.md",
+    "A\thandoffs/pr13-finish-20261021/reader-purpose-repair-frozen.json",
+    "M\tscripts/docs-api-documentation-role-custody.mjs",
+    "M\tscripts/docs-api-output-discovery.mjs",
+    "A\tscripts/tests/docs-reader-purpose-routing.test.mjs"
+  ]
+}

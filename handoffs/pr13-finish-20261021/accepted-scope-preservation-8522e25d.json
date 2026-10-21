@@ -1,0 +1,858 @@
+{
+  "schemaVersion": "bounded-accepted-scope-preservation.v1",
+  "reviewer": "/root/workflow_acceptance",
+  "revision": "8522e25d9b284e9bf1a34dedf313a806d97c28ee",
+  "readerRevision": "22ea0ffb9f4e30c7579b46ed7eb059a3de51ad30",
+  "role": "Independent changed-boundary review; original content reviewers/limits retained; no new gate or requirement acceptance count",
+  "verdict": "24 original scoped acceptances preserved; no whole A91201/PUB008/global approval",
+  "records": [
+    {
+      "id": "A911-03-REF-007-20261020",
+      "previousReviewedRevision": "d0bb52c4d8bcf323c0ff32b95e8e3120ffa6eefb",
+      "revision": "8522e25d9b284e9bf1a34dedf313a806d97c28ee",
+      "changedDependencies": [
+        "scripts/docs-publication.mjs"
+      ],
+      "originalAuthor": "PR13 automation capability author",
+      "originalReviewer": "/root/review_a91103",
+      "originalSummary": "Independent read-only topic review PASS: separate Nova/Buster grants, plugin declarations, worker profile and resource capabilities, Kubernetes RBAC and Codex interface metadata; clear non-translation and safe denial decisions. Canonical page agrees with generator.",
+      "originalLimits": [
+        "Source/documentation acceptance for capability namespace topic only; no live or deployed-policy claim.",
+        "No A911-11 mutation-suite or whole-AP09 acceptance."
+      ],
+      "originalGateIds": [
+        "A911-03"
+      ],
+      "originalRequirementIds": [
+        "REF-007"
+      ],
+      "review": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "verdict": "PRESERVE_ORIGINAL_SCOPE",
+      "reason": "Capability namespace/generator facts unaffected: publisher adds only validated reader redirect inputs, not capability rendering or grants.",
+      "openIssues": []
+    },
+    {
+      "id": "AP09.1-ready-topics-20261020",
+      "previousReviewedRevision": "cfc97be096908c1193877d054bb80662120f1eca",
+      "revision": "8522e25d9b284e9bf1a34dedf313a806d97c28ee",
+      "changedDependencies": [
+        "docs/site/reference/generated-documentation-map.json",
+        "scripts/docs-publication.mjs"
+      ],
+      "originalAuthor": "Documentation implementation authors before review campaign",
+      "originalReviewer": "/root/review_ready_foundations (01a157c4-a915-7bd0-9f54-0de78011b9b7)",
+      "originalSummary": "Independent PASS for entry/authority/completeness rules, product explanation/request, stable decision identity and public status/register consistency.",
+      "originalLimits": [
+        "Source and documentation acceptance only; no live deployment or global publication acceptance.",
+        "GOV-002 exhaustive inventory and DEC-002 full rationale review remain NOT_READY; GOV-006 metadata map stale.",
+        "Other-page/global refs/publication/boundary checks failed; not accepted by this scoped review."
+      ],
+      "originalGateIds": [],
+      "originalRequirementIds": [
+        "GOV-001",
+        "GOV-003",
+        "GOV-004",
+        "GOV-008",
+        "ENT-001",
+        "ENT-002",
+        "ENT-003",
+        "ENT-004",
+        "DEC-001",
+        "STA-001",
+        "STA-002"
+      ],
+      "review": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "verdict": "PRESERVE_ORIGINAL_SCOPE",
+      "reason": "Entry/product/status/decision authority prose unaffected. Generated map adds only reviewed docsite/error dependencies and a qualified error-section verification date; authority, owners, routes and checks unchanged.",
+      "openIssues": []
+    },
+    {
+      "id": "Reviewed-corrections-20261020",
+      "previousReviewedRevision": "cfc97be096908c1193877d054bb80662120f1eca",
+      "revision": "8522e25d9b284e9bf1a34dedf313a806d97c28ee",
+      "changedDependencies": [
+        "docs/site/reference/generated-documentation-map.json"
+      ],
+      "originalAuthor": "Documentation authors and correction coordinator",
+      "originalReviewer": "/root/review_worker_ready",
+      "originalSummary": "Seven concrete review findings corrected and independently re-reviewed: unsafe retry opt-in in4Buster reader paths,actual admission/invocation error codes,current lint facts and generated metadata freshness.",
+      "originalLimits": [
+        "Documentation/source acceptance only; no live deployment or globally green publication/CI claim.",
+        "Carries forward prior reviewed unchanged topic content; unrelated whole-file pin/publication failures remain open."
+      ],
+      "originalGateIds": [],
+      "originalRequirementIds": [
+        "SPC-001",
+        "CFG-006",
+        "FLW-011",
+        "EXT-005",
+        "EXT-006",
+        "CFG-016",
+        "GOV-006"
+      ],
+      "review": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "verdict": "PRESERVE_ORIGINAL_SCOPE",
+      "reason": "Unsafe-retry, admission-error and lint corrections unchanged; owner map faithfully adds the two newly reviewed topic dependencies/verification scope without resetting other-page dates.",
+      "openIssues": []
+    },
+    {
+      "id": "AP09-reader-operators-20261020",
+      "previousReviewedRevision": "d303e57edad20b27f2332c6d037c8daeadb8e1ba",
+      "revision": "8522e25d9b284e9bf1a34dedf313a806d97c28ee",
+      "changedDependencies": [
+        "scripts/docs-publication.mjs"
+      ],
+      "originalAuthor": "Documentation authors and correction coordinator",
+      "originalReviewer": "/root/review_worker_ready",
+      "originalSummary": "Independent topic acceptance for OPR-001, OPR-002, OPR-004, OPR-005, OPR-007, OPR-009, OPL-002; whole-gate acceptance only for explicitly reviewed A98-01, A98-05, A98-07.",
+      "originalLimits": [
+        "Documentation/source acceptance only; no live deployment or globally green publication/CI claim.",
+        "Full operator wrapper fails first-command assertion; dependency matrix generation has unresolved observer imports; combined cache/chart suite remains red. Only separately passed checks and reviewed scopes accepted.",
+        "No live backup/restore,application recovery,operator authentication or full installation/diagnosis/maintenance acceptance."
+      ],
+      "originalGateIds": [
+        "A98-01",
+        "A98-05",
+        "A98-07"
+      ],
+      "originalRequirementIds": [
+        "OPR-001",
+        "OPR-002",
+        "OPR-004",
+        "OPR-005",
+        "OPR-007",
+        "OPR-009",
+        "OPL-002"
+      ],
+      "review": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "verdict": "PRESERVE_ORIGINAL_SCOPE",
+      "reason": "Operator task, projection/recovery and isolated recovery-render source semantics unchanged; publication handoff does not execute tasks or broaden their recorded native/live limits.",
+      "openIssues": []
+    },
+    {
+      "id": "AP09-reader-developers-20261020",
+      "previousReviewedRevision": "d0bb52c4d8bcf323c0ff32b95e8e3120ffa6eefb",
+      "revision": "8522e25d9b284e9bf1a34dedf313a806d97c28ee",
+      "changedDependencies": [
+        ".github/workflows/docs-checks.yaml",
+        "scripts/docs-publication.mjs"
+      ],
+      "originalAuthor": "Documentation authors and correction coordinator",
+      "originalReviewer": "/root/review_platform_ready",
+      "originalSummary": "Independent topic acceptance for DEV-001, DEV-003, DEV-004, DEV-006, DEV-009, EXT-001, EXT-002, EXT-003, EXT-004, EXT-009, CDV-001, CDV-002, CDV-004, CDV-011; whole-gate acceptance only for explicitly reviewed A910-02.",
+      "originalLimits": [
+        "Documentation/source acceptance only; no live deployment or globally green publication/CI claim.",
+        "SDKgeneration missing json-schema-to-typescript; capability-security fixture stale; external-effect import admission,Prism deployment fixture and missing pglite keep assigned scopes NOT_READY.",
+        "Ops promotion authority,host version,same-ID replacement roots and missing capability/Forge/Echo change tasks remain FAIL. Inventory word-count freshness and choice-guide metadata check not green."
+      ],
+      "originalGateIds": [
+        "A910-02"
+      ],
+      "originalRequirementIds": [
+        "DEV-001",
+        "DEV-003",
+        "DEV-004",
+        "DEV-006",
+        "DEV-009",
+        "EXT-001",
+        "EXT-002",
+        "EXT-003",
+        "EXT-004",
+        "EXT-009",
+        "CDV-001",
+        "CDV-002",
+        "CDV-004",
+        "CDV-011"
+      ],
+      "review": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "verdict": "PRESERVE_ORIGINAL_SCOPE",
+      "reason": "Developer roles/package ownership/extension teaching paths unchanged; CI adds redirect native/browser controls only and retains existing trust/install/check order. No missing-prerequisite limitation is cleared.",
+      "openIssues": []
+    },
+    {
+      "id": "AP09-reviewed-configuration-20261020",
+      "previousReviewedRevision": "8f775411fdd8e0232bdd45135accb61f23768f0b",
+      "revision": "8522e25d9b284e9bf1a34dedf313a806d97c28ee",
+      "changedDependencies": [
+        "scripts/docs-publication.mjs"
+      ],
+      "originalAuthor": "Documentation authors and correction coordinator",
+      "originalReviewer": "/root/review_worker_ready",
+      "originalSummary": "Independent PASS for CFG-001, CFG-002, CFG-015, CFG-017. No whole-gate acceptance inferred from narrower requirements.",
+      "originalLimits": [
+        "Documentation/source acceptance only; no live deployment or globally green publication/CI claim.",
+        "Exhaustive configuration/error/event/store/public-source coverage remains unaccepted where independently failed or not established.",
+        "Passing focused checks do not assert all current repository links,generated outputs,publication,build,live services or deployed recovery are green."
+      ],
+      "originalGateIds": [],
+      "originalRequirementIds": [
+        "CFG-001",
+        "CFG-002",
+        "CFG-015",
+        "CFG-017"
+      ],
+      "review": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "verdict": "PRESERVE_ORIGINAL_SCOPE",
+      "reason": "Configuration inheritance/platform/scaffold semantics unchanged; publication has no configuration mutation or generation change.",
+      "openIssues": []
+    },
+    {
+      "id": "AP09-reviewed-reference-20261020",
+      "previousReviewedRevision": "8f775411fdd8e0232bdd45135accb61f23768f0b",
+      "revision": "8522e25d9b284e9bf1a34dedf313a806d97c28ee",
+      "changedDependencies": [
+        "scripts/docs-publication.mjs"
+      ],
+      "originalAuthor": "Documentation authors and correction coordinator",
+      "originalReviewer": "/root/review_platform_ready",
+      "originalSummary": "Independent PASS for REF-001, REF-008, REF-009, REF-017, REF-018. No whole-gate acceptance inferred from narrower requirements.",
+      "originalLimits": [
+        "Documentation/source acceptance only; no live deployment or globally green publication/CI claim.",
+        "Exhaustive configuration/error/event/store/public-source coverage remains unaccepted where independently failed or not established.",
+        "Passing focused checks do not assert all current repository links,generated outputs,publication,build,live services or deployed recovery are green."
+      ],
+      "originalGateIds": [],
+      "originalRequirementIds": [
+        "REF-001",
+        "REF-008",
+        "REF-009",
+        "REF-017",
+        "REF-018"
+      ],
+      "review": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "verdict": "PRESERVE_ORIGINAL_SCOPE",
+      "reason": "SDK entrypoints, package roles, glossary and reference semantics unchanged; publication adds no SDK/reference-field acceptance.",
+      "openIssues": []
+    },
+    {
+      "id": "AP09-reviewed-maintenance-20261020",
+      "previousReviewedRevision": "d0bb52c4d8bcf323c0ff32b95e8e3120ffa6eefb",
+      "revision": "8522e25d9b284e9bf1a34dedf313a806d97c28ee",
+      "changedDependencies": [
+        "scripts/docs-publication.mjs"
+      ],
+      "originalAuthor": "Documentation authors and correction coordinator",
+      "originalReviewer": "/root/review_data_ready",
+      "originalSummary": "Independent PASS for MNT-013, MNT-016. No whole-gate acceptance inferred from narrower requirements.",
+      "originalLimits": [
+        "Documentation/source acceptance only; no live deployment or globally green publication/CI claim.",
+        "Exhaustive configuration/error/event/store/public-source coverage remains unaccepted where independently failed or not established.",
+        "Passing focused checks do not assert all current repository links,generated outputs,publication,build,live services or deployed recovery are green."
+      ],
+      "originalGateIds": [],
+      "originalRequirementIds": [
+        "MNT-013",
+        "MNT-016"
+      ],
+      "review": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "verdict": "PRESERVE_ORIGINAL_SCOPE",
+      "reason": "Pinned-source scanner and authored/generated catalogue separation unchanged; positive selection/copy retained by actual owning controls.",
+      "openIssues": []
+    },
+    {
+      "id": "AP09-reviewed-publication-navigation-20261020",
+      "previousReviewedRevision": "cfc97be096908c1193877d054bb80662120f1eca",
+      "revision": "8522e25d9b284e9bf1a34dedf313a806d97c28ee",
+      "changedDependencies": [
+        "docs/site/reference/documentation-site.md",
+        "scripts/docs-publication.mjs"
+      ],
+      "originalAuthor": "Documentation implementation authors",
+      "originalReviewer": "/root/review_publication",
+      "originalSummary": "Independent navigation-only acceptance for PUB-001 and A912-02; all canonical pages reachable through meaningful role/task links in at most three decisions. Reviewed sources and pages unchanged since baseline.",
+      "originalLimits": [
+        "Navigation reachability only, not substantive acceptance of all destinations.",
+        "Publication/reference/boundary checks remain failed; no successful current output build, search, accessibility, rendered/offline task or live acceptance claimed.",
+        "Pre-existing dirty events.md excluded and preserved."
+      ],
+      "originalGateIds": [
+        "A912-02"
+      ],
+      "originalRequirementIds": [
+        "PUB-001"
+      ],
+      "review": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "verdict": "PRESERVE_ORIGINAL_SCOPE",
+      "reason": "Existing canonical role/task routes and all old docsite H2 targets retained. New preview/redirect sections supplement rather than replace the original page. Navigation-only acceptance persists, not substantive destination acceptance.",
+      "openIssues": []
+    },
+    {
+      "id": "AP09-closeout-config-reference-20261020",
+      "previousReviewedRevision": "d0bb52c4d8bcf323c0ff32b95e8e3120ffa6eefb",
+      "revision": "8522e25d9b284e9bf1a34dedf313a806d97c28ee",
+      "changedDependencies": [
+        "scripts/docs-publication.mjs"
+      ],
+      "originalAuthor": "Documentation authors and correction coordinator",
+      "originalReviewer": "/root/close_config_reference",
+      "originalSummary": "Independent sourceAccuracy/readerUsability/quality PASS for CFG-004, CFG-005, CFG-008, CFG-018, REF-015. Exact correction bytes reviewed; full scopes rather than file-existence or count proxies.",
+      "originalLimits": [
+        "Documentation/source acceptance only; no live deployment or globally green publication/CI claim.",
+        "No new whole-gate acceptance;all inherited scoped limits retained.",
+        "Remaining public reference/schema/error/event/store completeness,SDK/environment prerequisites,missing first-project/capability/integration journeys and integrated publication/language findings remain open."
+      ],
+      "originalGateIds": [],
+      "originalRequirementIds": [
+        "CFG-004",
+        "CFG-005",
+        "CFG-008",
+        "CFG-018",
+        "REF-015"
+      ],
+      "review": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "verdict": "PRESERVE_ORIGINAL_SCOPE",
+      "reason": "Reviewed zero/omission/owner/requester and worker contract corrections unchanged; publisher Source-link callback and source-byte guard unchanged.",
+      "openIssues": []
+    },
+    {
+      "id": "AP09-closeout-developer-maintenance-20261020",
+      "previousReviewedRevision": "d0bb52c4d8bcf323c0ff32b95e8e3120ffa6eefb",
+      "revision": "8522e25d9b284e9bf1a34dedf313a806d97c28ee",
+      "changedDependencies": [
+        "scripts/docs-publication.mjs"
+      ],
+      "originalAuthor": "Documentation authors and correction coordinator",
+      "originalReviewer": "/root/close_developer_maintenance",
+      "originalSummary": "Independent sourceAccuracy/readerUsability/quality PASS for DEV-005, DEV-008, EXT-007, EXT-008, CDV-005, OPL-003, OPL-004, PLG-004, PLG-012, GOV-005, GOV-007. Exact correction bytes reviewed; full scopes rather than file-existence or count proxies.",
+      "originalLimits": [
+        "Documentation/source acceptance only; no live deployment or globally green publication/CI claim.",
+        "No new whole-gate acceptance;all inherited scoped limits retained.",
+        "Remaining public reference/schema/error/event/store completeness,SDK/environment prerequisites,missing first-project/capability/integration journeys and integrated publication/language findings remain open."
+      ],
+      "originalGateIds": [],
+      "originalRequirementIds": [
+        "DEV-005",
+        "DEV-008",
+        "EXT-007",
+        "EXT-008",
+        "CDV-005",
+        "OPL-003",
+        "OPL-004",
+        "PLG-004",
+        "PLG-012",
+        "GOV-005",
+        "GOV-007"
+      ],
+      "review": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "verdict": "PRESERVE_ORIGINAL_SCOPE",
+      "reason": "Registry/grants/lifecycle, ownership/classification and change instructions unchanged; publisher does not widen generated or product authority.",
+      "openIssues": []
+    },
+    {
+      "id": "AP09-decision-record-content-20261021",
+      "previousReviewedRevision": "cfc97be096908c1193877d054bb80662120f1eca",
+      "revision": "8522e25d9b284e9bf1a34dedf313a806d97c28ee",
+      "changedDependencies": [
+        "scripts/docs-publication.mjs"
+      ],
+      "originalAuthor": "Nova /root authored content and correction coordinator",
+      "originalReviewer": "Independent Codex autoreview 2026-10-21 platform-ready-review",
+      "originalSummary": "Whole rationale, recorded alternatives, consequences and supersession obligation; unknown approval remains explicit and independent of implementation.",
+      "originalLimits": [
+        "Source-backed documentation acceptance only; no deployed encryption assurance, live restore, native host, rendered site or whole global generator/drift claim."
+      ],
+      "originalGateIds": [],
+      "originalRequirementIds": [
+        "DEC-002"
+      ],
+      "review": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "verdict": "PRESERVE_ORIGINAL_SCOPE",
+      "reason": "Decision rationale, alternatives, consequences, identity and unknown approval semantics unchanged; no publication result turns an unknown approval into authorization.",
+      "openIssues": []
+    },
+    {
+      "id": "AP09-documentation-agent-maintenance-20261021",
+      "previousReviewedRevision": "cfc97be096908c1193877d054bb80662120f1eca",
+      "revision": "8522e25d9b284e9bf1a34dedf313a806d97c28ee",
+      "changedDependencies": [
+        ".github/workflows/docs-checks.yaml",
+        "docs/site/reference/documentation-site.md",
+        "scripts/docs-api-output-discovery.mjs",
+        "scripts/docs-publication.mjs",
+        "scripts/docs-reader/renderer.mjs"
+      ],
+      "originalAuthor": "Nova /root authored content and correction coordinator",
+      "originalReviewer": "Independent Codex autoreview 2026-10-21 maintenance-ready-review",
+      "originalSummary": "Whole central documentation-agent maintenance contract: discovery, impact, owned generation, review, reader probe and safe retirement.",
+      "originalLimits": [
+        "Source-backed documentation acceptance only; no deployed encryption assurance, live restore, native host, rendered site or whole global generator/drift claim.",
+        "Other MNT global discovery/generator/drift obligations are NOT accepted from this authored maintenance guide audit; see scope.json."
+      ],
+      "originalGateIds": [],
+      "originalRequirementIds": [
+        "MNT-017"
+      ],
+      "review": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "verdict": "PRESERVE_ORIGINAL_SCOPE",
+      "reason": "Maintenance guide/owned-generation procedure retained. Additive UNACCEPTED_DATA hook preserves original graph construction/entries and is not admission; exact finite serve route retains fresh source inputs, no selected importer/entry, alias/public-target/full-unresolved guards. Global discovery/generation still explicitly excluded.",
+      "openIssues": []
+    },
+    {
+      "id": "AP09-complete-platform-change-content-20261021",
+      "previousReviewedRevision": "cfc97be096908c1193877d054bb80662120f1eca",
+      "revision": "8522e25d9b284e9bf1a34dedf313a806d97c28ee",
+      "changedDependencies": [
+        ".github/workflows/docs-checks.yaml",
+        "scripts/docs-publication.mjs"
+      ],
+      "originalAuthor": "Nova /root authored content and correction coordinator",
+      "originalReviewer": "Independent Codex autoreview 2026-10-21 platform-final-review",
+      "originalSummary": "Whole effect-format/identity/recovery change path, capability/event introduction, Forge/Echo integration and selected GitOps generation/ownership/security/upgrade tasks.",
+      "originalLimits": [
+        "Source-backed documentation acceptance only; no deployed encryption assurance, live restore, native host, rendered site or whole global generator/drift claim."
+      ],
+      "originalGateIds": [],
+      "originalRequirementIds": [
+        "CDV-003",
+        "CDV-007",
+        "CDV-010",
+        "CDV-012"
+      ],
+      "review": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "verdict": "PRESERVE_ORIGINAL_SCOPE",
+      "reason": "Effect identity/recovery, capability/event, Forge/Echo and GitOps change paths unchanged; added CI controls exercise reader fixtures, not product/platform changes.",
+      "openIssues": []
+    },
+    {
+      "id": "AP09-complete-plugin-maintenance-mechanisms-20261021",
+      "previousReviewedRevision": "d0bb52c4d8bcf323c0ff32b95e8e3120ffa6eefb",
+      "revision": "8522e25d9b284e9bf1a34dedf313a806d97c28ee",
+      "changedDependencies": [
+        "scripts/docs-publication.mjs"
+      ],
+      "originalAuthor": "Nova /root documentation coordinator",
+      "originalReviewer": "Independent Codex autoreview 2026-10-21 plugin-mechanisms whole original MNT obligations",
+      "originalSummary": "Whole mechanical generated plugin facts, roles/packages/registrations and plugin-registration drift implementation: all51 manifests/inventory rows/package pages,67 pipeline registrations,2 OpenClaw extensions and1 Codex plugin; separate editorial guidance and actual discovery/comparison mechanisms audited.",
+      "originalLimits": [
+        "No OPL001/005 full native runtime or credential semantics acceptance.",
+        "No A910-05 artifact/owner completeness, global API/discovery/generation/drift or rendered publication gate acceptance."
+      ],
+      "originalGateIds": [],
+      "originalRequirementIds": [
+        "MNT-002",
+        "MNT-007",
+        "MNT-012"
+      ],
+      "review": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "verdict": "PRESERVE_ORIGINAL_SCOPE",
+      "reason": "All existing plugin catalogue/registration mechanisms and editable/generated separation unchanged; publisher plugin-fact rendering/selection unchanged. Not a new all51 depth or runtime review.",
+      "openIssues": []
+    },
+    {
+      "id": "AP09-complete-publication-reference-navigation-20261021",
+      "previousReviewedRevision": "cfc97be096908c1193877d054bb80662120f1eca",
+      "revision": "8522e25d9b284e9bf1a34dedf313a806d97c28ee",
+      "changedDependencies": [
+        ".github/workflows/docs-checks.yaml",
+        "docs/site/reference/documentation-site.md",
+        "scripts/docs-publication.mjs"
+      ],
+      "originalAuthor": "Nova /root documentation author and correction coordinator",
+      "originalReviewer": "Independent Codex autoreview whole finished-reader-topics and LiteLLM audits with correction-final follow-up",
+      "originalSummary": "Whole repository links/anchors/version-bound code evidence and canonical-versus-legacy reader navigation.71 platform bindings now point to explicit inspected source revisions and appropriate implementation ranges.",
+      "originalLimits": [
+        "Source-backed documentation and reader-contract acceptance only; no whole gate/global API inventory/generator/drift or rendered/live execution qualification.",
+        "No rendered website routes, HTTP redirects, code preview widget, search or browser/accessibility result implied."
+      ],
+      "originalGateIds": [],
+      "originalRequirementIds": [
+        "PUB-003",
+        "PUB-009"
+      ],
+      "review": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "verdict": "PRESERVE_ORIGINAL_SCOPE",
+      "reason": "Actual docsite merge retains original repository/anchor/pinned-code and canonical-versus-legacy boundaries. CI adds checks, not authority. Current Source/route checks support the same reader contract; HTTP redirect acceptance is a separate new record.",
+      "openIssues": []
+    },
+    {
+      "id": "AP09-complete-developer-reader-contracts-20261021",
+      "previousReviewedRevision": "cfc97be096908c1193877d054bb80662120f1eca",
+      "revision": "8522e25d9b284e9bf1a34dedf313a806d97c28ee",
+      "changedDependencies": [
+        ".github/workflows/docs-checks.yaml",
+        "scripts/docs-publication.mjs"
+      ],
+      "originalAuthor": "Nova /root documentation author and correction coordinator",
+      "originalReviewer": "Independent Codex autoreview whole finished-reader-topics and LiteLLM audits with correction-final follow-up",
+      "originalSummary": "Whole authored Extension Developer and Platform/Core Developer reader paths: selection, local teaching journeys, host lifecycle boundaries, capability/event changes, Forge/Echo integration, GitOps and retained-state/change tasks. Current Source provenance corrected; declared deployment limits remain explicit.",
+      "originalLimits": [
+        "Source-backed documentation and reader-contract acceptance only; no whole gate/global API inventory/generator/drift or rendered/live execution qualification.",
+        "Reader-contract review is not executed full deployed multi-persona workflow acceptance."
+      ],
+      "originalGateIds": [],
+      "originalRequirementIds": [
+        "QUA-008",
+        "QUA-009"
+      ],
+      "review": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "verdict": "PRESERVE_ORIGINAL_SCOPE",
+      "reason": "Developer reader paths and declared deployment limits unchanged; new CI tests and reader fallback do not assert executed deployed multi-persona workflows.",
+      "openIssues": []
+    },
+    {
+      "id": "AP09-complete-static-reader-search-20261021",
+      "previousReviewedRevision": "cfc97be096908c1193877d054bb80662120f1eca",
+      "revision": "8522e25d9b284e9bf1a34dedf313a806d97c28ee",
+      "changedDependencies": [
+        "docs/site/reference/documentation-site.md",
+        "docs/site/reference/errors.md",
+        "scripts/docs-api-documentation-role-custody.mjs",
+        "scripts/docs-publication.mjs",
+        "scripts/docs-reader/renderer.mjs"
+      ],
+      "originalAuthor": "Nova /root documentation author and implementation coordinator",
+      "originalReviewer": "Independent Codex autoreview static-reader whole PUB-002 Source/reader-quality closeout",
+      "originalSummary": "Whole PUB-002: existing positive page/asset allowlists plus actual artifact-local full-text search across all167 canonical reader pages, headings and code/technical identifiers. Browser find/empty/no-JS behavior observed; code and output reviewed.",
+      "originalLimits": [
+        "Only whole PUB-002. Ranked/synonym reader search questions in A912-04 remain unaccepted; substring full-text search is stated honestly.",
+        "No other publication gate or whole documentation package acceptance.",
+        "Local HTML/search output is not external hosting, actual cluster/runtime behavior, rendered Mermaid, source-preview or human screenreader acceptance.",
+        "Global API source/caller discovery still blocked at bundle copier; site boundary still has three unchanged Helm generated-prose diagnostics."
+      ],
+      "originalGateIds": [],
+      "originalRequirementIds": [
+        "PUB-002"
+      ],
+      "review": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "verdict": "PRESERVE_ORIGINAL_SCOPE",
+      "reason": "Search index/text/ranking production functions unchanged. Error-page original chapter preserved with two bounded independently root-reviewed appendices; actual177-page search equality/12 questions pass. New snippets remain excluded from indexing by unchanged preview staging.",
+      "openIssues": []
+    },
+    {
+      "id": "AP09-search-reader-gate-20261021",
+      "previousReviewedRevision": "cfc97be096908c1193877d054bb80662120f1eca",
+      "revision": "8522e25d9b284e9bf1a34dedf313a806d97c28ee",
+      "changedDependencies": [
+        ".github/workflows/docs-checks.yaml",
+        "docs/site/reference/documentation-site.md",
+        "scripts/docs-api-documentation-role-custody.mjs",
+        "scripts/docs-reader/renderer.mjs"
+      ],
+      "originalAuthor": "Nova /root documentation author and implementation coordinator",
+      "originalReviewer": "Independent Codex autoreview whole A912-04 code/evidence review plus narrow Source/Reader/Quality native-impact follow-up",
+      "originalSummary": "Whole A912-04: canonical search index includes all167pages, headings and technical IDs, finite reader synonyms and weighted upper results. Twelve defined reader questions find expected route among top3 in actual browser at320/768/1440; exact positive-manifest equality excludes internal artifacts.",
+      "originalLimits": [
+        "Whole A912-04 only; finite declared reader synonyms, not universal semantic or natural-language search.",
+        "No other publication gate, all-page/human-screenreader, rendered-Mermaid/source-preview/externalhosting acceptance.",
+        "Global API bundle input/caller closure and three unchanged generated Helm-language diagnostics remain open."
+      ],
+      "originalGateIds": [
+        "A912-04"
+      ],
+      "originalRequirementIds": [],
+      "review": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "verdict": "PRESERVE_ORIGINAL_SCOPE",
+      "reason": "Ranking/search function, synonym authority and positive canonical index unchanged; actual22ea twelve questions pass. Purpose-custody changes do not change search behavior or invent selected execution.",
+      "openIssues": []
+    },
+    {
+      "id": "AP09-rendered-source-bounds-gate-20261021",
+      "previousReviewedRevision": "cfc97be096908c1193877d054bb80662120f1eca",
+      "revision": "8522e25d9b284e9bf1a34dedf313a806d97c28ee",
+      "changedDependencies": [
+        ".github/workflows/docs-checks.yaml",
+        "docs/site/reference/documentation-site.md",
+        "scripts/docs-api-documentation-role-custody.mjs",
+        "scripts/docs-publication.mjs",
+        "scripts/docs-reader/renderer.mjs"
+      ],
+      "originalAuthor": "Nova /root documentation author and implementation coordinator",
+      "originalReviewer": "Independent Codex autoreview whole A912-09 Source/Reader/Quality review and narrow changed-boundary impact review for 21 prior PASS records",
+      "originalSummary": "Whole A912-09: repository references and actual hash-verified built HTML links, anchors, assets and routes checked, plus full Source commit/type/actual-byte/line-or-Markdown-anchor validation.167 canonical pages,176HTML,179digests,36698localtargets,14401Source locators/3723objects including118primary upstream files across11repositories.",
+      "originalLimits": [
+        "Exact source location/object/type/byte/range checks, not semantic correctness of every claim, signatures, live runtime or hosting.",
+        "Local Source objects were observed in actual Git; GitHub reachability follows pushed ancestors, not a substituted upstream HTTP proof.",
+        "Native documentation purposes preserve source/caller identity and do not waive the global API bundle-copier boundary.",
+        "Whole A912-09 only; remaining publication/accessibility/diagram/preview/full-workflow gates not automatically accepted.",
+        "Three unchanged stale generated Helm phrases and global API bundle input/caller gap remain open."
+      ],
+      "originalGateIds": [
+        "A912-09"
+      ],
+      "originalRequirementIds": [],
+      "review": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "verdict": "PRESERVE_ORIGINAL_SCOPE",
+      "reason": "Source object/line/anchor and artifact-bound checks unchanged. New links/outputs checked by current22ea actual Source+artifact proofs; finite custody source bindings reacquire before caches, not bypass source provenance. Does not claim semantic census.",
+      "openIssues": []
+    },
+    {
+      "id": "AP09-complete-static-offline-fallback-20261021",
+      "previousReviewedRevision": "cfc97be096908c1193877d054bb80662120f1eca",
+      "revision": "8522e25d9b284e9bf1a34dedf313a806d97c28ee",
+      "changedDependencies": [
+        "docs/site/reference/documentation-site.md",
+        "scripts/docs-publication.mjs",
+        "scripts/docs-reader/renderer.mjs"
+      ],
+      "originalAuthor": "Nova /root documentation author and implementation coordinator",
+      "originalReviewer": "Independent Codex autoreview whole PUB-006/A912-10 Source/Reader/Quality closeout, inspecting original obligation, actual browser provenance and critical task prose",
+      "originalSummary": "Whole PUB-006/A912-10: actual local-file reader keeps critical content/instructions, navigation, native disclosures and explicit search fallback usable without JavaScript, external network, hover or normal color palette. Optional local search works offline. Architecture interaction remains optional, not invented for acceptance.",
+      "originalLimits": [
+        "Static browser/navigation/read-action-selection acceptance only, not execution of recovery/plugin/platform/pipeline product commands.",
+        "No fresh-person user study or human screenreader trial; no PUB007/A91208 acceptance.",
+        "Mermaid remains static code plus text alternative; no rendered visual interpretation or A91206/A91207 promotion from DOM metrics.",
+        "Whole PUB006/A91210 only; all other runtime/globalAPI/hosting/publication boundaries preserved."
+      ],
+      "originalGateIds": [
+        "A912-10"
+      ],
+      "originalRequirementIds": [
+        "PUB-006"
+      ],
+      "review": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "verdict": "PRESERVE_ORIGINAL_SCOPE",
+      "reason": "Complete original offline instructions/native fallback retained; new redirect no-JS link is visible and requires manual original-fragment carry. Actual changed-page three-width offline/noJS checks and separate redirect file/HTTP controls pass; no product commands executed.",
+      "openIssues": []
+    },
+    {
+      "id": "AP09-complete-same-source-code-preview-20261021",
+      "previousReviewedRevision": "cfc97be096908c1193877d054bb80662120f1eca",
+      "revision": "8522e25d9b284e9bf1a34dedf313a806d97c28ee",
+      "changedDependencies": [
+        ".github/workflows/docs-checks.yaml",
+        "docs/site/reference/documentation-site.md",
+        "scripts/docs-api-documentation-role-custody.mjs",
+        "scripts/docs-publication.mjs",
+        "scripts/docs-reader/renderer.mjs"
+      ],
+      "originalAuthor": "Nova /root documentation author and implementation coordinator",
+      "originalReviewer": "Independent Codex autoreview whole PUB004 Source/Reader/Quality closeout plus narrow changed-boundary preservation for21priorPASSrecords",
+      "originalSummary": "Whole PUB004: general same-source component automatically pairs immutable source links with exact same-revision inert code inside original evidence boxes.1660excerpts/390boxes/874objects across53pages;fresh-source and actualbrowser/text/native-disclosure proof.",
+      "originalLimits": [
+        "WholePUB004 only; A91205 all-six-field canonical format not established for every older evidence box and remains unaccepted.",
+        "Preserves originalclaims/contracts/tests/limits; missing author evidence not fabricated and source snippets do not prove live or semantic correctness.",
+        "ThreeSource boxes containingonlydirectory/named-anchor references remain ordinarylinks, not fake code previews.",
+        "No diagram/layoutgate, humanScreenReader, freshuser, hosting, globalAPI or productruntime approval.",
+        "GlobalAPIbundlecopier74 andthreeunchangedstaleHelmphrases stayopen."
+      ],
+      "originalGateIds": [],
+      "originalRequirementIds": [
+        "PUB-004"
+      ],
+      "review": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "verdict": "PRESERVE_ORIGINAL_SCOPE",
+      "reason": "Preview extraction/hash/inert rendering unchanged; new error appendices pass actual1805-excerpt/935-object verification. Six-field evidence completeness remains explicitly unaccepted; no invented preview for a directory-only source.",
+      "openIssues": []
+    },
+    {
+      "id": "AP09-complete-responsive-reader-layout-20261021",
+      "previousReviewedRevision": "af1b987ee4d461fc6205a18553db3e21461ca203",
+      "revision": "8522e25d9b284e9bf1a34dedf313a806d97c28ee",
+      "changedDependencies": [
+        ".github/workflows/docs-checks.yaml",
+        "docs/site/reference/documentation-site.md",
+        "scripts/docs-api-documentation-role-custody.mjs",
+        "scripts/docs-publication.mjs",
+        "scripts/docs-reader/renderer.mjs"
+      ],
+      "originalAuthor": "Nova /root documentation author and implementation coordinator",
+      "originalReviewer": "Independent Codex autoreview whole A91207 responsive-layout closeout and narrow24-record prior-boundary preservation",
+      "originalSummary": "Whole A91207 responsive reader layout at320/768/1440: navigation,tables,code,27 registered static diagrams,callouts,search remain available without page overflow; focusable internally scrolling regions preserve full content and textual alternatives.",
+      "originalLimits": [
+        "Whole responsive-layout gate only; PUB005/A91206 semantic diagram completeness NOT_READY:16/27 scoped supported,6system and5service proofs incomplete;capacity failures preserved.",
+        "Human screenreader/fresh-role user/hosting/live workflows/global API not accepted by automated browser or byte checks.",
+        "Native table/code/diagram internal horizontal scroll is intentional and focus/keyboard tested; no horizontal PAGE navigation.",
+        "Global bundle-copier and three stale generated Helm phrases remain open."
+      ],
+      "originalGateIds": [
+        "A912-07"
+      ],
+      "originalRequirementIds": [],
+      "review": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "verdict": "PRESERVE_ORIGINAL_SCOPE",
+      "reason": "Renderer CSS/content/table/code/diagram regions unchanged; docsite merged sections use existing components. Actual changed-page three-width offline/noJS observations pass; old whole-corpus/human-accessibility observations remain historical, not freshly rerun.",
+      "openIssues": []
+    },
+    {
+      "id": "AP09-complete-source-backed-diagrams-20261021",
+      "previousReviewedRevision": "af1b987ee4d461fc6205a18553db3e21461ca203",
+      "revision": "8522e25d9b284e9bf1a34dedf313a806d97c28ee",
+      "changedDependencies": [
+        "docs/site/reference/documentation-site.md",
+        "scripts/docs-publication.mjs",
+        "scripts/docs-reader/renderer.mjs"
+      ],
+      "originalAuthor": "Nova /root documentation author and coordinator",
+      "originalReviewer": "Independent Codex diagram_services whole-topic review coordinating independent source reviews; no content authorship",
+      "originalSummary": "Whole PUB-005 and A912-06:27registered question-led,source-backed diagrams in19owningpages have visible alternatives and drift owners. Full source semantics and final rendered visual interpretation supported after correcting public-web admission and precise manifest-identity scope.",
+      "originalLimits": [
+        "Only whole diagram obligations PUB-005/A912-06;not AP09/AP10/AP11 or release approval.",
+        "Configured/source-level arrows do not claim successful model calls,Discord traffic,SPIRE/Cilium enforcement,Tailscale delivery,live deployment,archive observation or application behavior.",
+        "No hosting or human screenreader/accessibility acceptance;A912-08 stays open.",
+        "Existing runtime configuration rejection,three generated Helm reader-boundary failures and global API qualification remain open."
+      ],
+      "originalGateIds": [
+        "A912-06"
+      ],
+      "originalRequirementIds": [
+        "PUB-005"
+      ],
+      "review": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "verdict": "PRESERVE_ORIGINAL_SCOPE",
+      "reason": "All27 complete diagram definitions/records exactly preserved and freshly rendered SVG checks pass. Redirect append does not alter question/source/owner/text-alternative semantics or imply live traffic.",
+      "openIssues": []
+    }
+  ],
+  "currentFileBindings": [
+    {
+      "path": ".github/workflows/docs-checks.yaml",
+      "sha256": "f44033eb4877618d34c65fb292a33f88f8dddb3dbe7c471439328f81f57ac2c5",
+      "lines": 172
+    },
+    {
+      "path": "docs/site/reference/documentation-site.md",
+      "sha256": "4f418aa28e32443300e50431ba9a80552a5bbcb96d2a58821316e6b1821300d8",
+      "lines": 382
+    },
+    {
+      "path": "docs/site/reference/errors.md",
+      "sha256": "4548aaee9982fc5f29408734078a1cd751d2fd4da7ddf881c2070dc2048b0a0a",
+      "lines": 574
+    },
+    {
+      "path": "docs/site/reference/generated-documentation-map.json",
+      "sha256": "3dfe3de8baa847840e488458b27c5a3720ccab559e1a6eb925f4d33a0849d6c2",
+      "lines": 4037
+    },
+    {
+      "path": "scripts/docs-api-documentation-role-custody.mjs",
+      "sha256": "2c4cb1577483fdac81d1d715cec828fe9cd62f277a0e0ca15abe673016c43544",
+      "lines": 30522
+    },
+    {
+      "path": "scripts/docs-api-output-discovery.mjs",
+      "sha256": "702af3563ec3a12e8a0726781a3a0a415c3473f668d342dd1c268579bee2912d",
+      "lines": 3307
+    },
+    {
+      "path": "scripts/docs-publication.mjs",
+      "sha256": "3b22ff66706c132c96a3b3ba39c7c2d043d314336d46660d94e7481c0f0ef360",
+      "lines": 1138
+    },
+    {
+      "path": "scripts/docs-reader/renderer.mjs",
+      "sha256": "9e87c023a29932f35c9c0ca5169c7c4cc39953a849e31b206e6f431bf91acf2b",
+      "lines": 195
+    }
+  ],
+  "reusedEvidence": [
+    "publication-redirects-independent/corrections-pass.md",
+    "publication-redirects-independent/corrections-pass.json",
+    "publication-gate-assessment/report.md",
+    "http-errors-independent-scratch/review.md",
+    "handoffs/pr13-finish-20261021/nri-api-errors-parent-review.md",
+    "handoffs/pr13-finish-20261021/reader-purpose-parent-review.md",
+    "postfreeze-acquisition-independent/review.md",
+    "reader-purpose-installed-tests.txt",
+    "reader-extracted-artifact-22ea0ffb.json",
+    "reader-preview-22ea0ffb.json",
+    "reader-source-links-22ea0ffb.json",
+    "reader-source-previews-22ea0ffb.json",
+    "reader-diagram-preservation-22ea0ffb.json",
+    "browser-recovery-22ea0ffb.json"
+  ],
+  "limits": [
+    "No new acceptance IDs, no authorship/reviewer substitution, no replacement of historical tests/counts by current claims.",
+    "A91201 and PUB008 remain NOT_READY: owning boundary check still red; no global docs-checks/owner-generation/Data acceptance.",
+    "A91205 six-field canonical format and REF005/A91105 exhaustive error census remain open.",
+    "No actual current graph acquisition/owner generation is attested by the reviewed UNACCEPTED_DATA hook or finite29-test fixture suite.",
+    "Parent/root execution evidence is explicitly reused as witnessed parent evidence, not rerun by this reviewer.",
+    "Later phrase/header/owner-map changes require a narrow successor impact review; this snapshot predates them."
+  ]
+}
