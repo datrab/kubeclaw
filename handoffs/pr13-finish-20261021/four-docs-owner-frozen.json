@@ -1,0 +1,125 @@
+{
+  "status": "FROZEN_V2_PORTABILITY_ONLY_AUTHOR_SUCCESSOR_PENDING_PARENT_REVIEW",
+  "baseHead": "d8e97be18ce7f2114212c64305fced4aa7b691a6",
+  "files": [
+    {
+      "path": "scripts/docs-documentation-owner-purpose-custody.mjs",
+      "candidate": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/four-docs-owner-candidate-v2-portable/scripts/docs-documentation-owner-purpose-custody.mjs",
+      "sha256": "58814cd8ca9bfe7f40795006e896f98040b35a93b068718b44e9c428c50f4096",
+      "bytes": 18400,
+      "lines": 375
+    },
+    {
+      "path": "scripts/docs-api-documentation-role-custody.mjs",
+      "candidate": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/four-docs-owner-candidate-v2-portable/scripts/docs-api-documentation-role-custody.mjs",
+      "sha256": "03df21604e3e22aae5b49504243eff9902aa82a2526f13827171e942a22fe9b1",
+      "bytes": 1203447,
+      "lines": 30539
+    },
+    {
+      "path": "scripts/docs-api-output-discovery.mjs",
+      "candidate": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/four-docs-owner-candidate-v2-portable/scripts/docs-api-output-discovery.mjs",
+      "sha256": "edbd418f020c88513ef9903057877c14287450fe724d322786ecdc4393ee4f50",
+      "bytes": 415596,
+      "lines": 3308
+    },
+    {
+      "path": "scripts/tests/docs-documentation-owner-purpose.test.mjs",
+      "candidate": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/four-docs-owner-candidate-v2-portable/scripts/tests/docs-documentation-owner-purpose.test.mjs",
+      "sha256": "ca9c17b70a3a46e82b9d11b6e3e2dd1fc201fa0434cb4e48f5ba71dfa33e1968",
+      "bytes": 4637,
+      "lines": 18
+    },
+    {
+      "path": "four-owner-role-recipes.draft.json",
+      "candidate": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/four-docs-owner-candidate-v2-portable/four-owner-role-recipes.draft.json",
+      "sha256": "0573f2e4262486d4efd4934600b1cd8aca583a030b55f676873060f064bcfc64",
+      "bytes": 16018,
+      "lines": 353
+    }
+  ],
+  "priorRoleObjectsUnchanged": 102,
+  "checks": {
+    "actualCommand": "node --test scripts/tests/docs-documentation-owner-purpose.test.mjs",
+    "terminalExit": 0,
+    "pass": 34,
+    "fail": 0,
+    "skip": 0,
+    "log": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/four-docs-owner-portable-owning.stdout",
+    "executionClass": "Only new analysisguard/builtin testharness; all56originalSource/data inputs inert physical copies local to each tested checkout, no producerimports",
+    "syntaxChecks": "node --check both proposed custody/discovery copies terminal0; no evaluation"
+  },
+  "pending": [
+    "Nonauthor completepurpose/routing/guard/code review",
+    "OriginalRoot Sourcefreeze acquisition of actualselectors,operationfacts,childauthority,graph,entries,dynamics,unresolvedloader/moduleinput/closure; preserve every newactualmember",
+    "Install noNULLdraftregistry/recipe; draft not an execution receipt; only after actualdata reviewed",
+    "Broader existingprivate/native/owner integration remains unrun by this author"
+  ],
+  "authorReport": {
+    "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/four-docs-owner-candidate-v2-portable/author-report.md",
+    "sha256": "033bb2471e2fe9f5c82936b5e3fb197af71699c356482a226e3cf7429c2e3e45"
+  },
+  "patchSha256": "767941480edcd2d7198fdf1a75ec5b91b6b2deb50cb5cc964705a10d85375da2",
+  "supersedes": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/four-docs-owner-candidate/frozen.json",
+  "portability": {
+    "oldTestSha256": "e5475b0c2d5f8aef60e1bc631a60fa55d1716a2123da5d5fe8874b83a0f6303c",
+    "newTestSha256": "ca9c17b70a3a46e82b9d11b6e3e2dd1fc201fa0434cb4e48f5ba71dfa33e1968",
+    "exactOnlyChange": "Add node:url fileURLToPath import; resolve repo root two parents from test import.meta.url. All34control bodies/profiles/routing/hooks unchanged.",
+    "actualNode": "v24.21.0",
+    "actualRuns": [
+      {
+        "cwd": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/four-docs-owner-candidate-v2-portable",
+        "exit": 0,
+        "pass": 34,
+        "fail": 0,
+        "skip": 0
+      },
+      {
+        "cwd": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/portable alternate checkout with spaces",
+        "exit": 0,
+        "pass": 34,
+        "fail": 0,
+        "skip": 0
+      }
+    ],
+    "initialAlternateFixtureFailure": {
+      "exit": 1,
+      "pass": 26,
+      "fail": 8,
+      "cause": "Author copy fixture omitted charts/ inputroot; exact56inputmanifest then copied, code unchanged, failedlogsretained"
+    },
+    "claimLimit": "Checkout-relative Source lookup demonstrated at two actual different Linux paths incl spaces; no otherOS/CI/native/producer/general portability acceptance.",
+    "artifacts": [
+      {
+        "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/four-docs-owner-portable-owning.stdout",
+        "sha256": "a1667e7bbba76807e2db1e680d3087805a2e53f4284713b34c93722b3bd0035a"
+      },
+      {
+        "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/four-docs-owner-portable-owning.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/four-docs-owner-alternate-checkout.stdout",
+        "sha256": "20f59739294b0f15505e74ba4655c086b6dfd1ef6b3a6a1df4bfe28179989350"
+      },
+      {
+        "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/four-docs-owner-alternate-checkout.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/four-docs-owner-alternate-checkout-final.stdout",
+        "sha256": "218418fbf6def2eccc6be7eace8e9a124ba145499426107c4880dccf90742b99"
+      },
+      {
+        "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/four-docs-owner-alternate-checkout-final.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    ]
+  },
+  "ciInputLimit": "Current v1 .github/workflows/docs-checks.yaml pin preserved exactly; forthcoming A91211CI edit requires independent reviewed binding, not silent rebase.",
+  "portabilityAddendum": {
+    "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/four-docs-owner-candidate-v2-portable/portability-addendum.md",
+    "sha256": "68babcd306a55d390725ad488b03b692ffa92607e708faa1fb96c1316134f05c"
+  },
+  "portabilityPatchSha256": "111b80645af03bb6ddf67454ccd2305d53cc3d753c75e547b81e4ebdf41f58d8"
+}

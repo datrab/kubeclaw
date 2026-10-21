@@ -1,3 +1,4 @@
+import {assertDocumentationOwnerPurpose} from './docs-documentation-owner-purpose-custody.mjs';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
@@ -10208,6 +10209,7 @@ function qualifiedStaticForwarding(root,source,staticSources,seen=new Set()){
  return forwarded;
 }
 export function assertDocumentationExecutableRole(root,source,staticSources=new Set()){
+ assertDocumentationOwnerPurpose(root,source); // fresh physical purpose inputs before either cache
  const bytes=fs.readFileSync(path.join(root,source),'utf8');
  // These exact documentation consumers have additional dynamic data/child
  // contracts. Acquire physical bytes before either role-cache reuse or use.

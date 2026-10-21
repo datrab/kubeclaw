@@ -1,0 +1,530 @@
+{
+  "status": "CONSERVATIVE_STATIC_PURPOSE_PARTITION_NO_QUALIFICATION",
+  "currentHead": "d8e97be18ce7f2114212c64305fced4aa7b691a6",
+  "worktree": "Parent integrated utility classifier/test separately; this22root set independently byteequalhistorical",
+  "categories": {
+    "1": "Exact documentation-purpose candidate, not currently accepted/qualified",
+    "2": "Real API/mixed Kubernetes deployment outputs: adapter obligations retained",
+    "3": "Genuine metadata/read/diagnostic subslots: narrow receiver contract needed; foreignpayload slots remainUNKNOWN",
+    "4": "Further coherent input/consumer proof required: raw/arbitrary or heterogeneous outputs remainAPI/UNKNOWN"
+  },
+  "counts": {
+    "1": 4,
+    "2": 7,
+    "3": 6,
+    "4": 5
+  },
+  "sources": [
+    {
+      "source": "scripts/check-capability-registrations-drift-controls.mjs",
+      "sha256": "e76c88fe7d72eff87a6ba1e2ff63d8630ae6c7ec861e884dc8e3575c0ce5e3cb",
+      "lines": 70,
+      "entireRootSourceRead": true,
+      "historicalRootBytesUnchanged": true,
+      "primaryCategory": 1,
+      "purpose": "Documentation semantic drift controls",
+      "sourceOutputAndGuards": "Whole manifest bytes/mutations/restoration go exclusively to owned temporary skills tree; child drift checker checks canonical capabilities page and original pages stay byteequal; finally removes tree. JSON generic source bytes are not runtime output authority.",
+      "actualCallerConsumerEvidence": "scripts/check-capability-registrations-drift.mjs child; scripts/tests/docs-tree-boundary.test.mjs495 owns boundary expectation; no rootpackage command found.",
+      "nextFiniteStep": "Exact checker/control recipe and temporary/caller route needed; cannot borrow another capability mutation recipe simply by name. Preserve malformed JSON status2 separate from semantic drift status1.",
+      "historicalSlots": [
+        {
+          "line": 51,
+          "sink": "fs.writeFileSync",
+          "expression": "JSON.parse(original)"
+        },
+        {
+          "line": 53,
+          "sink": "fs.writeFileSync",
+          "expression": "fs.readFileSync(source)"
+        },
+        {
+          "line": 65,
+          "sink": "fs.writeFileSync",
+          "expression": "'{ broken'"
+        },
+        {
+          "line": 67,
+          "sink": "fs.writeFileSync",
+          "expression": "fs.readFileSync(source)"
+        }
+      ]
+    },
+    {
+      "source": "scripts/docs-ap09-mutation-fixture.mjs",
+      "sha256": "f46c275fce0ef9d55e2ac61a4bcc7b466519d42f07bec4ec8d86a7c2ce6fc687",
+      "lines": 114,
+      "entireRootSourceRead": true,
+      "historicalRootBytesUnchanged": true,
+      "primaryCategory": 1,
+      "purpose": "Finite documentation patch constructor",
+      "sourceOutputAndGuards": "Exact fixture kind/variant/operation from AP09acceptance fixtures selects Source anchor; owned temp a/b source copies feed git diff; stdout is unified PATCH, not API manifest. Unsupported constructors/ambiguous anchor STOP.",
+      "actualCallerConsumerEvidence": "Actual14drift/SDK mutation callers; read full fixture-registration caller: deterministic stdout/path assertion then git apply only in owned temporary copy, checker diagnostic/status and page-byte invariance; original Source never executed by constructor.",
+      "nextFiniteStep": "Can use exact existing documentation-purpose architecture with independently bound fixture registry, all constructor Source authorities, exactgit argv/temp receiver and actual reviewed caller routes; no general patch/string waiver.",
+      "historicalSlots": [
+        {
+          "line": 109,
+          "sink": "fs.writeFileSync",
+          "expression": "[['a', original], ['b', original.replace(anchor, replacement)]]"
+        },
+        {
+          "line": 113,
+          "sink": "process.stdout.write",
+          "expression": "result.stdout"
+        }
+      ]
+    },
+    {
+      "source": "scripts/gitops-continuous.mjs",
+      "sha256": "f2b35d956ffaa40dc9644f7f3c22c3d7e6f34747e890f1c139de8211cd2e3734",
+      "lines": 108,
+      "entireRootSourceRead": true,
+      "historicalRootBytesUnchanged": true,
+      "primaryCategory": 2,
+      "purpose": "GitOps API manifest producer and registration",
+      "sourceOutputAndGuards": "Produces AppProject/Application bootstrap/apps YAML plus selection.json; prepare writes repo GitOps files, check compares; apply calls preflight then kubectl apply. Helm values.yaml is configuration input, not itself APIroot. Diagnostics/kubectlstdout separate.",
+      "actualCallerConsumerEvidence": "auto-promote-runtime.yaml49\u201358 and promote-runtime.yaml115\u2013123 commit/check exactbundle selection; register-runtime-argo imports render; rollback imports render.",
+      "nextFiniteStep": "API YAML/file slots remain API and need qualified original offline profile/adapter; fixed selection/diagnostic slots can be separate metadata, no wholefile nonAPI.",
+      "historicalSlots": [
+        {
+          "line": 103,
+          "sink": "kubectl-request",
+          "expression": "dump(result.documents)"
+        },
+        {
+          "line": 99,
+          "sink": "fs.writeFileSync",
+          "expression": null
+        },
+        {
+          "line": 107,
+          "sink": "process.stderr.write",
+          "expression": "`${error.message}\\n`"
+        }
+      ]
+    },
+    {
+      "source": "scripts/gitops-owner.mjs",
+      "sha256": "201b9e820af600cfef179ed299d82e65855aa30598bc165c330c13c56a20de51",
+      "lines": 32,
+      "entireRootSourceRead": true,
+      "historicalRootBytesUnchanged": true,
+      "primaryCategory": 3,
+      "purpose": "Read-only ownership preflight wrapper",
+      "sourceOutputAndGuards": "Default kubectl invocations are get CRD, allnamespace Applications, namespace workloads JSON; validates items/claims and throws on owned/retainedresource. No apply stdout; catchstderr is diagnostic. Optional run dependency injection is not execution authority.",
+      "actualCallerConsumerEvidence": "deploy.sh166/1946/2675/2790 before Helm/runtime mutations; gitops.mjs imports claimedNamespaces; deployment fixture imports assertNoGitOpsOwner.",
+      "nextFiniteStep": "Exact default get-argument/callsite census and diagnostic receiver can qualify read-only purpose; opaque args wrapper must not be generically marked nonAPI or waive newly addedcreate/patch/apply.",
+      "historicalSlots": [
+        {
+          "line": 15,
+          "sink": "kubectl-request",
+          "expression": "execFileSync('kubectl', args, { encoding: 'utf8', timeout: 30000 })"
+        }
+      ]
+    },
+    {
+      "source": "scripts/gitops-rollback.mjs",
+      "sha256": "cb99e161b264852a620710b73dbbc4f3162d1abb78e8ff36be741889e667b958",
+      "lines": 67,
+      "entireRootSourceRead": true,
+      "historicalRootBytesUnchanged": true,
+      "primaryCategory": 2,
+      "purpose": "Historical deployment selection/restoration",
+      "sourceOutputAndGuards": "Returns/writes heterogeneous historic release receipt+values and newly rendered actual GitOpsAPI YAML, removes only selectedruntimecode receipt when absent; stdout closed revision/directory metadata. Historical selection never called knownhealthy.",
+      "actualCallerConsumerEvidence": "rollback-runtime.yaml35 captures stdout\u2192jq.directory/revision at58\u201359, commits explicit release/GitOps files, continuous check; rollback code importedby deployment tests.",
+      "nextFiniteStep": "Retain actual manifest outputs API, values/config separate, closed stdout metadata narrowconsumer; needs original historical Git bytes/unchangedmanifest/selectedscope proof, no copiedbyte waiver.",
+      "historicalSlots": [
+        {
+          "line": 62,
+          "sink": "fs.writeFileSync",
+          "expression": null
+        },
+        {
+          "line": 66,
+          "sink": "process.stderr.write",
+          "expression": null
+        }
+      ]
+    },
+    {
+      "source": "scripts/gitops.mjs",
+      "sha256": "4f6de3a78c0e2bab93ac3b3420b672e155dd2016acd39bc086dd9fb176c54746",
+      "lines": 203,
+      "entireRootSourceRead": true,
+      "historicalRootBytesUnchanged": true,
+      "primaryCategory": 2,
+      "purpose": "Argo bootstrap/validation/apply",
+      "sourceOutputAndGuards": "Constructs actual two AppProject/Application APIroots; validates committed group digests/ownership/receipt/chart, preflight reads cluster+nativehost prerequisites, bootstrap stdout YAML; apply exactkubectl input. Export/preflight prose distinct.",
+      "actualCallerConsumerEvidence": "continuous/rollback import; actualbundle export/bootstrap manual CLI and continuous promotion workflow; gitops-owner ownership helper.",
+      "nextFiniteStep": "Keep API/apply outputs and original offlineadapter obligation; exactdiagnostics are separate. No nativepreflight execution grant or synthetic live success.",
+      "historicalSlots": [
+        {
+          "line": 190,
+          "sink": "kubectl-request",
+          "expression": "execFileSync('kubectl', ['apply', '-f', '-'], { input, encoding: 'utf8', timeout: 60000 })"
+        },
+        {
+          "line": 181,
+          "sink": "process.stdout.write",
+          "expression": null
+        },
+        {
+          "line": 198,
+          "sink": "process.stdout.write",
+          "expression": null
+        },
+        {
+          "line": 202,
+          "sink": "process.stderr.write",
+          "expression": "`${error.message}\\n`"
+        }
+      ]
+    },
+    {
+      "source": "scripts/infrastructure-chart.mjs",
+      "sha256": "6a136a40cced70d63de028e635bd5b9e4fb30f1a632cd725175385faf9c57e25",
+      "lines": 64,
+      "entireRootSourceRead": true,
+      "historicalRootBytesUnchanged": true,
+      "primaryCategory": 3,
+      "purpose": "Pinned chart archive acquisition/verification metadata",
+      "sourceOutputAndGuards": "CLI with archive prints closed name/version/appVersion/sha256 record; without archive prints staged path. Lock validation+archive size/digest/tar Chart identity guard. Downloads/cache are effects distinct from metadata.",
+      "actualCallerConsumerEvidence": "infrastructure-release/statedatabase/statefulpreflight/render-postgresql-recovery imports; deployment CLI release captures resulting archive.",
+      "nextFiniteStep": "Narrow verify-record versus archivepath consumer profiles; bind lock/versions/metadata selection. No chart-template/APIresource admission or remoteacquisition execution permission.",
+      "historicalSlots": [
+        {
+          "line": 63,
+          "sink": "console.log",
+          "expression": "file ? JSON.stringify(verifyInfrastructureChart(name, file)) : stageInfrastructureChart(name)"
+        }
+      ]
+    },
+    {
+      "source": "scripts/infrastructure-release.mjs",
+      "sha256": "a03aa7721f871473effbb0f79de84bc7ebcb2877c68fa023675ea335e27936f8",
+      "lines": 45,
+      "entireRootSourceRead": true,
+      "historicalRootBytesUnchanged": true,
+      "primaryCategory": 3,
+      "purpose": "Archive path CLI with API-capable rendering function",
+      "sourceOutputAndGuards": "CLI stdout is staged archivepath after install+upgrade render validation; exported renderInfrastructureChart returns real Helm API YAML. No Secret/offlinemarker leak for postgresql; imagebinding checks.",
+      "actualCallerConsumerEvidence": "deploy.sh1007/1080/1083 capture path\u2192helm upgrade/install; stateful-database-service/stateful-release-preflight call exported renderer to inspect actualresources.",
+      "nextFiniteStep": "Occurrence-vs-canonical separation: exact CLI archivepath receiver may be metadata; exported renderer remains API. Never wholefile nonAPI just because CLI prints path.",
+      "historicalSlots": [
+        {
+          "line": 44,
+          "sink": "console.log",
+          "expression": "export function prepareInfrastructureRelease(name, release, namespace, values, helm = 'helm') {\n  for (const [value, maximum] of [[release, 53], [namespace, 63]]) {\n    if (!/^[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/.test(value) || value.length > maximum) throw new Error('INFRASTRUCTURE_RELEASE_IDENTITY_INVALID');\n  }\n  const archive = stageInfrastructureChart(name);\n  for (const upgrade of [false, true]) {\n    // Helm post-renderers do not receive hooks. Also inspect the complete result\n    // here, so a mutable test/init image cannot escape the deployment preflight.\n    renderInfrastructureChart(name, release, namespace, archive, values, helm, upgrade);\n  }\n  return archive;\n}"
+        }
+      ]
+    },
+    {
+      "source": "scripts/install/register-runtime-argo.mjs",
+      "sha256": "aef8a00017be23e6e6e7153b9391fde1942f666545bc918f310e8171769a1df7",
+      "lines": 55,
+      "entireRootSourceRead": true,
+      "historicalRootBytesUnchanged": true,
+      "primaryCategory": 2,
+      "purpose": "Real API dryrun/registration installer",
+      "sourceOutputAndGuards": "Reads committed/current exact definitions; Application/AppProject+namespace/manualchild constraints, ownership/liveconflict checks; submits same YAML to serverdryrun and optional realapply; prints kubectlresponses.",
+      "actualCallerConsumerEvidence": "scripts/install/README.md32\u201340 exactmanual check/apply onControlnode explicitKUBE_CONTEXT, no selected rootpackage entry found.",
+      "nextFiniteStep": "Both dryrun and apply are API requests, not docs tests. Need bounded original adapter separating safe fixture observation from liveeffect, no registration\u2192workloadhealth promotion.",
+      "historicalSlots": [
+        {
+          "line": 29,
+          "sink": "kubectl-request",
+          "expression": "execFileSync('kubectl', ['--context', context, ...args],\n    {encoding: 'utf8', input, timeout: 60000, maxBuffer: 8 * 1024 * 1024})"
+        },
+        {
+          "line": 46,
+          "sink": "process.stdout.write",
+          "expression": "execFileSync"
+        },
+        {
+          "line": 47,
+          "sink": "process.stdout.write",
+          "expression": "execFileSync"
+        },
+        {
+          "line": 53,
+          "sink": "console.error",
+          "expression": "error.status !== undefined ? `REGISTRATION_COMMAND_FAILED:${error.status}` : error.message"
+        }
+      ]
+    },
+    {
+      "source": "scripts/lint-baseline-update.mjs",
+      "sha256": "876b93c47f0b50171b08545f34448d009934809acadc7d7ebd08c3f1dca58126",
+      "lines": 78,
+      "entireRootSourceRead": true,
+      "historicalRootBytesUnchanged": true,
+      "primaryCategory": 3,
+      "purpose": "Lint approval diagnostic plus mutable baseline writer",
+      "sourceOutputAndGuards": "stdout tool:string plus additions count is genuine diagnostic. Baseline JSON is loaded+schema_version/digest checked but arbitrary top-level fields survive; writes baseline.groups suppression update. Metadata approval fields do not prohibit apiVersion/kind in supplied baseline.",
+      "actualCallerConsumerEvidence": "Canonical extend/lint.md551 CLI; reportbaseline provenance and approval guards read complete78lines.",
+      "nextFiniteStep": "Only exactstatus text can have narrow receivercontract. Full rewritten caller-suppliedbaseline stays UNKNOWN/API when resource-shaped; no general schema_version nonAPI rule.",
+      "historicalSlots": [
+        {
+          "line": 75,
+          "sink": "process.stdout.write",
+          "expression": "`${args.tool}: added ${additions.length} approved fingerprints\\n`"
+        }
+      ]
+    },
+    {
+      "source": "scripts/observability-retirement-plan.mjs",
+      "sha256": "2ca72dadd16843704d47392ebfd7398a8e00a6121904dacba5cf1b173a4f756e",
+      "lines": 144,
+      "entireRootSourceRead": true,
+      "historicalRootBytesUnchanged": true,
+      "primaryCategory": 3,
+      "purpose": "Retention-only diagnostic inventory report",
+      "sourceOutputAndGuards": "Fixed observability-retirement-plan.v1 root, executable:false/releaseBytes0, always completeness/checkpoint/archive/saferelease blockers; selected store parsers emit identities/digests, no deletionimplemented. Inputroot/schema/limit/inventoryunchanged guards.",
+      "actualCallerConsumerEvidence": "Actual import consumers reliability admission/retirement/telemetry tests plus CLI JSONreport. Prior full unchanged retirement sources reviewed in four-api-utility-static-investigation.md and20hash roster.",
+      "nextFiniteStep": "Candidate finite closed report receiver/constructor contract with actual downstreaminspectRun/stores/journals evidence. Never inherit generic Inventory.json nonAPI; arbitrary store payload forwarding/newfield must revoke. No retirement/deletion authority.",
+      "historicalSlots": [
+        {
+          "line": 138,
+          "sink": "process.stdout.write",
+          "expression": "`${JSON.stringify(result, null, 2)}\\n`"
+        }
+      ]
+    },
+    {
+      "source": "scripts/plugin-system-inventory.mjs",
+      "sha256": "e5bd5dc0d681be0762c51e42ee5654b973c8f260fe7ff5919c7494ac3f42fb2c",
+      "lines": 195,
+      "entireRootSourceRead": true,
+      "historicalRootBytesUnchanged": true,
+      "primaryCategory": 1,
+      "purpose": "Canonical documentation package/file inventory",
+      "sourceOutputAndGuards": "Fixed JSON docs/generated/inventory/plugin-system.json and markdown docs/architecture/plugin-system-current-inventory.md; check compares, write emits discoveredregistration/filemetadata; summary console string. Reads manifests inert, doesnotimport package modules.",
+      "actualCallerConsumerEvidence": "package.json51\u201352; docs:check:generated and verify:contracts; docs-checks.yaml46/109. Fixed docs inventory consumers not runtime plugin activation.",
+      "nextFiniteStep": "New exactdocumentation qualification (currently not boundary source) for owner and console diagnostics plus full file-roster inputs. Reuse existing exact write role only at its existing slot, not newprofile authority.",
+      "historicalSlots": [
+        {
+          "line": 188,
+          "sink": "console.log",
+          "expression": "`(${counts.packageRoots} roots, ${counts.registrations} registrations)`"
+        }
+      ]
+    },
+    {
+      "source": "scripts/recover-openclaw-audit-input.mjs",
+      "sha256": "c076ad46a6ff29bfb897b5f9cf218d164706e76bf00cb735dc0a89ffc20cc80f",
+      "lines": 87,
+      "entireRootSourceRead": true,
+      "historicalRootBytesUnchanged": true,
+      "primaryCategory": 4,
+      "purpose": "Operator raw audit restoration, arbitrary JSONL payload",
+      "sourceOutputAndGuards": "Bound hashes/realregularsinglelinkfiles/fullyscrubbedraw/noexistingcheckpoint/backups/fsync/racechecks; writes exact sanitized bytes after checking only nonarrayobject perline, not domain schema. Object with apiVersion/kind passes that check.",
+      "actualCallerConsumerEvidence": "Owning unit+integration tests import; actualdoctor remains external upstream consumer named in comment; no maintained production invocation found.",
+      "nextFiniteStep": "Raw write stays UNKNOWN/API-capable copy, never generic metadata. Need original OpenClawdoctor importer contract/provenance for exact audit receiver before contextual restoration role; tests/hash alone do not supply it. Do not execute SQLite/recovery here.",
+      "historicalSlots": [
+        {
+          "line": 70,
+          "sink": "fs.writeFileSync",
+          "expression": "fs.readFileSync(sanitizedPath)"
+        }
+      ]
+    },
+    {
+      "source": "scripts/render-kubernetes-api-probe.mjs",
+      "sha256": "f081a58cdce9aea6a958ae9bd543c0c440b47c97b4a4d5d284a66262e8753eb0",
+      "lines": 39,
+      "entireRootSourceRead": true,
+      "historicalRootBytesUnchanged": true,
+      "primaryCategory": 2,
+      "purpose": "Real ConfigMap/Job manifest renderer",
+      "sourceOutputAndGuards": "Actual sourcePod identity/SA/node, validatedorigins, pinnedNode image, actualprobeSource/options feed ConfigMap and Job YAML. Carries actualSA mount+labels/nodeaffinity; neverreadyservicebackend is a constraint not inertness.",
+      "actualCallerConsumerEvidence": "pr6-api-network-contract.md42 explicit render\u2192review/apply user-owned livephase; canonical errors.md boundedrenderer/probeSource links.",
+      "nextFiniteStep": "Keep two APIroots and original offlineprofile/adapter requirement; no nonAPI test-purpose qualification merely name contains probe.",
+      "historicalSlots": [
+        {
+          "line": 39,
+          "sink": "process.stdout.write",
+          "expression": null
+        }
+      ]
+    },
+    {
+      "source": "scripts/render-stateful-network-policies.mjs",
+      "sha256": "4b2777294145a1605113238cc6319558abad3a6bd0409dc974e7684e495d0e25",
+      "lines": 69,
+      "entireRootSourceRead": true,
+      "historicalRootBytesUnchanged": true,
+      "primaryCategory": 2,
+      "purpose": "Real Cilium network-policy transformer",
+      "sourceOutputAndGuards": "Reads originalYAML documents, resolves actual renderedRedis/Postgresservice+workload selectors/ports; mutates selected Cilium rules with strictcounts/shape guards; returns all original documents including passive neighbors.",
+      "actualCallerConsumerEvidence": "deploy.sh1088 captures;1202 prints\u2192kubectlapply; statefulDatabaseService uses actualHelmrenderer. Existing APIowning tests include this realcaller shape.",
+      "nextFiniteStep": "Keep policy/pass-throughAPI outputs API; exactadapter must retain inputdocument roster and ports/selectors. No erase passive neighbors or claim whole stdout nonAPI.",
+      "historicalSlots": [
+        {
+          "line": 68,
+          "sink": "process.stdout.write",
+          "expression": null
+        }
+      ]
+    },
+    {
+      "source": "scripts/updates/check-upstream-refresh.mjs",
+      "sha256": "cbc42cd5476a3edb1b89e24fb7d18fce2b92af582e95c1151f187c9e7c504f43",
+      "lines": 26,
+      "entireRootSourceRead": true,
+      "historicalRootBytesUnchanged": true,
+      "primaryCategory": 4,
+      "purpose": "Real network updater regression harness, not documentation fixture",
+      "sourceOutputAndGuards": "Ownedtemporaryrepo priorversion metadata\u2192gitcommit, calls real refreshVersions withinheritstdio/900s; asserts independentlycommitted checksums; finally cleanup. Writes generic expected version manifest with version0 syntheticpart; real requestedupstream bytes.",
+      "actualCallerConsumerEvidence": "update-checks.yaml78; imports versionOutputs to copy actual generatedversionoutputs.",
+      "nextFiniteStep": "Test purpose not sufficient docsRole/nativeexecution grant. Bind exact external fetch/tool/temporaryrepo consumer and updater outputslots separately if supported; preserve prerequisite/network UNKNOWN, no fabricated offline fixture.",
+      "historicalSlots": [
+        {
+          "line": 20,
+          "sink": "fs.writeFileSync",
+          "expression": "JSON.stringify(baseline)"
+        }
+      ]
+    },
+    {
+      "source": "scripts/updates/deployment-release.mjs",
+      "sha256": "87d7c5e64c9718aba77a259611a760666f05626379dd2cc3f218b75869ed9ac3",
+      "lines": 198,
+      "entireRootSourceRead": true,
+      "historicalRootBytesUnchanged": true,
+      "primaryCategory": 2,
+      "purpose": "Mixed selected-commit scalar and real deployment YAML",
+      "sourceOutputAndGuards": "verify stdout validated40hex selectedcommit; render stdout originalHelmmanifest after receipt/images/bundle/overlaychecks; temporary context registry/nativebinding YAML only config. Raw overlayvalues remain callerdata.",
+      "actualCallerConsumerEvidence": "deploy.sh542 capturedselectedcommit and558/560render; deploy-ops-pod.sh11verify28render\u2192temp/rendered.yaml+optionalcat before actualHelmupgrade; gitops/bundle/selfmanagement imports validators.",
+      "nextFiniteStep": "Reuse occurrence-custody architecture for exactverify capture only; render remains API with qualified originaladapter, no wholefile scalarrole. Preserve selectedsource/configuration stop.",
+      "historicalSlots": [
+        {
+          "line": 177,
+          "sink": "process.stdout.write",
+          "expression": null
+        },
+        {
+          "line": 195,
+          "sink": "process.stdout.write",
+          "expression": null
+        }
+      ]
+    },
+    {
+      "source": "scripts/updates/materialize-release.mjs",
+      "sha256": "ad026a32e4e9cad21ab3f2f0e87fcafe6c5d563f5133191f70b4c5ef4c925475",
+      "lines": 51,
+      "entireRootSourceRead": true,
+      "historicalRootBytesUnchanged": true,
+      "primaryCategory": 4,
+      "purpose": "Release configuration materializer, not blanket metadata",
+      "sourceOutputAndGuards": "Writes selectedreceipt images/codebundle fields into sourcevalues and emits generated YAML. Source YAML top-level data are preserved without prohibiting resource-shaped keys; selectedsource check uses actualgit source.",
+      "actualCallerConsumerEvidence": "auto-promote/promote workflows and selectedRelease --check child; generatedreleases/values feed deploymentRelease/Helm.",
+      "nextFiniteStep": "Exact selected outputpath/configurationreceiver contract can model Helm values; arbitrary YAML remains UNKNOWN/API. Preserve verifyReleaseConfiguration check and --check-selected-source restricted checkonly; no release bypass.",
+      "historicalSlots": [
+        {
+          "line": 50,
+          "sink": "fs.writeFileSync",
+          "expression": "`# Generated from release ${release.commit} and byte-matched source configuration; do not edit.\\n${yaml.dump(values, { lineWidth: 120, noRefs: true })}`"
+        }
+      ]
+    },
+    {
+      "source": "scripts/updates/refresh-versions.mjs",
+      "sha256": "f125cb70dd7dec201ab1415a61d21d5f87e8e6e8ea3f5bd8f2ce1deaa5a04356",
+      "lines": 155,
+      "entireRootSourceRead": true,
+      "historicalRootBytesUnchanged": true,
+      "primaryCategory": 4,
+      "purpose": "Trusted upstream updater with heterogeneous output effects",
+      "sourceOutputAndGuards": "Fetches actual releases/checksums/registrydigests, mutates versions.json plus syncVersions/Codex/tool locks; rollbackoriginalversions on caughtwritephase failure. Unknown manifest topfields preserved. Child helpers can change realKubernetes/resource/config/source files.",
+      "actualCallerConsumerEvidence": "dependency-updates workflow readonlytrustedcode mount\u2192Renovate exact allowedCommand in renovate.cjs; check-upstream-refresh calls realnetworktool in temp.",
+      "nextFiniteStep": "Separate known diagnosticstrings from arbitrary manifest rewrite/helperAPI outputeffects. Needs coherent selectedmanifest+helperoutput/consumer proof, not generic administrative/nonAPIrole.",
+      "historicalSlots": [
+        {
+          "line": 140,
+          "sink": "console.log",
+          "expression": null
+        },
+        {
+          "line": 151,
+          "sink": "fs.writeFileSync",
+          "expression": "`${JSON.stringify(next, null, 2)}\\n`"
+        },
+        {
+          "line": 155,
+          "sink": "fs.writeFileSync",
+          "expression": null
+        }
+      ]
+    },
+    {
+      "source": "scripts/updates/release-images.mjs",
+      "sha256": "6c9afb34ba328142af2b086985ceda3313e74a48fac1608dc2271d8f80e47bf5",
+      "lines": 30,
+      "entireRootSourceRead": true,
+      "historicalRootBytesUnchanged": true,
+      "primaryCategory": 3,
+      "purpose": "Immutable image receipt metadata publisher",
+      "sourceOutputAndGuards": "Closedroot schemaVersion/commit/images plus positive safesourceRunId/Attempt; exact expectedfamily slots/imageSHA validation. CLI output path caller-supplied; no API apply. Public collectReceipts expectedarray parameter is not global arbitrarywriter authority.",
+      "actualCallerConsumerEvidence": "publish-image-receipts.yaml32 \u2192receipt-output/$FAMILY-images.json then gh releasecreate; downstream selectedRelease validates completefamilyreceipt/runidentity.",
+      "nextFiniteStep": "Finite metadata constructor+exactworkflowreceiver contract possible; preserve releaseprovenance/selection separately, no successfulbuild/sourceeligibility inferred from receipt shape.",
+      "historicalSlots": [
+        {
+          "line": 29,
+          "sink": "fs.writeFileSync",
+          "expression": "JSON.stringify(release, null, 2) + '\\n'"
+        }
+      ]
+    },
+    {
+      "source": "scripts/vendor-external-helm-authorities.mjs",
+      "sha256": "077c8136790d759262609f716ab6c77b0049d19bb7e2208c27a7c3733d6a96f8",
+      "lines": 284,
+      "entireRootSourceRead": true,
+      "historicalRootBytesUnchanged": true,
+      "primaryCategory": 1,
+      "purpose": "Documentation external Helm evidence owner",
+      "sourceOutputAndGuards": "Exact doclock/archive manifest/checksum+inventory fields; extractvalues/schema/templatecontext metadata into authorityJSON, copy/download archive inputs separately. Refresh retains unrelatedarchive owners; offlineextracted no acquisition, check rederives exactartifact.",
+      "actualCallerConsumerEvidence": "documentation-maintenance.md170 exactrefresh-extracted; full owningvendor test read: originalCLI inertfixture with failinghelm foroffline route, ownedHelm acquisitiondouble refresh, sharedownerpreservation/digestnegative.",
+      "nextFiniteStep": "Exact docsRole candidate binds archive/lock/inventory/derive and flags; archives/template strings do not grant moduleexecution or apply. Current console role already nonAPI, two writer slots not thereby qualified.",
+      "historicalSlots": [
+        {
+          "line": 209,
+          "sink": "fs.writeFileSync",
+          "expression": "bytes"
+        },
+        {
+          "line": 243,
+          "sink": "fs.writeFileSync",
+          "expression": "manifestBytes"
+        }
+      ]
+    },
+    {
+      "source": "scripts/versions.mjs",
+      "sha256": "c837f871d19a8d37bc1748c3f85db9cb46ccdf9d53b1c0aaa6f64c7c6efbf00b",
+      "lines": 189,
+      "entireRootSourceRead": true,
+      "historicalRootBytesUnchanged": true,
+      "primaryCategory": 4,
+      "purpose": "Central heterogeneous source/configuration/API version writer",
+      "sourceOutputAndGuards": "Validatedcentral manifest selects exactDockerARG/template/version/requirements replacements; outputs include realgitopsbootstrapApp YAML and resources.yaml as well asvalues/CI/scripts/packages/docsinventory. content writer is heterogeneous, not just statusJSON.",
+      "actualCallerConsumerEvidence": "package versions:sync/check; role/release/build/update workflows; refreshVersions and checkupstream import. syncVersions return checked/changed metadata is separate from actual outputfiles.",
+      "nextFiniteStep": "Need selected finite outputMap source/targettype partition retaining realAPI files asAPI, contextualvalues/scripts as respective contracts. Never generic content/copiedbyte nonAPI; preserve exactreplacementcounts/checkdrift/tool locks.",
+      "historicalSlots": [
+        {
+          "line": 181,
+          "sink": "fs.writeFileSync",
+          "expression": null
+        }
+      ]
+    }
+  ],
+  "limits": [
+    "Historical179census/22rows only working list; currentgraph/classifier not run, no presentunknown count inferred",
+    "All22complete originalrootSource bodies read, actualdirect caller/receiver contexts traced; broader transitive/npm/Git/native/tool semantic approval not claimed",
+    "No product/moduleimports, producers, owner/currentDATA acquisition, tests/native/network or runtime effects executed",
+    "Only scratchreport authored; no main/registry/qualificationDATA changes",
+    "Existing exact20source utility/retirement review reused only unchanged topic scope; no arbitraryJSON/domain parsing nonAPI waiver",
+    "No wholecensus/global/configuration/release PASS; currentreleaseconfiguration stop retained"
+  ]
+}

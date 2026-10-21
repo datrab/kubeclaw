@@ -1,3 +1,4 @@
+import {assertDocumentationOwnerPurpose,assertDocumentationOwnerAncestry,documentationOwnerNativeEntryMatches,reviewedDocumentationOwnerPurposes} from './docs-documentation-owner-purpose-custody.mjs';
 import {minimalPluginFixtureOutputCustody, minimalPluginFixtureOutputRole} from './docs-minimal-plugin-fixture-output-custody.mjs';
 import {deploymentScalarOccurrenceCustody, selectedDeploymentScalarOccurrences} from './docs-deployment-scalar-occurrence-custody.mjs';
 import {deploymentConfigOutputCustody, deploymentConfigOutputRole} from './docs-deployment-config-output-custody.mjs';
@@ -687,7 +688,7 @@ function assertDocumentationToolQualifications(root,boundary,packageBytes) {
   const inputAuthorityKey=documentationModuleInputAuthority(root,boundary,graph);
   // Purpose data and role receipts are separate from module-graph inputs.
   // Reacquire them even when the graph/registry qualification is warm.
-  for(const record of records)if(record.kind!=='static-receiver-descriptions/v1')assertDocumentationExecutableRole(root,record.source);
+  for(const record of records)if(record.kind!=='static-receiver-descriptions/v1'){assertDocumentationOwnerPurpose(root,record.source);assertDocumentationExecutableRole(root,record.source);}
   const qualificationKey=hash(JSON.stringify([graph.inputKey,inputAuthorityKey,boundary]));if(documentationQualificationCache.get(root)===qualificationKey)return;
   const docsReachable=new Set(entries.map(entry=>entry.source));let changed=true;
   while(changed){changed=false;for(const edge of graph.edges)if(docsReachable.has(edge.source)&&!docsReachable.has(edge.target)){docsReachable.add(edge.target);changed=true;}}
@@ -718,8 +719,8 @@ function assertDocumentationToolQualifications(root,boundary,packageBytes) {
       // fresh Source-owned purpose inputs before either cache. No fake entry.
       // A newly selected import or root-package entry requires Source review.
       assert(ancestors.size===1&&!entries.some(entry=>entry.source===source),`DOCUMENTATION_TOOL_PUBLIC_CONSUMER_UNQUALIFIED: ${source}; selected root-package/module-graph consumer added`);
-    }else for(const consumer of ancestors)assert(docsReachable.has(consumer),`DOCUMENTATION_TOOL_PUBLIC_CONSUMER_UNQUALIFIED: ${source}; ${consumer}`);
-    for(const entry of documentationEntryPoints(JSON.parse(packageBytes).scripts??{},false,root))if(!entry.name.startsWith('docs:')&&!entry.name.startsWith('verify:docs:'))assert(!ancestors.has(entry.source),`DOCUMENTATION_TOOL_PUBLIC_CONSUMER_UNQUALIFIED: ${source}; package invocation ${entry.name}`);
+    }else if(reviewedDocumentationOwnerPurposes[source]){assertDocumentationOwnerAncestry(root,source,ancestors,docsReachable,documentationEntryPoints(JSON.parse(packageBytes).scripts??{},false,root));}else for(const consumer of ancestors)assert(docsReachable.has(consumer),`DOCUMENTATION_TOOL_PUBLIC_CONSUMER_UNQUALIFIED: ${source}; ${consumer}`);
+    for(const entry of documentationEntryPoints(JSON.parse(packageBytes).scripts??{},false,root))if(!entry.name.startsWith('docs:')&&!entry.name.startsWith('verify:docs:'))assert(!ancestors.has(entry.source)||source===entry.source&&documentationOwnerNativeEntryMatches(source,entry),`DOCUMENTATION_TOOL_PUBLIC_CONSUMER_UNQUALIFIED: ${source}; package invocation ${entry.name}`);
     const packageDefinition=JSON.parse(packageBytes);
     function publicTargets(value){return typeof value==='string'?[value]:value&&typeof value==='object'?Object.values(value).flatMap(publicTargets):[];}
     for(const target of [...publicTargets(packageDefinition.bin),...publicTargets(packageDefinition.exports),...publicTargets(packageDefinition.main)]) {
