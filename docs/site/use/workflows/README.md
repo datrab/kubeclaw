@@ -3,7 +3,7 @@
 Status: workflow task index; full wait/resume lifecycle and deployment execution open
 Audience: pipeline authors and operators
 Owner: product integration maintainers
-Evidence: docs/site/use/workflows/examples/first-project.mjs; skills/nova/project/compiler.ts; docs/site/use/workflows/wait-resume.md; docs/site/use/workflows/buster-suite.md; docs/site/use/workflows/kubernetes-fixture.md; docs/site/use/demo-delivery.md; docs/site/use/diagnose.md; docs/site/use/recovery.md; docs/site/use/plugins.md
+Evidence: docs/site/use/workflows/examples/first-project.mjs; skills/nova/project/compiler.ts; docs/site/use/workflows/wait-resume.md; docs/site/use/workflows/buster-suite.md; docs/site/use/workflows/kubernetes-fixture.md; docs/site/use/demo-delivery.md; docs/site/use/diagnose.md; docs/site/use/recovery.md; docs/site/use/plugins.md; docs/site/use/workflows/repair-retry.md; docs/site/use/workflows/interruption-recovery.md; docs/site/use/workflows/redis-replay-recovery.md; docs/site/use/workflows/worker-result-recovery.md
 Applies to: pipeline workflow selection; each guide states its contracts and execution prerequisites
 Last verified: 2026-10-20; first-project local compilation and greeting assertion; other journey boundaries stated separately; no full project execution or deployment evidence; task routing source-checked 2026-10-21
 
@@ -22,6 +22,10 @@ new stage attempt; it does not change the result of the earlier attempt.
 | Deliver a demo and request human acceptance | [Deliver a Demo](../demo-delivery.md#canonical-demo-delivery-procedure) | Local contract rehearsal and explicit live-delivery prerequisites. |
 | Diagnose an uncertain external effect | [Lost Responses and Uncertain Effects](../diagnose.md#lost-responses-and-uncertain-effects), then [Pipeline State Recovery](../recovery.md#pipeline-state-recovery) | Preserve stopped-writer raw state before audit; match the original request, resource and receipt through an authorized owner read. Stop while the outcome or supported reconciliation path remains unknown. |
 | Activate, replace, or remove a plugin | [Canonical Plugin Lifecycle Procedure](../plugins.md#canonical-plugin-lifecycle-procedure) | Separate package discovery, configuration/grant admission, actual activation/result, drain and retained state. The procedure routes OpenClaw and Codex hosts to their own controls; no generic install/remove CLI or deployed proof is implied. |
+| Inspect technical retry, repair and mandatory rechecks | [Retry and repair rehearsal](repair-retry.md) | Actual Core/file journals/native Git/artifact-store rehearsal with explicitly trusted test checkers; not application quality or a compiled implementation project. |
+| Recover an interrupted Core attempt | [Interruption and original checkpoint recovery](interruption-recovery.md) | Actual owned child interruption/recovery and external-effect stop controls; preserve original run and raw state before recovery. |
+| Reconcile Redis delivery after an outage | [Redis replay and deduplication](redis-replay-recovery.md) | Separate readiness, canonical event, observer attempt/checkpoint, exact Redis stream and receiver acknowledgement. Native outage remains an owner-executed procedure, not a claimed result. |
+| Recover an accepted Worker attempt result | [Worker interruption and result recovery](worker-result-recovery.md) | Same-host ownership/spool/journal/result reconciliation; do not invent a generic kill/recover CLI or a fresh claim to bypass fencing. |
 
 ## Materialize and compile a first project
 

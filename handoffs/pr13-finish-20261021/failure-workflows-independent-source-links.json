@@ -1,0 +1,242 @@
+[
+  {
+    "page": "repair-retry.md",
+    "file": "tests/verification/reliability/repair-budget-fixture.mjs",
+    "revision": "ce7740252864a9b547bee8a35260d6ab10c9f05e",
+    "range": [
+      1,
+      39
+    ],
+    "sha256": "f9b87ecf53b9cb7828aa73cd37207a813f5744584a210f28bad1739458c62f2e"
+  },
+  {
+    "page": "repair-retry.md",
+    "file": "tests/fixtures/repair-budget/plugin/stage.mjs",
+    "revision": "ce7740252864a9b547bee8a35260d6ab10c9f05e",
+    "range": [
+      1,
+      27
+    ],
+    "sha256": "507d17499588f789534262ed9478e062eabc3f1b72b6a572a6fc7abcbe02102e"
+  },
+  {
+    "page": "repair-retry.md",
+    "file": "skills/nova/core/execution/graph-repair-budget.ts",
+    "revision": "ce7740252864a9b547bee8a35260d6ab10c9f05e",
+    "range": [
+      3,
+      30
+    ],
+    "sha256": "f5cd06815a0d7d631276b256fd80bcbd57e018f68326909d69b424f2e08a284e"
+  },
+  {
+    "page": "repair-retry.md",
+    "file": "skills/nova/core/lifecycle/repair-budget.ts",
+    "revision": "ce7740252864a9b547bee8a35260d6ab10c9f05e",
+    "range": [
+      46,
+      100
+    ],
+    "sha256": "6bd3d5f44d67edf626ce45301a716d5a6ea06d1f0f870b47d6f071b7930872d4"
+  },
+  {
+    "page": "repair-retry.md",
+    "file": "skills/nova/core/lifecycle/remediation.ts",
+    "revision": "ce7740252864a9b547bee8a35260d6ab10c9f05e",
+    "range": [
+      15,
+      58
+    ],
+    "sha256": "49c26f15b12f2281bf86a10c5b21669f7e8ab423c5d0f7ce317ce546e1254535"
+  },
+  {
+    "page": "repair-retry.md",
+    "file": "skills/nova/core/lifecycle/repair-authorization.ts",
+    "revision": "ce7740252864a9b547bee8a35260d6ab10c9f05e",
+    "range": [
+      1,
+      30
+    ],
+    "sha256": "148d198ec0458ef5bdb95f1932ab7fc59db8f0ebbb7bcf31555cda901a27a283"
+  },
+  {
+    "page": "interruption-recovery.md",
+    "file": "tests/verification/contracts/check-plugin-system-v2-checkpoint-recovery.mjs",
+    "revision": "ce7740252864a9b547bee8a35260d6ab10c9f05e",
+    "range": [
+      35,
+      90
+    ],
+    "sha256": "b77ea4a9f1ca3e0174630d42e3b4117eea6b37a1292bca1191e42d32b11d2423"
+  },
+  {
+    "page": "interruption-recovery.md",
+    "file": "tests/verification/contracts/check-plugin-system-v2-checkpoint-recovery.mjs",
+    "revision": "ce7740252864a9b547bee8a35260d6ab10c9f05e",
+    "range": [
+      91,
+      136
+    ],
+    "sha256": "b77ea4a9f1ca3e0174630d42e3b4117eea6b37a1292bca1191e42d32b11d2423"
+  },
+  {
+    "page": "interruption-recovery.md",
+    "file": "tests/fixtures/plugin-system-v2/resume-plugin/checkpoint.js",
+    "revision": "ce7740252864a9b547bee8a35260d6ab10c9f05e",
+    "range": [
+      1,
+      46
+    ],
+    "sha256": "49b4e9664577154de96946e5152a69972d1f4644f69bc0816a0dc078b45f186d"
+  },
+  {
+    "page": "interruption-recovery.md",
+    "file": "skills/nova/core/execution/effect-recovery.ts",
+    "revision": "ce7740252864a9b547bee8a35260d6ab10c9f05e",
+    "range": [
+      1,
+      29
+    ],
+    "sha256": "06ee56bce5fedf57518e39858b700278c33b81d4edb2177587007f392b0ce186"
+  },
+  {
+    "page": "interruption-recovery.md",
+    "file": "tests/verification/reliability/external-effect-recovery.test.mts",
+    "revision": "ce7740252864a9b547bee8a35260d6ab10c9f05e",
+    "range": [
+      13,
+      54
+    ],
+    "sha256": "75501024d5ef9aaac53ff4dbe7666cc528624217a3749666a2d1ea837d4d4e22"
+  },
+  {
+    "page": "interruption-recovery.md",
+    "file": "tests/verification/reliability/external-effect-recovery.test.mts",
+    "revision": "ce7740252864a9b547bee8a35260d6ab10c9f05e",
+    "range": [
+      95,
+      102
+    ],
+    "sha256": "75501024d5ef9aaac53ff4dbe7666cc528624217a3749666a2d1ea837d4d4e22"
+  },
+  {
+    "page": "worker-result-recovery.md",
+    "file": "skills/prism/server/worker.ts",
+    "revision": "ce7740252864a9b547bee8a35260d6ab10c9f05e",
+    "range": [
+      1,
+      50
+    ],
+    "sha256": "b8e882d4c0a5ea6001c5882a73c5a48ce079514ca758dacac7a623c529c4c376"
+  },
+  {
+    "page": "worker-result-recovery.md",
+    "file": "skills/prism/server/native-worker-execution.ts",
+    "revision": "ce7740252864a9b547bee8a35260d6ab10c9f05e",
+    "range": [
+      9,
+      49
+    ],
+    "sha256": "c6618f0f1dfdf61b2c2a126700f3aded99519b20a7ce3b553f21c27f53f3a406"
+  },
+  {
+    "page": "worker-result-recovery.md",
+    "file": "skills/worker/core/worker/native-attempt-executor.ts",
+    "revision": "ce7740252864a9b547bee8a35260d6ab10c9f05e",
+    "range": [
+      19,
+      72
+    ],
+    "sha256": "bddc68aa370648c86e7b7301f4f31a083504217dd89bac7694c36c344a8e23a3"
+  },
+  {
+    "page": "worker-result-recovery.md",
+    "file": "skills/worker/core/worker/native-attempt-recovery.ts",
+    "revision": "ce7740252864a9b547bee8a35260d6ab10c9f05e",
+    "range": [
+      1,
+      41
+    ],
+    "sha256": "fc55712ec3a5237e0131969d4aa190fcf994541525521210e8598ec63c950769"
+  },
+  {
+    "page": "worker-result-recovery.md",
+    "file": "tests/verification/reliability/worker-native-journal.test.mts",
+    "revision": "ce7740252864a9b547bee8a35260d6ab10c9f05e",
+    "range": [
+      39,
+      79
+    ],
+    "sha256": "9bc2b35db4537a9b0d62514ba3300ca436e30400dbae92fbc6d3cfcb7e411f2c"
+  },
+  {
+    "page": "redis-replay-recovery.md",
+    "file": "skills/common/plugins/redis-transport/src/adapter.ts",
+    "revision": "ce7740252864a9b547bee8a35260d6ab10c9f05e",
+    "range": [
+      14,
+      47
+    ],
+    "sha256": "15c91e7eed9a98784d6fbdcb931160202295ea6ef20b1c18367bcd9eaab4cc01"
+  },
+  {
+    "page": "redis-replay-recovery.md",
+    "file": "skills/common/plugins/redis-transport/src/adapter.ts",
+    "revision": "ce7740252864a9b547bee8a35260d6ab10c9f05e",
+    "range": [
+      57,
+      91
+    ],
+    "sha256": "15c91e7eed9a98784d6fbdcb931160202295ea6ef20b1c18367bcd9eaab4cc01"
+  },
+  {
+    "page": "redis-replay-recovery.md",
+    "file": "skills/common/plugins/redis-transport/src/stream-identity.ts",
+    "revision": "ce7740252864a9b547bee8a35260d6ab10c9f05e",
+    "range": [
+      1,
+      8
+    ],
+    "sha256": "a2657ab33a2833771bda44c8b2ef1904900a26c6773f7ba839f36a35da571167"
+  },
+  {
+    "page": "redis-replay-recovery.md",
+    "file": "skills/nova/core/telemetry/observer-delivery.ts",
+    "revision": "ce7740252864a9b547bee8a35260d6ab10c9f05e",
+    "range": [
+      15,
+      43
+    ],
+    "sha256": "d80f67ca85cafee41eb41d228be7a8d3aff820b556ccf21efa6f0a9845afd1fc"
+  },
+  {
+    "page": "redis-replay-recovery.md",
+    "file": "skills/nova/core/telemetry/observer-recovery.ts",
+    "revision": "ce7740252864a9b547bee8a35260d6ab10c9f05e",
+    "range": [
+      31,
+      58
+    ],
+    "sha256": "9d97600debff727243d62fbad6c4a4616b056a4e4afb1098e1e19bbaa5f3edcb"
+  },
+  {
+    "page": "redis-replay-recovery.md",
+    "file": "skills/nova/core/telemetry/observers.ts",
+    "revision": "ce7740252864a9b547bee8a35260d6ab10c9f05e",
+    "range": [
+      82,
+      108
+    ],
+    "sha256": "b46b9a70b190bf8541d96188221a63acc1e9c03ff6204a9e94b37c944306aafd"
+  },
+  {
+    "page": "redis-replay-recovery.md",
+    "file": "tests/verification/reliability/redis-transport.test.mts",
+    "revision": "ce7740252864a9b547bee8a35260d6ab10c9f05e",
+    "range": [
+      24,
+      81
+    ],
+    "sha256": "18f0faac50b8e06c2c8382c3dc7c63c67d4853d3d7bb4e3f956874fbcb68a053"
+  }
+]

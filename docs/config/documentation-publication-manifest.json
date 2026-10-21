@@ -842,6 +842,11 @@
       "canonicalUrl": "/use/workflows/buster-suite.html"
     },
     {
+      "sourcePath": "docs/site/use/workflows/interruption-recovery.md",
+      "route": "/use/workflows/interruption-recovery.html",
+      "canonicalUrl": "/use/workflows/interruption-recovery.html"
+    },
+    {
       "sourcePath": "docs/site/use/workflows/kubernetes-fixture.md",
       "route": "/use/workflows/kubernetes-fixture.html",
       "canonicalUrl": "/use/workflows/kubernetes-fixture.html"
@@ -852,9 +857,24 @@
       "canonicalUrl": "/use/workflows/local-core.html"
     },
     {
+      "sourcePath": "docs/site/use/workflows/redis-replay-recovery.md",
+      "route": "/use/workflows/redis-replay-recovery.html",
+      "canonicalUrl": "/use/workflows/redis-replay-recovery.html"
+    },
+    {
+      "sourcePath": "docs/site/use/workflows/repair-retry.md",
+      "route": "/use/workflows/repair-retry.html",
+      "canonicalUrl": "/use/workflows/repair-retry.html"
+    },
+    {
       "sourcePath": "docs/site/use/workflows/wait-resume.md",
       "route": "/use/workflows/wait-resume.html",
       "canonicalUrl": "/use/workflows/wait-resume.html"
+    },
+    {
+      "sourcePath": "docs/site/use/workflows/worker-result-recovery.md",
+      "route": "/use/workflows/worker-result-recovery.html",
+      "canonicalUrl": "/use/workflows/worker-result-recovery.html"
     }
   ]
 }

@@ -1,0 +1,242 @@
+{
+  "status": "AUTHOR_COMPLETE_REQUIRES_INDEPENDENT_REVIEW",
+  "draft": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/ref005-errors.draft.md",
+  "draftSha256": "c1818431abc965ca84ee87dd3170e83bb27c49012beefdb7802b743737d6589b",
+  "chapter": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/ref005-http-errors-chapter.draft.md",
+  "target": "docs/site/reference/errors.md",
+  "basePageRevision": "6d2cdeedbafba26e99e11cfd1793f25b15f4388a",
+  "scope": [
+    "Exact bounded publisher/generic runtime/selected common HTTP diagnostic families, dynamic helper arguments and actual pre/post-send/storage phases",
+    "Durable request/reservation/receipt/failure/transition conflict capacity and failure-write override boundaries",
+    "Actual Core provider/preflight, external failed receipt wrapper, stage blocked/retry mapping and separate recovery-entry errors",
+    "Correct previously false generator currentSHA locator to semantically reviewed explicit immutable0e snapshot; no other source-bound claims blindly changed",
+    "No whole product error census/REF005/A91105 selfacceptance; other-language emitter/wrapper gaps still explicit"
+  ],
+  "sources": [
+    {
+      "path": "skills/common/plugins/transport-publisher/src/adapter.ts",
+      "start": 25,
+      "end": 60,
+      "sha256": "017501aea38f59ede67adf7249ed0bfa9c2d16430b2c7acf6380944350f2cd31"
+    },
+    {
+      "path": "skills/common/plugins/transport-publisher/src/adapter.ts",
+      "start": 61,
+      "end": 98,
+      "sha256": "017501aea38f59ede67adf7249ed0bfa9c2d16430b2c7acf6380944350f2cd31"
+    },
+    {
+      "path": "skills/common/plugins/transport-publisher/src/adapter.ts",
+      "start": 100,
+      "end": 158,
+      "sha256": "017501aea38f59ede67adf7249ed0bfa9c2d16430b2c7acf6380944350f2cd31"
+    },
+    {
+      "path": "skills/common/plugins/transport-publisher/src/adapter.ts",
+      "start": 159,
+      "end": 173,
+      "sha256": "017501aea38f59ede67adf7249ed0bfa9c2d16430b2c7acf6380944350f2cd31"
+    },
+    {
+      "path": "skills/common/plugins/transport-publisher/src/adapter.ts",
+      "start": 197,
+      "end": 253,
+      "sha256": "017501aea38f59ede67adf7249ed0bfa9c2d16430b2c7acf6380944350f2cd31"
+    },
+    {
+      "path": "skills/common/plugins/transport-publisher/src/adapter.ts",
+      "start": 254,
+      "end": 312,
+      "sha256": "017501aea38f59ede67adf7249ed0bfa9c2d16430b2c7acf6380944350f2cd31"
+    },
+    {
+      "path": "skills/common/plugins/transport-publisher/src/adapter.ts",
+      "start": 313,
+      "end": 339,
+      "sha256": "017501aea38f59ede67adf7249ed0bfa9c2d16430b2c7acf6380944350f2cd31"
+    },
+    {
+      "path": "skills/common/plugins/runtime-dispatch/src/adapter.ts",
+      "start": 14,
+      "end": 59,
+      "sha256": "5bf2d0c003497e74b0bfdf7524b4725bcd77d12b592f00e121be553868009e5e"
+    },
+    {
+      "path": "skills/common/plugins/runtime-dispatch/src/adapter.ts",
+      "start": 60,
+      "end": 105,
+      "sha256": "5bf2d0c003497e74b0bfdf7524b4725bcd77d12b592f00e121be553868009e5e"
+    },
+    {
+      "path": "skills/common/plugins/runtime-dispatch/src/adapter.ts",
+      "start": 107,
+      "end": 147,
+      "sha256": "5bf2d0c003497e74b0bfdf7524b4725bcd77d12b592f00e121be553868009e5e"
+    },
+    {
+      "path": "skills/common/plugins/runtime-dispatch/src/dispatch-adapter.ts",
+      "start": 14,
+      "end": 38,
+      "sha256": "16ccaa5e974de17c36d20078fb2912ddd9d2fa1c6a0a677af760e242ce3cd33a"
+    },
+    {
+      "path": "skills/common/plugins/network-http/src/adapter.ts",
+      "start": 18,
+      "end": 71,
+      "sha256": "8885ca56e2a2322c98e4c83ba935397f8f47d829c4feec69efbdde0113553e8d"
+    },
+    {
+      "path": "skills/common/plugins/network-http/src/adapter.ts",
+      "start": 73,
+      "end": 124,
+      "sha256": "8885ca56e2a2322c98e4c83ba935397f8f47d829c4feec69efbdde0113553e8d"
+    },
+    {
+      "path": "skills/common/plugins/network-http/src/adapter.ts",
+      "start": 125,
+      "end": 137,
+      "sha256": "8885ca56e2a2322c98e4c83ba935397f8f47d829c4feec69efbdde0113553e8d"
+    },
+    {
+      "path": "skills/common/plugin-runtime/sdk/src/runtime-dispatch-profile.ts",
+      "start": 1,
+      "end": 29,
+      "sha256": "13f61a984922b7fa815e084b6a5a20238fd0da67aed5959bdc8b061a8e3173fb"
+    },
+    {
+      "path": "skills/nova/core/execution/adapters.ts",
+      "start": 52,
+      "end": 68,
+      "sha256": "293011e7313155b08f33bbef4ce0e910d00c7feef88fd6c585b040bb2cadbc24"
+    },
+    {
+      "path": "skills/nova/core/execution/effect-recovery.ts",
+      "start": 6,
+      "end": 28,
+      "sha256": "06ee56bce5fedf57518e39858b700278c33b81d4edb2177587007f392b0ce186"
+    },
+    {
+      "path": "skills/nova/core/execution/stage-executor.ts",
+      "start": 128,
+      "end": 141,
+      "sha256": "4c846993c679c9ce663f7dda0e8de78fd26101e83948dd17211e62f83ea2eafb"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/record-retirement.ts",
+      "start": 121,
+      "end": 136,
+      "sha256": "00a081bdccc917067eeabea36d6438615aada22c637e4d7f42e3852285647681"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/durable-records.ts",
+      "start": 183,
+      "end": 219,
+      "sha256": "c9a0c42b8cdd3a2f188ec38a3cab5270d0f032444801626ea2c6860e534582dd"
+    }
+  ],
+  "errorCoverage": [
+    {
+      "source": "skills/common/plugins/transport-publisher/src/adapter.ts",
+      "stems": [
+        "TRANSPORT_CONFIG_INVALID",
+        "TRANSPORT_MESSAGE_INVALID",
+        "TRANSPORT_OPERATION_UNSUPPORTED",
+        "TRANSPORT_PAYLOAD_CYCLIC",
+        "TRANSPORT_PAYLOAD_DEPTH_EXCEEDED",
+        "TRANSPORT_PAYLOAD_INVALID",
+        "TRANSPORT_PAYLOAD_SIZE_EXCEEDED",
+        "TRANSPORT_PAYLOAD_UNKNOWN_FIELD",
+        "TRANSPORT_PUBLICATION_ID_INVALID",
+        "TRANSPORT_PUBLICATION_REJECTED",
+        "TRANSPORT_RESOURCE_TYPE_INVALID",
+        "TRANSPORT_RESPONSE_BODY_INVALID",
+        "TRANSPORT_RESPONSE_STATUS_INVALID",
+        "TRANSPORT_SECRET_INVALID",
+        "TRANSPORT_SECRET_RESPONSE_INVALID",
+        "TRANSPORT_TARGET_UNKNOWN"
+      ],
+      "allExplainedInNewChapter": true
+    },
+    {
+      "source": "skills/common/plugins/runtime-dispatch/src/adapter.ts",
+      "stems": [
+        "RUNTIME_CONFIG_INVALID",
+        "RUNTIME_CONFIG_UNKNOWN_FIELD",
+        "RUNTIME_CONFIG_UNKNOWN_TARGET_FIELD",
+        "RUNTIME_OPERATION_UNSUPPORTED",
+        "RUNTIME_PAYLOAD_ARRAY_EXCEEDED",
+        "RUNTIME_PAYLOAD_DEPTH_EXCEEDED",
+        "RUNTIME_PAYLOAD_INVALID",
+        "RUNTIME_PAYLOAD_KEY_INVALID",
+        "RUNTIME_PAYLOAD_OBJECT_EXCEEDED",
+        "RUNTIME_REQUEST_SIZE_EXCEEDED",
+        "RUNTIME_RESPONSE_BODY_INVALID",
+        "RUNTIME_RESPONSE_SIZE_EXCEEDED",
+        "RUNTIME_RESPONSE_STATUS_INVALID",
+        "RUNTIME_SECRET_UNAVAILABLE",
+        "RUNTIME_TARGET_INVALID"
+      ],
+      "allExplainedInNewChapter": true
+    },
+    {
+      "source": "skills/common/plugins/network-http/src/adapter.ts",
+      "stems": [
+        "NETWORK_CONFIG_INVALID",
+        "NETWORK_CREDENTIALS_DENIED",
+        "NETWORK_HEADERS_INVALID",
+        "NETWORK_HEADER_DENIED",
+        "NETWORK_METHOD_DENIED",
+        "NETWORK_OPERATION_UNSUPPORTED",
+        "NETWORK_ORIGIN_DENIED",
+        "NETWORK_REDIRECT_DENIED",
+        "NETWORK_REQUEST_SIZE_EXCEEDED",
+        "NETWORK_RESPONSE_SIZE_EXCEEDED",
+        "NETWORK_TIMEOUT"
+      ],
+      "allExplainedInNewChapter": true
+    },
+    {
+      "source": "skills/common/plugin-runtime/sdk/src/runtime-dispatch-profile.ts",
+      "stems": [
+        "RUNTIME_DISPATCH_PROFILE_ALREADY_BOUND",
+        "RUNTIME_DISPATCH_PROFILE_CAPABILITY_INVALID",
+        "RUNTIME_DISPATCH_PROFILE_INVALID"
+      ],
+      "allExplainedInNewChapter": true
+    }
+  ],
+  "checks": [
+    {
+      "command": "node ref005-http-error-probes.mjs",
+      "exitCode": 0,
+      "observation": "50named probe cases PASS; publisher/generic original source with stubbed Secret/network and real private durable stores; commonHTTP real localhost denies/redirect/size/status/JSON; Core actual missing-provider and external-continuation classification only"
+    },
+    {
+      "command": "Literal/template/helper-argument custom error stem census for three original adapters plus SDKprofile",
+      "exitCode": 0,
+      "observation": "45stems allpresent in new chapter with trigger/phase/effect/action; dynamic field/id/key/name construction explained, not string-only completeness"
+    },
+    {
+      "command": "Bounded immutable-source ranges/fullcurrent bytes and existing quoted-hash validation",
+      "exitCode": 0,
+      "observation": "20newsource excerpts allfullcurrentbytes match0e and bounded; remaining oldquotedfileSHAs current; one incorrect oldgeneratorSHA repaired with explicit0e snapshot after reading unchanged15\u201369semantics; localtargets exist"
+    },
+    {
+      "command": "Exact unchanged publication owner checkLanguage on integrated draft",
+      "exitCode": 0,
+      "observation": "0findings; no checker edits/waivers"
+    },
+    {
+      "command": "Unchanged publicerrors page and existing fenced/code content",
+      "exitCode": 0,
+      "observation": "No repo modifications; old explanation preserved except necessary scoped metadata/footer and precise stale generator locator repair"
+    }
+  ],
+  "limits": [
+    "Author cannot independently accept own chapter or whole REF005/A91105.",
+    "No full Core effect/stage execution or deployed receiver/provider/credential proof; maintained publisher Core-backed fixture failure remains explicit, not patched.",
+    "No runtime/shared checker/matrix edits; dirty scalar work excluded. Draft only; parent application/independent semantic review and actual refs/governance/Reader needed.",
+    "No new globalconfiguration/Helm/release readiness; knip stop remains."
+  ],
+  "openAuthorFindings": []
+}

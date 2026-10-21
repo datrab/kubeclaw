@@ -3,9 +3,9 @@
 Status: bounded reference; discovery limitations stated below
 Audience: operator, developer, plugin author, maintainer
 Owner: documentation; named components own diagnostic and delivery semantics
-Evidence: skills/common/plugin-runtime/foundation/registry/errors.ts; skills/nova/core/execution/stage-executor.ts; skills/worker/core/worker/attempt-executor.ts; skills/worker/core/worker/phase-deadline.ts; skills/prism/server/worker-service.ts; scripts/generate-buster-error-reference.mjs
+Evidence: skills/common/plugins/transport-publisher/src/adapter.ts; skills/common/plugins/runtime-dispatch/src/adapter.ts; skills/common/plugins/network-http/src/adapter.ts; skills/nova/core/execution/adapters.ts; skills/common/plugin-runtime/foundation/registry/errors.ts; skills/nova/core/execution/stage-executor.ts; skills/worker/core/worker/attempt-executor.ts; skills/worker/core/worker/phase-deadline.ts; skills/prism/server/worker-service.ts; scripts/generate-buster-error-reference.mjs
 Applies to: the named diagnostic representations, families and current source boundaries below
-Last verified: 2026-10-15; current source behavior checked; no live diagnostic or recovery executed
+Last verified: 2026-10-15 original topics; HTTP error chapter source and local probes 2026-10-21 only; no live recovery
 
 ## Start with the first owning boundary
 
@@ -75,7 +75,10 @@ This hub is authored routing and consequence explanation, not another copied
 Buster code table or a new generator output.
 
 **Source — bounded Buster discovery:**
-[productionFiles / stableCode / valuesFor](../../../scripts/generate-buster-error-reference.mjs#L15-L69) (`scripts/generate-buster-error-reference.mjs:15–69`, current-checkout SHA-256 `83a7b3d025d684b0ebf321362885aaf0094a709efb8dca3a3765539a6f934000`).
+[productionFiles / stableCode / valuesFor](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/scripts/generate-buster-error-reference.mjs#L15-L69).
+
+Inspected snapshot SHA-256: `5b7f48767226cbc0a1bbcf310b879052b4aa55919bb60d52985b01f8f7b2424e`.
+This identifies that committed source snapshot; recheck changed sources before reuse.
 
 ## Dynamic families and detail parameters
 
@@ -165,6 +168,190 @@ Reconcile any earlier uncertain operation separately before resubmitting work.
 **Source — OpenClaw target keys, exact suffix, parser and activation order:**
 [openclaw-config.ts:4–7](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/skills/common/plugins/runtime-dispatch/src/openclaw-config.ts#L4-L7) [openclaw-config.ts:51–54](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/skills/common/plugins/runtime-dispatch/src/openclaw-config.ts#L51-L54) [openclaw-config.ts:82–86](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/skills/common/plugins/runtime-dispatch/src/openclaw-config.ts#L82-L85) [openclaw-adapter.ts:18–24](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/skills/common/plugins/runtime-dispatch/src/openclaw-adapter.ts#L18-L24)
 
+## Signed HTTP publisher and generic runtime errors
+
+These are colon-qualified `Error.message` values, not `RegistryError.code`
+properties or public HTTP response schemas. First select the registration:
+`kubeclaw.runtime-dispatch:runtime` is generic HTTP; `:openclaw` owns Gateway
+sessions. `kubeclaw.transport-publisher:publisher` is signed HTTP, not Redis.
+Read their [wire contracts](../understand/communication.md#signed-http-transport-publisher)
+and [generic runtime boundary](../understand/openclaw.md#generic-http-runtime-registration)
+before applying an error-specific action.
+
+The phase matters. Activation rejection creates no usable adapter. Invocation
+admission can fail before that adapter sends, although Core may already retain
+an effect intent. Request serialization, Secret resolution, network response
+and terminal persistence are separate phases. A response-side error does not
+prove the remote operation failed or that a new key is safe.
+
+### Publisher admission and response families
+
+| Exact message or family | Actual trigger and phase | Effect and safe action |
+| --- | --- | --- |
+| `TRANSPORT_CONFIG_INVALID:unknownField` | Closed publisher configuration contains an unsupported own key. | Activation stops. Correct the selected schema/config, not the exact-key guard. |
+| `TRANSPORT_CONFIG_INVALID:targets`, `TRANSPORT_CONFIG_INVALID:target:<id>` | Missing/empty/non-plain target map, invalid target ID or non-plain/extra-field target. | Activation stops. Preserve target identity and correct the configured object. `<id>` is the configured key, not a publication ID. |
+| `TRANSPORT_CONFIG_INVALID:endpoint` | URL is absent, malformed, not HTTP(S), or contains credentials/fragment. | Activation stops. Correct the endpoint. This adapter admits external HTTP; HMAC does not provide confidentiality. |
+| `TRANSPORT_CONFIG_INVALID:signingSecret:<id>` | Target's Secret name fails the lowercase identifier grammar. | Activation stops. Correct the Secret reference, not its raw value in public logs. |
+| `TRANSPORT_CONFIG_INVALID:maxPayloadBytes` | Selected payload limit is not an integer in 1–1,048,576. | Activation stops. Correct the target limit only after checking consumer and network limits. |
+| `TRANSPORT_CONFIG_INVALID:deliveryRoot` | Delivery root is absent or empty. | Activation stops. Restore the selected private store owner; do not replace an existing root to bypass history. |
+| `TRANSPORT_CONFIG_INVALID:maximumDeliveryRecords`, `TRANSPORT_CONFIG_INVALID:maximumDeliveryBytes` | Selected store limit is not a positive safe integer. | Activation stops. Correct the owning count/byte bound; a larger bound is not free capacity proof. |
+| `TRANSPORT_OPERATION_UNSUPPORTED`, `TRANSPORT_RESOURCE_TYPE_INVALID`, `TRANSPORT_TARGET_UNKNOWN:<id>` | Invocation capability/operation, resource type, or configured target does not match. | This publisher sends nothing for that invocation. Correct caller binding/grants/target; do not route through an unrelated adapter. |
+| `TRANSPORT_PAYLOAD_UNKNOWN_FIELD`, `TRANSPORT_MESSAGE_INVALID` | Wrapper has extra keys, or `message` is not a plain object. | Rejection precedes request append. Preserve original input and fix the closed `{message: object}` contract. |
+| `TRANSPORT_PAYLOAD_INVALID` | Wrapper or nested JSON representation is invalid; includes non-finite numbers, unsupported values/prototypes, control/empty/overlong/prototype keys. | Rejection precedes request append. Correct the exact value/key; do not delete semantic content silently. |
+| `TRANSPORT_PAYLOAD_CYCLIC`, `TRANSPORT_PAYLOAD_DEPTH_EXCEEDED` | A container recurs in the current traversal, or message depth exceeds 64. | Rejection precedes request append. Repair the representation. Reused acyclic objects are not automatically cycles. |
+| `TRANSPORT_PAYLOAD_SIZE_EXCEEDED` | UTF-8 bytes of the whole serialized `{message}` wrapper exceed the target limit. | Rejection precedes request append. Reduce/split only through a defined message contract or change approved limits; not an unchanged retry. |
+| `TRANSPORT_SECRET_RESPONSE_INVALID`, `TRANSPORT_SECRET_INVALID` | Secret response has extra keys, or `value` is empty/non-string/contains CR/LF. | Request and reservation already exist; no publisher network call has started. Resolve the named Secret owner and retain private state. |
+| `TRANSPORT_RESPONSE_STATUS_INVALID` | Selected network provider returns a non-integer or non-2xx status to the publisher. | Remote work may exist. Reconcile original key and receiver before retry. Common HTTP can instead throw `HTTP_<status>:<detail>` first. |
+| `TRANSPORT_RESPONSE_BODY_INVALID` | Response body is non-plain or has extra keys. | Remote acceptance is uncertain. Preserve private response/effect and fix the selected receiver's ACK shape. |
+| `TRANSPORT_PUBLICATION_REJECTED` | Body does not carry `accepted: true`. | No accepted receipt is committed by this branch. Reconcile receiver state; rejection does not prove absence of remote side effects. |
+| `TRANSPORT_PUBLICATION_ID_INVALID` | Receiver publication ID fails its 1–256-character ASCII identifier grammar. | Do not invent a replacement ID or accept a bare HTTP 200. Repair/reconcile the receiver under the original key. |
+
+Publisher invocation checks its fence, shutdown flag and initial cancellation
+before the request append. It checks cancellation again after Secret resolution
+and network completion. `ADAPTER_CANCELLED` can therefore mean before send or
+after remote acceptance; `ADAPTER_SHUTTING_DOWN` denies new work, not remote
+cancellation. A fence error comes from the caller's current fence authority,
+not this message catalogue.
+
+After reservation, the publisher attempts to store
+`transport-publication-failure.v1` for Secret/network/response/receipt errors,
+then rethrows the original error. Stored failure retains a 16-hex-character
+reason digest and at most 2,048 message characters, not the original error class,
+stack or complete cause. The same attempt rethrows its stored bounded message
+without sending; a different attempt can send again. An unresolved reservation
+can also re-enter sending. No automatic publisher retry or exactly-once promise
+follows from these diagnostics.
+
+### Publisher persistence is a separate failure boundary
+
+| Store error | Actual meaning here | Safe action |
+| --- | --- | --- |
+| `DURABLE_RECORD_IDEMPOTENCY_CONFLICT` | Same target/key request differs from retained payload or owner. Request append can reject before send. | Retain both identities and original payload; investigate the conflicting writer. Do not erase the request or force a new key. |
+| `DURABLE_RECORD_SIZE_EXCEEDED`, `DURABLE_RECORD_STORE_FULL` | Record/count/whole-store capacity rejects append or transition. Request/terminal reservation admission occurs before send; a later terminal write can fail after send. | Determine which operation failed. Preserve store/effect/receiver evidence; reconcile remote acceptance before a new publication attempt. |
+| `DURABLE_RECORD_TRANSITION_CONFLICT` | Terminal record's retained digest differs from the reserved digest at CAS. | Publisher rereads accepted receipt state; a racing accepted receipt can win. If conflict still escapes, reconcile the original terminal, not a copied receipt or manual digest edit. |
+| `DURABLE_RECORD_NOT_FOUND`, `DURABLE_RECORD_RETIRED`, replay/IO errors | Expected state is absent, retired, corrupt or unavailable at its actual store operation. | Stop mutation and preserve the complete root. Restore through its owner or report unsupported recovery; do not construct a successful terminal by hand. |
+
+The publisher can surface a transition error instead of its original error if
+persisting the failure also fails. Core's effect receipt and the first private
+exception can retain evidence that the bounded terminal alone lacks. Raw message,
+remote error text and signing identity are not safe public diagnostics. No
+publisher status/reconcile/retirement/backup/restore CLI exists; retain the full
+store and use the receiving service's supported reconciliation route.
+
+### Generic runtime dispatch is not Gateway cleanup
+
+| Exact message or family | Actual trigger and phase | Effect and safe action |
+| --- | --- | --- |
+| `RUNTIME_CONFIG_UNKNOWN_FIELD:<key>`, `RUNTIME_CONFIG_UNKNOWN_TARGET_FIELD:<key>` | Unsupported own configuration/target property. | Activation stops. Suffix is the offending property, not target or response. Generic and OpenClaw target sets differ. |
+| `RUNTIME_CONFIG_INVALID:targets`, `RUNTIME_CONFIG_INVALID:target:<id>` | Missing/empty/non-object map, or invalid target ID/value. | Correct the selected generic configuration; no dispatch instance is returned. |
+| `RUNTIME_CONFIG_INVALID:endpoint:<id>` | Endpoint is not a string/HTTP(S), or contains URL credentials/fragment. Malformed URL parsing can also throw native `TypeError`. | Correct the actual target URL; preserve the first parser error without credentials. |
+| `RUNTIME_CONFIG_INVALID:tokenSecret:<id>`, `RUNTIME_CONFIG_INVALID:plaintextHmac:<id>` | Invalid HMAC Secret name, or non-loopback HMAC endpoint uses plaintext HTTP. | Fix reference/HTTPS selection. Do not bypass authentication to make activation pass. |
+| `RUNTIME_CONFIG_INVALID:spiffeProxy:<id>` | Proxy mode points outside loopback. | Restore the selected loopback proxy and authenticated peer policy. A mode string is not proof of mTLS. |
+| `RUNTIME_CONFIG_INVALID:maxRequestBytes:<id>`, `RUNTIME_CONFIG_INVALID:maxResponseBytes:<id>` | Effective numeric limit is outside 1–8,388,608 or not a safe integer. | Correct the selected ceiling and schema-admitted value. The selected network provider can impose stricter limits. |
+| `RUNTIME_OPERATION_UNSUPPORTED`, `RUNTIME_TARGET_INVALID`, `RUNTIME_TARGET_DENIED:<id>` | Wrong capability/operation/resource/ID, or valid ID absent from the captured target map. | Generic adapter sends nothing at this invocation. Correct caller/grant/configuration, then recreate validated activation if needed. |
+| `RUNTIME_PAYLOAD_INVALID`, `RUNTIME_PAYLOAD_KEY_INVALID` | Unsupported JSON representation/key; finite scalars and bounded recursive containers required. | Check whether the helper was validating request or response. Request failure precedes send; response failure can follow remote work. |
+| `RUNTIME_PAYLOAD_DEPTH_EXCEEDED`, `RUNTIME_PAYLOAD_ARRAY_EXCEEDED`, `RUNTIME_PAYLOAD_OBJECT_EXCEEDED` | Recursive depth exceeds 20, or one array/object has more than 1,000 entries. | Same helper validates both directions. Repair the owning payload/receiver, not a blind increase of every limit. |
+| `RUNTIME_REQUEST_SIZE_EXCEEDED` | Serialized request exceeds configured UTF-8 ceiling. | No generic network call yet. Correct the request or approved limit and retain the original effect identity. |
+| `RUNTIME_SECRET_UNAVAILABLE` | Resolved HMAC response has no non-empty string value. | No generic network call yet. Repair the named confidential Secret source, never print the value. |
+| `RUNTIME_RESPONSE_STATUS_INVALID`, `RUNTIME_RESPONSE_BODY_INVALID`, `RUNTIME_RESPONSE_SIZE_EXCEEDED` | Provider status is not integer 2xx, body is not a non-array object, or serialized response exceeds its ceiling. | Remote work may exist. Preserve original key/effect and response; reconcile with that receiver. No `accepted` or session schema is imposed by this generic adapter. |
+| `RUNTIME_DISPATCH_PROFILE_INVALID`, `RUNTIME_DISPATCH_PROFILE_CAPABILITY_INVALID`, `RUNTIME_DISPATCH_PROFILE_ALREADY_BOUND` | SDK profile object differs from its frozen contract, appears on the wrong capability, or a producer tries to bind it twice. | Correct invocation metadata at its owner. An identically named payload key is ordinary data; do not rewrite a retained run profile. |
+
+`RUNTIME_CONFIG_INVALID:<field>:<id>` uses target identity for the suffix;
+`<field>` includes endpoint, tokenSecret, plaintextHmac, spiffeProxy and the two
+byte ceilings. Schema validation can reject a configuration before these parser
+messages. The shared dispatcher checks cancellation and shutdown before dispatch. The
+generic callback also checks cancellation after Secret and network return;
+`ADAPTER_CANCELLED` does not identify one universal phase.
+
+Unlike the OpenClaw registration, generic dispatch has no session-stop or cleanup
+handshake and no durable job/session store. Lost response or response-side
+validation failure requires reconciliation at the original receiver. Repair
+its auth/proxy/network/shape/size owner and preserve the same effect/key. Do not
+spawn a replacement agent or apply a Redis replay rule to this protocol.
+
+### Selected common HTTP provider and Core translation
+
+These messages belong to `kubeclaw.network-http:http`, not every provider of
+`network.http`. The generic dispatcher/publisher use this dependency only when
+that provider is selected and its grants/configuration admit the call.
+
+| Exact message or family | Actual trigger and boundary | Safe decision |
+| --- | --- | --- |
+| `allowedOrigins is required`, `NETWORK_CONFIG_INVALID:allowedHeaders` | Origin list or header allowlist fails parser admission. | Activation cannot complete. Correct selected configuration; malformed URL/method values can produce native parser errors instead. |
+| `NETWORK_CONFIG_INVALID:maxRequestBytes`, `NETWORK_CONFIG_INVALID:maxResponseBytes`, `NETWORK_CONFIG_INVALID:timeoutMs` | Numeric network bound is not a positive safe integer. | Correct that bound and consumer limits; no HTTP request by this activation failure. |
+| `NETWORK_OPERATION_UNSUPPORTED`, `NETWORK_ORIGIN_DENIED:<origin>`, `NETWORK_CREDENTIALS_DENIED`, `NETWORK_METHOD_DENIED:<method>` | Wrong capability/operation, disallowed origin, URL credentials or method. | Rejection precedes fetch. Preserve normalized target/method; repair exact grants/policy, not a wildcard allowlist. |
+| `NETWORK_HEADERS_INVALID`, `NETWORK_HEADER_DENIED:<name>` | Header object is invalid, name not allowed, value not a string or contains CR/LF. | Rejection precedes fetch. Publisher needs its four headers; generic HMAC needs its signature header. Do not expose credential values in a diagnostic. |
+| `NETWORK_REQUEST_SIZE_EXCEEDED` | Serialized request exceeds this provider's byte ceiling. | Rejection precedes fetch. An 8 MiB generic-target setting does not override a 1 MiB selected network limit. |
+| `NETWORK_REDIRECT_DENIED` | Fetch returned 3xx under manual redirect policy. | No redirect follow occurs. Initial request may already have acted; reconcile before changing target/retrying. |
+| `NETWORK_RESPONSE_SIZE_EXCEEDED` | Declared or streamed/decompressed response exceeds byte ceiling. | Work may already have acted. Keep original operation and receiver evidence; body truncation is not a valid ACK. |
+| `HTTP_<status>:<detail>` | Non-success response after bounded body read; detail is at most 1,000 characters. | Preserve actual status and private first cause. It can precede publisher/runtime response validation; never infer a successful ACK or safe retry from status alone. |
+| `NETWORK_TIMEOUT`, `ADAPTER_CANCELLED` | Selected timeout or caller signal wins during fetch/body read; cancellation preserves signal reason as cause. | A request may have reached the receiver. Reconcile original key; timeout/cancellation proves no remote rollback. |
+| Native fetch/URL/JSON exception | DNS/TLS/socket/URL parsing or JSON decoding failed without a custom prefix. | Retain original error/cause and target owner. JSON decoding can fail after remote acceptance; the finite custom-message list is not the only possible diagnostic. |
+
+Core can fail earlier with `CAPABILITY_PROVIDER_MISSING:<capability>`,
+`ADAPTER_NOT_READY:<package:registration>` or `ADAPTER_RUNTIME_STOPPING`.
+A failed non-confidential effect receipt on either external capability becomes
+`EFFECT_OUTCOME_UNRESOLVED:<effectId>:<original message>` in the adapter runtime.
+This conservative wrapper can include pre-send validation failures; it does not
+prove remote acceptance. Core blocks the stage as
+`core.effect_reconciliation_required` rather than authorizing a new operation.
+
+Confidential dependency calls have a different receipt path. A nested Secret or
+network error can still emerge as the outer publication/dispatch effect's cause.
+For recovery, accepted effects without a receipt can produce
+`RECOVERY_EFFECT_OUTCOME_UNRESOLVED:<ids>`; interrupted attempts with retained
+external receipts can produce `RECOVERY_EXTERNAL_CONTINUATION_REQUIRED:<ids>`.
+These are recovery-entry errors, not HTTP statuses or permission to bypass state.
+
+Retain run/stage/attempt/effect/key, exact provider/registration and original
+private input/response/terminal evidence. Determine before-send versus unknown
+remote outcome at that boundary. A stage `retry` label does not itself authorize
+repeating external work. Use the owner procedure, or stop when no supported
+reconciliation exists. Do not weaken canonical `effectRequest` admission merely
+to make a maintained integration fixture pass.
+
+> **Source — exact throw/helper sites and consuming translation**
+>
+> [Publisher exact-key, numeric and URL helpers](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/skills/common/plugins/transport-publisher/src/adapter.ts#L25-L60).
+>
+> [Publisher closed configuration callers](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/skills/common/plugins/transport-publisher/src/adapter.ts#L61-L98).
+>
+> [Publisher payload and Secret validation](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/skills/common/plugins/transport-publisher/src/adapter.ts#L100-L158).
+>
+> [Publisher exact ACK validation](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/skills/common/plugins/transport-publisher/src/adapter.ts#L159-L173).
+>
+> [Publisher admission, request append and attempt reservation](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/skills/common/plugins/transport-publisher/src/adapter.ts#L197-L253).
+>
+> [Publisher network path and success CAS](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/skills/common/plugins/transport-publisher/src/adapter.ts#L254-L312).
+>
+> [Publisher bounded failure and transition-error propagation](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/skills/common/plugins/transport-publisher/src/adapter.ts#L313-L339).
+>
+> [Generic numeric/URL/JSON helper diagnostics](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/skills/common/plugins/runtime-dispatch/src/adapter.ts#L14-L59).
+>
+> [Generic exact config and request admission](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/skills/common/plugins/runtime-dispatch/src/adapter.ts#L60-L105).
+>
+> [Generic request/Secret/network/response ordering](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/skills/common/plugins/runtime-dispatch/src/adapter.ts#L107-L147).
+>
+> [Shared generic fence, cancellation and target dispatch](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/skills/common/plugins/runtime-dispatch/src/dispatch-adapter.ts#L14-L38).
+>
+> [Selected HTTP config/header/timeout boundary](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/skills/common/plugins/network-http/src/adapter.ts#L18-L71).
+>
+> [Selected HTTP response/error and invoke preflight](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/skills/common/plugins/network-http/src/adapter.ts#L73-L124).
+>
+> [Selected HTTP method/header/bytes and fetch call](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/skills/common/plugins/network-http/src/adapter.ts#L125-L137).
+>
+> [SDK profile parse, capability and duplicate-binding failures](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/skills/common/plugin-runtime/sdk/src/runtime-dispatch-profile.ts#L1-L29).
+>
+> [Actual provider selection and failed receipt wrapping](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/skills/nova/core/execution/adapters.ts#L52-L68).
+>
+> [Actual external continuation set and recovery failures](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/skills/nova/core/execution/effect-recovery.ts#L6-L28).
+>
+> [Blocked versus cancellation/timeout/retry result translation](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/skills/nova/core/execution/stage-executor.ts#L128-L141).
+>
+> [Durable request conflict at existing-record lookup](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/skills/common/plugin-runtime/foundation/observability/record-retirement.ts#L121-L136).
+>
+> [Durable CAS, capacity, retirement and write errors](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/skills/common/plugin-runtime/foundation/observability/durable-records.ts#L183-L219).
+
 ## Diagnose uncertainty before retry
 
 | Observation | First distinction | Preserve / next decision |
@@ -200,5 +387,6 @@ Use [Documentation maintenance](../extend/documentation-maintenance.md) when
 an error's code, trigger, representation, owner or retry behavior changes.
 Keep generated facts separate from authored interpretation; update the affected
 reader route as well as the exact source identity. The existing Buster generator
-does not generate this central hub. We ran no extractor, diagnostic, audit, restart,
-retry, repair or live recovery command for this page.
+does not generate this central hub. The HTTP chapter has local bounded probes,
+not a product-wide extractor. No deployed diagnostic, restart, repair or live
+recovery ran for this page.

@@ -3,7 +3,7 @@
   "authority": "Page metadata supplies ownership and source dependencies. This file is generated and must not be edited by hand.",
   "generatedBy": "scripts/docs-governance.mjs",
   "routeRegistry": "docs/site/reference/documentation-route-registry.json",
-  "pageCount": 171,
+  "pageCount": 175,
   "pages": [
     {
       "page": "docs/site/README.md",
@@ -2101,8 +2101,12 @@
       "audience": "operator, developer, plugin author, maintainer",
       "owner": "documentation; named components own diagnostic and delivery semantics",
       "appliesTo": "the named diagnostic representations, families and current source boundaries below",
-      "lastVerified": "2026-10-15; current source behavior checked; no live diagnostic or recovery executed",
+      "lastVerified": "2026-10-15 original topics; HTTP error chapter source and local probes 2026-10-21 only; no live recovery",
       "sourceDependencies": [
+        "skills/common/plugins/transport-publisher/src/adapter.ts",
+        "skills/common/plugins/runtime-dispatch/src/adapter.ts",
+        "skills/common/plugins/network-http/src/adapter.ts",
+        "skills/nova/core/execution/adapters.ts",
         "skills/common/plugin-runtime/foundation/registry/errors.ts",
         "skills/nova/core/execution/stage-executor.ts",
         "skills/worker/core/worker/attempt-executor.ts",
@@ -3783,7 +3787,11 @@
         "docs/site/use/demo-delivery.md",
         "docs/site/use/diagnose.md",
         "docs/site/use/recovery.md",
-        "docs/site/use/plugins.md"
+        "docs/site/use/plugins.md",
+        "docs/site/use/workflows/repair-retry.md",
+        "docs/site/use/workflows/interruption-recovery.md",
+        "docs/site/use/workflows/redis-replay-recovery.md",
+        "docs/site/use/workflows/worker-result-recovery.md"
       ],
       "checks": [
         "npm run docs:governance:check",
@@ -3808,6 +3816,27 @@
       ],
       "checks": [
         "npm run docs:buster-guides:check",
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/use/workflows/interruption-recovery.md",
+      "route": "/use/workflows/interruption-recovery/",
+      "contentKind": "authored",
+      "status": "executable local checkpoint recovery rehearsal; external-effect recovery has explicit stop outcomes",
+      "audience": "pipeline operators and runtime maintainers",
+      "owner": "Nova Core maintainers",
+      "appliesTo": "local pipeline-definition.v2 execution and recovery; not Worker native supervision or project deployment",
+      "lastVerified": "2026-10-21; actual checkpoint child interruption/recover CLI and three external-effect interruption controls passed",
+      "sourceDependencies": [
+        "tests/verification/contracts/check-plugin-system-v2-checkpoint-recovery.mjs",
+        "tests/fixtures/plugin-system-v2/resume-plugin",
+        "tests/verification/reliability/external-effect-recovery.test.mts",
+        "skills/nova/core/execution/effect-recovery.ts"
+      ],
+      "checks": [
         "npm run docs:governance:check",
         "npm run docs:publication:check",
         "npm run docs:check:refs"
@@ -3858,6 +3887,52 @@
       ]
     },
     {
+      "page": "docs/site/use/workflows/redis-replay-recovery.md",
+      "route": "/use/workflows/redis-replay-recovery/",
+      "contentKind": "authored",
+      "status": "supported recovery boundaries and native dedup contract exercise; no observed deployed outage/replay claim",
+      "audience": "Nova, Redis and observer operators",
+      "owner": "telemetry, Redis and Nova runtime maintainers",
+      "appliesTo": "Nova v2 observer delivery through kubeclaw.redis-transport; not OpenClaw direct ingress replay",
+      "lastVerified": "2026-10-21; source review only for native Redis outage/replay; no native redis-server available in this author environment",
+      "sourceDependencies": [
+        "skills/common/plugins/redis-transport/src/adapter.ts",
+        "skills/common/plugins/redis-transport/src/stream-identity.ts",
+        "skills/nova/core/telemetry/observer-delivery.ts",
+        "skills/nova/core/telemetry/observer-recovery.ts",
+        "skills/nova/core/telemetry/observers.ts",
+        "tests/verification/reliability/redis-transport.test.mts",
+        "tests/verification/reliability/observer-recovery.test.mts"
+      ],
+      "checks": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/use/workflows/repair-retry.md",
+      "route": "/use/workflows/repair-retry/",
+      "contentKind": "authored",
+      "status": "maintained local Core contract rehearsal with trusted test stages; no application-delivery claim",
+      "audience": "pipeline operators and runtime developers",
+      "owner": "Nova Core lifecycle maintainers",
+      "appliesTo": "pipeline-definition.v2, pipeline-platform.v2, category-based repair and resume-signal.v2",
+      "lastVerified": "2026-10-21; author executed the three local fixture scenarios, replay checks and rejection controls",
+      "sourceDependencies": [
+        "docs/site/use/workflows/examples/repair-retry.mjs",
+        "tests/verification/reliability/repair-budget-fixture.mjs",
+        "tests/fixtures/repair-budget/plugin",
+        "skills/nova/core/lifecycle",
+        "skills/common/plugins/artifact-store"
+      ],
+      "checks": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
       "page": "docs/site/use/workflows/wait-resume.md",
       "route": "/use/workflows/wait-resume/",
       "contentKind": "authored",
@@ -3871,6 +3946,30 @@
         "skills/nova/core/execution",
         "skills/common/plugins/wait-store",
         "skills/common/plugins/operator-messaging"
+      ],
+      "checks": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/use/workflows/worker-result-recovery.md",
+      "route": "/use/workflows/worker-result-recovery/",
+      "contentKind": "authored",
+      "status": "source-backed native recovery procedure; local journal/lock crash controls are separate from delegated-host execution",
+      "audience": "worker, Prism service and storage operators",
+      "owner": "Worker Core and native worker host maintainers",
+      "appliesTo": "native Worker v3 attempt/result path; not Buster Worker v1 or the portable executor",
+      "lastVerified": "2026-10-21; source and actual local journal/ownership crash tests; no delegated-cgroup live recovery execution",
+      "sourceDependencies": [
+        "skills/worker/core/worker/native-attempt-executor.ts",
+        "skills/worker/core/worker/native-attempt-recovery.ts",
+        "skills/worker/core/worker/native-attempt-journal.ts",
+        "skills/worker/core/worker/native-worker-ownership.ts",
+        "skills/prism/server/worker.ts",
+        "skills/prism/server/native-worker-execution.ts",
+        "tests/verification/reliability/worker-native-journal.test.mts"
       ],
       "checks": [
         "npm run docs:governance:check",

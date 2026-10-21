@@ -1,0 +1,11 @@
+# Retained-state repair/retry author batch
+
+OFF TREE,2026-10-21. repair-retry.mjs is the intended maintained docs/site/use/workflows/examples helper; repair-retry.md intended new canonical task guide. No shared code/publicpage/register changes. Parent must own publication/nav/governance integration and independent acceptance.
+
+Actual prototype changes ONLY import locators and sourceRoot to run outside public path; normal helper retains intended relative imports/sourceRoot. Native owned fixtures use existing trusted TEST repair checker, actual Git commits, copied shipped artifact store, actual Core CLI, real journals/audits and strict lifecycle replay. No fake Core/events/receipts/external agent/provider. Explicit test-checker trust boundary in guide.
+
+Initial d3e actual prepare/run/verify/cleanup all0: mixed source5 attempts/retry1/ledger lint-review-test, checks4/3/2, succeeded132events; technical exhaustion source2/retry1/ledger0 blocked21events; one-extra source4/ledger3lint/exactlyoneauthorization/check4/later testrepair blocked98events. Wrong repair digest rejected without event byte changes. Source marker negative run/verify/cleanup all1 before action, restored verify0; owned cleanup0. Logs run.stdout,verify.stdout,negative-results.json,cleanup.stdout.
+
+Added only early partial-execution guard after first pass. Final exact candidate reran real prepare/run0 under eb265a54 and reproduced all states/counts/replay checks (final-prepare.stdout/final-run.stdout; stderr empty). Parent then committed new Source6d2c; fixture marker correctly still binds eb265a54, so final fixture retained rather than bypassing HEAD guard for cleanup. Original cleanup code unchanged and earlier actual cleanup0 remains bounded evidence, not falsely relabelled new-Source execution. Final retained private fixture final-fixture/. Parent Source churn must not be hidden by editing marker.
+
+All seven inspected source objects whole-byte equal ce774025 pinned baseline (repair-source-objects.json); public source excerpts<=60lines. No product implementation/runtime modifications. New helper syntax check0. Full publication check deferred until parent-authorized integration; no whole FLW007 or gate PASS/selfacceptance claimed. Guide documents actual positive and negative local contract rehearsal; no application/production agent quality success.

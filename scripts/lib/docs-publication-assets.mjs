@@ -17,6 +17,7 @@ const files = new Set([
   'use/workflows/examples/buster-fixture-matrix-report.pipeline.json',
   'use/workflows/examples/first-project.mjs',
   'use/workflows/examples/local-core.mjs',
+  'use/workflows/examples/repair-retry.mjs',
   'use/workflows/examples/request-trace-redis-unavailable.json',
   'use/workflows/examples/request-trace-success.json',
   'use/workflows/wait-resume/approval.pipeline.json',

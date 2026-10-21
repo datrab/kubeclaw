@@ -31387,6 +31387,14 @@
       "introducedAfterBaseline": true
     },
     {
+      "path": "docs/site/use/workflows/examples/repair-retry.mjs",
+      "class": "canonical-reader-documentation",
+      "purpose": "Source-backed owned local Core retry/repair executable rehearsal with explicit trusted test-stage boundary.",
+      "originalPath": "docs/site/use/workflows/examples/repair-retry.mjs",
+      "expectedPath": "docs/site/use/workflows/examples/repair-retry.mjs",
+      "introducedAfterBaseline": true
+    },
+    {
       "path": "docs/site/use/workflows/examples/request-trace-redis-unavailable.json",
       "class": "canonical-reader-documentation",
       "purpose": "Published, user-facing KubeClaw documentation.",
@@ -31403,6 +31411,14 @@
       "introducedAfterBaseline": false
     },
     {
+      "path": "docs/site/use/workflows/interruption-recovery.md",
+      "class": "canonical-reader-documentation",
+      "purpose": "Source-backed workflow recovery procedure with original identity, retained state, supported controls and explicit execution limits.",
+      "originalPath": "docs/site/use/workflows/interruption-recovery.md",
+      "expectedPath": "docs/site/use/workflows/interruption-recovery.md",
+      "introducedAfterBaseline": true
+    },
+    {
       "path": "docs/site/use/workflows/kubernetes-fixture.md",
       "class": "canonical-reader-documentation",
       "purpose": "Published, user-facing KubeClaw documentation.",
@@ -31416,6 +31432,22 @@
       "purpose": "Maintained local durable Core CLI success, rejection, audit, artifact and owned cleanup journey.",
       "originalPath": "docs/site/use/workflows/local-core.md",
       "expectedPath": "docs/site/use/workflows/local-core.md",
+      "introducedAfterBaseline": true
+    },
+    {
+      "path": "docs/site/use/workflows/redis-replay-recovery.md",
+      "class": "canonical-reader-documentation",
+      "purpose": "Source-backed workflow recovery procedure with original identity, retained state, supported controls and explicit execution limits.",
+      "originalPath": "docs/site/use/workflows/redis-replay-recovery.md",
+      "expectedPath": "docs/site/use/workflows/redis-replay-recovery.md",
+      "introducedAfterBaseline": true
+    },
+    {
+      "path": "docs/site/use/workflows/repair-retry.md",
+      "class": "canonical-reader-documentation",
+      "purpose": "Source-backed workflow recovery procedure with original identity, retained state, supported controls and explicit execution limits.",
+      "originalPath": "docs/site/use/workflows/repair-retry.md",
+      "expectedPath": "docs/site/use/workflows/repair-retry.md",
       "introducedAfterBaseline": true
     },
     {
@@ -31448,6 +31480,14 @@
       "purpose": "Published, user-facing KubeClaw documentation.",
       "originalPath": "docs/site/use/workflows/wait-resume/signal.template.json",
       "expectedPath": "docs/site/use/workflows/wait-resume/signal.template.json",
+      "introducedAfterBaseline": true
+    },
+    {
+      "path": "docs/site/use/workflows/worker-result-recovery.md",
+      "class": "canonical-reader-documentation",
+      "purpose": "Source-backed workflow recovery procedure with original identity, retained state, supported controls and explicit execution limits.",
+      "originalPath": "docs/site/use/workflows/worker-result-recovery.md",
+      "expectedPath": "docs/site/use/workflows/worker-result-recovery.md",
       "introducedAfterBaseline": true
     },
     {
