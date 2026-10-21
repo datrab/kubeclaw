@@ -1,0 +1,6 @@
+{
+  "findings": [],
+  "overall_correctness": "patch is correct",
+  "overall_explanation": "PASS for the bounded change. The PlusToken guard rejects externally selected raw operands before native receipt matching, preserves serialized schema values, and creates no new output exemption. The regression covers unchanged V2/V3 schema output, refreshed positive API identity, and refreshed raw argv refusal. Source/native consumer scope verdict: discovery, classifier, product-scope, api-reference, configuration-inventory, and docs-generate retain their reviewed documentation purpose and effects. Roles, consumers and child authority remain unchanged; the classifier also necessarily renews one expression selector for the changed helper, so these are not strictly factsDigest-only renewals. No new runtime input, effect or live qualification is established. Tests were inspected but not executed; the reported 70/70 result was not independently rerun. Communication/extension prose and broader whole-generator acceptance remain outside this verdict.",
+  "overall_confidence": 0.88
+}

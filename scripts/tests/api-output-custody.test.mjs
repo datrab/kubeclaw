@@ -327,3 +327,21 @@ test('native replay root selector preserves explicit external and empty-string n
  const program="import path from 'node:path';import {pathToFileURL} from 'node:url';"+selector.getText(tree)+loader.getText(tree)+"console.log(JSON.stringify({sourceRoot,identity:FileObservabilityAdmissionStore}));";
  for(const [selected,identity]of [[undefined,'candidate'],[path.join(root,'external'),'external'],['','candidate']]){const env={...process.env};if(selected===undefined)delete env.OBSERVABILITY_REPLAY_SOURCE_ROOT;else env.OBSERVABILITY_REPLAY_SOURCE_ROOT=selected;const native=spawnSync(process.execPath,['--input-type=module','-e',program],{encoding:'utf8',cwd:path.join(root,'candidate'),env});assert.equal(native.status,0,native.stderr);assert.deepEqual(JSON.parse(native.stdout),{sourceRoot:selected===undefined?path.join(root,'candidate'):selected,identity});}
 }));
+
+
+test('Worker resource schema generator receipts retain schema inputs and reject refreshed API output',()=>fixture(({root,write})=>{
+ const repository=path.resolve(new URL('../..',import.meta.url).pathname),registry=JSON.parse(fs.readFileSync(path.join(repository,'scripts/docs-api-producer-adapter-authorities.json')));
+ for(const version of [1,2,3]){const source=`contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v${version}.schema.json`;write(source,fs.readFileSync(path.join(repository,source),'utf8'));}
+ for(const version of [2,3]){
+  const source=`contracts/pipeline-worker-core/v1/scripts/generate-resource-schema-v${version}.mjs`,bytes=fs.readFileSync(path.join(repository,source),'utf8'),contract=structuredClone(registry.nonApiOutputContracts.find(r=>r.source===source));
+  const refresh=()=>{for(const op of contract.operations)op.factsDigest=nativeOperationFactDigest(deriveNativeOperationFacts(root,op.source,op.selectors));write('scripts/docs-api-producer-adapter-authorities.json',JSON.stringify({nonApiOutputContracts:[contract]}));};
+  write(source,bytes);refresh();assert.deepEqual(classifySerializedOutputRoles(root,source).map(x=>x.role),['non-api']);
+  write(source,bytes.replace(/JSON\.stringify\(schema,\s*null,\s*2\)/u,"JSON.stringify({apiVersion:'v1',kind:'Secret'},null,2)"));refresh();assert(classifySerializedOutputRoles(root,source).some(x=>x.role==='api'));
+  write(source,bytes.replace(/JSON\.stringify\(schema,\s*null,\s*2\)/u,'process.argv[2]'));refresh();assert(classifySerializedOutputRoles(root,source).some(x=>x.role==='unknown'));
+ }
+}));
+
+
+test('zero-argument scalar method calls remain conservative without crashing classification',()=>fixture(({root,write})=>{
+ for(const value of ["createHash('sha256').digest()", "Buffer.from('x').toString()", "[].join()"]){write('tools/zero.mjs',`import {createHash} from 'node:crypto';process.stdout.write(${value});`);assert.doesNotThrow(()=>classifySerializedOutputRoles(root,'tools/zero.mjs'));}
+}));
