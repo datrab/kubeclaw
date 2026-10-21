@@ -1,0 +1,7 @@
+# Local Core independent reproduction — 2026-10-21
+
+Reviewer/executor /root, source4dc3ff5829f3298a4d04148216e4e7da9b20c49b. Actual maintained helper prepare/run/verify in new private scratch fixture: all exit0. Real Core CLI success succeeded; invalid path blocked delivery_lint.path_invalid without repository-read effect; missing artifact grant rejected before execution. Complete stopped run/artifact state copied before actual CLI audit; strict original journals, original readRunEvidence and actual artifact blob checked.
+
+Actual success artifact delivery-lint:site, namespace kubeclaw.delivery-lint,47bytes, digest sha256:32d4aa7872f6377e8cb3670ee78fc261f06a27bc0fb633aead6da5759689324e; eventCount15. Values identify this local run, not universal fixtures. A separate actual verifier invocation after modifying preserved events.jsonl rejected with Preserved raw bytes changed; restoring original bytes verified without another stage run. Actual owned cleanup exited0 and removed only fixture with both named runIDs; externalResources:false.
+
+Logs retained in task scratch parent-core-{prepare,run,verify,tamper-negative,cleanup}.txt. Full source/reader review in source-pin-and-guide-independent-review.md. This is one shipped local explicit graph, not project compiler/Forge/remote Buster/provider/build/cluster/human acceptance or same-run observer telemetry. No full FLW-006/AP99/live/release approval.

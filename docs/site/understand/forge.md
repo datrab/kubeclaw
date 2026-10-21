@@ -197,3 +197,71 @@ Run these checks after a Forge change:
 The tests prove contract behavior in controlled repositories. They do not prove
 that a remote model follows a task well or that every external Git host remains
 available.
+
+## Blueprint Sync: Approved Control Files, Not Agent Implementation
+
+`kubeclaw.blueprint-sync` registers `kubeclaw.generate.blueprint-sync` with empty
+configuration. It never dispatches Forge or invents implementation work. Input
+names `blueprintId`, `repositoryRoot`, `branchRef`, non-empty unique
+`controlPaths`, and optional `sourceBinding`. The manifest requires separate
+`artifacts.read`, `artifacts.write`, `state.append`, `git.sync`, and `git.commit`
+grants. The selected adapters own filesystem/Git/state authority; the stage
+uses no secret or direct network client. See the [recursive configuration
+reference](../reference/plugin-configuration.md) for its exact schemas.
+
+With a source binding, `approvedSource` verifies approval/lineage. Repository
+identity and branch must match the approved subject, and every requested
+control path must be in its approved path set. Sync reads the immutable
+`architectureRevision`, not a later ambient branch tip. Without a binding it
+uses the declared branch reference; do not describe that path as approved.
+
+The [maintained effectful-plugin walkthrough](../extend/effectful-plugin.md)
+owns this package's complete multi-effect construction, idempotency, interruption
+and recovery explanation. Its concrete order is sync selected paths, commit
+returned synced paths when any exist, append `blueprint.controls.synced` under
+namespace `kubeclaw.blueprint-sync`, then publish a summary in the same artifact
+namespace with resource `blueprint-sync:<blueprintId>`. When bound, the commit
+must return a source revision. The summary retains blueprint/branch, synced and
+missing paths, plus approved subject digest, architecture revision, repository,
+and before/after source revisions. A bound subject's identity encoding is
+carried to the artifact request.
+
+A successful sync with no missing controls returns passed. Missing controls
+return `request_fix`, `blueprint.control_files_missing`, with the missing list
+and the already-written summary. This is **not** an all-or-nothing transaction:
+a request for two files can copy and commit the existing file, append state and
+write the report, then request repair for the missing one. Add the missing
+control file under the owning approval/source policy, inspect the integrated
+revision and prior effects, then let Nova schedule a new attempt. Do not blindly
+repeat the whole mutation sequence or edit the old summary.
+
+Invalid identity, empty/duplicate paths, mismatched approved input, missing
+returned bound revision, or adapter failure throws rather than returning a
+package-local retry. No state append follows a failed earlier Git call; a
+failed later append/artifact write does not undo an earlier commit. Preserve
+the Git refs, source/approval artifacts, effect receipts, state stream and
+report together. Acceptance without receipt or an incomplete attempt after
+external mutation follows the effectful guide's explicit reconciliation stop.
+An unchanged invalid declaration will fail again; uncertain Git outcomes need
+inspection before any retry.
+
+There is no stage-local retry loop, wait/resume cursor, child process or private
+store. Concurrent mutation and cancellation are enforced by Core's effect
+locks/fences and the selected Git/state adapters, not by a stage transaction.
+Cancellation can leave committed files and appended state; it is not rollback.
+Only adapter-owned temporary data is eligible for owned cleanup. Synced files,
+Git commits and durable state/artifacts remain until their owners' retention
+requirements end. Drain pinned runs before disabling adapters or removing
+packages via the [canonical plugin lifecycle](../use/plugins.md).
+
+To change sync behavior, update stage input/schema, approved-source checks,
+Git sync/commit contract, summary/state consumers and tests together. Reuse the
+effectful walkthrough's least-authority authoring and activation steps; run
+`npm test --prefix skills/nova/plugins/blueprint-sync` and
+`npm run docs:extensions:effectful:check`. Check both all-files-present success
+and partial missing-file repair, as well as source-binding rejection and
+interruption evidence. A controlled repository test is not live remote Git or
+agent proof. Removing this stage does not revert committed control files.
+
+Source: [complete sync, commit, state, artifact and repair sequence](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/blueprint-sync/src/stage.ts#L1-L60); [complete sync, commit, state, artifact and repair sequence (continued 2)](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/blueprint-sync/src/stage.ts#L61-L64),
+[registration and authority](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/blueprint-sync/plugin.json#L1-L25).

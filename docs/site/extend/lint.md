@@ -1192,3 +1192,63 @@ validated report, and target-runtime checks pass or state an exact prerequisite.
 | A language or target extension cannot escape declared repository authority. | [Target validation](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/lint/src/engine/policy-paths.ts#L1-L75) | [Project and discovery policy](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/kubeclaw/files/config/lint-policy.json#L2-L105) | Discovery and remediation suites passed, including scope, escape, and excluded-source cases. | `569f7b4933d4859cc67c80ddf40d5154ffd95ce5` | New native binaries still need installation and target-image acceptance. |
 | A policy-pack change is bound to exact bytes and a closed rule vocabulary. | [Pack admission](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/lint/src/engine/kubernetes-policy-pack.ts#L1-L118) | [Canonical pack source](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/kubeclaw/files/config/kubernetes-policy-pack-default.json#L1-L50) | Generated-reference and specialist-guide checks matched the source pack identity, digest, rule IDs, and rule types. | `569f7b4933d4859cc67c80ddf40d5154ffd95ce5` | The current chart omits the pack from the ConfigMap and both copy paths. Stop deployment acceptance until delivery tests prove the same bytes beside the runtime policy. |
 | The complete live function activates stages, adapter, grants, reports, and immutable artifacts. | [Live fixture](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/lint/tests/live-function.test.ts#L13-L230) | [Plugin manifest](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/lint/plugin.json#L1-L48) | Not reached. BusyBox `flock` stopped journal initialization before lint execution. | `569f7b4933d4859cc67c80ddf40d5154ffd95ce5` | Repeat in the target image with `shellcheck`, `shfmt`, and GNU `flock`. |
+
+## Delivery Lint Is A Separate Stage
+
+`kubeclaw.delivery-lint` registers `kubeclaw.lint.delivery`; it does not run the
+Lint engine, policy packs, baselines, or native tools described above. Its empty
+configuration accepts no fields. Input is `moduleId`, nullable repository
+`dockerfile`, and nullable container `staticPath`. See the [recursive configuration
+reference](../reference/plugin-configuration.md) for schema constraints.
+
+A null Dockerfile deliberately skips this delivery check and writes a passing
+report; it does not prove a deployable image exists. Otherwise the stage reads
+that path through `git.repository.read`, then statically matches literal Dockerfile
+`COPY` destinations in the final stage against `staticPath`, accounting for
+`WORKDIR`, named/numeric stage inheritance, JSON or shell argument form, COPY
+flags, line continuation and the Dockerfile escape directive. Matching is exact
+after POSIX lexical resolution, not prefix containment. An unresolved variable,
+heredoc, malformed instruction or unsupported path syntax fails closed. A null
+`staticPath` skips destination matching. This is not a Docker build or runtime
+HTTP check. Variable-dependent destinations that the parser cannot establish
+produce `delivery_lint.static_path_unverifiable`, not guessed success.
+
+Every normal branch writes JSON `{moduleId, passed, failures}` under namespace
+`kubeclaw.delivery-lint`, resource `delivery-lint:<moduleId>`, through
+`artifacts.write`; each failure contains code, message, and next step. The two
+capabilities need separate minimum path and namespace grants. No secrets, direct
+network client, child process, or private store is used by the stage. Repository
+bytes and the immutable artifact are owned by their adapters, not stage memory.
+
+| Trigger | Result and safe action |
+| --- | --- |
+| Dockerfile/static path contains forbidden controls or traversal; Dockerfile is absolute | `blocked`, `delivery_lint.path_invalid`. Correct the declaration; an unchanged retry cannot help. |
+| Repository read fails or returns non-text | `request_fix`, `delivery_lint.dockerfile_unavailable`. Inspect the underlying read/grant failure and provide a readable Dockerfile; do not widen roots blindly. |
+| Literal destination differs or cannot be established | `request_fix`, `delivery_lint.static_path_mismatch` or `.static_path_unverifiable`. Align the path or replace unverifiable expressions with statically checkable literals. |
+| Report write fails | Exception propagates to Core; no successful stage result exists. Fix the artifact dependency and inspect effect evidence before retry. |
+
+For a positive example, `FROM scratch` plus `COPY site/ /srv/site/` matches
+`staticPath: /srv/site`; a Dockerfile input `../Dockerfile` instead blocks before
+a repository read and still requests a failure report. The maintained
+[local Core journey](../use/workflows/local-core.md) exercises these actual
+branches, registry/grants, durable journal, audit, artifacts, and owned cleanup.
+
+There is no package-local retry loop, wait, resume cursor, or mutable state. A
+new attempt rereads repository content and publishes new evidence; it does not
+certify the earlier bytes. Cancellation travels through capability calls; their
+errors can reach the same read-failure branch, and a cancelled report write may
+propagate. Never infer successful cleanup or rollback from that branch. Preserve
+run/effect/artifact evidence under the [effectful plugin rules](effectful-plugin.md);
+no stage-owned temporary files need removal. Disable only after pinned runs
+finish using the [plugin lifecycle](../use/plugins.md#canonical-plugin-lifecycle-procedure).
+
+To change matching, update `dockerfile.ts`, its parser tests, the stage outcome
+tests, and this chapter together. To change input/report shape, update schemas,
+producer and consumers as a contract change. Run
+`npm test --prefix skills/nova/plugins/delivery-lint` and the local Core journey;
+verify both positive and mismatch/unverifiable/path-denial results before
+activation. A passing static check is never image-build or deployment proof.
+
+Source: [complete stage, reports and outcome branches](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/delivery-lint/src/stage.ts#L1-L60); [complete stage, reports and outcome branches (continued 2)](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/delivery-lint/src/stage.ts#L61-L120); [complete stage, reports and outcome branches (continued 3)](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/delivery-lint/src/stage.ts#L121-L146),
+[Dockerfile matching implementation](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/delivery-lint/src/dockerfile.ts#L1-L60); [Dockerfile matching implementation (continued 2)](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/delivery-lint/src/dockerfile.ts#L61-L95),
+and [registration and capabilities](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/delivery-lint/plugin.json#L1-L22).

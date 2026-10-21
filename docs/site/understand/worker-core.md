@@ -1007,3 +1007,81 @@ supervisor authority. A skipped host test is not live proof.
 - [Extend Hosts, Worker Engines, And Runtime Roles](../extend/host-and-engine.md)
   gives the implementation path for a new specialist engine.
 - [Operate](../use/operate.md) gives the operator recovery and diagnosis path.
+
+## Common Command Runner Adapter Is Not Worker Core
+
+`kubeclaw.command-runner:command` provides `command.execute` to Nova plugins.
+It is neither this page's durable Worker attempt executor nor Buster's native
+`kubeclaw.direct-command` provider. In particular, Buster's native runtime may
+supply an environment; the common adapter described here **rejects**
+`payload.environment` and starts with an empty environment. Do not infer a
+shared sandbox or credential contract from the common runner library.
+
+Configuration selects `allowedExecutables`, optional `executableCatalog`,
+`allowedWorkingRoots`, `maxOutputBytes`, `maxExecutionMs`, and
+`terminationGraceMs`; consult the [recursive configuration reference](../reference/plugin-configuration.md)
+for required fields and bounds. Activation canonicalizes real executable and
+directory paths, checks executability/type, and adds catalogued executables to
+the allowlist. Ready rechecks those paths; it does not execute a command.
+No network dependency or secret resolver is required by this adapter. The host
+OS executable permissions, cwd ownership, Linux process identity and `/proc`
+visibility remain prerequisites, not capabilities supplied by configuration.
+
+Invocation must use operation `run`, resource type `command.executable`, and an
+allowed canonical executable or `catalog:<name>`. Payload supplies string-array
+`args` without NUL and `workingDirectory`. Its real directory must equal an
+allowed root or be below it; canonicalization prevents an escaping symlink
+from becoming an authorized string prefix. There is no shell expansion and
+stdin is ignored. An admitted argv can still mutate anything that the child OS
+identity can access: an executable/cwd allowlist is not a filesystem sandbox.
+The adapter does not expose the reusable runner's sandbox/cgroup options.
+
+A completed command returns `exitCode`, `signal`, `stdout`, `stderr`, ordered
+output `records` and sampled `resources` (CPU time, peak memory and process
+count). Nonzero exit is a command result, not automatically an adapter error.
+Callers interpret it. Output from both streams shares the byte ceiling; at
+most 4,096 alternating stream records are retained. Timeout, abort, output or
+resource-limit failure terminates owned activity and rejects with a
+`CommandRunError` retaining partial output. The reusable runner supplies
+defaults of 1,024 processes, 1 GiB memory, CPU milliseconds equal to the
+execution-time budget, and 256 open files. CPU/memory/process observations are
+sampled every 25 ms; this unsandboxed adapter supplies no kernel open-file
+limit and does not turn every numeric limit into a sandbox guarantee.
+
+The child is detached into a process group on non-Windows hosts. Termination
+sends SIGTERM, then SIGKILL after the single configured grace budget. Close
+does not restart that budget. Linux cleanup acknowledges the captured process
+group identity with up to a further one-second exit check; the leader's exit
+alone is not descendant termination proof. Shutdown refuses new work,
+terminates all active executions, and waits for their cleanup promises.
+
+| Trigger/example | Effect and safe action |
+| --- | --- |
+| Allowed executable writes a short message in an allowed cwd | Return output/exit result after owned cleanup. This proves only that command invocation, not a durable Worker result. |
+| Unknown catalog entry, unallowed executable, outside cwd or supplied environment | `COMMAND_EXECUTABLE_DENIED`, `COMMAND_WORKING_DIRECTORY_DENIED`, or `COMMAND_ENVIRONMENT_DENIED` before child launch. Correct caller/config; unchanged retry cannot help. |
+| Bad operation/resource/argv or non-directory cwd | Validation rejects before launch. Correct the exact request, not the capability vocabulary. |
+| `COMMAND_TIMEOUT`, `ADAPTER_CANCELLED`, output/record/resource ceiling | Reject with partial output after termination handling. Preserve evidence; inspect any external mutation before a new Core attempt. Raising a reviewed limit is not rollback. |
+| Process-group identity/status/cleanup cannot be established | `COMMAND_PROCESS_GROUP_IDENTITY_UNAVAILABLE`, `COMMAND_PROCESS_GROUP_STATUS_FAILED`, or `COMMAND_PROCESS_GROUP_CLEANUP_TIMEOUT`. Stop new work and have the host owner establish descendant termination; do not call leader exit successful cleanup. |
+
+There is no adapter-private persistent result store, wait, resume cursor, or
+automatic rerun. Core owns effect evidence; the command owns any external
+files it created. A new invocation can repeat those mutations even if its
+process identity is new. Apply [effect reconciliation](../extend/effectful-plugin.md)
+before retry, retain run/output evidence, and use the [plugin lifecycle](../use/plugins.md)
+to drain before disablement. Removing this package does not delete child output
+files or compensate a completed command.
+
+To change admission, update `adapter.ts`, configuration schema, caller payloads
+and denial tests together. To change runner output/termination semantics, also
+review `runner.ts`, `execution.ts`, `process-group.ts` and Buster's separate
+callers before altering the shared library. Run
+`npm test --prefix skills/common/plugins/command-runner`; verify allowed success,
+nonzero exit, environment/cwd denial, bounded output, cancellation and
+descendant cleanup on the actual Linux host. Compile/grants checks prove
+admission, not executable health; activate with a harmless bounded command in
+a disposable owned cwd, then inspect its result and cleanup.
+
+Source: [common adapter admission, empty environment, readiness and shutdown](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/common/plugins/command-runner/src/adapter.ts#L1-L60); [common adapter admission, empty environment, readiness and shutdown (continued 2)](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/common/plugins/command-runner/src/adapter.ts#L61-L87),
+[runner spawn boundary](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/common/plugins/command-runner/src/runner.ts#L1-L60); [runner spawn boundary (continued 2)](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/common/plugins/command-runner/src/runner.ts#L61-L78),
+[output and resource observations](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/common/plugins/command-runner/src/execution.ts#L1-L60); [output and resource observations (continued 2)](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/common/plugins/command-runner/src/execution.ts#L61-L120); [output and resource observations (continued 3)](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/common/plugins/command-runner/src/execution.ts#L121-L131),
+and [termination ownership and bounded acknowledgement](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/common/plugins/command-runner/src/process-group.ts#L1-L60); [termination ownership and bounded acknowledgement (continued 2)](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/common/plugins/command-runner/src/process-group.ts#L61-L77).

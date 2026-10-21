@@ -11,8 +11,8 @@ Last verified: source, manifest, schema, package, and focused test inspection on
 ## Two Integration Surfaces
 
 KubeClaw uses two integration classes. They contain three active request paths:
-host tools, host observation, and agent dispatch. Agent dispatch has both a
-general Forge/Echo adapter and a separate durable Prism path.
+host tools, host observation, and agent dispatch. Agent dispatch includes a
+generic HTTP registration, a Gateway-based Forge/Echo adapter, and a separate durable Prism path.
 
 | Surface | Runs inside | Purpose | Authority |
 | --- | --- | --- | --- |
@@ -146,6 +146,93 @@ Gateway bearer token used by the general adapter.
 > [Nova selects the Prism runtime capability provider and its authenticated dispatch port](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/my-values/nova-values.yaml#L109-L116).
 >
 > [The Prism Envoy listener requires a client certificate and exact SPIFFE identities](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/kubeclaw/templates/configmap-worker-trust.yaml#L84-L117).
+
+## Generic HTTP Runtime Registration
+
+`kubeclaw.runtime-dispatch` exports two different registrations for the same
+`runtime.dispatch` capability. The `:runtime` registration uses `src/adapter.ts`
+and a generic JSON-over-HTTP contract. The `:openclaw` registration uses the
+Gateway/session implementation described in [Runtime Dispatch Target](#runtime-dispatch-target).
+Selecting the package does not select a registration, activate it, supply a
+target, or prove a remote service. Check the platform provider binding first.
+A generic dispatch is not an OpenClaw `sessions_spawn`, ACP poll, result-file
+collection, or cancellation protocol.
+
+### Configuration and request admission
+
+The generic configuration is a closed `targets` map with at least one entry.
+Each target has `endpoint`, optional `authentication` (default `hmac`),
+conditional `tokenSecret`, and optional `maxRequestBytes` / `maxResponseBytes`. Both byte
+ceilings default to 1,048,576 and accept integers from 1 to 8,388,608. Target
+and HMAC secret names are 1–128 characters. The first and last character must
+be a lowercase letter or digit; interior characters may be lowercase letters,
+digits, period, underscore, colon or hyphen. A single lowercase letter or digit
+is valid. They are names, not raw credentials. The endpoint must be HTTP(S), without URL
+credentials or a fragment. External HMAC endpoints require HTTPS; loopback
+HTTP remains allowed. Schema-admitted `spiffe-proxy` targets use loopback HTTP
+with an explicit port and no `tokenSecret`. The adapter checks loopback, but
+the configured proxy/peer policy supplies remote mTLS identity; a mode string
+is not proof that a proxy exists.
+
+Only `runtime.dispatch` / `dispatch` / `runtime.agent` and an exact configured
+target are admitted. Unknown targets fail `RUNTIME_TARGET_DENIED`; bad operation,
+resource or configuration fails before transport. Non-confidential calls check
+the current fence. Shutdown or pre-cancelled calls stop before dispatch.
+Payload JSON is checked recursively: depth at most 20, at most 1,000 entries per
+array/object, finite numeric scalars, non-empty keys at most 128 characters,
+and no `__proto__`, `constructor` or `prototype` keys. Serialized UTF-8 bytes
+must fit the target ceiling. Optional invocation metadata
+`runtimeDispatchProfile` must match the frozen SDK profile exactly; a same-named
+key inside the payload remains data, not profile authority. This adapter does
+not manufacture a task schema or reinterpret its payload as Gateway tools.
+
+### Wire contract, result and uncertainty
+
+HMAC mode confidentially resolves the named `secrets.read` value and requires a
+non-empty string. It computes HMAC-SHA-256 over `idempotencyKey`, a literal
+period, then `JSON.stringify(payload)`, encoded as UTF-8. Through confidential
+`network.http` it sends one POST to the configured endpoint, with the original
+payload as body and headers `content-type: application/json`,
+`idempotency-key`, and `x-kubeclaw-signature: v1=<hex>`. Proxy mode sends the same
+POST and key but no HMAC header or secret resolution. Neither mode sends a
+Gateway bearer or invents a remote session identity.
+
+The selected network adapter must grant the origin/method and allow these
+headers. It owns request cancellation, timeout, redirect and wire-response
+limits; the generic dispatcher adds no independent timer, polling or retry.
+For the common HTTP adapter the defaults are 30 seconds and 1 MiB each way,
+which can be stricter than a generic target's configured ceiling. Response
+status must be an integer 200–299, body must be a non-array object, its JSON
+must pass the same shape checks, and its serialized bytes must fit
+`maxResponseBytes`. The dispatcher returns a frozen shallow copy of that body.
+There is no required `accepted`, job ID, publication receipt, signed response,
+or specialist result schema here. A valid response is transport success;
+its owning consumer must validate business meaning.
+
+The target map is captured at activation. The generic adapter has no durable
+job/session/result store or receiver-side deduplication implementation. Core's
+effect journal and the receiving service own uncertain outcomes. A lost POST
+response, cancellation after send, or `RUNTIME_RESPONSE_*` failure can follow
+remote acceptance: preserve the same effect/key and reconcile with that receiver
+before another send. Unlike the OpenClaw registration there is no session-stop
+or cleanup handshake to call. Repair a denied target, HMAC secret/proxy identity,
+network policy, response shape or byte ceiling at its actual owner; do not
+replace the key or enable blind retries. Drain affected consumers before
+changing endpoint/authentication/grants, recreate the adapter from validated
+configuration and retain the original configuration for pinned-run recovery.
+Changing protocol or response meaning needs a versioned receiver/consumer
+contract and focused tests, not merely a new URL.
+
+> **Source evidence — generic registration, not Gateway spawn**
+>
+> [The manifest separates generic runtime and OpenClaw registrations and their capability dependencies.](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/skills/common/plugins/runtime-dispatch/plugin.json#L7-L36)
+> [Exact target/authentication/size configuration and invocation admission.](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/skills/common/plugins/runtime-dispatch/src/adapter.ts#L60-L105)
+> [Schema-closed authentication modes and conditional proxy/HMAC fields.](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/skills/common/plugins/runtime-dispatch/schemas/config.schema.json#L1-L29)
+> [Recursive JSON and key bounds.](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/skills/common/plugins/runtime-dispatch/src/adapter.ts#L35-L59)
+> [Confidential HMAC/POST, response checks and returned object.](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/skills/common/plugins/runtime-dispatch/src/adapter.ts#L107-L147)
+> [Shared activation/shutdown/fence/cancellation and target selection, without a session store.](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/skills/common/plugins/runtime-dispatch/src/dispatch-adapter.ts#L14-L38)
+> [Exact invocation profile binding; payload keys are not control metadata.](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/skills/common/plugin-runtime/sdk/src/runtime-dispatch-profile.ts#L1-L29)
+> [Selected common HTTP policy and one-request cancellation/timeout boundary.](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/skills/common/plugins/network-http/src/adapter.ts#L18-L71)
 
 ## Runtime Dispatch Target
 

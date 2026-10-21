@@ -333,3 +333,154 @@ definition; do not disable the check.
 > **Revision:** `c8987b18b450bc27571d5037cb6ce3fb26e0cbd0`
 >
 > **Limit:** Static compilation does not execute providers, confirm endpoint reachability, or establish product acceptance.
+
+## Preflight Contract Package: Two Different Checks
+
+`kubeclaw.preflight-contract` has empty configuration and registers both
+`kubeclaw.validate.preflight-contract` and `kubeclaw.validate.source-preflight`.
+Both require separately granted `git.repository.read` and `artifacts.write`,
+not Git mutation, dispatch, network, or secret access.
+
+The standalone preflight input names `moduleId`, `modulePath`, optional
+`substeps`, `ownedPaths`, nullable `serveDockerfile`, and nullable `apiSpecFile`.
+Without substeps it reads `<modulePath>/FORGE.md`; with them it reads each
+`<modulePath>/<substep>/FORGE.md`. An explicit empty substep list is invalid.
+Each file must contain exactly one complete `kubeclaw-deliverables` fenced JSON
+block with exactly `schemaVersion: forge-deliverables.v1`, matching `moduleId`,
+matching `substep` (null for the unsplit module), and `deliverables`. For example:
+
+````markdown
+```kubeclaw-deliverables
+{"schemaVersion":"forge-deliverables.v1","moduleId":"web","substep":null,"deliverables":["web/Dockerfile","web/openapi.json"]}
+```
+````
+
+Deliverables are exact canonical repository-relative identities, not basenames
+or suffix matches: no empty/dot/traversal segment, backslash, control, or colon.
+Duplicates inside a block or across substeps are invalid. The serve Dockerfile
+is required in the declaration only when this module owns its exact path or a
+parent prefix; a non-null API spec must be declared. This check validates a
+declaration, not whether the declared deliverable was implemented or built.
+
+Standalone validation stores `{moduleId, passed, failures}` in namespace
+`kubeclaw.preflight-contract`, resource `preflight-contract:<moduleId>`. A missing
+required declaration yields `request_fix`, with `.serve_dockerfile_not_declared`
+or `.api_spec_not_declared`; add the exact path to its owning blueprint and
+retry through Nova. Malformed declaration, unsafe module/substep path, empty
+substeps, or unreadable blueprint instead yield `blocked` with
+`preflight_contract.declaration_invalid`, `.path_invalid`, `.substep_invalid`,
+or `.blueprint_missing`. Preserve the specific message: a wrapped read failure
+can be a grant/dependency problem, not proof that the file is absent.
+
+The source-preflight registration instead accepts a review `source` plus a
+contract (`projectId`, `baseRevision`, `requiredFiles`, modules, policy). It
+requires source project identity and its exact sorted path set to match the
+required files plus every module blueprint. It captures immutable bytes and
+requires their revision to equal `baseRevision`, then applies the same
+declarations. Success stores `source-preflight.v1` with contract and subject,
+resource `source-preflight`; failure returns `blocked`,
+`source_preflight.invalid`, and no artifact. This is the compiler's
+[architecture source admission](#architecture-source-admission), not a
+mutable standalone read with a renamed result.
+
+Neither registration has a private store, concurrent writer, retry loop,
+wait/resume cursor, or secret. Repository/artifact adapters and Core own durable
+identity and cancellation. A standalone read exception can be reported as a
+blocked blueprint failure. Standalone report writes are outside that catch and
+propagate failures. Source-preflight keeps its report write inside the same
+try: write failure or cancellation there returns `blocked`,
+`source_preflight.invalid`, with no artifact. A new attempt rereads or recaptures
+source; never edit an earlier subject/report to force continuation. Preserve
+run and artifact evidence, and follow the [plugin lifecycle](../use/plugins.md)
+for activation/removal; no stage-owned temporary data needs cleanup.
+
+For a positive check use the exact block above with owned prefix `web` and the
+two required paths. Removing `web/openapi.json` produces a repair request;
+adding a second block instead blocks admission. When changing declarations,
+update `declarations.ts`, both registration paths and schemas, compiler source
+contracts, fixtures, and consumers together. Run
+`npm test --prefix skills/nova/plugins/preflight-contract`, retaining successful
+and negative observations; recompile the controlled project before activation.
+[Effect identity and interruption](../extend/effectful-plugin.md) remain the
+shared recovery boundary; no automatic compensation is added by this validator.
+
+Source: [standalone stage](https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/skills/nova/plugins/preflight-contract/src/stage.ts#L1-L60); [standalone stage (continued 2)](https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/skills/nova/plugins/preflight-contract/src/stage.ts#L61-L93),
+[exact declaration grammar](https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/skills/nova/plugins/preflight-contract/src/declarations.ts#L1-L60); [exact declaration grammar (continued 2)](https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/skills/nova/plugins/preflight-contract/src/declarations.ts#L61-L62),
+and [immutable source stage](https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/skills/nova/plugins/preflight-contract/src/source-stage.ts#L1-L41).
+
+## Project Summary Package: Evidence, Not Caller Counts
+
+`kubeclaw.project-summary` registers `kubeclaw.report.project-summary`. It requires
+`artifacts.read` and `artifacts.write`, with no agent dispatch, network, Git
+mutation, or secret. Configuration optionally accepts `agentRole` as unused
+metadata and `deliveryManifestEncoding: delivery-manifest.utf16-v1`; omission
+selects historical `delivery-manifest.v2`, the explicit selector creates v3
+and requests portable `kubeclaw-json.utf16.v1` outer artifact encoding. An
+invalid configuration throws before the summary's evidence-error catch.
+
+Input contains project identity, one to 128 uniquely identified module
+source/test bindings with expected module coverage, and a final source, lint,
+test, optional review binding with cumulative coverage. Module/source/test
+IDs must be unique; final source must be one module's source, and cumulative
+module coverage must exactly match the declared module policies. The
+[recursive input/configuration reference](plugin-configuration.md) supplies
+the schema fields; declaring coverage does not prove its execution.
+
+The stage resolves implementation source from Core evidence. For each selected
+namespace and stage it considers only artifact references from the active run,
+chooses the highest producer attempt number, and requires exactly one matching
+artifact at that attempt. It will not fall back to an older success because a
+newer attempt has missing evidence. JSON bytes must match the reference's
+digest and size; cumulative reads cannot exceed 8 MiB. It checks implementation
+evidence, native gate decision and quality report together: source revision,
+run, stage, coverage, decision/result digests, passed state, and either native
+passed outcome (test agent disabled) or model verdict passed.
+
+The final lint evidence must name the same source and have zero failed tools
+and blocking findings. Optional review requires matching report and bundle
+revisions/digest, passed outcome, and the exact coverage evidence, requirement
+set, and allowed prefixes. `reviewSemanticEncoding: review-semantics.utf16-v1`
+selects portable review-bundle.v2/report.v3/governor.v2 semantics instead of
+canonical v1/v2/v1; governor baseline and current identities are verified.
+Historical v2 implies portable outer review artifacts when semantic mode is
+selected and forbids `reviewArtifactEncoding`. V3 represents the outer selector
+independently: supplying `reviewArtifactEncoding` requires a review stage and
+that exact portable encoding, and supplying a semantic selector requires that
+outer selector. V3 without a review stage or either selector remains valid. The exact unversioned
+report/bundle pair remains a legacy Summary API compatibility case, not a
+claim that Review produces unversioned output.
+
+Success writes a digest-bound manifest containing project/run/source, verified
+module/final bindings and original evidence references to namespace
+`kubeclaw.project-summary`, resource `project-summary:<runId>`. It does not
+create a new deployment, test result, approval, or completed historical run.
+For example, a matching implementation, native decision, quality report and
+clean final lint produce a manifest; replacing the quality report's source
+with another revision instead blocks, even if its verdict says passed.
+
+| Failure family | Effect and safe action |
+| --- | --- |
+| Invalid coverage/input or encoding combination | `blocked`, `project_summary.invalid_evidence`, no artifact. Correct compiler/binding declarations; unchanged retry is not a repair. |
+| Missing/ambiguous latest evidence, changed bytes, wrong producer/run/source, exceeded read budget | Same blocked result; preserve exact references and bytes, inspect originating stage. Never substitute an old artifact or edit its reference. |
+| Failed gate, mismatched review/governor/coverage, or dirty final lint | Same blocked result. Repair and rerun the owning gate for the accepted candidate before a new summary attempt. |
+| Configuration rejection or final artifact publication failure | Exception propagates to Core; no passing Summary result. Diagnose selected configuration/store and effect records, not an invented summary verdict. |
+
+There is no package-local mutable store, retry loop, wait, resume cursor, or
+cleanup. Invocation errors during evidence assembly, including cancellation,
+enter its blocked catch; a cancelled final write can propagate. Core still
+owns lifecycle and effect recovery. Concurrent/new attempts publish separate
+immutable evidence; they cannot overwrite source authority. Retain referenced
+artifacts and run journals through removal under the [state and artifact
+lifecycle](../understand/data-and-state.md) and [plugin lifecycle](../use/plugins.md).
+
+Change manifest semantics only with the manifest contract, compiler bindings,
+summary reader and review semantic compatibility tests, schemas, and downstream
+consumers updated together. Run
+`npm test --prefix skills/nova/plugins/project-summary`; verify both encoding
+modes and source/coverage/digest/ambiguity rejection cases, then recompile and
+run a controlled project before activation. Do not replace evidence checks
+with caller-provided counts.
+
+Source: [configuration and publication](https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/skills/nova/plugins/project-summary/src/stage.ts#L1-L19),
+[complete evidence selection and reduction](https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/skills/nova/plugins/project-summary/src/summary.ts#L1-L60); [complete evidence selection and reduction (continued 2)](https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/skills/nova/plugins/project-summary/src/summary.ts#L61-L120); [complete evidence selection and reduction (continued 3)](https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/skills/nova/plugins/project-summary/src/summary.ts#L121-L164),
+and [review compatibility and governor identity](https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/skills/nova/plugins/project-summary/src/review-semantics.ts#L1-L51).

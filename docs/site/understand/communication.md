@@ -122,6 +122,8 @@ individual route's schema or admission rules.
 | Discord service and allowed user ↔ Nova or Buster OpenClaw | Carry the two enabled bot channels, allowed commands, threaded sessions, replies, and Buster execution approvals. | External Discord bot gateway and HTTPS APIs as implemented by the pinned OpenClaw Discord plugin. The repository fixes channel IDs but not Discord service endpoints. | Distinct `DISCORD_TOKEN` Secret keys authenticate each bot. Channel, allowed-user, owner, mention, and Buster approver lists authorize application handling. | The chart default requires a guild mention; selected Nova values set `discord.requireMention: false`, while Buster inherits `true`. The configured user allowlist remains in force for both. The configured inbound worker limit is 12 hours; thread idle is 999 hours. External request timeout, reconnect, and rate-limit retry are not defined here. | OpenClaw retains role session state. Discord retains external message identity. No Discord message can replace a Nova journal, Buster receipt, or Prism row, and no repository contract proves end-to-end message deduplication. | Discord limits, one gateway's session controls, and external rate controls. | Keep domain state unchanged on disconnect, denial, or uncertain reply. Restore the same bot and channel, then prove an allowed user and a denied user without replaying an uncertain command. |
 | Prism Control / Worker → Prism PostgreSQL | Transact projects, revisions, operations, agent jobs, approvals, preferences, corpus, and worker nonces. | PostgreSQL to `prism-postgresql:5432`; separate runtime, migration, backup, and test URLs. | Credentials come from `prism-postgresql-auth`; NetworkPolicy restricts named Prism clients. | Pool, statement, lock, and transaction limits are owner-specific. Worker dependency checks default to 750 ms. | PostgreSQL is authoritative. Row locks, unique keys, advisory locks, revision CAS, and job fences serialize conflicts. | Database pool and retained PVC. | Stop Prism mutation when unavailable. Restore the matched database-and-artifact group and reconcile operations before new admission. |
 | Nova stage → Forge or Echo via runtime adapter | `kubeclaw.implementation.v2` or the Echo review request; strict typed completion. | In-process capability call, then bearer-authenticated HTTP POST JSON to the configured OpenClaw Gateway endpoint for the selected allowlisted target; ACP/subagent selects the runtime, not a second wire transport. | Core capability grant, target ID allowlist, named secret; optional verified workspace owner. OpenClaw controls model/tool access. | Target polling defaults 1–15 s and session deadline 30 minutes. One session identity orders all polls and result collection. | Core effect identity and runtime idempotency key; session identity is reconciled after lost response. Final artifact is stored by the stage. | Fixed prompt/context/output budgets; target response sizes; bounded session polls. | Parser rejection blocks the stage. Abort sends cancel/stop and must prove terminal state. Unresolved cleanup blocks retry to prevent duplicate agents. |
+| Granted consumer → generic `kubeclaw.runtime-dispatch:runtime` target | Caller-owned JSON dispatch; no Gateway spawn/session/result schema is imposed. | One HTTP(S) POST through granted `network.http` to the configured target. | Exact runtime target grant; confidential secret HMAC (`v1=` over key, period and serialized payload), or loopback SPIFFE proxy. | No adapter-owned timeout/poll/retry; selected network adapter and owning effect deadline apply. Request/response defaults 1 MiB, configurable up to 8 MiB. | No local job/session store; Core effect and remote receiver own reconciliation and deduplication. | Recursive JSON shape and byte limits, plus selected HTTP limits. | Unknown target, auth, shape/status/size or cancellation fails. Reconcile uncertain remote acceptance under the original key; OpenClaw cancel/cleanup does not apply. See [generic HTTP runtime registration](openclaw.md#generic-http-runtime-registration). |
+| Granted consumer → `kubeclaw.transport-publisher:publisher` → configured receiver | Closed `{message: object}`; receiver acknowledges exactly `{accepted: true, publicationId}`. | One HTTP(S) POST per send branch through granted `network.http`. | Exact transport target/Secret grant; `sha256=` HMAC binds target, key and serialized wrapper. HTTP is accepted by this adapter and is not confidential transport. | No publisher-owned timer/retry; network/effect deadlines apply; stable per-target request identity precedes each attempt terminal. | Durable request + attempt reservation + receipt/failure at `deliveryRoot`; completed receipt replays, but unresolved reservations can resend and require receiver deduplication. | Default 256 KiB message wrapper, maximum 1 MiB; durable record/count/store limits stop before send. | Preserve target/key/request/attempt and remote evidence. Same-attempt terminal failure is rethrown; new attempts may send again. Never infer exactly-once or a Redis stream from this HTTP receipt. |
 | Nova Core → stage | Invoke stage with `StageInvocationContract`; receive `stage-result.v2`, wait, effects, facts, and artifacts. | In-process module call for direct activation; isolated stage IPC when that activation is selected. | Registry snapshot, package digest, registration ID, role selection, stage capability grant, attempt lease and fence. | Attempt lease and abort signal propagate. Scheduler orders graph dependencies; stages do not select successors. | Run journal and attempt records are authoritative. Attempt number and effect idempotency keys prevent reuse. | Declared input/artifact limits, scheduler concurrency, effect limits, and isolation channel limits. | Invalid result or expired fence cannot change lifecycle. Core records failure and applies declared retry/repair policy. |
 | Stage → adapter | Request one effect such as Git, artifact, secret, dispatch, Redis, or Buster transport. | In-process capability router; adapter can then use local or network transport. | Exact capability grant, operation, resource type and canonical ID; confidential calls hide secret results from ordinary stage data. | Caller abort and effect deadline propagate. Core journals intent before uncertain external work. | Effect ID and idempotency key bind retries. Adapter-specific reconciliation decides whether an unknown result can repeat. | Adapter request/response limits and bounded cleanup scope. | Unknown external outcome becomes reconciliation-required. Do not translate it into an ordinary stage retry. |
 | Buster provider → configured HTTP(S) target | Execute a Buster `network.http` request whose method and complete URL are supplied by the admitted provider request; inventory identity is `DYNAMIC {configuredUrl}`. | Fetch with manual redirects; HTTP or HTTPS only. WebSocket is a separately gated operation and is not this HTTP family. | The capability request must name `network.http`, `network.url`, and an allowed operation. Runtime policy checks exact origin or suffix, port, exact-origin authority, method, request headers, and optional registry-health credentials; URL credentials and fragments are denied. | The request timeout is the smaller configured request value or runtime maximum and is combined with caller cancellation. There is no automatic redirect or request retry. | The invoker stores no response or deduplication state. The owning Buster job/attempt and its evidence remain authoritative, so an uncertain non-idempotent target outcome needs target-specific reconciliation. | Configured request and response byte ceilings; request header entries and requested response-header names are each limited to 32; WebSocket message count/bytes are separately bounded. | Denied policy, cancellation, timeout, redirect, response overflow, or transport error fails the provider request. Do not replay a mutating configured method unless the owning effect and remote target make that replay safe. |
@@ -674,6 +676,117 @@ accept writes under one logical stream prefix.
 > [The OpenClaw writer applies queue priority and bounded retry](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/common/plugins/openclaw-agent-observer/src/redis-writer.ts#L140-L195) and [`MAXLEN` plus dead-letter handling](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/common/plugins/openclaw-agent-observer/src/redis-writer.ts#L196-L255).
 >
 > [The native migration test creates stream, pending-consumer, and dedup-expiry state](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/tests/verification/reliability/redis-migration.test.mts#L12-L60) and [verifies that state after migration](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/tests/verification/reliability/redis-migration.test.mts#L61-L83).
+
+### Signed HTTP Transport Publisher
+
+`kubeclaw.transport-publisher:publisher` provides `transport.publish`, not the
+Redis publisher's stream protocol. Nova's role package includes it, but an
+active platform still needs this exact provider binding, consumer grants,
+`network.http`, `secrets.read`, private delivery storage and a compatible receiver.
+Package availability is not a deployed endpoint or selected consumer.
+
+The closed configuration requires `targets` and `deliveryRoot`; optional
+`maximumDeliveryRecords` defaults to 100,000 and `maximumDeliveryBytes` to
+268,435,456. Each must be a positive safe integer. Each target has only
+`endpoint`, `signingSecret` and optional `maxPayloadBytes` (default 262,144;
+range 1–1,048,576). Target and signing-Secret names start with a lowercase
+letter, then use lowercase letters, digits, period, underscore or hyphen, at
+most 128 characters total. Endpoints accept HTTP or HTTPS with no URL
+credentials/fragment. Unlike generic runtime HMAC admission, this adapter does
+not reject non-loopback HTTP. HMAC authenticates a message; it neither encrypts
+it nor proves the selected network boundary is suitable for production.
+
+Admission requires `transport.publish` / `publish` / `transport.target`, current
+fence for non-confidential invocation, un-aborted signal and a configured target.
+The payload is exactly `{message: object}`; extra wrapper keys reject. The
+message must be a plain JSON object, finite and acyclic, depth at most 64, with
+non-empty keys at most 128 characters, no control characters and no
+`__proto__`, `constructor` or `prototype`. The UTF-8 byte limit applies to
+`JSON.stringify({message})`, not just one message field. No semantic redaction
+is applied: publisher storage and receiver must be authorized for message content.
+
+Before resolving the signing Secret or sending, the adapter appends a
+`transport-publication-request.v1` to stream `publications/<target>` in
+`<deliveryRoot>/records/store.json`. The record carries the original key,
+target and `message: {message: ...}` wrapper. Its record key is `delivery:request:`
+plus SHA-256 of the effect idempotency key. Identical request replay is admitted;
+changed message under that same target/key raises
+`DURABLE_RECORD_IDEMPOTENCY_CONFLICT` before publication. A prior completed
+receipt for that key returns without another send. Otherwise an attempt-specific
+`transport-publication-reservation.v1` reserves 8,192 characters before the
+external action. Its key includes attempt number and the first 16 hex digits
+of SHA-256(attempt ID), plus the full key digest. This is capacity reservation,
+not a remote delivery lock or exactly-once guarantee.
+
+The adapter resolves `signingSecret` through `secrets.read`; the response must
+contain only a non-empty `value` string without CR/LF. The HMAC-SHA-256 input is
+target ID, LF, idempotency key, LF, then the exact serialized wrapper. It sends
+POST with `content-type: application/json`, `idempotency-key`,
+`x-kubeclaw-target`, and `x-kubeclaw-signature: sha256=<hex>`. The network provider
+must allow POST, the selected origin and all four header names. The publisher
+adds no transport timer or automatic retry; the selected HTTP adapter supplies
+its timeout/response bounds and the owning effect supplies its deadline.
+This signature differs from generic runtime dispatch's period separator and
+`v1=` header: the receiver must implement the selected protocol, not substitute
+one adapter for another.
+
+The network result needs integer status 200–299 and a body with exactly
+`accepted: true` and `publicationId`. A publication ID starts with an ASCII
+letter/digit followed by letters, digits, period, underscore, colon or hyphen,
+at most 256 characters. A bare HTTP 200, extra body key or `accepted: false`
+is not acceptance. The returned receipt is exactly `accepted`, `target`,
+`publicationId` and `status`; it is persisted as
+`transport-publication-receipt.v1` before return. It is a receiver acknowledgement,
+not downstream processing, human acceptance or a canonical pipeline event.
+
+A send/auth/response error transitions the reserved slot to
+`transport-publication-failure.v1`, storing attempt, target/key, a reason digest
+and at most 2,048 error characters, then rethrows. The same attempt's retained
+failure is rethrown without another send; a different attempt can send again
+under the same publication key. A retained reservation without a terminal
+record can also re-enter the send branch after interruption. Concurrent
+receipt/failure terminal-transition conflicts re-read accepted receipt state; a completed
+success wins over a racing failure. These rules do not implement receiver
+idempotency: the remote receiver must enforce the key and reconcile lost ACKs.
+
+The record store limits each record to 1,114,112 bytes and applies count/whole
+store limits; append/reservation/capacity failure before the send prevents that
+send. A later persistence failure can follow remote acceptance. `ready()` only
+checks shutdown state; it does not probe remote service, credentials or free
+capacity. Shutdown denies new invocations; it is not remote cancellation.
+Keep private request/terminal/effect records and receiver observations together.
+Do not dump messages or bounded remote error text into public diagnostics.
+On unknown outcome, stop new publication identities and reconcile the original
+key at the receiver; do not delete a reservation or force a new key to get past
+it. No publisher status/reconcile/retirement/backup/restore CLI or automatic TTL
+is supplied. Quiesce writers and retain the complete delivery root through its
+storage owner; do not copy one JSON row or assume compaction is safe. Drain old
+consumers before changing endpoint, Secret, grants or store, recreate validated
+configuration and preserve old pinned-run inputs. Changing the message/ACK/HMAC
+protocol requires a versioned receiver contract and new boundary tests.
+
+**Verification limit (2026-10-21):** Configuration tests and direct-adapter
+probes of generic runtime dispatch and this publisher passed; the direct probes
+used stubbed Secret/network providers. The maintained publisher Core-backed
+live-function fixture fails canonical `effectRequest` admission before a
+successful integration, reporting `EFFECT_OUTCOME_UNRESOLVED` with
+`Value failed canonical contract effectRequest`. Retain that first error and
+repair its owning admission boundary; do not relax the schema to obtain a pass.
+These results do not prove a deployed transport, receiver or live credential.
+
+> **Source evidence — publisher admission, delivery and replay**
+>
+> [Closed target/store configuration and defaults.](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/skills/common/plugins/transport-publisher/src/adapter.ts#L61-L98)
+> [Published closed target/store configuration.](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/skills/common/plugins/transport-publisher/schemas/config.schema.json#L1-L40)
+> [JSON/wrapper/key/size and Secret response admission.](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/skills/common/plugins/transport-publisher/src/adapter.ts#L100-L158)
+> [Closed receiver ACK, publication ID and durable key/receipt lookup.](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/skills/common/plugins/transport-publisher/src/adapter.ts#L159-L195)
+> [Request first, retained receipt and per-attempt terminal reservation.](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/skills/common/plugins/transport-publisher/src/adapter.ts#L197-L253)
+> [Secret resolution, LF-delimited HMAC and POST headers/body.](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/skills/common/plugins/transport-publisher/src/adapter.ts#L254-L282)
+> [Receipt shape, terminal transition and success reconciliation.](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/skills/common/plugins/transport-publisher/src/adapter.ts#L283-L316)
+> [Bounded durable failure, conflict reconciliation and shutdown.](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/skills/common/plugins/transport-publisher/src/adapter.ts#L317-L339)
+> [Driver path, locking, replay, record and whole-store capacity.](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/skills/common/plugin-runtime/foundation/observability/durable-records.ts#L56-L109)
+> [Digest-CAS terminal transition and durable write.](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/skills/common/plugin-runtime/foundation/observability/durable-records.ts#L183-L219)
+> [Nova package selection includes runtime dispatch and transport publisher, not activation configuration.](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/packaging/runtime/roles/nova.json#L26-L43)
 
 ### SPIFFE And mTLS
 

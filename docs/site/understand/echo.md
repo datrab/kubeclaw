@@ -209,3 +209,68 @@ evidence authority, verification, slicing, clustering, governor decisions,
 reports, revalidation, and Echo output. These tests prove deterministic logic.
 They do not prove the accuracy of every model judgment. A production review
 still needs the fixed repository bytes and the configured runtime target.
+
+## Architecture Validator Is A Different Review Protocol
+
+`kubeclaw.architecture-validator` registers `kubeclaw.validate.architecture`.
+It does not execute the Echo policy reducer, repository audit, or repair loop
+above. Configuration requires a non-empty `agent`; optional `agentRole` is
+metadata, not target selection. Grants separately admit that `runtime.dispatch`
+target, repository reads, artifact reads and artifact writes. Secrets and
+network authentication belong to the selected dispatch adapter, not this stage.
+
+Admitted input carries `task`, optional architecture data, `source`, or
+`sourceBinding`; its closed schema does not admit a caller-supplied `subject`.
+The internal subject is derived by the stage. A binding resolves a
+source-preflight subject and contract;
+otherwise a supplied source is captured with task/architecture as the contract.
+The stage verifies the fixed subject before dispatch and again afterward.
+It requests `kubeclaw.architecture-validation.v2`, with optional helper guidance
+and the compiled runtime-dispatch profile. It asks about domain models and
+integration boundaries, not generic graph validity or deterministic preflight.
+
+The response's `result` must contain only `verdict`, `summary`, `findings`, and
+`checkedFiles`. Each finding contains only ID, severity
+(`blocking/error/warn/info`), scope (`domain_model/integration_boundary`), paths,
+explanation, and remediation. Finding count is bounded to 128; IDs to 256
+characters, explanations/remediations to 8,192. A passed verdict needs checked
+files and cannot contain a blocking finding. A blocked verdict requires a
+blocking finding. When a subject is bound, every subject path must occur in
+checkedFiles; a model's success assertion cannot excuse missing coverage.
+
+Success writes the parsed output plus bound subject, when present, to namespace
+`kubeclaw.architecture-validator`, resource `architecture-validation`.
+`passed` with no findings emits fact `architecture.review: clean`; passed
+with *any* finding emits `approval_required`, including error severity. This
+fact is not an approval or a wait request: Nova's compiled graph owns the next
+authority boundary. A model cannot return `request_fix` through this protocol.
+
+| Trigger/example | Outcome and safe response |
+| --- | --- |
+| Complete checked-file coverage, passed verdict, no findings | Store report, return passed/clean. This is bounded architecture evidence, not deployment proof. |
+| Passed verdict with advisory/error findings but none blocking | Store report, return passed/approval_required. Inspect findings through the owning approval route; do not call the fact approval. |
+| Blocked verdict with a blocking finding | Store report, return `blocked`, `architecture.blocked`, retaining findings and checked files in reason details. Resolve the architectural constraint before a new attempt. |
+| Passed verdict with blocking finding, unknown field, omitted subject file, changed subject, or dispatch failure | `blocked`, `architecture.invalid_output`, no report. Preserve source/session/effect identity; correct the contract, source, or dependency, then start a new authorized attempt. An unchanged malformed response will fail again. |
+| Missing agent configuration; report write fails after valid output | Exception propagates to Core, not a synthetic architecture approval. Correct configuration/store; reconcile prior dispatch effects before retry. |
+
+There is no private mutable state, automatic model retry, resume cursor, or
+stage-owned temporary file. Dispatch owns sessions and cancellation. The stage
+catches errors in capture/dispatch/verification as invalid output, including
+cancellation there; a report-write error outside that catch propagates. Neither
+branch proves the remote session stopped. Follow [OpenClaw reconciliation](openclaw.md)
+and [effect recovery](../extend/effectful-plugin.md) before redispatch. Retain
+immutable reports and subjects while any pinned run refers to them; use the
+[shared plugin lifecycle](../use/plugins.md) for drain, replacement and removal.
+
+To change finding semantics, coordinate `protocol.ts`, `output.ts`, stage facts,
+input/config/result schemas, compiler approval consumers, and tests; changing
+only the prompt is insufficient. Run
+`npm test --prefix skills/nova/plugins/architecture-validator` for positive,
+blocking, malformed, coverage, and source-binding paths, then compile/run a
+controlled graph with the actual configured dispatch provider. Local contract
+tests alone are not a live architecture-model quality claim.
+
+Source: [registration and grants](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/architecture-validator/plugin.json#L1-L24),
+[request protocol](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/architecture-validator/src/protocol.ts#L1-L52),
+[closed parser and contradiction rules](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/architecture-validator/src/output.ts#L1-L60); [closed parser and contradiction rules (continued 2)](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/architecture-validator/src/output.ts#L61-L83),
+and [source verification, outcomes and artifact](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/architecture-validator/src/stage.ts#L1-L60).
