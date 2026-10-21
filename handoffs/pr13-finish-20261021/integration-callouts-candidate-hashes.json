@@ -1,0 +1,55 @@
+{
+  "baseline": "dc90bae53b4f1e95784bf33997cf98ba5d7d3faa",
+  "files": [
+    {
+      "path": "docs/site/understand/archviewer.md",
+      "baselineSha256": "0f60687ababb15bd3a622cfe06a49216088176415bd4bb69fe440462e7e1598b",
+      "candidateSha256": "0b872d1322a3ce7e70e60fe2833af632693ba9d7013bd862aad73768b5b2ded5",
+      "headingsPreserved": true,
+      "headerPreserved": true
+    },
+    {
+      "path": "docs/site/understand/codex-integration.md",
+      "baselineSha256": "cb44700851c43e37cee504cf9bf22043598fc7a217a6a5f45daf544c92c53b9b",
+      "candidateSha256": "65b308ee02ce116f7956f093f4169df42e68a0dc295a7ad4954d369d056e1e99",
+      "headingsPreserved": true,
+      "headerPreserved": true
+    },
+    {
+      "path": "docs/site/understand/echo.md",
+      "baselineSha256": "3bd74ef477f26e501967e84b4f059fe67419f63fe2023b62d25f8e3a18312cd9",
+      "candidateSha256": "ead80d6d9c8f682b60eec1f4073f6de7226676051e89177061ed363bf1fecea4",
+      "headingsPreserved": true,
+      "headerPreserved": true
+    },
+    {
+      "path": "docs/site/understand/forge.md",
+      "baselineSha256": "69b06135677d2c6402481b679e486e8026fc2421f388520e564999dcd38c7d6c",
+      "candidateSha256": "5d1167ce01cd9dc6e1c98b65aab796182853d4bfcf9a233ec335e0ca3ce9610b",
+      "headingsPreserved": true,
+      "headerPreserved": true
+    },
+    {
+      "path": "docs/site/understand/openclaw.md",
+      "baselineSha256": "15859d1b90bc7dfac9fd215de3b110b358ab338b41f80c78278c3db58033f35e",
+      "candidateSha256": "e7ea2db508a63e4273bc49f2b95d2b5ee1a74373a6378d8adf3616d98d4035f0",
+      "headingsPreserved": true,
+      "headerPreserved": true
+    },
+    {
+      "path": "docs/site/understand/ops-mcp.md",
+      "baselineSha256": "c6b39e342575cdf9b517b3a38a22d96068baeeb365b9e052eeaf4e7c17bfaa81",
+      "candidateSha256": "8986c934935deb94d03fe0b563fb87ac7d79e4ea8d9af50ba61513318b87c288",
+      "headingsPreserved": true,
+      "headerPreserved": true
+    }
+  ],
+  "staticChecks": {
+    "all27MappingsHaveSixFields": true,
+    "allOriginalLinksRetainedInOrder": true,
+    "allOriginalHeadingsAndHeadersUnchanged": true,
+    "all71LinkedObjectsWholeCurrentBytesEqualPinned": true,
+    "allLinkedLineRangesWithinPinnedSource": true
+  },
+  "execution": "No product Source imports, owning check execution, test execution or main writes."
+}

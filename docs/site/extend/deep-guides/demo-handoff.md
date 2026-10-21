@@ -5,7 +5,7 @@ Audience: plugin developer, platform developer, pipeline operator
 Owner: Nova demo-handoff maintainers
 Evidence: skills/nova/plugins/demo-handoff/plugin.json; skills/nova/plugins/demo-handoff/src; skills/nova/plugins/demo-handoff/schemas; skills/nova/plugins/demo-handoff/tests
 Applies to: kubeclaw.demo-handoff 1.0.0; pipeline-plugin-v2
-Last verified: 2026-10-21; source inspection and separately identified local checks
+Last verified: 2026-10-21; repository-source facts checked; local checks identified separately
 
 ## Purpose and authority
 

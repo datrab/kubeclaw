@@ -1,0 +1,54 @@
+{
+  "reviewer": "/root/operator_acceptance",
+  "scope": "Two root-authored sentence-only corrections to independently reviewed 27-callout batch",
+  "source": "PASS preservation",
+  "readerSemantic": "PASS",
+  "quality": "PASS",
+  "materialFindings": [],
+  "files": [
+    {
+      "path": "docs/site/understand/archviewer.md",
+      "sha256": "0b872d1322a3ce7e70e60fe2833af632693ba9d7013bd862aad73768b5b2ded5",
+      "unchangedFromReviewedCandidate": true
+    },
+    {
+      "path": "docs/site/understand/codex-integration.md",
+      "sha256": "65b308ee02ce116f7956f093f4169df42e68a0dc295a7ad4954d369d056e1e99",
+      "unchangedFromReviewedCandidate": true
+    },
+    {
+      "path": "docs/site/understand/echo.md",
+      "sha256": "ead80d6d9c8f682b60eec1f4073f6de7226676051e89177061ed363bf1fecea4",
+      "unchangedFromReviewedCandidate": true
+    },
+    {
+      "path": "docs/site/understand/forge.md",
+      "sha256": "334012a343a780dd328f525ba1c9c482d0e3df1d600af15762ba424e22a1653d",
+      "unchangedFromReviewedCandidate": false
+    },
+    {
+      "path": "docs/site/understand/openclaw.md",
+      "sha256": "d7564a0741c4d6eb63cc5609ab28165efaa92908b63c3c3decf20557c0d1eea3",
+      "unchangedFromReviewedCandidate": false
+    },
+    {
+      "path": "docs/site/understand/ops-mcp.md",
+      "sha256": "8986c934935deb94d03fe0b563fb87ac7d79e4ea8d9af50ba61513318b87c288",
+      "unchangedFromReviewedCandidate": true
+    }
+  ],
+  "observations": [
+    "Exact diff contains only Forge semicolon-to-period plus Owner capitalization and OpenClaw active-voice/sentence split plus link-label capitalization.",
+    "Forge keeps controlled HTTP-in-place-of-model and no deployed Gateway/remote Git proof boundaries.",
+    "OpenClaw retains identical test URL/range, external-plaintext rejection/loopback admission assertion description, and explicit no inferred execution result.",
+    "Other four complete pages remain exact reviewed candidate bytes. Source objects and prior scoped verdicts unchanged."
+  ],
+  "limits": [
+    "No whole A91205 acceptance.",
+    "Owning publication-check terminal result and fresh built Reader remain parent-owned; this report does not assert their success."
+  ],
+  "check": {
+    "command": "Inert Python difflib plus SHA-256 comparison against frozen independently reviewed candidate copies",
+    "exit": 0
+  }
+}

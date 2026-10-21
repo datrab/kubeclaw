@@ -27,9 +27,21 @@ deterministic final decision.
 
 > **Source evidence — three bounded review stages**
 >
+> **Claim:** Review, repository audit and revalidation request read/dispatch/artifact capabilities; Echo does not own lifecycle decisions.
+>
+> **Implementation:** The registration and ordinary review stage below connect declared authority to the verification/reduction flow.
+>
 > [The package registers review, repository audit, and revalidation with read and artifact capabilities only](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/review/plugin.json#L1-L54).
 >
 > [The stage resolves policy, prepares evidence, dispatches Echo, verifies output, reduces the decision, and persists the result](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/review/src/stage.ts#L1-L28).
+>
+> **Contract or setting:** The manifest separates the three stage registrations and their required capabilities.
+>
+> **Test evidence:** [Review dispatch protocol checks](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/review/tests/protocol.unit.test.mjs#L27-L39) contains bundle, policy and closed-output-contract assertions. These assertions are not a recorded execution result for this callout.
+>
+> **Revision:** `569f7b4933d4859cc67c80ddf40d5154ffd95ce5`. These are the source bindings for the explanation above, not execution receipts.
+>
+> **Limit:** A valid request contract neither grants Git writes nor proves that model findings are correct.
 
 ## Fixed Review Subject
 
@@ -49,9 +61,21 @@ carry a path, reasons, and dependency depth from 1 through 8.
 
 > **Source evidence — subject admission**
 >
+> **Claim:** Review reports bind their identity to fixed revisions and manifest, policy and bundle digests.
+>
+> **Implementation:** The schema and report validator below define subject admission and report identity.
+>
 > [The stage input schema defines task, revision, scope, requirement, evidence, and context bounds](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/review/schemas/input.schema.json#L1-L35).
 >
 > [The final report validator binds report identity to revisions, manifest, policy, and bundle digests](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/review/src/review-report-contract.ts#L123-L140).
+>
+> **Contract or setting:** The input schema bounds declared evidence/context; the report validator requires matching subject digests.
+>
+> **Test evidence:** [Report identity assertions](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/review/tests/review-report-contract.unit.test.mjs#L15-L34) contains invalid digest, identity and governor/revision rejection assertions. These assertions are not a recorded execution result for this callout.
+>
+> **Revision:** `569f7b4933d4859cc67c80ddf40d5154ffd95ce5`. These are the source bindings for the explanation above, not execution receipts.
+>
+> **Limit:** These deterministic checks do not show that the selected repository bytes or every reported finding are semantically correct.
 
 ## Review, Repository Audit, And Revalidation
 
@@ -72,6 +96,10 @@ uses the limits inside `review-policy.v2`.
 
 > **Source evidence — the paths have distinct configuration contracts**
 >
+> **Claim:** Ordinary review and repository review paths resolve different configuration and profile inputs.
+>
+> **Implementation:** The manifest, stage configuration readers and repository profile resolver below establish those paths.
+>
 > [The manifest binds ordinary review to one schema and both repository paths to another](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/review/plugin.json#L5-L50).
 >
 > [Ordinary review resolves `agent`, the `gate` default, and optional policy](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/review/src/stage.ts#L30-L49).
@@ -79,6 +107,14 @@ uses the limits inside `review-policy.v2`.
 > [Repository audit resolves required reviewer identity and its `audit` default](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/review/src/repository-audit-stage.ts#L102-L124).
 >
 > [Repository input resolves grade, mode, scope, and named overrides into a digest](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/review/src/repository-review-profile.ts#L322-L357).
+>
+> **Contract or setting:** The linked ordinary and repository configuration consumers select their stated defaults; runtime prompt ceilings remain a separate target constraint.
+>
+> **Test evidence:** [Review policy resolution assertions](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/review/tests/review-policy-resolver.unit.test.mjs#L7-L34) contains complete-source precedence and stable policy-digest assertions. These assertions are not a recorded execution result for this callout.
+>
+> **Revision:** `569f7b4933d4859cc67c80ddf40d5154ffd95ce5`. These are the source bindings for the explanation above, not execution receipts.
+>
+> **Limit:** The resolver unit admits an explicitly authorized run override; these stage inputs do not expose that override. No model execution follows from configuration parsing.
 
 ## Echo Output
 
@@ -100,11 +136,23 @@ both as direct evidence.
 
 > **Source evidence — review language is a contract**
 >
+> **Claim:** Echo assessments and findings use the versioned, evidence-bound output vocabulary.
+>
+> **Implementation:** The output types and generated schema below define finding and assessment shapes.
+>
 > [The Echo contract defines assessment, category, priority, scope, change, and evidence values](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/review/src/echo-review-contract.ts#L11-L62).
 >
 > [The same contract defines the complete finding and output records](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/review/src/echo-review-contract.ts#L81-L133).
 >
 > [The generated schema requires evidence for satisfied and violated requirements](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/review/src/echo-review-contract.ts#L207-L237).
+>
+> **Contract or setting:** The linked schema requires evidence for satisfied or violated requirements; a model cannot substitute an unvalidated verdict.
+>
+> **Test evidence:** [Echo output parser assertions](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/review/tests/echo-review-output.unit.test.mjs#L69-L109) contains unknown-field, unsafe-path, unsupported-enum, missing-evidence and context-request rejection cases. These assertions are not a recorded execution result for this callout.
+>
+> **Revision:** `569f7b4933d4859cc67c80ddf40d5154ffd95ce5`. These are the source bindings for the explanation above, not execution receipts.
+>
+> **Limit:** Parsing proves admitted representation, not truth of evidence or correctness of model judgment.
 
 ## Policy And Certification
 
@@ -127,7 +175,19 @@ override in these stage inputs. The policy controls:
 
 > **Source evidence — policy precedence**
 >
+> **Claim:** A supplied settings policy replaces the complete built-in policy rather than deep-merging it.
+>
+> **Implementation:** The resolver below validates candidates and selects the last admitted complete policy.
+>
 > [The resolver validates each candidate and selects the last complete policy: built-in, then settings policy](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/review/src/review-policy-resolver.ts#L45-L87).
+>
+> **Contract or setting:** The selected review-policy.v2 must satisfy the parser and hard cross-field constraints; stage inputs provide no per-request override.
+>
+> **Test evidence:** [Policy parser and precedence checks](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/review/tests/review-policy-resolver.unit.test.mjs#L14-L57) contains selection order, unauthorized-override rejection and hard-ceiling cases. These assertions are not a recorded execution result for this callout.
+>
+> **Revision:** `569f7b4933d4859cc67c80ddf40d5154ffd95ce5`. These are the source bindings for the explanation above, not execution receipts.
+>
+> **Limit:** The authorized run-override case belongs to the general resolver test, not these stage inputs; policy validity does not certify any review result.
 
 The plugin creates a certified reduction input under the fixed orchestrator
 issuer. Echo cannot create this certificate. The reducer uses only certified
@@ -189,7 +249,19 @@ deadline.
 
 > **Source evidence — bounded repository retry**
 >
+> **Claim:** Repository revalidation stops retrying an unresolved dispatch effect rather than treating it as an ordinary transient failure.
+>
+> **Implementation:** The revalidation retry loop below distinguishes unresolved outcomes from bounded retries.
+>
 > [Revalidation retries within the configured count but stops on an unresolved external effect](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/review/src/repository-revalidation-stage.ts#L184-L213).
+>
+> **Contract or setting:** Configured retry count and shared phase, cost and wall budgets constrain any admitted retry.
+>
+> **Test evidence:** [Revalidation source-binding fixture](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/review/tests/repository-revalidation.unit.test.mjs#L128-L166) contains fixed-current-source dispatch and returned-backlog assertions. These assertions are not a recorded execution result for this callout.
+>
+> **Revision:** `569f7b4933d4859cc67c80ddf40d5154ffd95ce5`. These are the source bindings for the explanation above, not execution receipts.
+>
+> **Limit:** That fixture uses controlled capability responses and does not prove terminal OpenClaw cleanup or exercise every retry-stop branch.
 
 ## Extension And Verification
 

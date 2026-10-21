@@ -46,11 +46,23 @@ claim; removing the plugin does not remove any of these stores.
 
 > **Source evidence — package and marketplace boundary**
 >
+> **Claim:** The Codex package supplies troubleshooting instructions, not a Nova registration, embedded MCP server or mutation authority.
+>
+> **Implementation:** The package manifest, marketplace entry and skill below define installation and instruction scope.
+>
 > [The plugin manifest declares one skill directory and the `Read` interface capability](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/plugins/kubeclaw-ops/.codex-plugin/plugin.json#L1-L26).
 >
 > [The local marketplace makes installation available and requests authentication on install](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/.agents/plugins/marketplace.json#L1-L20).
 >
 > [The skill defines the evidence order and forbids mutation claims](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/plugins/kubeclaw-ops/skills/troubleshoot/SKILL.md#L1-L33).
+>
+> **Contract or setting:** The manifest Read capability describes the plugin interface; the separately configured Ops MCP credential and deployment define usable process authority.
+>
+> **Test evidence:** No executed Codex-host installation or troubleshooting session accompanies these manifest/skill links. The [Ops service method fixture](https://github.com/datrab/kubeclaw/blob/54a535b6046bc54e9aeeebee9c4cd24388477115/tools/ops-mcp/test/local.test.mjs#L43-L50) checks the separate MCP interface, not plugin activation.
+>
+> **Revision:** `569f7b4933d4859cc67c80ddf40d5154ffd95ce5`. These are the source bindings for the explanation above, not execution receipts.
+>
+> **Limit:** Installing instructions neither grants Kubernetes access nor proves a connected Codex host, service readiness or successful diagnosis.
 
 ## Installation And Activation
 
@@ -95,6 +107,10 @@ is wider.
 
 > **Source evidence — process and credential layout**
 >
+> **Claim:** Codex and MCP share a Pod network and, when exec namespaces are enabled, a projected Kubernetes identity with authority wider than MCP methods.
+>
+> **Implementation:** The workload, token volume and RBAC templates below define process and credential layout.
+>
 > [The chart requires immutable digests for the Codex and MCP images and fixes one writer](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/ops-pod/templates/workload.yaml#L1-L45).
 >
 > [Codex receives its own environment, persistent mounts, and readiness boundary](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/ops-pod/templates/workload.yaml#L49-L84).
@@ -110,6 +126,14 @@ is wider.
 > [RBAC grants cluster reads and creates namespace-scoped bindings separately](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/ops-pod/templates/rbac.yaml#L1-L58).
 >
 > [Optional pod-exec access is confined to the explicitly listed namespaces](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/ops-pod/templates/rbac.yaml#L60-L91).
+>
+> **Contract or setting:** Immutable application image guards, conditional Codex token mount and exec Role values are Helm inputs; MCP keeps its projected read token.
+>
+> **Test evidence:** The [local MCP boundary fixture](https://github.com/datrab/kubeclaw/blob/54a535b6046bc54e9aeeebee9c4cd24388477115/tools/ops-mcp/test/local.test.mjs#L43-L50) checks method listing and failed reads, not chart rollout or the shared credential permissions. No deployed process-isolation result is established here.
+>
+> **Revision:** `569f7b4933d4859cc67c80ddf40d5154ffd95ce5`. These are the source bindings for the explanation above, not execution receipts.
+>
+> **Limit:** Separate containers do not imply separate credentials. Interface Read labels do not prove a read-only effective ServiceAccount.
 
 ## Workspace And Network Boundaries
 
@@ -148,7 +172,19 @@ Tailscale without replacing that tag weakens release reproducibility.
 
 > **Source evidence — deployment defaults and the image exception**
 >
+> **Claim:** The chart requires digests for the two application images but leaves optional Tailscale disabled with a mutable default image tag.
+>
+> **Implementation:** The values below define storage, namespaces, network policy and the optional image exception.
+>
 > [Values define storage, namespace, network, and disabled Tailscale defaults](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/ops-pod/values.yaml#L1-L46).
+>
+> **Contract or setting:** The linked values are deployment defaults, not a live image-selection or release observation.
+>
+> **Test evidence:** No executed deployment/image-acquisition check accompanies this values evidence. A controlled rollout must separately verify the selected digests and optional Tailscale configuration.
+>
+> **Revision:** `569f7b4933d4859cc67c80ddf40d5154ffd95ce5`. These are the source bindings for the explanation above, not execution receipts.
+>
+> **Limit:** Default values do not prove the running image identity, single-writer handoff, external login, Tailscale route or Kubernetes access.
 
 ## Connection Failure And Recovery
 

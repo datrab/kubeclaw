@@ -27,6 +27,10 @@ reconciliation.
 
 > **Source evidence — authority is split by capability**
 >
+> **Claim:** Forge requests workspace, dispatch, commit, merge and artifact effects separately; Nova retains lifecycle authority.
+>
+> **Implementation:** The manifest and stage calls below define this capability split.
+>
 > [The implementation manifest declares the stage and its seven required capabilities](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/implementation-agent/plugin.json#L1-L23).
 >
 > [The stage creates and integrates the workspace through separate capability calls](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/implementation-agent/src/stage.ts#L13-L71).
@@ -34,6 +38,14 @@ reconciliation.
 > [The stage binds the active attempt, dispatches, and cleans up after integration](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/implementation-agent/src/stage.ts#L81-L115).
 >
 > [It stores completion and cleanup evidence and returns only Nova stage outcomes](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/implementation-agent/src/stage.ts#L118-L150).
+>
+> **Contract or setting:** The linked manifest declares required capabilities; actual runtime grants must separately authorize each call.
+>
+> **Test evidence:** [Forge protocol checks](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/implementation-agent/tests/protocol.test.ts#L1-L43) contains request-identity and strict completion-rejection assertions. These assertions are not a recorded execution result for this callout.
+>
+> **Revision:** `569f7b4933d4859cc67c80ddf40d5154ffd95ce5`. These are the source bindings for the explanation above, not execution receipts.
+>
+> **Limit:** The capability declaration does not prove that a host granted it or that a remote agent completed implementation.
 
 ## Input And Dispatch Contract
 
@@ -55,11 +67,23 @@ not invent that evidence.
 
 > **Source evidence — exact wire shapes**
 >
+> **Claim:** Forge dispatch uses a bounded, closed input and the implementation wire protocol.
+>
+> **Implementation:** The input schema and request builder below define the admitted fields and emitted request.
+>
 > [The first half of the input schema defines identity, task, source, and workspace fields](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/implementation-agent/schemas/input.schema.json#L1-L55).
 >
 > [The second half defines workspace bounds and rejects unknown input fields](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/implementation-agent/schemas/input.schema.json#L56-L106).
 >
 > [The request builder fixes the wire protocol and agent-owned output](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/implementation-agent/src/protocol.ts#L40-L76).
+>
+> **Contract or setting:** The two linked input-schema ranges govern input limits; the linked builder fixes the agent-owned output contract.
+>
+> **Test evidence:** [Implementation protocol assertions](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/implementation-agent/tests/protocol.test.ts#L1-L43) contains valid-completion, unknown-field, failed-check, unsafe-path and cancelled-session cases. These assertions are not a recorded execution result for this callout.
+>
+> **Revision:** `569f7b4933d4859cc67c80ddf40d5154ffd95ce5`. These are the source bindings for the explanation above, not execution receipts.
+>
+> **Limit:** Protocol validation does not prove model task quality, accepted transport or later Git integration.
 
 ## Workspace And Git Flow
 
@@ -86,11 +110,23 @@ necessary because a path string alone does not prove who owns a directory.
 
 > **Source evidence — workspace fencing**
 >
+> **Claim:** Attempt generation separates workspaces, and dispatch checks the complete persisted workspace owner.
+>
+> **Implementation:** The generation helper, stage calls and runtime workspace verifier below bind the path and attempt.
+>
 > [Attempt generation changes both workspace path and branch](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/implementation-agent/src/workspace.ts#L1-L11).
 >
 > [Creation, commit, merge, and removal validate returned revisions and references](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/implementation-agent/src/stage.ts#L13-L66).
 >
 > [Runtime dispatch verifies the real path and workspace owner file](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/common/plugins/runtime-dispatch/src/workspace-target.ts#L1-L30).
+>
+> **Contract or setting:** The workspace reference must agree with the active attempt and configured workspace root; a path alone grants nothing.
+>
+> **Test evidence:** [Controlled workspace ownership checks](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/tests/verification/reliability/forge-workspace.test.mts#L57-L80) contains changed-owner, changed-root and forged-source rejection plus deterministic generation assertions. These assertions are not a recorded execution result for this callout.
+>
+> **Revision:** `569f7b4933d4859cc67c80ddf40d5154ffd95ce5`. These are the source bindings for the explanation above, not execution receipts.
+>
+> **Limit:** The controlled fixture uses an HTTP endpoint in place of a real model. Owner checks do not attest a deployed Gateway or remote Git host.
 
 ## Completion, Commit Selection, And Merge
 
@@ -146,11 +182,23 @@ diagnostic evidence; it is not implicit input to the new attempt.
 
 > **Source evidence — repair and cancellation do not reuse authority**
 >
+> **Claim:** Repair requires Core-issued evidence; cancellation must reconcile an accepted OpenClaw session before another attempt.
+>
+> **Implementation:** The repair selector and cleanup functions below separate repair authority from session-stop observations.
+>
 > [Only a Core-issued repair request can select repair evidence](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/implementation-agent/src/repair-evidence.ts#L1-L30).
 >
 > [OpenClaw cancellation first resolves the accepted session identity](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/common/plugins/runtime-dispatch/src/openclaw-cleanup.ts#L25-L47).
 >
 > [Cleanup cancels and polls to terminal state or returns an unresolved result](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/common/plugins/runtime-dispatch/src/openclaw-cleanup.ts#L49-L72).
+>
+> **Contract or setting:** The linked repair-evidence parser admits Core-issued repair data; cleanup follows the accepted session identity, not a guessed path.
+>
+> **Test evidence:** [Retained-workspace repair checks](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/tests/verification/reliability/forge-workspace.test.mts#L34-L55) contains new-generation, confirmed-H1 repair and retained-branch assertions. These assertions are not a recorded execution result for this callout.
+>
+> **Revision:** `569f7b4933d4859cc67c80ddf40d5154ffd95ce5`. These are the source bindings for the explanation above, not execution receipts.
+>
+> **Limit:** Those repository checks do not establish live session cancellation. Cleanup can still return unresolved; a new attempt must not hide that uncertainty.
 
 ## Configuration And Extension
 
@@ -166,9 +214,21 @@ is no Forge environment-variable fallback and no Forge default for `agent`.
 
 > **Source evidence — configuration and precedence**
 >
+> **Claim:** The active lease owns attempt identity; Forge agent selection comes from compiled configuration.
+>
+> **Implementation:** The config schema and stage identity replacement below define the precedence.
+>
 > [The configuration schema requires `agent` and allows only `agentRole` beside it](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/implementation-agent/schemas/config.schema.json#L1).
 >
 > [The active lease replaces input identity before workspace creation and dispatch](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/implementation-agent/src/stage.ts#L81-L101).
+>
+> **Contract or setting:** The linked schema requires agent; optional agentRole is not a target selector. Runtime provider configuration and grants remain separate.
+>
+> **Test evidence:** [Request identity assertions](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/implementation-agent/tests/protocol.test.ts#L1-L10) contains request identity construction assertions. These assertions are not a recorded execution result for this callout.
+>
+> **Revision:** `569f7b4933d4859cc67c80ddf40d5154ffd95ce5`. These are the source bindings for the explanation above, not execution receipts.
+>
+> **Limit:** This protocol check does not itself exercise Core lease replacement or prove target availability; the linked stage is the implementation evidence.
 
 To add a Forge backend, implement a `runtime.dispatch` target that preserves the
 implementation request and completion contract. Do not add Git commit, merge,

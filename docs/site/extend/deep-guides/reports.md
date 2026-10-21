@@ -5,7 +5,7 @@ Audience: plugin developer, report maintainer, pipeline operator
 Owner: Nova report maintainers
 Evidence: skills/nova/plugins/pipeline-review; skills/nova/plugins/case-study; skills/nova/core/state/read-run-evidence.ts
 Applies to: kubeclaw.pipeline-review and kubeclaw.case-study; pipeline-plugin-v2; report-source-bundle.v1 and v4 dispatch protocols
-Last verified: 2026-10-21; current source inspection; local checks identified separately
+Last verified: 2026-10-21; repository-source facts checked; local checks identified separately
 
 ## Two packages, one evidence authority
 

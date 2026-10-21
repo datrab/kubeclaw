@@ -27,9 +27,21 @@ product needs a supported publisher, revision selection, or independent scaling.
 
 > **Source evidence — a static, Nova-only surface**
 >
+> **Claim:** Archviewer is a read-only static consumer and its Helm access resources are Nova-only.
+>
+> **Implementation:** The image construction and chart role/provider guards below define that surface.
+>
 > [The image contains only Nginx configuration and an initially empty `/designs` directory](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/docker/Dockerfile.archviewer#L1-L22).
 >
 > [The chart refuses non-Nova roles, invalid policy providers, and legacy duplicate port ownership](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/charts/kubeclaw/templates/archviewer.yaml#L1-L13).
+>
+> **Contract or setting:** The linked chart checks role, selected policy provider and duplicate port ownership; it does not implement a publisher.
+>
+> **Test evidence:** [Chart policy-provider checks](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/tests/verification/deployment/archviewer-policy-provider.test.mjs#L37-L45) contains Cilium selection and unknown-provider render rejection assertions. These assertions are not a recorded execution result for this callout.
+>
+> **Revision:** `569f7b4933d4859cc67c80ddf40d5154ffd95ce5`; `f99aecbb00cb399b46dfbbeb3ddb375fba6218e7`. These are the source bindings for the explanation above, not execution receipts.
+>
+> **Limit:** A chart test is not live network enforcement, document publication or proof of the historical reason for Nova placement.
 
 ## Request Path
 
@@ -74,6 +86,10 @@ dedicated private publication route or auth volume.
 
 > **Source evidence — three access checks**
 >
+> **Claim:** Document requests require Basic authentication; only health bypasses it, while chart policies select the private proxy path.
+>
+> **Implementation:** Nginx, chart access resources, defaults and Secret mount below define the independent checks.
+>
 > [Nginx requires Basic auth, disables indexes, and exempts only health](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/docker/archviewer.nginx.conf#L1-L19).
 >
 > [The current chart validates the provider and renders the private Service, Ingress, and selected policy](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/charts/kubeclaw/templates/archviewer.yaml#L5-L65).
@@ -83,6 +99,14 @@ dedicated private publication route or auth volume.
 > [The current values default to Cilium](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/charts/kubeclaw/values.yaml#L529-L539).
 >
 > [The deployment mounts only the named htpasswd key from the existing Secret](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/charts/kubeclaw/templates/deployment.yaml#L1716-L1724).
+>
+> **Contract or setting:** The named htpasswd Secret/key and selected networkPolicyProvider control access; all policies selecting the Pod still matter.
+>
+> **Test evidence:** [Native Nginx access assertions](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/tests/verification/reliability/archviewer-native.test.mjs#L43-L56) contains unauthenticated/wrong-password denial, retrieval, listing denial and credential-removal checks. These assertions are not a recorded execution result for this callout. Execution requires ARCHVIEWER_TEST_NGINX pointing to a real Nginx binary; no run result accompanies this callout.
+>
+> **Revision:** `569f7b4933d4859cc67c80ddf40d5154ffd95ce5`; `f99aecbb00cb399b46dfbbeb3ddb375fba6218e7`; `0e35889a3c4e65d5c47ba88e924611aace67eb1d`. These are the source bindings for the explanation above, not execution receipts.
+>
+> **Limit:** The native local listener does not establish Tailnet DNS/TLS or CNI enforcement; health does not prove authenticated document availability.
 
 ## Publication And Lifecycle
 
@@ -123,11 +147,23 @@ release receipt before deployment.
 
 > **Source evidence — current lab wiring**
 >
+> **Claim:** The lab values add access resources and the sidecar/mount separately; startup creates a directory, not a supported presentation publisher.
+>
+> **Implementation:** The values and startup lines below are the deployed-wiring inputs for this distinction.
+>
 > [The Nova values enable the private access resources](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/my-values/nova-values.yaml#L91-L96).
 >
 > [They separately define the actual sidecar and read-only workspace mount](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/my-values/nova-values.yaml#L151-L186).
 >
 > [Nova startup creates the directory but does not publish a document](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/charts/kubeclaw/templates/deployment.yaml#L454-L467).
+>
+> **Contract or setting:** The read-only prism/designs mount and separate extraContainers configuration must agree; the lab image tag is not an immutable release receipt.
+>
+> **Test evidence:** No maintained end-to-end producer test is identified because this inspected wiring supplies no publisher contract. The [native viewer test](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/tests/verification/reliability/archviewer-native.test.mjs#L10-L26) creates its own presentation file; it is not a producer test or recorded run here.
+>
+> **Revision:** `0e35889a3c4e65d5c47ba88e924611aace67eb1d`. These are the source bindings for the explanation above, not execution receipts.
+>
+> **Limit:** A file served from the fixture or mounted tree does not establish authenticated production publication, revision selection, retention or cleanup.
 
 ## Failure And Recovery
 

@@ -958,8 +958,8 @@ non-empty run identity (at most 512 characters). It emits a namespaced
 `plugin-domain-event.v2`; Nova supplies journal sequence and producer provenance.
 Its inner payload is `openclaw-agent-event.v2`, containing exactly
 `schemaVersion`, `observedFields`, and `metrics`. It removes top-level identity
-and credential-like field names, takes at most 128 remaining entries, sorts
-their names (each truncated to 128 characters) into `observedFields`, and keeps
+and credential-like field names, keeps up to 128 entries after that filtering,
+then sorts their names (each truncated to 128 characters) into `observedFields`, and keeps
 only finite numeric or boolean safe-metric fields in `metrics`. It does not
 copy the raw prompt, tool result, or v1 ingress payload. Field-name presence
 can itself disclose information, so this reduction is not semantic privacy.

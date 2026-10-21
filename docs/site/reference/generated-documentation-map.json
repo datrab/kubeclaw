@@ -275,7 +275,7 @@
       "audience": "plugin developer, platform developer, pipeline operator",
       "owner": "Nova demo-handoff maintainers",
       "appliesTo": "kubeclaw.demo-handoff 1.0.0; pipeline-plugin-v2",
-      "lastVerified": "2026-10-21; source inspection and separately identified local checks",
+      "lastVerified": "2026-10-21; repository-source facts checked; local checks identified separately",
       "sourceDependencies": [
         "skills/nova/plugins/demo-handoff/plugin.json",
         "skills/nova/plugins/demo-handoff/src",
@@ -297,7 +297,7 @@
       "audience": "plugin developer, report maintainer, pipeline operator",
       "owner": "Nova report maintainers",
       "appliesTo": "kubeclaw.pipeline-review and kubeclaw.case-study; pipeline-plugin-v2; report-source-bundle.v1 and v4 dispatch protocols",
-      "lastVerified": "2026-10-21; current source inspection; local checks identified separately",
+      "lastVerified": "2026-10-21; repository-source facts checked; local checks identified separately",
       "sourceDependencies": [
         "skills/nova/plugins/pipeline-review",
         "skills/nova/plugins/case-study",

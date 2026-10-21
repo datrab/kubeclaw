@@ -1,0 +1,815 @@
+{
+  "baseline": "dc90bae53b4f1e95784bf33997cf98ba5d7d3faa",
+  "pages": [
+    {
+      "path": "docs/site/understand/archviewer.md",
+      "candidateHashMatches": true,
+      "baselineHashMatches": true,
+      "boxes": 3,
+      "outsideBoxesExact": true,
+      "allSixFields": true,
+      "oldUrlsRetainedInOrder": true
+    },
+    {
+      "path": "docs/site/understand/codex-integration.md",
+      "candidateHashMatches": true,
+      "baselineHashMatches": true,
+      "boxes": 3,
+      "outsideBoxesExact": true,
+      "allSixFields": true,
+      "oldUrlsRetainedInOrder": true
+    },
+    {
+      "path": "docs/site/understand/echo.md",
+      "candidateHashMatches": true,
+      "baselineHashMatches": true,
+      "boxes": 6,
+      "outsideBoxesExact": true,
+      "allSixFields": true,
+      "oldUrlsRetainedInOrder": true
+    },
+    {
+      "path": "docs/site/understand/forge.md",
+      "candidateHashMatches": true,
+      "baselineHashMatches": true,
+      "boxes": 5,
+      "outsideBoxesExact": true,
+      "allSixFields": true,
+      "oldUrlsRetainedInOrder": true
+    },
+    {
+      "path": "docs/site/understand/openclaw.md",
+      "candidateHashMatches": true,
+      "baselineHashMatches": true,
+      "boxes": 5,
+      "outsideBoxesExact": true,
+      "allSixFields": true,
+      "oldUrlsRetainedInOrder": true
+    },
+    {
+      "path": "docs/site/understand/ops-mcp.md",
+      "candidateHashMatches": true,
+      "baselineHashMatches": true,
+      "boxes": 5,
+      "outsideBoxesExact": true,
+      "allSixFields": true,
+      "oldUrlsRetainedInOrder": true
+    }
+  ],
+  "boxCount": 27,
+  "sourceObjects": [
+    {
+      "revision": "569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "path": "docker/Dockerfile.archviewer",
+      "wholeCurrentBytesEqual": true,
+      "sha256": "3ec0c58abec0095d35a0bc6570ac65812cd55169836f45fa4928a0270deef5df",
+      "lines": 22,
+      "rangesValid": true
+    },
+    {
+      "revision": "f99aecbb00cb399b46dfbbeb3ddb375fba6218e7",
+      "path": "charts/kubeclaw/templates/archviewer.yaml",
+      "wholeCurrentBytesEqual": true,
+      "sha256": "5a89affd7b25f63ff38a0de9bec61388927e06b5d20a7075f6af0a92d4c7cb2a",
+      "lines": 82,
+      "rangesValid": true
+    },
+    {
+      "revision": "f99aecbb00cb399b46dfbbeb3ddb375fba6218e7",
+      "path": "tests/verification/deployment/archviewer-policy-provider.test.mjs",
+      "wholeCurrentBytesEqual": true,
+      "sha256": "a52f4af7ba104e043d7907710a835d83502fa685aa1f5af999a5b1bdc19df98c",
+      "lines": 45,
+      "rangesValid": true
+    },
+    {
+      "revision": "569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "path": "docker/archviewer.nginx.conf",
+      "wholeCurrentBytesEqual": true,
+      "sha256": "4af2c8146b2c62534c271701986ca3eb531a605294886fafcc0f4c3cd09462c4",
+      "lines": 21,
+      "rangesValid": true
+    },
+    {
+      "revision": "f99aecbb00cb399b46dfbbeb3ddb375fba6218e7",
+      "path": "charts/kubeclaw/values.yaml",
+      "wholeCurrentBytesEqual": true,
+      "sha256": "2bff3214d88e912445b1c435b6353cfb438cd5184124b3eb0cc9f7394dfc05aa",
+      "lines": 547,
+      "rangesValid": true
+    },
+    {
+      "revision": "0e35889a3c4e65d5c47ba88e924611aace67eb1d",
+      "path": "charts/kubeclaw/templates/deployment.yaml",
+      "wholeCurrentBytesEqual": true,
+      "sha256": "8e780bc0033c3da5c0a3d4db53e8ba9e0753200a072ce0ed63a598c461231883",
+      "lines": 1736,
+      "rangesValid": true
+    },
+    {
+      "revision": "569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "path": "tests/verification/reliability/archviewer-native.test.mjs",
+      "wholeCurrentBytesEqual": true,
+      "sha256": "63d542fffbb34c56aaadd7c7510b3046f610a8c7611427ad66b36b4ceb79922b",
+      "lines": 56,
+      "rangesValid": true
+    },
+    {
+      "revision": "0e35889a3c4e65d5c47ba88e924611aace67eb1d",
+      "path": "my-values/nova-values.yaml",
+      "wholeCurrentBytesEqual": true,
+      "sha256": "1704ad41236dbc9ea8c210c8d3e360189f9623ca65d1ca70eac23901d770ff7e",
+      "lines": 281,
+      "rangesValid": true
+    },
+    {
+      "revision": "569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "path": "plugins/kubeclaw-ops/.codex-plugin/plugin.json",
+      "wholeCurrentBytesEqual": true,
+      "sha256": "906bd92fc84b1ea15e3e76c8b39d8262d0cbaa5458c9923478233660521ff1e5",
+      "lines": 26,
+      "rangesValid": true
+    },
+    {
+      "revision": "569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "path": ".agents/plugins/marketplace.json",
+      "wholeCurrentBytesEqual": true,
+      "sha256": "4a843c8641e0e4bb4454a3aab8038942bd2e9f3922f8a20e782e4700ae6150b0",
+      "lines": 20,
+      "rangesValid": true
+    },
+    {
+      "revision": "569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "path": "plugins/kubeclaw-ops/skills/troubleshoot/SKILL.md",
+      "wholeCurrentBytesEqual": true,
+      "sha256": "52a7329b7176b69c98ca46069d1147e0dc242a6f812ac4efdceba0c86a8cc530",
+      "lines": 35,
+      "rangesValid": true
+    },
+    {
+      "revision": "54a535b6046bc54e9aeeebee9c4cd24388477115",
+      "path": "tools/ops-mcp/test/local.test.mjs",
+      "wholeCurrentBytesEqual": true,
+      "sha256": "88d0fbd1c6b51ec219be156fa91369e5c3837134a4c9b35dd0f6e10a7a798ad7",
+      "lines": 51,
+      "rangesValid": true
+    },
+    {
+      "revision": "569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "path": "charts/ops-pod/templates/workload.yaml",
+      "wholeCurrentBytesEqual": true,
+      "sha256": "3471a815948e99e52b03b7952f1076c9d21afddbd24b62c37e1c848b7a129d58",
+      "lines": 176,
+      "rangesValid": true
+    },
+    {
+      "revision": "569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "path": "charts/ops-pod/templates/rbac.yaml",
+      "wholeCurrentBytesEqual": true,
+      "sha256": "103ed540a9b71ca0fdde5d693e5e4d07b2943910e79116bbd7206d528668874b",
+      "lines": 92,
+      "rangesValid": true
+    },
+    {
+      "revision": "569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "path": "charts/ops-pod/values.yaml",
+      "wholeCurrentBytesEqual": true,
+      "sha256": "9f1d58dfe213f13169fdd9f983878b688d5f42fcf9f5283e31eed329e82b8c79",
+      "lines": 46,
+      "rangesValid": true
+    },
+    {
+      "revision": "569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "path": "skills/nova/plugins/review/plugin.json",
+      "wholeCurrentBytesEqual": true,
+      "sha256": "5ced42bfc8ca0851739ed6bbd668085345dea0e1caa391c5f1520e7f919be8f1",
+      "lines": 54,
+      "rangesValid": true
+    },
+    {
+      "revision": "569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "path": "skills/nova/plugins/review/src/stage.ts",
+      "wholeCurrentBytesEqual": true,
+      "sha256": "24edd137f6742ed10cdec57f43fc29ac6a270fd25019ca6b9ba2c348cdcb372c",
+      "lines": 289,
+      "rangesValid": true
+    },
+    {
+      "revision": "569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "path": "skills/nova/plugins/review/tests/protocol.unit.test.mjs",
+      "wholeCurrentBytesEqual": true,
+      "sha256": "a1adce04221c728da9c3b58eba21dbf5821786934ddc4ffebb5d58e1a2a3898e",
+      "lines": 69,
+      "rangesValid": true
+    },
+    {
+      "revision": "569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "path": "skills/nova/plugins/review/schemas/input.schema.json",
+      "wholeCurrentBytesEqual": true,
+      "sha256": "178399b3b8e27d28082b415c4101ef9213aad0e0b486238e0ef2348e9a52c71c",
+      "lines": 35,
+      "rangesValid": true
+    },
+    {
+      "revision": "569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "path": "skills/nova/plugins/review/src/review-report-contract.ts",
+      "wholeCurrentBytesEqual": true,
+      "sha256": "28a76f5eb111741263ab88438a2fc7f9ca0e60e77ccc1f3b7f0bff081fd6f522",
+      "lines": 236,
+      "rangesValid": true
+    },
+    {
+      "revision": "569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "path": "skills/nova/plugins/review/tests/review-report-contract.unit.test.mjs",
+      "wholeCurrentBytesEqual": true,
+      "sha256": "dc5226cf0c4e2e374f4b9184ad580917c0a8ffc8bbe7c12186517b6a1b263914",
+      "lines": 77,
+      "rangesValid": true
+    },
+    {
+      "revision": "569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "path": "skills/nova/plugins/review/src/repository-audit-stage.ts",
+      "wholeCurrentBytesEqual": true,
+      "sha256": "da35c9701be5169975fb4a71b9462e32e6cea61ef46d2211989413d8c6a28f64",
+      "lines": 771,
+      "rangesValid": true
+    },
+    {
+      "revision": "569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+      "wholeCurrentBytesEqual": true,
+      "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b",
+      "lines": 358,
+      "rangesValid": true
+    },
+    {
+      "revision": "569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "path": "skills/nova/plugins/review/tests/review-policy-resolver.unit.test.mjs",
+      "wholeCurrentBytesEqual": true,
+      "sha256": "99227e2906a31f6537eff098ff9e08332d3a54e3b386e0dfdb0be37ae35d324a",
+      "lines": 84,
+      "rangesValid": true
+    },
+    {
+      "revision": "569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "path": "skills/nova/plugins/review/src/echo-review-contract.ts",
+      "wholeCurrentBytesEqual": true,
+      "sha256": "67193f1308ba53eab12c8f280cc4a03a7897289c54147921fe61561b09a684e6",
+      "lines": 274,
+      "rangesValid": true
+    },
+    {
+      "revision": "569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "path": "skills/nova/plugins/review/tests/echo-review-output.unit.test.mjs",
+      "wholeCurrentBytesEqual": true,
+      "sha256": "1fae1e7309dbca0b79f09197b0c59355f90514a577468649f88bae32be862f92",
+      "lines": 109,
+      "rangesValid": true
+    },
+    {
+      "revision": "569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "path": "skills/nova/plugins/review/src/review-policy-resolver.ts",
+      "wholeCurrentBytesEqual": true,
+      "sha256": "c05b626889142e5cf8bd8b9c30446c9bef87b3a7ac5d9dd10799ff769c9dc0ad",
+      "lines": 129,
+      "rangesValid": true
+    },
+    {
+      "revision": "569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "path": "skills/nova/plugins/review/src/repository-revalidation-stage.ts",
+      "wholeCurrentBytesEqual": true,
+      "sha256": "6f8071ea095b3f912fc91e4c812bc7bd5c9cfd4077b48422e6eb4de1e0c70be7",
+      "lines": 357,
+      "rangesValid": true
+    },
+    {
+      "revision": "569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "path": "skills/nova/plugins/review/tests/repository-revalidation.unit.test.mjs",
+      "wholeCurrentBytesEqual": true,
+      "sha256": "e66005235188a9063b99da97e55ad42261f6c3f9273bc3c74a0ed6970f50cb3f",
+      "lines": 186,
+      "rangesValid": true
+    },
+    {
+      "revision": "569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "path": "skills/nova/plugins/architecture-validator/plugin.json",
+      "wholeCurrentBytesEqual": true,
+      "sha256": "915926814bba76b52d9cce47961da67e43cf5ade85c077a417272023c5730792",
+      "lines": 24,
+      "rangesValid": true
+    },
+    {
+      "revision": "569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "path": "skills/nova/plugins/architecture-validator/src/protocol.ts",
+      "wholeCurrentBytesEqual": true,
+      "sha256": "46c3f8894c19ac12c8ca5c35493ef47ace66a8d8092056e102d513c93f29b07a",
+      "lines": 52,
+      "rangesValid": true
+    },
+    {
+      "revision": "569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "path": "skills/nova/plugins/architecture-validator/src/output.ts",
+      "wholeCurrentBytesEqual": true,
+      "sha256": "8b6ee1fe1f98b019f0fda4eb52f4f3786863885f52c67f9db3e7d667416d93ea",
+      "lines": 83,
+      "rangesValid": true
+    },
+    {
+      "revision": "569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "path": "skills/nova/plugins/architecture-validator/src/stage.ts",
+      "wholeCurrentBytesEqual": true,
+      "sha256": "1d078730d6c276cba32fbdded3b289bff155638490e7a5d191750732e13565bc",
+      "lines": 60,
+      "rangesValid": true
+    },
+    {
+      "revision": "569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "path": "skills/nova/plugins/repository-adapter/plugin.json",
+      "wholeCurrentBytesEqual": true,
+      "sha256": "91fe75d56133722d51c62bb2b06f729cdf3ee35735f471857fb324aab34501bd",
+      "lines": 19,
+      "rangesValid": true
+    },
+    {
+      "revision": "569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "path": "skills/nova/plugins/repository-adapter/schemas/config.schema.json",
+      "wholeCurrentBytesEqual": true,
+      "sha256": "f41b62a39c7f0dd5f959e94807d8bb60352fc4bbdab28929214c9199106978a2",
+      "lines": 12,
+      "rangesValid": true
+    },
+    {
+      "revision": "569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "path": "skills/nova/plugins/repository-adapter/src/adapter.ts",
+      "wholeCurrentBytesEqual": true,
+      "sha256": "657ec9c38069eead03aa531e5d5b60041c8fe34b643e2bab838eb0a80e12afcd",
+      "lines": 91,
+      "rangesValid": true
+    },
+    {
+      "revision": "569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "path": "skills/nova/plugins/repository-adapter/src/repository-file.ts",
+      "wholeCurrentBytesEqual": true,
+      "sha256": "a6d8442958b8d90132a23d69449058c6d146aa170ad5f63a11433e42fb73277e",
+      "lines": 63,
+      "rangesValid": true
+    },
+    {
+      "revision": "569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "path": "skills/nova/plugins/repository-adapter/src/revision-reader.ts",
+      "wholeCurrentBytesEqual": true,
+      "sha256": "35aadab83485ed1dcf370ce2136a67d892b6026ba594d0d12d8c739dc3f0c71f",
+      "lines": 331,
+      "rangesValid": true
+    },
+    {
+      "revision": "569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "path": "skills/nova/plugins/repository-adapter/src/revision-parsers.ts",
+      "wholeCurrentBytesEqual": true,
+      "sha256": "de1770df42f8bcb5451b9b23cfa539c1f7d8fc0716d105e389ce95309a8fd295",
+      "lines": 71,
+      "rangesValid": true
+    },
+    {
+      "revision": "569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "path": "skills/nova/plugins/implementation-agent/plugin.json",
+      "wholeCurrentBytesEqual": true,
+      "sha256": "fde7e60285cf1fd687b85e9ce2372b1aaa02d7bbf35bced1b8741c073493e5c9",
+      "lines": 27,
+      "rangesValid": true
+    },
+    {
+      "revision": "569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "path": "skills/nova/plugins/implementation-agent/src/stage.ts",
+      "wholeCurrentBytesEqual": true,
+      "sha256": "4f2057feef1fdd4c81bbb90ae203564cd0ab3922a9fd44b098a1a99558da4870",
+      "lines": 152,
+      "rangesValid": true
+    },
+    {
+      "revision": "569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "path": "skills/nova/plugins/implementation-agent/tests/protocol.test.ts",
+      "wholeCurrentBytesEqual": true,
+      "sha256": "d95fd3d67bba3e442c02a722378cd763e70274ecb5fde72f5765156b49db1478",
+      "lines": 43,
+      "rangesValid": true
+    },
+    {
+      "revision": "569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "path": "skills/nova/plugins/implementation-agent/schemas/input.schema.json",
+      "wholeCurrentBytesEqual": true,
+      "sha256": "f2c8f956678a98cce81e8d6bd41fa444588ceb1519a9ca7a7f5db509f9478d5c",
+      "lines": 106,
+      "rangesValid": true
+    },
+    {
+      "revision": "569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "path": "skills/nova/plugins/implementation-agent/src/protocol.ts",
+      "wholeCurrentBytesEqual": true,
+      "sha256": "d1d2e0c5d82e37e3a3e51e89f1d002e1623a06fdcd0a4b9add816bf563b9cbe6",
+      "lines": 143,
+      "rangesValid": true
+    },
+    {
+      "revision": "569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "path": "skills/nova/plugins/implementation-agent/src/workspace.ts",
+      "wholeCurrentBytesEqual": true,
+      "sha256": "14cdeb066a35cbb2564928ca8ff8f4fa5ce2bd95a36c3607bda011f9c0e79c34",
+      "lines": 11,
+      "rangesValid": true
+    },
+    {
+      "revision": "569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "path": "skills/common/plugins/runtime-dispatch/src/workspace-target.ts",
+      "wholeCurrentBytesEqual": true,
+      "sha256": "163d6442b6eb4261db013c55af03183a04cedaa1a4a90c0893dc1f65f36f2ab5",
+      "lines": 30,
+      "rangesValid": true
+    },
+    {
+      "revision": "569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "path": "tests/verification/reliability/forge-workspace.test.mts",
+      "wholeCurrentBytesEqual": true,
+      "sha256": "ad2be66e99eabc5be03796c93b004098900f99d9d2e7d2469754a72461f60815",
+      "lines": 80,
+      "rangesValid": true
+    },
+    {
+      "revision": "569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "path": "skills/nova/plugins/implementation-agent/src/repair-evidence.ts",
+      "wholeCurrentBytesEqual": true,
+      "sha256": "0ba38e4004d0b9c3058fdce363611beeb6170ee3cb37424da599eb3757fa5c99",
+      "lines": 47,
+      "rangesValid": true
+    },
+    {
+      "revision": "569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "path": "skills/common/plugins/runtime-dispatch/src/openclaw-cleanup.ts",
+      "wholeCurrentBytesEqual": true,
+      "sha256": "9cd036b48db02117734aea56e9e77bf4010f5487150e3bab0fcdc99585ac22fd",
+      "lines": 72,
+      "rangesValid": true
+    },
+    {
+      "revision": "569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "path": "skills/nova/plugins/implementation-agent/schemas/config.schema.json",
+      "wholeCurrentBytesEqual": true,
+      "sha256": "49b1391ff9c5076715c42cf37857f4a6ec6e5a90e7777ff9c94e0d664449981a",
+      "lines": 1,
+      "rangesValid": true
+    },
+    {
+      "revision": "569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "path": "skills/nova/plugins/blueprint-sync/src/stage.ts",
+      "wholeCurrentBytesEqual": true,
+      "sha256": "77735e30c7109aee73cd6c396fe11858275935df1f251aae77d582ed4a7f2765",
+      "lines": 64,
+      "rangesValid": true
+    },
+    {
+      "revision": "569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "path": "skills/nova/plugins/blueprint-sync/plugin.json",
+      "wholeCurrentBytesEqual": true,
+      "sha256": "b7d85a1c195d9d5280da1c396ac1d697be9e0d3a85babe1046850c18fa47e384",
+      "lines": 25,
+      "rangesValid": true
+    },
+    {
+      "revision": "569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "path": "skills/common/plugins/git-workspace/plugin.json",
+      "wholeCurrentBytesEqual": true,
+      "sha256": "c7fac89445933a524d8f8032be5749a221cc8780de6cbcb20f483217841c8802",
+      "lines": 23,
+      "rangesValid": true
+    },
+    {
+      "revision": "569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "path": "skills/common/plugins/git-workspace/schemas/config.schema.json",
+      "wholeCurrentBytesEqual": true,
+      "sha256": "74c9d8c0287172334bd345b52d95de103c38559884d518d2d6f5b0cbb327505a",
+      "lines": 30,
+      "rangesValid": true
+    },
+    {
+      "revision": "569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "path": "skills/common/plugins/git-workspace/src/adapter.ts",
+      "wholeCurrentBytesEqual": true,
+      "sha256": "aa68298b0322f62bf8e64eef51f59107eb2fe4ab940d7aedbabc8041294dcbd7",
+      "lines": 27,
+      "rangesValid": true
+    },
+    {
+      "revision": "569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "path": "skills/common/plugins/git-workspace/src/operations.ts",
+      "wholeCurrentBytesEqual": true,
+      "sha256": "52562707281edf7bf484ee214a02034b74300bed8502c8ff465ceca50739c6a5",
+      "lines": 126,
+      "rangesValid": true
+    },
+    {
+      "revision": "569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "path": "skills/common/plugins/git-workspace/src/review-source.ts",
+      "wholeCurrentBytesEqual": true,
+      "sha256": "18eb4b6dc7d8118f9ad96dfb48379fd89f361d71a9b55a1d777a030bab10fe1b",
+      "lines": 60,
+      "rangesValid": true
+    },
+    {
+      "revision": "569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "path": "skills/common/plugins/git-workspace/src/runner.ts",
+      "wholeCurrentBytesEqual": true,
+      "sha256": "e5e03e53d63d0f48fea14b2789f68af4f986b5dd73867885d7c65212b98a3dcb",
+      "lines": 75,
+      "rangesValid": true
+    },
+    {
+      "revision": "569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "path": "skills/common/plugins/git-workspace/src/values.ts",
+      "wholeCurrentBytesEqual": true,
+      "sha256": "9e6b14a191f29b6f3bd672672b7fb457833ad73eb03e5a04bb3693f0e2e12c5a",
+      "lines": 110,
+      "rangesValid": true
+    },
+    {
+      "revision": "569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "path": "skills/common/plugins/git-workspace/src/workspace-ownership.ts",
+      "wholeCurrentBytesEqual": true,
+      "sha256": "af98b1c9b1ff29623e4c5369d8ccdac837940866987e3a8c649d8a8f97aededc",
+      "lines": 34,
+      "rangesValid": true
+    },
+    {
+      "revision": "569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "path": "skills/prism/openclaw-plugin/index.mjs",
+      "wholeCurrentBytesEqual": true,
+      "sha256": "97a30daa0a042f2cd9416746caffe9207828dd9a587e3a6c3e8de481f5d0640e",
+      "lines": 81,
+      "rangesValid": true
+    },
+    {
+      "revision": "569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "path": "skills/prism/server/control-server.ts",
+      "wholeCurrentBytesEqual": true,
+      "sha256": "c165fb6b20bc6b608ae2bc859f52fc5700856e6cea3798916df921dcac5ce8ac",
+      "lines": 942,
+      "rangesValid": true
+    },
+    {
+      "revision": "569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "path": "skills/prism/control/agent-jobs.ts",
+      "wholeCurrentBytesEqual": true,
+      "sha256": "ff62ef04432ebb67c700c4a25103a0477096f588c2cc3f34f3fab0b776860334",
+      "lines": 100,
+      "rangesValid": true
+    },
+    {
+      "revision": "569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "path": "skills/prism/openclaw-plugin/index.test.mjs",
+      "wholeCurrentBytesEqual": true,
+      "sha256": "0c5f68f6ca9cbbbdec820d619392a3b489a1302dedd309cf0eff67e566923114",
+      "lines": 16,
+      "rangesValid": true
+    },
+    {
+      "revision": "569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "path": "skills/prism/openclaw-plugin/openclaw.plugin.json",
+      "wholeCurrentBytesEqual": true,
+      "sha256": "1cf3f06268870973f2d7131cf64d469e516a62bf4b5f3a9d5b6d6a1c9bdd0588",
+      "lines": 17,
+      "rangesValid": true
+    },
+    {
+      "revision": "0e35889a3c4e65d5c47ba88e924611aace67eb1d",
+      "path": "skills/common/plugins/openclaw-agent-observer/package.json",
+      "wholeCurrentBytesEqual": true,
+      "sha256": "3685149c841d4a5a65e8e1b99e20fcf405fe0020c608f965ee334045997d60ce",
+      "lines": 33,
+      "rangesValid": true
+    },
+    {
+      "revision": "569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "path": "skills/common/plugins/openclaw-agent-events/schemas/config.schema.json",
+      "wholeCurrentBytesEqual": true,
+      "sha256": "d3e3295509aaa3d9c1c13fe1fca014058b36ae860621140025cd64734c5834fe",
+      "lines": 49,
+      "rangesValid": true
+    },
+    {
+      "revision": "569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "path": "skills/common/plugins/openclaw-agent-observer/src/index.ts",
+      "wholeCurrentBytesEqual": true,
+      "sha256": "a800b92606e0c803ae51867c7625ae5610169e23b2074b54d69f58e5f0d6f3aa",
+      "lines": 314,
+      "rangesValid": true
+    },
+    {
+      "revision": "569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "path": "skills/prism/server/agent-bridge.mjs",
+      "wholeCurrentBytesEqual": true,
+      "sha256": "f908013330077103e3c8c37df76401c642737d245f361b4c6ff63d9161e9738c",
+      "lines": 37,
+      "rangesValid": true
+    },
+    {
+      "revision": "569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "path": "skills/prism/server/agent-job-runner.mjs",
+      "wholeCurrentBytesEqual": true,
+      "sha256": "f97926e67b1737be717db6a549ca60920232b7fbd2da23f73c0a15597c331bfb",
+      "lines": 47,
+      "rangesValid": true
+    },
+    {
+      "revision": "569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "path": "charts/kubeclaw/templates/configmap-worker-trust.yaml",
+      "wholeCurrentBytesEqual": true,
+      "sha256": "23ccc1eca6b30efcc57f32e0689a06a5be1ad4fbee967b3632750a95e5d6e7be",
+      "lines": 198,
+      "rangesValid": true
+    },
+    {
+      "revision": "569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "path": "skills/prism/tests/agent-jobs.test.mts",
+      "wholeCurrentBytesEqual": true,
+      "sha256": "bb6ff7ce6f1df432e50f4d92bd563388b0037737b9e91d1d96dff3fe3b289110",
+      "lines": 113,
+      "rangesValid": true
+    },
+    {
+      "revision": "0e35889a3c4e65d5c47ba88e924611aace67eb1d",
+      "path": "skills/common/plugins/runtime-dispatch/plugin.json",
+      "wholeCurrentBytesEqual": true,
+      "sha256": "b3c3a77253ce191a184c8c85f6d02595a1df26b472a63f252339205cae04f349",
+      "lines": 36,
+      "rangesValid": true
+    },
+    {
+      "revision": "0e35889a3c4e65d5c47ba88e924611aace67eb1d",
+      "path": "skills/common/plugins/runtime-dispatch/src/adapter.ts",
+      "wholeCurrentBytesEqual": true,
+      "sha256": "5bf2d0c003497e74b0bfdf7524b4725bcd77d12b592f00e121be553868009e5e",
+      "lines": 147,
+      "rangesValid": true
+    },
+    {
+      "revision": "0e35889a3c4e65d5c47ba88e924611aace67eb1d",
+      "path": "skills/common/plugins/runtime-dispatch/schemas/config.schema.json",
+      "wholeCurrentBytesEqual": true,
+      "sha256": "c780e8086e6d6c954734e62c171f3de67a37b1c94c7483c887571ea08f18a641",
+      "lines": 29,
+      "rangesValid": true
+    },
+    {
+      "revision": "0e35889a3c4e65d5c47ba88e924611aace67eb1d",
+      "path": "skills/common/plugins/runtime-dispatch/src/dispatch-adapter.ts",
+      "wholeCurrentBytesEqual": true,
+      "sha256": "16ccaa5e974de17c36d20078fb2912ddd9d2fa1c6a0a677af760e242ce3cd33a",
+      "lines": 38,
+      "rangesValid": true
+    },
+    {
+      "revision": "0e35889a3c4e65d5c47ba88e924611aace67eb1d",
+      "path": "skills/common/plugin-runtime/sdk/src/runtime-dispatch-profile.ts",
+      "wholeCurrentBytesEqual": true,
+      "sha256": "13f61a984922b7fa815e084b6a5a20238fd0da67aed5959bdc8b061a8e3173fb",
+      "lines": 30,
+      "rangesValid": true
+    },
+    {
+      "revision": "0e35889a3c4e65d5c47ba88e924611aace67eb1d",
+      "path": "skills/common/plugins/network-http/src/adapter.ts",
+      "wholeCurrentBytesEqual": true,
+      "sha256": "8885ca56e2a2322c98e4c83ba935397f8f47d829c4feec69efbdde0113553e8d",
+      "lines": 137,
+      "rangesValid": true
+    },
+    {
+      "revision": "0e35889a3c4e65d5c47ba88e924611aace67eb1d",
+      "path": "skills/common/plugins/runtime-dispatch/tests/live-function.test.ts",
+      "wholeCurrentBytesEqual": true,
+      "sha256": "5f17fc8a95cfdaabeec8a0cb8a2c844afe775952096bff1069d29bf545df5395",
+      "lines": 493,
+      "rangesValid": true
+    },
+    {
+      "revision": "569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "path": "skills/common/plugins/runtime-dispatch/src/openclaw-config.ts",
+      "wholeCurrentBytesEqual": true,
+      "sha256": "52ba5eff35c441ee727753a3d154a357257df525c0461b6f81941ceadaf1add1",
+      "lines": 85,
+      "rangesValid": true
+    },
+    {
+      "revision": "569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "path": "skills/common/plugins/runtime-dispatch/src/openclaw-adapter.ts",
+      "wholeCurrentBytesEqual": true,
+      "sha256": "1532db26c17561feba17d5bdbba2771de2730df9bd299af203c4b0432d5842f4",
+      "lines": 24,
+      "rangesValid": true
+    },
+    {
+      "revision": "569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "path": "skills/common/plugins/runtime-dispatch/tests/live-function.test.ts",
+      "wholeCurrentBytesEqual": true,
+      "sha256": "5f17fc8a95cfdaabeec8a0cb8a2c844afe775952096bff1069d29bf545df5395",
+      "lines": 493,
+      "rangesValid": true
+    },
+    {
+      "revision": "569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "path": "tools/ops-mcp/src/config.mjs",
+      "wholeCurrentBytesEqual": true,
+      "sha256": "3bb1b2b4caf43be233ad6fafaccf644702507442b93de1139e1be8babd9f529c",
+      "lines": 23,
+      "rangesValid": true
+    },
+    {
+      "revision": "569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "path": "tools/ops-mcp/src/authentication.mjs",
+      "wholeCurrentBytesEqual": true,
+      "sha256": "d816c6dd9354166a009ffdfc5db423f030345b94a16c4009e2aec639d57d0049",
+      "lines": 38,
+      "rangesValid": true
+    },
+    {
+      "revision": "569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "path": "tools/ops-mcp/src/server.mjs",
+      "wholeCurrentBytesEqual": true,
+      "sha256": "a4fef1a5e66a45ea2885cc9a1715aba5835d77cb5219e39ac35a5f50b5bab65d",
+      "lines": 564,
+      "rangesValid": true
+    },
+    {
+      "revision": "569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "path": "tools/ops-mcp/test/authentication.test.mjs",
+      "wholeCurrentBytesEqual": true,
+      "sha256": "db57428e5650e4c7b2a95c4317a2534297629397a02852d121482f7cf96f2a6c",
+      "lines": 80,
+      "rangesValid": true
+    },
+    {
+      "revision": "569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "path": "tools/ops-mcp/src/hubble.mjs",
+      "wholeCurrentBytesEqual": true,
+      "sha256": "d4e60f2801e3c66ded259f420c1a9faca0071fa084dc198a35433f8c9cb4f599",
+      "lines": 118,
+      "rangesValid": true
+    },
+    {
+      "revision": "569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "path": "tools/ops-mcp/src/kubernetes.mjs",
+      "wholeCurrentBytesEqual": true,
+      "sha256": "449e55709e017f53790539a83936f0471915850180ec9b08fc589251ab5e987b",
+      "lines": 98,
+      "rangesValid": true
+    },
+    {
+      "revision": "569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "path": "tools/ops-mcp/test/kubernetes.test.mjs",
+      "wholeCurrentBytesEqual": true,
+      "sha256": "8e33058e60ae3646ac61133ed77573912271418f9996c73deba9f8b8f1ec997b",
+      "lines": 84,
+      "rangesValid": true
+    },
+    {
+      "revision": "54a535b6046bc54e9aeeebee9c4cd24388477115",
+      "path": "charts/ops-pod/templates/network.yaml",
+      "wholeCurrentBytesEqual": true,
+      "sha256": "1a96b733c35c853cf2064dd57caae1f061a94a023cc8637b4799464ad163e283",
+      "lines": 52,
+      "rangesValid": true
+    },
+    {
+      "revision": "54a535b6046bc54e9aeeebee9c4cd24388477115",
+      "path": "my-values/infra/cilium-cluster-policies.yaml",
+      "wholeCurrentBytesEqual": true,
+      "sha256": "06420e996f1a1953ffe81fb3ab2a96f48e144359008e8389ac98fc3f5680b5b7",
+      "lines": 141,
+      "rangesValid": true
+    },
+    {
+      "revision": "54a535b6046bc54e9aeeebee9c4cd24388477115",
+      "path": "scripts/deploy-ops-pod.sh",
+      "wholeCurrentBytesEqual": true,
+      "sha256": "b7b114e886142185732eb285a59f5b2f8a5b509ffedfd23de2d1fbf67ea3e73e",
+      "lines": 56,
+      "rangesValid": true
+    },
+    {
+      "revision": "569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "path": "tools/ops-mcp/test/hubble.test.mjs",
+      "wholeCurrentBytesEqual": true,
+      "sha256": "881a3a38a30c0cdab1a4b1e723fc01fca87ddb5a072bedaf606f489fb62f322e",
+      "lines": 57,
+      "rangesValid": true
+    },
+    {
+      "revision": "569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "path": "tools/ops-mcp/test/local.test.mjs",
+      "wholeCurrentBytesEqual": true,
+      "sha256": "88d0fbd1c6b51ec219be156fa91369e5c3837134a4c9b35dd0f6e10a7a798ad7",
+      "lines": 51,
+      "rangesValid": true
+    }
+  ],
+  "method": "Python inert text/git-object inspection only; no product imports/execution."
+}

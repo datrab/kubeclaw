@@ -48,11 +48,23 @@ returns the recorded result; a conflicting payload fails. If the job is
 
 > **Source evidence — Prism tool effect and uncertainty**
 >
+> **Claim:** A Prism host-tool fetch can lose its response after Control commits; the durable job identity governs reconciliation.
+>
+> **Implementation:** The host client, Control admission and stored-result checks below trace the effect boundary.
+>
 > [The host tool selects `controlUrl` and performs an unbounded, non-retrying fetch](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/prism/openclaw-plugin/index.mjs#L10-L19).
 >
 > [Prism Control authenticates the peer and validates both effect requests before storage](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/prism/server/control-server.ts#L243-L278).
 >
 > [The job result lock returns an identical committed result and rejects conflicting or unresolved work](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/prism/control/agent-jobs.ts#L84-L100).
+>
+> **Contract or setting:** Control validates peer/job/fence/payload bindings; the host client adds no timeout, byte bound or retry.
+>
+> **Test evidence:** [Prism host-tool shape check](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/prism/openclaw-plugin/index.test.mjs#L1-L16) contains tool-registration and exact three-design input assertions. These assertions are not a recorded execution result for this callout.
+>
+> **Revision:** `569f7b4933d4859cc67c80ddf40d5154ffd95ce5`. These are the source bindings for the explanation above, not execution receipts.
+>
+> **Limit:** The host-tool test does not exercise the network or committed-result replay; no successful live request is established here.
 
 ### Agent observer
 
@@ -81,6 +93,10 @@ explicit pressure boundary, not durable storage.
 
 > **Source evidence — package declarations**
 >
+> **Claim:** OpenClaw host packages and the pipeline event adapter have distinct declarations and configuration ownership.
+>
+> **Implementation:** The host manifest, package entries, event schema and observer merge below describe those boundaries.
+>
 > [The Prism host manifest declares both tools and its only configuration field](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/prism/openclaw-plugin/openclaw.plugin.json#L1-L17).
 >
 > [The observer package declares source/runtime entries, compatibility, and its complete test command](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/skills/common/plugins/openclaw-agent-observer/package.json#L1-L32).
@@ -88,6 +104,14 @@ explicit pressure boundary, not durable storage.
 > [The event adapter schema defines the hook allowlist and queue limits](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/common/plugins/openclaw-agent-events/schemas/config.schema.json#L1-L49).
 >
 > [The observer merges registration, service, and hook configuration before resolving environment fallbacks](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/common/plugins/openclaw-agent-observer/src/index.ts#L176-L199).
+>
+> **Contract or setting:** The linked manifests/schemas govern compatibility, hooks and queue limits; observer merge order precedes environment fallback.
+>
+> **Test evidence:** The linked observer package declares its maintained test command, not its result. No Gateway activation or Redis delivery result is established by these declaration links.
+>
+> **Revision:** `569f7b4933d4859cc67c80ddf40d5154ffd95ce5`; `0e35889a3c4e65d5c47ba88e924611aace67eb1d`. These are the source bindings for the explanation above, not execution receipts.
+>
+> **Limit:** Package entry metadata does not establish installed compatibility, registered hooks or durable delivery of queued events.
 
 ## Discovery, Installation, And Activation
 
@@ -137,6 +161,10 @@ Gateway bearer token used by the general adapter.
 
 > **Source evidence — persisted launch before OpenClaw execution**
 >
+> **Claim:** Prism persists and fences a launch before the bridge starts OpenClaw; uncertain running work becomes needs_nova.
+>
+> **Implementation:** Job admission, bridge routes, runner and provider/trust wiring below trace that separate dispatch path.
+>
 > [Prism admission persists request identity and changes expired running work to `needs_nova`](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/prism/control/agent-jobs.ts#L15-L52).
 >
 > [The bridge applies request and Control-call timeouts and exposes only job-bound routes](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/prism/server/agent-bridge.mjs#L4-L30).
@@ -146,6 +174,14 @@ Gateway bearer token used by the general adapter.
 > [Nova selects the Prism runtime capability provider and its authenticated dispatch port](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/my-values/nova-values.yaml#L109-L116).
 >
 > [The Prism Envoy listener requires a client certificate and exact SPIFFE identities](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/kubeclaw/templates/configmap-worker-trust.yaml#L84-L117).
+>
+> **Contract or setting:** The job state/fence and selected provider/SPIFFE settings control admission; a zero child exit alone is insufficient.
+>
+> **Test evidence:** [Durable Prism job checks](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/prism/tests/agent-jobs.test.mts#L40-L59) contains database-reopen, duplicate request and running-uncertainty assertions. These assertions are not a recorded execution result for this callout.
+>
+> **Revision:** `569f7b4933d4859cc67c80ddf40d5154ffd95ce5`; `0e35889a3c4e65d5c47ba88e924611aace67eb1d`. These are the source bindings for the explanation above, not execution receipts.
+>
+> **Limit:** These tests use PGlite and controlled local processes, not a live model, mTLS deployment or external Gateway.
 
 ## Generic HTTP Runtime Registration
 
@@ -225,6 +261,10 @@ contract and focused tests, not merely a new URL.
 
 > **Source evidence — generic registration, not Gateway spawn**
 >
+> **Claim:** The generic runtime registration sends bounded JSON-over-HTTP and does not implement Gateway session lifecycle.
+>
+> **Implementation:** The manifest, generic adapter, shared invocation/profile helpers and selected HTTP adapter below establish the request/result path.
+>
 > [The manifest separates generic runtime and OpenClaw registrations and their capability dependencies.](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/skills/common/plugins/runtime-dispatch/plugin.json#L7-L36)
 > [Exact target/authentication/size configuration and invocation admission.](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/skills/common/plugins/runtime-dispatch/src/adapter.ts#L60-L105)
 > [Schema-closed authentication modes and conditional proxy/HMAC fields.](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/skills/common/plugins/runtime-dispatch/schemas/config.schema.json#L1-L29)
@@ -233,6 +273,14 @@ contract and focused tests, not merely a new URL.
 > [Shared activation/shutdown/fence/cancellation and target selection, without a session store.](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/skills/common/plugins/runtime-dispatch/src/dispatch-adapter.ts#L14-L38)
 > [Exact invocation profile binding; payload keys are not control metadata.](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/skills/common/plugin-runtime/sdk/src/runtime-dispatch-profile.ts#L1-L29)
 > [Selected common HTTP policy and one-request cancellation/timeout boundary.](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/skills/common/plugins/network-http/src/adapter.ts#L18-L71)
+>
+> **Contract or setting:** The linked target schema and frozen runtime-dispatch profile govern mode, target and bounds; payload metadata does not grant control authority.
+>
+> **Test evidence:** The HTTP error reference describes generic-adapter and common-HTTP checks. [Runtime-dispatch live-function assertions](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/skills/common/plugins/runtime-dispatch/tests/live-function.test.ts#L14-L26) include external-plaintext rejection and loopback admission. No execution result is inferred from this link.
+>
+> **Revision:** `0e35889a3c4e65d5c47ba88e924611aace67eb1d`. These are the source bindings for the explanation above, not execution receipts.
+>
+> **Limit:** Transport success is not a signed receipt, business completion, receiver deduplication or terminal session proof.
 
 ## Runtime Dispatch Target
 
@@ -258,11 +306,23 @@ budgets must fit inside the context budget.
 
 > **Source evidence — target admission**
 >
+> **Claim:** The OpenClaw target parser admits complete allowlisted targets and rejects unsupported invocation shapes.
+>
+> **Implementation:** The target parser and adapter entry below define accepted fields, defaults and operation admission.
+>
 > [The target parser defines accepted fields, URL rules, and timing validity](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/common/plugins/runtime-dispatch/src/openclaw-config.ts#L1-L48).
 >
 > [It applies defaults and rejects an invalid target as one complete unit](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/common/plugins/runtime-dispatch/src/openclaw-config.ts#L51-L82).
 >
 > [The adapter rejects every operation outside the exact runtime-dispatch shape](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/common/plugins/runtime-dispatch/src/openclaw-adapter.ts#L1-L24).
+>
+> **Contract or setting:** Target configuration fixes endpoint, runtime identity, workspace, timing and prompt budgets; each complete target must pass validation.
+>
+> **Test evidence:** [Runtime dispatch admission assertions](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/common/plugins/runtime-dispatch/tests/live-function.test.ts#L14-L26) contains HMAC endpoint rejection and loopback admission cases. These assertions are not a recorded execution result for this callout.
+>
+> **Revision:** `569f7b4933d4859cc67c80ddf40d5154ffd95ce5`. These are the source bindings for the explanation above, not execution receipts.
+>
+> **Limit:** Those assertions cover transport admission only, not every target field, live target readiness, result collection or session cancellation.
 
 ## Session Lifecycle
 

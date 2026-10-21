@@ -84,6 +84,10 @@ must keep these values if it wants to continue an investigation.
 
 > **Source evidence — fail-closed HTTP boundary**
 >
+> **Claim:** Every Ops MCP request checks its bearer source and supplied origin before tool handling.
+>
+> **Implementation:** Configuration, credential comparison and HTTP router below define this fail-closed boundary.
+>
 > [Configuration validates port, local binding, namespaces, token sources, and origin allowlist](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/tools/ops-mcp/src/config.mjs#L1-L23).
 >
 > [Authentication validates and rereads the bearer credential for every request](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/tools/ops-mcp/src/authentication.mjs#L1-L38).
@@ -91,6 +95,14 @@ must keep these values if it wants to continue an investigation.
 > [The router constructs the MCP handler and applies bearer and origin checks](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/tools/ops-mcp/src/server.mjs#L491-L543).
 >
 > [It maps handler failures, starts the listener, and closes on termination](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/tools/ops-mcp/src/server.mjs#L545-L564).
+>
+> **Contract or setting:** The linked configuration requires exactly one bearer source and an optional exact origin allowlist; absent Origin remains allowed.
+>
+> **Test evidence:** [Bearer rotation and namespace checks](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/tools/ops-mcp/test/authentication.test.mjs#L52-L80) contains real loopback HTTP credential rotation, namespace rejection and missing-token health assertions. These assertions are not a recorded execution result for this callout.
+>
+> **Revision:** `569f7b4933d4859cc67c80ddf40d5154ffd95ce5`. These are the source bindings for the explanation above, not execution receipts.
+>
+> **Limit:** These controlled service assertions do not prove deployed Secret rotation, external client identity or Kubernetes RBAC.
 
 ## Configuration And Precedence
 
@@ -214,9 +226,21 @@ slightly different times, but it makes load and incompleteness visible.
 
 > **Source evidence — per-request bounds do not bound a complete scan**
 >
+> **Claim:** Per-request Kubernetes limits do not impose an aggregate bound on the complete namespace or event scan.
+>
+> **Implementation:** The list helper and event loop below follow continuation beyond a single bounded response.
+>
 > [`createKubeList` defaults to unlimited pages and applies a deadline only when `maxPages` is finite](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/tools/ops-mcp/src/kubernetes.mjs#L64-L97).
 >
 > [The event loop follows each continuation token and retains only the requested number of newest events](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/tools/ops-mcp/src/server.mjs#L107-L132).
+>
+> **Contract or setting:** createKubeList defaults to unlimited pages unless its caller supplies maxPages; get_events bounds retained count, not scanned pages.
+>
+> **Test evidence:** [List paging and pressure assertions](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/tools/ops-mcp/test/kubernetes.test.mjs#L54-L73) contains oversize page reduction, retained continuation and no authorization-error retry cases. These assertions are not a recorded execution result for this callout.
+>
+> **Revision:** `569f7b4933d4859cc67c80ddf40d5154ffd95ce5`. These are the source bindings for the explanation above, not execution receipts.
+>
+> **Limit:** The local TLS fixture is not Kubernetes; these assertions do not establish a finite total duration or safe size for a real full scan.
 
 ## Hubble Transport And Evidence Limits
 
@@ -254,6 +278,10 @@ lossless cursor. An empty or partial result does not prove that no drop occurred
 
 > **Source evidence — bounded downstream calls**
 >
+> **Claim:** Downstream Kubernetes requests and Hubble processes have distinct bounds and explicit incomplete-observation outcomes.
+>
+> **Implementation:** The Kubernetes helper and Hubble process/result functions below define those limits.
+>
 > [Kubernetes transport fixes HTTPS, CA, token rotation, 10-second timeout, and an 8 MiB ceiling](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/tools/ops-mcp/src/kubernetes.mjs#L1-L60).
 >
 > [List transport retries only oversized pages and retains a continuation token](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/tools/ops-mcp/src/kubernetes.mjs#L64-L98).
@@ -263,6 +291,14 @@ lossless cursor. An empty or partial result does not prove that no drop occurred
 > [It bounds bytes and applies exact post-query filtering](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/tools/ops-mcp/src/hubble.mjs#L51-L100).
 >
 > [The result records process failures, partial reasons, continuation advice, and retention limits](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/tools/ops-mcp/src/hubble.mjs#L101-L118).
+>
+> **Contract or setting:** The linked implementations fix request timeout/bytes and Hubble concurrency, window, raw bytes and retained flow bounds.
+>
+> **Test evidence:** [Kubernetes TLS/response checks](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/tools/ops-mcp/test/kubernetes.test.mjs#L44-L60) contains token rotation, redirect refusal, timeout and byte rejection assertions. These assertions are not a recorded execution result for this callout. [Hubble process fixtures](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/tools/ops-mcp/test/hubble.test.mjs#L34-L57) cover nonzero exit, shared raw-byte ceiling and timeout with an owned test CLI; they are not real Relay results.
+>
+> **Revision:** `569f7b4933d4859cc67c80ddf40d5154ffd95ce5`. These are the source bindings for the explanation above, not execution receipts.
+>
+> **Limit:** Per-request limits do not bound whole-tool scans; partial or empty Hubble output is not proof that no drop occurred.
 
 ## Authorization And Data Exposure
 
@@ -286,6 +322,10 @@ network policy, and an independent lifecycle.
 
 > **Source evidence — method authority and process authority differ**
 >
+> **Claim:** The MCP method surface is read-only, but the default colocated Pod credential can also authorize pods/exec.
+>
+> **Implementation:** The GET transport and shared token/RBAC wiring below show the difference.
+>
 > [The Kubernetes transport always sends GET and reads the mounted token for each request](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/tools/ops-mcp/src/kubernetes.mjs#L20-L59).
 >
 > [The default execution namespace enables the wider credential path](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/ops-pod/values.yaml#L21-L29).
@@ -293,6 +333,14 @@ network policy, and an independent lifecycle.
 > [One projected token volume is mounted into MCP and conditionally into Codex](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/ops-pod/templates/workload.yaml#L69-L101).
 >
 > [The execution Role grants the same ServiceAccount `pods/exec` `create`](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/ops-pod/templates/rbac.yaml#L63-L92).
+>
+> **Contract or setting:** Default execNamespaces and the resulting Role/token mount determine process credential authority; tool annotations do not reduce it.
+>
+> **Test evidence:** [Local method-surface check](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/tools/ops-mcp/test/local.test.mjs#L43-L50) contains tool listing without an exec method and failed Kubernetes-read assertions. These assertions are not a recorded execution result for this callout.
+>
+> **Revision:** `569f7b4933d4859cc67c80ddf40d5154ffd95ce5`. These are the source bindings for the explanation above, not execution receipts.
+>
+> **Limit:** The local service test does not validate effective deployed RBAC. The shared credential remains wider when exec roles are present.
 
 Pod logs and Hubble summaries are not content-redacted. They can contain
 application or network identifiers. Treat returned text as observation, never
@@ -370,9 +418,21 @@ a field only in a versioned tool or service protocol.
 
 > **Source evidence — tools are compiled service registrations**
 >
+> **Claim:** Ops tools are compiled service registrations; a new tool requires matching service, client and RBAC changes.
+>
+> **Implementation:** buildServer registrations and the RoleBinding template below are the owning implementation points.
+>
 > [Each tool declares its schema and read-only behavior directly in `buildServer`](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/tools/ops-mcp/src/server.mjs#L189-L235).
 >
 > [The deployment grants namespaced reads through explicit RoleBindings rather than tool annotations](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/ops-pod/templates/rbac.yaml#L34-L72).
+>
+> **Contract or setting:** Each registration supplies its schema and annotations; actual namespace authority comes from the rendered RoleBindings.
+>
+> **Test evidence:** [Registered-method fixture](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/tools/ops-mcp/test/local.test.mjs#L43-L50) contains platform tool presence and absence of restart/execute/shell names in the listed interface. These assertions are not a recorded execution result for this callout.
+>
+> **Revision:** `569f7b4933d4859cc67c80ddf40d5154ffd95ce5`. These are the source bindings for the explanation above, not execution receipts.
+>
+> **Limit:** This selected interface test is not a complete drift proof for a future tool or deployed authorization policy.
 
 Run the Ops MCP local, HTTP, authentication, Kubernetes, Hubble, diagnostics,
 bootstrap, and policy-contract tests after a change. These checks simulate and
