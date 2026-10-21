@@ -772,7 +772,6 @@ export function discoverScriptInputAcquisition(root) {
     packageSha256:hash(packageBytes),registrySha256:hash(registryBytes),
     inputKey:graph.inputKey,closureSources:graph.closureSources,
     executableSources:graph.executableSources,
-    executableSources:graph.executableSources,
     edges:graph.edges,aliases:graph.aliases,publicEntries:graph.publicEntries,
     dynamicOperations:graph.dynamicOperations,
     resolutionOnlyOperations:graph.resolutionOnlyOperations,
