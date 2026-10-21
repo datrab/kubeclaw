@@ -1,7 +1,7 @@
 {
   "schemaVersion": "pipeline-prism-chart-projection.v1",
   "generatedFrom": "config/pipeline.config.json",
-  "generationDigest": "sha256:566d20e069de05a5687adda5dc7b374db270b60a79f628abb110cd4ca80fe8c5",
+  "generationDigest": "sha256:04a9d4fc3c8cd372c26840fc4dbd3ef1b7d58cee5cdfb8bb538aecb59fae6f0a",
   "deployment": {
     "namespace": "kubeclaw",
     "releaseName": "prism"

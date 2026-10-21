@@ -137,6 +137,7 @@ export async function materializePipelineGeneration({ authorRoot, packageRoot, o
       // Bind and read back the whole versioned release output against retained
       // inputs and the separately held release composition/package. This is
       // still a candidate: source/caller and boot gates below remain closed.
+      const { receivePipelineV10BootSource } = await import(pathToFileURL(path.join(directory, 'pipeline-boot.mjs')).href);
       const image = createPipelineV10ImageReceipt(inputSource.declared.capture, services, hash(packageBytes));
       receivePipelineV10ImageReceipt(JSON.parse(jsonBytes(image)), inputSource.declared.capture, services, hash(packageBytes));
       for (const service of services) {
@@ -145,6 +146,14 @@ export async function materializePipelineGeneration({ authorRoot, packageRoot, o
         const expected = createPipelineV10ExpectedDelivery(inputSource.declared.capture, services, service.callerId, hash(packageBytes));
         receivePipelineV10ExpectedDelivery(JSON.parse(jsonBytes(expected)), inputSource.declared.capture,
           services, service.callerId, hash(packageBytes));
+        const selection = createPipelineV10ServiceSelection(inputSource.declared.capture, service, hash(packageBytes));
+        const owner = receipt.role === 'buster'
+          ? createBusterV10SelectedOwnerProjection(inputSource.declared.capture, selection) : null;
+        // Exercise the actual installed boot module's distinct v10 readback,
+        // with the original full input capture and release held independently.
+        // No v1 codec, productive capture or activation grant is returned.
+        receivePipelineV10BootSource(JSON.parse(jsonBytes({ expected, image, selection, owner })),
+          inputSource.declared.capture, services, service.callerId, hash(packageBytes));
       }
     }
     const captures = [], selections = [];

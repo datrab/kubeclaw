@@ -1515,6 +1515,9 @@ test('versioned v10 full release image binds original composition package and ow
 test('versioned v10 expected delivery binds original full release and receiving caller without boot admission', async t => {
  const { createPipelineV10ExpectedDelivery: create, receivePipelineV10ExpectedDelivery: receive } =
    await import('../../../skills/common/plugin-runtime/foundation/config/pipeline-generation.ts');
+ const { receivePipelineV10BootSource, assertPipelineBootCapture } = await import('../../../skills/common/plugin-runtime/foundation/config/pipeline-boot.mjs');
+ const { createPipelineV10ImageReceipt, createPipelineV10ServiceSelection, createBusterV10SelectedOwnerProjection } =
+   await import('../../../skills/common/plugin-runtime/foundation/config/pipeline-generation.ts');
  const root = tree(t), original = capture(root, replacements); t.after(original.capture.close);
  const document = JSON.parse(original.capture.read('config/pipeline.config.json').toString());
  const tuple = (callerId: string, instance = 'fixture.service.buster-runtime'): any => ({ role: 'buster', callerId,
@@ -1528,6 +1531,38 @@ test('versioned v10 expected delivery binds original full release and receiving 
   const expected = create(original.capture, services, callerId, pkg), wire = JSON.parse(JSON.stringify(expected));
   const run = (value: unknown = wire) => receive(value, original.capture, services, callerId, pkg);
   assert.equal(expected.schemaVersion, 'pipeline-expected-delivery.v2');
+  const service = services.find(value => value.callerId === callerId);
+  const selection = createPipelineV10ServiceSelection(original.capture, service, pkg);
+  const wires = { expected, image: createPipelineV10ImageReceipt(original.capture, services, pkg), selection,
+    owner: createBusterV10SelectedOwnerProjection(original.capture, selection) };
+  const bootReadback = (value: any = wires) => receivePipelineV10BootSource(value, original.capture, services, callerId, pkg);
+  const readback = bootReadback();
+  assert.deepEqual(readback.expected, expected); assert.deepEqual(readback.selection, selection);
+  assert.equal(readback.activationAllowed, false);
+  assert.throws(() => assertPipelineBootCapture(readback, callerId), /VERIFIED_CAPTURE_REQUIRED/);
+  // Each received wire is checked against the separately retained full release,
+  // not against another (possibly self-consistent foreign) incoming wire.
+  for (const key of ['expected', 'image', 'selection', 'owner'] as const) {
+    for (const bad of [null, { ...wires[key], extra: true }, { ...wires[key], schemaVersion: 'retired.v1' }]) {
+      assert.throws(() => bootReadback({ ...wires, [key]: bad }), /MISMATCH/);
+      assert.deepEqual(bootReadback(), readback);
+    }
+  }
+  assert.throws(() => bootReadback({ ...wires, extra: true }), /BOOT_SOURCE_INVALID/);
+  assert.throws(() => receivePipelineV10BootSource(wires, original.capture, foreign, callerId, pkg), /MISMATCH/);
+  assert.throws(() => receivePipelineV10BootSource(wires, original.capture, services, callerId, otherPkg), /MISMATCH/);
+  const movingServices = structuredClone(services);
+  const movingWires = structuredClone(wires);
+  const stable = receivePipelineV10BootSource(movingWires, {
+    ...original.capture,
+    read(name: string) {
+      movingServices[0].serviceInstanceId = 'changed-after-read';
+      movingWires.selection.callerId = 'foreign-caller';
+      return original.capture.read(name);
+    },
+  }, movingServices, callerId, pkg);
+  assert.deepEqual(stable, readback, 'all wire joins use one original snapshotted composition');
+
   assert.equal(Object.isFrozen(run()), true);
   assert.deepEqual(create(original.capture, [...services].reverse(), callerId, pkg), expected);
   for (const bad of [null, [], { ...wire, extra: true }, { ...wire, schemaVersion: 'pipeline-expected-delivery.v1' },

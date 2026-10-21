@@ -5,6 +5,7 @@ import { gzipSync, gunzipSync } from 'node:zlib';
 import { fileURLToPath } from 'node:url';
 import { captureSwarmSettings } from './swarm.ts';
 import { createPipelineGenerationReceipt, readPipelineServiceSelection, selectionProjection, receiveBusterSelectedOwnerProjection } from './pipeline-generation.ts';
+import { receivePipelineV10ExpectedDelivery, receivePipelineV10ImageReceipt, receivePipelineV10ServiceSelection, receiveBusterV10SelectedOwnerProjection } from './pipeline-generation.ts';
 import { swarmReaderAssets, swarmReaderAssetLocations } from './swarm-bundle.ts';
 import { verifyInstalledRuntimeBundle } from './runtime-bundle-receipt.mjs';
 import { captureBusterStartupFile } from './buster-startup-file.mjs';
@@ -446,4 +447,27 @@ export function verifyPipelineBootReceipt(expectedMount, callerId) {
 
 export function assertPipelineBootCapture(capture, callerId) {
   if (!verifiedCaptures.has(capture) || capture.selectionReceipt.callerId !== callerId) throw new Error('PIPELINE_VERIFIED_CAPTURE_REQUIRED');
+}
+
+/** Distinct original v10 boot-source wire readback. The receiving composition,
+ * package and retained full inputs are held separately from all received wires.
+ * This is not a productive boot capture: it never enters verifiedCaptures and
+ * cannot bypass source/caller, installed-code or native startup admission.
+ */
+export function receivePipelineV10BootSource(wires, inputs, services, callerId, packageReceiptDigest) {
+  // Hold one composition across all reads, even if an input reader calls back
+  // into its caller. Never select the receiver from an incoming receipt.
+  services = structuredClone(services);
+  wires = structuredClone(wires);
+  closed(wires, ['expected', 'image', 'selection', 'owner'], 'PIPELINE_V10_BOOT_SOURCE_INVALID');
+  const expected = receivePipelineV10ExpectedDelivery(wires.expected, inputs, services, callerId, packageReceiptDigest);
+  const image = receivePipelineV10ImageReceipt(wires.image, inputs, services, packageReceiptDigest);
+  const service = services.find(value => value.callerId === callerId);
+  const selection = receivePipelineV10ServiceSelection(wires.selection, inputs, service, packageReceiptDigest);
+  const owner = selection.role === 'buster'
+    ? receiveBusterV10SelectedOwnerProjection(wires.owner, inputs, selection, service, packageReceiptDigest)
+    : null;
+  if (selection.role !== 'buster' && wires.owner !== null) throw new Error('PIPELINE_V10_BOOT_OWNER_UNEXPECTED');
+  inputs.assertCurrent();
+  return Object.freeze({ expected, image, selection, owner, activationAllowed: false });
 }
