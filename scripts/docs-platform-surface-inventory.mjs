@@ -424,7 +424,6 @@ function deployedStaticObjects(namespace) {
   const recoverySource = 'scripts/render-postgresql-recovery.mjs';
   const recoveryRendered = execFileSync(process.execPath, [
     recoverySource,
-    '--preflight',
     namespace,
     'my-values/infra/postgresql-recovery.yaml',
     'my-values/infra/postgresql-values.yaml',

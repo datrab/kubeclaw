@@ -86,6 +86,30 @@ flowchart LR
     Policy -. limits packet paths .-> Prism
 ```
 
+**Text alternative to the diagram**
+
+Each row names a directed connection. Labels preserve the diagram’s conditions or handoffs; dotted relationships are identified explicitly.
+
+| From | Relationship | To |
+| --- | --- | --- |
+| Human operator or user | Directed connection — application identity or kubectl authority | Operator or application entry |
+| Operator or application entry | Directed connection — bounded request | Nova |
+| Nova | Directed connection — SPIFFE mTLS and signed source | Buster |
+| Nova | Directed connection — SPIFFE mTLS | Prism |
+| Prism Control | Directed connection — SPIFFE mTLS | Prism Worker |
+| Nova | Directed connection — leased capability | Capability adapter |
+| Capability adapter | Directed connection — named secret only | Kubernetes Secret |
+| Capability adapter | Directed connection — allowed namespace | Durable store |
+| BuildKit | Directed connection — content digest | OCI registry |
+| OCI registry | Directed connection — pinned image | Runtime workload |
+| SPIRE | Directed connection — short-lived X.509-SVID | Nova |
+| SPIRE | Directed connection — short-lived X.509-SVID | Buster |
+| SPIRE | Directed connection — short-lived X.509-SVID | Prism |
+| Network policy | Dotted relationship — limits packet paths | Nova |
+| Network policy | Dotted relationship — limits packet paths | Buster |
+| Network policy | Dotted relationship — limits packet paths | Prism |
+
+
 Text version: humans enter through an operator or application boundary. Nova delegates work through explicit leases. Protected worker calls use SPIFFE mutual TLS. The Nova-to-Buster path also carries a signed, immutable source snapshot. Capability adapters mediate access to secrets and durable stores. BuildKit sends content to a registry, and deployments select immutable image identities. Network policy limits which of these paths packets can use.
 
 ## One Request Passes Several Independent Checks

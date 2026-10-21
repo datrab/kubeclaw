@@ -84,6 +84,34 @@ flowchart TB
     Monitor[Monitoring stack] -. observes .-> Runtime
 ```
 
+**Text alternative to the diagram**
+
+Each row names a directed connection. Labels preserve the diagram’s conditions or handoffs; dotted relationships are identified explicitly.
+
+| From | Relationship | To |
+| --- | --- | --- |
+| Linux host and independent recovery access | Directed connection | K3s control plane and nodes |
+| K3s control plane and nodes | Directed connection | Cluster DNS |
+| K3s control plane and nodes | Directed connection | CSI and StorageClasses |
+| K3s control plane and nodes | Directed connection | Scheduling and capacity |
+| Cilium: current supported secured path | Directed connection | Pod network and policy boundary |
+| Flannel: unproved fallback | Dotted relationship — future alternative | Pod network and policy boundary |
+| Argo CD | Directed connection — declared desired state | K3s control plane and nodes |
+| Cluster DNS | Directed connection | Nova, Buster, and Prism |
+| CSI and StorageClasses | Directed connection | Nova, Buster, and Prism |
+| Scheduling and capacity | Directed connection | Nova, Buster, and Prism |
+| Pod network and policy boundary | Directed connection | Nova, Buster, and Prism |
+| Redis | Directed connection | Nova, Buster, and Prism |
+| Writable OCI registry | Directed connection | Buster and BuildKit |
+| Docker Hub mirror | Directed connection — current readiness and pull cache | Buster and BuildKit |
+| Tailscale operator | Directed connection | Private human and test routes |
+| LiteLLM | Directed connection | Vertex embedding provider |
+| Nova, Buster, and Prism | Directed connection | Managed OpenAI reasoning route |
+| Discord bot and webhook APIs | Directed connection | Nova, Buster, and Prism |
+| Ops Pod | Directed connection — read and optional bounded exec | K3s control plane and nodes |
+| Monitoring stack | Dotted relationship — observes | Nova, Buster, and Prism |
+
+
 Text version: the host supports K3s. K3s supplies scheduling, DNS, storage, and
 the network used by workloads. Cilium owns the Pod network in the supported
 secured deployment. Flannel is an architectural alternative only. Argo CD can

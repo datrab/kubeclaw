@@ -36,6 +36,28 @@ flowchart TB
     Runtime --> Prism
 ```
 
+**Text alternative to the diagram**
+
+Each row names a directed connection. Labels preserve the diagram’s conditions or handoffs; dotted relationships are identified explicitly.
+
+| From | Relationship | To |
+| --- | --- | --- |
+| Human or calling system | Directed connection — project and signals | Nova |
+| Nova | Directed connection — bounded task | Forge |
+| Nova | Directed connection — fixed review subject | Echo |
+| Nova | Directed connection — design request | Prism |
+| Nova | Directed connection — immutable test plan | Buster |
+| Prism | Directed connection — approved baseline | Nova |
+| Forge | Directed connection — commits and artifacts | Nova |
+| Echo | Directed connection — findings and evidence | Nova |
+| Buster | Directed connection — facts and evidence | Nova |
+| Buster | Directed connection | Worker Core |
+| Prism | Directed connection | Worker Core |
+| Plugin runtime | Directed connection | Nova |
+| Plugin runtime | Directed connection | Buster |
+| Plugin runtime | Directed connection | Prism |
+
+
 Text version: A human gives the project and signals to Nova.
 Nova delegates bounded work to Forge, Echo, Prism, and Buster.
 All specialists return facts or artifacts to Nova.
@@ -72,6 +94,22 @@ flowchart TB
     Core -->|bounded invocation| Plugins
     Plugins -->|typed facts and receipts| Core
 ```
+
+**Text alternative to the diagram**
+
+Each row names a directed connection. Labels preserve the diagram’s conditions or handoffs; dotted relationships are identified explicitly.
+
+| From | Relationship | To |
+| --- | --- | --- |
+| Nova runtime role | Directed connection | Pipeline entry point |
+| Pipeline entry point | Directed connection | Project compiler and CLI |
+| Pipeline entry point | Directed connection | Nova Core |
+| Nova runtime role | Directed connection | Plugin runtime |
+| Plugin runtime | Directed connection | Selected plugins and adapters |
+| Project compiler and CLI | Directed connection — fixed graph | Nova Core |
+| Nova Core | Directed connection — bounded invocation | Selected plugins and adapters |
+| Selected plugins and adapters | Directed connection — typed facts and receipts | Nova Core |
+
 
 Text version: The Nova role contains the entry point, project compiler, Nova Core, plugin runtime, and selected extensions.
 The compiler gives Core a fixed graph.
@@ -329,6 +367,27 @@ flowchart LR
     Adapter -->|durable receipt| Journal[Effect journal]
     Journal --> Nova
 ```
+
+**Text alternative to the diagram**
+
+Each row names a directed connection. Labels preserve the diagram’s conditions or handoffs; dotted relationships are identified explicitly.
+
+| From | Relationship | To |
+| --- | --- | --- |
+| Plugin manifest | Directed connection | Validated fixed registry |
+| Platform configuration | Directed connection | Selected activation |
+| Validated fixed registry | Directed connection | Selected activation |
+| Nova Core | Directed connection — attempt and revocable lease | Bounded invocation context |
+| Selected activation | Directed connection | Active plugin registration |
+| Bounded invocation context | Directed connection | Active plugin registration |
+| Active plugin registration | Directed connection — typed result | Nova Core |
+| Active plugin registration | Directed connection — capability request | Bounded invocation context |
+| Bounded invocation context | Directed connection — grant and resource check | Selected capability adapter |
+| Selected capability adapter | Directed connection — external operation | External resource |
+| External resource | Directed connection — known outcome | Selected capability adapter |
+| Selected capability adapter | Directed connection — durable receipt | Effect journal |
+| Effect journal | Directed connection | Nova Core |
+
 
 Text version: The manifest enters a validated registry.
 Platform configuration selects registrations from that registry for activation.

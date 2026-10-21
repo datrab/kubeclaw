@@ -68,6 +68,30 @@ sequenceDiagram
     N-->>H: Terminal state and project summary
 ```
 
+**Text alternative to the diagram**
+
+Read the following messages in order. A self-action stays with the same participant; a dashed reply is identified explicitly.
+
+Participants: Human or caller, Nova, Forge, Echo, Buster, Worker Core.
+
+| Step | From | Relationship | To |
+| --- | --- | --- | --- |
+| 1 | Human or caller | Message — Project and fixed source revision | Nova |
+| 2 | Nova | Self-action — Validate and compile graph | Nova |
+| 3 | Nova | Message — Bounded implementation attempt | Forge |
+| 4 | Forge | Dashed reply — Commits and artifacts | Nova |
+| 5 | Nova | Self-action — Lint fixed revision | Nova |
+| 6 | Nova | Message — Fixed review subject | Echo |
+| 7 | Echo | Dashed reply — Findings and evidence | Nova |
+| 8 | Nova | Self-action — Apply review policy | Nova |
+| 9 | Nova | Message — Immutable plan and source identity | Buster |
+| 10 | Buster | Message — Claimed bounded attempts | Worker Core |
+| 11 | Worker Core | Dashed reply — Bound results and resource facts | Buster |
+| 12 | Buster | Dashed reply — Stored result and evidence references | Nova |
+| 13 | Nova | Self-action — Verify, import once, and decide | Nova |
+| 14 | Nova | Dashed reply — Terminal state and project summary | Human or caller |
+
+
 Text version: Nova validates and compiles the project.
 Forge implements it, and Echo reviews a fixed revision.
 Nova then sends a fixed test plan to Buster.
@@ -221,6 +245,29 @@ flowchart TD
     Running -->|cancellation| Cancelled[Cancelled]
     Running -->|external outcome cannot be reconciled| Blocked
 ```
+
+**Text alternative to the diagram**
+
+Each row names a directed connection. Labels preserve the diagram’s conditions or handoffs; dotted relationships are identified explicitly.
+
+| From | Relationship | To |
+| --- | --- | --- |
+| Pending | Directed connection — dependencies complete and capacity available | Scheduled |
+| Scheduled | Directed connection — attempt recorded and invocation starts | Running |
+| Running | Directed connection — passed | Succeeded |
+| Running | Directed connection — retry within limits | Retrying |
+| Retrying | Directed connection — new bounded attempt | Scheduled |
+| Running | Directed connection — rate limit, signal, approval, or orchestrator decision | Waiting |
+| Waiting | Directed connection — valid matching signal or expired cooldown | Pending |
+| Running | Directed connection — declared product defect | Repair budget |
+| Repair budget | Directed connection — order allowed | Declared repair stage |
+| Declared repair stage | Directed connection — repair completes | Pending |
+| Repair budget | Directed connection — extra order needs approval | Waiting |
+| Repair budget | Directed connection — budget exhausted | Blocked |
+| Running | Directed connection — known terminal failure or timeout | Failed |
+| Running | Directed connection — cancellation | Cancelled |
+| Running | Directed connection — external outcome cannot be reconciled | Blocked |
+
 
 Text version: Nova moves a ready stage from pending to scheduled.
 Nova records the attempt and moves the stage to running when invocation starts.

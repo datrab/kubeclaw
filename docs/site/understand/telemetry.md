@@ -84,6 +84,23 @@ flowchart LR
     Journal --> Audit[Redacted audit projection]
 ```
 
+**Text alternative to the diagram**
+
+Each row names a directed connection. Labels preserve the diagram’s conditions or handoffs; dotted relationships are identified explicitly.
+
+| From | Relationship | To |
+| --- | --- | --- |
+| Nova Core or granted plugin | Directed connection | Canonical events.jsonl |
+| Canonical events.jsonl | Directed connection | Observer Runtime |
+| Observer Runtime | Directed connection | Observer delivery v2 |
+| Observer delivery v2 | Directed connection | Activated observer |
+| Activated observer | Directed connection | Granted adapter |
+| Granted adapter | Directed connection | File store, Redis, or operator service |
+| Observer Runtime | Directed connection | Delivery journal |
+| Observer Runtime | Directed connection | Checkpoint journal |
+| Canonical events.jsonl | Directed connection | Redacted audit projection |
+
+
 Text version: Nova Core or a granted plugin appends an event to the canonical
 journal. Observer Runtime filters it by an installed subscription. It records
 each delivery attempt, invokes the observer with a bounded lease, and writes a
@@ -116,6 +133,23 @@ flowchart LR
     Redis --> Missing[No repository stream consumer]
     DLQ --> Missing
 ```
+
+**Text alternative to the diagram**
+
+Each row names a directed connection. Labels preserve the diagram’s conditions or handoffs; dotted relationships are identified explicitly.
+
+| From | Relationship | To |
+| --- | --- | --- |
+| 12 OpenClaw hooks | Directed connection | JSON-safe v1 normalization |
+| OpenClaw runtime events | Directed connection | JSON-safe v1 normalization |
+| model.usage diagnostic | Directed connection | JSON-safe v1 normalization |
+| JSON-safe v1 normalization | Directed connection | Bounded in-memory dedupe |
+| Bounded in-memory dedupe | Directed connection | Control or payload queue |
+| Control or payload queue | Directed connection | Two Redis streams |
+| Control or payload queue | Directed connection — control write exhausted | Redis dead-letter stream |
+| Two Redis streams | Directed connection | No repository stream consumer |
+| Redis dead-letter stream | Directed connection | No repository stream consumer |
+
 
 The extension registers 12 hooks. It also subscribes to six OpenClaw runtime
 streams and to the `model.usage` diagnostic. It converts accepted input to
@@ -585,6 +619,21 @@ flowchart LR
     Observers --> FileRedis[File store or Redis]
 ```
 
+**Text alternative to the diagram**
+
+Each row names a directed connection. Labels preserve the diagram’s conditions or handoffs; dotted relationships are identified explicitly.
+
+| From | Relationship | To |
+| --- | --- | --- |
+| Chart-provided metric endpoints | Directed connection — Prometheus scrape | Prometheus TSDB |
+| Container stdout and stderr in CRI files | Directed connection — node-local file read | Alloy |
+| Alloy | Directed connection — CRI parse and HTTP push | Loki |
+| Prometheus TSDB | Directed connection | Grafana |
+| Loki | Directed connection | Grafana |
+| Nova canonical events | Directed connection | Observer delivery |
+| Observer delivery | Directed connection | File store or Redis |
+
+
 Text version: the Prometheus Operator stack discovers and scrapes the metric
 targets created by its chart, including Kubernetes and node exporters. The
 checked repository does not define a KubeClaw `ServiceMonitor`, `PodMonitor`,
@@ -706,7 +755,7 @@ different bound and response.
 | OpenClaw host queues | 100 control and 100 payload entries in process memory | New event is dropped; control remains first in flush order | Restart loses all queued events and counters; no replay source exists here |
 | OpenClaw control/payload streams | Approximate `MAXLEN` 10,000 per stream | Redis trims old entries during later writes | No repository consumer, acknowledgement, or checkpoint proves consumption |
 | OpenClaw dead-letter stream | Approximate `MAXLEN` 1,000 | Old failure copies trim; a failed DLQ write drops the new copy | The original OpenClaw hook is not recoverable from Nova's journal |
-| Audit result | Caller memory/output and complete journal read | Read fails or caller cannot retain output | No canonical data change |
+| Audit result | Caller memory/output and journal acquisition | Read fails or caller cannot retain output | No new lifecycle/audit entry; journal acquisition can repair an incomplete tail and create/open append-lock metadata (see audit caveat below) |
 | Retained v1 files | Repository source retention only | Removal can break unknown external readers | No current repository runtime effect; external use must be assessed |
 
 ### Pressure propagation
@@ -742,6 +791,42 @@ window and copy required evidence to an independent backup before deletion.
 
 ## Audit Is a Projection
 
+**Before using audit:** the projection adds no new canonical lifecycle or
+audit entry, but journal acquisition is **not byte-preserving or write-free**.
+`readPipelineAudit` constructs `FileJournal`. Its constructor prepares the
+parent directory and uses the stable `events.jsonl.append-lock` file through
+`FileMutex`, which opens the lock file and invokes `/usr/bin/flock` before
+loading the journal. This can create/open lock metadata even when there is no
+tail to repair. The parent-directory preparation is normally a no-op when the
+event file already exists; it is still part of the constructor path.
+
+When the existing journal is neither empty nor terminated by a line feed
+(LF), the loader opens it for writing, truncates it to the last LF
+(**possibly zero bytes**), and calls `fsync` before parsing the remaining
+chain and hashes. Empty or LF-terminated bytes do not need this tail
+truncation, but the lock path still applies. This is limited incomplete-tail
+handling, not a general corrupt-journal recovery guarantee: invalid committed
+records can still fail validation after these physical effects.
+
+`AUDIT_JOURNAL_MISSING` is raised before journal construction if `events.jsonl`
+is absent; this audit path does not create the missing event journal.
+`AUDIT_RUN_MISSING` is raised only after construction and filtering, so a
+failed audit for a missing run can already have acquired the lock and repaired
+an incomplete tail. No new entry and an early CLI return do not mean no writes.
+
+If original bytes must be retained, preserve the first diagnostic and original
+evidence before using audit. Use a correctly bound **inactive copy** of the
+run root for inspection rather than the sole retained original; audit can
+modify that copy too. Retain the original run identity and journal binding,
+do not redirect an active run to the copy, and do not combine output from
+different journal heads. There is no read-only or no-record flag in this audit
+route that bypasses journal construction, and no alternative parser or command
+is asserted to have equivalent behavior here.
+
+**Source — current acquisition and effect boundaries (2026-10-15; no audit
+command executed):**
+[readPipelineAudit](../../../skills/nova/core/telemetry/audit.ts#L15-L27) (`skills/nova/core/telemetry/audit.ts:15–27`, current-checkout SHA-256 `59eb49b7c0e2e430b38c53572edb5d7563724957996bd2dfda261fe1a1569bfd`). [FileJournal constructor](../../../skills/nova/core/state/journal.ts#L30-L42) (`skills/nova/core/state/journal.ts:30–42`, current-checkout SHA-256 `25be25a991c93c0e523178e3c45e2f7fb15ecad6e1a03566fca241d6b27f40bf`). [recoverIncompleteTail / load](../../../skills/nova/core/state/journal.ts#L59-L81) (`skills/nova/core/state/journal.ts:59–81`, current-checkout SHA-256 `25be25a991c93c0e523178e3c45e2f7fb15ecad6e1a03566fca241d6b27f40bf`). [FileMutex.withLock](../../../skills/nova/core/state/file-mutex.ts#L8-L24) (`skills/nova/core/state/file-mutex.ts:8–24`, current-checkout SHA-256 `d6d347d6b615796ff761c0c608ed6a4d9f4f834bea92ddd2870d2312b5d04c7c`). [audit CLI branch](../../../skills/nova/core/cli.ts#L48-L54) (`skills/nova/core/cli.ts:48–54`, current-checkout SHA-256 `09121b4b0a160d2e5e35448795156856b15ccc078a229bb1895f570c22f76787`).
+
 `audit` reads `events.jsonl`, filters one run, retains the event ID, sequence,
 type, redacted identity, time, causation, redacted payload, and source record
 hash, and then binds the projection to the journal head with a digest.
@@ -751,8 +836,12 @@ output a replacement journal. It excludes effect-receipt blobs, snapshots,
 artifacts, observer delivery attempts, and other stores unless their facts were
 also represented by events.
 
-If the audit command is interrupted, rerun it from the unchanged authoritative
-run root. Do not merge partial audit output with another run or journal head.
+If the audit command is interrupted, retain the first diagnostic and partial
+output before deciding whether to retry. Do not assume that journal bytes are
+unchanged. If original bytes must be retained, retry only against the
+correctly bound inactive copy described above, not the sole retained original.
+Keep the original run identity and journal binding, and do not merge partial
+audit output from different runs or journal heads.
 
 ## Failure and Recovery Matrix
 

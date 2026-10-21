@@ -37,6 +37,24 @@ flowchart LR
     Artifact --> Decision[passed / request_fix / blocked]
 ```
 
+**Text alternative to the diagram**
+
+Each row names a directed connection. Labels preserve the diagram’s conditions or handoffs; dotted relationships are identified explicitly.
+
+| From | Relationship | To |
+| --- | --- | --- |
+| Nova graph | Directed connection | pre-check or full stage |
+| pre-check or full stage | Directed connection — lint.execute / run_report | executor adapter |
+| executor adapter | Directed connection | Root and revision checks |
+| Root and revision checks | Directed connection | lint engine |
+| Policy + baseline + packs | Directed connection | lint engine |
+| lint engine | Directed connection | closed tool registry |
+| closed tool registry | Directed connection | Native and internal tools |
+| Native and internal tools | Directed connection | validated report.v7 |
+| validated report.v7 | Directed connection | immutable artifact |
+| immutable artifact | Directed connection | passed / request_fix / blocked |
+
+
 The stages own pipeline meaning. They select a tier, invoke `lint.execute`, store
 the report, and return a canonical stage result. They do not run commands or
 inspect files. The executor adapter owns filesystem and process authority. The

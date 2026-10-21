@@ -18,10 +18,15 @@ the original authors' motives.
 Use this guide before you create a package or change Core.
 It identifies the smallest supported change that solves your problem.
 
+Use [Maintain documentation](documentation-maintenance.md) to connect a source
+change to its page owner, generated facts, checks, reader task, and safe retirement.
+
 Use the [Developer handbook](developer-handbook.md) to prepare a checkout,
 choose component checks, and follow build and release procedures.
 For a bounded Core change, use the [administrative retry diagnostic exercise](examples/platform-change-nova-lifecycle.json)
 with the handbook’s [lifecycle change procedure](developer-handbook.md#practice-a-bounded-lifecycle-change-and-removal).
+
+- [Platform component changes](platform/README.md) selects the smallest internal owner, required checks, compatibility, and recovery boundaries.
 
 Use [Extend Prism safely](platform/prism.md) when the change belongs to a Prism
 contract, service, document operation, renderer, retrieval path, Studio,
@@ -74,6 +79,29 @@ flowchart TD
     Role -->|Yes| ExistingRole[Change the engine in that role]
     Role -->|No| NewRole[Add package ownership and a runtime role]
 ```
+
+**Text alternative to the diagram**
+
+Each row names a directed connection. Labels preserve the diagram’s conditions or handoffs; dotted relationships are identified explicitly.
+
+| From | Relationship | To |
+| --- | --- | --- |
+| State the new behavior | Directed connection | Does an installed component already supply it? |
+| Does an installed component already supply it? | Directed connection — Yes | Change project or platform configuration |
+| Does an installed component already supply it? | Directed connection — No | Does a host own the behavior? |
+| Does a host own the behavior? | Directed connection — OpenClaw or Codex | Create a host extension |
+| Does a host own the behavior? | Directed connection — Pipeline runtime | What does the behavior do? |
+| What does the behavior do? | Directed connection — Run one graph step | Create a stage |
+| What does the behavior do? | Directed connection — Consume committed events | Create an observer |
+| What does the behavior do? | Directed connection — Use an existing external authority type | Create a capability adapter |
+| What does the behavior do? | Directed connection — Run a test or fixture | Create a test provider |
+| What does the behavior do? | Directed connection — Read a declared report format | Create a report adapter |
+| What does the behavior do? | Directed connection — Interpret specialist worker attempts | Change or add a specialist engine |
+| What does the behavior do? | Directed connection — Change scheduling, canonical state, or trust rules | Change Core or Foundation |
+| Change or add a specialist engine | Directed connection | Does a current role contain the required packages? |
+| Does a current role contain the required packages? | Directed connection — Yes | Change the engine in that role |
+| Does a current role contain the required packages? | Directed connection — No | Add package ownership and a runtime role |
+
 
 Text version: First check whether configuration can select installed behavior.
 If not, identify the host and the behavior type.
@@ -491,5 +519,4 @@ These checks did not use a target cluster, OpenClaw host, Codex host, or externa
 - [Core And Plugin Decisions](../decisions/core-and-plugins.md) preserves the design reasons and their evidence limits.
 
 The linked pipeline, effect, Buster, Nova, host, lifecycle, and catalogue guides add detailed procedures.
-Independent reader acceptance remains a separate publication gate.
 This page remains the authority for selecting the correct extension class.

@@ -193,7 +193,7 @@ export function renderApiResourceReference(resources, sourceLink, metadataRefere
     const upstream = upstreamApiReference(resource.apiVersion, resource.kind);
     const authorityLink=!/^https?:\/\//u.test(upstream)?sourceLink(upstream,1):`[Pinned upstream schema or chart CRD authority](${upstream})`;
     const contexts = (resource.sourceContexts ?? []).map(context =>
-      `- ${sourceLink(context.path, 1)}; YAML document ${text(context.document)}.`).join('\n');
+      `- ${sourceLink(context.canonicalSource??context.path, context.canonicalSource?(context.line??1):1)}${context.canonicalSource?`; public entry ${code(context.path)}`:''}; YAML document ${text(context.document)}.`).join('\n');
     return `### ${text(resource.kind)} (${code(resource.apiVersion)})\n\n` +
       (resource.productSelection ? `These fields describe checked-in resource choices and relevant omissions under present objects. General upstream alternatives remain available through the pinned schema authority shown for each field. Cluster applicability: ${text(resource.productSelection.limits.join(' '))} ` : `These fields cover the full pinned API schema, including options absent from the checked-in manifests. `) +
       `Expected outcomes below come from implementation sources. They do not report a live API request or deployment test.\n\n` +

@@ -51,6 +51,9 @@ function checksFor(page) {
   if (prismGuidePages.has(page)) checks.unshift('npm run docs:prism-guides:check');
   if (page === 'docs/site/reference/helm-values.md') checks.unshift('npm run docs:inventory:local-helm:check');
   if (page === 'docs/site/reference/lint-policy-generated.md') checks.unshift('npm run docs:lint-policy:check');
+  if (['docs/site/reference/sdk.md', 'docs/site/reference/sdk-exports.md'].includes(page)) {
+    checks.unshift('npm run docs:sdk:check');
+  }
   if (page.includes('/buster') || page === 'docs/site/extend/platform/buster.md') {
     checks.unshift('npm run docs:buster-guides:check');
   }

@@ -56,6 +56,30 @@ flowchart LR
     Control -->|approved baseline| Nova
 ```
 
+**Text alternative to the diagram**
+
+Each row names a directed connection. Labels preserve the diagram’s conditions or handoffs; dotted relationships are identified explicitly.
+
+| From | Relationship | To |
+| --- | --- | --- |
+| Nova pipeline | Directed connection — design request or approved-baseline request | Prism Control |
+| Tailscale user | Directed connection | Prism Studio |
+| Prism Studio | Directed connection — session and user API | Prism Control |
+| Prism Control | Directed connection | PostgreSQL |
+| Prism Control | Directed connection | Artifact volume |
+| Prism Control | Directed connection — durable agent job | Prism Agent Bridge |
+| Prism Agent Bridge | Directed connection | OpenClaw gateway |
+| OpenClaw gateway | Directed connection | Managed model route |
+| Prism Agent Bridge | Directed connection — fenced design result | Prism Control |
+| Prism Control | Directed connection — bound attempt | Native Prism Worker |
+| Native Prism Worker | Directed connection — isolated host | Prism engine |
+| Prism engine | Directed connection — artifact read and write | Prism Control |
+| Prism Control | Directed connection — acquire and quarantine | Ingestion service |
+| Pipeline adapter library | Directed connection | Buster visual plan |
+| Pipeline adapter library | Directed connection | Forge assignments |
+| Prism Control | Directed connection — approved baseline | Nova pipeline |
+
+
 Text version: Nova sends a design request to Control. A user reaches Studio through the Tailscale ingress. Studio proxies the user API to Control. Control owns PostgreSQL records and the artifact volume. Model-driven jobs go through the Agent Bridge and OpenClaw. Deterministic operations go to the native Worker. The Worker reads and writes artifacts through Control. The optional Ingestion service acquires untrusted corpus content. The pipeline adapter converts a published baseline handoff into Buster and Forge inputs.
 
 ### Components and authority
@@ -309,6 +333,32 @@ sequenceDiagram
     N->>C: Dispatch same architecture with approval ID
     C-->>N: Approved archive and digest
 ```
+
+**Text alternative to the diagram**
+
+Read the following messages in order. A self-action stays with the same participant; a dashed reply is identified explicitly.
+
+Participants: Nova, Control, Agent Bridge, OpenClaw Agent, Studio user, Native Worker.
+
+| Step | From | Relationship | To |
+| --- | --- | --- | --- |
+| 1 | Nova | Message — Dispatch architecture and idempotency key | Control |
+| 2 | Control | Self-action — Record active design request and round | Control |
+| 3 | Control | Dashed reply — Waiting plus durable job identity | Nova |
+| 4 | Agent Bridge | Message — Claim job with runner identity | Control |
+| 5 | Control | Dashed reply — Fenced attempt and session key | Agent Bridge |
+| 6 | Agent Bridge | Message — Run one named OpenClaw session | OpenClaw Agent |
+| 7 | OpenClaw Agent | Message — Commit exactly three designs | Control |
+| 8 | Agent Bridge | Message — Finish bound attempt receipt | Control |
+| 9 | Studio user | Message — Select, revise, render, and evaluate | Control |
+| 10 | Studio user | Message — Approve exact design digest and warnings | Control |
+| 11 | Studio user | Message — Publish baseline | Control |
+| 12 | Control | Message — Render every view, state, and viewport | Native Worker |
+| 13 | Native Worker | Dashed reply — Bound result and evidence | Control |
+| 14 | Control | Self-action — Store immutable baseline archive | Control |
+| 15 | Nova | Message — Dispatch same architecture with approval ID | Control |
+| 16 | Control | Dashed reply — Approved archive and digest | Nova |
+
 
 Text version: Nova records one architecture and starts a durable design round. The bridge claims its job and uses one stable OpenClaw session. The Agent commits exactly three designs. A user selects and revises a direction, reviews quality findings, and approves an exact revision. Publication renders all declared states at three viewport classes and stores one immutable archive. Nova then requests that already approved archive.
 

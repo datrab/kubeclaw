@@ -125,6 +125,32 @@ sequenceDiagram
     N->>NS: Import once, then mark complete
 ```
 
+**Text alternative to the diagram**
+
+Read the following messages in order. A self-action stays with the same participant; a dashed reply is identified explicitly.
+
+Participants: Pipeline declaration, Nova, Nova durable stores, Buster plan service, Buster runner, Worker Core, Provider sandbox.
+
+| Step | From | Relationship | To |
+| --- | --- | --- | --- |
+| 1 | Pipeline declaration | Message — Tests, fixtures, suites, coverage, limits | Nova |
+| 2 | Nova | Self-action — Resolve and digest immutable plan | Nova |
+| 3 | Nova | Self-action — Archive committed Git revision | Nova |
+| 4 | Nova | Message — Store dispatch intent and source archive | Nova durable stores |
+| 5 | Nova | Message — POST digest-bound plan job | Buster plan service |
+| 6 | Buster plan service | Self-action — Verify source signature, plan, request, capacity | Buster plan service |
+| 7 | Buster plan service | Self-action — Persist accepted job | Buster plan service |
+| 8 | Buster plan service | Message — Execute fixed plan | Buster runner |
+| 9 | Buster runner | Message — Run bounded attempt envelope | Worker Core |
+| 10 | Worker Core | Message — Load exact provider snapshot | Provider sandbox |
+| 11 | Provider sandbox | Dashed reply — Facts, outputs, reports, evidence declarations | Buster runner |
+| 12 | Buster runner | Message — Attempts, node results, cleanup facts | Buster plan service |
+| 13 | Buster plan service | Self-action — Store result and evidence | Buster plan service |
+| 14 | Nova | Message — Poll status and fetch exact result/evidence digests | Buster plan service |
+| 15 | Nova | Self-action — Verify identities, receipts, counts, and policy | Nova |
+| 16 | Nova | Message — Import once, then mark complete | Nova durable stores |
+
+
 Text version: Nova reads the selected test scope and creates a deterministic
 plan. It archives only one committed Git tree and signs that source identity.
 Nova stores the job before network dispatch. Buster verifies the job before it

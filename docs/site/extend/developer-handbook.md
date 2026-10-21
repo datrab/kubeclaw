@@ -21,6 +21,20 @@ package. A **contract** is a versioned machine boundary. A **projection** is a
 view derived from durable records; it does not replace those records. A
 **digest** identifies exact bytes or a declared canonical encoding of a value.
 A **fixture** is bounded input and expected behavior for a check.
+An **invariant** is a rule that must remain true after each supported action.
+**Admission** is the decision to accept new work before it starts. **Fencing**
+closes that path when the current owner cannot prove its authority; it does not
+mean that running work has already stopped. A **spool** stores queued output
+bytes on disk until their owner can deliver or seal them. **Backpressure** slows
+or rejects new input when a bounded queue cannot accept more data.
+**Portable JSON** is the SDK's restricted JSON value/encoding contract, not
+arbitrary JavaScript serialization. Its tests reject values that cannot retain
+the declared meaning. **RSS** (resident set size) measures memory currently held
+in physical RAM by one process; child RSS is the child process's measurement,
+not the parent Node heap. **NRI** (Node Resource Interface) is the container
+runtime integration that binds a workload to its prepared native pool.
+A Linux **cgroup** groups processes for kernel resource control and observation;
+see [the shared glossary](../reference/glossary.md).
 
 ## Prepare a clean checkout
 
@@ -56,6 +70,7 @@ Run these steps in order. Stop at the first nonzero exit.
 1. Clone the repository into a new directory.
 
    ```sh
+   set -eu
    git clone https://github.com/datrab/kubeclaw.git kubeclaw
    cd kubeclaw
    ```
@@ -65,6 +80,7 @@ Run these steps in order. Stop at the first nonzero exit.
    commit and verify the corresponding source and documentation together.
 
    ```sh
+   set -eu
    git checkout --detach 671234b056bf5f5f503e51e8db30f843e781ba6e
    git status --short
    git rev-parse HEAD
@@ -76,6 +92,7 @@ Run these steps in order. Stop at the first nonzero exit.
 3. Check the host tools before installing or building.
 
    ```sh
+   set -eu
    node --version
    npm --version
    git --version
@@ -89,21 +106,50 @@ Run these steps in order. Stop at the first nonzero exit.
    a different contract, provision the disposable development host first.
    Changing `PATH` cannot replace the absolute `/usr/bin/flock` used by Nova.
 
-4. Install root dependencies without executing package install hooks.
+4. Install root **development** dependencies without executing package install
+   hooks. Use the committed lockfile and a writable cache owned by this
+   checkout's developer. The block allocates one under `/tmp`; if this host has
+   no writable temporary parent, stop and provision one before installation.
+   Keep the printed exact path for subsequent installs and cleanup.
 
    ```sh
-   npm ci --ignore-scripts
+   set -eu
+   DEV_NPM_CACHE="$(mktemp -d /tmp/kubeclaw-dev-npm-cache.XXXXXX)"
+   printf '%s\n' "$DEV_NPM_CACHE"
+   test -d "$DEV_NPM_CACHE"
+   test -w "$DEV_NPM_CACHE"
+   npm config get omit
+   npm ci --include=dev --ignore-scripts --cache "$DEV_NPM_CACHE"
+   node -e 'for (const name of ["typescript", "json-schema-to-typescript"]) console.log(require.resolve(name))'
    ```
 
+   Both install and module resolution must exit zero; resolution prints paths
+   inside the locked dependency tree. The root build/generator checks need
+   `typescript` and `json-schema-to-typescript`, which are development packages.
+   `NODE_ENV=production` or an npm omit setting can otherwise exclude them while
+   `npm ci` still exits zero. Explicit `--include=dev` overrides a dev omission;
+   see [npm's include/omit rules](https://docs.npmjs.com/cli/v12/commands/npm-ci/#include).
+   Do not treat a successful production-only install as this developer setup.
    This installs the declared workspaces. It does not build the C launcher,
    fetch browsers, provision services, or install independently locked packages.
    A lockfile or dependency-resolution failure is a setup failure. Retain its
    output and correct the dependency input; do not replace `npm ci` with an
-   unrecorded dependency update.
+   unrecorded dependency update. `ERR_MODULE_NOT_FOUND` for a required generator
+   or compiler package first requires the same include-dev install and resolution
+   check, not a schema/product fix. EROFS/EACCES for npm's cache is a separate host
+   condition: retain the first error, select an owned writable cache explicitly,
+   then repeat the same lockfile install. Do not weaken filesystem permissions
+   or switch to a shared root cache. Retain npm logs/config selection and cache
+   path without credentials. Remove only this exact owned cache after all
+   installs have stopped and their logs are retained; never delete another
+   user's cache, dependency tree or source files. If the shell exited, select
+   the retained printed allocation path in a new shell before retry/cleanup;
+   do not guess a cache directory from a filename pattern.
 
 5. Build the isolation launcher explicitly.
 
    ```sh
+   set -eu
    npm run plugin-system:sandbox:build
    ```
 
@@ -115,6 +161,7 @@ Run these steps in order. Stop at the first nonzero exit.
 6. Check the common source baseline.
 
    ```sh
+   set -eu
    npm run versions:check
    npm run plugin-system:sdk:check
    npm run verify:runtime-packaging:ownership
@@ -146,7 +193,7 @@ Run these steps in order. Stop at the first nonzero exit.
 | Prism Studio or Buster browser providers | Locked Playwright 1.62.1 browser and its Linux libraries | Disposable browser environment; loopback ports; no production session. |
 | Go controller | Root `go.mod` declares Go 1.22 | Run module commands at repository root. Use a compatible installed Go toolchain and the module lock. |
 | Pipeline observability cross-language check | Separate `contracts/pipeline-observability/v1/go/go.mod` declares Go 1.24 and has its own `go.sum`; genuine compatible Go at `/usr/local/go/bin/go` | Verify the absolute executable before this selected check. Telemetry wire tests/generation separately require `go` and `gofmt` on `PATH`. |
-| Native Worker NRI | `tools/native-worker-nri/go.mod` declares Go 1.26.5; C launcher; Linux cgroup v2 | Disposable host with explicit root/delegated-scope authority. This is a separate Go module. |
+| Native Worker NRI | `tools/native-worker-nri/go.mod` declares Go 1.26.5; C launcher; Linux cgroup v2. Native-runtime also needs actual Helm, race-supported Go platform, enabled cgo and the Go-selected C compiler. Native pool setup needs the exact central Node patch. | Disposable host with explicit root/delegated-scope authority; follow the native fixture and Helm/race procedures below. This is a separate Go module. |
 | Documentation API discovery | Helm 3.22.0; Go 1.26.3; root dependencies | Local render/parser route. The documentation workflow fixes these versions. They differ from runtime image tools. |
 | Chart/release render tests | Helm 3.18.4 as selected by product CI; local chart inputs | No cluster credential is required for local render. A successful render does not prove storage or RBAC. |
 | Redis/service reliability | Native nginx and source Redis; selected Redis binaries; Docker for extraction | Disposable service roots. CI supplies `ARCHVIEWER_TEST_NGINX`, `REDIS_SOURCE_SERVER`, and `REDIS_SERVER`. |
@@ -160,29 +207,51 @@ Run these steps in order. Stop at the first nonzero exit.
 Install the locked browser from repository root when your route needs it:
 
 ```sh
+set -eu
 node node_modules/playwright/cli.js install --with-deps chromium
 ```
 
-The `--with-deps` action can require host package authority. Run it on the
+The browser installation must exit zero for the locked Chromium and selected
+host libraries before browser checks. A download or host-package failure blocks
+that route; retain its first error and exact version selection, then repair the
+disposable host and retry the same command. Do not delete a shared browser cache
+as test cleanup. The `--with-deps` action can require host package authority. Run it on the
 prepared disposable host. The Studio test runner uses port 4190 and can reuse
 an existing server. Stop an unrelated listener before the test so that it does
 not validate someone else's build.
 
 Ops MCP and Ops Pod are not root workspaces. Install their separate lockfiles
-before their tests:
+before their tests. Keep the root setup's `DEV_NPM_CACHE` selected in the same
+shell, or allocate a new owned writable cache by that procedure if the shell
+changed. Include development dependencies for each selected package: Ops Pod's
+source checks require its development `yaml` package.
 
 ```sh
-npm ci --prefix tools/ops-mcp --ignore-scripts
-npm ci --prefix ops/pod --ignore-scripts
+set -eu
+: "${DEV_NPM_CACHE:?Select the owned writable cache from checkout setup}"
+npm ci --prefix tools/ops-mcp --include=dev --ignore-scripts --cache "$DEV_NPM_CACHE"
+npm ci --prefix ops/pod --include=dev --ignore-scripts --cache "$DEV_NPM_CACHE"
+test -f tools/ops-mcp/node_modules/@modelcontextprotocol/server/package.json
+test -f ops/pod/node_modules/yaml/package.json
 ```
 
 The Prism spike packages also have independent lockfiles. If you select
 `verify:prism:spikes`, prepare all four through the maintained bootstrap:
 
 ```sh
-npm run bootstrap:prism:tests
+set -eu
+NPM_CONFIG_CACHE="$DEV_NPM_CACHE" npm run bootstrap:prism:tests
 ```
 
+Each separate `npm ci` must exit zero for its own lockfile; dependency-resolution
+failure stops that package's tests, not the independent root baseline. Keep
+install logs/lockfile identity, and remove only an owned disposable dependency
+tree after no process uses it. The Prism bootstrap must finish all five installs
+with exit zero; a partial install is not a ready spike environment.
+The maintained bootstrap explicitly includes development dependencies for the
+root and all four spike lockfiles and uses `NPM_CONFIG_CACHE` (or its declared
+default). Select the same owned cache explicitly before calling it; stop if its
+cache is not writable. A partial or production-only spike tree is not ready.
 That script reinstalls the root and four spike packages. Do not run it in a
 shared checkout while another process uses the dependency tree.
 
@@ -204,6 +273,13 @@ environment variable being present.
 > Test evidence: [native Registry fixture prerequisites](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/tests/verification/integration/registry-local-gc.test.mjs#L14-L45). Status: source-only; no execution result is asserted.
 > Revision: `671234b056bf5f5f503e51e8db30f843e781ba6e`.
 > Limit: an installed tool or a rendered configuration does not prove external access.
+
+Development dependency declarations are source-owned: [root compiler and SDK
+generator packages](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/package.json#L297-L308),
+[Ops Pod development yaml](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/ops/pod/package.json#L5-L7), and the
+[bootstrap's explicit include-dev/cache options](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/scripts/bootstrap-prism-tests.sh#L3-L8).
+These declarations and install options do not establish an observed successful
+installation on your host; the install/module checks above must actually finish.
 
 ## Repository ownership and build boundaries
 
@@ -258,7 +334,7 @@ its current contract; do not silently bypass the boundary.
 > **Source evidence — ownership and source rules**
 >
 > Claim: package/import direction, role membership, erasable source, and generated-file rules are enforced separately.
-> Implementation: [dependency checks](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/scripts/check-runtime-package-ownership.mjs#L68-L106), [TypeScript config and tracked-output checks](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/scripts/check-erasable-typescript.mjs#L7-L42), [source/manifest rules](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/scripts/check-erasable-typescript.mjs#L43-L95).
+> Implementation: [dependency checks](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/scripts/check-runtime-package-ownership.mjs#L110-L118), [import enforcement](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/scripts/check-runtime-package-ownership.mjs#L138-L151), [TypeScript config and tracked-output checks](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/scripts/check-erasable-typescript.mjs#L7-L42), [source/manifest rules](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/scripts/check-erasable-typescript.mjs#L43-L95).
 > Contract or setting: [owner directions](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/packaging/runtime/package-ownership.json#L54-L80), [compiler options](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/tsconfig.base.json#L1-L16).
 > Required check: [temporary plugin compilation](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/scripts/build-v2-plugins.mjs#L6-L43).
 > Test evidence: no focused test is identified for this claim. Status: source-only; no execution result is asserted.
@@ -272,6 +348,7 @@ For a plugin-system contract change, update
 first. Then run:
 
 ```sh
+set -eu
 npm run plugin-system:sdk:generate
 npm run plugin-system:sdk:check
 npm run plugin-system:sdk:build
@@ -296,6 +373,15 @@ For telemetry, change the catalogue/schema authority, then run
 `node scripts/generate-telemetry-contracts.mjs` followed by the same command
 with `--check`. It requires `gofmt` even in check mode. For central versions,
 use [the version procedure below](#versions-and-release-selection).
+
+Interpret each generation step before starting its consumer:
+
+| Command/group | Expected completion and retained output | Failure/skip diagnosis, stop and cleanup |
+| --- | --- | --- |
+| SDK generate → check | Generate writes `sdk/src/generated/contracts.ts`; check exits zero only for exact generated bytes. Retain that intended diff. | A stale error stops consumers. Fix the schema/generation failure, retain any partial file and regenerate; do not repair generated bytes manually. |
+| SDK build → plugin build → sandbox build | SDK emits declaration output under its untracked `dist`; plugin compilation emits JavaScript into a temporary root and removes it; sandbox build writes the named local executable. All must exit zero. | Diagnose the first compiler/package configuration or C compiler error. Stop dependent builds. Remove only owned untracked build output after retaining logs; never commit generated `dist`. |
+| Prism validators/hooks | Generation and selected test/type/build commands finish with exit zero; inspect the validator diff even when a check hook wrote it. | A schema/generator failure can precede consumers. Retain the partial diff; fix the authority and rerun generation before retesting. |
+| Telemetry generate → --check | Write updates the owned representations; check exits zero for the same bytes. Retain schema/output diff. | Missing `gofmt`, invalid source or byte drift is not success. Stop; correct the tool/source and repeat the generator and check. Do not discard a partial output diff. |
 
 > **Source evidence — code generation**
 >
@@ -338,6 +424,12 @@ check. A skip is not a successful negative proof.
 | Deployment | Installed objects and service path in the test cluster | Every production environment |
 | Live | The named real dependency path and fault behavior | A universal availability or recovery guarantee |
 
+The outcome tables below describe required source-backed observations, not
+recorded command runs. In Node test summaries, a required skipped test is not
+a completed case; an intentionally asserted product `skipped` state inside a
+passing test is different. Stop each ordered chain at its first nonzero exit.
+Do not start downstream consumers on failed or partial output.
+
 Before each edit, record revision, environment, selected commands, baseline,
 and stop conditions. After the edit, retain exit codes, nonzero failures,
 skips, test counts, identity-bearing output, and generated diffs. Remove only
@@ -364,6 +456,50 @@ In particular, `verify:plugin-system-v2` requires
 > Revision: `671234b056bf5f5f503e51e8db30f843e781ba6e`.
 > Limit: a failed prerequisite establishes no recovery result.
 
+## Debug a component through its local caller
+
+A debugger lets you pause a process and inspect its values. Run it only in the
+isolated checkout with Node 24 and the selected caller's dependencies. Do not
+attach it to a deployed owner. Libraries have no independent listener; debug
+the test that imports them. The following callers are real source/test files,
+not new service entrypoints.
+
+| Component | Local caller and invocation from repository root | Configuration, logs and cleanup |
+| --- | --- | --- |
+| Nova Core | `node --inspect-brk=127.0.0.1:9229 --test --test-concurrency=1 tests/verification/reliability/lifecycle.test.mts` | Root install and GNU locks. Test output/stderr and temporary journal fixture; let fixture cleanup complete. Core has no daemon. |
+| Worker Core | `node --inspect-brk=127.0.0.1:9229 tests/verification/contracts/check-pipeline-worker-attempt-executor.mts` | Root install; bounded in-process contract caller, not native host proof. Retain assertion/stderr output. No Worker daemon to stop. |
+| Buster engine | `node --inspect-brk=127.0.0.1:9229 tests/verification/contracts/check-pipeline-test-plan-runner.mts` | Root install and built sandbox. Caller retains its allocated `test-plan-runner-` temporary root. Inspect its `temporary` variable at a breakpoint, retain that exact path/plan/assertion evidence, then remove only that root after exit; no production runtime starts. |
+| Prism domain | `node --inspect-brk=127.0.0.1:9229 --test --test-concurrency=1 skills/prism/tests/domain.test.mts` | Root install and current Prism validators. Domain assertions need no production Control/Worker credential. Test output is not service readiness. |
+| Plugin Registry | `node --inspect-brk=127.0.0.1:9229 tests/verification/contracts/check-plugin-system-v2-registry.mjs` | Root install; manifest discovery/registry caller. Retain assertion output; it is not a writable OCI daemon. |
+| SDK | `node --inspect-brk=127.0.0.1:9229 skills/common/plugin-runtime/sdk/tests/values.test.ts` | Root install; real public-value assertions. No independent SDK process or persistent store. |
+| Telemetry | `node --inspect-brk=127.0.0.1:9229 --test --test-concurrency=1 contracts/telemetry/v1/tests/contracts.test.mjs` | Prepare PATH Go/gofmt before this cross-language caller. Retain test/compiler errors; fixture temporary files are not authoritative deployed events. |
+| Charts/GitOps | `node --inspect-brk=127.0.0.1:9229 --test --test-concurrency=1 tests/verification/deployment/gitops-release.test.mjs` | Prepare Helm/Git and root dependencies. Debug the selection fixture, not Argo. Retain rendered/selection errors; remove only its temporary output. |
+| Ops MCP | `node --inspect-brk=127.0.0.1:9229 tools/ops-mcp/src/server.mjs` | Prepare its separate lockfile and the local-only bearer/loopback configuration in [the Ops route](#change-ops-mcp). Retain stderr without bearer values. Stop only this listener and remove its owned test bearer file after exit. |
+| Studio server | `node --inspect-brk=127.0.0.1:9229 skills/prism/server/studio.ts` | Build `dist-studio` and prepare the Control URL/ingress configuration in [the Prism route](#change-prism-contracts-services-data-or-engine). This debugs the proxy, not browser code. Keep its application port isolated because it binds all interfaces. Retain request/server errors; stop only this listener. |
+| Studio browser / Archviewer | Use `npm run dev:studio --prefix skills/prism` and browser developer tools for editor code. For Archviewer use the named native nginx test in [the UI route](#change-ui-behavior). | Vite and nginx are not Node SDK/Worker daemons. Browser console/network observations and nginx fixture logs belong to their own process. Stop only the owned Vite/nginx server and keep source documents. |
+
+1. Stop an unrelated debugger on port 9229, or select another unused loopback
+   port consistently in your invocation and debugger. Run one caller from the
+   table in the foreground. `--inspect-brk` waits before application execution;
+   absence of application output at that point is not a hung service.
+2. Read Node's stderr inspector URL and attach a Node-capable debugger to that
+   exact `127.0.0.1` port. Set a breakpoint in the component imported by the
+   caller, resume, and inspect the caller's actual input/error values. The
+   inspector URL identifies the debug listener, not application readiness.
+3. Keep stdout/stderr and assertion or request errors. Diagnose an import error
+   through the locked dependencies/current validators first; diagnose address
+   conflicts by the selected listener, not by killing unrelated processes.
+4. For a fixture, resume it to terminal status so its cleanup can run. For the
+   local service, use Ctrl-C in its owning terminal and confirm process exit.
+   If you interrupt a fixture before cleanup, retain its error/state and inspect
+   its exact owned temporary paths before removing them. Do not delete retained
+   native/journal state or a production resource as debugger cleanup.
+5. Rerun the selected checks without the debugger. Pausing alters deadlines,
+   cancellation and CPU measurements. Debug results cannot establish timing,
+   successful recovery or a native cleanup budget.
+
+Caller selection is defined by [Nova/Worker command routing](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/package.json#L153-L166), [Buster plan-runner routing](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/package.json#L72-L88), [SDK values caller](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/skills/common/plugin-runtime/sdk/package.json#L5-L12), and [Prism/Studio commands](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/skills/prism/package.json#L12-L29). These are source-backed debug routes, not recorded debug executions.
+
 ## Run Lint for a selected source change
 
 Owner: Lint maintainers. Use [Lint policy](../reference/lint-policy.md) for
@@ -373,12 +509,19 @@ the Nova stage owns its pipeline interpretation. Run these package checks from
 repository root:
 
 ```sh
+set -eu
 npm run build --prefix skills/nova/plugins/lint
 npm run test:focused --prefix skills/nova/plugins/lint
 npm run test:live --prefix skills/nova/plugins/lint
 ```
 
-The live-function test requires real shellcheck, shfmt, GNU locks and its
+The build must exit zero before focused or live checks. Focused checks must
+finish their assertions with no failed or required skipped case; retain their
+actual test summary. A compiler/import error is setup/source failure, not a
+clean Lint result. Stop this chain on the first error. The live check has the
+same terminal requirement; missing analyzer/configuration is blocked execution.
+Keep failed tool output and remove only owned temporary reports after retaining
+it. The live-function test requires real shellcheck, shfmt, GNU locks and its
 selected tools/configuration. Prepare the target-image route in the Lint guide
 when the source host lacks those tools. Do not let a missing analyzer look like
 a clean source result. Serialize acceptance-relevant reports while the shared
@@ -388,6 +531,7 @@ To lint the checked-out workspace with the canonical policy, after preparing
 its selected analyzer and Kubernetes-schema dependencies, run:
 
 ```sh
+set -eu
 npm run lint:report -- --working-directory . --policy charts/kubeclaw/files/config/lint-policy.json --policy-project workspace --tier full --helm-chart charts/kubeclaw --include-debt --include-experimental --output artifacts/lint-report.json
 ```
 
@@ -432,6 +576,7 @@ For an internal lifecycle reason change, run this complete local chain after
 adding tests that assert its precise trigger and unchanged neighboring cases:
 
 ```sh
+set -eu
 npm run typecheck --prefix skills/nova
 node tests/verification/contracts/check-plugin-system-v2-lifecycle.mjs
 node --test tests/verification/reliability/lifecycle.test.mts tests/verification/reliability/decisions-and-snapshots.test.mts
@@ -439,9 +584,6 @@ node --test tests/verification/reliability/project-recovery-version.test.mjs tes
 npm run plugin-system:sdk:check
 npm run verify:runtime-packaging:ownership
 npm run docs:core-guides:check
-npm run docs:governance:check
-npm run docs:check:refs
-npm run docs:publication:check
 ```
 
 The first checks typing and local lifecycle rules. The journal tests cover
@@ -449,11 +591,21 @@ repair scheduling, snapshots, and process-death recovery. Version fixtures
 cover retained source/graph interpretation. The SDK check must leave the
 unchanged external contract generation intact. Add a targeted new assertion
 for the changed diagnostic; existing tests do not automatically cover it.
-The last checks protect the affected explanation, ownership, links, and output.
+The Core guide check protects its component explanation and exact linked
+source bytes. If a Core source file changed, complete
+[the protected Core source-revision procedure](#update-protected-core-source-revisions)
+before that documentation check can pass. Then complete the
+[documentation-change chain](#documentation-change-chain).
 
-For a graph/compiler change, add
+For a graph/compiler change, complete the
+[absolute GNU tar preflight](#prepare-buster-remote-archive-fixtures) before adding
 `node tests/verification/contracts/check-project-compiler.mts` and
 `node --test tests/skills/nova/project_setup/progress-scaffold.test.mjs`.
+The progress-scaffold fixture creates and lists an archive with
+[the actual `/usr/bin/tar` caller](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/tests/skills/nova/project_setup/progress-scaffold.test.mjs#L482-L489). Missing or non-GNU absolute tar blocks this fixture even without a remote
+result change. Retain the first archive error and fixture output; after the
+fixture exits, remove only its owned temporary repository/archive, not source
+run state. PATH tar cannot replace that absolute executable.
 Before a remote result/import or restart change, complete the
 [absolute GNU tar preflight](#prepare-buster-remote-archive-fixtures) and prepare
 the launcher and remote-plan fixture environment. Then add
@@ -466,9 +618,20 @@ A dispatch response loss requires receipt reconciliation, not a fresh effect ID.
 Use [the run procedure](../use/operate.md) for start, signal, audit, and bounded
 recovery commands; it defines the actual project/platform/run inputs. Use
 [diagnosis](../use/diagnose.md) for logs and journal evidence. Core has no
-independent service start script. For a local CLI debug session, Node's `--inspect` can precede the
-same `.ts` entrypoint and arguments; keep the debug listener on loopback. An
-attached debugger can alter timeouts, so it cannot supply timing evidence.
+independent service start script. Use its retained-state fixture in
+[the debug map](#debug-a-component-through-its-local-caller); do not substitute
+a debugger session for a deadline/recovery check.
+
+
+Read the Nova chain as these separate outcomes:
+
+| Command/group | Expected completion and retained output | Failure/skip diagnosis, stop and cleanup |
+| --- | --- | --- |
+| Nova typecheck + lifecycle contract | Both exit zero; the contract result reports `ok`. No deployment/build artifact is implied. | Type/import errors need locked dependencies/current contract first; an assertion needs its exact trigger/expected outcome. Stop before journal checks. |
+| Lifecycle/snapshot tests | Node test summary has no failed or required skipped case; durable/recovery assertions complete. Retain test names and interruption errors. | Missing GNU lock or process-death assertion is not replay success. Stop; retain the reported journal/temp path and failure before owned cleanup. |
+| Source/graph version fixtures | Both families complete with no failed or required skipped case; retain old/current identity assertions. | First distinguish Git/source setup from retained-version mismatch. Stop incompatible interpretation; do not regenerate old fixture bytes to match new behavior. |
+| SDK freshness + ownership + Core guide | Each exits zero; SDK check is read-only, owner check rejects forbidden dependencies, guide check protects its named explanation. | First stale generated output, then forbidden edge or named guide defect: fix the reported authority, not the guard. Stop; no tracked mutation is expected. |
+| Selected compiler/remote/effect additions | Each selected command finishes its assertions; retain plan/source/receipt/recovery output. Not running an additional required case leaves that change unchecked. | Absolute tar/launcher/service setup error blocks remote proof. Assertion or uncertain receipt stops retry of effects; reconcile the original identity. Let owned fixture processes close; retain durable failure evidence. |
 
 > **Source evidence — lifecycle and restart**
 >
@@ -496,11 +659,27 @@ result and other administrative reasons. After a crash at the named durable
 boundary, inspect both journal bytes and recovered state. A reason in a durable
 event is not automatically a field in the recovered stage projection.
 
-Run the complete Nova chain and the new assertions. Record the reason, stage
-status, attempt counters, journal identity, schema/graph identities, and every
-failure or skip. Then remove the temporary source/test changes. Compare
-tracked files and generated output with the original baseline and rerun the
-selected checks. Retain logs outside the scratch tree before deleting it.
+Run the Nova product checks and new assertions, including the invalid transition
+and actual crash/replay cases. Record the reason, stage status, attempt counters,
+journal identity, schema/graph identities, and every failure or skip. Product
+success does not pass a failed documentation chain. Before the required Core
+guide/common documentation checks, complete
+[the protected source-revision procedure](#update-protected-core-source-revisions)
+in this scratch checkout. Its temporary local commits may identify changed
+source and documentation authorities for local Git checks. They do not make a
+GitHub URL available or prove publication/rendered results.
+
+After the changed product and documentation chains reach terminal results,
+remove the temporary source/tests **and** temporary Core checker/guide pins,
+authored explanations, common source lock and generated inventory/reference/map
+changes. Restore the exact recorded original bytes, including the original
+hardcoded checker revision and all three Core guide revisions. Do not retain a
+changed-source pin after removing its source. Compare tracked source, docs and
+generated output with the saved baseline, rerun the selected product and
+complete documentation checks, and retain each real result. A documentation
+check that failed before removal stays failed for the changed phase; successful
+removal cannot rewrite it as success. Keep local commit identities and logs
+outside the scratch tree before deleting only that owned tree.
 No successful exercise is claimed by the presence of this file or handbook.
 
 ## Change Worker Core or native execution
@@ -513,6 +692,7 @@ process control, ownership, result sealing, or resource accounting.
 For generic attempt behavior, run:
 
 ```sh
+set -eu
 npm run verify:worker-core:contracts
 npm run verify:worker-core:attempt-executor
 npm run verify:worker-core:local-runtime
@@ -524,15 +704,23 @@ Add the native chain when the change touches launch, cgroups, ownership,
 observation, or host recovery:
 
 ```sh
+set -eu
 npm run verify:worker-core:node-pools
 npm run verify:worker-core:native-runtime
 npm run verify:worker-core:native-scope
 ```
 
-These require Linux, the named native launchers, an accounted/delegated cgroup
-scope, and the NRI Go module toolchain. The native scope command is a live-host
-check. Before execution, identify the fixture's scope and privilege requirements;
-never use a production node as a disposable process-kill fixture. For trust
+Prepare the [native fixture host](#prepare-a-native-worker-fixture-host) before
+this chain. `node-pools` and `native-runtime` require the actual
+`systemd-analyze verify` CLI. `native-runtime` also builds the NRI program with
+PATH Go and `GOTOOLCHAIN=local`; that Go must exactly equal the current central
+`versions.json` `buildArgs.GO_VERSION` (1.26.5 at this source revision), not the
+documentation parser's Go 1.26.3. `native-scope` is a live-host check with four
+explicit inputs below; missing inputs are failures, not supported skips.
+`native-runtime` also invokes real Helm and a race-enabled Go test. Complete
+[its Helm/race preparation](#prepare-helm-and-go-for-native-runtime) before the
+native chain; a static NRI build does not cover that test.
+Never use a production node as a disposable process-kill fixture. For trust
 changes, run `npm run verify:worker-core:trust` and use
 `npm run verify:worker-core:trust:live` only in the registered cluster.
 
@@ -541,13 +729,25 @@ cleanup failure, crash after ownership commit, restart adoption, and admission
 fencing while authority is uncertain. Keep generic envelope/schema identity
 separate from Buster or Prism request meaning. Update the Worker architecture,
 profile reference, and recovery procedure; run `docs:core-guides:check` and the
-common documentation chain above.
+[documentation-change chain](#documentation-change-chain).
 
+For local debugging use the Worker caller in
+[the debug map](#debug-a-component-through-its-local-caller).
 Worker Core is a library, not a separately started developer daemon. Its
 specialist host supplies configuration. Stop admission before replacing native
 code. Preserve ownership, journal, and spool records until the owning process
 has reconciled them; deleting them can remove the only proof that an attempt
 still exists.
+
+Interpret Worker checks before using them as change evidence:
+
+| Command/group | Expected completion and retained output | Failure/skip diagnosis, stop and cleanup |
+| --- | --- | --- |
+| contracts / attempt-executor / local-runtime | Each npm group must complete its caller assertions and TypeScript checks with exit zero. Keep the individual command/error output. | An import/typing failure is distinct from an attempt assertion failure. Stop the sequence at the first error; no standalone Worker daemon or deployed output is created. |
+| role-surfaces + ownership | Exit zero checks neutral/specialist boundaries and package/import direction. No native resource claim follows. | Diagnose the named forbidden role/import or stale type first. Stop; do not copy specialist policy into Core. |
+| node-pools / native-runtime | Exit zero and no failed/required skipped case, including the real systemd parser; native-runtime also completes real Helm renders, exact-Go static build and the mandatory Go race tests. Retain tool/module/cache/compiler/test diagnostics. | Missing `systemd-analyze`, Helm, exact Go, effective cgo=1, supported race platform or Go-selected compiler blocks the selected step. A race report is a test failure. Stop; do not remove `-race`. Fixture render/build outputs are owned cleanup, not host identities or shared Go caches. |
+| native-scope | Exit zero with the two real-host cases completed; final counters/empty scopes/disposed ownership and replay/capacity assertions pass. | Missing one of the four inputs, launcher/host guard or cleanup error is failure, never a skip. Stop admission on unresolved ownership; keep records until reconciliation. See the host procedure for retirement. |
+| trust / trust:live | Source trust checks must exit zero. The live route must separately complete on the registered cluster and retain real identity/denial observations. | Unavailable cluster/credentials mean live unexecuted. Wrong identity or denied expected action is a failure to diagnose through trust policy; do not weaken authentication. Follow the registered fixture cleanup, not global resource deletion. |
 
 > **Source evidence — Worker route**
 >
@@ -558,6 +758,189 @@ still exists.
 > Test evidence: no focused test is identified for this claim. Status: source-only; no execution result is asserted.
 > Revision: `671234b056bf5f5f503e51e8db30f843e781ba6e`.
 > Limit: a local attempt test cannot establish native process authority or cluster trust.
+
+### Prepare Helm and Go for native-runtime
+
+Run from repository root in the same shell that will run
+`npm run verify:worker-core:native-runtime`. Prepare actual Helm through the
+[chart/render tool route](#add-tools-and-credentials-only-for-the-selected-route)
+(product CI selects Helm 3.18.4), exact central Go 1.26.5, its locked NRI module,
+and package-download/cache access. This command first runs Node tests with real
+Helm renders/static NRI build, then runs
+`GOTOOLCHAIN=local go -C tools/native-worker-nri test -mod=readonly -race -count=1 -v ./...`.
+Do not omit the race-enabled tail.
+
+A **data race** occurs when concurrent execution accesses the same value and
+at least one access writes it without the required coordination. Go's race
+checker observes these accesses during tests. **cgo** is Go's C-tool integration;
+this race route needs it enabled and an installed C compiler on Linux. Check
+that your effective GOOS/GOARCH is supported by the selected Go's
+[race detector](https://go.dev/doc/articles/race_detector#requirements). Do not
+cross-compile a test as proof that it ran on this fixture host.
+
+```sh
+set -eu
+command -v helm
+helm version --short
+env GOTOOLCHAIN=local go -C tools/native-worker-nri env GOVERSION GOOS GOARCH CGO_ENABLED CC GOMOD GOPROXY GOMODCACHE GOCACHE
+test "$(env GOTOOLCHAIN=local go -C tools/native-worker-nri env CGO_ENABLED)" = 1
+```
+
+GOVERSION must equal the current central `GO_VERSION` prefixed by `go`; GOMOD
+must select this checkout's NRI module. Verify the compiler selected by Go's
+`CC` value under this same PATH and retain its real path/version. `cc --version`
+for the launcher is sufficient only when Go actually selects that compiler.
+If cgo is disabled, the compiler is absent or the platform lacks race support,
+stop and prepare the supported environment before the command. After the
+supported platform/compiler is prepared, select `CGO_ENABLED=1` in the same
+shell, export it, and repeat the effective Go environment check before tests.
+Do not remove `-race` or change expected tests. Retain module/tool/cache/download selection
+and the first compiler or test diagnostic; never retain credential values.
+
+The static NRI builder sets `CGO_ENABLED=0` for its own child build only. That
+setting is not the mandatory race-test environment. The full command needs
+exit zero for both Node test cases and Go race tests, no failed/required skipped
+case and no reported race. A failed Helm render, compiler setup, module download
+or race assertion stops the chain before native-scope claims. Fixture temporary
+render/binary trees are removed by their callers; retain logs first. Shared Go
+module/build caches are not fixture cleanup and must not be deleted blindly.
+
+> **Source evidence — native-runtime tool and race boundary**
+>
+> Claim: native-runtime contains real Helm rendering, a static NRI build and a separate mandatory race-enabled Go test.
+> Implementation: [Helm render call](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/tests/verification/deployment/prism-native-runtime.test.mjs#L14-L21), [negative Helm renders and owned temp cleanup](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/tests/verification/deployment/prism-native-runtime.test.mjs#L58-L64).
+> Contract or setting: [complete native-runtime command](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/package.json#L291-L291), [child-local static cgo setting and Go identity](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/scripts/build-native-worker-nri.mjs#L10-L18); [upstream race requirements](https://go.dev/doc/articles/race_detector#requirements).
+> Test evidence: [original static binary and cleanup](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/tests/verification/deployment/prism-native-runtime.test.mjs#L66-L78). Status: source-only; no render, build or race-test result is asserted.
+> Revision: `671234b056bf5f5f503e51e8db30f843e781ba6e` for repository definitions; upstream race requirements were inspected separately.
+> Limit: setup observations do not prove test completion, native-host ownership or cluster execution.
+
+### Prepare a native Worker fixture host
+
+Use a disposable Linux cgroup-v2 host with real machine/boot identity, a
+systemd delegated pool, and capacity reserved outside Kubernetes Pod allocation.
+Do not copy a production identity/pool file into a container to imitate that
+host. The host must have the compiled original production launcher, root
+supervisor authority with effective KILL/SETGID/SETUID capabilities, and trusted
+root-owned policy/identity files. A setuid or group/world-writable launcher is
+rejected. Host and cgroup namespace identity must agree.
+
+1. The native-host owner selects a test node, real containerd version and
+   capacity policy. Start from `my-values/infra/native-worker-pools.yaml`; fill
+   its actual `nodeName`, runtime selection and owned namespaces/resources.
+   The template is not a prepared node. Render a new bundle with
+   `bash scripts/deploy.sh native-node-render "$NATIVE_TEST_BUNDLE" "$NATIVE_TEST_POLICY"`.
+   Both variables are exact owner-selected paths: the output directory must not
+   already exist, and the policy must describe this test host. Inspect the
+   generated role policies, NRI configuration, kubelet reservations and systemd
+   service. `systemd-analyze verify --man=no "$NATIVE_TEST_BUNDLE/kubeclaw-native-pools.service"`
+   must accept the actual unit before installation.
+2. Before installation/start, the host owner prepares the **exact** Node patch
+   selected by the bundle's `native-node-policy.json` `nodeVersion`. The renderer
+   derives it from `versions.json` `buildArgs.NODE_BASE`: **24.15.0** at this source
+   revision. The setup compares it directly with `process.versions.node` and
+   rejects a mismatch as `NATIVE_SETUP_POLICY_RUNTIME_INVALID`. General CI Node
+   major 24 and the separate Ops image override 24.21.0 are not this selection.
+   The generated service executes `/usr/bin/env node`, so verify its real Node
+   executable under the service's effective PATH, not only a login shell.
+   Before the service is installed or started, the host owner determines its
+   effective PATH from the actual systemd/service environment. Set
+   `NATIVE_TEST_SERVICE_PATH` to that exact value, not a login-shell assumption,
+   then run in the isolated verification shell:
+
+   ```sh
+   set -eu
+   : "${NATIVE_TEST_SERVICE_PATH:?Select the actual generated service PATH}"
+   env PATH="$NATIVE_TEST_SERVICE_PATH" /usr/bin/env node -p 'process.versions.node'
+   env PATH="$NATIVE_TEST_SERVICE_PATH" /usr/bin/env node -p 'process.execPath'
+   ```
+
+   The version must exactly match generated `nodeVersion`; retain the executable
+   path, version and service PATH. Stop if they differ. Install/select the real
+   supported Node executable in the service environment; do not insert a shim,
+   relax the guard or assume another major-24 process proves this requirement.
+   The host owner then installs the generated setup/policies at their declared
+   `/opt/kubeclaw/native` and `/etc/kubeclaw` paths, applies the generated kubelet
+   reservations/NRI selection, and runs the generated systemd service on that
+   host. These are host changes, not actions for a shared developer container.
+   Its setup process must stay running in the delegated `setup` subgroup.
+   It creates/verifies both role pools and real node/runtime identity files;
+   a pool-prepared status still requires capacity preflight. Never run the setup
+   script in an arbitrary shell cgroup or weaken a rejected limit/identity.
+3. On that selected host, with named Node read and kubelet `configz` access,
+   run `bash scripts/deploy.sh native-node-preflight "$NATIVE_TEST_POLICY"`.
+   Exit zero and its capacity/policy receipt establish this preflight only.
+   A namespace mismatch, changed Node/kubelet/host, unsupported runtime,
+   direct pool-root process occupancy or reservation/control failure blocks
+   this preflight. It checks host capacity, installed policy/runtime identity,
+   root identity, limits, domain type, counters and writable kill boundary.
+   It does **not** prove that all descendant scopes are empty: an empty root
+   `cgroup.procs` can coexist with running processes in descendant scopes.
+   Retain the first error and host policy/receipt; correct the host, not the guard.
+   Before selecting a live fixture, the host owner must separately establish
+   exclusive fixture ownership and an empty complete role subtree. Retain the
+   scope inventory/ownership reconciliation and the actual role root's
+   `cgroup.events` observation with `populated 0` (the kernel's
+   [hierarchical population signal](https://docs.kernel.org/admin-guide/cgroup-v2.html#un-populated-notification)), taken after stopping admission
+   and while no other writer can launch work. This is separate empty-fixture
+   evidence, not a property inferred from a zero preflight exit. Unknown scopes,
+   foreign work or unresolved ownership block the fixture. Do not remove a
+   descendant or kill a workload whose ownership is not established.
+4. Select the four live-scope fixture inputs in the same shell. Do not guess
+   their contents. `KUBECLAW_WORKER_TEST_CGROUP_ROOT` is the actual empty delegated
+   role pool. `KUBECLAW_WORKER_TEST_LAUNCHER` is the absolute original compiled
+   production launcher. `KUBECLAW_WORKER_TEST_NODE_IDENTITY_FILE` is the trusted
+   mounted node identity. `KUBECLAW_WORKER_TEST_POOL_LIMITS_FILE` is a JSON file
+   containing the `limits` of that prepared pool, not the whole role policy.
+   The host owner supplies it from the verified role-policy `limits` field,
+   without changing values or substituting a test vector. It must
+   describe the same aggregate pool, including CPU, memory and task controls.
+   These are distinct from plugin isolation's `KUBECLAW_TEST_CGROUP_ROOT`.
+
+   ```sh
+   set -eu
+   : "${KUBECLAW_WORKER_TEST_CGROUP_ROOT:?Select the prepared test pool}"
+   : "${KUBECLAW_WORKER_TEST_LAUNCHER:?Select the original production launcher}"
+   : "${KUBECLAW_WORKER_TEST_NODE_IDENTITY_FILE:?Select the trusted test host identity}"
+   : "${KUBECLAW_WORKER_TEST_POOL_LIMITS_FILE:?Select the actual aggregate pool limits}"
+   test -d "$KUBECLAW_WORKER_TEST_CGROUP_ROOT"
+   test -x "$KUBECLAW_WORKER_TEST_LAUNCHER"
+   test -r "$KUBECLAW_WORKER_TEST_NODE_IDENTITY_FILE"
+   test -r "$KUBECLAW_WORKER_TEST_POOL_LIMITS_FILE"
+   command -v systemd-analyze
+   env GOTOOLCHAIN=local go env GOVERSION
+   ```
+
+   Compare GOVERSION with the current central `GO_VERSION` prefixed by `go`.
+   The file/executable checks do not replace the native trust/identity/pool
+   validators. Stop on any missing input or rejected real authority.
+5. For Prism's native Worker tests, additionally set
+   `PRISM_NATIVE_ISOLATED_TEST_POOL=true`, `PRISM_NATIVE_POOL_POLICY_FILE` to the
+   trusted prepared **Prism** role policy, `PRISM_NATIVE_LAUNCHER` to its original
+   trusted launcher, and `PRISM_ENGINE_CONTENT_DIGEST` to the actual engine
+   identity. The supervisor reads limits, ownership root, node/runtime identity
+   and scope from the role policy. Prepare the selected PostgreSQL runtime URL
+   in `PRISM_NATIVE_OPERATION_TEST_DATABASE_URL`, locked Chromium/browser path
+   and native host libraries before selecting browser-backed cases. The harness
+   supplies its fixture-only HMAC configuration and local server; do not inject
+   production trust secrets. Do not use this opt-in to authorize a shared pool.
+
+The fixtures own their child processes and temporary state, not the host's
+identity, service or persistent role pool. A successful native scope check must
+prove final `populated=false`, final counters, disposed ownership and rejected
+replay/capacity overflow. A cleanup error or missing authority is nonzero, not
+an allowed skip. Preserve unresolved ownership and stop admission until the
+host owner reconciles it. After terminal results and retained evidence, the
+host owner retires only the disposable host/pool it provisioned. Do not stop a
+shared pool service or remove its identities as package-test cleanup.
+
+> **Source evidence — native fixture authority**
+>
+> Claim: native tests require actual accounted pools, exact fixture inputs and supervisor authority; rendering a setup bundle is not preparing a host.
+> Implementation: [mandatory live cgroup input](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/tests/verification/reliability/worker-native-scope-live.mts#L19-L20), [live-scope inputs and retained kernel assertions](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/tests/verification/reliability/worker-native-scope-live.mts#L95-L136), [host render bundle and unit](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/scripts/render-native-worker-node.mjs#L9-L70), [host setup/retained service](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/scripts/prepare-native-worker-pools.mjs#L81-L121).
+> Contract or setting: [central Node and separate Ops selections](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/versions.json#L27-L29), [complete-subtree populated observation](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/skills/worker/core/worker/native-resource-observation.ts#L52-L67), [separate unknown-scope recovery guard](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/skills/worker/core/worker/native-worker-ownership.ts#L244-L251), [exact generated Node selection](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/scripts/render-native-worker-node.mjs#L12-L15), [service executable selection](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/scripts/render-native-worker-node.mjs#L49-L56), [exact process Node guard](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/scripts/prepare-native-worker-pools.mjs#L8-L18), [pool controls, not descendant-empty assertion](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/skills/worker/core/worker/native-resource-pool.ts#L33-L61), [direct root occupancy guard](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/skills/worker/core/worker/native-resource-scope.ts#L15-L28), [trusted root/launcher guard](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/skills/worker/core/worker/native-supervisor-authority.ts#L4-L22), [native preflight actual host and Node](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/scripts/native-worker-node-preflight.mjs#L26-L48), [exact NRI Go selection](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/scripts/build-native-worker-nri.mjs#L7-L18), [systemd parser check](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/tests/verification/deployment/native-worker-node.test.mjs#L30-L47), [Prism pool/engine configuration](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/skills/prism/config/native-worker.ts#L53-L84).
+> Test evidence: [Prism isolated-pool harness and owned shutdown](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/skills/prism/tests/native/worker-harness.mts#L14-L36). Status: source-only; no host preparation or test execution is asserted.
+> Revision: `671234b056bf5f5f503e51e8db30f843e781ba6e`.
+> Limit: input preflight and host receipt do not prove fixture completion or deployed trust.
 
 ## Change Buster plans, providers, or result import
 
@@ -572,6 +955,7 @@ fixture, suite, or report adapter.
 For resolver/provider identity changes, run:
 
 ```sh
+set -eu
 npm run verify:test-gate:contracts
 npm run verify:test-gate:provider-registry
 npm run verify:test-gate:report-adapter-registry
@@ -591,7 +975,8 @@ use the commands below only after this preflight.
 
 ### Prepare Buster remote archive fixtures
 
-The remote-runtime, restart, and real-provider fixtures consume GNU tar at
+The Nova progress-scaffold, Buster remote-runtime, restart, and real-provider
+fixtures consume GNU tar at
 `/usr/bin/tar`. From repository root, check that exact executable before
 selecting those routes:
 
@@ -638,7 +1023,16 @@ For BuildKit, Registry, Kubernetes, browser, scanner, or Tailscale provider
 changes, the [suite guide](../reference/buster-suites.md) defines the additional
 local/production route and service prerequisites. Do not replace those checks
 with an unrelated provider's success. Update suite/config/error guides and run
-`npm run docs:buster-guides:check` plus the common documentation chain.
+`npm run docs:buster-guides:check` plus the [documentation-change chain](#documentation-change-chain).
+
+Interpret the Buster route by its changed boundary:
+
+| Command/group | Expected completion and retained output | Failure/skip diagnosis, stop and cleanup |
+| --- | --- | --- |
+| contracts / provider registry / report registry / suite resolver | Each finishes with exit zero and its contract assertions. Keep resolver/provider/report identity output. | First inspect the reported manifest, registration, digest or required report. Stop before execution when resolution fails. These checks do not activate production providers. |
+| plan-runner + changed package test | The original runner completes its plan/evidence/cancellation assertions; the package test completes its own cases. Retain plan/attempt/report output. | Missing sandbox/import setup differs from failed provider/report assertions. Stop dependent remote work. The plan-runner allocates a `test-plan-runner-` temporary root and retains it; keep its exact allocated path and evidence, then remove only that root after caller exit. If its exact path was not captured, retain it for diagnosis; do not select a directory by a broad name/glob. |
+| remote-plan / remote-runtime / remote-import | All selected groups exit zero; retain original source/archive identity, result record/signature and imported decision. | Missing absolute tar, launcher or selected service blocks execution. A transport/result/digest assertion is a test failure. Stop; preserve result identity before retry, never create a fresh effect to hide response loss. |
+| restart / real-provider additions | Both selected fixtures reach terminal assertions with exit zero; keep interruption/provider output. | Archive preflight or child readiness failure is not recovery evidence. Stop and retain first stderr; remove only their owned children/temp archives after evidence retention. |
 
 > **Source evidence — Buster chain**
 >
@@ -660,16 +1054,165 @@ owns the change, `npm run typecheck --prefix skills/prism`, and
 `npm run verify:prism:contracts`. Add adjacent consumer tests when the shape or
 meaning crosses their boundary.
 
-For a storage transaction, also run
-`node tests/verification/contracts/check-prism-postgres-transactions.mts`
-with `KUBECLAW_PRISM_TRANSACTION_TEST_DATABASE` naming a disposable PostgreSQL
-database. PGlite/in-memory success cannot prove real PostgreSQL transaction
-ownership. For native Worker binding, add `verify:prism:native-dispatch` and
-`verify:prism:native-worker` with their native authority prepared. For chart or
+For a storage transaction, follow
+[the transaction fixture procedure](#prepare-the-prism-pooled-transaction-fixture).
+Its own database and retained-state rules differ from native dispatch.
+PGlite/in-memory success cannot prove real PostgreSQL transaction ownership. For native dispatch, follow [the ordered PostgreSQL procedure](#prepare-prism-native-dispatch-databases).
+For native Worker binding, prepare [the native fixture host](#prepare-a-native-worker-fixture-host),
+then add `npm run verify:prism:native-worker`. That route requires
+`PRISM_NATIVE_ISOLATED_TEST_POOL=true`; this is explicit permission to use the
+prepared disposable pool, not proof that the pool is safe. For chart or
 runtime entrypoint changes, add `verify:prism:helm`,
 `verify:prism:runtime-role`, and `verify:prism:images`. Live service/recovery
 checks use the named cluster/provider routes; they remain separate from
 `verify:prism:repository`.
+
+### Prepare the Prism pooled-transaction fixture
+
+This regression checks concurrent pooled transactions, rollback and repeated
+agent/design writes. It does not check deployment-role grants, native Worker
+admission or the separate native-dispatch server. From repository root use an
+owner-selected **fresh disposable PostgreSQL database**. The transaction CI
+route uses PostgreSQL 17. Root npm dependencies and reachable native PostgreSQL
+are required; this fixture does not require unrelated pgvector infrastructure.
+PL/pgSQL is PostgreSQL's procedural language for SQL functions. A trigger calls
+such a function when the specified table action occurs.
+
+1. Its database owner provisions the fresh database and a test connection with
+   authority to create the `prism` schema, tables, constraints/indexes, a
+   PL/pgSQL function and a trigger, and to read/write its test rows. The selected
+   production migration slices omit deployment-role grants. Set
+   `KUBECLAW_PRISM_TRANSACTION_TEST_DATABASE` to that database's real URL.
+   Confirm the database/role identity and that `prism` is absent before any
+   test write. Do not reuse native dispatch's `/prism` database or a shared
+   application's schema. The owner retains the provisioning/teardown method
+   and exact database identity; credentials do not belong in logs. With that
+   URL selected, perform this read-only identity/absent-schema check before
+   the fixture. It uses the root-installed `pg` client and closes its connection.
+
+   ```sh
+   set -eu
+   node --input-type=module <<'NODE'
+   import assert from 'node:assert/strict';
+   import { Pool } from 'pg';
+   assert(process.env.KUBECLAW_PRISM_TRANSACTION_TEST_DATABASE, 'Select the fresh test database');
+   const pool = new Pool({ connectionString: process.env.KUBECLAW_PRISM_TRANSACTION_TEST_DATABASE });
+   try {
+     const identity = (await pool.query('SELECT current_database() AS database, current_user AS role')).rows[0];
+     const schemas = (await pool.query("SELECT nspname FROM pg_namespace WHERE nspname='prism'")).rows;
+     console.log(JSON.stringify(identity));
+     assert.equal(schemas.length, 0, 'Stop: prism schema is already present');
+   } finally { await pool.end(); }
+   NODE
+   ```
+
+   The printed database/role must match the owner's selected target and the
+   absent-schema assertion must pass. A connection or assertion failure stops
+   before writes. This read-only check does not prove creation privileges; the
+   owner must verify the permissions above separately, and the fixture's first
+   failed creation statement remains a failed preparation, not transaction evidence.
+2. Run the unchanged fixture. It unconditionally executes `CREATE SCHEMA prism`
+   and selected production migration slices, then its transaction assertions.
+
+   ```sh
+   set -eu
+   : "${KUBECLAW_PRISM_TRANSACTION_TEST_DATABASE:?Select the fresh transaction fixture database}"
+   node tests/verification/contracts/check-prism-postgres-transactions.mts
+   ```
+
+   Exit zero with its `ok` result establishes the pooled-transaction assertions:
+   one concurrent replacement, rollback without partial rows, repeated design
+   delivery and one claimed agent job. An absent URL raises
+   `REAL_POSTGRES_DATABASE_REQUIRED`; a schema-already-exists error means reused
+   or wrong setup. Connection/create/language privilege errors block the test.
+   An assertion after setup is failed behavior, not permission to erase rows and
+   retry. Stop at the first error; no database cleanup is inferred from exit.
+3. Retain the exact database/server/role identity, source revision, exit code,
+   output and first error. On success the fixture drops its `reject_second`
+   trigger, but retains `prism`, tables/test rows and the
+   `prism.reject_second_direction` function. Its `finally` closes only the pool.
+   A failed run can leave partial migration/table/test state and the trigger if
+   it failed before that explicit trigger removal. Do not claim automatic
+   schema/database cleanup or continue other fixtures on this state.
+4. After all connections have closed and evidence is retained, the database
+   owner tears down only the dedicated database using the recorded provisioning
+   method. No shared schema, unrelated role or production data is cleanup for
+   this fixture. To repeat, provision a fresh database with absent `prism` and
+   check the same permissions again. Retained successful or failed state is not
+   an eligible starting point; `CREATE SCHEMA` will reject it.
+
+> **Source evidence — pooled transaction setup and retained state**
+>
+> Claim: the transaction fixture requires an absent schema and its own creation authority, and retains database objects after success or failure.
+> Implementation: [required URL, unconditional schema and migration slices](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/tests/verification/contracts/check-prism-postgres-transactions.mts#L7-L25), [function/trigger failure injection and successful trigger removal](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/tests/verification/contracts/check-prism-postgres-transactions.mts#L45-L53).
+> Contract or setting: [separate transaction PostgreSQL CI selection](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/.github/workflows/pipeline-reliability.yaml#L196-L223).
+> Test evidence: [transaction/rollback assertions](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/tests/verification/contracts/check-prism-postgres-transactions.mts#L26-L44), [final probes, pool-only cleanup and result](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/tests/verification/contracts/check-prism-postgres-transactions.mts#L75-L79). Status: source-only; no SQL or fixture execution is asserted.
+> Revision: `671234b056bf5f5f503e51e8db30f843e781ba6e`.
+> Limit: pooled transaction assertions do not establish role grants, native admission or cleanup of the selected database.
+
+### Prepare Prism native-dispatch databases
+
+`verify:prism:native-dispatch` runs two processes in order. It is not the
+transaction fixture selected by `KUBECLAW_PRISM_TRANSACTION_TEST_DATABASE` and
+it does not launch a native Worker. Use a dedicated disposable PostgreSQL
+server on loopback with pgvector available. Its administrator must be able to
+create the database, login roles, extension and schema/grants. Initially it
+must have only the non-template `postgres` database and no user role other than
+the connected administrator; the first test refuses any other user database or
+role. Do not use the transaction CI database or any populated/shared server.
+
+1. The database owner provisions this empty server and records its exact
+   loopback host/port and lifecycle/cleanup authority. Set
+   `PRISM_NATIVE_OPERATION_TEST_ADMIN_URL` to its administrator connection to
+   `/postgres`. Keep the credential out of retained transcripts. Ensure its
+   authentication allows the subsequently created roles to log in with their
+   fixture passwords; do not point these test identities outside this server.
+2. Set `PRISM_NATIVE_OPERATION_TEST_DATABASE_URL` independently to the same
+   server/port, database `/prism`, user `prism_runtime`, password
+   `native-operation-runtime`. The first test creates that database and the
+   `prism_migrator`, `prism_runtime`, `prism_readonly` roles with
+   `native-operation-migrator`, `native-operation-runtime`, and
+   `native-operation-readonly` passwords. They are fixed disposable fixture
+   credentials, never production identities. Its child environment does not
+   export this URL to the second process.
+3. Check that both variables are selected, then run the maintained chain.
+
+   ```sh
+   set -eu
+   : "${PRISM_NATIVE_OPERATION_TEST_ADMIN_URL:?Select the dedicated empty loopback server}"
+   : "${PRISM_NATIVE_OPERATION_TEST_DATABASE_URL:?Select prism_runtime on that same server and /prism}"
+   npm run verify:prism:native-dispatch
+   ```
+
+   The first test checks empty-server guards, creates roles/schema, migrates,
+   checks concurrent reservation, writer death and durable receipt replay.
+   The second checks the runtime login and real loopback transport refusal,
+   retained attempt identity and SQL rejection of replacement. Exit zero with
+   both tests completed is the required result. A refused Worker connection is
+   an asserted negative case, not a failed test when its assertion passes.
+4. Retain both test summaries and the first failure/skip, database/server
+   identity and migration observation. Stop if the first process fails; the
+   npm `&&` chain does not start the second. An empty-server/role guard means
+   wrong or reused setup. Connection, extension or privilege errors mean
+   database preparation failed. An assertion after preparation is a test
+   failure, not permission to rerun setup against retained state.
+5. The tests close connections and remove their own temporary files, but retain
+   `prism`, all three roles and SQL rows. Keep that database between the two
+   processes. After results and evidence are retained, its owner disposes only
+   the dedicated server/data using the provisioning method from step 1. To
+   repeat the full chain, provision a fresh empty server: repeating the first
+   test on the retained one fails its guards. To investigate the second test,
+   preserve the first test's state and real runtime URL; do not erase rows to
+   force a pass.
+
+> **Source evidence — ordered native dispatch**
+>
+> Claim: the two tests have separate admin/runtime authorities and retain database state between processes.
+> Implementation: [admin guards, creation and migration](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/skills/prism/tests/native/operation-journal.mts#L19-L42), [journal connection/temp cleanup](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/skills/prism/tests/native/operation-journal.mts#L57-L61).
+> Contract or setting: [runtime URL/user/database guards](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/skills/prism/tests/native/operation-http.mts#L15-L19), [role credentials/extension/grants](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/skills/prism/server/database-roles.ts#L43-L58), [ordered npm command](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/package.json#L292-L292).
+> Test evidence: [real refusal, retained identity and temp cleanup](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/skills/prism/tests/native/operation-http.mts#L21-L47). Status: source-only; no database or command execution is asserted.
+> Revision: `671234b056bf5f5f503e51e8db30f843e781ba6e`.
+> Limit: real SQL/refusal checks do not prove a running native Worker or live design delivery.
 
 The service commands below run from repository root after configuration:
 
@@ -684,14 +1227,23 @@ with explicit ports and access restrictions. Use [Prism Studio
 operation](../use/prism-studio.md) for exact credential creation, deployment,
 health, and cleanup. Do not start Worker without native prerequisites or add an
 in-process production fallback. Retain stderr, service identities, document
-revision, operation/job IDs, and durable failure evidence. Use loopback Node
-inspection only for local debugging. Stop your own listeners through their
+revision, operation/job IDs, and durable failure evidence. Use the concrete Prism caller in
+[the debug map](#debug-a-component-through-its-local-caller) for local debugging. Stop your own listeners through their
 signal path and confirm exit before removing disposable stores.
 
 Update the affected Prism architecture/operator guide and run
-`npm run docs:prism-guides:check` plus the common documentation chain.
+`npm run docs:prism-guides:check` plus the [documentation-change chain](#documentation-change-chain).
 A new API or stored field also needs contract compatibility and upgrade/rollback
 rules; a successful fresh-database test does not cover old stored data.
+
+Interpret Prism checks and service starts separately:
+
+| Command/group | Expected completion and retained output | Failure/skip diagnosis, stop and cleanup |
+| --- | --- | --- |
+| selected component test + typecheck + contracts | Every selected test family completes with no failed/required skipped case and both contract/type checks exit zero. Retain generated-validator diff. | An invalid schema/generated validator or package import blocks consumers; an assertion is a component failure. Stop adjacent/native checks until diagnosed. Do not infer live readiness from PGlite. |
+| transaction / native-dispatch / native-worker | Transaction needs its own fresh DB, absent `prism` schema and creation privileges; it retains schema/function/tables/rows and possible failed trigger state. Dispatch needs both ordered SQL authorities; Worker needs the opted-in original host/pool. Keep individual test/host/database results. | Missing variable or authority is failure/unexecuted, not a skip to count as success. Native cleanup failure stops admission. Use the database/host procedures for retained state and repeat rules. |
+| helm / runtime-role / images | Each selected root command exits zero; keep template, role membership or exact image results by command. | Missing Helm/Docker/image access is prerequisite failure; wrong selected member or image input is assertion failure. Stop before service/live claims. Do not delete retained role/image identities. |
+| Control / built Studio / native Worker start | Process remains at its configured listener only after accepted configuration; check the application route and dependency readiness from the linked operator procedure. Retain stderr and identity/request IDs. | Config/DB/trust/ownership error or early child exit is failed startup. Listening alone is not functional success. Stop only your listeners, confirm exit, then remove owned disposable stores; preserve unresolved Worker records. |
 
 > **Source evidence — Prism startup and selection**
 >
@@ -712,6 +1264,7 @@ blobs. Select the correct owner before testing.
 For plugin registry changes, run:
 
 ```sh
+set -eu
 node tests/verification/contracts/check-plugin-system-v2-registry.mjs
 node tests/verification/contracts/check-plugin-system-v2-import-safety.mjs
 node tests/verification/contracts/check-plugin-system-v2-installation.mjs
@@ -725,11 +1278,12 @@ an existing digest, activation denial, replacement, and removal with retained
 state. Add checkpoint/recovery fixtures when registry state can survive a
 restart. Use [Plugin Runtime](../understand/plugin-runtime.md) and the changed
 [package guide](plugin-catalogue/README.md); run `docs:core-guides:check` and the
-common documentation chain.
+[documentation-change chain](#documentation-change-chain).
 
 For local OCI Registry storage changes, use:
 
 ```sh
+set -eu
 npm run verify:registry-local:storage
 npm run verify:registry-local:native
 ```
@@ -743,6 +1297,14 @@ from a writable build registry. Use [platform operations](../understand/platform
 and [data ownership](../understand/data-and-state.md) for that distinction.
 Do not run garbage collection on a live writer or discard referenced rollback
 images. Test an unavailable exact image digest rather than substituting a tag.
+
+Interpret the two Registry routes independently:
+
+| Command/group | Expected completion and retained output | Failure/skip diagnosis, stop and cleanup |
+| --- | --- | --- |
+| plugin registry / import safety / installation / ownership | Every selected script exits zero after its registry/import/install assertions. Retain registration/activation denial output. | First distinguish missing sandbox/host setup from wrong identity/import/capability assertions. Stop; retain fixture state on failure and remove only its owned temporary tree after process exit. |
+| OCI storage | Exit zero for selected storage/manifest assertions; no server or cluster proof. | Wrong configuration/manifest is a failed assertion. Stop before using its render as retention evidence; no production cleanup applies. |
+| OCI native | Original Distribution starts on loopback, and write/restart/offline-GC assertions complete with exit zero. Retain actual binary/version and test summary. | Missing `KUBECLAW_REGISTRY_BINARY`, wrong version or early server exit blocks proof; inspect first stderr. Test closes its own server/removes temp storage; never run its GC against a live writer. |
 
 > **Source evidence — Registry distinction**
 >
@@ -765,6 +1327,7 @@ adapter, provider, and report boundaries.
 For a helper/type/portable-value change, run:
 
 ```sh
+set -eu
 npm run plugin-system:sdk:check
 npm run plugin-system:sdk:build
 npm test --workspace @kubeclaw/plugin-sdk
@@ -784,15 +1347,29 @@ with a closed `additionalProperties: false` schema.
 Preserve exact digest encoding/version for retained values. A runtime identity
 change is not a package patch merely because types compile. Add historical
 fixture bytes and an explicit translation or safe rejection rule before release.
-Update the API explanation, contract/example pages, generated references, and
-validate the published commands, links, and generated reference output. This handbook routes SDK work; it does not replace
-a complete API export reference.
+Update the contract/example pages and generated references, then complete the
+[documentation-change chain](#documentation-change-chain). Update the canonical
+[SDK reference](../reference/sdk.md) and its
+[complete export/member inventory](../reference/sdk-exports.md) for changes to
+either entrypoint, public helpers/types/testing APIs, JSON and digest meaning,
+source identity, compatibility or rejection behavior. SDK maintainers own the
+product rules; documentation automation owns reference discovery and generation.
+The extension contracts do not replace this API reference. This handbook owns
+the contributor procedure, not a second manual export list.
+
+Interpret the SDK chain at each boundary:
+
+| Command/group | Expected completion and retained output | Failure/skip diagnosis, stop and cleanup |
+| --- | --- | --- |
+| SDK check → build | Freshness check exits zero for generated bytes; build exits zero and emits untracked declarations in SDK `dist`. | Stale generation requires canonical schema/generator; TypeScript errors need their source/consumer fix. Stop; retain diff/logs and remove only owned build output. |
+| SDK package test | Exit zero means public-value assertions completed; retain the actual assertion output. | Rejected value/digest mismatch assertions differ from missing dependencies. Stop and inspect exact value/encoding before changing historical bytes. No daemon/store cleanup is needed. |
+| verify:sdk:local + ownership | Aggregate completes every named portability/identity/durability/consumer test with no failure/required skip; owner check exits zero. Retain historical fixture and journal errors. | Missing Git/GNU lock blocks retained-state cases. Compatibility assertion failure stops release; retain original bytes and owned fixture evidence before temp cleanup. This is not complete API documentation. |
 
 > **Source evidence — SDK boundary**
 >
 > Claim: public/testing exports, schema generation, and historical compatibility are separate responsibilities.
 > Implementation: [SDK package exports](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/skills/common/plugin-runtime/sdk/package.json#L1-L16), [local compatibility command](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/package.json#L290-L290).
-> Contract or setting: [schema generator](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/scripts/generate-plugin-sdk-types.mjs#L1-L33).
+> Contract or setting: [schema generator](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/scripts/generate-plugin-sdk-types.mjs#L1-L33), [declaration-only build output](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/skills/common/plugin-runtime/sdk/tsconfig.build.json#L9-L16).
 > Validation: run the SDK value checks and portable JSON consumer checks with the required GNU lock executable.
 > Test evidence: no focused test is identified for this claim. Status: source-only; no execution result is asserted.
 > Revision: `671234b056bf5f5f503e51e8db30f843e781ba6e`.
@@ -860,6 +1437,7 @@ qualified host; changing `PATH` or inserting a wrapper does not satisfy this
 fixed executable boundary. Then add:
 
 ```sh
+set -eu
 node tests/verification/contracts/check-pipeline-observability-contracts.mts
 node tests/verification/contracts/check-pipeline-observability-durable-delivery.mts
 node tests/verification/contracts/check-pipeline-observability-durable-attempts.mts
@@ -872,9 +1450,17 @@ backpressure, redaction, interrupted delivery, restart checkpoints, and retained
 readers. Change source and projection compatibility together. Test a missing
 observation as unknown/unavailable, not as success. Update event/store/error
 references, telemetry explanations, and the consuming UI guide. Run
-`docs:platform-specialist-guides:check` and the common documentation chain.
+`docs:platform-specialist-guides:check` and the [documentation-change chain](#documentation-change-chain).
 Stop only the fixture-owned delivery process; retain its authoritative journal
 and checkpoint before removing temporary projections.
+
+Interpret telemetry and observability results before claiming delivery:
+
+| Command/group | Expected completion and retained output | Failure/skip diagnosis, stop and cleanup |
+| --- | --- | --- |
+| telemetry --check + wire tests | Generator comparison and every wire test complete with exit zero, no failed/required skipped case. Keep tool versions and compiler/test errors. | Missing Go/gofmt or source drift blocks interpretation; inspect the first tool/schema diagnostic. Stop; use the authority generator, not an edited expected wire byte. |
+| observer / store / projection / replay tests | Each selected package/integration/reliability case completes; keep correlation, delivery and checkpoint assertions. | A failed ordering/redaction/store-limit assertion is failure, not missing-data success. Stop dependent reader claims; retain authoritative fixture records before removing derived temporary projections. |
+| five pipeline observability scripts | Each completes its actual assertions with exit zero, using the separate absolute Go module route where selected. Retain delivery/attempt/reconciliation/view observations. | Missing absolute Go or locked-module download blocks the cross-language step; assertion/replay mismatch stops the rest. The check cleans its own temporary caches; do not delete a deployed spool/journal or checkpoint. |
 
 > **Source evidence — telemetry generation and reconciliation**
 >
@@ -898,6 +1484,7 @@ PVC lifetimes, permissions, and recovery effects belong in its own
 For role-chart or persistent-workload changes, run:
 
 ```sh
+set -eu
 node tests/verification/deployment/check-role-chart.mjs
 node tests/verification/deployment/check-deployment-truth.mjs
 helm lint charts/kubeclaw -f my-values/buster-values.yaml -f tests/fixtures/helm/runtime-registry.yaml
@@ -914,6 +1501,7 @@ about a specific storage backend without cluster evidence.
 For release selection/Argo routing, run:
 
 ```sh
+set -eu
 node --test tests/verification/deployment/gitops-continuous.test.mjs tests/verification/deployment/gitops-release.test.mjs tests/verification/deployment/code-release.test.mjs
 node --test tests/verification/deployment/release-configuration.test.mjs tests/verification/deployment/deployment-release.test.mjs
 npm run versions:check
@@ -929,10 +1517,18 @@ uncertain state. Render success cannot establish network enforcement or restore.
 
 Update install/configuration/maintenance pages and generated values through
 their own generators. Run `docs:inventory:config:check`,
-`docs:inventory:local-helm:check`, and the common documentation chain after
+`docs:inventory:local-helm:check`, and the [documentation-change chain](#documentation-change-chain) after
 those generators are current. Remove only disposable render output. A GitOps
 rollback selects a prior deployment; it does not delete retained PVCs or restore
 database contents.
+
+Interpret each local Chart/GitOps command before rollout:
+
+| Command/group | Expected completion and retained output | Failure/skip diagnosis, stop and cleanup |
+| --- | --- | --- |
+| role chart / deployment truth / Helm lint | All exit zero for the selected role/configuration assertions. Retain the actual profile/tool versions and diagnostics. | Missing Helm differs from template/object assertions. Stop rendering dependent profiles until repaired. No cluster resource is created by these checks. |
+| Helm template | Exit zero and a newly written render contain the intended selected objects/identities and changed branches. Keep the render/diff. | A failed redirect can leave an empty/partial output file; retain error and do not inspect it as a valid render. After evidence retention remove only your exact disposable render path. |
+| GitOps/code/config/deployment release tests + versions check | All families complete without failed/required skipped cases; versions check exits zero for selected inputs. Retain export/selection/identity errors. | First inspect stale input or exact selection/receipt mismatch. Stop live synchronization/promotion. Fixture temp work is not a production resource or database rollback. |
 
 > **Source evidence — Chart and GitOps route**
 >
@@ -947,12 +1543,35 @@ database contents.
 ## Change Ops MCP
 
 Owner: Ops MCP maintainers. The source entrypoint is
-`tools/ops-mcp/src/server.mjs`; its package has independent dependencies. Run:
+`tools/ops-mcp/src/server.mjs`; its package has independent dependencies.
+Before package tests, install its separate lockfile as described above and check
+the real OpenSSL CLI. The [TLS fixture](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/tools/ops-mcp/test/kubernetes.test.mjs#L12-L17) invokes `openssl req` with `-x509`,
+`-newkey rsa:2048`, `-nodes`, `-days`, `-keyout`, `-out`, `-subj`, and `-addext`
+for a localhost subject alternative name. Node TLS alone is not this tool.
 
 ```sh
+set -eu
+command -v openssl
+openssl version
+openssl req -help
+```
+
+The help must include these options, especially `-addext`. Stop for a missing
+CLI or unsupported option. The fixture creates temporary test keys/certificates,
+closes its loopback TLS server and removes its own temporary directory. Never
+supply a production certificate or cluster credential to make this fixture pass.
+Then run:
+
+```sh
+set -eu
 npm test --prefix tools/ops-mcp
 ```
 
+Exit zero with no failed or required skipped tests establishes the selected
+package assertions. A missing OpenSSL process, invalid fixture certificate or
+child exit before readiness is setup failure; inspect the first stderr/error
+and separate dependency install before rerunning. Keep the actual test summary
+and errors. Do not continue to image/live claims after a failed package test.
 The npm tests cover bearer authentication, HTTP, local startup, diagnostics,
 Kubernetes reads, Hubble, and bootstrap. Read [Ops MCP](../understand/ops-mcp.md)
 for tool semantics, namespaces, error interpretation, and deployment access.
@@ -1045,7 +1664,8 @@ package tests; live RBAC/cluster reads still require the test deployment.
 Keep stderr startup/diagnostic logs and failed-read output. Stop the owned
 process and remove its test bearer file. Do not remove source Kubernetes
 resources as MCP cleanup. Update the Ops page/endpoints/security inventory and
-run `docs:platform-specialist-guides:check` and validate the changed commands, links, and reference output.
+run `docs:platform-specialist-guides:check` and the
+[documentation-change chain](#documentation-change-chain).
 
 > **Source evidence — MCP local and image boundary**
 >
@@ -1069,6 +1689,7 @@ missing document must not become a publication success.
 For Studio, prepare the locked browser, then run:
 
 ```sh
+set -eu
 npm run typecheck --prefix skills/prism
 npm run test:domain --prefix skills/prism
 npm run build:studio --prefix skills/prism
@@ -1097,7 +1718,16 @@ boundary; stop at 404 and require a supported writer-to-authenticated-read test.
 Retain browser reports, screenshots for failing states, request/revision IDs,
 and server logs. Stop only the test-owned Vite/nginx process and preserve the
 source data. Update the UI's operator and extension guides; run the relevant
-Prism or platform guide check and common documentation chain.
+Prism or platform guide check and the [documentation-change chain](#documentation-change-chain).
+
+Interpret UI outcomes and retained output:
+
+| Command/group | Expected completion and retained output | Failure/skip diagnosis, stop and cleanup |
+| --- | --- | --- |
+| Studio typecheck / domain | Both complete with exit zero and no failed/required skipped case. Keep validator diff and domain/type errors. | Invalid generated schema/type or operation assertion stops build/browser claims; diagnose that first. |
+| Studio build | Exit zero produces `dist-studio`; prebuild can regenerate validators. Retain build/validator diff. | Build/prebuild error stops server/browser checks. Partial `dist-studio` is not a valid build. Keep logs, then remove only owned build output. |
+| Studio / remediation browser checks | Node prerequisites and Playwright cases complete; retain failing reports/screenshots and request/revision IDs. | Missing browser/library or wrong port-4190 server is setup failure. A failed browser assertion is UI failure. Stop; close only the owned test server before retry; do not count reused unrelated server output. |
+| Vite dev / Archviewer native | Vite listening supports local editor development, not deployed readiness. Archviewer requires original nginx/OpenSSL and authenticated/negative-read assertions to complete. | Missing source document/404 is not publication success. Keep browser/nginx logs, confirm owned process exit and preserve source documents before temp cleanup. |
 
 > **Source evidence — UI routes**
 >
@@ -1128,7 +1758,9 @@ real scanner/advisory database; the security CI job deliberately downloads real
 Trivy databases. For an image, use `npm run scan:images -- "$SECURITY_TEST_IMAGE"`
 where `SECURITY_TEST_IMAGE` is the exact digest-pinned image under test. Keep
 scanner failure, unavailable database, and detected vulnerability separate.
-A failed scan is not an empty finding set.
+A failed scan is not an empty finding set. The scan script retains reports in
+`dist/trivy` by default (or `KUBECLAW_TRIVY_REPORT_DIR`); keep that exact report
+path and its image identity before removing only owned disposable reports.
 
 For a journal performance change, run `npm run verify:nova-journal-scale` on the
 prepared Linux/GNU-lock host. Its default load is 16 MiB; accepted
@@ -1150,6 +1782,7 @@ acceptance limit recorded for this change before the run. Do not choose it
 after observing the result.
 
 ```sh
+set -eu
 npm run test:engine:native-retention --prefix skills/prism -- --max-retained-growth-bytes="$RETENTION_BUDGET_BYTES"
 ```
 
@@ -1160,11 +1793,19 @@ fixture. Keep overload/backpressure, abort/cleanup, invalid input, and repeated
 or concurrent requests in the change-specific proof. Retain failed budgets;
 change a budget only with a recorded requirement and comparable evidence.
 
+Interpret security/performance results without changing their acceptance inputs:
+
+| Command/group | Expected completion and retained output | Failure/skip diagnosis, stop and cleanup |
+| --- | --- | --- |
+| capability/isolation tests / scanner | Selected checks complete with exit zero and no required skip. Scanner result is bound to the exact selected image and available advisory data. | Missing launcher/cgroup/scanner/database is setup failure; denial/budget/security finding is its own result. Stop; retain denial/error reports and digest. Never turn unavailable scan into zero vulnerabilities. |
+| journal scale | Exit zero means replay/append/tail assertions and its fixed coarse append ceiling completed; retain load/elapsed/environment data. | Missing GNU lock or failed ceiling/assertion stops comparison. Preserve the failure; the fixture removes its owned temporary root, not deployed journals. |
+| Prism native retention | Exit zero means three measurement windows stayed within the predeclared parent-retention budget. Keep budget, window values and browser/tool identity. | Missing explicit GC/browser or invalid budget blocks measurement. Budget exceedance is regression evidence, not permission to choose a larger budget after the run. Keep failure and close only owned capture/browser resources. |
+
 > **Source evidence — security and scale limits**
 >
 > Claim: scanner data and journal scale checks require real dependencies and have bounded proof.
-> Implementation: [real security database setup](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/.github/workflows/pipeline-reliability.yaml#L174-L194), [journal load, timing and cleanup](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/tests/verification/contracts/check-nova-journal-scale.mts#L7-L37).
-> Contract or setting: [required predeclared retention budget](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/skills/prism/integration/engine-capture-retention.mts#L10-L29), [retention measurement and limit](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/skills/prism/integration/engine-capture-retention.mts#L98-L136), [native Worker and Prism performance commands](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/skills/prism/package.json#L32-L37).
+> Implementation: [scanner report and nonzero failure contract](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/scripts/scan-runtime-images.sh#L118-L145), [real security database setup](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/.github/workflows/pipeline-reliability.yaml#L174-L194), [journal load, timing and cleanup](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/tests/verification/contracts/check-nova-journal-scale.mts#L7-L37).
+> Contract or setting: [required predeclared retention budget](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/skills/prism/integration/engine-capture-retention.mts#L10-L29), [retention measurement and limit](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/skills/prism/integration/engine-capture-retention.mts#L98-L136), [explicit-GC retention command](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/skills/prism/package.json#L31-L31).
 > Prerequisite: journal scale checks require GNU `flock`. Verify that executable before measuring, and retain the actual timing, exit status, and output.
 > Test evidence: [journal load, timing and cleanup](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/tests/verification/contracts/check-nova-journal-scale.mts#L7-L37). Status: source-only; no execution result is asserted.
 > Revision: `671234b056bf5f5f503e51e8db30f843e781ba6e`.
@@ -1231,15 +1872,72 @@ identify different things. Do not use one as proof of the others.
 
 For a selected tool/base change:
 
-1. Change `versions.json` and inspect every affected image/tool consumer.
-2. Run `npm run versions:sync`. This updates generated versions and runtime
-   tool locks; it is a write command and can need the updater's network inputs.
-3. Run `npm run versions:check` and
-   `node --test tests/verification/deployment/versions.test.mjs tests/verification/deployment/runtime-tool-locks.test.mjs`.
-4. Run the changed component/image/native check. A version generator does not
-   prove that the selected executable exists or works on both architectures.
-5. Update compatibility, operator, and release explanations before proposing
-   the change. Keep old identities available while recovery still references them.
+1. Change `versions.json` and inspect every affected image/tool consumer. Save
+   the pre-update diff so that you can distinguish your authored change from
+   generated output.
+2. Prepare the conditional lock-resolution route **before** synchronization.
+   The command first writes version-derived inputs, then updates runtime-tool
+   locks. If receipt input/output hashes still agree, the lock updater returns
+   without running uv or Go. A stale/missing receipt or changed tool input
+   enters actual resolution: `uv pip compile` resolves Python 3.11 binary-wheel
+   locks through PyPI for x86_64 and aarch64; Go resolves/downloads its selected
+   tool modules. Prepare network access to those selected package sources.
+   The repository does not select a uv version; use a real uv CLI that supports
+   the updater's options, and retain its version. Do not invent a pinned uv
+   installation or substitute pip for this route.
+
+   ```sh
+   set -eu
+   command -v uv
+   uv --version
+   uv pip compile --help
+   command -v go
+   env GOTOOLCHAIN=local go version
+   node --input-type=module -e 'import fs from "node:fs"; console.log(JSON.parse(fs.readFileSync("versions.json", "utf8")).buildArgs.GO_VERSION)'
+   ```
+
+   Verify support for `--python-version`, `--python-platform`, `--generate-hashes`,
+   `--only-binary`, `--no-annotate`, `--no-header`, `--no-strip-extras`,
+   `--default-index`, and `--constraints`. PATH Go must exactly equal the new
+   selected central `GO_VERSION` (1.26.5 at the cited baseline). Automatic
+   toolchain downloads are disabled by `GOTOOLCHAIN=local`; a merely compatible
+   root-module Go or documentation Go does not satisfy this updater.
+3. Run `npm run versions:sync`. Exit zero must leave consistent version-derived
+   consumers, all Python/Go lock outputs and the receipt. Inspect the complete
+   diff, including `docker/python-tools/*.in`/`*.txt`,
+   `docker/go-tools/requirements.json`, `go.mod`, `go.sum`, and
+   `docker/runtime-tool-locks.json`. An unchanged valid receipt can mean no lock
+   diff; it does not mean the resolution branch was exercised.
+4. On failure, stop before image/build/release steps. The version writer or
+   earlier Python/Go resolution can already have changed files. The updater
+   writes the receipt only after both resolutions succeed; a failed run does
+   not certify partial locks. Retain the partial diff and first error. For
+   `RUNTIME_GO_TOOLCHAIN_NOT_SELECTED`, select the exact Go. For unavailable uv,
+   downloads or architecture mismatch, correct that prerequisite or incompatible
+   selection. Retry the same synchronization after diagnosis, then inspect its
+   entire diff again. To abandon the change, restore only your recorded authored
+   and generated changes, never someone else's work or a whole-tree reset.
+5. Run the stable checks in order.
+
+   ```sh
+   set -eu
+   npm run versions:check
+   node --test tests/verification/deployment/versions.test.mjs tests/verification/deployment/runtime-tool-locks.test.mjs
+   ```
+
+   Exit zero with both test families completed proves their consistency
+   assertions. `RUNTIME_TOOL_LOCK_DRIFT` or stale version output requires a
+   successful reviewed sync, not a manual receipt edit. No required skip or
+   missing command is a completed check. Retain exit/logs and generated diff;
+   updater temporary constraints are removed by its `finally` cleanup.
+6. Run the changed component/image/native check. A version generator does not
+   prove that the executable works on both architectures. Update compatibility,
+   operator/release explanations and the
+   [documentation-change chain](#documentation-change-chain). Keep old identities
+   available while recovery still references them.
+
+The conditional updater and partial-write boundary are defined by
+[receipt fast path and update order](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/scripts/runtime-tool-locks.mjs#L72-L86), [uv platforms/options and exact Go](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/scripts/runtime-tool-locks.mjs#L36-L69), and [sync command sequencing](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/package.json#L283-L284). This describes expected source behavior, not an observed updater run.
 
 A contract change needs a declared compatibility decision. Preserve supported
 old schema versions and retained byte encodings, or add a new version with a
@@ -1263,6 +1961,7 @@ apply it. A release PR is therefore not always a harmless metadata-only change.
 For release-tool changes, run:
 
 ```sh
+set -eu
 node --test tests/verification/deployment/release-images.test.mjs tests/verification/deployment/oci-image-identity.test.mjs tests/verification/deployment/release-configuration.test.mjs tests/verification/deployment/code-release.test.mjs
 node --test tests/verification/deployment/gitops-continuous.test.mjs tests/verification/deployment/gitops-release.test.mjs
 ```
@@ -1281,6 +1980,14 @@ remove resources retained by `prune=false`. Once an incompatible data write or
 migration crosses its irreversible boundary, selecting old code is insufficient.
 Stop and use the owning store's proven recovery path; the current platform
 [recovery limits](../use/recovery.md) still apply.
+
+Interpret release-tool fixtures separately from release operations:
+
+| Command/group | Expected completion and retained output | Failure/skip diagnosis, stop and cleanup |
+| --- | --- | --- |
+| receipt/image/config/code-release tests | Every selected family completes without failed/required skipped cases; retain exact identity/checksum/materialization diagnostics. | Missing Helm/Git is setup failure; rejected receipt/digest/signature or selection is failed assertion. Stop promotion; never substitute a tag/new image for an unavailable old digest. |
+| continuous / release GitOps tests | Both complete with exit zero; local selection/export behavior is checked. Keep test summaries and diffs. | A partial export or retained-selection assertion fails the route. Stop; remove only fixture-owned temporary outputs after retaining failure, not installed resources. |
+| actual promotion / rollback | Requires its distinct authorized workflow/identity, retained receipts and maintenance health/data checks. Retain run/job results and selected deployment commit. | Missing artifact, cancelled workflow, failed scan or irreversible data change blocks release/recovery. Use the linked maintenance/recovery stop rules; local tests are not authorization or deployed success. |
 
 > **Source evidence — version, receipt, promotion, rollback**
 >
@@ -1306,7 +2013,7 @@ source inventory and an authored explanation must each remain current.
 | --- | --- | --- |
 | Nova reducer, recorder, recovery, graph/compiler | [Nova Core](../understand/nova-core.md), this change guide, run/recovery task | Nova + developer experience; Core guide and source/contract checks |
 | Worker envelope, profile, native authority | [Worker Core](../understand/worker-core.md), profiles and recovery | Worker maintainer; Worker contracts/role/native checks and Core guide |
-| SDK schema/export/helper | [extension contracts](contracts.md), public API explanation and examples | SDK maintainer; SDK generation, compatibility, consumer and publication checks |
+| SDK schema/export/helper | [SDK reference](../reference/sdk.md), [export and member inventory](../reference/sdk-exports.md), [extension contracts](contracts.md) and examples | SDK maintainers own the product contract; documentation automation owns the reference and generated inventory. Run SDK generation/compatibility/consumer checks, `npm run docs:sdk:check`, and the documentation-change chain. |
 | Plugin manifest/registration/config | [package catalogue](plugin-catalogue/README.md), supported extension guide | Package + Foundation maintainer; inventory/publication and package checks |
 | Buster plan/provider/fixture/report/error | [Buster suite reference](../reference/buster-suites.md), Buster change guide | Buster maintainer; resolver/provider/import checks and Buster guide |
 | Prism schema/service/domain/data/Studio | [Prism change guide](platform/prism.md), linked mechanism and operator task | Prism maintainer; component/contract/native checks and Prism guide |
@@ -1316,15 +2023,232 @@ source inventory and an authored explanation must each remain current.
 | Ops MCP tool/auth/namespace | [Ops MCP](../understand/ops-mcp.md), trust/endpoints | Ops maintainer; tool inventory, package/image and platform guide checks |
 | UI view/operation/preview | Studio or [Archviewer](../understand/archviewer.md) | UI + source-data owner; browser/native reader and mapped guide checks |
 
-Run `npm run docs:governance:generate` after metadata/source dependencies change,
-then `npm run docs:governance:check`. Refresh generated references through their
-registered generators, not a manual table edit. Run `npm run docs:generate:check`,
-`npm run docs:check:refs`, the affected guide checks,
-`npm run docs:site-boundary:check`, and `npm run docs:publication:check`.
-Use `npm run docs:publication:build` to inspect the actual static output. These
-commands require the declared parser/render environment when their dependency
-chain reaches it. Coordinate generation after source changes are stable; do
-not regenerate while another author changes an authority.
+### Update protected Core source revisions
+
+Use this procedure when a Nova, Worker or Plugin Runtime change makes
+`npm run docs:core-guides:check` report changed source bytes. An **immutable
+revision** is a full Git commit whose stored bytes remain available by its
+40-character SHA. A working-tree diff, branch name or refreshed digest is not
+such a revision. Nova and developer-experience maintainers own the source/guide
+inspection; documentation automation owns common inventories and generation.
+Use an isolated branch with a real configured Git author identity. Do not
+commit another contributor's files or invent identity/remote availability.
+
+The selected checker currently fixes
+`4f089958db97a551f406c157d774bda143a38946` in
+`scripts/check-core-architecture-guides.mjs`. It protects exactly these three
+canonical guides as one source-revision set:
+
+- [Nova Core](../understand/nova-core.md)
+- [Plugin Runtime](../understand/plugin-runtime.md)
+- [Worker Core](../understand/worker-core.md)
+
+Each page's `Evidence revision`, every linked repository source SHA, and the
+checker's `revision` constant must agree. The checker compares **whole linked
+files**, not only the displayed range, with `git show` at that SHA. An unrelated
+line change in a linked file therefore still needs inspection and repinning.
+It also checks required content, link ranges, capability/error explanations and
+navigation. Changing the constant alone cannot establish a correct explanation.
+
+1. Before editing, retain the clean baseline commit and exact original bytes of
+   the changed source/tests, all three guides, this handbook's affected
+   callouts, the checker, `docs/generated/inventory/documentation-source-revision.json`,
+   and generated inventory/reference/map output. Record baseline results. For
+   the lifecycle exercise, the task's `671234b056bf5f5f503e51e8db30f843e781ba6e`
+   remains the original product baseline; it is not the later changed revision.
+2. Inspect the actual changed implementation, its callers, compatibility and
+   test results. Update the affected explanation and diagnostic/recovery
+   instructions. Commit the genuine changed product source and focused tests
+   on the isolated branch. Use `git status --short` and `git diff` to select
+   only intended paths; stage those exact paths, then run `git commit` with a
+   descriptive message. Do not stage a whole shared tree. For the bounded Nova
+   exercise, set `NOVA_EXERCISE_TEST_PATH` to the exact focused test file that you
+   authored in this scratch checkout, inspect the staged diff, and commit only
+   that file and the changed recorder. For another Core change, select its
+   actual owning paths instead; do not stage unrelated changes.
+
+   ```sh
+   set -eu
+   : "${NOVA_EXERCISE_TEST_PATH:?Select the exact authored scratch test path}"
+   git add -- skills/nova/core/execution/run-decisions.ts "$NOVA_EXERCISE_TEST_PATH"
+   git diff --cached --check
+   git diff --cached
+   git commit -m "Exercise: bounded administrative retry diagnostic"
+   CORE_SOURCE_REVISION="$(git rev-parse HEAD)"
+   git cat-file -e "$CORE_SOURCE_REVISION^{commit}"
+   git show --stat --oneline "$CORE_SOURCE_REVISION"
+   ```
+
+   Confirm this commit contains the changed source, not merely the old baseline
+   or a documentation-only commit. The full SHA is the Core guides' new source
+   authority. Verify every source file linked by all three guides still matches
+   that commit; if another linked source changes, inspect and commit it before
+   selecting the final `CORE_SOURCE_REVISION`. Keep narrow line ranges and
+   meaningful symbol labels after shifts. Never refresh a digest or pin without
+   reading the changed meaning and its callers/tests.
+3. Update all three guides' `Evidence revision` and every repository source URL
+   to this same `CORE_SOURCE_REVISION`, even where that guide's source is
+   unchanged. Preserve correct reasons/limits and update `Last verified` with
+   the actual inspection scope/date, not a fabricated execution claim. Update
+   each affected callout's revision/range and any handbook callout whose source
+   meaning changed. In the scratch branch, update the checker's existing
+   `revision` constant to that same SHA. Keep its equality, content, capability,
+   diagnostic, navigation and range guards intact. Then run:
+
+   ```sh
+   set -eu
+   npm run docs:core-guides:check
+   ```
+
+   Exit zero with its `ok` result means these guards passed locally, not that
+   remote links or product behavior passed. A source-equality failure means
+   the selected immutable source is stale or incomplete; inspect that exact
+   file and repeat steps 2–3. A missing-content/code/capability/range failure
+   needs the real explanation/source fix. Stop before common generation rather
+   than weaken a guard. Record the first error and any partial guide diff.
+4. Commit the inspected checker and authored guide/metadata changes. This
+   second commit is a **documentation authority revision**: it includes the
+   actual current checker/tool/source inputs. It can differ from the Core
+   source SHA because the checker itself changed after step 2. At this commit,
+   all source files linked by the Core guides must still equal their selected
+   Core source bytes. Capture and verify the common authority:
+
+   ```sh
+   set -eu
+   DOCS_AUTHORITY_REVISION="$(git rev-parse HEAD)"
+   git cat-file -e "$DOCS_AUTHORITY_REVISION^{commit}"
+   git diff --exit-code "$DOCS_AUTHORITY_REVISION" -- . ':!docs/generated/**' ':!docs/site/**'
+   git ls-files --others --exclude-standard
+   ```
+
+   The tracked non-generated/non-site source diff must be empty. Inspect the
+   untracked list and stop for any undeclared source/tool input; a generator
+   rejects such inputs outside its two output prefixes. Commit each genuine
+   input before selecting a new authority. Do not pass a dirty candidate as a
+   clean change revision or use the isolated-mutation override for this route.
+   After capturing this immutable authority, refresh handbook callouts that
+   describe the changed checker/tool itself to `DOCS_AUTHORITY_REVISION`, and
+   update the handbook's stated checker selection to the actual
+   `CORE_SOURCE_REVISION`. The three protected guides still use the Core source
+   SHA; the checker implementation's own link can need the later authority SHA.
+   These authored site updates can follow the authority commit because the
+   common source guard excludes `docs/site/`. A further checker/tool/source
+   change cannot: inspect and commit it, then recapture the authority.
+5. Prepare the documentation parser/render tools named above. Refresh the
+   common source inventories in dependency order, using their write modes only
+   after reading any affected authority. The configuration route requires its
+   current local Helm/schema inputs; it is not a product deployment or test.
+
+   ```sh
+   set -eu
+   npm run docs:inventory
+   npm run docs:inventory:local-helm
+   npm run docs:inventory:config
+   npm run docs:inventory:check
+   npm run docs:inventory:local-helm:check
+   npm run docs:inventory:config:check
+   node scripts/docs-generate.mjs --revision "$DOCS_AUTHORITY_REVISION" --update-source-revision
+   npm run docs:generate:check
+   npm run docs:governance:generate
+   npm run docs:governance:check
+   npm run docs:core-guides:check
+   ```
+
+   The explicit generator command writes the common source-revision lock and
+   owned reference output. It must use a real full local commit containing all
+   current source/tool inputs. Its `--check` mode cannot update the lock.
+   Inspect the entire intended inventory/reference/map diff, including partial
+   writes after a failure. Unsupported parser input or a revision mismatch
+   blocks the chain: diagnose and commit the real source/tool correction,
+   reselect the authority, then repeat inventory generation/checks. The local
+   Helm maintenance generator can write `scripts/docs-local-helm-field-authorities.json`,
+   which is a source/tool authority outside the two output prefixes. If its
+   reviewed content changes, stop before the common reference generator,
+   inspect and commit that real authority with step 4, capture the resulting
+   `DOCS_AUTHORITY_REVISION`, then repeat the inventory checks. Do not ignore
+   this non-output diff or keep using the earlier commit. Do not
+   hand-edit generated facts or refresh their digests to hide a failure.
+   Once these steps pass, resume the canonical documentation-change chain below
+   from its stable checks and then its staging/renderer boundary. Retain every
+   real error/skip and generated diff. Commit generated output separately from
+   the source/authority commits; do not mix later source changes into it.
+6. For delivery, the selected source/authority commits must exist at the
+   repository host before their public source URLs can be advertised as
+   available. Local-only scratch commits can support Git/equality/generation
+   observations; their GitHub links remain unavailable until genuine publication.
+   Local Markdown staging is not rendered-site, remote-link or live evidence.
+   If a required remote/renderer environment is absent, stop that part and
+   record it as unverified, not passed. Retain source/authority/output commit
+   identities, check results and source equality before retiring a scratch tree.
+
+> **Source evidence — protected Core guide revision guard**
+>
+> Claim: one hardcoded revision controls the three Core guides, and the checker compares each linked current file with immutable Git source before checking its ranges.
+> Implementation: [shared revision](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/scripts/check-core-architecture-guides.mjs#L9-L10), [Nova guide selection](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/scripts/check-core-architecture-guides.mjs#L20-L23), [Plugin Runtime guide selection](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/scripts/check-core-architecture-guides.mjs#L52-L54), [Worker guide selection](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/scripts/check-core-architecture-guides.mjs#L77-L79), [guide metadata, all link revisions and whole-file equality](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/scripts/check-core-architecture-guides.mjs#L103-L132).
+> Contract or setting: [common generator full-commit selection and lock-write boundary](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/scripts/docs-generate.mjs#L24-L52), [common tracked/untracked source guard](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/scripts/docs-generate.mjs#L54-L69), [required navigation and surface checks](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/scripts/check-core-architecture-guides.mjs#L142-L157); the common generator independently owns `docs/generated/inventory/documentation-source-revision.json` and rejects current source/tool inputs not in its selected full commit.
+> Test evidence: [local terminal guard result fields](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/scripts/check-core-architecture-guides.mjs#L300-L306). Status: source-only; no change-repin execution is asserted.
+> Revision: `671234b056bf5f5f503e51e8db30f843e781ba6e` for the unchanged selected Core checker and the cited common source-revision/write guards. The current common generator has additional source changes; these narrow unchanged guards do not certify its full current implementation.
+> Limit: local equality/metadata success does not prove source URL availability, complete semantic correctness, rendered output or the changed lifecycle task.
+
+### Documentation-change chain
+
+Run this one chain from repository root after the source and reader explanation
+are stable. Component sections add their specific guide/inventory checks; they
+do not define another common chain. Root locked dependencies are required.
+If a selected generator reaches configuration/API discovery, prepare the
+[documentation tools](#add-tools-and-credentials-only-for-the-selected-route)
+and its current source revision first. For a protected Core source change,
+complete [the source-revision procedure](#update-protected-core-source-revisions)
+before these stable checks. A stale revision or unsupported parser input is a
+blocked generation step, not permission to omit the source.
+
+1. Identify the changed source in the generated page map and update its authored
+   explanation and metadata. If metadata or source dependencies changed, run
+   `npm run docs:governance:generate`. If source-derived facts changed, run their
+   registered generator, then `npm run docs:generate` for the affected reference
+   sections. Plugin catalogue/operator matrix changes use
+   `npm run docs:publication:generate`. Do not run write commands for an
+   unrelated prose-only edit. Never hand-edit a generated section.
+2. Inspect the generated diff before continuing. Each write must finish with
+   exit zero and update only its owned facts. A failure can leave earlier files
+   written. Retain the partial diff and first error, fix the source/tool/revision
+   cause, and rerun the same generator. Do not reset another author's files or
+   treat a partial tree as current.
+3. Run the stable read-only checks below in order, stopping at the first error.
+   Run the component's named guide/inventory checks before publication checking.
+
+   ```sh
+   set -eu
+   npm run docs:governance:check
+   npm run docs:generate:check
+   npm run docs:check:refs
+   npm run docs:site-boundary:check
+   npm run docs:publication:check
+   ```
+
+4. Stage the approved Markdown and assets for inspection.
+
+   ```sh
+   set -eu
+   npm run docs:publication:build
+   ```
+
+   This replaces `.tmp/docs-publication` with staged Markdown, approved assets,
+   and `build-report.json`. It does not render HTML or run a site server. Inspect
+   the staged links/assets and report, then inspect the actual renderer's output
+   through [documentation governance](../reference/documentation-governance.md).
+   Staging does not prove rendered anchors, routes, accessibility, search, or
+   browser behavior. If no renderer output is available, retain that explicit
+   unverified result; do not call the Markdown tree a rendered site.
+
+| Step/check | Required result and retained output | First diagnosis and stop/cleanup rule |
+| --- | --- | --- |
+| Metadata/source generators | Exit zero; intended generated page/map changes only. Keep the diff, generator, tool versions and selected revision. | Read the first source/revision/parser diagnostic. Stop before checks on a partial write; repair and rerun. Preserve authored content and unrelated output. |
+| Governance / generated reference checks | Both exit zero; no tracked write in check mode. | A stale-output error requires the owning generator. A missing owner/source route requires its metadata, not a manual map patch. Stop the chain. |
+| Reference / reader-boundary checks | Exit zero with no unresolved link, fragment or internal-reader-content error. | Open the named destination or prose location. Fix that exact defect before retry. They do not prove published HTML. |
+| Publication check | Exit zero for its helper tests and publication-input checks. Retain individual test failures/skips. | A nonzero exit or skipped required test stops staging. Check allowance, metadata and reported source boundary first. |
+| Publication build | Exit zero and a fresh Markdown/assets report in `.tmp/docs-publication`. | A nonzero exit is failed staging, even if old output exists. Retain the report/diff first; remove only this owned staging tree when no inspection uses it. |
+| Actual renderer inspection | Retain the real rendered page/route/anchor results separately. | Missing renderer or failed request means unverified/failed rendering. Never infer it from the staging report. |
 
 Update source callouts with a full committed SHA, a symbol, and a narrow valid
 line range. Check the cited file bytes against the current checkout. A pinned
@@ -1338,12 +2262,21 @@ link cleanup and the declared route redirect before deleting a public page.
 > **Source evidence — maintenance routing**
 >
 > Claim: page metadata supplies ownership and checks while source-derived references remain separate from authored prose.
-> Implementation: [map inputs and check routing](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/scripts/docs-governance.mjs#L8-L63).
-> Contract or setting: [publication source boundaries](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/package.json#L215-L229).
-> Validation: regenerate the affected references, then build the published tree and check its routes and assets.
+> Implementation: [map inputs and check routing](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/scripts/docs-governance.mjs#L85-L105).
+> Contract or setting: [authored/generated page classification](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/scripts/docs-governance.mjs#L63-L80), [Markdown staging and approved asset copy](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/scripts/docs-publication.mjs#L993-L1028).
+> Validation: regenerate affected references and inspect staged Markdown/assets. Inspect actual rendered routes and anchors separately; staging does not provide them.
 > Test evidence: no focused test is identified for this claim. Status: source-only; no execution result is asserted.
 > Revision: `671234b056bf5f5f503e51e8db30f843e781ba6e`.
 > Limit: the map routes known dependencies; it does not prove a semantic explanation complete or an unknown source surface discovered.
+
+> **Source evidence — publication input selection**
+>
+> Claim: publication staging selects explicitly classified regular Markdown pages and separately allowed regular assets; it rejects symlinks and unexpected inputs.
+> Implementation: [publicationPages classification and regular-file guards](https://github.com/datrab/kubeclaw/blob/30824cc555fa2623142752646f26dcc43072b5f7/scripts/lib/docs-publication-assets.mjs#L25-L59).
+> Contract or setting: [separate asset allowance](https://github.com/datrab/kubeclaw/blob/30824cc555fa2623142752646f26dcc43072b5f7/scripts/lib/docs-publication-assets.mjs#L5-L23), [publicationAssets regular-file and allowance guards](https://github.com/datrab/kubeclaw/blob/30824cc555fa2623142752646f26dcc43072b5f7/scripts/lib/docs-publication-assets.mjs#L62-L79).
+> Test evidence: [selected/unexpected-page tests](https://github.com/datrab/kubeclaw/blob/30824cc555fa2623142752646f26dcc43072b5f7/scripts/tests/docs-publication-assets.test.mjs#L67-L85), [unexpected/symlink asset tests](https://github.com/datrab/kubeclaw/blob/30824cc555fa2623142752646f26dcc43072b5f7/scripts/tests/docs-publication-assets.test.mjs#L43-L65). Status: source-only; no execution or rendered result is asserted.
+> Revision: `30824cc555fa2623142752646f26dcc43072b5f7` for this input selector. The earlier staging implementation is separately pinned above.
+> Limit: selecting/copying reader inputs does not create HTML or prove rendered page/route/anchor behavior.
 
 ## Stop rules and unresolved proof
 

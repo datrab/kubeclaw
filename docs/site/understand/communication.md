@@ -42,6 +42,27 @@ flowchart LR
     LiteLLM --> Provider[Vertex embedding provider]
 ```
 
+**Text alternative to the diagram**
+
+Each row names a directed connection. Labels preserve the diagram’s conditions or handoffs; dotted relationships are identified explicitly.
+
+| From | Relationship | To |
+| --- | --- | --- |
+| Nova Prism stage | Directed connection — runtime.dispatch | Nova loopback Envoy 28080 |
+| Nova loopback Envoy 28080 | Directed connection — SPIFFE mTLS | agent-prism Envoy 18082 |
+| agent-prism Envoy 18082 | Directed connection — loopback 18080 | Prism agent bridge |
+| Prism agent bridge | Directed connection — loopback Envoy 28080 then mTLS | Prism Control 8443 to 8080 |
+| Prism Control 8443 to 8080 | Directed connection | Prism PostgreSQL |
+| Prism agent bridge | Directed connection — claim durable job | Prism Control 8443 to 8080 |
+| Prism agent bridge | Directed connection — one OpenClaw CLI process | OpenClaw gateway |
+| OpenClaw gateway | Directed connection — fenced design tool | Prism Control 8443 to 8080 |
+| Prism Control 8443 to 8080 | Directed connection — native attempt through Envoy | Prism Worker |
+| Prism Control 8443 to 8080 | Directed connection — optional acquired corpus | Prism Ingestion |
+| OpenClaw gateway | Directed connection — managed reasoning | OpenAI provider |
+| OpenClaw gateway | Directed connection — memory embeddings | LiteLLM |
+| LiteLLM | Directed connection | Vertex embedding provider |
+
+
 Text version: Nova sends one idempotent request to its loopback Envoy. Envoy
 authenticates the Nova workload to the `agent-prism` Envoy. That proxy forwards
 to the bridge on loopback. The bridge sends the request through its second
