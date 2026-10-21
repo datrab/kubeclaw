@@ -1,0 +1,43 @@
+[
+  {
+    "id": "AP09-buster-lease-reference-20261020",
+    "revision": "113da57a37d25cd45f23d902728e87dcd1770f8c",
+    "changedFiles": [
+      "docs/site/understand/buster-namespace-controller.md"
+    ],
+    "summary": "Complete ownedBusterNamespaceLease recursive readerreference linkedfromcontrollerguide;type,required/default/omission,enum/range/collection,CEL,operatorpolicy,writeownership,readiness,credentials,retention andsafechanges independentlyreviewed.",
+    "limits": [
+      "Documentation/source acceptance only; no live deployment or globally green publication/CI claim.",
+      "No live Kubernetesadmission/DNS/delivery/RBAC/recovery/deletion orglobalpublicationgreenclaim.",
+      "StandardObjectMeta remains upstream;renderedpolicy andcontrollerfallbacks areseparatefromshippedtemplate values."
+    ]
+  },
+  {
+    "id": "AP09-complete-static-reader-search-20261021",
+    "revision": "8f775411fdd8e0232bdd45135accb61f23768f0b",
+    "changedFiles": [
+      "docs/site/understand/buster-namespace-controller.md"
+    ],
+    "summary": "Whole PUB-002: existing positive page/asset allowlists plus actual artifact-local full-text search across all167 canonical reader pages, headings and code/technical identifiers. Browser find/empty/no-JS behavior observed; code and output reviewed.",
+    "limits": [
+      "Only whole PUB-002. Ranked/synonym reader search questions in A912-04 remain unaccepted; substring full-text search is stated honestly.",
+      "No other publication gate or whole documentation package acceptance.",
+      "Local HTML/search output is not external hosting, actual cluster/runtime behavior, rendered Mermaid, source-preview or human screenreader acceptance.",
+      "Global API source/caller discovery still blocked at bundle copier; site boundary still has three unchanged Helm generated-prose diagnostics."
+    ]
+  },
+  {
+    "id": "AP09-complete-responsive-reader-layout-20261021",
+    "revision": "8f775411fdd8e0232bdd45135accb61f23768f0b",
+    "changedFiles": [
+      "docs/config/documentation-diagrams.json"
+    ],
+    "summary": "Whole A91207 responsive reader layout at320/768/1440: navigation,tables,code,27 registered static diagrams,callouts,search remain available without page overflow; focusable internally scrolling regions preserve full content and textual alternatives.",
+    "limits": [
+      "Whole responsive-layout gate only; PUB005/A91206 semantic diagram completeness NOT_READY:16/27 scoped supported,6system and5service proofs incomplete;capacity failures preserved.",
+      "Human screenreader/fresh-role user/hosting/live workflows/global API not accepted by automated browser or byte checks.",
+      "Native table/code/diagram internal horizontal scroll is intentional and focus/keyboard tested; no horizontal PAGE navigation.",
+      "Global bundle-copier and three stale generated Helm phrases remain open."
+    ]
+  }
+]

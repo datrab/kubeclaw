@@ -1,0 +1,6 @@
+{
+  "findings": [],
+  "overall_correctness": "patch is correct",
+  "overall_explanation": "Narrow three-record preservation PASS: AP09-buster-lease-reference-20261020, AP09-complete-static-reader-search-20261021, and AP09-complete-responsive-reader-layout-20261021 retain their accepted boundaries and limits. The sentence split preserves the namespace diagram\u2019s Source verdict; its four sentences contain 5, 6, 8, and 11 words. Refreshed HTML and search contain the correction, and artifact manifests match supplied evidence. Source/preview/fresh-SVG evidence and native-scroll browser observations at 320/768/1440 support preservation. Earlier whole-page browser observations remain baseline evidence only. Source2 corrections remain intact. Diagram Source support remains 17/27, with six system and four service diagrams incomplete; whole PUB005/A91206 remains NOT_READY. No new acceptance count or human AT, fresh-user, global API, runtime, or hosting acceptance is granted. No actionable defect found; no files modified or tests executed.",
+  "overall_confidence": 0.96
+}

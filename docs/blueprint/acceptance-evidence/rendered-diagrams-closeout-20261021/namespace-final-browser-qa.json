@@ -1,0 +1,49 @@
+{
+  "observations": [
+    {
+      "width": 575,
+      "page": "understand/buster-namespace-controller.md",
+      "id": "diagram-aa13d9d4c599db83",
+      "loaded": true,
+      "height": 2044.59375,
+      "pageWidth": 320,
+      "viewport": 320,
+      "textAlternativePresent": true,
+      "questionLabel": "How does a namespace request become controlled Kubernetes workloads?",
+      "keyboardScroll": true,
+      "externalNetwork": false,
+      "javaScript": false
+    },
+    {
+      "width": 575,
+      "page": "understand/buster-namespace-controller.md",
+      "id": "diagram-aa13d9d4c599db83",
+      "loaded": true,
+      "height": 2044.59375,
+      "pageWidth": 768,
+      "viewport": 768,
+      "textAlternativePresent": true,
+      "questionLabel": "How does a namespace request become controlled Kubernetes workloads?",
+      "keyboardScroll": true,
+      "externalNetwork": false,
+      "javaScript": false
+    },
+    {
+      "width": 575,
+      "page": "understand/buster-namespace-controller.md",
+      "id": "diagram-aa13d9d4c599db83",
+      "loaded": true,
+      "height": 2044.59375,
+      "pageWidth": 1440,
+      "viewport": 1440,
+      "textAlternativePresent": true,
+      "questionLabel": "How does a namespace request become controlled Kubernetes workloads?",
+      "keyboardScroll": "not needed",
+      "externalNetwork": false,
+      "javaScript": false
+    }
+  ],
+  "findings": [],
+  "externalNetwork": [],
+  "limit": "Actual SVG loading, widths, native keyboard horizontal scrolling and visible alternative destinations; not semantic edge or human screenreader acceptance."
+}
