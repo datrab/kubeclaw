@@ -6,7 +6,7 @@ Owner: runtime and platform maintainers
 Evidence: contracts/pipeline-test-gate/v1; contracts/pipeline-worker-core/v1; skills/nova/core; skills/worker/core; skills/common/plugins/redis-transport; charts/kubeclaw; charts/prism; tests/verification/reliability
 Evidence revision: `13bff0a18a64e74f2cbbaa1978e746fcdeff0c10`
 Applies to: current Nova, Buster, Prism, Worker Core, specialist, Redis, registry, Git, BuildKit, Tailscale, and SPIFFE paths
-Last verified: original path inspection on 2026-09-21; native restart, Core isolation and observer delivery source details extended on 2026-10-21; no live or native exercise asserted
+Last verified: original path inspection on 2026-09-21; native restart, Core isolation, observer delivery and private-route source details extended on 2026-10-21; no live or native exercise asserted
 
 ## How To Read This Page
 
@@ -131,7 +131,7 @@ individual route's schema or admission rules.
 | OpenClaw observer → Redis | Write agent-observability v1 control or payload events and failed-control dead letters. | `XADD MAXLEN ~` to fixed `pipeline:agent-observability:{control,payload,deadletter}:v1` streams. | Observer Redis credentials and optional TLS; host policy controls which OpenClaw hooks enter the writer. | One queue drains control before payload. Each command has a configured timeout. Control retries use bounded exponential delay; payload writes try once. | Redis retains entries to approximate configured length. Runtime sequence/content suppression reduces duplicate observations, but there is no atomic Redis dedup key and no consumer acknowledgement here. | Separate bounded control and payload queues. A full queue drops the new event for that same queue. Control drain priority does not evict a payload event. | Failed control writes go to the dead-letter stream after bounded retry. If that write also fails, counters and warnings are the only evidence. Telemetry loss never changes lifecycle authority. |
 | Browser → Prism Studio static responder | Load the Studio shell or a built asset. The server route is the method-agnostic SPA fallback `ANY /*`, excluding exact `/health` and `/ready` and the proxied `/v1/*` prefix; `/v1` without the trailing slash is therefore static fallback input. | HTTPS through the private Tailscale Ingress, then local filesystem streaming. Missing files fall back to `index.html`; this path never calls Control. | Tailnet route policy protects external reachability. The static responder itself does not require the Prism session cookie and grants no domain authority; browser API mutations still use the separate `/v1/*` proxy with session and CSRF checks. | There is no application fallback timer or ordering state. The response stream awaits filesystem and socket backpressure; health and API classification precede fallback selection. | Built Studio files are deployment content, not mutable domain state. The fallback writes no database, journal, session, or deduplication record. | Traversal outside the configured root is denied. Content streams without buffering the whole file; limits are filesystem, server, and ingress bounds rather than a route body quota. | Invalid URL encoding returns 400, traversal returns 403, a missing fallback index returns 404, and other I/O failures return 500. Repair or redeploy the static bundle; never infer Control state from a successful shell response. |
 | User → Prism Studio / Control | Browser session, project and revision work, approval, publication. | HTTPS Tailscale Ingress to Studio; Studio proxies the `/v1/*` prefix to Control. | Tailscale identity exchange, signed 15-minute session cookie, CSRF cookie/header for mutations, product-role checks. | Studio proxy timeout; disconnect aborts upstream. Revision CAS orders edits and approval. | PostgreSQL persists domain state. Operation and revision identities reject stale writes. | Request/body limits, pool limits, one publication per locked project path. | Authentication, CSRF, stale revision, validation, or publication evidence failure stops mutation. Reload authoritative revision and retry explicitly. |
-| Private client → Tailscale-published service | Reach Prism Studio, Archviewer, Argo/Ops surfaces, or a temporary Buster fixture. | Tailnet DNS and Tailscale Ingress; Buster exposure returns a typed HTTPS endpoint and lease. | Tailnet device/user ACL plus service auth where present. Archviewer also requires Basic auth. Temporary fixture authority is namespace-lease and capability bound. | Readiness and lease deadlines are service-specific. Exposure must exist before tests use it and release follows consumers. | Platform routes have controller state. Buster exposure persists lease identity; it is not a general durable message queue. | Ingress/service limits and test concurrency. | DNS, certificate, ACL, readiness, or lease failure blocks that consumer. Release or retain according to cleanup policy; never reuse a stale lease URL. |
+| Private client → Tailscale-published service | Reach Prism Studio, Archviewer, Argo CD, or a temporary Buster fixture; the optional Ops SOCKS sidecar is not an inbound publication. | Tailnet DNS and Tailscale Ingress; Buster exposure returns a typed HTTPS endpoint and lease. | Tailnet device/user ACL plus service auth where present. Archviewer also requires Basic auth. Temporary fixture authority is namespace-lease and capability bound. | Readiness and lease deadlines are service-specific. Exposure must exist before tests use it and release follows consumers. | Platform routes have controller state. Buster exposure persists lease identity; it is not a general durable message queue. | Ingress/service limits and test concurrency. | DNS, certificate, ACL, readiness, or lease failure blocks that consumer. Release or retain according to cleanup policy; never reuse a stale lease URL. |
 | Nova / Buster → Git | Clone or fetch source; create a local worktree; commit selected files; merge an exact revision. | Operator-configured Git SSH/HTTPS remote and local filesystem worktrees. No supported local Git-mirror service exists in the current repository. | Deploy key and host trust at Git transport; Core capability grants and workspace owner records for mutation. | Git command deadlines; expected parent and source revision impose order. | Git objects and refs persist. Attempt generation separates worktrees. Commit SHA and owner record bind identity. | Repository size, command output, path count, disk, and lock-wait bounds. | Stale parent, conflict, lock timeout, remote failure, or owner mismatch blocks. Reconcile refs before retry. A managed Git mirror remains roadmap work and has no current fallback contract. |
 | Buster → BuildKit → OCI registry | Build an image, push immutable manifest/layers, verify digest, then let consumers pull it. | BuildKit client protocol to rootless BuildKit; OCI Distribution API to local registry; upstream pulls may use Docker Hub mirror. | Registry client configuration controls endpoints and credentials. Current lab local registry is anonymous HTTP; it is not production-grade HTTPS. | Build and push deadlines are provider settings. Manifest digest binds later verification and pull order. | BuildKit cache and registry blobs persist independently. Content digests deduplicate layers and bind the selected manifest. | Build context, output, cache, disk, concurrent build, and registry limits. | Build, push, digest check, or pull failure fails the node. Retry only after checking whether the digest exists. A mirror miss is not local-registry success. |
 | Workload → SPIRE / Envoy → protected service | Obtain SVID, establish mTLS, and forward verified SPIFFE identity to loopback application HTTP. | SPIFFE Workload API over CSI socket; Envoy mTLS listener and local plaintext application listener. | SPIRE issues workload identity. Envoy validates peer trust domain and SAN. Application accepts forwarded identity only from loopback proxy and an exact peer allowlist. | SVID rotation is handled by workload API/Envoy. Application request deadlines still apply. | No message persistence or deduplication at mTLS. Domain stores retain accepted operations. | Envoy connection/request limits plus application limits. | Missing SVID, invalid SAN, unlisted peer, non-loopback forwarded header, or proxy failure denies the request. Restore identity/proxy; never fall back silently to anonymous remote HTTP. |
@@ -674,6 +674,163 @@ fence, capability, or application-role authorization.
 > **Source evidence — application-side peer proof**
 >
 > [Worker trust accepts one URI identity, validates its form, checks loopback proxy origin, and enforces the exact allowlist](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/worker/core/worker/trust.ts#L1-L52).
+
+### Private routes are not one transport
+
+The checked-in private HTTP publications use the Tailscale Ingress class, but
+have different owners, backend ports and application authentication. Their TLS
+host labels are requested names, not proof of an issued certificate or a live
+Tailnet FQDN. Use the operator-reported Ingress address; no Tailnet suffix, user
+ACL policy or successful route is established by these manifests.
+
+| Publication and owner | Requested host and internal receiver | Application identity and boundary |
+| --- | --- | --- |
+| Argo CD bootstrap | `argocd` in namespace `argocd`; `argocd-server:80`. The bootstrap includes the separate Tailscale Ingress. | Argo CD owns its login and authorization. `server.insecure=true` selects internal HTTP because the private proxy terminates TLS; it is not a statement that the external route should use HTTP. |
+| Prism chart, when `tailscale.enabled` | Selected `prism-studio`; Service `prism-studio:80` → Studio port 8080 in the Prism release namespace. | Static UI and Control's proxied `/v1/*` are different contracts. A page load is not an authenticated API session. Control expects trusted identity headers, a signed session and mutation CSRF; product mode also checks the configured Origin. Prove those proxy headers and the actual Origin before using the route. |
+| Nova Archviewer chart/profile | Selected `nova-architecture`; the chart-named Service on 3456 reaches the Nova-side presentation container on 3456. | Nginx reads `/etc/archviewer-auth/htpasswd`; only `/healthz` bypasses Basic auth. Read-only `/designs` is the Nova workspace presentation subpath, not Prism's approved design authority. Network policy binds the exact owning Tailscale proxy labels and operator namespace. |
+| Broker-owned Buster final preview | Default label `<namespace>-<service>`, or a validated requested label; `buster-final-preview` Ingress routes the declared Prefix path to the lease-bound Service/port. | Tailnet admission and fixture application auth are separate from Buster's capability/lease authority. A broker `Ready` status is not a successful client HTTP or browser check. |
+
+There is no matching inbound Ops route in the Ops Pod chart. Its optional,
+default-disabled Tailscale sidecar uses userspace networking and a SOCKS5 server
+on `127.0.0.1:1055`, with persistent device state and an authkey Secret. That is
+an outbound client facility, not a Tailscale Ingress, Serve configuration or a
+publication of the MCP port. The GitOps Ops application selects this chart;
+listing the Tailscale namespace in its RBAC is not an exposure declaration.
+Do not infer an inbound MCP URL from `tailscale.hostname`.
+
+Source: [Argo private Ingress](https://github.com/datrab/kubeclaw/blob/f88a8c5c56adc2098d73804c85c6f41d7d7a239f/my-values/infra/argocd-tailscale-ingress.yaml#L1-L15),
+[Argo backend TLS boundary](https://github.com/datrab/kubeclaw/blob/f88a8c5c56adc2098d73804c85c6f41d7d7a239f/my-values/infra/argocd-values.yaml#L1-L16),
+[Prism Service](https://github.com/datrab/kubeclaw/blob/f88a8c5c56adc2098d73804c85c6f41d7d7a239f/charts/prism/templates/services.yaml#L1-L6),
+[Prism private Ingress](https://github.com/datrab/kubeclaw/blob/f88a8c5c56adc2098d73804c85c6f41d7d7a239f/charts/prism/templates/services.yaml#L38-L47),
+[selected Prism route](https://github.com/datrab/kubeclaw/blob/f88a8c5c56adc2098d73804c85c6f41d7d7a239f/my-values/prism-values.yaml#L32-L40),
+[Archviewer Ingress and proxy policy](https://github.com/datrab/kubeclaw/blob/f88a8c5c56adc2098d73804c85c6f41d7d7a239f/charts/kubeclaw/templates/archviewer.yaml#L22-L79),
+[selected presentation container](https://github.com/datrab/kubeclaw/blob/f88a8c5c56adc2098d73804c85c6f41d7d7a239f/my-values/nova-values.yaml#L154-L188),
+[Basic auth and health exception](https://github.com/datrab/kubeclaw/blob/f88a8c5c56adc2098d73804c85c6f41d7d7a239f/docker/archviewer.nginx.conf#L1-L21),
+[Ops outbound sidecar](https://github.com/datrab/kubeclaw/blob/f88a8c5c56adc2098d73804c85c6f41d7d7a239f/charts/ops-pod/templates/workload.yaml#L113-L135),
+and [disabled default and SOCKS contract](https://github.com/datrab/kubeclaw/blob/f88a8c5c56adc2098d73804c85c6f41d7d7a239f/charts/ops-pod/values.yaml#L37-L46).
+
+#### Buster exposure request, readiness and release
+
+The test-provider boundary is `kubernetes.exposure`, operations `prepare` and
+`release`, with resource type `kubernetes.exposure` and canonical ID
+`kubernetes-exposure:attempt:<identity>`. Buster does not directly create an
+Ingress as the test workload. Its configured kubectl identity must be able to
+`get` and `patch` the namespace-lease custom resource in the controller
+namespace. The namespace controller owns the Ingress lifecycle; the Tailscale
+operator owns the private proxy and its reported address.
+
+1. The input binds lease name, allowed namespace prefix, Service/port and exact
+   expiry to an existing lease whose namespace is `Ready`. Expired or mismatched
+   authority is rejected. This namespace-ready phase is separate from
+   `status.exposurePhase=Ready`.
+2. The request identity and owner annotations bind the attempt, payload and
+   predecessor chain. Buster uses the lease's `resourceVersion` when requesting
+   `purpose=final-preview` and provider `tailscale-ingress`; a conflict is not
+   permission to overwrite another owner. The optional hostname is a DNS label;
+   the path is bounded and must be an absolute path without query/fragment.
+3. The controller waits for the named Service and ready Endpoints, creates or
+   reconciles the owned Prefix Ingress with the requested TLS label, and waits
+   for its reported hostname/address. Only that observed address becomes the
+   canonical preview URL. It does not invent a public URL from the label.
+4. Buster waits for the same owner and exact observed metadata generation.
+   `readinessTimeoutMs` is required and bounded by configured
+   `maximumExecutionMs`; polling defaults to 1,000 ms. Kubectl calls have their
+   own bounded timeouts. Cancellation, controller failure, owner change or the
+   readiness deadline fails preparation. A late/stale `Ready` is not accepted.
+5. The returned URL must be canonical HTTPS, have no embedded credentials,
+   query or fragment, match the requested path and optional hostname prefix,
+   match `status.exposureHostname`, and fall within configured
+   `allowedHostSuffixes`. Namespace prefixes and host suffixes are independent
+   grants. Runtime DNS, TLS, Tailnet ACL and application response still require
+   the actual intended client path; none is proved by the CRD status alone.
+6. The result contains the lease, namespace, URL/hostname, creation/expiry and
+   an owner-bound `releaseAction`. The `await-readiness` retention mode uses an
+   observed ownership handoff and predecessor chain; it does not authorize an
+   unrecorded replacement or an indefinite endpoint. Consumers retain the
+   returned handoff/lease authority rather than constructing another URL.
+7. Before committed demo readiness, `release` only acts for its recorded owner
+   and request. A superseded owner
+   returns `released=false, superseded=true` and must not remove the successor.
+   Otherwise it CAS-patches purpose back to `gate` and exposure to `off`, waits
+   for the same owner/generation's `Off`, and checks namespace/expiry again.
+   In that pre-readiness state this releases the exposure, not the namespace's
+   separate lifetime. The committed-readiness boundary below is different.
+
+A failed prepare attempts owner-checked rollback with a separate bounded signal
+(up to 15 seconds, capped by the invoker maximum). The controller deletes only
+its owned exposure when it is off. If cleanup or its acknowledgement is
+uncertain, keep the recorded lease/owner and reconcile controller and Ingress
+state before retry; do not delete a newer Ingress or request another lease to
+hide the uncertainty. A private platform route has its own chart lifecycle and
+must not be cleaned up through this temporary-preview release protocol.
+
+#### Committed demo readiness changes the owner and expiry
+
+`await-readiness` is only the preliminary handoff; the demo plan requires it
+before the authenticated controller readiness request. A successful
+`POST /v1/demo-ready` commits `status.demoReadiness` with the bound run/source,
+candidate/result/decision and lease identities, saved exposure specification,
+`previousOwner` and a new `owner=ready:<requestDigest>`. It also commits the
+retained expiry and `status.exposureOwner` using resource-version CAS, then
+reads back and verifies the committed state. A version conflict or uncertain
+commit is not permission to repeat the handoff under a new identity.
+
+The request's `retentionSeconds` defaults to 604,800 seconds (seven days).
+Explicit values must be positive integers within the technical duration/date
+bounds; that bound is not an operational retention recommendation. Stored V2
+state requires the retention field. Only the actual historical V1 state has
+implicit seven-day compatibility. The effective deadline starts at the
+committed readiness time, not the original namespace TTL.
+
+While that committed readiness record is valid, the controller uses its saved
+exposure specification, owner and exposure generation. Patching the ordinary
+`spec.exposure.provider` to `off` does **not** disable the retained route. The
+old annotation-bound invoker `releaseAction` is not the retirement protocol:
+its original expiry can now fail lease validation, and changing its payload
+would change its identity. Do not reuse or rewrite that action to claim release.
+
+Reconcile an uncertain readiness commit through authenticated
+`POST /v1/demo-ready/status` with the same lease name/UID and request ID, and
+verify current committed readiness and its deadline. This controller channel
+is separate from the public preview URL. Where the product-decision feature
+is configured, authenticated, signed `accept` and `extend` decisions bind the
+current subject, generation, expiry and resource version. Acceptance does not
+make the route permanent; only a valid extension chain changes the effective
+retained deadline. A disconnected, conflicting or replay-changed extension is
+not a new lifetime grant.
+
+The controller's expiry reconciliation uses this retained/product deadline,
+fences cleanup and deletes the broker-owned namespace with ownership/CAS checks.
+Authorised deletion of the lease follows its separate deletion/finalizer
+cleanup path; it is not a test-runner exposure release. These source paths do
+not define an early-retire `release` operation for committed readiness.
+Preserve the readiness receipt, subject, owner, generation and effective expiry
+for diagnosis; do not manually edit status, delete a successor Ingress or clear
+ownership records to simulate retirement. Tailnet reachability and content
+acceptance still need their own evidence.
+
+Source: [demo handoff prerequisite](https://github.com/datrab/kubeclaw/blob/f88a8c5c56adc2098d73804c85c6f41d7d7a239f/skills/nova/project/demo.ts#L47-L55),
+[authenticated readiness routes](https://github.com/datrab/kubeclaw/blob/f88a8c5c56adc2098d73804c85c6f41d7d7a239f/cmd/buster-namespace-controller/demo-readiness.go#L125-L173),
+[status reconciliation](https://github.com/datrab/kubeclaw/blob/f88a8c5c56adc2098d73804c85c6f41d7d7a239f/cmd/buster-namespace-controller/demo-readiness.go#L176-L200),
+[retention and atomic readiness commit](https://github.com/datrab/kubeclaw/blob/f88a8c5c56adc2098d73804c85c6f41d7d7a239f/cmd/buster-namespace-controller/demo-readiness.go#L237-L281),
+[retention validation](https://github.com/datrab/kubeclaw/blob/f88a8c5c56adc2098d73804c85c6f41d7d7a239f/cmd/buster-namespace-controller/demo-retention.go#L9-L50),
+[retained owner and generation](https://github.com/datrab/kubeclaw/blob/f88a8c5c56adc2098d73804c85c6f41d7d7a239f/cmd/buster-namespace-controller/demo-readiness-lifecycle.go#L133-L145),
+[retained routing instead of ordinary exposure spec](https://github.com/datrab/kubeclaw/blob/f88a8c5c56adc2098d73804c85c6f41d7d7a239f/cmd/buster-namespace-controller/main.go#L1199-L1212),
+[signed subject and extension checks](https://github.com/datrab/kubeclaw/blob/f88a8c5c56adc2098d73804c85c6f41d7d7a239f/cmd/buster-namespace-controller/demo-product.go#L213-L250),
+[product decision CAS](https://github.com/datrab/kubeclaw/blob/f88a8c5c56adc2098d73804c85c6f41d7d7a239f/cmd/buster-namespace-controller/demo-product.go#L270-L324),
+[effective retained deadline](https://github.com/datrab/kubeclaw/blob/f88a8c5c56adc2098d73804c85c6f41d7d7a239f/cmd/buster-namespace-controller/main.go#L1580-L1590),
+[expiry cleanup](https://github.com/datrab/kubeclaw/blob/f88a8c5c56adc2098d73804c85c6f41d7d7a239f/cmd/buster-namespace-controller/main.go#L319-L336),
+and [deleted-lease finalization](https://github.com/datrab/kubeclaw/blob/f88a8c5c56adc2098d73804c85c6f41d7d7a239f/cmd/buster-namespace-controller/main.go#L704-L717).
+
+Source: [invoker policy and bounds](https://github.com/datrab/kubeclaw/blob/f88a8c5c56adc2098d73804c85c6f41d7d7a239f/skills/buster/engine/test-gates/tailscale-exposure-runtime.ts#L76-L98),
+[wait and bound lease](https://github.com/datrab/kubeclaw/blob/f88a8c5c56adc2098d73804c85c6f41d7d7a239f/skills/buster/engine/test-gates/tailscale-exposure-runtime.ts#L120-L157),
+[rollback and request validation](https://github.com/datrab/kubeclaw/blob/f88a8c5c56adc2098d73804c85c6f41d7d7a239f/skills/buster/engine/test-gates/tailscale-exposure-runtime.ts#L158-L190),
+[prepare and ownership handoff](https://github.com/datrab/kubeclaw/blob/f88a8c5c56adc2098d73804c85c6f41d7d7a239f/skills/buster/engine/test-gates/tailscale-exposure-runtime.ts#L191-L236),
+[URL and release checks](https://github.com/datrab/kubeclaw/blob/f88a8c5c56adc2098d73804c85c6f41d7d7a239f/skills/buster/engine/test-gates/tailscale-exposure-runtime.ts#L237-L280),
+[owner and generation identity](https://github.com/datrab/kubeclaw/blob/f88a8c5c56adc2098d73804c85c6f41d7d7a239f/skills/buster/engine/test-gates/exposure-generation.ts#L1-L21),
+[controller routing specification](https://github.com/datrab/kubeclaw/blob/f88a8c5c56adc2098d73804c85c6f41d7d7a239f/cmd/buster-namespace-controller/main.go#L1199-L1232),
+[readiness and off handling](https://github.com/datrab/kubeclaw/blob/f88a8c5c56adc2098d73804c85c6f41d7d7a239f/cmd/buster-namespace-controller/main.go#L1234-L1305),
+and [Ingress and reported URL](https://github.com/datrab/kubeclaw/blob/f88a8c5c56adc2098d73804c85c6f41d7d7a239f/cmd/buster-namespace-controller/main.go#L1347-L1399).
 
 ### Git, OCI, BuildKit, And Tailscale
 

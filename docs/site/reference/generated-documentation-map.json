@@ -2931,7 +2931,7 @@
       "audience": "platform operator, runtime maintainer, integration developer, security reviewer",
       "owner": "runtime and platform maintainers",
       "appliesTo": "current Nova, Buster, Prism, Worker Core, specialist, Redis, registry, Git, BuildKit, Tailscale, and SPIFFE paths",
-      "lastVerified": "original path inspection on 2026-09-21; native restart, Core isolation and observer delivery source details extended on 2026-10-21; no live or native exercise asserted",
+      "lastVerified": "original path inspection on 2026-09-21; native restart, Core isolation, observer delivery and private-route source details extended on 2026-10-21; no live or native exercise asserted",
       "sourceDependencies": [
         "contracts/pipeline-test-gate/v1",
         "contracts/pipeline-worker-core/v1",
@@ -3589,7 +3589,7 @@
       "audience": "Prism operator, designer, incident responder, platform maintainer",
       "owner": "Prism maintainers",
       "appliesTo": "the current Prism Control, Studio, agent, native worker, ingestion service, and Nova Prism stage",
-      "lastVerified": "2026-10-17 source-only reconciliation against `164d2042d818021d71f267fe4f33d119e0f1d646`; local sample source and focused checks remain historical at `ad73a0df62607ea9634304c3e9518826450a6a25`; no new browser, deployment, or live journey result",
+      "lastVerified": "2026-10-21 source-only reconciliation against `f88a8c5c56adc2098d73804c85c6f41d7d7a239f`; local sample source and focused checks remain historical at `ad73a0df62607ea9634304c3e9518826450a6a25`; no new browser, deployment, or live journey result",
       "sourceDependencies": [
         "skills/prism",
         "skills/nova/plugins/prism-design",

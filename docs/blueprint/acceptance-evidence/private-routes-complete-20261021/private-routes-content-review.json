@@ -1,0 +1,18 @@
+{
+  "findings": [
+    {
+      "title": "[P2] Document the committed demo-readiness retention boundary",
+      "body": "The release description is incomplete for a consumer of `await-readiness`. `skills/nova/project/demo.ts:54` requires that mode for demo handoffs, and `cmd/buster-namespace-controller/demo-readiness.go:256-257` subsequently commits a new status owner, retained exposure specification and expiry. Once committed, `main.go:1200-1206` uses that retained specification regardless of `spec.exposure.provider=off`; `demo-readiness-lifecycle.go:135-144` also derives the effective owner/generation from readiness status. Consequently, the returned annotation-bound releaseAction does not disable this retained route, and the invoker's original-expiry validation can reject release. The page currently describes only the preliminary handoff and then asserts that switching exposure off releases it. Document the subsequent readiness ownership/expiry transition, its reconciliation and retirement boundary, and explicitly limit this release procedure to exposure that has not entered committed demo readiness.",
+      "priority": "P2",
+      "confidence": 0.96,
+      "category": "bug",
+      "code_location": {
+        "file_path": "docs/site/understand/communication.md",
+        "line": 755
+      }
+    }
+  ],
+  "overall_correctness": "patch is incorrect",
+  "overall_explanation": "Whole COM009: sourceAccuracy NOT_READY, readerUsability NOT_READY, quality NOT_READY. The platform publication inventory and outbound-only Ops correction match the inspected charts, selected values and GitOps configuration. The ordinary Buster prepare/release description largely matches the invoker, but omits the downstream committed demo-readiness lifecycle that changes ownership, expiry and release behavior. This prevents whole-scope acceptance under catalogue COM-009 (docs/blueprint/generated/ap09-catalogue.json:1185-1196).\nImpact verdict: PASS for preserving previously accepted COM002/003/004/005/006/007/012 content; the additions and Ops correction introduce no separate regression in those existing contracts. The new retained-exposure claim requires the correction above.\nRead-only source inspection only; no execution or runtime proof. DNS, certificates, ACL enforcement, trusted-header issuance and live reachability remain explicitly unproven. No acceptance granted for COM001/008/010/011, gates, global/runtime behavior, registry receipts or the separately reviewed PrismStudio pin repair.",
+  "overall_confidence": 0.9
+}
