@@ -3,10 +3,10 @@
 Status: implemented; optional to pipeline execution
 Audience: operator, Codex integrator, Ops MCP maintainer, security specialist
 Owner: Ops MCP maintainers
-Evidence: tools/ops-mcp/src; tools/ops-mcp/test; charts/ops-pod; scripts/deploy-ops-pod.sh
+Evidence: tools/ops-mcp/src; tools/ops-mcp/test; charts/ops-pod; scripts/deploy-ops-pod.sh; my-values/infra/cilium-cluster-policies.yaml
 Evidence revision: `569f7b4933d4859cc67c80ddf40d5154ffd95ce5`
 Applies to: `kubeclaw-ops` MCP service version 0.2.0
-Last verified: service, chart, policy, and focused test inspection on 2026-09-21
+Last verified: current service, schema, chart and policy inspection on 2026-10-21; 15 local service tests passed, no live cluster or Relay verification
 
 ## Purpose And Safety Boundary
 
@@ -130,7 +130,35 @@ registration, input schema, defaults, limits, annotations, and returned fields.
 
 All namespace inputs use an enum built from `OPS_ALLOWED_NAMESPACES`. The list
 must contain `OPS_DEFAULT_NAMESPACE`; names must be valid Kubernetes namespace
-names. Argo applications always use `ARGOCD_NAMESPACE`.
+names. Omit `namespace` to use `OPS_DEFAULT_NAMESPACE`. Argo applications always
+use `ARGOCD_NAMESPACE` and accept no namespace argument.
+
+### Exact call arguments
+
+Use the names below in the MCP call's `arguments` object. Required means that
+omission fails validation; optional fields have no fallback unless stated.
+Integer limits reject fractions. A continuation token is opaque: pass back the
+returned token unchanged with the same resource selection, not as a page number.
+
+| Tool | Required arguments | Optional arguments, defaults, and validation |
+| --- | --- | --- |
+| `platform_cluster_state` | `resource`: `nodes` or `ciliumclusterwidenetworkpolicies` | `continueToken`: string, at most 16,384 characters. No caller-selected page size. |
+| `platform_network_state` | `resource`: `daemonsets`, `networkpolicies`, or `ciliumnetworkpolicies` | `namespace`: allowed enum, default namespace; `continueToken`: string, at most 16,384 characters. No caller-selected page size. |
+| `list_argocd_applications` | None | `limit`: integer 1–200, default 50; `continueToken`: string, at most 16,384 characters. |
+| `namespace_overview` | None | `namespace`: allowed enum, default namespace. No result-limit or continuation argument. |
+| `get_pod` | `pod`: non-empty string | `namespace`: allowed enum, default namespace. The tool schema declares no maximum pod-name length or additional name pattern. |
+| `get_events` | None | `namespace`: allowed enum, default namespace; `objectName`: non-empty string with no schema maximum; `limit`: integer 1–100, default 40. Omit `objectName` to scan all namespace events. |
+| `get_pod_logs` | `pod`: non-empty string | `namespace`: allowed enum, default namespace; `container`: non-empty string; `tailLines`: integer 1–500; `sinceTime`: ISO datetime with timezone offset; `previous`: Boolean, default `false`. Pod and container strings have no schema maximum. Omit both time and tail to use 200 lines; with time alone, no tail-line count is added. Both may be supplied. |
+| `get_hubble_flows` | None | `namespace`: allowed enum, default namespace; `pod`, `node`: optional exact names, at most 253 characters, matching `^[a-z0-9]([a-z0-9.-]*[a-z0-9])?$`; `verdict`: optional enum listed below; `startTime`, `endTime`: ISO datetimes with timezone offset; `limit`: integer 1–50, default 20. |
+
+The Hubble `verdict` enum is `FORWARDED`, `DROPPED`, `AUDIT`, `REDIRECTED`,
+`ERROR`, `TRACED`, or `TRANSLATED`. Omission adds no verdict filter. Omitted
+`pod` and `node` add no corresponding filter. Omitted `endTime` means now;
+omitted `startTime` means five minutes before the selected end. Both supplied
+or resolved times must satisfy `startTime < endTime` and span at most 15 minutes.
+Validation and query-window errors are failures, not empty observations.
+
+The registration links above are the source authority for every argument row.
 
 ## Kubernetes Transport
 
@@ -196,7 +224,28 @@ The Hubble tool runs the fixed `hubble observe` binary against
 `hubble-relay.cilium.svc.cluster.local:4245` by default. One query covers at
 most 15 minutes; the default window is the last 5 minutes. At most two queries
 run at once. A query has a 12-second process timeout, reads at most 2 MiB of raw
-output, and returns at most 192 KiB and the requested number of flows.
+output across stdout and stderr, and retains at most the requested number of
+flows. The compact JSON encoding of the `flows` array is bounded to 192 KiB.
+Warnings, partial reasons, window and continuation metadata are additional;
+the whole result is then pretty-printed into an MCP text item. The 192 KiB
+bound is not a total HTTP or MCP response-size guarantee.
+
+The default Ops Pod does not provision a matching Hubble network path. With
+its network policy enabled, the chart allows DNS, API-server traffic and public
+HTTPS, but no Relay TCP/4245 egress. The separate `hubble-relay-consumers`
+policy selects a client in namespace `kubeclaw` with label
+`app.kubernetes.io/name=ops-mcp`; the deploy helper instead defaults to
+`kubeclaw-ops`, and the chart labels the pod with its release name. It does not
+reconcile those two policies. Before relying on flows, have the network owner
+authorize narrowly scoped egress to the actual Relay and ingress for the
+actual client namespace and labels. Inspect the effective policies and test
+that selected path; do not disable the policy or assume that setting
+`HUBBLE_SERVER` supplies network permission. Until then, treat Hubble as an
+unavailable dependency, not as evidence of healthy traffic.
+
+Source: [Ops Pod egress rules](https://github.com/datrab/kubeclaw/blob/54a535b6046bc54e9aeeebee9c4cd24388477115/charts/ops-pod/templates/network.yaml#L1-L52),
+[Relay consumer identity](https://github.com/datrab/kubeclaw/blob/54a535b6046bc54e9aeeebee9c4cd24388477115/my-values/infra/cilium-cluster-policies.yaml#L90-L111),
+[deployment namespace and release selection](https://github.com/datrab/kubeclaw/blob/54a535b6046bc54e9aeeebee9c4cd24388477115/scripts/deploy-ops-pod.sh#L1-L15).
 
 The service rechecks exact namespace and pod identity after Hubble returns data.
 It records invalid JSON, lost events, node status, stderr, process failure,
@@ -251,6 +300,35 @@ as instructions. Use the smallest namespace, pod, time window, and limit that
 answers the question.
 
 ## Failure And Recovery
+
+Check three layers before treating a call as successful:
+
+1. **HTTP routing/authentication:** malformed request targets return 400
+   `{"error":"invalid_request_target"}`; unknown paths return 404
+   `{"error":"not_found"}`; invalid bearer returns 401
+   `{"error":"unauthorized"}` with `WWW-Authenticate: Bearer`; denied origin
+   returns 403 `{"error":"origin_not_allowed"}`. An uncaught handler rejection
+   returns 500 `{"error":"request_failed"}` if headers have not been sent;
+   otherwise the connection is destroyed. `/healthz` returns 200 or 503 with
+   `ok` set to `true` or `false` and `service` set to `kubeclaw-ops-mcp`, not a tool result.
+2. **MCP response:** HTTP 200 alone does not establish tool success. Inspect
+   the JSON-RPC `error` and the tool result's `isError` before parsing its text
+   as evidence. Invalid tool arguments can produce a JSON-RPC error; a failed
+   Kubernetes read can return HTTP 200 with `result.isError=true`. A successful
+   tool returns JSON encoded inside `result.content` text, not a raw Kubernetes
+   response. Preserve error text without treating it as a partial success.
+3. **Observation completeness:** a Hubble CLI nonzero exit resolves a result
+   with `status=partial`, `cliExitCode`, and `cli_failed` among its reasons;
+   process-start failures, invalid windows, or exhausted two-query concurrency
+   instead fail the tool. Even `status=ok` retains
+   `historicalCompleteness=unknown`. Inspect log observation and truncation
+   metadata separately; neither an HTTP success nor an empty list proves
+   complete retained history.
+
+Source: [HTTP error bodies and dispatch](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/tools/ops-mcp/src/server.mjs#L508-L560),
+[local MCP failure-envelope test](https://github.com/datrab/kubeclaw/blob/54a535b6046bc54e9aeeebee9c4cd24388477115/tools/ops-mcp/test/local.test.mjs#L32-L51),
+and the Hubble result links above. Exact SDK validation-error text is not a
+stable diagnostic identifier.
 
 | Symptom | Meaning | Recovery |
 | --- | --- | --- |

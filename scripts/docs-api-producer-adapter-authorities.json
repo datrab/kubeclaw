@@ -67948,7 +67948,7 @@
           {
             "source": "scripts/docs-configuration-inventory.mjs",
             "expression": "import(pathToFileURL(path.join(root, file)).href)",
-            "operation": "async function verifyRuntimeConsumerSemantics() {\n  const importSource = (file) => import(pathToFileURL(path.join(root, file)).href);\n  const studio = await importSource('skills/prism/server/studio-config.ts');\n  assert.equal(studio.loadStudioConfig({}).control.href, 'http://prism-control:8080/');\n  assert.throws(() => studio.loadStudioConfig({ PRISM_CONTROL_URL: '' }), /Invalid URL/u);\n  assert.equal(studio.loadStudioConfig({ PRISM_CONTROL_URL: 'https://control.invalid' }).control.href, 'https://control.invalid/');\n  assert.throws(() => studio.loadStudioConfig({ PRISM_CONTROL_TIMEOUT_MS: '' }), /PRISM_STUDIO_CONTROL_TIMEOUT_INVALID/u);\n  assert.equal(studio.loadStudioConfig({ PRISM_CONTROL_TIMEOUT_MS: '12' }).controlTimeoutMs, 12);\n  for (const value of [undefined, '', 'https://bridge.invalid']) {\n    const environment = value === undefined ? {} : { PRISM_CONTROL_URL: value };\n    const actual = vm.runInNewContext(sourceProgramPart('skills/prism/server/agent-bridge.mjs', 'controlUrl', 'initializer'), { process: { env: environment } });\n    assert.equal(actual, value || 'http://127.0.0.1:28080');\n  }\n  let requested, requestOptions;\n  const post = vm.runInNewContext(`${sourceProgramPart('skills/prism/openclaw-plugin/index.mjs', 'post', 'function')}; post`, {\n    process: { env: { PRISM_CONTROL_URL: 'https://environment.invalid' } }, URL,\n    fetch: async (url, options) => { requested = String(url); requestOptions = options; return { ok: true, json: async () => ({}) }; },\n  });\n  await post('/test', {}, { controlUrl: 'https://plugin.invalid' }); assert.equal(requested, 'https://plugin.invalid/test');\n  assert.equal(Object.hasOwn(requestOptions, 'signal'), false, 'OpenClaw post unexpectedly has a configured timeout');\n  await post('/test', {}, { controlUrl: '' }); assert.equal(requested, 'https://environment.invalid/test');\n  await assert.rejects(() => post('/test', {}, { controlUrl: 'malformed' }), /Invalid URL/u);\n  const bootstrap = await importSource('skills/prism/config/database-bootstrap.ts');\n  const completeBootstrap = { ADMIN_DATABASE_URL: 'postgresql://admin.invalid/db', PRISM_MIGRATOR_PASSWORD: 'm', PRISM_RUNTIME_PASSWORD: 'r', PRISM_READONLY_PASSWORD: 'q' };\n  assert.equal(bootstrap.prismDatabaseBootstrapConfig(completeBootstrap).adminUrl, completeBootstrap.ADMIN_DATABASE_URL);\n  for (const name of Object.keys(completeBootstrap)) assert.throws(() => bootstrap.prismDatabaseBootstrapConfig({ ...completeBootstrap, [name]: '' }), new RegExp(`${name} is required`, 'u'));\n  const observer = await importSource('skills/common/plugins/openclaw-agent-observer/src/config.ts');\n  const observerSource = read('skills/common/plugins/openclaw-agent-observer/src/config.ts');\n  const pairs = [...observerSource.matchAll(/configuredValue\\(config, env, '([^']+)', '([^']+)'\\)/gu)].map((match) => [match[1], match[2]]);\n  const observerEnv = Object.fromEntries(pairs.map(([key, name]) => [name, key === 'enabled' ? 'true' : key === 'redisHost' ? ' redis.invalid ' : key === 'redisPassword' ? ' secret ' : key === 'redisUsername' ? ' user ' : key === 'redisNetworkIsolation' ? 'isolated' : key === 'redisTls' ? 'false' : key === 'hookPriority' ? '0' : key === 'redisPort' ? '6379' : '2']));\n  const resolved = observer.resolveAgentObserverConfig({}, observerEnv);\n  assert.equal(resolved.enabled, true); assert.equal(resolved.redisHost, 'redis.invalid'); assert.equal(resolved.redisPassword, 'secret'); assert.equal(resolved.hookPriority, 0);\n  assert.equal(observer.resolveAgentObserverConfig({ enabled: false, redisHost: '' }, observerEnv).enabled, false);\n  assert.equal(observer.resolveAgentObserverConfig({ redisHost: '' }, observerEnv).redisHost, undefined);\n  assert.equal(observer.resolveAgentObserverConfig({}, { ...observerEnv, OPENCLAW_AGENT_OBSERVER_ENABLED: 'unexpected' }).enabled, false);\n  assert.throws(() => observer.resolveAgentObserverConfig({ enabled: null }, observerEnv), /enabled must be configured/u);\n  for (const [key, name] of pairs.filter(([key]) => !key.startsWith('redis') && key !== 'enabled')) {\n    assert.throws(() => observer.resolveAgentObserverConfig({}, { ...observerEnv, [name]: '' }), /required|configured/u, name);\n    assert.throws(() => observer.resolveAgentObserverConfig({}, { ...observerEnv, [name]: 'not-a-number' }), /integer/u, name);\n    if (key !== 'hookPriority') assert.throws(() => observer.resolveAgentObserverConfig({}, { ...observerEnv, [name]: '0' }), /positive integer/u, name);\n  }\n  assert.throws(() => observer.resolveAgentObserverConfig({}, { ...observerEnv, REDIS_PORT: '65536' }), /between 1 and 65535/u);\n  assert.throws(() => observer.resolveAgentObserverConfig({}, { ...observerEnv, OPENCLAW_AGENT_OBSERVER_MAX_EVENT_BYTES: '5242881' }), /cannot exceed/u);\n  assert.equal(observer.resolveAgentObserverConfig({ redisTls: null }, observerEnv).redisTls, false);\n  assert.equal(observer.resolveAgentObserverConfig({ redisPort: null }, observerEnv).redisPort, undefined);\n  assert.equal(observer.resolveAgentObserverConfig({ hookPriority: ' ' }, observerEnv).hookPriority, 0);\n  assert.throws(() => observer.resolveAgentObserverConfig({ maxQueuePerStream: ' ' }, observerEnv), /positive integer/u);\n  const support = await importSource('skills/common/plugins/openclaw-agent-observer/src/observer-support.ts');\n  assert.deepEqual(support.mergeConfigInputs({ enabled: true, redisHost: 'registration' }, { redisHost: 'service' }, { enabled: undefined, redisHost: '' }), { enabled: true, redisHost: '' });\n  assert.deepEqual(support.mergeConfigInputs({ enabled: true }, { enabled: null }), { enabled: null });\n  for (const [key] of pairs) {\n    const field = flattenSchema(JSON.parse(read('skills/common/plugins/openclaw-agent-observer/openclaw.plugin.json')).configSchema).find((item) => item.path === `$.${key}`);\n    const rule = schemaRuntimeValidationRules('skills/common/plugins/openclaw-agent-observer/openclaw.plugin.json#$.configSchema', field);\n    assert(rule?.accepted && rule.omission && rule.empty && rule.failure, `${key}: inline observer runtime contract is incomplete`);\n    assert.match(rule.omission, /Registration configuration.*service configuration.*hook configuration/u);\n  }\n  const transport = await importSource('skills/common/plugins/openclaw-agent-observer/src/redis-transport.ts');\n  assert.throws(() => transport.resolveRedisTransportConfig({ host: 'localhost', port: 6379 }), /Secure Redis transport policy violation/u);\n  assert.equal(transport.resolveRedisTransportConfig({ host: 'redis.invalid', port: 6379, networkIsolation: 'documented' }).policy.networkIsolation, true);\n  assert.throws(() => transport.resolveRedisTransportConfig({ host: 'redis.invalid', port: 6379, enforceSecureMode: false }), /restricted to localhost/u);\n  const controlConfig = await importSource('skills/prism/server/control-config.ts');\n  const controlEnvironment = { PRISM_SESSION_SECRET: 'session', PRISM_INGRESS_SECRET: 'ingress', PRISM_INGESTION_SECRET: 'ingestion', PRISM_DISPATCH_SECRET: 'dispatch', PRISM_WORKER_SECRET: 'worker' };\n  assert.equal(controlConfig.loadControlServerConfig(controlEnvironment).dispatchSecret, 'dispatch');\n  for (const name of Object.keys(controlEnvironment)) assert.throws(() => controlConfig.loadControlServerConfig({ ...controlEnvironment, [name]: '' }), new RegExp(`${name} is required`, 'u'));\n  assert.throws(() => controlConfig.loadControlConfig({ PRISM_PIPELINE_PREFERENCE_SUBJECT: '' }), /invalid platform pipeline preference subject/u);\n  assert.equal(controlConfig.loadControlConfig({ PRISM_PIPELINE_PREFERENCE_SUBJECT: `user-${'a'.repeat(24)}` }).pipelinePreferenceSubject, `user-${'a'.repeat(24)}`);\n  const spiffe = { ...controlEnvironment, WORKER_TRUST_SPIFFE_ENABLED: 'true', PRISM_TRUSTED_NOVA_SPIFFE_ID: 'nova', PRISM_TRUSTED_WORKER_SPIFFE_ID: 'worker', PRISM_CONTROL_SPIFFE_ID: 'control', PRISM_TRUSTED_AGENT_SPIFFE_ID: 'agent', PRISM_DISPATCH_SECRET: '', PRISM_WORKER_SECRET: '' };\n  assert.equal(controlConfig.loadControlServerConfig(spiffe).dispatchSecret, '');\n  assert.throws(() => controlConfig.loadControlServerConfig({ ...spiffe, PRISM_TRUSTED_NOVA_SPIFFE_ID: '' }), /trust policy is incomplete/u);\n  const ingestionTtl = sourceProgramPart('skills/prism/server/ingestion.ts', 'configuredQuarantineTtl', 'initializer');\n  const ingestionClamp = sourceProgramPart('skills/prism/server/ingestion.ts', 'quarantineTtl', 'initializer');\n  for (const [raw, expected] of [[undefined, 3600000], ['', 60000], ['-1', 60000], ['86400001', 86400000]]) {\n    const configured = vm.runInNewContext(ingestionTtl, { process: { env: raw === undefined ? {} : { PRISM_QUARANTINE_TTL_MS: raw } }, Number });\n    assert.equal(vm.runInNewContext(ingestionClamp, { configuredQuarantineTtl: configured, Math }), expected);\n  }\n  const chartText = read('charts/kubeclaw/templates/deployment.yaml');\n  const healthSource = chartText.slice(chartText.indexOf(\"<<'HEALTH_SCRIPT'\") + \"<<'HEALTH_SCRIPT'\".length, chartText.indexOf('\\n              HEALTH_SCRIPT'));\n  const healthAst = ts.createSourceFile('generated-health.mjs', healthSource, ts.ScriptTarget.Latest, true, ts.ScriptKind.JS);\n  const enabledNode = healthAst.statements.find((statement) => ts.isFunctionDeclaration(statement) && statement.name?.text === 'enabled');\n  assert(enabledNode, 'embedded health boolean helper is missing');\n  for (const [raw, fallback, expected] of [[undefined, true, true], ['', true, true], ['TRUE', false, true], ['yes', false, true], [' true ', true, false], ['unexpected', true, false]]) {\n    const enabled = vm.runInNewContext(`${enabledNode.getText(healthAst)}; enabled`, { process: { env: raw === undefined ? {} : { TEST: raw } } });\n    assert.equal(enabled('TEST', fallback), expected);\n  }\n  const bare = environmentOccurrences('charts/example/templates/workload.yaml', 'env:\\n  - {name: REDIS_HOST, value: redis}\\nscript: |\\n  printf \"%s\" \"$REDIS_HOST\"\\n');\n  assert(bare.some((occurrence) => occurrence.name === 'REDIS_HOST' && occurrence.kind === 'embedded-shell-env'));\n  const ops = await importSource('tools/ops-mcp/src/config.mjs');\n  assert.equal(ops.loadOpsMcpConfig({}).defaultNamespace, 'kubeclaw');\n  assert.throws(() => ops.loadOpsMcpConfig({ OPS_DEFAULT_NAMESPACE: '' }), /OPS_ALLOWED_NAMESPACES/u);\n  const kube = await importSource('tools/ops-mcp/src/kubernetes.mjs');\n  assert.equal(typeof kube.createKubeRequest({ api: 'https://api.invalid' }), 'function');\n  for (const api of ['', 'http://api.invalid', 'https://user:pass@api.invalid', 'https://api.invalid/path', 'https://api.invalid/#fragment']) assert.throws(() => kube.createKubeRequest({ api }), /Invalid URL|HTTPS origin/u);\n  const dispatch = await importSource('skills/common/plugins/runtime-dispatch/src/adapter.ts');\n  const activate = (target) => dispatch.activate({ config: { targets: { sample: target } } });\n  for (const target of [{ endpoint: 'http://127.0.0.1:8080', tokenSecret: 'valid-secret' }, { endpoint: 'https://runtime.invalid', tokenSecret: 'valid-secret' }, { endpoint: 'http://localhost:8080', authentication: 'spiffe-proxy' }]) await activate(target).shutdown();\n  for (const endpoint of ['ftp://runtime.invalid', 'https://user:pass@runtime.invalid', 'https://runtime.invalid/#fragment', 'http://runtime.invalid']) assert.throws(() => activate({ endpoint, tokenSecret: 'valid-secret' }), /RUNTIME_CONFIG_INVALID/u);\n  for (const tokenSecret of ['', '../secret', 'UPPER', 'a'.repeat(129)]) assert.throws(() => activate({ endpoint: 'https://runtime.invalid', tokenSecret }), /RUNTIME_CONFIG_INVALID:tokenSecret/u);\n  assert.throws(() => activate({ endpoint: 'https://runtime.invalid', authentication: 'spiffe-proxy' }), /RUNTIME_CONFIG_INVALID:spiffeProxy/u);\n  const ajv = new Ajv2020({ strict: false }); addFormats(ajv);\n  const openapiSchema = JSON.parse(read('skills/buster/plugins/openapi/schemas/config.schema.json'));\n  const bodySchema = openapiSchema.properties.operations.items.properties.body;\n  assert.equal(ajv.compile(bodySchema)(''), true);\n  assert.doesNotMatch(schemaEmptyBehavior(flattenSchema(bodySchema)[0]), /wrong type/u);\n  assert.equal(schemaType({ properties: { value: { type: 'string' } } }), 'unspecified');\n  assert.equal(ajv.compile({ properties: { value: { type: 'string' } } })(''), true);\n  for (const schema of [{}, { default: 12, description: 'Annotation only' }, { anyOf: [{ type: 'integer' }, {}] }, { items: { type: 'integer' } }]) {\n    assert.equal(ajv.compile(schema)(''), true, 'unconstrained or type-specific keyword wrongly rejected a string');\n    assert.doesNotMatch(schemaEmptyBehavior(flattenSchema(schema)[0]), /wrong (?:declared )?type/u);\n  }\n  const branches = { type: 'string', allOf: [{ minLength: 1 }] };\n  assert.equal(ajv.compile(branches)(''), false);\n  assert.doesNotMatch(schemaEmptyBehavior(flattenSchema(branches)[1]), /wrong type/u);\n  const workspace = fs.mkdtempSync(path.join(os.tmpdir(), 'kubeclaw-openapi-body-contract-'));\n  try {\n    fs.mkdirSync(path.join(workspace, 'repository')); fs.mkdirSync(path.join(workspace, 'evidence'));\n    const provider = await importSource('skills/buster/plugins/openapi/src/provider.js');\n    const invocation = { testIdentity: 'body-empty', configuration: { values: { specFile: 'spec.json', url: 'https://endpoint.invalid', operations: [{ operationId: 'sample', body: '' }] } }, inputs: [], workspace: { repository: 'repository', evidence: 'evidence' }, timeoutMs: 1000 };\n    for (const [requestSchema, expected, expectedCalls] of [[{ type: 'string' }, 'passed', 1], [{ type: 'string', minLength: 1 }, 'failed', 0], [{ type: 'object' }, 'failed', 0]]) {\n      fs.writeFileSync(path.join(workspace, 'repository/spec.json'), JSON.stringify({ openapi: '3.1.0', paths: { '/sample': { post: { operationId: 'sample', requestBody: { required: true, content: { 'application/json': { schema: requestSchema } } }, responses: { '204': { description: 'empty success' } } } } } }));\n      let calls = 0;\n      const result = await provider.provider().execute(invocation, { workspaceRoot: workspace, signal: new AbortController().signal, async invoke(capability, request) { calls++; assert.equal(capability, 'network.http'); assert.equal(request.payload.body, JSON.stringify('')); return { status: 204, body: '', headers: {} }; } });\n      assert.equal(result.outcome, expected); assert.equal(calls, expectedCalls);\n    }\n  } finally { fs.rmSync(workspace, { recursive: true, force: true }); }\n  console.log('PASS actual runtime consumer contracts: Prism source precedence, observer overrides/normalization/guards, Redis security, Ops API origins, dispatch URL/auth/secret identifiers, unconstrained and operation-validated OpenAPI bodies. No network calls or live commands.');\n}",
+            "operation": "async function verifyRuntimeConsumerSemantics() {\n  const importSource = (file) => import(pathToFileURL(path.join(root, file)).href);\n  const studio = await importSource('skills/prism/server/studio-config.ts');\n  assert.equal(studio.loadStudioConfig({}).control.href, 'http://prism-control:8080/');\n  assert.throws(() => studio.loadStudioConfig({ PRISM_CONTROL_URL: '' }), /Invalid URL/u);\n  assert.equal(studio.loadStudioConfig({ PRISM_CONTROL_URL: 'https://control.invalid' }).control.href, 'https://control.invalid/');\n  assert.throws(() => studio.loadStudioConfig({ PRISM_CONTROL_TIMEOUT_MS: '' }), /PRISM_STUDIO_CONTROL_TIMEOUT_INVALID/u);\n  assert.equal(studio.loadStudioConfig({ PRISM_CONTROL_TIMEOUT_MS: '12' }).controlTimeoutMs, 12);\n  for (const value of [undefined, '', 'https://bridge.invalid']) {\n    const environment = value === undefined ? {} : { PRISM_CONTROL_URL: value };\n    const actual = vm.runInNewContext(sourceProgramPart('skills/prism/server/agent-bridge.mjs', 'controlUrl', 'initializer'), { process: { env: environment } });\n    assert.equal(actual, value || 'http://127.0.0.1:28080');\n  }\n  let requested, requestOptions;\n  const post = vm.runInNewContext(`${sourceProgramPart('skills/prism/openclaw-plugin/index.mjs', 'post', 'function')}; post`, {\n    process: { env: { PRISM_CONTROL_URL: 'https://environment.invalid' } }, URL,\n    fetch: async (url, options) => { requested = String(url); requestOptions = options; return { ok: true, json: async () => ({}) }; },\n  });\n  await post('/test', {}, { controlUrl: 'https://plugin.invalid' }); assert.equal(requested, 'https://plugin.invalid/test');\n  assert.equal(Object.hasOwn(requestOptions, 'signal'), false, 'OpenClaw post unexpectedly has a configured timeout');\n  await post('/test', {}, { controlUrl: '' }); assert.equal(requested, 'https://environment.invalid/test');\n  await assert.rejects(() => post('/test', {}, { controlUrl: 'malformed' }), /Invalid URL/u);\n  const bootstrap = await importSource('skills/prism/config/database-bootstrap.ts');\n  const completeBootstrap = { ADMIN_DATABASE_URL: 'postgresql://admin.invalid/db', PRISM_MIGRATOR_PASSWORD: 'm', PRISM_RUNTIME_PASSWORD: 'r', PRISM_READONLY_PASSWORD: 'q' };\n  assert.equal(bootstrap.prismDatabaseBootstrapConfig(completeBootstrap).adminUrl, completeBootstrap.ADMIN_DATABASE_URL);\n  for (const name of Object.keys(completeBootstrap)) assert.throws(() => bootstrap.prismDatabaseBootstrapConfig({ ...completeBootstrap, [name]: '' }), new RegExp(`${name} is required`, 'u'));\n  const observer = await importSource('skills/common/plugins/openclaw-agent-observer/src/config.ts');\n  const observerSource = read('skills/common/plugins/openclaw-agent-observer/src/config.ts');\n  const pairs = [...observerSource.matchAll(/configuredValue\\(config, env, '([^']+)', '([^']+)'\\)/gu)].map((match) => [match[1], match[2]]);\n  const observerEnv = Object.fromEntries(pairs.map(([key, name]) => [name, key === 'enabled' ? 'true' : key === 'redisHost' ? ' redis.invalid ' : key === 'redisPassword' ? ' secret ' : key === 'redisUsername' ? ' user ' : key === 'redisNetworkIsolation' ? 'isolated' : key === 'redisTls' ? 'false' : key === 'hookPriority' ? '0' : key === 'redisPort' ? '6379' : '2']));\n  const resolved = observer.resolveAgentObserverConfig({}, observerEnv);\n  assert.equal(resolved.enabled, true); assert.equal(resolved.redisHost, 'redis.invalid'); assert.equal(resolved.redisPassword, 'secret'); assert.equal(resolved.hookPriority, 0);\n  assert.equal(observer.resolveAgentObserverConfig({ enabled: false, redisHost: '' }, observerEnv).enabled, false);\n  assert.equal(observer.resolveAgentObserverConfig({ redisHost: '' }, observerEnv).redisHost, undefined);\n  assert.equal(observer.resolveAgentObserverConfig({}, { ...observerEnv, OPENCLAW_AGENT_OBSERVER_ENABLED: 'unexpected' }).enabled, false);\n  assert.throws(() => observer.resolveAgentObserverConfig({ enabled: null }, observerEnv), /enabled must be configured/u);\n  for (const [key, name] of pairs.filter(([key]) => !key.startsWith('redis') && key !== 'enabled')) {\n    assert.throws(() => observer.resolveAgentObserverConfig({}, { ...observerEnv, [name]: '' }), /required|configured/u, name);\n    assert.throws(() => observer.resolveAgentObserverConfig({}, { ...observerEnv, [name]: 'not-a-number' }), /integer/u, name);\n    if (key !== 'hookPriority') assert.throws(() => observer.resolveAgentObserverConfig({}, { ...observerEnv, [name]: '0' }), /positive integer/u, name);\n  }\n  assert.throws(() => observer.resolveAgentObserverConfig({}, { ...observerEnv, REDIS_PORT: '65536' }), /between 1 and 65535/u);\n  assert.throws(() => observer.resolveAgentObserverConfig({}, { ...observerEnv, OPENCLAW_AGENT_OBSERVER_MAX_EVENT_BYTES: '5242881' }), /cannot exceed/u);\n  assert.equal(observer.resolveAgentObserverConfig({ redisTls: null }, observerEnv).redisTls, false);\n  assert.equal(observer.resolveAgentObserverConfig({ redisPort: null }, observerEnv).redisPort, undefined);\n  assert.equal(observer.resolveAgentObserverConfig({ hookPriority: ' ' }, observerEnv).hookPriority, 0);\n  assert.throws(() => observer.resolveAgentObserverConfig({ maxQueuePerStream: ' ' }, observerEnv), /positive integer/u);\n  const support = await importSource('skills/common/plugins/openclaw-agent-observer/src/observer-support.ts');\n  assert.deepEqual(support.mergeConfigInputs({ enabled: true, redisHost: 'registration' }, { redisHost: 'service' }, { enabled: undefined, redisHost: '' }), { enabled: true, redisHost: '' });\n  assert.deepEqual(support.mergeConfigInputs({ enabled: true }, { enabled: null }), { enabled: null });\n  for (const [key] of pairs) {\n    const field = flattenSchema(JSON.parse(read('skills/common/plugins/openclaw-agent-observer/openclaw.plugin.json')).configSchema).find((item) => item.path === `$.${key}`);\n    const rule = schemaRuntimeValidationRules('skills/common/plugins/openclaw-agent-observer/openclaw.plugin.json#$.configSchema', field);\n    assert(rule?.accepted && rule.omission && rule.empty && rule.failure, `${key}: inline observer runtime contract is incomplete`);\n    assert.match(rule.omission, /Registration configuration.*service configuration.*hook configuration/u);\n  }\n  const transport = await importSource('skills/common/plugins/openclaw-agent-observer/src/redis-transport.ts');\n  assert.throws(() => transport.resolveRedisTransportConfig({ host: 'localhost', port: 6379 }), /Secure Redis transport policy violation/u);\n  assert.equal(transport.resolveRedisTransportConfig({ host: 'redis.invalid', port: 6379, networkIsolation: 'documented' }).policy.networkIsolation, true);\n  assert.throws(() => transport.resolveRedisTransportConfig({ host: 'redis.invalid', port: 6379, enforceSecureMode: false }), /restricted to localhost/u);\n  const controlConfig = await importSource('skills/prism/server/control-config.ts');\n  const controlEnvironment = { PRISM_SESSION_SECRET: 'session', PRISM_INGRESS_SECRET: 'ingress', PRISM_INGESTION_SECRET: 'ingestion', PRISM_DISPATCH_SECRET: 'dispatch', PRISM_WORKER_SECRET: 'worker' };\n  assert.equal(controlConfig.loadControlServerConfig(controlEnvironment).dispatchSecret, 'dispatch');\n  for (const name of Object.keys(controlEnvironment)) assert.throws(() => controlConfig.loadControlServerConfig({ ...controlEnvironment, [name]: '' }), new RegExp(`${name} is required`, 'u'));\n  assert.throws(() => controlConfig.loadControlConfig({ PRISM_PIPELINE_PREFERENCE_SUBJECT: '' }), /invalid platform pipeline preference subject/u);\n  assert.equal(controlConfig.loadControlConfig({ PRISM_PIPELINE_PREFERENCE_SUBJECT: `user-${'a'.repeat(24)}` }).pipelinePreferenceSubject, `user-${'a'.repeat(24)}`);\n  const spiffe = { ...controlEnvironment, WORKER_TRUST_SPIFFE_ENABLED: 'true', PRISM_TRUSTED_NOVA_SPIFFE_ID: 'nova', PRISM_TRUSTED_WORKER_SPIFFE_ID: 'worker', PRISM_CONTROL_SPIFFE_ID: 'control', PRISM_TRUSTED_AGENT_SPIFFE_ID: 'agent', PRISM_DISPATCH_SECRET: '', PRISM_WORKER_SECRET: '' };\n  assert.equal(controlConfig.loadControlServerConfig(spiffe).dispatchSecret, '');\n  assert.throws(() => controlConfig.loadControlServerConfig({ ...spiffe, PRISM_TRUSTED_NOVA_SPIFFE_ID: '' }), /trust policy is incomplete/u);\n  const ingestionTtl = sourceProgramPart('skills/prism/server/ingestion.ts', 'configuredQuarantineTtl', 'initializer');\n  const ingestionClamp = sourceProgramPart('skills/prism/server/ingestion.ts', 'quarantineTtl', 'initializer');\n  for (const [raw, expected] of [[undefined, 3600000], ['', 60000], ['-1', 60000], ['86400001', 86400000]]) {\n    const configured = vm.runInNewContext(ingestionTtl, { process: { env: raw === undefined ? {} : { PRISM_QUARANTINE_TTL_MS: raw } }, Number });\n    assert.equal(vm.runInNewContext(ingestionClamp, { configuredQuarantineTtl: configured, Math }), expected);\n  }\n  const chartText = read('charts/kubeclaw/templates/deployment.yaml');\n  const healthSource = chartText.slice(chartText.indexOf(\"<<'HEALTH_SCRIPT'\") + \"<<'HEALTH_SCRIPT'\".length, chartText.indexOf('\\n              HEALTH_SCRIPT'));\n  const healthAst = ts.createSourceFile('generated-health.mjs', healthSource, ts.ScriptTarget.Latest, true, ts.ScriptKind.JS);\n  const enabledNode = healthAst.statements.find((statement) => ts.isFunctionDeclaration(statement) && statement.name?.text === 'enabled');\n  assert(enabledNode, 'embedded health boolean helper is missing');\n  for (const [raw, fallback, expected] of [[undefined, true, true], ['', true, true], ['TRUE', false, true], ['yes', false, true], [' true ', true, false], ['unexpected', true, false]]) {\n    const enabled = vm.runInNewContext(`${enabledNode.getText(healthAst)}; enabled`, { process: { env: raw === undefined ? {} : { TEST: raw } } });\n    assert.equal(enabled('TEST', fallback), expected);\n  }\n  // Use a real dependency-free chart namespace: helper custody validates Chart.yaml\n  // even when this synthetic payload contains no template helper calls.\n  const bare = environmentOccurrences('charts/ops-pod/templates/ap98-bare-semantic-fixture.yaml', 'env:\\n  - {name: REDIS_HOST, value: redis}\\nscript: |\\n  printf \"%s\" \"$REDIS_HOST\"\\n');\n  assert(bare.some((occurrence) => occurrence.name === 'REDIS_HOST' && occurrence.kind === 'embedded-shell-env'));\n  const ops = await importSource('tools/ops-mcp/src/config.mjs');\n  assert.equal(ops.loadOpsMcpConfig({}).defaultNamespace, 'kubeclaw');\n  assert.throws(() => ops.loadOpsMcpConfig({ OPS_DEFAULT_NAMESPACE: '' }), /OPS_ALLOWED_NAMESPACES/u);\n  const kube = await importSource('tools/ops-mcp/src/kubernetes.mjs');\n  assert.equal(typeof kube.createKubeRequest({ api: 'https://api.invalid' }), 'function');\n  for (const api of ['', 'http://api.invalid', 'https://user:pass@api.invalid', 'https://api.invalid/path', 'https://api.invalid/#fragment']) assert.throws(() => kube.createKubeRequest({ api }), /Invalid URL|HTTPS origin/u);\n  const dispatch = await importSource('skills/common/plugins/runtime-dispatch/src/adapter.ts');\n  const activate = (target) => dispatch.activate({ config: { targets: { sample: target } } });\n  for (const target of [{ endpoint: 'http://127.0.0.1:8080', tokenSecret: 'valid-secret' }, { endpoint: 'https://runtime.invalid', tokenSecret: 'valid-secret' }, { endpoint: 'http://localhost:8080', authentication: 'spiffe-proxy' }]) await activate(target).shutdown();\n  for (const endpoint of ['ftp://runtime.invalid', 'https://user:pass@runtime.invalid', 'https://runtime.invalid/#fragment', 'http://runtime.invalid']) assert.throws(() => activate({ endpoint, tokenSecret: 'valid-secret' }), /RUNTIME_CONFIG_INVALID/u);\n  for (const tokenSecret of ['', '../secret', 'UPPER', 'a'.repeat(129)]) assert.throws(() => activate({ endpoint: 'https://runtime.invalid', tokenSecret }), /RUNTIME_CONFIG_INVALID:tokenSecret/u);\n  assert.throws(() => activate({ endpoint: 'https://runtime.invalid', authentication: 'spiffe-proxy' }), /RUNTIME_CONFIG_INVALID:spiffeProxy/u);\n  const ajv = new Ajv2020({ strict: false }); addFormats(ajv);\n  const openapiSchema = JSON.parse(read('skills/buster/plugins/openapi/schemas/config.schema.json'));\n  const bodySchema = openapiSchema.properties.operations.items.properties.body;\n  assert.equal(ajv.compile(bodySchema)(''), true);\n  assert.doesNotMatch(schemaEmptyBehavior(flattenSchema(bodySchema)[0]), /wrong type/u);\n  assert.equal(schemaType({ properties: { value: { type: 'string' } } }), 'unspecified');\n  assert.equal(ajv.compile({ properties: { value: { type: 'string' } } })(''), true);\n  for (const schema of [{}, { default: 12, description: 'Annotation only' }, { anyOf: [{ type: 'integer' }, {}] }, { items: { type: 'integer' } }]) {\n    assert.equal(ajv.compile(schema)(''), true, 'unconstrained or type-specific keyword wrongly rejected a string');\n    assert.doesNotMatch(schemaEmptyBehavior(flattenSchema(schema)[0]), /wrong (?:declared )?type/u);\n  }\n  const branches = { type: 'string', allOf: [{ minLength: 1 }] };\n  assert.equal(ajv.compile(branches)(''), false);\n  assert.doesNotMatch(schemaEmptyBehavior(flattenSchema(branches)[1]), /wrong type/u);\n  const workspace = fs.mkdtempSync(path.join(os.tmpdir(), 'kubeclaw-openapi-body-contract-'));\n  try {\n    fs.mkdirSync(path.join(workspace, 'repository')); fs.mkdirSync(path.join(workspace, 'evidence'));\n    const provider = await importSource('skills/buster/plugins/openapi/src/provider.js');\n    const invocation = { testIdentity: 'body-empty', configuration: { values: { specFile: 'spec.json', url: 'https://endpoint.invalid', operations: [{ operationId: 'sample', body: '' }] } }, inputs: [], workspace: { repository: 'repository', evidence: 'evidence' }, timeoutMs: 1000 };\n    for (const [requestSchema, expected, expectedCalls] of [[{ type: 'string' }, 'passed', 1], [{ type: 'string', minLength: 1 }, 'failed', 0], [{ type: 'object' }, 'failed', 0]]) {\n      fs.writeFileSync(path.join(workspace, 'repository/spec.json'), JSON.stringify({ openapi: '3.1.0', paths: { '/sample': { post: { operationId: 'sample', requestBody: { required: true, content: { 'application/json': { schema: requestSchema } } }, responses: { '204': { description: 'empty success' } } } } } }));\n      let calls = 0;\n      const result = await provider.provider().execute(invocation, { workspaceRoot: workspace, signal: new AbortController().signal, async invoke(capability, request) { calls++; assert.equal(capability, 'network.http'); assert.equal(request.payload.body, JSON.stringify('')); return { status: 204, body: '', headers: {} }; } });\n      assert.equal(result.outcome, expected); assert.equal(calls, expectedCalls);\n    }\n  } finally { fs.rmSync(workspace, { recursive: true, force: true }); }\n  console.log('PASS actual runtime consumer contracts: Prism source precedence, observer overrides/normalization/guards, Redis security, Ops API origins, dispatch URL/auth/secret identifiers, unconstrained and operation-validated OpenAPI bodies. No network calls or live commands.');\n}",
             "hints": [
               "--root"
             ]
@@ -67996,6 +67996,15 @@
             "hints": [
               "--root",
               "skills/common/plugins/command-runner/src/adapter.ts"
+            ]
+          },
+          {
+            "source": "tests/verification/contracts/check-pipeline-visual-legacy-comparison.mts",
+            "expression": "import(`${pathToFileURL(legacyModule).href}?proof=1`)",
+            "operation": "import(`${pathToFileURL(legacyModule).href}?proof=1`)",
+            "hints": [
+              ".visual-legacy-comparison-",
+              "visual-reg-image.ts"
             ]
           }
         ],
@@ -68066,7 +68075,7 @@
           {
             "source": "scripts/docs-configuration-inventory.mjs",
             "expression": "import(pathToFileURL(path.join(root, file)).href)",
-            "operationSha256": "b7e20c77a3e54c1f69a76780ba210044e6b18d6aa26a40ec1e8f82890382e271",
+            "operationSha256": "464229bde294d982a6986cdd4de1c228a3e719b08e7813e362cb6fd9cee09457",
             "hints": [
               "--root"
             ]
@@ -68211,6 +68220,447 @@
             "expression": "import(pathToFileURL(modulePath).href)",
             "operationSha256": "5cc87864b98ca34840541a357ee2c6a385acac3f2cbb8765cff64e04c4dc241a",
             "hints": []
+          },
+          {
+            "source": "tests/verification/contracts/check-nova-journal-scale.mts",
+            "expression": "import(pathToFileURL(path.resolve('skills/nova/core/src/index.ts')).href)",
+            "operationSha256": "889d35a5cff7b6cfb752b6cf89f7b7ff27f8807ccca483ee4edb8a57743fdc5b",
+            "hints": [
+              "skills/nova/core/src/index.ts"
+            ]
+          },
+          {
+            "source": "tests/verification/contracts/check-pipeline-observability-legacy-cutover.mjs",
+            "expression": "import(moduleUrl)",
+            "operationSha256": "7c8fe398cd82d5ea80560281e00f6154b09b15615233da0a8b56ac03f861e51b",
+            "hints": [
+              "../../..",
+              "skills/common/plugin-runtime/foundation/observability/durable-records.ts"
+            ]
+          },
+          {
+            "source": "tests/verification/contracts/check-pipeline-remote-plan-runtime.mts",
+            "expression": "import(pathToFileURL(path.resolve('tests/verification/reliability/nova-remote-faults.mts')).href)",
+            "operationSha256": "a528a93dc369322c4618e4b1cd168ab5d9667b6524d704793382926ea407ebf9",
+            "hints": [
+              "tests/verification/reliability/nova-remote-faults.mts"
+            ]
+          },
+          {
+            "source": "tests/verification/contracts/check-pipeline-visual-legacy-comparison.mts",
+            "expression": "import(`${pathToFileURL(legacyModule).href}?proof=1`)",
+            "operationSha256": "a185e66be5b82e2eefe7e69e65c8253fb30220eeca36f661f1bc429bc1fb604b",
+            "hints": [
+              ".visual-legacy-comparison-",
+              "visual-reg-image.ts"
+            ]
+          },
+          {
+            "source": "tests/verification/contracts/check-plugin-system-v2-boundaries.mjs",
+            "expression": "import(pathToFileURL(path.resolve('skills/nova/core/src/index.ts')).href)",
+            "operationSha256": "889d35a5cff7b6cfb752b6cf89f7b7ff27f8807ccca483ee4edb8a57743fdc5b",
+            "hints": [
+              "skills/nova/core/src/index.ts"
+            ]
+          },
+          {
+            "source": "tests/verification/contracts/check-plugin-system-v2-capability-runtime.mjs",
+            "expression": "import(pathToFileURL(path.resolve('skills/nova/core/src/index.ts')).href)",
+            "operationSha256": "889d35a5cff7b6cfb752b6cf89f7b7ff27f8807ccca483ee4edb8a57743fdc5b",
+            "hints": [
+              "skills/nova/core/src/index.ts"
+            ]
+          },
+          {
+            "source": "tests/verification/contracts/check-plugin-system-v2-capability-security.mjs",
+            "expression": "import(pathToFileURL(\n  path.resolve('skills/nova/core/src/index.ts'),\n).href)",
+            "operationSha256": "b85b66f28ec93d86b284c9485cc97218a276d56c1d52ecdba20d9496b0dc0567",
+            "hints": [
+              "skills/nova/core/src/index.ts"
+            ]
+          },
+          {
+            "source": "tests/verification/contracts/check-plugin-system-v2-e2e.mjs",
+            "expression": "import(pathToFileURL(path.resolve('skills/nova/core/src/index.ts')).href)",
+            "operationSha256": "889d35a5cff7b6cfb752b6cf89f7b7ff27f8807ccca483ee4edb8a57743fdc5b",
+            "hints": [
+              "skills/nova/core/src/index.ts"
+            ]
+          },
+          {
+            "source": "tests/verification/contracts/check-plugin-system-v2-external-engine.mjs",
+            "expression": "import(\n  pathToFileURL(path.resolve('skills/nova/core/execution/engine.ts')).href\n)",
+            "operationSha256": "f64cf53adb48ac6df52464b11d33b0d49d24ff81e68419d5e64ee090fbd49ce9",
+            "hints": [
+              "skills/nova/core/execution/engine.ts"
+            ]
+          },
+          {
+            "source": "tests/verification/contracts/check-plugin-system-v2-external-engine.mjs",
+            "expression": "import(\n  pathToFileURL(path.resolve('skills/common/plugin-runtime/foundation/registry/digest.ts')).href\n)",
+            "operationSha256": "09e8c611e647b7be6bac31e7ea09ff64f59a566d17ffe07bc4aa3744d0b4e6d0",
+            "hints": [
+              "skills/common/plugin-runtime/foundation/registry/digest.ts"
+            ]
+          },
+          {
+            "source": "tests/verification/contracts/check-plugin-system-v2-import-safety.mjs",
+            "expression": "import(pathToFileURL(path.resolve('skills/nova/core/src/index.ts')).href)",
+            "operationSha256": "889d35a5cff7b6cfb752b6cf89f7b7ff27f8807ccca483ee4edb8a57743fdc5b",
+            "hints": [
+              "skills/nova/core/src/index.ts"
+            ]
+          },
+          {
+            "source": "tests/verification/contracts/check-plugin-system-v2-installation.mjs",
+            "expression": "import(pathToFileURL(path.resolve('skills/nova/core/src/index.ts')).href)",
+            "operationSha256": "889d35a5cff7b6cfb752b6cf89f7b7ff27f8807ccca483ee4edb8a57743fdc5b",
+            "hints": [
+              "skills/nova/core/src/index.ts"
+            ]
+          },
+          {
+            "source": "tests/verification/contracts/check-plugin-system-v2-installation.mjs",
+            "expression": "import(\n  pathToFileURL(path.resolve('skills/common/plugin-runtime/foundation/registry/digest.ts')).href\n)",
+            "operationSha256": "09e8c611e647b7be6bac31e7ea09ff64f59a566d17ffe07bc4aa3744d0b4e6d0",
+            "hints": [
+              "skills/common/plugin-runtime/foundation/registry/digest.ts"
+            ]
+          },
+          {
+            "source": "tests/verification/contracts/check-plugin-system-v2-isolation.mjs",
+            "expression": "import(\n  pathToFileURL(path.resolve('skills/common/plugin-runtime/foundation/isolation/runner.ts')).href\n)",
+            "operationSha256": "970ec726dbfbda48b319202cbd6750df8d566a1179ecda67fe75c126a4c95ec2",
+            "hints": [
+              "skills/common/plugin-runtime/foundation/isolation/runner.ts"
+            ]
+          },
+          {
+            "source": "tests/verification/contracts/check-plugin-system-v2-lifecycle.mjs",
+            "expression": "import(pathToFileURL(path.resolve('skills/nova/core/src/index.ts')).href)",
+            "operationSha256": "889d35a5cff7b6cfb752b6cf89f7b7ff27f8807ccca483ee4edb8a57743fdc5b",
+            "hints": [
+              "skills/nova/core/src/index.ts"
+            ]
+          },
+          {
+            "source": "tests/verification/contracts/check-plugin-system-v2-phase11.mts",
+            "expression": "import(pathToFileURL(path.join(\n  root,\n  'skills/nova/core/src/index.ts',\n)).href)",
+            "operationSha256": "e8f74385e9785e6694c345674762012783894301e8062b9d6af395441b289d9f",
+            "hints": [
+              ".",
+              "skills/nova/core/src/index.ts"
+            ]
+          },
+          {
+            "source": "tests/verification/contracts/check-plugin-system-v2-phase11.mts",
+            "expression": "import(pathToFileURL(path.join(\n  root,\n  'skills/common/plugin-runtime/foundation/registry/digest.ts',\n)).href)",
+            "operationSha256": "8e830b795402c27f33e62db6373b497b35d4387e649e198d3d200d84e5289872",
+            "hints": [
+              ".",
+              "skills/common/plugin-runtime/foundation/registry/digest.ts"
+            ]
+          },
+          {
+            "source": "tests/verification/contracts/check-plugin-system-v2-phase6.mjs",
+            "expression": "import(pathToFileURL(\n  path.resolve('skills/nova/core/src/index.ts'),\n).href)",
+            "operationSha256": "b85b66f28ec93d86b284c9485cc97218a276d56c1d52ecdba20d9496b0dc0567",
+            "hints": [
+              "skills/nova/core/src/index.ts"
+            ]
+          },
+          {
+            "source": "tests/verification/contracts/check-plugin-system-v2-phase6.mjs",
+            "expression": "import(pathToFileURL(\n  path.resolve('skills/nova/core/execution/engine-snapshots.ts'),\n).href)",
+            "operationSha256": "a361f79337e54dad60f0661742503a0dea562ed2a3057aea521f0202911a4b36",
+            "hints": [
+              "skills/nova/core/execution/engine-snapshots.ts"
+            ]
+          },
+          {
+            "source": "tests/verification/contracts/check-plugin-system-v2-phase6.mjs",
+            "expression": "import(pathToFileURL(\n  path.resolve('skills/nova/core/execution/run-root.ts'),\n).href)",
+            "operationSha256": "a85f1967d10e57cf675ab004087ec646d216f590fcd6365bbfd387cd43eb1387",
+            "hints": [
+              "skills/nova/core/execution/run-root.ts"
+            ]
+          },
+          {
+            "source": "tests/verification/contracts/check-plugin-system-v2-phase7.mjs",
+            "expression": "import(pathToFileURL(\n  path.resolve('skills/nova/core/src/index.ts'),\n).href)",
+            "operationSha256": "b85b66f28ec93d86b284c9485cc97218a276d56c1d52ecdba20d9496b0dc0567",
+            "hints": [
+              "skills/nova/core/src/index.ts"
+            ]
+          },
+          {
+            "source": "tests/verification/contracts/check-plugin-system-v2-platform-config.mjs",
+            "expression": "import(pathToFileURL(path.resolve('skills/nova/core/src/index.ts')).href)",
+            "operationSha256": "889d35a5cff7b6cfb752b6cf89f7b7ff27f8807ccca483ee4edb8a57743fdc5b",
+            "hints": [
+              "skills/nova/core/src/index.ts"
+            ]
+          },
+          {
+            "source": "tests/verification/contracts/check-plugin-system-v2-registry.mjs",
+            "expression": "import(pathToFileURL(path.resolve('skills/nova/core/src/index.ts')).href)",
+            "operationSha256": "889d35a5cff7b6cfb752b6cf89f7b7ff27f8807ccca483ee4edb8a57743fdc5b",
+            "hints": [
+              "skills/nova/core/src/index.ts"
+            ]
+          },
+          {
+            "source": "tests/verification/contracts/check-project-compiler.mts",
+            "expression": "import(pathToFileURL(compilerFile).href)",
+            "operationSha256": "b6469708ec3764fbc4218b5f069a97125f3b5bd4d491ad4166b8fdbe8c9d5914",
+            "hints": [
+              ".",
+              "skills/nova",
+              "nova-project-proof-",
+              "runtime",
+              "skills",
+              "packages/nova-project/compiler.ts",
+              "project/compiler.ts"
+            ]
+          },
+          {
+            "source": "tests/verification/historical-branch-acceptance/delivery-manifest-v3-compiler-recovery-independent.test.mjs",
+            "expression": "import(pathToFileURL(path.join(root, relative)).href)",
+            "operationSha256": "5d42ff2dc06c25c59aaa847164193273f4fa8a9a3643059d3f5e6b2941c6c666",
+            "hints": []
+          },
+          {
+            "source": "tests/verification/historical-branch-acceptance/delivery-manifest-v3-contract-independent.test.mjs",
+            "expression": "import(pathToFileURL(path.join(\n  sourceRoot,\n  'contracts/delivery-manifest/v3/src/index.ts',\n)).href)",
+            "operationSha256": "bc194707b2f64513567be034e7717326a916b7be55ee523bf8dfbe97761439fa",
+            "hints": [
+              "contracts/delivery-manifest/v3/src/index.ts"
+            ]
+          },
+          {
+            "source": "tests/verification/historical-branch-acceptance/delivery-manifest-v3-summary-mode-independent.test.mjs",
+            "expression": "import(pathToFileURL(path.join(sourceRoot, 'skills/nova/plugins/project-summary/src/summary.ts')).href)",
+            "operationSha256": "cdef21f91d925aa2a8ed8528a82220ca5caf4768d494fc5877698817cc09ef5e",
+            "hints": [
+              "skills/nova/plugins/project-summary/src/summary.ts"
+            ]
+          },
+          {
+            "source": "tests/verification/historical-branch-acceptance/delivery-manifest-v3-summary-mode-independent.test.mjs",
+            "expression": "import(pathToFileURL(path.join(sourceRoot, 'skills/common/plugins/artifact-store/src/adapter.ts')).href)",
+            "operationSha256": "7bba4a2304fed4843e5928e450612b774fab9a8c5c261c22da60fc03609c38c4",
+            "hints": [
+              "skills/common/plugins/artifact-store/src/adapter.ts"
+            ]
+          },
+          {
+            "source": "tests/verification/reliability/observability-replay.test.mjs",
+            "expression": "import(pathToFileURL(path.join(sourceRoot, 'skills/common/plugin-runtime/foundation/observability/durable-delivery.ts')).href)",
+            "operationSha256": "de48826a3b343df431354abd6e5a32236fa2b860f736a66f934e6288b7bd64f7",
+            "hints": [
+              "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts"
+            ]
+          },
+          {
+            "source": "tests/verification/reliability/observability-replay.test.mjs",
+            "expression": "import(pathToFileURL(path.join(sourceRoot, 'skills/common/plugin-runtime/foundation/observability/durable-attempts.ts')).href)",
+            "operationSha256": "749f576885a259dc25e24f58cfceed0cefaf0320a56f03daccddea5d967dbb62",
+            "hints": [
+              "skills/common/plugin-runtime/foundation/observability/durable-attempts.ts"
+            ]
+          },
+          {
+            "source": "tests/verification/reliability/review-cache-legacy-prefix.test.mjs",
+            "expression": "import(pathToFileURL(path.join(core,'execution/engine-snapshots.ts')))",
+            "operationSha256": "e2841bf836d362b9924012b29ecd09ec2fe8cb934d9dc16c22e6067ed4fe36cf",
+            "hints": [
+              "core",
+              "execution/engine-snapshots.ts"
+            ]
+          },
+          {
+            "source": "tests/verification/reliability/review-cache-legacy-prefix.test.mjs",
+            "expression": "import(pathToFileURL(path.join(selected,'repository-audit-cache.ts')))",
+            "operationSha256": "e2841bf836d362b9924012b29ecd09ec2fe8cb934d9dc16c22e6067ed4fe36cf",
+            "hints": [
+              "v4",
+              "review",
+              ".",
+              "skills/nova/plugins/review/src",
+              "repository-audit-cache.ts"
+            ]
+          },
+          {
+            "source": "tests/verification/reliability/review-cache-legacy-prefix.test.mjs",
+            "expression": "import(pathToFileURL(path.join(selected,'review-content-cache.ts')))",
+            "operationSha256": "e2841bf836d362b9924012b29ecd09ec2fe8cb934d9dc16c22e6067ed4fe36cf",
+            "hints": [
+              "v4",
+              "review",
+              ".",
+              "skills/nova/plugins/review/src",
+              "review-content-cache.ts"
+            ]
+          },
+          {
+            "source": "tests/verification/reliability/review-evidence-compiler-recovery.test.mjs",
+            "expression": "import(pathToFileURL(target).href)",
+            "operationSha256": "c45f88e16e9e627c20989fe8a9c976d898f95447072def8e91709470064e46f8",
+            "hints": [
+              "review-compiler-recovery-",
+              "original",
+              "../../fixtures/repair-budget/legacy-review-compiler.json",
+              "utf8"
+            ]
+          },
+          {
+            "source": "tests/verification/reliability/review-report-compiler-recovery.test.mjs",
+            "expression": "import(pathToFileURL(target).href)",
+            "operationSha256": "c45f88e16e9e627c20989fe8a9c976d898f95447072def8e91709470064e46f8",
+            "hints": [
+              "report-archived-",
+              "original",
+              "../../fixtures/repair-budget/legacy-review-compiler.json",
+              "utf8"
+            ]
+          },
+          {
+            "source": "tests/verification/reliability/runtime-dispatch-native-profile.test.mjs",
+            "expression": "import(pathToFileURL(path.join(source,'skills/nova/core/src/index.ts')))",
+            "operationSha256": "912847ae35aabb8bc8cf9c13aee438081ebeb6fec5539f0e8ab691c23dcbe477",
+            "hints": [
+              ".",
+              "skills/nova/core/src/index.ts"
+            ]
+          },
+          {
+            "source": "tests/verification/reliability/runtime-dispatch-native-profile.test.mjs",
+            "expression": "import(pathToFileURL(path.join(source,'skills/nova/core/execution/engine-snapshots.ts')))",
+            "operationSha256": "8c331c82fbe760354b5ef2102b7f7a866e0fa5dd8af3993125136e2ae6fe4075",
+            "hints": [
+              ".",
+              "skills/nova/core/execution/engine-snapshots.ts"
+            ]
+          },
+          {
+            "source": "tests/verification/reliability/runtime-dispatch-native-profile.test.mjs",
+            "expression": "import(pathToFileURL(path.join(source,'skills/nova/core/execution/engine-runtime.ts')))",
+            "operationSha256": "e93480229ffa5a42ab780c9196a58d401c2dbcc90e5c06092cab9f82e77ae7bf",
+            "hints": [
+              ".",
+              "skills/nova/core/execution/engine-runtime.ts"
+            ]
+          },
+          {
+            "source": "tests/verification/reliability/runtime-dispatch-native-profile.test.mjs",
+            "expression": "import(pathToFileURL(path.join(source,'skills/nova/core/execution/run-root.ts')))",
+            "operationSha256": "836257c7ac96cfd28425a6a3fb92ebbacb923fd4b939046f253876a210f3e96d",
+            "hints": [
+              ".",
+              "skills/nova/core/execution/run-root.ts"
+            ]
+          },
+          {
+            "source": "tests/verification/reliability/runtime-dispatch-native-profile.test.mjs",
+            "expression": "import(pathToFileURL(path.join(source,'skills/nova/plugins/architecture-validator/src/protocol.ts')))",
+            "operationSha256": "44e021555e4ad39af6d082268666d36e11bca90a07ed3921ce86eed1a4cda691",
+            "hints": [
+              ".",
+              "skills/nova/plugins/architecture-validator/src/protocol.ts"
+            ]
+          },
+          {
+            "source": "tests/verification/reliability/runtime-dispatch-native-profile.test.mjs",
+            "expression": "import(pathToFileURL(path.join(modules,'review-graph.ts')))",
+            "operationSha256": "8cee6df5e6133383bdc138fab9d1ea4eba3b50d30d92e9514d5148f148a226f9",
+            "hints": [
+              ".",
+              "skills/nova/plugins/review/src",
+              "review-graph.ts"
+            ]
+          },
+          {
+            "source": "tests/verification/reliability/runtime-dispatch-native-profile.test.mjs",
+            "expression": "import(pathToFileURL(path.join(modules,'review-snapshot-inventory.ts')))",
+            "operationSha256": "ee12290104391a59b9fb62c8e0ad42fd07e9b24b0b569f4d674205fb8fb7bb89",
+            "hints": [
+              ".",
+              "skills/nova/plugins/review/src",
+              "review-snapshot-inventory.ts"
+            ]
+          },
+          {
+            "source": "tests/verification/reliability/runtime-dispatch-native-profile.test.mjs",
+            "expression": "import(pathToFileURL(path.join(modules,'review-scale-slicing.ts')))",
+            "operationSha256": "3ad451f342fa91a74d3b536807d3745c53c65e0424a64ac5a995744e8d2d2d5a",
+            "hints": [
+              ".",
+              "skills/nova/plugins/review/src",
+              "review-scale-slicing.ts"
+            ]
+          },
+          {
+            "source": "tests/verification/reliability/runtime-dispatch-native-profile.test.mjs",
+            "expression": "import(pathToFileURL(path.join(modules,'scalable-review-jobs.ts')))",
+            "operationSha256": "57dabfbeb800f3f7446c909af925564fe2b0d4a8016e9257b507a3c7d2c05603",
+            "hints": [
+              ".",
+              "skills/nova/plugins/review/src",
+              "scalable-review-jobs.ts"
+            ]
+          },
+          {
+            "source": "tests/verification/reliability/runtime-dispatch-native-profile.test.mjs",
+            "expression": "import(pathToFileURL(path.join(modules,'scalable-review-execution.ts')))",
+            "operationSha256": "2029d8ea7baec599764111c50b58bb9cfee09e30a4689df7b38f5a700c95d1aa",
+            "hints": [
+              ".",
+              "skills/nova/plugins/review/src",
+              "scalable-review-execution.ts"
+            ]
+          },
+          {
+            "source": "tests/verification/reliability/runtime-dispatch-native-profile.test.mjs",
+            "expression": "import(pathToFileURL(path.join(modules,'scalable-review-verification.ts')))",
+            "operationSha256": "d26274d329c75b2e388ba8b8dc836afa1ae7fbe081fe4d8871ea357409c65650",
+            "hints": [
+              ".",
+              "skills/nova/plugins/review/src",
+              "scalable-review-verification.ts"
+            ]
+          },
+          {
+            "source": "tests/verification/reliability/runtime-dispatch-native-profile.test.mjs",
+            "expression": "import(pathToFileURL(path.join(mode==='pipeline'?archivedCore(root,version):path.join(source,'skills/nova/core'),'execution/engine.ts')))",
+            "operationSha256": "580f7d2b98e0ededd4b534114ff17168e4510a8a462ede9663b0725aef760bbe",
+            "hints": [
+              "pipeline",
+              ".",
+              "skills/nova/core",
+              "execution/engine.ts"
+            ]
+          },
+          {
+            "source": "tests/verification/reliability/runtime-dispatch-native-profile.test.mjs",
+            "expression": "import(pathToFileURL(path.join(archivedCore(root,version),'execution/engine-snapshots.ts')))",
+            "operationSha256": "026fbb46f7d47f50514fe538330d2b1dd2534faeae859eefc2a3018effd72ab5",
+            "hints": [
+              "execution/engine-snapshots.ts"
+            ]
+          },
+          {
+            "source": "tests/verification/contracts/project-legacy-import-cases.mts",
+            "expression": "import(pathToFileURL(compilerFile).href)",
+            "operationSha256": "c815a74930036ebc80dcfeb50f1ee4d286b26fd811cb7c471b48948493f3da6b",
+            "hints": []
+          },
+          {
+            "source": "tests/verification/contracts/project-legacy-import-cases.mts",
+            "expression": "import(pathToFileURL(path.join(path.dirname(compilerFile), 'legacy-import.ts')).href)",
+            "operationSha256": "c815a74930036ebc80dcfeb50f1ee4d286b26fd811cb7c471b48948493f3da6b",
+            "hints": [
+              "legacy-import.ts"
+            ]
           }
         ]
       }

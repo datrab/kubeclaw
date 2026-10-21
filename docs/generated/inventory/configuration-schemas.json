@@ -22,7 +22,7 @@
         {
           "authority": "Pod volume init-swarm-config selects the rendered swarm ConfigMap object",
           "kind": "configmap-volume-object-reference",
-          "line": 1630,
+          "line": 1702,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "name: {{ include \"kubeclaw.fullname\" . }}-swarm-config",
           "sourceLineSha256": "eca9a1ae32784caa60e728934079736359ae269cb54a30567a96527e55095516"
@@ -30,7 +30,7 @@
         {
           "authority": "init container mounts the ConfigMap at /init-swarm-config",
           "kind": "configmap-volume-mount",
-          "line": 1226,
+          "line": 1298,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "mountPath: /init-swarm-config",
           "sourceLineSha256": "96b2483e98709d7bc554a852bebf64090722c3135a8a88954f243e6d8c7e763a"
@@ -38,7 +38,7 @@
         {
           "authority": ".semgrep.yml is copied from the ConfigMap mount into persistent /config",
           "kind": "first-config-copy",
-          "line": 636,
+          "line": 708,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "cp -Lf \"/init-swarm-config/.semgrep.yml\" \"/config/.semgrep.yml\"",
           "sourceLineSha256": "eff2358fe6956c8a8d992361c377750f1c9e0f3034de646aff8aa344546c0a8c"
@@ -46,7 +46,7 @@
         {
           "authority": ".semgrep.yml is copied or rendered from /config into /runtime-config",
           "kind": "runtime-config-copy",
-          "line": 678,
+          "line": 750,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "cp -Lf /config/.semgrep.yml /runtime-config/.semgrep.yml",
           "sourceLineSha256": "0ec88dc084b0206b54a305112fc8e2a8fcd114e4953ccf4976838a9aa52cc54b"
@@ -88,7 +88,7 @@
         {
           "authority": "Pod volume init-swarm-config selects the rendered swarm ConfigMap object",
           "kind": "configmap-volume-object-reference",
-          "line": 1630,
+          "line": 1702,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "name: {{ include \"kubeclaw.fullname\" . }}-swarm-config",
           "sourceLineSha256": "eca9a1ae32784caa60e728934079736359ae269cb54a30567a96527e55095516"
@@ -96,7 +96,7 @@
         {
           "authority": "init container mounts the ConfigMap at /init-swarm-config",
           "kind": "configmap-volume-mount",
-          "line": 1226,
+          "line": 1298,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "mountPath: /init-swarm-config",
           "sourceLineSha256": "96b2483e98709d7bc554a852bebf64090722c3135a8a88954f243e6d8c7e763a"
@@ -104,7 +104,7 @@
         {
           "authority": ".semgrep.yml is copied from the ConfigMap mount into persistent /config",
           "kind": "first-config-copy",
-          "line": 636,
+          "line": 708,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "cp -Lf \"/init-swarm-config/.semgrep.yml\" \"/config/.semgrep.yml\"",
           "sourceLineSha256": "eff2358fe6956c8a8d992361c377750f1c9e0f3034de646aff8aa344546c0a8c"
@@ -112,7 +112,7 @@
         {
           "authority": ".semgrep.yml is copied or rendered from /config into /runtime-config",
           "kind": "runtime-config-copy",
-          "line": 678,
+          "line": 750,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "cp -Lf /config/.semgrep.yml /runtime-config/.semgrep.yml",
           "sourceLineSha256": "0ec88dc084b0206b54a305112fc8e2a8fcd114e4953ccf4976838a9aa52cc54b"
@@ -1862,7 +1862,7 @@
         {
           "authority": "the chart source participates only when the mounted .semgrep.yml exists",
           "kind": "chart-source-present-condition",
-          "line": 634,
+          "line": 706,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "if [ -f \"/init-swarm-config/.semgrep.yml\" ]; then",
           "sourceLineSha256": "76e1588aa496ef1f1a0426b813636b1e53c2008541db1a8c39e56ab177d1dc52"
@@ -1870,7 +1870,7 @@
         {
           "authority": "chart bytes replace persistent .semgrep.yml only when override is true or no persistent file exists",
           "kind": "override-or-absent-condition",
-          "line": 635,
+          "line": 707,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "if [ \"${OVERRIDE_SWARM_CONFIG}\" = \"true\" ] || [ ! -f \"/config/.semgrep.yml\" ]; then",
           "sourceLineSha256": "49ceba867e7bd6915fae06d352297852aeacda21bb40ac673330a4fa01517fdd"
@@ -1878,7 +1878,7 @@
         {
           "authority": "an existing persistent .semgrep.yml is retained when override is false",
           "kind": "persistent-retention-branch",
-          "line": 639,
+          "line": 711,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": ".semgrep.yml exists, keeping (override=false)",
           "sourceLineSha256": "1aa07e8d88180399b6d4250e1abf5d27a85e42a8f38ce97f842ac1a2a2e131a0"
@@ -1909,7 +1909,7 @@
         {
           "authority": "Pod volume init-swarm-config selects the rendered swarm ConfigMap object",
           "kind": "configmap-volume-object-reference",
-          "line": 1630,
+          "line": 1702,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "name: {{ include \"kubeclaw.fullname\" . }}-swarm-config",
           "sourceLineSha256": "eca9a1ae32784caa60e728934079736359ae269cb54a30567a96527e55095516"
@@ -1917,7 +1917,7 @@
         {
           "authority": "init container mounts the ConfigMap at /init-swarm-config",
           "kind": "configmap-volume-mount",
-          "line": 1226,
+          "line": 1298,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "mountPath: /init-swarm-config",
           "sourceLineSha256": "96b2483e98709d7bc554a852bebf64090722c3135a8a88954f243e6d8c7e763a"
@@ -1925,7 +1925,7 @@
         {
           "authority": ".tflint.hcl is copied from the ConfigMap mount into persistent /config",
           "kind": "first-config-copy",
-          "line": 655,
+          "line": 727,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "cp -Lf \"/init-swarm-config/.tflint.hcl\" \"/config/.tflint.hcl\"",
           "sourceLineSha256": "18d74d2717ebafbe82de77c7e66fcfe94a76d94b0a9abf448ba5e9d8bf466050"
@@ -1933,7 +1933,7 @@
         {
           "authority": ".tflint.hcl is copied or rendered from /config into /runtime-config",
           "kind": "runtime-config-copy",
-          "line": 687,
+          "line": 759,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "cp -Lf /config/.tflint.hcl /runtime-config/.tflint.hcl",
           "sourceLineSha256": "3d8bf7ad19d0ce46ba8df8e025a7058c7d0687df29f8aeaee43182046f4c4146"
@@ -1975,7 +1975,7 @@
         {
           "authority": "Pod volume init-swarm-config selects the rendered swarm ConfigMap object",
           "kind": "configmap-volume-object-reference",
-          "line": 1630,
+          "line": 1702,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "name: {{ include \"kubeclaw.fullname\" . }}-swarm-config",
           "sourceLineSha256": "eca9a1ae32784caa60e728934079736359ae269cb54a30567a96527e55095516"
@@ -1983,7 +1983,7 @@
         {
           "authority": "init container mounts the ConfigMap at /init-swarm-config",
           "kind": "configmap-volume-mount",
-          "line": 1226,
+          "line": 1298,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "mountPath: /init-swarm-config",
           "sourceLineSha256": "96b2483e98709d7bc554a852bebf64090722c3135a8a88954f243e6d8c7e763a"
@@ -1991,7 +1991,7 @@
         {
           "authority": ".tflint.hcl is copied from the ConfigMap mount into persistent /config",
           "kind": "first-config-copy",
-          "line": 655,
+          "line": 727,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "cp -Lf \"/init-swarm-config/.tflint.hcl\" \"/config/.tflint.hcl\"",
           "sourceLineSha256": "18d74d2717ebafbe82de77c7e66fcfe94a76d94b0a9abf448ba5e9d8bf466050"
@@ -1999,7 +1999,7 @@
         {
           "authority": ".tflint.hcl is copied or rendered from /config into /runtime-config",
           "kind": "runtime-config-copy",
-          "line": 687,
+          "line": 759,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "cp -Lf /config/.tflint.hcl /runtime-config/.tflint.hcl",
           "sourceLineSha256": "3d8bf7ad19d0ce46ba8df8e025a7058c7d0687df29f8aeaee43182046f4c4146"
@@ -2032,7 +2032,7 @@
         {
           "authority": "the chart source replaces persistent .tflint.hcl only when the mounted source file exists",
           "kind": "chart-source-present-condition",
-          "line": 654,
+          "line": 726,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "if [ -f \"/init-swarm-config/.tflint.hcl\" ]; then",
           "sourceLineSha256": "63cb6c9e9e2c537f44e35627aeb80ecca3b9ef96ded514bbe8fc52f09608a097"
@@ -2063,7 +2063,7 @@
         {
           "authority": "Pod volume init-swarm-config selects the rendered swarm ConfigMap object",
           "kind": "configmap-volume-object-reference",
-          "line": 1630,
+          "line": 1702,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "name: {{ include \"kubeclaw.fullname\" . }}-swarm-config",
           "sourceLineSha256": "eca9a1ae32784caa60e728934079736359ae269cb54a30567a96527e55095516"
@@ -2071,7 +2071,7 @@
         {
           "authority": "init container mounts the ConfigMap at /init-swarm-config",
           "kind": "configmap-volume-mount",
-          "line": 1226,
+          "line": 1298,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "mountPath: /init-swarm-config",
           "sourceLineSha256": "96b2483e98709d7bc554a852bebf64090722c3135a8a88954f243e6d8c7e763a"
@@ -2079,7 +2079,7 @@
         {
           "authority": ".yamllint.yml is copied from the ConfigMap mount into persistent /config",
           "kind": "first-config-copy",
-          "line": 651,
+          "line": 723,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "cp -Lf \"/init-swarm-config/.yamllint.yml\" \"/config/.yamllint.yml\"",
           "sourceLineSha256": "77b45a97a977909360d442a0eabb2c6503b2ec9e7d3bc4f54632d0fa21e60e1d"
@@ -2087,7 +2087,7 @@
         {
           "authority": ".yamllint.yml is copied or rendered from /config into /runtime-config",
           "kind": "runtime-config-copy",
-          "line": 684,
+          "line": 756,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "cp -Lf /config/.yamllint.yml /runtime-config/.yamllint.yml",
           "sourceLineSha256": "1435a7d034640c3d4cc7ec1c1ef2edc4c421465b70046fb922c1d56597dc0e10"
@@ -2129,7 +2129,7 @@
         {
           "authority": "Pod volume init-swarm-config selects the rendered swarm ConfigMap object",
           "kind": "configmap-volume-object-reference",
-          "line": 1630,
+          "line": 1702,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "name: {{ include \"kubeclaw.fullname\" . }}-swarm-config",
           "sourceLineSha256": "eca9a1ae32784caa60e728934079736359ae269cb54a30567a96527e55095516"
@@ -2137,7 +2137,7 @@
         {
           "authority": "init container mounts the ConfigMap at /init-swarm-config",
           "kind": "configmap-volume-mount",
-          "line": 1226,
+          "line": 1298,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "mountPath: /init-swarm-config",
           "sourceLineSha256": "96b2483e98709d7bc554a852bebf64090722c3135a8a88954f243e6d8c7e763a"
@@ -2145,7 +2145,7 @@
         {
           "authority": ".yamllint.yml is copied from the ConfigMap mount into persistent /config",
           "kind": "first-config-copy",
-          "line": 651,
+          "line": 723,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "cp -Lf \"/init-swarm-config/.yamllint.yml\" \"/config/.yamllint.yml\"",
           "sourceLineSha256": "77b45a97a977909360d442a0eabb2c6503b2ec9e7d3bc4f54632d0fa21e60e1d"
@@ -2153,7 +2153,7 @@
         {
           "authority": ".yamllint.yml is copied or rendered from /config into /runtime-config",
           "kind": "runtime-config-copy",
-          "line": 684,
+          "line": 756,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "cp -Lf /config/.yamllint.yml /runtime-config/.yamllint.yml",
           "sourceLineSha256": "1435a7d034640c3d4cc7ec1c1ef2edc4c421465b70046fb922c1d56597dc0e10"
@@ -2241,7 +2241,7 @@
         {
           "authority": "the chart source replaces persistent .yamllint.yml only when the mounted source file exists",
           "kind": "chart-source-present-condition",
-          "line": 650,
+          "line": 722,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "if [ -f \"/init-swarm-config/.yamllint.yml\" ]; then",
           "sourceLineSha256": "09cccac7c94c6e331aef4979043f18841b84fa5007a3d68bd0948ead7c10338b"
@@ -2272,7 +2272,7 @@
         {
           "authority": "Pod volume init-swarm-config selects the rendered swarm ConfigMap object",
           "kind": "configmap-volume-object-reference",
-          "line": 1630,
+          "line": 1702,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "name: {{ include \"kubeclaw.fullname\" . }}-swarm-config",
           "sourceLineSha256": "eca9a1ae32784caa60e728934079736359ae269cb54a30567a96527e55095516"
@@ -2280,7 +2280,7 @@
         {
           "authority": "init container mounts the ConfigMap at /init-swarm-config",
           "kind": "configmap-volume-mount",
-          "line": 1226,
+          "line": 1298,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "mountPath: /init-swarm-config",
           "sourceLineSha256": "96b2483e98709d7bc554a852bebf64090722c3135a8a88954f243e6d8c7e763a"
@@ -2288,7 +2288,7 @@
         {
           "authority": "eslint-type-evidence-config.mjs is an explicit member of the first-copy loop from /init-swarm-config to /config",
           "kind": "first-copy-loop-membership",
-          "line": 658,
+          "line": 730,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "for lint_config in eslint-type-evidence-config.mjs eslint-type-evidence-tests-config.mjs eslint-type-evidence-generated-config.mjs type-evidence-eslint-plugin.mjs knip.json jscpd.json jscpd-tests.json lint-baseline.json",
           "sourceLineSha256": "e24867b804c03f233009f7f19d3ba66bccbad2fd975b27992dee5653691a1ca8"
@@ -2296,7 +2296,7 @@
         {
           "authority": "the first-copy loop copies its exact named member from /init-swarm-config to /config",
           "kind": "first-config-copy",
-          "line": 660,
+          "line": 732,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "cp -Lf \"/init-swarm-config/$lint_config\" \"/config/$lint_config\"",
           "sourceLineSha256": "fe3adcda12b548fc489bce3c0db53d471ab960a50c728205777857afebfaf69f"
@@ -2304,7 +2304,7 @@
         {
           "authority": "eslint-type-evidence-config.mjs is an explicit member of the runtime-copy loop from /config to /runtime-config",
           "kind": "runtime-copy-loop-membership",
-          "line": 689,
+          "line": 761,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "for lint_config in eslint-type-evidence-config.mjs eslint-type-evidence-tests-config.mjs eslint-type-evidence-generated-config.mjs type-evidence-eslint-plugin.mjs knip.json jscpd.json jscpd-tests.json lint-baseline.json",
           "sourceLineSha256": "e24867b804c03f233009f7f19d3ba66bccbad2fd975b27992dee5653691a1ca8"
@@ -2312,7 +2312,7 @@
         {
           "authority": "the runtime-copy loop copies its exact named member into /runtime-config",
           "kind": "runtime-config-copy",
-          "line": 691,
+          "line": 763,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "cp -Lf \"/config/$lint_config\" \"/runtime-config/$lint_config\"",
           "sourceLineSha256": "39cbdcca732af1c1cbbf76020c3f29b0caccf9c3cac75c93363edcb94a439e3f"
@@ -2354,7 +2354,7 @@
         {
           "authority": "Pod volume init-swarm-config selects the rendered swarm ConfigMap object",
           "kind": "configmap-volume-object-reference",
-          "line": 1630,
+          "line": 1702,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "name: {{ include \"kubeclaw.fullname\" . }}-swarm-config",
           "sourceLineSha256": "eca9a1ae32784caa60e728934079736359ae269cb54a30567a96527e55095516"
@@ -2362,7 +2362,7 @@
         {
           "authority": "init container mounts the ConfigMap at /init-swarm-config",
           "kind": "configmap-volume-mount",
-          "line": 1226,
+          "line": 1298,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "mountPath: /init-swarm-config",
           "sourceLineSha256": "96b2483e98709d7bc554a852bebf64090722c3135a8a88954f243e6d8c7e763a"
@@ -2370,7 +2370,7 @@
         {
           "authority": "eslint-type-evidence-config.mjs is an explicit member of the first-copy loop from /init-swarm-config to /config",
           "kind": "first-copy-loop-membership",
-          "line": 658,
+          "line": 730,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "for lint_config in eslint-type-evidence-config.mjs eslint-type-evidence-tests-config.mjs eslint-type-evidence-generated-config.mjs type-evidence-eslint-plugin.mjs knip.json jscpd.json jscpd-tests.json lint-baseline.json",
           "sourceLineSha256": "e24867b804c03f233009f7f19d3ba66bccbad2fd975b27992dee5653691a1ca8"
@@ -2378,7 +2378,7 @@
         {
           "authority": "the first-copy loop copies its exact named member from /init-swarm-config to /config",
           "kind": "first-config-copy",
-          "line": 660,
+          "line": 732,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "cp -Lf \"/init-swarm-config/$lint_config\" \"/config/$lint_config\"",
           "sourceLineSha256": "fe3adcda12b548fc489bce3c0db53d471ab960a50c728205777857afebfaf69f"
@@ -2386,7 +2386,7 @@
         {
           "authority": "eslint-type-evidence-config.mjs is an explicit member of the runtime-copy loop from /config to /runtime-config",
           "kind": "runtime-copy-loop-membership",
-          "line": 689,
+          "line": 761,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "for lint_config in eslint-type-evidence-config.mjs eslint-type-evidence-tests-config.mjs eslint-type-evidence-generated-config.mjs type-evidence-eslint-plugin.mjs knip.json jscpd.json jscpd-tests.json lint-baseline.json",
           "sourceLineSha256": "e24867b804c03f233009f7f19d3ba66bccbad2fd975b27992dee5653691a1ca8"
@@ -2394,7 +2394,7 @@
         {
           "authority": "the runtime-copy loop copies its exact named member into /runtime-config",
           "kind": "runtime-config-copy",
-          "line": 691,
+          "line": 763,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "cp -Lf \"/config/$lint_config\" \"/runtime-config/$lint_config\"",
           "sourceLineSha256": "39cbdcca732af1c1cbbf76020c3f29b0caccf9c3cac75c93363edcb94a439e3f"
@@ -2427,7 +2427,7 @@
         {
           "authority": "eslint-type-evidence-config.mjs is copied only when its explicit loop member exists in the mounted chart source",
           "kind": "chart-source-present-condition",
-          "line": 659,
+          "line": 731,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "if [ -f \"/init-swarm-config/$lint_config\" ]; then",
           "sourceLineSha256": "3925f6965ec2a8df2e349fecb36cb7fc057eb59027cd977e7f74d97ef877bf2f"
@@ -2458,7 +2458,7 @@
         {
           "authority": "Pod volume init-swarm-config selects the rendered swarm ConfigMap object",
           "kind": "configmap-volume-object-reference",
-          "line": 1630,
+          "line": 1702,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "name: {{ include \"kubeclaw.fullname\" . }}-swarm-config",
           "sourceLineSha256": "eca9a1ae32784caa60e728934079736359ae269cb54a30567a96527e55095516"
@@ -2466,7 +2466,7 @@
         {
           "authority": "init container mounts the ConfigMap at /init-swarm-config",
           "kind": "configmap-volume-mount",
-          "line": 1226,
+          "line": 1298,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "mountPath: /init-swarm-config",
           "sourceLineSha256": "96b2483e98709d7bc554a852bebf64090722c3135a8a88954f243e6d8c7e763a"
@@ -2474,7 +2474,7 @@
         {
           "authority": "eslint-type-evidence-generated-config.mjs is an explicit member of the first-copy loop from /init-swarm-config to /config",
           "kind": "first-copy-loop-membership",
-          "line": 658,
+          "line": 730,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "for lint_config in eslint-type-evidence-config.mjs eslint-type-evidence-tests-config.mjs eslint-type-evidence-generated-config.mjs type-evidence-eslint-plugin.mjs knip.json jscpd.json jscpd-tests.json lint-baseline.json",
           "sourceLineSha256": "e24867b804c03f233009f7f19d3ba66bccbad2fd975b27992dee5653691a1ca8"
@@ -2482,7 +2482,7 @@
         {
           "authority": "the first-copy loop copies its exact named member from /init-swarm-config to /config",
           "kind": "first-config-copy",
-          "line": 660,
+          "line": 732,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "cp -Lf \"/init-swarm-config/$lint_config\" \"/config/$lint_config\"",
           "sourceLineSha256": "fe3adcda12b548fc489bce3c0db53d471ab960a50c728205777857afebfaf69f"
@@ -2490,7 +2490,7 @@
         {
           "authority": "eslint-type-evidence-generated-config.mjs is an explicit member of the runtime-copy loop from /config to /runtime-config",
           "kind": "runtime-copy-loop-membership",
-          "line": 689,
+          "line": 761,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "for lint_config in eslint-type-evidence-config.mjs eslint-type-evidence-tests-config.mjs eslint-type-evidence-generated-config.mjs type-evidence-eslint-plugin.mjs knip.json jscpd.json jscpd-tests.json lint-baseline.json",
           "sourceLineSha256": "e24867b804c03f233009f7f19d3ba66bccbad2fd975b27992dee5653691a1ca8"
@@ -2498,7 +2498,7 @@
         {
           "authority": "the runtime-copy loop copies its exact named member into /runtime-config",
           "kind": "runtime-config-copy",
-          "line": 691,
+          "line": 763,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "cp -Lf \"/config/$lint_config\" \"/runtime-config/$lint_config\"",
           "sourceLineSha256": "39cbdcca732af1c1cbbf76020c3f29b0caccf9c3cac75c93363edcb94a439e3f"
@@ -2540,7 +2540,7 @@
         {
           "authority": "Pod volume init-swarm-config selects the rendered swarm ConfigMap object",
           "kind": "configmap-volume-object-reference",
-          "line": 1630,
+          "line": 1702,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "name: {{ include \"kubeclaw.fullname\" . }}-swarm-config",
           "sourceLineSha256": "eca9a1ae32784caa60e728934079736359ae269cb54a30567a96527e55095516"
@@ -2548,7 +2548,7 @@
         {
           "authority": "init container mounts the ConfigMap at /init-swarm-config",
           "kind": "configmap-volume-mount",
-          "line": 1226,
+          "line": 1298,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "mountPath: /init-swarm-config",
           "sourceLineSha256": "96b2483e98709d7bc554a852bebf64090722c3135a8a88954f243e6d8c7e763a"
@@ -2556,7 +2556,7 @@
         {
           "authority": "eslint-type-evidence-generated-config.mjs is an explicit member of the first-copy loop from /init-swarm-config to /config",
           "kind": "first-copy-loop-membership",
-          "line": 658,
+          "line": 730,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "for lint_config in eslint-type-evidence-config.mjs eslint-type-evidence-tests-config.mjs eslint-type-evidence-generated-config.mjs type-evidence-eslint-plugin.mjs knip.json jscpd.json jscpd-tests.json lint-baseline.json",
           "sourceLineSha256": "e24867b804c03f233009f7f19d3ba66bccbad2fd975b27992dee5653691a1ca8"
@@ -2564,7 +2564,7 @@
         {
           "authority": "the first-copy loop copies its exact named member from /init-swarm-config to /config",
           "kind": "first-config-copy",
-          "line": 660,
+          "line": 732,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "cp -Lf \"/init-swarm-config/$lint_config\" \"/config/$lint_config\"",
           "sourceLineSha256": "fe3adcda12b548fc489bce3c0db53d471ab960a50c728205777857afebfaf69f"
@@ -2572,7 +2572,7 @@
         {
           "authority": "eslint-type-evidence-generated-config.mjs is an explicit member of the runtime-copy loop from /config to /runtime-config",
           "kind": "runtime-copy-loop-membership",
-          "line": 689,
+          "line": 761,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "for lint_config in eslint-type-evidence-config.mjs eslint-type-evidence-tests-config.mjs eslint-type-evidence-generated-config.mjs type-evidence-eslint-plugin.mjs knip.json jscpd.json jscpd-tests.json lint-baseline.json",
           "sourceLineSha256": "e24867b804c03f233009f7f19d3ba66bccbad2fd975b27992dee5653691a1ca8"
@@ -2580,7 +2580,7 @@
         {
           "authority": "the runtime-copy loop copies its exact named member into /runtime-config",
           "kind": "runtime-config-copy",
-          "line": 691,
+          "line": 763,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "cp -Lf \"/config/$lint_config\" \"/runtime-config/$lint_config\"",
           "sourceLineSha256": "39cbdcca732af1c1cbbf76020c3f29b0caccf9c3cac75c93363edcb94a439e3f"
@@ -2613,7 +2613,7 @@
         {
           "authority": "eslint-type-evidence-generated-config.mjs is copied only when its explicit loop member exists in the mounted chart source",
           "kind": "chart-source-present-condition",
-          "line": 659,
+          "line": 731,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "if [ -f \"/init-swarm-config/$lint_config\" ]; then",
           "sourceLineSha256": "3925f6965ec2a8df2e349fecb36cb7fc057eb59027cd977e7f74d97ef877bf2f"
@@ -2644,7 +2644,7 @@
         {
           "authority": "Pod volume init-swarm-config selects the rendered swarm ConfigMap object",
           "kind": "configmap-volume-object-reference",
-          "line": 1630,
+          "line": 1702,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "name: {{ include \"kubeclaw.fullname\" . }}-swarm-config",
           "sourceLineSha256": "eca9a1ae32784caa60e728934079736359ae269cb54a30567a96527e55095516"
@@ -2652,7 +2652,7 @@
         {
           "authority": "init container mounts the ConfigMap at /init-swarm-config",
           "kind": "configmap-volume-mount",
-          "line": 1226,
+          "line": 1298,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "mountPath: /init-swarm-config",
           "sourceLineSha256": "96b2483e98709d7bc554a852bebf64090722c3135a8a88954f243e6d8c7e763a"
@@ -2660,7 +2660,7 @@
         {
           "authority": "eslint-type-evidence-tests-config.mjs is an explicit member of the first-copy loop from /init-swarm-config to /config",
           "kind": "first-copy-loop-membership",
-          "line": 658,
+          "line": 730,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "for lint_config in eslint-type-evidence-config.mjs eslint-type-evidence-tests-config.mjs eslint-type-evidence-generated-config.mjs type-evidence-eslint-plugin.mjs knip.json jscpd.json jscpd-tests.json lint-baseline.json",
           "sourceLineSha256": "e24867b804c03f233009f7f19d3ba66bccbad2fd975b27992dee5653691a1ca8"
@@ -2668,7 +2668,7 @@
         {
           "authority": "the first-copy loop copies its exact named member from /init-swarm-config to /config",
           "kind": "first-config-copy",
-          "line": 660,
+          "line": 732,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "cp -Lf \"/init-swarm-config/$lint_config\" \"/config/$lint_config\"",
           "sourceLineSha256": "fe3adcda12b548fc489bce3c0db53d471ab960a50c728205777857afebfaf69f"
@@ -2676,7 +2676,7 @@
         {
           "authority": "eslint-type-evidence-tests-config.mjs is an explicit member of the runtime-copy loop from /config to /runtime-config",
           "kind": "runtime-copy-loop-membership",
-          "line": 689,
+          "line": 761,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "for lint_config in eslint-type-evidence-config.mjs eslint-type-evidence-tests-config.mjs eslint-type-evidence-generated-config.mjs type-evidence-eslint-plugin.mjs knip.json jscpd.json jscpd-tests.json lint-baseline.json",
           "sourceLineSha256": "e24867b804c03f233009f7f19d3ba66bccbad2fd975b27992dee5653691a1ca8"
@@ -2684,7 +2684,7 @@
         {
           "authority": "the runtime-copy loop copies its exact named member into /runtime-config",
           "kind": "runtime-config-copy",
-          "line": 691,
+          "line": 763,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "cp -Lf \"/config/$lint_config\" \"/runtime-config/$lint_config\"",
           "sourceLineSha256": "39cbdcca732af1c1cbbf76020c3f29b0caccf9c3cac75c93363edcb94a439e3f"
@@ -2726,7 +2726,7 @@
         {
           "authority": "Pod volume init-swarm-config selects the rendered swarm ConfigMap object",
           "kind": "configmap-volume-object-reference",
-          "line": 1630,
+          "line": 1702,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "name: {{ include \"kubeclaw.fullname\" . }}-swarm-config",
           "sourceLineSha256": "eca9a1ae32784caa60e728934079736359ae269cb54a30567a96527e55095516"
@@ -2734,7 +2734,7 @@
         {
           "authority": "init container mounts the ConfigMap at /init-swarm-config",
           "kind": "configmap-volume-mount",
-          "line": 1226,
+          "line": 1298,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "mountPath: /init-swarm-config",
           "sourceLineSha256": "96b2483e98709d7bc554a852bebf64090722c3135a8a88954f243e6d8c7e763a"
@@ -2742,7 +2742,7 @@
         {
           "authority": "eslint-type-evidence-tests-config.mjs is an explicit member of the first-copy loop from /init-swarm-config to /config",
           "kind": "first-copy-loop-membership",
-          "line": 658,
+          "line": 730,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "for lint_config in eslint-type-evidence-config.mjs eslint-type-evidence-tests-config.mjs eslint-type-evidence-generated-config.mjs type-evidence-eslint-plugin.mjs knip.json jscpd.json jscpd-tests.json lint-baseline.json",
           "sourceLineSha256": "e24867b804c03f233009f7f19d3ba66bccbad2fd975b27992dee5653691a1ca8"
@@ -2750,7 +2750,7 @@
         {
           "authority": "the first-copy loop copies its exact named member from /init-swarm-config to /config",
           "kind": "first-config-copy",
-          "line": 660,
+          "line": 732,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "cp -Lf \"/init-swarm-config/$lint_config\" \"/config/$lint_config\"",
           "sourceLineSha256": "fe3adcda12b548fc489bce3c0db53d471ab960a50c728205777857afebfaf69f"
@@ -2758,7 +2758,7 @@
         {
           "authority": "eslint-type-evidence-tests-config.mjs is an explicit member of the runtime-copy loop from /config to /runtime-config",
           "kind": "runtime-copy-loop-membership",
-          "line": 689,
+          "line": 761,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "for lint_config in eslint-type-evidence-config.mjs eslint-type-evidence-tests-config.mjs eslint-type-evidence-generated-config.mjs type-evidence-eslint-plugin.mjs knip.json jscpd.json jscpd-tests.json lint-baseline.json",
           "sourceLineSha256": "e24867b804c03f233009f7f19d3ba66bccbad2fd975b27992dee5653691a1ca8"
@@ -2766,7 +2766,7 @@
         {
           "authority": "the runtime-copy loop copies its exact named member into /runtime-config",
           "kind": "runtime-config-copy",
-          "line": 691,
+          "line": 763,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "cp -Lf \"/config/$lint_config\" \"/runtime-config/$lint_config\"",
           "sourceLineSha256": "39cbdcca732af1c1cbbf76020c3f29b0caccf9c3cac75c93363edcb94a439e3f"
@@ -2799,7 +2799,7 @@
         {
           "authority": "eslint-type-evidence-tests-config.mjs is copied only when its explicit loop member exists in the mounted chart source",
           "kind": "chart-source-present-condition",
-          "line": 659,
+          "line": 731,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "if [ -f \"/init-swarm-config/$lint_config\" ]; then",
           "sourceLineSha256": "3925f6965ec2a8df2e349fecb36cb7fc057eb59027cd977e7f74d97ef877bf2f"
@@ -2830,7 +2830,7 @@
         {
           "authority": "Pod volume init-swarm-config selects the rendered swarm ConfigMap object",
           "kind": "configmap-volume-object-reference",
-          "line": 1630,
+          "line": 1702,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "name: {{ include \"kubeclaw.fullname\" . }}-swarm-config",
           "sourceLineSha256": "eca9a1ae32784caa60e728934079736359ae269cb54a30567a96527e55095516"
@@ -2838,7 +2838,7 @@
         {
           "authority": "init container mounts the ConfigMap at /init-swarm-config",
           "kind": "configmap-volume-mount",
-          "line": 1226,
+          "line": 1298,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "mountPath: /init-swarm-config",
           "sourceLineSha256": "96b2483e98709d7bc554a852bebf64090722c3135a8a88954f243e6d8c7e763a"
@@ -2846,7 +2846,7 @@
         {
           "authority": "eslint.config.mjs is copied from the ConfigMap mount into persistent /config",
           "kind": "first-config-copy",
-          "line": 644,
+          "line": 716,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "cp -Lf \"/init-swarm-config/eslint.config.mjs\" \"/config/eslint.config.mjs\"",
           "sourceLineSha256": "d3f6ddd00d1ee79975570e06fa371a8ecacde34c4642f95b44c8365127362703"
@@ -2854,7 +2854,7 @@
         {
           "authority": "eslint.config.mjs is copied or rendered from /config into /runtime-config",
           "kind": "runtime-config-copy",
-          "line": 681,
+          "line": 753,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "cp -Lf /config/eslint.config.mjs /runtime-config/eslint.config.mjs",
           "sourceLineSha256": "d9e19dd5c5a9b31c87023cb40c6819eac39c9c15af308e94d945c6e0e1d2d3be"
@@ -2896,7 +2896,7 @@
         {
           "authority": "Pod volume init-swarm-config selects the rendered swarm ConfigMap object",
           "kind": "configmap-volume-object-reference",
-          "line": 1630,
+          "line": 1702,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "name: {{ include \"kubeclaw.fullname\" . }}-swarm-config",
           "sourceLineSha256": "eca9a1ae32784caa60e728934079736359ae269cb54a30567a96527e55095516"
@@ -2904,7 +2904,7 @@
         {
           "authority": "init container mounts the ConfigMap at /init-swarm-config",
           "kind": "configmap-volume-mount",
-          "line": 1226,
+          "line": 1298,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "mountPath: /init-swarm-config",
           "sourceLineSha256": "96b2483e98709d7bc554a852bebf64090722c3135a8a88954f243e6d8c7e763a"
@@ -2912,7 +2912,7 @@
         {
           "authority": "eslint.config.mjs is copied from the ConfigMap mount into persistent /config",
           "kind": "first-config-copy",
-          "line": 644,
+          "line": 716,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "cp -Lf \"/init-swarm-config/eslint.config.mjs\" \"/config/eslint.config.mjs\"",
           "sourceLineSha256": "d3f6ddd00d1ee79975570e06fa371a8ecacde34c4642f95b44c8365127362703"
@@ -2920,7 +2920,7 @@
         {
           "authority": "eslint.config.mjs is copied or rendered from /config into /runtime-config",
           "kind": "runtime-config-copy",
-          "line": 681,
+          "line": 753,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "cp -Lf /config/eslint.config.mjs /runtime-config/eslint.config.mjs",
           "sourceLineSha256": "d9e19dd5c5a9b31c87023cb40c6819eac39c9c15af308e94d945c6e0e1d2d3be"
@@ -2953,7 +2953,7 @@
         {
           "authority": "the chart source participates only when the mounted eslint.config.mjs exists",
           "kind": "chart-source-present-condition",
-          "line": 642,
+          "line": 714,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "if [ -f \"/init-swarm-config/eslint.config.mjs\" ]; then",
           "sourceLineSha256": "d923b8e950547ebec9e48f37e098a0ccba61c543129268b2f081fe838a022ac5"
@@ -2961,7 +2961,7 @@
         {
           "authority": "chart bytes replace persistent eslint.config.mjs only when override is true or no persistent file exists",
           "kind": "override-or-absent-condition",
-          "line": 643,
+          "line": 715,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "if [ \"${OVERRIDE_SWARM_CONFIG}\" = \"true\" ] || [ ! -f \"/config/eslint.config.mjs\" ]; then",
           "sourceLineSha256": "db6e8c0b543c5995e1a25171dda903f84af11910eae127fe4d7b74a431bfe8cd"
@@ -2969,7 +2969,7 @@
         {
           "authority": "an existing persistent eslint.config.mjs is retained when override is false",
           "kind": "persistent-retention-branch",
-          "line": 647,
+          "line": 719,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "eslint.config.mjs exists, keeping (override=false)",
           "sourceLineSha256": "6a628b122767cabead094d225a906f900be26d0a498a025aa199fdce6190840d"
@@ -3000,7 +3000,7 @@
         {
           "authority": "Pod volume init-swarm-config selects the rendered swarm ConfigMap object",
           "kind": "configmap-volume-object-reference",
-          "line": 1630,
+          "line": 1702,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "name: {{ include \"kubeclaw.fullname\" . }}-swarm-config",
           "sourceLineSha256": "eca9a1ae32784caa60e728934079736359ae269cb54a30567a96527e55095516"
@@ -3008,7 +3008,7 @@
         {
           "authority": "init container mounts the ConfigMap at /init-swarm-config",
           "kind": "configmap-volume-mount",
-          "line": 1226,
+          "line": 1298,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "mountPath: /init-swarm-config",
           "sourceLineSha256": "96b2483e98709d7bc554a852bebf64090722c3135a8a88954f243e6d8c7e763a"
@@ -3016,7 +3016,7 @@
         {
           "authority": "jscpd-tests.json is an explicit member of the first-copy loop from /init-swarm-config to /config",
           "kind": "first-copy-loop-membership",
-          "line": 658,
+          "line": 730,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "for lint_config in eslint-type-evidence-config.mjs eslint-type-evidence-tests-config.mjs eslint-type-evidence-generated-config.mjs type-evidence-eslint-plugin.mjs knip.json jscpd.json jscpd-tests.json lint-baseline.json",
           "sourceLineSha256": "e24867b804c03f233009f7f19d3ba66bccbad2fd975b27992dee5653691a1ca8"
@@ -3024,7 +3024,7 @@
         {
           "authority": "the first-copy loop copies its exact named member from /init-swarm-config to /config",
           "kind": "first-config-copy",
-          "line": 660,
+          "line": 732,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "cp -Lf \"/init-swarm-config/$lint_config\" \"/config/$lint_config\"",
           "sourceLineSha256": "fe3adcda12b548fc489bce3c0db53d471ab960a50c728205777857afebfaf69f"
@@ -3032,7 +3032,7 @@
         {
           "authority": "jscpd-tests.json is an explicit member of the runtime-copy loop from /config to /runtime-config",
           "kind": "runtime-copy-loop-membership",
-          "line": 689,
+          "line": 761,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "for lint_config in eslint-type-evidence-config.mjs eslint-type-evidence-tests-config.mjs eslint-type-evidence-generated-config.mjs type-evidence-eslint-plugin.mjs knip.json jscpd.json jscpd-tests.json lint-baseline.json",
           "sourceLineSha256": "e24867b804c03f233009f7f19d3ba66bccbad2fd975b27992dee5653691a1ca8"
@@ -3040,7 +3040,7 @@
         {
           "authority": "the runtime-copy loop copies its exact named member into /runtime-config",
           "kind": "runtime-config-copy",
-          "line": 691,
+          "line": 763,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "cp -Lf \"/config/$lint_config\" \"/runtime-config/$lint_config\"",
           "sourceLineSha256": "39cbdcca732af1c1cbbf76020c3f29b0caccf9c3cac75c93363edcb94a439e3f"
@@ -3082,7 +3082,7 @@
         {
           "authority": "Pod volume init-swarm-config selects the rendered swarm ConfigMap object",
           "kind": "configmap-volume-object-reference",
-          "line": 1630,
+          "line": 1702,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "name: {{ include \"kubeclaw.fullname\" . }}-swarm-config",
           "sourceLineSha256": "eca9a1ae32784caa60e728934079736359ae269cb54a30567a96527e55095516"
@@ -3090,7 +3090,7 @@
         {
           "authority": "init container mounts the ConfigMap at /init-swarm-config",
           "kind": "configmap-volume-mount",
-          "line": 1226,
+          "line": 1298,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "mountPath: /init-swarm-config",
           "sourceLineSha256": "96b2483e98709d7bc554a852bebf64090722c3135a8a88954f243e6d8c7e763a"
@@ -3098,7 +3098,7 @@
         {
           "authority": "jscpd-tests.json is an explicit member of the first-copy loop from /init-swarm-config to /config",
           "kind": "first-copy-loop-membership",
-          "line": 658,
+          "line": 730,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "for lint_config in eslint-type-evidence-config.mjs eslint-type-evidence-tests-config.mjs eslint-type-evidence-generated-config.mjs type-evidence-eslint-plugin.mjs knip.json jscpd.json jscpd-tests.json lint-baseline.json",
           "sourceLineSha256": "e24867b804c03f233009f7f19d3ba66bccbad2fd975b27992dee5653691a1ca8"
@@ -3106,7 +3106,7 @@
         {
           "authority": "the first-copy loop copies its exact named member from /init-swarm-config to /config",
           "kind": "first-config-copy",
-          "line": 660,
+          "line": 732,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "cp -Lf \"/init-swarm-config/$lint_config\" \"/config/$lint_config\"",
           "sourceLineSha256": "fe3adcda12b548fc489bce3c0db53d471ab960a50c728205777857afebfaf69f"
@@ -3114,7 +3114,7 @@
         {
           "authority": "jscpd-tests.json is an explicit member of the runtime-copy loop from /config to /runtime-config",
           "kind": "runtime-copy-loop-membership",
-          "line": 689,
+          "line": 761,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "for lint_config in eslint-type-evidence-config.mjs eslint-type-evidence-tests-config.mjs eslint-type-evidence-generated-config.mjs type-evidence-eslint-plugin.mjs knip.json jscpd.json jscpd-tests.json lint-baseline.json",
           "sourceLineSha256": "e24867b804c03f233009f7f19d3ba66bccbad2fd975b27992dee5653691a1ca8"
@@ -3122,7 +3122,7 @@
         {
           "authority": "the runtime-copy loop copies its exact named member into /runtime-config",
           "kind": "runtime-config-copy",
-          "line": 691,
+          "line": 763,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "cp -Lf \"/config/$lint_config\" \"/runtime-config/$lint_config\"",
           "sourceLineSha256": "39cbdcca732af1c1cbbf76020c3f29b0caccf9c3cac75c93363edcb94a439e3f"
@@ -3246,7 +3246,7 @@
         {
           "authority": "jscpd-tests.json is copied only when its explicit loop member exists in the mounted chart source",
           "kind": "chart-source-present-condition",
-          "line": 659,
+          "line": 731,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "if [ -f \"/init-swarm-config/$lint_config\" ]; then",
           "sourceLineSha256": "3925f6965ec2a8df2e349fecb36cb7fc057eb59027cd977e7f74d97ef877bf2f"
@@ -3277,7 +3277,7 @@
         {
           "authority": "Pod volume init-swarm-config selects the rendered swarm ConfigMap object",
           "kind": "configmap-volume-object-reference",
-          "line": 1630,
+          "line": 1702,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "name: {{ include \"kubeclaw.fullname\" . }}-swarm-config",
           "sourceLineSha256": "eca9a1ae32784caa60e728934079736359ae269cb54a30567a96527e55095516"
@@ -3285,7 +3285,7 @@
         {
           "authority": "init container mounts the ConfigMap at /init-swarm-config",
           "kind": "configmap-volume-mount",
-          "line": 1226,
+          "line": 1298,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "mountPath: /init-swarm-config",
           "sourceLineSha256": "96b2483e98709d7bc554a852bebf64090722c3135a8a88954f243e6d8c7e763a"
@@ -3293,7 +3293,7 @@
         {
           "authority": "jscpd.json is an explicit member of the first-copy loop from /init-swarm-config to /config",
           "kind": "first-copy-loop-membership",
-          "line": 658,
+          "line": 730,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "for lint_config in eslint-type-evidence-config.mjs eslint-type-evidence-tests-config.mjs eslint-type-evidence-generated-config.mjs type-evidence-eslint-plugin.mjs knip.json jscpd.json jscpd-tests.json lint-baseline.json",
           "sourceLineSha256": "e24867b804c03f233009f7f19d3ba66bccbad2fd975b27992dee5653691a1ca8"
@@ -3301,7 +3301,7 @@
         {
           "authority": "the first-copy loop copies its exact named member from /init-swarm-config to /config",
           "kind": "first-config-copy",
-          "line": 660,
+          "line": 732,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "cp -Lf \"/init-swarm-config/$lint_config\" \"/config/$lint_config\"",
           "sourceLineSha256": "fe3adcda12b548fc489bce3c0db53d471ab960a50c728205777857afebfaf69f"
@@ -3309,7 +3309,7 @@
         {
           "authority": "jscpd.json is an explicit member of the runtime-copy loop from /config to /runtime-config",
           "kind": "runtime-copy-loop-membership",
-          "line": 689,
+          "line": 761,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "for lint_config in eslint-type-evidence-config.mjs eslint-type-evidence-tests-config.mjs eslint-type-evidence-generated-config.mjs type-evidence-eslint-plugin.mjs knip.json jscpd.json jscpd-tests.json lint-baseline.json",
           "sourceLineSha256": "e24867b804c03f233009f7f19d3ba66bccbad2fd975b27992dee5653691a1ca8"
@@ -3317,7 +3317,7 @@
         {
           "authority": "the runtime-copy loop copies its exact named member into /runtime-config",
           "kind": "runtime-config-copy",
-          "line": 691,
+          "line": 763,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "cp -Lf \"/config/$lint_config\" \"/runtime-config/$lint_config\"",
           "sourceLineSha256": "39cbdcca732af1c1cbbf76020c3f29b0caccf9c3cac75c93363edcb94a439e3f"
@@ -3359,7 +3359,7 @@
         {
           "authority": "Pod volume init-swarm-config selects the rendered swarm ConfigMap object",
           "kind": "configmap-volume-object-reference",
-          "line": 1630,
+          "line": 1702,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "name: {{ include \"kubeclaw.fullname\" . }}-swarm-config",
           "sourceLineSha256": "eca9a1ae32784caa60e728934079736359ae269cb54a30567a96527e55095516"
@@ -3367,7 +3367,7 @@
         {
           "authority": "init container mounts the ConfigMap at /init-swarm-config",
           "kind": "configmap-volume-mount",
-          "line": 1226,
+          "line": 1298,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "mountPath: /init-swarm-config",
           "sourceLineSha256": "96b2483e98709d7bc554a852bebf64090722c3135a8a88954f243e6d8c7e763a"
@@ -3375,7 +3375,7 @@
         {
           "authority": "jscpd.json is an explicit member of the first-copy loop from /init-swarm-config to /config",
           "kind": "first-copy-loop-membership",
-          "line": 658,
+          "line": 730,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "for lint_config in eslint-type-evidence-config.mjs eslint-type-evidence-tests-config.mjs eslint-type-evidence-generated-config.mjs type-evidence-eslint-plugin.mjs knip.json jscpd.json jscpd-tests.json lint-baseline.json",
           "sourceLineSha256": "e24867b804c03f233009f7f19d3ba66bccbad2fd975b27992dee5653691a1ca8"
@@ -3383,7 +3383,7 @@
         {
           "authority": "the first-copy loop copies its exact named member from /init-swarm-config to /config",
           "kind": "first-config-copy",
-          "line": 660,
+          "line": 732,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "cp -Lf \"/init-swarm-config/$lint_config\" \"/config/$lint_config\"",
           "sourceLineSha256": "fe3adcda12b548fc489bce3c0db53d471ab960a50c728205777857afebfaf69f"
@@ -3391,7 +3391,7 @@
         {
           "authority": "jscpd.json is an explicit member of the runtime-copy loop from /config to /runtime-config",
           "kind": "runtime-copy-loop-membership",
-          "line": 689,
+          "line": 761,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "for lint_config in eslint-type-evidence-config.mjs eslint-type-evidence-tests-config.mjs eslint-type-evidence-generated-config.mjs type-evidence-eslint-plugin.mjs knip.json jscpd.json jscpd-tests.json lint-baseline.json",
           "sourceLineSha256": "e24867b804c03f233009f7f19d3ba66bccbad2fd975b27992dee5653691a1ca8"
@@ -3399,7 +3399,7 @@
         {
           "authority": "the runtime-copy loop copies its exact named member into /runtime-config",
           "kind": "runtime-config-copy",
-          "line": 691,
+          "line": 763,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "cp -Lf \"/config/$lint_config\" \"/runtime-config/$lint_config\"",
           "sourceLineSha256": "39cbdcca732af1c1cbbf76020c3f29b0caccf9c3cac75c93363edcb94a439e3f"
@@ -3573,7 +3573,7 @@
         {
           "authority": "jscpd.json is copied only when its explicit loop member exists in the mounted chart source",
           "kind": "chart-source-present-condition",
-          "line": 659,
+          "line": 731,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "if [ -f \"/init-swarm-config/$lint_config\" ]; then",
           "sourceLineSha256": "3925f6965ec2a8df2e349fecb36cb7fc057eb59027cd977e7f74d97ef877bf2f"
@@ -3604,7 +3604,7 @@
         {
           "authority": "Pod volume init-swarm-config selects the rendered swarm ConfigMap object",
           "kind": "configmap-volume-object-reference",
-          "line": 1630,
+          "line": 1702,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "name: {{ include \"kubeclaw.fullname\" . }}-swarm-config",
           "sourceLineSha256": "eca9a1ae32784caa60e728934079736359ae269cb54a30567a96527e55095516"
@@ -3612,7 +3612,7 @@
         {
           "authority": "init container mounts the ConfigMap at /init-swarm-config",
           "kind": "configmap-volume-mount",
-          "line": 1226,
+          "line": 1298,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "mountPath: /init-swarm-config",
           "sourceLineSha256": "96b2483e98709d7bc554a852bebf64090722c3135a8a88954f243e6d8c7e763a"
@@ -3620,7 +3620,7 @@
         {
           "authority": "knip.json is an explicit member of the first-copy loop from /init-swarm-config to /config",
           "kind": "first-copy-loop-membership",
-          "line": 658,
+          "line": 730,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "for lint_config in eslint-type-evidence-config.mjs eslint-type-evidence-tests-config.mjs eslint-type-evidence-generated-config.mjs type-evidence-eslint-plugin.mjs knip.json jscpd.json jscpd-tests.json lint-baseline.json",
           "sourceLineSha256": "e24867b804c03f233009f7f19d3ba66bccbad2fd975b27992dee5653691a1ca8"
@@ -3628,7 +3628,7 @@
         {
           "authority": "the first-copy loop copies its exact named member from /init-swarm-config to /config",
           "kind": "first-config-copy",
-          "line": 660,
+          "line": 732,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "cp -Lf \"/init-swarm-config/$lint_config\" \"/config/$lint_config\"",
           "sourceLineSha256": "fe3adcda12b548fc489bce3c0db53d471ab960a50c728205777857afebfaf69f"
@@ -3636,7 +3636,7 @@
         {
           "authority": "knip.json is an explicit member of the runtime-copy loop from /config to /runtime-config",
           "kind": "runtime-copy-loop-membership",
-          "line": 689,
+          "line": 761,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "for lint_config in eslint-type-evidence-config.mjs eslint-type-evidence-tests-config.mjs eslint-type-evidence-generated-config.mjs type-evidence-eslint-plugin.mjs knip.json jscpd.json jscpd-tests.json lint-baseline.json",
           "sourceLineSha256": "e24867b804c03f233009f7f19d3ba66bccbad2fd975b27992dee5653691a1ca8"
@@ -3644,7 +3644,7 @@
         {
           "authority": "the runtime-copy loop copies its exact named member into /runtime-config",
           "kind": "runtime-config-copy",
-          "line": 691,
+          "line": 763,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "cp -Lf \"/config/$lint_config\" \"/runtime-config/$lint_config\"",
           "sourceLineSha256": "39cbdcca732af1c1cbbf76020c3f29b0caccf9c3cac75c93363edcb94a439e3f"
@@ -3686,7 +3686,7 @@
         {
           "authority": "Pod volume init-swarm-config selects the rendered swarm ConfigMap object",
           "kind": "configmap-volume-object-reference",
-          "line": 1630,
+          "line": 1702,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "name: {{ include \"kubeclaw.fullname\" . }}-swarm-config",
           "sourceLineSha256": "eca9a1ae32784caa60e728934079736359ae269cb54a30567a96527e55095516"
@@ -3694,7 +3694,7 @@
         {
           "authority": "init container mounts the ConfigMap at /init-swarm-config",
           "kind": "configmap-volume-mount",
-          "line": 1226,
+          "line": 1298,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "mountPath: /init-swarm-config",
           "sourceLineSha256": "96b2483e98709d7bc554a852bebf64090722c3135a8a88954f243e6d8c7e763a"
@@ -3702,7 +3702,7 @@
         {
           "authority": "knip.json is an explicit member of the first-copy loop from /init-swarm-config to /config",
           "kind": "first-copy-loop-membership",
-          "line": 658,
+          "line": 730,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "for lint_config in eslint-type-evidence-config.mjs eslint-type-evidence-tests-config.mjs eslint-type-evidence-generated-config.mjs type-evidence-eslint-plugin.mjs knip.json jscpd.json jscpd-tests.json lint-baseline.json",
           "sourceLineSha256": "e24867b804c03f233009f7f19d3ba66bccbad2fd975b27992dee5653691a1ca8"
@@ -3710,7 +3710,7 @@
         {
           "authority": "the first-copy loop copies its exact named member from /init-swarm-config to /config",
           "kind": "first-config-copy",
-          "line": 660,
+          "line": 732,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "cp -Lf \"/init-swarm-config/$lint_config\" \"/config/$lint_config\"",
           "sourceLineSha256": "fe3adcda12b548fc489bce3c0db53d471ab960a50c728205777857afebfaf69f"
@@ -3718,7 +3718,7 @@
         {
           "authority": "knip.json is an explicit member of the runtime-copy loop from /config to /runtime-config",
           "kind": "runtime-copy-loop-membership",
-          "line": 689,
+          "line": 761,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "for lint_config in eslint-type-evidence-config.mjs eslint-type-evidence-tests-config.mjs eslint-type-evidence-generated-config.mjs type-evidence-eslint-plugin.mjs knip.json jscpd.json jscpd-tests.json lint-baseline.json",
           "sourceLineSha256": "e24867b804c03f233009f7f19d3ba66bccbad2fd975b27992dee5653691a1ca8"
@@ -3726,7 +3726,7 @@
         {
           "authority": "the runtime-copy loop copies its exact named member into /runtime-config",
           "kind": "runtime-config-copy",
-          "line": 691,
+          "line": 763,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "cp -Lf \"/config/$lint_config\" \"/runtime-config/$lint_config\"",
           "sourceLineSha256": "39cbdcca732af1c1cbbf76020c3f29b0caccf9c3cac75c93363edcb94a439e3f"
@@ -3788,50 +3788,55 @@
         {
           "path": "$.ignoreBinaries[5]",
           "type": "string",
-          "value": "systemd-analyze"
+          "value": "setpriv"
         },
         {
           "path": "$.ignoreBinaries[6]",
           "type": "string",
-          "value": "uv"
+          "value": "systemd-analyze"
         },
         {
           "path": "$.ignoreBinaries[7]",
           "type": "string",
-          "value": "go"
+          "value": "uv"
         },
         {
           "path": "$.ignoreBinaries[8]",
           "type": "string",
-          "value": "openssl"
+          "value": "go"
         },
         {
           "path": "$.ignoreBinaries[9]",
           "type": "string",
-          "value": "mkfifo"
+          "value": "openssl"
         },
         {
           "path": "$.ignoreBinaries[10]",
           "type": "string",
-          "value": "helm"
+          "value": "mkfifo"
         },
         {
           "path": "$.ignoreBinaries[11]",
           "type": "string",
-          "value": "kubeconform"
+          "value": "helm"
         },
         {
           "path": "$.ignoreBinaries[12]",
           "type": "string",
-          "value": "kubectl"
+          "value": "kubeconform"
         },
         {
           "path": "$.ignoreBinaries[13]",
           "type": "string",
-          "value": "tsc"
+          "value": "kubectl"
         },
         {
           "path": "$.ignoreBinaries[14]",
+          "type": "string",
+          "value": "tsc"
+        },
+        {
+          "path": "$.ignoreBinaries[15]",
           "type": "string",
           "value": "which"
         },
@@ -3919,6 +3924,16 @@
           "path": "$.workspaces...ignoreUnresolved[0]",
           "type": "string",
           "value": "^/usr/local/bin/kubectl$"
+        },
+        {
+          "path": "$.workspaces...ignoreUnresolved[1]",
+          "type": "string",
+          "value": "^/usr/bin/systemd-notify$"
+        },
+        {
+          "path": "$.workspaces...ignoreDependencies[0]",
+          "type": "string",
+          "value": "eslint"
         },
         {
           "path": "$.workspaces...entry[0]",
@@ -4054,6 +4069,21 @@
           "path": "$.workspaces.contracts/prism/v1.project[1]",
           "type": "string",
           "value": "tests/**/*.mts"
+        },
+        {
+          "path": "$.workspaces.ops/pod.entry[0]",
+          "type": "string",
+          "value": "test/*.test.mjs"
+        },
+        {
+          "path": "$.workspaces.ops/pod.project[0]",
+          "type": "string",
+          "value": "test/**/*.mjs"
+        },
+        {
+          "path": "$.workspaces.ops/pod.ignoreDependencies[0]",
+          "type": "string",
+          "value": "@openai/codex"
         },
         {
           "path": "$.workspaces.skills/buster/engine.entry[0]",
@@ -5776,6 +5806,11 @@
           "value": "@types/react-dom"
         },
         {
+          "path": "$.workspaces.tools/ops-mcp.ignoreDependencies[0]",
+          "type": "string",
+          "value": "hono"
+        },
+        {
           "path": "$.workspaces.tools/ops-mcp.entry[0]",
           "type": "string",
           "value": "src/server.mjs"
@@ -5796,7 +5831,7 @@
           "value": "test/**/*.mjs"
         }
       ],
-      "leafFields": 409,
+      "leafFields": 416,
       "parseMode": "recursive-json",
       "path": "charts/kubeclaw/files/config/knip.json",
       "readerBoundary": "Knip tool adapter places the policy-selected config path after --config",
@@ -5805,13 +5840,13 @@
         {
           "authority": "knip.json is copied only when its explicit loop member exists in the mounted chart source",
           "kind": "chart-source-present-condition",
-          "line": 659,
+          "line": 731,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "if [ -f \"/init-swarm-config/$lint_config\" ]; then",
           "sourceLineSha256": "3925f6965ec2a8df2e349fecb36cb7fc057eb59027cd977e7f74d97ef877bf2f"
         }
       ],
-      "sourceDigest": "f3b6ced7573925bf338b8d3c9789d794792af62364fae1f227c9c997624b5d23",
+      "sourceDigest": "a4cdaefa215be97e2852da29b16bdbf663666fa46bf9239d5ae31f8b65e77bbc",
       "unboundReaderEvidence": []
     },
     {
@@ -5836,7 +5871,7 @@
         {
           "authority": "Pod volume init-swarm-config selects the rendered swarm ConfigMap object",
           "kind": "configmap-volume-object-reference",
-          "line": 1630,
+          "line": 1702,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "name: {{ include \"kubeclaw.fullname\" . }}-swarm-config",
           "sourceLineSha256": "eca9a1ae32784caa60e728934079736359ae269cb54a30567a96527e55095516"
@@ -5844,7 +5879,7 @@
         {
           "authority": "init container mounts the ConfigMap at /init-swarm-config",
           "kind": "configmap-volume-mount",
-          "line": 1226,
+          "line": 1298,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "mountPath: /init-swarm-config",
           "sourceLineSha256": "96b2483e98709d7bc554a852bebf64090722c3135a8a88954f243e6d8c7e763a"
@@ -5852,7 +5887,7 @@
         {
           "authority": "lint-baseline.json is an explicit member of the first-copy loop from /init-swarm-config to /config",
           "kind": "first-copy-loop-membership",
-          "line": 658,
+          "line": 730,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "for lint_config in eslint-type-evidence-config.mjs eslint-type-evidence-tests-config.mjs eslint-type-evidence-generated-config.mjs type-evidence-eslint-plugin.mjs knip.json jscpd.json jscpd-tests.json lint-baseline.json",
           "sourceLineSha256": "e24867b804c03f233009f7f19d3ba66bccbad2fd975b27992dee5653691a1ca8"
@@ -5860,7 +5895,7 @@
         {
           "authority": "the first-copy loop copies its exact named member from /init-swarm-config to /config",
           "kind": "first-config-copy",
-          "line": 660,
+          "line": 732,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "cp -Lf \"/init-swarm-config/$lint_config\" \"/config/$lint_config\"",
           "sourceLineSha256": "fe3adcda12b548fc489bce3c0db53d471ab960a50c728205777857afebfaf69f"
@@ -5868,7 +5903,7 @@
         {
           "authority": "lint-baseline.json is an explicit member of the runtime-copy loop from /config to /runtime-config",
           "kind": "runtime-copy-loop-membership",
-          "line": 689,
+          "line": 761,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "for lint_config in eslint-type-evidence-config.mjs eslint-type-evidence-tests-config.mjs eslint-type-evidence-generated-config.mjs type-evidence-eslint-plugin.mjs knip.json jscpd.json jscpd-tests.json lint-baseline.json",
           "sourceLineSha256": "e24867b804c03f233009f7f19d3ba66bccbad2fd975b27992dee5653691a1ca8"
@@ -5876,7 +5911,7 @@
         {
           "authority": "the runtime-copy loop copies its exact named member into /runtime-config",
           "kind": "runtime-config-copy",
-          "line": 691,
+          "line": 763,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "cp -Lf \"/config/$lint_config\" \"/runtime-config/$lint_config\"",
           "sourceLineSha256": "39cbdcca732af1c1cbbf76020c3f29b0caccf9c3cac75c93363edcb94a439e3f"
@@ -5918,7 +5953,7 @@
         {
           "authority": "Pod volume init-swarm-config selects the rendered swarm ConfigMap object",
           "kind": "configmap-volume-object-reference",
-          "line": 1630,
+          "line": 1702,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "name: {{ include \"kubeclaw.fullname\" . }}-swarm-config",
           "sourceLineSha256": "eca9a1ae32784caa60e728934079736359ae269cb54a30567a96527e55095516"
@@ -5926,7 +5961,7 @@
         {
           "authority": "init container mounts the ConfigMap at /init-swarm-config",
           "kind": "configmap-volume-mount",
-          "line": 1226,
+          "line": 1298,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "mountPath: /init-swarm-config",
           "sourceLineSha256": "96b2483e98709d7bc554a852bebf64090722c3135a8a88954f243e6d8c7e763a"
@@ -5934,7 +5969,7 @@
         {
           "authority": "lint-baseline.json is an explicit member of the first-copy loop from /init-swarm-config to /config",
           "kind": "first-copy-loop-membership",
-          "line": 658,
+          "line": 730,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "for lint_config in eslint-type-evidence-config.mjs eslint-type-evidence-tests-config.mjs eslint-type-evidence-generated-config.mjs type-evidence-eslint-plugin.mjs knip.json jscpd.json jscpd-tests.json lint-baseline.json",
           "sourceLineSha256": "e24867b804c03f233009f7f19d3ba66bccbad2fd975b27992dee5653691a1ca8"
@@ -5942,7 +5977,7 @@
         {
           "authority": "the first-copy loop copies its exact named member from /init-swarm-config to /config",
           "kind": "first-config-copy",
-          "line": 660,
+          "line": 732,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "cp -Lf \"/init-swarm-config/$lint_config\" \"/config/$lint_config\"",
           "sourceLineSha256": "fe3adcda12b548fc489bce3c0db53d471ab960a50c728205777857afebfaf69f"
@@ -5950,7 +5985,7 @@
         {
           "authority": "lint-baseline.json is an explicit member of the runtime-copy loop from /config to /runtime-config",
           "kind": "runtime-copy-loop-membership",
-          "line": 689,
+          "line": 761,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "for lint_config in eslint-type-evidence-config.mjs eslint-type-evidence-tests-config.mjs eslint-type-evidence-generated-config.mjs type-evidence-eslint-plugin.mjs knip.json jscpd.json jscpd-tests.json lint-baseline.json",
           "sourceLineSha256": "e24867b804c03f233009f7f19d3ba66bccbad2fd975b27992dee5653691a1ca8"
@@ -5958,7 +5993,7 @@
         {
           "authority": "the runtime-copy loop copies its exact named member into /runtime-config",
           "kind": "runtime-config-copy",
-          "line": 691,
+          "line": 763,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "cp -Lf \"/config/$lint_config\" \"/runtime-config/$lint_config\"",
           "sourceLineSha256": "39cbdcca732af1c1cbbf76020c3f29b0caccf9c3cac75c93363edcb94a439e3f"
@@ -6042,7 +6077,7 @@
         {
           "authority": "lint-baseline.json is copied only when its explicit loop member exists in the mounted chart source",
           "kind": "chart-source-present-condition",
-          "line": 659,
+          "line": 731,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "if [ -f \"/init-swarm-config/$lint_config\" ]; then",
           "sourceLineSha256": "3925f6965ec2a8df2e349fecb36cb7fc057eb59027cd977e7f74d97ef877bf2f"
@@ -6073,7 +6108,7 @@
         {
           "authority": "Pod volume init-swarm-config selects the rendered swarm ConfigMap object",
           "kind": "configmap-volume-object-reference",
-          "line": 1630,
+          "line": 1702,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "name: {{ include \"kubeclaw.fullname\" . }}-swarm-config",
           "sourceLineSha256": "eca9a1ae32784caa60e728934079736359ae269cb54a30567a96527e55095516"
@@ -6081,7 +6116,7 @@
         {
           "authority": "init container mounts the ConfigMap at /init-swarm-config",
           "kind": "configmap-volume-mount",
-          "line": 1226,
+          "line": 1298,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "mountPath: /init-swarm-config",
           "sourceLineSha256": "96b2483e98709d7bc554a852bebf64090722c3135a8a88954f243e6d8c7e763a"
@@ -6089,7 +6124,7 @@
         {
           "authority": "lint-policy.json is copied from the ConfigMap mount into persistent /config",
           "kind": "first-config-copy",
-          "line": 665,
+          "line": 737,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "cp -Lf \"/init-swarm-config/lint-policy.json\" \"/config/lint-policy.json\"",
           "sourceLineSha256": "3b5d3744623c65afe6a8e7de034ba80a677de8e87d49a66b7dcfaa8aa97842e1"
@@ -6097,7 +6132,7 @@
         {
           "authority": "lint-policy.json is copied or rendered from /config into /runtime-config",
           "kind": "runtime-config-copy",
-          "line": 695,
+          "line": 767,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "cp -Lf /config/lint-policy.json /runtime-config/lint-policy.json",
           "sourceLineSha256": "9c8a758340ecd4fc65d33bd9c3e6c322bf1edb1b3a31ff93987ec9d8ea8b6961"
@@ -6123,7 +6158,7 @@
         {
           "authority": "Pod volume init-swarm-config selects the rendered swarm ConfigMap object",
           "kind": "configmap-volume-object-reference",
-          "line": 1630,
+          "line": 1702,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "name: {{ include \"kubeclaw.fullname\" . }}-swarm-config",
           "sourceLineSha256": "eca9a1ae32784caa60e728934079736359ae269cb54a30567a96527e55095516"
@@ -6131,7 +6166,7 @@
         {
           "authority": "init container mounts the ConfigMap at /init-swarm-config",
           "kind": "configmap-volume-mount",
-          "line": 1226,
+          "line": 1298,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "mountPath: /init-swarm-config",
           "sourceLineSha256": "96b2483e98709d7bc554a852bebf64090722c3135a8a88954f243e6d8c7e763a"
@@ -6139,7 +6174,7 @@
         {
           "authority": "lint-policy.json is copied from the ConfigMap mount into persistent /config",
           "kind": "first-config-copy",
-          "line": 665,
+          "line": 737,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "cp -Lf \"/init-swarm-config/lint-policy.json\" \"/config/lint-policy.json\"",
           "sourceLineSha256": "3b5d3744623c65afe6a8e7de034ba80a677de8e87d49a66b7dcfaa8aa97842e1"
@@ -6147,7 +6182,7 @@
         {
           "authority": "lint-policy.json is copied or rendered from /config into /runtime-config",
           "kind": "runtime-config-copy",
-          "line": 695,
+          "line": 767,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "cp -Lf /config/lint-policy.json /runtime-config/lint-policy.json",
           "sourceLineSha256": "9c8a758340ecd4fc65d33bd9c3e6c322bf1edb1b3a31ff93987ec9d8ea8b6961"
@@ -9520,7 +9555,7 @@
         {
           "authority": "the chart source replaces persistent lint-policy.json only when the mounted source file exists",
           "kind": "chart-source-present-condition",
-          "line": 664,
+          "line": 736,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "if [ -f \"/init-swarm-config/lint-policy.json\" ]; then",
           "sourceLineSha256": "787af6c5c3c257c20f510c6a1c5aedbb1cd57f38eedd5589aa73484c9b3cd788"
@@ -9568,7 +9603,7 @@
         {
           "authority": "Pod volume init-swarm-config selects the rendered swarm ConfigMap object",
           "kind": "configmap-volume-object-reference",
-          "line": 1630,
+          "line": 1702,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "name: {{ include \"kubeclaw.fullname\" . }}-swarm-config",
           "sourceLineSha256": "eca9a1ae32784caa60e728934079736359ae269cb54a30567a96527e55095516"
@@ -9576,7 +9611,7 @@
         {
           "authority": "init container mounts the ConfigMap at /init-swarm-config",
           "kind": "configmap-volume-mount",
-          "line": 1226,
+          "line": 1298,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "mountPath: /init-swarm-config",
           "sourceLineSha256": "96b2483e98709d7bc554a852bebf64090722c3135a8a88954f243e6d8c7e763a"
@@ -9584,7 +9619,7 @@
         {
           "authority": "swarm.config.json is copied from the ConfigMap mount into persistent /config",
           "kind": "first-config-copy",
-          "line": 628,
+          "line": 700,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "cp -Lf \"/init-swarm-config/swarm.config.json\" \"/config/swarm.config.json\"",
           "sourceLineSha256": "e4c2f8ece8d86d9f8d30e2048eb7f958b77152b13d8a3f4fbfff7606025a9123"
@@ -9592,7 +9627,7 @@
         {
           "authority": "swarm.config.json is copied or rendered from /config into /runtime-config",
           "kind": "runtime-config-copy",
-          "line": 674,
+          "line": 746,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "const source=\"/config/swarm.config.json\"; const target=\"/runtime-config/swarm.config.json\"",
           "sourceLineSha256": "b185d9145468b37bc070093a18edf47fc85afebe2d0f299dc517bc6bc86846d4"
@@ -9600,7 +9635,7 @@
         {
           "authority": "the main workload process receives the mounted runtime swarm configuration path",
           "kind": "process-config-path",
-          "line": 1358,
+          "line": 1430,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "value: \"/home/node/.openclaw/swarm.config.json\"",
           "sourceLineSha256": "355909ee9b1121f61db048132685b88b08a6c250f4ddd427f34ddb1be9e9b8b3"
@@ -9626,7 +9661,7 @@
         {
           "authority": "Pod volume init-swarm-config selects the rendered swarm ConfigMap object",
           "kind": "configmap-volume-object-reference",
-          "line": 1630,
+          "line": 1702,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "name: {{ include \"kubeclaw.fullname\" . }}-swarm-config",
           "sourceLineSha256": "eca9a1ae32784caa60e728934079736359ae269cb54a30567a96527e55095516"
@@ -9634,7 +9669,7 @@
         {
           "authority": "init container mounts the ConfigMap at /init-swarm-config",
           "kind": "configmap-volume-mount",
-          "line": 1226,
+          "line": 1298,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "mountPath: /init-swarm-config",
           "sourceLineSha256": "96b2483e98709d7bc554a852bebf64090722c3135a8a88954f243e6d8c7e763a"
@@ -9642,7 +9677,7 @@
         {
           "authority": "swarm.config.json is copied from the ConfigMap mount into persistent /config",
           "kind": "first-config-copy",
-          "line": 628,
+          "line": 700,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "cp -Lf \"/init-swarm-config/swarm.config.json\" \"/config/swarm.config.json\"",
           "sourceLineSha256": "e4c2f8ece8d86d9f8d30e2048eb7f958b77152b13d8a3f4fbfff7606025a9123"
@@ -9650,7 +9685,7 @@
         {
           "authority": "swarm.config.json is copied or rendered from /config into /runtime-config",
           "kind": "runtime-config-copy",
-          "line": 674,
+          "line": 746,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "const source=\"/config/swarm.config.json\"; const target=\"/runtime-config/swarm.config.json\"",
           "sourceLineSha256": "b185d9145468b37bc070093a18edf47fc85afebe2d0f299dc517bc6bc86846d4"
@@ -9658,7 +9693,7 @@
         {
           "authority": "the main workload process receives the mounted runtime swarm configuration path",
           "kind": "process-config-path",
-          "line": 1358,
+          "line": 1430,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "value: \"/home/node/.openclaw/swarm.config.json\"",
           "sourceLineSha256": "355909ee9b1121f61db048132685b88b08a6c250f4ddd427f34ddb1be9e9b8b3"
@@ -9731,7 +9766,7 @@
         {
           "authority": "the chart source replaces persistent swarm.config.json only when the mounted source file exists",
           "kind": "chart-source-present-condition",
-          "line": 627,
+          "line": 699,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "if [ -f \"/init-swarm-config/swarm.config.json\" ]; then",
           "sourceLineSha256": "d7adabe4bd67d29798321b376f42c3bb74a291fba51e5976fef2fca98fea30cf"
@@ -9742,7 +9777,7 @@
         {
           "authority": "the init script parses the persistent file only to produce the runtime copy; this is not the workload field reader",
           "kind": "init-transform-parser",
-          "line": 674,
+          "line": 746,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "JSON.parse(fs.readFileSync(source,\"utf8\"))",
           "sourceLineSha256": "b185d9145468b37bc070093a18edf47fc85afebe2d0f299dc517bc6bc86846d4"
@@ -9771,7 +9806,7 @@
         {
           "authority": "Pod volume init-swarm-config selects the rendered swarm ConfigMap object",
           "kind": "configmap-volume-object-reference",
-          "line": 1630,
+          "line": 1702,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "name: {{ include \"kubeclaw.fullname\" . }}-swarm-config",
           "sourceLineSha256": "eca9a1ae32784caa60e728934079736359ae269cb54a30567a96527e55095516"
@@ -9779,7 +9814,7 @@
         {
           "authority": "init container mounts the ConfigMap at /init-swarm-config",
           "kind": "configmap-volume-mount",
-          "line": 1226,
+          "line": 1298,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "mountPath: /init-swarm-config",
           "sourceLineSha256": "96b2483e98709d7bc554a852bebf64090722c3135a8a88954f243e6d8c7e763a"
@@ -9787,7 +9822,7 @@
         {
           "authority": "type-evidence-eslint-plugin.mjs is an explicit member of the first-copy loop from /init-swarm-config to /config",
           "kind": "first-copy-loop-membership",
-          "line": 658,
+          "line": 730,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "for lint_config in eslint-type-evidence-config.mjs eslint-type-evidence-tests-config.mjs eslint-type-evidence-generated-config.mjs type-evidence-eslint-plugin.mjs knip.json jscpd.json jscpd-tests.json lint-baseline.json",
           "sourceLineSha256": "e24867b804c03f233009f7f19d3ba66bccbad2fd975b27992dee5653691a1ca8"
@@ -9795,7 +9830,7 @@
         {
           "authority": "the first-copy loop copies its exact named member from /init-swarm-config to /config",
           "kind": "first-config-copy",
-          "line": 660,
+          "line": 732,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "cp -Lf \"/init-swarm-config/$lint_config\" \"/config/$lint_config\"",
           "sourceLineSha256": "fe3adcda12b548fc489bce3c0db53d471ab960a50c728205777857afebfaf69f"
@@ -9803,7 +9838,7 @@
         {
           "authority": "type-evidence-eslint-plugin.mjs is an explicit member of the runtime-copy loop from /config to /runtime-config",
           "kind": "runtime-copy-loop-membership",
-          "line": 689,
+          "line": 761,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "for lint_config in eslint-type-evidence-config.mjs eslint-type-evidence-tests-config.mjs eslint-type-evidence-generated-config.mjs type-evidence-eslint-plugin.mjs knip.json jscpd.json jscpd-tests.json lint-baseline.json",
           "sourceLineSha256": "e24867b804c03f233009f7f19d3ba66bccbad2fd975b27992dee5653691a1ca8"
@@ -9811,7 +9846,7 @@
         {
           "authority": "the runtime-copy loop copies its exact named member into /runtime-config",
           "kind": "runtime-config-copy",
-          "line": 691,
+          "line": 763,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "cp -Lf \"/config/$lint_config\" \"/runtime-config/$lint_config\"",
           "sourceLineSha256": "39cbdcca732af1c1cbbf76020c3f29b0caccf9c3cac75c93363edcb94a439e3f"
@@ -9853,7 +9888,7 @@
         {
           "authority": "Pod volume init-swarm-config selects the rendered swarm ConfigMap object",
           "kind": "configmap-volume-object-reference",
-          "line": 1630,
+          "line": 1702,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "name: {{ include \"kubeclaw.fullname\" . }}-swarm-config",
           "sourceLineSha256": "eca9a1ae32784caa60e728934079736359ae269cb54a30567a96527e55095516"
@@ -9861,7 +9896,7 @@
         {
           "authority": "init container mounts the ConfigMap at /init-swarm-config",
           "kind": "configmap-volume-mount",
-          "line": 1226,
+          "line": 1298,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "mountPath: /init-swarm-config",
           "sourceLineSha256": "96b2483e98709d7bc554a852bebf64090722c3135a8a88954f243e6d8c7e763a"
@@ -9869,7 +9904,7 @@
         {
           "authority": "type-evidence-eslint-plugin.mjs is an explicit member of the first-copy loop from /init-swarm-config to /config",
           "kind": "first-copy-loop-membership",
-          "line": 658,
+          "line": 730,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "for lint_config in eslint-type-evidence-config.mjs eslint-type-evidence-tests-config.mjs eslint-type-evidence-generated-config.mjs type-evidence-eslint-plugin.mjs knip.json jscpd.json jscpd-tests.json lint-baseline.json",
           "sourceLineSha256": "e24867b804c03f233009f7f19d3ba66bccbad2fd975b27992dee5653691a1ca8"
@@ -9877,7 +9912,7 @@
         {
           "authority": "the first-copy loop copies its exact named member from /init-swarm-config to /config",
           "kind": "first-config-copy",
-          "line": 660,
+          "line": 732,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "cp -Lf \"/init-swarm-config/$lint_config\" \"/config/$lint_config\"",
           "sourceLineSha256": "fe3adcda12b548fc489bce3c0db53d471ab960a50c728205777857afebfaf69f"
@@ -9885,7 +9920,7 @@
         {
           "authority": "type-evidence-eslint-plugin.mjs is an explicit member of the runtime-copy loop from /config to /runtime-config",
           "kind": "runtime-copy-loop-membership",
-          "line": 689,
+          "line": 761,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "for lint_config in eslint-type-evidence-config.mjs eslint-type-evidence-tests-config.mjs eslint-type-evidence-generated-config.mjs type-evidence-eslint-plugin.mjs knip.json jscpd.json jscpd-tests.json lint-baseline.json",
           "sourceLineSha256": "e24867b804c03f233009f7f19d3ba66bccbad2fd975b27992dee5653691a1ca8"
@@ -9893,7 +9928,7 @@
         {
           "authority": "the runtime-copy loop copies its exact named member into /runtime-config",
           "kind": "runtime-config-copy",
-          "line": 691,
+          "line": 763,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "cp -Lf \"/config/$lint_config\" \"/runtime-config/$lint_config\"",
           "sourceLineSha256": "39cbdcca732af1c1cbbf76020c3f29b0caccf9c3cac75c93363edcb94a439e3f"
@@ -9926,7 +9961,7 @@
         {
           "authority": "type-evidence-eslint-plugin.mjs is copied only when its explicit loop member exists in the mounted chart source",
           "kind": "chart-source-present-condition",
-          "line": 659,
+          "line": 731,
           "path": "charts/kubeclaw/templates/deployment.yaml",
           "requiredToken": "if [ -f \"/init-swarm-config/$lint_config\" ]; then",
           "sourceLineSha256": "3925f6965ec2a8df2e349fecb36cb7fc057eb59027cd977e7f74d97ef877bf2f"
@@ -15546,10 +15581,17 @@
           "description": "",
           "meaning": {
             "acceptedValues": "array with maxItems=32, uniqueItems=true",
-            "additionalImplementationEvidence": [],
+            "additionalImplementationEvidence": [
+              "skills/buster/engine/test-gates/kubernetes-fixture-runtime.ts:664",
+              "skills/buster/engine/test-gates/kubernetes-fixture-runtime.ts:700",
+              "skills/buster/engine/test-gates/kubernetes-fixture-runtime.ts:715",
+              "cmd/buster-namespace-controller/main.go:185",
+              "cmd/buster-namespace-controller/main.go:623",
+              "cmd/buster-namespace-controller/main.go:1401"
+            ],
             "authorityKey": "skills/buster/plugins/kubernetes-fixture/schemas/config.schema.json::$.secretReferences",
             "blockerOwner": null,
-            "changeImpact": "Changing $.secretReferences changes this exact configured behavior when one isolated Kubernetes deployment lease next loads it: Lists operator-allowlisted Kubernetes Secrets mounted into the deployment lease created by one isolated Kubernetes deployment lease.",
+            "changeImpact": "Changing $.secretReferences changes this exact configured behavior when one isolated Kubernetes deployment lease next loads it: Lists Kubernetes Secret objects to copy from the approved source namespace into the deployment lease namespace created by one isolated Kubernetes deployment lease. The runtime allowedSecretReferences and controller BUSTER_ALLOWED_SOURCE_SECRETS allowlists must both admit each name. The separately applied checked workload manifest defines volume, environment and imagePullSecret projections; listing a copied Secret does not create those projections.",
             "closureCondition": null,
             "defaultBehavior": "The schema declares no default. Stage, observer, adapter, and platform validation leaves an omitted field absent. The linked consumer owns any later fallback; a schema annotation alone does not establish an effective value.",
             "emptyBehavior": "The local array constraints permit zero items. Apply every listed conditional constraint and the linked consumer rules before using an empty array.",
@@ -15560,7 +15602,7 @@
             "runtimeDefaultEvidence": null,
             "schemaEvidence": "skills/buster/plugins/kubernetes-fixture/schemas/config.schema.json",
             "status": "qualified-runtime-authority",
-            "text": "Lists operator-allowlisted Kubernetes Secrets mounted into the deployment lease created by one isolated Kubernetes deployment lease. Accepted values: array with maxItems=32, uniqueItems=true. Omission: The schema declares no default. Stage, observer, adapter, and platform validation leaves an omitted field absent. The linked consumer owns any later fallback; a schema annotation alone does not establish an effective value. Empty value: The local array constraints permit zero items. Apply every listed conditional constraint and the linked consumer rules before using an empty array. Change effect: Changing $.secretReferences changes this exact configured behavior when one isolated Kubernetes deployment lease next loads it: Lists operator-allowlisted Kubernetes Secrets mounted into the deployment lease created by one isolated Kubernetes deployment lease. Failure: Schema validation rejects $.secretReferences when it violates array with maxItems=32, uniqueItems=true. The linked consumer at skills/buster/plugins/kubernetes-fixture/src/provider.js:49 owns any later operational rejection for this field; no unrelated target, path, secret, or resource failure is inferred."
+            "text": "Lists Kubernetes Secret objects to copy from the approved source namespace into the deployment lease namespace created by one isolated Kubernetes deployment lease. The runtime allowedSecretReferences and controller BUSTER_ALLOWED_SOURCE_SECRETS allowlists must both admit each name. The separately applied checked workload manifest defines volume, environment and imagePullSecret projections; listing a copied Secret does not create those projections. Accepted values: array with maxItems=32, uniqueItems=true. Omission: The schema declares no default. Stage, observer, adapter, and platform validation leaves an omitted field absent. The linked consumer owns any later fallback; a schema annotation alone does not establish an effective value. Empty value: The local array constraints permit zero items. Apply every listed conditional constraint and the linked consumer rules before using an empty array. Change effect: Changing $.secretReferences changes this exact configured behavior when one isolated Kubernetes deployment lease next loads it: Lists Kubernetes Secret objects to copy from the approved source namespace into the deployment lease namespace created by one isolated Kubernetes deployment lease. The runtime allowedSecretReferences and controller BUSTER_ALLOWED_SOURCE_SECRETS allowlists must both admit each name. The separately applied checked workload manifest defines volume, environment and imagePullSecret projections; listing a copied Secret does not create those projections. Failure: Schema validation rejects $.secretReferences when it violates array with maxItems=32, uniqueItems=true. The linked consumer at skills/buster/plugins/kubernetes-fixture/src/provider.js:49 owns any later operational rejection for this field; no unrelated target, path, secret, or resource failure is inferred."
           },
           "negated": false,
           "ownerEvidence": "skills/buster/plugins/kubernetes-fixture/package.json",
@@ -15590,10 +15632,17 @@
           "description": "",
           "meaning": {
             "acceptedValues": "string with pattern=\"^[A-Za-z0-9._-]+$\", maxLength=253",
-            "additionalImplementationEvidence": [],
+            "additionalImplementationEvidence": [
+              "skills/buster/engine/test-gates/kubernetes-fixture-runtime.ts:664",
+              "skills/buster/engine/test-gates/kubernetes-fixture-runtime.ts:700",
+              "skills/buster/engine/test-gates/kubernetes-fixture-runtime.ts:715",
+              "cmd/buster-namespace-controller/main.go:185",
+              "cmd/buster-namespace-controller/main.go:623",
+              "cmd/buster-namespace-controller/main.go:1401"
+            ],
             "authorityKey": "skills/buster/plugins/kubernetes-fixture/schemas/config.schema.json::$.secretReferences[]",
             "blockerOwner": null,
-            "changeImpact": "Changing $.secretReferences[] changes this exact configured behavior when one isolated Kubernetes deployment lease next loads it: Lists operator-allowlisted Kubernetes Secrets mounted into the deployment lease created by one isolated Kubernetes deployment lease.",
+            "changeImpact": "Changing $.secretReferences[] changes this exact configured behavior when one isolated Kubernetes deployment lease next loads it: Names one Kubernetes Secret object to copy from the approved source namespace into the deployment lease namespace created by one isolated Kubernetes deployment lease. The runtime allowedSecretReferences and controller BUSTER_ALLOWED_SOURCE_SECRETS allowlists must both admit each name. The separately applied checked workload manifest defines volume, environment and imagePullSecret projections; listing a copied Secret does not create those projections.",
             "closureCondition": null,
             "defaultBehavior": "The schema declares no default. The immediate parent requires this field. Validation without default insertion rejects omission.",
             "emptyBehavior": "An empty string does not match the required pattern.",
@@ -15604,7 +15653,7 @@
             "runtimeDefaultEvidence": null,
             "schemaEvidence": "skills/buster/plugins/kubernetes-fixture/schemas/config.schema.json",
             "status": "qualified-runtime-authority",
-            "text": "Lists operator-allowlisted Kubernetes Secrets mounted into the deployment lease created by one isolated Kubernetes deployment lease. Accepted values: string with pattern=\"^[A-Za-z0-9._-]+$\", maxLength=253. Omission: The schema declares no default. The immediate parent requires this field. Validation without default insertion rejects omission. Empty value: An empty string does not match the required pattern. Change effect: Changing $.secretReferences[] changes this exact configured behavior when one isolated Kubernetes deployment lease next loads it: Lists operator-allowlisted Kubernetes Secrets mounted into the deployment lease created by one isolated Kubernetes deployment lease. Failure: Schema validation rejects $.secretReferences[] when it violates string with pattern=\"^[A-Za-z0-9._-]+$\", maxLength=253. The linked consumer at skills/buster/plugins/kubernetes-fixture/src/provider.js:49 owns any later operational rejection for this field; no unrelated target, path, secret, or resource failure is inferred."
+            "text": "Names one Kubernetes Secret object to copy from the approved source namespace into the deployment lease namespace created by one isolated Kubernetes deployment lease. The runtime allowedSecretReferences and controller BUSTER_ALLOWED_SOURCE_SECRETS allowlists must both admit each name. The separately applied checked workload manifest defines volume, environment and imagePullSecret projections; listing a copied Secret does not create those projections. Accepted values: string with pattern=\"^[A-Za-z0-9._-]+$\", maxLength=253. Omission: The schema declares no default. The immediate parent requires this field. Validation without default insertion rejects omission. Empty value: An empty string does not match the required pattern. Change effect: Changing $.secretReferences[] changes this exact configured behavior when one isolated Kubernetes deployment lease next loads it: Names one Kubernetes Secret object to copy from the approved source namespace into the deployment lease namespace created by one isolated Kubernetes deployment lease. The runtime allowedSecretReferences and controller BUSTER_ALLOWED_SOURCE_SECRETS allowlists must both admit each name. The separately applied checked workload manifest defines volume, environment and imagePullSecret projections; listing a copied Secret does not create those projections. Failure: Schema validation rejects $.secretReferences[] when it violates string with pattern=\"^[A-Za-z0-9._-]+$\", maxLength=253. The linked consumer at skills/buster/plugins/kubernetes-fixture/src/provider.js:49 owns any later operational rejection for this field; no unrelated target, path, secret, or resource failure is inferred."
           },
           "negated": false,
           "ownerEvidence": "skills/buster/plugins/kubernetes-fixture/package.json",
@@ -25565,7 +25614,7 @@
             "additionalImplementationEvidence": [],
             "authorityKey": "skills/buster/plugins/size-budget/schemas/config.schema.json::$.matchingFiles[].maximumBytes",
             "blockerOwner": null,
-            "changeImpact": "Changing $.matchingFiles[].maximumBytes changes this exact configured behavior when one repository size-budget decision next loads it: Sets the largest allowed byte size for each file matched by one budget rule.",
+            "changeImpact": "Changing $.matchingFiles[].maximumBytes changes this exact configured behavior when one repository size-budget decision next loads it: Sets the largest allowed aggregate byte size of all files matched by one budget rule.",
             "closureCondition": null,
             "defaultBehavior": "The schema declares no default. The immediate parent requires this field. Validation without default insertion rejects omission.",
             "emptyBehavior": "A JSON empty string has the wrong declared type. Apply enclosing and sibling constraints as well.",
@@ -25576,7 +25625,7 @@
             "runtimeDefaultEvidence": null,
             "schemaEvidence": "skills/buster/plugins/size-budget/schemas/config.schema.json",
             "status": "qualified-runtime-authority",
-            "text": "Sets the largest allowed byte size for each file matched by one budget rule. Accepted values: integer with minimum=0, maximum=9007199254740991. Omission: The schema declares no default. The immediate parent requires this field. Validation without default insertion rejects omission. Empty value: A JSON empty string has the wrong declared type. Apply enclosing and sibling constraints as well. Change effect: Changing $.matchingFiles[].maximumBytes changes this exact configured behavior when one repository size-budget decision next loads it: Sets the largest allowed byte size for each file matched by one budget rule. Failure: Schema validation rejects $.matchingFiles[].maximumBytes when it violates integer with minimum=0, maximum=9007199254740991. The linked consumer at skills/buster/plugins/size-budget/src/provider.js:52 owns any later operational rejection for this field; no unrelated target, path, secret, or resource failure is inferred."
+            "text": "Sets the largest allowed aggregate byte size of all files matched by one budget rule. Accepted values: integer with minimum=0, maximum=9007199254740991. Omission: The schema declares no default. The immediate parent requires this field. Validation without default insertion rejects omission. Empty value: A JSON empty string has the wrong declared type. Apply enclosing and sibling constraints as well. Change effect: Changing $.matchingFiles[].maximumBytes changes this exact configured behavior when one repository size-budget decision next loads it: Sets the largest allowed aggregate byte size of all files matched by one budget rule. Failure: Schema validation rejects $.matchingFiles[].maximumBytes when it violates integer with minimum=0, maximum=9007199254740991. The linked consumer at skills/buster/plugins/size-budget/src/provider.js:52 owns any later operational rejection for this field; no unrelated target, path, secret, or resource failure is inferred."
           },
           "negated": false,
           "ownerEvidence": "skills/buster/plugins/size-budget/package.json",
@@ -34903,7 +34952,7 @@
             "additionalImplementationEvidence": [],
             "authorityKey": "skills/common/plugins/secret-resolver/schemas/config.schema.json::$.environment.{*}",
             "blockerOwner": null,
-            "changeImpact": "Changing $.environment.{*} changes this exact configured behavior when the confidential environment-backed secret resolver next loads it: Maps one declared environment name to the value given to the confidential environment-backed secret resolver; it does not grant ambient host-environment access.",
+            "changeImpact": "Changing $.environment.{*} changes this exact configured behavior when the confidential environment-backed secret resolver next loads it: Maps one allowed logical secret identifier to the process environment-variable name read for its confidential resolve request; the mapping stores the variable name, not the secret value.",
             "closureCondition": null,
             "defaultBehavior": "The schema declares no default. Stage, observer, adapter, and platform validation leaves an omitted field absent. The linked consumer owns any later fallback; a schema annotation alone does not establish an effective value.",
             "emptyBehavior": "An empty string does not match the required pattern.",
@@ -34914,7 +34963,7 @@
             "runtimeDefaultEvidence": null,
             "schemaEvidence": "skills/common/plugins/secret-resolver/schemas/config.schema.json",
             "status": "qualified-runtime-authority",
-            "text": "Maps one declared environment name to the value given to the confidential environment-backed secret resolver; it does not grant ambient host-environment access. Accepted values: string with pattern=\"^[A-Z][A-Z0-9_]*$\". Omission: The schema declares no default. Stage, observer, adapter, and platform validation leaves an omitted field absent. The linked consumer owns any later fallback; a schema annotation alone does not establish an effective value. Empty value: An empty string does not match the required pattern. Change effect: Changing $.environment.{*} changes this exact configured behavior when the confidential environment-backed secret resolver next loads it: Maps one declared environment name to the value given to the confidential environment-backed secret resolver; it does not grant ambient host-environment access. Failure: Schema validation rejects $.environment.{*} when it violates string with pattern=\"^[A-Z][A-Z0-9_]*$\". The linked consumer at skills/common/plugins/secret-resolver/src/adapter.ts:4 owns any later operational rejection for this field; no unrelated target, path, secret, or resource failure is inferred."
+            "text": "Maps one allowed logical secret identifier to the process environment-variable name read for its confidential resolve request; the mapping stores the variable name, not the secret value. Accepted values: string with pattern=\"^[A-Z][A-Z0-9_]*$\". Omission: The schema declares no default. Stage, observer, adapter, and platform validation leaves an omitted field absent. The linked consumer owns any later fallback; a schema annotation alone does not establish an effective value. Empty value: An empty string does not match the required pattern. Change effect: Changing $.environment.{*} changes this exact configured behavior when the confidential environment-backed secret resolver next loads it: Maps one allowed logical secret identifier to the process environment-variable name read for its confidential resolve request; the mapping stores the variable name, not the secret value. Failure: Schema validation rejects $.environment.{*} when it violates string with pattern=\"^[A-Z][A-Z0-9_]*$\". The linked consumer at skills/common/plugins/secret-resolver/src/adapter.ts:4 owns any later operational rejection for this field; no unrelated target, path, secret, or resource failure is inferred."
           },
           "negated": false,
           "ownerEvidence": "skills/common/plugins/secret-resolver/package.json",
@@ -50423,7 +50472,7 @@
     "conditionalOrUnknownRequired": 0,
     "deployedConfigPayloads": 14,
     "deployedPayloadsWithoutCheckedInReader": 2,
-    "deployedStructuredPayloadLeaves": 1442,
+    "deployedStructuredPayloadLeaves": 1449,
     "publicSchemaCollectionFields": 171,
     "publicSchemaFields": 699,
     "publicSchemaLeaves": 528,

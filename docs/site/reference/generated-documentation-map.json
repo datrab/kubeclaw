@@ -3104,12 +3104,13 @@
       "audience": "operator, Codex integrator, Ops MCP maintainer, security specialist",
       "owner": "Ops MCP maintainers",
       "appliesTo": "`kubeclaw-ops` MCP service version 0.2.0",
-      "lastVerified": "service, chart, policy, and focused test inspection on 2026-09-21",
+      "lastVerified": "current service, schema, chart and policy inspection on 2026-10-21; 15 local service tests passed, no live cluster or Relay verification",
       "sourceDependencies": [
         "tools/ops-mcp/src",
         "tools/ops-mcp/test",
         "charts/ops-pod",
-        "scripts/deploy-ops-pod.sh"
+        "scripts/deploy-ops-pod.sh",
+        "my-values/infra/cilium-cluster-policies.yaml"
       ],
       "checks": [
         "npm run docs:governance:check",
