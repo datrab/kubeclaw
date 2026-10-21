@@ -1,0 +1,28 @@
+{
+  "baseline": "17720beb",
+  "scope": "Explicit internal classification, source-bound standalone documentation consumers, retained read edges, deterministic owner-generated inventory, two stale installer links and three stale governance metadata timestamps. No new content/gate acceptance.",
+  "codeReview": "code-review.json",
+  "tests": {
+    "treeProtection": {
+      "passed": 54,
+      "failed": 0
+    },
+    "custody": {
+      "passed": 30,
+      "failed": 0
+    },
+    "documentationRoles": {
+      "passed": 64,
+      "failed": 0
+    }
+  },
+  "baselineTreeCheck": "initial-tree-check.txt",
+  "oldClassificationRecordsPreserved": 2965,
+  "initialExplicitInternalAdditions": 945,
+  "proofFilesAreAlsoExplicitInternalInputs": true,
+  "governanceDelta": "Three lastVerified fields copied exactly from already-reviewed authored pages by scripts/docs-governance.mjs; no reader route, authority, checker or dependency changes.",
+  "docCheck": "167 active Markdown files PASS; architecture9diagrams58boxes177links and operations20boxes202links only, not whole diagram Source acceptance.",
+  "publicationCheck": "167pages/51plugins PASS; proof files are not canonical publication entries.",
+  "nativeReceipt": "One precise AST fact receipt renewal;63unchanged; no new role or selector/child authority changes.",
+  "limits": "Current HTML/SVG/search/Source previews are existing c958eb59 baseline, not newly rebuilt browser evidence. Global API copier line91, stale generated Helm phrases, eight Source diagrams, human/live-workflow limits remain NOT_READY. Counts remain203/261 and17/89."
+}

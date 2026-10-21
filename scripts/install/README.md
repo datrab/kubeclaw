@@ -82,6 +82,6 @@ on every later reconciliation.
   implementations may carry `ax41` in their current filenames without making it
   a universal installer default.
 
-See [AX41 rollout and installer requirements](../../docs/operations/ax41-rollout.md)
-and [the roadmap](../../docs/ROADMAP.md). No new execution wrapper or supported
+See the [canonical installation and preflight procedure](../../docs/site/use/install.md#canonical-install-and-preflight-procedure)
+and [the roadmap](../../docs/site/status/roadmap.md). No new execution wrapper or supported
 one-command installation is introduced by this catalog.

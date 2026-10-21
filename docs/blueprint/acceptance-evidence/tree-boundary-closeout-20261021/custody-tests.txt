@@ -1,0 +1,38 @@
+✔ sink location discovery conservatively retains classified writers without assigning roles (26.609693ms)
+✔ closed bundle writer retains its API capability and projects every payload caller (85.11924ms)
+✔ changed or escaping bundle writers cannot refresh a private projection into authority (179.113807ms)
+✔ an operation receipt cannot forge a projected API-capable utility (3.680249ms)
+✔ bundle facade construction binds all three role values without qualifying source copies or imports (236.873714ms)
+✔ Ops Helm source checksum stays a hash-check input, not a generic Docker writer exemption (16.261085ms)
+✔ live-check diagnostic roles bind complete readonly source and cannot be refreshed into API output (1180.666637ms)
+✔ auxiliary Python receipts distinguish AST, policy-probe and JSON-RPC metadata from API writers (605.450862ms)
+✔ node module builtin-name projections preserve API discovery and reject loader escapes (87.173255ms)
+✔ current documentation checker role binds exported link parser, helper and guarded invocation (661.979504ms)
+✔ native ESM keeps actual .js authority, explicit .ts neighbors, creation and removal custody (47.277996ms)
+✔ scalar and guard exemptions revoke direct and captured caller-time binding writes (357.280806ms)
+✔ reached initialization effects and caller writes bind facts, unused siblings remain passive (3.75725ms)
+✔ heredoc closure uses exact << and tab-only <<- native boundaries (136.176806ms)
+✔ finite command custody selects actual argv and final fd0, not quoted or commented neighbors (1.13435ms)
+✔ outside-root public main, exports, bin and actual Node commands independently publish finite closure (368.61321ms)
+✔ caller-only change, deletion and re-creation cannot reuse transformed custody (49.077184ms)
+✔ same-line API to native transition revokes transaction shell facts (580.592984ms)
+✔ actual reached validator format and schema installation authority is present in finite facts (194.566359ms)
+✔ finite heredoc fd duplication and legacy substitutions agree with actual native consumption (93.122633ms)
+✔ guarded array aliases and unsupported post-proof calls cannot retain a stale scalar-array exemption (78.828441ms)
+✔ package argv distinguishes passive quoted mentions from actual inline Node programs (44.697727ms)
+✔ two source-bound resolver terminals classify only source-location metadata (78.78106ms)
+✔ source/archive compiler metadata binds both callers, extraction branch, package mapping and helper transfer (69.263284ms)
+✔ historical environment roots classify only bound operations and retain current executable source facts (46.409793ms)
+✔ native historical from selector really follows external root, not scanner checkout identity (270.884902ms)
+✔ six native replay recipes bind archive, overlay, caller and exact loader branches without fixture exclusion (585.155105ms)
+✔ native replay root selector preserves explicit external and empty-string nullish cases (398.764974ms)
+✔ Worker resource schema generator receipts retain schema inputs and reject refreshed API output (96.272707ms)
+✔ zero-argument scalar method calls remain conservative without crashing classification (1.525071ms)
+ℹ tests 30
+ℹ suites 0
+ℹ pass 30
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 7126.684925

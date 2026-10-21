@@ -25,6 +25,21 @@ const allowedClasses = new Set([
   'legacy-extraction-source',
   'deletable-remainder',
 ]);
+// Inspected standalone documentation validators outside the docs-* namespace.
+// Preserve their read edges. Exact source bindings revoke this exception when
+// a validator changes; these pages are not product runtime configuration.
+const reviewedStandaloneDocumentationTools = {
+  'scripts/check-extension-class-drift.mjs': '61cda6e05a7e12b28a8d16adb0a3de5b439418645a738b3e0a284522df68ef74',
+  'scripts/check-contract-drift.mjs': '463b2a8a3999e977ea3839b80549336431cdbc2ea3c76caf3d218005d8ccbae8',
+  'scripts/check-plugin-manifest-drift.mjs': '2da10898085027449f543c966027c983ac11ad9508aa03156f972af005acd1f9',
+  'scripts/check-provider-registration-drift.mjs': '5bc75b333b0b88880e77f1bf2572af3be97124957c562cb55b781f1a1a99dcca',
+  'scripts/check-fixture-registration-drift.mjs': '89683802223aadcddbf631fb6bdd1ef8a6c43203d2a3118a89fc8440d6843937',
+  'scripts/check-report-registration-drift.mjs': 'cfd5071ee4a167768fadf00ede81e1d847ee42d151c68121d20697c84893acee',
+  'scripts/check-capability-policy-drift.mjs': '4470cc4342ea7c4e39d41f57626734e2c75c79a5fd4a57103e6868b7cdb69924',
+  'scripts/check-capability-registrations-drift.mjs': '8a4d3b81e0f8f2ac374bcda38a6502c78c37308a218230c908e544a7766f0180',
+  'scripts/check-capability-vocabulary-drift.mjs': 'c466cfa01aaf23a3f6927538a09dff6f31d1eb8c83c80e204d4853692492c2f7',
+  'scripts/check-capability-registrations-drift-controls.mjs': 'e76c88fe7d72eff87a6ba1e2ff63d8630ae6c7ec861e884dc8e3575c0ce5e3cb',
+};
 
 export function parseTreeArguments(args) {
   assert(Array.isArray(args), 'arguments must be an array');
@@ -491,6 +506,11 @@ function executableConsumers(values) {
 }
 
 function canonicalDocumentationTooling(sourcePath) {
+  if (Object.hasOwn(reviewedStandaloneDocumentationTools, sourcePath)) {
+    const source = safeTreePath(root, sourcePath);
+    return crypto.createHash('sha256').update(fs.readFileSync(source)).digest('hex')
+      === reviewedStandaloneDocumentationTools[sourcePath];
+  }
   return sourcePath.startsWith('scripts/docs-')
     || sourcePath.startsWith('scripts/tests/docs-')
     || /^scripts\/check-(?:ap08-[^/]*guide|[^/]+-guides)\.mjs$/u.test(sourcePath)
@@ -813,6 +833,7 @@ function build() {
     `unclassified documentation files: ${unclassified.slice(0, 30).join(', ')}`);
   assert.equal(absentClassifications.length, 0,
     `classification records have no current file: ${absentClassifications.slice(0, 30).join(', ')}`);
+  const canonicalInputConflicts = [];
   const files = paths.map((pathname) => {
     const declared = derived.get(pathname) ?? classification.records.get(pathname);
     const directExecutable = executableConsumers(consumers.get(pathname) ?? []);
@@ -824,8 +845,8 @@ function build() {
     if (declared.class === 'canonical-reader-documentation') assert(pathname.startsWith('docs/site/'),
       `${pathname}: canonical reader documentation must be under docs/site/`);
     if (declared.class === 'canonical-reader-documentation') {
-      assert.equal(canonicalExecutable.length, 0,
-        `${pathname}: canonical reader documentation cannot be an executable input`);
+      if (canonicalExecutable.length) canonicalInputConflicts.push({ pathname,
+        consumers: canonicalExecutable.map(item => item.sourcePath) });
     }
     if (declared.class === 'legacy-extraction-source') {
       assert(pathname.startsWith('docs/_legacy-source/'), `${pathname}: legacy source is outside the legacy root`);
@@ -854,6 +875,8 @@ function build() {
       sha256: sha256(pathname),
     };
   });
+  assert.equal(canonicalInputConflicts.length, 0,
+    canonicalInputConflicts.map(item => `${item.pathname}: canonical reader documentation cannot be an executable input; consumers: ${item.consumers.join(', ')}`).join('\n'));
   const byOriginal = new Map();
   for (const file of files) {
     assert(!byOriginal.has(file.originalPath), `two current files claim baseline path ${file.originalPath}`);

@@ -1,0 +1,6 @@
+npm notice run plugin-system:inventory:check
+npm notice run node scripts/plugin-system-inventory.mjs --check
+verified plugin-system inventory (49 roots, 67 registrations)
+npm notice run docs:ap08:inventory:check
+npm notice run node scripts/ap08-extension-inventory.mjs --check
+verified AP08 extension inventory (51 manifests)

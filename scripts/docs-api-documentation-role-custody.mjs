@@ -4718,7 +4718,7 @@ export const documentationExecutableRoleRecipes = {
         "expressionSha256": "87d345ec293f6455f292ba5e4b24582fb6e09e2c91241bef26ef045aa2de8392"
       }
     ],
-    "factsDigest": "73ee7dcec94e77e8a4666fc092136e7406fb6130d0a1060789f4be9bf95a7f7b",
+    "factsDigest": "4d04b1bf3ba93e1f69085c27a4a7604506487253e47ff53b71fb5d6b62b15d5b",
     "authorityInputs": []
   },
   "scripts/docs-yaml-field-authorities.mjs": {

@@ -482,6 +482,36 @@ test('allows documentation tooling to validate canonical reader documentation', 
   run(root, 'node', ['scripts/docs-tree-boundary.mjs', '--check']);
 });
 
+for (const [consumer, page] of [
+  ['scripts/check-extension-class-drift.mjs', 'docs/site/extend/README.md'],
+  ['scripts/check-contract-drift.mjs', 'docs/site/extend/developer-handbook.md'],
+  ['scripts/check-plugin-manifest-drift.mjs', 'docs/site/extend/plugin-catalogue/kubeclaw.lint.md'],
+  ['scripts/check-provider-registration-drift.mjs', 'docs/site/reference/buster-provider-configuration.md'],
+  ['scripts/check-fixture-registration-drift.mjs', 'docs/site/reference/buster-suites.md'],
+  ['scripts/check-report-registration-drift.mjs', 'docs/site/reference/buster-suites.md'],
+  ['scripts/check-capability-policy-drift.mjs', 'docs/site/reference/capabilities.md'],
+  ['scripts/check-capability-registrations-drift.mjs', 'docs/site/reference/capabilities.md'],
+  ['scripts/check-capability-vocabulary-drift.mjs', 'docs/site/reference/capabilities.md'],
+  ['scripts/check-capability-registrations-drift-controls.mjs', 'docs/site/reference/capabilities.md'],
+]) {
+  test(`binds standalone documentation checker ${consumer} without hiding its read edge`, () => {
+    const root = fixture();
+    write(root, page, '# Canonical documentation validation fixture\n');
+    run(root, 'node', ['scripts/docs-tree-boundary.mjs', '--bootstrap-classification']);
+    const original = fs.readFileSync(path.join(sourceRoot, consumer), 'utf8');
+    write(root, consumer, original);
+    run(root, 'node', ['scripts/docs-tree-boundary.mjs']);
+    run(root, 'node', ['scripts/docs-tree-boundary.mjs', '--check']);
+    const inventory = JSON.parse(fs.readFileSync(path.join(root, 'docs/generated/inventory/documentation-tree.json'), 'utf8'));
+    const record = inventory.files.find(item => item.path === page);
+    assert.equal(record.class, 'canonical-reader-documentation');
+    assert(record.executableConsumers.includes(consumer), 'genuine checker read was hidden');
+    assert(record.consumers.some(item => item.sourcePath === consumer && item.inputUse));
+    write(root, consumer, original + '\nglobalThis.productConfiguration=fs.readFileSync(path.join(root,page),"utf8");\n');
+    mustFail(root, `canonical reader documentation cannot be an executable input; consumers: ${consumer}`);
+  });
+}
+
 test('allows runtime diagnostics to point readers to canonical documentation', () => {
   const root = fixture();
   write(root, 'scripts/runtime-help.mjs',

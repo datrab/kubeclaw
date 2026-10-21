@@ -1,0 +1,261 @@
+{
+  "count": 64,
+  "results": [
+    {
+      "source": "scripts/docs-ap09-catalogue.mjs",
+      "result": "PASS"
+    },
+    {
+      "source": "scripts/docs-api-output-discovery.mjs",
+      "result": "PASS"
+    },
+    {
+      "source": "scripts/docs-api-output-role-classification.mjs",
+      "result": "PASS"
+    },
+    {
+      "source": "scripts/docs-api-product-scope.mjs",
+      "result": "PASS"
+    },
+    {
+      "source": "scripts/docs-api-receiver-coverage.mjs",
+      "result": "PASS"
+    },
+    {
+      "source": "scripts/docs-api-reference.mjs",
+      "result": "PASS"
+    },
+    {
+      "source": "scripts/docs-api-schema-authorities.mjs",
+      "result": "PASS"
+    },
+    {
+      "source": "scripts/docs-argo-receiver-contracts.mjs",
+      "result": "PASS"
+    },
+    {
+      "source": "scripts/docs-blueprint-generate.mjs",
+      "result": "PASS"
+    },
+    {
+      "source": "scripts/docs-buster-authored-unknown-field-contracts.mjs",
+      "result": "PASS"
+    },
+    {
+      "source": "scripts/docs-buster-lease-receiver-contracts.mjs",
+      "result": "PASS"
+    },
+    {
+      "source": "scripts/docs-check-coverage.mjs",
+      "result": "PASS"
+    },
+    {
+      "source": "scripts/docs-check-refs.mjs",
+      "result": "PASS"
+    },
+    {
+      "source": "scripts/docs-check.mjs",
+      "result": "PASS"
+    },
+    {
+      "source": "scripts/docs-cilium-receiver-contracts.mjs",
+      "result": "PASS"
+    },
+    {
+      "source": "scripts/docs-clusterspiffeid-selected-receiver-contracts.mjs",
+      "result": "PASS"
+    },
+    {
+      "source": "scripts/docs-configuration-inventory.mjs",
+      "result": "PASS"
+    },
+    {
+      "source": "scripts/docs-generate-core.mjs",
+      "result": "PASS"
+    },
+    {
+      "source": "scripts/docs-generate.mjs",
+      "result": "PASS"
+    },
+    {
+      "source": "scripts/docs-governance.mjs",
+      "result": "PASS"
+    },
+    {
+      "source": "scripts/docs-inventory.mjs",
+      "result": "PASS"
+    },
+    {
+      "source": "scripts/docs-kubernetes-admission-receiver-contracts.mjs",
+      "result": "PASS"
+    },
+    {
+      "source": "scripts/docs-kubernetes-admission-status-contracts.mjs",
+      "result": "PASS"
+    },
+    {
+      "source": "scripts/docs-kubernetes-apps-receiver-contracts.mjs",
+      "result": "PASS"
+    },
+    {
+      "source": "scripts/docs-kubernetes-auth-delete-receiver-contracts.mjs",
+      "result": "PASS"
+    },
+    {
+      "source": "scripts/docs-kubernetes-cluster-configuration-receiver-contracts.mjs",
+      "result": "PASS"
+    },
+    {
+      "source": "scripts/docs-kubernetes-core-receiver-contracts.mjs",
+      "result": "PASS"
+    },
+    {
+      "source": "scripts/docs-kubernetes-envelope-receiver-contracts.mjs",
+      "result": "PASS"
+    },
+    {
+      "source": "scripts/docs-kubernetes-identity-secret-receiver-contracts.mjs",
+      "result": "PASS"
+    },
+    {
+      "source": "scripts/docs-kubernetes-metadata-receiver-contracts.mjs",
+      "result": "PASS"
+    },
+    {
+      "source": "scripts/docs-kubernetes-namespace-isolation-receiver-contracts.mjs",
+      "result": "PASS"
+    },
+    {
+      "source": "scripts/docs-kubernetes-network-receiver-contracts.mjs",
+      "result": "PASS"
+    },
+    {
+      "source": "scripts/docs-kubernetes-node-workloads-receiver-contracts.mjs",
+      "result": "PASS"
+    },
+    {
+      "source": "scripts/docs-kubernetes-pv-selected-receiver-contracts.mjs",
+      "result": "PASS"
+    },
+    {
+      "source": "scripts/docs-kubernetes-webhook-selected-receiver-contracts.mjs",
+      "result": "PASS"
+    },
+    {
+      "source": "scripts/docs-kubernetes-workload-receiver-contracts.mjs",
+      "result": "PASS"
+    },
+    {
+      "source": "scripts/docs-lint-policy-reference.mjs",
+      "result": "PASS"
+    },
+    {
+      "source": "scripts/docs-local-helm-authorities.mjs",
+      "result": "PASS"
+    },
+    {
+      "source": "scripts/docs-parity-batches.mjs",
+      "result": "PASS"
+    },
+    {
+      "source": "scripts/docs-parity-check.mjs",
+      "result": "PASS"
+    },
+    {
+      "source": "scripts/docs-parity-extract.mjs",
+      "result": "PASS"
+    },
+    {
+      "source": "scripts/docs-parity-review-assignments.mjs",
+      "result": "PASS"
+    },
+    {
+      "source": "scripts/docs-parity-status.mjs",
+      "result": "PASS"
+    },
+    {
+      "source": "scripts/docs-parity-transition.mjs",
+      "result": "PASS"
+    },
+    {
+      "source": "scripts/docs-platform-surface-inventory.mjs",
+      "result": "PASS"
+    },
+    {
+      "source": "scripts/docs-prometheus-selected-receiver-contracts.mjs",
+      "result": "PASS"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "result": "PASS"
+    },
+    {
+      "source": "scripts/docs-runtime-consumer-contracts.mjs",
+      "result": "PASS"
+    },
+    {
+      "source": "scripts/docs-secret-inventory.mjs",
+      "result": "PASS"
+    },
+    {
+      "source": "scripts/docs-status.mjs",
+      "result": "PASS"
+    },
+    {
+      "source": "scripts/docs-tree-boundary.mjs",
+      "result": "PASS"
+    },
+    {
+      "source": "scripts/docs-yaml-field-authorities.mjs",
+      "result": "PASS"
+    },
+    {
+      "source": "scripts/docs-yaml-inventory.mjs",
+      "result": "PASS"
+    },
+    {
+      "source": "scripts/docs-sdk-reference.mjs",
+      "result": "PASS"
+    },
+    {
+      "source": "scripts/docs-reader/renderer.mjs",
+      "result": "PASS"
+    },
+    {
+      "source": "scripts/docs-reader/check-artifact.mjs",
+      "result": "PASS"
+    },
+    {
+      "source": "scripts/docs-reader/check-search.mjs",
+      "result": "PASS"
+    },
+    {
+      "source": "scripts/docs-reader/source-links.mjs",
+      "result": "PASS"
+    },
+    {
+      "source": "scripts/docs-reader/check-source-links.mjs",
+      "result": "PASS"
+    },
+    {
+      "source": "scripts/docs-reader/metadata.mjs",
+      "result": "PASS"
+    },
+    {
+      "source": "scripts/docs-reader/source-previews.mjs",
+      "result": "PASS"
+    },
+    {
+      "source": "scripts/docs-reader/check-source-previews.mjs",
+      "result": "PASS"
+    },
+    {
+      "source": "scripts/docs-reader/diagrams.mjs",
+      "result": "PASS"
+    },
+    {
+      "source": "scripts/docs-reader/check-diagrams.mjs",
+      "result": "PASS"
+    }
+  ]
+}

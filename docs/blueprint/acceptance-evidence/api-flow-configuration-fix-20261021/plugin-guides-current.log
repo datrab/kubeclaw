@@ -1,0 +1,17 @@
+npm notice run docs:ap08:choice:check
+npm notice run node scripts/check-ap08-choice-guide.mjs
+AP08 choice-guide check passed (24 pinned source links, 12 decision scenarios)
+npm notice run docs:ap08:minimal-plugin:check
+npm notice run node scripts/check-ap08-minimal-plugin.mjs
+{"ok":true,"journey":"ap08-minimal-pipeline-plugin","packageTest":"passed","roleOmission":"rejected","roleInclusion":"passed","activatedStages":1,"successFact":"Hello, KubeClaw!","intentionalFailure":"failed","invalidInput":"rejected","removal":"stage-owner-missing","retainedRunJournals":2,"persistenceBoundary":"in-memory journal; persistent recovery requires separate checks"}
+npm notice run docs:ap08:advanced-guides:check
+npm notice run node scripts/check-ap08-advanced-guides.mjs
+{"ok":true,"pages":4,"pinnedSourceLinks":94,"registrations":{"novaStages":21,"novaAdapters":6,"novaObservers":0,"busterTests":17,"busterFixtures":2,"busterReports":1},"suites":12}
+npm notice run docs:ap08:effectful:check
+npm notice run node scripts/check-ap08-effectful-guide.mjs
+{"ok":true,"referencePlugin":"kubeclaw.blueprint-sync","capabilityOrder":["git.sync","git.commit","state.append","artifacts.write"],"duplicateAdapterInvocations":1,"nextEffectAfterLockRelease":"completed","failedRetryAdapterInvocations":1,"acceptedWithoutReceipt":true,"recoveredByReceipt":"completed","cancellation":"rejected","persistenceBoundary":"memory journals; GNU flock-dependent checks reported separately"}
+npm notice run docs:ap08:host-lifecycle-catalogue:check
+npm notice run node scripts/check-ap08-host-lifecycle-catalogue.mjs && node scripts/check-ap08-observers.mjs && node scripts/check-ap08-reader-references.mjs
+{"ok":true,"pages":54,"packages":51,"authoredRecords":51,"sourceTargets":435,"pinnedLineLinks":72,"auditStatuses":{"locally-verified":18,"content-written":33},"localResults":{"passed":18,"unavailable":32,"not-run":1}}
+{"ok":true,"observers":["kubeclaw.agent-observability:ingester","kubeclaw.agent-observability:evidence","kubeclaw.notification-observer:notifications","kubeclaw.notification-observer:preview-delivery","kubeclaw.telemetry-observer:telemetry"],"proof":"registry identities, role inclusion, and selected activation; no delivery claim"}
+{"ok":true,"localLinks":878,"pinnedLinks":1055,"pinnedObjects":743,"boundary":"Targets, Markdown anchors and Git source ranges only; claim semantics require reader review."}

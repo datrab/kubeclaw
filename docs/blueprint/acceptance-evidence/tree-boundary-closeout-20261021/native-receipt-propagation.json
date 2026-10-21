@@ -1,0 +1,882 @@
+{
+  "baseline": "17720beb",
+  "counterfactual": "Temporarily restored the exact baseline tree module in try/finally, independently rederived every accepted old selector/child/fact receipt, then restored all working code before deriving current facts.",
+  "changedSources": [
+    "scripts/docs-tree-boundary.mjs"
+  ],
+  "statements": [
+    {
+      "source": "scripts/docs-tree-boundary.mjs",
+      "version": "previous",
+      "kind": "ImportDeclaration",
+      "sha256": "3bd42e15e5427f946b98b898212af900ed0a4068cff03a37aa2ce1d3a081f2ec",
+      "symbol": ""
+    },
+    {
+      "source": "scripts/docs-tree-boundary.mjs",
+      "version": "previous",
+      "kind": "ImportDeclaration",
+      "sha256": "967573157d8a0118a9b81842abb29015d82a1e83f6d2d055d56e848e4def640e",
+      "symbol": ""
+    },
+    {
+      "source": "scripts/docs-tree-boundary.mjs",
+      "version": "previous",
+      "kind": "ImportDeclaration",
+      "sha256": "ad73ca8dd2be89150d9ce0f13eae68ebf5fc6eae24f81e521b6223459d4a6005",
+      "symbol": ""
+    },
+    {
+      "source": "scripts/docs-tree-boundary.mjs",
+      "version": "previous",
+      "kind": "ImportDeclaration",
+      "sha256": "99a8a8a7117b1395e3a209cdc8ba5a70424687458932bc4dc8a7b6e59ff53868",
+      "symbol": ""
+    },
+    {
+      "source": "scripts/docs-tree-boundary.mjs",
+      "version": "previous",
+      "kind": "ImportDeclaration",
+      "sha256": "113f0af17fdf683cf360ab9d03b7eff1b572d3475e83119031d47ee4331621aa",
+      "symbol": ""
+    },
+    {
+      "source": "scripts/docs-tree-boundary.mjs",
+      "version": "previous",
+      "kind": "ImportDeclaration",
+      "sha256": "c911664f1383262f472f293bf37442ecc966e75f7783f63641e87892a5d649c8",
+      "symbol": ""
+    },
+    {
+      "source": "scripts/docs-tree-boundary.mjs",
+      "version": "previous",
+      "kind": "ImportDeclaration",
+      "sha256": "a882f1835ea242b921aa508c130775a3aa3d9fed136b7e1db78f5bf034f0582b",
+      "symbol": ""
+    },
+    {
+      "source": "scripts/docs-tree-boundary.mjs",
+      "version": "previous",
+      "kind": "FirstStatement",
+      "sha256": "f6055bf37a2744ecd109a220117928b82359853c93ea2274e97993770e5ac65a",
+      "symbol": "root"
+    },
+    {
+      "source": "scripts/docs-tree-boundary.mjs",
+      "version": "previous",
+      "kind": "FirstStatement",
+      "sha256": "06817f79bd6ce1fd3596c75bb48cc4bb48a655a04368d22a54ca457b36b01733",
+      "symbol": "outputPath"
+    },
+    {
+      "source": "scripts/docs-tree-boundary.mjs",
+      "version": "previous",
+      "kind": "FirstStatement",
+      "sha256": "50aadfdc6952bc3e55b433391828c3d804ce2a624d5114ffd798f8f692eb9da9",
+      "symbol": "classificationPath"
+    },
+    {
+      "source": "scripts/docs-tree-boundary.mjs",
+      "version": "previous",
+      "kind": "FirstStatement",
+      "sha256": "14167a7786526fac6537ba0d128785e93cb7a4e942efbdc3008be5d7257b4988",
+      "symbol": "baselinePath"
+    },
+    {
+      "source": "scripts/docs-tree-boundary.mjs",
+      "version": "previous",
+      "kind": "FirstStatement",
+      "sha256": "f1ab6d46c3db3a960156fd918d8cd18896be098469602de2e655ca6d41aa5e6f",
+      "symbol": "derivedParityRoots"
+    },
+    {
+      "source": "scripts/docs-tree-boundary.mjs",
+      "version": "previous",
+      "kind": "FirstStatement",
+      "sha256": "71c37b96b25e4483dbd9701b2499e75960f60d137412e529df0b1c66b84b18c4",
+      "symbol": "derivedTransitionPaths"
+    },
+    {
+      "source": "scripts/docs-tree-boundary.mjs",
+      "version": "previous",
+      "kind": "FirstStatement",
+      "sha256": "b6a965a78e48d6ee3a970f7ea790c0a4bb44d3b105cb90bb5f55f3a5551745ab",
+      "symbol": "allowedClasses"
+    },
+    {
+      "source": "scripts/docs-tree-boundary.mjs",
+      "version": "previous",
+      "kind": "FunctionDeclaration",
+      "sha256": "af4e249bedbabae469906812f6724787cdaa44de44ae3e997ebe29f6e3dd5368",
+      "symbol": "parseTreeArguments"
+    },
+    {
+      "source": "scripts/docs-tree-boundary.mjs",
+      "version": "previous",
+      "kind": "FunctionDeclaration",
+      "sha256": "1404071a5bede47df22181010fff5d3200f9c70d301ecb8b7e6f0e6b1d6dbf61",
+      "symbol": "lstatIfPresent"
+    },
+    {
+      "source": "scripts/docs-tree-boundary.mjs",
+      "version": "previous",
+      "kind": "FunctionDeclaration",
+      "sha256": "588c8131dda6f2570c57f92086b10664f82442ac2ae85b6b08130afcf2066e4a",
+      "symbol": "safeTreePath"
+    },
+    {
+      "source": "scripts/docs-tree-boundary.mjs",
+      "version": "previous",
+      "kind": "FunctionDeclaration",
+      "sha256": "dbfbd9ef83ff4c8c4b3cd9eb3e2706112c171570680366bd4b0b3f0d2ad8c227",
+      "symbol": "atomicWriteTreeOutput"
+    },
+    {
+      "source": "scripts/docs-tree-boundary.mjs",
+      "version": "previous",
+      "kind": "FunctionDeclaration",
+      "sha256": "c6b46b311d69ebe8180f88e8796299fc861d0491925c04c5e6e1b3b143d02924",
+      "symbol": "git"
+    },
+    {
+      "source": "scripts/docs-tree-boundary.mjs",
+      "version": "previous",
+      "kind": "FunctionDeclaration",
+      "sha256": "ee4b036b5ca1c8970e8c4ec71fc894beba2b4d63ae9da2f0a8aa9b549df3525c",
+      "symbol": "trackedAndUntrackedDocs"
+    },
+    {
+      "source": "scripts/docs-tree-boundary.mjs",
+      "version": "previous",
+      "kind": "FunctionDeclaration",
+      "sha256": "943c42776a91c1f2c7f832f52448bcd6e65535956c6c691521b0398cb2065df4",
+      "symbol": "documentationKind"
+    },
+    {
+      "source": "scripts/docs-tree-boundary.mjs",
+      "version": "previous",
+      "kind": "FunctionDeclaration",
+      "sha256": "704ca28bd77417d1f140825e7f277a89965d2a8e26bb016784b2ba9b2bff98c7",
+      "symbol": "captureBaseline"
+    },
+    {
+      "source": "scripts/docs-tree-boundary.mjs",
+      "version": "previous",
+      "kind": "FunctionDeclaration",
+      "sha256": "d7f70019e5fdeb520474e693752a56e41c39b5cdb5e23a33867a47ebed31cc0c",
+      "symbol": "sourceConsumers"
+    },
+    {
+      "source": "scripts/docs-tree-boundary.mjs",
+      "version": "previous",
+      "kind": "FunctionDeclaration",
+      "sha256": "4950fb8c7829f04aca31f825928e0646ffa27cc0127044364b9c7f39a841202d",
+      "symbol": "executableConsumers"
+    },
+    {
+      "source": "scripts/docs-tree-boundary.mjs",
+      "version": "previous",
+      "kind": "FunctionDeclaration",
+      "sha256": "ac3fd7377f7565c98ee9ecc5690399ea6e90ba7ac870a177eefc7be8cae15927",
+      "symbol": "canonicalDocumentationTooling"
+    },
+    {
+      "source": "scripts/docs-tree-boundary.mjs",
+      "version": "previous",
+      "kind": "FunctionDeclaration",
+      "sha256": "40356d1f35ba3dcf429602a4039d186c2aa6bc5a75cd1728dc366bbd860e49b7",
+      "symbol": "canonicalExecutableConsumers"
+    },
+    {
+      "source": "scripts/docs-tree-boundary.mjs",
+      "version": "previous",
+      "kind": "FunctionDeclaration",
+      "sha256": "9128d3ad9f9ff4ccb74929ee9acac69e5074d6f73e35b46188e43d013af5c322",
+      "symbol": "provenanceOnlyDocument"
+    },
+    {
+      "source": "scripts/docs-tree-boundary.mjs",
+      "version": "previous",
+      "kind": "FunctionDeclaration",
+      "sha256": "71d45a8fae6bd524714fb3f134d1c0a7f08238101334cb58f977d3081bae9605",
+      "symbol": "structuredDependencyDocument"
+    },
+    {
+      "source": "scripts/docs-tree-boundary.mjs",
+      "version": "previous",
+      "kind": "FunctionDeclaration",
+      "sha256": "facbca849cacaed42c732f62bf09d021955e9ddc946bbee7fa3c239bce3b41cc",
+      "symbol": "executableDocumentDependencies"
+    },
+    {
+      "source": "scripts/docs-tree-boundary.mjs",
+      "version": "previous",
+      "kind": "FunctionDeclaration",
+      "sha256": "2ceb0714983ab99b52daf7028de825bb560b3a39aa80eb2c8fa78ff7f3b702a5",
+      "symbol": "historicalReferenceConsumer"
+    },
+    {
+      "source": "scripts/docs-tree-boundary.mjs",
+      "version": "previous",
+      "kind": "FunctionDeclaration",
+      "sha256": "1e3d2fe8c0a1affa57354fd7aa82d7a2d00d517185adb12be5260bf21239991d",
+      "symbol": "internalRoot"
+    },
+    {
+      "source": "scripts/docs-tree-boundary.mjs",
+      "version": "previous",
+      "kind": "FunctionDeclaration",
+      "sha256": "01ed2f0f4411c39f566cc96f7bfc0174c7ece1e1a42efe3b5f73167b11b7af69",
+      "symbol": "classify"
+    },
+    {
+      "source": "scripts/docs-tree-boundary.mjs",
+      "version": "previous",
+      "kind": "FunctionDeclaration",
+      "sha256": "e9e24a0543efb0b1f980ec0497c74e130bfc6c6d626fbee42124ba1888080027",
+      "symbol": "parityRoot"
+    },
+    {
+      "source": "scripts/docs-tree-boundary.mjs",
+      "version": "previous",
+      "kind": "FunctionDeclaration",
+      "sha256": "9af2050fdb5a894d846ceb4b15b817c484b754f50371d367e315846f9d2053b9",
+      "symbol": "derivedTransitionClassification"
+    },
+    {
+      "source": "scripts/docs-tree-boundary.mjs",
+      "version": "previous",
+      "kind": "FunctionDeclaration",
+      "sha256": "ccffe5b758efc4218c59f1316512cbd46a353aa156c4d153768d32bae9c79aef",
+      "symbol": "derivedParityClassification"
+    },
+    {
+      "source": "scripts/docs-tree-boundary.mjs",
+      "version": "previous",
+      "kind": "FunctionDeclaration",
+      "sha256": "40b66f7467495466d705815e1fdf002a84a79a87f5bf01bcb4a4cc63178e6326",
+      "symbol": "sha256"
+    },
+    {
+      "source": "scripts/docs-tree-boundary.mjs",
+      "version": "previous",
+      "kind": "FunctionDeclaration",
+      "sha256": "e763beb03513990e92d565c9b994c66965d2775ecd210470261bdfe0443f6852",
+      "symbol": "readJson"
+    },
+    {
+      "source": "scripts/docs-tree-boundary.mjs",
+      "version": "previous",
+      "kind": "FunctionDeclaration",
+      "sha256": "34ec54f7aafd0c959b88804c36b7142a82b63046fba07814bd607193d0f0a469",
+      "symbol": "classificationRegistry"
+    },
+    {
+      "source": "scripts/docs-tree-boundary.mjs",
+      "version": "previous",
+      "kind": "FunctionDeclaration",
+      "sha256": "e81fc723413efcc100692ea639887f5b251687afa81563b3eb3f7bd5135c1773",
+      "symbol": "baselineRegistry"
+    },
+    {
+      "source": "scripts/docs-tree-boundary.mjs",
+      "version": "previous",
+      "kind": "FunctionDeclaration",
+      "sha256": "6b8adf1faa728e28367422051bc29eb46e2b44c8b5fe05fb0abdae3231120430",
+      "symbol": "writeInitialClassification"
+    },
+    {
+      "source": "scripts/docs-tree-boundary.mjs",
+      "version": "previous",
+      "kind": "FunctionDeclaration",
+      "sha256": "d5337159ed2cefb9f0fcd2be683a09ed0f51ad5c3de44666f1730d3ab0dc71b1",
+      "symbol": "build"
+    },
+    {
+      "source": "scripts/docs-tree-boundary.mjs",
+      "version": "previous",
+      "kind": "FunctionDeclaration",
+      "sha256": "e2395e28a82124065dbd1ffb60f574494132bc9bd329ad0777edb58df9fc5d7b",
+      "symbol": "main"
+    },
+    {
+      "source": "scripts/docs-tree-boundary.mjs",
+      "version": "previous",
+      "kind": "IfStatement",
+      "sha256": "4e070add69344445011fb0ce9d6b82d2f4103ab129edb0f6f93e8e63120c7ad9",
+      "symbol": ""
+    },
+    {
+      "source": "scripts/docs-tree-boundary.mjs",
+      "version": "current",
+      "kind": "ImportDeclaration",
+      "sha256": "3bd42e15e5427f946b98b898212af900ed0a4068cff03a37aa2ce1d3a081f2ec",
+      "symbol": ""
+    },
+    {
+      "source": "scripts/docs-tree-boundary.mjs",
+      "version": "current",
+      "kind": "ImportDeclaration",
+      "sha256": "967573157d8a0118a9b81842abb29015d82a1e83f6d2d055d56e848e4def640e",
+      "symbol": ""
+    },
+    {
+      "source": "scripts/docs-tree-boundary.mjs",
+      "version": "current",
+      "kind": "ImportDeclaration",
+      "sha256": "ad73ca8dd2be89150d9ce0f13eae68ebf5fc6eae24f81e521b6223459d4a6005",
+      "symbol": ""
+    },
+    {
+      "source": "scripts/docs-tree-boundary.mjs",
+      "version": "current",
+      "kind": "ImportDeclaration",
+      "sha256": "99a8a8a7117b1395e3a209cdc8ba5a70424687458932bc4dc8a7b6e59ff53868",
+      "symbol": ""
+    },
+    {
+      "source": "scripts/docs-tree-boundary.mjs",
+      "version": "current",
+      "kind": "ImportDeclaration",
+      "sha256": "113f0af17fdf683cf360ab9d03b7eff1b572d3475e83119031d47ee4331621aa",
+      "symbol": ""
+    },
+    {
+      "source": "scripts/docs-tree-boundary.mjs",
+      "version": "current",
+      "kind": "ImportDeclaration",
+      "sha256": "c911664f1383262f472f293bf37442ecc966e75f7783f63641e87892a5d649c8",
+      "symbol": ""
+    },
+    {
+      "source": "scripts/docs-tree-boundary.mjs",
+      "version": "current",
+      "kind": "ImportDeclaration",
+      "sha256": "a882f1835ea242b921aa508c130775a3aa3d9fed136b7e1db78f5bf034f0582b",
+      "symbol": ""
+    },
+    {
+      "source": "scripts/docs-tree-boundary.mjs",
+      "version": "current",
+      "kind": "FirstStatement",
+      "sha256": "f6055bf37a2744ecd109a220117928b82359853c93ea2274e97993770e5ac65a",
+      "symbol": "root"
+    },
+    {
+      "source": "scripts/docs-tree-boundary.mjs",
+      "version": "current",
+      "kind": "FirstStatement",
+      "sha256": "06817f79bd6ce1fd3596c75bb48cc4bb48a655a04368d22a54ca457b36b01733",
+      "symbol": "outputPath"
+    },
+    {
+      "source": "scripts/docs-tree-boundary.mjs",
+      "version": "current",
+      "kind": "FirstStatement",
+      "sha256": "50aadfdc6952bc3e55b433391828c3d804ce2a624d5114ffd798f8f692eb9da9",
+      "symbol": "classificationPath"
+    },
+    {
+      "source": "scripts/docs-tree-boundary.mjs",
+      "version": "current",
+      "kind": "FirstStatement",
+      "sha256": "14167a7786526fac6537ba0d128785e93cb7a4e942efbdc3008be5d7257b4988",
+      "symbol": "baselinePath"
+    },
+    {
+      "source": "scripts/docs-tree-boundary.mjs",
+      "version": "current",
+      "kind": "FirstStatement",
+      "sha256": "f1ab6d46c3db3a960156fd918d8cd18896be098469602de2e655ca6d41aa5e6f",
+      "symbol": "derivedParityRoots"
+    },
+    {
+      "source": "scripts/docs-tree-boundary.mjs",
+      "version": "current",
+      "kind": "FirstStatement",
+      "sha256": "71c37b96b25e4483dbd9701b2499e75960f60d137412e529df0b1c66b84b18c4",
+      "symbol": "derivedTransitionPaths"
+    },
+    {
+      "source": "scripts/docs-tree-boundary.mjs",
+      "version": "current",
+      "kind": "FirstStatement",
+      "sha256": "b6a965a78e48d6ee3a970f7ea790c0a4bb44d3b105cb90bb5f55f3a5551745ab",
+      "symbol": "allowedClasses"
+    },
+    {
+      "source": "scripts/docs-tree-boundary.mjs",
+      "version": "current",
+      "kind": "FirstStatement",
+      "sha256": "779f28f89ed2b8f8ccce272a1e450e0f8fcec09a96409f99d5ab9173df75b64d",
+      "symbol": "reviewedStandaloneDocumentationTools"
+    },
+    {
+      "source": "scripts/docs-tree-boundary.mjs",
+      "version": "current",
+      "kind": "FunctionDeclaration",
+      "sha256": "af4e249bedbabae469906812f6724787cdaa44de44ae3e997ebe29f6e3dd5368",
+      "symbol": "parseTreeArguments"
+    },
+    {
+      "source": "scripts/docs-tree-boundary.mjs",
+      "version": "current",
+      "kind": "FunctionDeclaration",
+      "sha256": "1404071a5bede47df22181010fff5d3200f9c70d301ecb8b7e6f0e6b1d6dbf61",
+      "symbol": "lstatIfPresent"
+    },
+    {
+      "source": "scripts/docs-tree-boundary.mjs",
+      "version": "current",
+      "kind": "FunctionDeclaration",
+      "sha256": "588c8131dda6f2570c57f92086b10664f82442ac2ae85b6b08130afcf2066e4a",
+      "symbol": "safeTreePath"
+    },
+    {
+      "source": "scripts/docs-tree-boundary.mjs",
+      "version": "current",
+      "kind": "FunctionDeclaration",
+      "sha256": "dbfbd9ef83ff4c8c4b3cd9eb3e2706112c171570680366bd4b0b3f0d2ad8c227",
+      "symbol": "atomicWriteTreeOutput"
+    },
+    {
+      "source": "scripts/docs-tree-boundary.mjs",
+      "version": "current",
+      "kind": "FunctionDeclaration",
+      "sha256": "c6b46b311d69ebe8180f88e8796299fc861d0491925c04c5e6e1b3b143d02924",
+      "symbol": "git"
+    },
+    {
+      "source": "scripts/docs-tree-boundary.mjs",
+      "version": "current",
+      "kind": "FunctionDeclaration",
+      "sha256": "ee4b036b5ca1c8970e8c4ec71fc894beba2b4d63ae9da2f0a8aa9b549df3525c",
+      "symbol": "trackedAndUntrackedDocs"
+    },
+    {
+      "source": "scripts/docs-tree-boundary.mjs",
+      "version": "current",
+      "kind": "FunctionDeclaration",
+      "sha256": "943c42776a91c1f2c7f832f52448bcd6e65535956c6c691521b0398cb2065df4",
+      "symbol": "documentationKind"
+    },
+    {
+      "source": "scripts/docs-tree-boundary.mjs",
+      "version": "current",
+      "kind": "FunctionDeclaration",
+      "sha256": "704ca28bd77417d1f140825e7f277a89965d2a8e26bb016784b2ba9b2bff98c7",
+      "symbol": "captureBaseline"
+    },
+    {
+      "source": "scripts/docs-tree-boundary.mjs",
+      "version": "current",
+      "kind": "FunctionDeclaration",
+      "sha256": "d7f70019e5fdeb520474e693752a56e41c39b5cdb5e23a33867a47ebed31cc0c",
+      "symbol": "sourceConsumers"
+    },
+    {
+      "source": "scripts/docs-tree-boundary.mjs",
+      "version": "current",
+      "kind": "FunctionDeclaration",
+      "sha256": "4950fb8c7829f04aca31f825928e0646ffa27cc0127044364b9c7f39a841202d",
+      "symbol": "executableConsumers"
+    },
+    {
+      "source": "scripts/docs-tree-boundary.mjs",
+      "version": "current",
+      "kind": "FunctionDeclaration",
+      "sha256": "475501e86546149e8531d907384c54ddca153cb67825c2d65c218099a06c0916",
+      "symbol": "canonicalDocumentationTooling"
+    },
+    {
+      "source": "scripts/docs-tree-boundary.mjs",
+      "version": "current",
+      "kind": "FunctionDeclaration",
+      "sha256": "40356d1f35ba3dcf429602a4039d186c2aa6bc5a75cd1728dc366bbd860e49b7",
+      "symbol": "canonicalExecutableConsumers"
+    },
+    {
+      "source": "scripts/docs-tree-boundary.mjs",
+      "version": "current",
+      "kind": "FunctionDeclaration",
+      "sha256": "9128d3ad9f9ff4ccb74929ee9acac69e5074d6f73e35b46188e43d013af5c322",
+      "symbol": "provenanceOnlyDocument"
+    },
+    {
+      "source": "scripts/docs-tree-boundary.mjs",
+      "version": "current",
+      "kind": "FunctionDeclaration",
+      "sha256": "71d45a8fae6bd524714fb3f134d1c0a7f08238101334cb58f977d3081bae9605",
+      "symbol": "structuredDependencyDocument"
+    },
+    {
+      "source": "scripts/docs-tree-boundary.mjs",
+      "version": "current",
+      "kind": "FunctionDeclaration",
+      "sha256": "facbca849cacaed42c732f62bf09d021955e9ddc946bbee7fa3c239bce3b41cc",
+      "symbol": "executableDocumentDependencies"
+    },
+    {
+      "source": "scripts/docs-tree-boundary.mjs",
+      "version": "current",
+      "kind": "FunctionDeclaration",
+      "sha256": "2ceb0714983ab99b52daf7028de825bb560b3a39aa80eb2c8fa78ff7f3b702a5",
+      "symbol": "historicalReferenceConsumer"
+    },
+    {
+      "source": "scripts/docs-tree-boundary.mjs",
+      "version": "current",
+      "kind": "FunctionDeclaration",
+      "sha256": "1e3d2fe8c0a1affa57354fd7aa82d7a2d00d517185adb12be5260bf21239991d",
+      "symbol": "internalRoot"
+    },
+    {
+      "source": "scripts/docs-tree-boundary.mjs",
+      "version": "current",
+      "kind": "FunctionDeclaration",
+      "sha256": "01ed2f0f4411c39f566cc96f7bfc0174c7ece1e1a42efe3b5f73167b11b7af69",
+      "symbol": "classify"
+    },
+    {
+      "source": "scripts/docs-tree-boundary.mjs",
+      "version": "current",
+      "kind": "FunctionDeclaration",
+      "sha256": "e9e24a0543efb0b1f980ec0497c74e130bfc6c6d626fbee42124ba1888080027",
+      "symbol": "parityRoot"
+    },
+    {
+      "source": "scripts/docs-tree-boundary.mjs",
+      "version": "current",
+      "kind": "FunctionDeclaration",
+      "sha256": "9af2050fdb5a894d846ceb4b15b817c484b754f50371d367e315846f9d2053b9",
+      "symbol": "derivedTransitionClassification"
+    },
+    {
+      "source": "scripts/docs-tree-boundary.mjs",
+      "version": "current",
+      "kind": "FunctionDeclaration",
+      "sha256": "ccffe5b758efc4218c59f1316512cbd46a353aa156c4d153768d32bae9c79aef",
+      "symbol": "derivedParityClassification"
+    },
+    {
+      "source": "scripts/docs-tree-boundary.mjs",
+      "version": "current",
+      "kind": "FunctionDeclaration",
+      "sha256": "40b66f7467495466d705815e1fdf002a84a79a87f5bf01bcb4a4cc63178e6326",
+      "symbol": "sha256"
+    },
+    {
+      "source": "scripts/docs-tree-boundary.mjs",
+      "version": "current",
+      "kind": "FunctionDeclaration",
+      "sha256": "e763beb03513990e92d565c9b994c66965d2775ecd210470261bdfe0443f6852",
+      "symbol": "readJson"
+    },
+    {
+      "source": "scripts/docs-tree-boundary.mjs",
+      "version": "current",
+      "kind": "FunctionDeclaration",
+      "sha256": "34ec54f7aafd0c959b88804c36b7142a82b63046fba07814bd607193d0f0a469",
+      "symbol": "classificationRegistry"
+    },
+    {
+      "source": "scripts/docs-tree-boundary.mjs",
+      "version": "current",
+      "kind": "FunctionDeclaration",
+      "sha256": "e81fc723413efcc100692ea639887f5b251687afa81563b3eb3f7bd5135c1773",
+      "symbol": "baselineRegistry"
+    },
+    {
+      "source": "scripts/docs-tree-boundary.mjs",
+      "version": "current",
+      "kind": "FunctionDeclaration",
+      "sha256": "6b8adf1faa728e28367422051bc29eb46e2b44c8b5fe05fb0abdae3231120430",
+      "symbol": "writeInitialClassification"
+    },
+    {
+      "source": "scripts/docs-tree-boundary.mjs",
+      "version": "current",
+      "kind": "FunctionDeclaration",
+      "sha256": "0812dc8fc9afbf8fec2473850e3f8d21ec7ed933ec8148a22a13823650eae3bf",
+      "symbol": "build"
+    },
+    {
+      "source": "scripts/docs-tree-boundary.mjs",
+      "version": "current",
+      "kind": "FunctionDeclaration",
+      "sha256": "e2395e28a82124065dbd1ffb60f574494132bc9bd329ad0777edb58df9fc5d7b",
+      "symbol": "main"
+    },
+    {
+      "source": "scripts/docs-tree-boundary.mjs",
+      "version": "current",
+      "kind": "IfStatement",
+      "sha256": "4e070add69344445011fb0ce9d6b82d2f4103ab129edb0f6f93e8e63120c7ad9",
+      "symbol": ""
+    }
+  ],
+  "renewals": [
+    {
+      "source": "scripts/docs-tree-boundary.mjs",
+      "previous": "73ee7dcec94e77e8a4666fc092136e7406fb6130d0a1060789f4be9bf95a7f7b",
+      "current": "4d04b1bf3ba93e1f69085c27a4a7604506487253e47ff53b71fb5d6b62b15d5b",
+      "previousSelectors": [
+        {
+          "expressionSha256": "8ce6a6c67c5ec0c48bb70f4d773abf7188847659e42b4a016db55207e2d34c1e"
+        },
+        {
+          "expressionSha256": "dd688ad8b368b5ad4accb4471a9bf5df7034d8452413dc68698ac9ecdf8d044c"
+        },
+        {
+          "expressionSha256": "025a17c00a8e228dc9749214346ba1e5ea1ec4c2d4dae18e730b942b0d87105b"
+        },
+        {
+          "expressionSha256": "6efa21b1767c78f6978992bf5aa2d858f15d55be24340e84cac25234e16d65ac"
+        },
+        {
+          "expressionSha256": "186623875da9de9e5f302e0b7731151a7f19e8912e94e3691a4e14e1d9d494df"
+        },
+        {
+          "expressionSha256": "6d9accf81a75d64f93c93a7f7aea38ae3de36c2f47de6519da6283492cf65a66"
+        },
+        {
+          "expressionSha256": "3c1234833ab0430a499b63495c084c79ed4a163cdec3d94ea67820eb9cd38c36"
+        },
+        {
+          "expressionSha256": "b6e2799a8111746ebaad2e248f7205e376dabcca8c075ce8e390c2770c1938b0"
+        },
+        {
+          "expressionSha256": "8db84910f7756dd1e4fc681e8b9d4717b90fe275ec85033970fe0f13f9b4242b"
+        },
+        {
+          "expressionSha256": "f89c5ea2b03168b7081ed16d599b181adb7f96b0642f783b37d44c2dfbad4e2e"
+        },
+        {
+          "expressionSha256": "6e77aacc4029b426e8d6c6bf431a05378c606837d60e08ba9bba6ebdaf74652b"
+        },
+        {
+          "expressionSha256": "77a215ce53e8d2eb7b6867c921fc02dd08db5d028711e6b1a26266a62e997b32"
+        },
+        {
+          "expressionSha256": "dbfbd9ef83ff4c8c4b3cd9eb3e2706112c171570680366bd4b0b3f0d2ad8c227"
+        },
+        {
+          "expressionSha256": "af4e249bedbabae469906812f6724787cdaa44de44ae3e997ebe29f6e3dd5368"
+        },
+        {
+          "expressionSha256": "3bd42e15e5427f946b98b898212af900ed0a4068cff03a37aa2ce1d3a081f2ec"
+        },
+        {
+          "expressionSha256": "967573157d8a0118a9b81842abb29015d82a1e83f6d2d055d56e848e4def640e"
+        },
+        {
+          "expressionSha256": "99a8a8a7117b1395e3a209cdc8ba5a70424687458932bc4dc8a7b6e59ff53868"
+        },
+        {
+          "expressionSha256": "113f0af17fdf683cf360ab9d03b7eff1b572d3475e83119031d47ee4331621aa"
+        },
+        {
+          "expressionSha256": "a882f1835ea242b921aa508c130775a3aa3d9fed136b7e1db78f5bf034f0582b"
+        },
+        {
+          "expressionSha256": "ad73ca8dd2be89150d9ce0f13eae68ebf5fc6eae24f81e521b6223459d4a6005"
+        },
+        {
+          "expressionSha256": "c911664f1383262f472f293bf37442ecc966e75f7783f63641e87892a5d649c8"
+        },
+        {
+          "expressionSha256": "541aaa1860f42882cd3d8793292bb02ac3169e2abaf515e951320294d69b5f4c"
+        },
+        {
+          "expressionSha256": "bdc1aefed2f33867cd76d273a58bd3678d79ff7d746421b48b2f834932aa81ae"
+        },
+        {
+          "expressionSha256": "3d92aa6cd24d32ced8b03cead8ccc4cf11c8a480b85f1e06645fa00c2a5f871c"
+        },
+        {
+          "expressionSha256": "87d345ec293f6455f292ba5e4b24582fb6e09e2c91241bef26ef045aa2de8392"
+        }
+      ],
+      "selectorReceipt": [
+        {
+          "expressionSha256": "8ce6a6c67c5ec0c48bb70f4d773abf7188847659e42b4a016db55207e2d34c1e"
+        },
+        {
+          "expressionSha256": "dd688ad8b368b5ad4accb4471a9bf5df7034d8452413dc68698ac9ecdf8d044c"
+        },
+        {
+          "expressionSha256": "025a17c00a8e228dc9749214346ba1e5ea1ec4c2d4dae18e730b942b0d87105b"
+        },
+        {
+          "expressionSha256": "6efa21b1767c78f6978992bf5aa2d858f15d55be24340e84cac25234e16d65ac"
+        },
+        {
+          "expressionSha256": "186623875da9de9e5f302e0b7731151a7f19e8912e94e3691a4e14e1d9d494df"
+        },
+        {
+          "expressionSha256": "6d9accf81a75d64f93c93a7f7aea38ae3de36c2f47de6519da6283492cf65a66"
+        },
+        {
+          "expressionSha256": "3c1234833ab0430a499b63495c084c79ed4a163cdec3d94ea67820eb9cd38c36"
+        },
+        {
+          "expressionSha256": "b6e2799a8111746ebaad2e248f7205e376dabcca8c075ce8e390c2770c1938b0"
+        },
+        {
+          "expressionSha256": "8db84910f7756dd1e4fc681e8b9d4717b90fe275ec85033970fe0f13f9b4242b"
+        },
+        {
+          "expressionSha256": "f89c5ea2b03168b7081ed16d599b181adb7f96b0642f783b37d44c2dfbad4e2e"
+        },
+        {
+          "expressionSha256": "6e77aacc4029b426e8d6c6bf431a05378c606837d60e08ba9bba6ebdaf74652b"
+        },
+        {
+          "expressionSha256": "77a215ce53e8d2eb7b6867c921fc02dd08db5d028711e6b1a26266a62e997b32"
+        },
+        {
+          "expressionSha256": "dbfbd9ef83ff4c8c4b3cd9eb3e2706112c171570680366bd4b0b3f0d2ad8c227"
+        },
+        {
+          "expressionSha256": "af4e249bedbabae469906812f6724787cdaa44de44ae3e997ebe29f6e3dd5368"
+        },
+        {
+          "expressionSha256": "3bd42e15e5427f946b98b898212af900ed0a4068cff03a37aa2ce1d3a081f2ec"
+        },
+        {
+          "expressionSha256": "967573157d8a0118a9b81842abb29015d82a1e83f6d2d055d56e848e4def640e"
+        },
+        {
+          "expressionSha256": "99a8a8a7117b1395e3a209cdc8ba5a70424687458932bc4dc8a7b6e59ff53868"
+        },
+        {
+          "expressionSha256": "113f0af17fdf683cf360ab9d03b7eff1b572d3475e83119031d47ee4331621aa"
+        },
+        {
+          "expressionSha256": "a882f1835ea242b921aa508c130775a3aa3d9fed136b7e1db78f5bf034f0582b"
+        },
+        {
+          "expressionSha256": "ad73ca8dd2be89150d9ce0f13eae68ebf5fc6eae24f81e521b6223459d4a6005"
+        },
+        {
+          "expressionSha256": "c911664f1383262f472f293bf37442ecc966e75f7783f63641e87892a5d649c8"
+        },
+        {
+          "expressionSha256": "541aaa1860f42882cd3d8793292bb02ac3169e2abaf515e951320294d69b5f4c"
+        },
+        {
+          "expressionSha256": "bdc1aefed2f33867cd76d273a58bd3678d79ff7d746421b48b2f834932aa81ae"
+        },
+        {
+          "expressionSha256": "3d92aa6cd24d32ced8b03cead8ccc4cf11c8a480b85f1e06645fa00c2a5f871c"
+        },
+        {
+          "expressionSha256": "87d345ec293f6455f292ba5e4b24582fb6e09e2c91241bef26ef045aa2de8392"
+        }
+      ],
+      "selectorsChanged": false,
+      "authorityInputsUnchanged": true,
+      "priorFactsExactlyReconstructed": true,
+      "removedFacts": [
+        {
+          "source": "scripts/docs-tree-boundary.mjs",
+          "kind": "FunctionDeclaration",
+          "symbol": "build",
+          "sha256": "d5337159ed2cefb9f0fcd2be683a09ed0f51ad5c3de44666f1730d3ab0dc71b1"
+        },
+        {
+          "source": "scripts/docs-tree-boundary.mjs",
+          "kind": "FunctionDeclaration",
+          "symbol": "canonicalDocumentationTooling",
+          "sha256": "ac3fd7377f7565c98ee9ecc5690399ea6e90ba7ac870a177eefc7be8cae15927"
+        }
+      ],
+      "addedFacts": [
+        {
+          "source": "scripts/docs-tree-boundary.mjs",
+          "kind": "FirstStatement",
+          "symbol": "reviewedStandaloneDocumentationTools",
+          "sha256": "779f28f89ed2b8f8ccce272a1e450e0f8fcec09a96409f99d5ab9173df75b64d"
+        },
+        {
+          "source": "scripts/docs-tree-boundary.mjs",
+          "kind": "FunctionDeclaration",
+          "symbol": "build",
+          "sha256": "0812dc8fc9afbf8fec2473850e3f8d21ec7ed933ec8148a22a13823650eae3bf"
+        },
+        {
+          "source": "scripts/docs-tree-boundary.mjs",
+          "kind": "FunctionDeclaration",
+          "symbol": "canonicalDocumentationTooling",
+          "sha256": "475501e86546149e8531d907384c54ddca153cb67825c2d65c218099a06c0916"
+        }
+      ]
+    }
+  ],
+  "unchanged": [
+    "scripts/docs-ap09-catalogue.mjs",
+    "scripts/docs-api-output-discovery.mjs",
+    "scripts/docs-api-output-role-classification.mjs",
+    "scripts/docs-api-product-scope.mjs",
+    "scripts/docs-api-receiver-coverage.mjs",
+    "scripts/docs-api-reference.mjs",
+    "scripts/docs-api-schema-authorities.mjs",
+    "scripts/docs-argo-receiver-contracts.mjs",
+    "scripts/docs-blueprint-generate.mjs",
+    "scripts/docs-buster-authored-unknown-field-contracts.mjs",
+    "scripts/docs-buster-lease-receiver-contracts.mjs",
+    "scripts/docs-check-coverage.mjs",
+    "scripts/docs-check-refs.mjs",
+    "scripts/docs-check.mjs",
+    "scripts/docs-cilium-receiver-contracts.mjs",
+    "scripts/docs-clusterspiffeid-selected-receiver-contracts.mjs",
+    "scripts/docs-configuration-inventory.mjs",
+    "scripts/docs-generate-core.mjs",
+    "scripts/docs-generate.mjs",
+    "scripts/docs-governance.mjs",
+    "scripts/docs-inventory.mjs",
+    "scripts/docs-kubernetes-admission-receiver-contracts.mjs",
+    "scripts/docs-kubernetes-admission-status-contracts.mjs",
+    "scripts/docs-kubernetes-apps-receiver-contracts.mjs",
+    "scripts/docs-kubernetes-auth-delete-receiver-contracts.mjs",
+    "scripts/docs-kubernetes-cluster-configuration-receiver-contracts.mjs",
+    "scripts/docs-kubernetes-core-receiver-contracts.mjs",
+    "scripts/docs-kubernetes-envelope-receiver-contracts.mjs",
+    "scripts/docs-kubernetes-identity-secret-receiver-contracts.mjs",
+    "scripts/docs-kubernetes-metadata-receiver-contracts.mjs",
+    "scripts/docs-kubernetes-namespace-isolation-receiver-contracts.mjs",
+    "scripts/docs-kubernetes-network-receiver-contracts.mjs",
+    "scripts/docs-kubernetes-node-workloads-receiver-contracts.mjs",
+    "scripts/docs-kubernetes-pv-selected-receiver-contracts.mjs",
+    "scripts/docs-kubernetes-webhook-selected-receiver-contracts.mjs",
+    "scripts/docs-kubernetes-workload-receiver-contracts.mjs",
+    "scripts/docs-lint-policy-reference.mjs",
+    "scripts/docs-local-helm-authorities.mjs",
+    "scripts/docs-parity-batches.mjs",
+    "scripts/docs-parity-check.mjs",
+    "scripts/docs-parity-extract.mjs",
+    "scripts/docs-parity-review-assignments.mjs",
+    "scripts/docs-parity-status.mjs",
+    "scripts/docs-parity-transition.mjs",
+    "scripts/docs-platform-surface-inventory.mjs",
+    "scripts/docs-prometheus-selected-receiver-contracts.mjs",
+    "scripts/docs-publication.mjs",
+    "scripts/docs-runtime-consumer-contracts.mjs",
+    "scripts/docs-secret-inventory.mjs",
+    "scripts/docs-status.mjs",
+    "scripts/docs-yaml-field-authorities.mjs",
+    "scripts/docs-yaml-inventory.mjs",
+    "scripts/docs-sdk-reference.mjs",
+    "scripts/docs-reader/renderer.mjs",
+    "scripts/docs-reader/check-artifact.mjs",
+    "scripts/docs-reader/check-search.mjs",
+    "scripts/docs-reader/source-links.mjs",
+    "scripts/docs-reader/check-source-links.mjs",
+    "scripts/docs-reader/metadata.mjs",
+    "scripts/docs-reader/source-previews.mjs",
+    "scripts/docs-reader/check-source-previews.mjs",
+    "scripts/docs-reader/diagrams.mjs",
+    "scripts/docs-reader/check-diagrams.mjs"
+  ],
+  "newRoles": []
+}

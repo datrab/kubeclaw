@@ -1,0 +1,2767 @@
+{
+  "baseline": "17720beb",
+  "classification": {
+    "old": 2965,
+    "new": 3910,
+    "unchangedOldRecords": 2965,
+    "added": 945,
+    "addedClasses": {
+      "internal-documentation-input": 945
+    },
+    "baselineRevisionUnchanged": true
+  },
+  "inventory": {
+    "old": 2941,
+    "new": 3917,
+    "removed": [],
+    "added": [
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/checks/current-governance.json",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/checks/current-html-reconciliation-producer.mjs",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/checks/current-html-reconciliation.json",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/checks/current-html.json",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/checks/current-impact.json",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/checks/current-production.json",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/checks/governance6-original.json",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/checks/governance6-raw/authored-preservation-check.stdout",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/checks/governance6-raw/authored-preservation-regenerate.stdout",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/checks/governance6-raw/current-primary.stdout",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/checks/governance6-raw/manual-owner-rejected.stderr",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/checks/governance6-raw/restored-current-primary.stdout",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/checks/governance6-raw/wrong-generated-class-rejected.stderr",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/checks/negative-provenance-original.json",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/checks/negative-provenance-raw/actual-result.json",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/checks/negative-provenance-raw/optimized-python-refused.stderr",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/checks/negative-provenance-raw/stale-production-revision.stderr",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/checks/negative-provenance-raw/stale-receipt.json",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/checks/owner-map-checkpoint.json",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/checks/owner-source-checkpoint.json",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/checks/owning14-original.json",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/checks/raw-evidence-whitespace-findings.json",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/ledger.json",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/allowlist-probe.json",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/anchor-inventory.json",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/build-report.json",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/README.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/decisions/README.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/decisions/acceptance.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/decisions/core-and-plugins.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/decisions/echo.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/decisions/implementation.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/decisions/prism.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/decisions/runtime-and-operations.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/decisions/test-gate.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/extend/README.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/extend/buster.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/extend/contracts.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/extend/developer-handbook.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/extend/documentation-maintenance.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/extend/effectful-plugin.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/extend/examples/minimal-stage/package.json",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/extend/examples/minimal-stage/plugin.json",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/extend/examples/minimal-stage/schemas/config.schema.json",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/extend/examples/minimal-stage/schemas/input.schema.json",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/extend/examples/minimal-stage/schemas/result.schema.json",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/extend/examples/minimal-stage/src/stage.js",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/extend/examples/minimal-stage/tests/stage.test.mjs",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/extend/examples/platform-change-nova-lifecycle.json",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/extend/first-plugin.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/extend/host-and-engine.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/extend/lint.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/extend/nova.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/extend/platform/README.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/extend/platform/buster.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/extend/platform/prism.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/extend/plugin-catalogue/README.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/extend/plugin-catalogue/kubeclaw-agent-observer.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/extend/plugin-catalogue/kubeclaw-ops.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/extend/plugin-catalogue/kubeclaw-prism.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/extend/plugin-catalogue/kubeclaw.agent-observability.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/extend/plugin-catalogue/kubeclaw.api-flow.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/extend/plugin-catalogue/kubeclaw.architecture-validator.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/extend/plugin-catalogue/kubeclaw.artifact-store.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/extend/plugin-catalogue/kubeclaw.axe.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/extend/plugin-catalogue/kubeclaw.blueprint-sync.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/extend/plugin-catalogue/kubeclaw.buster-quality-gate.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/extend/plugin-catalogue/kubeclaw.case-study.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/extend/plugin-catalogue/kubeclaw.command-runner.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/extend/plugin-catalogue/kubeclaw.container-build.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/extend/plugin-catalogue/kubeclaw.coverage-budget.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/extend/plugin-catalogue/kubeclaw.delivery-lint.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/extend/plugin-catalogue/kubeclaw.demo-auth-smoke.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/extend/plugin-catalogue/kubeclaw.demo-handoff.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/extend/plugin-catalogue/kubeclaw.direct-command.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/extend/plugin-catalogue/kubeclaw.git-workspace.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/extend/plugin-catalogue/kubeclaw.http.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/extend/plugin-catalogue/kubeclaw.human-approval.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/extend/plugin-catalogue/kubeclaw.implementation-agent.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/extend/plugin-catalogue/kubeclaw.junit-report.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/extend/plugin-catalogue/kubeclaw.kubernetes-fixture.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/extend/plugin-catalogue/kubeclaw.lighthouse.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/extend/plugin-catalogue/kubeclaw.lint.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/extend/plugin-catalogue/kubeclaw.network-http.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/extend/plugin-catalogue/kubeclaw.notification-observer.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/extend/plugin-catalogue/kubeclaw.openapi.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/extend/plugin-catalogue/kubeclaw.openclaw-agent-events.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/extend/plugin-catalogue/kubeclaw.operator-messaging.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/extend/plugin-catalogue/kubeclaw.pipeline-review.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/extend/plugin-catalogue/kubeclaw.playwright.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/extend/plugin-catalogue/kubeclaw.preflight-contract.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/extend/plugin-catalogue/kubeclaw.prism-design.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/extend/plugin-catalogue/kubeclaw.project-summary.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/extend/plugin-catalogue/kubeclaw.redis-transport.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/extend/plugin-catalogue/kubeclaw.remote-test-gate.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/extend/plugin-catalogue/kubeclaw.repository-adapter.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/extend/plugin-catalogue/kubeclaw.review.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/extend/plugin-catalogue/kubeclaw.runtime-dispatch.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/extend/plugin-catalogue/kubeclaw.secret-resolver.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/extend/plugin-catalogue/kubeclaw.security-providers.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/extend/plugin-catalogue/kubeclaw.size-budget.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/extend/plugin-catalogue/kubeclaw.state-store.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/extend/plugin-catalogue/kubeclaw.tailscale-exposure.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/extend/plugin-catalogue/kubeclaw.telemetry-observer.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/extend/plugin-catalogue/kubeclaw.telemetry-store.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/extend/plugin-catalogue/kubeclaw.transport-publisher.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/extend/plugin-catalogue/kubeclaw.visual.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/extend/plugin-catalogue/kubeclaw.wait-store.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/extend/testing.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/product-surfaces.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/reference/README.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/reference/api-object-updates.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/reference/buster-error-codes.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/reference/buster-provider-configuration.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/reference/buster-runtime-configuration.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/reference/buster-suites.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/reference/capabilities.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/reference/cli.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/reference/configuration-change-impact.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/reference/configuration-compatibility.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/reference/configuration-errors.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/reference/configuration-precedence.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/reference/configuration.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/reference/contracts.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/reference/documentation-governance.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/reference/documentation-route-registry.json",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/reference/documentation-site.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/reference/endpoints.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/reference/environment-variables.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/reference/errors.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/reference/events.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/reference/generated-documentation-map.json",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/reference/glossary.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/reference/helm-values.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/reference/host-and-prism-configuration.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/reference/images-and-digests.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/reference/lint-policy-generated.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/reference/lint-policy.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/reference/lint-rules.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/reference/nova-project.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/reference/pipeline-definition.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/reference/pipeline-json.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/reference/pipeline-platform.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/reference/platform-surfaces-generated.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/reference/plugin-configuration.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/reference/project-pipeline-publication.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/reference/roles-and-package-ownership.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/reference/schemas.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/reference/sdk-exports.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/reference/sdk.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/reference/secrets.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/reference/service-routing.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/reference/stores-and-retention.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/reference/verification-commands.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/reference/worker-profiles-and-roles.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/reference/workflows.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/status/acceptance.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/status/current.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/status/open-issues.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/status/roadmap.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/understand/README.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/understand/archviewer.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/understand/buster-namespace-controller.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/understand/buster.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/understand/codex-integration.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/understand/communication.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/understand/components-and-authority.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/understand/data-and-state.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/understand/deployment-and-trust.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/understand/echo.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/understand/forge.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/understand/nova-core.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/understand/openclaw.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/understand/ops-mcp.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/understand/pipeline-dependencies.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/understand/platform-and-operations.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/understand/plugin-runtime.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/understand/prism-data.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/understand/prism-runtime.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/understand/prism.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/understand/request-state-recovery.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/understand/request-to-result.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/understand/security-and-trust.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/understand/telemetry.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/understand/worker-core.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/understand/worker-trust.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/use/README.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/use/capacity.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/use/demo-delivery.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/use/diagnose.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/use/install.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/use/maintenance.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/use/operate.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/use/plugins.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/use/prism-studio.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/use/quickstart.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/use/recovery.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/use/worker-trust.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/use/workflows/README.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/use/workflows/buster-suite.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/use/workflows/examples/buster-fixture-matrix-report.pipeline.json",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/use/workflows/examples/request-trace-redis-unavailable.json",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/use/workflows/examples/request-trace-success.json",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/use/workflows/kubernetes-fixture.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/use/workflows/wait-resume.html",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/use/workflows/wait-resume/approval.pipeline.json",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/use/workflows/wait-resume/platform.template.json",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/use/workflows/wait-resume/signal.template.json",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/README.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/decisions/README.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/decisions/acceptance.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/decisions/core-and-plugins.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/decisions/echo.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/decisions/implementation.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/decisions/prism.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/decisions/runtime-and-operations.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/decisions/test-gate.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/extend/README.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/extend/buster.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/extend/contracts.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/extend/developer-handbook.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/extend/documentation-maintenance.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/extend/effectful-plugin.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/extend/first-plugin.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/extend/host-and-engine.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/extend/lint.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/extend/nova.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/extend/platform/README.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/extend/platform/buster.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/extend/platform/prism.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/extend/plugin-catalogue/README.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/extend/plugin-catalogue/kubeclaw-agent-observer.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/extend/plugin-catalogue/kubeclaw-ops.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/extend/plugin-catalogue/kubeclaw-prism.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/extend/plugin-catalogue/kubeclaw.agent-observability.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/extend/plugin-catalogue/kubeclaw.api-flow.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/extend/plugin-catalogue/kubeclaw.architecture-validator.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/extend/plugin-catalogue/kubeclaw.artifact-store.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/extend/plugin-catalogue/kubeclaw.axe.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/extend/plugin-catalogue/kubeclaw.blueprint-sync.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/extend/plugin-catalogue/kubeclaw.buster-quality-gate.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/extend/plugin-catalogue/kubeclaw.case-study.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/extend/plugin-catalogue/kubeclaw.command-runner.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/extend/plugin-catalogue/kubeclaw.container-build.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/extend/plugin-catalogue/kubeclaw.coverage-budget.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/extend/plugin-catalogue/kubeclaw.delivery-lint.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/extend/plugin-catalogue/kubeclaw.demo-auth-smoke.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/extend/plugin-catalogue/kubeclaw.demo-handoff.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/extend/plugin-catalogue/kubeclaw.direct-command.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/extend/plugin-catalogue/kubeclaw.git-workspace.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/extend/plugin-catalogue/kubeclaw.http.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/extend/plugin-catalogue/kubeclaw.human-approval.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/extend/plugin-catalogue/kubeclaw.implementation-agent.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/extend/plugin-catalogue/kubeclaw.junit-report.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/extend/plugin-catalogue/kubeclaw.kubernetes-fixture.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/extend/plugin-catalogue/kubeclaw.lighthouse.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/extend/plugin-catalogue/kubeclaw.lint.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/extend/plugin-catalogue/kubeclaw.network-http.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/extend/plugin-catalogue/kubeclaw.notification-observer.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/extend/plugin-catalogue/kubeclaw.openapi.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/extend/plugin-catalogue/kubeclaw.openclaw-agent-events.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/extend/plugin-catalogue/kubeclaw.operator-messaging.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/extend/plugin-catalogue/kubeclaw.pipeline-review.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/extend/plugin-catalogue/kubeclaw.playwright.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/extend/plugin-catalogue/kubeclaw.preflight-contract.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/extend/plugin-catalogue/kubeclaw.prism-design.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/extend/plugin-catalogue/kubeclaw.project-summary.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/extend/plugin-catalogue/kubeclaw.redis-transport.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/extend/plugin-catalogue/kubeclaw.remote-test-gate.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/extend/plugin-catalogue/kubeclaw.repository-adapter.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/extend/plugin-catalogue/kubeclaw.review.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/extend/plugin-catalogue/kubeclaw.runtime-dispatch.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/extend/plugin-catalogue/kubeclaw.secret-resolver.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/extend/plugin-catalogue/kubeclaw.security-providers.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/extend/plugin-catalogue/kubeclaw.size-budget.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/extend/plugin-catalogue/kubeclaw.state-store.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/extend/plugin-catalogue/kubeclaw.tailscale-exposure.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/extend/plugin-catalogue/kubeclaw.telemetry-observer.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/extend/plugin-catalogue/kubeclaw.telemetry-store.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/extend/plugin-catalogue/kubeclaw.transport-publisher.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/extend/plugin-catalogue/kubeclaw.visual.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/extend/plugin-catalogue/kubeclaw.wait-store.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/extend/testing.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/product-surfaces.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/reference/README.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/reference/api-object-updates.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/reference/buster-error-codes.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/reference/buster-provider-configuration.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/reference/buster-runtime-configuration.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/reference/buster-suites.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/reference/capabilities.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/reference/cli.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/reference/configuration-change-impact.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/reference/configuration-compatibility.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/reference/configuration-errors.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/reference/configuration-precedence.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/reference/configuration.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/reference/contracts.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/reference/documentation-governance.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/reference/documentation-site.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/reference/endpoints.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/reference/environment-variables.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/reference/errors.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/reference/events.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/reference/glossary.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/reference/helm-values.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/reference/host-and-prism-configuration.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/reference/images-and-digests.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/reference/lint-policy-generated.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/reference/lint-policy.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/reference/lint-rules.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/reference/nova-project.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/reference/pipeline-definition.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/reference/pipeline-json.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/reference/pipeline-platform.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/reference/platform-surfaces-generated.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/reference/plugin-configuration.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/reference/project-pipeline-publication.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/reference/roles-and-package-ownership.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/reference/schemas.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/reference/sdk-exports.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/reference/sdk.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/reference/secrets.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/reference/service-routing.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/reference/stores-and-retention.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/reference/verification-commands.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/reference/worker-profiles-and-roles.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/reference/workflows.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/status/acceptance.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/status/current.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/status/open-issues.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/status/roadmap.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/unapproved-evidence-probe.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/understand/README.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/understand/archviewer.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/understand/buster-namespace-controller.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/understand/buster.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/understand/codex-integration.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/understand/communication.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/understand/components-and-authority.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/understand/data-and-state.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/understand/deployment-and-trust.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/understand/echo.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/understand/forge.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/understand/nova-core.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/understand/openclaw.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/understand/ops-mcp.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/understand/pipeline-dependencies.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/understand/platform-and-operations.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/understand/plugin-runtime.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/understand/prism-data.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/understand/prism-runtime.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/understand/prism.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/understand/request-state-recovery.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/understand/request-to-result.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/understand/security-and-trust.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/understand/telemetry.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/understand/worker-core.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/understand/worker-trust.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/use/README.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/use/capacity.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/use/demo-delivery.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/use/diagnose.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/use/install.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/use/maintenance.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/use/operate.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/use/plugins.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/use/prism-studio.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/use/quickstart.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/use/recovery.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/use/worker-trust.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/use/workflows/README.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/use/workflows/buster-suite.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/use/workflows/kubernetes-fixture.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/use/workflows/wait-resume.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/route-inventory.json",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/source-manifest.json",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/reviews/historical3354/quality.json",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/reviews/historical3354/reader.json",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/reviews/historical3354/source.json",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/reviews/owner-map-review.json",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/reviews/owner-source-review.json",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/reviews/quality-process.json",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/reviews/quality-prompt.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/reviews/quality-review.json",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/reviews/quality-review.log",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/reviews/reader-process.json",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/reviews/reader-prompt.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/reviews/reader-review.json",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/reviews/reader-review.log",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/reviews/source-process.json",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/reviews/source-prompt.md",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/reviews/source-review.json",
+      "docs/blueprint/acceptance-evidence/A911-09-currentc559/reviews/source-review.log",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a10-actual-link-transition-result.json",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a100-review.json",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a101-run-provider-transition.py.raw",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a102-scope-receipt.json",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a103-source-reference-relations.json",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a104-source-transition-ledger.json",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a105-update-work.py.raw",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a106-actual-governance-map-delta.json",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a107-actual-result.json",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a108-baseline-check.stderr.raw",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a109-baseline-check.stdout.raw",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a11-applicability-and-baseline-verification.json",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a110-baseline-write.stderr.raw",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a111-baseline-write.stdout.raw",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a112-checkpoint.py.raw",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a113-current-governance-check.stderr.raw",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a114-current-governance-check.stdout.raw",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a115-current-governance-write.stderr.raw",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a116-current-governance-write.stdout.raw",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a117-current-package-result.json",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a118-current-provider-noarg-check.stderr.raw",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a119-current-provider-noarg-check.stdout.raw",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a12-audit.py.raw",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a120-current-provider-write.stderr.raw",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a121-current-provider-write.stdout.raw",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a122-fix-whitespace.py.raw",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a123-narrow-provider-successor-governance.stderr.raw",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a124-narrow-provider-successor-governance.stdout.raw",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a125-noarg-owning-caller-after-rename.stderr.raw",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a126-noarg-owning-caller-after-rename.stdout.raw",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a127-package-review.json",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a128-prepare-current.py.raw",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a129-proposal.json",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a13-close-run.py.raw",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a130-published-baseline-governance.stderr.raw",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a131-published-baseline-governance.stdout.raw",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a132-reconcile-current.py.raw",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a133-reject-invalid-revision.stderr.raw",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a134-reject-invalid-revision.stdout.raw",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a135-reject-missing-revision.stderr.raw",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a136-reject-missing-revision.stdout.raw",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a137-reject-tree-object.stderr.raw",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a138-reject-tree-object.stdout.raw",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a139-remove-new-source-check.stderr.raw",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a14-continuation-next-task.json",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a140-remove-new-source-check.stdout.raw",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a141-remove-new-source-write.stderr.raw",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a142-remove-new-source-write.stdout.raw",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a143-remove-stale-output-rejected.stderr.raw",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a144-remove-stale-output-rejected.stdout.raw",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a145-remove-uncommitted-rejected-before-write.stderr.raw",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a146-remove-uncommitted-rejected-before-write.stdout.raw",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a147-rename-new-source-check.stderr.raw",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a148-rename-new-source-check.stdout.raw",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a149-rename-new-source-write.stderr.raw",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a15-continuation-result.json",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a150-rename-new-source-write.stdout.raw",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a151-rename-old-pin-rejected.stderr.raw",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a152-rename-old-pin-rejected.stdout.raw",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a153-rename-stale-output-rejected.stderr.raw",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a154-rename-stale-output-rejected.stdout.raw",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a155-rename-uncommitted-rejected-before-write.stderr.raw",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a156-rename-uncommitted-rejected-before-write.stdout.raw",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a157-review.json",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a158-run.py.raw",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a159-checkpoint-failure.json",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a16-current-route-census.json",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a160-checkpoint-prepush.json",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a161-checkpoint-receipt.json",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a162-checkpoint.py.raw",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a163-current-package-result.json",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a164-current-provider-noarg-check.stderr.raw",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a165-current-provider-noarg-check.stdout.raw",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a166-current-provider-write.stderr.raw",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a167-current-provider-write.stdout.raw",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a168-fresh-canonical-census.json",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a169-package-review.json",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a17-current-source-impact.json",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a170-actual-result.json",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a171-direct-baseline-check.stderr.raw",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a172-direct-baseline-check.stdout.raw",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a173-direct-baseline-write.stderr.raw",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a174-direct-baseline-write.stdout.raw",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a175-direct-rename-check.stderr.raw",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a176-direct-rename-check.stdout.raw",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a177-direct-rename-stale-row-correct-pin-rejected.stderr.raw",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a178-direct-rename-stale-row-correct-pin-rejected.stdout.raw",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a179-direct-rename-write.stderr.raw",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a18-fresh-canonical-census.json",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a180-direct-rename-write.stdout.raw",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a181-review.json",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a182-run.py.raw",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a183-source-after.json",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a184-source-before.json",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a185-active-owner.json",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a186-dossier.json",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a187-source-engine-finding-transcription.json",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a188-source-engine-raw-tool-log.json",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a189-dossier.json",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a19-historical-route-transitions.json",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a190-baseline-output.md.raw",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a191-stale-old-row-with-correct-new-pin.md.raw",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a192-renamed-output.md.raw",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a193-provider-baseline-output.md.raw",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a194-provider-removed-output.md.raw",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a195-provider-renamed-output.md.raw",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a196-result.json",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a197-selected-authority.json",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a198-derive.mjs.raw",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a199-docs-api-output-role-classification.mjs.raw",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a2-source-engine-raw-tool-log.json",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a20-links-baseline.stderr.raw",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a200-docs-api-observer-materialized-source.mjs.raw",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a201-result.json",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a202-selected-authority.json",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a203-derive.mjs.raw",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a204-docs-api-output-role-classification.mjs.raw",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a205-docs-api-observer-materialized-source.mjs.raw",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a206-direct-rename-source.bundle.raw",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a207-provider-v3-source.bundle.raw",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a208-docs-governance.mjs.reviewed-source.raw",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a209-docs-route-continuity.mjs.reviewed-source.raw",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a21-links-baseline.stdout.raw",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a210-docs-route-continuity.test.mjs.reviewed-source.raw",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a211-docs-published-route-baseline.json.reviewed-source.raw",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a212-generate-buster-provider-reference.mjs.reviewed-source.raw",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a213-docs-check-refs.mjs.reviewed-source.raw",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a214-docs-markdown-anchors.mjs.reviewed-source.raw",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a215-docs-upstream-reference.mjs.reviewed-source.raw",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a216-documentation-route-registry.json.reviewed-source.raw",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a217-buster-provider-configuration.md.reviewed-source.raw",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a218-generated-documentation-map.json.reviewed-source.raw",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a219-config.schema.json.reviewed-source.raw",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a22-links-removal-migrated-disposition.stderr.raw",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a220-AP09-acceptance-fixtures.reviewed.json",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a23-links-removal-migrated-disposition.stdout.raw",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a24-links-removal-stale-reference.stderr.raw",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a25-links-removal-stale-reference.stdout.raw",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a26-links-rename-migrated-anchor.stderr.raw",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a27-links-rename-migrated-anchor.stdout.raw",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a28-links-rename-migrated-reference.stderr.raw",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a29-links-rename-migrated-reference.stdout.raw",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a3-source-prompt.md.raw",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a30-links-rename-stale-anchor.stderr.raw",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a31-links-rename-stale-anchor.stdout.raw",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a32-links-rename-stale-reference.stderr.raw",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a33-links-rename-stale-reference.stdout.raw",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a34-no-progress-recovery-result.json",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a35-prepare-correction.py.raw",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a36-receipt.json",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a37-run-link-transition.py.raw",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a38-scope-receipt.json",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a39-actual-focused-result.json",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a40-baseline-byte-tamper-refused.stderr.raw",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a41-baseline-byte-tamper-refused.stdout.raw",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a42-checkpoint-prepush.json",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a43-checkpoint-receipt.json",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a44-checkpoint.py.raw",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a45-focused-release.json",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a46-full166-baseline-check.stderr.raw",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a47-full166-baseline-check.stdout.raw",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a48-manifest.json",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a49-old-freeze-preserved.json",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a5-reader-engine-raw-tool-log.json",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a50-pure-tests.stderr.raw",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a51-pure-tests.stdout.raw",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a52-removal-owned-successor-check.stderr.raw",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a53-removal-owned-successor-check.stdout.raw",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a54-removal-owned-successor-generate.stderr.raw",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a55-removal-owned-successor-generate.stdout.raw",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a56-removal-refused-before-generation.stderr.raw",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a57-removal-refused-before-generation.stdout.raw",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a58-rename-owned-successor-check.stderr.raw",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a59-rename-owned-successor-check.stdout.raw",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a6-reader-prompt.md.raw",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a60-rename-owned-successor-generate.stderr.raw",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a61-rename-owned-successor-generate.stdout.raw",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a62-rename-refused-before-generation.stderr.raw",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a63-rename-refused-before-generation.stdout.raw",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a64-rename-refused-check.stderr.raw",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a65-rename-refused-check.stdout.raw",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a66-review.json",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a67-run-focused.py.raw",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a68-audit.py.raw",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a69-continuation-next-task.json",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a70-continuation-result.json",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a71-controller-path-resolution.json",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a72-dispatch-error.json",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a73-input-bindings.json",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a74-no-progress-recovery-result.json",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a75-observed-remote-heads.json",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a76-pinned-links.py.raw",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a77-pinned-source-link-resolution.json",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a78-prepare-gate-dossier.py.raw",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a79-prepare-provenance.py.raw",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a8-quality-engine-raw-tool-log.json",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a80-provider-baseline.stderr.raw",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a81-provider-baseline.stdout.raw",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a82-provider-controller-review-v1.json",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a83-provider-controller-review-v2.json",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a84-provider-controller-review.json",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a85-provider-input-bindings.json",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a86-provider-removal-current-check.stderr.raw",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a87-provider-removal-current-check.stdout.raw",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a88-provider-removal-stale-rejected.stderr.raw",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a89-provider-removal-stale-rejected.stdout.raw",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a9-quality-prompt.md.raw",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a90-provider-removal-write.stderr.raw",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a91-provider-removal-write.stdout.raw",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a92-provider-rename-current-check.stderr.raw",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a93-provider-rename-current-check.stdout.raw",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a94-provider-rename-stale-rejected.stderr.raw",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a95-provider-rename-stale-rejected.stdout.raw",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a96-provider-rename-write.stderr.raw",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a97-provider-rename-write.stdout.raw",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a98-provider-transition-result.json",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a99-resolve.py.raw",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/current-quality-review-quality-review.json",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/current-reader-review-reader-review.json",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/current-source-review-source-review.json",
+      "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/ledger.json",
+      "docs/blueprint/acceptance-evidence/api-flow-configuration-fix-20261021/api-flow-artifact-review.json",
+      "docs/blueprint/acceptance-evidence/api-flow-configuration-fix-20261021/api-flow-bounded-code-review.json",
+      "docs/blueprint/acceptance-evidence/api-flow-configuration-fix-20261021/api-flow-closeout-docs.log",
+      "docs/blueprint/acceptance-evidence/api-flow-configuration-fix-20261021/api-flow-closeout-governance.log",
+      "docs/blueprint/acceptance-evidence/api-flow-configuration-fix-20261021/api-flow-closeout-publication.log",
+      "docs/blueprint/acceptance-evidence/api-flow-configuration-fix-20261021/api-flow-closeout-refs.log",
+      "docs/blueprint/acceptance-evidence/api-flow-configuration-fix-20261021/api-flow-final-pin-proof.json",
+      "docs/blueprint/acceptance-evidence/api-flow-configuration-fix-20261021/code-checks.json",
+      "docs/blueprint/acceptance-evidence/api-flow-configuration-fix-20261021/final-check-results.json",
+      "docs/blueprint/acceptance-evidence/api-flow-configuration-fix-20261021/generated-closeout-scope.json",
+      "docs/blueprint/acceptance-evidence/api-flow-configuration-fix-20261021/original-plugin-finding.json",
+      "docs/blueprint/acceptance-evidence/api-flow-configuration-fix-20261021/plugin-guides-current.log",
+      "docs/blueprint/acceptance-evidence/api-flow-configuration-fix-20261021/plugin-inventory-current.log",
+      "docs/blueprint/acceptance-evidence/api-flow-configuration-fix-20261021/plugin-mechanisms-review.json",
+      "docs/blueprint/acceptance-evidence/api-flow-configuration-fix-20261021/plugins-complete-review.json",
+      "docs/blueprint/acceptance-evidence/api-flow-configuration-fix-20261021/schema-all-role-check.json",
+      "docs/blueprint/acceptance-evidence/api-flow-configuration-fix-20261021/schema-role-propagation.json",
+      "docs/blueprint/acceptance-evidence/api-flow-configuration-fix-20261021/schema-role-review.json",
+      "docs/blueprint/acceptance-evidence/argocd-original-check-profile-20261021/adapter-check-results.json",
+      "docs/blueprint/acceptance-evidence/argocd-original-check-profile-20261021/argocd-checked-artifact-code-review.json",
+      "docs/blueprint/acceptance-evidence/argocd-original-check-profile-20261021/argocd-five-role-check.json",
+      "docs/blueprint/acceptance-evidence/argocd-original-check-profile-20261021/argocd-integrated-api-frontier.json",
+      "docs/blueprint/acceptance-evidence/argocd-original-check-profile-20261021/argocd-original-check-runtime-proof.json",
+      "docs/blueprint/acceptance-evidence/argocd-original-check-profile-20261021/argocd-original-check-source-review.json",
+      "docs/blueprint/acceptance-evidence/argocd-original-check-profile-20261021/argocd-receipt-maintenance-review.json",
+      "docs/blueprint/acceptance-evidence/argocd-original-check-profile-20261021/argocd-role-propagation.json",
+      "docs/blueprint/acceptance-evidence/argocd-original-check-profile-20261021/scope.json",
+      "docs/blueprint/acceptance-evidence/bundle-writer-boundaries-20261021/all-documentation-roles.json",
+      "docs/blueprint/acceptance-evidence/bundle-writer-boundaries-20261021/bounded-constructor-loader-review.json",
+      "docs/blueprint/acceptance-evidence/bundle-writer-boundaries-20261021/checked-observations.json",
+      "docs/blueprint/acceptance-evidence/bundle-writer-boundaries-20261021/exact-native-propagation.json",
+      "docs/blueprint/acceptance-evidence/bundle-writer-boundaries-20261021/first-native-prerequisite-observation.json",
+      "docs/blueprint/acceptance-evidence/bundle-writer-boundaries-20261021/five-record-preservation-review.json",
+      "docs/blueprint/acceptance-evidence/bundle-writer-boundaries-20261021/input-origin-projection.json.gz",
+      "docs/blueprint/acceptance-evidence/bundle-writer-boundaries-20261021/isolated-original-builder-observations.json",
+      "docs/blueprint/acceptance-evidence/bundle-writer-boundaries-20261021/original-facade-consumer-observations.json",
+      "docs/blueprint/acceptance-evidence/bundle-writer-boundaries-20261021/passive-resource-shape-triage.json",
+      "docs/blueprint/acceptance-evidence/bundle-writer-boundaries-20261021/prior-impact-records.json",
+      "docs/blueprint/acceptance-evidence/bundle-writer-boundaries-20261021/private-writer-projection-review.json",
+      "docs/blueprint/acceptance-evidence/bundle-writer-boundaries-20261021/provenance-and-checks.json",
+      "docs/blueprint/acceptance-evidence/bundle-writer-boundaries-20261021/unchanged-diagram-bytes.json",
+      "docs/blueprint/acceptance-evidence/communication-complete-20261021/communication-correction-final-review.json",
+      "docs/blueprint/acceptance-evidence/communication-complete-20261021/communication-correction-review.json",
+      "docs/blueprint/acceptance-evidence/communication-complete-20261021/communication-fifth-review.json",
+      "docs/blueprint/acceptance-evidence/communication-complete-20261021/communication-fourth-review.json",
+      "docs/blueprint/acceptance-evidence/communication-complete-20261021/communication-review.json",
+      "docs/blueprint/acceptance-evidence/communication-complete-20261021/communication-third-review-retry.json",
+      "docs/blueprint/acceptance-evidence/compiler-input-continuation-20261021/ap08-review-scope-refresh-proof.json",
+      "docs/blueprint/acceptance-evidence/compiler-input-continuation-20261021/check-results.json",
+      "docs/blueprint/acceptance-evidence/compiler-input-continuation-20261021/compiler-module-five-role-check.json",
+      "docs/blueprint/acceptance-evidence/compiler-input-continuation-20261021/compiler-module-role-propagation.json",
+      "docs/blueprint/acceptance-evidence/compiler-input-continuation-20261021/configuration-module-continuation-review.json",
+      "docs/blueprint/acceptance-evidence/compiler-input-continuation-20261021/configuration-module-receipt-continuation.json",
+      "docs/blueprint/acceptance-evidence/compiler-input-continuation-20261021/current-bounded-role-scan.json",
+      "docs/blueprint/acceptance-evidence/compiler-input-continuation-20261021/npm-ci-compiler-input-proof.json",
+      "docs/blueprint/acceptance-evidence/compiler-input-continuation-20261021/npm-ci-compiler-input-review.json",
+      "docs/blueprint/acceptance-evidence/compiler-input-continuation-20261021/npm-ci-compiler-negative-controls.json",
+      "docs/blueprint/acceptance-evidence/concat-guard-review-20261021.json",
+      "docs/blueprint/acceptance-evidence/core-guide-byte-review-20261021.json",
+      "docs/blueprint/acceptance-evidence/core-receipt-propagation-20261021/check-results.json",
+      "docs/blueprint/acceptance-evidence/core-receipt-propagation-20261021/core-all-role-check.json",
+      "docs/blueprint/acceptance-evidence/core-receipt-propagation-20261021/core-propagation-followup.json",
+      "docs/blueprint/acceptance-evidence/core-receipt-propagation-20261021/core-propagation-review.json",
+      "docs/blueprint/acceptance-evidence/core-receipt-propagation-20261021/core-receipt-review.json",
+      "docs/blueprint/acceptance-evidence/core-receipt-propagation-20261021/core-role-propagation.json",
+      "docs/blueprint/acceptance-evidence/core-receipt-propagation-20261021/script-role-scan.json",
+      "docs/blueprint/acceptance-evidence/coverage-build-configuration-fix-20261021/artifact-check-results.json",
+      "docs/blueprint/acceptance-evidence/coverage-build-configuration-fix-20261021/code-check-results.json",
+      "docs/blueprint/acceptance-evidence/coverage-build-configuration-fix-20261021/coverage-build-artifact-proof.json",
+      "docs/blueprint/acceptance-evidence/coverage-build-configuration-fix-20261021/coverage-build-artifact-review.json",
+      "docs/blueprint/acceptance-evidence/coverage-build-configuration-fix-20261021/coverage-build-code-review.json",
+      "docs/blueprint/acceptance-evidence/coverage-build-configuration-fix-20261021/coverage-build-five-role-check.json",
+      "docs/blueprint/acceptance-evidence/coverage-build-configuration-fix-20261021/coverage-build-receipt-review.json",
+      "docs/blueprint/acceptance-evidence/coverage-build-configuration-fix-20261021/coverage-build-role-propagation.json",
+      "docs/blueprint/acceptance-evidence/coverage-build-configuration-fix-20261021/original-plugin-configuration-findings.json",
+      "docs/blueprint/acceptance-evidence/coverage-build-configuration-fix-20261021/plugin-configuration-whole-review.json",
+      "docs/blueprint/acceptance-evidence/coverage-build-configuration-fix-20261021/scope.json",
+      "docs/blueprint/acceptance-evidence/finished-reader-closeout-20261021/check-results.json",
+      "docs/blueprint/acceptance-evidence/finished-reader-closeout-20261021/finished-reader-topics-review.json",
+      "docs/blueprint/acceptance-evidence/finished-reader-closeout-20261021/freshness-all-role-check.json",
+      "docs/blueprint/acceptance-evidence/finished-reader-closeout-20261021/freshness-receipt-review.json",
+      "docs/blueprint/acceptance-evidence/finished-reader-closeout-20261021/freshness-role-propagation.json",
+      "docs/blueprint/acceptance-evidence/finished-reader-closeout-20261021/litellm-registry/1c188fb990fad2d2cc6d7555910ab4d455b69e9750ecdd4d8557957035019053.json",
+      "docs/blueprint/acceptance-evidence/finished-reader-closeout-20261021/litellm-registry/27852540a0b41e0150d72f51bfbad3be449fb26e8067456c5e6bc3c74b004356.json",
+      "docs/blueprint/acceptance-evidence/finished-reader-closeout-20261021/litellm-registry/5911460342252d7ebc7e0a386cb13773bf90cb25eb3e8d533827a0c50677f14b.json",
+      "docs/blueprint/acceptance-evidence/finished-reader-closeout-20261021/litellm-registry/63edff769d60019a62856f880181f23e209d0f03d2ac41b2ece729f1363ec351.json",
+      "docs/blueprint/acceptance-evidence/finished-reader-closeout-20261021/litellm-registry/690f24800e2208e4f31b01483b9d0521d79dc508c8191f1c0b2f21549400c580.json",
+      "docs/blueprint/acceptance-evidence/finished-reader-closeout-20261021/litellm-registry/a79320760af8df488074ab3fbc830883856c7f952976aad00f039d3a43ffe4b2.json",
+      "docs/blueprint/acceptance-evidence/finished-reader-closeout-20261021/litellm-registry/bffd0267943a45a8e48a48c7197c70c3b65b27ade38db1331379405a857e8f6f.json",
+      "docs/blueprint/acceptance-evidence/finished-reader-closeout-20261021/litellm-registry/c175e926e4b0e8328885696165f40e28bb763c7384e4c9c55235e3cdfb78a0c7.json",
+      "docs/blueprint/acceptance-evidence/finished-reader-closeout-20261021/litellm-registry/c81da31234e87f79136beb68d728e08fb3d439a1b0aa95de5e15726e3ad662d4.json",
+      "docs/blueprint/acceptance-evidence/finished-reader-closeout-20261021/litellm-registry/fdd19ec7b3b133895f6f09116cc27979d32bcd6bb3344a2e3ed59bb86c942585.json",
+      "docs/blueprint/acceptance-evidence/finished-reader-closeout-20261021/litellm-registry/manifest.json",
+      "docs/blueprint/acceptance-evidence/finished-reader-closeout-20261021/litellm-upstream-manifest.json",
+      "docs/blueprint/acceptance-evidence/finished-reader-closeout-20261021/litellm-whole-review.json",
+      "docs/blueprint/acceptance-evidence/finished-reader-closeout-20261021/platform-source-binding-proof.json",
+      "docs/blueprint/acceptance-evidence/finished-reader-closeout-20261021/ready-correction-final-review.json",
+      "docs/blueprint/acceptance-evidence/finished-reader-closeout-20261021/scope.json",
+      "docs/blueprint/acceptance-evidence/finished-reader-closeout-20261021/source-freshness-review.json",
+      "docs/blueprint/acceptance-evidence/host-release-evidence-review-20261021.json",
+      "docs/blueprint/acceptance-evidence/host-release-followup-20261021.json",
+      "docs/blueprint/acceptance-evidence/knip-diagnostic-review-20261021.json",
+      "docs/blueprint/acceptance-evidence/native-contract-reconciliation-20261021/documentation-role-check.json",
+      "docs/blueprint/acceptance-evidence/native-contract-reconciliation-20261021/final-assembly-review.json",
+      "docs/blueprint/acceptance-evidence/native-contract-reconciliation-20261021/partition-1.json",
+      "docs/blueprint/acceptance-evidence/native-contract-reconciliation-20261021/partition-2.json",
+      "docs/blueprint/acceptance-evidence/native-contract-reconciliation-20261021/partition-3.json",
+      "docs/blueprint/acceptance-evidence/native-contract-reconciliation-20261021/partition-4.json",
+      "docs/blueprint/acceptance-evidence/native-contract-reconciliation-20261021/partition-5.json",
+      "docs/blueprint/acceptance-evidence/native-contract-reconciliation-20261021/partition-6.json",
+      "docs/blueprint/acceptance-evidence/native-contract-reconciliation-20261021/partition-7.json",
+      "docs/blueprint/acceptance-evidence/native-contract-reconciliation-20261021/partition-8.json",
+      "docs/blueprint/acceptance-evidence/native-contract-reconciliation-20261021/scope.json",
+      "docs/blueprint/acceptance-evidence/ops-mcp-complete-20261021.json",
+      "docs/blueprint/acceptance-evidence/private-routes-complete-20261021/prism-studio-pin-review.json",
+      "docs/blueprint/acceptance-evidence/private-routes-complete-20261021/private-routes-content-review.json",
+      "docs/blueprint/acceptance-evidence/private-routes-complete-20261021/private-routes-followup.json",
+      "docs/blueprint/acceptance-evidence/python-consumer-boundaries-20261021.json",
+      "docs/blueprint/acceptance-evidence/reader-evidence-negative-controls-20261021.json",
+      "docs/blueprint/acceptance-evidence/reader-search-gate-20261021/browser-qa-source.json",
+      "docs/blueprint/acceptance-evidence/reader-search-gate-20261021/committed-search-observation.json",
+      "docs/blueprint/acceptance-evidence/reader-search-gate-20261021/observations.json",
+      "docs/blueprint/acceptance-evidence/reader-search-gate-20261021/search-native-impact-review.json",
+      "docs/blueprint/acceptance-evidence/reader-search-gate-20261021/search-native-propagation.json",
+      "docs/blueprint/acceptance-evidence/reader-search-gate-20261021/search-native-three-role-check.json",
+      "docs/blueprint/acceptance-evidence/reader-search-gate-20261021/search-rank-browser-qa.json",
+      "docs/blueprint/acceptance-evidence/reader-search-gate-20261021/search-rank-questions.json",
+      "docs/blueprint/acceptance-evidence/reader-search-gate-20261021/search-rank-review.json",
+      "docs/blueprint/acceptance-evidence/ready-topics-20261021/check-results.json",
+      "docs/blueprint/acceptance-evidence/ready-topics-20261021/maintenance-ready-review.json",
+      "docs/blueprint/acceptance-evidence/ready-topics-20261021/platform-correction-review.json",
+      "docs/blueprint/acceptance-evidence/ready-topics-20261021/platform-final-review.json",
+      "docs/blueprint/acceptance-evidence/ready-topics-20261021/platform-original-findings.json",
+      "docs/blueprint/acceptance-evidence/ready-topics-20261021/platform-ready-review.json",
+      "docs/blueprint/acceptance-evidence/ready-topics-20261021/publication-scope-review.json",
+      "docs/blueprint/acceptance-evidence/ready-topics-20261021/scope.json",
+      "docs/blueprint/acceptance-evidence/ready-topics-20261021/specialists-whole-gate-review.json",
+      "docs/blueprint/acceptance-evidence/ready-topics-20261021/state-correction-review.json",
+      "docs/blueprint/acceptance-evidence/ready-topics-20261021/state-final-review.json",
+      "docs/blueprint/acceptance-evidence/ready-topics-20261021/state-original-findings.json",
+      "docs/blueprint/acceptance-evidence/ready-topics-20261021/state-ready-review.json",
+      "docs/blueprint/acceptance-evidence/ready-topics-20261021/workflows-ready-review.json",
+      "docs/blueprint/acceptance-evidence/registry-studio-complete-20261021/checks.json",
+      "docs/blueprint/acceptance-evidence/registry-studio-complete-20261021/registry-profiles-correction-review.json",
+      "docs/blueprint/acceptance-evidence/registry-studio-complete-20261021/registry-profiles-final-review.json",
+      "docs/blueprint/acceptance-evidence/registry-studio-complete-20261021/remaining-surfaces-review.json",
+      "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/authority-diagram-source-input.json",
+      "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/authority-diagram-source-review.json",
+      "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/buster-diagram-source-input.json",
+      "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/buster-diagram-source-review.json",
+      "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corpus-platform-final-artifact.json",
+      "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corpus-platform-final-browser-harness.json",
+      "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corpus-platform-final-browser-qa.json",
+      "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corpus-platform-final-diagram-manifest.json",
+      "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corpus-platform-final-fresh-render.json",
+      "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corpus-platform-final-images/diagram-4dc422d67c265fd9-full.png",
+      "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corpus-platform-final-images/diagram-4dc422d67c265fd9-mobile.png",
+      "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corpus-platform-final-images/diagram-e8beb8435cf1a6fc-full.png",
+      "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corpus-platform-final-images/diagram-e8beb8435cf1a6fc-mobile.png",
+      "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corpus-platform-final-output-observations.json",
+      "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corpus-platform-final-previews.json",
+      "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corpus-platform-final-reader-manifest.json",
+      "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corpus-platform-final-search.json",
+      "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corpus-platform-final-sources.json",
+      "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corpus-platform-prior-impact-records.json",
+      "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corpus-platform-prior-impact-review.json",
+      "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corrected-axe-observations.json",
+      "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corrected-browser-harness-provenance.json",
+      "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corrected-browser-observations.json",
+      "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corrected-diagram-manifest.json",
+      "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corrected-images/diagram-0f029c30e10c4448-full.png",
+      "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corrected-images/diagram-0f4497fd43eef4ed-full.png",
+      "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corrected-images/diagram-103d8eadfc4cc651-full.png",
+      "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corrected-images/diagram-103d8eadfc4cc651-mobile.png",
+      "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corrected-images/diagram-11b058604e7e4129-full.png",
+      "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corrected-images/diagram-3040be06a2ca5b14-full.png",
+      "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corrected-images/diagram-3b52a062e077e074-full.png",
+      "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corrected-images/diagram-3bcb1bfe88a28c51-full.png",
+      "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corrected-images/diagram-4dc422d67c265fd9-full.png",
+      "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corrected-images/diagram-5b05df08c6d4de49-full.png",
+      "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corrected-images/diagram-605a76cab20cfebf-full.png",
+      "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corrected-images/diagram-605a76cab20cfebf-mobile.png",
+      "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corrected-images/diagram-6802ba43c34d2052-full.png",
+      "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corrected-images/diagram-6e2b51e2c5b4e58e-full.png",
+      "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corrected-images/diagram-72c587181952cb2f-full.png",
+      "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corrected-images/diagram-72c587181952cb2f-mobile.png",
+      "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corrected-images/diagram-865c11cbad4bc6f0-full.png",
+      "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corrected-images/diagram-894c4ee28dace602-full.png",
+      "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corrected-images/diagram-9546393698719b4f-full.png",
+      "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corrected-images/diagram-9b919d5135916a43-full.png",
+      "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corrected-images/diagram-a7fdace370992a64-full.png",
+      "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corrected-images/diagram-aa13d9d4c599db83-full.png",
+      "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corrected-images/diagram-be26288d618208c0-full.png",
+      "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corrected-images/diagram-df5ab3f6a317ad1b-full.png",
+      "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corrected-images/diagram-dfc5314e0b82b354-full.png",
+      "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corrected-images/diagram-dfc5314e0b82b354-mobile.png",
+      "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corrected-images/diagram-e1d664febf645813-full.png",
+      "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corrected-images/diagram-e8beb8435cf1a6fc-full.png",
+      "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corrected-images/diagram-e9adf15cb5cf80b6-full.png",
+      "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corrected-images/diagram-ea45cd168e3309e3-full.png",
+      "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corrected-images/diagram-fa17e8be474839f8-full.png",
+      "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corrected-images/diagram-fa17e8be474839f8-mobile.png",
+      "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corrected-output-observations.json",
+      "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corrected-reader-manifest.json",
+      "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corrected-source-observations.json",
+      "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corrected-whole-reader-observations.json",
+      "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/diagram-code-review.json",
+      "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/diagram-dependency-audit-patched.json",
+      "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/diagram-dependency-audit.json",
+      "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/diagram-four-role-check.json",
+      "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/diagram-native-baseline-difference.json",
+      "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/diagram-native-propagation.json",
+      "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/diagram-reference-lock.json",
+      "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/initial-semantic-review.json",
+      "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/namespace-citation-correction.json",
+      "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/namespace-citation-fix-review.json",
+      "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/namespace-corrected-source-bounds.json",
+      "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/namespace-corrected-source-review.json",
+      "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/namespace-final-artifact.json",
+      "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/namespace-final-browser-harness.json",
+      "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/namespace-final-browser-qa.json",
+      "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/namespace-final-diagram-manifest.json",
+      "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/namespace-final-fresh-render.json",
+      "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/namespace-final-images/diagram-aa13d9d4c599db83-full.png",
+      "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/namespace-final-images/diagram-aa13d9d4c599db83-mobile.png",
+      "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/namespace-final-output-observations.json",
+      "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/namespace-final-previews.json",
+      "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/namespace-final-proof-notes.json",
+      "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/namespace-final-reader-manifest.json",
+      "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/namespace-final-search.json",
+      "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/namespace-final-sources.json",
+      "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/namespace-initial-source-findings.json",
+      "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/namespace-prior-impact-records.json",
+      "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/namespace-prior-impact-review.json",
+      "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/namespace-source-review-input.json",
+      "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/platform-corrected-source-bounds.json",
+      "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/platform-corrected-source-review.json",
+      "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/platform-initial-source-findings.json",
+      "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/precommit-observations.json",
+      "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/prior-source-impact-records.json",
+      "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/prism-data-corrected-source-bounds.json",
+      "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/prism-data-corrected-source-review.json",
+      "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/prism-data-initial-source-findings.json",
+      "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/prism-readability-correction-review.json",
+      "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/semantic-correction-source-observations.json",
+      "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/semantic-review-capacity-failures.json",
+      "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/system-and-confirmed-corrections-review.json",
+      "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/whole-layout-and-prior-impact-review.json",
+      "docs/blueprint/acceptance-evidence/rendered-source-links-20261021/committed-output-observation.json",
+      "docs/blueprint/acceptance-evidence/rendered-source-links-20261021/complete-source-negative-observation.json",
+      "docs/blueprint/acceptance-evidence/rendered-source-links-20261021/diagnostic-source-traversal.json",
+      "docs/blueprint/acceptance-evidence/rendered-source-links-20261021/kubectl-tag-commit-observation.json",
+      "docs/blueprint/acceptance-evidence/rendered-source-links-20261021/metadata-correction-observations.json",
+      "docs/blueprint/acceptance-evidence/rendered-source-links-20261021/metadata-fix-corrected-review.json",
+      "docs/blueprint/acceptance-evidence/rendered-source-links-20261021/metadata-fix-final-review.json",
+      "docs/blueprint/acceptance-evidence/rendered-source-links-20261021/metadata-fix-review.json",
+      "docs/blueprint/acceptance-evidence/rendered-source-links-20261021/metadata-native-propagation.json",
+      "docs/blueprint/acceptance-evidence/rendered-source-links-20261021/metadata-role-check-final.json",
+      "docs/blueprint/acceptance-evidence/rendered-source-links-20261021/precommit-observations.json",
+      "docs/blueprint/acceptance-evidence/rendered-source-links-20261021/primary-source-observation.json",
+      "docs/blueprint/acceptance-evidence/rendered-source-links-20261021/rendered-output-manifest.json",
+      "docs/blueprint/acceptance-evidence/rendered-source-links-20261021/rendered-source-gate-review.json",
+      "docs/blueprint/acceptance-evidence/rendered-source-links-20261021/source-impact-records.json",
+      "docs/blueprint/acceptance-evidence/rendered-source-links-20261021/source-link-four-role-check.json",
+      "docs/blueprint/acceptance-evidence/rendered-source-links-20261021/source-link-native-propagation.json",
+      "docs/blueprint/acceptance-evidence/rendered-source-links-20261021/source-output-code-review.json",
+      "docs/blueprint/acceptance-evidence/rendered-source-links-20261021/source-output-current-code-review.json",
+      "docs/blueprint/acceptance-evidence/runtime-adoption-diagnostic-20261021.json",
+      "docs/blueprint/acceptance-evidence/schema-and-pin-review-20261021.json",
+      "docs/blueprint/acceptance-evidence/script-output-scan-20261021.json",
+      "docs/blueprint/acceptance-evidence/source-preview-closeout-20261021/browser-harness-source.json",
+      "docs/blueprint/acceptance-evidence/source-preview-closeout-20261021/committed-preview-observations.json",
+      "docs/blueprint/acceptance-evidence/source-preview-closeout-20261021/expanded-preview-axe-observations.json",
+      "docs/blueprint/acceptance-evidence/source-preview-closeout-20261021/precommit-observations.json",
+      "docs/blueprint/acceptance-evidence/source-preview-closeout-20261021/preview-native-propagation.json",
+      "docs/blueprint/acceptance-evidence/source-preview-closeout-20261021/preview-six-role-check.json",
+      "docs/blueprint/acceptance-evidence/source-preview-closeout-20261021/primary-source-observations.json",
+      "docs/blueprint/acceptance-evidence/source-preview-closeout-20261021/prior-source-impact-records.json",
+      "docs/blueprint/acceptance-evidence/source-preview-closeout-20261021/rendered-output-manifest.json",
+      "docs/blueprint/acceptance-evidence/source-preview-closeout-20261021/rendered-source-preview-manifest.json",
+      "docs/blueprint/acceptance-evidence/source-preview-closeout-20261021/source-preview-1440-README.png",
+      "docs/blueprint/acceptance-evidence/source-preview-closeout-20261021/source-preview-1440-documentation-site.png",
+      "docs/blueprint/acceptance-evidence/source-preview-closeout-20261021/source-preview-1440-nova-core.png",
+      "docs/blueprint/acceptance-evidence/source-preview-closeout-20261021/source-preview-320-README.png",
+      "docs/blueprint/acceptance-evidence/source-preview-closeout-20261021/source-preview-320-documentation-site.png",
+      "docs/blueprint/acceptance-evidence/source-preview-closeout-20261021/source-preview-320-nova-core.png",
+      "docs/blueprint/acceptance-evidence/source-preview-closeout-20261021/source-preview-768-README.png",
+      "docs/blueprint/acceptance-evidence/source-preview-closeout-20261021/source-preview-768-documentation-site.png",
+      "docs/blueprint/acceptance-evidence/source-preview-closeout-20261021/source-preview-768-nova-core.png",
+      "docs/blueprint/acceptance-evidence/source-preview-closeout-20261021/source-preview-code-review.json",
+      "docs/blueprint/acceptance-evidence/source-preview-closeout-20261021/whole-content-and-prior-impact-review.json",
+      "docs/blueprint/acceptance-evidence/source-preview-closeout-20261021/whole-reader-offline-observations.json",
+      "docs/blueprint/acceptance-evidence/source-preview-closeout-20261021/widget-browser-observations.json",
+      "docs/blueprint/acceptance-evidence/source-role-reconciliation-20261021/boundary-review.json",
+      "docs/blueprint/acceptance-evidence/source-role-reconciliation-20261021/configuration-effects-review.json",
+      "docs/blueprint/acceptance-evidence/source-role-reconciliation-20261021/configuration-import-closure-review.json",
+      "docs/blueprint/acceptance-evidence/source-role-reconciliation-20261021/discovery-effects-review.json",
+      "docs/blueprint/acceptance-evidence/source-role-reconciliation-20261021/role-partition-A.json",
+      "docs/blueprint/acceptance-evidence/source-role-reconciliation-20261021/role-partition-B.json",
+      "docs/blueprint/acceptance-evidence/source-role-reconciliation-20261021/role-partition-C.json",
+      "docs/blueprint/acceptance-evidence/source-role-reconciliation-20261021/role-partition-D.json",
+      "docs/blueprint/acceptance-evidence/source-role-reconciliation-20261021/role-reconciliation-review.json",
+      "docs/blueprint/acceptance-evidence/source-role-reconciliation-20261021/scope.json",
+      "docs/blueprint/acceptance-evidence/static-offline-fallback-20261021/browser-harness-and-provenance.json",
+      "docs/blueprint/acceptance-evidence/static-offline-fallback-20261021/browser-observations.json",
+      "docs/blueprint/acceptance-evidence/static-offline-fallback-20261021/independent-closeout-review.json",
+      "docs/blueprint/acceptance-evidence/static-offline-fallback-20261021/offline-configuration-precedence-320.png",
+      "docs/blueprint/acceptance-evidence/static-offline-fallback-20261021/offline-nova-core-320.png",
+      "docs/blueprint/acceptance-evidence/static-offline-fallback-20261021/offline-recovery-320.png",
+      "docs/blueprint/acceptance-evidence/static-reader-closeout-20261021/browser-qa-source.json",
+      "docs/blueprint/acceptance-evidence/static-reader-closeout-20261021/committed-reader-manifest.json",
+      "docs/blueprint/acceptance-evidence/static-reader-closeout-20261021/committed-reader-observation.json",
+      "docs/blueprint/acceptance-evidence/static-reader-closeout-20261021/local-check-observations.json",
+      "docs/blueprint/acceptance-evidence/static-reader-closeout-20261021/prior-api-census-boundary.json",
+      "docs/blueprint/acceptance-evidence/static-reader-closeout-20261021/reader-closeout-review.json",
+      "docs/blueprint/acceptance-evidence/static-reader-closeout-20261021/reader-code-review-final.json",
+      "docs/blueprint/acceptance-evidence/static-reader-closeout-20261021/reader-code-review.json",
+      "docs/blueprint/acceptance-evidence/static-reader-closeout-20261021/reader-native-delta.json",
+      "docs/blueprint/acceptance-evidence/static-reader-closeout-20261021/reader-native-propagation.json",
+      "docs/blueprint/acceptance-evidence/static-reader-closeout-20261021/reader-three-role-check.json",
+      "docs/blueprint/acceptance-evidence/static-reader-closeout-20261021/reference-lock.json",
+      "docs/blueprint/acceptance-evidence/vendor-archive-refresh-20261021/checks.json",
+      "docs/blueprint/acceptance-evidence/vendor-archive-refresh-20261021/receipt-checks.json",
+      "docs/blueprint/acceptance-evidence/vendor-archive-refresh-20261021/vendor-all-role-check.json",
+      "docs/blueprint/acceptance-evidence/vendor-archive-refresh-20261021/vendor-owner-review.json",
+      "docs/blueprint/acceptance-evidence/vendor-archive-refresh-20261021/vendor-receipt-propagation.json",
+      "docs/blueprint/acceptance-evidence/vendor-archive-refresh-20261021/vendor-receipt-review.json",
+      "docs/blueprint/acceptance-evidence/vendor-archive-refresh-20261021/vendor-refresh-review.json",
+      "docs/blueprint/acceptance-evidence/zero-argument-review-20261021.json",
+      "docs/blueprint/upstream-main-20261017/ROADMAP.md",
+      "docs/blueprint/upstream-main-20261017/architecture/prism-openclaw-runtime.md",
+      "docs/blueprint/upstream-main-20261017/deployment/continuous-gitops.md",
+      "docs/blueprint/upstream-main-20261017/manifest.json",
+      "docs/blueprint/upstream-main-20261017/operations/automatic-runtime-deployments.md",
+      "docs/blueprint/upstream-main-20261017/operations/ax41-rollout.md",
+      "docs/blueprint/upstream-main-20261017/operations/native-worker-host-pools.md",
+      "docs/blueprint/upstream-main-20261017/operations/openclaw-audit-recovery.md",
+      "docs/blueprint/upstream-main-20261017/ops/ops-pod.md",
+      "docs/blueprint/upstream-main-20261017/reference/helm-values.md",
+      "docs/blueprint/upstream-main-20261017/runbooks/prism-recovery.md",
+      "docs/config/documentation-diagrams.json",
+      "docs/config/documentation-publication-manifest.json",
+      "docs/generated/inventory/ops-tool-versions.json",
+      "docs/generated/inventory/sdk-reference.json",
+      "docs/site/extend/developer-handbook.md",
+      "docs/site/extend/documentation-maintenance.md",
+      "docs/site/extend/examples/platform-change-nova-lifecycle.json",
+      "docs/site/extend/platform/README.md",
+      "docs/site/reference/buster-namespace-lease.md",
+      "docs/site/reference/configuration.md",
+      "docs/site/reference/contracts.md",
+      "docs/site/reference/documentation-site.md",
+      "docs/site/reference/errors.md",
+      "docs/site/reference/events.md",
+      "docs/site/reference/images-and-digests.md",
+      "docs/site/reference/roles-and-package-ownership.md",
+      "docs/site/reference/schemas.md",
+      "docs/site/reference/sdk-exports.md",
+      "docs/site/reference/sdk.md",
+      "docs/site/reference/stores-and-retention.md",
+      "docs/site/use/workflows/examples/first-project.mjs"
+    ],
+    "changedFields": {
+      "indirectExecutableConsumers": 153,
+      "consumers": 229,
+      "sha256": 145,
+      "executableConsumers": 45
+    },
+    "changed": [
+      {
+        "path": "docs/site/use/workflows/README.md",
+        "fields": [
+          "indirectExecutableConsumers",
+          "consumers",
+          "sha256"
+        ]
+      },
+      {
+        "path": "docs/site/reference/glossary.md",
+        "fields": [
+          "indirectExecutableConsumers",
+          "consumers",
+          "executableConsumers"
+        ]
+      },
+      {
+        "path": "docs/site/understand/telemetry.md",
+        "fields": [
+          "indirectExecutableConsumers",
+          "consumers",
+          "sha256"
+        ]
+      },
+      {
+        "path": "docs/blueprint/generated/completeness.json",
+        "fields": [
+          "sha256"
+        ]
+      },
+      {
+        "path": "docs/site/extend/plugin-catalogue/kubeclaw.size-budget.md",
+        "fields": [
+          "indirectExecutableConsumers",
+          "consumers",
+          "sha256"
+        ]
+      },
+      {
+        "path": "docs/architecture/plugin-system-phase5-capabilities.json",
+        "fields": [
+          "sha256"
+        ]
+      },
+      {
+        "path": "docs/site/extend/host-and-engine.md",
+        "fields": [
+          "indirectExecutableConsumers",
+          "consumers"
+        ]
+      },
+      {
+        "path": "docs/site/reference/README.md",
+        "fields": [
+          "indirectExecutableConsumers",
+          "consumers",
+          "sha256"
+        ]
+      },
+      {
+        "path": "docs/site/extend/plugin-catalogue/kubeclaw.demo-auth-smoke.md",
+        "fields": [
+          "indirectExecutableConsumers",
+          "consumers",
+          "sha256"
+        ]
+      },
+      {
+        "path": "docs/site/use/recovery.md",
+        "fields": [
+          "indirectExecutableConsumers",
+          "consumers",
+          "executableConsumers",
+          "sha256"
+        ]
+      },
+      {
+        "path": "docs/site/reference/pipeline-json.md",
+        "fields": [
+          "indirectExecutableConsumers",
+          "consumers",
+          "sha256"
+        ]
+      },
+      {
+        "path": "docs/generated/reference/README.md",
+        "fields": [
+          "sha256"
+        ]
+      },
+      {
+        "path": "docs/site/understand/request-state-recovery.md",
+        "fields": [
+          "indirectExecutableConsumers",
+          "consumers",
+          "sha256"
+        ]
+      },
+      {
+        "path": "docs/site/understand/forge.md",
+        "fields": [
+          "indirectExecutableConsumers",
+          "consumers"
+        ]
+      },
+      {
+        "path": "docs/site/status/current.md",
+        "fields": [
+          "indirectExecutableConsumers",
+          "consumers"
+        ]
+      },
+      {
+        "path": "docs/site/understand/security-and-trust.md",
+        "fields": [
+          "indirectExecutableConsumers",
+          "consumers",
+          "sha256"
+        ]
+      },
+      {
+        "path": "docs/blueprint/documentation-completion-matrix.json",
+        "fields": [
+          "consumers",
+          "executableConsumers",
+          "sha256"
+        ]
+      },
+      {
+        "path": "docs/site/extend/plugin-catalogue/kubeclaw.prism-design.md",
+        "fields": [
+          "indirectExecutableConsumers",
+          "consumers",
+          "sha256"
+        ]
+      },
+      {
+        "path": "docs/site/understand/archviewer.md",
+        "fields": [
+          "indirectExecutableConsumers",
+          "consumers",
+          "sha256"
+        ]
+      },
+      {
+        "path": "docs/site/extend/examples/minimal-stage/schemas/result.schema.json",
+        "fields": [
+          "consumers"
+        ]
+      },
+      {
+        "path": "docs/site/extend/plugin-catalogue/kubeclaw.operator-messaging.md",
+        "fields": [
+          "indirectExecutableConsumers",
+          "consumers",
+          "sha256"
+        ]
+      },
+      {
+        "path": "docs/site/extend/plugin-catalogue/kubeclaw.tailscale-exposure.md",
+        "fields": [
+          "indirectExecutableConsumers",
+          "consumers",
+          "sha256"
+        ]
+      },
+      {
+        "path": "docs/architecture/plugin-system-current-inventory.md",
+        "fields": [
+          "consumers"
+        ]
+      },
+      {
+        "path": "docs/site/extend/testing.md",
+        "fields": [
+          "indirectExecutableConsumers",
+          "consumers",
+          "sha256"
+        ]
+      },
+      {
+        "path": "docs/site/extend/plugin-catalogue/kubeclaw.kubernetes-fixture.md",
+        "fields": [
+          "indirectExecutableConsumers",
+          "consumers",
+          "sha256"
+        ]
+      },
+      {
+        "path": "docs/site/reference/host-and-prism-configuration.md",
+        "fields": [
+          "indirectExecutableConsumers",
+          "consumers"
+        ]
+      },
+      {
+        "path": "docs/site/use/maintenance.md",
+        "fields": [
+          "indirectExecutableConsumers",
+          "consumers",
+          "executableConsumers",
+          "sha256"
+        ]
+      },
+      {
+        "path": "docs/site/extend/examples/minimal-stage/src/stage.js",
+        "fields": [
+          "consumers"
+        ]
+      },
+      {
+        "path": "docs/architecture/pipeline-test-gate-unit-parity-ledger.json",
+        "fields": [
+          "consumers"
+        ]
+      },
+      {
+        "path": "docs/site/extend/plugin-catalogue/kubeclaw.state-store.md",
+        "fields": [
+          "indirectExecutableConsumers",
+          "consumers",
+          "sha256"
+        ]
+      },
+      {
+        "path": "docs/config/documentation-parity/operators/recovery-runbook.md.json",
+        "fields": [
+          "consumers"
+        ]
+      },
+      {
+        "path": "docs/site/reference/buster-provider-configuration.md",
+        "fields": [
+          "indirectExecutableConsumers",
+          "consumers",
+          "executableConsumers",
+          "sha256"
+        ]
+      },
+      {
+        "path": "docs/generated/inventory/documentation-source-revision.json",
+        "fields": [
+          "consumers",
+          "executableConsumers",
+          "sha256"
+        ]
+      },
+      {
+        "path": "docs/blueprint/generated/migration-ledger.csv",
+        "fields": [
+          "sha256"
+        ]
+      },
+      {
+        "path": "docs/_legacy-source/operations/native-worker-host-pools.md",
+        "fields": [
+          "consumers"
+        ]
+      },
+      {
+        "path": "docs/site/understand/worker-core.md",
+        "fields": [
+          "indirectExecutableConsumers",
+          "consumers",
+          "sha256"
+        ]
+      },
+      {
+        "path": "docs/generated/inventory/workflows.json",
+        "fields": [
+          "consumers",
+          "executableConsumers",
+          "sha256"
+        ]
+      },
+      {
+        "path": "docs/blueprint/AP08-local-verification.json",
+        "fields": [
+          "consumers"
+        ]
+      },
+      {
+        "path": "docs/site/status/open-issues.md",
+        "fields": [
+          "indirectExecutableConsumers",
+          "consumers",
+          "executableConsumers",
+          "sha256"
+        ]
+      },
+      {
+        "path": "docs/site/extend/plugin-catalogue/kubeclaw.openclaw-agent-events.md",
+        "fields": [
+          "indirectExecutableConsumers",
+          "consumers",
+          "sha256"
+        ]
+      },
+      {
+        "path": "docs/generated/inventory/platform-surfaces.json",
+        "fields": [
+          "consumers",
+          "executableConsumers",
+          "sha256"
+        ]
+      },
+      {
+        "path": "docs/site/extend/plugin-catalogue/kubeclaw.coverage-budget.md",
+        "fields": [
+          "indirectExecutableConsumers",
+          "consumers",
+          "sha256"
+        ]
+      },
+      {
+        "path": "docs/site/understand/ops-mcp.md",
+        "fields": [
+          "indirectExecutableConsumers",
+          "consumers",
+          "sha256"
+        ]
+      },
+      {
+        "path": "docs/architecture/pipeline-test-gate-suite-migration-templates.md",
+        "fields": [
+          "consumers"
+        ]
+      },
+      {
+        "path": "docs/site/extend/plugin-catalogue/kubeclaw.repository-adapter.md",
+        "fields": [
+          "indirectExecutableConsumers",
+          "consumers",
+          "sha256"
+        ]
+      },
+      {
+        "path": "docs/site/understand/worker-trust.md",
+        "fields": [
+          "indirectExecutableConsumers",
+          "consumers"
+        ]
+      },
+      {
+        "path": "docs/site/reference/documentation-route-registry.json",
+        "fields": [
+          "consumers",
+          "sha256"
+        ]
+      },
+      {
+        "path": "docs/site/reference/environment-variables.md",
+        "fields": [
+          "indirectExecutableConsumers",
+          "consumers",
+          "sha256"
+        ]
+      },
+      {
+        "path": "docs/site/extend/first-plugin.md",
+        "fields": [
+          "indirectExecutableConsumers",
+          "consumers"
+        ]
+      },
+      {
+        "path": "docs/blueprint/generated/ap08-extension-inventory.json",
+        "fields": [
+          "consumers",
+          "sha256"
+        ]
+      },
+      {
+        "path": "docs/site/decisions/prism.md",
+        "fields": [
+          "indirectExecutableConsumers",
+          "consumers"
+        ]
+      },
+      {
+        "path": "docs/site/extend/buster.md",
+        "fields": [
+          "indirectExecutableConsumers",
+          "consumers",
+          "sha256"
+        ]
+      },
+      {
+        "path": "docs/config/documentation-parity/operators/plugin-pipeline-lifecycle.md.json",
+        "fields": [
+          "consumers"
+        ]
+      },
+      {
+        "path": "docs/_legacy-source/ROADMAP.md",
+        "fields": [
+          "consumers"
+        ]
+      },
+      {
+        "path": "docs/site/understand/codex-integration.md",
+        "fields": [
+          "indirectExecutableConsumers",
+          "consumers"
+        ]
+      },
+      {
+        "path": "docs/site/reference/workflows.md",
+        "fields": [
+          "indirectExecutableConsumers",
+          "consumers",
+          "executableConsumers",
+          "sha256"
+        ]
+      },
+      {
+        "path": "docs/site/reference/configuration-errors.md",
+        "fields": [
+          "indirectExecutableConsumers",
+          "consumers",
+          "sha256"
+        ]
+      },
+      {
+        "path": "docs/blueprint/documentation-parity-contract.md",
+        "fields": [
+          "consumers"
+        ]
+      },
+      {
+        "path": "docs/site/reference/configuration-change-impact.md",
+        "fields": [
+          "indirectExecutableConsumers",
+          "consumers",
+          "executableConsumers"
+        ]
+      },
+      {
+        "path": "docs/site/decisions/README.md",
+        "fields": [
+          "indirectExecutableConsumers",
+          "consumers"
+        ]
+      },
+      {
+        "path": "docs/site/reference/lint-policy.md",
+        "fields": [
+          "indirectExecutableConsumers",
+          "consumers"
+        ]
+      },
+      {
+        "path": "docs/_legacy-source/operations/ax41-rollout.md",
+        "fields": [
+          "consumers"
+        ]
+      },
+      {
+        "path": "docs/site/extend/plugin-catalogue/kubeclaw.case-study.md",
+        "fields": [
+          "indirectExecutableConsumers",
+          "consumers",
+          "sha256"
+        ]
+      },
+      {
+        "path": "docs/review/branch-cleanup-20260912/branches.json",
+        "fields": [
+          "consumers"
+        ]
+      },
+      {
+        "path": "docs/site/reference/worker-profiles-and-roles.md",
+        "fields": [
+          "indirectExecutableConsumers",
+          "consumers",
+          "sha256"
+        ]
+      },
+      {
+        "path": "docs/site/extend/plugin-catalogue/kubeclaw.axe.md",
+        "fields": [
+          "indirectExecutableConsumers",
+          "consumers",
+          "sha256"
+        ]
+      },
+      {
+        "path": "docs/_legacy-source/runbooks/prism-recovery.md",
+        "fields": [
+          "consumers"
+        ]
+      },
+      {
+        "path": "docs/site/extend/README.md",
+        "fields": [
+          "indirectExecutableConsumers",
+          "consumers",
+          "executableConsumers",
+          "sha256"
+        ]
+      },
+      {
+        "path": "docs/site/understand/communication.md",
+        "fields": [
+          "indirectExecutableConsumers",
+          "consumers",
+          "sha256"
+        ]
+      },
+      {
+        "path": "docs/blueprint/AP08-plan.md",
+        "fields": [
+          "consumers"
+        ]
+      },
+      {
+        "path": "docs/site/extend/contracts.md",
+        "fields": [
+          "indirectExecutableConsumers",
+          "consumers",
+          "sha256"
+        ]
+      },
+      {
+        "path": "docs/site/extend/nova.md",
+        "fields": [
+          "indirectExecutableConsumers",
+          "consumers",
+          "sha256"
+        ]
+      },
+      {
+        "path": "docs/site/understand/platform-and-operations.md",
+        "fields": [
+          "indirectExecutableConsumers",
+          "consumers",
+          "executableConsumers",
+          "sha256"
+        ]
+      },
+      {
+        "path": "docs/site/extend/examples/minimal-stage/tests/stage.test.mjs",
+        "fields": [
+          "consumers"
+        ]
+      },
+      {
+        "path": "docs/site/use/demo-delivery.md",
+        "fields": [
+          "indirectExecutableConsumers",
+          "consumers"
+        ]
+      },
+      {
+        "path": "docs/site/extend/plugin-catalogue/kubeclaw.telemetry-observer.md",
+        "fields": [
+          "indirectExecutableConsumers",
+          "consumers",
+          "sha256"
+        ]
+      },
+      {
+        "path": "docs/site/understand/prism-data.md",
+        "fields": [
+          "indirectExecutableConsumers",
+          "consumers",
+          "sha256"
+        ]
+      },
+      {
+        "path": "docs/site/extend/plugin-catalogue/kubeclaw.http.md",
+        "fields": [
+          "indirectExecutableConsumers",
+          "consumers",
+          "sha256"
+        ]
+      },
+      {
+        "path": "docs/site/reference/generated-documentation-map.json",
+        "fields": [
+          "consumers",
+          "sha256"
+        ]
+      },
+      {
+        "path": "docs/blueprint/AP08-catalogue-guidance.json",
+        "fields": [
+          "consumers"
+        ]
+      },
+      {
+        "path": "docs/site/reference/verification-commands.md",
+        "fields": [
+          "indirectExecutableConsumers",
+          "consumers",
+          "sha256"
+        ]
+      },
+      {
+        "path": "docs/site/extend/plugin-catalogue/kubeclaw.visual.md",
+        "fields": [
+          "indirectExecutableConsumers",
+          "consumers",
+          "sha256"
+        ]
+      },
+      {
+        "path": "docs/site/understand/README.md",
+        "fields": [
+          "indirectExecutableConsumers",
+          "consumers",
+          "sha256"
+        ]
+      },
+      {
+        "path": "docs/site/reference/buster-runtime-configuration.md",
+        "fields": [
+          "indirectExecutableConsumers",
+          "consumers"
+        ]
+      },
+      {
+        "path": "docs/site/extend/examples/minimal-stage/schemas/config.schema.json",
+        "fields": [
+          "consumers"
+        ]
+      },
+      {
+        "path": "docs/site/reference/project-pipeline-publication.md",
+        "fields": [
+          "indirectExecutableConsumers",
+          "consumers",
+          "executableConsumers",
+          "sha256"
+        ]
+      },
+      {
+        "path": "docs/blueprint/generated/ap09-catalogue.json",
+        "fields": [
+          "consumers",
+          "executableConsumers",
+          "sha256"
+        ]
+      },
+      {
+        "path": "docs/site/use/workflows/buster-suite.md",
+        "fields": [
+          "indirectExecutableConsumers",
+          "consumers",
+          "sha256"
+        ]
+      },
+      {
+        "path": "docs/site/extend/plugin-catalogue/kubeclaw-prism.md",
+        "fields": [
+          "indirectExecutableConsumers",
+          "consumers",
+          "sha256"
+        ]
+      },
+      {
+        "path": "docs/README.md",
+        "fields": [
+          "consumers"
+        ]
+      },
+      {
+        "path": "docs/generated/inventory/secret-setup.json",
+        "fields": [
+          "consumers"
+        ]
+      },
+      {
+        "path": "docs/blueprint/AP09-completeness-audit.md",
+        "fields": [
+          "consumers",
+          "executableConsumers"
+        ]
+      },
+      {
+        "path": "docs/site/reference/helm-values.md",
+        "fields": [
+          "indirectExecutableConsumers",
+          "consumers",
+          "executableConsumers",
+          "sha256"
+        ]
+      },
+      {
+        "path": "docs/site/extend/examples/minimal-stage/package.json",
+        "fields": [
+          "consumers"
+        ]
+      },
+      {
+        "path": "docs/site/status/acceptance.md",
+        "fields": [
+          "indirectExecutableConsumers",
+          "consumers",
+          "sha256"
+        ]
+      },
+      {
+        "path": "docs/generated/inventory/configuration-values.json",
+        "fields": [
+          "consumers",
+          "executableConsumers"
+        ]
+      },
+      {
+        "path": "docs/config/documentation-parity/operators/running-the-pipeline.md.json",
+        "fields": [
+          "consumers"
+        ]
+      },
+      {
+        "path": "docs/site/decisions/acceptance.md",
+        "fields": [
+          "indirectExecutableConsumers",
+          "consumers"
+        ]
+      },
+      {
+        "path": "docs/site/extend/plugin-catalogue/kubeclaw.network-http.md",
+        "fields": [
+          "indirectExecutableConsumers",
+          "consumers",
+          "sha256"
+        ]
+      },
+      {
+        "path": "docs/blueprint/AP08-audit-ledger.json",
+        "fields": [
+          "consumers"
+        ]
+      },
+      {
+        "path": "docs/blueprint/ap01-baseline/README.md",
+        "fields": [
+          "sha256"
+        ]
+      },
+      {
+        "path": "docs/site/extend/plugin-catalogue/kubeclaw.transport-publisher.md",
+        "fields": [
+          "indirectExecutableConsumers",
+          "consumers",
+          "sha256"
+        ]
+      },
+      {
+        "path": "docs/_legacy-source/architecture/prism-openclaw-runtime.md",
+        "fields": [
+          "consumers"
+        ]
+      },
+      {
+        "path": "docs/site/extend/plugin-catalogue/kubeclaw.demo-handoff.md",
+        "fields": [
+          "indirectExecutableConsumers",
+          "consumers",
+          "sha256"
+        ]
+      },
+      {
+        "path": "docs/site/use/workflows/wait-resume.md",
+        "fields": [
+          "indirectExecutableConsumers",
+          "consumers",
+          "sha256"
+        ]
+      },
+      {
+        "path": "docs/site/use/operate.md",
+        "fields": [
+          "indirectExecutableConsumers",
+          "consumers",
+          "executableConsumers",
+          "sha256"
+        ]
+      },
+      {
+        "path": "docs/site/extend/plugin-catalogue/kubeclaw.pipeline-review.md",
+        "fields": [
+          "indirectExecutableConsumers",
+          "consumers",
+          "sha256"
+        ]
+      },
+      {
+        "path": "docs/site/use/prism-studio.md",
+        "fields": [
+          "indirectExecutableConsumers",
+          "consumers",
+          "executableConsumers",
+          "sha256"
+        ]
+      },
+      {
+        "path": "docs/site/extend/plugin-catalogue/kubeclaw.project-summary.md",
+        "fields": [
+          "indirectExecutableConsumers",
+          "consumers",
+          "sha256"
+        ]
+      },
+      {
+        "path": "docs/config/documentation-tree-classification.json",
+        "fields": [
+          "consumers",
+          "sha256"
+        ]
+      },
+      {
+        "path": "docs/site/extend/plugin-catalogue/kubeclaw.openapi.md",
+        "fields": [
+          "indirectExecutableConsumers",
+          "consumers",
+          "sha256"
+        ]
+      },
+      {
+        "path": "docs/site/extend/plugin-catalogue/kubeclaw.human-approval.md",
+        "fields": [
+          "indirectExecutableConsumers",
+          "consumers",
+          "sha256"
+        ]
+      },
+      {
+        "path": "docs/config/documentation-parity/operators/external-pipeline-plugins.md.json",
+        "fields": [
+          "consumers"
+        ]
+      },
+      {
+        "path": "docs/site/extend/platform/buster.md",
+        "fields": [
+          "indirectExecutableConsumers",
+          "consumers"
+        ]
+      },
+      {
+        "path": "docs/site/reference/lint-rules.md",
+        "fields": [
+          "indirectExecutableConsumers",
+          "consumers"
+        ]
+      },
+      {
+        "path": "docs/config/documentation-parity/operators/plugin-observers.md.json",
+        "fields": [
+          "consumers"
+        ]
+      },
+      {
+        "path": "docs/site/extend/plugin-catalogue/kubeclaw.notification-observer.md",
+        "fields": [
+          "indirectExecutableConsumers",
+          "consumers",
+          "sha256"
+        ]
+      },
+      {
+        "path": "docs/site/reference/endpoints.md",
+        "fields": [
+          "indirectExecutableConsumers",
+          "consumers"
+        ]
+      },
+      {
+        "path": "docs/generated/inventory/configuration-runtime-inputs.json",
+        "fields": [
+          "consumers"
+        ]
+      },
+      {
+        "path": "docs/site/reference/service-routing.md",
+        "fields": [
+          "indirectExecutableConsumers",
+          "consumers",
+          "executableConsumers"
+        ]
+      },
+      {
+        "path": "docs/site/reference/secrets.md",
+        "fields": [
+          "indirectExecutableConsumers",
+          "consumers"
+        ]
+      },
+      {
+        "path": "docs/blueprint/07-documentation-quality-standard.md",
+        "fields": [
+          "consumers",
+          "executableConsumers"
+        ]
+      },
+      {
+        "path": "docs/site/understand/deployment-and-trust.md",
+        "fields": [
+          "indirectExecutableConsumers",
+          "consumers",
+          "sha256"
+        ]
+      },
+      {
+        "path": "docs/blueprint/generated/ap08-extension-inventory.md",
+        "fields": [
+          "consumers"
+        ]
+      },
+      {
+        "path": "docs/site/decisions/runtime-and-operations.md",
+        "fields": [
+          "indirectExecutableConsumers",
+          "consumers"
+        ]
+      },
+      {
+        "path": "docs/site/product-surfaces.md",
+        "fields": [
+          "indirectExecutableConsumers",
+          "consumers",
+          "sha256"
+        ]
+      },
+      {
+        "path": "docs/site/extend/plugin-catalogue/kubeclaw.api-flow.md",
+        "fields": [
+          "indirectExecutableConsumers",
+          "consumers",
+          "sha256"
+        ]
+      },
+      {
+        "path": "docs/site/extend/plugin-catalogue/kubeclaw.runtime-dispatch.md",
+        "fields": [
+          "indirectExecutableConsumers",
+          "consumers",
+          "sha256"
+        ]
+      },
+      {
+        "path": "docs/site/extend/plugin-catalogue/kubeclaw.buster-quality-gate.md",
+        "fields": [
+          "indirectExecutableConsumers",
+          "consumers",
+          "sha256"
+        ]
+      },
+      {
+        "path": "docs/site/use/plugins.md",
+        "fields": [
+          "indirectExecutableConsumers",
+          "consumers",
+          "executableConsumers",
+          "sha256"
+        ]
+      },
+      {
+        "path": "docs/site/understand/prism.md",
+        "fields": [
+          "indirectExecutableConsumers",
+          "consumers",
+          "sha256"
+        ]
+      },
+      {
+        "path": "docs/site/reference/configuration-precedence.md",
+        "fields": [
+          "indirectExecutableConsumers",
+          "consumers"
+        ]
+      },
+      {
+        "path": "docs/architecture/pipeline-test-gate-phase-9-parity-report.md",
+        "fields": [
+          "consumers"
+        ]
+      },
+      {
+        "path": "docs/site/understand/prism-runtime.md",
+        "fields": [
+          "indirectExecutableConsumers",
+          "consumers",
+          "sha256"
+        ]
+      },
+      {
+        "path": "docs/site/use/workflows/wait-resume/platform.template.json",
+        "fields": [
+          "consumers",
+          "executableConsumers"
+        ]
+      },
+      {
+        "path": "docs/site/understand/components-and-authority.md",
+        "fields": [
+          "indirectExecutableConsumers",
+          "consumers",
+          "sha256"
+        ]
+      },
+      {
+        "path": "docs/site/extend/lint.md",
+        "fields": [
+          "indirectExecutableConsumers",
+          "consumers",
+          "sha256"
+        ]
+      },
+      {
+        "path": "docs/site/use/README.md",
+        "fields": [
+          "indirectExecutableConsumers",
+          "consumers",
+          "executableConsumers"
+        ]
+      },
+      {
+        "path": "docs/site/extend/plugin-catalogue/kubeclaw.redis-transport.md",
+        "fields": [
+          "indirectExecutableConsumers",
+          "consumers",
+          "sha256"
+        ]
+      },
+      {
+        "path": "docs/site/decisions/test-gate.md",
+        "fields": [
+          "indirectExecutableConsumers",
+          "consumers"
+        ]
+      },
+      {
+        "path": "docs/site/extend/examples/minimal-stage/schemas/input.schema.json",
+        "fields": [
+          "consumers"
+        ]
+      },
+      {
+        "path": "docs/site/understand/pipeline-dependencies.md",
+        "fields": [
+          "indirectExecutableConsumers",
+          "consumers",
+          "sha256"
+        ]
+      },
+      {
+        "path": "docs/site/extend/plugin-catalogue/README.md",
+        "fields": [
+          "indirectExecutableConsumers",
+          "consumers",
+          "sha256"
+        ]
+      },
+      {
+        "path": "docs/site/extend/plugin-catalogue/kubeclaw.junit-report.md",
+        "fields": [
+          "indirectExecutableConsumers",
+          "consumers",
+          "sha256"
+        ]
+      },
+      {
+        "path": "docs/site/reference/plugin-configuration.md",
+        "fields": [
+          "indirectExecutableConsumers",
+          "consumers",
+          "executableConsumers",
+          "sha256"
+        ]
+      },
+      {
+        "path": "docs/generated/inventory/deploy-script.json",
+        "fields": [
+          "consumers",
+          "sha256"
+        ]
+      },
+      {
+        "path": "docs/site/use/workflows/wait-resume/approval.pipeline.json",
+        "fields": [
+          "consumers"
+        ]
+      },
+      {
+        "path": "docs/generated/inventory/operator-tasks.json",
+        "fields": [
+          "consumers",
+          "sha256"
+        ]
+      },
+      {
+        "path": "docs/site/use/worker-trust.md",
+        "fields": [
+          "indirectExecutableConsumers",
+          "consumers",
+          "executableConsumers",
+          "sha256"
+        ]
+      },
+      {
+        "path": "docs/site/understand/data-and-state.md",
+        "fields": [
+          "indirectExecutableConsumers",
+          "consumers",
+          "executableConsumers",
+          "sha256"
+        ]
+      },
+      {
+        "path": "docs/operator-tasks.json",
+        "fields": [
+          "consumers",
+          "executableConsumers",
+          "sha256"
+        ]
+      },
+      {
+        "path": "docs/blueprint/generated/completeness-report.md",
+        "fields": [
+          "sha256"
+        ]
+      },
+      {
+        "path": "docs/review/remediation/implementation/studio-service.md",
+        "fields": [
+          "sha256"
+        ]
+      },
+      {
+        "path": "docs/site/extend/plugin-catalogue/kubeclaw.delivery-lint.md",
+        "fields": [
+          "indirectExecutableConsumers",
+          "consumers",
+          "sha256"
+        ]
+      },
+      {
+        "path": "docs/site/extend/plugin-catalogue/kubeclaw.review.md",
+        "fields": [
+          "indirectExecutableConsumers",
+          "consumers",
+          "sha256"
+        ]
+      },
+      {
+        "path": "docs/site/extend/plugin-catalogue/kubeclaw.command-runner.md",
+        "fields": [
+          "indirectExecutableConsumers",
+          "consumers",
+          "sha256"
+        ]
+      },
+      {
+        "path": "docs/site/reference/lint-policy-generated.md",
+        "fields": [
+          "indirectExecutableConsumers",
+          "consumers",
+          "sha256"
+        ]
+      },
+      {
+        "path": "docs/site/reference/documentation-governance.md",
+        "fields": [
+          "indirectExecutableConsumers",
+          "consumers",
+          "sha256"
+        ]
+      },
+      {
+        "path": "docs/site/understand/buster.md",
+        "fields": [
+          "indirectExecutableConsumers",
+          "consumers",
+          "sha256"
+        ]
+      },
+      {
+        "path": "docs/site/extend/plugin-catalogue/kubeclaw.direct-command.md",
+        "fields": [
+          "indirectExecutableConsumers",
+          "consumers",
+          "sha256"
+        ]
+      },
+      {
+        "path": "docs/site/use/workflows/examples/request-trace-redis-unavailable.json",
+        "fields": [
+          "consumers"
+        ]
+      },
+      {
+        "path": "docs/_legacy-source/reference/helm-values.md",
+        "fields": [
+          "consumers"
+        ]
+      },
+      {
+        "path": "docs/site/use/install.md",
+        "fields": [
+          "indirectExecutableConsumers",
+          "consumers",
+          "executableConsumers",
+          "sha256"
+        ]
+      },
+      {
+        "path": "docs/site/extend/plugin-catalogue/kubeclaw.lint.md",
+        "fields": [
+          "indirectExecutableConsumers",
+          "consumers",
+          "executableConsumers",
+          "sha256"
+        ]
+      },
+      {
+        "path": "docs/site/decisions/core-and-plugins.md",
+        "fields": [
+          "indirectExecutableConsumers",
+          "consumers"
+        ]
+      },
+      {
+        "path": "docs/blueprint/AP09-acceptance-fixtures.json",
+        "fields": [
+          "consumers",
+          "executableConsumers",
+          "sha256"
+        ]
+      },
+      {
+        "path": "docs/site/reference/configuration-compatibility.md",
+        "fields": [
+          "indirectExecutableConsumers",
+          "consumers",
+          "sha256"
+        ]
+      },
+      {
+        "path": "docs/architecture/pipeline-test-gate-suite-migration-playbook.md",
+        "fields": [
+          "consumers"
+        ]
+      },
+      {
+        "path": "docs/generated/inventory/configuration-schemas.json",
+        "fields": [
+          "consumers",
+          "executableConsumers",
+          "sha256"
+        ]
+      },
+      {
+        "path": "docs/site/understand/echo.md",
+        "fields": [
+          "indirectExecutableConsumers",
+          "consumers"
+        ]
+      },
+      {
+        "path": "docs/site/decisions/echo.md",
+        "fields": [
+          "indirectExecutableConsumers",
+          "consumers"
+        ]
+      },
+      {
+        "path": "docs/architecture/pipeline-test-gate-unit-baseline.md",
+        "fields": [
+          "consumers"
+        ]
+      },
+      {
+        "path": "docs/site/status/roadmap.md",
+        "fields": [
+          "indirectExecutableConsumers",
+          "consumers",
+          "sha256"
+        ]
+      },
+      {
+        "path": "docs/site/reference/buster-suites.md",
+        "fields": [
+          "indirectExecutableConsumers",
+          "consumers",
+          "executableConsumers",
+          "sha256"
+        ]
+      },
+      {
+        "path": "docs/site/reference/platform-surfaces-generated.md",
+        "fields": [
+          "indirectExecutableConsumers",
+          "consumers",
+          "executableConsumers",
+          "sha256"
+        ]
+      },
+      {
+        "path": "docs/config/documentation-tree-baseline.json",
+        "fields": [
+          "consumers"
+        ]
+      },
+      {
+        "path": "docs/site/extend/plugin-catalogue/kubeclaw.artifact-store.md",
+        "fields": [
+          "indirectExecutableConsumers",
+          "consumers",
+          "sha256"
+        ]
+      },
+      {
+        "path": "docs/site/extend/plugin-catalogue/kubeclaw.git-workspace.md",
+        "fields": [
+          "indirectExecutableConsumers",
+          "consumers",
+          "sha256"
+        ]
+      },
+      {
+        "path": "docs/site/use/workflows/kubernetes-fixture.md",
+        "fields": [
+          "indirectExecutableConsumers",
+          "consumers"
+        ]
+      },
+      {
+        "path": "docs/site/use/workflows/examples/request-trace-success.json",
+        "fields": [
+          "consumers"
+        ]
+      },
+      {
+        "path": "docs/site/extend/examples/minimal-stage/plugin.json",
+        "fields": [
+          "consumers"
+        ]
+      },
+      {
+        "path": "docs/site/extend/plugin-catalogue/kubeclaw.blueprint-sync.md",
+        "fields": [
+          "indirectExecutableConsumers",
+          "consumers",
+          "sha256"
+        ]
+      },
+      {
+        "path": "docs/blueprint/05-decision-record-catalogue.md",
+        "fields": [
+          "consumers"
+        ]
+      },
+      {
+        "path": "docs/status/open-issues.json",
+        "fields": [
+          "consumers",
+          "executableConsumers",
+          "sha256"
+        ]
+      },
+      {
+        "path": "docs/review/evidence/litellm-pinned-provenance.json",
+        "fields": [
+          "consumers"
+        ]
+      },
+      {
+        "path": "docs/site/extend/plugin-catalogue/kubeclaw.remote-test-gate.md",
+        "fields": [
+          "indirectExecutableConsumers",
+          "consumers",
+          "sha256"
+        ]
+      },
+      {
+        "path": "docs/architecture/pipeline-test-gate-suite-migration-status.json",
+        "fields": [
+          "consumers"
+        ]
+      },
+      {
+        "path": "docs/blueprint/AP03-progress.md",
+        "fields": [
+          "sha256"
+        ]
+      },
+      {
+        "path": "docs/site/extend/plugin-catalogue/kubeclaw.security-providers.md",
+        "fields": [
+          "indirectExecutableConsumers",
+          "consumers",
+          "sha256"
+        ]
+      },
+      {
+        "path": "docs/site/extend/plugin-catalogue/kubeclaw.telemetry-store.md",
+        "fields": [
+          "indirectExecutableConsumers",
+          "consumers",
+          "sha256"
+        ]
+      },
+      {
+        "path": "docs/site/extend/plugin-catalogue/kubeclaw.playwright.md",
+        "fields": [
+          "indirectExecutableConsumers",
+          "consumers",
+          "sha256"
+        ]
+      },
+      {
+        "path": "docs/config/documentation-parity/operators/README.md.json",
+        "fields": [
+          "consumers"
+        ]
+      },
+      {
+        "path": "docs/site/understand/buster-namespace-controller.md",
+        "fields": [
+          "indirectExecutableConsumers",
+          "consumers",
+          "sha256"
+        ]
+      },
+      {
+        "path": "docs/site/use/quickstart.md",
+        "fields": [
+          "indirectExecutableConsumers",
+          "consumers",
+          "executableConsumers",
+          "sha256"
+        ]
+      },
+      {
+        "path": "docs/site/extend/effectful-plugin.md",
+        "fields": [
+          "indirectExecutableConsumers",
+          "consumers"
+        ]
+      },
+      {
+        "path": "docs/site/extend/plugin-catalogue/kubeclaw.agent-observability.md",
+        "fields": [
+          "indirectExecutableConsumers",
+          "consumers",
+          "sha256"
+        ]
+      },
+      {
+        "path": "docs/_legacy-source/deployment/continuous-gitops.md",
+        "fields": [
+          "consumers"
+        ]
+      },
+      {
+        "path": "docs/status/finding-identities.json",
+        "fields": [
+          "consumers",
+          "sha256"
+        ]
+      },
+      {
+        "path": "docs/blueprint/generated/migration-ledger-summary.md",
+        "fields": [
+          "sha256"
+        ]
+      },
+      {
+        "path": "docs/site/extend/plugin-catalogue/kubeclaw.secret-resolver.md",
+        "fields": [
+          "indirectExecutableConsumers",
+          "consumers",
+          "sha256"
+        ]
+      },
+      {
+        "path": "docs/generated/inventory/helm-values.json",
+        "fields": [
+          "consumers",
+          "sha256"
+        ]
+      },
+      {
+        "path": "docs/site/decisions/implementation.md",
+        "fields": [
+          "indirectExecutableConsumers",
+          "consumers"
+        ]
+      },
+      {
+        "path": "docs/config/documentation-parity/operators/final-preview-tailscale.md.json",
+        "fields": [
+          "consumers"
+        ]
+      },
+      {
+        "path": "docs/blueprint/documentation-work-plan.md",
+        "fields": [
+          "consumers",
+          "executableConsumers"
+        ]
+      },
+      {
+        "path": "docs/site/reference/capabilities.md",
+        "fields": [
+          "indirectExecutableConsumers",
+          "consumers",
+          "executableConsumers",
+          "sha256"
+        ]
+      },
+      {
+        "path": "docs/site/understand/request-to-result.md",
+        "fields": [
+          "indirectExecutableConsumers",
+          "consumers"
+        ]
+      },
+      {
+        "path": "docs/site/understand/plugin-runtime.md",
+        "fields": [
+          "indirectExecutableConsumers",
+          "consumers",
+          "sha256"
+        ]
+      },
+      {
+        "path": "docs/site/reference/pipeline-platform.md",
+        "fields": [
+          "indirectExecutableConsumers",
+          "consumers"
+        ]
+      },
+      {
+        "path": "docs/site/extend/plugin-catalogue/kubeclaw.wait-store.md",
+        "fields": [
+          "indirectExecutableConsumers",
+          "consumers",
+          "sha256"
+        ]
+      },
+      {
+        "path": "docs/_legacy-source/operations/automatic-runtime-deployments.md",
+        "fields": [
+          "consumers"
+        ]
+      },
+      {
+        "path": "docs/site/extend/plugin-catalogue/kubeclaw-ops.md",
+        "fields": [
+          "indirectExecutableConsumers",
+          "consumers",
+          "sha256"
+        ]
+      },
+      {
+        "path": "docs/site/extend/plugin-catalogue/kubeclaw-agent-observer.md",
+        "fields": [
+          "indirectExecutableConsumers",
+          "consumers",
+          "sha256"
+        ]
+      },
+      {
+        "path": "docs/site/use/workflows/wait-resume/signal.template.json",
+        "fields": [
+          "consumers"
+        ]
+      },
+      {
+        "path": "docs/site/extend/plugin-catalogue/kubeclaw.architecture-validator.md",
+        "fields": [
+          "indirectExecutableConsumers",
+          "consumers",
+          "sha256"
+        ]
+      },
+      {
+        "path": "docs/site/understand/nova-core.md",
+        "fields": [
+          "indirectExecutableConsumers",
+          "consumers",
+          "sha256"
+        ]
+      },
+      {
+        "path": "docs/blueprint/AP09-acceptance-contract.md",
+        "fields": [
+          "consumers",
+          "executableConsumers",
+          "sha256"
+        ]
+      },
+      {
+        "path": "docs/generated/inventory/plugin-system.json",
+        "fields": [
+          "indirectExecutableConsumers",
+          "consumers"
+        ]
+      },
+      {
+        "path": "docs/site/extend/plugin-catalogue/kubeclaw.preflight-contract.md",
+        "fields": [
+          "indirectExecutableConsumers",
+          "consumers",
+          "sha256"
+        ]
+      },
+      {
+        "path": "docs/site/README.md",
+        "fields": [
+          "indirectExecutableConsumers",
+          "consumers",
+          "executableConsumers",
+          "sha256"
+        ]
+      },
+      {
+        "path": "docs/site/extend/plugin-catalogue/kubeclaw.container-build.md",
+        "fields": [
+          "indirectExecutableConsumers",
+          "consumers",
+          "sha256"
+        ]
+      },
+      {
+        "path": "docs/site/use/workflows/examples/buster-fixture-matrix-report.pipeline.json",
+        "fields": [
+          "consumers"
+        ]
+      },
+      {
+        "path": "docs/site/reference/pipeline-definition.md",
+        "fields": [
+          "indirectExecutableConsumers",
+          "consumers",
+          "sha256"
+        ]
+      },
+      {
+        "path": "docs/_legacy-source/operations/redis-migration.md",
+        "fields": [
+          "consumers"
+        ]
+      },
+      {
+        "path": "docs/_legacy-source/ops/ops-pod.md",
+        "fields": [
+          "consumers"
+        ]
+      },
+      {
+        "path": "docs/site/extend/plugin-catalogue/kubeclaw.implementation-agent.md",
+        "fields": [
+          "indirectExecutableConsumers",
+          "consumers",
+          "sha256"
+        ]
+      },
+      {
+        "path": "docs/site/understand/openclaw.md",
+        "fields": [
+          "indirectExecutableConsumers",
+          "consumers"
+        ]
+      },
+      {
+        "path": "docs/site/extend/plugin-catalogue/kubeclaw.lighthouse.md",
+        "fields": [
+          "indirectExecutableConsumers",
+          "consumers",
+          "sha256"
+        ]
+      },
+      {
+        "path": "docs/architecture/pipeline-test-gate-suite-migration-status.md",
+        "fields": [
+          "consumers"
+        ]
+      },
+      {
+        "path": "docs/site/extend/platform/prism.md",
+        "fields": [
+          "indirectExecutableConsumers",
+          "consumers"
+        ]
+      },
+      {
+        "path": "docs/blueprint/generated/ap08-repeat-review-scope.json",
+        "fields": [
+          "consumers",
+          "sha256"
+        ]
+      },
+      {
+        "path": "docs/config/platform-surface-map.json",
+        "fields": [
+          "consumers",
+          "sha256"
+        ]
+      },
+      {
+        "path": "docs/site/use/capacity.md",
+        "fields": [
+          "indirectExecutableConsumers",
+          "consumers",
+          "executableConsumers",
+          "sha256"
+        ]
+      },
+      {
+        "path": "docs/blueprint/AP09-execution-plan.md",
+        "fields": [
+          "consumers",
+          "executableConsumers"
+        ]
+      },
+      {
+        "path": "docs/site/reference/nova-project.md",
+        "fields": [
+          "indirectExecutableConsumers",
+          "consumers"
+        ]
+      },
+      {
+        "path": "docs/site/use/diagnose.md",
+        "fields": [
+          "indirectExecutableConsumers",
+          "consumers",
+          "executableConsumers",
+          "sha256"
+        ]
+      },
+      {
+        "path": "docs/site/reference/buster-error-codes.md",
+        "fields": [
+          "indirectExecutableConsumers",
+          "consumers",
+          "executableConsumers",
+          "sha256"
+        ]
+      },
+      {
+        "path": "docs/site/reference/api-object-updates.md",
+        "fields": [
+          "indirectExecutableConsumers",
+          "consumers"
+        ]
+      },
+      {
+        "path": "docs/site/reference/cli.md",
+        "fields": [
+          "indirectExecutableConsumers",
+          "consumers",
+          "sha256"
+        ]
+      }
+    ]
+  },
+  "limits": "Tree classes and observable read edges only. No content/runtime/acceptance promotion."
+}

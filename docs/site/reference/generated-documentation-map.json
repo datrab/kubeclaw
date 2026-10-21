@@ -2890,7 +2890,7 @@
       "audience": "platform operator, Buster maintainer, fixture author",
       "owner": "buster",
       "appliesTo": "Kubernetes-backed Buster fixtures, dedicated demo credentials and preview retention",
-      "lastVerified": "local source and contract inspection on 2026-10-10",
+      "lastVerified": "local source and contract inspection on 2026-10-10; diagram provisioning/cleanup boundaries rechecked against the same pinned source on 2026-10-21; no live cluster observation",
       "sourceDependencies": [
         "charts/kubeclaw/templates/buster-namespace-lease-crd.yaml",
         "charts/kubeclaw/templates/buster-namespace-controller.yaml",
@@ -3173,7 +3173,7 @@
       "audience": "architecture reader, platform operator, maintainer, security reviewer",
       "owner": "platform architecture and operations",
       "appliesTo": "current Kubernetes platform and its supported deployment paths",
-      "lastVerified": "2026-09-21",
+      "lastVerified": "2026-09-21; diagram mirror/storage ownership boundaries rechecked against the same pinned source on 2026-10-21; no live platform result",
       "sourceDependencies": [
         "scripts/deploy.sh",
         "scripts/platform-services.mjs",
@@ -3219,7 +3219,7 @@
       "audience": "Prism developer, platform engineer, operator, and incident responder",
       "owner": "Prism maintainers",
       "appliesTo": "prism.design-document.v1, the current Prism services, and the Prism PostgreSQL schema",
-      "lastVerified": "source, schema, migration, chart, and test inspection on 2026-09-19; backup behavior checked against the cited implementation on 2026-10-17; no live restore result is established",
+      "lastVerified": "source, schema, migration, chart, and test inspection on 2026-09-19; backup behavior checked against the cited implementation on 2026-10-17; no live restore result is established; diagram corpus/generation boundaries rechecked against the same pinned source on 2026-10-21",
       "sourceDependencies": [
         "contracts/prism/v1",
         "skills/prism",
