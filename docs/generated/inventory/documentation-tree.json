@@ -25797,6 +25797,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "PR13-SESSION-HANDOFF.md",
+          "token": "docs/blueprint/AP09-acceptance-fixtures.json",
+          "inputUse": false
+        },
+        {
           "sourcePath": "scripts/check-capability-drift-mutations.mjs",
           "token": "docs/blueprint/AP09-acceptance-fixtures.json",
           "inputUse": true
@@ -45911,6 +45916,11 @@
           "sourcePath": "docs/config/documentation-tree-classification.json",
           "token": "docs/blueprint/acceptance-evidence/diagram-boundaries-20261021/checked-observations.json",
           "inputUse": false
+        },
+        {
+          "sourcePath": "handoffs/pr13-reset-20261021/diagram-services-review.md",
+          "token": "docs/blueprint/acceptance-evidence/diagram-boundaries-20261021/checked-observations.json",
+          "inputUse": false
         }
       ],
       "executableConsumers": [],
@@ -53212,7 +53222,7 @@
         "scripts/tests/docs-source-freshness.test.mjs"
       ],
       "indirectExecutableConsumers": [],
-      "sha256": "6ce70a854e9adefb5928f738c87d0ba659ab64086c46a90dd4dc653e63313a55"
+      "sha256": "32c8d746a46ffd3a004c1bf905a7117206694aaa38216215a9d3503a401242aa"
     },
     {
       "path": "docs/blueprint/documentation-parity-contract.md",
@@ -53436,7 +53446,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "0b6843cc3e0de3a205ef525ab5819ba4529cf80a51d430b3ae59ca40605addb7"
+      "sha256": "03fc4be52c272fbc2a5ec97d937826d941571f1f47c4af262f24f3ae2e6f296a"
     },
     {
       "path": "docs/blueprint/generated/ap09-catalogue.json",
@@ -53538,6 +53548,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "PR13-SESSION-HANDOFF.md",
+          "token": "docs/blueprint/generated/ap09-catalogue.json",
+          "inputUse": false
+        },
+        {
           "sourcePath": "scripts/check-ap09-acceptance-contract.mjs",
           "token": "docs/blueprint/generated/ap09-catalogue.json",
           "inputUse": false
@@ -53597,7 +53612,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "9ae9cbf4aad4fa94ef5657fb2892a1683426eca8cf809cb93503ddd166af541e"
+      "sha256": "14233b431c00832455aebce9ec7ba479ddfdb5482d4884e099c5db435daf1783"
     },
     {
       "path": "docs/blueprint/generated/completeness.json",
@@ -53641,7 +53656,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "f4e1ed1e4596a1b697e16b039a76656149082b451a0d71cc4272886e2df737a6"
+      "sha256": "f69ed960e1ffa21ea1b737bac9172b86bf38ace628f6f94d590e45cbb1cc8463"
     },
     {
       "path": "docs/blueprint/generated/migration-ledger-summary.md",
@@ -53680,7 +53695,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "7c91c9166e6f50be47536ab34df0e67bb77569c6941581869fcbc6213bcf17a4"
+      "sha256": "3ba81dc4e26cf1c955b5e1e2f096aa4b2abb6df67a2bce9bcc13fb917ab11e40"
     },
     {
       "path": "docs/blueprint/generated/migration-ledger.csv",
@@ -53734,7 +53749,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "f831eda3130c1429e898458a1e454b00658c5e480f1c6d6a67aac42f2f94b386"
+      "sha256": "b99845015ac6db9f781b52e656c2f5e0c4a9c895db67ec562df29a83cc7027ce"
     },
     {
       "path": "docs/blueprint/generated/platform-inventory.json",
@@ -54265,6 +54280,21 @@
           "inputUse": false
         },
         {
+          "sourcePath": "handoffs/pr13-reset-20261021/diagram-services-review.md",
+          "token": "docs/config/documentation-diagrams.json",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "handoffs/pr13-reset-20261021/diagram-system-review.md",
+          "token": "docs/config/documentation-diagrams.json",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "handoffs/pr13-reset-20261021/release-review.md",
+          "token": "docs/config/documentation-diagrams.json",
+          "inputUse": false
+        },
+        {
           "sourcePath": "scripts/docs-publication.mjs",
           "token": "docs/config/documentation-diagrams.json",
           "inputUse": false
@@ -54277,7 +54307,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "5d2ca5814fb4690900ad5548ed03db6e09bdaf6b410ca1d8e79027d51657b16c"
+      "sha256": "1e3bc507ad0a36dd66f2e4e7f0f9832964d16d574de59c0650da8c8149a64f40"
     },
     {
       "path": "docs/config/documentation-parity-batches.json",
@@ -57393,7 +57423,7 @@
         ".codex/handoffs/documentation-cloud/worktree-files.json"
       ],
       "indirectExecutableConsumers": [],
-      "sha256": "f268ba628fede7d1d5aa83ee157b1a398d9c915efb6cae5d504b04313529b7b8"
+      "sha256": "473648e3de3f6675f5497d28010c4e1ee35cabb984717635027e678b1c9a7511"
     },
     {
       "path": "docs/generated/reference/README.md",
@@ -172581,7 +172611,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "1a244aa03ff33b51f0e77fc184bb924d673da7910c435943930c80e0949ac68c"
+      "sha256": "291975654090a334cf66c0e903cdbda3f022deb7be46ef6b8c4422ada89c6126"
     },
     {
       "path": "docs/site/reference/glossary.md",
@@ -173143,6 +173173,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "handoffs/pr13-reset-20261021/release-review.md",
+          "token": "docs/site/reference/images-and-digests.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "scripts/docs-ap09-catalogue.mjs",
           "token": "docs/site/reference/images-and-digests.md",
           "inputUse": false
@@ -173162,7 +173197,7 @@
           ]
         }
       ],
-      "sha256": "84b012ccef95ef25e45b5912735c69b3dced00987ebeb02a7c599bb290236eeb"
+      "sha256": "dfcc2e2a347077f63fcdba51b3d020d129d6a923048a2158d41b157a8df89e24"
     },
     {
       "path": "docs/site/reference/lint-policy-generated.md",
@@ -177958,6 +177993,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "handoffs/pr13-reset-20261021/diagram-system-review.md",
+          "token": "docs/site/understand/components-and-authority.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "scripts/check-core-architecture-guides.mjs",
           "token": "docs/site/understand/components-and-authority.md",
           "inputUse": false
@@ -178353,6 +178393,11 @@
         },
         {
           "sourcePath": "docs/site/reference/glossary.md",
+          "token": "docs/site/understand/deployment-and-trust.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "handoffs/pr13-reset-20261021/diagram-system-review.md",
           "token": "docs/site/understand/deployment-and-trust.md",
           "inputUse": false
         },
@@ -179195,6 +179240,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "handoffs/pr13-reset-20261021/diagram-system-review.md",
+          "token": "docs/site/understand/pipeline-dependencies.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "scripts/docs-check.mjs",
           "token": "docs/site/understand/pipeline-dependencies.md",
           "inputUse": false
@@ -179372,6 +179422,11 @@
         },
         {
           "sourcePath": "docs/site/reference/generated-documentation-map.json",
+          "token": "docs/site/understand/platform-and-operations.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "handoffs/pr13-reset-20261021/diagram-services-review.md",
           "token": "docs/site/understand/platform-and-operations.md",
           "inputUse": false
         },
@@ -180106,7 +180161,7 @@
           ]
         }
       ],
-      "sha256": "74e962ea9b06da85ad1058458b07c9cce2b204f7f00896008dbaa7939c11f471"
+      "sha256": "630443355414a9021f00732446bad4bbfcd66fa6e209d452374a94b3b27f61db"
     },
     {
       "path": "docs/site/understand/request-state-recovery.md",
@@ -180592,6 +180647,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "handoffs/pr13-reset-20261021/diagram-services-review.md",
+          "token": "docs/site/understand/security-and-trust.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "scripts/check-platform-specialist-guides.mjs",
           "token": "docs/site/understand/security-and-trust.md",
           "inputUse": false
@@ -180778,6 +180838,11 @@
         },
         {
           "sourcePath": "docs/site/reference/generated-documentation-map.json",
+          "token": "docs/site/understand/telemetry.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "handoffs/pr13-reset-20261021/diagram-services-review.md",
           "token": "docs/site/understand/telemetry.md",
           "inputUse": false
         },
@@ -182031,6 +182096,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "handoffs/pr13-reset-20261021/release-review.md",
+          "token": "docs/site/use/install.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "README.md",
           "token": "docs/site/use/install.md",
           "inputUse": false
@@ -182113,7 +182183,7 @@
           ]
         }
       ],
-      "sha256": "3d82fe900e7987e5240bb66bb0994833a7e9e0b04a77e6322ab771fd55a4e9eb"
+      "sha256": "74afdd9ffd18bd7ceb507fd68d50eea068c040519433ab33543838649633c598"
     },
     {
       "path": "docs/site/use/maintenance.md",
@@ -182260,6 +182330,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "handoffs/pr13-reset-20261021/release-review.md",
+          "token": "docs/site/use/maintenance.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "README.md",
           "token": "docs/site/use/maintenance.md",
           "inputUse": false
@@ -182315,7 +182390,7 @@
           ]
         }
       ],
-      "sha256": "6d933108edebac9353a8282e6e4a5075be5dd1428c08013a232e1635eed28535"
+      "sha256": "d3650ac88018d32ca2c8a6137c5760e47777c82839c60ad34308dd03bf98f3dd"
     },
     {
       "path": "docs/site/use/operate.md",

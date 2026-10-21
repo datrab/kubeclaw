@@ -2159,7 +2159,7 @@
       "audience": "release maintainer, platform operator, developer",
       "owner": "documentation; release owners select artifacts and workload owners verify deployment",
       "appliesTo": "ten runtime and two Ops image slots, three separate role bundles, and named release/deployment readers",
-      "lastVerified": "2026-10-15; current source and local selection files checked; no registry, build, deployment or container observed",
+      "lastVerified": "2026-10-15 source review; local receipt presence and first configuration rejection rechecked on 2026-10-21; no remote build, deployment, or container observed",
       "sourceDependencies": [
         "versions.json",
         ".github/workflows/build-images.yaml",
@@ -3524,7 +3524,7 @@
       "page": "docs/site/use/install.md",
       "route": "/use/install/",
       "contentKind": "authored",
-      "status": "source-backed deployment path; current runtime selection is absent, so a new runtime installation must stop before mutation",
+      "status": "source-backed deployment path; stored runtime selection fails current configuration verification, so installation must stop before mutation",
       "audience": "Kubernetes platform operator, security operator",
       "owner": "platform operations",
       "appliesTo": "current selected runtime release",
@@ -3548,7 +3548,7 @@
       "audience": "release maintainer, platform operator, security operator",
       "owner": "release engineering and platform operations",
       "appliesTo": "current release-selection and deployment contracts",
-      "lastVerified": "2026-10-11; local projection, snippet and synthetic teardown checks only; no live upgrade, rotation or retirement result is available",
+      "lastVerified": "2026-10-11 prior local checks; local selection rejection and synthetic bundle-manifest reader checks on 2026-10-21; no live upgrade, rotation, retirement, or bundle observation",
       "sourceDependencies": [
         "versions.json",
         "releases/ops-images.json",

@@ -75,8 +75,8 @@ flowchart LR
     Worker --> Core[Worker Core]
     Core --> Engine[Prism Engine]
     Engine --> Render[Renderer and evaluation]
-    Control --> Ingest[Ingestion service]
-    Ingest --> Source[External source]
+    Control -->|uploaded or metadata source| Ingest[Ingestion service]
+    Ingest -.->|public-web capability; blocked at Control| Source[External web source]
     Worker -->|artifact HTTP| Control
     Control --> Artifacts[Content-addressed artifacts]
     Control --> Baseline[Approved baseline bundle]
@@ -100,8 +100,8 @@ Each row names a directed connection. Labels preserve the diagram’s conditions
 | Prism Worker | Directed connection | Worker Core |
 | Worker Core | Directed connection | Prism Engine |
 | Prism Engine | Directed connection | Renderer and evaluation |
-| Prism Control | Directed connection | Ingestion service |
-| Ingestion service | Directed connection | External source |
+| Prism Control | Directed connection — uploaded or metadata source | Ingestion service |
+| Ingestion service | Dotted connection — public-web capability; blocked at Control | External web source |
 | Prism Worker | Directed connection — artifact HTTP | Prism Control |
 | Prism Control | Directed connection | Content-addressed artifacts |
 | Prism Control | Directed connection | Approved baseline bundle |
@@ -116,12 +116,20 @@ request. Model-driven generation uses a durable Agent job, the Agent Bridge,
 and OpenClaw. Deterministic render, evaluation, embedding, and low-level
 publication work goes through the Prism Worker and neutral Worker Core before
 the Prism Engine interprets it. The production native Worker rejects
-`generate`. Source ingestion enters through a separate service and rights
-gate. PostgreSQL holds relational authority. The Worker reads and writes
+`generate`. Source ingestion uses uploaded content or metadata through a
+separate service and rights gate. Control rejects `public-web` before acquisition.
+The ingestion service implements public-web fetching, but that implementation
+does not enable the route through Control. Do not bypass Control's admission
+by calling the ingestion service directly.
+PostgreSQL holds relational authority. The Worker reads and writes
 immutable artifact bytes through Control. Human approval binds one revision
 and its evidence into a baseline. The pipeline adapter then creates a
 digest-bound Buster plan or read-only Forge assignments. Nova calls Control
 directly; the adapter does not create a Nova input.
+
+[Control's public-web rejection precedes the acquisition request](https://github.com/datrab/kubeclaw/blob/d303e57edad20b27f2332c6d037c8daeadb8e1ba/skills/prism/server/control-server.ts#L810-L817).
+The [separate fetch implementation](https://github.com/datrab/kubeclaw/blob/d303e57edad20b27f2332c6d037c8daeadb8e1ba/skills/prism/server/ingestion.ts#L49-L62)
+is not proof of an admitted or successfully executed public-web journey.
 
 ## Authority Map
 
