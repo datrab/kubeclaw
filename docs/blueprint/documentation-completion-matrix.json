@@ -1821,7 +1821,7 @@
     },
     {
       "id": "AP09-reader-operators-20261020",
-      "revision": "8f775411fdd8e0232bdd45135accb61f23768f0b",
+      "revision": "d303e57edad20b27f2332c6d037c8daeadb8e1ba",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/review_worker_ready",
       "gateIds": [
@@ -1940,6 +1940,11 @@
           "command": "Independent whole A91207 and narrow24-record changed-boundary review; original91tests and final actual Source/preview/SVG/browser proof",
           "exitCode": 0,
           "observation": "209output hashes,27freshSVGhashes,1660fresh excerpts; prior scoped facts and limits preserved without whole semantic/runtime reapproval. docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/whole-layout-and-prior-impact-review.json"
+        },
+        {
+          "command": "Independent bounded release-content preservation plus current d303 reader build, artifact/search, Source links/previews, deterministic diagrams and changed-page browser checks",
+          "exitCode": 0,
+          "observation": "Seven affected records narrowly reviewed; 38 reader/bundle tests PASS; current counts and limits recorded in revisionHistory. Historical global layout/accessibility/live evidence not rerun. Three pre-existing generated Helm reader-boundary failures remain separate."
         }
       ],
       "review": {
@@ -2044,6 +2049,17 @@
             "scripts/docs-publication.mjs"
           ],
           "review": "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/whole-layout-and-prior-impact-review.json"
+        },
+        {
+          "revision": "8f775411fdd8e0232bdd45135accb61f23768f0b",
+          "changedFiles": [
+            "docs/site/use/install.md",
+            "docs/site/use/maintenance.md",
+            "docs/site/reference/images-and-digests.md",
+            "docs/config/documentation-diagrams.json"
+          ],
+          "review": "handoffs/pr13-reset-20261021/release-review.md",
+          "reason": "Independent narrow Source/Reader/Quality preservation: truthful current selection stop, family-specific Ops direct-main authority, bound manifest observation with explicit false loaded-module/payload flags. Current d303 reader: 167 canonical pages/177 HTML/209 hashes/36958 local targets; 14471 Source links/3742 objects;1696 excerpts/889 objects;27 deterministic SVGs;12 search questions and12 scoped offline/noJS width observations PASS. Unchanged original accepted scopes/limits preserved; no blanket semantic, operational or live reapproval."
         }
       ]
     },
@@ -3539,7 +3555,7 @@
     },
     {
       "id": "AP09-closeout-config-reference-20261020",
-      "revision": "8f775411fdd8e0232bdd45135accb61f23768f0b",
+      "revision": "d303e57edad20b27f2332c6d037c8daeadb8e1ba",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/close_config_reference",
       "gateIds": [],
@@ -3629,6 +3645,11 @@
           "command": "Independent whole A91207 and narrow24-record changed-boundary review; original91tests and final actual Source/preview/SVG/browser proof",
           "exitCode": 0,
           "observation": "209output hashes,27freshSVGhashes,1660fresh excerpts; prior scoped facts and limits preserved without whole semantic/runtime reapproval. docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/whole-layout-and-prior-impact-review.json"
+        },
+        {
+          "command": "Independent bounded release-content preservation plus current d303 reader build, artifact/search, Source links/previews, deterministic diagrams and changed-page browser checks",
+          "exitCode": 0,
+          "observation": "Seven affected records narrowly reviewed; 38 reader/bundle tests PASS; current counts and limits recorded in revisionHistory. Historical global layout/accessibility/live evidence not rerun. Three pre-existing generated Helm reader-boundary failures remain separate."
         }
       ],
       "review": {
@@ -3721,6 +3742,17 @@
             "scripts/docs-publication.mjs"
           ],
           "review": "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/whole-layout-and-prior-impact-review.json"
+        },
+        {
+          "revision": "8f775411fdd8e0232bdd45135accb61f23768f0b",
+          "changedFiles": [
+            "docs/site/use/install.md",
+            "docs/site/use/maintenance.md",
+            "docs/site/reference/images-and-digests.md",
+            "docs/config/documentation-diagrams.json"
+          ],
+          "review": "handoffs/pr13-reset-20261021/release-review.md",
+          "reason": "Independent narrow Source/Reader/Quality preservation: truthful current selection stop, family-specific Ops direct-main authority, bound manifest observation with explicit false loaded-module/payload flags. Current d303 reader: 167 canonical pages/177 HTML/209 hashes/36958 local targets; 14471 Source links/3742 objects;1696 excerpts/889 objects;27 deterministic SVGs;12 search questions and12 scoped offline/noJS width observations PASS. Unchanged original accepted scopes/limits preserved; no blanket semantic, operational or live reapproval."
         }
       ]
     },
@@ -4390,7 +4422,7 @@
     },
     {
       "id": "AP09-compiler-import-provider-diagnosis-20261021",
-      "revision": "287a0f0e46bd373fce8f7a605599e3b9a66cd867",
+      "revision": "d303e57edad20b27f2332c6d037c8daeadb8e1ba",
       "author": "Documentation authors and /root correction coordinator",
       "reviewer": "Independent Codex autoreview 2026-10-21 (ready, correction-final and contributor invocations)",
       "gateIds": [
@@ -4444,6 +4476,11 @@
           "command": "Independent rendered-Source whole gate and narrow 21-record Source/Reader/Quality impact review; original 84-test custody/publication/adapter/reader/Source run",
           "exitCode": 0,
           "observation": "Changed Source boundaries preserve previous facts and limits. Complete actual built output and Source bytes verified; not broader historical semantic/runtime approval. docs/blueprint/acceptance-evidence/rendered-source-links-20261021/rendered-source-gate-review.json"
+        },
+        {
+          "command": "Independent bounded release-content preservation plus current d303 reader build, artifact/search, Source links/previews, deterministic diagrams and changed-page browser checks",
+          "exitCode": 0,
+          "observation": "Seven affected records narrowly reviewed; 38 reader/bundle tests PASS; current counts and limits recorded in revisionHistory. Historical global layout/accessibility/live evidence not rerun. Three pre-existing generated Helm reader-boundary failures remain separate."
         }
       ],
       "review": {
@@ -4510,6 +4547,17 @@
             "docs/site/use/install.md"
           ],
           "review": "docs/blueprint/acceptance-evidence/rendered-source-links-20261021/rendered-source-gate-review.json"
+        },
+        {
+          "revision": "287a0f0e46bd373fce8f7a605599e3b9a66cd867",
+          "changedFiles": [
+            "docs/site/use/install.md",
+            "docs/site/use/maintenance.md",
+            "docs/site/reference/images-and-digests.md",
+            "docs/config/documentation-diagrams.json"
+          ],
+          "review": "handoffs/pr13-reset-20261021/release-review.md",
+          "reason": "Independent narrow Source/Reader/Quality preservation: truthful current selection stop, family-specific Ops direct-main authority, bound manifest observation with explicit false loaded-module/payload flags. Current d303 reader: 167 canonical pages/177 HTML/209 hashes/36958 local targets; 14471 Source links/3742 objects;1696 excerpts/889 objects;27 deterministic SVGs;12 search questions and12 scoped offline/noJS width observations PASS. Unchanged original accepted scopes/limits preserved; no blanket semantic, operational or live reapproval."
         }
       ]
     },
@@ -4855,7 +4903,7 @@
     },
     {
       "id": "AP09-install-maintenance-project-entry-20261021",
-      "revision": "287a0f0e46bd373fce8f7a605599e3b9a66cd867",
+      "revision": "d303e57edad20b27f2332c6d037c8daeadb8e1ba",
       "author": "Documentation authors and /root entry correction coordinator",
       "reviewer": "Independent Codex autoreview 2026-10-21 (operator, entry closeout and publication impact invocations)",
       "gateIds": [],
@@ -4916,6 +4964,11 @@
           "command": "Independent rendered-Source whole gate and narrow 21-record Source/Reader/Quality impact review; original 84-test custody/publication/adapter/reader/Source run",
           "exitCode": 0,
           "observation": "Changed Source boundaries preserve previous facts and limits. Complete actual built output and Source bytes verified; not broader historical semantic/runtime approval. docs/blueprint/acceptance-evidence/rendered-source-links-20261021/rendered-source-gate-review.json"
+        },
+        {
+          "command": "Independent bounded release-content preservation plus current d303 reader build, artifact/search, Source links/previews, deterministic diagrams and changed-page browser checks",
+          "exitCode": 0,
+          "observation": "Seven affected records narrowly reviewed; 38 reader/bundle tests PASS; current counts and limits recorded in revisionHistory. Historical global layout/accessibility/live evidence not rerun. Three pre-existing generated Helm reader-boundary failures remain separate."
         }
       ],
       "review": {
@@ -4939,6 +4992,17 @@
             "docs/site/use/install.md"
           ],
           "review": "docs/blueprint/acceptance-evidence/rendered-source-links-20261021/rendered-source-gate-review.json"
+        },
+        {
+          "revision": "287a0f0e46bd373fce8f7a605599e3b9a66cd867",
+          "changedFiles": [
+            "docs/site/use/install.md",
+            "docs/site/use/maintenance.md",
+            "docs/site/reference/images-and-digests.md",
+            "docs/config/documentation-diagrams.json"
+          ],
+          "review": "handoffs/pr13-reset-20261021/release-review.md",
+          "reason": "Independent narrow Source/Reader/Quality preservation: truthful current selection stop, family-specific Ops direct-main authority, bound manifest observation with explicit false loaded-module/payload flags. Current d303 reader: 167 canonical pages/177 HTML/209 hashes/36958 local targets; 14471 Source links/3742 objects;1696 excerpts/889 objects;27 deterministic SVGs;12 search questions and12 scoped offline/noJS width observations PASS. Unchanged original accepted scopes/limits preserved; no blanket semantic, operational or live reapproval."
         }
       ]
     },
@@ -8197,7 +8261,7 @@
     },
     {
       "id": "AP09-complete-static-reader-search-20261021",
-      "revision": "c5d0062db699056ebc044c0a016a77ace6a1ede9",
+      "revision": "d303e57edad20b27f2332c6d037c8daeadb8e1ba",
       "author": "Nova /root documentation author and implementation coordinator",
       "reviewer": "Independent Codex autoreview static-reader whole PUB-002 Source/reader-quality closeout",
       "verdict": "PASS",
@@ -8483,6 +8547,11 @@
           "command": "Independent nineteen-record preservation plus actual c0584fc0 reader build/checks",
           "exitCode": 0,
           "observation": "27freshSVGs;177HTML/209hashes/36952localtargets;1692excerpts886objects;14464SourceLinks3739objects;12searchquestions;4changeddiagrams×3widths offline/noJS/keyboard=12observations,0findings. SixPNGs visuallyinspected. Full501page/81diagram/27fallback/9Axe remainshistoricalbaseline, not freshly rerun. docs/blueprint/acceptance-evidence/diagram-boundaries-20261021/prior-record-preservation-review.json"
+        },
+        {
+          "command": "Independent bounded release-content preservation plus current d303 reader build, artifact/search, Source links/previews, deterministic diagrams and changed-page browser checks",
+          "exitCode": 0,
+          "observation": "Seven affected records narrowly reviewed; 38 reader/bundle tests PASS; current counts and limits recorded in revisionHistory. Historical global layout/accessibility/live evidence not rerun. Three pre-existing generated Helm reader-boundary failures remain separate."
         }
       ],
       "limits": [
@@ -8593,6 +8662,17 @@
           ],
           "review": "docs/blueprint/acceptance-evidence/diagram-boundaries-20261021/prior-record-preservation-review.json",
           "reason": "Narrow independent preservation after four source-backed diagram boundary corrections, exact alternative/registry updates, four owner-generated metadata fields and nine explicitly internal proof records. No reapproval of untouched historical claims or broad diagram/runtime semantics."
+        },
+        {
+          "revision": "c5d0062db699056ebc044c0a016a77ace6a1ede9",
+          "changedFiles": [
+            "docs/site/use/install.md",
+            "docs/site/use/maintenance.md",
+            "docs/site/reference/images-and-digests.md",
+            "docs/config/documentation-diagrams.json"
+          ],
+          "review": "handoffs/pr13-reset-20261021/release-review.md",
+          "reason": "Independent narrow Source/Reader/Quality preservation: truthful current selection stop, family-specific Ops direct-main authority, bound manifest observation with explicit false loaded-module/payload flags. Current d303 reader: 167 canonical pages/177 HTML/209 hashes/36958 local targets; 14471 Source links/3742 objects;1696 excerpts/889 objects;27 deterministic SVGs;12 search questions and12 scoped offline/noJS width observations PASS. Unchanged original accepted scopes/limits preserved; no blanket semantic, operational or live reapproval."
         }
       ]
     },
@@ -8758,7 +8838,7 @@
     },
     {
       "id": "AP09-rendered-source-bounds-gate-20261021",
-      "revision": "0da0ecd98738705c5f7fe17da8abfe8beb55c1b6",
+      "revision": "d303e57edad20b27f2332c6d037c8daeadb8e1ba",
       "author": "Nova /root documentation author and implementation coordinator",
       "reviewer": "Independent Codex autoreview whole A912-09 Source/Reader/Quality review and narrow changed-boundary impact review for 21 prior PASS records",
       "verdict": "PASS",
@@ -8850,6 +8930,11 @@
           "command": "Independent eleven-record bounded tree/metadata/receipt preservation review; tree and custody checks",
           "exitCode": 0,
           "observation": "54 tree-protection tests,30 custody tests,64 documentation roles PASS. All2965old classification entries unchanged;954explicit internal additions;3926files,0misplaced or active stale legacy references. Governance167pages/publication167pages51plugins/docs167Markdown PASS. docs/blueprint/acceptance-evidence/tree-boundary-closeout-20261021/prior-record-preservation-review.json"
+        },
+        {
+          "command": "Independent bounded release-content preservation plus current d303 reader build, artifact/search, Source links/previews, deterministic diagrams and changed-page browser checks",
+          "exitCode": 0,
+          "observation": "Seven affected records narrowly reviewed; 38 reader/bundle tests PASS; current counts and limits recorded in revisionHistory. Historical global layout/accessibility/live evidence not rerun. Three pre-existing generated Helm reader-boundary failures remain separate."
         }
       ],
       "limits": [
@@ -8902,6 +8987,17 @@
           ],
           "review": "docs/blueprint/acceptance-evidence/tree-boundary-closeout-20261021/prior-record-preservation-review.json",
           "reason": "Independent narrow preservation of exact internal tree additions, source-bound documentation validators retaining read edges, one derived AST receipt renewal/63unchanged, two canonical catalog links and three owner-generated metadata fields. No reapproval of unchanged historical content or runtime claims."
+        },
+        {
+          "revision": "0da0ecd98738705c5f7fe17da8abfe8beb55c1b6",
+          "changedFiles": [
+            "docs/site/use/install.md",
+            "docs/site/use/maintenance.md",
+            "docs/site/reference/images-and-digests.md",
+            "docs/config/documentation-diagrams.json"
+          ],
+          "review": "handoffs/pr13-reset-20261021/release-review.md",
+          "reason": "Independent narrow Source/Reader/Quality preservation: truthful current selection stop, family-specific Ops direct-main authority, bound manifest observation with explicit false loaded-module/payload flags. Current d303 reader: 167 canonical pages/177 HTML/209 hashes/36958 local targets; 14471 Source links/3742 objects;1696 excerpts/889 objects;27 deterministic SVGs;12 search questions and12 scoped offline/noJS width observations PASS. Unchanged original accepted scopes/limits preserved; no blanket semantic, operational or live reapproval."
         }
       ]
     },
@@ -9135,7 +9231,7 @@
     },
     {
       "id": "AP09-complete-responsive-reader-layout-20261021",
-      "revision": "c5d0062db699056ebc044c0a016a77ace6a1ede9",
+      "revision": "d303e57edad20b27f2332c6d037c8daeadb8e1ba",
       "author": "Nova /root documentation author and implementation coordinator",
       "reviewer": "Independent Codex autoreview whole A91207 responsive-layout closeout and narrow24-record prior-boundary preservation",
       "verdict": "PASS",
@@ -9275,6 +9371,11 @@
           "command": "Independent nineteen-record preservation plus actual c0584fc0 reader build/checks",
           "exitCode": 0,
           "observation": "27freshSVGs;177HTML/209hashes/36952localtargets;1692excerpts886objects;14464SourceLinks3739objects;12searchquestions;4changeddiagrams×3widths offline/noJS/keyboard=12observations,0findings. SixPNGs visuallyinspected. Full501page/81diagram/27fallback/9Axe remainshistoricalbaseline, not freshly rerun. docs/blueprint/acceptance-evidence/diagram-boundaries-20261021/prior-record-preservation-review.json"
+        },
+        {
+          "command": "Independent bounded release-content preservation plus current d303 reader build, artifact/search, Source links/previews, deterministic diagrams and changed-page browser checks",
+          "exitCode": 0,
+          "observation": "Seven affected records narrowly reviewed; 38 reader/bundle tests PASS; current counts and limits recorded in revisionHistory. Historical global layout/accessibility/live evidence not rerun. Three pre-existing generated Helm reader-boundary failures remain separate."
         }
       ],
       "limits": [
@@ -9325,6 +9426,17 @@
           ],
           "review": "docs/blueprint/acceptance-evidence/diagram-boundaries-20261021/prior-record-preservation-review.json",
           "reason": "Narrow independent preservation after four source-backed diagram boundary corrections, exact alternative/registry updates, four owner-generated metadata fields and nine explicitly internal proof records. No reapproval of untouched historical claims or broad diagram/runtime semantics."
+        },
+        {
+          "revision": "c5d0062db699056ebc044c0a016a77ace6a1ede9",
+          "changedFiles": [
+            "docs/site/use/install.md",
+            "docs/site/use/maintenance.md",
+            "docs/site/reference/images-and-digests.md",
+            "docs/config/documentation-diagrams.json"
+          ],
+          "review": "handoffs/pr13-reset-20261021/release-review.md",
+          "reason": "Independent narrow Source/Reader/Quality preservation: truthful current selection stop, family-specific Ops direct-main authority, bound manifest observation with explicit false loaded-module/payload flags. Current d303 reader: 167 canonical pages/177 HTML/209 hashes/36958 local targets; 14471 Source links/3742 objects;1696 excerpts/889 objects;27 deterministic SVGs;12 search questions and12 scoped offline/noJS width observations PASS. Unchanged original accepted scopes/limits preserved; no blanket semantic, operational or live reapproval."
         }
       ]
     }
@@ -40182,10 +40294,10 @@
     }
   ],
   "continuation": {
-    "stage": "AP09.8 open. First full FAIL10 correction authored and checked; new fresh Source review has additional loop/comprehension-target omission and is completing full scope. Two-page Reader review active; page Source/Quality pending. No independent or package acceptance.",
+    "stage": "Release source/content corrections independently reviewed; current d303 reader rebuilt and scoped checks passed. Diagram source coverage advances only for whole release graph; other diagram reviews in progress. No overall acceptance.",
     "baselineMutationSession": 17726,
     "baselineMutationLog": "/tmp/kubeclaw-a98-config-mutations.log",
-    "next": "Collect full new Source/Reader findings; correct coherent set and semantically rebind changed sources again. Complete fresh separate Source/Reader/Quality on all affected scopes; retain exact observed checks. Do not start long overall gates or Source/Generated commits while known material findings remain. Full deployment/platform evidence, Astra, parity/AP10/AP11 remain required.",
+    "next": "Complete finite upstream diagram tails, finish remaining diagram Source review, and continue AP09.7–AP09.13 under compact-topic contract. Keep current runtime configuration rejection, three generated Helm reader-boundary failures and unqualified global API copier visible. No AP10 deletion or release authorization.",
     "environmentConstraints": [
       "Previously reported /tmp proof artifacts and native tool bindings are not assumed available after runtime resumption; revalidate required tools."
     ],
@@ -41508,6 +41620,30 @@
       ],
       "diagramSourceProgress": "20/27 individual diagrams supported in documented pinned Source scope. WholeONE authority map14connections SourcePASS. Five system diagrams and two service diagrams remain incomplete; wholePUB005/A91206 NOT_READY.",
       "globalApiBlocker": "API_PRODUCT_SCRIPT_OUTPUT_ROLE_UNQUALIFIED scripts/build-runtime-role-bundle.mjs:91 fs.readFileSync(source). Copied source/dependency/native/caller API input purpose remains unqualified. Rawbyte/mode/link observations are notAPI approval. Three stale generatedHelm phrases remain."
+    },
+    "current20261021": {
+      "revision": "d303e57edad20b27f2332c6d037c8daeadb8e1ba",
+      "reviewReports": [
+        "handoffs/pr13-reset-20261021/release-review.md",
+        "handoffs/pr13-reset-20261021/diagram-system-review.md",
+        "handoffs/pr13-reset-20261021/diagram-services-review.md"
+      ],
+      "diagramScope": "Whole release diagram6e2b51e2c5b4e58e newly source-supported (11edges); system authority map was already in historical20/27 and is not counted again. Provisional supported21/27, NOT whole PUB005/A91206. Remaining finite source reviews continue.",
+      "runtimeStop": "RELEASE_CONFIGURATION_CHANGED: charts/kubeclaw/files/config/knip.json; receipts present, no bypass, no live cluster validation",
+      "checks": {
+        "readerBuild": "PASS:167canonical pages/177HTML/209hashes",
+        "artifact": "PASS:36958local targets",
+        "search": "PASS:12questions",
+        "sourceLinks": "PASS:14471links/3742objects",
+        "sourcePreviews": "PASS:1696excerpts/889objects",
+        "diagrams": "PASS:27fresh deterministic SVG hashes; rendering only",
+        "browser": "PASS:12changed-page/release-diagram offline noJS width observations",
+        "readerTests": "PASS:38tests",
+        "readerBoundary": "FAIL:three pre-existing generated Helm source-inspection phrases",
+        "wholeDocs": "FAIL:first stale AP08 review-scope output regenerated; full integrated check still pending",
+        "releaseNative": "PASS28/28 with genuine GNUAwk5.2.1 in task-local PATH; prior23/28 under mawk1.3.4 retained as environment failure. No cluster calls."
+      },
+      "acceptance": "203/261 requirements,17/89gates; unchanged. Checkpoints not overall release approval."
     }
   },
   "productBoundaries": [

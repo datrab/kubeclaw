@@ -1,0 +1,68 @@
+# Independent service-diagram semantic review — 2026-10-21
+
+Reviewed checkout: `d53a287ee41d0f379d04331e90eea692c527017a` (clean at inspection).
+Contract: AP09 acceptance contract §§1–3. Read-only source/reader/quality review; no repository changes, tests, rendering, publication, live calls to product services, or activation claims. Upstream downloads went only to scratch `services-upstream/`. This report is not an additional completion register.
+
+## Scope and verdict
+
+Read the complete current Mermaid fences and all their visible alternative rows, reader questions, owner entries, and adjacent explanatory boundaries for these registry entries:
+
+- `865c11cbad4bc6f0`: `docs/site/understand/telemetry.md`, index 2, observability maintainers.
+- `11b058604e7e4129`: `docs/site/understand/security-and-trust.md`, index 0, platform security and runtime maintainers.
+- `4dc422d67c265fd9`: `docs/site/understand/platform-and-operations.md`, index 0, platform architecture and operations.
+
+Read `docs/config/documentation-diagrams.json` selected entries and the previous precise open scopes in `docs/blueprint/acceptance-evidence/diagram-boundaries-20261021/checked-observations.json`. Historical hashes were not used as semantic proof. No release diagram was reviewed.
+
+**All three whole-diagram Source verdicts remain NOT_READY.** Several previously missing producer/receiver segments are now directly source-supported below, but this finite review does not cover every tail or every unchanged connection. Incomplete inspection is not evidence that an edge is false. No new actionable diagram defect was established in the inspected segments. No supported-count increment is justified.
+
+Reader usability and structural quality of the three selected diagram units are supported: questions and owners are concrete; complete visible alternatives preserve arrow direction, labels and dotted status; surrounding explanations distinguish configured behavior from live proof. This does not constitute whole-page acceptance, browser verification, fresh-reader execution, or screen-reader acceptance.
+
+## Telemetry — 865c11cbad4bc6f0
+
+### Newly supported source segments
+
+1. **Selected chart metrics → Prometheus scrape:** bootstrap selects kube-prometheus-stack **91.4.0**. Official release archive was acquired and inspected, not merely its version declaration. Chart defaults and the Prometheus template select release-labelled ServiceMonitors; the node-exporter dependency actually creates a ServiceMonitor with selector and named endpoint. The chart selects Operator **0.94.0** and Prometheus **3.14.0**. Operator `resource_selector.go:105–210` lists namespaces, matches selectors, validates selected objects and selects ServiceMonitors; `promcfg.go:1971–2040,3249–3272` builds per-endpoint discovery/scrape configuration. Prometheus `scrape/scrape.go:731–758,1340–1410` executes HTTP GET, checks response and commits/rolls back the appender. This is an implementation chain, not a live sample claim.
+2. **CRI files → Alloy → HTTP Loki:** selected Alloy chart **1.12.1** has appVersion **1.19.2**. `_agent.yaml:1–106` injects `HOSTNAME` from `spec.nodeName`, passes configuration/storage arguments and mounts `/var/log` read-only; controllers `_pod.yaml:20–24,73–95` supplies ServiceAccount and hostPath; chart RBAC/default rules grant discovery reads. Local Alloy config uses that node field selector and constructs `/var/log/pods/*<uid>/<container>/*.log`, then source.file → process.cri → write endpoint. Alloy v1.19.2 `loki/source/file/file.go:205–335` creates positions, resolves/globs sources and fans out; `loki/process/stages/cri.go:95–165` parses CRI, reconstructs partial lines and replaces framing with content; `loki/write/write.go:98–205` consumes received entries and selects its client; common Loki client `endpoint.go:31–96`, `consumer_fanout.go`, and `shards.go:401–435,480–518` follow queue/batch → HTTP POST to the configured URL with timeout. The Kubernetes discovery component converts the role/field selector into the Prometheus discovery configuration. No assumption that chart 1.12.1 means Alloy binary 1.12.1 was made.
+3. **Nova events → observer delivery → file or Redis:** runner `run()` appends lifecycle events with `appendSequenced`; engine-run wires `onEventsCommitted` to serialized observer draining; engine-runtime constructs ObserverRuntime from the canonical journal and selected activated/granted registry. ObserverRuntime filters subscriptions, journals attempts, invokes bounded delivery, and checkpoints after completion. `observer-delivery.ts` constructs the revocable lease and dispatches the activated observer. `telemetry-observer/src/observer.ts` redacts the envelope and invokes `telemetry.emit`. File adapter appends through `FileDurableRecordStore`; Redis telemetry adapter obtains a named secret and invokes `exchange` with EVAL/XADD plus bounded dedup. These are conditional selected-provider paths, not proof that both are activated simultaneously.
+4. **Declared query destinations:** local Prometheus values and upstream chart `templates/grafana/configmaps-datasources.yaml:1–105` explicitly create the Prometheus proxy datasource and additional Loki datasource. Local Loki values establish the declared Loki service/store profile. Thus query configuration is supported.
+
+### Remaining precise Source scope
+
+Whole Source remains **NOT_READY**: actual selected Grafana datasource query/client implementation and provisioning consumer were not completed; the complete exporter set, final Loki receiving/storage implementation and Redis exchange/file-store backend implementations were not exhaustively retraced in this review. Attempts to retrieve old Grafana monorepo paths at selected v13.2.1 returned 404; no substitute version was treated as selected-source proof. The existing diagram's distinction between metrics/log queries and canonical observer delivery remains correct in inspected source. No live scrape, push, query, sample retention, position recovery or observer execution was performed.
+
+## Security — 11b058604e7e4129
+
+### Newly supported source segments
+
+- Selected `gitops/platform/values/spire.yaml` restricts registration to `kubeclaw.dev/worker-trust=true`, renders namespace/ServiceAccount SPIFFE IDs and sets trust domain. Current Nova/Buster values enable SPIFFE; kubeclaw deployment labels protected Pods, names their ServiceAccount, mounts CSI Workload API and Envoy configuration. Prism workload template separately labels Control/Worker, names `prism-<role>` ServiceAccounts and mounts CSI/Envoy. This does not imply every Prism application gets an SVID.
+- Official SPIRE **0.30.0** chart acquired; appVersion **1.14.5**, controller-manager image **0.7.0**. Selected controller source `078ce2097356b5af7179dc8953ec4c0321b2ccd2` was read directly: `entries.go:72–130` binds Pod UID/node parent and renders ServiceAccount-derived identity; `reconciler.go:448–532` selects namespace/Pod and adds desired entries; `210–258` chooses create/update/delete. SPIRE v1.14.5 Workload API `handler.go:209–244` attests the caller, subscribes by selectors and streams X.509-SVID responses. This closes registration → Workload API segments, not the whole issuing-authority/SDS chain.
+- Cilium selected **1.20.1** source `7d68cfb394f2960e10aa72e76d0d51e66c1b2ebc`: `pkg/policy/k8s/network_policy.go:19–61` parses standard NetworkPolicy and calls UpdatePolicy; `cilium_network_policy.go:123–165` parses CNP/CCNP and submits policy entries; `pkg/policy/repository.go:390–475` matches cluster/namespace rules to identities and derives directional default-deny policy. Local cluster default-deny/DNS rules, KubeClaw agent egress and Prism per-role NetworkPolicy selectors/ports were read. This supports receiving/selection semantics for the three dotted policy relationships, not installed dataplane enforcement.
+- Corrected secret edge is still supported: invocation context requires active lease and grant, authorization limits logical names, resolver maps to `process.env`; no Kubernetes Secret API client exists there.
+- Nova committed-source builder and Buster admission preflight were read directly: commit/tree archive, Ed25519 attestation and receiver verification/digest checks support the signed-source qualifier. Prism Worker service authenticates proxied Control SPIFFE identity before dispatch; its nonce DB is HMAC-only.
+
+### Remaining precise Source scope
+
+Whole Source remains **NOT_READY**: selected SPIRE server signing/agent cache issuance, workload attestor and CSI socket binding, SDS → Envoy credential consumption/rotation, and complete policy-import → endpoint/dataplane realization were not all traced. Human entry → Nova, all Nova→Buster/Prism HTTP callers, generic namespace-bounded durable-store adapters, and BuildKit/OCI/pinned workload edges were not exhaustively re-reviewed. The corrected secret relationship does not certify these other edges. No negative traffic, identity issuance, handshake or live enforcement result is inferred.
+
+## Platform — 4dc422d67c265fd9
+
+### Newly supported source segments
+
+- Cilium receiving/policy selection chain above is shared source evidence for its network boundary, not a second independent implementation proof.
+- Tailscale bootstrap selects **1.102.3**. Directly read selected `cmd/k8s-operator/ingress.go:64–90,185–260,324–371`: reconcile checks whether to expose, resolves Service backends/ports, builds ServeConfig proxy handlers and passes them to the StatefulSet reconciler's Provision call. `svc.go` function/declaration search also identified the separate Service reconciler; it was not fully read. This is concrete operator generation, not private-route connectivity.
+- Local gateway template routes OpenClaw memory search to the OpenAI-compatible LiteLLM endpoint/model, selected LiteLLM config maps `gemini-embedding-001` to `vertex_ai/gemini-embedding-001`, and deployment supplies mounted config and Google credential path. Selected image provenance was inspected only as a locator, not semantic proof of provider calls.
+- Nova/Buster Discord enablement and Prism's explicitly disabled Discord entry were checked in selected values; chart gateway settings identify managed OpenAI reasoning and the LiteLLM memory route. Aggregate Runtime must continue to be read with the page's selected-path qualification, not as all integrations enabled for every role.
+- Monitoring source path is precisely the telemetry chain above: infrastructure metrics and CRI logs, not an application-event completeness bridge.
+- Corrected mirror readiness/client-configuration and external-CSI boundaries remain preserved in the full diagram and visible alternative. Their earlier limited correction is not converted into whole-platform approval.
+
+### Remaining precise Source scope
+
+Whole Source remains **NOT_READY**: Tailscale Provision → generated proxy process → actual test/human caller path, selected LiteLLM embedding dispatch → Vertex auth/HTTP consumer, selected OpenClaw Discord bot and webhook producer/receiver/client implementations, and managed OpenAI client call path were not completed. `/app` has a different running OpenClaw source tree; it was only filename-searched and was not used as proof of repository-selected 2026.10.3 behavior. Host/K3s/DNS/scheduler, external CSI, Argo, Redis, registry/BuildKit and Ops connections were not exhaustively re-traced. No optionality, route readiness or live integrations are inferred from installed charts/configuration.
+
+## Actual read inventory and checks
+
+Local substantive reads: AP09 §§1–3; selected registry/prior observations; all three full diagram units/alternatives; platform selected dependency table and source-boundary context; telemetry monitoring subsections; `versions.json` selected monitoring/platform/infrastructure pins; bootstrap `{prometheus,alloy,spire,tailscale-operator}.yaml`; `gitops/platform/values/{alloy,prometheus,loki,spire}.yaml`; `gitops/platform/litellm/*.yaml`; `my-values/infra/{cilium-values,cilium-cluster-policies,network-policies,litellm-config}.yaml` shown ranges; Nova/Buster/Prism selected values shown relevant ranges; kubeclaw deployment/RBAC/gateway shown relevant ranges; Prism workloads/networkpolicy shown ranges; Nova telemetry `{observers,observer-delivery}.ts` complete, engine-runtime complete, runner/context/authorization/engine-run relevant ranges; telemetry-observer implementation+manifest complete; file telemetry adapter complete; Redis telemetry adapter complete; secret resolver complete; source-snapshot builder complete; Buster preflight and Prism worker auth relevant ranges.
+
+Upstream substantive reads are the files/ranges explicitly listed above, all under scratch `services-upstream/`. Archives: official GitHub release assets for kube-prometheus-stack91.4.0, Alloy1.12.1, SPIRE0.30.0; Tailscale and other sources retrieved from official project raw GitHub URLs at named tags/commits. Additional downloaded but not semantically read files are not claimed as reviewed. Generated receiver contracts were searched only to locate exact upstream sources; their claims were not substituted for those sources. No assertion of full-page/full-file read is made for files where only ranges/search matches were examined.
+
+Checks: source inspection commands and successful archive/source HTTP retrievals exited 0; missing candidate upstream paths returned 404 and remained unresolved. `git status --short` was empty at start. No product tests or documentation builds were executed. This review supports only the stated segments; AP09 sourceAccuracy is NOT_READY for each whole diagram, so no overall PASS/completion registration follows.

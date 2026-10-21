@@ -1,5 +1,17 @@
 # PR13 session reset — 2026-10-21
 
+## Current continuation — 2026-10-21 18:10 UTC
+
+- Reader/content candidate: `d303e57e`, pushed and remote-verified. Corrected stale absent-selection claim, separated Ops direct-main promotion from runtime PR authority, and bound the manifest-reader wrapper to frozen cluster authority. Independent scoped content review PASS; see `handoffs/pr13-reset-20261021/release-review.md`.
+- Fresh reader: 167 canonical pages, 177 HTML, 209 output hashes, 36,958 local targets; 12 search questions; 14,471 Source links/3,742 objects; 1,696 excerpts/889 objects; all 27 deterministic SVGs. Twelve changed-page/release-diagram offline/no-JavaScript width observations PASS. This is not semantic acceptance of all diagrams.
+- Tests: 38 Reader/bundle fixtures PASS. Native release suite initially 23/28 under old mawk; genuine GNU Awk 5.2.1 in task-local PATH gives 28/28. Browser installation plus existing extracted Debian libraries/font config qualified a real browser launch. No live cluster calls.
+- Whole release diagram's 11 source edges now supported; historical system-authority diagram is not counted twice. Source-supported count provisionally 21/27; ongoing targeted upstream reviews must supply their terminal results before further count changes. PUB-005/A912-06 remain open.
+- Seven affected prior PASS records have bounded independent preservation and current output checks; acceptance remains 203/261 requirements and 17/89 gates. Current contract checker passes; checkpoints are not overall acceptance.
+- Existing runtime stop remains `RELEASE_CONFIGURATION_CHANGED: charts/kubeclaw/files/config/knip.json`. Three generated Helm source-inspection phrases still fail the Reader boundary. The global API copier remains unqualified. Full documentation check first found stale AP08 review scope; regenerated its four-line obsolete directory removal, then resumed the full check.
+- Next: collect terminal telemetry/dependency/communication/security Source reviews; finish remaining diagram scopes and AP09.7–AP09.13. Preserve all stops; no AP10 deletion. Reports are transitional internal handoff material, not reader publication. Current logs/tools: `/home/node/.openclaw/workspace/tmp/pr13-resume-20261021/`.
+
+## Original reset baseline (retained)
+
 - Continue in `/home/node/.openclaw/workspace/kubeclaw-pr13-recovery`, local branch `docs/pr13-recovery-20261019`; PR branch on origin: `docs/documentation-overhaul` (PR #13).
 - This reset commit preserves unfinished work, NOT final acceptance. Prior reviewed checkpoint: `2384072a`. Latest patch: runtime receipts exist but fail configuration verification; bundle-manifest observation procedure and matching diagram wording.
 - Acceptance unchanged: 17/89 checklist items; 203/261 content requirements. Registers: `docs/blueprint/AP09-acceptance-fixtures.json` and `docs/blueprint/generated/ap09-catalogue.json`. Diagram source acceptance last recorded at 20/27; remaining scopes, PUB-005 and A912-06 are open.
