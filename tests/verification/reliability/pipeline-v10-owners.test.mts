@@ -76,9 +76,16 @@ test('existing physical loader checks v10 root and every owner, but never emits 
   fs.mkdirSync(path.join(directory, 'components'));
   fs.writeFileSync(path.join(directory, 'pipeline.config.json'), JSON.stringify(root));
   for (const [name, owner] of Object.entries(owners)) fs.writeFileSync(path.join(directory, 'components', name+'.config.json'), JSON.stringify(owner));
-  const binding = root.bindings.find((b: any) => b.owner === 'buster-engine');
+  // Use a complete original same-instance consuming tuple. The historical
+  // preparation-only instance has no WorkerCore peer and correctly fails the
+  // versioned selection gate before these deeper owner/source assertions.
+  const binding = root.bindings.find((b: any) => b.owner === 'buster-engine'
+    && root.bindings.some((peer: any) => peer.role === 'buster'
+      && peer.instanceId === b.instanceId && peer.owner === 'worker-core'));
   const selection = { role: 'buster' as const, callerId: 'buster-preparation' as const, serviceInstanceId: binding.instanceId,
-    bindings: [{ owner: 'buster-engine' as const, instanceId: binding.instanceId, profileId: binding.profileId }] };
+    bindings: root.bindings.filter((b: any) => b.role === 'buster' && b.instanceId === binding.instanceId
+      && ['buster-engine', 'worker-core'].includes(b.owner))
+      .map(({ owner, instanceId, profileId }: any) => ({ owner, instanceId, profileId })) };
   assert.throws(() => readSwarmBundle(path.join(directory, 'pipeline.config.json'), selection), /V10_SOURCE_LAYOUT_REQUIRED/);
   // Whole-owner functional receiving precedes plugin/source I/O, including
   // unselected arms. No successful source/boot/caller authority is inferred.
@@ -139,9 +146,16 @@ test('v10 selected and unselected render widths retain original strict ordering 
   const unselected = 'unselected-render';
   execution.profiles[unselected] = structuredClone(execution.profiles[selected]);
   assert.ok(!candidate.root.bindings.some((b: any) => b.owner === 'prism-execution' && b.profileId === unselected));
-  const binding = candidate.root.bindings.find((b: any) => b.owner === 'buster-engine');
+  // Use a complete original same-instance consuming tuple. The historical
+  // preparation-only instance has no WorkerCore peer and correctly fails the
+  // versioned selection gate before these deeper owner/source assertions.
+  const binding = candidate.root.bindings.find((b: any) => b.owner === 'buster-engine'
+    && candidate.root.bindings.some((peer: any) => peer.role === 'buster'
+      && peer.instanceId === b.instanceId && peer.owner === 'worker-core'));
   const selection = { role: 'buster' as const, callerId: 'buster-preparation' as const, serviceInstanceId: binding.instanceId,
-    bindings: [{ owner: 'buster-engine' as const, instanceId: binding.instanceId, profileId: binding.profileId }] };
+    bindings: root.bindings.filter((b: any) => b.role === 'buster' && b.instanceId === binding.instanceId
+      && ['buster-engine', 'worker-core'].includes(b.owner))
+      .map(({ owner, instanceId, profileId }: any) => ({ owner, instanceId, profileId })) };
   const entry = path.join(directory, 'pipeline.config.json');
   const write = () => {
     for (const [name, owner] of Object.entries(candidate.owners)) {

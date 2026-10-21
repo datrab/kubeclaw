@@ -94,9 +94,16 @@ function fixture(t: test.TestContext) {
     const destination = path.join(directory, relative); fs.mkdirSync(path.dirname(destination), { recursive: true });
     fs.copyFileSync(path.join(base, 'same-entry-agent-role-binding-01/stand', relative), destination);
   }
-  const binding = root.bindings.find((binding: any) => binding.owner === 'buster-engine');
+  // Use a complete original same-instance consuming tuple. The historical
+  // preparation-only instance has no WorkerCore peer and correctly fails the
+  // versioned selection gate before these deeper owner/source assertions.
+  const binding = root.bindings.find((b: any) => b.owner === 'buster-engine'
+    && root.bindings.some((peer: any) => peer.role === 'buster'
+      && peer.instanceId === b.instanceId && peer.owner === 'worker-core'));
   const selection = { role: 'buster' as const, callerId: 'buster-preparation' as const, serviceInstanceId: binding.instanceId,
-    bindings: [{ owner: 'buster-engine' as const, instanceId: binding.instanceId, profileId: binding.profileId }] };
+    bindings: root.bindings.filter((b: any) => b.role === 'buster' && b.instanceId === binding.instanceId
+      && ['buster-engine', 'worker-core'].includes(b.owner))
+      .map(({ owner, instanceId, profileId }: any) => ({ owner, instanceId, profileId })) };
   return { directory, config, root, writeRoot, load: () => readSwarmBundle(file, selection) };
 }
 
