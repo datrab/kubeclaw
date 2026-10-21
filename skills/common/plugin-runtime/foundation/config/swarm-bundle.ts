@@ -1,4 +1,5 @@
 import { parseDocument } from 'yaml';
+import { capturePipelineMaterializerInputSource } from './pipeline-v10-input-set.ts';
 import { captureCorpusRanking } from './corpus-ranking.ts';
 import { captureBusterPreparationV10 } from './buster-preparation-v10.ts';
 import { validateWorkerCoreV3Author } from './worker-core-policy.ts';
@@ -381,7 +382,34 @@ export function readSwarmBundle(file: string | undefined, selection?: SwarmSelec
         requirePhysicalPath(file);
         return readObservedBytes(file, observations);
       });
-      throw new Error('PIPELINE_V10_SOURCE_RECEIVING_REQUIRED');
+      // Direct consumers must retain the SAME complete declared source set as
+      // the release materializer, not admit a seven-file structural subset.
+      // This closes source/caller concordance only, never boot authorization.
+      const source = capturePipelineMaterializerInputSource(generationDirectory);
+      try {
+        if (!source.declared || source.rootMember.sha256 !== observations[0]!.sha256) {
+          throw new Error('PIPELINE_AUTHOR_GENERATION_CHANGED');
+        }
+        for (const observation of observations) {
+          const relative = path.relative(path.dirname(generationDirectory), observation.file);
+          const raw = source.declared.capture.read(relative);
+          if (raw.byteLength !== observation.byteLength
+            || createHash('sha256').update(raw).digest('hex') !== observation.sha256) {
+            throw new Error('PIPELINE_AUTHOR_GENERATION_CHANGED');
+          }
+        }
+        const bindings = (document as { bindings: Binding[] }).bindings;
+        for (const projected of selection.bindings) {
+          const binding = bindings.find(binding => binding.role === selection.role
+            && binding.instanceId === selection.serviceInstanceId && binding.owner === projected.owner);
+          if (!binding) throw new Error(`SWARM_CONFIG_BINDING_REQUIRED:${projected.owner}`);
+          if (binding.profileId !== projected.profileId) {
+            throw new Error(`SWARM_CONFIG_SELECTION_PROFILE_MISMATCH:${projected.owner}`);
+          }
+        }
+        source.declared.capture.assertCurrent();
+        throw new Error('PIPELINE_V10_SOURCE_RECEIVING_REQUIRED');
+      } finally { source.declared?.capture.close(); }
     }
     if (!validateEntry(document)) throw new Error(`SWARM_CONFIG_INVALID:${JSON.stringify(validateEntry.errors)}`);
     const { components: references, bindings } = document as { components: Record<Owner, string>; bindings: Binding[] };

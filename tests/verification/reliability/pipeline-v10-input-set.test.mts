@@ -103,6 +103,27 @@ test('missing inherited unselected schema never becomes partial seven-file or so
   assert.throws(()=>capture(root,replacements),{code:'ENOENT'});
 });
 
+test('direct v10 loader retains full original sources and exact caller bindings before closed admission', async t => {
+  const { readSwarmBundle } = await import('../../../skills/common/plugin-runtime/foundation/config/swarm-bundle.ts');
+  const root = tree(t), entry = path.join(root, 'config/pipeline.config.json');
+  const document = JSON.parse(rootBytes.toString());
+  const instance = 'fixture.service.buster-runtime';
+  const selection = { role: 'buster' as const, callerId: 'buster-runtime' as const, serviceInstanceId: instance,
+    bindings: document.bindings.filter((b: any) => b.role === 'buster' && b.instanceId === instance)
+      .map(({ owner, instanceId, profileId }: any) => ({ owner, instanceId, profileId })) };
+  assert.throws(() => readSwarmBundle(entry, selection), /PIPELINE_V10_SOURCE_RECEIVING_REQUIRED/);
+  const wrong = structuredClone(selection); wrong.bindings[0].profileId = 'foreign-profile';
+  assert.throws(() => readSwarmBundle(entry, wrong), /SWARM_CONFIG_SELECTION_PROFILE_MISMATCH/);
+  const schema = path.join(root, 'schemas/browser/axe.task.schema.json'), original = fs.readFileSync(schema);
+  fs.unlinkSync(schema);
+  assert.throws(() => readSwarmBundle(entry, selection), { code: 'ENOENT' });
+  const mutant = Buffer.from(original); mutant[0] = mutant[0]! ^ 1;
+  fs.writeFileSync(schema, mutant);
+  assert.throws(() => readSwarmBundle(entry, selection), /PIPELINE_INPUT_DIGEST_MISMATCH/);
+  fs.writeFileSync(schema, original);
+  assert.throws(() => readSwarmBundle(entry, selection), /PIPELINE_V10_SOURCE_RECEIVING_REQUIRED/);
+});
+
 test('EXISTING real role materializer enumerates all v10 inputs before source denial and emits no legacy outputs', async t => {
   const { execFileSync } = await import('node:child_process');
   const { materializePipelineGeneration } = await import('../../../scripts/updates/pipeline-generation.mjs');
