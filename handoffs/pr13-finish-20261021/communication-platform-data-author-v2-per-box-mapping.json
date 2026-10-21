@@ -1,0 +1,1063 @@
+{
+  "author": "/root/operator_acceptance",
+  "status": "AUTHOR_V2_F1_ONLY_REQUIRES_NONAUTHOR_REVIEW",
+  "baseline": {
+    "HEAD": "d8e97be18ce7f2114212c64305fced4aa7b691a6",
+    "files": [
+      {
+        "path": "docs/site/understand/communication.md",
+        "sha256": "89605e8e262b22ceabc8fa0a2becae7bef0c4e8051a4e3513fd5985501cb9eaf",
+        "HEADMatches": true
+      },
+      {
+        "path": "docs/site/understand/platform-and-operations.md",
+        "sha256": "0c138033e653e9b1a2765345ea6c1a82afdcae0da0c452e1e342ca4448b2b098",
+        "HEADMatches": true
+      },
+      {
+        "path": "docs/site/understand/data-and-state.md",
+        "sha256": "2a2c5442bd88eaf53b7be31d97007351d4157ae1274773a4d50430ce3c2f428e",
+        "HEADMatches": true
+      },
+      {
+        "path": "docs/site/understand/prism-data.md",
+        "sha256": "7ac2cc4ac527543b9adff51a0dfbbc52c91505dbf532beaa411459c7ec244f28",
+        "HEADMatches": true
+      }
+    ]
+  },
+  "boxes": [
+    {
+      "index": 1,
+      "page": "docs/site/understand/communication.md",
+      "line": 87,
+      "title": "> **Source evidence \u2014 the complete Prism bridge**",
+      "disposition": "AUTHOR_FIELDS_ADDED",
+      "fields": {
+        "Claim": "Nova reaches Control through the private Prism bridge; Control owns admitted jobs and committed design state.",
+        "Implementation": "Stage, proxy, bridge, attempt and job-store links trace those separate owners.",
+        "Contract or setting": "SPIFFE peers, dispatch identity, body limits and job fence constrain this selected path.",
+        "Test evidence": "No deployed Nova-to-bridge-to-Control journey is established by these source bindings.",
+        "Revision": "`13bff0a18a64e74f2cbbaa1978e746fcdeff0c10`. Source bindings, not execution receipts.",
+        "Limit": "A lost response is uncertain; a claimed job must not be blindly replayed or replaced."
+      },
+      "oldBoxSha256": "5e80a10e8c8e45236af96bdb505ae1ee0fa578a9088fab96878debb38b1b3eee",
+      "candidateBoxSha256": "187e41d32383bc44692876330a69b8afe6ca09bfbb41bd32a6bfd672d5d27103"
+    },
+    {
+      "index": 2,
+      "page": "docs/site/understand/communication.md",
+      "line": 152,
+      "title": "> **Source evidence \u2014 dynamic HTTP families and Studio fallback**",
+      "disposition": "AUTHOR_FIELDS_ADDED",
+      "fields": {
+        "Claim": "Dynamic outbound targets and Studio static fallback have different admission rules, not wildcard server authority.",
+        "Implementation": "HTTP provider policy, Kubernetes GET transport and Studio routing below define the selected families.",
+        "Contract or setting": "Origins, methods, headers, canonical URLs and static-root containment constrain their respective handlers.",
+        "Test evidence": "No complete deployed dynamic-target and static-fallback matrix execution is established here.",
+        "Revision": "`13bff0a18a64e74f2cbbaa1978e746fcdeff0c10`. Source bindings, not execution receipts.",
+        "Limit": "A symbolic endpoint is not a discovered concrete route or permission to call arbitrary addresses."
+      },
+      "oldBoxSha256": "83bf9716896742f27e5c66414610014ffe0f591623a633697e45f923c8fd8a3f",
+      "candidateBoxSha256": "01e257544b6d57d3b7f691ce12bde38111e8bceae1c7c867b5497907c30835fe"
+    },
+    {
+      "index": 3,
+      "page": "docs/site/understand/communication.md",
+      "line": 168,
+      "title": "> **Source evidence \u2014 selected reasoning and Discord configuration**",
+      "disposition": "AUTHOR_FIELDS_ADDED",
+      "fields": {
+        "Claim": "Nova selects a different reasoning primary and mention policy from the chart/Buster and Prism defaults.",
+        "Implementation": "Role overlays and gateway templates below define model order, conditional allowlist and guild handling.",
+        "Contract or setting": "Nova selects GPT-6.1 and no mention; chart/Buster and Prism use the documented GPT-5 model order.",
+        "Test evidence": "These are authored selections and rendering rules, not an executed provider or Discord access check.",
+        "Revision": "`0e35889a3c4e65d5c47ba88e924611aace67eb1d`. Source bindings, not execution receipts.",
+        "Limit": "Configuration does not prove persisted host state, wire traffic or an allowed/denied user interaction."
+      },
+      "oldBoxSha256": "5b94196fabe1e128fc7ef9eb147a697d5b802904d207f8ec2b6ef724f8eb9177",
+      "candidateBoxSha256": "a617e6a160524a0d692f6c5bfcb7ce91f8eb169cc0197d926df3040219a4c940"
+    },
+    {
+      "index": 4,
+      "page": "docs/site/understand/communication.md",
+      "line": 204,
+      "title": "> **Source evidence \u2014 route matching and authority**",
+      "disposition": "AUTHOR_FIELDS_ADDED",
+      "fields": {
+        "Claim": "Prism routes separate pipeline, agent, user, artifact, corpus and optional product-decision authority.",
+        "Implementation": "Control, bridge, job and product-decision handlers below implement these route families.",
+        "Contract or setting": "Peer/session/CSRF checks, request contracts and durable identities depend on the selected route.",
+        "Test evidence": "No successful complete live Prism route journey is established by this handler inventory.",
+        "Revision": "`13bff0a18a64e74f2cbbaa1978e746fcdeff0c10`. Source bindings, not execution receipts.",
+        "Limit": "A route match or HTTP success does not substitute for its owning domain transaction or receipt."
+      },
+      "oldBoxSha256": "2b06090b93acebcef4722739822692a1722ba64ece9898042b6b5be3e2d07e69",
+      "candidateBoxSha256": "b2be2a4f5266bda4575294b99d09ed5a7cd6ee2e4a219c4426afd570d584cea5"
+    },
+    {
+      "index": 5,
+      "page": "docs/site/understand/communication.md",
+      "line": 253,
+      "title": "> **Source evidence \u2014 service and optional monitoring endpoints**",
+      "disposition": "AUTHOR_FIELDS_ADDED",
+      "fields": {
+        "Claim": "Service listeners, external clients and optional monitoring endpoints have different readiness and ownership scopes.",
+        "Implementation": "Services, registry manifests, gateway values and monitoring configuration below declare the selected connections.",
+        "Contract or setting": "Ports, Secret references, model/channel selections and retention belong to their respective deployment profiles.",
+        "Test evidence": "No complete deployed connectivity, provider-vector or monitoring-delivery check is established by these declarations.",
+        "Revision": "`13bff0a18a64e74f2cbbaa1978e746fcdeff0c10`; `0e35889a3c4e65d5c47ba88e924611aace67eb1d`. Source bindings, not execution receipts.",
+        "Limit": "A ready listener does not prove an authenticated business operation, current model route or complete retained history."
+      },
+      "oldBoxSha256": "bfc203012f8f479d3ac7cf25bf2fe2eca692fb91249ebb92af6e7832150c7c90",
+      "candidateBoxSha256": "0d0b273b656ddf1bc9cf78ba42127ba418b59f1937a05ebe124b8876c53c2d0e"
+    },
+    {
+      "index": 6,
+      "page": "docs/site/understand/communication.md",
+      "line": 288,
+      "title": "> **Source evidence \u2014 remote calls and content binding**",
+      "disposition": "AUTHOR_FIELDS_ADDED",
+      "fields": {
+        "Claim": "Nova dispatch retains one job identity and verifies digest-bound results before their import.",
+        "Implementation": "Remote dispatch construction and transport below bind the admitted job and downloads.",
+        "Contract or setting": "Plan/source/request identities and the operation deadline constrain the handoff.",
+        "Test evidence": "No live complete Nova-to-Buster result and evidence import is established by this source trace.",
+        "Revision": "`13bff0a18a64e74f2cbbaa1978e746fcdeff0c10`. Source bindings, not execution receipts.",
+        "Limit": "Transport success alone does not validate remote execution or permit replacement of an uncertain job."
+      },
+      "oldBoxSha256": "297e1fe989d0234c3e62f87d7b43ffc169813cd85d9b0121fd405875df7b5fe2",
+      "candidateBoxSha256": "d49d6e43aecd08ee1a12408bf299c7cc432738efa9c9ea0dd443f162e72a05a0"
+    },
+    {
+      "index": 7,
+      "page": "docs/site/understand/communication.md",
+      "line": 390,
+      "title": "> **Source evidence \u2014 bounded framing**",
+      "disposition": "AUTHOR_FIELDS_ADDED",
+      "fields": {
+        "Claim": "Native control framing preserves bounded messages without owning their specialist meaning.",
+        "Implementation": "The channel implementation below defines byte framing, ordered writer and reader behavior.",
+        "Contract or setting": "Channel byte ceilings are separate from a role-owned schema and durable phase acknowledgement.",
+        "Test evidence": "No deployment-host native channel and specialist phase exercise is established by these implementation links.",
+        "Revision": "`13bff0a18a64e74f2cbbaa1978e746fcdeff0c10`. Source bindings, not execution receipts.",
+        "Limit": "Framing does not prove payload validity, process isolation or a committed lifecycle transition."
+      },
+      "oldBoxSha256": "298bed2d66c67c14b362a940f7242de3317a747c8ed413e5b1e1506863204702",
+      "candidateBoxSha256": "125cf1f8b9ac505f7faeec366a69bc9b154cb184904442fd162a01e31e244f46"
+    },
+    {
+      "index": 8,
+      "page": "docs/site/understand/communication.md",
+      "line": 668,
+      "title": "> **Source evidence \u2014 stream, atomic deduplication, and limits**",
+      "disposition": "AUTHOR_FIELDS_ADDED",
+      "fields": {
+        "Claim": "Redis publication has bounded deduplication and stream retention, separate from consumers and host ingress queues.",
+        "Implementation": "The Lua publisher, protocol parser, host writer and migration fixture below define those boundaries.",
+        "Contract or setting": "Stream identity, MAXLEN, dedupTtlMs and host queue/retry settings govern different retained state.",
+        "Test evidence": "The linked native-binary migration fixture asserts stream/pending-state/absolute-expiry preservation and lost-ACK replay; no fresh run is claimed.",
+        "Revision": "`13bff0a18a64e74f2cbbaa1978e746fcdeff0c10`. Source bindings, not execution receipts.",
+        "Limit": "The fixture requires real source/destination binaries; stream acceptance is not downstream consumption or indefinite deduplication."
+      },
+      "oldBoxSha256": "0172dc7259ce7ee21c0cbba26c168183bebd7776b14912112c5083809eee5a80",
+      "candidateBoxSha256": "2029aa98d546512f7ed30c6092c0e7269bb5f7cab015d9be36d46d3df54fea80"
+    },
+    {
+      "index": 9,
+      "page": "docs/site/understand/communication.md",
+      "line": 777,
+      "title": "> **Source evidence \u2014 publisher admission, delivery and replay**",
+      "disposition": "AUTHOR_FIELDS_ADDED",
+      "fields": {
+        "Claim": "The HTTP publisher binds a closed message and ACK to durable request and per-attempt terminal records.",
+        "Implementation": "Publisher admission, HMAC transport and durable driver below implement this non-Redis protocol.",
+        "Contract or setting": "Target/key/wrapper limits, receiver publicationId and store capacity constrain each send branch.",
+        "Test evidence": "The preceding dated record distinguishes passing stubbed direct probes from the failed Core-backed fixture; these links add no execution result.",
+        "Revision": "`0e35889a3c4e65d5c47ba88e924611aace67eb1d`. Source bindings, not execution receipts.",
+        "Limit": "An unresolved reservation can resend; receiver deduplication and reconciliation remain necessary, not exactly-once delivery."
+      },
+      "oldBoxSha256": "aba80592836729dda1a47af051f824d663af637a640d4259f959090a55590f1e",
+      "candidateBoxSha256": "b99ace564ce84217d50e851d82d63fdb7aa960230dcd8809e2930a68278a3158"
+    },
+    {
+      "index": 10,
+      "page": "docs/site/understand/communication.md",
+      "line": 802,
+      "title": "> **Source evidence \u2014 application-side peer proof**",
+      "disposition": "AUTHOR_FIELDS_ADDED",
+      "fields": {
+        "Claim": "Application peer admission requires both a local trusted proxy connection and an allowed SPIFFE identity.",
+        "Implementation": "Worker trust parsing below checks forwarded URI identity and loopback origin.",
+        "Contract or setting": "The exact peer allowlist supplements, rather than replaces, job/capability/fence authorization.",
+        "Test evidence": "No live proxy certificate and allowed/denied peer exercise is established by this source trace.",
+        "Revision": "`13bff0a18a64e74f2cbbaa1978e746fcdeff0c10`. Source bindings, not execution receipts.",
+        "Limit": "A self-asserted remote forwarding header is not trusted identity or business authority."
+      },
+      "oldBoxSha256": "e1b9006e80094b4b953641bb323722757c344f16960ea83c75648f93fb342f1b",
+      "candidateBoxSha256": "83b4c1a4dbf34e96359aa46e9c568bc27a35b585868be5dbb7eaa79083ceebf5"
+    },
+    {
+      "index": 11,
+      "page": "docs/site/understand/communication.md",
+      "line": 1032,
+      "title": "> **Source evidence \u2014 content and route wiring**",
+      "disposition": "AUTHOR_FIELDS_ADDED",
+      "fields": {
+        "Claim": "Registry-client configuration, private content and private route ownership remain distinct.",
+        "Implementation": "Buster startup, client projections and Archviewer route policy below show their separate wiring.",
+        "Contract or setting": "Explicit registry/mirror endpoints select clients; the route policy selects the exact proxy identity.",
+        "Test evidence": "No fresh uncached image pull, retained registry restore or private route exercise is established here.",
+        "Revision": "`0e35889a3c4e65d5c47ba88e924611aace67eb1d`; `13bff0a18a64e74f2cbbaa1978e746fcdeff0c10`. Source bindings, not execution receipts.",
+        "Limit": "A mirror hit or ready Service cannot restore missing private blobs or prove retained storage."
+      },
+      "oldBoxSha256": "6bf4daef2a14c9a4d8031a73c3f463f3a8e82fc295d1e692e879448a378620db",
+      "candidateBoxSha256": "272621099dd0fd81217748f79ab051dcf6349240ba2819b7312ed242d4aa99d2"
+    },
+    {
+      "index": 12,
+      "page": "docs/site/understand/communication.md",
+      "line": 1068,
+      "title": "> **Source evidence \u2014 Prism adjacent paths**",
+      "disposition": "AUTHOR_FIELDS_ADDED",
+      "fields": {
+        "Claim": "Corpus ingestion, native deterministic execution and OpenClaw memory embeddings are separate Prism paths.",
+        "Implementation": "Control/Ingestion handlers, native host composition and provider functions below identify each owner.",
+        "Contract or setting": "Control gates acquisition/activation; the native host selects its deterministic provider, not every available provider class.",
+        "Test evidence": "No full live acquisition, native provider or gateway-embedding journey is established by these source bindings.",
+        "Revision": "`13bff0a18a64e74f2cbbaa1978e746fcdeff0c10`. Source bindings, not execution receipts.",
+        "Limit": "Available code does not prove composition or permission; uncertain agent work gains no improvised resolution transition."
+      },
+      "oldBoxSha256": "81b017f7d7fec707f9a9dae834947a0db1c03596422dc576854107ca152cf588",
+      "candidateBoxSha256": "5f5c58d196a24f8ac8ca115b774521ffda7b8d13ba183ea94ff74c5bc212facb"
+    },
+    {
+      "index": 13,
+      "page": "docs/site/understand/communication.md",
+      "line": 1093,
+      "title": "> **Source evidence \u2014 observation paths**",
+      "disposition": "AUTHOR_FIELDS_ADDED",
+      "fields": {
+        "Claim": "Ops reads and monitoring projections observe systems without acquiring their lifecycle mutation authority.",
+        "Implementation": "Projected-token wiring, Kubernetes GETs, Hubble process bounds and Alloy forwarding below define the observation paths.",
+        "Contract or setting": "MCP grants, shared credential mounts and per-request/query bounds govern different authority and pressure.",
+        "Test evidence": "No deployed Kubernetes RBAC, Relay completeness or CRI-to-Loki delivery result is established by these links.",
+        "Revision": "`13bff0a18a64e74f2cbbaa1978e746fcdeff0c10`. Source bindings, not execution receipts.",
+        "Limit": "A read-only tool list does not narrow the shared credential; empty/partial observations are not complete incident proof."
+      },
+      "oldBoxSha256": "4cfb76af579ce552a929089bdb2934f55a0d34e6e47d7c6293ba0b1056ff5ed0",
+      "candidateBoxSha256": "3d51387a8dc2e3ac222d8ffbfe1e4342db93be0339b0f74792243839ff37d47d"
+    },
+    {
+      "index": 14,
+      "page": "docs/site/understand/communication.md",
+      "line": 1215,
+      "title": "> **Source evidence \u2014 full showcase bindings**",
+      "disposition": "AUTHOR_FIELDS_ADDED",
+      "fields": {
+        "Claim": "The complete showcase trace is a target acceptance example, not an executed successful run.",
+        "Implementation": "Role wiring, provider routes, Control job admission and BuildKit startup below support the named handoffs.",
+        "Contract or setting": "Selected deployment owner, endpoints, credentials and domain identities must each be supplied and verified.",
+        "Test evidence": "The example explicitly requires live checks; no completed showcase or missing registry-client selection is inferred here.",
+        "Revision": "`0e35889a3c4e65d5c47ba88e924611aace67eb1d`; `13bff0a18a64e74f2cbbaa1978e746fcdeff0c10`. Source bindings, not execution receipts.",
+        "Limit": "A probe, model answer, message or cache hit cannot replace an authoritative journal, row, receipt or verified digest."
+      },
+      "oldBoxSha256": "23ec0cf8f41db0235a1fe29c5fe14d6e9d71f42d7ac12f2ddec7f652111aabb8",
+      "candidateBoxSha256": "4d4626dbe8e4a61f141fb57f2c10a59d0874de0dc595f5674af5ce2b4070deed"
+    },
+    {
+      "index": 15,
+      "page": "docs/site/understand/platform-and-operations.md",
+      "line": 130,
+      "title": "> **Source evidence \u2014 selected readiness and external storage**",
+      "disposition": "UNCHANGED_EXISTING_SIX_FIELDS",
+      "fields": {},
+      "oldBoxSha256": "164216ac27a330f45cc6004505b5fa336f7d66dbbe7e07acc23a6e2de08fc089",
+      "candidateBoxSha256": "164216ac27a330f45cc6004505b5fa336f7d66dbbe7e07acc23a6e2de08fc089"
+    },
+    {
+      "index": 16,
+      "page": "docs/site/understand/platform-and-operations.md",
+      "line": 167,
+      "title": "> **Source evidence \u2014 present bootstrap boundary**",
+      "disposition": "AUTHOR_FIELDS_ADDED",
+      "fields": {
+        "Claim": "The current deployment entry assumes an existing supported cluster rather than implementing complete host bootstrap.",
+        "Implementation": "Deploy inputs and the linked roadmap below distinguish present orchestration from planned automation.",
+        "Contract or setting": "Explicit cluster/component switches do not provision every kernel, storage or independent recovery prerequisite.",
+        "Test evidence": "No empty-host bootstrap, rollback or recovery exercise is established by this source boundary.",
+        "Revision": "`0e35889a3c4e65d5c47ba88e924611aace67eb1d`. Source bindings, not execution receipts.",
+        "Limit": "Ops and in-cluster services cannot supply independent recovery access to the cluster that hosts them."
+      },
+      "oldBoxSha256": "c33c5f60c18aba9057dd527e4c7784d6bfb27010f36168b91a7f72d2b6ec2485",
+      "candidateBoxSha256": "4174de55a6909c23cd807dcb1c776dc206ebccff15ca284e7e3676f68c8fc3e5"
+    },
+    {
+      "index": 17,
+      "page": "docs/site/understand/platform-and-operations.md",
+      "line": 206,
+      "title": "> **Source evidence \u2014 storage and scheduling inputs**",
+      "disposition": "AUTHOR_FIELDS_ADDED",
+      "fields": {
+        "Claim": "Storage adoption, retained volumes and runtime resource declarations are separate scheduling inputs.",
+        "Implementation": "The adopted storage project, registry storage contract and Buster values below declare those inputs.",
+        "Contract or setting": "Selected StorageClass/access mode and node/cgroup/resource prerequisites must match the consumer.",
+        "Test evidence": "No actual PVC persistence, capacity or scheduled native workload proof is established by these declarations.",
+        "Revision": "`13bff0a18a64e74f2cbbaa1978e746fcdeff0c10`. Source bindings, not execution receipts.",
+        "Limit": "Placement alone is not readiness, storage durability or permission to delete owner-managed files."
+      },
+      "oldBoxSha256": "034d58637c32874d5958e5d36b7a0a4c888ca08e2bdd9bc83fb9c3eb6038ee94",
+      "candidateBoxSha256": "ecb75013de946d91387343e61038939d18fcf3461032b116096f94590e46be09"
+    },
+    {
+      "index": 18,
+      "page": "docs/site/understand/platform-and-operations.md",
+      "line": 260,
+      "title": "> **Source evidence \u2014 guarded CNI ownership**",
+      "disposition": "AUTHOR_FIELDS_ADDED",
+      "fields": {
+        "Claim": "Cilium installation has a guarded ownership cutover; network manifests are not live enforcement proof.",
+        "Implementation": "Installer and selected CNI/policy values below define the supported network ownership.",
+        "Contract or setting": "One CNI owns the dataplane; equivalent fallback policy/evidence requires separate acceptance.",
+        "Test evidence": "No live alternate-CNI or permitted/denied traffic exercise is established by this callout.",
+        "Revision": "`13bff0a18a64e74f2cbbaa1978e746fcdeff0c10`. Source bindings, not execution receipts.",
+        "Limit": "Source/render portability does not prove Flannel security equivalence or Hubble-equivalent evidence."
+      },
+      "oldBoxSha256": "24bc8933ec69cc5ede38d749bf29d09607ddb5b2fe3f02d056f6e3bd6c027274",
+      "candidateBoxSha256": "34a393bc034626d22562a4c95a18821dbb49c34e973b49569bf7c08f6e0acc7b"
+    },
+    {
+      "index": 19,
+      "page": "docs/site/understand/platform-and-operations.md",
+      "line": 299,
+      "title": "> **Source evidence \u2014 Git deployment boundary**",
+      "disposition": "AUTHOR_FIELDS_ADDED",
+      "fields": {
+        "Claim": "Direct deployment and Git reconciliation need explicit handover and exclusive resource ownership.",
+        "Implementation": "Argo projects, applications and adopted-service rules below delimit the reconciliation owners.",
+        "Contract or setting": "Repository/destination restrictions and shared-resource rejection constrain GitOps, not pipeline state.",
+        "Test evidence": "No live ownership handover, reconciliation or disaster-recovery result is established here.",
+        "Revision": "`13bff0a18a64e74f2cbbaa1978e746fcdeff0c10`. Source bindings, not execution receipts.",
+        "Limit": "Concurrent Helm/Argo control is not a supported way to resolve drift or restore authority."
+      },
+      "oldBoxSha256": "95088739d76f8e06707be30f9ab58833cd717ac8ee8d2c523906f4997601095f",
+      "candidateBoxSha256": "410e5eb1a8b1f387a88ec89e35b3d02ff8ed8ddee8e29f254400f81e4ee89890"
+    },
+    {
+      "index": 20,
+      "page": "docs/site/understand/platform-and-operations.md",
+      "line": 346,
+      "title": "> **Source evidence \u2014 dependency configuration and precedence inputs**",
+      "disposition": "AUTHOR_FIELDS_ADDED",
+      "fields": {
+        "Claim": "Role dependency configuration and generated client settings govern different readiness and routing behavior.",
+        "Implementation": "Defaults, registry projections, Prism workload and gateway inputs below bind those selected dependencies.",
+        "Contract or setting": "Values precedence, explicit endpoint transport and Secret/model/channel selection determine each consumer contract.",
+        "Test evidence": "No complete live readiness and authenticated dependency-operation matrix is established by these configuration links.",
+        "Revision": "`0e35889a3c4e65d5c47ba88e924611aace67eb1d`; `13bff0a18a64e74f2cbbaa1978e746fcdeff0c10`. Source bindings, not execution receipts.",
+        "Limit": "A health probe does not prove client routing, provider output, credential rotation or a domain outcome."
+      },
+      "oldBoxSha256": "b3825ae7a155c6645f69663f7ec629707f98f96bd2a21d5f943b3c6d7f7f9151",
+      "candidateBoxSha256": "cce60c1eac18c0c8c4eb1c4884484eb798e1275bc7b5be19a40a119b213ba56b"
+    },
+    {
+      "index": 21,
+      "page": "docs/site/understand/platform-and-operations.md",
+      "line": 402,
+      "title": "> **Source evidence \u2014 builder lifecycle**",
+      "disposition": "AUTHOR_FIELDS_ADDED",
+      "fields": {
+        "Claim": "Buster owns its colocated rootless BuildKit startup and shutdown, separate from retained job evidence.",
+        "Implementation": "Entrypoint, image and bounded preflight code below define worker/socket preparation and cleanup.",
+        "Contract or setting": "Registry-clients.v1 and rootless host prerequisites constrain the local Unix-socket builder.",
+        "Test evidence": "The linked preflight is an executable check definition, not a recorded deployment-host result here.",
+        "Revision": "`0e35889a3c4e65d5c47ba88e924611aace67eb1d`; `13bff0a18a64e74f2cbbaa1978e746fcdeff0c10`. Source bindings, not execution receipts.",
+        "Limit": "Build cache loss is not receipt loss; a process exit does not prove that no image was pushed."
+      },
+      "oldBoxSha256": "207465ce6b8300d8f0f34e42fcd26dc4a19a4596d48cf85f0ee728cc0593c162",
+      "candidateBoxSha256": "7e96a5a172e67b8ec555e8d482c87b435cedd861102fa67c022f3b913b0000e3"
+    },
+    {
+      "index": 22,
+      "page": "docs/site/understand/platform-and-operations.md",
+      "line": 453,
+      "title": "> **Source evidence \u2014 explicit laboratory limits**",
+      "disposition": "AUTHOR_FIELDS_ADDED",
+      "fields": {
+        "Claim": "The writable registry profiles are explicit anonymous HTTP laboratory choices, not authenticated production storage.",
+        "Implementation": "Registry template/client admission and deployment selection below enforce the stated lab boundary.",
+        "Contract or setting": "Explicit transport, endpoints and credentials rules separate retained direct storage from ephemeral GitOps adoption.",
+        "Test evidence": "No authenticated HTTPS registry, off-host restore or uncached pull proof is established by these declarations.",
+        "Revision": "`d7f822c3cddd97e637aeca47f1cd49e87164ff87`; `13bff0a18a64e74f2cbbaa1978e746fcdeff0c10`; `0e35889a3c4e65d5c47ba88e924611aace67eb1d`. Source bindings, not execution receipts.",
+        "Limit": "A ready registry or prior push does not prove current retained manifests/layers or production access controls."
+      },
+      "oldBoxSha256": "80b37d9b0e9000c7acc13bc9e9f8ab90af4492c81f0490844d38aabd558af309",
+      "candidateBoxSha256": "e8c8aea0bfb69d2f970be17fdc63d55ac27ad802807db1605137873417acd3bd"
+    },
+    {
+      "index": 23,
+      "page": "docs/site/understand/platform-and-operations.md",
+      "line": 497,
+      "title": "> **Source evidence \u2014 cache boundary and client routing**",
+      "disposition": "AUTHOR_FIELDS_ADDED",
+      "fields": {
+        "Claim": "The Docker Hub mirror is replaceable upstream cache and configures no client merely by existing.",
+        "Implementation": "Mirror workload and registry-client generator below define storage and explicit routing.",
+        "Contract or setting": "Selected mirror endpoint, writable-registry separation and client projection govern use.",
+        "Test evidence": "No actual cold pull, corruption recovery or capacity-window exercise is established here.",
+        "Revision": "`13bff0a18a64e74f2cbbaa1978e746fcdeff0c10`. Source bindings, not execution receipts.",
+        "Limit": "Cache retention is not private artifact authority or a substitute for upstream availability."
+      },
+      "oldBoxSha256": "300c79dad80baa762dbe8c2dba9ee380d022b894038cb10864c90414542b5f12",
+      "candidateBoxSha256": "f2d227ed15e418b2d7b34b6dd2a12ef110d1eec84ddd64d120c6c0a22771657e"
+    },
+    {
+      "index": 24,
+      "page": "docs/site/understand/platform-and-operations.md",
+      "line": 537,
+      "title": "> **Source evidence \u2014 service ownership**",
+      "disposition": "AUTHOR_FIELDS_ADDED",
+      "fields": {
+        "Claim": "Redis, platform PostgreSQL and Tailscale retain different state under different owners.",
+        "Implementation": "Service values below declare authentication, volumes, database identity and operator route settings.",
+        "Contract or setting": "The platform LiteLLM database is not Prism PostgreSQL; route OAuth/tags are not product decisions.",
+        "Test evidence": "No deployed database restore, stream replay or Tailnet access proof is established by these values.",
+        "Revision": "`13bff0a18a64e74f2cbbaa1978e746fcdeff0c10`. Source bindings, not execution receipts.",
+        "Limit": "Configured persistence and a ready service do not certify a matched recovery group or independent cluster access."
+      },
+      "oldBoxSha256": "1e0e46acd71d83c16ce133225ce7e498bd411ac0728434860e098499cd50ed11",
+      "candidateBoxSha256": "4f6f912cd79a13a701b9458e79768d489854df5d2d7013fd37fe63bb137525cd"
+    },
+    {
+      "index": 25,
+      "page": "docs/site/understand/platform-and-operations.md",
+      "line": 649,
+      "title": "> **Source evidence \u2014 selected embedding client**",
+      "disposition": "UNCHANGED_EXISTING_SIX_FIELDS",
+      "fields": {},
+      "oldBoxSha256": "16d2f84038f547aae296f411fe19f57d79fd6b00147146ef748a835965017dd5",
+      "candidateBoxSha256": "16d2f84038f547aae296f411fe19f57d79fd6b00147146ef748a835965017dd5"
+    },
+    {
+      "index": 26,
+      "page": "docs/site/understand/platform-and-operations.md",
+      "line": 674,
+      "title": "> **Source evidence \u2014 gateway configuration and rollout**",
+      "disposition": "AUTHOR_FIELDS_ADDED",
+      "fields": {
+        "Claim": "LiteLLM embedding configuration and rollout are distinct from a successful selected-provider request.",
+        "Implementation": "Gateway settings, direct/GitOps workloads, renderer and role probe below trace those profile boundaries.",
+        "Contract or setting": "Mounted config/checksum, database/Secret/provider inputs and model selection determine the chosen route.",
+        "Test evidence": "No authenticated Vertex vector or complete gateway recovery is established by the configuration/probe links.",
+        "Revision": "`13bff0a18a64e74f2cbbaa1978e746fcdeff0c10`; `0e35889a3c4e65d5c47ba88e924611aace67eb1d`. Source bindings, not execution receipts.",
+        "Limit": "The role health check alone does not prove the embedding model, managed reasoning or effective persisted settings."
+      },
+      "oldBoxSha256": "2cca49bb8ae8de7e14cc427d713e7c291d80d597e89567a9402c0f3a0ec97657",
+      "candidateBoxSha256": "10151f7bdfa1331a930c91f8493df2c886ec7d717ce27b4c306c1472feadc903"
+    },
+    {
+      "index": 27,
+      "page": "docs/site/understand/platform-and-operations.md",
+      "line": 722,
+      "title": "> **Source evidence:** [The chart defaults to requiring a mention](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/charts/kubeclaw/values.yaml#L188-L191).",
+      "disposition": "AUTHOR_FIELDS_ADDED",
+      "fields": {
+        "Claim": "Guild mention handling is a selected value, not a universal prerequisite for bot messages.",
+        "Implementation": "The chart default, Nova overlay and gateway guild template below define this precedence.",
+        "Contract or setting": "Nova sets requireMention false; the chart default remains true and user allowlisting still applies.",
+        "Test evidence": "No actual allowed/denied Discord user interaction is established by these selected values.",
+        "Revision": "`0e35889a3c4e65d5c47ba88e924611aace67eb1d`. Source bindings, not execution receipts.",
+        "Limit": "A rendered mention policy does not prove effective host state, bot availability or webhook delivery."
+      },
+      "oldBoxSha256": "e7b95532582cdfd1acba6b02f7546861021e427df3351ff5f401493aa43a6beb",
+      "candidateBoxSha256": "7ffe9675eb8fffdf7ec29566992e67599457021d19008a71f15637df4062b513"
+    },
+    {
+      "index": 28,
+      "page": "docs/site/understand/platform-and-operations.md",
+      "line": 744,
+      "title": "> **Source evidence \u2014 distinct external paths**",
+      "disposition": "AUTHOR_FIELDS_ADDED",
+      "fields": {
+        "Claim": "Managed reasoning, Vertex embeddings, bot channels and webhooks have separate credentials and consumers.",
+        "Implementation": "Gateway, role values, provider mounts and messaging adapter below implement those distinct paths.",
+        "Contract or setting": "OAuth, embedding key/Google identity, bot token/allowlist and explicit webhook target grants are not interchangeable.",
+        "Test evidence": "No deployed end-to-end provider, channel or webhook journey is established by these wiring links.",
+        "Revision": "`0e35889a3c4e65d5c47ba88e924611aace67eb1d`; `13bff0a18a64e74f2cbbaa1978e746fcdeff0c10`. Source bindings, not execution receipts.",
+        "Limit": "Secret injection alone does not activate a sender or permit replay after an uncertain external outcome."
+      },
+      "oldBoxSha256": "a54d179ecfe4e05578b2d739decbd22a9a8b4d49a0cba0e31845576183f7ac33",
+      "candidateBoxSha256": "46eeae016c35a3dad77cdfad9b8ffacc3ccaa8e972f8b9bd0b1168d3be307664"
+    },
+    {
+      "index": 29,
+      "page": "docs/site/understand/platform-and-operations.md",
+      "line": 782,
+      "title": "> **Source evidence \u2014 retention and collector boundary**",
+      "disposition": "AUTHOR_FIELDS_ADDED",
+      "fields": {
+        "Claim": "Optional monitoring retains projections without becoming a source of pipeline authority.",
+        "Implementation": "Prometheus/Grafana, Loki and Alloy values below define storage, collector and delivery settings.",
+        "Contract or setting": "Configured retention, collector positions and network protection apply to their selected monitoring profile.",
+        "Test evidence": "No complete live scrape/log-delivery, retention-capacity or paging proof is established by these values.",
+        "Revision": "`13bff0a18a64e74f2cbbaa1978e746fcdeff0c10`. Source bindings, not execution receipts.",
+        "Limit": "Dashboard health cannot reconstruct missing canonical events or prove zero collection loss."
+      },
+      "oldBoxSha256": "5de3a6dd9d1dbf132781892b7c9b5b322a888f6615fb7db8a254ebb03902338a",
+      "candidateBoxSha256": "7e4dfc3f05ded431a88be7f00a7e4992411b39e80f657270e8f772b582491b8d"
+    },
+    {
+      "index": 30,
+      "page": "docs/site/understand/platform-and-operations.md",
+      "line": 816,
+      "title": "> **Source evidence \u2014 effective operations authority**",
+      "disposition": "AUTHOR_FIELDS_ADDED",
+      "fields": {
+        "Claim": "The optional Ops Pod can hold wider Kubernetes authority than its read-oriented MCP method list.",
+        "Implementation": "Role/token mount and RBAC templates below show the shared credential and conditional exec path.",
+        "Contract or setting": "Nonempty execNamespaces enables Codex token/kubeconfig and namespace-scoped exec; MCP mounts the same kube-api ServiceAccount token, including those effective exec grants.",
+        "Test evidence": "No deployed effective-RBAC or process-isolation result is established by these templates.",
+        "Revision": "`13bff0a18a64e74f2cbbaa1978e746fcdeff0c10`. Source bindings, not execution receipts.",
+        "Limit": "Tool labels do not remove credential authority; the Ops Pod is not an independent host recovery route."
+      },
+      "oldBoxSha256": "f2df649412fc5fd9344cf2b4fdb52bf60989eaf891ea4c639267607600e66665",
+      "candidateBoxSha256": "a451dcd0680b3d3cf20a6d4996f68502784c1c913f7f613b2f8508b113b41621"
+    },
+    {
+      "index": 31,
+      "page": "docs/site/understand/data-and-state.md",
+      "line": 52,
+      "title": "> **Source evidence \u2014 result and source identities**",
+      "disposition": "AUTHOR_FIELDS_ADDED",
+      "fields": {
+        "Claim": "Remote result integrity and source attestation are different identity contracts.",
+        "Implementation": "The result receipt and signed source-snapshot types below define their separate fields.",
+        "Contract or setting": "Content digests/receipts bind returned results; the source snapshot has its own Ed25519 attestation.",
+        "Test evidence": "No executed remote result acceptance or source-attestation journey is established by these type declarations.",
+        "Revision": "`13bff0a18a64e74f2cbbaa1978e746fcdeff0c10`. Source bindings, not execution receipts.",
+        "Limit": "A deterministic result receipt must not be described as an asymmetric result signature."
+      },
+      "oldBoxSha256": "3cccba8f1a71b2ecd607bc3e4995fd2390a105d2f636367e5880991c85c664e9",
+      "candidateBoxSha256": "156da33016fbde65c9da32a89202c509eb2dfcee5bbc3ebac84251badf4bf589"
+    },
+    {
+      "index": 32,
+      "page": "docs/site/understand/data-and-state.md",
+      "line": 204,
+      "title": "> **Source evidence \u2014 temporary and inactive identities**",
+      "disposition": "AUTHOR_FIELDS_ADDED",
+      "fields": {
+        "Claim": "Temporary workspaces, disposable caches and reserved schema identities do not all represent active durable authority.",
+        "Implementation": "Provider cleanup, terminal workspace, delivery-compaction and snapshot sources below identify those lifetimes.",
+        "Contract or setting": "Consumer/owner and committed references determine whether a path is temporary, retained or inactive.",
+        "Test evidence": "No complete crash/cleanup/retirement matrix is established by these separate implementation references.",
+        "Revision": "`13bff0a18a64e74f2cbbaa1978e746fcdeff0c10`. Source bindings, not execution receipts.",
+        "Limit": "A familiar path or defined table does not prove active use, safe deletion or recoverable application state."
+      },
+      "oldBoxSha256": "3605f146b2192f4d8eff8da1c5356c145193c1e8b9d9d2623e6ac5e79d8fb8e9",
+      "candidateBoxSha256": "b2cc6b7cd0c942752ac18ef890e6895ac80747e2684f820cb650aa92223ab617"
+    },
+    {
+      "index": 33,
+      "page": "docs/site/understand/data-and-state.md",
+      "line": 221,
+      "title": "> **Source evidence \u2014 the common file-store guarantees**",
+      "disposition": "AUTHOR_FIELDS_ADDED",
+      "fields": {
+        "Claim": "Common file stores enforce bounded identity and durable record mechanics, not complete backup or rollback protection.",
+        "Implementation": "Journal acquisition/append and durable-record storage below define their distinct file guarantees.",
+        "Contract or setting": "Hash chains, locks, idempotent content and capacity checks apply at the owning store boundary.",
+        "Test evidence": "No target-volume power-loss, whole-store backup or new-reader rollback detection exercise is established here.",
+        "Revision": "`13bff0a18a64e74f2cbbaa1978e746fcdeff0c10`. Source bindings, not execution receipts.",
+        "Limit": "Opening a journal can repair an incomplete tail; preserve raw evidence before stateful inspection."
+      },
+      "oldBoxSha256": "9ea8836dfb38f5856e4ff1217cddf698b6c47f5db3be0266d57163dfd0f1b93d",
+      "candidateBoxSha256": "fa4ad799613000b0243872ea041c16d22e18cf77c9fb104081666d883942c2e0"
+    },
+    {
+      "index": 34,
+      "page": "docs/site/understand/data-and-state.md",
+      "line": 249,
+      "title": "> **Source evidence \u2014 deployment store contracts**",
+      "disposition": "AUTHOR_FIELDS_ADDED",
+      "fields": {
+        "Claim": "Deployment volumes have consumer-specific persistence, capacity and writer contracts.",
+        "Implementation": "PVC/workload/cache/registry/monitoring declarations below identify those selected storage profiles.",
+        "Contract or setting": "Access mode, mount, retention settings and single-writer deployment differ by owner and profile.",
+        "Test evidence": "No complete deployed volume-loss and restore exercise is established by these declarations.",
+        "Revision": "`13bff0a18a64e74f2cbbaa1978e746fcdeff0c10`; `0e35889a3c4e65d5c47ba88e924611aace67eb1d`. Source bindings, not execution receipts.",
+        "Limit": "PVC size and attachment policy alone do not prove application consistency, encryption or off-host backup."
+      },
+      "oldBoxSha256": "cb6c1bf5238f998ff9bbe247f755ce1f2068d32740fd99a1600669cc181179ba",
+      "candidateBoxSha256": "8dd844a40df3c98059aa31b6f16450a8c7b5da0d4a7800aa2a3c72d63229a858"
+    },
+    {
+      "index": 35,
+      "page": "docs/site/understand/data-and-state.md",
+      "line": 300,
+      "title": "> **Source evidence \u2014 run identity and snapshots**",
+      "disposition": "AUTHOR_FIELDS_ADDED",
+      "fields": {
+        "Claim": "Nova binds a run root and immutable snapshot before continued execution.",
+        "Implementation": "Run-root resolution and snapshot publication below bind graph and admitted runtime identity.",
+        "Contract or setting": "Run identity, package provenance and the explicitly stored configuration subset constrain recovery.",
+        "Test evidence": "No executed changed-snapshot recovery or host-storage durability exercise is established by this trace.",
+        "Revision": "`13bff0a18a64e74f2cbbaa1978e746fcdeff0c10`. Source bindings, not execution receipts.",
+        "Limit": "A newer installed package or matching label does not authorize replacing the stored graph or configuration."
+      },
+      "oldBoxSha256": "a212e364f56e4fbb33612835ffc9f39ef6aa1cc44b60b9b432e9d014ecd231a4",
+      "candidateBoxSha256": "dc4f79e28d8adaac51e2e443d0840609dd6ee4e18d922a59edf2d315cd28252f"
+    },
+    {
+      "index": 36,
+      "page": "docs/site/understand/data-and-state.md",
+      "line": 328,
+      "title": "> **Source evidence \u2014 effect persistence**",
+      "disposition": "AUTHOR_FIELDS_ADDED",
+      "fields": {
+        "Claim": "Effect journals and referenced result blobs form one recovery group.",
+        "Implementation": "Effect record and large-result persistence below bind exact request/receipt content and hydration.",
+        "Contract or setting": "The 64KiB external-result threshold and byte-count/digest checks govern retained result references.",
+        "Test evidence": "No complete interrupted effect-blob backup/restore exercise is established by these implementations.",
+        "Revision": "`13bff0a18a64e74f2cbbaa1978e746fcdeff0c10`. Source bindings, not execution receipts.",
+        "Limit": "A journal without its referenced result tree cannot prove or reconstruct an accepted external outcome."
+      },
+      "oldBoxSha256": "22747d50c0affa2f87e64ffdf1cbb2d78fa2ac9d5fbcf4bd339280bb45083917",
+      "candidateBoxSha256": "91e2d7b78f4315b98832bd1f3ed7781ce383cdb8f7d871c7675b56a98428dcc7"
+    },
+    {
+      "index": 37,
+      "page": "docs/site/understand/data-and-state.md",
+      "line": 358,
+      "title": "> **Source evidence \u2014 Nova control stores**",
+      "disposition": "AUTHOR_FIELDS_ADDED",
+      "fields": {
+        "Claim": "Signals, administrative decisions, remote gates and required reconciliation evidence are separate retained Nova authorities.",
+        "Implementation": "Resume/admin admission, dispatch/import and observability-store sources below define their different records.",
+        "Contract or setting": "Signal issuer fields are not caller authentication; new administrative decisions need the matching trusted principal.",
+        "Test evidence": "No complete live multi-store recovery journey is established by this combined source map.",
+        "Revision": "`13bff0a18a64e74f2cbbaa1978e746fcdeff0c10`. Source bindings, not execution receipts.",
+        "Limit": "Optional monitoring cannot replace required reconciliation state; preserve both submitted inputs and applied lifecycle evidence."
+      },
+      "oldBoxSha256": "2129e3125acda932d170ffb0bb401b20ac0808df75bc9dec7d97c80ab7adc016",
+      "candidateBoxSha256": "c28cbc56c47a39a915051f7036a8b95b028098653ee80e61a682346737540bd5"
+    },
+    {
+      "index": 38,
+      "page": "docs/site/understand/data-and-state.md",
+      "line": 415,
+      "title": "> **Source evidence \u2014 Worker durability and capacity**",
+      "disposition": "AUTHOR_FIELDS_ADDED",
+      "fields": {
+        "Claim": "Worker attempt evidence and native ownership are distinct durable authorities with bounded storage liability.",
+        "Implementation": "Attempt journal, ownership store and original-output spool below implement admission and retention.",
+        "Contract or setting": "Accepted identity, sealed result, reserved capacity and combined output ceiling constrain new work.",
+        "Test evidence": "No deployment-host process recovery or full-volume exercise is established by these store sources.",
+        "Revision": "`13bff0a18a64e74f2cbbaa1978e746fcdeff0c10`. Source bindings, not execution receipts.",
+        "Limit": "A sealed result alone does not prove scope ownership; output limits reject rather than silently truncate prior bytes."
+      },
+      "oldBoxSha256": "e491a090bdecff0ed9f52309732dd3c59e5c3c72d5bcb940eccf24081ffdf74b",
+      "candidateBoxSha256": "51263cbf5cac9b8c184ad5e06e661fd99a116808c30bbb3e20f1f420445958f4"
+    },
+    {
+      "index": 39,
+      "page": "docs/site/understand/data-and-state.md",
+      "line": 452,
+      "title": "> **Source evidence \u2014 Buster stores**",
+      "disposition": "AUTHOR_FIELDS_ADDED",
+      "fields": {
+        "Claim": "Buster separately retains admission, attempts, original evidence and verified remote results.",
+        "Implementation": "Remote service, runner evidence checks and compaction below define those stores.",
+        "Contract or setting": "Job/source/plan identities and bounded evidence checks precede publication; compaction requires retained-source verification.",
+        "Test evidence": "No complete deployed Buster backup/restore or remote import result is established by this source trace.",
+        "Revision": "`13bff0a18a64e74f2cbbaa1978e746fcdeff0c10`. Source bindings, not execution receipts.",
+        "Limit": "Evidence paths are not automatically content-addressed; normalized reports do not replace original bytes."
+      },
+      "oldBoxSha256": "d10e87a19ca27fba051b185f634b53054ba54f60ee49b4cc4922a83cb8c59753",
+      "candidateBoxSha256": "6d22435ec925a6208ab54e575de07ad8c703648281e3963f247c96a854b4b9ce"
+    },
+    {
+      "index": 40,
+      "page": "docs/site/understand/data-and-state.md",
+      "line": 513,
+      "title": "> **Source evidence \u2014 Prism ownership and backup**",
+      "disposition": "AUTHOR_FIELDS_ADDED",
+      "fields": {
+        "Claim": "Prism relational records and immutable artifact bytes must be backed up as a matched group.",
+        "Implementation": "Database/migration and content-addressed artifact implementation below establish the referenced state owners.",
+        "Contract or setting": "Artifact publication before database reference supports copying a dump plus the retained immutable artifact superset.",
+        "Test evidence": "No successful matched database/artifact restore is established by these storage implementation links.",
+        "Revision": "`13bff0a18a64e74f2cbbaa1978e746fcdeff0c10`. Source bindings, not execution receipts.",
+        "Limit": "This ordering assumes no concurrent administrative deletion and supplies no off-host backup or automatic garbage collector."
+      },
+      "oldBoxSha256": "ec6c6e72356d8203b91080de82470833ea9d1f45d8d43146cbe9d5f437ea3393",
+      "candidateBoxSha256": "46a8d85d17f071a9ddd9655f3fe25da9c3672aa2fecbeabf1ec5c4b4096032fb"
+    },
+    {
+      "index": 41,
+      "page": "docs/site/understand/data-and-state.md",
+      "line": 570,
+      "title": "> **Source evidence \u2014 LiteLLM persistence**",
+      "disposition": "AUTHOR_FIELDS_ADDED",
+      "fields": {
+        "Claim": "LiteLLM PostgreSQL has its own database identity, credential recovery and backup-capacity policy.",
+        "Implementation": "Direct deployment, PostgreSQL values and recovery script below define that selected recovery path.",
+        "Contract or setting": "Selected storage, dump bounds/schedules and external master/salt/credential authority must be retained separately.",
+        "Test evidence": "No live recovery-time or successful ciphertext/application restore is established by these declarations.",
+        "Revision": "`13bff0a18a64e74f2cbbaa1978e746fcdeff0c10`. Source bindings, not execution receipts.",
+        "Limit": "A database dump does not recover Kubernetes Secrets, login passwords or external provider accounts."
+      },
+      "oldBoxSha256": "6566b66335f7b52ba1d8ed2fe9b0144eb9def9f328e6fbf2919305f28f6b564e",
+      "candidateBoxSha256": "e7829464f1c15bb19779993bce92dcdbee4e28155377949b4c469828be5251d3"
+    },
+    {
+      "index": 42,
+      "page": "docs/site/understand/data-and-state.md",
+      "line": 818,
+      "title": "> **Source evidence \u2014 retention identification and its limit**",
+      "disposition": "UNCHANGED_EXISTING_SIX_FIELDS",
+      "fields": {},
+      "oldBoxSha256": "f0e116cf218f51d0e87b32a18edb8a45988b0ad00506a3e5ebee97c75d3d7284",
+      "candidateBoxSha256": "f0e116cf218f51d0e87b32a18edb8a45988b0ad00506a3e5ebee97c75d3d7284"
+    },
+    {
+      "index": 43,
+      "page": "docs/site/understand/data-and-state.md",
+      "line": 958,
+      "title": "> **Source evidence \u2014 selected LiteLLM implementation**",
+      "disposition": "EXISTING_SIX_FIELDS_SAME_SECTION_SOURCE_LINK_ADDITION",
+      "fields": {},
+      "oldBoxSha256": "43128d6d5d253e0364b68c07179dcc552d3fa7fd972420a12b6dd474f629bb1a",
+      "candidateBoxSha256": "3d6afb6aa5eaac7bc40900870eb99d7d80626336275f597457377389a054021d"
+    },
+    {
+      "index": 44,
+      "page": "docs/site/understand/data-and-state.md",
+      "line": 990,
+      "title": "> **Source evidence \u2014 profile differences**",
+      "disposition": "AUTHOR_FIELDS_ADDED",
+      "fields": {
+        "Claim": "Direct and GitOps database/Redis profiles do not declare the same capacity and durability contract.",
+        "Implementation": "Their separate values below identify the selected storage and Redis persistence inputs.",
+        "Contract or setting": "Deployment ownership selects 20 GiB versus smaller platform claims and explicit versus chart-default persistence settings.",
+        "Test evidence": "No effective rendered-default or deployed capacity/durability proof is established by comparing these values.",
+        "Revision": "`13bff0a18a64e74f2cbbaa1978e746fcdeff0c10`. Source bindings, not execution receipts.",
+        "Limit": "Do not calculate capacity from the larger unselected profile or infer identical AOF policy."
+      },
+      "oldBoxSha256": "2b3f42a2f1288840e36db1908c5ee0d04a4edda6aab4fba17998764a881ec85d",
+      "candidateBoxSha256": "cdf9a1c308d7efc2e9f979ec57b25ca964323cd5b9886c7c85469ccad5b21753"
+    },
+    {
+      "index": 45,
+      "page": "docs/site/understand/data-and-state.md",
+      "line": 1020,
+      "title": "> **Source evidence \u2014 Redis data behavior**",
+      "disposition": "AUTHOR_FIELDS_ADDED",
+      "fields": {
+        "Claim": "Redis stream publication and deduplication are bounded transport state, not product lifecycle authority.",
+        "Implementation": "Publisher and direct production Redis settings below define atomic append/dedup and server pressure policy.",
+        "Contract or setting": "AOF/noeviction/MAXLEN and dedup TTL control different durability, capacity and replay boundaries.",
+        "Test evidence": "No fresh native Redis persistence or restore run is established by these configuration/source links.",
+        "Revision": "`13bff0a18a64e74f2cbbaa1978e746fcdeff0c10`. Source bindings, not execution receipts.",
+        "Limit": "Dedup expiry permits later duplicates; a 1 GiB memory setting is not proof of capacity for every stream."
+      },
+      "oldBoxSha256": "a7d7b36eb9e92c2a210f3c9c5b83aa831fc7e7a1aad8dff44c0223ff78234015",
+      "candidateBoxSha256": "b72e2013e5ede4987b61015ec15f7674a1e502195be4780973a519e5f0901cfc"
+    },
+    {
+      "index": 46,
+      "page": "docs/site/understand/data-and-state.md",
+      "line": 1077,
+      "title": "> **Source evidence:**",
+      "disposition": "AUTHOR_FIELDS_ADDED",
+      "fields": {
+        "Claim": "Artifact encoding is part of the complete reference even when two codecs produce identical bytes.",
+        "Implementation": "Codec and artifact read/write functions below bind serialization, metadata and verified blob selection.",
+        "Contract or setting": "Portable UTF-16 ordering names a JSON codec, not UTF-16 stored text; exact reference/encoding must survive recovery.",
+        "Test evidence": "The linked maintained fixture asserts portable/legacy checkpoint preservation and same-byte relabel rejection; no fresh execution is claimed.",
+        "Revision": "`f99aecbb00cb399b46dfbbeb3ddb375fba6218e7`. Source bindings, not execution receipts.",
+        "Limit": "Metadata-only intent is not readable completion, and these local checks are not a remote backup/restore exercise."
+      },
+      "oldBoxSha256": "f7940a9e3771ab095baea10e0de7f1c935669da321e32dde1d1ce16f3a6885de",
+      "candidateBoxSha256": "dd56be7bd8b37ac3ef84fcaaf860cf1d0bef87d134afde635deef8b8992703fa"
+    },
+    {
+      "index": 47,
+      "page": "docs/site/understand/prism-data.md",
+      "line": 82,
+      "title": "> **Source evidence \u2014 relational ownership**",
+      "disposition": "AUTHOR_FIELDS_ADDED",
+      "fields": {
+        "Claim": "Prism relational records own design intent, revisions, approvals and baseline references.",
+        "Implementation": "Initial and design-round migrations below define the project/request/round/document relationships.",
+        "Contract or setting": "Relational keys, immutable revision links and current-frontier references constrain state ownership.",
+        "Test evidence": "No deployed schema migration or complete design/publication journey is established by these table definitions.",
+        "Revision": "`b2b85d4c8d3174aa41507cde77637227bb709e1e`. Source bindings, not execution receipts.",
+        "Limit": "A schema relationship is not proof of a running producer, current result or accessible artifact body."
+      },
+      "oldBoxSha256": "ac6adb8ddda5bbe18aba572db10a22be617b7e24b6372c19d0d1a4218614a6e6",
+      "candidateBoxSha256": "d699123d1e2e494a7c0a8d419d968d8bbdebd2fc5eddb167e0405df9cadab39a"
+    },
+    {
+      "index": 48,
+      "page": "docs/site/understand/prism-data.md",
+      "line": 88,
+      "title": "> **Source evidence \u2014 corpus and generation boundaries**",
+      "disposition": "UNCHANGED_EXISTING_SIX_FIELDS",
+      "fields": {},
+      "oldBoxSha256": "667ac2fefbfb0858787a900268c8179cf0131b82637eec2cb8079073db1e4156",
+      "candidateBoxSha256": "667ac2fefbfb0858787a900268c8179cf0131b82637eec2cb8079073db1e4156"
+    },
+    {
+      "index": 49,
+      "page": "docs/site/understand/prism-data.md",
+      "line": 142,
+      "title": "> **Source evidence \u2014 architecture frontier**",
+      "disposition": "AUTHOR_FIELDS_ADDED",
+      "fields": {
+        "Claim": "The active design-request frontier binds one architecture revision to stable digest and request content.",
+        "Implementation": "Request schema, generation transition and Control admission below enforce forward-only architecture identity.",
+        "Contract or setting": "Same revision must retain content; approvalId requests an existing approved result rather than changing design intent.",
+        "Test evidence": "No complete live architecture-transition/replay exercise is established by this source trace.",
+        "Revision": "`b2b85d4c8d3174aa41507cde77637227bb709e1e`. Source bindings, not execution receipts.",
+        "Limit": "Changing content under an existing revision is not a supported correction or new approval authority."
+      },
+      "oldBoxSha256": "1f9363412e6d4cbff1f552e14c2d8a03cc5db38567b57841017ac27b11d5638f",
+      "candidateBoxSha256": "efdfb73d60cd753b6fe17cae7c161acb8b891ca309c3c66db88ba410ce29f77f"
+    },
+    {
+      "index": 50,
+      "page": "docs/site/understand/prism-data.md",
+      "line": 194,
+      "title": "> **Source evidence \u2014 round admission and delivery**",
+      "disposition": "AUTHOR_FIELDS_ADDED",
+      "fields": {
+        "Claim": "A design round admits exactly three materially distinct directions as one transactional set.",
+        "Implementation": "Round selection, repository insertion and material-distance comparison below define admission and delivery.",
+        "Contract or setting": "Unique direction keys, current round/source and material structure constrain the set.",
+        "Test evidence": "No fresh pooled PostgreSQL transaction or live agent design-set execution is claimed by these links.",
+        "Revision": "`b2b85d4c8d3174aa41507cde77637227bb709e1e`. Source bindings, not execution receipts.",
+        "Limit": "Different wording alone is not material diversity; partial directions do not become an accepted comparison."
+      },
+      "oldBoxSha256": "01a45410d1ce234d6d078d1f6f482925d35087575e80fc02ea8080e543bbc2aa",
+      "candidateBoxSha256": "3d17939781729675deba375e0907c1415aed4ff822a7f24e2b19d8373dea5f23"
+    },
+    {
+      "index": 51,
+      "page": "docs/site/understand/prism-data.md",
+      "line": 232,
+      "title": "> **Source evidence \u2014 closed document contract**",
+      "disposition": "AUTHOR_FIELDS_ADDED",
+      "fields": {
+        "Claim": "Prism documents use a closed structural contract plus semantic and complexity admission.",
+        "Implementation": "Schema, semantic validator, complexity guard and node catalog below define accepted document meaning.",
+        "Contract or setting": "Declared node/property/reference rules and 32 MiB/depth/node/property limits constrain input, not rendering cost.",
+        "Test evidence": "No complete maximum-size document/render performance or every-node execution matrix is established here.",
+        "Revision": "`b2b85d4c8d3174aa41507cde77637227bb709e1e`. Source bindings, not execution receipts.",
+        "Limit": "Schema validity is not proof of visual quality, bounded render latency or service-memory sufficiency."
+      },
+      "oldBoxSha256": "0ebe74e5b5abd1808e2e83e970f2855cd11f90e185a7fa9011b9a17a61eebd4f",
+      "candidateBoxSha256": "ffe44a27dde52d550aa87a7cfa71d5770efeddf2404e878df46304ddd351ffd9"
+    },
+    {
+      "index": 52,
+      "page": "docs/site/understand/prism-data.md",
+      "line": 276,
+      "title": "> **Source evidence \u2014 deterministic editing**",
+      "disposition": "AUTHOR_FIELDS_ADDED",
+      "fields": {
+        "Claim": "Editing creates a validated next revision and uses compare-and-swap to advance the document frontier.",
+        "Implementation": "Domain operations, revision repository and transaction fixture below define editing and storage concurrency.",
+        "Contract or setting": "Base revision, unique nodes, parent linkage and current-pointer identity constrain changes and restore.",
+        "Test evidence": "The linked prepared-PostgreSQL fixture asserts one winning concurrent edit and rollback; no fresh execution is claimed.",
+        "Revision": "`b2b85d4c8d3174aa41507cde77637227bb709e1e`. Source bindings, not execution receipts.",
+        "Limit": "Restoring content creates a new revision, not a history rewind or permission to bypass agent fences."
+      },
+      "oldBoxSha256": "5a89aa4e4ca11e5c9c689722da28ee10777be0f2d1c07a2d0ee63507422491b8",
+      "candidateBoxSha256": "2db1c46892b04d7d30d8871dcf8c2c5c2e48a46b8ece4194a5feb31e78a3f022"
+    },
+    {
+      "index": 53,
+      "page": "docs/site/understand/prism-data.md",
+      "line": 331,
+      "title": "> **Source evidence \u2014 decisions and preferences**",
+      "disposition": "AUTHOR_FIELDS_ADDED",
+      "fields": {
+        "Claim": "Preference events become deterministic, subject-bound generation snapshots before model work.",
+        "Implementation": "Decision recording, projection, snapshot and pipeline-subject admission below define learning scope.",
+        "Contract or setting": "Event weights/decay, project precedence, personal policy and configured subject control the snapshot.",
+        "Test evidence": "No live preference-learning or model-output improvement result is established by these source definitions.",
+        "Revision": "`b2b85d4c8d3174aa41507cde77637227bb709e1e`. Source bindings, not execution receipts.",
+        "Limit": "Future evidence cannot rewrite a stored generation; a caller cannot nominate an arbitrary personal subject."
+      },
+      "oldBoxSha256": "43ab2a301dba279635777bccc810f6626a2bb7c735ede42db2a9899b9de6fd34",
+      "candidateBoxSha256": "c626b6fe56982bef0f97bd275161f44a75718dfebe35de31dffc5f6e128ded94"
+    },
+    {
+      "index": 54,
+      "page": "docs/site/understand/prism-data.md",
+      "line": 444,
+      "title": "> **Source evidence \u2014 quality and release authority**",
+      "disposition": "AUTHOR_FIELDS_ADDED",
+      "fields": {
+        "Claim": "Quality findings, explicit approval and complete baseline publication confer different authority.",
+        "Implementation": "Evaluation, approval, rendering and archive construction below define those separate boundaries.",
+        "Contract or setting": "Exact revision/architecture/warnings and v2 checksum/archive identities constrain publication.",
+        "Test evidence": "No complete live approval-to-rendered-baseline acceptance is established by these source links.",
+        "Revision": "`b2b85d4c8d3174aa41507cde77637227bb709e1e`. Source bindings, not execution receipts.",
+        "Limit": "An approval is not a complete bundle; bundle_digest and the full archive artifact digest identify different bytes."
+      },
+      "oldBoxSha256": "5960dcbac6e1b58f7f907484de4d2ba125ca7fecf8d9df3340c4ae63363d28b1",
+      "candidateBoxSha256": "3fe2d7204ae54e102e7647ae0764323cee1900641b335d1f2aa958ae1bb15123"
+    },
+    {
+      "index": 55,
+      "page": "docs/site/understand/prism-data.md",
+      "line": 498,
+      "title": "> **Source evidence \u2014 deterministic safe rendering**",
+      "disposition": "AUTHOR_FIELDS_ADDED",
+      "fields": {
+        "Claim": "Prism rendering applies constrained document data and ordered patches, not arbitrary supplied HTML or styles.",
+        "Implementation": "Renderer, capture operation, preview loader and internal artifact checks below define these admission boundaries.",
+        "Contract or setting": "State/viewport and variant/instance precedence, CSP and asset/route limits constrain rendering.",
+        "Test evidence": "No cross-browser bit-identical rendering or live complete preview/artifact journey is established by this trace.",
+        "Revision": "`b2b85d4c8d3174aa41507cde77637227bb709e1e`. Source bindings, not execution receipts.",
+        "Limit": "Deterministic settings reduce drift but do not erase Chromium-version differences or prove semantic media safety."
+      },
+      "oldBoxSha256": "86ac09cfaab2c0e73a996fd3ac41ac44ec1b71d7834744e88d6ae47b27990b81",
+      "candidateBoxSha256": "5a72eef382a50781330443785a575cdad1fdeb7bdfa1d321efef91f2a922bf76"
+    },
+    {
+      "index": 56,
+      "page": "docs/site/understand/prism-data.md",
+      "line": 545,
+      "title": "> **Source evidence \u2014 local CAS**",
+      "disposition": "AUTHOR_FIELDS_ADDED",
+      "fields": {
+        "Claim": "Prism publishes immutable local content-addressed artifacts and verifies their bytes on read.",
+        "Implementation": "Artifact publication, download route and single-Control workload below define storage and access scope.",
+        "Contract or setting": "Digest-verified regular files and single-writer volume ownership do not replace resource authorization.",
+        "Test evidence": "No deployment-volume power-loss, replication or complete artifact restore exercise is established here.",
+        "Revision": "`b2b85d4c8d3174aa41507cde77637227bb709e1e`. Source bindings, not execution receipts.",
+        "Limit": "Any authenticated Studio user knowing a digest can currently fetch it; a digest is not an access grant."
+      },
+      "oldBoxSha256": "a7a7cf8a1141ab25502e2e286ccab9156f06805682935b32336b90bf4da66bea",
+      "candidateBoxSha256": "aadb0502abbf02ea19fa692cc7de8edb0b41ca5202d59ac3b2659cd9fbfdd7e7"
+    },
+    {
+      "index": 57,
+      "page": "docs/site/understand/prism-data.md",
+      "line": 611,
+      "title": "> **Source evidence \u2014 governed ingestion**",
+      "disposition": "AUTHOR_FIELDS_ADDED",
+      "fields": {
+        "Claim": "Corpus ingestion stores governed metadata/embedding revisions and removes quarantine before activation.",
+        "Implementation": "Corpus transactions, acquisition, Control admission and integration fixture below define that path.",
+        "Contract or setting": "Rights, content digest, model identity and current public-web rejection constrain admitted use.",
+        "Test evidence": "The linked integration fixture defines concurrent corpus behavior; no fresh database or public-web execution is claimed.",
+        "Revision": "`b2b85d4c8d3174aa41507cde77637227bb709e1e`. Source bindings, not execution receipts.",
+        "Limit": "Retention metadata is not a deletion scheduler; acquired source bytes are not retained in the artifact store by this path."
+      },
+      "oldBoxSha256": "eb665180bd0f71d4509d4ae696e24583983ad7c0b86ccd98ff891a396f7f2d0c",
+      "candidateBoxSha256": "d3e308643f1a954ee5d2d0a1e1fcefe20d0dd33914573266fc10cc7277f1e3a0"
+    },
+    {
+      "index": 58,
+      "page": "docs/site/understand/prism-data.md",
+      "line": 682,
+      "title": "> **Source evidence \u2014 retrieval policy and algorithm**",
+      "disposition": "AUTHOR_FIELDS_ADDED",
+      "fields": {
+        "Claim": "Retrieval applies eligibility and rights filters before its configured ranking and diversity selection.",
+        "Implementation": "Corpus search, Control query admission and vector schema below define the retrieval boundary.",
+        "Contract or setting": "Model equality, vector compatibility, requested limits and source-family policy constrain candidates.",
+        "Test evidence": "No production-scale ranking benchmark or deployed embedding/search result is established by these implementations.",
+        "Revision": "`b2b85d4c8d3174aa41507cde77637227bb709e1e`. Source bindings, not execution receipts.",
+        "Limit": "Unindexed exact vector search can be costly; model filtering is not separate physical vector partitioning."
+      },
+      "oldBoxSha256": "7270f7a5fd80120ab07eea6df7807606a3f9676a107c0683d08d48f08b6e7d5d",
+      "candidateBoxSha256": "ebc53d64068be98b804310a9ceeae933177eb577a0b6acefe55ca182fe056ae1"
+    },
+    {
+      "index": 59,
+      "page": "docs/site/understand/prism-data.md",
+      "line": 758,
+      "title": "> **Source evidence \u2014 durable coordination**",
+      "disposition": "AUTHOR_FIELDS_ADDED",
+      "fields": {
+        "Claim": "Native operations, agent jobs and product decisions retain separate idempotent coordination records.",
+        "Implementation": "Reservation/result stores, agent fences, nonce admission and decision schema below define their identities.",
+        "Contract or setting": "Exact accepted envelope/result, session fence and signed intent have different replay contracts; brief_revision remains reserved.",
+        "Test evidence": "No complete live cross-store recovery exercise is established by this source map.",
+        "Revision": "`b2b85d4c8d3174aa41507cde77637227bb709e1e`. Source bindings, not execution receipts.",
+        "Limit": "A cached result without its accepted binding or a defined unused table cannot authorize replacement work."
+      },
+      "oldBoxSha256": "1c4b5e3d07d2c484ae2329870dd176ab669c1aa15845c06b8b9ccda5fa7baa50",
+      "candidateBoxSha256": "450564c61fab8dd8e7213c7ebdd0a8097bcf1862e7f0643e0c70dcb0065835ee"
+    },
+    {
+      "index": 60,
+      "page": "docs/site/understand/prism-data.md",
+      "line": 838,
+      "title": "> **Source evidence \u2014 bootstrap and migration**",
+      "disposition": "AUTHOR_FIELDS_ADDED",
+      "fields": {
+        "Claim": "Prism bootstrap uses separate database roles and ordered recorded migrations.",
+        "Implementation": "Role setup, bootstrap entry and migration runner below implement those privileged boundaries.",
+        "Contract or setting": "Runtime/migration/backup/test credentials and exact migration history have distinct authority.",
+        "Test evidence": "No production database bootstrap, rollback or restored-schema acceptance is established by these definitions.",
+        "Revision": "`b2b85d4c8d3174aa41507cde77637227bb709e1e`. Source bindings, not execution receipts.",
+        "Limit": "Starting application code is not proof that retained data migrated safely or that old writers remain compatible."
+      },
+      "oldBoxSha256": "7e551872cd0b0059e2b2ea94f5cf0013db649a2a671941a745efedfb707f1066",
+      "candidateBoxSha256": "dd6e89f6c59b6c979332e6696cddaeb5ad035abed9a400f6842b766260d13f6e"
+    },
+    {
+      "index": 61,
+      "page": "docs/site/understand/prism-data.md",
+      "line": 879,
+      "title": "> **Source evidence \u2014 concurrency boundaries**",
+      "disposition": "AUTHOR_FIELDS_ADDED",
+      "fields": {
+        "Claim": "Prism concurrency relies on actual transactions, current-frontier checks and owner-specific connection deadlines.",
+        "Implementation": "Transaction helper, revision CAS and nonce readiness implementation below define those different bounds.",
+        "Contract or setting": "One reserved pool connection scopes BEGIN/COMMIT; the nonce path owns its separate four-connection deadline policy.",
+        "Test evidence": "No fresh pooled database-contention or query-cancellation execution is established by these source links.",
+        "Revision": "`b2b85d4c8d3174aa41507cde77637227bb709e1e`. Source bindings, not execution receipts.",
+        "Limit": "Nonce readiness does not impose a deadline on all Control queries or prove their database health."
+      },
+      "oldBoxSha256": "9d7838f36ee8e648069818752cf08e4ad5e38e1b82bf1e01f3023698297472a3",
+      "candidateBoxSha256": "561f384d0e2de5b634448147c6be64ee155632f4d2e85aa49170a3150609b63c"
+    },
+    {
+      "index": 62,
+      "page": "docs/site/understand/prism-data.md",
+      "line": 983,
+      "title": "> **Source evidence \u2014 backup behavior**",
+      "disposition": "AUTHOR_FIELDS_ADDED",
+      "fields": {
+        "Claim": "Prism backup groups have bounded capacity and duration, not automatic age-based file retirement.",
+        "Implementation": "Backup values, owned script and CronJobs below define publication, validation and recovery checks.",
+        "Contract or setting": "Exclusive lock, dump/artifact group, deadlines/capacity and retained claims govern the selected backup procedure.",
+        "Test evidence": "No fresh deployed backup/restore/proof execution is established by these script/chart links.",
+        "Revision": "`b2b85d4c8d3174aa41507cde77637227bb709e1e`. Source bindings, not execution receipts.",
+        "Limit": "Finished-Job TTL bounds diagnostics, not backup-file retention; credentials and off-host copies need independent authority."
+      },
+      "oldBoxSha256": "84bf9adbb5c2e0cb0236ece86fee72013e233b7ea4a67f945039656d9db666d4",
+      "candidateBoxSha256": "170493e9736a8c1cf82820a2c08809eb3b1b669dc0bc5b2b76332fc4f6091bdc"
+    }
+  ],
+  "exceptions": [
+    {
+      "index": 43,
+      "page": "docs/site/understand/data-and-state.md",
+      "kind": "eligible upstream Source links copied exactly from same accepted section into existing Implementation; no new semantic/image/test claim"
+    },
+    {
+      "index": 46,
+      "page": "docs/site/understand/data-and-state.md",
+      "kind": "unquoted blank to quoted blank within existing same Source claim",
+      "count": 3
+    }
+  ]
+}

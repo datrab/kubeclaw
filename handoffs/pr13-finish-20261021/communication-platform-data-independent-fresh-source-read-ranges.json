@@ -1,0 +1,299 @@
+[
+  {
+    "path": "skills/worker/core/worker/native-control-channel.ts",
+    "sha256": "253ecc17f153e13e6e00aad3f842565ad17a01e85cac15db910d9b4b2ea9edc8",
+    "readRanges": [
+      [
+        1,
+        74
+      ]
+    ],
+    "scope": "complete fresh source/assertion text read; not execution"
+  },
+  {
+    "path": "tests/verification/reliability/redis-migration.test.mts",
+    "sha256": "2996e9495c3ef27bdb416de17f1cec24ae309c4779eb17cda2606b5272a9c988",
+    "readRanges": [
+      [
+        1,
+        86
+      ]
+    ],
+    "scope": "complete fresh source/assertion text read; not execution"
+  },
+  {
+    "path": "tests/verification/reliability/artifact-checkpoint-encoding.test.mjs",
+    "sha256": "1112a5e00c8a05578c21c548bbb4a2fd57b4ddd8469c25e3501b04b2fb2bd09b",
+    "readRanges": [
+      [
+        1,
+        106
+      ]
+    ],
+    "scope": "complete fresh source/assertion text read; not execution"
+  },
+  {
+    "path": "tests/verification/contracts/check-prism-postgres-transactions.mts",
+    "sha256": "85e8fab3340bffd4fe2693f75b8af0a5fe053d3662e018d78aace337aaa2e860",
+    "readRanges": [
+      [
+        1,
+        79
+      ]
+    ],
+    "scope": "complete fresh source/assertion text read; not execution"
+  },
+  {
+    "path": "skills/prism/integration/corpus-pool.mts",
+    "sha256": "993e49c853527500253108753d94178855a6ef019203ac8dd1b012e50de6d8c7",
+    "readRanges": [
+      [
+        1,
+        85
+      ]
+    ],
+    "scope": "complete fresh source/assertion text read; not execution"
+  },
+  {
+    "path": "skills/prism/tests/corpus.test.mts",
+    "sha256": "4eb46c91c2ada8e2ff3f9255017820bba55adc8ab5cfebb34bdd0a80a92f9639",
+    "readRanges": [
+      [
+        1,
+        126
+      ]
+    ],
+    "scope": "complete fresh source/assertion text read; not execution"
+  },
+  {
+    "path": "skills/worker/core/worker/native-output-spool.ts",
+    "sha256": "da9b2bdd9f5b8f9418e98a451eb3275aadec117a9ee7ca733566e571870898c7",
+    "readRanges": [
+      [
+        1,
+        96
+      ]
+    ],
+    "scope": "complete fresh source/assertion text read; not execution"
+  },
+  {
+    "path": "skills/worker/core/worker/trust.ts",
+    "sha256": "722f48ca75fb8546dbc4f4c9cc8eab8e31dfdfeafec7ea7aab587045e78b23fe",
+    "readRanges": [
+      [
+        1,
+        52
+      ]
+    ],
+    "scope": "complete fresh source/assertion text read; not execution"
+  },
+  {
+    "path": "skills/common/plugins/redis-transport/src/adapter.ts",
+    "sha256": "15c91e7eed9a98784d6fbdcb931160202295ea6ef20b1c18367bcd9eaab4cc01",
+    "readRanges": [
+      [
+        1,
+        91
+      ]
+    ],
+    "scope": "complete fresh source/assertion text read; not execution"
+  },
+  {
+    "path": "skills/common/plugins/redis-transport/src/stream-identity.ts",
+    "sha256": "a2657ab33a2833771bda44c8b2ef1904900a26c6773f7ba839f36a35da571167",
+    "readRanges": [
+      [
+        1,
+        8
+      ]
+    ],
+    "scope": "complete fresh source/assertion text read; not execution"
+  },
+  {
+    "path": "skills/nova/core/effects/journal.ts",
+    "sha256": "1ab8839b77c51008973975a324d675af129e8aa45152ae0fde97c954d5af3b95",
+    "readRanges": [
+      [
+        1,
+        241
+      ]
+    ],
+    "scope": "complete fresh source/assertion text read; not execution"
+  },
+  {
+    "path": "skills/common/plugins/artifact-store/src/adapter.ts",
+    "sha256": "12fa6150089d49da0a9065de560fb53436dc46e3f10f15da0f3fe8b112a50154",
+    "readRanges": [
+      [
+        1,
+        179
+      ]
+    ],
+    "scope": "complete fresh source/assertion text read; not execution"
+  },
+  {
+    "path": "contracts/prism/v1/src/complexity.ts",
+    "sha256": "041bfa7037f86afaf6f9667bc90a07db4fe088924dcb3e7ef650841dfd1c60df",
+    "readRanges": [
+      [
+        1,
+        69
+      ]
+    ],
+    "scope": "complete fresh source/assertion text read; not execution"
+  },
+  {
+    "path": "skills/prism/control/design-generations.ts",
+    "sha256": "cd32799fdb1eacbaf40c968b101badcfbedc0f8ce9b12ab045e82ae2e632cbfd",
+    "readRanges": [
+      [
+        1,
+        83
+      ]
+    ],
+    "scope": "complete fresh source/assertion text read; not execution"
+  },
+  {
+    "path": "skills/prism/control/preference-snapshot.ts",
+    "sha256": "e0ac8ed987149afdbc7775d05dd4a31175b57189272d0b92de6301d775288ed2",
+    "readRanges": [
+      [
+        1,
+        38
+      ]
+    ],
+    "scope": "complete fresh source/assertion text read; not execution"
+  },
+  {
+    "path": "skills/prism/control/pipeline-preference-subject.ts",
+    "sha256": "ded8597750c0e6fb3de823cceb31ecbbff7ece03143f4cdd30037ceff0a77eb3",
+    "readRanges": [
+      [
+        1,
+        11
+      ]
+    ],
+    "scope": "complete fresh source/assertion text read; not execution"
+  },
+  {
+    "path": "skills/prism/directions/index.ts",
+    "sha256": "8f787b1ec48c8a0b876f754260d2702ae1c65bc8f2a031b897a989bcb8b973eb",
+    "readRanges": [
+      [
+        1,
+        37
+      ]
+    ],
+    "scope": "complete fresh source/assertion text read; not execution"
+  },
+  {
+    "path": "skills/prism/server/native-worker-host.ts",
+    "sha256": "485118712479bd2991724c4787acb4bf111ddd56866d0d584f608482a3b4ba34",
+    "readRanges": [
+      [
+        1,
+        36
+      ]
+    ],
+    "scope": "complete fresh source/assertion text read; not execution"
+  },
+  {
+    "path": "skills/prism/storage/migrations/001_prism.sql",
+    "sha256": "02f48a7e783b74fded50a0bc626d418b532515fe9e5456c0a22735a991ee1c41",
+    "readRanges": [
+      [
+        1,
+        80
+      ]
+    ],
+    "scope": "complete fresh source/assertion text read; not execution"
+  },
+  {
+    "path": "skills/prism/storage/migrations/013_design_round.sql",
+    "sha256": "ad72bfc7d76495b6ceac25460dd7aef9bb8db333c80baea0f3bf055d5c48ef04",
+    "readRanges": [
+      [
+        1,
+        23
+      ]
+    ],
+    "scope": "complete fresh source/assertion text read; not execution"
+  },
+  {
+    "path": "skills/prism/storage/artifacts.ts",
+    "sha256": "8177fe9d5199d1af866a2ad7d5d7fdfa82b99b0fe6df5b7f0c3c04e96536ef1f",
+    "readRanges": [
+      [
+        1,
+        68
+      ]
+    ],
+    "scope": "complete fresh source/assertion text read; not execution"
+  },
+  {
+    "path": "charts/ops-pod/templates/workload.yaml",
+    "sha256": "3471a815948e99e52b03b7952f1076c9d21afddbd24b62c37e1c848b7a129d58",
+    "readRanges": [
+      [
+        1,
+        176
+      ]
+    ],
+    "scope": "complete fresh source/assertion text read; not execution"
+  },
+  {
+    "path": "charts/ops-pod/templates/rbac.yaml",
+    "sha256": "103ed540a9b71ca0fdde5d693e5e4d07b2943910e79116bbd7206d528668874b",
+    "readRanges": [
+      [
+        1,
+        92
+      ]
+    ],
+    "scope": "complete fresh source/assertion text read; not execution"
+  },
+  {
+    "path": "charts/ops-pod/templates/kubeconfig.yaml",
+    "sha256": "af3152d6d912c4f7a53505902fe03925d35abfeaf4edfd465482bf3cfec42911",
+    "readRanges": [
+      [
+        1,
+        26
+      ]
+    ],
+    "scope": "complete fresh source/assertion text read; not execution"
+  },
+  {
+    "path": "charts/ops-pod/values.yaml",
+    "sha256": "9f1d58dfe213f13169fdd9f983878b688d5f42fcf9f5283e31eed329e82b8c79",
+    "readRanges": [
+      [
+        1,
+        46
+      ]
+    ],
+    "scope": "complete fresh source/assertion text read; not execution"
+  },
+  {
+    "path": "scripts/docs-reader/source-previews.mjs",
+    "sha256": "44a78b3922c7cc9af759ca1e2757c6f91e85d5ee8204a35eab56a7119576e13d",
+    "readRanges": [
+      [
+        1,
+        133
+      ]
+    ],
+    "scope": "complete fresh source/assertion text read; not execution"
+  },
+  {
+    "path": "skills/common/plugin-runtime/sdk/src/values.ts",
+    "sha256": "b91ec914fb8ce1eaccc40751f9693689694e455389eb8742d7f275fdeb24571f",
+    "readRanges": [
+      [
+        1,
+        100
+      ]
+    ],
+    "scope": "complete serialization functions in this range; remainder not freshly re-reviewed"
+  }
+]

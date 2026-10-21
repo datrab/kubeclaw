@@ -86,6 +86,11 @@ it is not the authority for Control state.
 
 > **Source evidence — the complete Prism bridge**
 >
+> **Claim:** Nova reaches Control through the private Prism bridge; Control owns admitted jobs and committed design state.
+>
+> **Implementation:** Stage, proxy, bridge, attempt and job-store links trace those separate owners.
+>
+>
 > [Nova derives the dispatch idempotency key from run, architecture, and phase](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/nova/plugins/prism-design/src/stage.ts#L10-L34).
 >
 > [Nova and Prism-agent proxies define the two mTLS hops and loopback listeners](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/charts/kubeclaw/templates/configmap-worker-trust.yaml#L84-L130) and [the agent-to-Control cluster](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/charts/kubeclaw/templates/configmap-worker-trust.yaml#L175-L197).
@@ -98,6 +103,15 @@ it is not the authority for Control state.
 > [Control persists the request before job admission](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/prism/server/control-server.ts#L202-L240).
 >
 > [The job store enforces one active session, a 16-minute fence, and `needs_nova`](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/prism/control/agent-jobs.ts#L31-L65).
+>
+> **Contract or setting:** SPIFFE peers, dispatch identity, body limits and job fence constrain this selected path.
+>
+> **Test evidence:** No deployed Nova-to-bridge-to-Control journey is established by these source bindings.
+>
+> **Revision:** `13bff0a18a64e74f2cbbaa1978e746fcdeff0c10`. Source bindings, not execution receipts.
+>
+> **Limit:** A lost response is uncertain; a claimed job must not be blindly replayed or replaced.
+>
 
 ## Complete Connection Matrix
 
@@ -151,6 +165,11 @@ it is not a general application catchall.
 
 > **Source evidence — dynamic HTTP families and Studio fallback**
 >
+> **Claim:** Dynamic outbound targets and Studio static fallback have different admission rules, not wildcard server authority.
+>
+> **Implementation:** HTTP provider policy, Kubernetes GET transport and Studio routing below define the selected families.
+>
+>
 > [Buster validates the configured URL, origin, and port before it permits the dynamic target](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/buster/engine/test-gates/network-http-runtime.ts#L185-L198).
 >
 > [The request path enforces the method, headers, timeout, and byte ceilings before and during the dynamic fetch](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/buster/engine/test-gates/network-http-runtime.ts#L208-L268).
@@ -164,8 +183,22 @@ it is not a general application catchall.
 > [Ops MCP fixes HTTPS and GET while accepting a validated dynamic Kubernetes API path, rotating token, CA, timeout, and response ceiling](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/tools/ops-mcp/src/kubernetes.mjs#L1-L58).
 >
 > [Studio classifies health first, proxies only `/v1/`, and sends every other path to the bounded static-file/SPA responder](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/prism/server/studio-request.ts#L89-L139).
+>
+> **Contract or setting:** Origins, methods, headers, canonical URLs and static-root containment constrain their respective handlers.
+>
+> **Test evidence:** No complete deployed dynamic-target and static-fallback matrix execution is established here.
+>
+> **Revision:** `13bff0a18a64e74f2cbbaa1978e746fcdeff0c10`. Source bindings, not execution receipts.
+>
+> **Limit:** A symbolic endpoint is not a discovered concrete route or permission to call arbitrary addresses.
+>
 
 > **Source evidence — selected reasoning and Discord configuration**
+>
+> **Claim:** Nova selects a different reasoning primary and mention policy from the chart/Buster and Prism defaults.
+>
+> **Implementation:** Role overlays and gateway templates below define model order, conditional allowlist and guild handling.
+>
 >
 > [Nova selects no-mention guild handling and the GPT-6.1 primary.](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/my-values/nova-values.yaml#L52-L74)
 > [Chart defaults require mention and select the GPT-5.6 primary and GPT-5.5 fallback.](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/charts/kubeclaw/values.yaml#L186-L214)
@@ -177,6 +210,15 @@ it is not a general application catchall.
 > These are authored selections and template behavior, not observed provider
 > traffic or Discord access. Rendering alone does not establish the effective
 > persisted OpenClaw state or prove an allowed/denied user request.
+>
+> **Contract or setting:** Nova selects GPT-6.1 and no mention; chart/Buster and Prism use the documented GPT-5 model order.
+>
+> **Test evidence:** These are authored selections and rendering rules, not an executed provider or Discord access check.
+>
+> **Revision:** `0e35889a3c4e65d5c47ba88e924611aace67eb1d`. Source bindings, not execution receipts.
+>
+> **Limit:** Configuration does not prove persisted host state, wire traffic or an allowed/denied user interaction.
+>
 
 ### Dynamic Prism Route Families
 
@@ -203,6 +245,11 @@ PostgreSQL or the artifact store.
 
 > **Source evidence — route matching and authority**
 >
+> **Claim:** Prism routes separate pipeline, agent, user, artifact, corpus and optional product-decision authority.
+>
+> **Implementation:** Control, bridge, job and product-decision handlers below implement these route families.
+>
+>
 > [Control separates health, database readiness, session exchange, and protected pipeline dispatch](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/prism/server/control-server.ts#L141-L200).
 >
 > [The agent tool routes bind exactly three designs or one forward revision to the protected agent identity](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/prism/server/control-server.ts#L242-L278).
@@ -223,6 +270,15 @@ PostgreSQL or the artifact store.
 > [Preference routes bind policy and events to the authenticated user](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/prism/server/control-server.ts#L888-L920).
 >
 > [Product decisions store intent and expose recovery of the same decision](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/prism/server/product-decisions.ts#L42-L70), and [the route layer authenticates every data action](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/prism/server/product-decisions.ts#L73-L104).
+>
+> **Contract or setting:** Peer/session/CSRF checks, request contracts and durable identities depend on the selected route.
+>
+> **Test evidence:** No successful complete live Prism route journey is established by this handler inventory.
+>
+> **Revision:** `13bff0a18a64e74f2cbbaa1978e746fcdeff0c10`. Source bindings, not execution receipts.
+>
+> **Limit:** A route match or HTTP success does not substitute for its owning domain transaction or receipt.
+>
 
 ## Endpoint Catalogue
 
@@ -252,6 +308,11 @@ PostgreSQL or the artifact store.
 
 > **Source evidence — service and optional monitoring endpoints**
 >
+> **Claim:** Service listeners, external clients and optional monitoring endpoints have different readiness and ownership scopes.
+>
+> **Implementation:** Services, registry manifests, gateway values and monitoring configuration below declare the selected connections.
+>
+>
 > [Prism Services expose Studio, Control, Worker, ingestion, and their mTLS variants on separate ports](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/charts/prism/templates/services.yaml#L1-L47).
 >
 > [The local registry defines one retained writer](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/my-values/infra/registry-local.yaml#L1-L55).
@@ -273,6 +334,15 @@ PostgreSQL or the artifact store.
 > [Alloy discovers and processes node log streams](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/gitops/platform/values/alloy.yaml#L30-L79) and [sends them to the exact Loki push URL](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/gitops/platform/values/alloy.yaml#L80-L101).
 >
 > [Prometheus and Grafana values define credentials, persistence, retention, resources, and the lab NodePort](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/gitops/platform/values/prometheus.yaml#L1-L44).
+>
+> **Contract or setting:** Ports, Secret references, model/channel selections and retention belong to their respective deployment profiles.
+>
+> **Test evidence:** No complete deployed connectivity, provider-vector or monitoring-delivery check is established by these declarations.
+>
+> **Revision:** `13bff0a18a64e74f2cbbaa1978e746fcdeff0c10`; `0e35889a3c4e65d5c47ba88e924611aace67eb1d`. Source bindings, not execution receipts.
+>
+> **Limit:** A ready listener does not prove an authenticated business operation, current model route or complete retained history.
+>
 
 ## Detailed Transport Notes
 
@@ -287,11 +357,25 @@ before import.
 
 > **Source evidence — remote calls and content binding**
 >
+> **Claim:** Nova dispatch retains one job identity and verifies digest-bound results before their import.
+>
+> **Implementation:** Remote dispatch construction and transport below bind the admitted job and downloads.
+>
+>
 > [The transport defines endpoint, authentication, and request rules](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/nova/core/test-gates/remote-dispatch.ts#L23-L74).
 >
 > [It defines remote operations and response ceilings](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/nova/core/test-gates/remote-dispatch.ts#L75-L134).
 >
 > [It checks result and evidence digests](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/nova/core/test-gates/remote-dispatch.ts#L135-L194).
+>
+> **Contract or setting:** Plan/source/request identities and the operation deadline constrain the handoff.
+>
+> **Test evidence:** No live complete Nova-to-Buster result and evidence import is established by this source trace.
+>
+> **Revision:** `13bff0a18a64e74f2cbbaa1978e746fcdeff0c10`. Source bindings, not execution receipts.
+>
+> **Limit:** Transport success alone does not validate remote execution or permit replacement of an uncertain job.
+>
 
 ### Forge and Echo: Gateway envelope and result import
 
@@ -389,7 +473,21 @@ state machine.
 
 > **Source evidence — bounded framing**
 >
+> **Claim:** Native control framing preserves bounded messages without owning their specialist meaning.
+>
+> **Implementation:** The channel implementation below defines byte framing, ordered writer and reader behavior.
+>
+>
 > [The channel validates limits and serializes framed writes](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/worker/core/worker/native-control-channel.ts#L1-L45), then [rejects a second reader and truncated or oversized input](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/worker/core/worker/native-control-channel.ts#L46-L74).
+>
+> **Contract or setting:** Channel byte ceilings are separate from a role-owned schema and durable phase acknowledgement.
+>
+> **Test evidence:** No deployment-host native channel and specialist phase exercise is established by these implementation links.
+>
+> **Revision:** `13bff0a18a64e74f2cbbaa1978e746fcdeff0c10`. Source bindings, not execution receipts.
+>
+> **Limit:** Framing does not prove payload validity, process isolation or a committed lifecycle transition.
+>
 
 ### Prism hop identities and native pressure
 
@@ -667,6 +765,11 @@ accept writes under one logical stream prefix.
 
 > **Source evidence — stream, atomic deduplication, and limits**
 >
+> **Claim:** Redis publication has bounded deduplication and stream retention, separate from consumers and host ingress queues.
+>
+> **Implementation:** The Lua publisher, protocol parser, host writer and migration fixture below define those boundaries.
+>
+>
 > [The adapter validates bounded configuration](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/common/plugins/redis-transport/src/adapter.ts#L1-L48) and [atomically deduplicates before `XADD`](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/common/plugins/redis-transport/src/adapter.ts#L49-L91).
 >
 > [Stream names include version, kind, encoded target, and a hashed idempotency key](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/common/plugins/redis-transport/src/stream-identity.ts#L1-L8).
@@ -676,6 +779,15 @@ accept writes under one logical stream prefix.
 > [The OpenClaw writer applies queue priority and bounded retry](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/common/plugins/openclaw-agent-observer/src/redis-writer.ts#L140-L195) and [`MAXLEN` plus dead-letter handling](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/common/plugins/openclaw-agent-observer/src/redis-writer.ts#L196-L255).
 >
 > [The native migration test creates stream, pending-consumer, and dedup-expiry state](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/tests/verification/reliability/redis-migration.test.mts#L12-L60) and [verifies that state after migration](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/tests/verification/reliability/redis-migration.test.mts#L61-L83).
+>
+> **Contract or setting:** Stream identity, MAXLEN, dedupTtlMs and host queue/retry settings govern different retained state.
+>
+> **Test evidence:** The linked native-binary migration fixture asserts stream/pending-state/absolute-expiry preservation and lost-ACK replay; no fresh run is claimed.
+>
+> **Revision:** `13bff0a18a64e74f2cbbaa1978e746fcdeff0c10`. Source bindings, not execution receipts.
+>
+> **Limit:** The fixture requires real source/destination binaries; stream acceptance is not downstream consumption or indefinite deduplication.
+>
 
 ### Signed HTTP Transport Publisher
 
@@ -776,6 +888,11 @@ These results do not prove a deployed transport, receiver or live credential.
 
 > **Source evidence — publisher admission, delivery and replay**
 >
+> **Claim:** The HTTP publisher binds a closed message and ACK to durable request and per-attempt terminal records.
+>
+> **Implementation:** Publisher admission, HMAC transport and durable driver below implement this non-Redis protocol.
+>
+>
 > [Closed target/store configuration and defaults.](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/skills/common/plugins/transport-publisher/src/adapter.ts#L61-L98)
 > [Published closed target/store configuration.](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/skills/common/plugins/transport-publisher/schemas/config.schema.json#L1-L40)
 > [JSON/wrapper/key/size and Secret response admission.](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/skills/common/plugins/transport-publisher/src/adapter.ts#L100-L158)
@@ -787,6 +904,15 @@ These results do not prove a deployed transport, receiver or live credential.
 > [Driver path, locking, replay, record and whole-store capacity.](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/skills/common/plugin-runtime/foundation/observability/durable-records.ts#L56-L109)
 > [Digest-CAS terminal transition and durable write.](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/skills/common/plugin-runtime/foundation/observability/durable-records.ts#L183-L219)
 > [Nova package selection includes runtime dispatch and transport publisher, not activation configuration.](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/packaging/runtime/roles/nova.json#L26-L43)
+>
+> **Contract or setting:** Target/key/wrapper limits, receiver publicationId and store capacity constrain each send branch.
+>
+> **Test evidence:** The preceding dated record distinguishes passing stubbed direct probes from the failed Core-backed fixture; these links add no execution result.
+>
+> **Revision:** `0e35889a3c4e65d5c47ba88e924611aace67eb1d`. Source bindings, not execution receipts.
+>
+> **Limit:** An unresolved reservation can resend; receiver deduplication and reconciliation remain necessary, not exactly-once delivery.
+>
 
 ### SPIFFE And mTLS
 
@@ -801,7 +927,21 @@ fence, capability, or application-role authorization.
 
 > **Source evidence — application-side peer proof**
 >
+> **Claim:** Application peer admission requires both a local trusted proxy connection and an allowed SPIFFE identity.
+>
+> **Implementation:** Worker trust parsing below checks forwarded URI identity and loopback origin.
+>
+>
 > [Worker trust accepts one URI identity, validates its form, checks loopback proxy origin, and enforces the exact allowlist](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/worker/core/worker/trust.ts#L1-L52).
+>
+> **Contract or setting:** The exact peer allowlist supplements, rather than replaces, job/capability/fence authorization.
+>
+> **Test evidence:** No live proxy certificate and allowed/denied peer exercise is established by this source trace.
+>
+> **Revision:** `13bff0a18a64e74f2cbbaa1978e746fcdeff0c10`. Source bindings, not execution receipts.
+>
+> **Limit:** A self-asserted remote forwarding header is not trusted identity or business authority.
+>
 
 ### Private routes are not one transport
 
@@ -1031,11 +1171,25 @@ Source: [direct storage template](https://github.com/datrab/kubeclaw/blob/d7f822
 
 > **Source evidence — content and route wiring**
 >
+> **Claim:** Registry-client configuration, private content and private route ownership remain distinct.
+>
+> **Implementation:** Buster startup, client projections and Archviewer route policy below show their separate wiring.
+>
+>
 > [The Buster runtime starts rootless BuildKit with generated registry configuration](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/docker/buster-runtime-entrypoint.sh#L1-L38).
 >
 > [One generator produces node, BuildKit, and runtime registry client settings from the selected endpoints](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/scripts/registry-client-config.mjs#L57-L104).
 >
 > [Archviewer demonstrates a private Tailscale Ingress whose Cilium rule binds the exact owning proxy](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/charts/kubeclaw/templates/archviewer.yaml#L26-L81).
+>
+> **Contract or setting:** Explicit registry/mirror endpoints select clients; the route policy selects the exact proxy identity.
+>
+> **Test evidence:** No fresh uncached image pull, retained registry restore or private route exercise is established here.
+>
+> **Revision:** `0e35889a3c4e65d5c47ba88e924611aace67eb1d`; `13bff0a18a64e74f2cbbaa1978e746fcdeff0c10`. Source bindings, not execution receipts.
+>
+> **Limit:** A mirror hit or ready Service cannot restore missing private blobs or prove retained storage.
+>
 
 ### Prism Ingestion, Providers, And State
 
@@ -1067,6 +1221,11 @@ same Control result receipt after a lost response.
 
 > **Source evidence — Prism adjacent paths**
 >
+> **Claim:** Corpus ingestion, native deterministic execution and OpenClaw memory embeddings are separate Prism paths.
+>
+> **Implementation:** Control/Ingestion handlers, native host composition and provider functions below identify each owner.
+>
+>
 > [Control acquires, verifies, embeds, stores, cleans, and activates a corpus revision in that order](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/prism/server/control-server.ts#L810-L842).
 >
 > [Ingestion bounds TTL and remote HTTPS acquisition](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/prism/server/ingestion.ts#L10-L58) and [authenticates, validates, quarantines, and classifies failures](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/prism/server/ingestion.ts#L60-L97).
@@ -1076,6 +1235,15 @@ same Control result receipt after a lost response.
 > [The optional OpenAI-compatible provider uses a 60-second default timeout](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/prism/engine/design-providers.ts#L38-L96).
 >
 > [It validates embedding status and vectors](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/prism/engine/design-providers.ts#L121-L155).
+>
+> **Contract or setting:** Control gates acquisition/activation; the native host selects its deterministic provider, not every available provider class.
+>
+> **Test evidence:** No full live acquisition, native provider or gateway-embedding journey is established by these source bindings.
+>
+> **Revision:** `13bff0a18a64e74f2cbbaa1978e746fcdeff0c10`. Source bindings, not execution receipts.
+>
+> **Limit:** Available code does not prove composition or permission; uncertain agent work gains no improvised resolution transition.
+>
 
 ### Operations And Monitoring
 
@@ -1092,6 +1260,11 @@ journal, database row, receipt, or digest proves the system transition.
 
 > **Source evidence — observation paths**
 >
+> **Claim:** Ops reads and monitoring projections observe systems without acquiring their lifecycle mutation authority.
+>
+> **Implementation:** Projected-token wiring, Kubernetes GETs, Hubble process bounds and Alloy forwarding below define the observation paths.
+>
+>
 > [The deployed MCP binds to loopback and mounts the kube-api token volume](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/charts/ops-pod/templates/workload.yaml#L85-L101).
 > [Codex conditionally mounts the same volume](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/charts/ops-pod/templates/workload.yaml#L74-L77).
 >
@@ -1102,6 +1275,15 @@ journal, database row, receipt, or digest proves the system transition.
 > [Hubble fixes endpoint, concurrency, time, and byte ceilings](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/tools/ops-mcp/src/hubble.mjs#L1-L59) and [returns explicit partial-result reasons](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/tools/ops-mcp/src/hubble.mjs#L60-L118).
 >
 > [Alloy discovers and processes CRI log files](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/gitops/platform/values/alloy.yaml#L30-L79) and [pushes them to the fixed Loki endpoint](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/gitops/platform/values/alloy.yaml#L80-L101).
+>
+> **Contract or setting:** MCP grants, shared credential mounts and per-request/query bounds govern different authority and pressure.
+>
+> **Test evidence:** No deployed Kubernetes RBAC, Relay completeness or CRI-to-Loki delivery result is established by these links.
+>
+> **Revision:** `13bff0a18a64e74f2cbbaa1978e746fcdeff0c10`. Source bindings, not execution receipts.
+>
+> **Limit:** A read-only tool list does not narrow the shared credential; empty/partial observations are not complete incident proof.
+>
 
 ## Complete Showcase Success Trace
 
@@ -1214,6 +1396,11 @@ record.
 
 > **Source evidence — full showcase bindings**
 >
+> **Claim:** The complete showcase trace is a target acceptance example, not an executed successful run.
+>
+> **Implementation:** Role wiring, provider routes, Control job admission and BuildKit startup below support the named handoffs.
+>
+>
 > [The role workload receives exact Git, Redis, LiteLLM, and gateway configuration](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/charts/kubeclaw/templates/deployment.yaml#L1350-L1372).
 > [It renders the selected provider routes](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/charts/kubeclaw/templates/deployment.yaml#L1373-L1415).
 > [It turns selected dependencies into readiness inputs](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/charts/kubeclaw/templates/deployment.yaml#L1437-L1460).
@@ -1226,6 +1413,15 @@ record.
 > [The durable agent store binds claim, fence, and non-replay outcome](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/prism/control/agent-jobs.ts#L31-L65).
 >
 > [The Buster entrypoint starts rootless BuildKit only after it writes selected registry configuration](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/docker/buster-runtime-entrypoint.sh#L4-L61).
+>
+> **Contract or setting:** Selected deployment owner, endpoints, credentials and domain identities must each be supplied and verified.
+>
+> **Test evidence:** The example explicitly requires live checks; no completed showcase or missing registry-client selection is inferred here.
+>
+> **Revision:** `0e35889a3c4e65d5c47ba88e924611aace67eb1d`; `13bff0a18a64e74f2cbbaa1978e746fcdeff0c10`. Source bindings, not execution receipts.
+>
+> **Limit:** A probe, model answer, message or cache hit cannot replace an authoritative journal, row, receipt or verified digest.
+>
 
 ## Dependency Failure Traces To An Operator Decision
 

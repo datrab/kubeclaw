@@ -1,0 +1,3767 @@
+{
+  "pages": [
+    {
+      "path": "docs/site/understand/communication.md",
+      "baselineSha256": "89605e8e262b22ceabc8fa0a2becae7bef0c4e8051a4e3513fd5985501cb9eaf",
+      "candidateSha256": "489ddeed11405303f5b0560f234d68ef3601a645e7f3120508d4e16686e17bee",
+      "actualSourceBoxes": 14,
+      "headingsUnchanged": true,
+      "oldUrlsPreservedInOrder": true
+    },
+    {
+      "path": "docs/site/understand/platform-and-operations.md",
+      "baselineSha256": "0c138033e653e9b1a2765345ea6c1a82afdcae0da0c452e1e342ca4448b2b098",
+      "candidateSha256": "c80a95726d18def7801ecf1d615bc3cba1901b1e728f82f4ac7638290ee49bfb",
+      "actualSourceBoxes": 16,
+      "headingsUnchanged": true,
+      "oldUrlsPreservedInOrder": true
+    },
+    {
+      "path": "docs/site/understand/data-and-state.md",
+      "baselineSha256": "2a2c5442bd88eaf53b7be31d97007351d4157ae1274773a4d50430ce3c2f428e",
+      "candidateSha256": "8148e1cf2b7366e778d990b03fdea956cc376e811091a2a1d38946daf8c735a4",
+      "actualSourceBoxes": 16,
+      "headingsUnchanged": true,
+      "oldUrlsPreservedInOrder": true
+    },
+    {
+      "path": "docs/site/understand/prism-data.md",
+      "baselineSha256": "7ac2cc4ac527543b9adff51a0dfbbc52c91505dbf532beaa411459c7ec244f28",
+      "candidateSha256": "747e3ab117b34340221fcbdc1946a5a273f9df6645bf1ed0ffc27c8a2da34cf4",
+      "actualSourceBoxes": 16,
+      "headingsUnchanged": true,
+      "oldUrlsPreservedInOrder": true
+    }
+  ],
+  "boxes": [
+    {
+      "page": "docs/site/understand/communication.md",
+      "startLine": 87,
+      "endLine": 114,
+      "title": "> **Source evidence — the complete Prism bridge**",
+      "sha256": "a896e0f703ddb5ce614e21ebd664a52098b78ce226806c28449792fa38c05d77",
+      "fields": [
+        {
+          "field": "Claim",
+          "present": true
+        },
+        {
+          "field": "Implementation",
+          "present": true
+        },
+        {
+          "field": "Contract",
+          "present": true
+        },
+        {
+          "field": "Test evidence",
+          "present": true
+        },
+        {
+          "field": "Revision",
+          "present": true
+        },
+        {
+          "field": "Limit",
+          "present": true
+        }
+      ]
+    },
+    {
+      "page": "docs/site/understand/communication.md",
+      "startLine": 166,
+      "endLine": 194,
+      "title": "> **Source evidence — dynamic HTTP families and Studio fallback**",
+      "sha256": "8214f10b38bc89c0ad6604e68bc0993c3de7db2ade738a3a0641d9f2cbc5a0f9",
+      "fields": [
+        {
+          "field": "Claim",
+          "present": true
+        },
+        {
+          "field": "Implementation",
+          "present": true
+        },
+        {
+          "field": "Contract",
+          "present": true
+        },
+        {
+          "field": "Test evidence",
+          "present": true
+        },
+        {
+          "field": "Revision",
+          "present": true
+        },
+        {
+          "field": "Limit",
+          "present": true
+        }
+      ]
+    },
+    {
+      "page": "docs/site/understand/communication.md",
+      "startLine": 196,
+      "endLine": 221,
+      "title": "> **Source evidence — selected reasoning and Discord configuration**",
+      "sha256": "b45494f604d3aec20e2597cd80c0deb390e39751c55004d84c1d346a01864b3c",
+      "fields": [
+        {
+          "field": "Claim",
+          "present": true
+        },
+        {
+          "field": "Implementation",
+          "present": true
+        },
+        {
+          "field": "Contract",
+          "present": true
+        },
+        {
+          "field": "Test evidence",
+          "present": true
+        },
+        {
+          "field": "Revision",
+          "present": true
+        },
+        {
+          "field": "Limit",
+          "present": true
+        }
+      ]
+    },
+    {
+      "page": "docs/site/understand/communication.md",
+      "startLine": 246,
+      "endLine": 281,
+      "title": "> **Source evidence — route matching and authority**",
+      "sha256": "b916d0895fedd0b5807d983132e649e24b64263a314ca48bab2e04618ef75764",
+      "fields": [
+        {
+          "field": "Claim",
+          "present": true
+        },
+        {
+          "field": "Implementation",
+          "present": true
+        },
+        {
+          "field": "Contract",
+          "present": true
+        },
+        {
+          "field": "Test evidence",
+          "present": true
+        },
+        {
+          "field": "Revision",
+          "present": true
+        },
+        {
+          "field": "Limit",
+          "present": true
+        }
+      ]
+    },
+    {
+      "page": "docs/site/understand/communication.md",
+      "startLine": 309,
+      "endLine": 345,
+      "title": "> **Source evidence — service and optional monitoring endpoints**",
+      "sha256": "070dbfbb5f9df7c3a24bf5288480bc0eab5992f5fce167d95095377bb535330c",
+      "fields": [
+        {
+          "field": "Claim",
+          "present": true
+        },
+        {
+          "field": "Implementation",
+          "present": true
+        },
+        {
+          "field": "Contract",
+          "present": true
+        },
+        {
+          "field": "Test evidence",
+          "present": true
+        },
+        {
+          "field": "Revision",
+          "present": true
+        },
+        {
+          "field": "Limit",
+          "present": true
+        }
+      ]
+    },
+    {
+      "page": "docs/site/understand/communication.md",
+      "startLine": 358,
+      "endLine": 378,
+      "title": "> **Source evidence — remote calls and content binding**",
+      "sha256": "896b289c24ea38be2733f6d045b1518d333981ffca4d5b6a380b072f0e196851",
+      "fields": [
+        {
+          "field": "Claim",
+          "present": true
+        },
+        {
+          "field": "Implementation",
+          "present": true
+        },
+        {
+          "field": "Contract",
+          "present": true
+        },
+        {
+          "field": "Test evidence",
+          "present": true
+        },
+        {
+          "field": "Revision",
+          "present": true
+        },
+        {
+          "field": "Limit",
+          "present": true
+        }
+      ]
+    },
+    {
+      "page": "docs/site/understand/communication.md",
+      "startLine": 474,
+      "endLine": 490,
+      "title": "> **Source evidence — bounded framing**",
+      "sha256": "3331bdce95dec33afe117b46b03bece72cc011ea7566fdcbcb16f2bc8345026f",
+      "fields": [
+        {
+          "field": "Claim",
+          "present": true
+        },
+        {
+          "field": "Implementation",
+          "present": true
+        },
+        {
+          "field": "Contract",
+          "present": true
+        },
+        {
+          "field": "Test evidence",
+          "present": true
+        },
+        {
+          "field": "Revision",
+          "present": true
+        },
+        {
+          "field": "Limit",
+          "present": true
+        }
+      ]
+    },
+    {
+      "page": "docs/site/understand/communication.md",
+      "startLine": 766,
+      "endLine": 790,
+      "title": "> **Source evidence — stream, atomic deduplication, and limits**",
+      "sha256": "035b1794e529ba18add19515418d38e5ceed630b57f4107c63ef8a424a10cbc5",
+      "fields": [
+        {
+          "field": "Claim",
+          "present": true
+        },
+        {
+          "field": "Implementation",
+          "present": true
+        },
+        {
+          "field": "Contract",
+          "present": true
+        },
+        {
+          "field": "Test evidence",
+          "present": true
+        },
+        {
+          "field": "Revision",
+          "present": true
+        },
+        {
+          "field": "Limit",
+          "present": true
+        }
+      ]
+    },
+    {
+      "page": "docs/site/understand/communication.md",
+      "startLine": 889,
+      "endLine": 915,
+      "title": "> **Source evidence — publisher admission, delivery and replay**",
+      "sha256": "227e2b4497ffa3a407a6f13a089c93d28a354876f3c2055c78db2e9801e97f29",
+      "fields": [
+        {
+          "field": "Claim",
+          "present": true
+        },
+        {
+          "field": "Implementation",
+          "present": true
+        },
+        {
+          "field": "Contract",
+          "present": true
+        },
+        {
+          "field": "Test evidence",
+          "present": true
+        },
+        {
+          "field": "Revision",
+          "present": true
+        },
+        {
+          "field": "Limit",
+          "present": true
+        }
+      ]
+    },
+    {
+      "page": "docs/site/understand/communication.md",
+      "startLine": 928,
+      "endLine": 944,
+      "title": "> **Source evidence — application-side peer proof**",
+      "sha256": "36383a3a061043d4f58cbfedd92710f42a09b66c6cfda8743bbe927344219d89",
+      "fields": [
+        {
+          "field": "Claim",
+          "present": true
+        },
+        {
+          "field": "Implementation",
+          "present": true
+        },
+        {
+          "field": "Contract",
+          "present": true
+        },
+        {
+          "field": "Test evidence",
+          "present": true
+        },
+        {
+          "field": "Revision",
+          "present": true
+        },
+        {
+          "field": "Limit",
+          "present": true
+        }
+      ]
+    },
+    {
+      "page": "docs/site/understand/communication.md",
+      "startLine": 1172,
+      "endLine": 1192,
+      "title": "> **Source evidence — content and route wiring**",
+      "sha256": "e951bbe87af977a17c65fd73127b34d2006f56dc264a8125cb671d40ad60739b",
+      "fields": [
+        {
+          "field": "Claim",
+          "present": true
+        },
+        {
+          "field": "Implementation",
+          "present": true
+        },
+        {
+          "field": "Contract",
+          "present": true
+        },
+        {
+          "field": "Test evidence",
+          "present": true
+        },
+        {
+          "field": "Revision",
+          "present": true
+        },
+        {
+          "field": "Limit",
+          "present": true
+        }
+      ]
+    },
+    {
+      "page": "docs/site/understand/communication.md",
+      "startLine": 1222,
+      "endLine": 1246,
+      "title": "> **Source evidence — Prism adjacent paths**",
+      "sha256": "70f56e41cbc447ac010a628670fbfdab6401ff2e635434cd8f774fb474972a76",
+      "fields": [
+        {
+          "field": "Claim",
+          "present": true
+        },
+        {
+          "field": "Implementation",
+          "present": true
+        },
+        {
+          "field": "Contract",
+          "present": true
+        },
+        {
+          "field": "Test evidence",
+          "present": true
+        },
+        {
+          "field": "Revision",
+          "present": true
+        },
+        {
+          "field": "Limit",
+          "present": true
+        }
+      ]
+    },
+    {
+      "page": "docs/site/understand/communication.md",
+      "startLine": 1261,
+      "endLine": 1286,
+      "title": "> **Source evidence — observation paths**",
+      "sha256": "f67c3e6ff4ac5e14ae178ac8fa695b095452bf524886256644ddb4f2767f04a5",
+      "fields": [
+        {
+          "field": "Claim",
+          "present": true
+        },
+        {
+          "field": "Implementation",
+          "present": true
+        },
+        {
+          "field": "Contract",
+          "present": true
+        },
+        {
+          "field": "Test evidence",
+          "present": true
+        },
+        {
+          "field": "Revision",
+          "present": true
+        },
+        {
+          "field": "Limit",
+          "present": true
+        }
+      ]
+    },
+    {
+      "page": "docs/site/understand/communication.md",
+      "startLine": 1397,
+      "endLine": 1424,
+      "title": "> **Source evidence — full showcase bindings**",
+      "sha256": "0148a43dda86d5d83dd326bf4bc6bbebae1763be370f461bf2fd6d3d2f9bdcf7",
+      "fields": [
+        {
+          "field": "Claim",
+          "present": true
+        },
+        {
+          "field": "Implementation",
+          "present": true
+        },
+        {
+          "field": "Contract",
+          "present": true
+        },
+        {
+          "field": "Test evidence",
+          "present": true
+        },
+        {
+          "field": "Revision",
+          "present": true
+        },
+        {
+          "field": "Limit",
+          "present": true
+        }
+      ]
+    },
+    {
+      "page": "docs/site/understand/platform-and-operations.md",
+      "startLine": 130,
+      "endLine": 142,
+      "title": "> **Source evidence — selected readiness and external storage**",
+      "sha256": "601f5e1bf92ebb4358dba36c3b8e489c01827033239ff7e755f1654aafc639d1",
+      "fields": [
+        {
+          "field": "Claim",
+          "present": true
+        },
+        {
+          "field": "Implementation",
+          "present": true
+        },
+        {
+          "field": "Contract",
+          "present": true
+        },
+        {
+          "field": "Test evidence",
+          "present": true
+        },
+        {
+          "field": "Revision",
+          "present": true
+        },
+        {
+          "field": "Limit",
+          "present": true
+        }
+      ]
+    },
+    {
+      "page": "docs/site/understand/platform-and-operations.md",
+      "startLine": 167,
+      "endLine": 185,
+      "title": "> **Source evidence — present bootstrap boundary**",
+      "sha256": "db296b148e5d0d1a6e184563764f8c74f7669f084ee977f4d18fa4d3e286659f",
+      "fields": [
+        {
+          "field": "Claim",
+          "present": true
+        },
+        {
+          "field": "Implementation",
+          "present": true
+        },
+        {
+          "field": "Contract",
+          "present": true
+        },
+        {
+          "field": "Test evidence",
+          "present": true
+        },
+        {
+          "field": "Revision",
+          "present": true
+        },
+        {
+          "field": "Limit",
+          "present": true
+        }
+      ]
+    },
+    {
+      "page": "docs/site/understand/platform-and-operations.md",
+      "startLine": 220,
+      "endLine": 240,
+      "title": "> **Source evidence — storage and scheduling inputs**",
+      "sha256": "da2dd2be09b07b0a387c1ec37fbe2825d34d3e23253f16dfcaa1c7daabe2baa5",
+      "fields": [
+        {
+          "field": "Claim",
+          "present": true
+        },
+        {
+          "field": "Implementation",
+          "present": true
+        },
+        {
+          "field": "Contract",
+          "present": true
+        },
+        {
+          "field": "Test evidence",
+          "present": true
+        },
+        {
+          "field": "Revision",
+          "present": true
+        },
+        {
+          "field": "Limit",
+          "present": true
+        }
+      ]
+    },
+    {
+      "page": "docs/site/understand/platform-and-operations.md",
+      "startLine": 288,
+      "endLine": 308,
+      "title": "> **Source evidence — guarded CNI ownership**",
+      "sha256": "b18bc4dbb8986c4ba47d9f463f2889182576656da817414c42e29e244140c809",
+      "fields": [
+        {
+          "field": "Claim",
+          "present": true
+        },
+        {
+          "field": "Implementation",
+          "present": true
+        },
+        {
+          "field": "Contract",
+          "present": true
+        },
+        {
+          "field": "Test evidence",
+          "present": true
+        },
+        {
+          "field": "Revision",
+          "present": true
+        },
+        {
+          "field": "Limit",
+          "present": true
+        }
+      ]
+    },
+    {
+      "page": "docs/site/understand/platform-and-operations.md",
+      "startLine": 341,
+      "endLine": 361,
+      "title": "> **Source evidence — Git deployment boundary**",
+      "sha256": "db1b675e52a932e4f4971c4e58828723e8552c057858c05983adc24e53c9a9cb",
+      "fields": [
+        {
+          "field": "Claim",
+          "present": true
+        },
+        {
+          "field": "Implementation",
+          "present": true
+        },
+        {
+          "field": "Contract",
+          "present": true
+        },
+        {
+          "field": "Test evidence",
+          "present": true
+        },
+        {
+          "field": "Revision",
+          "present": true
+        },
+        {
+          "field": "Limit",
+          "present": true
+        }
+      ]
+    },
+    {
+      "page": "docs/site/understand/platform-and-operations.md",
+      "startLine": 402,
+      "endLine": 429,
+      "title": "> **Source evidence — dependency configuration and precedence inputs**",
+      "sha256": "a130f2a42c5ba87f0d237d0fa79c546ec0d8ff47a443deaadbf63e0c74ed2345",
+      "fields": [
+        {
+          "field": "Claim",
+          "present": true
+        },
+        {
+          "field": "Implementation",
+          "present": true
+        },
+        {
+          "field": "Contract",
+          "present": true
+        },
+        {
+          "field": "Test evidence",
+          "present": true
+        },
+        {
+          "field": "Revision",
+          "present": true
+        },
+        {
+          "field": "Limit",
+          "present": true
+        }
+      ]
+    },
+    {
+      "page": "docs/site/understand/platform-and-operations.md",
+      "startLine": 472,
+      "endLine": 492,
+      "title": "> **Source evidence — builder lifecycle**",
+      "sha256": "845f1e322678e2578e852a118765b8aa7b2a9cbcfcd0b41c9bc1d3cbca1e8176",
+      "fields": [
+        {
+          "field": "Claim",
+          "present": true
+        },
+        {
+          "field": "Implementation",
+          "present": true
+        },
+        {
+          "field": "Contract",
+          "present": true
+        },
+        {
+          "field": "Test evidence",
+          "present": true
+        },
+        {
+          "field": "Revision",
+          "present": true
+        },
+        {
+          "field": "Limit",
+          "present": true
+        }
+      ]
+    },
+    {
+      "page": "docs/site/understand/platform-and-operations.md",
+      "startLine": 537,
+      "endLine": 562,
+      "title": "> **Source evidence — explicit laboratory limits**",
+      "sha256": "414760d58540bff28330ab4645b83c0ebf1c31f40ade98b5c142a80b9d175660",
+      "fields": [
+        {
+          "field": "Claim",
+          "present": true
+        },
+        {
+          "field": "Implementation",
+          "present": true
+        },
+        {
+          "field": "Contract",
+          "present": true
+        },
+        {
+          "field": "Test evidence",
+          "present": true
+        },
+        {
+          "field": "Revision",
+          "present": true
+        },
+        {
+          "field": "Limit",
+          "present": true
+        }
+      ]
+    },
+    {
+      "page": "docs/site/understand/platform-and-operations.md",
+      "startLine": 595,
+      "endLine": 613,
+      "title": "> **Source evidence — cache boundary and client routing**",
+      "sha256": "b44391a76680e603d3f727b78575b51eddb3c2ad539353b4fc9d0bd2c3e1473d",
+      "fields": [
+        {
+          "field": "Claim",
+          "present": true
+        },
+        {
+          "field": "Implementation",
+          "present": true
+        },
+        {
+          "field": "Contract",
+          "present": true
+        },
+        {
+          "field": "Test evidence",
+          "present": true
+        },
+        {
+          "field": "Revision",
+          "present": true
+        },
+        {
+          "field": "Limit",
+          "present": true
+        }
+      ]
+    },
+    {
+      "page": "docs/site/understand/platform-and-operations.md",
+      "startLine": 649,
+      "endLine": 669,
+      "title": "> **Source evidence — service ownership**",
+      "sha256": "16a6edcee32ec0effad1f9bf725eba76b37ec1d0268415720b10cc11f18abd7e",
+      "fields": [
+        {
+          "field": "Claim",
+          "present": true
+        },
+        {
+          "field": "Implementation",
+          "present": true
+        },
+        {
+          "field": "Contract",
+          "present": true
+        },
+        {
+          "field": "Test evidence",
+          "present": true
+        },
+        {
+          "field": "Revision",
+          "present": true
+        },
+        {
+          "field": "Limit",
+          "present": true
+        }
+      ]
+    },
+    {
+      "page": "docs/site/understand/platform-and-operations.md",
+      "startLine": 775,
+      "endLine": 782,
+      "title": "> **Source evidence — selected embedding client**",
+      "sha256": "10ae943869e60b227dfb2f946ff8b85a194f4190050c7a6e519ade63f6173cdf",
+      "fields": [
+        {
+          "field": "Claim",
+          "present": true
+        },
+        {
+          "field": "Implementation",
+          "present": true
+        },
+        {
+          "field": "Contract",
+          "present": true
+        },
+        {
+          "field": "Test evidence",
+          "present": true
+        },
+        {
+          "field": "Revision",
+          "present": true
+        },
+        {
+          "field": "Limit",
+          "present": true
+        }
+      ]
+    },
+    {
+      "page": "docs/site/understand/platform-and-operations.md",
+      "startLine": 800,
+      "endLine": 828,
+      "title": "> **Source evidence — gateway configuration and rollout**",
+      "sha256": "10bc73975daa50e4842d4c84e694170a81166eb1502ddc285474e16b4eef4f90",
+      "fields": [
+        {
+          "field": "Claim",
+          "present": true
+        },
+        {
+          "field": "Implementation",
+          "present": true
+        },
+        {
+          "field": "Contract",
+          "present": true
+        },
+        {
+          "field": "Test evidence",
+          "present": true
+        },
+        {
+          "field": "Revision",
+          "present": true
+        },
+        {
+          "field": "Limit",
+          "present": true
+        }
+      ]
+    },
+    {
+      "page": "docs/site/understand/platform-and-operations.md",
+      "startLine": 862,
+      "endLine": 878,
+      "title": "> **Source evidence:** [The chart defaults to requiring a mention](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/charts/kubeclaw/values.yaml#L188-L191).",
+      "sha256": "3f4d95c1c93a3a1f27d778ebe3d803267cf0f6889ae1a6a1002861ab8885899e",
+      "fields": [
+        {
+          "field": "Claim",
+          "present": true
+        },
+        {
+          "field": "Implementation",
+          "present": true
+        },
+        {
+          "field": "Contract",
+          "present": true
+        },
+        {
+          "field": "Test evidence",
+          "present": true
+        },
+        {
+          "field": "Revision",
+          "present": true
+        },
+        {
+          "field": "Limit",
+          "present": true
+        }
+      ]
+    },
+    {
+      "page": "docs/site/understand/platform-and-operations.md",
+      "startLine": 898,
+      "endLine": 926,
+      "title": "> **Source evidence — distinct external paths**",
+      "sha256": "c9ffc0756424afa53c30891946d899ddb56a00c6196201c1bdfed50eec80bc7c",
+      "fields": [
+        {
+          "field": "Claim",
+          "present": true
+        },
+        {
+          "field": "Implementation",
+          "present": true
+        },
+        {
+          "field": "Contract",
+          "present": true
+        },
+        {
+          "field": "Test evidence",
+          "present": true
+        },
+        {
+          "field": "Revision",
+          "present": true
+        },
+        {
+          "field": "Limit",
+          "present": true
+        }
+      ]
+    },
+    {
+      "page": "docs/site/understand/platform-and-operations.md",
+      "startLine": 950,
+      "endLine": 970,
+      "title": "> **Source evidence — retention and collector boundary**",
+      "sha256": "e0eb0ad5393361e082c150ac16cc3efea6055d03dde79ebf831cd613c871617d",
+      "fields": [
+        {
+          "field": "Claim",
+          "present": true
+        },
+        {
+          "field": "Implementation",
+          "present": true
+        },
+        {
+          "field": "Contract",
+          "present": true
+        },
+        {
+          "field": "Test evidence",
+          "present": true
+        },
+        {
+          "field": "Revision",
+          "present": true
+        },
+        {
+          "field": "Limit",
+          "present": true
+        }
+      ]
+    },
+    {
+      "page": "docs/site/understand/platform-and-operations.md",
+      "startLine": 998,
+      "endLine": 1021,
+      "title": "> **Source evidence — effective operations authority**",
+      "sha256": "8731ffeb8be1d5c8c1abf10a931089db41c6dbffe7229cd1fedd6b094894387c",
+      "fields": [
+        {
+          "field": "Claim",
+          "present": true
+        },
+        {
+          "field": "Implementation",
+          "present": true
+        },
+        {
+          "field": "Contract",
+          "present": true
+        },
+        {
+          "field": "Test evidence",
+          "present": true
+        },
+        {
+          "field": "Revision",
+          "present": true
+        },
+        {
+          "field": "Limit",
+          "present": true
+        }
+      ]
+    },
+    {
+      "page": "docs/site/understand/data-and-state.md",
+      "startLine": 52,
+      "endLine": 69,
+      "title": "> **Source evidence — result and source identities**",
+      "sha256": "e28b2e3ab0f8371682de988b331f5d0c9611feb645a79191f6145dbcaa5eeaa1",
+      "fields": [
+        {
+          "field": "Claim",
+          "present": true
+        },
+        {
+          "field": "Implementation",
+          "present": true
+        },
+        {
+          "field": "Contract",
+          "present": true
+        },
+        {
+          "field": "Test evidence",
+          "present": true
+        },
+        {
+          "field": "Revision",
+          "present": true
+        },
+        {
+          "field": "Limit",
+          "present": true
+        }
+      ]
+    },
+    {
+      "page": "docs/site/understand/data-and-state.md",
+      "startLine": 218,
+      "endLine": 247,
+      "title": "> **Source evidence — temporary and inactive identities**",
+      "sha256": "7b7c4f553b045baafa696884702a80410a187ad235cdb123fc904141faf0aa56",
+      "fields": [
+        {
+          "field": "Claim",
+          "present": true
+        },
+        {
+          "field": "Implementation",
+          "present": true
+        },
+        {
+          "field": "Contract",
+          "present": true
+        },
+        {
+          "field": "Test evidence",
+          "present": true
+        },
+        {
+          "field": "Revision",
+          "present": true
+        },
+        {
+          "field": "Limit",
+          "present": true
+        }
+      ]
+    },
+    {
+      "page": "docs/site/understand/data-and-state.md",
+      "startLine": 249,
+      "endLine": 271,
+      "title": "> **Source evidence — the common file-store guarantees**",
+      "sha256": "2aafca5cc1abec57abceef706c7390ad9a84a12016b0bf68f98523cd9e5ad4f6",
+      "fields": [
+        {
+          "field": "Claim",
+          "present": true
+        },
+        {
+          "field": "Implementation",
+          "present": true
+        },
+        {
+          "field": "Contract",
+          "present": true
+        },
+        {
+          "field": "Test evidence",
+          "present": true
+        },
+        {
+          "field": "Revision",
+          "present": true
+        },
+        {
+          "field": "Limit",
+          "present": true
+        }
+      ]
+    },
+    {
+      "page": "docs/site/understand/data-and-state.md",
+      "startLine": 291,
+      "endLine": 326,
+      "title": "> **Source evidence — deployment store contracts**",
+      "sha256": "65cef22f9e241a76d13983afffc33adb47e0781ba9726b11af87dcf9b2bec67c",
+      "fields": [
+        {
+          "field": "Claim",
+          "present": true
+        },
+        {
+          "field": "Implementation",
+          "present": true
+        },
+        {
+          "field": "Contract",
+          "present": true
+        },
+        {
+          "field": "Test evidence",
+          "present": true
+        },
+        {
+          "field": "Revision",
+          "present": true
+        },
+        {
+          "field": "Limit",
+          "present": true
+        }
+      ]
+    },
+    {
+      "page": "docs/site/understand/data-and-state.md",
+      "startLine": 356,
+      "endLine": 374,
+      "title": "> **Source evidence — run identity and snapshots**",
+      "sha256": "12df488798522318a889077e0ff2ad004f684e6af676f6a6d95efc0cbe2a5ece",
+      "fields": [
+        {
+          "field": "Claim",
+          "present": true
+        },
+        {
+          "field": "Implementation",
+          "present": true
+        },
+        {
+          "field": "Contract",
+          "present": true
+        },
+        {
+          "field": "Test evidence",
+          "present": true
+        },
+        {
+          "field": "Revision",
+          "present": true
+        },
+        {
+          "field": "Limit",
+          "present": true
+        }
+      ]
+    },
+    {
+      "page": "docs/site/understand/data-and-state.md",
+      "startLine": 398,
+      "endLine": 416,
+      "title": "> **Source evidence — effect persistence**",
+      "sha256": "afcf8fa0a7dae1690fe5cc81b5b6d5733a46fe388b179bdcd9866a463b6bc970",
+      "fields": [
+        {
+          "field": "Claim",
+          "present": true
+        },
+        {
+          "field": "Implementation",
+          "present": true
+        },
+        {
+          "field": "Contract",
+          "present": true
+        },
+        {
+          "field": "Test evidence",
+          "present": true
+        },
+        {
+          "field": "Revision",
+          "present": true
+        },
+        {
+          "field": "Limit",
+          "present": true
+        }
+      ]
+    },
+    {
+      "page": "docs/site/understand/data-and-state.md",
+      "startLine": 442,
+      "endLine": 474,
+      "title": "> **Source evidence — Nova control stores**",
+      "sha256": "68151f144fcaa1863553fa8de2912e8d4f5a2d504153704b775dc627a8aebc63",
+      "fields": [
+        {
+          "field": "Claim",
+          "present": true
+        },
+        {
+          "field": "Implementation",
+          "present": true
+        },
+        {
+          "field": "Contract",
+          "present": true
+        },
+        {
+          "field": "Test evidence",
+          "present": true
+        },
+        {
+          "field": "Revision",
+          "present": true
+        },
+        {
+          "field": "Limit",
+          "present": true
+        }
+      ]
+    },
+    {
+      "page": "docs/site/understand/data-and-state.md",
+      "startLine": 513,
+      "endLine": 538,
+      "title": "> **Source evidence — Worker durability and capacity**",
+      "sha256": "72535db0cf2566b8fa656a685b6a094a05cec50a36edb03e3cebba9e726d6e40",
+      "fields": [
+        {
+          "field": "Claim",
+          "present": true
+        },
+        {
+          "field": "Implementation",
+          "present": true
+        },
+        {
+          "field": "Contract",
+          "present": true
+        },
+        {
+          "field": "Test evidence",
+          "present": true
+        },
+        {
+          "field": "Revision",
+          "present": true
+        },
+        {
+          "field": "Limit",
+          "present": true
+        }
+      ]
+    },
+    {
+      "page": "docs/site/understand/data-and-state.md",
+      "startLine": 564,
+      "endLine": 590,
+      "title": "> **Source evidence — Buster stores**",
+      "sha256": "c4ff1a896c00e81f23920cb79ab94fa16ce05241f17c6c9cb803101045b0019b",
+      "fields": [
+        {
+          "field": "Claim",
+          "present": true
+        },
+        {
+          "field": "Implementation",
+          "present": true
+        },
+        {
+          "field": "Contract",
+          "present": true
+        },
+        {
+          "field": "Test evidence",
+          "present": true
+        },
+        {
+          "field": "Revision",
+          "present": true
+        },
+        {
+          "field": "Limit",
+          "present": true
+        }
+      ]
+    },
+    {
+      "page": "docs/site/understand/data-and-state.md",
+      "startLine": 639,
+      "endLine": 657,
+      "title": "> **Source evidence — Prism ownership and backup**",
+      "sha256": "1f96d4b5d044bf1db4a3b190d4b8521f957c604952fc962d34277ba6bebdffcd",
+      "fields": [
+        {
+          "field": "Claim",
+          "present": true
+        },
+        {
+          "field": "Implementation",
+          "present": true
+        },
+        {
+          "field": "Contract",
+          "present": true
+        },
+        {
+          "field": "Test evidence",
+          "present": true
+        },
+        {
+          "field": "Revision",
+          "present": true
+        },
+        {
+          "field": "Limit",
+          "present": true
+        }
+      ]
+    },
+    {
+      "page": "docs/site/understand/data-and-state.md",
+      "startLine": 709,
+      "endLine": 734,
+      "title": "> **Source evidence — LiteLLM persistence**",
+      "sha256": "b10e9cf9962fc3bbbb6e6f04c3ccffe82264fac75640db3ccc853564d8cbefe4",
+      "fields": [
+        {
+          "field": "Claim",
+          "present": true
+        },
+        {
+          "field": "Implementation",
+          "present": true
+        },
+        {
+          "field": "Contract",
+          "present": true
+        },
+        {
+          "field": "Test evidence",
+          "present": true
+        },
+        {
+          "field": "Revision",
+          "present": true
+        },
+        {
+          "field": "Limit",
+          "present": true
+        }
+      ]
+    },
+    {
+      "page": "docs/site/understand/data-and-state.md",
+      "startLine": 971,
+      "endLine": 991,
+      "title": "> **Source evidence — retention identification and its limit**",
+      "sha256": "91a1cebe838512c72638ce522eae03fca9695bb6247a067823c1adab50c1e4dc",
+      "fields": [
+        {
+          "field": "Claim",
+          "present": true
+        },
+        {
+          "field": "Implementation",
+          "present": true
+        },
+        {
+          "field": "Contract",
+          "present": true
+        },
+        {
+          "field": "Test evidence",
+          "present": true
+        },
+        {
+          "field": "Revision",
+          "present": true
+        },
+        {
+          "field": "Limit",
+          "present": true
+        }
+      ]
+    },
+    {
+      "page": "docs/site/understand/data-and-state.md",
+      "startLine": 1111,
+      "endLine": 1131,
+      "title": "> **Source evidence — selected LiteLLM implementation**",
+      "sha256": "1ebcee7deabee3df25493fa13f4c1311c26126c9eff3bd8b49653874bab0ed6b",
+      "fields": [
+        {
+          "field": "Claim",
+          "present": true
+        },
+        {
+          "field": "Implementation",
+          "present": true
+        },
+        {
+          "field": "Contract",
+          "present": true
+        },
+        {
+          "field": "Test evidence",
+          "present": true
+        },
+        {
+          "field": "Revision",
+          "present": true
+        },
+        {
+          "field": "Limit",
+          "present": true
+        }
+      ]
+    },
+    {
+      "page": "docs/site/understand/data-and-state.md",
+      "startLine": 1149,
+      "endLine": 1169,
+      "title": "> **Source evidence — profile differences**",
+      "sha256": "61c680d3bc2b6274b66cae8cb98d07a25fe236f53817b8769c92c2b357b2e129",
+      "fields": [
+        {
+          "field": "Claim",
+          "present": true
+        },
+        {
+          "field": "Implementation",
+          "present": true
+        },
+        {
+          "field": "Contract",
+          "present": true
+        },
+        {
+          "field": "Test evidence",
+          "present": true
+        },
+        {
+          "field": "Revision",
+          "present": true
+        },
+        {
+          "field": "Limit",
+          "present": true
+        }
+      ]
+    },
+    {
+      "page": "docs/site/understand/data-and-state.md",
+      "startLine": 1193,
+      "endLine": 1211,
+      "title": "> **Source evidence — Redis data behavior**",
+      "sha256": "fd3eaa3ec1ceab7b38986bb9fb673c0213a71e5ff1129e62b84789bc36e49582",
+      "fields": [
+        {
+          "field": "Claim",
+          "present": true
+        },
+        {
+          "field": "Implementation",
+          "present": true
+        },
+        {
+          "field": "Contract",
+          "present": true
+        },
+        {
+          "field": "Test evidence",
+          "present": true
+        },
+        {
+          "field": "Revision",
+          "present": true
+        },
+        {
+          "field": "Limit",
+          "present": true
+        }
+      ]
+    },
+    {
+      "page": "docs/site/understand/data-and-state.md",
+      "startLine": 1264,
+      "endLine": 1287,
+      "title": "> **Source evidence:**",
+      "sha256": "ac0cdb80af3e07d038f79331fd29f26ed1927bb840eae40dbccddeaa069e515b",
+      "fields": [
+        {
+          "field": "Claim",
+          "present": true
+        },
+        {
+          "field": "Implementation",
+          "present": true
+        },
+        {
+          "field": "Contract",
+          "present": true
+        },
+        {
+          "field": "Test evidence",
+          "present": true
+        },
+        {
+          "field": "Revision",
+          "present": true
+        },
+        {
+          "field": "Limit",
+          "present": true
+        }
+      ]
+    },
+    {
+      "page": "docs/site/understand/prism-data.md",
+      "startLine": 82,
+      "endLine": 100,
+      "title": "> **Source evidence — relational ownership**",
+      "sha256": "f8f724de00c7955cdce134f1d8469db788c82c9279f78d35ae2ac53db36c355c",
+      "fields": [
+        {
+          "field": "Claim",
+          "present": true
+        },
+        {
+          "field": "Implementation",
+          "present": true
+        },
+        {
+          "field": "Contract",
+          "present": true
+        },
+        {
+          "field": "Test evidence",
+          "present": true
+        },
+        {
+          "field": "Revision",
+          "present": true
+        },
+        {
+          "field": "Limit",
+          "present": true
+        }
+      ]
+    },
+    {
+      "page": "docs/site/understand/prism-data.md",
+      "startLine": 102,
+      "endLine": 114,
+      "title": "> **Source evidence — corpus and generation boundaries**",
+      "sha256": "62e597f58f6abe02a19eea97cb3ec17805180c02ba58bb1c6494b4ce2599fe1d",
+      "fields": [
+        {
+          "field": "Claim",
+          "present": true
+        },
+        {
+          "field": "Implementation",
+          "present": true
+        },
+        {
+          "field": "Contract",
+          "present": true
+        },
+        {
+          "field": "Test evidence",
+          "present": true
+        },
+        {
+          "field": "Revision",
+          "present": true
+        },
+        {
+          "field": "Limit",
+          "present": true
+        }
+      ]
+    },
+    {
+      "page": "docs/site/understand/prism-data.md",
+      "startLine": 156,
+      "endLine": 177,
+      "title": "> **Source evidence — architecture frontier**",
+      "sha256": "c60a733ee4b166386386665010adc74a8f4a89205013799ba4b1690fe0147f2a",
+      "fields": [
+        {
+          "field": "Claim",
+          "present": true
+        },
+        {
+          "field": "Implementation",
+          "present": true
+        },
+        {
+          "field": "Contract",
+          "present": true
+        },
+        {
+          "field": "Test evidence",
+          "present": true
+        },
+        {
+          "field": "Revision",
+          "present": true
+        },
+        {
+          "field": "Limit",
+          "present": true
+        }
+      ]
+    },
+    {
+      "page": "docs/site/understand/prism-data.md",
+      "startLine": 222,
+      "endLine": 244,
+      "title": "> **Source evidence — round admission and delivery**",
+      "sha256": "3e3116f4516ba763cf9624a76f3d02a0901ce2401a993a79caa0c5cc2adaed1c",
+      "fields": [
+        {
+          "field": "Claim",
+          "present": true
+        },
+        {
+          "field": "Implementation",
+          "present": true
+        },
+        {
+          "field": "Contract",
+          "present": true
+        },
+        {
+          "field": "Test evidence",
+          "present": true
+        },
+        {
+          "field": "Revision",
+          "present": true
+        },
+        {
+          "field": "Limit",
+          "present": true
+        }
+      ]
+    },
+    {
+      "page": "docs/site/understand/prism-data.md",
+      "startLine": 274,
+      "endLine": 296,
+      "title": "> **Source evidence — closed document contract**",
+      "sha256": "a68c7f16f64475613c5cd10109b2875ad82813bcaa5a3247a99ebf73728c302d",
+      "fields": [
+        {
+          "field": "Claim",
+          "present": true
+        },
+        {
+          "field": "Implementation",
+          "present": true
+        },
+        {
+          "field": "Contract",
+          "present": true
+        },
+        {
+          "field": "Test evidence",
+          "present": true
+        },
+        {
+          "field": "Revision",
+          "present": true
+        },
+        {
+          "field": "Limit",
+          "present": true
+        }
+      ]
+    },
+    {
+      "page": "docs/site/understand/prism-data.md",
+      "startLine": 332,
+      "endLine": 354,
+      "title": "> **Source evidence — deterministic editing**",
+      "sha256": "dcc4e58228d07092505fffb2469adf540f739569c3f120541cb151d0e365d856",
+      "fields": [
+        {
+          "field": "Claim",
+          "present": true
+        },
+        {
+          "field": "Implementation",
+          "present": true
+        },
+        {
+          "field": "Contract",
+          "present": true
+        },
+        {
+          "field": "Test evidence",
+          "present": true
+        },
+        {
+          "field": "Revision",
+          "present": true
+        },
+        {
+          "field": "Limit",
+          "present": true
+        }
+      ]
+    },
+    {
+      "page": "docs/site/understand/prism-data.md",
+      "startLine": 401,
+      "endLine": 423,
+      "title": "> **Source evidence — decisions and preferences**",
+      "sha256": "91d09cfea1f4fcbf64d6cd894ee53464ffd3453817a28b4949164aeb0e2ce059",
+      "fields": [
+        {
+          "field": "Claim",
+          "present": true
+        },
+        {
+          "field": "Implementation",
+          "present": true
+        },
+        {
+          "field": "Contract",
+          "present": true
+        },
+        {
+          "field": "Test evidence",
+          "present": true
+        },
+        {
+          "field": "Revision",
+          "present": true
+        },
+        {
+          "field": "Limit",
+          "present": true
+        }
+      ]
+    },
+    {
+      "page": "docs/site/understand/prism-data.md",
+      "startLine": 528,
+      "endLine": 560,
+      "title": "> **Source evidence — quality and release authority**",
+      "sha256": "c8d4f3e536d13f4594a1812f61ade6ef673c34bafc30ceb11533b475f2278ded",
+      "fields": [
+        {
+          "field": "Claim",
+          "present": true
+        },
+        {
+          "field": "Implementation",
+          "present": true
+        },
+        {
+          "field": "Contract",
+          "present": true
+        },
+        {
+          "field": "Test evidence",
+          "present": true
+        },
+        {
+          "field": "Revision",
+          "present": true
+        },
+        {
+          "field": "Limit",
+          "present": true
+        }
+      ]
+    },
+    {
+      "page": "docs/site/understand/prism-data.md",
+      "startLine": 596,
+      "endLine": 620,
+      "title": "> **Source evidence — deterministic safe rendering**",
+      "sha256": "faf7ad0a1883acf51f0a6319c240e52d9929398b69c99255ca0da39de4033ab4",
+      "fields": [
+        {
+          "field": "Claim",
+          "present": true
+        },
+        {
+          "field": "Implementation",
+          "present": true
+        },
+        {
+          "field": "Contract",
+          "present": true
+        },
+        {
+          "field": "Test evidence",
+          "present": true
+        },
+        {
+          "field": "Revision",
+          "present": true
+        },
+        {
+          "field": "Limit",
+          "present": true
+        }
+      ]
+    },
+    {
+      "page": "docs/site/understand/prism-data.md",
+      "startLine": 657,
+      "endLine": 679,
+      "title": "> **Source evidence — local CAS**",
+      "sha256": "f580d8198a2263aca9c08184779b6eff6bc4fc29b45408b31497290be59a5a34",
+      "fields": [
+        {
+          "field": "Claim",
+          "present": true
+        },
+        {
+          "field": "Implementation",
+          "present": true
+        },
+        {
+          "field": "Contract",
+          "present": true
+        },
+        {
+          "field": "Test evidence",
+          "present": true
+        },
+        {
+          "field": "Revision",
+          "present": true
+        },
+        {
+          "field": "Limit",
+          "present": true
+        }
+      ]
+    },
+    {
+      "page": "docs/site/understand/prism-data.md",
+      "startLine": 737,
+      "endLine": 760,
+      "title": "> **Source evidence — governed ingestion**",
+      "sha256": "71418b63f76d4e710b93356fdc72fa8b69744876f253bdee1888f67aacfb1f86",
+      "fields": [
+        {
+          "field": "Claim",
+          "present": true
+        },
+        {
+          "field": "Implementation",
+          "present": true
+        },
+        {
+          "field": "Contract",
+          "present": true
+        },
+        {
+          "field": "Test evidence",
+          "present": true
+        },
+        {
+          "field": "Revision",
+          "present": true
+        },
+        {
+          "field": "Limit",
+          "present": true
+        }
+      ]
+    },
+    {
+      "page": "docs/site/understand/prism-data.md",
+      "startLine": 822,
+      "endLine": 845,
+      "title": "> **Source evidence — retrieval policy and algorithm**",
+      "sha256": "0dd195f7c77006b0b42b0e03d265329d2375cfb5ea34ff5f65331105f3c23a33",
+      "fields": [
+        {
+          "field": "Claim",
+          "present": true
+        },
+        {
+          "field": "Implementation",
+          "present": true
+        },
+        {
+          "field": "Contract",
+          "present": true
+        },
+        {
+          "field": "Test evidence",
+          "present": true
+        },
+        {
+          "field": "Revision",
+          "present": true
+        },
+        {
+          "field": "Limit",
+          "present": true
+        }
+      ]
+    },
+    {
+      "page": "docs/site/understand/prism-data.md",
+      "startLine": 912,
+      "endLine": 942,
+      "title": "> **Source evidence — durable coordination**",
+      "sha256": "8b862571f4af72e8f6d98f5d2ea3ec27d57894b5793ae5c9371fd8c891221142",
+      "fields": [
+        {
+          "field": "Claim",
+          "present": true
+        },
+        {
+          "field": "Implementation",
+          "present": true
+        },
+        {
+          "field": "Contract",
+          "present": true
+        },
+        {
+          "field": "Test evidence",
+          "present": true
+        },
+        {
+          "field": "Revision",
+          "present": true
+        },
+        {
+          "field": "Limit",
+          "present": true
+        }
+      ]
+    },
+    {
+      "page": "docs/site/understand/prism-data.md",
+      "startLine": 1006,
+      "endLine": 1028,
+      "title": "> **Source evidence — bootstrap and migration**",
+      "sha256": "f0051d9dd0f84664dfaffb9c3fb2ef9feb1b5dc08decb64b9be930fe34a35453",
+      "fields": [
+        {
+          "field": "Claim",
+          "present": true
+        },
+        {
+          "field": "Implementation",
+          "present": true
+        },
+        {
+          "field": "Contract",
+          "present": true
+        },
+        {
+          "field": "Test evidence",
+          "present": true
+        },
+        {
+          "field": "Revision",
+          "present": true
+        },
+        {
+          "field": "Limit",
+          "present": true
+        }
+      ]
+    },
+    {
+      "page": "docs/site/understand/prism-data.md",
+      "startLine": 1061,
+      "endLine": 1083,
+      "title": "> **Source evidence — concurrency boundaries**",
+      "sha256": "4260a25fc5f8f1166227690988e80e1afaa6910fa59a5e25a256bcdf0533e52b",
+      "fields": [
+        {
+          "field": "Claim",
+          "present": true
+        },
+        {
+          "field": "Implementation",
+          "present": true
+        },
+        {
+          "field": "Contract",
+          "present": true
+        },
+        {
+          "field": "Test evidence",
+          "present": true
+        },
+        {
+          "field": "Revision",
+          "present": true
+        },
+        {
+          "field": "Limit",
+          "present": true
+        }
+      ]
+    },
+    {
+      "page": "docs/site/understand/prism-data.md",
+      "startLine": 1179,
+      "endLine": 1207,
+      "title": "> **Source evidence — backup behavior**",
+      "sha256": "239260fecfc005bc34308f9cd452723a14dbd8723df6a07abde5adf6f1c3a3c6",
+      "fields": [
+        {
+          "field": "Claim",
+          "present": true
+        },
+        {
+          "field": "Implementation",
+          "present": true
+        },
+        {
+          "field": "Contract",
+          "present": true
+        },
+        {
+          "field": "Test evidence",
+          "present": true
+        },
+        {
+          "field": "Revision",
+          "present": true
+        },
+        {
+          "field": "Limit",
+          "present": true
+        }
+      ]
+    }
+  ],
+  "sourceObjects": [
+    {
+      "revision": "13bff0a18a64e74f2cbbaa1978e746fcdeff0c10",
+      "path": "skills/nova/plugins/prism-design/src/stage.ts",
+      "sha256": "20bee389c4868070dc7450d366b85745c2f26acb88e8d526463c3cb5a599db88",
+      "lines": 36,
+      "currentEqual": true
+    },
+    {
+      "revision": "13bff0a18a64e74f2cbbaa1978e746fcdeff0c10",
+      "path": "charts/kubeclaw/templates/configmap-worker-trust.yaml",
+      "sha256": "23ccc1eca6b30efcc57f32e0689a06a5be1ad4fbee967b3632750a95e5d6e7be",
+      "lines": 198,
+      "currentEqual": true
+    },
+    {
+      "revision": "13bff0a18a64e74f2cbbaa1978e746fcdeff0c10",
+      "path": "skills/prism/server/agent-bridge.mjs",
+      "sha256": "f908013330077103e3c8c37df76401c642737d245f361b4c6ff63d9161e9738c",
+      "lines": 37,
+      "currentEqual": true
+    },
+    {
+      "revision": "13bff0a18a64e74f2cbbaa1978e746fcdeff0c10",
+      "path": "skills/common/plugins/runtime-dispatch/src/adapter.ts",
+      "sha256": "5bf2d0c003497e74b0bfdf7524b4725bcd77d12b592f00e121be553868009e5e",
+      "lines": 147,
+      "currentEqual": true
+    },
+    {
+      "revision": "13bff0a18a64e74f2cbbaa1978e746fcdeff0c10",
+      "path": "skills/prism/server/agent-attempt.ts",
+      "sha256": "3e27552ab5cbc3d1c357df81a3ba92b5928feaeb4df36d054c174b9c2f7d0de8",
+      "lines": 29,
+      "currentEqual": true
+    },
+    {
+      "revision": "13bff0a18a64e74f2cbbaa1978e746fcdeff0c10",
+      "path": "skills/prism/server/control-server.ts",
+      "sha256": "c165fb6b20bc6b608ae2bc859f52fc5700856e6cea3798916df921dcac5ce8ac",
+      "lines": 942,
+      "currentEqual": true
+    },
+    {
+      "revision": "13bff0a18a64e74f2cbbaa1978e746fcdeff0c10",
+      "path": "skills/prism/control/agent-jobs.ts",
+      "sha256": "ff62ef04432ebb67c700c4a25103a0477096f588c2cc3f34f3fab0b776860334",
+      "lines": 100,
+      "currentEqual": true
+    },
+    {
+      "revision": "13bff0a18a64e74f2cbbaa1978e746fcdeff0c10",
+      "path": "skills/buster/engine/test-gates/network-http-runtime.ts",
+      "sha256": "b0dfbf0ba6ef2333572754d5a3f0510b8b5c825e47e208e519c2d4a90f99168d",
+      "lines": 268,
+      "currentEqual": true
+    },
+    {
+      "revision": "13bff0a18a64e74f2cbbaa1978e746fcdeff0c10",
+      "path": "skills/common/plugins/network-http/src/adapter.ts",
+      "sha256": "8885ca56e2a2322c98e4c83ba935397f8f47d829c4feec69efbdde0113553e8d",
+      "lines": 137,
+      "currentEqual": true
+    },
+    {
+      "revision": "13bff0a18a64e74f2cbbaa1978e746fcdeff0c10",
+      "path": "tools/ops-mcp/src/kubernetes.mjs",
+      "sha256": "449e55709e017f53790539a83936f0471915850180ec9b08fc589251ab5e987b",
+      "lines": 98,
+      "currentEqual": true
+    },
+    {
+      "revision": "13bff0a18a64e74f2cbbaa1978e746fcdeff0c10",
+      "path": "skills/prism/server/studio-request.ts",
+      "sha256": "efca0f821ef3da9f441e9c6c5458a33d8c525f8e7db3a63aea1a8e7f37e93bbb",
+      "lines": 139,
+      "currentEqual": true
+    },
+    {
+      "revision": "0e35889a3c4e65d5c47ba88e924611aace67eb1d",
+      "path": "my-values/nova-values.yaml",
+      "sha256": "1704ad41236dbc9ea8c210c8d3e360189f9623ca65d1ca70eac23901d770ff7e",
+      "lines": 281,
+      "currentEqual": true
+    },
+    {
+      "revision": "0e35889a3c4e65d5c47ba88e924611aace67eb1d",
+      "path": "charts/kubeclaw/values.yaml",
+      "sha256": "2bff3214d88e912445b1c435b6353cfb438cd5184124b3eb0cc9f7394dfc05aa",
+      "lines": 547,
+      "currentEqual": true
+    },
+    {
+      "revision": "0e35889a3c4e65d5c47ba88e924611aace67eb1d",
+      "path": "my-values/prism-agent-values.yaml",
+      "sha256": "aaa81d8deb3ae3a512b98edad516f235be958866f4b11eaf54e0c1b2e919c696",
+      "lines": 120,
+      "currentEqual": true
+    },
+    {
+      "revision": "0e35889a3c4e65d5c47ba88e924611aace67eb1d",
+      "path": "my-values/buster-values.yaml",
+      "sha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622",
+      "lines": 255,
+      "currentEqual": true
+    },
+    {
+      "revision": "0e35889a3c4e65d5c47ba88e924611aace67eb1d",
+      "path": "charts/kubeclaw/templates/configmap-gateway.yaml",
+      "sha256": "7282446c984679ad226222708c98d716c310686bfb39d8dd75a1ccd32af3feda",
+      "lines": 348,
+      "currentEqual": true
+    },
+    {
+      "revision": "13bff0a18a64e74f2cbbaa1978e746fcdeff0c10",
+      "path": "skills/prism/server/agent-job-routes.ts",
+      "sha256": "cf4dcb8dcd817106028b018453871accf46eec1c996fa940cac3315790abaaa0",
+      "lines": 27,
+      "currentEqual": true
+    },
+    {
+      "revision": "13bff0a18a64e74f2cbbaa1978e746fcdeff0c10",
+      "path": "skills/prism/server/agent-job-runner.mjs",
+      "sha256": "f97926e67b1737be717db6a549ca60920232b7fbd2da23f73c0a15597c331bfb",
+      "lines": 47,
+      "currentEqual": true
+    },
+    {
+      "revision": "13bff0a18a64e74f2cbbaa1978e746fcdeff0c10",
+      "path": "skills/prism/server/internal-artifacts.ts",
+      "sha256": "16750a5eecea51781dc67e271cfc331550f1a0a03460917133226cd9c975dab8",
+      "lines": 53,
+      "currentEqual": true
+    },
+    {
+      "revision": "13bff0a18a64e74f2cbbaa1978e746fcdeff0c10",
+      "path": "skills/prism/server/product-decisions.ts",
+      "sha256": "04be267143d97a628ff607527ff67166faf3c32405536292d326c52ac5b1283d",
+      "lines": 104,
+      "currentEqual": true
+    },
+    {
+      "revision": "13bff0a18a64e74f2cbbaa1978e746fcdeff0c10",
+      "path": "charts/prism/templates/services.yaml",
+      "sha256": "c09a05501eca8a1876e44c1d70898fb5dd6770210e777353d6eff0ee9cd9ae1b",
+      "lines": 47,
+      "currentEqual": true
+    },
+    {
+      "revision": "13bff0a18a64e74f2cbbaa1978e746fcdeff0c10",
+      "path": "my-values/infra/registry-local.yaml",
+      "sha256": "966ab5af3851d5a6f9305d8819574301ca78d6c20f6d19074d078bf3b8e28d53",
+      "lines": 106,
+      "currentEqual": true
+    },
+    {
+      "revision": "13bff0a18a64e74f2cbbaa1978e746fcdeff0c10",
+      "path": "my-values/infra/registry-mirror.yaml",
+      "sha256": "383c470fb991a43aa9dfc1634d2399c53a1e77c19f37d5bb4b8bc0d26ef207f5",
+      "lines": 94,
+      "currentEqual": true
+    },
+    {
+      "revision": "13bff0a18a64e74f2cbbaa1978e746fcdeff0c10",
+      "path": "my-values/infra/litellm-config.yaml",
+      "sha256": "70356ac84fef937d6cfad5ea54583a16342784d8299406e155524128542baa6d",
+      "lines": 14,
+      "currentEqual": true
+    },
+    {
+      "revision": "13bff0a18a64e74f2cbbaa1978e746fcdeff0c10",
+      "path": "my-values/infra/litellm-deployment.yaml",
+      "sha256": "21136d7cc63b549db0d9e1f3a32d449c5bf3c2644790d144d47d476372c56bab",
+      "lines": 97,
+      "currentEqual": true
+    },
+    {
+      "revision": "13bff0a18a64e74f2cbbaa1978e746fcdeff0c10",
+      "path": "my-values/buster-values.yaml",
+      "sha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622",
+      "lines": 255,
+      "currentEqual": true
+    },
+    {
+      "revision": "13bff0a18a64e74f2cbbaa1978e746fcdeff0c10",
+      "path": "gitops/platform/values/alloy.yaml",
+      "sha256": "29e18d6d49210bfe193f21e43aaac00ecea5bacc3175d7f3efe7d8be6d1b2c61",
+      "lines": 131,
+      "currentEqual": true
+    },
+    {
+      "revision": "13bff0a18a64e74f2cbbaa1978e746fcdeff0c10",
+      "path": "gitops/platform/values/prometheus.yaml",
+      "sha256": "4fd5cddf6469e535f6d44a4903eef8781218cbbc2f65595cddf58ce3a1270509",
+      "lines": 50,
+      "currentEqual": true
+    },
+    {
+      "revision": "13bff0a18a64e74f2cbbaa1978e746fcdeff0c10",
+      "path": "skills/nova/core/test-gates/remote-dispatch.ts",
+      "sha256": "18bcaabddd476609a44a2447d847f19524a110d001847e07a4e11edb94a254c5",
+      "lines": 197,
+      "currentEqual": true
+    },
+    {
+      "revision": "a721a6e69aef5900002cef1dca3d1272f7903009",
+      "path": "skills/nova/plugins/implementation-agent/src/protocol.ts",
+      "sha256": "d1d2e0c5d82e37e3a3e51e89f1d002e1623a06fdcd0a4b9add816bf563b9cbe6",
+      "lines": 143,
+      "currentEqual": true
+    },
+    {
+      "revision": "a721a6e69aef5900002cef1dca3d1272f7903009",
+      "path": "skills/nova/plugins/review/src/protocol.ts",
+      "sha256": "3daf94d3d8f68696311299e6e005186f6adbf21c808e74410dbf9eea333c5bf7",
+      "lines": 75,
+      "currentEqual": true
+    },
+    {
+      "revision": "a721a6e69aef5900002cef1dca3d1272f7903009",
+      "path": "skills/nova/plugins/review/src/echo-review-contract.ts",
+      "sha256": "67193f1308ba53eab12c8f280cc4a03a7897289c54147921fe61561b09a684e6",
+      "lines": 274,
+      "currentEqual": true
+    },
+    {
+      "revision": "a721a6e69aef5900002cef1dca3d1272f7903009",
+      "path": "skills/nova/plugins/review/src/echo-review-verification-contract.ts",
+      "sha256": "3cb15e75b870e32689e10ee6dee92efa2fb2d0c2cf76f4b4a896d2258afd0802",
+      "lines": 95,
+      "currentEqual": true
+    },
+    {
+      "revision": "a721a6e69aef5900002cef1dca3d1272f7903009",
+      "path": "skills/nova/plugins/review/src/scalable-review-jobs.ts",
+      "sha256": "727d9042c598be9920c15c11e7c1aab20ca4bdfcb2f0a41f4b30860296fc9c90",
+      "lines": 436,
+      "currentEqual": true
+    },
+    {
+      "revision": "a721a6e69aef5900002cef1dca3d1272f7903009",
+      "path": "skills/nova/plugins/review/src/scalable-review-verification.ts",
+      "sha256": "d06f9d7524d75b61ac8cd6493418f4689d0fd5883d10a93390393f7df320034d",
+      "lines": 389,
+      "currentEqual": true
+    },
+    {
+      "revision": "a721a6e69aef5900002cef1dca3d1272f7903009",
+      "path": "skills/nova/plugins/review/src/repository-revalidation-stage.ts",
+      "sha256": "6f8071ea095b3f912fc91e4c812bc7bd5c9cfd4077b48422e6eb4de1e0c70be7",
+      "lines": 357,
+      "currentEqual": true
+    },
+    {
+      "revision": "a721a6e69aef5900002cef1dca3d1272f7903009",
+      "path": "skills/common/plugins/runtime-dispatch/src/openclaw.ts",
+      "sha256": "a66a16088c28519c1d88a63b650bf7caa416e13cee5eefe3b773df2691832af5",
+      "lines": 303,
+      "currentEqual": true
+    },
+    {
+      "revision": "a721a6e69aef5900002cef1dca3d1272f7903009",
+      "path": "skills/common/plugins/runtime-dispatch/src/openclaw-config.ts",
+      "sha256": "52ba5eff35c441ee727753a3d154a357257df525c0461b6f81941ceadaf1add1",
+      "lines": 85,
+      "currentEqual": true
+    },
+    {
+      "revision": "a721a6e69aef5900002cef1dca3d1272f7903009",
+      "path": "skills/common/plugins/runtime-dispatch/src/openclaw-session.ts",
+      "sha256": "8f3bfbfe9d3d9fa3fa88ac532f8f59abe457d830089a340b196cb8c25bd97217",
+      "lines": 260,
+      "currentEqual": true
+    },
+    {
+      "revision": "a721a6e69aef5900002cef1dca3d1272f7903009",
+      "path": "skills/common/plugins/runtime-dispatch/src/openclaw-result.ts",
+      "sha256": "38290ff080cc31a5465f911bf8adaf1d7d82c1c0a019914d088a5dd6c35b9643",
+      "lines": 116,
+      "currentEqual": true
+    },
+    {
+      "revision": "a721a6e69aef5900002cef1dca3d1272f7903009",
+      "path": "skills/common/plugins/runtime-dispatch/src/openclaw-cleanup.ts",
+      "sha256": "9cd036b48db02117734aea56e9e77bf4010f5487150e3bab0fcdc99585ac22fd",
+      "lines": 72,
+      "currentEqual": true
+    },
+    {
+      "revision": "13bff0a18a64e74f2cbbaa1978e746fcdeff0c10",
+      "path": "skills/worker/core/worker/native-control-channel.ts",
+      "sha256": "253ecc17f153e13e6e00aad3f842565ad17a01e85cac15db910d9b4b2ea9edc8",
+      "lines": 74,
+      "currentEqual": true
+    },
+    {
+      "revision": "a721a6e69aef5900002cef1dca3d1272f7903009",
+      "path": "my-values/prism-values.yaml",
+      "sha256": "9462337fa87add8927e3e4eb9888fa197a25dea40c1598fa5017b7e5d26b11d2",
+      "lines": 40,
+      "currentEqual": true
+    },
+    {
+      "revision": "a721a6e69aef5900002cef1dca3d1272f7903009",
+      "path": "charts/prism/values.yaml",
+      "sha256": "add69f96f117b8faed83b42133b7804eacca58ef850ef7428ea039842028d298",
+      "lines": 92,
+      "currentEqual": true
+    },
+    {
+      "revision": "a721a6e69aef5900002cef1dca3d1272f7903009",
+      "path": "charts/prism/templates/configmap-worker-trust.yaml",
+      "sha256": "61d7e98c21c7f9ae69fc7a5bbeec145fff6c8c85123763cb8cdd8fb562c1ebd6",
+      "lines": 262,
+      "currentEqual": true
+    },
+    {
+      "revision": "a721a6e69aef5900002cef1dca3d1272f7903009",
+      "path": "charts/kubeclaw/templates/configmap-worker-trust.yaml",
+      "sha256": "23ccc1eca6b30efcc57f32e0689a06a5be1ad4fbee967b3632750a95e5d6e7be",
+      "lines": 198,
+      "currentEqual": true
+    },
+    {
+      "revision": "a721a6e69aef5900002cef1dca3d1272f7903009",
+      "path": "skills/prism/config/native-worker.ts",
+      "sha256": "00296097bfd5eaf337bb4782191f0d219008f890985f90a0e9a528ee15060367",
+      "lines": 84,
+      "currentEqual": true
+    },
+    {
+      "revision": "a721a6e69aef5900002cef1dca3d1272f7903009",
+      "path": "skills/worker/core/worker/native-attempt-journal.ts",
+      "sha256": "9115ef644c440d5024745149613f63b971ba444ac54147b750f405e1ac2167e4",
+      "lines": 185,
+      "currentEqual": true
+    },
+    {
+      "revision": "a721a6e69aef5900002cef1dca3d1272f7903009",
+      "path": "skills/worker/core/worker/native-process-output.ts",
+      "sha256": "5f7a4e1cdd9424fefe249775886a34019da38f7a76c486b38005c5d727f14350",
+      "lines": 27,
+      "currentEqual": true
+    },
+    {
+      "revision": "a721a6e69aef5900002cef1dca3d1272f7903009",
+      "path": "skills/prism/control/native-operation-store.ts",
+      "sha256": "da764d081570b56a5579652033f4cbc0e2623ced3d1b62e0dc8945978f1e77a9",
+      "lines": 68,
+      "currentEqual": true
+    },
+    {
+      "revision": "a721a6e69aef5900002cef1dca3d1272f7903009",
+      "path": "skills/prism/control/native-operation.ts",
+      "sha256": "1a75f9cd8053f2d3b00dd9539ea6a97daf74308e4a44f337a4b6a80c8ffb3c13",
+      "lines": 31,
+      "currentEqual": true
+    },
+    {
+      "revision": "a721a6e69aef5900002cef1dca3d1272f7903009",
+      "path": "skills/prism/control/worker-operation-transport.ts",
+      "sha256": "048a23bb132d4d70978e28449a468169ccd87b3a06fa2127fedffbcc992a9958",
+      "lines": 35,
+      "currentEqual": true
+    },
+    {
+      "revision": "a721a6e69aef5900002cef1dca3d1272f7903009",
+      "path": "skills/worker/core/worker/native-attempt-executor.ts",
+      "sha256": "bddc68aa370648c86e7b7301f4f31a083504217dd89bac7694c36c344a8e23a3",
+      "lines": 79,
+      "currentEqual": true
+    },
+    {
+      "revision": "a721a6e69aef5900002cef1dca3d1272f7903009",
+      "path": "skills/worker/core/worker/native-attempt-recovery.ts",
+      "sha256": "fc55712ec3a5237e0131969d4aa190fcf994541525521210e8598ec63c950769",
+      "lines": 41,
+      "currentEqual": true
+    },
+    {
+      "revision": "a721a6e69aef5900002cef1dca3d1272f7903009",
+      "path": "skills/common/plugin-runtime/sdk/src/runtime.ts",
+      "sha256": "d4f0ee5d8960b4ff619bf5d45064b069a39f75b978cf831837de08cb5900d6e4",
+      "lines": 184,
+      "currentEqual": true
+    },
+    {
+      "revision": "a721a6e69aef5900002cef1dca3d1272f7903009",
+      "path": "skills/common/plugin-runtime/sdk/src/generated/contracts.ts",
+      "sha256": "8ade81b1f64c78b4cf2198f7ae7dc0c726fb4cec3ffa553986310d353dbc71c1",
+      "lines": 699,
+      "currentEqual": true
+    },
+    {
+      "revision": "a721a6e69aef5900002cef1dca3d1272f7903009",
+      "path": "skills/common/plugin-runtime/foundation/isolation/runner.ts",
+      "sha256": "36c9c5e668f4599f46524f5599898037bdb0600d4fdca7527985ef809af7587b",
+      "lines": 59,
+      "currentEqual": true
+    },
+    {
+      "revision": "a721a6e69aef5900002cef1dca3d1272f7903009",
+      "path": "skills/common/plugin-runtime/foundation/isolation/session.ts",
+      "sha256": "79bc9adc0cacb9fe00e27a567142377db46af92049abb685d5b2a61f6ba4cc7c",
+      "lines": 169,
+      "currentEqual": true
+    },
+    {
+      "revision": "a721a6e69aef5900002cef1dca3d1272f7903009",
+      "path": "skills/common/plugin-runtime/foundation/isolation/protocol.ts",
+      "sha256": "48563d1740ff46022fc85132706e20c9a418bc185891704fca08b417df42e820",
+      "lines": 37,
+      "currentEqual": true
+    },
+    {
+      "revision": "a721a6e69aef5900002cef1dca3d1272f7903009",
+      "path": "skills/common/plugin-runtime/foundation/isolation/child.mjs",
+      "sha256": "2851d7491792b3c4831386346c8eac79abfe79c1e3f1f9f2d415a834aad59d8c",
+      "lines": 98,
+      "currentEqual": true
+    },
+    {
+      "revision": "a721a6e69aef5900002cef1dca3d1272f7903009",
+      "path": "skills/nova/core/execution/stage-executor.ts",
+      "sha256": "4c846993c679c9ce663f7dda0e8de78fd26101e83948dd17211e62f83ea2eafb",
+      "lines": 147,
+      "currentEqual": true
+    },
+    {
+      "revision": "a721a6e69aef5900002cef1dca3d1272f7903009",
+      "path": "skills/nova/core/execution/adapter-startup.ts",
+      "sha256": "9bb8a0c27dfa199756cbe16a6898e7fb4d3a43c6ca59af144026bbb135a44619",
+      "lines": 183,
+      "currentEqual": true
+    },
+    {
+      "revision": "a721a6e69aef5900002cef1dca3d1272f7903009",
+      "path": "skills/nova/core/execution/adapter-invocation-phase.ts",
+      "sha256": "eaae9f5fd571a476b1b7ddbec709f1389c95e71189143ea23a87faa52847ae5f",
+      "lines": 60,
+      "currentEqual": true
+    },
+    {
+      "revision": "a721a6e69aef5900002cef1dca3d1272f7903009",
+      "path": "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json",
+      "sha256": "837efd7975991aa21b8c92b57881194e9bc8c7adc4370f238d1a15b6d85d44db",
+      "lines": 1179,
+      "currentEqual": true
+    },
+    {
+      "revision": "a721a6e69aef5900002cef1dca3d1272f7903009",
+      "path": "skills/common/plugins/telemetry-observer/plugin.json",
+      "sha256": "e8f47d3fe54481f200935675f1899a29fe428b636060e5cf61756958044221b6",
+      "lines": 56,
+      "currentEqual": true
+    },
+    {
+      "revision": "a721a6e69aef5900002cef1dca3d1272f7903009",
+      "path": "skills/common/plugins/notification-observer/plugin.json",
+      "sha256": "7b5b349b4767d74db5df9db9b4580880dff6a86bdcecf5cbf9f11470e76f8e48",
+      "lines": 64,
+      "currentEqual": true
+    },
+    {
+      "revision": "a721a6e69aef5900002cef1dca3d1272f7903009",
+      "path": "skills/nova/core/telemetry/observers.ts",
+      "sha256": "b46b9a70b190bf8541d96188221a63acc1e9c03ff6204a9e94b37c944306aafd",
+      "lines": 108,
+      "currentEqual": true
+    },
+    {
+      "revision": "a721a6e69aef5900002cef1dca3d1272f7903009",
+      "path": "skills/nova/core/telemetry/observer-delivery.ts",
+      "sha256": "d80f67ca85cafee41eb41d228be7a8d3aff820b556ccf21efa6f0a9845afd1fc",
+      "lines": 44,
+      "currentEqual": true
+    },
+    {
+      "revision": "a721a6e69aef5900002cef1dca3d1272f7903009",
+      "path": "skills/nova/core/telemetry/observer-recovery.ts",
+      "sha256": "9d97600debff727243d62fbad6c4a4616b056a4e4afb1098e1e19bbaa5f3edcb",
+      "lines": 83,
+      "currentEqual": true
+    },
+    {
+      "revision": "13bff0a18a64e74f2cbbaa1978e746fcdeff0c10",
+      "path": "skills/common/plugins/redis-transport/src/adapter.ts",
+      "sha256": "15c91e7eed9a98784d6fbdcb931160202295ea6ef20b1c18367bcd9eaab4cc01",
+      "lines": 91,
+      "currentEqual": true
+    },
+    {
+      "revision": "13bff0a18a64e74f2cbbaa1978e746fcdeff0c10",
+      "path": "skills/common/plugins/redis-transport/src/stream-identity.ts",
+      "sha256": "a2657ab33a2833771bda44c8b2ef1904900a26c6773f7ba839f36a35da571167",
+      "lines": 8,
+      "currentEqual": true
+    },
+    {
+      "revision": "13bff0a18a64e74f2cbbaa1978e746fcdeff0c10",
+      "path": "skills/common/plugins/redis-transport/src/resp.ts",
+      "sha256": "2f5af011407659a9e3af4d21b6f9b5ec8042f63cc5f8be7b4a423fbbe108d7ea",
+      "lines": 75,
+      "currentEqual": true
+    },
+    {
+      "revision": "13bff0a18a64e74f2cbbaa1978e746fcdeff0c10",
+      "path": "skills/common/plugins/openclaw-agent-observer/src/redis-writer.ts",
+      "sha256": "8f974830cf10d931410d6bd1f23b4782aa8988b96baba13f4172a3b9f85d4a5d",
+      "lines": 301,
+      "currentEqual": true
+    },
+    {
+      "revision": "13bff0a18a64e74f2cbbaa1978e746fcdeff0c10",
+      "path": "tests/verification/reliability/redis-migration.test.mts",
+      "sha256": "2996e9495c3ef27bdb416de17f1cec24ae309c4779eb17cda2606b5272a9c988",
+      "lines": 86,
+      "currentEqual": true
+    },
+    {
+      "revision": "0e35889a3c4e65d5c47ba88e924611aace67eb1d",
+      "path": "skills/common/plugins/transport-publisher/src/adapter.ts",
+      "sha256": "017501aea38f59ede67adf7249ed0bfa9c2d16430b2c7acf6380944350f2cd31",
+      "lines": 339,
+      "currentEqual": true
+    },
+    {
+      "revision": "0e35889a3c4e65d5c47ba88e924611aace67eb1d",
+      "path": "skills/common/plugins/transport-publisher/schemas/config.schema.json",
+      "sha256": "31dccf98f7921ed10af125417de5e913a899ad39eca6efc6386d28c7d64fdc8e",
+      "lines": 40,
+      "currentEqual": true
+    },
+    {
+      "revision": "0e35889a3c4e65d5c47ba88e924611aace67eb1d",
+      "path": "skills/common/plugin-runtime/foundation/observability/durable-records.ts",
+      "sha256": "c9a0c42b8cdd3a2f188ec38a3cab5270d0f032444801626ea2c6860e534582dd",
+      "lines": 308,
+      "currentEqual": true
+    },
+    {
+      "revision": "0e35889a3c4e65d5c47ba88e924611aace67eb1d",
+      "path": "packaging/runtime/roles/nova.json",
+      "sha256": "1c9de75dde812cb7ac118cfc074aa3a57bef7f428b789f11e9051ea713f0dc23",
+      "lines": 62,
+      "currentEqual": true
+    },
+    {
+      "revision": "13bff0a18a64e74f2cbbaa1978e746fcdeff0c10",
+      "path": "skills/worker/core/worker/trust.ts",
+      "sha256": "722f48ca75fb8546dbc4f4c9cc8eab8e31dfdfeafec7ea7aab587045e78b23fe",
+      "lines": 52,
+      "currentEqual": true
+    },
+    {
+      "revision": "f88a8c5c56adc2098d73804c85c6f41d7d7a239f",
+      "path": "my-values/infra/argocd-tailscale-ingress.yaml",
+      "sha256": "eb86daeca77a9329d80d0f0f96b0b9a46ee5807a7b9bd9187cb6ebb2d1ece58e",
+      "lines": 15,
+      "currentEqual": true
+    },
+    {
+      "revision": "f88a8c5c56adc2098d73804c85c6f41d7d7a239f",
+      "path": "my-values/infra/argocd-values.yaml",
+      "sha256": "eb0a7cdadf4bab951724dafa6ec48f5d4e07152cb3d41929c59d3c2899247dac",
+      "lines": 16,
+      "currentEqual": true
+    },
+    {
+      "revision": "f88a8c5c56adc2098d73804c85c6f41d7d7a239f",
+      "path": "charts/prism/templates/services.yaml",
+      "sha256": "c09a05501eca8a1876e44c1d70898fb5dd6770210e777353d6eff0ee9cd9ae1b",
+      "lines": 47,
+      "currentEqual": true
+    },
+    {
+      "revision": "f88a8c5c56adc2098d73804c85c6f41d7d7a239f",
+      "path": "my-values/prism-values.yaml",
+      "sha256": "9462337fa87add8927e3e4eb9888fa197a25dea40c1598fa5017b7e5d26b11d2",
+      "lines": 40,
+      "currentEqual": true
+    },
+    {
+      "revision": "0e35889a3c4e65d5c47ba88e924611aace67eb1d",
+      "path": "charts/kubeclaw/templates/archviewer.yaml",
+      "sha256": "5a89affd7b25f63ff38a0de9bec61388927e06b5d20a7075f6af0a92d4c7cb2a",
+      "lines": 82,
+      "currentEqual": true
+    },
+    {
+      "revision": "f88a8c5c56adc2098d73804c85c6f41d7d7a239f",
+      "path": "docker/archviewer.nginx.conf",
+      "sha256": "4af2c8146b2c62534c271701986ca3eb531a605294886fafcc0f4c3cd09462c4",
+      "lines": 21,
+      "currentEqual": true
+    },
+    {
+      "revision": "f88a8c5c56adc2098d73804c85c6f41d7d7a239f",
+      "path": "charts/ops-pod/templates/workload.yaml",
+      "sha256": "3471a815948e99e52b03b7952f1076c9d21afddbd24b62c37e1c848b7a129d58",
+      "lines": 176,
+      "currentEqual": true
+    },
+    {
+      "revision": "f88a8c5c56adc2098d73804c85c6f41d7d7a239f",
+      "path": "charts/ops-pod/values.yaml",
+      "sha256": "9f1d58dfe213f13169fdd9f983878b688d5f42fcf9f5283e31eed329e82b8c79",
+      "lines": 46,
+      "currentEqual": true
+    },
+    {
+      "revision": "f88a8c5c56adc2098d73804c85c6f41d7d7a239f",
+      "path": "skills/nova/project/demo.ts",
+      "sha256": "fa1aeed1f47f817fde79905a97b565191be5e4279b83ee8752c36f45531aa566",
+      "lines": 55,
+      "currentEqual": true
+    },
+    {
+      "revision": "f88a8c5c56adc2098d73804c85c6f41d7d7a239f",
+      "path": "cmd/buster-namespace-controller/demo-readiness.go",
+      "sha256": "a0838b433b686307159055d07684657a87524f54e125de23bbe82895853fd34e",
+      "lines": 301,
+      "currentEqual": true
+    },
+    {
+      "revision": "f88a8c5c56adc2098d73804c85c6f41d7d7a239f",
+      "path": "cmd/buster-namespace-controller/demo-retention.go",
+      "sha256": "4a173d7f2012e8c9d58a0c2f93ceda77629bacac384e5f56fdbec9c459a7c2a7",
+      "lines": 50,
+      "currentEqual": true
+    },
+    {
+      "revision": "f88a8c5c56adc2098d73804c85c6f41d7d7a239f",
+      "path": "cmd/buster-namespace-controller/demo-readiness-lifecycle.go",
+      "sha256": "6c79d6dd6d94ed7df8903c2d617eeec2574bb9789bf6ac2c0c34d6059a8c8ba2",
+      "lines": 198,
+      "currentEqual": true
+    },
+    {
+      "revision": "f88a8c5c56adc2098d73804c85c6f41d7d7a239f",
+      "path": "cmd/buster-namespace-controller/main.go",
+      "sha256": "c93bcc15f56bf6c5a9266c48835018b42589489846642bede2eb93851c4b6624",
+      "lines": 2099,
+      "currentEqual": true
+    },
+    {
+      "revision": "f88a8c5c56adc2098d73804c85c6f41d7d7a239f",
+      "path": "cmd/buster-namespace-controller/demo-product.go",
+      "sha256": "127c82f150c8277a931ae9fba701b7a1c6cc368d9e8290f9fb2082efd74cc49c",
+      "lines": 426,
+      "currentEqual": true
+    },
+    {
+      "revision": "f88a8c5c56adc2098d73804c85c6f41d7d7a239f",
+      "path": "skills/buster/engine/test-gates/tailscale-exposure-runtime.ts",
+      "sha256": "0144b279f77977b7285231852e32ceacbc70c7598121c24fa8be6f96acd52c9d",
+      "lines": 281,
+      "currentEqual": true
+    },
+    {
+      "revision": "f88a8c5c56adc2098d73804c85c6f41d7d7a239f",
+      "path": "skills/buster/engine/test-gates/exposure-generation.ts",
+      "sha256": "cbaed4e6debf9e225c0c5aab51ecc8383bed69ff3b5dc4f7fe7c18a0ee02a360",
+      "lines": 62,
+      "currentEqual": true
+    },
+    {
+      "revision": "a721a6e69aef5900002cef1dca3d1272f7903009",
+      "path": "skills/buster/engine/test-gates/container-build-runtime.ts",
+      "sha256": "9316f1e642640c768f268aa7f236f075e9290516543ded5148869914e91f907e",
+      "lines": 280,
+      "currentEqual": true
+    },
+    {
+      "revision": "d7f822c3cddd97e637aeca47f1cd49e87164ff87",
+      "path": "my-values/infra/registry-local.yaml",
+      "sha256": "966ab5af3851d5a6f9305d8819574301ca78d6c20f6d19074d078bf3b8e28d53",
+      "lines": 106,
+      "currentEqual": true
+    },
+    {
+      "revision": "d7f822c3cddd97e637aeca47f1cd49e87164ff87",
+      "path": "scripts/render-registry-local.mjs",
+      "sha256": "5bf7d3dc0e65f312f697828ef2eaf32f28a8a03940b9548f221e616c8d168b51",
+      "lines": 80,
+      "currentEqual": true
+    },
+    {
+      "revision": "d7f822c3cddd97e637aeca47f1cd49e87164ff87",
+      "path": "gitops/platform/registry-local/resources.yaml",
+      "sha256": "f728da90b05f3185afce2d7de85484ff4bab8f29e7db88d797ce1dcbf78916a7",
+      "lines": 53,
+      "currentEqual": true
+    },
+    {
+      "revision": "d7f822c3cddd97e637aeca47f1cd49e87164ff87",
+      "path": "scripts/argocd-self-management.mjs",
+      "sha256": "79330ccdc6c86a6a3187e538f3a11fb2ab13e97d24e7b9681b1b2a52d2fe7b26",
+      "lines": 222,
+      "currentEqual": true
+    },
+    {
+      "revision": "0e35889a3c4e65d5c47ba88e924611aace67eb1d",
+      "path": "docker/buster-runtime-entrypoint.sh",
+      "sha256": "1b13228deb6e53e66580b96752c34abcada89ecef278ea3dff9b1ed980f68225",
+      "lines": 347,
+      "currentEqual": true
+    },
+    {
+      "revision": "13bff0a18a64e74f2cbbaa1978e746fcdeff0c10",
+      "path": "scripts/registry-client-config.mjs",
+      "sha256": "51d00a4883b7e0e9bb63b4e490b4dad1f512053956b116b4a2da9d9d7d1fe210",
+      "lines": 119,
+      "currentEqual": true
+    },
+    {
+      "revision": "13bff0a18a64e74f2cbbaa1978e746fcdeff0c10",
+      "path": "skills/prism/server/ingestion.ts",
+      "sha256": "bbee6795991e601600e6442927e483bcd5a87c798b66a42ed5606bb496354717",
+      "lines": 97,
+      "currentEqual": true
+    },
+    {
+      "revision": "13bff0a18a64e74f2cbbaa1978e746fcdeff0c10",
+      "path": "skills/prism/server/native-worker-host.ts",
+      "sha256": "485118712479bd2991724c4787acb4bf111ddd56866d0d584f608482a3b4ba34",
+      "lines": 36,
+      "currentEqual": true
+    },
+    {
+      "revision": "13bff0a18a64e74f2cbbaa1978e746fcdeff0c10",
+      "path": "skills/prism/engine/design-providers.ts",
+      "sha256": "8f5e806732b36779182d5b9e7e025927a6a9ff5898866d876880d382e4d67145",
+      "lines": 156,
+      "currentEqual": true
+    },
+    {
+      "revision": "13bff0a18a64e74f2cbbaa1978e746fcdeff0c10",
+      "path": "charts/ops-pod/templates/workload.yaml",
+      "sha256": "3471a815948e99e52b03b7952f1076c9d21afddbd24b62c37e1c848b7a129d58",
+      "lines": 176,
+      "currentEqual": true
+    },
+    {
+      "revision": "13bff0a18a64e74f2cbbaa1978e746fcdeff0c10",
+      "path": "tools/ops-mcp/src/hubble.mjs",
+      "sha256": "d4e60f2801e3c66ded259f420c1a9faca0071fa084dc198a35433f8c9cb4f599",
+      "lines": 118,
+      "currentEqual": true
+    },
+    {
+      "revision": "0e35889a3c4e65d5c47ba88e924611aace67eb1d",
+      "path": "charts/kubeclaw/templates/deployment.yaml",
+      "sha256": "8e780bc0033c3da5c0a3d4db53e8ba9e0753200a072ce0ed63a598c461231883",
+      "lines": 1736,
+      "currentEqual": true
+    },
+    {
+      "revision": "13bff0a18a64e74f2cbbaa1978e746fcdeff0c10",
+      "path": "scripts/platform-services.mjs",
+      "sha256": "8318de0a9d541e7729ea7851989dc804455fddef32ec4f3a47fd18bdcc326ead",
+      "lines": 69,
+      "currentEqual": true
+    },
+    {
+      "revision": "13bff0a18a64e74f2cbbaa1978e746fcdeff0c10",
+      "path": "tests/verification/deployment/registry-client-config.test.mjs",
+      "sha256": "899b1cc7f9032e26165569c8dace78190252780a11d120c85d8d0ace05e6b3cf",
+      "lines": 76,
+      "currentEqual": true
+    },
+    {
+      "revision": "0e35889a3c4e65d5c47ba88e924611aace67eb1d",
+      "path": "scripts/deploy.sh",
+      "sha256": "97c1e39bf9cec6c1d5d8e11198af90ed04efd15a6077f2bbac1129c2ea0741e2",
+      "lines": 3066,
+      "currentEqual": true
+    },
+    {
+      "revision": "13bff0a18a64e74f2cbbaa1978e746fcdeff0c10",
+      "path": "scripts/deploy-cilium.sh",
+      "sha256": "8b6a6bf4fa028f4f5f76adfe50783adae20024d92f06deb515a4e8c854b13b03",
+      "lines": 55,
+      "currentEqual": true
+    },
+    {
+      "revision": "13bff0a18a64e74f2cbbaa1978e746fcdeff0c10",
+      "path": "my-values/infra/cilium-values.yaml",
+      "sha256": "19461be990b66c6484150f9f3dbd96140cd063f63b37b351d464510e98cff5e6",
+      "lines": 65,
+      "currentEqual": true
+    },
+    {
+      "revision": "13bff0a18a64e74f2cbbaa1978e746fcdeff0c10",
+      "path": "my-values/infra/network-policies.yaml",
+      "sha256": "a42018fe382e389077f4ed373c4ae54ebfd7e46a639b5360215cd80948823d79",
+      "lines": 380,
+      "currentEqual": true
+    },
+    {
+      "revision": "13bff0a18a64e74f2cbbaa1978e746fcdeff0c10",
+      "path": "scripts/argocd-self-management.mjs",
+      "sha256": "79330ccdc6c86a6a3187e538f3a11fb2ab13e97d24e7b9681b1b2a52d2fe7b26",
+      "lines": 222,
+      "currentEqual": true
+    },
+    {
+      "revision": "13bff0a18a64e74f2cbbaa1978e746fcdeff0c10",
+      "path": "charts/prism/templates/workloads.yaml",
+      "sha256": "9bb2865f5d232b2cc5fac39259c8957e573decc891d2c9b25d7554da01148739",
+      "lines": 230,
+      "currentEqual": true
+    },
+    {
+      "revision": "13bff0a18a64e74f2cbbaa1978e746fcdeff0c10",
+      "path": "docker/Dockerfile.buster-runtime",
+      "sha256": "a312398adeaf6addfd875940cbe04cd4bc53611fb8f26422020fe290d7fcc27c",
+      "lines": 158,
+      "currentEqual": true
+    },
+    {
+      "revision": "d7f822c3cddd97e637aeca47f1cd49e87164ff87",
+      "path": "gitops/platform/bootstrap/registry-local.yaml",
+      "sha256": "8218528022125386b1c9c86f0bf07c2e2f8856d9689d47ad8eca3d252e766e7b",
+      "lines": 24,
+      "currentEqual": true
+    },
+    {
+      "revision": "13bff0a18a64e74f2cbbaa1978e746fcdeff0c10",
+      "path": "gitops/platform/values/redis.yaml",
+      "sha256": "e0523d1b0ca368d5567e9be9275c6a8ce54793315d346805b41b8979bb69d8ca",
+      "lines": 21,
+      "currentEqual": true
+    },
+    {
+      "revision": "13bff0a18a64e74f2cbbaa1978e746fcdeff0c10",
+      "path": "gitops/platform/values/postgresql.yaml",
+      "sha256": "6e317137b18b6888c99d872a9cd58509aeb1ebf77b001d42eaab448f2bcddb7b",
+      "lines": 25,
+      "currentEqual": true
+    },
+    {
+      "revision": "13bff0a18a64e74f2cbbaa1978e746fcdeff0c10",
+      "path": "gitops/platform/values/tailscale-operator.yaml",
+      "sha256": "6cc7ea4c8f9b0c29eb35d040dad23e9ecd4ac324bf8993e9bd43b2f8be5a160b",
+      "lines": 21,
+      "currentEqual": true
+    },
+    {
+      "revision": "7994a51e16bc752357c3a801190b12b7d6a191a4",
+      "path": "versions.json",
+      "sha256": "04281d9b2addd93073bd548293ea9ba6e1d88c2a18fff0f34cbdbc14ca7fe2c1",
+      "lines": 147,
+      "currentEqual": true
+    },
+    {
+      "revision": "13bff0a18a64e74f2cbbaa1978e746fcdeff0c10",
+      "path": "scripts/render-litellm-deployment.mjs",
+      "sha256": "036f4658360318ba7d503edb15fff1b7e1590dc5a42b34c20fbceab9c0181c9c",
+      "lines": 22,
+      "currentEqual": true
+    },
+    {
+      "revision": "13bff0a18a64e74f2cbbaa1978e746fcdeff0c10",
+      "path": "gitops/platform/litellm/resources.yaml",
+      "sha256": "faf5a32f91568604ee1726ac60a58c7490fb95802d61a0019171006423474637",
+      "lines": 80,
+      "currentEqual": true
+    },
+    {
+      "revision": "13bff0a18a64e74f2cbbaa1978e746fcdeff0c10",
+      "path": "skills/common/plugins/operator-messaging/src/config.ts",
+      "sha256": "0fc5440d5519c03c463073e95baeaf8206cfdf37cbd55bf0f70aaf45dd4a95c1",
+      "lines": 107,
+      "currentEqual": true
+    },
+    {
+      "revision": "13bff0a18a64e74f2cbbaa1978e746fcdeff0c10",
+      "path": "skills/common/plugins/operator-messaging/src/adapter.ts",
+      "sha256": "a6d719a5e69b401a0696af9a74dcf358015cdc57bfa062cca0514c54410b3785",
+      "lines": 117,
+      "currentEqual": true
+    },
+    {
+      "revision": "13bff0a18a64e74f2cbbaa1978e746fcdeff0c10",
+      "path": "gitops/platform/values/loki.yaml",
+      "sha256": "7795a3ee39b969422b037d546a5ffbf0ab5152e8310772fb46b216d661332e76",
+      "lines": 34,
+      "currentEqual": true
+    },
+    {
+      "revision": "13bff0a18a64e74f2cbbaa1978e746fcdeff0c10",
+      "path": "charts/ops-pod/values.yaml",
+      "sha256": "9f1d58dfe213f13169fdd9f983878b688d5f42fcf9f5283e31eed329e82b8c79",
+      "lines": 46,
+      "currentEqual": true
+    },
+    {
+      "revision": "13bff0a18a64e74f2cbbaa1978e746fcdeff0c10",
+      "path": "charts/ops-pod/templates/rbac.yaml",
+      "sha256": "103ed540a9b71ca0fdde5d693e5e4d07b2943910e79116bbd7206d528668874b",
+      "lines": 92,
+      "currentEqual": true
+    },
+    {
+      "revision": "13bff0a18a64e74f2cbbaa1978e746fcdeff0c10",
+      "path": "contracts/pipeline-test-gate/v1/src/types.ts",
+      "sha256": "704d87007fce75e3f6d8eafd73273478de08c0bf6b1d0ee753f3da31b9fc010c",
+      "lines": 472,
+      "currentEqual": true
+    },
+    {
+      "revision": "13bff0a18a64e74f2cbbaa1978e746fcdeff0c10",
+      "path": "skills/buster/engine/test-gates/browser-playwright-runtime.ts",
+      "sha256": "20e32c52051339237e14cf1bed0da9c690ece23297bec9bb77a628e8df211917",
+      "lines": 121,
+      "currentEqual": true
+    },
+    {
+      "revision": "13bff0a18a64e74f2cbbaa1978e746fcdeff0c10",
+      "path": "skills/buster/engine/test-gates/container-build-runtime.ts",
+      "sha256": "9316f1e642640c768f268aa7f236f075e9290516543ded5148869914e91f907e",
+      "lines": 280,
+      "currentEqual": true
+    },
+    {
+      "revision": "13bff0a18a64e74f2cbbaa1978e746fcdeff0c10",
+      "path": "skills/buster/engine/test-gates/security-scan-runtime.ts",
+      "sha256": "087b2f1a242b0d8ad1025011ec5a6e9cc82b17652eb7775370a2e57208d9c0e9",
+      "lines": 264,
+      "currentEqual": true
+    },
+    {
+      "revision": "13bff0a18a64e74f2cbbaa1978e746fcdeff0c10",
+      "path": "skills/buster/engine/test-gates/terminal-workspace.ts",
+      "sha256": "ede9e4ffd51edd40de683eade25ba313b5b2395d6a7bbcf5ce50e583f7940c59",
+      "lines": 26,
+      "currentEqual": true
+    },
+    {
+      "revision": "13bff0a18a64e74f2cbbaa1978e746fcdeff0c10",
+      "path": "skills/buster/engine/test-gates/runner.ts",
+      "sha256": "d6695dc52cd1919a88f7feed8051a543bdd9cee260b95afb829cbcee6f254919",
+      "lines": 2012,
+      "currentEqual": true
+    },
+    {
+      "revision": "13bff0a18a64e74f2cbbaa1978e746fcdeff0c10",
+      "path": "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts",
+      "sha256": "5624aa2b5f980a373ab30fdf012dee1346418ac3b2537244475f2a496d3766a0",
+      "lines": 840,
+      "currentEqual": true
+    },
+    {
+      "revision": "13bff0a18a64e74f2cbbaa1978e746fcdeff0c10",
+      "path": "skills/nova/core/execution/engine-snapshots.ts",
+      "sha256": "50dfe92e656875658b7604f30012f8493564729473f6ddd65b64960ecf9946fd",
+      "lines": 144,
+      "currentEqual": true
+    },
+    {
+      "revision": "13bff0a18a64e74f2cbbaa1978e746fcdeff0c10",
+      "path": "skills/nova/core/state/journal.ts",
+      "sha256": "25be25a991c93c0e523178e3c45e2f7fb15ecad6e1a03566fca241d6b27f40bf",
+      "lines": 197,
+      "currentEqual": true
+    },
+    {
+      "revision": "13bff0a18a64e74f2cbbaa1978e746fcdeff0c10",
+      "path": "skills/common/plugin-runtime/foundation/observability/durable-records.ts",
+      "sha256": "c9a0c42b8cdd3a2f188ec38a3cab5270d0f032444801626ea2c6860e534582dd",
+      "lines": 308,
+      "currentEqual": true
+    },
+    {
+      "revision": "13bff0a18a64e74f2cbbaa1978e746fcdeff0c10",
+      "path": "charts/kubeclaw/templates/pvc.yaml",
+      "sha256": "315dfd8674eb45996769d61323f268bbb77e33b48ee138f8dd227b8761343fa9",
+      "lines": 49,
+      "currentEqual": true
+    },
+    {
+      "revision": "13bff0a18a64e74f2cbbaa1978e746fcdeff0c10",
+      "path": "charts/kubeclaw/templates/buster-runtime-pvc.yaml",
+      "sha256": "cacf352b9b0ea8daa2f7d47f59ca00256cc8997621075441a22966da0aca8279",
+      "lines": 22,
+      "currentEqual": true
+    },
+    {
+      "revision": "13bff0a18a64e74f2cbbaa1978e746fcdeff0c10",
+      "path": "gitops/platform/registry-local/resources.yaml",
+      "sha256": "f728da90b05f3185afce2d7de85484ff4bab8f29e7db88d797ce1dcbf78916a7",
+      "lines": 53,
+      "currentEqual": true
+    },
+    {
+      "revision": "13bff0a18a64e74f2cbbaa1978e746fcdeff0c10",
+      "path": "skills/nova/core/execution/run-root.ts",
+      "sha256": "38ac1d4f579cbda7db66487edc274619e79d212f03e7f5a193a7c8a7168907b3",
+      "lines": 76,
+      "currentEqual": true
+    },
+    {
+      "revision": "13bff0a18a64e74f2cbbaa1978e746fcdeff0c10",
+      "path": "skills/nova/core/effects/journal.ts",
+      "sha256": "1ab8839b77c51008973975a324d675af129e8aa45152ae0fde97c954d5af3b95",
+      "lines": 241,
+      "currentEqual": true
+    },
+    {
+      "revision": "13bff0a18a64e74f2cbbaa1978e746fcdeff0c10",
+      "path": "skills/nova/core/execution/engine-run.ts",
+      "sha256": "eca97e2a488bd31d597c0dd71cd9971beffc9a5dc94fad1dbccf8867aa8f4819",
+      "lines": 122,
+      "currentEqual": true
+    },
+    {
+      "revision": "13bff0a18a64e74f2cbbaa1978e746fcdeff0c10",
+      "path": "skills/common/plugin-runtime/sdk/src/generated/contracts.ts",
+      "sha256": "8ade81b1f64c78b4cf2198f7ae7dc0c726fb4cec3ffa553986310d353dbc71c1",
+      "lines": 699,
+      "currentEqual": true
+    },
+    {
+      "revision": "13bff0a18a64e74f2cbbaa1978e746fcdeff0c10",
+      "path": "skills/nova/core/cli.ts",
+      "sha256": "09121b4b0a160d2e5e35448795156856b15ccc078a229bb1895f570c22f76787",
+      "lines": 81,
+      "currentEqual": true
+    },
+    {
+      "revision": "13bff0a18a64e74f2cbbaa1978e746fcdeff0c10",
+      "path": "skills/nova/core/execution/engine-admin.ts",
+      "sha256": "f3ba44d49baffa01ee74a4d749818e8f903feb48827eb9108f959c24c8a0a1f2",
+      "lines": 152,
+      "currentEqual": true
+    },
+    {
+      "revision": "13bff0a18a64e74f2cbbaa1978e746fcdeff0c10",
+      "path": "skills/nova/core/test-gates/production.ts",
+      "sha256": "886c5898b90473ac1f547a40136ed43de2e40bd556bb1acde025fcd95c2a0be1",
+      "lines": 125,
+      "currentEqual": true
+    },
+    {
+      "revision": "13bff0a18a64e74f2cbbaa1978e746fcdeff0c10",
+      "path": "skills/nova/core/test-gates/remote-dispatch-store.ts",
+      "sha256": "634dc70de20d811672f69f70b58a6b620e578ae7c1188fe10afec46d90bca069",
+      "lines": 152,
+      "currentEqual": true
+    },
+    {
+      "revision": "13bff0a18a64e74f2cbbaa1978e746fcdeff0c10",
+      "path": "skills/nova/core/test-gates/remote-result-import.ts",
+      "sha256": "ddb1e749086128083a295c15790a1e666a614000b4650055e3374c9bf7edcc81",
+      "lines": 277,
+      "currentEqual": true
+    },
+    {
+      "revision": "13bff0a18a64e74f2cbbaa1978e746fcdeff0c10",
+      "path": "skills/nova/core/observability/reconciler.ts",
+      "sha256": "61c65951f07d04e1767fdc3114a473183ed5b968ef8d68f665b4ec5d0661dd71",
+      "lines": 396,
+      "currentEqual": true
+    },
+    {
+      "revision": "13bff0a18a64e74f2cbbaa1978e746fcdeff0c10",
+      "path": "skills/common/plugins/wait-store/src/adapter.ts",
+      "sha256": "b55d76d4913c0c6f4074af43615046365ba226dfb51189fd26fa6d486753b92d",
+      "lines": 241,
+      "currentEqual": true
+    },
+    {
+      "revision": "13bff0a18a64e74f2cbbaa1978e746fcdeff0c10",
+      "path": "skills/common/plugins/operator-messaging/src/delivery-records.ts",
+      "sha256": "25ce708f55dfd154d04f044edfac8f232989b2fbd59a7b644bb41aa65dfcbddc",
+      "lines": 113,
+      "currentEqual": true
+    },
+    {
+      "revision": "13bff0a18a64e74f2cbbaa1978e746fcdeff0c10",
+      "path": "skills/worker/core/worker/native-attempt-journal.ts",
+      "sha256": "9115ef644c440d5024745149613f63b971ba444ac54147b750f405e1ac2167e4",
+      "lines": 185,
+      "currentEqual": true
+    },
+    {
+      "revision": "13bff0a18a64e74f2cbbaa1978e746fcdeff0c10",
+      "path": "skills/worker/core/worker/ownership-store.ts",
+      "sha256": "d784b4196a6103a0ad1e1eaa086640d89ea3205db74be0b0d569045183d20b79",
+      "lines": 171,
+      "currentEqual": true
+    },
+    {
+      "revision": "13bff0a18a64e74f2cbbaa1978e746fcdeff0c10",
+      "path": "skills/worker/core/worker/native-output-spool.ts",
+      "sha256": "da9b2bdd9f5b8f9418e98a451eb3275aadec117a9ee7ca733566e571870898c7",
+      "lines": 96,
+      "currentEqual": true
+    },
+    {
+      "revision": "13bff0a18a64e74f2cbbaa1978e746fcdeff0c10",
+      "path": "skills/buster/engine/test-gates/remote-plan-service.ts",
+      "sha256": "3be9e75c8619da96c22bfaabd7fbab548bc07085787d092a83ba1f20130434f9",
+      "lines": 815,
+      "currentEqual": true
+    },
+    {
+      "revision": "13bff0a18a64e74f2cbbaa1978e746fcdeff0c10",
+      "path": "skills/buster/engine/test-gates/artifacts.ts",
+      "sha256": "4eedb9892218a3b0ee8a9b14d22c8e37b29c454333adbdf4cbae1772f44e5179",
+      "lines": 112,
+      "currentEqual": true
+    },
+    {
+      "revision": "13bff0a18a64e74f2cbbaa1978e746fcdeff0c10",
+      "path": "skills/buster/engine/test-gates/remote-plan-compaction.ts",
+      "sha256": "e74b3fe2e8dca0157d22c6bd1b50f5cc69df91ec29eedbdbaef86d4ff05a42de",
+      "lines": 162,
+      "currentEqual": true
+    },
+    {
+      "revision": "1e60f5d34c9a599a334a414987a754c95dc3543f",
+      "path": "skills/buster/engine/test-gates/artifacts.ts",
+      "sha256": "4eedb9892218a3b0ee8a9b14d22c8e37b29c454333adbdf4cbae1772f44e5179",
+      "lines": 112,
+      "currentEqual": true
+    },
+    {
+      "revision": "1e60f5d34c9a599a334a414987a754c95dc3543f",
+      "path": "skills/buster/engine/test-gates/runner.ts",
+      "sha256": "d6695dc52cd1919a88f7feed8051a543bdd9cee260b95afb829cbcee6f254919",
+      "lines": 2012,
+      "currentEqual": true
+    },
+    {
+      "revision": "13bff0a18a64e74f2cbbaa1978e746fcdeff0c10",
+      "path": "skills/prism/storage/index.ts",
+      "sha256": "e5105909e5f1abf1eb2178270dd63d1b8e2aa337177dcb620b6ae43199a3a199",
+      "lines": 332,
+      "currentEqual": true
+    },
+    {
+      "revision": "13bff0a18a64e74f2cbbaa1978e746fcdeff0c10",
+      "path": "skills/prism/storage/artifacts.ts",
+      "sha256": "8177fe9d5199d1af866a2ad7d5d7fdfa82b99b0fe6df5b7f0c3c04e96536ef1f",
+      "lines": 68,
+      "currentEqual": true
+    },
+    {
+      "revision": "0e35889a3c4e65d5c47ba88e924611aace67eb1d",
+      "path": "charts/prism/files/prism-backup.sh",
+      "sha256": "6823dff4e65d056a82676d7970474921d55cd9573960a82344f15dd0eeaffece",
+      "lines": 191,
+      "currentEqual": true
+    },
+    {
+      "revision": "13bff0a18a64e74f2cbbaa1978e746fcdeff0c10",
+      "path": "charts/prism/templates/ingestion.yaml",
+      "sha256": "73f19bc39066d2f6f0944846c2784c193a4d1e59202ed737d3a6c6ff8ec77f98",
+      "lines": 40,
+      "currentEqual": true
+    },
+    {
+      "revision": "13bff0a18a64e74f2cbbaa1978e746fcdeff0c10",
+      "path": "my-values/infra/postgresql-values.yaml",
+      "sha256": "b7c1445d47350c6fcae2fc7de901e930dec1f8309331bf0db69c70c1f3404994",
+      "lines": 19,
+      "currentEqual": true
+    },
+    {
+      "revision": "13bff0a18a64e74f2cbbaa1978e746fcdeff0c10",
+      "path": "scripts/postgresql-recovery.sh",
+      "sha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b",
+      "lines": 196,
+      "currentEqual": true
+    },
+    {
+      "revision": "ebcc04066d42c94b4a4e0fc85e3393dae3d61f78",
+      "path": "my-values/infra/litellm-config.yaml",
+      "sha256": "70356ac84fef937d6cfad5ea54583a16342784d8299406e155524128542baa6d",
+      "lines": 14,
+      "currentEqual": true
+    },
+    {
+      "revision": "ebcc04066d42c94b4a4e0fc85e3393dae3d61f78",
+      "path": "my-values/infra/litellm-deployment.yaml",
+      "sha256": "21136d7cc63b549db0d9e1f3a32d449c5bf3c2644790d144d47d476372c56bab",
+      "lines": 97,
+      "currentEqual": true
+    },
+    {
+      "revision": "ebcc04066d42c94b4a4e0fc85e3393dae3d61f78",
+      "path": "gitops/platform/litellm/resources.yaml",
+      "sha256": "faf5a32f91568604ee1726ac60a58c7490fb95802d61a0019171006423474637",
+      "lines": 80,
+      "currentEqual": true
+    },
+    {
+      "revision": "13bff0a18a64e74f2cbbaa1978e746fcdeff0c10",
+      "path": "my-values/infra/redis-values.yaml",
+      "sha256": "929dec7ffac0922517188e0fb318b746e276292acad2723c59da802e5962c9b2",
+      "lines": 29,
+      "currentEqual": true
+    },
+    {
+      "revision": "f99aecbb00cb399b46dfbbeb3ddb375fba6218e7",
+      "path": "skills/common/plugin-runtime/sdk/src/values.ts",
+      "sha256": "b91ec914fb8ce1eaccc40751f9693689694e455389eb8742d7f275fdeb24571f",
+      "lines": 128,
+      "currentEqual": true
+    },
+    {
+      "revision": "f99aecbb00cb399b46dfbbeb3ddb375fba6218e7",
+      "path": "skills/common/plugins/artifact-store/src/adapter.ts",
+      "sha256": "12fa6150089d49da0a9065de560fb53436dc46e3f10f15da0f3fe8b112a50154",
+      "lines": 179,
+      "currentEqual": true
+    },
+    {
+      "revision": "f99aecbb00cb399b46dfbbeb3ddb375fba6218e7",
+      "path": "tests/verification/reliability/artifact-checkpoint-encoding.test.mjs",
+      "sha256": "1112a5e00c8a05578c21c548bbb4a2fd57b4ddd8469c25e3501b04b2fb2bd09b",
+      "lines": 106,
+      "currentEqual": true
+    },
+    {
+      "revision": "1e60f5d34c9a599a334a414987a754c95dc3543f",
+      "path": "skills/prism/storage/artifacts.ts",
+      "sha256": "8177fe9d5199d1af866a2ad7d5d7fdfa82b99b0fe6df5b7f0c3c04e96536ef1f",
+      "lines": 68,
+      "currentEqual": true
+    },
+    {
+      "revision": "1e60f5d34c9a599a334a414987a754c95dc3543f",
+      "path": "scripts/postgresql-recovery.sh",
+      "sha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b",
+      "lines": 196,
+      "currentEqual": true
+    },
+    {
+      "revision": "1e60f5d34c9a599a334a414987a754c95dc3543f",
+      "path": "scripts/redis-prepare-migration.sh",
+      "sha256": "baaa7e6c33e72ec2ca0133ca44fdbf6335bd6394d9d81259e073e62ada360e4b",
+      "lines": 109,
+      "currentEqual": true
+    },
+    {
+      "revision": "1e60f5d34c9a599a334a414987a754c95dc3543f",
+      "path": "versions.json",
+      "sha256": "04281d9b2addd93073bd548293ea9ba6e1d88c2a18fff0f34cbdbc14ca7fe2c1",
+      "lines": 147,
+      "currentEqual": true
+    },
+    {
+      "revision": "1e60f5d34c9a599a334a414987a754c95dc3543f",
+      "path": "my-values/infra/redis-values.yaml",
+      "sha256": "929dec7ffac0922517188e0fb318b746e276292acad2723c59da802e5962c9b2",
+      "lines": 29,
+      "currentEqual": true
+    },
+    {
+      "revision": "1e60f5d34c9a599a334a414987a754c95dc3543f",
+      "path": "tests/verification/reliability/redis-migration.test.mts",
+      "sha256": "2996e9495c3ef27bdb416de17f1cec24ae309c4779eb17cda2606b5272a9c988",
+      "lines": 86,
+      "currentEqual": true
+    },
+    {
+      "revision": "b2b85d4c8d3174aa41507cde77637227bb709e1e",
+      "path": "skills/prism/storage/migrations/001_prism.sql",
+      "sha256": "02f48a7e783b74fded50a0bc626d418b532515fe9e5456c0a22735a991ee1c41",
+      "lines": 80,
+      "currentEqual": true
+    },
+    {
+      "revision": "b2b85d4c8d3174aa41507cde77637227bb709e1e",
+      "path": "skills/prism/storage/migrations/013_design_round.sql",
+      "sha256": "ad72bfc7d76495b6ceac25460dd7aef9bb8db333c80baea0f3bf055d5c48ef04",
+      "lines": 23,
+      "currentEqual": true
+    },
+    {
+      "revision": "b2b85d4c8d3174aa41507cde77637227bb709e1e",
+      "path": "skills/prism/server/control-server.ts",
+      "sha256": "c165fb6b20bc6b608ae2bc859f52fc5700856e6cea3798916df921dcac5ce8ac",
+      "lines": 942,
+      "currentEqual": true
+    },
+    {
+      "revision": "b2b85d4c8d3174aa41507cde77637227bb709e1e",
+      "path": "skills/prism/control/design-generations.ts",
+      "sha256": "cd32799fdb1eacbaf40c968b101badcfbedc0f8ce9b12ab045e82ae2e632cbfd",
+      "lines": 83,
+      "currentEqual": true
+    },
+    {
+      "revision": "b2b85d4c8d3174aa41507cde77637227bb709e1e",
+      "path": "skills/prism/server/agent-prompt.mjs",
+      "sha256": "3bcd6b4b2bb25d82c9ec767a03fd08ea1c17420eca3ce1742410359ed2d1aea9",
+      "lines": 22,
+      "currentEqual": true
+    },
+    {
+      "revision": "b2b85d4c8d3174aa41507cde77637227bb709e1e",
+      "path": "skills/prism/corpus/index.ts",
+      "sha256": "99ee5eee2282734c9df492c5ac1219903b9680f3dff37f3c513bfa4cff2c6343",
+      "lines": 256,
+      "currentEqual": true
+    },
+    {
+      "revision": "b2b85d4c8d3174aa41507cde77637227bb709e1e",
+      "path": "skills/prism/tests/corpus.test.mts",
+      "sha256": "4eb46c91c2ada8e2ff3f9255017820bba55adc8ab5cfebb34bdd0a80a92f9639",
+      "lines": 126,
+      "currentEqual": true
+    },
+    {
+      "revision": "b2b85d4c8d3174aa41507cde77637227bb709e1e",
+      "path": "skills/prism/storage/migrations/006_design_request.sql",
+      "sha256": "45e2eea130015a7e7050ecdc1488b3461ce6187c6ce920682c4e78d52cf3f09e",
+      "lines": 17,
+      "currentEqual": true
+    },
+    {
+      "revision": "b2b85d4c8d3174aa41507cde77637227bb709e1e",
+      "path": "skills/prism/storage/index.ts",
+      "sha256": "e5105909e5f1abf1eb2178270dd63d1b8e2aa337177dcb620b6ae43199a3a199",
+      "lines": 332,
+      "currentEqual": true
+    },
+    {
+      "revision": "b2b85d4c8d3174aa41507cde77637227bb709e1e",
+      "path": "skills/prism/directions/index.ts",
+      "sha256": "8f787b1ec48c8a0b876f754260d2702ae1c65bc8f2a031b897a989bcb8b973eb",
+      "lines": 37,
+      "currentEqual": true
+    },
+    {
+      "revision": "b2b85d4c8d3174aa41507cde77637227bb709e1e",
+      "path": "contracts/prism/v1/schemas/prism-v1.schema.json",
+      "sha256": "7e8e248ffbc3753ee462d8e4f1d8de98499c02df94f07f0bcfc28367886bf99b",
+      "lines": 834,
+      "currentEqual": true
+    },
+    {
+      "revision": "b2b85d4c8d3174aa41507cde77637227bb709e1e",
+      "path": "contracts/prism/v1/src/document-semantics.ts",
+      "sha256": "0a467d617890be691aaff6eb114b4acbb5de4efca55a5888879b7518a7f4cef2",
+      "lines": 136,
+      "currentEqual": true
+    },
+    {
+      "revision": "b2b85d4c8d3174aa41507cde77637227bb709e1e",
+      "path": "contracts/prism/v1/src/complexity.ts",
+      "sha256": "041bfa7037f86afaf6f9667bc90a07db4fe088924dcb3e7ef650841dfd1c60df",
+      "lines": 69,
+      "currentEqual": true
+    },
+    {
+      "revision": "b2b85d4c8d3174aa41507cde77637227bb709e1e",
+      "path": "contracts/prism/v1/src/node-catalog.ts",
+      "sha256": "6c005e8a54eb395677727023fe8bb659c223cd252baac6d1e628112172127104",
+      "lines": 421,
+      "currentEqual": true
+    },
+    {
+      "revision": "b2b85d4c8d3174aa41507cde77637227bb709e1e",
+      "path": "skills/prism/domain/index.ts",
+      "sha256": "710ff6fd047d301aef22477cb8cdecfd1fe1c9bd224c069abc6af9d805462838",
+      "lines": 136,
+      "currentEqual": true
+    },
+    {
+      "revision": "b2b85d4c8d3174aa41507cde77637227bb709e1e",
+      "path": "tests/verification/contracts/check-prism-postgres-transactions.mts",
+      "sha256": "85e8fab3340bffd4fe2693f75b8af0a5fe053d3662e018d78aace337aaa2e860",
+      "lines": 79,
+      "currentEqual": true
+    },
+    {
+      "revision": "b2b85d4c8d3174aa41507cde77637227bb709e1e",
+      "path": "skills/prism/control/direction-decisions.ts",
+      "sha256": "fe2067cb0421585e4622e0fad38da7960689b0de92c75d8a71f576177ccf972c",
+      "lines": 61,
+      "currentEqual": true
+    },
+    {
+      "revision": "b2b85d4c8d3174aa41507cde77637227bb709e1e",
+      "path": "skills/prism/preferences/index.ts",
+      "sha256": "2a86ae6f5c2fb5e0bc0b6dc2f60a6f7c3dad1d2695e1bde2cf9e00b6134b6c7d",
+      "lines": 90,
+      "currentEqual": true
+    },
+    {
+      "revision": "b2b85d4c8d3174aa41507cde77637227bb709e1e",
+      "path": "skills/prism/control/preference-snapshot.ts",
+      "sha256": "e0ac8ed987149afdbc7775d05dd4a31175b57189272d0b92de6301d775288ed2",
+      "lines": 38,
+      "currentEqual": true
+    },
+    {
+      "revision": "b2b85d4c8d3174aa41507cde77637227bb709e1e",
+      "path": "skills/prism/control/pipeline-preference-subject.ts",
+      "sha256": "ded8597750c0e6fb3de823cceb31ecbbff7ece03143f4cdd30037ceff0a77eb3",
+      "lines": 11,
+      "currentEqual": true
+    },
+    {
+      "revision": "b2b85d4c8d3174aa41507cde77637227bb709e1e",
+      "path": "skills/prism/evaluation/index.ts",
+      "sha256": "3c05396fdea1ada5bcc32fa5f45215e9ff2492f73e3c3987a4c0eb994a68416a",
+      "lines": 236,
+      "currentEqual": true
+    },
+    {
+      "revision": "b2b85d4c8d3174aa41507cde77637227bb709e1e",
+      "path": "contracts/prism/v1/src/baseline-archive.ts",
+      "sha256": "7017d8472863ec34449a725300f5c92707aa3dce13371f5e982621cce9b25237",
+      "lines": 92,
+      "currentEqual": true
+    },
+    {
+      "revision": "b2b85d4c8d3174aa41507cde77637227bb709e1e",
+      "path": "skills/prism/renderer/index.ts",
+      "sha256": "a96197346ae06317f68b5dd3fd68de35bb02780af6d17e2f7ac5683f17751552",
+      "lines": 304,
+      "currentEqual": true
+    },
+    {
+      "revision": "b2b85d4c8d3174aa41507cde77637227bb709e1e",
+      "path": "skills/prism/engine/render-operation.ts",
+      "sha256": "63b95de9640f47bce2b04e929232e0f7dd617c11ba08152f8e428db6a601d501",
+      "lines": 176,
+      "currentEqual": true
+    },
+    {
+      "revision": "b2b85d4c8d3174aa41507cde77637227bb709e1e",
+      "path": "skills/prism/studio/preview-assets.ts",
+      "sha256": "94b27166a5c76ec23705852bac3828b077abce2eb5a05f2059c2efef8324fbdd",
+      "lines": 66,
+      "currentEqual": true
+    },
+    {
+      "revision": "b2b85d4c8d3174aa41507cde77637227bb709e1e",
+      "path": "skills/prism/server/internal-artifacts.ts",
+      "sha256": "16750a5eecea51781dc67e271cfc331550f1a0a03460917133226cd9c975dab8",
+      "lines": 53,
+      "currentEqual": true
+    },
+    {
+      "revision": "b2b85d4c8d3174aa41507cde77637227bb709e1e",
+      "path": "skills/prism/storage/artifacts.ts",
+      "sha256": "8177fe9d5199d1af866a2ad7d5d7fdfa82b99b0fe6df5b7f0c3c04e96536ef1f",
+      "lines": 68,
+      "currentEqual": true
+    },
+    {
+      "revision": "b2b85d4c8d3174aa41507cde77637227bb709e1e",
+      "path": "charts/prism/templates/workloads.yaml",
+      "sha256": "9bb2865f5d232b2cc5fac39259c8957e573decc891d2c9b25d7554da01148739",
+      "lines": 230,
+      "currentEqual": true
+    },
+    {
+      "revision": "b2b85d4c8d3174aa41507cde77637227bb709e1e",
+      "path": "skills/prism/server/ingestion.ts",
+      "sha256": "bbee6795991e601600e6442927e483bcd5a87c798b66a42ed5606bb496354717",
+      "lines": 97,
+      "currentEqual": true
+    },
+    {
+      "revision": "b2b85d4c8d3174aa41507cde77637227bb709e1e",
+      "path": "skills/prism/integration/corpus-pool.mts",
+      "sha256": "993e49c853527500253108753d94178855a6ef019203ac8dd1b012e50de6d8c7",
+      "lines": 85,
+      "currentEqual": true
+    },
+    {
+      "revision": "b2b85d4c8d3174aa41507cde77637227bb709e1e",
+      "path": "skills/prism/control/native-operation-store.ts",
+      "sha256": "da764d081570b56a5579652033f4cbc0e2623ced3d1b62e0dc8945978f1e77a9",
+      "lines": 68,
+      "currentEqual": true
+    },
+    {
+      "revision": "b2b85d4c8d3174aa41507cde77637227bb709e1e",
+      "path": "skills/prism/storage/migrations/017_native_operation_identity.sql",
+      "sha256": "184d4e576b0175f828384ae2a5b0cea727cc6161d6528fb9b54ef7bd25d5e754",
+      "lines": 30,
+      "currentEqual": true
+    },
+    {
+      "revision": "b2b85d4c8d3174aa41507cde77637227bb709e1e",
+      "path": "skills/prism/control/agent-jobs.ts",
+      "sha256": "ff62ef04432ebb67c700c4a25103a0477096f588c2cc3f34f3fab0b776860334",
+      "lines": 100,
+      "currentEqual": true
+    },
+    {
+      "revision": "b2b85d4c8d3174aa41507cde77637227bb709e1e",
+      "path": "skills/prism/server/internal-auth.ts",
+      "sha256": "e0662a6b5237bc081fa346a35739fd2a388bdf20e93fff88ab866f8839b3fc72",
+      "lines": 87,
+      "currentEqual": true
+    },
+    {
+      "revision": "b2b85d4c8d3174aa41507cde77637227bb709e1e",
+      "path": "skills/prism/storage/product-decisions.ts",
+      "sha256": "522e30f6c1e668e145b05b055dcc9d4ca4226df8f4b1183e0918f4f99183c174",
+      "lines": 29,
+      "currentEqual": true
+    },
+    {
+      "revision": "b2b85d4c8d3174aa41507cde77637227bb709e1e",
+      "path": "skills/prism/storage/migrations/002_engine_operation_results.sql",
+      "sha256": "46e1a7a4600589b51616abda14e878c7cd8ae83210e297b7f7512bd12d3e9a79",
+      "lines": 2,
+      "currentEqual": true
+    },
+    {
+      "revision": "b2b85d4c8d3174aa41507cde77637227bb709e1e",
+      "path": "skills/prism/storage/migrations/003_worker_nonce.sql",
+      "sha256": "55af2848fecbd3d99fbe819a2eb2d0f3bc155efbb5b1b483765121a4c1c40768",
+      "lines": 9,
+      "currentEqual": true
+    },
+    {
+      "revision": "b2b85d4c8d3174aa41507cde77637227bb709e1e",
+      "path": "skills/prism/storage/migrations/004_approval_warnings.sql",
+      "sha256": "ac18eb41f1e54be046b0b1088723173c922b1ad71465762d958790b72398f6b0",
+      "lines": 2,
+      "currentEqual": true
+    },
+    {
+      "revision": "b2b85d4c8d3174aa41507cde77637227bb709e1e",
+      "path": "skills/prism/storage/migrations/005_direction_source.sql",
+      "sha256": "fbbdb69288fa15e5f0e7b436f0852614b63cca5c28c02a09b1d2e65690abff01",
+      "lines": 9,
+      "currentEqual": true
+    },
+    {
+      "revision": "b2b85d4c8d3174aa41507cde77637227bb709e1e",
+      "path": "skills/prism/storage/migrations/007_direction_evidence.sql",
+      "sha256": "0cbe2ea9f673b90ed2a4841451eef96b2df16a5441475d91ee1bf6a314bb1adc",
+      "lines": 1,
+      "currentEqual": true
+    },
+    {
+      "revision": "b2b85d4c8d3174aa41507cde77637227bb709e1e",
+      "path": "skills/prism/storage/migrations/008_document_request_binding.sql",
+      "sha256": "7713052490c58a4142f3827e7e563ecb5cab38b0a6c6af708a9920f1dd551067",
+      "lines": 4,
+      "currentEqual": true
+    },
+    {
+      "revision": "b2b85d4c8d3174aa41507cde77637227bb709e1e",
+      "path": "skills/prism/storage/migrations/009_corpus_source_evidence.sql",
+      "sha256": "1cd18eeb435a35e3106dd2acc613e5990b7e8534cba99de81e9028a022a01a88",
+      "lines": 8,
+      "currentEqual": true
+    },
+    {
+      "revision": "b2b85d4c8d3174aa41507cde77637227bb709e1e",
+      "path": "skills/prism/storage/migrations/010_direction_unsourced_uniqueness.sql",
+      "sha256": "d1b10f5a6cf161b2f4ae1a1f33ac226422b41a1c793099347cd19b423209865e",
+      "lines": 32,
+      "currentEqual": true
+    },
+    {
+      "revision": "b2b85d4c8d3174aa41507cde77637227bb709e1e",
+      "path": "skills/prism/storage/migrations/011_preference_wire_ids.sql",
+      "sha256": "af2e24bbfca75d7b6e3094af9535fd808ffe5afc65b51964b6ff58cc689693a4",
+      "lines": 7,
+      "currentEqual": true
+    },
+    {
+      "revision": "b2b85d4c8d3174aa41507cde77637227bb709e1e",
+      "path": "skills/prism/storage/migrations/012_preference_generation.sql",
+      "sha256": "91417f8f983fcf4f666037619780155d89eda796707832cbd5a27d7c5051596c",
+      "lines": 14,
+      "currentEqual": true
+    },
+    {
+      "revision": "b2b85d4c8d3174aa41507cde77637227bb709e1e",
+      "path": "skills/prism/storage/migrations/014_agent_jobs.sql",
+      "sha256": "723f518c0a9fc8d80f5b0191c36834e061ab74871067ea77830262fc6fac450a",
+      "lines": 35,
+      "currentEqual": true
+    },
+    {
+      "revision": "b2b85d4c8d3174aa41507cde77637227bb709e1e",
+      "path": "skills/prism/storage/migrations/015_product_decisions.sql",
+      "sha256": "69c0c7aa95ecd70cf5599eccdc35ff9ed01de83fd9be31c7ddda06473696993d",
+      "lines": 17,
+      "currentEqual": true
+    },
+    {
+      "revision": "b2b85d4c8d3174aa41507cde77637227bb709e1e",
+      "path": "skills/prism/storage/migrations/016_preference_legacy_insert_compatibility.sql",
+      "sha256": "df76fa398d9506c26eea9d05dfb1ac1f2af8d3b36b6e9549ff3abad1b7a5cbbf",
+      "lines": 15,
+      "currentEqual": true
+    },
+    {
+      "revision": "b2b85d4c8d3174aa41507cde77637227bb709e1e",
+      "path": "skills/prism/server/database-roles.ts",
+      "sha256": "f9b1b0048c2cc881969e33d7db58a74293a311079a50c8d391827996eaf5ae3a",
+      "lines": 58,
+      "currentEqual": true
+    },
+    {
+      "revision": "b2b85d4c8d3174aa41507cde77637227bb709e1e",
+      "path": "skills/prism/config/database-bootstrap.ts",
+      "sha256": "23b7078c1fe9304ab60d0fa7742dc5fe543a75da8a3367bb508a9ce8dc649625",
+      "lines": 11,
+      "currentEqual": true
+    },
+    {
+      "revision": "b2b85d4c8d3174aa41507cde77637227bb709e1e",
+      "path": "skills/prism/server/bootstrap-database.ts",
+      "sha256": "4cacc0a24266f58196bd6f6a74abeeb4f7bb95f833312fe691e9f6c0a76d28ee",
+      "lines": 20,
+      "currentEqual": true
+    },
+    {
+      "revision": "b2b85d4c8d3174aa41507cde77637227bb709e1e",
+      "path": "skills/prism/server/worker-readiness.ts",
+      "sha256": "b760fe315ee28b214d1309cb6ac85e16256581168d1bb27070de29ac956d233e",
+      "lines": 107,
+      "currentEqual": true
+    },
+    {
+      "revision": "b2b85d4c8d3174aa41507cde77637227bb709e1e",
+      "path": "skills/prism/server/control.ts",
+      "sha256": "b99be63fc90f0096a6acfef54c26c86b247ae7b1ad85066df064abca60600cd3",
+      "lines": 9,
+      "currentEqual": true
+    },
+    {
+      "revision": "b2b85d4c8d3174aa41507cde77637227bb709e1e",
+      "path": "charts/prism/values.yaml",
+      "sha256": "add69f96f117b8faed83b42133b7804eacca58ef850ef7428ea039842028d298",
+      "lines": 92,
+      "currentEqual": true
+    },
+    {
+      "revision": "b2b85d4c8d3174aa41507cde77637227bb709e1e",
+      "path": "charts/prism/files/prism-backup.sh",
+      "sha256": "6823dff4e65d056a82676d7970474921d55cd9573960a82344f15dd0eeaffece",
+      "lines": 191,
+      "currentEqual": true
+    },
+    {
+      "revision": "b2b85d4c8d3174aa41507cde77637227bb709e1e",
+      "path": "charts/prism/templates/backup.yaml",
+      "sha256": "8b22353f1a790233a269e462ee52fd72d8fc1faec73885f7fbe5ffddf0e7a406",
+      "lines": 90,
+      "currentEqual": true
+    }
+  ],
+  "externalUnchangedIdentities": [
+    "BerriAI/litellm@16f6d924530c1cf2dc94b3e83c86a4632aefb7c0:litellm/proxy/common_utils/encrypt_decrypt_utils.py",
+    "BerriAI/litellm@16f6d924530c1cf2dc94b3e83c86a4632aefb7c0:litellm/proxy/proxy_cli.py",
+    "BerriAI/litellm@16f6d924530c1cf2dc94b3e83c86a4632aefb7c0:litellm/proxy/proxy_server.py",
+    "BerriAI/litellm@16f6d924530c1cf2dc94b3e83c86a4632aefb7c0:schema.prisma",
+    "BerriAI/litellm@7d5b6456baaf8be6ac1a60db2b710566b5344adf:litellm-proxy-extras/litellm_proxy_extras/utils.py",
+    "BerriAI/litellm@7d5b6456baaf8be6ac1a60db2b710566b5344adf:litellm/litellm_core_utils/duration_parser.py",
+    "BerriAI/litellm@7d5b6456baaf8be6ac1a60db2b710566b5344adf:litellm/proxy/common_utils/encrypt_decrypt_utils.py",
+    "BerriAI/litellm@7d5b6456baaf8be6ac1a60db2b710566b5344adf:litellm/proxy/db/db_transaction_queue/spend_log_cleanup.py",
+    "BerriAI/litellm@7d5b6456baaf8be6ac1a60db2b710566b5344adf:litellm/proxy/db/prisma_client.py",
+    "BerriAI/litellm@7d5b6456baaf8be6ac1a60db2b710566b5344adf:litellm/proxy/management_endpoints/model_management_endpoints.py",
+    "BerriAI/litellm@7d5b6456baaf8be6ac1a60db2b710566b5344adf:litellm/proxy/proxy_cli.py",
+    "BerriAI/litellm@7d5b6456baaf8be6ac1a60db2b710566b5344adf:litellm/proxy/proxy_server.py",
+    "BerriAI/litellm@7d5b6456baaf8be6ac1a60db2b710566b5344adf:schema.prisma",
+    "openclaw/openclaw@59cb44796b0f1f0daa0e37af8b1495abb45d9bc1:extensions/memory-core/src/memory/manager-embedding-errors.ts",
+    "openclaw/openclaw@59cb44796b0f1f0daa0e37af8b1495abb45d9bc1:extensions/memory-core/src/memory/manager-embedding-ops.ts",
+    "openclaw/openclaw@59cb44796b0f1f0daa0e37af8b1495abb45d9bc1:extensions/memory-core/src/memory/manager-embedding-policy.ts",
+    "openclaw/openclaw@59cb44796b0f1f0daa0e37af8b1495abb45d9bc1:packages/memory-host-sdk/src/host/embedding-vectors.ts",
+    "openclaw/openclaw@59cb44796b0f1f0daa0e37af8b1495abb45d9bc1:src/agents/provider-http-errors.ts",
+    "openclaw/openclaw@59cb44796b0f1f0daa0e37af8b1495abb45d9bc1:src/plugins/openai-compatible-embedding-provider.ts"
+  ],
+  "semanticAcceptance": false
+}

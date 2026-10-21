@@ -1,0 +1,22 @@
+[
+  {
+    "path": "docs/site/understand/communication.md",
+    "sha256": "489ddeed11405303f5b0560f234d68ef3601a645e7f3120508d4e16686e17bee",
+    "unchangedFromV1": true
+  },
+  {
+    "path": "docs/site/understand/platform-and-operations.md",
+    "sha256": "12474c7960e6703ab586ee50d9b2fa9a249e727d672bea5d46cd2ab5244b9ca5",
+    "unchangedFromV1": false
+  },
+  {
+    "path": "docs/site/understand/data-and-state.md",
+    "sha256": "8148e1cf2b7366e778d990b03fdea956cc376e811091a2a1d38946daf8c735a4",
+    "unchangedFromV1": true
+  },
+  {
+    "path": "docs/site/understand/prism-data.md",
+    "sha256": "747e3ab117b34340221fcbdc1946a5a273f9df6645bf1ed0ffc27c8a2da34cf4",
+    "unchangedFromV1": true
+  }
+]

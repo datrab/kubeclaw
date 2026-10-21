@@ -166,9 +166,23 @@ network, identity, and data services before application reconciliation.
 
 > **Source evidence — present bootstrap boundary**
 >
+> **Claim:** The current deployment entry assumes an existing supported cluster rather than implementing complete host bootstrap.
+>
+> **Implementation:** Deploy inputs and the linked roadmap below distinguish present orchestration from planned automation.
+>
+>
 > [The deployment command defines the selected cluster inputs and explicit component switches](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/scripts/deploy.sh#L1-L60).
 >
 > [The host-automation roadmap states the required planned result](../status/roadmap.md#automated-host-bootstrap-and-recovery).
+>
+> **Contract or setting:** Explicit cluster/component switches do not provision every kernel, storage or independent recovery prerequisite.
+>
+> **Test evidence:** No empty-host bootstrap, rollback or recovery exercise is established by this source boundary.
+>
+> **Revision:** `0e35889a3c4e65d5c47ba88e924611aace67eb1d`. Source bindings, not execution receipts.
+>
+> **Limit:** Ops and in-cluster services cannot supply independent recovery access to the cluster that hosts them.
+>
 
 ## DNS, Storage, and Scheduling
 
@@ -205,11 +219,25 @@ configuration fault.
 
 > **Source evidence — storage and scheduling inputs**
 >
+> **Claim:** Storage adoption, retained volumes and runtime resource declarations are separate scheduling inputs.
+>
+> **Implementation:** The adopted storage project, registry storage contract and Buster values below declare those inputs.
+>
+>
 > [Argo CD adopts the SMB CSI driver as a separate storage project](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/scripts/platform-services.mjs#L3-L40).
 >
 > [The local registry requires an explicit StorageClass, capacity, and `ReadWriteOncePod`](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/my-values/infra/registry-local.yaml#L1-L14).
 >
 > [Buster declares CPU, memory, ephemeral-storage, retained runtime state, and a dedicated cgroup subtree](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/my-values/buster-values.yaml#L5-L19).
+>
+> **Contract or setting:** Selected StorageClass/access mode and node/cgroup/resource prerequisites must match the consumer.
+>
+> **Test evidence:** No actual PVC persistence, capacity or scheduled native workload proof is established by these declarations.
+>
+> **Revision:** `13bff0a18a64e74f2cbbaa1978e746fcdeff0c10`. Source bindings, not execution receipts.
+>
+> **Limit:** Placement alone is not readiness, storage durability or permission to delete owner-managed files.
+>
 
 ## One Network Owner: Flannel or Cilium
 
@@ -259,11 +287,25 @@ allowed and denied connections before returning a node to service.
 
 > **Source evidence — guarded CNI ownership**
 >
+> **Claim:** Cilium installation has a guarded ownership cutover; network manifests are not live enforcement proof.
+>
+> **Implementation:** Installer and selected CNI/policy values below define the supported network ownership.
+>
+>
 > [The installer separates first cutover from later Cilium updates](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/scripts/deploy-cilium.sh#L7-L32).
 >
 > [The selected values explicitly disable the normal K3s CNI ownership](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/my-values/infra/cilium-values.yaml#L24-L31).
 >
 > [The active platform policy uses Cilium identities and a Cilium API resource](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/my-values/infra/network-policies.yaml#L1-L55).
+>
+> **Contract or setting:** One CNI owns the dataplane; equivalent fallback policy/evidence requires separate acceptance.
+>
+> **Test evidence:** No live alternate-CNI or permitted/denied traffic exercise is established by this callout.
+>
+> **Revision:** `13bff0a18a64e74f2cbbaa1978e746fcdeff0c10`. Source bindings, not execution receipts.
+>
+> **Limit:** Source/render portability does not prove Flannel security equivalence or Hubble-equivalent evidence.
+>
 
 ## Argo CD and Exclusive Resource Ownership
 
@@ -298,11 +340,25 @@ bootstrap, recover, and reconcile every resource without a shared-owner window.
 
 > **Source evidence — Git deployment boundary**
 >
+> **Claim:** Direct deployment and Git reconciliation need explicit handover and exclusive resource ownership.
+>
+> **Implementation:** Argo projects, applications and adopted-service rules below delimit the reconciliation owners.
+>
+>
 > [Platform projects restrict source repositories, destinations, and resource kinds](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/scripts/argocd-self-management.mjs#L15-L29).
 >
 > [The platform tree assigns separate Tailscale, Ops, Redis, and registry applications](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/scripts/argocd-self-management.mjs#L55-L105).
 >
 > [Adopted SPIRE and storage applications reject shared resource ownership](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/scripts/platform-services.mjs#L24-L57).
+>
+> **Contract or setting:** Repository/destination restrictions and shared-resource rejection constrain GitOps, not pipeline state.
+>
+> **Test evidence:** No live ownership handover, reconciliation or disaster-recovery result is established here.
+>
+> **Revision:** `13bff0a18a64e74f2cbbaa1978e746fcdeff0c10`. Source bindings, not execution receipts.
+>
+> **Limit:** Concurrent Helm/Argo control is not a supported way to resolve drift or restore authority.
+>
 
 ## Runtime Dependency Contracts
 
@@ -345,6 +401,11 @@ supplies a credential value after the non-secret endpoint has been selected.
 
 > **Source evidence — dependency configuration and precedence inputs**
 >
+> **Claim:** Role dependency configuration and generated client settings govern different readiness and routing behavior.
+>
+> **Implementation:** Defaults, registry projections, Prism workload and gateway inputs below bind those selected dependencies.
+>
+>
 > [Role defaults define Git, Redis, LiteLLM, and worker-trust inputs](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/charts/kubeclaw/values.yaml#L132-L173) and [the adjacent Git and Redis defaults](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/charts/kubeclaw/values.yaml#L205-L233).
 >
 > [The registry contract rejects implicit transport and unsafe credential combinations](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/scripts/registry-client-config.mjs#L23-L54) and [generates distinct BuildKit, runtime, and node projections](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/scripts/registry-client-config.mjs#L57-L104).
@@ -357,6 +418,15 @@ supplies a credential value after the non-secret endpoint has been selected.
 > [The gateway configuration separates managed OpenAI reasoning from the LiteLLM memory route](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/charts/kubeclaw/templates/configmap-gateway.yaml#L28-L79) and [limits the allowed reasoning models](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/charts/kubeclaw/templates/configmap-gateway.yaml#L81-L128).
 >
 > [Nova enables its Discord channel and token source](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/my-values/nova-values.yaml#L38-L59), and [Buster enables its distinct channel and execution approver](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/my-values/buster-values.yaml#L41-L65).
+>
+> **Contract or setting:** Values precedence, explicit endpoint transport and Secret/model/channel selection determine each consumer contract.
+>
+> **Test evidence:** No complete live readiness and authenticated dependency-operation matrix is established by these configuration links.
+>
+> **Revision:** `0e35889a3c4e65d5c47ba88e924611aace67eb1d`; `13bff0a18a64e74f2cbbaa1978e746fcdeff0c10`. Source bindings, not execution receipts.
+>
+> **Limit:** A health probe does not prove client routing, provider output, credential rotation or a domain outcome.
+>
 
 ### Initialization and verification dependency signals
 
@@ -401,11 +471,25 @@ features. It deletes the probe afterward and reports a cleanup failure.
 
 > **Source evidence — builder lifecycle**
 >
+> **Claim:** Buster owns its colocated rootless BuildKit startup and shutdown, separate from retained job evidence.
+>
+> **Implementation:** Entrypoint, image and bounded preflight code below define worker/socket preparation and cleanup.
+>
+>
 > [The Buster entrypoint creates registry configuration, starts rootless BuildKit, waits for its worker, and owns shutdown](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/docker/buster-runtime-entrypoint.sh#L4-L61).
 >
 > [The worker image pins BuildKit and rootless tools](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/docker/Dockerfile.buster-runtime#L1-L44) and [defines the runtime user mappings and paths](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/docker/Dockerfile.buster-runtime#L45-L78).
 >
 > [The host preflight creates the bounded rootless probe](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/scripts/deploy.sh#L722-L781) and [checks its worker, result, and cleanup](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/scripts/deploy.sh#L793-L852).
+>
+> **Contract or setting:** Registry-clients.v1 and rootless host prerequisites constrain the local Unix-socket builder.
+>
+> **Test evidence:** The linked preflight is an executable check definition, not a recorded deployment-host result here.
+>
+> **Revision:** `0e35889a3c4e65d5c47ba88e924611aace67eb1d`; `13bff0a18a64e74f2cbbaa1978e746fcdeff0c10`. Source bindings, not execution receipts.
+>
+> **Limit:** Build cache loss is not receipt loss; a process exit does not prove that no image was pushed.
+>
 
 ## Writable Local OCI Registry
 
@@ -452,6 +536,11 @@ expected digest and a fresh consuming-node pull before resuming dependent work.
 
 > **Source evidence — explicit laboratory limits**
 >
+> **Claim:** The writable registry profiles are explicit anonymous HTTP laboratory choices, not authenticated production storage.
+>
+> **Implementation:** Registry template/client admission and deployment selection below enforce the stated lab boundary.
+>
+>
 > [The Argo-selected workload has no data volume and enables deletion](https://github.com/datrab/kubeclaw/blob/d7f822c3cddd97e637aeca47f1cd49e87164ff87/gitops/platform/registry-local/resources.yaml#L1-L53).
 > [Its bootstrap Application selects that separate directory](https://github.com/datrab/kubeclaw/blob/d7f822c3cddd97e637aeca47f1cd49e87164ff87/gitops/platform/bootstrap/registry-local.yaml#L1-L24).
 >
@@ -462,6 +551,15 @@ expected digest and a fresh consuming-node pull before resuming dependent work.
 > [Deployment requires explicit storage input and never enables the lab registry by default](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/scripts/deploy.sh#L1164-L1196).
 >
 > [The production-grade registry roadmap gives the required acceptance boundary](../status/roadmap.md#production-grade-local-oci-registry).
+>
+> **Contract or setting:** Explicit transport, endpoints and credentials rules separate retained direct storage from ephemeral GitOps adoption.
+>
+> **Test evidence:** No authenticated HTTPS registry, off-host restore or uncached pull proof is established by these declarations.
+>
+> **Revision:** `d7f822c3cddd97e637aeca47f1cd49e87164ff87`; `13bff0a18a64e74f2cbbaa1978e746fcdeff0c10`; `0e35889a3c4e65d5c47ba88e924611aace67eb1d`. Source bindings, not execution receipts.
+>
+> **Limit:** A ready registry or prior push does not prove current retained manifests/layers or production access controls.
+>
 
 ## Docker Hub Pull-Through Mirror
 
@@ -496,9 +594,23 @@ operation does not need a backup because upstream content and digests are author
 
 > **Source evidence — cache boundary and client routing**
 >
+> **Claim:** The Docker Hub mirror is replaceable upstream cache and configures no client merely by existing.
+>
+> **Implementation:** Mirror workload and registry-client generator below define storage and explicit routing.
+>
+>
 > [The mirror manifest names Docker Hub and its retained cache](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/my-values/infra/registry-mirror.yaml#L1-L55), with [resource bounds, probes, and Service port 5000](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/my-values/infra/registry-mirror.yaml#L56-L94).
 >
 > [The client generator keeps writable registry and mirror routes separate and creates BuildKit and node configuration](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/scripts/registry-client-config.mjs#L57-L104).
+>
+> **Contract or setting:** Selected mirror endpoint, writable-registry separation and client projection govern use.
+>
+> **Test evidence:** No actual cold pull, corruption recovery or capacity-window exercise is established here.
+>
+> **Revision:** `13bff0a18a64e74f2cbbaa1978e746fcdeff0c10`. Source bindings, not execution receipts.
+>
+> **Limit:** Cache retention is not private artifact authority or a substitute for upstream availability.
+>
 
 ## Git Source and the Absent Git Mirror
 
@@ -536,11 +648,25 @@ releases a bounded test route.
 
 > **Source evidence — service ownership**
 >
+> **Claim:** Redis, platform PostgreSQL and Tailscale retain different state under different owners.
+>
+> **Implementation:** Service values below declare authentication, volumes, database identity and operator route settings.
+>
+>
 > [Redis values declare authentication, standalone topology, persistence, and resource bounds](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/gitops/platform/values/redis.yaml#L1-L21).
 >
 > [Platform PostgreSQL declares the LiteLLM database, existing Secret keys, persistence, and resources](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/gitops/platform/values/postgresql.yaml#L1-L25).
 >
 > [Tailscale values declare the ingress class, tags, and bounded resources](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/gitops/platform/values/tailscale-operator.yaml#L1-L21).
+>
+> **Contract or setting:** The platform LiteLLM database is not Prism PostgreSQL; route OAuth/tags are not product decisions.
+>
+> **Test evidence:** No deployed database restore, stream replay or Tailnet access proof is established by these values.
+>
+> **Revision:** `13bff0a18a64e74f2cbbaa1978e746fcdeff0c10`. Source bindings, not execution receipts.
+>
+> **Limit:** Configured persistence and a ready service do not certify a matched recovery group or independent cluster access.
+>
 
 ## LiteLLM Model Gateway
 
@@ -673,6 +799,11 @@ base URL, authentication, model identity, vector validation, and recovery proof.
 
 > **Source evidence — gateway configuration and rollout**
 >
+> **Claim:** LiteLLM embedding configuration and rollout are distinct from a successful selected-provider request.
+>
+> **Implementation:** Gateway settings, direct/GitOps workloads, renderer and role probe below trace those profile boundaries.
+>
+>
 > [The current model list, provider location, master-key source, and parameter behavior](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/my-values/infra/litellm-config.yaml#L1-L14).
 >
 > [The direct Deployment declares the image, database mode, provider mount, and startup/readiness checks](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/my-values/infra/litellm-deployment.yaml#L23-L81).
@@ -686,6 +817,15 @@ base URL, authentication, model identity, vector validation, and recovery proof.
 > [The role renders the embedding URL, Secret reference, and model](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/charts/kubeclaw/templates/configmap-gateway.yaml#L59-L79).
 >
 > [Its dependency check calls only authenticated `/health`](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/charts/kubeclaw/templates/deployment.yaml#L914-L919).
+>
+> **Contract or setting:** Mounted config/checksum, database/Secret/provider inputs and model selection determine the chosen route.
+>
+> **Test evidence:** No authenticated Vertex vector or complete gateway recovery is established by the configuration/probe links.
+>
+> **Revision:** `13bff0a18a64e74f2cbbaa1978e746fcdeff0c10`; `0e35889a3c4e65d5c47ba88e924611aace67eb1d`. Source bindings, not execution receipts.
+>
+> **Limit:** The role health check alone does not prove the embedding model, managed reasoning or effective persisted settings.
+>
 
 ## Managed Reasoning, Vertex Embeddings, and Discord
 
@@ -720,8 +860,22 @@ Nova values override it to `false`. A mention is therefore not universally
 required. This setting does not remove the configured user allowlist.
 
 > **Source evidence:** [The chart defaults to requiring a mention](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/charts/kubeclaw/values.yaml#L188-L191).
+>
+> **Claim:** Guild mention handling is a selected value, not a universal prerequisite for bot messages.
+>
+> **Implementation:** The chart default, Nova overlay and gateway guild template below define this precedence.
+>
 > [Nova overrides the mention setting](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/my-values/nova-values.yaml#L52-L56).
 > [The gateway renders that value into the guild policy](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/charts/kubeclaw/templates/configmap-gateway.yaml#L235-L242).
+>
+> **Contract or setting:** Nova sets requireMention false; the chart default remains true and user allowlisting still applies.
+>
+> **Test evidence:** No actual allowed/denied Discord user interaction is established by these selected values.
+>
+> **Revision:** `0e35889a3c4e65d5c47ba88e924611aace67eb1d`. Source bindings, not execution receipts.
+>
+> **Limit:** A rendered mention policy does not prove effective host state, bot availability or webhook delivery.
+>
 Prism declares a Discord credential source but leaves its channel disabled.
 
 The shared webhook is a second Discord identity. Its secret value contains the
@@ -743,6 +897,11 @@ and grants its secret and network capabilities.
 
 > **Source evidence — distinct external paths**
 >
+> **Claim:** Managed reasoning, Vertex embeddings, bot channels and webhooks have separate credentials and consumers.
+>
+> **Implementation:** Gateway, role values, provider mounts and messaging adapter below implement those distinct paths.
+>
+>
 > [The generated gateway keeps OpenAI auth and the LiteLLM memory endpoint in separate configuration blocks](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/charts/kubeclaw/templates/configmap-gateway.yaml#L28-L79).
 >
 > [Prism selects the managed reasoning models while retaining the separate LiteLLM key and endpoint](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/my-values/prism-agent-values.yaml#L34-L62).
@@ -756,6 +915,15 @@ and grants its secret and network capabilities.
 >
 > [The notification adapter requires an explicit target, endpoint mode, secret name, payload limit, and format](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/common/plugins/operator-messaging/src/config.ts#L59-L80).
 > [It uses granted secret and network capabilities only after durable reservation](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/common/plugins/operator-messaging/src/adapter.ts#L35-L63).
+>
+> **Contract or setting:** OAuth, embedding key/Google identity, bot token/allowlist and explicit webhook target grants are not interchangeable.
+>
+> **Test evidence:** No deployed end-to-end provider, channel or webhook journey is established by these wiring links.
+>
+> **Revision:** `0e35889a3c4e65d5c47ba88e924611aace67eb1d`; `13bff0a18a64e74f2cbbaa1978e746fcdeff0c10`. Source bindings, not execution receipts.
+>
+> **Limit:** Secret injection alone does not activate a sender or permit replay after an uncertain external outcome.
+>
 
 ## Monitoring Is Optional and Non-Authoritative
 
@@ -781,11 +949,25 @@ dashboard.
 
 > **Source evidence — retention and collector boundary**
 >
+> **Claim:** Optional monitoring retains projections without becoming a source of pipeline authority.
+>
+> **Implementation:** Prometheus/Grafana, Loki and Alloy values below define storage, collector and delivery settings.
+>
+>
 > [Prometheus and Grafana values declare retained storage, credentials, and metric retention](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/gitops/platform/values/prometheus.yaml#L1-L50).
 >
 > [Loki values declare retained filesystem storage and log retention](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/gitops/platform/values/loki.yaml#L1-L33).
 >
 > [Alloy values declare CRI discovery and processing](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/gitops/platform/values/alloy.yaml#L30-L79) and [the Loki delivery and collector resource boundary](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/gitops/platform/values/alloy.yaml#L80-L130).
+>
+> **Contract or setting:** Configured retention, collector positions and network protection apply to their selected monitoring profile.
+>
+> **Test evidence:** No complete live scrape/log-delivery, retention-capacity or paging proof is established by these values.
+>
+> **Revision:** `13bff0a18a64e74f2cbbaa1978e746fcdeff0c10`. Source bindings, not execution receipts.
+>
+> **Limit:** Dashboard health cannot reconstruct missing canonical events or prove zero collection loss.
+>
 
 ## Ops Pod: Tool Policy Is Not Kubernetes Authority
 
@@ -815,6 +997,11 @@ Pod cannot repair the cluster that must schedule it.
 
 > **Source evidence — effective operations authority**
 >
+> **Claim:** The optional Ops Pod can hold wider Kubernetes authority than its read-oriented MCP method list.
+>
+> **Implementation:** Role/token mount and RBAC templates below show the shared credential and conditional exec path.
+>
+>
 > [Chart defaults enable namespace-scoped Codex execution in `kubeclaw`](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/charts/ops-pod/values.yaml#L21-L28).
 >
 > [RBAC declares the read surface](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/charts/ops-pod/templates/rbac.yaml#L1-L50) and [separates namespace-scoped Pod execution](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/charts/ops-pod/templates/rbac.yaml#L51-L92).
@@ -823,6 +1010,15 @@ Pod cannot repair the cluster that must schedule it.
 > [MCP mounts the same volume](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/charts/ops-pod/templates/workload.yaml#L99-L101), and
 > [that volume projects one rotating ServiceAccount token](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/charts/ops-pod/templates/workload.yaml#L147-L151).
 > [The exec Role separates Pod reads from the get/create exec verbs](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/charts/ops-pod/templates/rbac.yaml#L74-L81).
+>
+> **Contract or setting:** Nonempty execNamespaces enables Codex token/kubeconfig and namespace-scoped exec; MCP mounts the same kube-api ServiceAccount token, including those effective exec grants.
+>
+> **Test evidence:** No deployed effective-RBAC or process-isolation result is established by these templates.
+>
+> **Revision:** `13bff0a18a64e74f2cbbaa1978e746fcdeff0c10`. Source bindings, not execution receipts.
+>
+> **Limit:** Tool labels do not remove credential authority; the Ops Pod is not an independent host recovery route.
+>
 
 ## Dependency and Recovery Order
 

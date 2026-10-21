@@ -1,0 +1,490 @@
+{
+  "pages": [
+    {
+      "path": "docs/site/understand/communication.md",
+      "sha256": "489ddeed11405303f5b0560f234d68ef3601a645e7f3120508d4e16686e17bee",
+      "unchangedFromV1": true,
+      "actualSourceBoxes": 14
+    },
+    {
+      "path": "docs/site/understand/platform-and-operations.md",
+      "sha256": "12474c7960e6703ab586ee50d9b2fa9a249e727d672bea5d46cd2ab5244b9ca5",
+      "unchangedFromV1": false,
+      "actualSourceBoxes": 16
+    },
+    {
+      "path": "docs/site/understand/data-and-state.md",
+      "sha256": "8148e1cf2b7366e778d990b03fdea956cc376e811091a2a1d38946daf8c735a4",
+      "unchangedFromV1": true,
+      "actualSourceBoxes": 16
+    },
+    {
+      "path": "docs/site/understand/prism-data.md",
+      "sha256": "747e3ab117b34340221fcbdc1946a5a273f9df6645bf1ed0ffc27c8a2da34cf4",
+      "unchangedFromV1": true,
+      "actualSourceBoxes": 16
+    }
+  ],
+  "changedSourceBoxes": [
+    30
+  ],
+  "boxes": [
+    {
+      "page": "docs/site/understand/communication.md",
+      "startLine": 87,
+      "endLine": 114,
+      "sha256": "a896e0f703ddb5ce614e21ebd664a52098b78ce226806c28449792fa38c05d77",
+      "sixFieldsInSameParsedBlock": true
+    },
+    {
+      "page": "docs/site/understand/communication.md",
+      "startLine": 166,
+      "endLine": 194,
+      "sha256": "8214f10b38bc89c0ad6604e68bc0993c3de7db2ade738a3a0641d9f2cbc5a0f9",
+      "sixFieldsInSameParsedBlock": true
+    },
+    {
+      "page": "docs/site/understand/communication.md",
+      "startLine": 196,
+      "endLine": 221,
+      "sha256": "b45494f604d3aec20e2597cd80c0deb390e39751c55004d84c1d346a01864b3c",
+      "sixFieldsInSameParsedBlock": true
+    },
+    {
+      "page": "docs/site/understand/communication.md",
+      "startLine": 246,
+      "endLine": 281,
+      "sha256": "b916d0895fedd0b5807d983132e649e24b64263a314ca48bab2e04618ef75764",
+      "sixFieldsInSameParsedBlock": true
+    },
+    {
+      "page": "docs/site/understand/communication.md",
+      "startLine": 309,
+      "endLine": 345,
+      "sha256": "070dbfbb5f9df7c3a24bf5288480bc0eab5992f5fce167d95095377bb535330c",
+      "sixFieldsInSameParsedBlock": true
+    },
+    {
+      "page": "docs/site/understand/communication.md",
+      "startLine": 358,
+      "endLine": 378,
+      "sha256": "896b289c24ea38be2733f6d045b1518d333981ffca4d5b6a380b072f0e196851",
+      "sixFieldsInSameParsedBlock": true
+    },
+    {
+      "page": "docs/site/understand/communication.md",
+      "startLine": 474,
+      "endLine": 490,
+      "sha256": "3331bdce95dec33afe117b46b03bece72cc011ea7566fdcbcb16f2bc8345026f",
+      "sixFieldsInSameParsedBlock": true
+    },
+    {
+      "page": "docs/site/understand/communication.md",
+      "startLine": 766,
+      "endLine": 790,
+      "sha256": "035b1794e529ba18add19515418d38e5ceed630b57f4107c63ef8a424a10cbc5",
+      "sixFieldsInSameParsedBlock": true
+    },
+    {
+      "page": "docs/site/understand/communication.md",
+      "startLine": 889,
+      "endLine": 915,
+      "sha256": "227e2b4497ffa3a407a6f13a089c93d28a354876f3c2055c78db2e9801e97f29",
+      "sixFieldsInSameParsedBlock": true
+    },
+    {
+      "page": "docs/site/understand/communication.md",
+      "startLine": 928,
+      "endLine": 944,
+      "sha256": "36383a3a061043d4f58cbfedd92710f42a09b66c6cfda8743bbe927344219d89",
+      "sixFieldsInSameParsedBlock": true
+    },
+    {
+      "page": "docs/site/understand/communication.md",
+      "startLine": 1172,
+      "endLine": 1192,
+      "sha256": "e951bbe87af977a17c65fd73127b34d2006f56dc264a8125cb671d40ad60739b",
+      "sixFieldsInSameParsedBlock": true
+    },
+    {
+      "page": "docs/site/understand/communication.md",
+      "startLine": 1222,
+      "endLine": 1246,
+      "sha256": "70f56e41cbc447ac010a628670fbfdab6401ff2e635434cd8f774fb474972a76",
+      "sixFieldsInSameParsedBlock": true
+    },
+    {
+      "page": "docs/site/understand/communication.md",
+      "startLine": 1261,
+      "endLine": 1286,
+      "sha256": "f67c3e6ff4ac5e14ae178ac8fa695b095452bf524886256644ddb4f2767f04a5",
+      "sixFieldsInSameParsedBlock": true
+    },
+    {
+      "page": "docs/site/understand/communication.md",
+      "startLine": 1397,
+      "endLine": 1424,
+      "sha256": "0148a43dda86d5d83dd326bf4bc6bbebae1763be370f461bf2fd6d3d2f9bdcf7",
+      "sixFieldsInSameParsedBlock": true
+    },
+    {
+      "page": "docs/site/understand/platform-and-operations.md",
+      "startLine": 130,
+      "endLine": 142,
+      "sha256": "601f5e1bf92ebb4358dba36c3b8e489c01827033239ff7e755f1654aafc639d1",
+      "sixFieldsInSameParsedBlock": true
+    },
+    {
+      "page": "docs/site/understand/platform-and-operations.md",
+      "startLine": 167,
+      "endLine": 185,
+      "sha256": "db296b148e5d0d1a6e184563764f8c74f7669f084ee977f4d18fa4d3e286659f",
+      "sixFieldsInSameParsedBlock": true
+    },
+    {
+      "page": "docs/site/understand/platform-and-operations.md",
+      "startLine": 220,
+      "endLine": 240,
+      "sha256": "da2dd2be09b07b0a387c1ec37fbe2825d34d3e23253f16dfcaa1c7daabe2baa5",
+      "sixFieldsInSameParsedBlock": true
+    },
+    {
+      "page": "docs/site/understand/platform-and-operations.md",
+      "startLine": 288,
+      "endLine": 308,
+      "sha256": "b18bc4dbb8986c4ba47d9f463f2889182576656da817414c42e29e244140c809",
+      "sixFieldsInSameParsedBlock": true
+    },
+    {
+      "page": "docs/site/understand/platform-and-operations.md",
+      "startLine": 341,
+      "endLine": 361,
+      "sha256": "db1b675e52a932e4f4971c4e58828723e8552c057858c05983adc24e53c9a9cb",
+      "sixFieldsInSameParsedBlock": true
+    },
+    {
+      "page": "docs/site/understand/platform-and-operations.md",
+      "startLine": 402,
+      "endLine": 429,
+      "sha256": "a130f2a42c5ba87f0d237d0fa79c546ec0d8ff47a443deaadbf63e0c74ed2345",
+      "sixFieldsInSameParsedBlock": true
+    },
+    {
+      "page": "docs/site/understand/platform-and-operations.md",
+      "startLine": 472,
+      "endLine": 492,
+      "sha256": "845f1e322678e2578e852a118765b8aa7b2a9cbcfcd0b41c9bc1d3cbca1e8176",
+      "sixFieldsInSameParsedBlock": true
+    },
+    {
+      "page": "docs/site/understand/platform-and-operations.md",
+      "startLine": 537,
+      "endLine": 562,
+      "sha256": "414760d58540bff28330ab4645b83c0ebf1c31f40ade98b5c142a80b9d175660",
+      "sixFieldsInSameParsedBlock": true
+    },
+    {
+      "page": "docs/site/understand/platform-and-operations.md",
+      "startLine": 595,
+      "endLine": 613,
+      "sha256": "b44391a76680e603d3f727b78575b51eddb3c2ad539353b4fc9d0bd2c3e1473d",
+      "sixFieldsInSameParsedBlock": true
+    },
+    {
+      "page": "docs/site/understand/platform-and-operations.md",
+      "startLine": 649,
+      "endLine": 669,
+      "sha256": "16a6edcee32ec0effad1f9bf725eba76b37ec1d0268415720b10cc11f18abd7e",
+      "sixFieldsInSameParsedBlock": true
+    },
+    {
+      "page": "docs/site/understand/platform-and-operations.md",
+      "startLine": 775,
+      "endLine": 782,
+      "sha256": "10ae943869e60b227dfb2f946ff8b85a194f4190050c7a6e519ade63f6173cdf",
+      "sixFieldsInSameParsedBlock": true
+    },
+    {
+      "page": "docs/site/understand/platform-and-operations.md",
+      "startLine": 800,
+      "endLine": 828,
+      "sha256": "10bc73975daa50e4842d4c84e694170a81166eb1502ddc285474e16b4eef4f90",
+      "sixFieldsInSameParsedBlock": true
+    },
+    {
+      "page": "docs/site/understand/platform-and-operations.md",
+      "startLine": 862,
+      "endLine": 878,
+      "sha256": "3f4d95c1c93a3a1f27d778ebe3d803267cf0f6889ae1a6a1002861ab8885899e",
+      "sixFieldsInSameParsedBlock": true
+    },
+    {
+      "page": "docs/site/understand/platform-and-operations.md",
+      "startLine": 898,
+      "endLine": 926,
+      "sha256": "c9ffc0756424afa53c30891946d899ddb56a00c6196201c1bdfed50eec80bc7c",
+      "sixFieldsInSameParsedBlock": true
+    },
+    {
+      "page": "docs/site/understand/platform-and-operations.md",
+      "startLine": 950,
+      "endLine": 970,
+      "sha256": "e0eb0ad5393361e082c150ac16cc3efea6055d03dde79ebf831cd613c871617d",
+      "sixFieldsInSameParsedBlock": true
+    },
+    {
+      "page": "docs/site/understand/platform-and-operations.md",
+      "startLine": 998,
+      "endLine": 1021,
+      "sha256": "cd8d5a7188e7e83637025f2f62964fe9697eb58d4adee8f9d774382420e02a44",
+      "sixFieldsInSameParsedBlock": true
+    },
+    {
+      "page": "docs/site/understand/data-and-state.md",
+      "startLine": 52,
+      "endLine": 69,
+      "sha256": "e28b2e3ab0f8371682de988b331f5d0c9611feb645a79191f6145dbcaa5eeaa1",
+      "sixFieldsInSameParsedBlock": true
+    },
+    {
+      "page": "docs/site/understand/data-and-state.md",
+      "startLine": 218,
+      "endLine": 247,
+      "sha256": "7b7c4f553b045baafa696884702a80410a187ad235cdb123fc904141faf0aa56",
+      "sixFieldsInSameParsedBlock": true
+    },
+    {
+      "page": "docs/site/understand/data-and-state.md",
+      "startLine": 249,
+      "endLine": 271,
+      "sha256": "2aafca5cc1abec57abceef706c7390ad9a84a12016b0bf68f98523cd9e5ad4f6",
+      "sixFieldsInSameParsedBlock": true
+    },
+    {
+      "page": "docs/site/understand/data-and-state.md",
+      "startLine": 291,
+      "endLine": 326,
+      "sha256": "65cef22f9e241a76d13983afffc33adb47e0781ba9726b11af87dcf9b2bec67c",
+      "sixFieldsInSameParsedBlock": true
+    },
+    {
+      "page": "docs/site/understand/data-and-state.md",
+      "startLine": 356,
+      "endLine": 374,
+      "sha256": "12df488798522318a889077e0ff2ad004f684e6af676f6a6d95efc0cbe2a5ece",
+      "sixFieldsInSameParsedBlock": true
+    },
+    {
+      "page": "docs/site/understand/data-and-state.md",
+      "startLine": 398,
+      "endLine": 416,
+      "sha256": "afcf8fa0a7dae1690fe5cc81b5b6d5733a46fe388b179bdcd9866a463b6bc970",
+      "sixFieldsInSameParsedBlock": true
+    },
+    {
+      "page": "docs/site/understand/data-and-state.md",
+      "startLine": 442,
+      "endLine": 474,
+      "sha256": "68151f144fcaa1863553fa8de2912e8d4f5a2d504153704b775dc627a8aebc63",
+      "sixFieldsInSameParsedBlock": true
+    },
+    {
+      "page": "docs/site/understand/data-and-state.md",
+      "startLine": 513,
+      "endLine": 538,
+      "sha256": "72535db0cf2566b8fa656a685b6a094a05cec50a36edb03e3cebba9e726d6e40",
+      "sixFieldsInSameParsedBlock": true
+    },
+    {
+      "page": "docs/site/understand/data-and-state.md",
+      "startLine": 564,
+      "endLine": 590,
+      "sha256": "c4ff1a896c00e81f23920cb79ab94fa16ce05241f17c6c9cb803101045b0019b",
+      "sixFieldsInSameParsedBlock": true
+    },
+    {
+      "page": "docs/site/understand/data-and-state.md",
+      "startLine": 639,
+      "endLine": 657,
+      "sha256": "1f96d4b5d044bf1db4a3b190d4b8521f957c604952fc962d34277ba6bebdffcd",
+      "sixFieldsInSameParsedBlock": true
+    },
+    {
+      "page": "docs/site/understand/data-and-state.md",
+      "startLine": 709,
+      "endLine": 734,
+      "sha256": "b10e9cf9962fc3bbbb6e6f04c3ccffe82264fac75640db3ccc853564d8cbefe4",
+      "sixFieldsInSameParsedBlock": true
+    },
+    {
+      "page": "docs/site/understand/data-and-state.md",
+      "startLine": 971,
+      "endLine": 991,
+      "sha256": "91a1cebe838512c72638ce522eae03fca9695bb6247a067823c1adab50c1e4dc",
+      "sixFieldsInSameParsedBlock": true
+    },
+    {
+      "page": "docs/site/understand/data-and-state.md",
+      "startLine": 1111,
+      "endLine": 1131,
+      "sha256": "1ebcee7deabee3df25493fa13f4c1311c26126c9eff3bd8b49653874bab0ed6b",
+      "sixFieldsInSameParsedBlock": true
+    },
+    {
+      "page": "docs/site/understand/data-and-state.md",
+      "startLine": 1149,
+      "endLine": 1169,
+      "sha256": "61c680d3bc2b6274b66cae8cb98d07a25fe236f53817b8769c92c2b357b2e129",
+      "sixFieldsInSameParsedBlock": true
+    },
+    {
+      "page": "docs/site/understand/data-and-state.md",
+      "startLine": 1193,
+      "endLine": 1211,
+      "sha256": "fd3eaa3ec1ceab7b38986bb9fb673c0213a71e5ff1129e62b84789bc36e49582",
+      "sixFieldsInSameParsedBlock": true
+    },
+    {
+      "page": "docs/site/understand/data-and-state.md",
+      "startLine": 1264,
+      "endLine": 1287,
+      "sha256": "ac0cdb80af3e07d038f79331fd29f26ed1927bb840eae40dbccddeaa069e515b",
+      "sixFieldsInSameParsedBlock": true
+    },
+    {
+      "page": "docs/site/understand/prism-data.md",
+      "startLine": 82,
+      "endLine": 100,
+      "sha256": "f8f724de00c7955cdce134f1d8469db788c82c9279f78d35ae2ac53db36c355c",
+      "sixFieldsInSameParsedBlock": true
+    },
+    {
+      "page": "docs/site/understand/prism-data.md",
+      "startLine": 102,
+      "endLine": 114,
+      "sha256": "62e597f58f6abe02a19eea97cb3ec17805180c02ba58bb1c6494b4ce2599fe1d",
+      "sixFieldsInSameParsedBlock": true
+    },
+    {
+      "page": "docs/site/understand/prism-data.md",
+      "startLine": 156,
+      "endLine": 177,
+      "sha256": "c60a733ee4b166386386665010adc74a8f4a89205013799ba4b1690fe0147f2a",
+      "sixFieldsInSameParsedBlock": true
+    },
+    {
+      "page": "docs/site/understand/prism-data.md",
+      "startLine": 222,
+      "endLine": 244,
+      "sha256": "3e3116f4516ba763cf9624a76f3d02a0901ce2401a993a79caa0c5cc2adaed1c",
+      "sixFieldsInSameParsedBlock": true
+    },
+    {
+      "page": "docs/site/understand/prism-data.md",
+      "startLine": 274,
+      "endLine": 296,
+      "sha256": "a68c7f16f64475613c5cd10109b2875ad82813bcaa5a3247a99ebf73728c302d",
+      "sixFieldsInSameParsedBlock": true
+    },
+    {
+      "page": "docs/site/understand/prism-data.md",
+      "startLine": 332,
+      "endLine": 354,
+      "sha256": "dcc4e58228d07092505fffb2469adf540f739569c3f120541cb151d0e365d856",
+      "sixFieldsInSameParsedBlock": true
+    },
+    {
+      "page": "docs/site/understand/prism-data.md",
+      "startLine": 401,
+      "endLine": 423,
+      "sha256": "91d09cfea1f4fcbf64d6cd894ee53464ffd3453817a28b4949164aeb0e2ce059",
+      "sixFieldsInSameParsedBlock": true
+    },
+    {
+      "page": "docs/site/understand/prism-data.md",
+      "startLine": 528,
+      "endLine": 560,
+      "sha256": "c8d4f3e536d13f4594a1812f61ade6ef673c34bafc30ceb11533b475f2278ded",
+      "sixFieldsInSameParsedBlock": true
+    },
+    {
+      "page": "docs/site/understand/prism-data.md",
+      "startLine": 596,
+      "endLine": 620,
+      "sha256": "faf7ad0a1883acf51f0a6319c240e52d9929398b69c99255ca0da39de4033ab4",
+      "sixFieldsInSameParsedBlock": true
+    },
+    {
+      "page": "docs/site/understand/prism-data.md",
+      "startLine": 657,
+      "endLine": 679,
+      "sha256": "f580d8198a2263aca9c08184779b6eff6bc4fc29b45408b31497290be59a5a34",
+      "sixFieldsInSameParsedBlock": true
+    },
+    {
+      "page": "docs/site/understand/prism-data.md",
+      "startLine": 737,
+      "endLine": 760,
+      "sha256": "71418b63f76d4e710b93356fdc72fa8b69744876f253bdee1888f67aacfb1f86",
+      "sixFieldsInSameParsedBlock": true
+    },
+    {
+      "page": "docs/site/understand/prism-data.md",
+      "startLine": 822,
+      "endLine": 845,
+      "sha256": "0dd195f7c77006b0b42b0e03d265329d2375cfb5ea34ff5f65331105f3c23a33",
+      "sixFieldsInSameParsedBlock": true
+    },
+    {
+      "page": "docs/site/understand/prism-data.md",
+      "startLine": 912,
+      "endLine": 942,
+      "sha256": "8b862571f4af72e8f6d98f5d2ea3ec27d57894b5793ae5c9371fd8c891221142",
+      "sixFieldsInSameParsedBlock": true
+    },
+    {
+      "page": "docs/site/understand/prism-data.md",
+      "startLine": 1006,
+      "endLine": 1028,
+      "sha256": "f0051d9dd0f84664dfaffb9c3fb2ef9feb1b5dc08decb64b9be930fe34a35453",
+      "sixFieldsInSameParsedBlock": true
+    },
+    {
+      "page": "docs/site/understand/prism-data.md",
+      "startLine": 1061,
+      "endLine": 1083,
+      "sha256": "4260a25fc5f8f1166227690988e80e1afaa6910fa59a5e25a256bcdf0533e52b",
+      "sixFieldsInSameParsedBlock": true
+    },
+    {
+      "page": "docs/site/understand/prism-data.md",
+      "startLine": 1179,
+      "endLine": 1207,
+      "sha256": "239260fecfc005bc34308f9cd452723a14dbd8723df6a07abde5adf6f1c3a3c6",
+      "sixFieldsInSameParsedBlock": true
+    }
+  ],
+  "sources": [
+    {
+      "path": "charts/ops-pod/templates/workload.yaml",
+      "sha256": "3471a815948e99e52b03b7952f1076c9d21afddbd24b62c37e1c848b7a129d58",
+      "priorCompleteReadUnchanged": true
+    },
+    {
+      "path": "charts/ops-pod/templates/rbac.yaml",
+      "sha256": "103ed540a9b71ca0fdde5d693e5e4d07b2943910e79116bbd7206d528668874b",
+      "priorCompleteReadUnchanged": true
+    },
+    {
+      "path": "charts/ops-pod/templates/kubeconfig.yaml",
+      "sha256": "af3152d6d912c4f7a53505902fe03925d35abfeaf4edfd465482bf3cfec42911",
+      "priorCompleteReadUnchanged": true
+    }
+  ],
+  "verdict": {
+    "sourceAccuracy": "PASS",
+    "semanticPrecision": "PASS",
+    "quality": "PASS"
+  },
+  "scope": "Targeted F1 correction plus exact unchanged61scope reuse from complete prior report; no renderedReader/gate/global claim"
+}

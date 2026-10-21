@@ -1,0 +1,697 @@
+{
+  "reviewer": "/root/workflow_acceptance",
+  "author": "/root/operator_acceptance",
+  "role": "independent complete four-page callout candidate review, with named unchanged prior topic scopes reused",
+  "status": "NOT_READY_ONE_MATERIAL_FINDING",
+  "baselineRevision": "d8e97be18ce7f2114212c64305fced4aa7b691a6",
+  "frozenPages": [
+    {
+      "path": "docs/site/understand/communication.md",
+      "baselineSha256": "89605e8e262b22ceabc8fa0a2becae7bef0c4e8051a4e3513fd5985501cb9eaf",
+      "candidateSha256": "489ddeed11405303f5b0560f234d68ef3601a645e7f3120508d4e16686e17bee",
+      "outsideSourceGroupsByteIdentical": true,
+      "oldUrlsPreservedInOrder": true,
+      "headingsUnchanged": true,
+      "SourceHeadings": 14
+    },
+    {
+      "path": "docs/site/understand/platform-and-operations.md",
+      "baselineSha256": "0c138033e653e9b1a2765345ea6c1a82afdcae0da0c452e1e342ca4448b2b098",
+      "candidateSha256": "c80a95726d18def7801ecf1d615bc3cba1901b1e728f82f4ac7638290ee49bfb",
+      "outsideSourceGroupsByteIdentical": true,
+      "oldUrlsPreservedInOrder": true,
+      "headingsUnchanged": true,
+      "SourceHeadings": 16
+    },
+    {
+      "path": "docs/site/understand/data-and-state.md",
+      "baselineSha256": "2a2c5442bd88eaf53b7be31d97007351d4157ae1274773a4d50430ce3c2f428e",
+      "candidateSha256": "8148e1cf2b7366e778d990b03fdea956cc376e811091a2a1d38946daf8c735a4",
+      "outsideSourceGroupsByteIdentical": true,
+      "oldUrlsPreservedInOrder": true,
+      "headingsUnchanged": true,
+      "SourceHeadings": 16
+    },
+    {
+      "path": "docs/site/understand/prism-data.md",
+      "baselineSha256": "7ac2cc4ac527543b9adff51a0dfbbc52c91505dbf532beaa411459c7ec244f28",
+      "candidateSha256": "747e3ab117b34340221fcbdc1946a5a273f9df6645bf1ed0ffc27c8a2da34cf4",
+      "outsideSourceGroupsByteIdentical": true,
+      "oldUrlsPreservedInOrder": true,
+      "headingsUnchanged": true,
+      "SourceHeadings": 16
+    }
+  ],
+  "findings": [
+    {
+      "id": "F1",
+      "priority": "P2",
+      "boxIndex": 30,
+      "page": "docs/site/understand/platform-and-operations.md",
+      "line": 1014,
+      "title": "Do not label the shared ServiceAccount credential as a separate read token",
+      "body": "The new Contract/setting says MCP retains its read token separately when execNamespaces enables Codex exec. Both containers mount the same projected kube-api volume and use the same ServiceAccount. Namespace exec grants bind that identity, so the MCP-held credential also has those effective exec rights. The surrounding existing prose and links correctly say the credential is shared; the new field contradicts that boundary. Describe the retained MCP mount of the same ServiceAccount token, not a separate read-only token.",
+      "sources": [
+        {
+          "path": "charts/ops-pod/templates/workload.yaml",
+          "ranges": [
+            [
+              38,
+              39
+            ],
+            [
+              74,
+              77
+            ],
+            [
+              99,
+              101
+            ],
+            [
+              147,
+              151
+            ]
+          ]
+        },
+        {
+          "path": "charts/ops-pod/templates/rbac.yaml",
+          "ranges": [
+            [
+              65,
+              92
+            ]
+          ]
+        },
+        {
+          "path": "charts/ops-pod/templates/kubeconfig.yaml",
+          "ranges": [
+            [
+              1,
+              26
+            ]
+          ]
+        }
+      ],
+      "suggestedFiniteCorrection": "Nonempty execNamespaces enables Codex token/kubeconfig mounts and namespace-scoped exec; MCP keeps the same ServiceAccount token, including those effective grants."
+    }
+  ],
+  "boxes": [
+    {
+      "index": 1,
+      "page": "docs/site/understand/communication.md",
+      "line": 87,
+      "sha256": "a896e0f703ddb5ce614e21ebd664a52098b78ce226806c28449792fa38c05d77",
+      "sourceAccuracy": "PASS",
+      "semanticReader": "PASS",
+      "quality": "PASS"
+    },
+    {
+      "index": 2,
+      "page": "docs/site/understand/communication.md",
+      "line": 166,
+      "sha256": "8214f10b38bc89c0ad6604e68bc0993c3de7db2ade738a3a0641d9f2cbc5a0f9",
+      "sourceAccuracy": "PASS",
+      "semanticReader": "PASS",
+      "quality": "PASS"
+    },
+    {
+      "index": 3,
+      "page": "docs/site/understand/communication.md",
+      "line": 196,
+      "sha256": "b45494f604d3aec20e2597cd80c0deb390e39751c55004d84c1d346a01864b3c",
+      "sourceAccuracy": "PASS",
+      "semanticReader": "PASS",
+      "quality": "PASS"
+    },
+    {
+      "index": 4,
+      "page": "docs/site/understand/communication.md",
+      "line": 246,
+      "sha256": "b916d0895fedd0b5807d983132e649e24b64263a314ca48bab2e04618ef75764",
+      "sourceAccuracy": "PASS",
+      "semanticReader": "PASS",
+      "quality": "PASS"
+    },
+    {
+      "index": 5,
+      "page": "docs/site/understand/communication.md",
+      "line": 309,
+      "sha256": "070dbfbb5f9df7c3a24bf5288480bc0eab5992f5fce167d95095377bb535330c",
+      "sourceAccuracy": "PASS",
+      "semanticReader": "PASS",
+      "quality": "PASS"
+    },
+    {
+      "index": 6,
+      "page": "docs/site/understand/communication.md",
+      "line": 358,
+      "sha256": "896b289c24ea38be2733f6d045b1518d333981ffca4d5b6a380b072f0e196851",
+      "sourceAccuracy": "PASS",
+      "semanticReader": "PASS",
+      "quality": "PASS"
+    },
+    {
+      "index": 7,
+      "page": "docs/site/understand/communication.md",
+      "line": 474,
+      "sha256": "3331bdce95dec33afe117b46b03bece72cc011ea7566fdcbcb16f2bc8345026f",
+      "sourceAccuracy": "PASS",
+      "semanticReader": "PASS",
+      "quality": "PASS"
+    },
+    {
+      "index": 8,
+      "page": "docs/site/understand/communication.md",
+      "line": 766,
+      "sha256": "035b1794e529ba18add19515418d38e5ceed630b57f4107c63ef8a424a10cbc5",
+      "sourceAccuracy": "PASS",
+      "semanticReader": "PASS",
+      "quality": "PASS"
+    },
+    {
+      "index": 9,
+      "page": "docs/site/understand/communication.md",
+      "line": 889,
+      "sha256": "227e2b4497ffa3a407a6f13a089c93d28a354876f3c2055c78db2e9801e97f29",
+      "sourceAccuracy": "PASS",
+      "semanticReader": "PASS",
+      "quality": "PASS"
+    },
+    {
+      "index": 10,
+      "page": "docs/site/understand/communication.md",
+      "line": 928,
+      "sha256": "36383a3a061043d4f58cbfedd92710f42a09b66c6cfda8743bbe927344219d89",
+      "sourceAccuracy": "PASS",
+      "semanticReader": "PASS",
+      "quality": "PASS"
+    },
+    {
+      "index": 11,
+      "page": "docs/site/understand/communication.md",
+      "line": 1172,
+      "sha256": "e951bbe87af977a17c65fd73127b34d2006f56dc264a8125cb671d40ad60739b",
+      "sourceAccuracy": "PASS",
+      "semanticReader": "PASS",
+      "quality": "PASS"
+    },
+    {
+      "index": 12,
+      "page": "docs/site/understand/communication.md",
+      "line": 1222,
+      "sha256": "70f56e41cbc447ac010a628670fbfdab6401ff2e635434cd8f774fb474972a76",
+      "sourceAccuracy": "PASS",
+      "semanticReader": "PASS",
+      "quality": "PASS"
+    },
+    {
+      "index": 13,
+      "page": "docs/site/understand/communication.md",
+      "line": 1261,
+      "sha256": "f67c3e6ff4ac5e14ae178ac8fa695b095452bf524886256644ddb4f2767f04a5",
+      "sourceAccuracy": "PASS",
+      "semanticReader": "PASS",
+      "quality": "PASS"
+    },
+    {
+      "index": 14,
+      "page": "docs/site/understand/communication.md",
+      "line": 1397,
+      "sha256": "0148a43dda86d5d83dd326bf4bc6bbebae1763be370f461bf2fd6d3d2f9bdcf7",
+      "sourceAccuracy": "PASS",
+      "semanticReader": "PASS",
+      "quality": "PASS"
+    },
+    {
+      "index": 15,
+      "page": "docs/site/understand/platform-and-operations.md",
+      "line": 130,
+      "sha256": "601f5e1bf92ebb4358dba36c3b8e489c01827033239ff7e755f1654aafc639d1",
+      "sourceAccuracy": "PASS",
+      "semanticReader": "PASS",
+      "quality": "PASS"
+    },
+    {
+      "index": 16,
+      "page": "docs/site/understand/platform-and-operations.md",
+      "line": 167,
+      "sha256": "db296b148e5d0d1a6e184563764f8c74f7669f084ee977f4d18fa4d3e286659f",
+      "sourceAccuracy": "PASS",
+      "semanticReader": "PASS",
+      "quality": "PASS"
+    },
+    {
+      "index": 17,
+      "page": "docs/site/understand/platform-and-operations.md",
+      "line": 220,
+      "sha256": "da2dd2be09b07b0a387c1ec37fbe2825d34d3e23253f16dfcaa1c7daabe2baa5",
+      "sourceAccuracy": "PASS",
+      "semanticReader": "PASS",
+      "quality": "PASS"
+    },
+    {
+      "index": 18,
+      "page": "docs/site/understand/platform-and-operations.md",
+      "line": 288,
+      "sha256": "b18bc4dbb8986c4ba47d9f463f2889182576656da817414c42e29e244140c809",
+      "sourceAccuracy": "PASS",
+      "semanticReader": "PASS",
+      "quality": "PASS"
+    },
+    {
+      "index": 19,
+      "page": "docs/site/understand/platform-and-operations.md",
+      "line": 341,
+      "sha256": "db1b675e52a932e4f4971c4e58828723e8552c057858c05983adc24e53c9a9cb",
+      "sourceAccuracy": "PASS",
+      "semanticReader": "PASS",
+      "quality": "PASS"
+    },
+    {
+      "index": 20,
+      "page": "docs/site/understand/platform-and-operations.md",
+      "line": 402,
+      "sha256": "a130f2a42c5ba87f0d237d0fa79c546ec0d8ff47a443deaadbf63e0c74ed2345",
+      "sourceAccuracy": "PASS",
+      "semanticReader": "PASS",
+      "quality": "PASS"
+    },
+    {
+      "index": 21,
+      "page": "docs/site/understand/platform-and-operations.md",
+      "line": 472,
+      "sha256": "845f1e322678e2578e852a118765b8aa7b2a9cbcfcd0b41c9bc1d3cbca1e8176",
+      "sourceAccuracy": "PASS",
+      "semanticReader": "PASS",
+      "quality": "PASS"
+    },
+    {
+      "index": 22,
+      "page": "docs/site/understand/platform-and-operations.md",
+      "line": 537,
+      "sha256": "414760d58540bff28330ab4645b83c0ebf1c31f40ade98b5c142a80b9d175660",
+      "sourceAccuracy": "PASS",
+      "semanticReader": "PASS",
+      "quality": "PASS"
+    },
+    {
+      "index": 23,
+      "page": "docs/site/understand/platform-and-operations.md",
+      "line": 595,
+      "sha256": "b44391a76680e603d3f727b78575b51eddb3c2ad539353b4fc9d0bd2c3e1473d",
+      "sourceAccuracy": "PASS",
+      "semanticReader": "PASS",
+      "quality": "PASS"
+    },
+    {
+      "index": 24,
+      "page": "docs/site/understand/platform-and-operations.md",
+      "line": 649,
+      "sha256": "16a6edcee32ec0effad1f9bf725eba76b37ec1d0268415720b10cc11f18abd7e",
+      "sourceAccuracy": "PASS",
+      "semanticReader": "PASS",
+      "quality": "PASS"
+    },
+    {
+      "index": 25,
+      "page": "docs/site/understand/platform-and-operations.md",
+      "line": 775,
+      "sha256": "10ae943869e60b227dfb2f946ff8b85a194f4190050c7a6e519ade63f6173cdf",
+      "sourceAccuracy": "PASS",
+      "semanticReader": "PASS",
+      "quality": "PASS"
+    },
+    {
+      "index": 26,
+      "page": "docs/site/understand/platform-and-operations.md",
+      "line": 800,
+      "sha256": "10bc73975daa50e4842d4c84e694170a81166eb1502ddc285474e16b4eef4f90",
+      "sourceAccuracy": "PASS",
+      "semanticReader": "PASS",
+      "quality": "PASS"
+    },
+    {
+      "index": 27,
+      "page": "docs/site/understand/platform-and-operations.md",
+      "line": 862,
+      "sha256": "3f4d95c1c93a3a1f27d778ebe3d803267cf0f6889ae1a6a1002861ab8885899e",
+      "sourceAccuracy": "PASS",
+      "semanticReader": "PASS",
+      "quality": "PASS"
+    },
+    {
+      "index": 28,
+      "page": "docs/site/understand/platform-and-operations.md",
+      "line": 898,
+      "sha256": "c9ffc0756424afa53c30891946d899ddb56a00c6196201c1bdfed50eec80bc7c",
+      "sourceAccuracy": "PASS",
+      "semanticReader": "PASS",
+      "quality": "PASS"
+    },
+    {
+      "index": 29,
+      "page": "docs/site/understand/platform-and-operations.md",
+      "line": 950,
+      "sha256": "e0eb0ad5393361e082c150ac16cc3efea6055d03dde79ebf831cd613c871617d",
+      "sourceAccuracy": "PASS",
+      "semanticReader": "PASS",
+      "quality": "PASS"
+    },
+    {
+      "index": 30,
+      "page": "docs/site/understand/platform-and-operations.md",
+      "line": 998,
+      "sha256": "8731ffeb8be1d5c8c1abf10a931089db41c6dbffe7229cd1fedd6b094894387c",
+      "sourceAccuracy": "NOT_READY",
+      "semanticReader": "NOT_READY",
+      "quality": "NOT_READY"
+    },
+    {
+      "index": 31,
+      "page": "docs/site/understand/data-and-state.md",
+      "line": 52,
+      "sha256": "e28b2e3ab0f8371682de988b331f5d0c9611feb645a79191f6145dbcaa5eeaa1",
+      "sourceAccuracy": "PASS",
+      "semanticReader": "PASS",
+      "quality": "PASS"
+    },
+    {
+      "index": 32,
+      "page": "docs/site/understand/data-and-state.md",
+      "line": 218,
+      "sha256": "7b7c4f553b045baafa696884702a80410a187ad235cdb123fc904141faf0aa56",
+      "sourceAccuracy": "PASS",
+      "semanticReader": "PASS",
+      "quality": "PASS"
+    },
+    {
+      "index": 33,
+      "page": "docs/site/understand/data-and-state.md",
+      "line": 249,
+      "sha256": "2aafca5cc1abec57abceef706c7390ad9a84a12016b0bf68f98523cd9e5ad4f6",
+      "sourceAccuracy": "PASS",
+      "semanticReader": "PASS",
+      "quality": "PASS"
+    },
+    {
+      "index": 34,
+      "page": "docs/site/understand/data-and-state.md",
+      "line": 291,
+      "sha256": "65cef22f9e241a76d13983afffc33adb47e0781ba9726b11af87dcf9b2bec67c",
+      "sourceAccuracy": "PASS",
+      "semanticReader": "PASS",
+      "quality": "PASS"
+    },
+    {
+      "index": 35,
+      "page": "docs/site/understand/data-and-state.md",
+      "line": 356,
+      "sha256": "12df488798522318a889077e0ff2ad004f684e6af676f6a6d95efc0cbe2a5ece",
+      "sourceAccuracy": "PASS",
+      "semanticReader": "PASS",
+      "quality": "PASS"
+    },
+    {
+      "index": 36,
+      "page": "docs/site/understand/data-and-state.md",
+      "line": 398,
+      "sha256": "afcf8fa0a7dae1690fe5cc81b5b6d5733a46fe388b179bdcd9866a463b6bc970",
+      "sourceAccuracy": "PASS",
+      "semanticReader": "PASS",
+      "quality": "PASS"
+    },
+    {
+      "index": 37,
+      "page": "docs/site/understand/data-and-state.md",
+      "line": 442,
+      "sha256": "68151f144fcaa1863553fa8de2912e8d4f5a2d504153704b775dc627a8aebc63",
+      "sourceAccuracy": "PASS",
+      "semanticReader": "PASS",
+      "quality": "PASS"
+    },
+    {
+      "index": 38,
+      "page": "docs/site/understand/data-and-state.md",
+      "line": 513,
+      "sha256": "72535db0cf2566b8fa656a685b6a094a05cec50a36edb03e3cebba9e726d6e40",
+      "sourceAccuracy": "PASS",
+      "semanticReader": "PASS",
+      "quality": "PASS"
+    },
+    {
+      "index": 39,
+      "page": "docs/site/understand/data-and-state.md",
+      "line": 564,
+      "sha256": "c4ff1a896c00e81f23920cb79ab94fa16ce05241f17c6c9cb803101045b0019b",
+      "sourceAccuracy": "PASS",
+      "semanticReader": "PASS",
+      "quality": "PASS"
+    },
+    {
+      "index": 40,
+      "page": "docs/site/understand/data-and-state.md",
+      "line": 639,
+      "sha256": "1f96d4b5d044bf1db4a3b190d4b8521f957c604952fc962d34277ba6bebdffcd",
+      "sourceAccuracy": "PASS",
+      "semanticReader": "PASS",
+      "quality": "PASS"
+    },
+    {
+      "index": 41,
+      "page": "docs/site/understand/data-and-state.md",
+      "line": 709,
+      "sha256": "b10e9cf9962fc3bbbb6e6f04c3ccffe82264fac75640db3ccc853564d8cbefe4",
+      "sourceAccuracy": "PASS",
+      "semanticReader": "PASS",
+      "quality": "PASS"
+    },
+    {
+      "index": 42,
+      "page": "docs/site/understand/data-and-state.md",
+      "line": 971,
+      "sha256": "91a1cebe838512c72638ce522eae03fca9695bb6247a067823c1adab50c1e4dc",
+      "sourceAccuracy": "PASS",
+      "semanticReader": "PASS",
+      "quality": "PASS"
+    },
+    {
+      "index": 43,
+      "page": "docs/site/understand/data-and-state.md",
+      "line": 1111,
+      "sha256": "1ebcee7deabee3df25493fa13f4c1311c26126c9eff3bd8b49653874bab0ed6b",
+      "sourceAccuracy": "PASS",
+      "semanticReader": "PASS",
+      "quality": "PASS"
+    },
+    {
+      "index": 44,
+      "page": "docs/site/understand/data-and-state.md",
+      "line": 1149,
+      "sha256": "61c680d3bc2b6274b66cae8cb98d07a25fe236f53817b8769c92c2b357b2e129",
+      "sourceAccuracy": "PASS",
+      "semanticReader": "PASS",
+      "quality": "PASS"
+    },
+    {
+      "index": 45,
+      "page": "docs/site/understand/data-and-state.md",
+      "line": 1193,
+      "sha256": "fd3eaa3ec1ceab7b38986bb9fb673c0213a71e5ff1129e62b84789bc36e49582",
+      "sourceAccuracy": "PASS",
+      "semanticReader": "PASS",
+      "quality": "PASS"
+    },
+    {
+      "index": 46,
+      "page": "docs/site/understand/data-and-state.md",
+      "line": 1264,
+      "sha256": "ac0cdb80af3e07d038f79331fd29f26ed1927bb840eae40dbccddeaa069e515b",
+      "sourceAccuracy": "PASS",
+      "semanticReader": "PASS",
+      "quality": "PASS"
+    },
+    {
+      "index": 47,
+      "page": "docs/site/understand/prism-data.md",
+      "line": 82,
+      "sha256": "f8f724de00c7955cdce134f1d8469db788c82c9279f78d35ae2ac53db36c355c",
+      "sourceAccuracy": "PASS",
+      "semanticReader": "PASS",
+      "quality": "PASS"
+    },
+    {
+      "index": 48,
+      "page": "docs/site/understand/prism-data.md",
+      "line": 102,
+      "sha256": "62e597f58f6abe02a19eea97cb3ec17805180c02ba58bb1c6494b4ce2599fe1d",
+      "sourceAccuracy": "PASS",
+      "semanticReader": "PASS",
+      "quality": "PASS"
+    },
+    {
+      "index": 49,
+      "page": "docs/site/understand/prism-data.md",
+      "line": 156,
+      "sha256": "c60a733ee4b166386386665010adc74a8f4a89205013799ba4b1690fe0147f2a",
+      "sourceAccuracy": "PASS",
+      "semanticReader": "PASS",
+      "quality": "PASS"
+    },
+    {
+      "index": 50,
+      "page": "docs/site/understand/prism-data.md",
+      "line": 222,
+      "sha256": "3e3116f4516ba763cf9624a76f3d02a0901ce2401a993a79caa0c5cc2adaed1c",
+      "sourceAccuracy": "PASS",
+      "semanticReader": "PASS",
+      "quality": "PASS"
+    },
+    {
+      "index": 51,
+      "page": "docs/site/understand/prism-data.md",
+      "line": 274,
+      "sha256": "a68c7f16f64475613c5cd10109b2875ad82813bcaa5a3247a99ebf73728c302d",
+      "sourceAccuracy": "PASS",
+      "semanticReader": "PASS",
+      "quality": "PASS"
+    },
+    {
+      "index": 52,
+      "page": "docs/site/understand/prism-data.md",
+      "line": 332,
+      "sha256": "dcc4e58228d07092505fffb2469adf540f739569c3f120541cb151d0e365d856",
+      "sourceAccuracy": "PASS",
+      "semanticReader": "PASS",
+      "quality": "PASS"
+    },
+    {
+      "index": 53,
+      "page": "docs/site/understand/prism-data.md",
+      "line": 401,
+      "sha256": "91d09cfea1f4fcbf64d6cd894ee53464ffd3453817a28b4949164aeb0e2ce059",
+      "sourceAccuracy": "PASS",
+      "semanticReader": "PASS",
+      "quality": "PASS"
+    },
+    {
+      "index": 54,
+      "page": "docs/site/understand/prism-data.md",
+      "line": 528,
+      "sha256": "c8d4f3e536d13f4594a1812f61ade6ef673c34bafc30ceb11533b475f2278ded",
+      "sourceAccuracy": "PASS",
+      "semanticReader": "PASS",
+      "quality": "PASS"
+    },
+    {
+      "index": 55,
+      "page": "docs/site/understand/prism-data.md",
+      "line": 596,
+      "sha256": "faf7ad0a1883acf51f0a6319c240e52d9929398b69c99255ca0da39de4033ab4",
+      "sourceAccuracy": "PASS",
+      "semanticReader": "PASS",
+      "quality": "PASS"
+    },
+    {
+      "index": 56,
+      "page": "docs/site/understand/prism-data.md",
+      "line": 657,
+      "sha256": "f580d8198a2263aca9c08184779b6eff6bc4fc29b45408b31497290be59a5a34",
+      "sourceAccuracy": "PASS",
+      "semanticReader": "PASS",
+      "quality": "PASS"
+    },
+    {
+      "index": 57,
+      "page": "docs/site/understand/prism-data.md",
+      "line": 737,
+      "sha256": "71418b63f76d4e710b93356fdc72fa8b69744876f253bdee1888f67aacfb1f86",
+      "sourceAccuracy": "PASS",
+      "semanticReader": "PASS",
+      "quality": "PASS"
+    },
+    {
+      "index": 58,
+      "page": "docs/site/understand/prism-data.md",
+      "line": 822,
+      "sha256": "0dd195f7c77006b0b42b0e03d265329d2375cfb5ea34ff5f65331105f3c23a33",
+      "sourceAccuracy": "PASS",
+      "semanticReader": "PASS",
+      "quality": "PASS"
+    },
+    {
+      "index": 59,
+      "page": "docs/site/understand/prism-data.md",
+      "line": 912,
+      "sha256": "8b862571f4af72e8f6d98f5d2ea3ec27d57894b5793ae5c9371fd8c891221142",
+      "sourceAccuracy": "PASS",
+      "semanticReader": "PASS",
+      "quality": "PASS"
+    },
+    {
+      "index": 60,
+      "page": "docs/site/understand/prism-data.md",
+      "line": 1006,
+      "sha256": "f0051d9dd0f84664dfaffb9c3fb2ef9feb1b5dc08decb64b9be930fe34a35453",
+      "sourceAccuracy": "PASS",
+      "semanticReader": "PASS",
+      "quality": "PASS"
+    },
+    {
+      "index": 61,
+      "page": "docs/site/understand/prism-data.md",
+      "line": 1061,
+      "sha256": "4260a25fc5f8f1166227690988e80e1afaa6910fa59a5e25a256bcdf0533e52b",
+      "sourceAccuracy": "PASS",
+      "semanticReader": "PASS",
+      "quality": "PASS"
+    },
+    {
+      "index": 62,
+      "page": "docs/site/understand/prism-data.md",
+      "line": 1179,
+      "sha256": "239260fecfc005bc34308f9cd452723a14dbd8723df6a07abde5adf6f1c3a3c6",
+      "sourceAccuracy": "PASS",
+      "semanticReader": "PASS",
+      "quality": "PASS"
+    }
+  ],
+  "checks": {
+    "actualMarkdownItSourceBlocks": 62,
+    "sixFieldsInsideSameParsedBlock": true,
+    "fourExistingCompleteBlocksExact": true,
+    "quotedBlankRepairs": 3,
+    "sameSectionLiteLLMDuplicatedLinks": 6,
+    "authorLocalBindingObjectsCovered": 225,
+    "independentAdditionalUnrangedMigrationObjects": 12,
+    "independentAllPageLocalObjectsCurrentEqual": 237,
+    "externalUnchangedIdentities": 19,
+    "candidateFourPageReaderBoundaryExitCode": 0,
+    "productTestsExecuted": false,
+    "rendererExecuted": false
+  },
+  "limits": [
+    "Semantic reader task review, not a fresh-reader persona or built/browser acceptance.",
+    "Every62actualSourcegroup and all57newfieldsets fully read. Complete original unchanged topic facts reuse named independent completed reviews after exact declared Source diff comparison; no fresh semantic reread of all237objects or5356lines claimed.",
+    "Eight named prior records retain only their original scopes, authors, failures and limits; all declared sources unchanged from each reviewed revision to capturedbaseline. No new gate/count/globalacceptance.",
+    "No product/target/test/service imports or execution, upstream retrieval/image-layer check, main/register/generator/global current-graph-DATA acquisition.",
+    "Parent owns grouped fresh Reader and integration checks; wholeA91205 remains open."
+  ],
+  "frozenHandoffFiles": [
+    {
+      "path": "author-report.md",
+      "sha256": "f34bbc8b7df86e779191a0fc397752a0ed76700af96592daf91249971a378a3a"
+    },
+    {
+      "path": "candidate.patch",
+      "sha256": "0299ce620c882ac2c901bb1429ae462e10178707e8a08d0430434915a3657ec2"
+    },
+    {
+      "path": "candidate-hashes.json",
+      "sha256": "fc875e5c0cdd0551c09bad3445375f3a9d01e1b63c925ce23881f70e8748501e"
+    },
+    {
+      "path": "per-box-mapping.json",
+      "sha256": "cdf2e901951c34e846f1186c4f808ef0941607eb360170e1557b0a49e32fd20f"
+    }
+  ]
+}

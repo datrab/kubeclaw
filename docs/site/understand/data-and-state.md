@@ -51,8 +51,22 @@ has a separate Ed25519 attestation; do not treat it as a result signature.
 
 > **Source evidence — result and source identities**
 >
+> **Claim:** Remote result integrity and source attestation are different identity contracts.
+>
+> **Implementation:** The result receipt and signed source-snapshot types below define their separate fields.
+>
+>
 > [Remote results carry a digest and receipt](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/contracts/pipeline-test-gate/v1/src/types.ts#L416-L429).
 > [Source snapshots carry the distinct Ed25519 attestation](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/contracts/pipeline-test-gate/v1/src/types.ts#L385-L401).
+>
+> **Contract or setting:** Content digests/receipts bind returned results; the source snapshot has its own Ed25519 attestation.
+>
+> **Test evidence:** No executed remote result acceptance or source-attestation journey is established by these type declarations.
+>
+> **Revision:** `13bff0a18a64e74f2cbbaa1978e746fcdeff0c10`. Source bindings, not execution receipts.
+>
+> **Limit:** A deterministic result receipt must not be described as an asymmetric result signature.
+>
 
 | Store | Schema or format | Physical location | Writer and reader | Consistency and protection | Retention, capacity, migration, and recovery |
 | --- | --- | --- | --- | --- | --- |
@@ -203,6 +217,11 @@ in the identity table.
 
 > **Source evidence — temporary and inactive identities**
 >
+> **Claim:** Temporary workspaces, disposable caches and reserved schema identities do not all represent active durable authority.
+>
+> **Implementation:** Provider cleanup, terminal workspace, delivery-compaction and snapshot sources below identify those lifetimes.
+>
+>
 > [Playwright creates its report and related temporary paths, consumes the report,
 > and removes them in `finally`](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/buster/engine/test-gates/browser-playwright-runtime.ts#L102-L120).
 > [Container build creates temporary metadata and registry credentials and removes
@@ -217,8 +236,22 @@ in the identity table.
 > but does not establish an active composition](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/common/plugin-runtime/foundation/observability/durable-delivery.ts#L333-L392).
 > [Current snapshot publication rejects the unsupported split filenames and writes
 > only the combined run snapshot](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/nova/core/execution/engine-snapshots.ts#L100-L120).
+>
+> **Contract or setting:** Consumer/owner and committed references determine whether a path is temporary, retained or inactive.
+>
+> **Test evidence:** No complete crash/cleanup/retirement matrix is established by these separate implementation references.
+>
+> **Revision:** `13bff0a18a64e74f2cbbaa1978e746fcdeff0c10`. Source bindings, not execution receipts.
+>
+> **Limit:** A familiar path or defined table does not prove active use, safe deletion or recoverable application state.
+>
 
 > **Source evidence — the common file-store guarantees**
+>
+> **Claim:** Common file stores enforce bounded identity and durable record mechanics, not complete backup or rollback protection.
+>
+> **Implementation:** Journal acquisition/append and durable-record storage below define their distinct file guarantees.
+>
 >
 > [The file journal validates and hash-chains records under its file lock](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/nova/core/state/journal.ts#L21-L80).
 > [Its append and refresh paths synchronize writes and truncate only an incomplete final line](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/nova/core/state/journal.ts#L136-L195).
@@ -227,6 +260,15 @@ in the identity table.
 >
 > **Reason:** These stores favor an explicit stop over silent state loss. A full
 > store reduces availability, but it does not evict the proof needed for replay.
+>
+> **Contract or setting:** Hash chains, locks, idempotent content and capacity checks apply at the owning store boundary.
+>
+> **Test evidence:** No target-volume power-loss, whole-store backup or new-reader rollback detection exercise is established here.
+>
+> **Revision:** `13bff0a18a64e74f2cbbaa1978e746fcdeff0c10`. Source bindings, not execution receipts.
+>
+> **Limit:** Opening a journal can repair an incomplete tail; preserve raw evidence before stateful inspection.
+>
 
 ### Deployment and operations stores
 
@@ -248,6 +290,11 @@ workspaces. They still need an explicit loss and retirement rule.
 
 > **Source evidence — deployment store contracts**
 >
+> **Claim:** Deployment volumes have consumer-specific persistence, capacity and writer contracts.
+>
+> **Implementation:** PVC/workload/cache/registry/monitoring declarations below identify those selected storage profiles.
+>
+>
 > [The agent chart creates retained config and workspace claims with configured
 > access modes and sizes](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/charts/kubeclaw/templates/pvc.yaml#L1-L48).
 > [The Buster state claim enforces one writer and `ReadWriteOnce`](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/charts/kubeclaw/templates/buster-runtime-pvc.yaml#L1-L21).
@@ -268,6 +315,15 @@ workspaces. They still need an explicit loss and retirement rule.
 > file](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/gitops/platform/values/alloy.yaml#L8-L29).
 > [The Ops workload defines its two claim templates and optional Tailscale state
 > claim](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/charts/ops-pod/templates/workload.yaml#L137-L176).
+>
+> **Contract or setting:** Access mode, mount, retention settings and single-writer deployment differ by owner and profile.
+>
+> **Test evidence:** No complete deployed volume-loss and restore exercise is established by these declarations.
+>
+> **Revision:** `13bff0a18a64e74f2cbbaa1978e746fcdeff0c10`; `0e35889a3c4e65d5c47ba88e924611aace67eb1d`. Source bindings, not execution receipts.
+>
+> **Limit:** PVC size and attachment policy alone do not prove application consistency, encryption or off-host backup.
+>
 
 ### Why these stores remain separate
 
@@ -299,9 +355,23 @@ replace a package or graph because a newer copy is installed.
 
 > **Source evidence — run identity and snapshots**
 >
+> **Claim:** Nova binds a run root and immutable snapshot before continued execution.
+>
+> **Implementation:** Run-root resolution and snapshot publication below bind graph and admitted runtime identity.
+>
+>
 > [Run-root selection validates the ID, uses a SHA-256 path, and verifies a legacy directory through its journal](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/nova/core/execution/run-root.ts#L62-L76).
 >
 > [Snapshot publication writes a private temporary file, synchronizes it, links it without replacement, and synchronizes the directory](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/nova/core/execution/engine-snapshots.ts#L75-L121).
+>
+> **Contract or setting:** Run identity, package provenance and the explicitly stored configuration subset constrain recovery.
+>
+> **Test evidence:** No executed changed-snapshot recovery or host-storage durability exercise is established by this trace.
+>
+> **Revision:** `13bff0a18a64e74f2cbbaa1978e746fcdeff0c10`. Source bindings, not execution receipts.
+>
+> **Limit:** A newer installed package or matching label does not authorize replacing the stored graph or configuration.
+>
 
 ### Journal commit boundary
 
@@ -327,9 +397,23 @@ never restore `effects.jsonl` without its referenced `effect-results` tree.
 
 > **Source evidence — effect persistence**
 >
+> **Claim:** Effect journals and referenced result blobs form one recovery group.
+>
+> **Implementation:** Effect record and large-result persistence below bind exact request/receipt content and hydration.
+>
+>
 > [The effect journal stores request, acceptance, receipt, and content-addressed large-result references](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/nova/core/effects/journal.ts#L13-L25).
 >
 > [Large results use private temporary files, immutable publication, directory synchronization, size checks, and digest checks](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/nova/core/effects/journal.ts#L146-L205).
+>
+> **Contract or setting:** The 64KiB external-result threshold and byte-count/digest checks govern retained result references.
+>
+> **Test evidence:** No complete interrupted effect-blob backup/restore exercise is established by these implementations.
+>
+> **Revision:** `13bff0a18a64e74f2cbbaa1978e746fcdeff0c10`. Source bindings, not execution receipts.
+>
+> **Limit:** A journal without its referenced result tree cannot prove or reconstruct an accepted external outcome.
+>
 
 ### Signals, administrative decisions, and remote gates
 
@@ -357,6 +441,11 @@ this directory with optional Prometheus or Loki data.
 
 > **Source evidence — Nova control stores**
 >
+> **Claim:** Signals, administrative decisions, remote gates and required reconciliation evidence are separate retained Nova authorities.
+>
+> **Implementation:** Resume/admin admission, dispatch/import and observability-store sources below define their different records.
+>
+>
 > [Run entry points open separate decision, event, and signal journals and reject
 > a signal after the event journal records wait resolution](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/nova/core/execution/engine-run.ts#L58-L117).
 > [Resume validation checks wait and issuer fields, expiry, and issue time](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/nova/core/execution/engine-snapshots.ts#L137-L144).
@@ -374,6 +463,15 @@ this directory with optional Prometheus or Loki data.
 >
 > [Nova persists the reconciliation plan and constructs bounded attempt,
 > admission, and journal stores during recovery](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/nova/core/observability/reconciler.ts#L338-L395).
+>
+> **Contract or setting:** Signal issuer fields are not caller authentication; new administrative decisions need the matching trusted principal.
+>
+> **Test evidence:** No complete live multi-store recovery journey is established by this combined source map.
+>
+> **Revision:** `13bff0a18a64e74f2cbbaa1978e746fcdeff0c10`. Source bindings, not execution receipts.
+>
+> **Limit:** Optional monitoring cannot replace required reconciliation state; preserve both submitted inputs and applied lifecycle evidence.
+>
 
 ### Wait and operator-message projections
 
@@ -414,6 +512,11 @@ bytes. The sealed result is immutable for the accepted identity.
 
 > **Source evidence — Worker durability and capacity**
 >
+> **Claim:** Worker attempt evidence and native ownership are distinct durable authorities with bounded storage liability.
+>
+> **Implementation:** Attempt journal, ownership store and original-output spool below implement admission and retention.
+>
+>
 > [The attempt journal binds accepted envelopes and retained state to exact claim
 > and attempt identity](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/worker/core/worker/native-attempt-journal.ts#L18-L77).
 > [It validates process completion and sealed-result transitions](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/worker/core/worker/native-attempt-journal.ts#L78-L131).
@@ -424,6 +527,15 @@ bytes. The sealed result is immutable for the accepted identity.
 > [Its transitions apply revision checks and configured record and byte limits](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/worker/core/worker/ownership-store.ts#L110-L169).
 >
 > [The output spool uses private files, exclusive no-follow creation, bounded append, and per-write synchronization](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/worker/core/worker/native-output-spool.ts#L13-L68).
+>
+> **Contract or setting:** Accepted identity, sealed result, reserved capacity and combined output ceiling constrain new work.
+>
+> **Test evidence:** No deployment-host process recovery or full-volume exercise is established by these store sources.
+>
+> **Revision:** `13bff0a18a64e74f2cbbaa1978e746fcdeff0c10`. Source bindings, not execution receipts.
+>
+> **Limit:** A sealed result alone does not prove scope ownership; output limits reject rather than silently truncate prior bytes.
+>
 
 For lifecycle transitions, corruption cases, and restart decisions, read
 [Worker Core](worker-core.md#attempt-journal-and-commit-boundaries).
@@ -451,6 +563,11 @@ artifacts. It keeps a receipt of that decision.
 
 > **Source evidence — Buster stores**
 >
+> **Claim:** Buster separately retains admission, attempts, original evidence and verified remote results.
+>
+> **Implementation:** Remote service, runner evidence checks and compaction below define those stores.
+>
+>
 > [The remote job store configures bounded records and content-addressed result
 > blobs](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/buster/engine/test-gates/remote-plan-service.ts#L52-L111).
 > [Admission validates and reserves the accepted job before execution](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/buster/engine/test-gates/remote-plan-service.ts#L112-L164).
@@ -462,6 +579,15 @@ artifacts. It keeps a receipt of that decision.
 > [Evidence staging enforces containment, duplicate-file rejection, count, and byte limits before immutable storage](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/buster/engine/test-gates/artifacts.ts#L24-L83).
 >
 > [Remote compaction verifies the completed job, source identity, archive digest, and retained result artifacts](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/buster/engine/test-gates/remote-plan-compaction.ts#L90-L149).
+>
+> **Contract or setting:** Job/source/plan identities and bounded evidence checks precede publication; compaction requires retained-source verification.
+>
+> **Test evidence:** No complete deployed Buster backup/restore or remote import result is established by this source trace.
+>
+> **Revision:** `13bff0a18a64e74f2cbbaa1978e746fcdeff0c10`. Source bindings, not execution receipts.
+>
+> **Limit:** Evidence paths are not automatically content-addressed; normalized reports do not replace original bytes.
+>
 
 The full record and failure flow is in [Buster architecture](buster.md#4-durable-admission-and-state).
 
@@ -512,9 +638,22 @@ operator-owned retention decision.
 
 > **Source evidence — Prism ownership and backup**
 >
+> **Claim:** Prism relational records and immutable artifact bytes must be backed up as a matched group.
+>
+> **Implementation:** Database/migration and content-addressed artifact implementation below establish the referenced state owners.
+>
+>
 > [Prism migration uses one reserved connection, a transaction, an advisory lock, ownership checks, and a filename journal](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/prism/storage/index.ts#L21-L74).
 >
 > [The artifact store publishes digest-addressed files without replacement and verifies every read](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/prism/storage/artifacts.ts#L8-L67).
+>
+> **Contract or setting:** Artifact publication before database reference supports copying a dump plus the retained immutable artifact superset.
+>
+> **Test evidence:** No successful matched database/artifact restore is established by these storage implementation links.
+>
+> **Revision:** `13bff0a18a64e74f2cbbaa1978e746fcdeff0c10`. Source bindings, not execution receipts.
+>
+> **Limit:** This ordering assumes no concurrent administrative deletion and supplies no off-host backup or automatic garbage collector.
 >
 Before a Prism backup or scheduled database proof, the current script waits
 under a 30-second timeout with a one-second kill grace for `pg_isready`. Only its not-ready/no-response statuses
@@ -569,6 +708,11 @@ delete completed backup groups or upload them off-node.
 
 > **Source evidence — LiteLLM persistence**
 >
+> **Claim:** LiteLLM PostgreSQL has its own database identity, credential recovery and backup-capacity policy.
+>
+> **Implementation:** Direct deployment, PostgreSQL values and recovery script below define that selected recovery path.
+>
+>
 > [The deployment enables database-backed model storage and obtains database and encryption settings from Secrets](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/my-values/infra/litellm-deployment.yaml#L21-L50).
 >
 > [The production PostgreSQL values select the LiteLLM database, external Secret, standalone mode, and 20 GiB persistent volume](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/my-values/infra/postgresql-values.yaml#L1-L19).
@@ -579,6 +723,15 @@ delete completed backup groups or upload them off-node.
 > credential binding, version, age, and archive](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/scripts/postgresql-recovery.sh#L101-L129).
 > [Restore rejects the source server and a nonempty target, then uses one
 > error-stopping transaction](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/scripts/postgresql-recovery.sh#L141-L156).
+>
+> **Contract or setting:** Selected storage, dump bounds/schedules and external master/salt/credential authority must be retained separately.
+>
+> **Test evidence:** No live recovery-time or successful ciphertext/application restore is established by these declarations.
+>
+> **Revision:** `13bff0a18a64e74f2cbbaa1978e746fcdeff0c10`. Source bindings, not execution receipts.
+>
+> **Limit:** A database dump does not recover Kubernetes Secrets, login passwords or external provider accounts.
+>
 
 ### LiteLLM row retention
 
@@ -961,6 +1114,12 @@ compatible recovery group first.
 > startup migration behavior described above.
 > **Implementation:** The commit-pinned upstream functions and schema linked
 > beside each mechanism, inspected at the revisions reported by the image configurations.
+> [Direct schema records](https://github.com/BerriAI/litellm/blob/7d5b6456baaf8be6ac1a60db2b710566b5344adf/schema.prisma#L12-L61),
+> [GitOps schema records](https://github.com/BerriAI/litellm/blob/16f6d924530c1cf2dc94b3e83c86a4632aefb7c0/schema.prisma#L38-L61),
+> [direct encryption selection](https://github.com/BerriAI/litellm/blob/7d5b6456baaf8be6ac1a60db2b710566b5344adf/litellm/proxy/common_utils/encrypt_decrypt_utils.py#L23-L116),
+> [GitOps encryption selection](https://github.com/BerriAI/litellm/blob/16f6d924530c1cf2dc94b3e83c86a4632aefb7c0/litellm/proxy/common_utils/encrypt_decrypt_utils.py#L26-L119),
+> [direct startup/migration admission](https://github.com/BerriAI/litellm/blob/7d5b6456baaf8be6ac1a60db2b710566b5344adf/litellm/proxy/proxy_cli.py#L1309-L1360),
+> and [GitOps startup failure handling](https://github.com/BerriAI/litellm/blob/16f6d924530c1cf2dc94b3e83c86a4632aefb7c0/litellm/proxy/proxy_cli.py#L1351-L1378).
 > **Contract or setting:** The two deployment image digests, external `litellm-secrets`,
 > gateway configuration, and startup arguments determine the selected profile.
 > **Test evidence:** Registry index, platform manifest, configuration digests, and
@@ -989,11 +1148,25 @@ claim the same durability as the direct profile.
 
 > **Source evidence — profile differences**
 >
+> **Claim:** Direct and GitOps database/Redis profiles do not declare the same capacity and durability contract.
+>
+> **Implementation:** Their separate values below identify the selected storage and Redis persistence inputs.
+>
+>
 > [The Argo CD PostgreSQL values request 1 GiB](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/gitops/platform/values/postgresql.yaml#L1-L23), while [the direct production values request 20 GiB](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/my-values/infra/postgresql-values.yaml#L1-L19).
 >
 > [The Argo CD Redis values request 2 GiB and omit an explicit persistence-policy block](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/gitops/platform/values/redis.yaml#L1-L19).
 >
 > [The direct profile declares strict AOF, no eviction, and 20 GiB](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/my-values/infra/redis-values.yaml#L1-L27).
+>
+> **Contract or setting:** Deployment ownership selects 20 GiB versus smaller platform claims and explicit versus chart-default persistence settings.
+>
+> **Test evidence:** No effective rendered-default or deployed capacity/durability proof is established by comparing these values.
+>
+> **Revision:** `13bff0a18a64e74f2cbbaa1978e746fcdeff0c10`. Source bindings, not execution receipts.
+>
+> **Limit:** Do not calculate capacity from the larger unselected profile or infer identical AOF policy.
+>
 
 ## Redis: Durable Delivery, Not Product Authority
 
@@ -1019,9 +1192,23 @@ consume memory. Monitor measured stream and key growth.
 
 > **Source evidence — Redis data behavior**
 >
+> **Claim:** Redis stream publication and deduplication are bounded transport state, not product lifecycle authority.
+>
+> **Implementation:** Publisher and direct production Redis settings below define atomic append/dedup and server pressure policy.
+>
+>
 > [The adapter validates endpoints and bounds, limits payloads to 1 MiB, and performs stream append plus deduplication in Lua](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/common/plugins/redis-transport/src/adapter.ts#L28-L87).
 >
 > [The selected production values enable strict AOF, disable eviction, set 1 GiB Redis memory, and request a 20 GiB PVC](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/my-values/infra/redis-values.yaml#L1-L27).
+>
+> **Contract or setting:** AOF/noeviction/MAXLEN and dedup TTL control different durability, capacity and replay boundaries.
+>
+> **Test evidence:** No fresh native Redis persistence or restore run is established by these configuration/source links.
+>
+> **Revision:** `13bff0a18a64e74f2cbbaa1978e746fcdeff0c10`. Source bindings, not execution receipts.
+>
+> **Limit:** Dedup expiry permits later duplicates; a 1 GiB memory setting is not proof of capacity for every stream.
+>
 
 ## Artifact Lifecycle
 
@@ -1075,15 +1262,29 @@ These rules describe local adapter and checkpoint behavior, not a successful
 remote backup or restore exercise.
 
 > **Source evidence:**
+>
+> **Claim:** Artifact encoding is part of the complete reference even when two codecs produce identical bytes.
+>
+> **Implementation:** Codec and artifact read/write functions below bind serialization, metadata and verified blob selection.
+>
 > [Legacy locale ordering and explicit portable UTF-16 code-unit key ordering](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/skills/common/plugin-runtime/sdk/src/values.ts#L45-L63).
 > [Adapter encoding, read selection, verification and metadata-before-blob publication](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/skills/common/plugins/artifact-store/src/adapter.ts#L38-L98).
-
+>
 > [Adapter encoding, read selection, verification and metadata-before-blob publication (continued 2)](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/skills/common/plugins/artifact-store/src/adapter.ts#L99-L159).
-
+>
 > [Adapter encoding, read selection, verification and metadata-before-blob publication (continued 3)](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/skills/common/plugins/artifact-store/src/adapter.ts#L160-L173).
 > [Maintained tests preserve legacy and portable checkpoints and reject same-byte relabeling](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/tests/verification/reliability/artifact-checkpoint-encoding.test.mjs#L39-L99).
-
+>
 > [Maintained tests preserve legacy and portable checkpoints and reject same-byte relabeling (continued 2)](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/tests/verification/reliability/artifact-checkpoint-encoding.test.mjs#L100-L106).
+>
+> **Contract or setting:** Portable UTF-16 ordering names a JSON codec, not UTF-16 stored text; exact reference/encoding must survive recovery.
+>
+> **Test evidence:** The linked maintained fixture asserts portable/legacy checkpoint preservation and same-byte relabel rejection; no fresh execution is claimed.
+>
+> **Revision:** `f99aecbb00cb399b46dfbbeb3ddb375fba6218e7`. Source bindings, not execution receipts.
+>
+> **Limit:** Metadata-only intent is not readable completion, and these local checks are not a remote backup/restore exercise.
+>
 
 ## Encryption is a separate boundary
 
