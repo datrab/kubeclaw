@@ -66,7 +66,7 @@ export async function materializePipelineGeneration({ authorRoot, packageRoot, o
     const { captureSwarmSettings } = await import(pathToFileURL(path.join(directory, 'swarm.ts')).href);
     const { capturePipelineInputSet } = await import(pathToFileURL(path.join(directory, 'pipeline-input-set.ts')).href);
     const { capturePipelineMaterializerInputSource } = await import(pathToFileURL(path.join(directory, 'pipeline-v10-input-set.ts')).href);
-    const { createPipelineGenerationReceipt, createPipelineServiceSelection, createBusterSelectedOwnerProjection, createPipelineV10ServiceSelection, createBusterV10SelectedOwnerProjection, receivePipelineV10ServiceSelection, receiveBusterV10SelectedOwnerProjection, createPipelineV10ImageReceipt, receivePipelineV10ImageReceipt } = await import(pathToFileURL(path.join(directory, 'pipeline-generation.ts')).href);
+    const { createPipelineGenerationReceipt, createPipelineServiceSelection, createBusterSelectedOwnerProjection, createPipelineV10ServiceSelection, createBusterV10SelectedOwnerProjection, receivePipelineV10ServiceSelection, receiveBusterV10SelectedOwnerProjection, createPipelineV10ImageReceipt, receivePipelineV10ImageReceipt, createPipelineV10ExpectedDelivery, receivePipelineV10ExpectedDelivery } = await import(pathToFileURL(path.join(directory, 'pipeline-generation.ts')).href);
     const { verifyInstalledRuntimeBundle, assertRuntimeBundleObservations } = await import(pathToFileURL(path.join(directory, 'runtime-bundle-receipt.mjs')).href);
     verifyInstalledRuntimeBundle(receipt, packageRoot, receipt.role, receipt.runtimeSurface, observations);
     const inputSource = capturePipelineMaterializerInputSource(authorRoot);
@@ -139,6 +139,13 @@ export async function materializePipelineGeneration({ authorRoot, packageRoot, o
       // still a candidate: source/caller and boot gates below remain closed.
       const image = createPipelineV10ImageReceipt(inputSource.declared.capture, services, hash(packageBytes));
       receivePipelineV10ImageReceipt(JSON.parse(jsonBytes(image)), inputSource.declared.capture, services, hash(packageBytes));
+      for (const service of services) {
+        // Read back each expected-delivery v2 against the original full release,
+        // never against a tuple or image identity supplied by received bytes.
+        const expected = createPipelineV10ExpectedDelivery(inputSource.declared.capture, services, service.callerId, hash(packageBytes));
+        receivePipelineV10ExpectedDelivery(JSON.parse(jsonBytes(expected)), inputSource.declared.capture,
+          services, service.callerId, hash(packageBytes));
+      }
     }
     const captures = [], selections = [];
     for (const service of services) {

@@ -1492,3 +1492,46 @@ test('versioned v10 full release image binds original composition package and ow
  assert.deepEqual(receive(image, restored.capture, services, pkg), image);
  restored.capture.close(); assert.throws(() => receive(image, restored.capture, services, pkg), /CAPTURE_CLOSED/);
 });
+
+
+test('versioned v10 expected delivery binds original full release and receiving caller without boot admission', async t => {
+ const { createPipelineV10ExpectedDelivery: create, receivePipelineV10ExpectedDelivery: receive } =
+   await import('../../../skills/common/plugin-runtime/foundation/config/pipeline-generation.ts');
+ const root = tree(t), original = capture(root, replacements); t.after(original.capture.close);
+ const document = JSON.parse(original.capture.read('config/pipeline.config.json').toString());
+ const tuple = (callerId: string, instance = 'fixture.service.buster-runtime'): any => ({ role: 'buster', callerId,
+   serviceInstanceId: instance, bindings: document.bindings.filter((b: any) => b.role === 'buster' && b.instanceId === instance)
+     .map(({ owner, instanceId, profileId }: any) => ({ owner, instanceId, profileId })) });
+ const services = [tuple('buster-preparation'), tuple('buster-runtime')];
+ const foreign = [tuple('buster-preparation', 'fixture.service.buster-security-runtime'), tuple('buster-runtime', 'fixture.service.buster-security-runtime')];
+ const pkg = ('sha256:' + 'a'.repeat(64)) as `sha256:${string}`;
+ const otherPkg = ('sha256:' + 'b'.repeat(64)) as `sha256:${string}`;
+ for (const callerId of ['buster-preparation', 'buster-runtime'] as const) {
+  const expected = create(original.capture, services, callerId, pkg), wire = JSON.parse(JSON.stringify(expected));
+  const run = (value: unknown = wire) => receive(value, original.capture, services, callerId, pkg);
+  assert.equal(expected.schemaVersion, 'pipeline-expected-delivery.v2');
+  assert.equal(Object.isFrozen(run()), true);
+  assert.deepEqual(create(original.capture, [...services].reverse(), callerId, pkg), expected);
+  for (const bad of [null, [], { ...wire, extra: true }, { ...wire, schemaVersion: 'pipeline-expected-delivery.v1' },
+    ...['generationDigest', 'inputGenerationSha256', 'selectionDigest', 'packageReceiptDigest', 'imageReceiptDigest'].map(key => ({ ...wire, [key]: 'sha256:' + '0'.repeat(64) })),
+    create(original.capture, services, callerId, otherPkg), create(original.capture, foreign, callerId, pkg),
+    create(original.capture, services, callerId === 'buster-runtime' ? 'buster-preparation' : 'buster-runtime', pkg)]) {
+   assert.throws(() => run(bad), /EXPECTED_DELIVERY_MISMATCH/); assert.deepEqual(run(), expected);
+  }
+  assert.throws(() => receive(expected, original.capture, services, callerId, otherPkg), /EXPECTED_DELIVERY_MISMATCH/);
+  assert.throws(() => create(original.capture, [services[0]], callerId, pkg), /CALLER_CLOSURE_REQUIRED/);
+  assert.throws(() => create(original.capture, [...services, services[0]], callerId, pkg), /COMPOSITION_INVALID/);
+  assert.throws(() => create(original.capture, services, 'prism-control', pkg), /EXPECTED_DELIVERY_CALLER_REQUIRED/);
+  wire.callerId = 'prism-control';
+  assert.deepEqual(receive(expected, original.capture, services, callerId, pkg), expected);
+ }
+ const expected = create(original.capture, services, 'buster-runtime', pkg);
+ const file = path.join(root, 'schemas/pipeline-entry.schema.json'), bytes = fs.readFileSync(file);
+ fs.appendFileSync(file, ' ');
+ assert.throws(() => receive(expected, original.capture, services, 'buster-runtime', pkg), /INPUT_CHANGED/);
+ original.capture.close(); fs.writeFileSync(file, bytes);
+ const restored = capture(root, replacements); t.after(restored.capture.close);
+ assert.deepEqual(receive(expected, restored.capture, services, 'buster-runtime', pkg), expected);
+ restored.capture.close();
+ assert.throws(() => receive(expected, restored.capture, services, 'buster-runtime', pkg), /CAPTURE_CLOSED/);
+});

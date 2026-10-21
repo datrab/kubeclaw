@@ -288,3 +288,35 @@ export function receivePipelineV10ImageReceipt(value: unknown,
   if (portableJson(value) !== portableJson(expected)) throw new Error('PIPELINE_V10_IMAGE_RECEIPT_MISMATCH');
   return expected;
 }
+
+
+/** Per-caller expected delivery from the separately held full original release.
+ * The v2 image digest uses portable JSON, not the legacy image-file byte codec.
+ * This receipt is provenance only; it does not grant source or boot authority.
+ */
+export function createPipelineV10ExpectedDelivery(inputs: ReturnType<typeof capturePipelineInputSet>,
+  services: readonly SwarmSelection[], callerId: SwarmSelection['callerId'], packageReceiptDigest: Digest) {
+  services = structuredClone(services);
+  const image = createPipelineV10ImageReceipt(inputs, services, packageReceiptDigest);
+  const service = services.find(value => value.callerId === callerId);
+  if (!service) throw new Error('PIPELINE_EXPECTED_DELIVERY_CALLER_REQUIRED');
+  const selection = createPipelineV10ServiceSelection(inputs, service, packageReceiptDigest);
+  const receipt = { schemaVersion: 'pipeline-expected-delivery.v2' as const, role: selection.role,
+    serviceInstanceId: selection.serviceInstanceId, callerId, generationDigest: image.generationDigest,
+    inputGenerationSha256: image.inputGenerationSha256, selectionDigest: selection.digest,
+    packageReceiptDigest, imageReceiptDigest: sha256Text(portableJson(image)) };
+  inputs.assertCurrent();
+  deepFreeze(receipt);
+  return receipt;
+}
+
+/** Receive against original inputs/composition and a separate receiving caller;
+ * never choose a caller, package or original generation from received bytes.
+ */
+export function receivePipelineV10ExpectedDelivery(value: unknown,
+  inputs: ReturnType<typeof capturePipelineInputSet>, services: readonly SwarmSelection[],
+  callerId: SwarmSelection['callerId'], packageReceiptDigest: Digest) {
+  const expected = createPipelineV10ExpectedDelivery(inputs, services, callerId, packageReceiptDigest);
+  if (portableJson(value) !== portableJson(expected)) throw new Error('PIPELINE_V10_EXPECTED_DELIVERY_MISMATCH');
+  return expected;
+}
