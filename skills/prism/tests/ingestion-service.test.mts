@@ -143,3 +143,46 @@ test('metadata-only acquisitions enforce the selected source-byte boundary befor
   }
   assert.equal((await (await import('node:fs/promises')).readdir(root)).length, 1, 'oversize metadata never writes quarantine bytes');
 });
+
+
+test('published ingestion A/B/A reaper cadence controls post-start expiration without deleting recent content', async t => {
+  const base = JSON.parse((await import('node:fs')).readFileSync(new URL('../../../config/components/prism-control.config.json', import.meta.url), 'utf8')).profiles.standard.settings.ingestionServer;
+  for (const [index, reaperIntervalMs] of [20, 60000, 20].entries()) {
+    await t.test(`snapshot ${index}: ${reaperIntervalMs}ms`, async t => {
+      const root = await mkdtemp(join(tmpdir(), 'ingestion-reaper-selected-'));
+      t.after(() => rm(root, { recursive: true, force: true }));
+      const reserve = createServer(); reserve.listen(0, '127.0.0.1'); await once(reserve, 'listening');
+      const address = reserve.address(); assert(address && typeof address !== 'string');
+      await new Promise<void>(resolve => reserve.close(() => resolve()));
+      const { code, capture } = await publishedServiceConfig(t, 'prism-ingestion', { ingestionServer: {
+        ...base, port: address.port, quarantineRoot: root, quarantineTtlMs: 60000, reaperIntervalMs,
+      } });
+      const { loadIngestionConfig } = await import(pathToFileURL(join(code, 'skills/packages/prism-engine/server/ingestion-config.ts')).href);
+      const { startIngestionServer } = await import(pathToFileURL(join(code, 'skills/packages/prism-engine/server/ingestion.ts')).href);
+      const server = await startIngestionServer(loadIngestionConfig(capture, { PRISM_INGESTION_SECRET: 'reaper-selected' }));
+      t.after(async () => { server.closeAllConnections(); await new Promise<void>(resolve => server.close(() => resolve())); });
+      // Create AFTER startup cleanup: only the actual recurring reaper can remove it.
+      const expired = join(root, 'd'.repeat(64)), recent = join(root, 'e'.repeat(64));
+      await writeFile(expired, 'expired'); await writeFile(recent, 'recent');
+      await utimes(expired, new Date(), new Date(Date.now() - 120000));
+      const pause = () => new Promise<void>(resolve => setTimeout(resolve, 10));
+      if (reaperIntervalMs === 60000) {
+        // The short cadence must have had multiple opportunities, but B must retain it.
+        const start = performance.now();
+        while (performance.now() - start < 150) await pause();
+        await access(expired);
+      } else {
+        const start = performance.now();
+        while (true) {
+          try { await access(expired); }
+          catch (error) { if ((error as NodeJS.ErrnoException).code === 'ENOENT') break; throw error; }
+          assert(performance.now() - start < 2000, 'selected short recurring reaper must delete post-start expired bytes');
+          await pause();
+        }
+        await assert.rejects(access(expired), { code: 'ENOENT' });
+      }
+      await access(recent);
+      assert.equal((await fetch(`http://127.0.0.1:${address.port}/ready`)).status, 200);
+    });
+  }
+});
