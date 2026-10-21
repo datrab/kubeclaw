@@ -3,7 +3,7 @@
   "authority": "Page metadata supplies ownership and source dependencies. This file is generated and must not be edited by hand.",
   "generatedBy": "scripts/docs-governance.mjs",
   "routeRegistry": "docs/site/reference/documentation-route-registry.json",
-  "pageCount": 175,
+  "pageCount": 177,
   "pages": [
     {
       "page": "docs/site/README.md",
@@ -3791,7 +3791,32 @@
         "docs/site/use/workflows/repair-retry.md",
         "docs/site/use/workflows/interruption-recovery.md",
         "docs/site/use/workflows/redis-replay-recovery.md",
-        "docs/site/use/workflows/worker-result-recovery.md"
+        "docs/site/use/workflows/worker-result-recovery.md",
+        "docs/site/use/workflows/build-image.md",
+        "docs/site/use/workflows/tailnet-exposure.md"
+      ],
+      "checks": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/use/workflows/build-image.md",
+      "route": "/use/workflows/build-image/",
+      "contentKind": "authored",
+      "status": "supported build/publication path with explicit original-request and consuming-node stops; no live build or pull claim",
+      "audience": "pipeline, Buster, registry and node operators",
+      "owner": "Buster build provider, registry and platform maintainers",
+      "appliesTo": "kubeclaw.container-build@1, container-image.v1 and the selected registry-clients.v1 installation",
+      "lastVerified": "2026-10-21; source and bounded local contract checks only; no build, push, node pull or application execution",
+      "sourceDependencies": [
+        "scripts/registry-client-config.mjs",
+        "scripts/inspect-node-registry.mjs",
+        "skills/buster/plugins/container-build/src/provider.js",
+        "skills/buster/engine/test-gates/container-build-runtime.ts",
+        "tests/verification/e2e/nova-buildkit-production-preflight.mts",
+        "scripts/deploy.sh"
       ],
       "checks": [
         "npm run docs:governance:check",
@@ -3925,6 +3950,30 @@
         "tests/fixtures/repair-budget/plugin",
         "skills/nova/core/lifecycle",
         "skills/common/plugins/artifact-store"
+      ],
+      "checks": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/use/workflows/tailnet-exposure.md",
+      "route": "/use/workflows/tailnet-exposure/",
+      "contentKind": "authored",
+      "status": "supported exposure lifecycle and explicit external-client/policy boundaries; no live Tailnet claim",
+      "audience": "pipeline, namespace-controller, Tailnet and application operators",
+      "owner": "Buster exposure, namespace-controller and Tailnet maintainers",
+      "appliesTo": "Buster public-endpoint-fixture.v1 via tailscale-ingress; platform Studio routes remain separate",
+      "lastVerified": "2026-10-21; source and bounded local contract checks only; no OAuth, ACL, DNS, HTTPS or route cleanup execution",
+      "sourceDependencies": [
+        "skills/buster/plugins/tailscale-exposure/src/provider.js",
+        "skills/buster/engine/test-gates/tailscale-exposure-runtime.ts",
+        "skills/buster/engine/test-gates/exposure-generation.ts",
+        "skills/buster/engine/test-gates/exposure-handoff.ts",
+        "tests/verification/e2e/nova-tailscale-production-preflight.mts",
+        "scripts/deploy.sh",
+        "my-values/infra/tailscale-operator-values.yaml"
       ],
       "checks": [
         "npm run docs:governance:check",

@@ -3,7 +3,7 @@
 Status: workflow task index; full wait/resume lifecycle and deployment execution open
 Audience: pipeline authors and operators
 Owner: product integration maintainers
-Evidence: docs/site/use/workflows/examples/first-project.mjs; skills/nova/project/compiler.ts; docs/site/use/workflows/wait-resume.md; docs/site/use/workflows/buster-suite.md; docs/site/use/workflows/kubernetes-fixture.md; docs/site/use/demo-delivery.md; docs/site/use/diagnose.md; docs/site/use/recovery.md; docs/site/use/plugins.md; docs/site/use/workflows/repair-retry.md; docs/site/use/workflows/interruption-recovery.md; docs/site/use/workflows/redis-replay-recovery.md; docs/site/use/workflows/worker-result-recovery.md
+Evidence: docs/site/use/workflows/examples/first-project.mjs; skills/nova/project/compiler.ts; docs/site/use/workflows/wait-resume.md; docs/site/use/workflows/buster-suite.md; docs/site/use/workflows/kubernetes-fixture.md; docs/site/use/demo-delivery.md; docs/site/use/diagnose.md; docs/site/use/recovery.md; docs/site/use/plugins.md; docs/site/use/workflows/repair-retry.md; docs/site/use/workflows/interruption-recovery.md; docs/site/use/workflows/redis-replay-recovery.md; docs/site/use/workflows/worker-result-recovery.md; docs/site/use/workflows/build-image.md; docs/site/use/workflows/tailnet-exposure.md
 Applies to: pipeline workflow selection; each guide states its contracts and execution prerequisites
 Last verified: 2026-10-20; first-project local compilation and greeting assertion; other journey boundaries stated separately; no full project execution or deployment evidence; task routing source-checked 2026-10-21
 
@@ -26,6 +26,8 @@ new stage attempt; it does not change the result of the earlier attempt.
 | Recover an interrupted Core attempt | [Interruption and original checkpoint recovery](interruption-recovery.md) | Actual owned child interruption/recovery and external-effect stop controls; preserve original run and raw state before recovery. |
 | Reconcile Redis delivery after an outage | [Redis replay and deduplication](redis-replay-recovery.md) | Separate readiness, canonical event, observer attempt/checkpoint, exact Redis stream and receiver acknowledgement. Native outage remains an owner-executed procedure, not a claimed result. |
 | Recover an accepted Worker attempt result | [Worker interruption and result recovery](worker-result-recovery.md) | Same-host ownership/spool/journal/result reconciliation; do not invent a generic kill/recover CLI or a fresh claim to bypass fencing. |
+| Build, publish and inspect the original image on its node | [BuildKit image-to-node workflow](build-image.md) | Separates client preparation, actual remote build/manifest/import and the owner-provided uncached node/application procedure; no live build/pull or missing original-state reconciliation is implied. |
+| Expose, hand off and release one Tailnet fixture | [Tailnet exposure lifecycle](tailnet-exposure.md) | Distinguishes ephemeral release from retained readiness handoff, allowed/denied client proof and successor-safe cleanup; no live OAuth/ACL/Tailnet result is implied. |
 
 ## Materialize and compile a first project
 

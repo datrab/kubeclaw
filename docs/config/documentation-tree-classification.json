@@ -31355,6 +31355,14 @@
       "introducedAfterBaseline": true
     },
     {
+      "path": "docs/site/use/workflows/build-image.md",
+      "class": "canonical-reader-documentation",
+      "purpose": "Source-backed image/node and Tailnet operator task with explicit original identity, supported lifecycle and safe unavailable-operation boundaries.",
+      "originalPath": "docs/site/use/workflows/build-image.md",
+      "expectedPath": "docs/site/use/workflows/build-image.md",
+      "introducedAfterBaseline": true
+    },
+    {
       "path": "docs/site/use/workflows/buster-suite.md",
       "class": "canonical-reader-documentation",
       "purpose": "Published, user-facing KubeClaw documentation.",
@@ -31448,6 +31456,14 @@
       "purpose": "Source-backed workflow recovery procedure with original identity, retained state, supported controls and explicit execution limits.",
       "originalPath": "docs/site/use/workflows/repair-retry.md",
       "expectedPath": "docs/site/use/workflows/repair-retry.md",
+      "introducedAfterBaseline": true
+    },
+    {
+      "path": "docs/site/use/workflows/tailnet-exposure.md",
+      "class": "canonical-reader-documentation",
+      "purpose": "Source-backed image/node and Tailnet operator task with explicit original identity, supported lifecycle and safe unavailable-operation boundaries.",
+      "originalPath": "docs/site/use/workflows/tailnet-exposure.md",
+      "expectedPath": "docs/site/use/workflows/tailnet-exposure.md",
       "introducedAfterBaseline": true
     },
     {

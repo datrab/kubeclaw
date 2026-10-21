@@ -1,0 +1,592 @@
+{
+  "revision": "24a3fa0b316160187f23b02aeac8b2c60bb6e527",
+  "pageSha256": "c1818431abc965ca84ee87dd3170e83bb27c49012beefdb7802b743737d6589b",
+  "htmlSha256": "ca3243cc036fec09efd2a8087d24d8457f0fdb1a11a6c7449e120ae7f46bb165",
+  "htmlBytes": 117390,
+  "manifestMatches": true,
+  "pins": [
+    {
+      "path": "skills/common/plugins/transport-publisher/src/adapter.ts",
+      "start": 25,
+      "end": 60,
+      "sha256": "017501aea38f59ede67adf7249ed0bfa9c2d16430b2c7acf6380944350f2cd31",
+      "currentEqualsPin": true,
+      "lineCount": 36
+    },
+    {
+      "path": "skills/common/plugins/transport-publisher/src/adapter.ts",
+      "start": 61,
+      "end": 98,
+      "sha256": "017501aea38f59ede67adf7249ed0bfa9c2d16430b2c7acf6380944350f2cd31",
+      "currentEqualsPin": true,
+      "lineCount": 38
+    },
+    {
+      "path": "skills/common/plugins/transport-publisher/src/adapter.ts",
+      "start": 100,
+      "end": 158,
+      "sha256": "017501aea38f59ede67adf7249ed0bfa9c2d16430b2c7acf6380944350f2cd31",
+      "currentEqualsPin": true,
+      "lineCount": 59
+    },
+    {
+      "path": "skills/common/plugins/transport-publisher/src/adapter.ts",
+      "start": 159,
+      "end": 173,
+      "sha256": "017501aea38f59ede67adf7249ed0bfa9c2d16430b2c7acf6380944350f2cd31",
+      "currentEqualsPin": true,
+      "lineCount": 15
+    },
+    {
+      "path": "skills/common/plugins/transport-publisher/src/adapter.ts",
+      "start": 197,
+      "end": 253,
+      "sha256": "017501aea38f59ede67adf7249ed0bfa9c2d16430b2c7acf6380944350f2cd31",
+      "currentEqualsPin": true,
+      "lineCount": 57
+    },
+    {
+      "path": "skills/common/plugins/transport-publisher/src/adapter.ts",
+      "start": 254,
+      "end": 312,
+      "sha256": "017501aea38f59ede67adf7249ed0bfa9c2d16430b2c7acf6380944350f2cd31",
+      "currentEqualsPin": true,
+      "lineCount": 59
+    },
+    {
+      "path": "skills/common/plugins/transport-publisher/src/adapter.ts",
+      "start": 313,
+      "end": 339,
+      "sha256": "017501aea38f59ede67adf7249ed0bfa9c2d16430b2c7acf6380944350f2cd31",
+      "currentEqualsPin": true,
+      "lineCount": 27
+    },
+    {
+      "path": "skills/common/plugins/runtime-dispatch/src/adapter.ts",
+      "start": 14,
+      "end": 59,
+      "sha256": "5bf2d0c003497e74b0bfdf7524b4725bcd77d12b592f00e121be553868009e5e",
+      "currentEqualsPin": true,
+      "lineCount": 46
+    },
+    {
+      "path": "skills/common/plugins/runtime-dispatch/src/adapter.ts",
+      "start": 60,
+      "end": 105,
+      "sha256": "5bf2d0c003497e74b0bfdf7524b4725bcd77d12b592f00e121be553868009e5e",
+      "currentEqualsPin": true,
+      "lineCount": 46
+    },
+    {
+      "path": "skills/common/plugins/runtime-dispatch/src/adapter.ts",
+      "start": 107,
+      "end": 147,
+      "sha256": "5bf2d0c003497e74b0bfdf7524b4725bcd77d12b592f00e121be553868009e5e",
+      "currentEqualsPin": true,
+      "lineCount": 41
+    },
+    {
+      "path": "skills/common/plugins/runtime-dispatch/src/dispatch-adapter.ts",
+      "start": 14,
+      "end": 38,
+      "sha256": "16ccaa5e974de17c36d20078fb2912ddd9d2fa1c6a0a677af760e242ce3cd33a",
+      "currentEqualsPin": true,
+      "lineCount": 25
+    },
+    {
+      "path": "skills/common/plugins/network-http/src/adapter.ts",
+      "start": 18,
+      "end": 71,
+      "sha256": "8885ca56e2a2322c98e4c83ba935397f8f47d829c4feec69efbdde0113553e8d",
+      "currentEqualsPin": true,
+      "lineCount": 54
+    },
+    {
+      "path": "skills/common/plugins/network-http/src/adapter.ts",
+      "start": 73,
+      "end": 124,
+      "sha256": "8885ca56e2a2322c98e4c83ba935397f8f47d829c4feec69efbdde0113553e8d",
+      "currentEqualsPin": true,
+      "lineCount": 52
+    },
+    {
+      "path": "skills/common/plugins/network-http/src/adapter.ts",
+      "start": 125,
+      "end": 137,
+      "sha256": "8885ca56e2a2322c98e4c83ba935397f8f47d829c4feec69efbdde0113553e8d",
+      "currentEqualsPin": true,
+      "lineCount": 13
+    },
+    {
+      "path": "skills/common/plugin-runtime/sdk/src/runtime-dispatch-profile.ts",
+      "start": 1,
+      "end": 29,
+      "sha256": "13f61a984922b7fa815e084b6a5a20238fd0da67aed5959bdc8b061a8e3173fb",
+      "currentEqualsPin": true,
+      "lineCount": 29
+    },
+    {
+      "path": "skills/nova/core/execution/adapters.ts",
+      "start": 52,
+      "end": 68,
+      "sha256": "293011e7313155b08f33bbef4ce0e910d00c7feef88fd6c585b040bb2cadbc24",
+      "currentEqualsPin": true,
+      "lineCount": 17
+    },
+    {
+      "path": "skills/nova/core/execution/effect-recovery.ts",
+      "start": 6,
+      "end": 28,
+      "sha256": "06ee56bce5fedf57518e39858b700278c33b81d4edb2177587007f392b0ce186",
+      "currentEqualsPin": true,
+      "lineCount": 23
+    },
+    {
+      "path": "skills/nova/core/execution/stage-executor.ts",
+      "start": 128,
+      "end": 141,
+      "sha256": "4c846993c679c9ce663f7dda0e8de78fd26101e83948dd17211e62f83ea2eafb",
+      "currentEqualsPin": true,
+      "lineCount": 14
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/record-retirement.ts",
+      "start": 121,
+      "end": 136,
+      "sha256": "00a081bdccc917067eeabea36d6438615aada22c637e4d7f42e3852285647681",
+      "currentEqualsPin": true,
+      "lineCount": 16
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/durable-records.ts",
+      "start": 183,
+      "end": 219,
+      "sha256": "c9a0c42b8cdd3a2f188ec38a3cab5270d0f032444801626ea2c6860e534582dd",
+      "currentEqualsPin": true,
+      "lineCount": 37
+    }
+  ],
+  "sourceReads": [
+    {
+      "path": "docs/site/reference/errors.md",
+      "sha256": "c1818431abc965ca84ee87dd3170e83bb27c49012beefdb7802b743737d6589b",
+      "lines": 392,
+      "readRanges": [
+        [
+          1,
+          105
+        ],
+        [
+          170,
+          392
+        ]
+      ],
+      "equals24": true
+    },
+    {
+      "path": "skills/common/plugins/transport-publisher/src/adapter.ts",
+      "sha256": "017501aea38f59ede67adf7249ed0bfa9c2d16430b2c7acf6380944350f2cd31",
+      "lines": 339,
+      "readRanges": [
+        [
+          1,
+          339
+        ]
+      ],
+      "equals24": true
+    },
+    {
+      "path": "skills/common/plugins/runtime-dispatch/src/adapter.ts",
+      "sha256": "5bf2d0c003497e74b0bfdf7524b4725bcd77d12b592f00e121be553868009e5e",
+      "lines": 147,
+      "readRanges": [
+        [
+          1,
+          147
+        ]
+      ],
+      "equals24": true
+    },
+    {
+      "path": "skills/common/plugins/runtime-dispatch/src/dispatch-adapter.ts",
+      "sha256": "16ccaa5e974de17c36d20078fb2912ddd9d2fa1c6a0a677af760e242ce3cd33a",
+      "lines": 38,
+      "readRanges": [
+        [
+          1,
+          38
+        ]
+      ],
+      "equals24": true
+    },
+    {
+      "path": "skills/common/plugins/network-http/src/adapter.ts",
+      "sha256": "8885ca56e2a2322c98e4c83ba935397f8f47d829c4feec69efbdde0113553e8d",
+      "lines": 137,
+      "readRanges": [
+        [
+          1,
+          137
+        ]
+      ],
+      "equals24": true
+    },
+    {
+      "path": "skills/common/plugin-runtime/sdk/src/runtime-dispatch-profile.ts",
+      "sha256": "13f61a984922b7fa815e084b6a5a20238fd0da67aed5959bdc8b061a8e3173fb",
+      "lines": 30,
+      "readRanges": [
+        [
+          1,
+          29
+        ]
+      ],
+      "equals24": true
+    },
+    {
+      "path": "skills/common/plugins/transport-publisher/plugin.json",
+      "sha256": "91473413670e5fa02bb197c71deaeffba26a9661dae26e6d04f9c527c026a76f",
+      "lines": 22,
+      "readRanges": [
+        [
+          1,
+          22
+        ]
+      ],
+      "equals24": true
+    },
+    {
+      "path": "skills/common/plugins/runtime-dispatch/plugin.json",
+      "sha256": "b3c3a77253ce191a184c8c85f6d02595a1df26b472a63f252339205cae04f349",
+      "lines": 36,
+      "readRanges": [
+        [
+          1,
+          36
+        ]
+      ],
+      "equals24": true
+    },
+    {
+      "path": "skills/common/plugins/network-http/plugin.json",
+      "sha256": "54d1a21a08c950e7a63731f2fc76c5dd479c349462880e2b50977c5518b3b1e3",
+      "lines": 19,
+      "readRanges": [
+        [
+          1,
+          19
+        ]
+      ],
+      "equals24": true
+    },
+    {
+      "path": "skills/common/plugins/transport-publisher/schemas/config.schema.json",
+      "sha256": "31dccf98f7921ed10af125417de5e913a899ad39eca6efc6386d28c7d64fdc8e",
+      "lines": 40,
+      "readRanges": [
+        [
+          1,
+          40
+        ]
+      ],
+      "equals24": true
+    },
+    {
+      "path": "skills/common/plugins/runtime-dispatch/schemas/config.schema.json",
+      "sha256": "c780e8086e6d6c954734e62c171f3de67a37b1c94c7483c887571ea08f18a641",
+      "lines": 29,
+      "readRanges": [
+        [
+          1,
+          29
+        ]
+      ],
+      "equals24": true
+    },
+    {
+      "path": "skills/common/plugins/network-http/schemas/config.schema.json",
+      "sha256": "a064ffe2b856d9a11ff45b51bc24cfb2506f321f66a54ea0707a17de59fa6219",
+      "lines": 1,
+      "readRanges": [
+        [
+          1,
+          1
+        ]
+      ],
+      "equals24": true
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/record-retirement.ts",
+      "sha256": "00a081bdccc917067eeabea36d6438615aada22c637e4d7f42e3852285647681",
+      "lines": 136,
+      "readRanges": [
+        [
+          1,
+          136
+        ]
+      ],
+      "equals24": true
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/durable-records.ts",
+      "sha256": "c9a0c42b8cdd3a2f188ec38a3cab5270d0f032444801626ea2c6860e534582dd",
+      "lines": 308,
+      "readRanges": [
+        [
+          1,
+          221
+        ]
+      ],
+      "equals24": true
+    },
+    {
+      "path": "skills/nova/core/execution/adapters.ts",
+      "sha256": "293011e7313155b08f33bbef4ce0e910d00c7feef88fd6c585b040bb2cadbc24",
+      "lines": 88,
+      "readRanges": [
+        [
+          1,
+          88
+        ]
+      ],
+      "equals24": true
+    },
+    {
+      "path": "skills/nova/core/execution/adapter-startup.ts",
+      "sha256": "9bb8a0c27dfa199756cbe16a6898e7fb4d3a43c6ca59af144026bbb135a44619",
+      "lines": 183,
+      "readRanges": [
+        [
+          1,
+          183
+        ]
+      ],
+      "equals24": true
+    },
+    {
+      "path": "skills/nova/core/execution/adapter-support.ts",
+      "sha256": "2eb72fdc7d7731b105807495697647b049c00c39e84b695db29a219a2ac1156d",
+      "lines": 25,
+      "readRanges": [
+        [
+          1,
+          25
+        ]
+      ],
+      "equals24": true
+    },
+    {
+      "path": "skills/nova/core/execution/stage-executor.ts",
+      "sha256": "4c846993c679c9ce663f7dda0e8de78fd26101e83948dd17211e62f83ea2eafb",
+      "lines": 147,
+      "readRanges": [
+        [
+          1,
+          147
+        ]
+      ],
+      "equals24": true
+    },
+    {
+      "path": "skills/nova/core/execution/effect-recovery.ts",
+      "sha256": "06ee56bce5fedf57518e39858b700278c33b81d4edb2177587007f392b0ce186",
+      "lines": 29,
+      "readRanges": [
+        [
+          1,
+          29
+        ]
+      ],
+      "equals24": true
+    },
+    {
+      "path": "skills/nova/core/effects/coordinator.ts",
+      "sha256": "e0a3408e2102507c5b8b0ffdc6833e2901afdf41c5bc1ef7fa22e98d7506ac89",
+      "lines": 73,
+      "readRanges": [
+        [
+          1,
+          73
+        ]
+      ],
+      "equals24": true
+    },
+    {
+      "path": "skills/nova/core/effects/durable-invocation.ts",
+      "sha256": "6856d2c2761cb9c8e974d0f8683e0083571ed91b25740832921d32341e70d3f2",
+      "lines": 165,
+      "readRanges": [
+        [
+          1,
+          165
+        ]
+      ],
+      "equals24": true
+    },
+    {
+      "path": "skills/nova/core/effects/contracts.ts",
+      "sha256": "2214fa4a761a7e2b427df8b7578c76373377d27a021176e13a14e05e5ef606d3",
+      "lines": 33,
+      "readRanges": [
+        [
+          1,
+          33
+        ]
+      ],
+      "equals24": true
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/registry/capabilities.ts",
+      "sha256": "eeebd66fcb6a813fdad60188261e14d530c5d09f6c61f9972bc0428ecff151b6",
+      "lines": 221,
+      "readRanges": [
+        [
+          1,
+          26
+        ]
+      ],
+      "equals24": true
+    },
+    {
+      "path": "scripts/generate-buster-error-reference.mjs",
+      "sha256": "5b7f48767226cbc0a1bbcf310b879052b4aa55919bb60d52985b01f8f7b2424e",
+      "lines": 1206,
+      "readRanges": [
+        [
+          15,
+          69
+        ]
+      ],
+      "equals24": true
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts",
+      "sha256": "5624aa2b5f980a373ab30fdf012dee1346418ac3b2537244475f2a496d3766a0",
+      "lines": 840,
+      "readRanges": [
+        [
+          1,
+          80
+        ],
+        [
+          95,
+          275
+        ]
+      ],
+      "equals24": true,
+      "scope": "additional bounded helper/purpose read; partial live fixture not complete independent test review"
+    },
+    {
+      "path": "skills/common/plugins/transport-publisher/tests/live-function.test.ts",
+      "sha256": "e10234a92b112dc46fbb9597a016ac30e3e0c92f23dc04758c2d05a6836ec1c0",
+      "lines": 443,
+      "readRanges": [
+        [
+          1,
+          110
+        ]
+      ],
+      "equals24": true,
+      "scope": "additional bounded helper/purpose read; partial live fixture not complete independent test review"
+    },
+    {
+      "path": "skills/common/plugins/transport-publisher/package.json",
+      "sha256": "25d741c9719087d43c5af51c05b96f3ce1056c96e32dbd6b3c0d3b60ab3cbf6c",
+      "lines": 13,
+      "readRanges": [
+        [
+          1,
+          13
+        ]
+      ],
+      "equals24": true,
+      "scope": "additional bounded helper/purpose read; partial live fixture not complete independent test review"
+    }
+  ],
+  "independentStemEnumeration": [
+    {
+      "path": "skills/common/plugins/transport-publisher/src/adapter.ts",
+      "stems": [
+        "TRANSPORT_CONFIG_INVALID",
+        "TRANSPORT_MESSAGE_INVALID",
+        "TRANSPORT_OPERATION_UNSUPPORTED",
+        "TRANSPORT_PAYLOAD_CYCLIC",
+        "TRANSPORT_PAYLOAD_DEPTH_EXCEEDED",
+        "TRANSPORT_PAYLOAD_INVALID",
+        "TRANSPORT_PAYLOAD_SIZE_EXCEEDED",
+        "TRANSPORT_PAYLOAD_UNKNOWN_FIELD",
+        "TRANSPORT_PUBLICATION_ID_INVALID",
+        "TRANSPORT_PUBLICATION_REJECTED",
+        "TRANSPORT_RESOURCE_TYPE_INVALID",
+        "TRANSPORT_RESPONSE_BODY_INVALID",
+        "TRANSPORT_RESPONSE_STATUS_INVALID",
+        "TRANSPORT_SECRET_INVALID",
+        "TRANSPORT_SECRET_RESPONSE_INVALID",
+        "TRANSPORT_TARGET_UNKNOWN"
+      ]
+    },
+    {
+      "path": "skills/common/plugins/runtime-dispatch/src/adapter.ts",
+      "stems": [
+        "RUNTIME_CONFIG_INVALID",
+        "RUNTIME_CONFIG_UNKNOWN_FIELD",
+        "RUNTIME_CONFIG_UNKNOWN_TARGET_FIELD",
+        "RUNTIME_OPERATION_UNSUPPORTED",
+        "RUNTIME_PAYLOAD_ARRAY_EXCEEDED",
+        "RUNTIME_PAYLOAD_DEPTH_EXCEEDED",
+        "RUNTIME_PAYLOAD_INVALID",
+        "RUNTIME_PAYLOAD_KEY_INVALID",
+        "RUNTIME_PAYLOAD_OBJECT_EXCEEDED",
+        "RUNTIME_REQUEST_SIZE_EXCEEDED",
+        "RUNTIME_RESPONSE_BODY_INVALID",
+        "RUNTIME_RESPONSE_SIZE_EXCEEDED",
+        "RUNTIME_RESPONSE_STATUS_INVALID",
+        "RUNTIME_SECRET_UNAVAILABLE",
+        "RUNTIME_TARGET_INVALID"
+      ]
+    },
+    {
+      "path": "skills/common/plugins/network-http/src/adapter.ts",
+      "stems": [
+        "NETWORK_CONFIG_INVALID",
+        "NETWORK_CREDENTIALS_DENIED",
+        "NETWORK_HEADERS_INVALID",
+        "NETWORK_HEADER_DENIED",
+        "NETWORK_METHOD_DENIED",
+        "NETWORK_OPERATION_UNSUPPORTED",
+        "NETWORK_ORIGIN_DENIED",
+        "NETWORK_REDIRECT_DENIED",
+        "NETWORK_REQUEST_SIZE_EXCEEDED",
+        "NETWORK_RESPONSE_SIZE_EXCEEDED",
+        "NETWORK_TIMEOUT"
+      ]
+    },
+    {
+      "path": "skills/common/plugin-runtime/sdk/src/runtime-dispatch-profile.ts",
+      "stems": [
+        "RUNTIME_DISPATCH_PROFILE_ALREADY_BOUND",
+        "RUNTIME_DISPATCH_PROFILE_CAPABILITY_INVALID",
+        "RUNTIME_DISPATCH_PROFILE_INVALID"
+      ]
+    }
+  ],
+  "stemCount": 45,
+  "additionalSharedHelperStem": "RUNTIME_TARGET_DENIED",
+  "tables": 4,
+  "tableRowsIncludingHeaders": 48,
+  "allRowsHaveThreeCells": true,
+  "localChapterRoutes": [
+    "../understand/communication.html#signed-http-transport-publisher",
+    "../understand/openclaw.html#generic-http-runtime-registration"
+  ],
+  "probeEvidence": {
+    "path": "handoffs/pr13-finish-20261021/ref005-parent-http-error-probes.json",
+    "sha256": "3f82fa5ea15f2cba2271232306a01f6a95448b05296dacb14bb8fb7f4e96040f",
+    "cases": 50,
+    "uniqueLabels": 49,
+    "independentRerun": false
+  },
+  "probeScriptSha256": "173d196c98035f4312071f9286ba06a1b5dd870cf22a0ff787146dabcb88f102",
+  "findings": [],
+  "wholeREF005Accepted": false
+}

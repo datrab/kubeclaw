@@ -1,0 +1,223 @@
+{
+  "reviewer": "/root",
+  "sourceRevision": "24cec4bc5974d3ec543843fab01aafca49f905d5",
+  "pages": {
+    "build-image.md": "d90f9f2160554e216d0f45f5ef90de72b6e3373d9a91ffcbb40d8f20554ab499",
+    "tailnet-exposure.md": "e2a84bcd30e11ca5fd922891f9d20c5689b43596a12aeb7e82b9a664e333660f",
+    "workflow-task-rows.md": "73f1456db6d10870689674e63facdf291da3af16658f4fbb590f3b5480648e14"
+  },
+  "wholeCurrentSourceObjects": {
+    "scripts/registry-client-config.mjs": "51d00a4883b7e0e9bb63b4e490b4dad1f512053956b116b4a2da9d9d7d1fe210",
+    "docker/buster-runtime-entrypoint.sh": "1b13228deb6e53e66580b96752c34abcada89ecef278ea3dff9b1ed980f68225",
+    "skills/buster/plugins/container-build/src/provider.js": "1204d07c75942e9def8b703748bf97510e933b2cfb33b85f84c485d42b89c847",
+    "skills/buster/engine/test-gates/container-build-runtime.ts": "9316f1e642640c768f268aa7f236f075e9290516543ded5148869914e91f907e",
+    "tests/verification/e2e/nova-buildkit-production-preflight.mts": "c660165efe3cd6b23760bf56bc57b5cb2f03764f84144d28f418f17cbdc2644d",
+    "scripts/deploy.sh": "97c1e39bf9cec6c1d5d8e11198af90ed04efd15a6077f2bbac1129c2ea0741e2",
+    "my-values/infra/k3s-registries.yaml": "9b9130095665189402be10b045b4c80cd6ef174c4c9c896f11c4257fbbb84c5f",
+    "scripts/inspect-node-registry.mjs": "c7592f0fbd62225f151d97466184364970c15f0240931167a94ce6171b311094",
+    "my-values/infra/tailscale-operator-values.yaml": "8c8f44a3f243b519973ea250d283da3c6a08b31a9224ee3b34012b4e28f36110",
+    "skills/buster/plugins/tailscale-exposure/src/provider.js": "7e8f092bf66aac62bcd7ffd01b80710ccdd97c87f1ceec126139ba23d08ca1f0",
+    "skills/buster/engine/test-gates/tailscale-exposure-runtime.ts": "0144b279f77977b7285231852e32ceacbc70c7598121c24fa8be6f96acd52c9d",
+    "skills/buster/engine/test-gates/exposure-generation.ts": "cbaed4e6debf9e225c0c5aab51ecc8383bed69ff3b5dc4f7fe7c18a0ee02a360",
+    "skills/buster/engine/test-gates/exposure-handoff.ts": "4e725c913e11f5eb11a4444c9a96373e423c06b2da33287e5269fbe1401b9e83",
+    "tests/verification/e2e/nova-tailscale-production-preflight.mts": "0301c3d4e7cc7e15d2a5e58f103a92cd782d4d17ce3675cc57f36a024650f370"
+  },
+  "pins": [
+    {
+      "page": "build-image.md",
+      "path": "scripts/registry-client-config.mjs",
+      "revision": "4d3068465a2e202d2d5073b77e9273c308497995",
+      "lines": [
+        83,
+        118
+      ]
+    },
+    {
+      "page": "build-image.md",
+      "path": "docker/buster-runtime-entrypoint.sh",
+      "revision": "24a3fa0b316160187f23b02aeac8b2c60bb6e527",
+      "lines": [
+        11,
+        31
+      ]
+    },
+    {
+      "page": "build-image.md",
+      "path": "skills/buster/plugins/container-build/src/provider.js",
+      "revision": "4d3068465a2e202d2d5073b77e9273c308497995",
+      "lines": [
+        48,
+        94
+      ]
+    },
+    {
+      "page": "build-image.md",
+      "path": "skills/buster/plugins/container-build/src/provider.js",
+      "revision": "4d3068465a2e202d2d5073b77e9273c308497995",
+      "lines": [
+        98,
+        145
+      ]
+    },
+    {
+      "page": "build-image.md",
+      "path": "skills/buster/engine/test-gates/container-build-runtime.ts",
+      "revision": "4d3068465a2e202d2d5073b77e9273c308497995",
+      "lines": [
+        226,
+        263
+      ]
+    },
+    {
+      "page": "build-image.md",
+      "path": "skills/buster/engine/test-gates/container-build-runtime.ts",
+      "revision": "4d3068465a2e202d2d5073b77e9273c308497995",
+      "lines": [
+        113,
+        154
+      ]
+    },
+    {
+      "page": "build-image.md",
+      "path": "tests/verification/e2e/nova-buildkit-production-preflight.mts",
+      "revision": "4d3068465a2e202d2d5073b77e9273c308497995",
+      "lines": [
+        88,
+        129
+      ]
+    },
+    {
+      "page": "build-image.md",
+      "path": "scripts/deploy.sh",
+      "revision": "24a3fa0b316160187f23b02aeac8b2c60bb6e527",
+      "lines": [
+        1990,
+        2042
+      ]
+    },
+    {
+      "page": "build-image.md",
+      "path": "my-values/infra/k3s-registries.yaml",
+      "revision": "4d3068465a2e202d2d5073b77e9273c308497995",
+      "lines": [
+        1,
+        7
+      ]
+    },
+    {
+      "page": "build-image.md",
+      "path": "scripts/inspect-node-registry.mjs",
+      "revision": "4d3068465a2e202d2d5073b77e9273c308497995",
+      "lines": [
+        15,
+        46
+      ]
+    },
+    {
+      "page": "tailnet-exposure.md",
+      "path": "my-values/infra/tailscale-operator-values.yaml",
+      "revision": "4d3068465a2e202d2d5073b77e9273c308497995",
+      "lines": [
+        1,
+        34
+      ]
+    },
+    {
+      "page": "tailnet-exposure.md",
+      "path": "skills/buster/plugins/tailscale-exposure/src/provider.js",
+      "revision": "4d3068465a2e202d2d5073b77e9273c308497995",
+      "lines": [
+        32,
+        62
+      ]
+    },
+    {
+      "page": "tailnet-exposure.md",
+      "path": "skills/buster/plugins/tailscale-exposure/src/provider.js",
+      "revision": "4d3068465a2e202d2d5073b77e9273c308497995",
+      "lines": [
+        72,
+        106
+      ]
+    },
+    {
+      "page": "tailnet-exposure.md",
+      "path": "skills/buster/engine/test-gates/tailscale-exposure-runtime.ts",
+      "revision": "4d3068465a2e202d2d5073b77e9273c308497995",
+      "lines": [
+        123,
+        163
+      ]
+    },
+    {
+      "page": "tailnet-exposure.md",
+      "path": "skills/buster/engine/test-gates/tailscale-exposure-runtime.ts",
+      "revision": "4d3068465a2e202d2d5073b77e9273c308497995",
+      "lines": [
+        190,
+        240
+      ]
+    },
+    {
+      "page": "tailnet-exposure.md",
+      "path": "skills/buster/engine/test-gates/tailscale-exposure-runtime.ts",
+      "revision": "4d3068465a2e202d2d5073b77e9273c308497995",
+      "lines": [
+        242,
+        270
+      ]
+    },
+    {
+      "page": "tailnet-exposure.md",
+      "path": "skills/buster/engine/test-gates/exposure-generation.ts",
+      "revision": "4d3068465a2e202d2d5073b77e9273c308497995",
+      "lines": [
+        8,
+        62
+      ]
+    },
+    {
+      "page": "tailnet-exposure.md",
+      "path": "skills/buster/engine/test-gates/exposure-handoff.ts",
+      "revision": "4d3068465a2e202d2d5073b77e9273c308497995",
+      "lines": [
+        1,
+        49
+      ]
+    },
+    {
+      "page": "tailnet-exposure.md",
+      "path": "tests/verification/e2e/nova-tailscale-production-preflight.mts",
+      "revision": "4d3068465a2e202d2d5073b77e9273c308497995",
+      "lines": [
+        119,
+        151
+      ]
+    },
+    {
+      "page": "tailnet-exposure.md",
+      "path": "tests/verification/e2e/nova-tailscale-production-preflight.mts",
+      "revision": "4d3068465a2e202d2d5073b77e9273c308497995",
+      "lines": [
+        173,
+        225
+      ]
+    },
+    {
+      "page": "tailnet-exposure.md",
+      "path": "scripts/deploy.sh",
+      "revision": "24a3fa0b316160187f23b02aeac8b2c60bb6e527",
+      "lines": [
+        2534,
+        2589
+      ]
+    }
+  ],
+  "sourceVerdict": "PASS",
+  "readerAndPublication": "PENDING integration and current Reader",
+  "scope": "Full both candidate pages read. Full providers, build runtime, exposure runtime/generation/handoff, both preflight programs, registry generator and node inspector read. Runtime entrypoint11-40, deploy preflight/wrapper ranges1975-2049 and2500-2595, complete operator and node-example values read. Unchanged prior Buster compiler/submission, platform, image and demo source scopes reused, not recounted. Source-to-request-to-import-to-node and exposure-to-handoff-to-successor-cleanup claims reconciled; no live operations performed.",
+  "limits": [
+    "Author package/loopback checks bounded; root installed Tailscale checker actual0, nativeCluster:false. buildctl ENOENT preserved.",
+    "Missing original-preflight custody, node installer/cold pull/application reader and external Tailnet policy controls explicitly owner-supported stop conditions, not invented commands or passed execution."
+  ]
+}

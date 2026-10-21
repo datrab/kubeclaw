@@ -837,6 +837,11 @@
       "canonicalUrl": "/use/workflows/README.html"
     },
     {
+      "sourcePath": "docs/site/use/workflows/build-image.md",
+      "route": "/use/workflows/build-image.html",
+      "canonicalUrl": "/use/workflows/build-image.html"
+    },
+    {
       "sourcePath": "docs/site/use/workflows/buster-suite.md",
       "route": "/use/workflows/buster-suite.html",
       "canonicalUrl": "/use/workflows/buster-suite.html"
@@ -865,6 +870,11 @@
       "sourcePath": "docs/site/use/workflows/repair-retry.md",
       "route": "/use/workflows/repair-retry.html",
       "canonicalUrl": "/use/workflows/repair-retry.html"
+    },
+    {
+      "sourcePath": "docs/site/use/workflows/tailnet-exposure.md",
+      "route": "/use/workflows/tailnet-exposure.html",
+      "canonicalUrl": "/use/workflows/tailnet-exposure.html"
     },
     {
       "sourcePath": "docs/site/use/workflows/wait-resume.md",
