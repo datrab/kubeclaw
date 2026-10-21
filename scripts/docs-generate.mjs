@@ -24,8 +24,8 @@ const invocationRoot = process.cwd();
 const root = path.resolve(option('--root', invocationRoot));
 const checkOnly = argv.includes('--check');
 const only = option('--only', null);
-if (argv.includes('--only') && only !== 'workflows') {
-  throw new Error('--only supports exactly workflows');
+if (argv.includes('--only') && !['workflows', 'plugin-configuration'].includes(only)) {
+  throw new Error('--only supports exactly workflows or plugin-configuration');
 }
 if (only && argv.includes('--update-source-revision')) {
   throw new Error('bounded generation must not update the shared source revision lock');
@@ -137,6 +137,12 @@ function selectedValue(value) {
 }
 
 function stableWriteMap() {
+  // A schema-only correction has its own complete publication boundary. Keep
+  // unrelated API, SDK and values inventories out of this explicitly selected route.
+  if (only === 'plugin-configuration') return new Map([
+    ['docs/site/reference/plugin-configuration.md', renderPluginConfiguration(
+      readJson('docs/generated/inventory/configuration-schemas.json'))],
+  ]);
   // Keep bounded workflow publication independent of unrelated SDK inventories.
   if (only === 'workflows') return new Map([
     ['docs/site/reference/workflows.md', renderWorkflows(readJson('docs/generated/inventory/workflows.json'))],

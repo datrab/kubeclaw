@@ -1,0 +1,18 @@
+{
+  "findings": [
+    {
+      "title": "[P2] Document the actual API-flow endpoint selection behavior",
+      "body": "The requested whole-content OPL-001 audit exposes an incomplete configuration contract here. The endpointName row defers omission and operational failures to its linked consumer instead of describing them. In skills/buster/plugins/api-flow/src/provider.js:26-43, omission selects the sole deployment endpoint, multiple endpoints require a matching name, and a missing match raises API_FLOW_ENDPOINT_NOT_FOUND. Supplying url together with a typed endpoint input instead raises API_FLOW_TARGET_AMBIGUOUS. These distinctions determine whether an otherwise schema-valid configuration runs. The package catalogue also lists only the optional field and pattern. Add these concrete selection and failure rules to the owning configuration semantics and regenerate the reference and operator matrix.",
+      "priority": "P2",
+      "confidence": 0.97,
+      "category": "maintainability",
+      "code_location": {
+        "file_path": "docs/site/reference/plugin-configuration.md",
+        "line": 42
+      }
+    }
+  ],
+  "overall_correctness": "patch is incorrect",
+  "overall_explanation": "Requested whole-scope verdicts (sourceAccuracy / readerUsability / quality):\nOPL-001: NOT_READY / NOT_READY / NOT_READY. A concrete consumer-behavior omission remains in the central configuration contract.\nOPL-005: NOT_READY / NOT_READY / NOT_READY. Complete dependency, credential, owner, reachability and failure semantics across every consumer were not independently established.\nMNT-002: NOT_READY / NOT_READY / NOT_READY.\nMNT-007: NOT_READY / NOT_READY / NOT_READY.\nMNT-012: NOT_READY / NOT_READY / NOT_READY.\nThe MNT verdicts withhold whole implementation acceptance; they do not assert that dynamic discovery is absent.\n\nWhole A910-05: NOT_READY. Independent filesystem discovery found 51 manifests. Every discovered package has a catalogue page and operator entry, and every pipeline registration appears in the operator matrix. The inventory and publication implementations discover manifests dynamically and compare generated outputs; the hardcoded prose count is not their discovery mechanism. However, these set comparisons do not establish complete configuration/default semantics, native-consumer coverage, artifact/owner coverage or all required drift behavior. This inspection did not complete an independent semantic review of every package and consumer, so whole-gate PASS is not justified.\n\nThe finding concerns the expressly requested current-content audit, rather than a newly introduced defect in the unrelated platform/state changes. Previously accepted adjacent scopes are not revoked. No files were modified, tests or generators executed, or nested reviewers invoked. No rendered, native, runtime or live qualification is granted.",
+  "overall_confidence": 0.84
+}

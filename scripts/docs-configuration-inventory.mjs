@@ -3470,6 +3470,20 @@ function schemaEmptyBehavior(field) {
 }
 
 function schemaRuntimeValidationRules(authorityPath, field) {
+  if (authorityPath === 'skills/buster/plugins/api-flow/schemas/config.schema.json'
+    && ['$.endpointName', '$.url'].includes(field.path)) return {
+    accepted: field.path === '$.endpointName'
+      ? 'The declared name pattern applies. Deployment endpoint names match exactly; a typed public endpoint supplies its URL without using endpointName.'
+      : 'The schema requires a nonempty string. The selected network capability separately checks the actual URL and its allowed origin.',
+    omission: field.path === '$.endpointName'
+      ? 'A typed deployment with one endpoint selects that endpoint. Multiple endpoints require a matching name; there is no implicit first-entry selection. A direct URL or typed public endpoint does not use this selector.'
+      : 'Without url, one typed deployment or public-endpoint input must supply the destination. No target fails with API_FLOW_TARGET_REQUIRED.',
+    empty: field.path === '$.endpointName'
+      ? 'The schema pattern rejects an empty name; null is not a string. Do not use an empty name to request automatic selection.'
+      : 'The schema rejects an empty string and null. These are not equivalent to omitting url.',
+    failure: 'API_FLOW_ENDPOINT_NOT_FOUND means no matching deployment endpoint or no selected URL. Supplying url alongside a typed deployment/endpoint input raises API_FLOW_TARGET_AMBIGUOUS. Missing target raises API_FLOW_TARGET_REQUIRED; invalid input shape raises API_FLOW_INPUT_INVALID.',
+    evidence: ['skills/buster/plugins/api-flow/src/provider.js:26', 'skills/buster/plugins/api-flow/src/provider.js:30', 'skills/buster/plugins/api-flow/src/provider.js:40'],
+  };
   if (authorityPath === 'skills/common/plugin-runtime/foundation/config/platform.schema.json' && field.path === '$.activeAdapters[]') return {
     accepted: 'An existing adapter registration identifier. This list is the explicit initial set; required capabilities of enabled adapters, observers and stages recursively enable their selected provider adapters',
     empty: 'An empty identifier does not name a registered adapter. Removing every item removes only this initial adapter set; required provider adapters can still become enabled.',
@@ -3508,6 +3522,12 @@ function schemaRuntimeValidationRules(authorityPath, field) {
 }
 
 function schemaSpecificPurpose(authorityPath, fieldPath, context) {
+  if (authorityPath === 'skills/buster/plugins/api-flow/schemas/config.schema.json' && fieldPath === '$.endpointName') {
+    return 'Selects an exact named endpoint only from a typed Kubernetes deployment fixture. Omission selects its sole endpoint; multiple endpoints require a matching name. A typed public-endpoint input already supplies its URL and ignores this selector.';
+  }
+  if (authorityPath === 'skills/buster/plugins/api-flow/schemas/config.schema.json' && fieldPath === '$.url') {
+    return 'Supplies a direct target instead of a typed deployment/endpoint input. Combining both sources is ambiguous and fails before any network operation.';
+  }
   const pathWithoutRoot = fieldPath.replace(/^\$\.?/u, '');
   const segments = schemaNamedSegments(fieldPath);
   const leaf = segments.at(-1);

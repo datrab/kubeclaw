@@ -135,6 +135,19 @@ cause and rerun that same owned generator. Do not use a broad reset, edit genera
 facts manually, or pass a gap-allowance switch to hide a production omission.
 For prose-only changes, avoid unrelated generator writes.
 
+For a plugin-schema explanation change, the inventory owner supports
+`node scripts/docs-configuration-inventory.mjs --schemas-only`. This writes the
+complete schema inventory without regenerating unrelated values/API families.
+Require the same command with `--check` to confirm that inventory against source.
+After committing the owning source change, publish its reference with
+`node scripts/docs-generate.mjs --only plugin-configuration --revision <full-committed-revision>`.
+The source revision must match the actual checkout. This route owns only
+`reference/plugin-configuration.md`; it does not update the shared revision lock
+or qualify the other inventories. Use `--check` for a read-only comparison of
+that same selected page. The separate publication generator owns the catalogue
+and operator matrix; regenerate those after the schema inventory succeeds.
+A bounded success is not a global generation PASS.
+
 The common stable sequence is:
 
 ```sh
