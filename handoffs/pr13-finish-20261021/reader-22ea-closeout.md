@@ -1,0 +1,13 @@
+# Reader integration closeout — 22ea0ffb
+
+Actual source/build revision: `22ea0ffb9f4e30c7579b46ed7eb059a3de51ad30`. Main tracked tree clean throughout build/checks. No graph or runtime authority is inferred.
+
+- Build terminal0:177canonical pages/51plugins.
+- Five actual checkers terminal0:187HTML/40832local targets/240outputdigests;12search questions;14783Source links/3928objects;1805excerpts/935objects across411Sourceboxes/409withpreviews;27fresh deterministic SVG hashes.
+- Complete27diagram records equal prior deliveredcfc97be0; existing bounded semantic scopes retained, not27new reviews.
+- Actual source-preview native suite4/4PASS,0skipped. A root-CJS diagnostic first failed to resolve markdown-it because it belongs to isolated scripts/docs-reader dependencies; corrected diagnostic used actual createRequire from that package. It is not an installation or publication failure.
+- Actual offline/noJS browser observations10changed/new pages at320/768/1440 plus actual offlineJSsearch:31observations,0findings,0network. Includes documentation-site preserved existing sections and added preview instructions. No human screenreader or full accessibility claim.
+- Actual integrated loopback preview served every240manifestoutput with200 and exact digest/length, including19copied assets. Home308preserves query; selected helper HEAD200empty; unknown404; POST405. Real registry remains empty. Synthetic maintained redirect/fragment/negative controls stay separately attributed, not invented deployed history.
+- ZIP242safeunique regular members:240outputs union19already-includedassets plus2metadata reports. All19copiedassets compared to actual committed Source. SHA256`284042a9e2097f37cbf7cc87116e86508385fc7ef4c66ade74c54cd5cb35e9bf`,7655246bytes. Fresh extraction actualartifact/search both terminal0. Delivered Discord1562593231987023902.
+
+Evidence paths in task-local scratch: reader-{build,artifact,search,source-links,source-previews,diagrams}-22ea0ffb.*,reader-preview-22ea0ffb.json,source-preview-native-22ea0ffb.tap,browser-recovery-22ea0ffb.{json,stdout,stderr},reader-diagram-preservation-22ea0ffb.json,reader-archive-22ea0ffb.json,reader-extracted-{artifact,search}-22ea0ffb.json. No broad Source or release PASS. Sourcebox literal-field triage is diagnostic only, not semantic acceptance:411boxes,274missing at least one literal field name; actual six-field consistency requires coherent content assessment and remains open. Current graph/facts renewal and overall generation remain pending;43/89gates223/261requirements remain the latest accepted register count, not completion percentage. Runtime RELEASE_CONFIGURATION_CHANGED:charts/kubeclaw/files/config/knip.json unchanged.

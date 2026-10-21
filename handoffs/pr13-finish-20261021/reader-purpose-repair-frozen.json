@@ -1,0 +1,47 @@
+{
+  "status": "AUTHOR_FROZEN_PENDING_INDEPENDENT_REVIEW_AND_CURRENT_CUSTODY_CAPTURE",
+  "baseCommit": "22ea0ffb9f4e30c7579b46ed7eb059a3de51ad30",
+  "files": [
+    {
+      "target": "scripts/docs-api-documentation-role-custody.mjs",
+      "candidate": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/reader-purpose-repair-candidate/scripts/docs-api-documentation-role-custody.mjs",
+      "sha256": "2c4cb1577483fdac81d1d715cec828fe9cd62f277a0e0ca15abe673016c43544",
+      "bytes": 1202607,
+      "lines": 30522
+    },
+    {
+      "target": "scripts/docs-api-output-discovery.mjs",
+      "candidate": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/reader-purpose-repair-candidate/scripts/docs-api-output-discovery.mjs",
+      "sha256": "210d4eb223509b27baa6bd1cd73116f78a31cd66f368d44ce1a9025636b8b5d7",
+      "bytes": 413259,
+      "lines": 3279
+    },
+    {
+      "target": "scripts/tests/docs-reader-purpose-routing.test.mjs",
+      "candidate": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/reader-purpose-repair-candidate/scripts/tests/docs-reader-purpose-routing.test.mjs",
+      "sha256": "44d32e470116bace61bb893af793762168fd5ab8c0883b945ec3664dfb9b2adc",
+      "bytes": 9459,
+      "lines": 90
+    },
+    {
+      "target": "DRAFT_ONLY_NOT_TRACKED_REGISTRY",
+      "candidate": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/reader-purpose-repair-candidate/reader-purpose-registry-additions.draft.json",
+      "sha256": "7f0dc730a52ab1b074f909ef1917c01bb9f284d566846578da369b2b64eb109f",
+      "bytes": 1342,
+      "lines": 33
+    }
+  ],
+  "mainWrites": false,
+  "newPackageEntries": false,
+  "testsSelectedAsRoots": false,
+  "tests": {
+    "command": "env -u SWARM_CONFIG -u NODE_ENV node --test scripts/tests/docs-reader-purpose-routing.test.mjs scripts/tests/docs-documentation-purpose-routing.test.mjs",
+    "exit": 0,
+    "new": 21,
+    "existingUnchanged": 8,
+    "passed": 29,
+    "skipped": 0,
+    "log": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/reader-purpose-repair-tests-combined-final.txt"
+  },
+  "dataStatus": "Source-owned2recipe receipts derived from actual22ea unchanged inputs, provisional for final renewed tree; registry graph/entry/operation fields remain null until custody actual capture"
+}

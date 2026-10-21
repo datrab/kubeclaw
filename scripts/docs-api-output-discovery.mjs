@@ -664,11 +664,14 @@ const staticReceiverSourceAuthorities={
 };
 // Exact existing executable consumer roles whose purpose is not discovered by
 // the root-only docs-helper traversal. This is analysis routing, never entry or
-// runtime acquisition authority. The Source-locator has no current invocation.
+// runtime acquisition authority. The Source-locator has no selected root-package
+// command or selected importing ancestor; direct CI invocation is outside that
+// selected entry graph and is separately reviewed.
 const reviewedDocumentationPurposeRoutes=Object.freeze({
  'scripts/docs-reader/check-source-links.mjs':'uninvoked-primary-source-locator-analysis/v1',
  'scripts/docs-reader/renderer.mjs':'positive-publication-reader-renderer/v1',
  'scripts/docs-sdk-reference.mjs':'sdk-source-reference-consumer/v1',
+ 'scripts/docs-reader/serve.mjs':'manual-reader-preview-with-external-ci-fixtures/v1',
 });
 function assertDocumentationToolQualifications(root,boundary,packageBytes) {
   const qualificationRecords=boundary.qualifications??[],routes=boundary.purposeRoutes??[],records=[...qualificationRecords,...routes],required=[...new Set([...(boundary.qualificationRequiredSources??[]),...Object.keys(staticReceiverSourceAuthorities).filter(source=>(boundary.sources??[]).includes(source)||records.some(record=>record.source===source))])];
@@ -708,10 +711,13 @@ function assertDocumentationToolQualifications(root,boundary,packageBytes) {
     const ancestors=new Set([source]);changed=true;
     while(changed){changed=false;for(const edge of graph.edges)if(ancestors.has(edge.target)&&!ancestors.has(edge.source)){ancestors.add(edge.source);changed=true;}}
     for(const alias of graph.aliases)assert(![...ancestors].some(ancestor=>ancestor===alias.target||alias.directory&&ancestor.startsWith(alias.target+'/'))||ancestors.has(alias.source),`DOCUMENTATION_TOOL_PUBLIC_CONSUMER_UNQUALIFIED: ${source}; symlink ${alias.source}`);
-    if(purposeRoute&&record.kind==='uninvoked-primary-source-locator-analysis/v1'){
-      // An uninvoked analysis source is not invented documentation execution.
-      // Any newly selected import or entry needs a separate Source review.
-      assert(ancestors.size===1&&!entries.some(entry=>entry.source===source),`DOCUMENTATION_TOOL_PUBLIC_CONSUMER_UNQUALIFIED: ${source}; uninvoked analysis gained a consumer`);
+    if(purposeRoute&&(record.kind==='uninvoked-primary-source-locator-analysis/v1'||source==='scripts/docs-reader/serve.mjs'&&record.kind==='manual-reader-preview-with-external-ci-fixtures/v1')){
+      // No selected root-package command or selected importing ancestor. This
+      // does not claim global non-invocation: the locator has direct CI use;
+      // the exact preview has documented manual/CI-fixture callers bound by
+      // fresh Source-owned purpose inputs before either cache. No fake entry.
+      // A newly selected import or root-package entry requires Source review.
+      assert(ancestors.size===1&&!entries.some(entry=>entry.source===source),`DOCUMENTATION_TOOL_PUBLIC_CONSUMER_UNQUALIFIED: ${source}; selected root-package/module-graph consumer added`);
     }else for(const consumer of ancestors)assert(docsReachable.has(consumer),`DOCUMENTATION_TOOL_PUBLIC_CONSUMER_UNQUALIFIED: ${source}; ${consumer}`);
     for(const entry of documentationEntryPoints(JSON.parse(packageBytes).scripts??{},false,root))if(!entry.name.startsWith('docs:')&&!entry.name.startsWith('verify:docs:'))assert(!ancestors.has(entry.source),`DOCUMENTATION_TOOL_PUBLIC_CONSUMER_UNQUALIFIED: ${source}; package invocation ${entry.name}`);
     const packageDefinition=JSON.parse(packageBytes);
@@ -749,6 +755,35 @@ export function discoverScriptInputGraph(root) {
   const graph=documentationGraphCache.get(root);
   const freeze=value=>{if(value&&typeof value==='object'){Object.values(value).forEach(freeze);Object.freeze(value);}return value;};
   return freeze(JSON.parse(JSON.stringify({closureSources:graph.closureSources,edges:graph.edges,publicEntries:graph.publicEntries})));
+}
+// Unaccepted analysis DATA only. This is not a role, module, output or native
+// execution receipt. Preserve the original graph/entry acquisition and guards;
+// the actual owner still independently checks every qualification record.
+export function discoverScriptInputAcquisition(root) {
+  const packageFile=path.join(root,'package.json');
+  const packageBytes=fs.existsSync(packageFile)?fs.readFileSync(packageFile):Buffer.from('{}');
+  const registryFile=path.join(root,'scripts/docs-api-producer-adapter-authorities.json');
+  const registryBytes=fs.existsSync(registryFile)?fs.readFileSync(registryFile):Buffer.from('{}');
+  const boundary=JSON.parse(registryBytes).documentationToolBoundary??{};
+  const graph=documentationModuleGraph(root,packageBytes,boundary);
+  const scripts=JSON.parse(packageBytes).scripts??{};
+  const value={
+    protocol:'docs-script-input-acquisition-data-v1',status:'UNACCEPTED_DATA',
+    packageSha256:hash(packageBytes),registrySha256:hash(registryBytes),
+    inputKey:graph.inputKey,closureSources:graph.closureSources,
+    executableSources:graph.executableSources,
+    executableSources:graph.executableSources,
+    edges:graph.edges,aliases:graph.aliases,publicEntries:graph.publicEntries,
+    dynamicOperations:graph.dynamicOperations,
+    resolutionOnlyOperations:graph.resolutionOnlyOperations,
+    dependencyPaths:graph.dependencyPaths,
+    installedFoundationDependencies:graph.installedFoundationDependencies,
+    installedFoundationDependencyPaths:graph.installedFoundationDependencyPaths,
+    documentationEntries:documentationEntryPoints(scripts,true,root),
+    packageEntries:documentationEntryPoints(scripts,false,root),
+  };
+  const freeze=item=>{if(item&&typeof item==='object'){Object.values(item).forEach(freeze);Object.freeze(item);}return item;};
+  return freeze(JSON.parse(JSON.stringify(value)));
 }
 function publicNodeSourceContexts(root,source,context) {
   const graph=documentationGraphCache.get(root),contexts=[context];

@@ -1,0 +1,358 @@
+{
+  "baselineRevision": "22ea0ffb9f4e30c7579b46ed7eb059a3de51ad30",
+  "verdict": "ADDITIVE_HOOK_SOURCE_READY_ONLY; PACKET_PREPARE_ONLY_NOT_EXECUTION_READY",
+  "sources": [
+    {
+      "path": "scripts/docs-api-output-discovery.mjs",
+      "sha256": "987ff618c6aa26e472f9ff1b9b42d9f42057a3e16a33dacac8bea948fb421173",
+      "readRanges": [
+        [
+          1,
+          130
+        ],
+        [
+          205,
+          752
+        ],
+        [
+          1077,
+          1088
+        ],
+        [
+          1106,
+          1132
+        ]
+      ]
+    },
+    {
+      "path": "scripts/docs-api-documentation-role-custody.mjs",
+      "sha256": "9edb03a0853488341df83bc65957699ab8b89c84bc8d5648ca71a045246bb45d",
+      "readRanges": [
+        [
+          1,
+          28
+        ],
+        [
+          9072,
+          9165
+        ],
+        [
+          9889,
+          9906
+        ],
+        [
+          9965,
+          9988
+        ],
+        [
+          10003,
+          10039
+        ],
+        [
+          30040,
+          30163
+        ]
+      ]
+    },
+    {
+      "path": "scripts/docs-api-output-role-classification.mjs",
+      "sha256": "42a4cb9d4487ede91fb225ff908adcea435611c31ec7450458e5ecfe0083354a",
+      "readRanges": [
+        [
+          1,
+          188
+        ],
+        [
+          685,
+          704
+        ]
+      ]
+    },
+    {
+      "path": "scripts/docs-shell-source-custody.mjs",
+      "sha256": "a23ba2be33b619c32153d553ece1a548ebe3b0666a3f3afc5f702afcc1c91b67",
+      "readRanges": [
+        [
+          1,
+          129
+        ]
+      ]
+    },
+    {
+      "path": "scripts/docs-api-observer-materialized-source.mjs",
+      "sha256": "c05f1fb516078ed1f2aecc4478e298877a9df061a967f1d7ff24689a82b96dc3",
+      "readRanges": [
+        [
+          1,
+          76
+        ]
+      ]
+    }
+  ],
+  "packetInputs": [
+    {
+      "path": "README.md",
+      "sha256": "ae87c2d644a1237c6ae8069fdcd03f936dcf9342a11b0a2859408538c7d7a321",
+      "readScope": "whole"
+    },
+    {
+      "path": "packet.json",
+      "sha256": "e6e3b93ab28f266ce5747c735be3ded9633fd8e895146efaf28624e6f4c23c54",
+      "readScope": "whole"
+    },
+    {
+      "path": "projection-proposal.patch",
+      "sha256": "60ec6c3dc18fbdbca83bf3275af1cdd9e5101096d360c09d2bee55ab5de7578f",
+      "readScope": "whole"
+    }
+  ],
+  "priorSourceIdentityChecks": [
+    {
+      "path": "scripts/check-capability-drift-mutations.mjs",
+      "expected": "31171d9e192c617b2a56cc752dd19339a485de22b19a97af30759e0d6c9a604f",
+      "actual": "31171d9e192c617b2a56cc752dd19339a485de22b19a97af30759e0d6c9a604f",
+      "semanticReview": "attributed prior review, not repeated"
+    },
+    {
+      "path": "scripts/check-capability-drift.mjs",
+      "expected": "70847dabcd9771f5fc5a8e430386d5935237bfed265ccef86013d1fbfc1cdca4",
+      "actual": "70847dabcd9771f5fc5a8e430386d5935237bfed265ccef86013d1fbfc1cdca4",
+      "semanticReview": "attributed prior review, not repeated"
+    },
+    {
+      "path": "scripts/check-capability-policy-drift-mutations.mjs",
+      "expected": "aab7f432c3f92f5c01397007c49e1527bb901741277fbfc6e2fd0a0c4887b08f",
+      "actual": "aab7f432c3f92f5c01397007c49e1527bb901741277fbfc6e2fd0a0c4887b08f",
+      "semanticReview": "attributed prior review, not repeated"
+    },
+    {
+      "path": "scripts/check-capability-policy-drift.mjs",
+      "expected": "4470cc4342ea7c4e39d41f57626734e2c75c79a5fd4a57103e6868b7cdb69924",
+      "actual": "4470cc4342ea7c4e39d41f57626734e2c75c79a5fd4a57103e6868b7cdb69924",
+      "semanticReview": "attributed prior review, not repeated"
+    },
+    {
+      "path": "scripts/check-capability-registrations-drift.mjs",
+      "expected": "8a4d3b81e0f8f2ac374bcda38a6502c78c37308a218230c908e544a7766f0180",
+      "actual": "8a4d3b81e0f8f2ac374bcda38a6502c78c37308a218230c908e544a7766f0180",
+      "semanticReview": "attributed prior review, not repeated"
+    },
+    {
+      "path": "scripts/check-capability-swarm-boundary.mjs",
+      "expected": "0147ec6cf172c612023fc3fe55b43ec3848899b84f2b0e729be9c575d9b61aa2",
+      "actual": "0147ec6cf172c612023fc3fe55b43ec3848899b84f2b0e729be9c575d9b61aa2",
+      "semanticReview": "attributed prior review, not repeated"
+    },
+    {
+      "path": "scripts/check-capability-vocabulary-drift-mutations.mjs",
+      "expected": "160e780708a62f95238dfc435d105aaf60f8e653029f3c895b6fceb8c0b14325",
+      "actual": "160e780708a62f95238dfc435d105aaf60f8e653029f3c895b6fceb8c0b14325",
+      "semanticReview": "attributed prior review, not repeated"
+    },
+    {
+      "path": "scripts/check-capability-vocabulary-drift.mjs",
+      "expected": "c466cfa01aaf23a3f6927538a09dff6f31d1eb8c83c80e204d4853692492c2f7",
+      "actual": "c466cfa01aaf23a3f6927538a09dff6f31d1eb8c83c80e204d4853692492c2f7",
+      "semanticReview": "attributed prior review, not repeated"
+    },
+    {
+      "path": "scripts/check-configuration-cli-drift.mjs",
+      "expected": "82148923a66dc77711ba7b67dcb7da747d279691dc51a449f86b383a8c3e3cf0",
+      "actual": "82148923a66dc77711ba7b67dcb7da747d279691dc51a449f86b383a8c3e3cf0",
+      "semanticReview": "attributed prior review, not repeated"
+    },
+    {
+      "path": "scripts/check-configuration-drift-mutations.mjs",
+      "expected": "e0e5d36a69e8467101ca7c0f045c32f8565111d841f3bc34c41d4e4f2cab49da",
+      "actual": "e0e5d36a69e8467101ca7c0f045c32f8565111d841f3bc34c41d4e4f2cab49da",
+      "semanticReview": "attributed prior review, not repeated"
+    },
+    {
+      "path": "scripts/check-contract-drift-mutations.mjs",
+      "expected": "cd1bdc5438cb072bd495892f871888460226cfcb5a8e85a27cc48c173ae2e623",
+      "actual": "cd1bdc5438cb072bd495892f871888460226cfcb5a8e85a27cc48c173ae2e623",
+      "semanticReview": "attributed prior review, not repeated"
+    },
+    {
+      "path": "scripts/check-contract-drift.mjs",
+      "expected": "463b2a8a3999e977ea3839b80549336431cdbc2ea3c76caf3d218005d8ccbae8",
+      "actual": "463b2a8a3999e977ea3839b80549336431cdbc2ea3c76caf3d218005d8ccbae8",
+      "semanticReview": "attributed prior review, not repeated"
+    },
+    {
+      "path": "scripts/check-error-code-drift-mutations.mjs",
+      "expected": "47b1dd5a26085725b1464752e1c8c18753ed2bbff9f230affdf165b4c5c8ffb5",
+      "actual": "47b1dd5a26085725b1464752e1c8c18753ed2bbff9f230affdf165b4c5c8ffb5",
+      "semanticReview": "attributed prior review, not repeated"
+    },
+    {
+      "path": "scripts/check-error-code-drift.mjs",
+      "expected": "da6af31671d8f5dffe4fda86ff0e152ba9ed7627a7aa497953faa80ff365c944",
+      "actual": "da6af31671d8f5dffe4fda86ff0e152ba9ed7627a7aa497953faa80ff365c944",
+      "semanticReview": "attributed prior review, not repeated"
+    },
+    {
+      "path": "scripts/check-extension-class-drift-mutations.mjs",
+      "expected": "34358ec82373a23a66cc47a489927b18a7612f92c778f7287f81c31795bb32f4",
+      "actual": "34358ec82373a23a66cc47a489927b18a7612f92c778f7287f81c31795bb32f4",
+      "semanticReview": "attributed prior review, not repeated"
+    },
+    {
+      "path": "scripts/check-extension-class-drift.mjs",
+      "expected": "61cda6e05a7e12b28a8d16adb0a3de5b439418645a738b3e0a284522df68ef74",
+      "actual": "61cda6e05a7e12b28a8d16adb0a3de5b439418645a738b3e0a284522df68ef74",
+      "semanticReview": "attributed prior review, not repeated"
+    },
+    {
+      "path": "scripts/check-fixture-registration-drift-mutations.mjs",
+      "expected": "69873ea3df07137d5ebaa89344de1168ca9786245d642436de3059d3f1b03ece",
+      "actual": "69873ea3df07137d5ebaa89344de1168ca9786245d642436de3059d3f1b03ece",
+      "semanticReview": "attributed prior review, not repeated"
+    },
+    {
+      "path": "scripts/check-fixture-registration-drift.mjs",
+      "expected": "89683802223aadcddbf631fb6bdd1ef8a6c43203d2a3118a89fc8440d6843937",
+      "actual": "89683802223aadcddbf631fb6bdd1ef8a6c43203d2a3118a89fc8440d6843937",
+      "semanticReview": "attributed prior review, not repeated"
+    },
+    {
+      "path": "scripts/check-platform-surface-drift-mutations.mjs",
+      "expected": "3cbe65acb14b66acba5754fd44728801b301f50a8de1deed6a642c5293a28e45",
+      "actual": "3cbe65acb14b66acba5754fd44728801b301f50a8de1deed6a642c5293a28e45",
+      "semanticReview": "attributed prior review, not repeated"
+    },
+    {
+      "path": "scripts/check-plugin-manifest-drift-mutations.mjs",
+      "expected": "d0463149d637e0061da26512f73048a949846c964ef6dfc82480325762675653",
+      "actual": "d0463149d637e0061da26512f73048a949846c964ef6dfc82480325762675653",
+      "semanticReview": "attributed prior review, not repeated"
+    },
+    {
+      "path": "scripts/check-plugin-manifest-drift.mjs",
+      "expected": "2da10898085027449f543c966027c983ac11ad9508aa03156f972af005acd1f9",
+      "actual": "2da10898085027449f543c966027c983ac11ad9508aa03156f972af005acd1f9",
+      "semanticReview": "attributed prior review, not repeated"
+    },
+    {
+      "path": "scripts/check-progress-contract-drift-mutations.mjs",
+      "expected": "c740b33340853111031e6ebea7adb0a145cdc1b1d1773ba7cc33c2b11467a5aa",
+      "actual": "c740b33340853111031e6ebea7adb0a145cdc1b1d1773ba7cc33c2b11467a5aa",
+      "semanticReview": "attributed prior review, not repeated"
+    },
+    {
+      "path": "scripts/check-provider-registration-drift-mutations.mjs",
+      "expected": "e923ea164e2686b835c70fc8edd3041c4e49a04f582b305d7859daf0782fb30d",
+      "actual": "e923ea164e2686b835c70fc8edd3041c4e49a04f582b305d7859daf0782fb30d",
+      "semanticReview": "attributed prior review, not repeated"
+    },
+    {
+      "path": "scripts/check-provider-registration-drift.mjs",
+      "expected": "5bc75b333b0b88880e77f1bf2572af3be97124957c562cb55b781f1a1a99dcca",
+      "actual": "5bc75b333b0b88880e77f1bf2572af3be97124957c562cb55b781f1a1a99dcca",
+      "semanticReview": "attributed prior review, not repeated"
+    },
+    {
+      "path": "scripts/check-report-registration-drift-mutations.mjs",
+      "expected": "bc064e1f02567b515a69efe6b0c1b0d20b64ed835017e24d3a3739237f021c4e",
+      "actual": "bc064e1f02567b515a69efe6b0c1b0d20b64ed835017e24d3a3739237f021c4e",
+      "semanticReview": "attributed prior review, not repeated"
+    },
+    {
+      "path": "scripts/check-report-registration-drift.mjs",
+      "expected": "cfd5071ee4a167768fadf00ede81e1d847ee42d151c68121d20697c84893acee",
+      "actual": "cfd5071ee4a167768fadf00ede81e1d847ee42d151c68121d20697c84893acee",
+      "semanticReview": "attributed prior review, not repeated"
+    },
+    {
+      "path": "scripts/check-schema-drift-mutations.mjs",
+      "expected": "307a040b9875969e5533c2edd46f9ce301cca001d2ddc606f70e546cc9bac73f",
+      "actual": "307a040b9875969e5533c2edd46f9ce301cca001d2ddc606f70e546cc9bac73f",
+      "semanticReview": "attributed prior review, not repeated"
+    },
+    {
+      "path": "scripts/check-sdk-contract-mutation-constructors.mjs",
+      "expected": "24837bf0fe0391ac6cc48b17bcce2ff2bf05da7f962c0cd3be1732321afdf325",
+      "actual": "24837bf0fe0391ac6cc48b17bcce2ff2bf05da7f962c0cd3be1732321afdf325",
+      "semanticReview": "attributed prior review, not repeated"
+    },
+    {
+      "path": "scripts/check-workflow-drift-mutations.mjs",
+      "expected": "94324dda29e23fe924eb89282a882ed6e46442ec066caf5f728a641d1755fd41",
+      "actual": "94324dda29e23fe924eb89282a882ed6e46442ec066caf5f728a641d1755fd41",
+      "semanticReview": "attributed prior review, not repeated"
+    },
+    {
+      "path": "scripts/docs-product-pipeline-reference.mjs",
+      "expected": "0d5ca69959c9ac502d60cc2f51c8485330888f082b861d1ca52c96b0eac0c25d",
+      "actual": "0d5ca69959c9ac502d60cc2f51c8485330888f082b861d1ca52c96b0eac0c25d",
+      "semanticReview": "attributed prior review, not repeated"
+    },
+    {
+      "path": "scripts/generate-local-helm-authorities.mjs",
+      "expected": "0c01058c36010623664ecf46a886dabb59c3d5c8446715641f481b2100fb9a94",
+      "actual": "0c01058c36010623664ecf46a886dabb59c3d5c8446715641f481b2100fb9a94",
+      "semanticReview": "attributed prior review, not repeated"
+    },
+    {
+      "path": "scripts/docs-reader/check-source-links.mjs",
+      "expected": "464ca70cdd65dcb4c82e8e464717672534127ec2514e34d638599776cacb22c5",
+      "actual": "464ca70cdd65dcb4c82e8e464717672534127ec2514e34d638599776cacb22c5",
+      "semanticReview": "attributed prior review, not repeated"
+    },
+    {
+      "path": "scripts/docs-reader/renderer.mjs",
+      "expected": "9e87c023a29932f35c9c0ca5169c7c4cc39953a849e31b206e6f431bf91acf2b",
+      "actual": "9e87c023a29932f35c9c0ca5169c7c4cc39953a849e31b206e6f431bf91acf2b",
+      "semanticReview": "attributed prior review, not repeated"
+    },
+    {
+      "path": "scripts/docs-sdk-reference.mjs",
+      "expected": "0b9a68256214b05289a60355a536526bcfca823c0d95cf763ba5c461a0921b1a",
+      "actual": "0b9a68256214b05289a60355a536526bcfca823c0d95cf763ba5c461a0921b1a",
+      "semanticReview": "attributed prior review, not repeated"
+    }
+  ],
+  "artifactAdvertisements": [
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/postfreeze-acquisition-packet/README.md",
+      "expected": "4c37e9b2531ece0f3c0b766ded5172d00394ed8503dea5bae98bd563f22c5b97",
+      "actual": "ae87c2d644a1237c6ae8069fdcd03f936dcf9342a11b0a2859408538c7d7a321"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/postfreeze-acquisition-packet/projection-proposal.patch",
+      "expected": "60ec6c3dc18fbdbca83bf3275af1cdd9e5101096d360c09d2bee55ab5de7578f",
+      "actual": "60ec6c3dc18fbdbca83bf3275af1cdd9e5101096d360c09d2bee55ab5de7578f"
+    }
+  ],
+  "sourceOnlyConditionalChildCount": {
+    "fullPackageEntries": 12,
+    "syntheticSourcesIncludingHarnessNpm": 14,
+    "graphTwoSyntheticPlusEntries": 40,
+    "oneHook": 52,
+    "coldWarmPair": 104,
+    "statedOuterCeiling": 64
+  },
+  "materialPacketFindings": [
+    {
+      "id": "ACQ-PACKET-F1",
+      "finding": "64outerchildceiling versus104predictedcoldwarmpair; explicitcalllist/percall/wholeprocesslimitsrequired"
+    },
+    {
+      "id": "ACQ-PACKET-F2",
+      "finding": "Rawgraph retains unresolved/unqualified operations; moduleInputAuthority and fullrole/consumerqualifications separate/unrun"
+    }
+  ],
+  "precisionNotes": [
+    "OriginalspawnSyncencoding:utf8 producesdecodedAPIstrings, notpredecoderawbytes; do not relabel .bin reconstruction raw.",
+    "Proposalbare@@ is schematic, notapplyreadyunifieddiff.",
+    "executableSources omitted; closureincludespassiveJSON, do notinferexecutablemembership.",
+    "packetREADMEadvertisedhashstale, refreshaftercoherentpacketcorrections."
+  ],
+  "noTargetImports": true,
+  "noNativeAcquisition": true,
+  "noMainWrites": true,
+  "limits": [
+    "No31purpose rereview/currentDATA/role/output/runtime/Reader/REF005 acceptance.",
+    "Controller/importer/eager installeddependency and absence roster/recorder stillpendingactualindependentreview."
+  ]
+}

@@ -9067,6 +9067,198 @@ export const documentationExecutableRoleRecipes = {
         "sha256": "646f14105e48d9401b8d8ac99a0c439f60c8b69e42d72c15c0b66e132a1c9a2d"
       }
     ]
+  },
+  "scripts/docs-reader/redirects.mjs": {
+    "role": "documentation-consumer",
+    "qualificationKind": "reviewed-documentation-consumer/v1",
+    "sourceSha256": "bdeb3d97575e9e8116fc5d07eb2fd359aeac3a5ae824d0521e688ff187e43a60",
+    "consumer": "Exact positive reader artifact redirect compiler/writer used by the actual documentation publication/renderer; selected physical asset hashes and validated local canonical fallback outputs, not product API bodies or example module execution.",
+    "selectors": [
+      {
+        "expressionSha256": "ce8ca4d18773d9beee9f6f45f78a89962c42dadd6a5e90d011a0a305204cadb0"
+      },
+      {
+        "expressionSha256": "46d8c286876cb137d281519c45fa1e8b190b74d351db6659947d0747840a2e00"
+      },
+      {
+        "expressionSha256": "6f92584fc827bd0bac3202fcadbfcd935a548693763ea90a134dcaaf100ccde3"
+      },
+      {
+        "expressionSha256": "df1b87e8588d6b2fb0f997c6e4e36e4b70f22b4d461d30d64342adc0d69a18f4"
+      },
+      {
+        "expressionSha256": "8fa16c52fb576b4806893bbe3d568e642216fd02618d180aa6a66a822d3e4a43"
+      },
+      {
+        "expressionSha256": "c2373e0ad750e6fb50d6fdb23b4078c162d54b22b58a9a5d927e6a6cb775656a"
+      },
+      {
+        "expressionSha256": "1947628e82e9a705a71d325f15c390a694e168f14f7308f7c4df6988d188cbcd"
+      },
+      {
+        "expressionSha256": "b9502732a223ff4f94a9b72d1c872a29a61aabc8b714031c3d59c9145409e2d9"
+      },
+      {
+        "expressionSha256": "54caae4911b7302d936da5044933df20c456b824186378b25b405255aa72642d"
+      },
+      {
+        "expressionSha256": "82a51bcfe018e6b4ffbde5427bea64ded1871c81b64b2358dcb90b5ad7710659"
+      },
+      {
+        "expressionSha256": "c936dcf2e216ec3e088f1fc7cfc57b3fca2a4817a44ad6b51c5085751b7af3bb"
+      },
+      {
+        "expressionSha256": "d3f75effb0d479247d7a99426eac1f00ffbd9f67c7a61a8f8357f9d563aece3e"
+      },
+      {
+        "expressionSha256": "396cffcd6da5ea95d5c9ca62b7daf06185a26e4a2e41e3540adb5f91720beebc"
+      },
+      {
+        "expressionSha256": "1861278a0c63aed36c51b0c0f572a1174fe374394ba4db0dbd87c37d3ffec787"
+      },
+      {
+        "expressionSha256": "a806fc69f93ada2fb7d8beefa6eae5d3d5b92ee0133efec1e483578a78e63925"
+      },
+      {
+        "expressionSha256": "6da918545ea0f320147cd56432282e6b038e0e23b184f925e7e96f5778e64c73"
+      },
+      {
+        "expressionSha256": "55c60475fff8d8c37dda4d6f1c0ec98b07d9c852cf2da8055f0c34cb5d650a91"
+      },
+      {
+        "expressionSha256": "3bd42e15e5427f946b98b898212af900ed0a4068cff03a37aa2ce1d3a081f2ec"
+      },
+      {
+        "expressionSha256": "967573157d8a0118a9b81842abb29015d82a1e83f6d2d055d56e848e4def640e"
+      },
+      {
+        "expressionSha256": "99a8a8a7117b1395e3a209cdc8ba5a70424687458932bc4dc8a7b6e59ff53868"
+      },
+      {
+        "expressionSha256": "113f0af17fdf683cf360ab9d03b7eff1b572d3475e83119031d47ee4331621aa"
+      },
+      {
+        "expressionSha256": "336b18dd5dc9cb9c5d587503227270022936b0a9c40437d4b1413b6096e17ad1"
+      },
+      {
+        "expressionSha256": "23f9409606f828ebbdfdcfb88b177299d88a7ba7c5ef997d5e5b1330f919d7f3"
+      },
+      {
+        "expressionSha256": "d4329af4fd3ca4228d4318a2ee89ee4ee6d82b182333e93907b83644fde38eb1"
+      },
+      {
+        "expressionSha256": "0c2ae36c8486546d157fe6cf852587be51571c5e852460d04a45658720354730"
+      },
+      {
+        "expressionSha256": "ac3a72df8cdd6dd641fa9cd5600101d35fdc38fe47b75329f28b88a580003a4e"
+      },
+      {
+        "expressionSha256": "ccbeb091ad62aa9456e6c8975e6b02a79f8ff537281f484b5b51762e7c427fff"
+      },
+      {
+        "expressionSha256": "909deec7d292d48c23ea809ef0f54905bca147269562e887e4846c7c13bbf833"
+      },
+      {
+        "expressionSha256": "848db1572e2d2a822fa7cf1ec4b7ac5a57fd00dc2a146496d5cb2cbbc4ed277e"
+      },
+      {
+        "expressionSha256": "e04e725248a5a226d1b614b0b2080ea55df5922a657f4ab0705d417b6d1bcb34"
+      },
+      {
+        "expressionSha256": "8d1bf50b992a7987f908cc2bc792bc39d2416eb08672a379bf59b0c357443e33"
+      }
+    ],
+    "factsDigest": "f31f9792439acba8b0b5a6faca613ce2bb5a6a9e453ab825d957c55e0a392513",
+    "authorityInputs": [],
+    "purposeInputs": [
+      {
+        "path": "scripts/docs-published-route-baseline.json",
+        "canonical": "scripts/docs-published-route-baseline.json",
+        "sha256": "c9fd21962ade0616a71cc5f0a30363b0020ed26028fd88444a9934197d76f6b7"
+      },
+      {
+        "path": "scripts/lib/docs-route-continuity.mjs",
+        "canonical": "scripts/lib/docs-route-continuity.mjs",
+        "sha256": "95ebc24186da8c7b446a5bd3edb36f8514b79cb4104dc0394f0b381ddb5dd449"
+      }
+    ]
+  },
+  "scripts/docs-reader/serve.mjs": {
+    "role": "documentation-consumer",
+    "qualificationKind": "manual-reader-preview-with-external-ci-fixtures/v1",
+    "sourceSha256": "15d8bfea45c90d2f2d7380e18e2190498c4ca9f64259f651354418782195e834",
+    "consumer": "Exact manifest-only documentation preview: verified artifact bytes and local redirect/diagnostic HTTP responses; actual CLI and external CI-test callers listen on127.0.0.1. No general server/runtime exemption; no selected root-package entry or importing ancestor.",
+    "selectors": [
+      {
+        "expressionSha256": "5fa2ddeb5e38966bdafa3b5424495d84a5525eee4e8a60473b8b9793fd7e1dab"
+      },
+      {
+        "expressionSha256": "7da8d80d9b75c9bf196cd4245170b36b66b4e0e1773f38c6101ac21e6f8d159d"
+      },
+      {
+        "expressionSha256": "669bf7902b82963ad6206c26cab7d65e139f97b82b7fe092462ec19f10660994"
+      },
+      {
+        "expressionSha256": "2cb40424adb826940af64a002a015ddc09663046ebce341623a2a1451d9b807b"
+      },
+      {
+        "expressionSha256": "09c0ac0b394f786f0bc32efdb3b9aa1ea5acea266d6d86a05885ca9157f0a180"
+      },
+      {
+        "expressionSha256": "e81db774b2e4469536663951bba035f0e60a071d99785e9b9774bf0b96ccb304"
+      },
+      {
+        "expressionSha256": "7284c570fe2aa0489e456e83a99f12cad3d6e28c6b1ad9fafe5a141fad3018d9"
+      },
+      {
+        "expressionSha256": "3bd42e15e5427f946b98b898212af900ed0a4068cff03a37aa2ce1d3a081f2ec"
+      },
+      {
+        "expressionSha256": "967573157d8a0118a9b81842abb29015d82a1e83f6d2d055d56e848e4def640e"
+      },
+      {
+        "expressionSha256": "99a8a8a7117b1395e3a209cdc8ba5a70424687458932bc4dc8a7b6e59ff53868"
+      },
+      {
+        "expressionSha256": "6dee6c38cf4c5eb693e5aa9d21e655dc54bb550c6d15578821beb40411741def"
+      },
+      {
+        "expressionSha256": "113f0af17fdf683cf360ab9d03b7eff1b572d3475e83119031d47ee4331621aa"
+      },
+      {
+        "expressionSha256": "d37409f3aec6d92901e0978436cecceb691e341bc16ec749d2215903156541a3"
+      },
+      {
+        "expressionSha256": "9f0dc72e5266a50be0c480bd11a37ca8b8c3ee398c0d128682b9cd19bc868232"
+      },
+      {
+        "expressionSha256": "96c2fcb72fb0583576703247fe26d55318e4e9e264bd3c737a8a8a5556e0b815"
+      }
+    ],
+    "factsDigest": "20385852d2fc894df27baad6289c5b908b5cd15ed033844effd187fca3bba205",
+    "authorityInputs": [],
+    "purposeInputs": [
+      {
+        "path": ".github/workflows/docs-checks.yaml",
+        "canonical": ".github/workflows/docs-checks.yaml",
+        "sha256": "f44033eb4877618d34c65fb292a33f88f8dddb3dbe7c471439328f81f57ac2c5"
+      },
+      {
+        "path": "scripts/tests/docs-reader-redirects.test.mjs",
+        "canonical": "scripts/tests/docs-reader-redirects.test.mjs",
+        "sha256": "dec1ca9dcfb5ca80adeb661ff57350029df06d3690794d3194cff8d406c4c646"
+      },
+      {
+        "path": "scripts/tests/docs-reader-redirects.browser.mjs",
+        "canonical": "scripts/tests/docs-reader-redirects.browser.mjs",
+        "sha256": "4c0f4fdc4112201b289172c21e4123bbb976718dd10cfd7e3ba8390542f3bcec"
+      },
+      {
+        "path": "docs/site/reference/documentation-site.md",
+        "canonical": "docs/site/reference/documentation-site.md",
+        "sha256": "4f418aa28e32443300e50431ba9a80552a5bbcb96d2a58821316e6b1821300d8"
+      }
+    ]
   }
 };
 const syntaxSha256=syntax=>createHash('sha256').update(syntax).digest('hex');
@@ -10006,7 +10198,7 @@ export function assertDocumentationExecutableRole(root,source,staticSources=new 
  // contracts. Acquire physical bytes before either role-cache reuse or use.
  // Registry membership/digest refresh cannot renew Source-owned purpose data.
  const purposeRecipe=documentationExecutableRoleRecipes[source],purposeFiles=[];
- if(purposeRecipe?.qualificationKind==='reviewed-documentation-consumer/v1'){
+ if(purposeRecipe?.qualificationKind==='reviewed-documentation-consumer/v1'||source==='scripts/docs-reader/serve.mjs'&&purposeRecipe?.qualificationKind==='manual-reader-preview-with-external-ci-fixtures/v1'){
   assert.equal(syntaxSha256(bytes),purposeRecipe.sourceSha256,`DOCUMENTATION_TOOL_PURPOSE_SOURCE_DRIFT: ${source}`);
   for(const input of purposeRecipe.purposeInputs){
    const file=path.join(root,input.path),canonical=fs.existsSync(file)?path.relative(root,fs.realpathSync(file)).replaceAll(path.sep,'/'):null;
