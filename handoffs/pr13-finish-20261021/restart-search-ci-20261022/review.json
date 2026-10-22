@@ -1,0 +1,6 @@
+{
+  "findings": [],
+  "overall_correctness": "patch is correct",
+  "overall_explanation": "No actionable defects found in the provided diff. Reachability remains limited to the two exact entries, and every selected entry is checked for importers before any reachability is added, preventing partial authorization on failure. The search source and questions are added to the fixed inputs, with negative tests for drift and unauthorized importers. Repository inspection was blocked by the sandbox, so this assessment is limited to the supplied bundle; tests were not rerun and broader API/generator acceptance is not established.",
+  "overall_confidence": 0.76
+}

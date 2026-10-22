@@ -9,6 +9,7 @@ const repository=path.resolve(import.meta.dirname,'../..');
 const source='scripts/docs-reader/check-artifact.mjs';
 const inputs=["scripts/docs-reader/check-artifact.mjs", "scripts/docs-reader/page-records.mjs", "scripts/docs-publication.mjs", "scripts/docs-reader/renderer.mjs", "scripts/docs-reader/redirects.mjs", ".github/workflows/docs-checks.yaml", "scripts/tests/docs-reader-page-records.test.mjs", "scripts/tests/docs-reader.test.mjs", "scripts/tests/docs-reader-redirects.test.mjs", "docs/site/reference/documentation-site.md", "package.json", "scripts/lib/docs-publication-assets.mjs", "scripts/lib/docs-route-continuity.mjs", "scripts/docs-reader/metadata.mjs"];
 const sha=bytes=>createHash('sha256').update(bytes).digest('hex');
+inputs.push('scripts/docs-reader/check-search.mjs','scripts/docs-reader/search-questions.json');
 function fixture(t){
  const root=fs.mkdtempSync(path.join(os.tmpdir(),'reader-external-ci-purpose-'));t.after(()=>fs.rmSync(root,{recursive:true,force:true}));
  const write=(name,bytes)=>{fs.mkdirSync(path.dirname(path.join(root,name)),{recursive:true});fs.writeFileSync(path.join(root,name),bytes);};
@@ -16,6 +17,23 @@ function fixture(t){
  return {root,write,read:name=>fs.readFileSync(path.join(root,name))};
 }
 const graph=()=>({executableSources:[source,'scripts/docs-reader/page-records.mjs'],edges:[{source,target:'scripts/docs-reader/page-records.mjs',kind:'import'}]});
+test('exact CI search entry reaches its renderer helpers without admitting arbitrary siblings',t=>{
+ const f=fixture(t),search='scripts/docs-reader/check-search.mjs',selected=graph(),reachable=new Set();
+ selected.executableSources.push(search,'scripts/docs-reader/unreviewed-check.mjs');
+ selected.edges.push({source:search,target:'scripts/docs-reader/renderer.mjs',kind:'import'});
+ assert.equal(addReaderArtifactExternalCiSeed(assertReaderArtifactExternalCiPurpose(f.root),selected,reachable),true);
+ assert.deepEqual([...reachable],[source,search]);
+ assert.equal(assertDocumentationOwnerPurpose(f.root,search),null);
+ f.write('scripts/docs-reader/search-questions.json',Buffer.concat([f.read('scripts/docs-reader/search-questions.json'),Buffer.from('\nchanged\n')]));
+ assert.throws(()=>assertDocumentationOwnerPurpose(f.root,search),/PURPOSE_DRIFT/);
+});
+test('search entry with a new importer cannot partially seed the other entry',t=>{
+ const f=fixture(t),selected=graph(),reachable=new Set();
+ selected.executableSources.push('scripts/docs-reader/check-search.mjs');
+ selected.edges.push({source:'scripts/runtime-consumer.mjs',target:'scripts/docs-reader/check-search.mjs',kind:'import'});
+ assert.throws(()=>addReaderArtifactExternalCiSeed(assertReaderArtifactExternalCiPurpose(f.root),selected,reachable),/new selected verifier importer/);
+ assert.equal(reachable.size,0);
+});
 test('actual physical caller proof seeds one selected verifier, never native entry facts',t=>{
  const f=fixture(t),entries=[],selected=graph(),reachable=new Set(['scripts/docs-publication.mjs']);
  for(let i=0;i<2;i++){const proof=assertReaderArtifactExternalCiPurpose(f.root);assert.equal(addReaderArtifactExternalCiSeed(proof,selected,reachable),true);}

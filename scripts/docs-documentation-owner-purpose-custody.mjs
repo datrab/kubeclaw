@@ -376,13 +376,23 @@ export function documentationOwnerNativeEntryMatches(source,entry){
  return reviewedDocumentationOwnerPurposes[source]?.allowedNativePackageEntries.some(value=>JSON.stringify(value)===JSON.stringify(entry))??false;
 }
 
-// One exact external caller seed, separate from root-package/native entries.
+// Exact external CI caller seeds, separate from root-package/native entries.
 // Full physical caller/consumer proof is acquired before graph and role caches.
 const readerArtifactCiPurpose=freeze({
   "kind": "exact-external-ci-reader-artifact-verifier/v1",
   "source": "scripts/docs-reader/check-artifact.mjs",
   "meaning": "Analysis-only purpose reachability from the actual external CI/documented normal checker caller. No package/native entry, role receipt, API or execution authority.",
   "inputs": [
+    {
+      "path": "scripts/docs-reader/check-search.mjs",
+      "canonical": "scripts/docs-reader/check-search.mjs",
+      "sha256": "6eb9c612a24e87e3697094de6e0853b865644e0ed95bf12877c6ab214b644452"
+    },
+    {
+      "path": "scripts/docs-reader/search-questions.json",
+      "canonical": "scripts/docs-reader/search-questions.json",
+      "sha256": "10657354f2e2cef6dbd7e748a01874b008541944755894914e4ce781df1b0fd5"
+    },
     {
       "path": "scripts/docs-reader/check-artifact.mjs",
       "canonical": "scripts/docs-reader/check-artifact.mjs",
@@ -458,7 +468,8 @@ const readerArtifactCiPurpose=freeze({
   "manualCommand": "node scripts/docs-reader/check-artifact.mjs /path/to/reader-artifact /path/to/source-checkout"
 });
 const readerArtifactCiProofs=new WeakMap();
-const readerArtifactCiRoleSources=new Set(['scripts/docs-reader/check-artifact.mjs','scripts/docs-reader/page-records.mjs','scripts/docs-publication.mjs','scripts/docs-reader/renderer.mjs','scripts/docs-reader/redirects.mjs']);
+const readerArtifactCiEntrySources=['scripts/docs-reader/check-artifact.mjs','scripts/docs-reader/check-search.mjs'];
+const readerArtifactCiRoleSources=new Set([...readerArtifactCiEntrySources,'scripts/docs-reader/page-records.mjs','scripts/docs-publication.mjs','scripts/docs-reader/renderer.mjs','scripts/docs-reader/redirects.mjs']);
 export function assertReaderArtifactExternalCiPurpose(root){
  root=path.resolve(root);
  const profile=readerArtifactCiPurpose,source=path.join(root,profile.source),ci=path.join(root,'.github/workflows/docs-checks.yaml');
@@ -496,8 +507,10 @@ export function addReaderArtifactExternalCiSeed(proof,graph,docsReachable){
  const root=readerArtifactCiProofs.get(proof);
  assert(assertReaderArtifactExternalCiPurpose(root)!==null,'DOCUMENTATION_READER_CI_PURPOSE_DRIFT: acquired verifier context removed'); // stale handles cannot become unrelated-root authority
  assert(Array.isArray(graph?.executableSources)&&Array.isArray(graph.edges)&&docsReachable instanceof Set,'DOCUMENTATION_READER_CI_PURPOSE_UNQUALIFIED: selected graph context');
- if(!graph.executableSources.includes(readerArtifactCiPurpose.source))return false;
- assert(!graph.edges.some(edge=>edge.target===readerArtifactCiPurpose.source),
+ const selected=readerArtifactCiEntrySources.filter(source=>graph.executableSources.includes(source));
+ // Validate every selected external entry before granting any reachability.
+ for(const source of selected)assert(!graph.edges.some(edge=>edge.target===source),
   'DOCUMENTATION_READER_CI_PURPOSE_UNQUALIFIED: new selected verifier importer');
- docsReachable.add(readerArtifactCiPurpose.source);return true;
+ for(const source of selected)docsReachable.add(source);
+ return selected.length>0;
 }

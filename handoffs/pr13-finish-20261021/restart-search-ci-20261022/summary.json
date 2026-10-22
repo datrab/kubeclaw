@@ -1,0 +1,24 @@
+{
+  "baseline": "c89cf0d0fd6faa35254ff29942c1f41200e8e066",
+  "originalFailureRetained": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/public-role-original-c89cf0d0",
+  "successorRun": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/public-role-budget-original-c89cf0d0",
+  "completedChildren": 424,
+  "nonzeroChildren": 0,
+  "publicResultReturned": false,
+  "status": "FAILED_ORIGINAL_PUBLIC_CONSUMER_UNQUALIFIED_SEARCH_ENTRY",
+  "fixScope": "Exact existing CI check-search source and question data; no arbitrary sibling/native/package seed, no graph/role receipt renewal",
+  "checks": {
+    "purpose": {
+      "passed": 56,
+      "failed": 0,
+      "skipped": 0
+    },
+    "adjacent": {
+      "passed": 42,
+      "failed": 0,
+      "skipped": 0
+    }
+  },
+  "reviewScope": "Independent autoreview supplied patch bundle only; repository inspection unavailable in reviewer sandbox",
+  "acceptance": "No new gate or requirement accepted; public route and generators remain incomplete"
+}

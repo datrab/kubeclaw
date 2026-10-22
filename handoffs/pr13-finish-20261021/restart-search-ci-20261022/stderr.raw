@@ -1,0 +1,18 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: DOCUMENTATION_TOOL_PUBLIC_CONSUMER_UNQUALIFIED: scripts/docs-reader/redirects.mjs; scripts/docs-reader/check-search.mjs
+    at assertDocumentationToolQualifications (file:///home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/docs-api-output-discovery.mjs:725:240)
+    at documentationToolSources (file:///home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/docs-api-output-discovery.mjs:804:3)
+    at Module.discoverScriptOutputRoleClassifications (file:///home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/docs-api-output-discovery.mjs:1898:28)
+    at file:///home/node/.openclaw/workspace/tmp/pr13-finish-20261021/public-role-budget-root-ready-20261022/capture.mjs:111:24 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: '==',
+  diff: 'simple'
+}
+
+Node.js v24.21.0

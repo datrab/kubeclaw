@@ -1,3 +1,11 @@
+## Restart recovery and exact search CI entry correction — 2026-10-22
+
+- Restart physical check matched all declared Source/tool/context boundaries at clean c89cf0d0; remote SHA verified. No retained child or old target process remained active; existing completed preparation/independent reports reused.
+- Independently prepared finite715 observer admitted for one original public-route first/repeat run. Actual run FAILED at DOCUMENTATION_TOOL_PUBLIC_CONSUMER_UNQUALIFIED redirects.mjs ancestor check-search.mjs after424 successful children. No first public return, native AST receipt or completion; original128-ceiling failure retained.
+- Exact existing search CI entry now receives analysis-only reachability under physical search Source/questions plus original CI/package/reader inputs. New importers reject before any partial seed; arbitrary siblings remain excluded.56/56 owning and42/42 adjacent controls PASS,0skip. Autoreview helper clean on supplied patch bundle; reviewer repository reads were blocked, so no broader independent Source acceptance is inferred.
+- No new acceptance:56/89 gates,224/261 requirements. No reader/publication content change; settled Reader487 not rerun. Next: original whole public route on clean new revision with only reviewed helper Source context delta, preserve next real STOP; then continue config/generator/remaining whole gates. Runtime knip and genuine compiled-journey authorized-host/cgroup blocks remain; no receipt rewrite/AP10 deletion.
+- Evidence: handoffs/pr13-finish-20261021/restart-search-ci-20261022 (raw run indexed in retained scratch). This checkpoint is not task completion.
+
 ## Five scalar-derived facts bindings adopted — 2026-10-22
 
 - **56/89 gates,224/261 requirements unchanged**. Source72d079eb installs exactly fivefactsDigest literal values from actualoriginal107recipe capture; completeSource reversal and103JSarray/4native preservation independently reviewed. Actual original8purpose-routing controlsPASS0skip. No newproduct/globalrole/graph/API/generator/native/runtime/release approval.
