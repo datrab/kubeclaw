@@ -1,0 +1,166 @@
+{
+  "status": "READ_ONLY_SOURCE_AND_ASSERTIONS_NOT_EXECUTION",
+  "files": [
+    {
+      "path": "skills/buster/plugins/coverage-budget/src/provider.js",
+      "sha256": "3e76c0b48e6728a195de48f8c7325e517e0681e8e0e169e7adb129bd0752430b",
+      "ranges": [
+        [
+          1,
+          98
+        ]
+      ]
+    },
+    {
+      "path": "skills/buster/plugins/junit-report-adapter/src/adapter.js",
+      "sha256": "dceb8492b6f03b31c9c57190cdff836e4d6917b33ab49480fe8001c02e247736",
+      "ranges": [
+        [
+          1,
+          365
+        ]
+      ]
+    },
+    {
+      "path": "skills/buster/plugins/openapi/src/provider.js",
+      "sha256": "cabeb560867f9dc802a7e936c0efc1fb6f900f211b5563414b6016c780f48cca",
+      "ranges": [
+        [
+          1,
+          262
+        ]
+      ]
+    },
+    {
+      "path": "skills/buster/plugins/openapi/src/schema-support.js",
+      "sha256": "05e27ae54dfd00cb9f1344eb171699a6e4fa87801f5c5f8ff97be18910377e4b",
+      "ranges": [
+        [
+          1,
+          73
+        ]
+      ]
+    },
+    {
+      "path": "skills/buster/plugins/size-budget/src/provider.js",
+      "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce",
+      "ranges": [
+        [
+          1,
+          369
+        ]
+      ]
+    },
+    {
+      "path": "skills/buster/plugins/coverage-budget/schemas/config.schema.json",
+      "sha256": "72fc0422bb8f35b01b44405d217a3a1a4d62c4f875ddbe3bce1ddb814126025f",
+      "ranges": [
+        [
+          1,
+          8
+        ]
+      ]
+    },
+    {
+      "path": "skills/buster/plugins/openapi/schemas/config.schema.json",
+      "sha256": "7f52e048a57a7527c47c02f6018af113cdb60a8e63cc446f1b9017f425bdab29",
+      "ranges": [
+        [
+          1,
+          25
+        ]
+      ]
+    },
+    {
+      "path": "skills/buster/plugins/size-budget/schemas/config.schema.json",
+      "sha256": "e20a56b4cb1bba2d69355a3da142db17bb9d254d8276b86809c8b32994dbd894",
+      "ranges": [
+        [
+          1,
+          31
+        ]
+      ]
+    },
+    {
+      "path": "skills/buster/plugins/coverage-budget/tests/live-function.test.ts",
+      "sha256": "9a94bc174399e298b53d980665fdd0f2052d1bb9120f79c1ec327887d9b63ae1",
+      "ranges": [
+        [
+          1,
+          51
+        ]
+      ]
+    },
+    {
+      "path": "skills/buster/plugins/junit-report-adapter/tests/adapter.test.mjs",
+      "sha256": "7eb05515a38bce0beabffb8a0a931c3a56d8f3ff7f9f0038f5a7e2e5a8d81edf",
+      "ranges": [
+        [
+          1,
+          114
+        ]
+      ]
+    },
+    {
+      "path": "skills/buster/plugins/junit-report-adapter/tests/live-function.test.ts",
+      "sha256": "14d1030b8a9d68828865ef1d84d8999daff41b8241bcb27c04d540135f826ea3",
+      "ranges": [
+        [
+          1,
+          3
+        ]
+      ]
+    },
+    {
+      "path": "skills/buster/plugins/openapi/tests/live-function.test.ts",
+      "sha256": "9caf53c6a77db03bb58a798c3bfc9fd6dd8e73f2bc91333a148dfa57ff081a33",
+      "ranges": [
+        [
+          1,
+          250
+        ]
+      ]
+    },
+    {
+      "path": "skills/buster/plugins/openapi/tests/remediation.test.ts",
+      "sha256": "0c157e593df364b8837168f42e3a6eb6a3aa2ac8c8ec0d8766fb41071ae5fbbd",
+      "ranges": [
+        [
+          1,
+          86
+        ]
+      ]
+    },
+    {
+      "path": "skills/buster/plugins/size-budget/tests/live-function.test.ts",
+      "sha256": "0db789a82964e2676582e0bee7afd31e046d6f4b6e9604ccaf63474f78207408",
+      "ranges": [
+        [
+          1,
+          128
+        ]
+      ]
+    }
+  ],
+  "generatorBaseline": {
+    "path": "scripts/generate-buster-error-reference.mjs",
+    "sha256": "5b7f48767226cbc0a1bbcf310b879052b4aa55919bb60d52985b01f8f7b2424e",
+    "ranges": [
+      [
+        1,
+        1206
+      ]
+    ]
+  },
+  "generatorCandidate": {
+    "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/buster-fixed-parser-error-owner-root-author/generate-buster-error-reference.mjs",
+    "sha256": "0bea7e164b4acb8541af112fe8af4c36966ca967eca4581cf71d5c732006a4ca",
+    "ranges": [
+      [
+        1,
+        1328
+      ]
+    ],
+    "unchangedRangesReuse": "byte-exact baseline except two additive diff hunks; baseline fully read, no baseline own-author acceptance substituted"
+  }
+}

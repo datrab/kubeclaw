@@ -1,0 +1,22 @@
+{
+  "status": "BOUNDED_SOURCE_SEMANTIC_READER_QUALITY_PASS",
+  "candidateSha256": "0bea7e164b4acb8541af112fe8af4c36966ca967eca4581cf71d5c732006a4ca",
+  "materialFindings": [],
+  "reviewer": "/root/workflow_acceptance",
+  "author": "/root",
+  "mainWrites": false,
+  "generatorRun": false,
+  "importsOrCliRun": false,
+  "freshRenderedReader": false,
+  "gateClaim": false,
+  "productionSourceEquality": {
+    "paths": 66,
+    "revision": "cebe61ef2046263e4e373732227ae5f03107c1f6",
+    "wholeBytesEqual": true
+  },
+  "limits": [
+    "Root final receiving context/seal/invocation remains separate",
+    "No global error census or graph/role/native/runtime approval",
+    "Test assertions not executions"
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "argv": [
+    "/usr/local/bin/node",
+    "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/generate-buster-error-reference.mjs",
+    "--write"
+  ],
+  "cwd": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery",
+  "environment": {
+    "PATH": "/usr/local/bin:/usr/bin:/bin",
+    "HOME": "/home/node",
+    "LANG": "C.UTF-8",
+    "LC_ALL": "C.UTF-8",
+    "TZ": "UTC",
+    "TMPDIR": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/buster-fixed-parser-original-owner-run38/tmp"
+  },
+  "stdin": "DEVNULL",
+  "startEpoch": 1792639394.7217538,
+  "ownerSha256": "0bea7e164b4acb8541af112fe8af4c36966ca967eca4581cf71d5c732006a4ca",
+  "targetBeforeSha256": "13447280ec318d502eef0d5e5eeb41236b2a247f8f426abe1a6406226966fef3"
+}

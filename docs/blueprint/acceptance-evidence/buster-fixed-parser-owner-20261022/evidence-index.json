@@ -1,0 +1,148 @@
+{
+  "status": "SOURCE_AND_ACTUAL_ORIGINAL_OWNER_ONLY_NO_WHOLEGATE_ACCEPTANCE",
+  "files": [
+    {
+      "path": "buster-fixed-parser-error-owner-independent/complete-source-read-bindings.json",
+      "bytes": 4220,
+      "sha256": "ee401294e113af33d9e881c8acbd5906ad916017df5e64d631971300e68f732f"
+    },
+    {
+      "path": "buster-fixed-parser-error-owner-independent/packet-hashes.json",
+      "bytes": 683,
+      "sha256": "198b3f9c791d970c2b2bc20e912ce95a360fad11316f3cc22cfd798c489d20ca"
+    },
+    {
+      "path": "buster-fixed-parser-error-owner-independent/production-evidence-revision-equality.json",
+      "bytes": 25990,
+      "sha256": "8313966270fbcbcb5700ae5e602fc92bd8fa0bf4ee9392a823e08bb001809962"
+    },
+    {
+      "path": "buster-fixed-parser-error-owner-independent/review.json",
+      "bytes": 706,
+      "sha256": "ad3f988749a94d8f9a5d3f81e245c5c2cc58b1998953e29453e731ab4c2b4374"
+    },
+    {
+      "path": "buster-fixed-parser-error-owner-independent/review.md",
+      "bytes": 7311,
+      "sha256": "c53fc4c92a1f8adc03bb4fa26922440f8429e8bc56afbf8501392782b87b81d4"
+    },
+    {
+      "path": "buster-fixed-parser-error-owner-independent/startup-reuse-and-invocation.json",
+      "bytes": 3862,
+      "sha256": "60655e6820afcd1f8cd3c60d454ccc9c8e87af105c6cc7c70d8e6a5bcce9a0e1"
+    },
+    {
+      "path": "buster-fixed-parser-error-owner-independent/thirteen-code-source-map.json",
+      "bytes": 5372,
+      "sha256": "9b65e6537ad336e31987298bdee5b40deee146084efef9ce9c795489bccc9189"
+    },
+    {
+      "path": "buster-fixed-parser-original-owner-result-independent/packet-hashes.json",
+      "bytes": 264,
+      "sha256": "ec1975581aa4add47ac1ac6f221e59de601153d7ad70d6fe512f2b1c53fa44ba"
+    },
+    {
+      "path": "buster-fixed-parser-original-owner-result-independent/passive-checks.json",
+      "bytes": 20972,
+      "sha256": "fce0ba5a82841db2c27fb28f45265b3244d7547eeec85ab0aac4754a635416b4"
+    },
+    {
+      "path": "buster-fixed-parser-original-owner-result-independent/review.json",
+      "bytes": 4796,
+      "sha256": "00254e489bbaddacffa403e0ad2124e6380bd91a15b7ffce3be8645baa366c98"
+    },
+    {
+      "path": "buster-fixed-parser-original-owner-result-independent/review.md",
+      "bytes": 3661,
+      "sha256": "e5681a2abae2ad22d67f1a6843b249caf01da53e34ab4145c68ebc2b7e090f88"
+    },
+    {
+      "path": "buster-fixed-parser-original-owner-run38/context-after.json",
+      "bytes": 99806,
+      "sha256": "829a3a162b9c5eb968e31d65c16826b16cfb50e275435ddf6a6b76a0c1d3ba74"
+    },
+    {
+      "path": "buster-fixed-parser-original-owner-run38/context-before.json",
+      "bytes": 99806,
+      "sha256": "829a3a162b9c5eb968e31d65c16826b16cfb50e275435ddf6a6b76a0c1d3ba74"
+    },
+    {
+      "path": "buster-fixed-parser-original-owner-run38/process-00/launch.json",
+      "bytes": 743,
+      "sha256": "352a856b71c1bd5c13f0951bc8be4908dacbe7a2b675faf069e3c6bad69677ce"
+    },
+    {
+      "path": "buster-fixed-parser-original-owner-run38/process-00/stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "buster-fixed-parser-original-owner-run38/process-00/stdout.bin",
+      "bytes": 93,
+      "sha256": "7ee164b8f552ee02452710e2693d328f25a31437cfbc27c9a2190a569cc427e5"
+    },
+    {
+      "path": "buster-fixed-parser-original-owner-run38/process-00/terminal.json",
+      "bytes": 422,
+      "sha256": "3a0a65a1d20277d63040d714958aa1237ff94861d79c28417855c7c9d019a065"
+    },
+    {
+      "path": "buster-fixed-parser-original-owner-run38/process-01/launch.json",
+      "bytes": 743,
+      "sha256": "1ad27b5869ae73a667e1ebe5dd9e5787236dfdda7fb2f18ad2c3a50a41138ca6"
+    },
+    {
+      "path": "buster-fixed-parser-original-owner-run38/process-01/stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "buster-fixed-parser-original-owner-run38/process-01/stdout.bin",
+      "bytes": 93,
+      "sha256": "7ee164b8f552ee02452710e2693d328f25a31437cfbc27c9a2190a569cc427e5"
+    },
+    {
+      "path": "buster-fixed-parser-original-owner-run38/process-01/terminal.json",
+      "bytes": 423,
+      "sha256": "0d5d7f10051de8c3c83be307d3eb299396f0b7539832afc7ddcbbd0cfbdb48b5"
+    },
+    {
+      "path": "buster-fixed-parser-original-owner-run38/process-02/launch.json",
+      "bytes": 743,
+      "sha256": "43098dd4fde231afda62a703308c470762b6fd93cdb83d2d9d05fd21dc6a4591"
+    },
+    {
+      "path": "buster-fixed-parser-original-owner-run38/process-02/stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "buster-fixed-parser-original-owner-run38/process-02/stdout.bin",
+      "bytes": 83,
+      "sha256": "b18fe4893228071571d6695b729574850d7cae499d5e77f079a6aec351555a59"
+    },
+    {
+      "path": "buster-fixed-parser-original-owner-run38/process-02/terminal.json",
+      "bytes": 423,
+      "sha256": "eb9058d98484a97594cf15bcefc9994a47ee2c915be3315c4fa37275f24439df"
+    },
+    {
+      "path": "buster-fixed-parser-original-owner-run38/result.json",
+      "bytes": 920,
+      "sha256": "82da58b824f4089970bbe504816085eff3a83369638c27730c4418036b9eae0f"
+    },
+    {
+      "path": "buster-fixed-parser-original-owner-run38/root-admission.json",
+      "bytes": 1047,
+      "sha256": "e2f65ba24c1c96a003bf754e4b2879a0300bf0a3042081377e7c9f0c58523e68"
+    },
+    {
+      "path": "root-author.json",
+      "bytes": 1101,
+      "sha256": "24824ac132f2a0b8454d59c5369002752fa4b3fd54fdacb43200c032975b49ad"
+    }
+  ],
+  "historicalTargetBefore": "Git38d5c8f22d9cc3a923a7fdd421a1c02e4d176fdb:docs/site/reference/buster-error-codes.md, sha in original firstlaunch",
+  "originalScratchPointers": "External historical context references remain original. Committed exact owning Source/newoutput and current individual process evidence sufficient for bounded run; not full external startup packet relocation.",
+  "independentActualResult": "PASS at exact owner/output/3originalprocesses/13rows; fresh rendered Reader and all whole gates remain separate"
+}

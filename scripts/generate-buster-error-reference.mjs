@@ -788,6 +788,124 @@ const processRecoveryDiagnoses = new Map([
 ]);
 // Exact source-backed recovery for the audited finite limit/path/file-size families.
 const finiteFamilyDiagnoses = new Map([
+  // Fixed parser bounds are not configurable provider budgets.
+  [
+    "COVERAGE_LCOV_TOO_LARGE",
+    [
+      "The LCOV artifact exceeds the fixed 67,108,864-byte (64 MiB) parser limit.",
+      "The artifact has already been read and checked for declared size and digest; parsing rejects it before decoding. This is not a pre-read memory bound.",
+      "Reduce the LCOV artifact while preserving the coverage scope and artifact identity. No provider setting raises this parser limit.",
+      "Retry with a newly admitted valid artifact; the unchanged artifact fails again."
+    ]
+  ],
+  [
+    "COVERAGE_LCOV_LINE_LIMIT",
+    [
+      "The LCOV parser encountered more than 2,000,000 DA records, including repeated records for the same source line.",
+      "Parsing stops without a complete coverage result. This counter is not the final distinct-line total.",
+      "Reduce DA-record volume without silently changing the claimed coverage scope. No provider setting raises this fixed parser limit.",
+      "Retry with a newly admitted valid artifact; an unchanged artifact exceeds the same counter."
+    ]
+  ],
+  [
+    "JUNIT_XML_TAG_LIMIT",
+    [
+      "The XML tag scan did not find an unquoted closing > within the fixed scan window: index minus start is at most 65,536 UTF-16 code units.",
+      "The adapter rejects the tag. The bound measures JavaScript string indices, not UTF-8 bytes; an unterminated tag can also trigger this code.",
+      "Correct unterminated quoting or tags and shorten oversized tags. No adapter setting increases this fixed scan window.",
+      "Retry with corrected complete XML, not an unchanged document or a larger runtime capacity setting."
+    ]
+  ],
+  [
+    "JUNIT_XML_DEPTH_LIMIT",
+    [
+      "Opening another XML element would exceed the fixed stack depth of 256 elements.",
+      "The adapter stops parsing before accepting that additional element.",
+      "Reduce XML element nesting while preserving the report meaning. No adapter setting raises this parser depth.",
+      "Retry only with a valid report within the fixed nesting bound."
+    ]
+  ],
+  [
+    "JUNIT_SUITE_DEPTH_LIMIT",
+    [
+      "Opening another testsuite would exceed 64 simultaneously active suite elements.",
+      "The adapter rejects the additional nested suite; this is not a limit of 64 total suites in the document.",
+      "Flatten suite nesting without losing case identities. No adapter setting raises this fixed suite-depth limit.",
+      "Retry with a valid report within the fixed suite nesting bound."
+    ]
+  ],
+  [
+    "OPENAPI_SCHEMA_DEPTH_EXCEEDED",
+    [
+      "A schema-validation or local-reference traversal reached a recursion depth greater than the fixed value 64.",
+      "The provider rejects that traversal instead of completing the operation checks; this code alone does not prove that earlier selected operations made no requests.",
+      "Reduce schema or local-reference recursion while preserving the intended contract. No provider setting raises this traversal bound.",
+      "Reconcile any prior operation effects before retrying with a valid bounded contract."
+    ]
+  ],
+  [
+    "OPENAPI_FILE_TOO_LARGE",
+    [
+      "The specification file exceeds the fixed 4,194,304-byte (4 MiB) limit.",
+      "The entire file has already been read; the provider rejects it before JSON parsing or operation invocation. This is not a pre-read memory bound.",
+      "Reduce the specification while preserving the selected contract. No provider setting raises this file limit.",
+      "Retry with a valid smaller specification; an unchanged file fails again."
+    ]
+  ],
+  [
+    "OPENAPI_SELECTION_LIMIT_EXCEEDED",
+    [
+      "The combined explicit and tag-selected operation list contains more than the fixed maximum of 128 entries.",
+      "The provider rejects the selection before invoking operations.",
+      "Reduce the selected operation list or divide the intended coverage into separately reviewed tests. No provider setting raises this selection bound.",
+      "Retry with an admitted selection of at most 128 entries."
+    ]
+  ],
+  [
+    "SIZE_BUDGET_ARCHIVE_EXPANDED_LIMIT",
+    [
+      "The archive scan received more than the fixed 2,147,483,648-byte (2 GiB) expanded-stream allowance, including archive framing.",
+      "The scan rejects the stream without completing measurements; for tar-gzip this counts decompressed bytes, not stored compressed size.",
+      "Reduce the expanded archive while preserving the intended measurement scope. Budget thresholds do not raise this fixed parser limit.",
+      "Retry with a newly admitted valid artifact within the parser bound."
+    ]
+  ],
+  [
+    "SIZE_BUDGET_ARCHIVE_FILE_LIMIT",
+    [
+      "The archive contains more than the fixed maximum of 100,000 regular-file entries.",
+      "The scan rejects the additional regular-file entry; directory entries are not counted as files by this check.",
+      "Reduce regular-file count without silently changing the measurement scope. Configured budget thresholds do not raise this fixed parser bound.",
+      "Retry with a newly admitted valid artifact within the file-count bound."
+    ]
+  ],
+  [
+    "SIZE_BUDGET_TOTAL_LIMIT",
+    [
+      "The sum of measured file sizes is not a safe integer or exceeds the fixed 2,147,483,648-byte (2 GiB) measurement ceiling.",
+      "The provider rejects the measurements before producing a complete budget result.",
+      "Reduce the measured artifact while preserving its intended scope. Configured budget thresholds do not raise this fixed measurement ceiling.",
+      "Retry with a newly admitted valid artifact within the measurement bound."
+    ]
+  ],
+  [
+    "SIZE_BUDGET_BASELINE_OUTPUT_LIMIT",
+    [
+      "The serialized new baseline exceeds the fixed 1,048,576-byte (1 MiB) output limit.",
+      "The provider rejects the baseline bytes before writing size-budget-baseline.json.",
+      "Inspect the measured metadata and serialized baseline. This producer has no configuration option for a larger baseline output.",
+      "Retry only after the baseline is valid and within the fixed output bound."
+    ]
+  ],
+  [
+    "SIZE_BUDGET_INPUT_SIZE_INVALID",
+    [
+      "The declared input size is negative, is not a safe integer, or exceeds its fixed allowance; the same code also rejects bytes read beyond that allowance.",
+      "Input verification stops. The artifact allowance is 536,870,912 bytes (512 MiB); the baseline allowance is 1,048,576 bytes (1 MiB). The suffix identifies the input.",
+      "Correct invalid size metadata or supply a smaller valid input with matching size and digest. Budget thresholds do not raise these fixed input allowances.",
+      "Retry only with consistent admitted artifact identity and size within the applicable allowance."
+    ]
+  ],
   [
     "CONTAINER_BUILD_LOG_LIMIT_INVALID",
     [
@@ -960,6 +1078,10 @@ const finiteFamilyDiagnoses = new Map([
     ]
   ]
 ]);
+// Fail closed if an exact fixed-bound diagnosis outlives its production code.
+for (const code of ["COVERAGE_LCOV_TOO_LARGE", "COVERAGE_LCOV_LINE_LIMIT", "JUNIT_XML_TAG_LIMIT", "JUNIT_XML_DEPTH_LIMIT", "JUNIT_SUITE_DEPTH_LIMIT", "OPENAPI_SCHEMA_DEPTH_EXCEEDED", "OPENAPI_FILE_TOO_LARGE", "OPENAPI_SELECTION_LIMIT_EXCEEDED", "SIZE_BUDGET_ARCHIVE_EXPANDED_LIMIT", "SIZE_BUDGET_ARCHIVE_FILE_LIMIT", "SIZE_BUDGET_TOTAL_LIMIT", "SIZE_BUDGET_BASELINE_OUTPUT_LIMIT", "SIZE_BUDGET_INPUT_SIZE_INVALID"]) {
+  assert(locations.has(code), `fixed parser diagnosis has no production occurrence: ${code}`);
+}
 function diagnosis(code) {
   if (processRecoveryDiagnoses.has(code)) return processRecoveryDiagnoses.get(code);
   if (finiteFamilyDiagnoses.has(code)) return finiteFamilyDiagnoses.get(code);

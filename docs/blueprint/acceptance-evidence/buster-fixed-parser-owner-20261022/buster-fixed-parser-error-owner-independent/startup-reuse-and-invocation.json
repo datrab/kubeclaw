@@ -1,0 +1,67 @@
+{
+  "status": "ORIGINAL_DIRECT_OWNER_SOURCE_PURPOSE_REVIEWED_NOT_RUN_NOT_RECEIVING_SEALED",
+  "candidateSha256": "0bea7e164b4acb8541af112fe8af4c36966ca967eca4581cf71d5c732006a4ca",
+  "afterReviewedInstallationOnly": true,
+  "argv": [
+    "/usr/local/bin/node",
+    "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/generate-buster-error-reference.mjs",
+    "--write"
+  ],
+  "cwd": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery",
+  "target": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/docs/site/reference/buster-error-codes.md",
+  "implicitEvidenceRevision": "cebe61ef2046263e4e373732227ae5f03107c1f6",
+  "productionEquality": {
+    "paths": 66,
+    "allWholeBytesEqual": true,
+    "proof": "production-evidence-revision-equality.json"
+  },
+  "eagerTargetImports": [
+    "node:assert/strict",
+    "node:fs",
+    "node:path",
+    "typescript"
+  ],
+  "typescriptSelectedPackage": {
+    "path": "node_modules/typescript/package.json",
+    "sha256": "822ef7ca6452205657b6288b066481ecf508bfbf43455d715cf7d3ec457561e6",
+    "main": "./lib/typescript.js",
+    "version": "5.9.3"
+  },
+  "typescriptEntry": {
+    "path": "node_modules/typescript/lib/typescript.js",
+    "sha256": "3ae902c92cc44dace175c0e69e13a4b0899f6983c6121d76b9ab8dd5795e7675"
+  },
+  "purpose": "original createSourceFile AST analysis only, no Program, emit, project load, target/product import, child process, native parser, network, package script or private Source extraction",
+  "reads": [
+    "own fixed production Source domain",
+    "existing target solely for implicit evidence revision",
+    "original Node package/TS initializer context"
+  ],
+  "writes": [
+    "fixed target only when --write selected",
+    "console stdout success; stderr/errors on actual failure; no claimed atomic target replacement"
+  ],
+  "reuse": [
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/graph-successor-after-7ef-v2/manifest.reviewed-ready-graph-55496fa4.json",
+      "sha256": "0a50c93302a31ebb7e4221716179795f3dba186004e5b792187ad181b43d8239",
+      "scope": "Retained prior Node/TS initializer and physical namespace continuity; not permission from new graph authoring, no SDK/project runtime invocation"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/graph-successor-after-7ef-v2/root-physical-context-and-runner-review.json",
+      "sha256": "cc1a4d4f13b75e12653e99a6d6733533a45b62178e4bd63cb4f1c65ed13dd88a",
+      "scope": "Retained prior Node/TS initializer and physical namespace continuity; not permission from new graph authoring, no SDK/project runtime invocation"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/graph-caller-original-acquisition-38d5c8f2-author/inert-author-checks.json",
+      "sha256": "6ad883cf6b31001ad052b992df29a22e7f60f0e0ce5c7367852e1eb1ba5d51ed",
+      "scope": "Retained prior Node/TS initializer and physical namespace continuity; not permission from new graph authoring, no SDK/project runtime invocation"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/sdk-original-cli-controller-author-9f4a3045/original-sdk-plan/installed-candidate-namespace.json",
+      "sha256": "922b73c0eb862ce4c21ffc1aeca751801d0ff820894de3379f5f57bb007ab6d0",
+      "scope": "Retained prior Node/TS initializer and physical namespace continuity; not permission from new graph authoring, no SDK/project runtime invocation"
+    }
+  ],
+  "separateRequired": "Root reviewed installation/finalSource/receiving context and explicit exact invocation admission. Clear NODE_OPTIONS/NODE_PATH and loader/preload/supplier env; isolated owned TMP/cache if selected. Do not run off-tree candidate since import.meta.dirname would select wrong root. No globalgraph gate precondition is invented for this independent direct owner."
+}

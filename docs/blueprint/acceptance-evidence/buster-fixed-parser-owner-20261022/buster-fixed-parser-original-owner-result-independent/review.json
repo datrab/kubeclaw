@@ -1,0 +1,94 @@
+{
+  "scope": "Original Buster error owner actual write/write/check result and exact13-row output delta only",
+  "reviewer": "/root/operator_acceptance",
+  "verdicts": {
+    "Source": "PASS",
+    "semanticReader": "PASS",
+    "Quality": "PASS"
+  },
+  "openIssues": [],
+  "ownerSha256": "0bea7e164b4acb8541af112fe8af4c36966ca967eca4581cf71d5c732006a4ca",
+  "outputSha256": "a8e7fba7558fca0859943ae1f3f6434c89d7fc70c746fb4f35e0a9b8eea08d04",
+  "sourceReviewBasis": [
+    {
+      "reusedIndependentReport": "buster-fixed-parser-error-owner-independent/review.md",
+      "sha256": "c53fc4c92a1f8adc03bb4fa26922440f8429e8bc56afbf8501392782b87b81d4",
+      "scope": "Workflow complete original1206-line owner, exact13 fixed-mechanism diagnoses and actual provider/parser/schema/test-source causal semantics; all recorded Source bindings independently rechecked current exact. No unchanged full owner semantic rereview fabricated."
+    },
+    {
+      "review": "Actual original argv/environment/status/full raw stream receipts verified; retained baseline vs current output line-by-line:13 exact code rows and unchanged all other lines/SourceLinks. Full433 physical file hash/mode bindings current exact; contexts before/after identical;66 actual production files whole-byte equal retained cebe61 source pins."
+    }
+  ],
+  "checks": [
+    {
+      "argv": [
+        "/usr/local/bin/node",
+        "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/generate-buster-error-reference.mjs",
+        "--write"
+      ],
+      "cwd": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery",
+      "environment": {
+        "PATH": "/usr/local/bin:/usr/bin:/bin",
+        "HOME": "/home/node",
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "TZ": "UTC",
+        "TMPDIR": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/buster-fixed-parser-original-owner-run38/tmp"
+      },
+      "exitCode": 0,
+      "stdout": "wrote docs/site/reference/buster-error-codes.md (1027 stable codes from 66 production files)",
+      "stdoutSha256": "7ee164b8f552ee02452710e2693d328f25a31437cfbc27c9a2190a569cc427e5",
+      "stderrBytes": 0,
+      "targetAfterSha256": "a8e7fba7558fca0859943ae1f3f6434c89d7fc70c746fb4f35e0a9b8eea08d04"
+    },
+    {
+      "argv": [
+        "/usr/local/bin/node",
+        "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/generate-buster-error-reference.mjs",
+        "--write"
+      ],
+      "cwd": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery",
+      "environment": {
+        "PATH": "/usr/local/bin:/usr/bin:/bin",
+        "HOME": "/home/node",
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "TZ": "UTC",
+        "TMPDIR": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/buster-fixed-parser-original-owner-run38/tmp"
+      },
+      "exitCode": 0,
+      "stdout": "wrote docs/site/reference/buster-error-codes.md (1027 stable codes from 66 production files)",
+      "stdoutSha256": "7ee164b8f552ee02452710e2693d328f25a31437cfbc27c9a2190a569cc427e5",
+      "stderrBytes": 0,
+      "targetAfterSha256": "a8e7fba7558fca0859943ae1f3f6434c89d7fc70c746fb4f35e0a9b8eea08d04"
+    },
+    {
+      "argv": [
+        "/usr/local/bin/node",
+        "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/generate-buster-error-reference.mjs",
+        "--check"
+      ],
+      "cwd": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery",
+      "environment": {
+        "PATH": "/usr/local/bin:/usr/bin:/bin",
+        "HOME": "/home/node",
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "TZ": "UTC",
+        "TMPDIR": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/buster-fixed-parser-original-owner-run38/tmp"
+      },
+      "exitCode": 0,
+      "stdout": "Buster error reference verified: 18 groups, 1027 stable codes, 66 production files",
+      "stdoutSha256": "b18fe4893228071571d6695b729574850d7cae499d5e77f079a6aec351555a59",
+      "stderrBytes": 0,
+      "targetAfterSha256": "a8e7fba7558fca0859943ae1f3f6434c89d7fc70c746fb4f35e0a9b8eea08d04"
+    }
+  ],
+  "limits": [
+    "No execution by this reviewer; original receipts are Root-run, individually verified raw bytes/statuses.",
+    "The two writes are evidenced by original result.byteEqualWrites and identical first/second target SHA receipts matching current physical output; no independent saved first-output byte copy is asserted.",
+    "Semantic Reader PASS concerns corrected generated rows and preserved page structure only; fresh rendered Reader/publication is pending.",
+    "Typed installed namespace counts are retained observations, not a new full physical namespace census by this reviewer.",
+    "No huge-threshold product tests, whole guide, REF005, global generation, graph/role/native/runtime/release grant."
+  ]
+}

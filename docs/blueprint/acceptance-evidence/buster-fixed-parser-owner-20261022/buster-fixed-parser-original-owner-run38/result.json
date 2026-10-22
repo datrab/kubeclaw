@@ -1,0 +1,28 @@
+{
+  "status": "ACTUAL_ORIGINAL_OWNER_WRITE_REPEAT_CHECK_PASS",
+  "processes": 3,
+  "eachReturncode": 0,
+  "byteEqualWrites": true,
+  "changedRows": [
+    "JUNIT_SUITE_DEPTH_LIMIT",
+    "JUNIT_XML_DEPTH_LIMIT",
+    "JUNIT_XML_TAG_LIMIT",
+    "COVERAGE_LCOV_LINE_LIMIT",
+    "COVERAGE_LCOV_TOO_LARGE",
+    "OPENAPI_FILE_TOO_LARGE",
+    "OPENAPI_SCHEMA_DEPTH_EXCEEDED",
+    "OPENAPI_SELECTION_LIMIT_EXCEEDED",
+    "SIZE_BUDGET_ARCHIVE_EXPANDED_LIMIT",
+    "SIZE_BUDGET_ARCHIVE_FILE_LIMIT",
+    "SIZE_BUDGET_BASELINE_OUTPUT_LIMIT",
+    "SIZE_BUDGET_INPUT_SIZE_INVALID",
+    "SIZE_BUDGET_TOTAL_LIMIT"
+  ],
+  "allOtherLinesAndSourceLinksUnchanged": true,
+  "outputSha256": "a8e7fba7558fca0859943ae1f3f6434c89d7fc70c746fb4f35e0a9b8eea08d04",
+  "limits": [
+    "No huge numeric-bound runtime tests",
+    "No Buster wholeguide/REF005/globalgenerator acceptance",
+    "No graph/publicrole/native/runtime/release permission"
+  ]
+}

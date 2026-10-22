@@ -1,0 +1,607 @@
+{
+  "status": "PASSIVE_PRODUCTION_EQUALITY_NOT_GENERATOR_EXECUTION",
+  "revision": "cebe61ef2046263e4e373732227ae5f03107c1f6",
+  "currentHead": "38d5c8f22d9cc3a923a7fdd421a1c02e4d176fdb",
+  "oldCount": 66,
+  "currentCount": 66,
+  "membershipEqual": true,
+  "allCurrentRegular": true,
+  "allBytesEqual": true,
+  "rows": [
+    {
+      "path": "skills/buster/engine/remote-plan-cli.ts",
+      "atEvidenceRevision": true,
+      "current": true,
+      "currentRegularNoSymlink": true,
+      "historicalSha256": "50520ba5efe6d4647463da64e3ae186a8076b4508208959470587d8da3977c5f",
+      "currentSha256": "50520ba5efe6d4647463da64e3ae186a8076b4508208959470587d8da3977c5f",
+      "equal": true
+    },
+    {
+      "path": "skills/buster/engine/src/index.ts",
+      "atEvidenceRevision": true,
+      "current": true,
+      "currentRegularNoSymlink": true,
+      "historicalSha256": "51c35b9e5455f1c1d253c769f1f020c23b1d1a0fe8e3b30abe4158e43be09f6a",
+      "currentSha256": "51c35b9e5455f1c1d253c769f1f020c23b1d1a0fe8e3b30abe4158e43be09f6a",
+      "equal": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/artifacts.ts",
+      "atEvidenceRevision": true,
+      "current": true,
+      "currentRegularNoSymlink": true,
+      "historicalSha256": "4eedb9892218a3b0ee8a9b14d22c8e37b29c454333adbdf4cbae1772f44e5179",
+      "currentSha256": "4eedb9892218a3b0ee8a9b14d22c8e37b29c454333adbdf4cbae1772f44e5179",
+      "equal": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/browser-axe-runtime.ts",
+      "atEvidenceRevision": true,
+      "current": true,
+      "currentRegularNoSymlink": true,
+      "historicalSha256": "7370bdf54556875b996cc0ac4c4219a8c9ddc11d25dfb72875f41806e82482c8",
+      "currentSha256": "7370bdf54556875b996cc0ac4c4219a8c9ddc11d25dfb72875f41806e82482c8",
+      "equal": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/browser-lighthouse-runtime.ts",
+      "atEvidenceRevision": true,
+      "current": true,
+      "currentRegularNoSymlink": true,
+      "historicalSha256": "a7af35a6b7df314129cf9150c3d44d2017c2bf47b9e529ef1ff6962129966b75",
+      "currentSha256": "a7af35a6b7df314129cf9150c3d44d2017c2bf47b9e529ef1ff6962129966b75",
+      "equal": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/browser-playwright-runtime.ts",
+      "atEvidenceRevision": true,
+      "current": true,
+      "currentRegularNoSymlink": true,
+      "historicalSha256": "20e32c52051339237e14cf1bed0da9c690ece23297bec9bb77a628e8df211917",
+      "currentSha256": "20e32c52051339237e14cf1bed0da9c690ece23297bec9bb77a628e8df211917",
+      "equal": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/browser-visual-runtime.ts",
+      "atEvidenceRevision": true,
+      "current": true,
+      "currentRegularNoSymlink": true,
+      "historicalSha256": "197b89c97cf756a90cbf2effd3485391f8cdbe494829ef6c668e527f0f695382",
+      "currentSha256": "197b89c97cf756a90cbf2effd3485391f8cdbe494829ef6c668e527f0f695382",
+      "equal": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/buildkit-readiness.ts",
+      "atEvidenceRevision": true,
+      "current": true,
+      "currentRegularNoSymlink": true,
+      "historicalSha256": "7f50b4c1c6c1e661319dd2f9ba1afecf27dd19a26c06ac51ef52abc0d97703f3",
+      "currentSha256": "7f50b4c1c6c1e661319dd2f9ba1afecf27dd19a26c06ac51ef52abc0d97703f3",
+      "equal": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/composite-capability-runtime.ts",
+      "atEvidenceRevision": true,
+      "current": true,
+      "currentRegularNoSymlink": true,
+      "historicalSha256": "fbd71da7e0fe2e53801e60e36c3c13636b4fcb5be0e43503ef66571820b0810f",
+      "currentSha256": "fbd71da7e0fe2e53801e60e36c3c13636b4fcb5be0e43503ef66571820b0810f",
+      "equal": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/container-build-runtime.ts",
+      "atEvidenceRevision": true,
+      "current": true,
+      "currentRegularNoSymlink": true,
+      "historicalSha256": "9316f1e642640c768f268aa7f236f075e9290516543ded5148869914e91f907e",
+      "currentSha256": "9316f1e642640c768f268aa7f236f075e9290516543ded5148869914e91f907e",
+      "equal": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/dependency-process.ts",
+      "atEvidenceRevision": true,
+      "current": true,
+      "currentRegularNoSymlink": true,
+      "historicalSha256": "c1f305fd3281328e1cd5714b1366cb946907e2a96af2bf6c3f629c2ab4ed354b",
+      "currentSha256": "c1f305fd3281328e1cd5714b1366cb946907e2a96af2bf6c3f629c2ab4ed354b",
+      "equal": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/direct-command-runtime.ts",
+      "atEvidenceRevision": true,
+      "current": true,
+      "currentRegularNoSymlink": true,
+      "historicalSha256": "eaacae3a6c4b3110039b7134378b8eb114dc8cb2161c4bc593c405c967afa006",
+      "currentSha256": "eaacae3a6c4b3110039b7134378b8eb114dc8cb2161c4bc593c405c967afa006",
+      "equal": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/exposure-generation.ts",
+      "atEvidenceRevision": true,
+      "current": true,
+      "currentRegularNoSymlink": true,
+      "historicalSha256": "cbaed4e6debf9e225c0c5aab51ecc8383bed69ff3b5dc4f7fe7c18a0ee02a360",
+      "currentSha256": "cbaed4e6debf9e225c0c5aab51ecc8383bed69ff3b5dc4f7fe7c18a0ee02a360",
+      "equal": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/exposure-handoff.ts",
+      "atEvidenceRevision": true,
+      "current": true,
+      "currentRegularNoSymlink": true,
+      "historicalSha256": "4e725c913e11f5eb11a4444c9a96373e423c06b2da33287e5269fbe1401b9e83",
+      "currentSha256": "4e725c913e11f5eb11a4444c9a96373e423c06b2da33287e5269fbe1401b9e83",
+      "equal": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/fixture-authority.ts",
+      "atEvidenceRevision": true,
+      "current": true,
+      "currentRegularNoSymlink": true,
+      "historicalSha256": "b3fac0a68c4cab2d3c1abfabf10b38848cc6917512a6684e80a030656ee0a1f5",
+      "currentSha256": "b3fac0a68c4cab2d3c1abfabf10b38848cc6917512a6684e80a030656ee0a1f5",
+      "equal": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/generated-demo-credentials.ts",
+      "atEvidenceRevision": true,
+      "current": true,
+      "currentRegularNoSymlink": true,
+      "historicalSha256": "0df7b344a3ccb3c27322a0381ca8f2cf891feca22140c9a5e1899fa520ae10da",
+      "currentSha256": "0df7b344a3ccb3c27322a0381ca8f2cf891feca22140c9a5e1899fa520ae10da",
+      "equal": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-runtime.ts",
+      "atEvidenceRevision": true,
+      "current": true,
+      "currentRegularNoSymlink": true,
+      "historicalSha256": "b9f8bee4d6ed977daf39be3dd91ba8e8323e5b625ff630b53ed1aa923a989833",
+      "currentSha256": "b9f8bee4d6ed977daf39be3dd91ba8e8323e5b625ff630b53ed1aa923a989833",
+      "equal": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-manifest.ts",
+      "atEvidenceRevision": true,
+      "current": true,
+      "currentRegularNoSymlink": true,
+      "historicalSha256": "42f3533feab2fcf98a60e4fe570d9980c6d008785d65df6e73e15e3f2f54dc85",
+      "currentSha256": "42f3533feab2fcf98a60e4fe570d9980c6d008785d65df6e73e15e3f2f54dc85",
+      "equal": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-runtime-security.ts",
+      "atEvidenceRevision": true,
+      "current": true,
+      "currentRegularNoSymlink": true,
+      "historicalSha256": "01da0c323776cc8f9f4778d9ed2afb198133b79f7f2afbfa0850f657dda357b0",
+      "currentSha256": "01da0c323776cc8f9f4778d9ed2afb198133b79f7f2afbfa0850f657dda357b0",
+      "equal": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/native-fixture-control.ts",
+      "atEvidenceRevision": true,
+      "current": true,
+      "currentRegularNoSymlink": true,
+      "historicalSha256": "6d305ecd5509af0dc13b90e02d00339619822cb5551c17077b4503439bfd272d",
+      "currentSha256": "6d305ecd5509af0dc13b90e02d00339619822cb5551c17077b4503439bfd272d",
+      "equal": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/native-fixture-journal.ts",
+      "atEvidenceRevision": true,
+      "current": true,
+      "currentRegularNoSymlink": true,
+      "historicalSha256": "4c5fb76cb5d6a9f28c76338ccefd39f7bbb17e7607bb90a998a5a146f43237a7",
+      "currentSha256": "4c5fb76cb5d6a9f28c76338ccefd39f7bbb17e7607bb90a998a5a146f43237a7",
+      "equal": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/native-fixture-lifetime.ts",
+      "atEvidenceRevision": true,
+      "current": true,
+      "currentRegularNoSymlink": true,
+      "historicalSha256": "fb755b6a559c3eb4f34e9a6151cc26dd4a6e14ff0e4c16d9e727964547497297",
+      "currentSha256": "fb755b6a559c3eb4f34e9a6151cc26dd4a6e14ff0e4c16d9e727964547497297",
+      "equal": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/native-fixture-state.ts",
+      "atEvidenceRevision": true,
+      "current": true,
+      "currentRegularNoSymlink": true,
+      "historicalSha256": "448417a808f5d630c24aba477af3fed88bc2a8f74e9a9c203c4f6f5bbd035b5e",
+      "currentSha256": "448417a808f5d630c24aba477af3fed88bc2a8f74e9a9c203c4f6f5bbd035b5e",
+      "equal": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/network-http-runtime.ts",
+      "atEvidenceRevision": true,
+      "current": true,
+      "currentRegularNoSymlink": true,
+      "historicalSha256": "b0dfbf0ba6ef2333572754d5a3f0510b8b5c825e47e208e519c2d4a90f99168d",
+      "currentSha256": "b0dfbf0ba6ef2333572754d5a3f0510b8b5c825e47e208e519c2d4a90f99168d",
+      "equal": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/process-input-lifecycle.ts",
+      "atEvidenceRevision": true,
+      "current": true,
+      "currentRegularNoSymlink": true,
+      "historicalSha256": "b45b50d0cfd2ae6a0aa091ba1e1edcb936b868490ae2a579f3ac561d24f8394e",
+      "currentSha256": "b45b50d0cfd2ae6a0aa091ba1e1edcb936b868490ae2a579f3ac561d24f8394e",
+      "equal": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/process-input.ts",
+      "atEvidenceRevision": true,
+      "current": true,
+      "currentRegularNoSymlink": true,
+      "historicalSha256": "3b34b84511ab198baf9d982799149288565c63f42d1ffc5a83256e4bf6209620",
+      "currentSha256": "3b34b84511ab198baf9d982799149288565c63f42d1ffc5a83256e4bf6209620",
+      "equal": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/production.ts",
+      "atEvidenceRevision": true,
+      "current": true,
+      "currentRegularNoSymlink": true,
+      "historicalSha256": "79c47d55e525f5ebb5e7e05a9c52e18514f9e464401c51e7def38dcec7f646a3",
+      "currentSha256": "79c47d55e525f5ebb5e7e05a9c52e18514f9e464401c51e7def38dcec7f646a3",
+      "equal": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/provider-capabilities.ts",
+      "atEvidenceRevision": true,
+      "current": true,
+      "currentRegularNoSymlink": true,
+      "historicalSha256": "b7dc5260ba57dd177fcb2e1e40f85f39554bf261f3e99388a6d91d17d24879b1",
+      "currentSha256": "b7dc5260ba57dd177fcb2e1e40f85f39554bf261f3e99388a6d91d17d24879b1",
+      "equal": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/provider-loader.ts",
+      "atEvidenceRevision": true,
+      "current": true,
+      "currentRegularNoSymlink": true,
+      "historicalSha256": "8453535b799916c74d2f036ca09a5bc973f600eb402ade0da57f93ab24ab6c85",
+      "currentSha256": "8453535b799916c74d2f036ca09a5bc973f600eb402ade0da57f93ab24ab6c85",
+      "equal": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/registry-health-access.ts",
+      "atEvidenceRevision": true,
+      "current": true,
+      "currentRegularNoSymlink": true,
+      "historicalSha256": "34f7cab5f360c415f5817ad0d5a0fcc76835c6046018d3779f185b2ad33c3f8c",
+      "currentSha256": "34f7cab5f360c415f5817ad0d5a0fcc76835c6046018d3779f185b2ad33c3f8c",
+      "equal": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/remote-plan-compaction.ts",
+      "atEvidenceRevision": true,
+      "current": true,
+      "currentRegularNoSymlink": true,
+      "historicalSha256": "e74b3fe2e8dca0157d22c6bd1b50f5cc69df91ec29eedbdbaef86d4ff05a42de",
+      "currentSha256": "e74b3fe2e8dca0157d22c6bd1b50f5cc69df91ec29eedbdbaef86d4ff05a42de",
+      "equal": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/remote-plan-http.ts",
+      "atEvidenceRevision": true,
+      "current": true,
+      "currentRegularNoSymlink": true,
+      "historicalSha256": "21b63692a2049718b49bcbdec03033642fc25d4e6206fa0330c753615ca036ff",
+      "currentSha256": "21b63692a2049718b49bcbdec03033642fc25d4e6206fa0330c753615ca036ff",
+      "equal": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/remote-plan-runtime.ts",
+      "atEvidenceRevision": true,
+      "current": true,
+      "currentRegularNoSymlink": true,
+      "historicalSha256": "dae94180e4c734b9fbd853329c9fa8b8dcf6e90fa71fee96255123384e45ea8c",
+      "currentSha256": "dae94180e4c734b9fbd853329c9fa8b8dcf6e90fa71fee96255123384e45ea8c",
+      "equal": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/remote-plan-service.ts",
+      "atEvidenceRevision": true,
+      "current": true,
+      "currentRegularNoSymlink": true,
+      "historicalSha256": "3be9e75c8619da96c22bfaabd7fbab548bc07085787d092a83ba1f20130434f9",
+      "currentSha256": "3be9e75c8619da96c22bfaabd7fbab548bc07085787d092a83ba1f20130434f9",
+      "equal": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/report-adapter-runtime.ts",
+      "atEvidenceRevision": true,
+      "current": true,
+      "currentRegularNoSymlink": true,
+      "historicalSha256": "0675902bcfebf7842d10eade9965c1b49d21e2083acaa9a7b7e6f03c248e24a9",
+      "currentSha256": "0675902bcfebf7842d10eade9965c1b49d21e2083acaa9a7b7e6f03c248e24a9",
+      "equal": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/report-finalizer.ts",
+      "atEvidenceRevision": true,
+      "current": true,
+      "currentRegularNoSymlink": true,
+      "historicalSha256": "8cc0ff2562fd8b530c2a2e1b32b13aaccdec1a2ea9f398df0e7cd350b2cb9b7e",
+      "currentSha256": "8cc0ff2562fd8b530c2a2e1b32b13aaccdec1a2ea9f398df0e7cd350b2cb9b7e",
+      "equal": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/runner.ts",
+      "atEvidenceRevision": true,
+      "current": true,
+      "currentRegularNoSymlink": true,
+      "historicalSha256": "d6695dc52cd1919a88f7feed8051a543bdd9cee260b95afb829cbcee6f254919",
+      "currentSha256": "d6695dc52cd1919a88f7feed8051a543bdd9cee260b95afb829cbcee6f254919",
+      "equal": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/security-scan-runtime.ts",
+      "atEvidenceRevision": true,
+      "current": true,
+      "currentRegularNoSymlink": true,
+      "historicalSha256": "087b2f1a242b0d8ad1025011ec5a6e9cc82b17652eb7775370a2e57208d9c0e9",
+      "currentSha256": "087b2f1a242b0d8ad1025011ec5a6e9cc82b17652eb7775370a2e57208d9c0e9",
+      "equal": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/tailscale-exposure-runtime.ts",
+      "atEvidenceRevision": true,
+      "current": true,
+      "currentRegularNoSymlink": true,
+      "historicalSha256": "0144b279f77977b7285231852e32ceacbc70c7598121c24fa8be6f96acd52c9d",
+      "currentSha256": "0144b279f77977b7285231852e32ceacbc70c7598121c24fa8be6f96acd52c9d",
+      "equal": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/terminal-workspace.ts",
+      "atEvidenceRevision": true,
+      "current": true,
+      "currentRegularNoSymlink": true,
+      "historicalSha256": "ede9e4ffd51edd40de683eade25ba313b5b2395d6a7bbcf5ce50e583f7940c59",
+      "currentSha256": "ede9e4ffd51edd40de683eade25ba313b5b2395d6a7bbcf5ce50e583f7940c59",
+      "equal": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/trivy-database.ts",
+      "atEvidenceRevision": true,
+      "current": true,
+      "currentRegularNoSymlink": true,
+      "historicalSha256": "240997c417ef7ab27716b482c7b698abed6249c8c8b6f303f9264875347224cf",
+      "currentSha256": "240997c417ef7ab27716b482c7b698abed6249c8c8b6f303f9264875347224cf",
+      "equal": true
+    },
+    {
+      "path": "skills/buster/plugins/api-flow/src/provider.js",
+      "atEvidenceRevision": true,
+      "current": true,
+      "currentRegularNoSymlink": true,
+      "historicalSha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b",
+      "currentSha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b",
+      "equal": true
+    },
+    {
+      "path": "skills/buster/plugins/axe/src/provider.js",
+      "atEvidenceRevision": true,
+      "current": true,
+      "currentRegularNoSymlink": true,
+      "historicalSha256": "3943f787c2d7fc1f2215268c043135f0a6d6425fd6e09b26d48bb2171e87c472",
+      "currentSha256": "3943f787c2d7fc1f2215268c043135f0a6d6425fd6e09b26d48bb2171e87c472",
+      "equal": true
+    },
+    {
+      "path": "skills/buster/plugins/container-build/src/provider.js",
+      "atEvidenceRevision": true,
+      "current": true,
+      "currentRegularNoSymlink": true,
+      "historicalSha256": "1204d07c75942e9def8b703748bf97510e933b2cfb33b85f84c485d42b89c847",
+      "currentSha256": "1204d07c75942e9def8b703748bf97510e933b2cfb33b85f84c485d42b89c847",
+      "equal": true
+    },
+    {
+      "path": "skills/buster/plugins/coverage-budget/src/provider.js",
+      "atEvidenceRevision": true,
+      "current": true,
+      "currentRegularNoSymlink": true,
+      "historicalSha256": "3e76c0b48e6728a195de48f8c7325e517e0681e8e0e169e7adb129bd0752430b",
+      "currentSha256": "3e76c0b48e6728a195de48f8c7325e517e0681e8e0e169e7adb129bd0752430b",
+      "equal": true
+    },
+    {
+      "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+      "atEvidenceRevision": true,
+      "current": true,
+      "currentRegularNoSymlink": true,
+      "historicalSha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b",
+      "currentSha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b",
+      "equal": true
+    },
+    {
+      "path": "skills/buster/plugins/demo-auth-smoke/src/provider.js",
+      "atEvidenceRevision": true,
+      "current": true,
+      "currentRegularNoSymlink": true,
+      "historicalSha256": "21e239a33d59c5849d8b9acef7ac0d6eba70b5652f885a430eefd82063f07c30",
+      "currentSha256": "21e239a33d59c5849d8b9acef7ac0d6eba70b5652f885a430eefd82063f07c30",
+      "equal": true
+    },
+    {
+      "path": "skills/buster/plugins/direct-command/src/provider.js",
+      "atEvidenceRevision": true,
+      "current": true,
+      "currentRegularNoSymlink": true,
+      "historicalSha256": "825182b963d34c1414fd779b5c523d00cc354fb38d6e8669cc68aa0b40261667",
+      "currentSha256": "825182b963d34c1414fd779b5c523d00cc354fb38d6e8669cc68aa0b40261667",
+      "equal": true
+    },
+    {
+      "path": "skills/buster/plugins/http/src/provider.js",
+      "atEvidenceRevision": true,
+      "current": true,
+      "currentRegularNoSymlink": true,
+      "historicalSha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186",
+      "currentSha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186",
+      "equal": true
+    },
+    {
+      "path": "skills/buster/plugins/junit-report-adapter/src/adapter.js",
+      "atEvidenceRevision": true,
+      "current": true,
+      "currentRegularNoSymlink": true,
+      "historicalSha256": "dceb8492b6f03b31c9c57190cdff836e4d6917b33ab49480fe8001c02e247736",
+      "currentSha256": "dceb8492b6f03b31c9c57190cdff836e4d6917b33ab49480fe8001c02e247736",
+      "equal": true
+    },
+    {
+      "path": "skills/buster/plugins/kubernetes-fixture/src/provider.js",
+      "atEvidenceRevision": true,
+      "current": true,
+      "currentRegularNoSymlink": true,
+      "historicalSha256": "4af5c60de7d010bc6956e81429ee10cbbca38fcf25636c348e0ef4fbb0f2d50e",
+      "currentSha256": "4af5c60de7d010bc6956e81429ee10cbbca38fcf25636c348e0ef4fbb0f2d50e",
+      "equal": true
+    },
+    {
+      "path": "skills/buster/plugins/lighthouse/src/provider.js",
+      "atEvidenceRevision": true,
+      "current": true,
+      "currentRegularNoSymlink": true,
+      "historicalSha256": "8858c30f362574414d16d8dcd99b963382b79e3195a670145c2e67d63dfa85a5",
+      "currentSha256": "8858c30f362574414d16d8dcd99b963382b79e3195a670145c2e67d63dfa85a5",
+      "equal": true
+    },
+    {
+      "path": "skills/buster/plugins/openapi/src/provider.js",
+      "atEvidenceRevision": true,
+      "current": true,
+      "currentRegularNoSymlink": true,
+      "historicalSha256": "cabeb560867f9dc802a7e936c0efc1fb6f900f211b5563414b6016c780f48cca",
+      "currentSha256": "cabeb560867f9dc802a7e936c0efc1fb6f900f211b5563414b6016c780f48cca",
+      "equal": true
+    },
+    {
+      "path": "skills/buster/plugins/openapi/src/schema-support.js",
+      "atEvidenceRevision": true,
+      "current": true,
+      "currentRegularNoSymlink": true,
+      "historicalSha256": "05e27ae54dfd00cb9f1344eb171699a6e4fa87801f5c5f8ff97be18910377e4b",
+      "currentSha256": "05e27ae54dfd00cb9f1344eb171699a6e4fa87801f5c5f8ff97be18910377e4b",
+      "equal": true
+    },
+    {
+      "path": "skills/buster/plugins/playwright/src/provider.js",
+      "atEvidenceRevision": true,
+      "current": true,
+      "currentRegularNoSymlink": true,
+      "historicalSha256": "7a380ecfc9dd2b42751ecd451222779f606f82668274cdc66e7b9136f1f988e8",
+      "currentSha256": "7a380ecfc9dd2b42751ecd451222779f606f82668274cdc66e7b9136f1f988e8",
+      "equal": true
+    },
+    {
+      "path": "skills/buster/plugins/security-providers/src/common.js",
+      "atEvidenceRevision": true,
+      "current": true,
+      "currentRegularNoSymlink": true,
+      "historicalSha256": "74fd765615fdee3f5876cfffa0b7baca6405b57fc3830e39dd56293fdc8d04b3",
+      "currentSha256": "74fd765615fdee3f5876cfffa0b7baca6405b57fc3830e39dd56293fdc8d04b3",
+      "equal": true
+    },
+    {
+      "path": "skills/buster/plugins/security-providers/src/database-evidence.js",
+      "atEvidenceRevision": true,
+      "current": true,
+      "currentRegularNoSymlink": true,
+      "historicalSha256": "2aa34c8cfe07618191408a280ca7e9b36169056f33cf441e233cae6bba4dad57",
+      "currentSha256": "2aa34c8cfe07618191408a280ca7e9b36169056f33cf441e233cae6bba4dad57",
+      "equal": true
+    },
+    {
+      "path": "skills/buster/plugins/security-providers/src/dependency.js",
+      "atEvidenceRevision": true,
+      "current": true,
+      "currentRegularNoSymlink": true,
+      "historicalSha256": "e44c6d32e9609c914493108ecbbe14de459d0eb57f917cdbe95c9ff81836af55",
+      "currentSha256": "e44c6d32e9609c914493108ecbbe14de459d0eb57f917cdbe95c9ff81836af55",
+      "equal": true
+    },
+    {
+      "path": "skills/buster/plugins/security-providers/src/headers.js",
+      "atEvidenceRevision": true,
+      "current": true,
+      "currentRegularNoSymlink": true,
+      "historicalSha256": "7799951ab8165572b3779b0a97306e33597115069de51400f7476df03ac2b7e7",
+      "currentSha256": "7799951ab8165572b3779b0a97306e33597115069de51400f7476df03ac2b7e7",
+      "equal": true
+    },
+    {
+      "path": "skills/buster/plugins/security-providers/src/image.js",
+      "atEvidenceRevision": true,
+      "current": true,
+      "currentRegularNoSymlink": true,
+      "historicalSha256": "7e54a7a0140628c26d2e81572ef8959fb0816cd5cd9cb663759c4b175bc71588",
+      "currentSha256": "7e54a7a0140628c26d2e81572ef8959fb0816cd5cd9cb663759c4b175bc71588",
+      "equal": true
+    },
+    {
+      "path": "skills/buster/plugins/security-providers/src/kubernetes-policy.js",
+      "atEvidenceRevision": true,
+      "current": true,
+      "currentRegularNoSymlink": true,
+      "historicalSha256": "aac3c6388e4238df46b5cc9b59f62b6fd0df4192061d29ff5be6625f26f392fd",
+      "currentSha256": "aac3c6388e4238df46b5cc9b59f62b6fd0df4192061d29ff5be6625f26f392fd",
+      "equal": true
+    },
+    {
+      "path": "skills/buster/plugins/security-providers/src/kubernetes-runtime.js",
+      "atEvidenceRevision": true,
+      "current": true,
+      "currentRegularNoSymlink": true,
+      "historicalSha256": "0694947eb3fcfb8637ad8a80be41e7b9985fae79df1b348a5279b9c6959203c5",
+      "currentSha256": "0694947eb3fcfb8637ad8a80be41e7b9985fae79df1b348a5279b9c6959203c5",
+      "equal": true
+    },
+    {
+      "path": "skills/buster/plugins/size-budget/src/provider.js",
+      "atEvidenceRevision": true,
+      "current": true,
+      "currentRegularNoSymlink": true,
+      "historicalSha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce",
+      "currentSha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce",
+      "equal": true
+    },
+    {
+      "path": "skills/buster/plugins/tailscale-exposure/src/provider.js",
+      "atEvidenceRevision": true,
+      "current": true,
+      "currentRegularNoSymlink": true,
+      "historicalSha256": "7e8f092bf66aac62bcd7ffd01b80710ccdd97c87f1ceec126139ba23d08ca1f0",
+      "currentSha256": "7e8f092bf66aac62bcd7ffd01b80710ccdd97c87f1ceec126139ba23d08ca1f0",
+      "equal": true
+    },
+    {
+      "path": "skills/buster/plugins/visual/src/browser-identity.js",
+      "atEvidenceRevision": true,
+      "current": true,
+      "currentRegularNoSymlink": true,
+      "historicalSha256": "44ab23cb793d764710dae28b0a3a4c340ae57aeeb6e36dc7bfae192c05c265d3",
+      "currentSha256": "44ab23cb793d764710dae28b0a3a4c340ae57aeeb6e36dc7bfae192c05c265d3",
+      "equal": true
+    },
+    {
+      "path": "skills/buster/plugins/visual/src/provider.js",
+      "atEvidenceRevision": true,
+      "current": true,
+      "currentRegularNoSymlink": true,
+      "historicalSha256": "1a321386019f583561a20297bf8ad1ff57599aac2e906ed1f48bada2f08419b1",
+      "currentSha256": "1a321386019f583561a20297bf8ad1ff57599aac2e906ed1f48bada2f08419b1",
+      "equal": true
+    }
+  ],
+  "scope": "Exact generator selected js/ts not d.ts; tests directories excluded; plugin files require /src/. This inventory supports immutable source-link equality, not full semantic reread or actual original generator result."
+}

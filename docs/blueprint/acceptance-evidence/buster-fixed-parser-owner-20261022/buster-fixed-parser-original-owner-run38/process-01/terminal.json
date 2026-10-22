@@ -1,0 +1,15 @@
+{
+  "returncode": 0,
+  "endEpoch": 1792639396.0035396,
+  "targetAfterSha256": "a8e7fba7558fca0859943ae1f3f6434c89d7fc70c746fb4f35e0a9b8eea08d04",
+  "streams": {
+    "stdout.bin": {
+      "bytes": 93,
+      "sha256": "7ee164b8f552ee02452710e2693d328f25a31437cfbc27c9a2190a569cc427e5"
+    },
+    "stderr.bin": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  }
+}

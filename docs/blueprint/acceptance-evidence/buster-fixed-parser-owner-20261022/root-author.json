@@ -1,0 +1,24 @@
+{
+  "role": "Root AUTHOR ONLY; no independent acceptance or execution",
+  "base": "38d5c8f22d9cc3a923a7fdd421a1c02e4d176fdb",
+  "source": "scripts/generate-buster-error-reference.mjs",
+  "beforeSha256": "5b7f48767226cbc0a1bbcf310b879052b4aa55919bb60d52985b01f8f7b2424e",
+  "candidateSha256": "0bea7e164b4acb8541af112fe8af4c36966ca967eca4581cf71d5c732006a4ca",
+  "exactCodes": [
+    "COVERAGE_LCOV_TOO_LARGE",
+    "COVERAGE_LCOV_LINE_LIMIT",
+    "JUNIT_XML_TAG_LIMIT",
+    "JUNIT_XML_DEPTH_LIMIT",
+    "JUNIT_SUITE_DEPTH_LIMIT",
+    "OPENAPI_SCHEMA_DEPTH_EXCEEDED",
+    "OPENAPI_FILE_TOO_LARGE",
+    "OPENAPI_SELECTION_LIMIT_EXCEEDED",
+    "SIZE_BUDGET_ARCHIVE_EXPANDED_LIMIT",
+    "SIZE_BUDGET_ARCHIVE_FILE_LIMIT",
+    "SIZE_BUDGET_TOTAL_LIMIT",
+    "SIZE_BUDGET_BASELINE_OUTPUT_LIMIT",
+    "SIZE_BUDGET_INPUT_SIZE_INVALID"
+  ],
+  "scope": "13 exact source-fixed diagnoses plus production-occurrence assertion; no generic diagnosis, source discovery, runtime limits, execution profile or generated target changed",
+  "generatedOutput": "NOT RUN; original owner only after independent source review"
+}

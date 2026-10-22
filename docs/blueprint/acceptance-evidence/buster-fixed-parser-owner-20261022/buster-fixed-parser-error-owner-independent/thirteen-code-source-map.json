@@ -1,0 +1,98 @@
+{
+  "candidateSha256": "0bea7e164b4acb8541af112fe8af4c36966ca967eca4581cf71d5c732006a4ca",
+  "status": "BOUNDED_SOURCE_SEMANTIC_READER_QUALITY_PASS_NO_EXECUTION",
+  "rows": [
+    {
+      "code": "COVERAGE_LCOV_TOO_LARGE",
+      "source": "skills/buster/plugins/coverage-budget/src/provider.js",
+      "causalReadRanges": "5\u201310;57\u201369",
+      "verdict": "PASS",
+      "reason": "Strict >64MiB after complete read/declared-size/SHA comparison and before TextDecoder; threshold is not provider configuration or preread cap."
+    },
+    {
+      "code": "COVERAGE_LCOV_LINE_LIMIT",
+      "source": "skills/buster/plugins/coverage-budget/src/provider.js",
+      "causalReadRanges": "19\u201333",
+      "verdict": "PASS",
+      "reason": "Every valid DA increments records, including repeated same line, then >2million rejects. Final distinct lines are a different counter."
+    },
+    {
+      "code": "JUNIT_XML_TAG_LIMIT",
+      "source": "skills/buster/plugins/junit-report-adapter/src/adapter.js",
+      "causalReadRanges": "103\u2013114;315\u2013333",
+      "verdict": "PASS",
+      "reason": "Scan index-start <=65536 inclusive, unquoted > only, UTF16 code units, exhaustion/unterminated quoted tag shares code; not byte count."
+    },
+    {
+      "code": "JUNIT_XML_DEPTH_LIMIT",
+      "source": "skills/buster/plugins/junit-report-adapter/src/adapter.js",
+      "causalReadRanges": "218\u2013229",
+      "verdict": "PASS",
+      "reason": "stack.length>=256 rejects before push, including non-suite elements. Existing stack can remain internal but no parse return."
+    },
+    {
+      "code": "JUNIT_SUITE_DEPTH_LIMIT",
+      "source": "skills/buster/plugins/junit-report-adapter/src/adapter.js",
+      "causalReadRanges": "230\u2013236;269\u2013280",
+      "verdict": "PASS",
+      "reason": "Active suites.length>=64 rejects additional suite; popped on closing. Sibling total is unbounded by this check."
+    },
+    {
+      "code": "OPENAPI_SCHEMA_DEPTH_EXCEEDED",
+      "source": "skills/buster/plugins/openapi/src/provider.js + schema-support.js",
+      "causalReadRanges": "provider34\u201346,66\u2013132,207\u2013266;support45\u201373",
+      "verdict": "PASS",
+      "reason": "Fixed depth>64 in local-ref traversal/schema validation/support walk. Inside operation try it becomes a finding; prior/current HTTP requests can already exist, other selected operations can continue. Initial catalog reference errors can throw earlier. New prose promises neither all-or-nothing nor safe replay."
+    },
+    {
+      "code": "OPENAPI_FILE_TOO_LARGE",
+      "source": "skills/buster/plugins/openapi/src/provider.js",
+      "causalReadRanges": "190\u2013195",
+      "verdict": "PASS",
+      "reason": "Synchronous whole read first, >4194304 rejects before JSON parse/catalog/requests; no configurable larger spec cap."
+    },
+    {
+      "code": "OPENAPI_SELECTION_LIMIT_EXCEEDED",
+      "source": "skills/buster/plugins/openapi/src/provider.js",
+      "causalReadRanges": "196\u2013203",
+      "verdict": "PASS",
+      "reason": "Explicit entries plus tag-selected catalog entries (excluding explicit IDs), cleanup-sorted; total>128 rejects before invoke, repeats explicit entries still count."
+    },
+    {
+      "code": "SIZE_BUDGET_ARCHIVE_EXPANDED_LIMIT",
+      "source": "skills/buster/plugins/size-budget/src/provider.js",
+      "causalReadRanges": "166\u2013187",
+      "verdict": "PASS",
+      "reason": "Every delivered expanded stream chunk contributes, including headers/padding; compressed source uses gunzip first. >2GiB rejects, not configured budget threshold."
+    },
+    {
+      "code": "SIZE_BUDGET_ARCHIVE_FILE_LIMIT",
+      "source": "skills/buster/plugins/size-budget/src/provider.js",
+      "causalReadRanges": "195\u2013210",
+      "verdict": "PASS",
+      "reason": "Directory type5 continues without files.push; accepted regular entry is pushed then >100000 rejects. Not all tar headers/directories."
+    },
+    {
+      "code": "SIZE_BUDGET_TOTAL_LIMIT",
+      "source": "skills/buster/plugins/size-budget/src/provider.js",
+      "causalReadRanges": "229\u2013241",
+      "verdict": "PASS",
+      "reason": "Sum of measurement file size values unsafe integer or >2GiB rejects before full measurements/budget result. Separate configured maximumTotalBytes only creates findings later."
+    },
+    {
+      "code": "SIZE_BUDGET_BASELINE_OUTPUT_LIMIT",
+      "source": "skills/buster/plugins/size-budget/src/provider.js",
+      "causalReadRanges": "274\u2013293;314\u2013351",
+      "verdict": "PASS",
+      "reason": "JSON baseline Buffer >1MiB rejects before exclusive wx0600 baseline write; input reads/measurement already happened. No promised rollback/global absent effects. Guard remains valid even if ordinary minimal metadata rarely reaches it."
+    },
+    {
+      "code": "SIZE_BUDGET_INPUT_SIZE_INVALID",
+      "source": "skills/buster/plugins/size-budget/src/provider.js",
+      "causalReadRanges": "101\u2013136;248\u2013254;310\u2013319",
+      "verdict": "PASS",
+      "reason": "Negative/unsafe/>bound declared size before open, and actual accumulated reads>bound same code, label identifies baseline vs build-output;512MiB/1MiB respectively. Verification closes failed handle; changing configured budget cannot raise either."
+    }
+  ],
+  "counterexampleMode": "Source-derived counterexamples, not executed product witnesses"
+}

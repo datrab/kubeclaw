@@ -1,0 +1,16 @@
+{
+  "reviewer": "/root; author of exact diagnosis correction, nonauthor fullowner review by workflow_acceptance",
+  "status": "EXACT_ORIGINAL_OWNER_INVOCATION_ADMITTED",
+  "candidate": "0bea7e164b4acb8541af112fe8af4c36966ca967eca4581cf71d5c732006a4ca",
+  "independentReviewSha256": "c53fc4c92a1f8adc03bb4fa26922440f8429e8bc56afbf8501392782b87b81d4",
+  "argv": [
+    "/usr/local/bin/node",
+    "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/generate-buster-error-reference.mjs",
+    "--write"
+  ],
+  "cwd": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery",
+  "scope": "Original fixed target write only, AST Source-as-data, no target product import/native parser/graph/consumer grant",
+  "environment": "literal clean PATH HOME LANG LC_ALL TZ owned TMPDIR; no inherited NODE_OPTIONS NODE_PATH loader hooks",
+  "runs": "two original --write runs then original --check; individual raw streams and statuses, beforeafter context, exact13rowdelta required",
+  "sourceEvidenceRevision": "cebe61ef2046263e4e373732227ae5f03107c1f6"
+}
