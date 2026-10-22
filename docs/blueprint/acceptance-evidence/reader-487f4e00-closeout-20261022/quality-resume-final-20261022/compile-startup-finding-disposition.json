@@ -1,0 +1,47 @@
+{
+  "finding": "A98-QUALITY-COMPILE-STARTUP",
+  "role": "QUALITY only",
+  "candidate": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+  "disposition": "RESOLVED_IN_CURRENT_DOCUMENTATION_QUALITY_SCOPE",
+  "verdict": "PASS",
+  "page": {
+    "path": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/docs/site/use/plugins.md",
+    "sha256": "b0cd0f8a937af4bd22ffca25e65e11e120b0053df2d67fa4250b61f1fe6ade5d"
+  },
+  "currentEvidence": [
+    {
+      "lines": "269\u2013272",
+      "observation": "Compiled output validates registry/config/grants, explicitly does not prove endpoint/account/credential/live dependency."
+    },
+    {
+      "lines": "286\u2013290",
+      "observation": "Compilation imports enabled modules but explicitly does not call factories or ready(), create a run or prove a dependency; calls it code admission."
+    },
+    {
+      "lines": "292\u2013305",
+      "observation": "Runtime alone starts dependency-ordered adapters, awaits ready(), describes rollback and unbounded noncooperative shutdown; routes to plugin-runtime activation-is-fail-closed."
+    },
+    {
+      "lines": "345\u2013355",
+      "observation": "Pending startup/readiness is a stop; readiness proves declared startup checks only; terminal project result proves operation."
+    },
+    {
+      "lines": "462",
+      "observation": "Local source callout distinguishes compilation from runtime starter with separate pinned links; no live verified outcome claimed."
+    }
+  ],
+  "retainedProof": {
+    "path": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/handoffs/pr13-finish-20261021/prior57-review.json",
+    "record": "records[71].originalRecord",
+    "id": "FLW014-plugin-operator-supported-lifecycle-20261021",
+    "revision": "cfc97be096908c1193877d054bb80662120f1eca",
+    "quality": "PASS",
+    "wholePageByteEqualToPrior": true
+  },
+  "reason": "Current canonical wording clearly separates code admission from startup/readiness and business-operation evidence. The cited material false-success quality claim is absent and its safe-stop consequences are explicit. OPL001 inventory row/catalogue route does not override the canonical lifecycle procedure. Old matrix open state is stale for this precise quality finding, not evidence of a current prose defect.",
+  "limits": [
+    "No Main/matrix edits or Source/Reader adjudication.",
+    "No re-review/recount of51 packages; retained complete Quality scope and final review remain unchanged.",
+    "This disposition does not close other legacy findings or establish runtime readiness."
+  ]
+}

@@ -1,0 +1,917 @@
+[
+  {
+    "path": "docs/config/documentation-plugin-complexity.json",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "19ad54c83ac945e2f82927fdad65f4740292562b99752828d43068edfc5623b5"
+  },
+  {
+    "path": "plugins/kubeclaw-ops/.codex-plugin/plugin.json",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "906bd92fc84b1ea15e3e76c8b39d8262d0cbaa5458c9923478233660521ff1e5"
+  },
+  {
+    "path": "plugins/kubeclaw-ops/skills/troubleshoot/SKILL.md",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "52a7329b7176b69c98ca46069d1147e0dc242a6f812ac4efdceba0c86a8cc530"
+  },
+  {
+    "path": "scripts/generate-buster-error-reference.mjs",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "11cf5c42d7b13565534eab04be11b9ed2f16bf8ee5ad6ba025850363f8ddd6d8"
+  },
+  {
+    "path": "skills/buster/plugins/api-flow/README.md",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "fdb4520d8d9a12e25a79787a5f2dd219a5bbc98d95ef0c22c204ee82d668a55e"
+  },
+  {
+    "path": "skills/buster/plugins/api-flow/plugin.json",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "d6c8f75a90ab142a4273893cd0e0bcf12a1d377432a42eb8f65127c177bbe536"
+  },
+  {
+    "path": "skills/buster/plugins/api-flow/src/provider.js",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b"
+  },
+  {
+    "path": "skills/buster/plugins/axe/README.md",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "1ab2a74127ab6340c77b01a9dcca756486c4b9a9ecec19e03e88bab05cb44a6a"
+  },
+  {
+    "path": "skills/buster/plugins/axe/plugin.json",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "178f07330165f84e5f6ac7be7876b74318eb939c97d5a560f5289d313fbbd0d7"
+  },
+  {
+    "path": "skills/buster/plugins/axe/src/provider.js",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "3943f787c2d7fc1f2215268c043135f0a6d6425fd6e09b26d48bb2171e87c472"
+  },
+  {
+    "path": "skills/buster/plugins/container-build/README.md",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "9f717d5483450ff8aa9e01f95694bbe54165b6ee18f0014ece1fa6de77a892d3"
+  },
+  {
+    "path": "skills/buster/plugins/container-build/plugin.json",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "6a43c756b8707be3a5efb3851ed8869a17e376658a30503bf9d51697a7e9c011"
+  },
+  {
+    "path": "skills/buster/plugins/container-build/src/provider.js",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "1204d07c75942e9def8b703748bf97510e933b2cfb33b85f84c485d42b89c847"
+  },
+  {
+    "path": "skills/buster/plugins/coverage-budget/README.md",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "2a8f2e52e59f5ee7be788636a86a36a0fa37306d65fc273caacf84494e47c217"
+  },
+  {
+    "path": "skills/buster/plugins/coverage-budget/plugin.json",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "0f0ae38312005bf70de5b8da45dd96122be24614b05079b2ed410248e9166067"
+  },
+  {
+    "path": "skills/buster/plugins/coverage-budget/src/provider.js",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "3e76c0b48e6728a195de48f8c7325e517e0681e8e0e169e7adb129bd0752430b"
+  },
+  {
+    "path": "skills/buster/plugins/demo-auth-smoke/README.md",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "3230e842192813df317830d44228dae9836152ce7bddde9e65c2c4a7a9a37631"
+  },
+  {
+    "path": "skills/buster/plugins/demo-auth-smoke/plugin.json",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "a7dc11d0cd73886181c787be579552ed8f26eba3a4b364e87361ca6eff0db194"
+  },
+  {
+    "path": "skills/buster/plugins/demo-auth-smoke/src/provider.js",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "21e239a33d59c5849d8b9acef7ac0d6eba70b5652f885a430eefd82063f07c30"
+  },
+  {
+    "path": "skills/buster/plugins/direct-command/README.md",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "6e1ec48fd7d145c7ab3cc9aff1c48c46c99a6ca07745a96535fa4d5bb4d3f4f9"
+  },
+  {
+    "path": "skills/buster/plugins/direct-command/plugin.json",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "649466714d77ce1afe3a753f48e1a77481aa757fb46a325f3ea05c0c3ed2835a"
+  },
+  {
+    "path": "skills/buster/plugins/direct-command/src/provider.js",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "825182b963d34c1414fd779b5c523d00cc354fb38d6e8669cc68aa0b40261667"
+  },
+  {
+    "path": "skills/buster/plugins/http/README.md",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "d1e5043fc7de143d939eac59d9472ccd230fbe54e745ceb628b820d7bd759105"
+  },
+  {
+    "path": "skills/buster/plugins/http/plugin.json",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "be8c584b93172cc05d88c547f43d351dd00a0570475bad0c2a6bfbebc6792453"
+  },
+  {
+    "path": "skills/buster/plugins/http/src/provider.js",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186"
+  },
+  {
+    "path": "skills/buster/plugins/junit-report-adapter/README.md",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "012b7603d9ff50ed2299576c94031c9c69d7359bf05a40bc3811f9e3adfe5cdf"
+  },
+  {
+    "path": "skills/buster/plugins/junit-report-adapter/plugin.json",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "9787400a76dea54fbfe31a6371c1724f60fdacb7fc544fa33c0c454132e92b77"
+  },
+  {
+    "path": "skills/buster/plugins/junit-report-adapter/src/adapter.js",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "dceb8492b6f03b31c9c57190cdff836e4d6917b33ab49480fe8001c02e247736"
+  },
+  {
+    "path": "skills/buster/plugins/kubernetes-fixture/README.md",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "30cbdad838949b74272a02f1712169a5c1ec4856015ab024ece60ad2cce10e37"
+  },
+  {
+    "path": "skills/buster/plugins/kubernetes-fixture/plugin.json",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "9c658fd6807beea11340609d22483ffac429a5e9184e74233a145774ec92feea"
+  },
+  {
+    "path": "skills/buster/plugins/kubernetes-fixture/src/provider.js",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "4af5c60de7d010bc6956e81429ee10cbbca38fcf25636c348e0ef4fbb0f2d50e"
+  },
+  {
+    "path": "skills/buster/plugins/lighthouse/README.md",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "747d7478d270fb9b8c2c9103ff0f10783627d4a619ce0206afd675c7eaca9bca"
+  },
+  {
+    "path": "skills/buster/plugins/lighthouse/plugin.json",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "3c7fa93d06001f1b627aab1f161e90d19124028172b347ce7a64ccb369d2aaf1"
+  },
+  {
+    "path": "skills/buster/plugins/lighthouse/src/provider.js",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "8858c30f362574414d16d8dcd99b963382b79e3195a670145c2e67d63dfa85a5"
+  },
+  {
+    "path": "skills/buster/plugins/openapi/README.md",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "afc989c4127027ad0f66ec95dea04953020f688b231427a77dff0714c9b1159a"
+  },
+  {
+    "path": "skills/buster/plugins/openapi/plugin.json",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "ea64826e4be0b75620a11de0d375abb6ef0361492488adaa5c3b839e49fbf3af"
+  },
+  {
+    "path": "skills/buster/plugins/openapi/src/provider.js",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "cabeb560867f9dc802a7e936c0efc1fb6f900f211b5563414b6016c780f48cca"
+  },
+  {
+    "path": "skills/buster/plugins/playwright/README.md",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "9b370d17fcf2a99824fe1506b703790bf149b26a73008a0f4fe628ce79b4e346"
+  },
+  {
+    "path": "skills/buster/plugins/playwright/plugin.json",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "897cbd8bfbd302d7ed00d01340f18578fe9d3778c45bba95c6eff1c8951cf1c9"
+  },
+  {
+    "path": "skills/buster/plugins/playwright/src/provider.js",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "7a380ecfc9dd2b42751ecd451222779f606f82668274cdc66e7b9136f1f988e8"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/README.md",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "97f0db9adda62d1b15cfa518816547b15ad66b1c38f35010c75d6d5797f5cd20"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/plugin.json",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "14d1e66e0ee7a0063964555222332d7345bf172bfc8186f9a12fdca7d2c9d510"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/common.js",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "74fd765615fdee3f5876cfffa0b7baca6405b57fc3830e39dd56293fdc8d04b3"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/dependency.js",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "e44c6d32e9609c914493108ecbbe14de459d0eb57f917cdbe95c9ff81836af55"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/headers.js",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "7799951ab8165572b3779b0a97306e33597115069de51400f7476df03ac2b7e7"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/image.js",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "7e54a7a0140628c26d2e81572ef8959fb0816cd5cd9cb663759c4b175bc71588"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/kubernetes-policy.js",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "aac3c6388e4238df46b5cc9b59f62b6fd0df4192061d29ff5be6625f26f392fd"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/kubernetes-runtime.js",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "0694947eb3fcfb8637ad8a80be41e7b9985fae79df1b348a5279b9c6959203c5"
+  },
+  {
+    "path": "skills/buster/plugins/size-budget/README.md",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "9cab80aae3f14c2c1dac300c3875ffa561dda4e64bdec0bfcec530e1e1ceb7a4"
+  },
+  {
+    "path": "skills/buster/plugins/size-budget/plugin.json",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "5f9a11dad63edf557454124ae8a71a6382ddac5212dbeaf064e86019fe28a737"
+  },
+  {
+    "path": "skills/buster/plugins/size-budget/src/provider.js",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+  },
+  {
+    "path": "skills/buster/plugins/tailscale-exposure/README.md",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "7fcb51b8fb8d22dddab78d9e5aa09abe37f547aa8385e0e9d22cfcfcf88db4df"
+  },
+  {
+    "path": "skills/buster/plugins/tailscale-exposure/plugin.json",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "c61695a3a068a240a335949e27287829fa8183b465bd648662525da67fc9648b"
+  },
+  {
+    "path": "skills/buster/plugins/tailscale-exposure/src/provider.js",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "7e8f092bf66aac62bcd7ffd01b80710ccdd97c87f1ceec126139ba23d08ca1f0"
+  },
+  {
+    "path": "skills/buster/plugins/visual/README.md",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "96654f60f76342f316b001db5e94b9a730938bed691808f729f3ce970cc95ac4"
+  },
+  {
+    "path": "skills/buster/plugins/visual/plugin.json",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "3f637455f6577136024318784f35e724a04abfe43e24406f31e37ded4f6f5a90"
+  },
+  {
+    "path": "skills/buster/plugins/visual/src/provider.js",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "1a321386019f583561a20297bf8ad1ff57599aac2e906ed1f48bada2f08419b1"
+  },
+  {
+    "path": "skills/common/plugins/agent-observability/README.md",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "587baf990dd55b551e27ea93cc923b5365445f6a38f306f9cb0fb0a7abbb365a"
+  },
+  {
+    "path": "skills/common/plugins/agent-observability/plugin.json",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "00319c7417cd253a0bcc0ae6574baba74a2592a8ee9284552f7d2fc2c341ce8c"
+  },
+  {
+    "path": "skills/common/plugins/agent-observability/src/observers.ts",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "b52a00959c3ba7c122faf4fe364ce9ab5baf530e590df89b8f3ddc5e764b111c"
+  },
+  {
+    "path": "skills/common/plugins/artifact-store/README.md",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "7151e61fd08387cba2f06f05f32bdc1ddfe0fa11c4e9fe0aba978ca86bb6ffb5"
+  },
+  {
+    "path": "skills/common/plugins/artifact-store/plugin.json",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "48f2a67542f717818d50d395a74c66273078a0444cdebbc70e8f3cc4a840202f"
+  },
+  {
+    "path": "skills/common/plugins/artifact-store/src/adapter.ts",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "12fa6150089d49da0a9065de560fb53436dc46e3f10f15da0f3fe8b112a50154"
+  },
+  {
+    "path": "skills/common/plugins/command-runner/README.md",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "0aa9d5c701c7c521d6eb580646130c65f8cf2d2bcf8078ba3a5d5c64d5097d2f"
+  },
+  {
+    "path": "skills/common/plugins/command-runner/plugin.json",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "6d59b5fdf3f954c2b11894024166b281d57583fa8d3e5b4b1a77b1090232c146"
+  },
+  {
+    "path": "skills/common/plugins/command-runner/src/adapter.ts",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "31265c4ce8ad540a119e74cc0b4449ffb0621af688f0c37fa848cdb509b4620b"
+  },
+  {
+    "path": "skills/common/plugins/command-runner/src/execution.ts",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "b08ca224ab8b6a6276c002152cc54814f236d2dcda84a7faebb2b4463fce2ee0"
+  },
+  {
+    "path": "skills/common/plugins/command-runner/src/runner.ts",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "3cf07ec2c39b3caa50419c48ce49119d37491abb83398d637d400f06ebf5e2ad"
+  },
+  {
+    "path": "skills/common/plugins/git-workspace/README.md",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "605ae890a2fa87b4f23faf9f8a66b939de009efbcbc322d6f2bc7e724d16a778"
+  },
+  {
+    "path": "skills/common/plugins/git-workspace/plugin.json",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "c7fac89445933a524d8f8032be5749a221cc8780de6cbcb20f483217841c8802"
+  },
+  {
+    "path": "skills/common/plugins/git-workspace/src/adapter.ts",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "aa68298b0322f62bf8e64eef51f59107eb2fe4ab940d7aedbabc8041294dcbd7"
+  },
+  {
+    "path": "skills/common/plugins/git-workspace/src/operations.ts",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "52562707281edf7bf484ee214a02034b74300bed8502c8ff465ceca50739c6a5"
+  },
+  {
+    "path": "skills/common/plugins/git-workspace/src/runner.ts",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "e5e03e53d63d0f48fea14b2789f68af4f986b5dd73867885d7c65212b98a3dcb"
+  },
+  {
+    "path": "skills/common/plugins/network-http/README.md",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "10b1f89e246820bff951b8a95ba671c7f71b65e1cd00395ef908c700892e66a6"
+  },
+  {
+    "path": "skills/common/plugins/network-http/plugin.json",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "54d1a21a08c950e7a63731f2fc76c5dd479c349462880e2b50977c5518b3b1e3"
+  },
+  {
+    "path": "skills/common/plugins/network-http/src/adapter.ts",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "8885ca56e2a2322c98e4c83ba935397f8f47d829c4feec69efbdde0113553e8d"
+  },
+  {
+    "path": "skills/common/plugins/notification-observer/README.md",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "64235a03c137827e4ef3db5cfa0313374a46f470bf91a86fbb7335fd8d99d52f"
+  },
+  {
+    "path": "skills/common/plugins/notification-observer/plugin.json",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "7b5b349b4767d74db5df9db9b4580880dff6a86bdcecf5cbf9f11470e76f8e48"
+  },
+  {
+    "path": "skills/common/plugins/notification-observer/src/observer.ts",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "264990bdacb7d3598db99fb4c7aab9a050c1d717f08c4013ba6f19eced578a70"
+  },
+  {
+    "path": "skills/common/plugins/openclaw-agent-events/README.md",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "72403574cdae0eedc8995e2ba75af81ca940effcd34a16e73425a60dbe45fb48"
+  },
+  {
+    "path": "skills/common/plugins/openclaw-agent-events/plugin.json",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "16e0baa799abd2a53ef43f3ccfb0a4055d90c2129453de750992eafec9112be5"
+  },
+  {
+    "path": "skills/common/plugins/openclaw-agent-events/src/adapter.ts",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "665d10a623f4e9e83dc50bc9a7c769aea0bec8658ab233f3a6d07a89338dd7c7"
+  },
+  {
+    "path": "skills/common/plugins/openclaw-agent-events/src/ingress-queue.ts",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "7bbab8b7083c08c77b801f1a90ad439c9c166d1dc3734a0a8b4bf82ff64af7fa"
+  },
+  {
+    "path": "skills/common/plugins/openclaw-agent-observer/README.md",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "70562cb03464e32946b91b0a166d91e8fb253c7f0df8bcf6efa749965aa8cb35"
+  },
+  {
+    "path": "skills/common/plugins/openclaw-agent-observer/openclaw.plugin.json",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "651bf5310a5261ee309e219453e534754e7738fdd86152e582183e3ba95ec5eb"
+  },
+  {
+    "path": "skills/common/plugins/openclaw-agent-observer/src/diagnostics.ts",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "4957fc2f8b2dab174f7aaa7cac5ddc94ae42ea3cf83caf2b414553396a0b5719"
+  },
+  {
+    "path": "skills/common/plugins/openclaw-agent-observer/src/index.ts",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "a800b92606e0c803ae51867c7625ae5610169e23b2074b54d69f58e5f0d6f3aa"
+  },
+  {
+    "path": "skills/common/plugins/openclaw-agent-observer/src/redis-writer.ts",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "8f974830cf10d931410d6bd1f23b4782aa8988b96baba13f4172a3b9f85d4a5d"
+  },
+  {
+    "path": "skills/common/plugins/operator-messaging/README.md",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "84e6525da379f33bdd2a3543881737b6e14568f66297544548df2f35a1b25ed7"
+  },
+  {
+    "path": "skills/common/plugins/operator-messaging/plugin.json",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "e46b330a054495e0628168c03e7fe8c1e3ea58542ea40012b87def6185744563"
+  },
+  {
+    "path": "skills/common/plugins/operator-messaging/src/adapter.ts",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "a6d719a5e69b401a0696af9a74dcf358015cdc57bfa062cca0514c54410b3785"
+  },
+  {
+    "path": "skills/common/plugins/redis-transport/README.md",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "6522f6dc211b28863facf7296a42e50cf8607e36c418e65e013e94a5b667bcc0"
+  },
+  {
+    "path": "skills/common/plugins/redis-transport/plugin.json",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "a90353c2451b1e6649929310944cdec0f9e5c9ff8ae44474b6c23dfb24aa2843"
+  },
+  {
+    "path": "skills/common/plugins/redis-transport/src/adapter.ts",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "15c91e7eed9a98784d6fbdcb931160202295ea6ef20b1c18367bcd9eaab4cc01"
+  },
+  {
+    "path": "skills/common/plugins/runtime-dispatch/README.md",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "8d35a3f4317061a91daa80dba389e3a4e453052e815ffce9db7a5c23875e8f47"
+  },
+  {
+    "path": "skills/common/plugins/runtime-dispatch/plugin.json",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "b3c3a77253ce191a184c8c85f6d02595a1df26b472a63f252339205cae04f349"
+  },
+  {
+    "path": "skills/common/plugins/runtime-dispatch/src/adapter.ts",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "5bf2d0c003497e74b0bfdf7524b4725bcd77d12b592f00e121be553868009e5e"
+  },
+  {
+    "path": "skills/common/plugins/runtime-dispatch/src/openclaw-adapter.ts",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "1532db26c17561feba17d5bdbba2771de2730df9bd299af203c4b0432d5842f4"
+  },
+  {
+    "path": "skills/common/plugins/runtime-dispatch/src/openclaw-result.ts",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "38290ff080cc31a5465f911bf8adaf1d7d82c1c0a019914d088a5dd6c35b9643"
+  },
+  {
+    "path": "skills/common/plugins/runtime-dispatch/src/result-persistence.ts",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "4939307a37adc3aea6dfba4d7f196a897c5ee3ca72a7594c6b7b8c02f4509a41"
+  },
+  {
+    "path": "skills/common/plugins/secret-resolver/README.md",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "20d8c301684dad82c2c43cb192e134baddcfcb187d7c121f1dc7e4d686520964"
+  },
+  {
+    "path": "skills/common/plugins/secret-resolver/plugin.json",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "c36463ec4caa7adc8334d5adc6ac362d8a6fa5763e9a3b1ff03bf044024ed347"
+  },
+  {
+    "path": "skills/common/plugins/secret-resolver/src/adapter.ts",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "89e997cbc5c533ab70b5c17e71f29e72ce26a49263345ae635ad9a41f8b56eb3"
+  },
+  {
+    "path": "skills/common/plugins/state-store/README.md",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "f3cb1eff736094a1fdcab144000f4f700c76fd5107160ca1e5a7a5317ebce028"
+  },
+  {
+    "path": "skills/common/plugins/state-store/plugin.json",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "57fa3d6179e5f6d781f716a164eb88e26630a69d768f2fd1022eab7c3580a8eb"
+  },
+  {
+    "path": "skills/common/plugins/state-store/src/adapter.ts",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "1805e68a4d478af60df925fb6c38204344d53e17a8134fafdd47732263c473c7"
+  },
+  {
+    "path": "skills/common/plugins/telemetry-observer/README.md",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "921d2ddf474987a9d2417171cf0bad32d409cf961e76ecaa963d84fe70941133"
+  },
+  {
+    "path": "skills/common/plugins/telemetry-observer/plugin.json",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "e8f47d3fe54481f200935675f1899a29fe428b636060e5cf61756958044221b6"
+  },
+  {
+    "path": "skills/common/plugins/telemetry-observer/src/observer.ts",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "21abca7f49d39ccb085bac5aa152c3e2fd7b5b477d7fbc897785a8750854b71c"
+  },
+  {
+    "path": "skills/common/plugins/telemetry-store/README.md",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "86528774651ce1cc75349470f02ce8c1ac9dfa6610c98211b74e74a27f67e503"
+  },
+  {
+    "path": "skills/common/plugins/telemetry-store/plugin.json",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "77c3f887ed4068b00a3d3a3019c5257b9a9a7c397c5d94a2bc21095b5481b848"
+  },
+  {
+    "path": "skills/common/plugins/telemetry-store/src/adapter.ts",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "f5a3ff64dce028471c800e9a5da01bcc3a405f26b1e68ccdd8e78cd54e00fb13"
+  },
+  {
+    "path": "skills/common/plugins/transport-publisher/README.md",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "92a62894d0171bc3ea702f18fd4d7ae16d0842e8e7e8353401b6b4333a70b839"
+  },
+  {
+    "path": "skills/common/plugins/transport-publisher/plugin.json",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "91473413670e5fa02bb197c71deaeffba26a9661dae26e6d04f9c527c026a76f"
+  },
+  {
+    "path": "skills/common/plugins/transport-publisher/src/adapter.ts",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "017501aea38f59ede67adf7249ed0bfa9c2d16430b2c7acf6380944350f2cd31"
+  },
+  {
+    "path": "skills/common/plugins/wait-store/README.md",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "1e950161e573a8dfe0ae3700bce649c16e7935a833702d9032992bb75e6ea5f3"
+  },
+  {
+    "path": "skills/common/plugins/wait-store/plugin.json",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "f7564d3bb167b2aebe69bba54ab7ba2d59cf588475ea21c8c4cb4ab658a210ed"
+  },
+  {
+    "path": "skills/common/plugins/wait-store/src/adapter.ts",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "b55d76d4913c0c6f4074af43615046365ba226dfb51189fd26fa6d486753b92d"
+  },
+  {
+    "path": "skills/nova/plugins/architecture-validator/README.md",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "1ea6563f1ca2b809d9cc3966ab11d6098caa39beb030bd907ed1aabf73ec4cf2"
+  },
+  {
+    "path": "skills/nova/plugins/architecture-validator/plugin.json",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "915926814bba76b52d9cce47961da67e43cf5ade85c077a417272023c5730792"
+  },
+  {
+    "path": "skills/nova/plugins/architecture-validator/src/stage.ts",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "1d078730d6c276cba32fbdded3b289bff155638490e7a5d191750732e13565bc"
+  },
+  {
+    "path": "skills/nova/plugins/blueprint-sync/README.md",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "8d7826178378bd3fe2a9f368744f784e3003655eb48297e3b4782be57a94d9e4"
+  },
+  {
+    "path": "skills/nova/plugins/blueprint-sync/plugin.json",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "b7d85a1c195d9d5280da1c396ac1d697be9e0d3a85babe1046850c18fa47e384"
+  },
+  {
+    "path": "skills/nova/plugins/blueprint-sync/src/stage.ts",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "77735e30c7109aee73cd6c396fe11858275935df1f251aae77d582ed4a7f2765"
+  },
+  {
+    "path": "skills/nova/plugins/buster-quality-gate/README.md",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "81f3cf942b15fc8a091eb34b9009dadb14cb4c8211febfa391b23b13a19862f6"
+  },
+  {
+    "path": "skills/nova/plugins/buster-quality-gate/plugin.json",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "19b03b5c61f4b6decbf06a650a3824db02f61ba010939246a7d1bd35ae3e6966"
+  },
+  {
+    "path": "skills/nova/plugins/buster-quality-gate/src/stage.ts",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "3b58135f8f95a089a7776ca76152d51ae394627f13ce0da1f362c90ab7b1ea76"
+  },
+  {
+    "path": "skills/nova/plugins/case-study/README.md",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "d896e5e31a642289a86806abd984add82a969fd6377257ff39b864c1967aaa56"
+  },
+  {
+    "path": "skills/nova/plugins/case-study/plugin.json",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "e18697e96655c6b0fcf775de0a898a18821d7bd1c9e1960fdd150d18f9f68b8e"
+  },
+  {
+    "path": "skills/nova/plugins/case-study/src/stage.ts",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "a537e4028ddc30ea19ae7fa18e828c10745f08f14b0cf16e534ee8b42ea720b9"
+  },
+  {
+    "path": "skills/nova/plugins/delivery-lint/README.md",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "6ff50abaa584bcad2bd2be83034d06a30d3653e8e903bb40a8ebbfdabf5998a3"
+  },
+  {
+    "path": "skills/nova/plugins/delivery-lint/plugin.json",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "4d560ad2f25858a8f399097effb0f32c7a25bfbe326c3dfd61101346ee1d01d9"
+  },
+  {
+    "path": "skills/nova/plugins/delivery-lint/src/stage.ts",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "b8f849c5d228713dd73ab7a47e73ef5be9ee5fd07af39e4276c483a3555ac862"
+  },
+  {
+    "path": "skills/nova/plugins/demo-handoff/README.md",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "5a80c23923eecb0361cd60ae3eec9ee72560eaecc73ef4b99dc459e5448561e0"
+  },
+  {
+    "path": "skills/nova/plugins/demo-handoff/plugin.json",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "6603951e6a1eb1eef6a48d400a942ca153ec064d2ea67b0ec7f78b4f7e680d6e"
+  },
+  {
+    "path": "skills/nova/plugins/demo-handoff/src/adapter.ts",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "245bff96d5198426aa2bc73739fdc4976fb632b0a4737b923594efa052af0855"
+  },
+  {
+    "path": "skills/nova/plugins/demo-handoff/src/candidate.ts",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "0706b62469c38751d1b22fdc0486e66915cda45077b315b144ef8a4ec641eff3"
+  },
+  {
+    "path": "skills/nova/plugins/demo-handoff/src/delivery.ts",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "a1dfb3d6fef144d5f11e3546039ba4a291c97ad4f5fcf7ee0279b83fdfadaff7"
+  },
+  {
+    "path": "skills/nova/plugins/demo-handoff/src/ready.ts",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "ae78a23722ab515d539b8ad4c0950ee8d487c5ff02a4b5f851f249f2026ffb82"
+  },
+  {
+    "path": "skills/nova/plugins/human-approval/README.md",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "39f9c6805d61be22d45bc3d5709499dae9977e7c4dee1fb1e75ac8e3dd6e537f"
+  },
+  {
+    "path": "skills/nova/plugins/human-approval/plugin.json",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "a93144f20bcd0968995844516da5221e8d77aa5c559577c7f1165f00dfd0f4b8"
+  },
+  {
+    "path": "skills/nova/plugins/human-approval/src/architecture-approval.ts",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "3a6073a7c6ef98ba417ed1b38827c15b3449e70ac89b8a126b7ad14f380e304b"
+  },
+  {
+    "path": "skills/nova/plugins/human-approval/src/stage.ts",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "9e54e56d6b5acc631985cc2de9e9be943f3e8cdeaa09835dfdc1e402d67da8fd"
+  },
+  {
+    "path": "skills/nova/plugins/implementation-agent/README.md",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "9f6b149f2994f44abeefc59e9e960f240f3c4947c1dceaf1d97806cc0255192a"
+  },
+  {
+    "path": "skills/nova/plugins/implementation-agent/plugin.json",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "fde7e60285cf1fd687b85e9ce2372b1aaa02d7bbf35bced1b8741c073493e5c9"
+  },
+  {
+    "path": "skills/nova/plugins/implementation-agent/src/stage.ts",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "4f2057feef1fdd4c81bbb90ae203564cd0ab3922a9fd44b098a1a99558da4870"
+  },
+  {
+    "path": "skills/nova/plugins/lint/README.md",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "95b6617ebe1ea090c7ac550f269ee82b17dfb82159eb777c6e25007fae95320c"
+  },
+  {
+    "path": "skills/nova/plugins/lint/plugin.json",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "3d671a34bb259b1c031d7f2ac1c54b19b4821e023bb53c7d43e5642dd1a0ce04"
+  },
+  {
+    "path": "skills/nova/plugins/lint/src/adapter.ts",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "7d525ef53fc8a187eba48e7ee15ca7f8f2df1d00a4e23823de15bae47a1b49e4"
+  },
+  {
+    "path": "skills/nova/plugins/lint/src/stage.ts",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "87145aaf9cf42a78e5a9ad076b2d6c3799861bf0e78576076feb07c9c273c5e8"
+  },
+  {
+    "path": "skills/nova/plugins/pipeline-review/README.md",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "acdf524d2b206d0f6152b537375a69b07b0abf5ad3ce6e57942a5e64ebde9141"
+  },
+  {
+    "path": "skills/nova/plugins/pipeline-review/plugin.json",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "113fad3ba88ebc4db595fd411230d3288a28e8dfc99583e5495cf34da2483cab"
+  },
+  {
+    "path": "skills/nova/plugins/pipeline-review/src/evidence-adapter.ts",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "477c0a5349d80816ab5af7dd06abbdeec3bf62ab94fe25ea88159d3f1b74293c"
+  },
+  {
+    "path": "skills/nova/plugins/pipeline-review/src/stage.ts",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "e2951394c77a1f57f8538dc8586fb6f8b571a5b2050b87fec65f42260055d51a"
+  },
+  {
+    "path": "skills/nova/plugins/preflight-contract/README.md",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "59edb208e51d04f8c675d23583aab236c1ecd2d7e23938acb99424d4d6c48da6"
+  },
+  {
+    "path": "skills/nova/plugins/preflight-contract/plugin.json",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "3db03aa245a1721e183ce3e035bf0c6a5a57b2c227e3ca230b528b1bc68c192c"
+  },
+  {
+    "path": "skills/nova/plugins/preflight-contract/src/source-stage.ts",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "9f7e566f15813cb4b096dbd5dcd84f9d4925e09da29075ef8a85dc1f352bb1c6"
+  },
+  {
+    "path": "skills/nova/plugins/preflight-contract/src/stage.ts",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "75da42cf49cb7a655e9edb4e4928bd3e708ece30f592cb5a14aa2627ce3fc4ef"
+  },
+  {
+    "path": "skills/nova/plugins/prism-design/README.md",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "578e856a2dc1bec26227012406c610bca1ed9ce569778347b9d90355ed4f96ac"
+  },
+  {
+    "path": "skills/nova/plugins/prism-design/plugin.json",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "063ef9316e7bfdbe8b2b9a0812bfc2a0b968294edc116d85e557d3e591dbf2d9"
+  },
+  {
+    "path": "skills/nova/plugins/prism-design/src/stage.ts",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "20bee389c4868070dc7450d366b85745c2f26acb88e8d526463c3cb5a599db88"
+  },
+  {
+    "path": "skills/nova/plugins/project-summary/README.md",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "b04bfca11bc047ccfecab442c0dd6631a16dd93bca4ccb5f691cef6acf901f26"
+  },
+  {
+    "path": "skills/nova/plugins/project-summary/plugin.json",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "995ddb9dec1c6ad6ea9e55c7ed667e560a045365fcc6e4721908bd86b63b0454"
+  },
+  {
+    "path": "skills/nova/plugins/project-summary/src/stage.ts",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "b16533ade1d6bbf08c53d3c31bbe7102f5b67b785b1f928524ca9879a99a4fee"
+  },
+  {
+    "path": "skills/nova/plugins/remote-test-gate/README.md",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "d3dbc1c4911286b1a7ffa0812d1cca86f6e4e0842da9dc82ce6db1eb83112331"
+  },
+  {
+    "path": "skills/nova/plugins/remote-test-gate/plugin.json",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "7c42888270bb814bfeb9c47b2bc1daa4a858e649890866c9abb0f6b3c4b8d35e"
+  },
+  {
+    "path": "skills/nova/plugins/remote-test-gate/src/adapter.ts",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "41ae631fac290f59931c6243280b4991278cd0b1659bc70dee4898c16ed33237"
+  },
+  {
+    "path": "skills/nova/plugins/remote-test-gate/src/evidence-adapter.ts",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "6afbc4274b2cbffa9fff2ed3c32deb9af3a381e7d3400e253fc3b871e139bffe"
+  },
+  {
+    "path": "skills/nova/plugins/repository-adapter/README.md",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "e0d8e4885ec3f72abdeebf8f6d1b8f94618e7f4bb69bb24f91809195b9da8138"
+  },
+  {
+    "path": "skills/nova/plugins/repository-adapter/plugin.json",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "91fe75d56133722d51c62bb2b06f729cdf3ee35735f471857fb324aab34501bd"
+  },
+  {
+    "path": "skills/nova/plugins/repository-adapter/src/adapter.ts",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "657ec9c38069eead03aa531e5d5b60041c8fe34b643e2bab838eb0a80e12afcd"
+  },
+  {
+    "path": "skills/nova/plugins/repository-adapter/src/repository-file.ts",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "a6d8442958b8d90132a23d69449058c6d146aa170ad5f63a11433e42fb73277e"
+  },
+  {
+    "path": "skills/nova/plugins/repository-adapter/src/revision-reader.ts",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "35aadab83485ed1dcf370ce2136a67d892b6026ba594d0d12d8c739dc3f0c71f"
+  },
+  {
+    "path": "skills/nova/plugins/review/README.md",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "643e1eb16117035d97d8856a89de766d10f39de3cc61f944e6ebd92eb1902f67"
+  },
+  {
+    "path": "skills/nova/plugins/review/plugin.json",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "5ced42bfc8ca0851739ed6bbd668085345dea0e1caa391c5f1520e7f919be8f1"
+  },
+  {
+    "path": "skills/nova/plugins/review/src/repository-audit-stage.ts",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "da35c9701be5169975fb4a71b9462e32e6cea61ef46d2211989413d8c6a28f64"
+  },
+  {
+    "path": "skills/nova/plugins/review/src/repository-revalidation-stage.ts",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "6f8071ea095b3f912fc91e4c812bc7bd5c9cfd4077b48422e6eb4de1e0c70be7"
+  },
+  {
+    "path": "skills/nova/plugins/review/src/review-report-flow.ts",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "0769c1c76b65f88c6647adabcb5fc965e89980d431db30dfce2bf263063be6b4"
+  },
+  {
+    "path": "skills/nova/plugins/review/src/review-report-storage.ts",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "2ac682bb07057feeec977c9b1446339f65555bf14977a2dbe1644cbaff72c4e5"
+  },
+  {
+    "path": "skills/nova/plugins/review/src/stage.ts",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "24edd137f6742ed10cdec57f43fc29ac6a270fd25019ca6b9ba2c348cdcb372c"
+  },
+  {
+    "path": "skills/prism/openclaw-plugin/README.md",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "48eb6362bc55e2dec68324b49d66f4a3069d2c00955664e5fe48aa6c3be0db05"
+  },
+  {
+    "path": "skills/prism/openclaw-plugin/index.mjs",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "97a30daa0a042f2cd9416746caffe9207828dd9a587e3a6c3e8de481f5d0640e"
+  },
+  {
+    "path": "skills/prism/openclaw-plugin/openclaw.plugin.json",
+    "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+    "sha256": "1cf3f06268870973f2d7131cf64d469e516a62bf4b5f3a9d5b6d6a1c9bdd0588"
+  }
+]

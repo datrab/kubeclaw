@@ -1,0 +1,107 @@
+{
+  "status": "PASS_OPL001_SOURCE_ADDENDUM_THREE_EXACT_LEGACY_FINDINGS",
+  "reviewer": "/root/source_closeout",
+  "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+  "wholeOPL001SourceVerdict": "PASS_REMAINS_SUPPORTED",
+  "decisions": [
+    {
+      "findingId": "A98-READER-OBSERVER-REDIS",
+      "OPL001Disposition": "RESOLVED_SOURCE_IN_OPL001_SCOPE",
+      "reason": "Current canonical generated observer registration row explicitly names ioredis at redis-transport.ts41; includes redisHost/redisPort, REDIS_HOST/PORT config precedence and TLS/network-isolation, sensitive redisPassword/REDIS_PASSWORD and deployment credential ownership. Original index\u2192AgentObserverRedisWriter\u2192defaultRedisClientFactory\u2192loadRedisCtor/createRedisClient\u2192ioredis path is actual runtime source, not package-name inference. Password is uiHints.sensitive. The all-package top row only says no manifest-declared capability/input, not no dependency.",
+      "limits": "Does not independently close every external dependency, health check or secret lifecycle under OPL005/CFG. redisUsername is not claimed present in the dependency-row secret projection; whole configuration guide/reference union remains its authority.",
+      "disposition": "RESOLVED_SOURCE_IN_OPL001_SCOPE"
+    },
+    {
+      "findingId": "A98-QUALITY-COMPILE-STARTUP",
+      "OPL001Disposition": "RESOLVED_SOURCE_IN_OPL001_SCOPE",
+      "reason": "Canonical step2 explicitly makes compile validation/code admission without dependency proof. Step3 states compile imports enabled modules but calls neither adapter factories nor ready and creates no run. Run startup orders dependencies, awaits factory and ready, publishes only the complete started set, and preserves failed-readiness cleanup/rollback pending limitations. AdapterRuntime.start/#start and AdapterStarter.startAll/#start are the controlling separate runtime paths. This is no compile-as-health claim.",
+      "limits": "No successful compile/start, runtime activation, service readiness or live outcome inferred. Other A98 gates not accepted by this addendum.",
+      "disposition": "RESOLVED_SOURCE_IN_OPL001_SCOPE"
+    },
+    {
+      "findingId": "A98-R2-PLUGIN-DEPENDENCY-TRUTH",
+      "OPL001Disposition": "RESOLVED_SOURCE_IN_OPL001_SCOPE",
+      "reason": "Original projector now visits properties, additional/unevaluated dictionary keys, patternProperties, items/prefixItems, referenced targets and siblings, allOf/anyOf/oneOf, if/then/else, not and dependent schema/required predicates. It preserves conditions and unresolved/dynamic diagnostics. Canonical rows actually contain targets{key}.endpoint/tokenSecret, patterned messaging keys and if/unless/forbidden predicates. Source closure resolves declared workspace package exports/conditions/aliases and follows actual selected export references; publisher uses invocation client/client-owner/capability evidence plus qualified boundaries, not package-name/substrings as remote-service proof. Its field-name tokens only select candidate endpoint/secret fields, not remote clients. Diagnostics feed publication errors. Owning assertion sources explicitly cover hidden Redis client, workspace-selected local versus unused remote export, misleading Redis/Tailscale/package-name/comment/string and dictionary/pattern/ref/conditional cases. These assertions were read, not run.",
+      "limits": "This resolves the exact legacy mechanism objections relevant to OPL001 inventory/functions/configuration truth, using its complete51 guide union as substantive explanation. It is NOT a new complete audit of all per-registration service/endpoints/secret/owner/reachability claims, general parser completeness, OPL005 or CFG007 acceptance.",
+      "disposition": "RESOLVED_SOURCE_IN_OPL001_SCOPE"
+    }
+  ],
+  "bindings": [
+    {
+      "path": "docs/site/use/plugins.md",
+      "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+      "sha256": "b0cd0f8a937af4bd22ffca25e65e11e120b0053df2d67fa4250b61f1fe6ade5d"
+    },
+    {
+      "path": "scripts/docs-publication.mjs",
+      "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+      "sha256": "fdae9667aa99505d4fcc90681f081fb45717ab9f9d4333a30544abdea33525a4"
+    },
+    {
+      "path": "scripts/plugin-schema-dependencies.mjs",
+      "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+      "sha256": "92a7aadf67ee26fe81dc98aba5e8227c6d67c2f8967f3f5ec80b10104937ba89"
+    },
+    {
+      "path": "scripts/plugin-source-closure.mjs",
+      "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+      "sha256": "847cf0a6e4a64703ed51b61eec37cf1bb80c25ddebdd575a89474d41ef108f13"
+    },
+    {
+      "path": "scripts/plugin-dependency-boundaries.mjs",
+      "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+      "sha256": "386d898c20c0f9c8602e94ad10023c5e1c8311163053304c87f97cbd7fcde661"
+    },
+    {
+      "path": "scripts/tests/plugin-schema-dependencies.test.mjs",
+      "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+      "sha256": "fb7bab983c94cc9ec518fc5de166307c4bb6cb3a92f9f1716fda1dfc1666a929"
+    },
+    {
+      "path": "scripts/tests/plugin-source-closure.test.mjs",
+      "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+      "sha256": "c7edb51e3b8aeee2598b8f488591f66c3e08505a1878af60f1af7ee224813cf0"
+    },
+    {
+      "path": "skills/common/plugins/openclaw-agent-observer/src/index.ts",
+      "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+      "sha256": "a800b92606e0c803ae51867c7625ae5610169e23b2074b54d69f58e5f0d6f3aa"
+    },
+    {
+      "path": "skills/common/plugins/openclaw-agent-observer/src/config.ts",
+      "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+      "sha256": "1617f4937214a1b601b66d2525309a780c9202e54666a4ac3ff9135e3216297c"
+    },
+    {
+      "path": "skills/common/plugins/openclaw-agent-observer/src/redis-writer.ts",
+      "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+      "sha256": "8f974830cf10d931410d6bd1f23b4782aa8988b96baba13f4172a3b9f85d4a5d"
+    },
+    {
+      "path": "skills/common/plugins/openclaw-agent-observer/src/redis-transport.ts",
+      "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+      "sha256": "cc49831a1ff6eef51642fd47a0e4a1d00d6ad6bb6337c09f709d7cfd5a5f46da"
+    },
+    {
+      "path": "skills/common/plugins/openclaw-agent-observer/openclaw.plugin.json",
+      "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+      "sha256": "651bf5310a5261ee309e219453e534754e7738fdd86152e582183e3ba95ec5eb"
+    },
+    {
+      "path": "skills/nova/core/execution/adapters.ts",
+      "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+      "sha256": "293011e7313155b08f33bbef4ce0e910d00c7feef88fd6c585b040bb2cadbc24"
+    },
+    {
+      "path": "skills/nova/core/execution/adapter-startup.ts",
+      "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+      "sha256": "9bb8a0c27dfa199756cbe16a6898e7fb4d3a43c6ca59af144026bbb135a44619"
+    }
+  ],
+  "reviewMethod": "Narrow independent original source and canonical generated-row/procedure reading; inert current-vs-Git-byte binding. No target imports or generation/tests/runtime execution. Existing complete51 semantic scope retained, not rerun.",
+  "globalFindingDisposition": "Leave global matrix finding records untouched. These are OPL001-scoped source resolutions only; other cited requirement/gate residuals, OPL005 and CFG scopes require their separate whole reviews. Main alone performs any scoped openFindingIds change.",
+  "openMaterialOPL001SourceIssues": [],
+  "correctionToPriorReasoning": "The initial all51 guide proof alone did not dispose of these generated-operator-matrix allegations. This addendum supplies the previously unstated narrow original-generator/actual-canonical-row proof, not an automatic promotion from the guides.",
+  "overallAcceptance": "Independent Reader/Quality and actual retained checks still required; no Main or matrix edits.",
+  "opl001Verdict": "PASS"
+}

@@ -1,0 +1,393 @@
+{
+  "id": "A910-07-08-09-12-OPL001-whole-487f4e00-20261022",
+  "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+  "author": "Original canonical-guide authors and named eleven-guide correction authors; exact provenance in frozen proof union",
+  "reviewer": "/root/source_closeout (Source only); independent Reader and Quality must be integrated",
+  "gateIds": [
+    "A910-07",
+    "A910-08",
+    "A910-09",
+    "A910-12"
+  ],
+  "requirementIds": [
+    "OPL-001"
+  ],
+  "pages": [
+    "docs/site/extend/deep-guides/README.md",
+    "docs/site/extend/deep-guides/demo-handoff.md",
+    "docs/site/extend/deep-guides/reports.md",
+    "docs/site/extend/lint.md",
+    "docs/site/extend/plugin-catalogue/README.md",
+    "docs/site/reference/buster-error-codes.md",
+    "docs/site/reference/buster-suites.md",
+    "docs/site/reference/lint-policy.md",
+    "docs/site/reference/lint-rules.md",
+    "docs/site/reference/nova-project.md",
+    "docs/site/understand/buster.md",
+    "docs/site/understand/communication.md",
+    "docs/site/understand/data-and-state.md",
+    "docs/site/understand/echo.md",
+    "docs/site/understand/forge.md",
+    "docs/site/understand/openclaw.md",
+    "docs/site/understand/ops-mcp.md",
+    "docs/site/understand/prism-runtime.md",
+    "docs/site/understand/security-and-trust.md",
+    "docs/site/understand/telemetry.md",
+    "docs/site/understand/worker-core.md",
+    "docs/site/use/plugins.md",
+    "docs/site/use/workflows/redis-replay-recovery.md",
+    "docs/site/use/workflows/wait-resume.md"
+  ],
+  "sources": [
+    "docs/config/documentation-plugin-complexity.json",
+    "plugins/kubeclaw-ops/.codex-plugin/plugin.json",
+    "plugins/kubeclaw-ops/skills/troubleshoot/SKILL.md",
+    "scripts/generate-buster-error-reference.mjs",
+    "skills/buster/plugins/api-flow/README.md",
+    "skills/buster/plugins/api-flow/plugin.json",
+    "skills/buster/plugins/api-flow/src/provider.js",
+    "skills/buster/plugins/axe/README.md",
+    "skills/buster/plugins/axe/plugin.json",
+    "skills/buster/plugins/axe/src/provider.js",
+    "skills/buster/plugins/container-build/README.md",
+    "skills/buster/plugins/container-build/plugin.json",
+    "skills/buster/plugins/container-build/src/provider.js",
+    "skills/buster/plugins/coverage-budget/README.md",
+    "skills/buster/plugins/coverage-budget/plugin.json",
+    "skills/buster/plugins/coverage-budget/src/provider.js",
+    "skills/buster/plugins/demo-auth-smoke/README.md",
+    "skills/buster/plugins/demo-auth-smoke/plugin.json",
+    "skills/buster/plugins/demo-auth-smoke/src/provider.js",
+    "skills/buster/plugins/direct-command/README.md",
+    "skills/buster/plugins/direct-command/plugin.json",
+    "skills/buster/plugins/direct-command/src/provider.js",
+    "skills/buster/plugins/http/README.md",
+    "skills/buster/plugins/http/plugin.json",
+    "skills/buster/plugins/http/src/provider.js",
+    "skills/buster/plugins/junit-report-adapter/README.md",
+    "skills/buster/plugins/junit-report-adapter/plugin.json",
+    "skills/buster/plugins/junit-report-adapter/src/adapter.js",
+    "skills/buster/plugins/kubernetes-fixture/README.md",
+    "skills/buster/plugins/kubernetes-fixture/plugin.json",
+    "skills/buster/plugins/kubernetes-fixture/src/provider.js",
+    "skills/buster/plugins/lighthouse/README.md",
+    "skills/buster/plugins/lighthouse/plugin.json",
+    "skills/buster/plugins/lighthouse/src/provider.js",
+    "skills/buster/plugins/openapi/README.md",
+    "skills/buster/plugins/openapi/plugin.json",
+    "skills/buster/plugins/openapi/src/provider.js",
+    "skills/buster/plugins/playwright/README.md",
+    "skills/buster/plugins/playwright/plugin.json",
+    "skills/buster/plugins/playwright/src/provider.js",
+    "skills/buster/plugins/security-providers/README.md",
+    "skills/buster/plugins/security-providers/plugin.json",
+    "skills/buster/plugins/security-providers/src/common.js",
+    "skills/buster/plugins/security-providers/src/dependency.js",
+    "skills/buster/plugins/security-providers/src/headers.js",
+    "skills/buster/plugins/security-providers/src/image.js",
+    "skills/buster/plugins/security-providers/src/kubernetes-policy.js",
+    "skills/buster/plugins/security-providers/src/kubernetes-runtime.js",
+    "skills/buster/plugins/size-budget/README.md",
+    "skills/buster/plugins/size-budget/plugin.json",
+    "skills/buster/plugins/size-budget/src/provider.js",
+    "skills/buster/plugins/tailscale-exposure/README.md",
+    "skills/buster/plugins/tailscale-exposure/plugin.json",
+    "skills/buster/plugins/tailscale-exposure/src/provider.js",
+    "skills/buster/plugins/visual/README.md",
+    "skills/buster/plugins/visual/plugin.json",
+    "skills/buster/plugins/visual/src/provider.js",
+    "skills/common/plugins/agent-observability/README.md",
+    "skills/common/plugins/agent-observability/plugin.json",
+    "skills/common/plugins/agent-observability/src/observers.ts",
+    "skills/common/plugins/artifact-store/README.md",
+    "skills/common/plugins/artifact-store/plugin.json",
+    "skills/common/plugins/artifact-store/src/adapter.ts",
+    "skills/common/plugins/command-runner/README.md",
+    "skills/common/plugins/command-runner/plugin.json",
+    "skills/common/plugins/command-runner/src/adapter.ts",
+    "skills/common/plugins/command-runner/src/execution.ts",
+    "skills/common/plugins/command-runner/src/runner.ts",
+    "skills/common/plugins/git-workspace/README.md",
+    "skills/common/plugins/git-workspace/plugin.json",
+    "skills/common/plugins/git-workspace/src/adapter.ts",
+    "skills/common/plugins/git-workspace/src/operations.ts",
+    "skills/common/plugins/git-workspace/src/runner.ts",
+    "skills/common/plugins/network-http/README.md",
+    "skills/common/plugins/network-http/plugin.json",
+    "skills/common/plugins/network-http/src/adapter.ts",
+    "skills/common/plugins/notification-observer/README.md",
+    "skills/common/plugins/notification-observer/plugin.json",
+    "skills/common/plugins/notification-observer/src/observer.ts",
+    "skills/common/plugins/openclaw-agent-events/README.md",
+    "skills/common/plugins/openclaw-agent-events/plugin.json",
+    "skills/common/plugins/openclaw-agent-events/src/adapter.ts",
+    "skills/common/plugins/openclaw-agent-events/src/ingress-queue.ts",
+    "skills/common/plugins/openclaw-agent-observer/README.md",
+    "skills/common/plugins/openclaw-agent-observer/openclaw.plugin.json",
+    "skills/common/plugins/openclaw-agent-observer/src/diagnostics.ts",
+    "skills/common/plugins/openclaw-agent-observer/src/index.ts",
+    "skills/common/plugins/openclaw-agent-observer/src/redis-writer.ts",
+    "skills/common/plugins/operator-messaging/README.md",
+    "skills/common/plugins/operator-messaging/plugin.json",
+    "skills/common/plugins/operator-messaging/src/adapter.ts",
+    "skills/common/plugins/redis-transport/README.md",
+    "skills/common/plugins/redis-transport/plugin.json",
+    "skills/common/plugins/redis-transport/src/adapter.ts",
+    "skills/common/plugins/runtime-dispatch/README.md",
+    "skills/common/plugins/runtime-dispatch/plugin.json",
+    "skills/common/plugins/runtime-dispatch/src/adapter.ts",
+    "skills/common/plugins/runtime-dispatch/src/openclaw-adapter.ts",
+    "skills/common/plugins/runtime-dispatch/src/openclaw-result.ts",
+    "skills/common/plugins/runtime-dispatch/src/result-persistence.ts",
+    "skills/common/plugins/secret-resolver/README.md",
+    "skills/common/plugins/secret-resolver/plugin.json",
+    "skills/common/plugins/secret-resolver/src/adapter.ts",
+    "skills/common/plugins/state-store/README.md",
+    "skills/common/plugins/state-store/plugin.json",
+    "skills/common/plugins/state-store/src/adapter.ts",
+    "skills/common/plugins/telemetry-observer/README.md",
+    "skills/common/plugins/telemetry-observer/plugin.json",
+    "skills/common/plugins/telemetry-observer/src/observer.ts",
+    "skills/common/plugins/telemetry-store/README.md",
+    "skills/common/plugins/telemetry-store/plugin.json",
+    "skills/common/plugins/telemetry-store/src/adapter.ts",
+    "skills/common/plugins/transport-publisher/README.md",
+    "skills/common/plugins/transport-publisher/plugin.json",
+    "skills/common/plugins/transport-publisher/src/adapter.ts",
+    "skills/common/plugins/wait-store/README.md",
+    "skills/common/plugins/wait-store/plugin.json",
+    "skills/common/plugins/wait-store/src/adapter.ts",
+    "skills/nova/plugins/architecture-validator/README.md",
+    "skills/nova/plugins/architecture-validator/plugin.json",
+    "skills/nova/plugins/architecture-validator/src/stage.ts",
+    "skills/nova/plugins/blueprint-sync/README.md",
+    "skills/nova/plugins/blueprint-sync/plugin.json",
+    "skills/nova/plugins/blueprint-sync/src/stage.ts",
+    "skills/nova/plugins/buster-quality-gate/README.md",
+    "skills/nova/plugins/buster-quality-gate/plugin.json",
+    "skills/nova/plugins/buster-quality-gate/src/stage.ts",
+    "skills/nova/plugins/case-study/README.md",
+    "skills/nova/plugins/case-study/plugin.json",
+    "skills/nova/plugins/case-study/src/stage.ts",
+    "skills/nova/plugins/delivery-lint/README.md",
+    "skills/nova/plugins/delivery-lint/plugin.json",
+    "skills/nova/plugins/delivery-lint/src/stage.ts",
+    "skills/nova/plugins/demo-handoff/README.md",
+    "skills/nova/plugins/demo-handoff/plugin.json",
+    "skills/nova/plugins/demo-handoff/src/adapter.ts",
+    "skills/nova/plugins/demo-handoff/src/candidate.ts",
+    "skills/nova/plugins/demo-handoff/src/delivery.ts",
+    "skills/nova/plugins/demo-handoff/src/ready.ts",
+    "skills/nova/plugins/human-approval/README.md",
+    "skills/nova/plugins/human-approval/plugin.json",
+    "skills/nova/plugins/human-approval/src/architecture-approval.ts",
+    "skills/nova/plugins/human-approval/src/stage.ts",
+    "skills/nova/plugins/implementation-agent/README.md",
+    "skills/nova/plugins/implementation-agent/plugin.json",
+    "skills/nova/plugins/implementation-agent/src/stage.ts",
+    "skills/nova/plugins/lint/README.md",
+    "skills/nova/plugins/lint/plugin.json",
+    "skills/nova/plugins/lint/src/adapter.ts",
+    "skills/nova/plugins/lint/src/stage.ts",
+    "skills/nova/plugins/pipeline-review/README.md",
+    "skills/nova/plugins/pipeline-review/plugin.json",
+    "skills/nova/plugins/pipeline-review/src/evidence-adapter.ts",
+    "skills/nova/plugins/pipeline-review/src/stage.ts",
+    "skills/nova/plugins/preflight-contract/README.md",
+    "skills/nova/plugins/preflight-contract/plugin.json",
+    "skills/nova/plugins/preflight-contract/src/source-stage.ts",
+    "skills/nova/plugins/preflight-contract/src/stage.ts",
+    "skills/nova/plugins/prism-design/README.md",
+    "skills/nova/plugins/prism-design/plugin.json",
+    "skills/nova/plugins/prism-design/src/stage.ts",
+    "skills/nova/plugins/project-summary/README.md",
+    "skills/nova/plugins/project-summary/plugin.json",
+    "skills/nova/plugins/project-summary/src/stage.ts",
+    "skills/nova/plugins/remote-test-gate/README.md",
+    "skills/nova/plugins/remote-test-gate/plugin.json",
+    "skills/nova/plugins/remote-test-gate/src/adapter.ts",
+    "skills/nova/plugins/remote-test-gate/src/evidence-adapter.ts",
+    "skills/nova/plugins/repository-adapter/README.md",
+    "skills/nova/plugins/repository-adapter/plugin.json",
+    "skills/nova/plugins/repository-adapter/src/adapter.ts",
+    "skills/nova/plugins/repository-adapter/src/repository-file.ts",
+    "skills/nova/plugins/repository-adapter/src/revision-reader.ts",
+    "skills/nova/plugins/review/README.md",
+    "skills/nova/plugins/review/plugin.json",
+    "skills/nova/plugins/review/src/repository-audit-stage.ts",
+    "skills/nova/plugins/review/src/repository-revalidation-stage.ts",
+    "skills/nova/plugins/review/src/review-report-flow.ts",
+    "skills/nova/plugins/review/src/review-report-storage.ts",
+    "skills/nova/plugins/review/src/stage.ts",
+    "skills/prism/openclaw-plugin/README.md",
+    "skills/prism/openclaw-plugin/index.mjs",
+    "skills/prism/openclaw-plugin/openclaw.plugin.json"
+  ],
+  "checks": [
+    {
+      "command": "/usr/local/bin/node scripts/check-buster-guides.mjs",
+      "exitCode": 0,
+      "observation": "Buster guides verified: 9 pages, 12 suites, 19 providers, 1714 pinned links, 217 revision-bound source files, 6 requirements. Original retained Root execution, not a reviewer rerun.",
+      "originalResult": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/eleven-guide-scalar-checks/buster-guides-after-repin/result.json"
+    },
+    {
+      "command": "/usr/local/bin/node scripts/check-core-architecture-guides.mjs",
+      "exitCode": 0,
+      "observation": "{\"ok\":true,\"pages\":3,\"requirements\":52,\"pinnedSourceLinks\":259,\"currentEvidenceFiles\":133,\"capabilities\":28,\"novaErrorCodesCoveredByFamily\":446,\"workerErrorCodesNamed\":223,\"pluginRuntimeDiagnosticsNamed\":89} Original retained Root execution, not a reviewer rerun.",
+      "originalResult": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/eleven-guide-scalar-checks/core-guides-after-repin/result.json"
+    },
+    {
+      "command": "/usr/local/bin/node scripts/docs-publication.mjs check",
+      "exitCode": 0,
+      "observation": "documentation publication passed (177 pages, 51 plugins) Original retained Root execution, not a reviewer rerun.",
+      "originalResult": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/eleven-guide-scalar-checks/publication-after-repin/result.json"
+    }
+  ],
+  "review": {
+    "sourceAccuracy": "PASS",
+    "readerUsability": "NOT_READY",
+    "quality": "NOT_READY"
+  },
+  "summary": "Independent whole Source PASS for complete 51-package / 50-README union and all eleven guide corrections; original 12 chapter acceptances retained. Exact four whole passConditions/automaticFailures and whole OPL-001 adjudicated in Source review.json. Actual independent Reader/Quality and retained current checks must be integrated before PASS.",
+  "limits": [
+    "Original 12 completed chapter scopes retained; no new deep-guide acceptance count or second acceptance of old OPL-002/003/004.",
+    "Review is Source-only; Reader and Quality verdicts must be supplied independently before a matrix PASS.",
+    "No target imports, generator/test/native/model/cluster/browser/receiver execution by this reviewer; inert Python and Git checks only.",
+    "Original first failures remain historical; later named correction reviews supersede only their exact mechanisms.",
+    "Ruff/ESLint wrong-shape/nonzero parser limit, Prism selected production mismatch, unknown remote outcome and owner-controlled cleanup remain product limits, not fixed or live-validated.",
+    "No general 1027-code semantic approval, REF-005/all-product errors or CFG-007 exhaustive configuration acceptance. Exact 13 fixed-parser rows and two outcome/preamble hunks retain their separate proofs.",
+    "No A910-05/13/14, graph/role/current-consumer/native/release approval or new execution authority. Matrix remains 52/89 and 223/261 until explicit integration."
+  ],
+  "openIssues": [
+    "Assembly prerequisite only: integrate independently supplied current Reader/Quality decisions and actual retained command results; not a material Source finding."
+  ],
+  "verdict": "NOT_READY",
+  "integrationInstruction": "Candidate skeleton only, not a new register. Replace role/overall assembly fields solely from actual independent results; keep this Source decision and original limits. Do not use this NOT_READY record to close IDs.",
+  "priorProofAttribution": [
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/a910-all51-family-review-continuation/coverage.json",
+      "sha256": "79930135d1934c7963909f7c4f1316b1f0b525d889b6a0affa4fd9347c385300"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/a910-all51-review-union-source-addendum/addendum.json",
+      "sha256": "a14a96877f4645abd15f17554b0f59489f8d27f5d055dfc51743bcfc444aaa5e"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/a910-all51-final-doc-correction-review-addendum/addendum.json",
+      "sha256": "1c1ff9613f3d96c74574642ad52bbf1b1455e8367ab17062fe0cf7d93f5f75b7"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/lint-engine-31-independent/review.md",
+      "sha256": "d85be8e6d5c615d90bdd04854bde91b037c6f401d9f8740eec134bed5b416208"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/echo-v2-independent/review.json",
+      "sha256": "23ac695e15716783c5af4a5396894cc3eae681258f292dbb4984974d351f96e2"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/eleven-guide-style-root-independent/review.json",
+      "sha256": "9e3240993220bd0d6fba3c0781051cda0156c80ce1b312c0391ea0b183e38bd9"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/eleven-guide-style-root-independent/adoption.json",
+      "sha256": "74253c633589ad159559039119dd40349424ca3d5be36e0b5673ab60d2add4f5"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/buster-demo-auth-seven-url-repin-root-independent/review.json",
+      "sha256": "b35501d1e37d0f599f7d0553f49459c3a4554c54164f29da2a3f87e46fd94c74"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/buster-family-seven-fixes-independent/review.json",
+      "sha256": "24021b2867c70be90f429e89bbee22c168a346d3e8eff71d91cff97346f746f4"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/telemetry-two-mechanism-independent/review.json",
+      "sha256": "a6ae6cce75132c730b29d31c0225af44cb9d19625f041c1520295635a327a26b"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/durable-operator-operation-guides-independent/review.json",
+      "sha256": "3ba17418ac2c8a10355fe38498c8baac7ee5dabb48927fca9221a504e591ac18"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/quality-optional-evaluator-guide-independent/review.json",
+      "sha256": "ea24ef77d3487d2602e398b1f4b20526f2f4607cad52ccf4325a563e40e05a47"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/source-ingress-status-drain-independent/review.json",
+      "sha256": "7055109cd7f53e5f28a41a6844f82050880c3ac68eecd47fc1569e43fd8202bb"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/echo-supervised-operator-independent/review.json",
+      "sha256": "88c09b2f92d3122a464971cdd9411b7475420680476aa95197afadd03f210d9f"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/lint-engine-four-doc-corrections-independent/review.json",
+      "sha256": "a138d1493b1549b4be8f5a3e1f4f57dd0685431e1c42f54dc830bbea4d0a3cfc"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/a910-final-nine-family-independent/review.md",
+      "sha256": "0d0c39342ed64d1cf82acdd9bc8aea5e45b1797d723e1c184ae74e8a8bc83cc0"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/a910-final-nine-family-independent/coverage.json",
+      "sha256": "d36e8a3eef547bc49300035cea4aa294b87960f1b3b7f7db528f522078b56667"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/a910-telemetry-family-independent/review.md",
+      "sha256": "c84c7af017fca2bf6cf0cc8a0bf713e76922cdae1310225754b085e265c1064b"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/a910-telemetry-family-independent/coverage.json",
+      "sha256": "8bb09b5e8242eaba5c3ecef5174509a1baeae2e1196b671af90764bda52dd13c"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/a910-buster-family-independent/review.md",
+      "sha256": "52ad51711e17eee0149f0cee85bb5b4a2beb4698378a6b16e8138b71750b162d"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/a910-buster-family-independent/coverage.json",
+      "sha256": "b3c8dc304a75f757c90bd2a58052bebf1f4c990281953cd4332742c989c495d7"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/six-guide-independent-review.md",
+      "sha256": "7aaaae18db470573a0722a40c2f0d26d4ce8e8d4449531af312c45d7a615c0a8"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/a910-durable-approval-family-independent/review.md",
+      "sha256": "9451210171236cc0fd047c6df180e574986e7c7ddf3b6b1409339ec4e81907ed"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/a910-durable-approval-family-independent/coverage.json",
+      "sha256": "99f97b678e5e183c236116bb31d1e23711616426c4b6219fd2b727c445cc51b4"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/a910-quality-communication-family-independent/review.md",
+      "sha256": "82408d032c008b930cd5fe5935682930de0a9226be6c1517b88db18a0529833f"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/a910-quality-communication-family-independent/coverage.json",
+      "sha256": "f68f8b567b8ade90c84ec6f33da9a1e7ce7a6e7ed0486b5cac978fd074785e76"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/reports-guide-independent-review.md",
+      "sha256": "56a55d6e81c4a6a8b33ac0ddac0c5e3b4447c1672aed082a15c59133bf21c7cd"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/demo-auth-guide-independent-review/review.md",
+      "sha256": "2709923927d6b340150773768cb4805441385c550e32b0ed12fd461d0ab922ec"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/handoffs/pr13-finish-20261021/source-pin-and-guide-independent-review.md",
+      "sha256": "abc2fb107c05b4abc07064010fc7dbfe0f00c33ee5e533443c7829ed8d65f1f7"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/handoffs/pr13-finish-20261021/git-workspace-independent-review.md",
+      "sha256": "db14712eb66cd052b280559d9a6c1efd6e474253848e97ef0a7fde100a7cdebb"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/handoffs/pr13-finish-20261021/repository-adapter-independent-review.md",
+      "sha256": "73a50cce6b2444944defce8aac674c59f39518238624c0d70e66cf8e88b16418"
+    }
+  ],
+  "sourceReview": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/source-resume-final-20261022/review.json"
+}

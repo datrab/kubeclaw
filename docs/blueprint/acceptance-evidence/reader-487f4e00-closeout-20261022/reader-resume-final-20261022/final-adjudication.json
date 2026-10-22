@@ -1,0 +1,31 @@
+{
+  "verdict": "PASS",
+  "role": "Reader only",
+  "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+  "originalRecords": 94,
+  "affectedPreservation": 48,
+  "noNewImpactPreservation": 46,
+  "readerChecks": {
+    "R1": "PASS",
+    "R2": "PASS",
+    "R3": "PASS",
+    "R4": "PASS",
+    "R5": "PASS",
+    "R6": "PASS",
+    "R7": "PASS"
+  },
+  "readerGateDecisions": {
+    "A910-07": "PASS_READER_READY_FOR_ROOT_WHOLE_DECISION",
+    "A910-08": "PASS_READER_READY_FOR_ROOT_WHOLE_DECISION",
+    "A910-09": "PASS_READER_READY_FOR_ROOT_WHOLE_DECISION",
+    "A910-12": "PASS_READER_READY_FOR_ROOT_WHOLE_DECISION",
+    "OPL-001": "PASS_READER_READY_FOR_ROOT_WHOLE_DECISION"
+  },
+  "openIssues": [],
+  "historicalOriginalV3Exit": 1,
+  "historicalOriginalNativeFailures": 137,
+  "currentWholeBoxes": 433,
+  "observedSelectedBoxWidths": 432,
+  "allOriginalFieldsPreserved": true,
+  "noRecount": true
+}

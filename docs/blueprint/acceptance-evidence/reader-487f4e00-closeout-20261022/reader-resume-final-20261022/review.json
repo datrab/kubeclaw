@@ -1,0 +1,87 @@
+{
+  "status": "PASS_BOUNDED_TERMINAL_RECEIVING_REVIEW_ONLY",
+  "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+  "retake": {
+    "exactOriginalFailedCases": 137,
+    "keyboardEndpointPasses": 137,
+    "cellRangeObservations": 4825,
+    "widthCounts": {
+      "320": 129,
+      "768": 8
+    },
+    "wheelReachedEnd": 137,
+    "original137FailuresPreserved": true
+  },
+  "supplement": {
+    "pages": 3,
+    "tableWidthObservations": 57,
+    "offlineNativeSearchActivations": 3
+  },
+  "limits": [
+    "No historical failure rewritten; keyboard scroll-mediated reachability is not simultaneous visibility or a wheel waiver.",
+    "Passive receiving evidence review, not a fresh browser run, full corpus semantic review, screenreader/persona acceptance, or product runtime qualification.",
+    "No gate, requirement, completion record, register, Main, or delivered archive modified. Final integration and exact94 preservation disposition remain separate."
+  ],
+  "bindings": {
+    "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/a910-scroll137-retake-root-review/execution/result.json": {
+      "bytes": 1259,
+      "sha256": "1fc24b9ffd843b540265d57cd8f1c5241f8b70ef21920997725390a71a961109"
+    },
+    "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/a910-scroll137-retake-root-review/execution/invocation.json": {
+      "bytes": 934,
+      "sha256": "0e366d2a0ad38ed255d9fa2e2e5edc6018c4d97f51cb30c846e78c18dd85adf5"
+    },
+    "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/a910-scroll137-retake-root-review/execution/stdout.raw": {
+      "bytes": 18858,
+      "sha256": "011ab91ac688fab76b4699120b376e224c968f62e4a8cdf7976b48df98b57bca"
+    },
+    "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/a910-scroll137-retake-root-review/execution/stderr.raw": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/a910-scroll137-retake-result/report.json": {
+      "bytes": 12711290,
+      "sha256": "532304bed72250f47cc596dacd2bd51d9f77f0f0b7ca3a1c85d823bab83f0bdd"
+    },
+    "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/a910-scroll137-retake-author/retake-scroll.mjs": {
+      "bytes": 13534,
+      "sha256": "7d0b55841e0d95c69726a638d4ac609807397d33d231b83e967e6dd79e970488"
+    },
+    "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/a910-scroll137-retake-author/preparation.json": {
+      "bytes": 23040,
+      "sha256": "f1c9a47b4928be70ea830c1c9bcb0d375c140ee0d7812633e38f5050b5c16a22"
+    },
+    "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/a910-reader-487f4e00-v3-browser/report.json": {
+      "bytes": 61612267,
+      "sha256": "acf55aa273f94f405e1119bda378a7868cba6deb75a3a06048512bc34d292f9c"
+    },
+    "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/reader-error-search-supplement-root-review/browser/result.json": {
+      "bytes": 1290,
+      "sha256": "b6b5502f4afa2eaab7488b1f65710dca7cff92c4f661801b0d10c0de01af9c23"
+    },
+    "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/reader-error-search-supplement-root-review/browser/invocation.json": {
+      "bytes": 967,
+      "sha256": "0b1e93e8618dfe23ef3bb6dfdbb7673a4f844a5966e8ef37a20cfbe617f8aaea"
+    },
+    "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/reader-error-search-supplement-root-review/browser/stdout.raw": {
+      "bytes": 172,
+      "sha256": "c27dba211ae0ed5bada21b911bb6ea1be83c9ec5f99375f08ff30d6851306693"
+    },
+    "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/reader-error-search-supplement-root-review/browser/stderr.raw": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/reader-error-search-supplement-result-browser/report.json": {
+      "bytes": 16949845,
+      "sha256": "7e5105caf047f40b6bf0f6dade747d4b158f73ce987c719645c82f68f8cb550a"
+    },
+    "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/reader-error-search-supplement-author/supplement.mjs": {
+      "bytes": 13106,
+      "sha256": "b06386cf00acf6ece6bdf820b81caf48968868007ef3e0fc093b4681e32afec1"
+    },
+    "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/reader-error-search-supplement-author/preparation.json": {
+      "bytes": 43960,
+      "sha256": "c1c62f9a5c582331a8fb074ac0885f6ebcb42e44f36b800c6ea19e6d185bb612"
+    }
+  }
+}

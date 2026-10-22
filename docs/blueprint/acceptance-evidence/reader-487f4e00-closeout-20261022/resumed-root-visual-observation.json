@@ -1,0 +1,31 @@
+{
+  "sourceRevision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+  "reviewer": "/root",
+  "method": "Direct view_image inspection of existing genuine screenshots this resumed turn; no new browser run.",
+  "observations": [
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/a910-reader-487f4e00-v3-browser/understand__buster.md.png",
+      "sha256": "f548a5bacbdbf3585dbb7c7e6fd1a7697287c6a3cf31e47a9faedb189fc66fbb",
+      "observation": "Table scrolled within local blue focus boundary; clipped outer columns remain local overflow. Reached lifecycle/recovery actions readable."
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/a910-reader-487f4e00-v3-browser/understand__echo.md.png",
+      "sha256": "a63f31c3467710f860412714e996050189b17620b2ca22114aaa95a23969aa7b",
+      "observation": "Local table shows identity/unsafe retry diagnostics and actions; wrapping preserves long diagnostic tokens. Local overflow boundary, not simultaneous columns."
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/a910-reader-487f4e00-v3-browser/reference__lint-rules.md.png",
+      "sha256": "fdf74c6b8b68486908af679902f2bbe3220795b0999e22d3732118b5f21116d4",
+      "observation": "320px header, navigation, title, scope disclosure and introductory prose contained and readable."
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/reader-error-search-supplement-result-browser/error-table-320-right.png",
+      "sha256": "60f8d3495361e80346c50ec7d418b2893c823e8d6cc141165a0d04ed722b6db8",
+      "observation": "Right-scrolled error reference table shows descriptions and Source links within focus boundary; left code fragments lie outside local scrollport."
+    }
+  ],
+  "limits": [
+    "Only these four actual images visually inspected; not all20pages or whole corpus.",
+    "Local horizontal scrolling does not make every table column simultaneously visible. No screenreader/accessibility/fresh-persona claim."
+  ]
+}

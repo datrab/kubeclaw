@@ -1,0 +1,2976 @@
+[
+  {
+    "id": "A911-03-REF-007-20261020",
+    "originalRecordCanonicalSha256": "f90ebab35414138319cccb9715ea2e7bda84db0ca5a3d6961a3236c2a9904a24",
+    "originalRecordRawObjectSha256": "510fbfdb9af7d07fe9da7fe4bb252f3797743f09ff4a8f6a395dadf27203ed0e",
+    "affected": false,
+    "renderedCorpusOutputAffected": false,
+    "sourceAffected": false,
+    "requiredCurrentReaderEvidence": [
+      "R1",
+      "R2",
+      "R3",
+      "R5"
+    ],
+    "focusedChangedCanonicalPages": [],
+    "readerVerdict": "PASS_PRESERVE_ORIGINAL_SCOPE_NO_RECOUNT",
+    "reason": [
+      {
+        "group": "NO_IDENTIFIED_SCOPE_DELTA",
+        "basis": "Ownrevision and latestaccepted-impact actualGitdiffs have no declaredpage/source-prefix intersection; actual changed3code import ancestry has no boundsource intersection. No semantic readoption is needed; retain originalscope/verdict/evidence/limits and pendingcurrentartifact binding only."
+      }
+    ],
+    "originalFieldsUnchanged": true
+  },
+  {
+    "id": "AP09.1-ready-topics-20261020",
+    "originalRecordCanonicalSha256": "1ddadec8cf846994c33f6a9dc362852cfacf224180cc201e4ba58fe41e55a32e",
+    "originalRecordRawObjectSha256": "f3a5a6ab9194b7947da239b4a1e702449d33913f757bd3d4639d23f6d709684e",
+    "affected": false,
+    "renderedCorpusOutputAffected": false,
+    "sourceAffected": false,
+    "requiredCurrentReaderEvidence": [
+      "R1",
+      "R2",
+      "R3",
+      "R5"
+    ],
+    "focusedChangedCanonicalPages": [],
+    "readerVerdict": "PASS_PRESERVE_ORIGINAL_SCOPE_NO_RECOUNT",
+    "reason": [
+      {
+        "group": "NO_IDENTIFIED_SCOPE_DELTA",
+        "basis": "Ownrevision and latestaccepted-impact actualGitdiffs have no declaredpage/source-prefix intersection; actual changed3code import ancestry has no boundsource intersection. No semantic readoption is needed; retain originalscope/verdict/evidence/limits and pendingcurrentartifact binding only."
+      }
+    ],
+    "originalFieldsUnchanged": true
+  },
+  {
+    "id": "AP09.2-ready-topics-20261020",
+    "originalRecordCanonicalSha256": "12acd94d78311b1370b31c7068d08835d35e1029c3a5d3b7d874729125301e36",
+    "originalRecordRawObjectSha256": "025faec49503aad5c40c47d6d05a0e692488de80fc5aac9ddfd23f8130cb7005",
+    "affected": false,
+    "renderedCorpusOutputAffected": false,
+    "sourceAffected": false,
+    "requiredCurrentReaderEvidence": [
+      "R1",
+      "R2",
+      "R3",
+      "R5"
+    ],
+    "focusedChangedCanonicalPages": [],
+    "readerVerdict": "PASS_PRESERVE_ORIGINAL_SCOPE_NO_RECOUNT",
+    "reason": [
+      {
+        "group": "NO_IDENTIFIED_SCOPE_DELTA",
+        "basis": "Ownrevision and latestaccepted-impact actualGitdiffs have no declaredpage/source-prefix intersection; actual changed3code import ancestry has no boundsource intersection. No semantic readoption is needed; retain originalscope/verdict/evidence/limits and pendingcurrentartifact binding only."
+      }
+    ],
+    "originalFieldsUnchanged": true
+  },
+  {
+    "id": "AP09.4-ready-prism-topics-20261020",
+    "originalRecordCanonicalSha256": "6f0241dda1c1f547db3188aaad2e4d9198a350a8495eb8644984dd320abd2428",
+    "originalRecordRawObjectSha256": "937e4a7423b4a6ff5aa4d91be2947229ceb7dd088c1c672ccdb5431aa93ef895",
+    "affected": false,
+    "renderedCorpusOutputAffected": false,
+    "sourceAffected": false,
+    "requiredCurrentReaderEvidence": [
+      "R1",
+      "R2",
+      "R3",
+      "R5"
+    ],
+    "focusedChangedCanonicalPages": [],
+    "readerVerdict": "PASS_PRESERVE_ORIGINAL_SCOPE_NO_RECOUNT",
+    "reason": [
+      {
+        "group": "NO_IDENTIFIED_SCOPE_DELTA",
+        "basis": "Ownrevision and latestaccepted-impact actualGitdiffs have no declaredpage/source-prefix intersection; actual changed3code import ancestry has no boundsource intersection. No semantic readoption is needed; retain originalscope/verdict/evidence/limits and pendingcurrentartifact binding only."
+      }
+    ],
+    "originalFieldsUnchanged": true
+  },
+  {
+    "id": "AP09.5-ready-buster-core-change-20261020",
+    "originalRecordCanonicalSha256": "cc0d799f3f006be7def0c4a41e69d83da4891bc9cafa544eff85607110ff7197",
+    "originalRecordRawObjectSha256": "4ff42217491230d39cf2dce0b09bfa5ba03e1c964a5dbd4c3e1ec18d66dea50d",
+    "affected": false,
+    "renderedCorpusOutputAffected": false,
+    "sourceAffected": false,
+    "requiredCurrentReaderEvidence": [
+      "R1",
+      "R2",
+      "R3",
+      "R5"
+    ],
+    "focusedChangedCanonicalPages": [],
+    "readerVerdict": "PASS_PRESERVE_ORIGINAL_SCOPE_NO_RECOUNT",
+    "reason": [
+      {
+        "group": "NO_IDENTIFIED_SCOPE_DELTA",
+        "basis": "Ownrevision and latestaccepted-impact actualGitdiffs have no declaredpage/source-prefix intersection; actual changed3code import ancestry has no boundsource intersection. No semantic readoption is needed; retain originalscope/verdict/evidence/limits and pendingcurrentartifact binding only."
+      }
+    ],
+    "originalFieldsUnchanged": true
+  },
+  {
+    "id": "AP09.3-ready-worker-topics-20261020",
+    "originalRecordCanonicalSha256": "b44870d28737673d2dd4ee5dd849ec43e1a0355ae1eef7dccea051a2a0172797",
+    "originalRecordRawObjectSha256": "fa174a07d58d3c8f53955ed7b95916c42c14a8d13bb6c8e653d23eaf8c35b386",
+    "affected": false,
+    "renderedCorpusOutputAffected": false,
+    "sourceAffected": false,
+    "requiredCurrentReaderEvidence": [
+      "R1",
+      "R2",
+      "R3",
+      "R5"
+    ],
+    "focusedChangedCanonicalPages": [],
+    "readerVerdict": "PASS_PRESERVE_ORIGINAL_SCOPE_NO_RECOUNT",
+    "reason": [
+      {
+        "group": "NO_IDENTIFIED_SCOPE_DELTA",
+        "basis": "Ownrevision and latestaccepted-impact actualGitdiffs have no declaredpage/source-prefix intersection; actual changed3code import ancestry has no boundsource intersection. No semantic readoption is needed; retain originalscope/verdict/evidence/limits and pendingcurrentartifact binding only."
+      }
+    ],
+    "originalFieldsUnchanged": true
+  },
+  {
+    "id": "AP09.7-ready-platform-topics-20261020",
+    "originalRecordCanonicalSha256": "605d3127ea928d72606f959aa3919f942feb3eb2c5ca885ebf6ca59ee5f08f24",
+    "originalRecordRawObjectSha256": "0e0e46f16f2a0bc69c560fdd57c4b72b68e5e06392520519ad23ad256d12d458",
+    "affected": true,
+    "renderedCorpusOutputAffected": true,
+    "sourceAffected": true,
+    "requiredCurrentReaderEvidence": [
+      "R1",
+      "R2",
+      "R3",
+      "R4",
+      "R5",
+      "R6"
+    ],
+    "focusedChangedCanonicalPages": [
+      "docs/site/understand/echo.md",
+      "docs/site/understand/openclaw.md"
+    ],
+    "readerVerdict": "PASS_PRESERVE_ORIGINAL_SCOPE_NO_RECOUNT",
+    "reason": [
+      {
+        "group": "REVIEW_OPERATOR_AND_EVIDENCE",
+        "basis": "Root follow-up/completeness and lexical simplification corrections plus custody-reviewed supervisor/status/lease/resource/livepreflight path preserve fixed subject/policy/cache/authority and no-new-execution limits. Author does not selfaccept own supervisor/style; custody and Root nonauthor reports supply those deltas.",
+        "exactIntersections": [
+          "docs/site/understand/echo.md"
+        ],
+        "transitiveOnly": false
+      },
+      {
+        "group": "SOURCE_INGRESS",
+        "basis": "Root-authored/custody-reviewed enqueue/status/pressure/drain/shutdown semantics preserve host event provenance and downstream authority split; emit error is not durable ACK or a new source retry. Short labels preserve claims/URLs.",
+        "exactIntersections": [
+          "docs/site/understand/openclaw.md"
+        ],
+        "transitiveOnly": false
+      }
+    ],
+    "originalFieldsUnchanged": true
+  },
+  {
+    "id": "AP09.7-ready-data-topics-20261020",
+    "originalRecordCanonicalSha256": "de4d9467d0ef138d91ab276cd890e349bd711fd8e3f3832b2891c7c39ee839b3",
+    "originalRecordRawObjectSha256": "fce90248c0fc93139d5f274289abed01b458278e09d8d4a5512cad7a94d8f3b0",
+    "affected": true,
+    "renderedCorpusOutputAffected": true,
+    "sourceAffected": true,
+    "requiredCurrentReaderEvidence": [
+      "R1",
+      "R2",
+      "R3",
+      "R4",
+      "R5",
+      "R6"
+    ],
+    "focusedChangedCanonicalPages": [
+      "docs/site/understand/data-and-state.md",
+      "docs/site/understand/telemetry.md"
+    ],
+    "readerVerdict": "PASS_PRESERVE_ORIGINAL_SCOPE_NO_RECOUNT",
+    "reason": [
+      {
+        "group": "STORE_RECORD_AUTHORITY",
+        "basis": "Independently reviewed state/wait operation/encoding/fence/size/read/retention extensions preserve canonical Core authority and backup/encryption/LiteLLM limits; style splits only assertions, not test execution.",
+        "exactIntersections": [
+          "docs/site/understand/data-and-state.md"
+        ],
+        "transitiveOnly": false
+      },
+      {
+        "group": "TELEMETRY_OBSERVER_LIMITS",
+        "basis": "Independently reviewed required/best_effort observer, Redis receipt/replay/retirement and exact write/queue boundaries clarify prior accepted event/retention/recovery scopes. No native Redis/live outage, broader host journal replay or canonical retirement inferred.",
+        "exactIntersections": [
+          "docs/site/understand/telemetry.md"
+        ],
+        "transitiveOnly": false
+      }
+    ],
+    "originalFieldsUnchanged": true
+  },
+  {
+    "id": "Reviewed-corrections-20261020",
+    "originalRecordCanonicalSha256": "c0ec06a604add0abd4ffadd48562077e4becdcadfe34dd329c9c7a532b312eaa",
+    "originalRecordRawObjectSha256": "27e53ce0b4edb0c401777ed68d88e3f2684f5714b2f84973466fe4c6990353d7",
+    "affected": true,
+    "renderedCorpusOutputAffected": true,
+    "sourceAffected": true,
+    "requiredCurrentReaderEvidence": [
+      "R1",
+      "R2",
+      "R3",
+      "R4",
+      "R5",
+      "R6"
+    ],
+    "focusedChangedCanonicalPages": [
+      "docs/site/reference/buster-suites.md",
+      "docs/site/reference/lint-policy.md",
+      "docs/site/understand/buster.md"
+    ],
+    "readerVerdict": "PASS_PRESERVE_ORIGINAL_SCOPE_NO_RECOUNT",
+    "reason": [
+      {
+        "group": "BUSTER_RECURSIVE_SUITES",
+        "basis": "Seven independently corrected provider mechanisms: cancellation vs cleanup, supported OpenAPI subset, HTTP/build outcome, browser companions, JUnit roots/entities/bounds, Size baseline/growth and fixed parser safe actions. Prior accepted provider input/workflow/classification boundaries retained; no native/live/newprovider authority. Root nonauthor style+seven equal-source URL correction supplies this reviewer authored delta acceptance.",
+        "exactIntersections": [
+          "docs/site/reference/buster-suites.md"
+        ],
+        "transitiveOnly": false
+      },
+      {
+        "group": "OPTIONAL_QUALITY_EVALUATOR",
+        "basis": "Independently reviewed native-first evaluator output identity/branch/artifact/error boundary added; nonpassing native cannot be overruled. Four-field illustrative table and split test sentences preserve Source-only evidence and unchanged native production/recovery route.",
+        "exactIntersections": [
+          "docs/site/understand/buster.md"
+        ],
+        "transitiveOnly": false
+      },
+      {
+        "group": "LINT_SUPPORTED_PARSER_BOUNDARY",
+        "basis": "Independent complete31-tool engine review and bounded four-document correction distinguish ignored native shape/nonzero empty results from unsupported product fix. Policy/rule/config routes and already accepted scope remain; known parser/exit-result product weakness is explicit, not green native Lint assurance.",
+        "exactIntersections": [
+          "docs/site/reference/lint-policy.md"
+        ],
+        "transitiveOnly": false
+      }
+    ],
+    "originalFieldsUnchanged": true
+  },
+  {
+    "id": "AP09-reader-operators-20261020",
+    "originalRecordCanonicalSha256": "a315a3c17aaaef78d6390f6db70e9c0d3994d1825ff5d1460b1279e8715d36ce",
+    "originalRecordRawObjectSha256": "2904143672c5d08268ea1b713eb1f1dd0aaa3e0e89fc52347c890fbcaed2fe50",
+    "affected": false,
+    "renderedCorpusOutputAffected": false,
+    "sourceAffected": false,
+    "requiredCurrentReaderEvidence": [
+      "R1",
+      "R2",
+      "R3",
+      "R5"
+    ],
+    "focusedChangedCanonicalPages": [],
+    "readerVerdict": "PASS_PRESERVE_ORIGINAL_SCOPE_NO_RECOUNT",
+    "reason": [
+      {
+        "group": "NO_IDENTIFIED_SCOPE_DELTA",
+        "basis": "Ownrevision and latestaccepted-impact actualGitdiffs have no declaredpage/source-prefix intersection; actual changed3code import ancestry has no boundsource intersection. No semantic readoption is needed; retain originalscope/verdict/evidence/limits and pendingcurrentartifact binding only."
+      }
+    ],
+    "originalFieldsUnchanged": true
+  },
+  {
+    "id": "AP09-reader-workflows-20261020",
+    "originalRecordCanonicalSha256": "c3181d97016569d4043e589e51c9ca57972fb2d1dde5a1b699107c7c26ee527d",
+    "originalRecordRawObjectSha256": "c8fefa237ff868f2041250e4ff7d0f6e4fa292f80d4211a59f6c09ec9b078cec",
+    "affected": true,
+    "renderedCorpusOutputAffected": true,
+    "sourceAffected": true,
+    "requiredCurrentReaderEvidence": [
+      "R1",
+      "R2",
+      "R3",
+      "R4",
+      "R5",
+      "R6"
+    ],
+    "focusedChangedCanonicalPages": [
+      "docs/site/use/workflows/wait-resume.md"
+    ],
+    "readerVerdict": "PASS_PRESERVE_ORIGINAL_SCOPE_NO_RECOUNT",
+    "reason": [
+      {
+        "group": "OPERATOR_DELIVERY",
+        "basis": "Independently reviewed signed/confidential wire, retained reservation/reconstructed receipt and lost-ACK authority sharpen no-second-send/same-identity stop. Existing approval/resume, external uncertainty, actual bounded fixtures and no live service limits remain.",
+        "exactIntersections": [
+          "docs/site/use/workflows/wait-resume.md"
+        ],
+        "transitiveOnly": false
+      }
+    ],
+    "originalFieldsUnchanged": true
+  },
+  {
+    "id": "AP09-reader-developers-20261020",
+    "originalRecordCanonicalSha256": "59e36aa3918b0676a1cdd457138c7b573d49530d96c51af1fe2ad4f4b7e56da7",
+    "originalRecordRawObjectSha256": "213ce4dd9d352864809b729e84144938976e0b12de52e07c59ddeedaceb770ee",
+    "affected": true,
+    "renderedCorpusOutputAffected": true,
+    "sourceAffected": true,
+    "requiredCurrentReaderEvidence": [
+      "R1",
+      "R2",
+      "R3",
+      "R5"
+    ],
+    "focusedChangedCanonicalPages": [],
+    "readerVerdict": "PASS_PRESERVE_ORIGINAL_SCOPE_NO_RECOUNT",
+    "reason": [
+      {
+        "group": "PURPOSE_THREE_PLUS_CHILD_ONE",
+        "basis": "Root nonauthor four-value reversal/completeconsumer Source review and8actual purpose-routing controls support only3purpose-input+1literalchildSHA identities. All107recipes/facts/selectors/native/guards/code remain exact; no current fullconsumer/native/role qualification inferred.",
+        "exactIntersections": [],
+        "transitiveOnly": true
+      },
+      {
+        "group": "SCALAR_TWO_DATA_LITERALS",
+        "basis": "Only2original graph/caller guard digests adopted after complete original DATA/full-record multiset/13Source-purpose nonauthor proof. Profiles/anchors/actual deployment receivers/UNKNOWN/WeakSet/cache and runtime/API false unchanged. Actualfullconsumer and native4/115/public/alias/dynamic/module guards remain separate and can STOP.",
+        "exactIntersections": [],
+        "transitiveOnly": true
+      }
+    ],
+    "originalFieldsUnchanged": true
+  },
+  {
+    "id": "AP09-reviewed-configuration-20261020",
+    "originalRecordCanonicalSha256": "382bf43ba225160f318d28bc4e3f44931d6faadc06264d3e174f23bb2a0694d7",
+    "originalRecordRawObjectSha256": "a21f700a212277bd7b7419a8fa749d501adc689c4ddf43f2b6544d1129b020d4",
+    "affected": true,
+    "renderedCorpusOutputAffected": true,
+    "sourceAffected": true,
+    "requiredCurrentReaderEvidence": [
+      "R1",
+      "R2",
+      "R3",
+      "R5"
+    ],
+    "focusedChangedCanonicalPages": [],
+    "readerVerdict": "PASS_PRESERVE_ORIGINAL_SCOPE_NO_RECOUNT",
+    "reason": [
+      {
+        "group": "PURPOSE_THREE_PLUS_CHILD_ONE",
+        "basis": "Root nonauthor four-value reversal/completeconsumer Source review and8actual purpose-routing controls support only3purpose-input+1literalchildSHA identities. All107recipes/facts/selectors/native/guards/code remain exact; no current fullconsumer/native/role qualification inferred.",
+        "exactIntersections": [],
+        "transitiveOnly": true
+      },
+      {
+        "group": "SCALAR_TWO_DATA_LITERALS",
+        "basis": "Only2original graph/caller guard digests adopted after complete original DATA/full-record multiset/13Source-purpose nonauthor proof. Profiles/anchors/actual deployment receivers/UNKNOWN/WeakSet/cache and runtime/API false unchanged. Actualfullconsumer and native4/115/public/alias/dynamic/module guards remain separate and can STOP.",
+        "exactIntersections": [],
+        "transitiveOnly": true
+      }
+    ],
+    "originalFieldsUnchanged": true
+  },
+  {
+    "id": "AP09-reviewed-reference-20261020",
+    "originalRecordCanonicalSha256": "2c0fcfead39247e598212c9769d843594626ccadff2290181ed7c428792d6213",
+    "originalRecordRawObjectSha256": "5eea79278d446dfab5a08feb9fc00663c919d53552da60333a26cdd102140f3c",
+    "affected": true,
+    "renderedCorpusOutputAffected": true,
+    "sourceAffected": true,
+    "requiredCurrentReaderEvidence": [
+      "R1",
+      "R2",
+      "R3",
+      "R5"
+    ],
+    "focusedChangedCanonicalPages": [],
+    "readerVerdict": "PASS_PRESERVE_ORIGINAL_SCOPE_NO_RECOUNT",
+    "reason": [
+      {
+        "group": "ERROR_OWNER_13_PLUS_2",
+        "basis": "Exact original fixed AST producer adds13static diagnosis/occurrence entries and2outcome prose strings only; full66production Source bytes/stable census and fixed writer/check unchanged. Actual original two write/write/check sets and exact generated row/preamble deltas independently verified. Public CLI selectors/defaults unchanged; this does not accept full REF005/error universe.",
+        "exactIntersections": [
+          "scripts/generate-buster-error-reference.mjs"
+        ],
+        "transitiveOnly": false
+      },
+      {
+        "group": "PURPOSE_THREE_PLUS_CHILD_ONE",
+        "basis": "Root nonauthor four-value reversal/completeconsumer Source review and8actual purpose-routing controls support only3purpose-input+1literalchildSHA identities. All107recipes/facts/selectors/native/guards/code remain exact; no current fullconsumer/native/role qualification inferred.",
+        "exactIntersections": [],
+        "transitiveOnly": true
+      },
+      {
+        "group": "SCALAR_TWO_DATA_LITERALS",
+        "basis": "Only2original graph/caller guard digests adopted after complete original DATA/full-record multiset/13Source-purpose nonauthor proof. Profiles/anchors/actual deployment receivers/UNKNOWN/WeakSet/cache and runtime/API false unchanged. Actualfullconsumer and native4/115/public/alias/dynamic/module guards remain separate and can STOP.",
+        "exactIntersections": [],
+        "transitiveOnly": true
+      }
+    ],
+    "originalFieldsUnchanged": true
+  },
+  {
+    "id": "AP09-reviewed-maintenance-20261020",
+    "originalRecordCanonicalSha256": "6642c50ad9b7dafedcc8da8bf7f508a78134a23f63c639dedf8db1d90e99b79e",
+    "originalRecordRawObjectSha256": "e6031c498ae20b8bec23de120e75cf282f1340de82c668de6b0b78f45db9fdc8",
+    "affected": true,
+    "renderedCorpusOutputAffected": true,
+    "sourceAffected": true,
+    "requiredCurrentReaderEvidence": [
+      "R1",
+      "R2",
+      "R3",
+      "R5"
+    ],
+    "focusedChangedCanonicalPages": [],
+    "readerVerdict": "PASS_PRESERVE_ORIGINAL_SCOPE_NO_RECOUNT",
+    "reason": [
+      {
+        "group": "ERROR_OWNER_13_PLUS_2",
+        "basis": "Exact original fixed AST producer adds13static diagnosis/occurrence entries and2outcome prose strings only; full66production Source bytes/stable census and fixed writer/check unchanged. Actual original two write/write/check sets and exact generated row/preamble deltas independently verified. Public CLI selectors/defaults unchanged; this does not accept full REF005/error universe.",
+        "exactIntersections": [
+          "scripts/generate-buster-error-reference.mjs"
+        ],
+        "transitiveOnly": false
+      },
+      {
+        "group": "PURPOSE_THREE_PLUS_CHILD_ONE",
+        "basis": "Root nonauthor four-value reversal/completeconsumer Source review and8actual purpose-routing controls support only3purpose-input+1literalchildSHA identities. All107recipes/facts/selectors/native/guards/code remain exact; no current fullconsumer/native/role qualification inferred.",
+        "exactIntersections": [],
+        "transitiveOnly": true
+      },
+      {
+        "group": "SCALAR_TWO_DATA_LITERALS",
+        "basis": "Only2original graph/caller guard digests adopted after complete original DATA/full-record multiset/13Source-purpose nonauthor proof. Profiles/anchors/actual deployment receivers/UNKNOWN/WeakSet/cache and runtime/API false unchanged. Actualfullconsumer and native4/115/public/alias/dynamic/module guards remain separate and can STOP.",
+        "exactIntersections": [],
+        "transitiveOnly": true
+      }
+    ],
+    "originalFieldsUnchanged": true
+  },
+  {
+    "id": "AP09-reviewed-publication-navigation-20261020",
+    "originalRecordCanonicalSha256": "0087fd05e73e6d1958383ee5fbaeaa44a6c9086cb9f343b5315222427aca6033",
+    "originalRecordRawObjectSha256": "56245d8bf7f9d80ba2ead538e7bee7201cc88e68863b477ec9134698ef8a962d",
+    "affected": true,
+    "renderedCorpusOutputAffected": true,
+    "sourceAffected": false,
+    "requiredCurrentReaderEvidence": [
+      "R1",
+      "R2",
+      "R3",
+      "R4",
+      "R5",
+      "R6",
+      "R7"
+    ],
+    "focusedChangedCanonicalPages": [],
+    "readerVerdict": "PASS_PRESERVE_ORIGINAL_SCOPE_NO_RECOUNT",
+    "reason": [
+      {
+        "group": "NO_IDENTIFIED_SCOPE_DELTA",
+        "basis": "Ownrevision and latestaccepted-impact actualGitdiffs have no declaredpage/source-prefix intersection; actual changed3code import ancestry has no boundsource intersection. No semantic readoption is needed; retain originalscope/verdict/evidence/limits and pendingcurrentartifact binding only."
+      },
+      {
+        "group": "CURRENT_RENDERED_CORPUS_ONLY",
+        "basis": "Underlying owned Source/pages remain exact within declaredscope, but whole reader/noJS/offline/redirect/page-record output universe incorporates12changedcanonical inputs. Require original currentartifact/pageRecords/Source/packaging checks and bounded fallback evidence without reaccepting unchanged mechanism."
+      }
+    ],
+    "originalFieldsUnchanged": true
+  },
+  {
+    "id": "AP09-closeout-runtime-20261020",
+    "originalRecordCanonicalSha256": "e745327c7662109b5a5ac8074a79ad0405494034bb486c49e37f435440b853b7",
+    "originalRecordRawObjectSha256": "5b9a8c118dc29213a296be1fa4da2b3674fc3eaac159a442f1458328a2bf8368",
+    "affected": true,
+    "renderedCorpusOutputAffected": true,
+    "sourceAffected": true,
+    "requiredCurrentReaderEvidence": [
+      "R1",
+      "R2",
+      "R3",
+      "R4",
+      "R5",
+      "R6"
+    ],
+    "focusedChangedCanonicalPages": [
+      "docs/site/understand/data-and-state.md"
+    ],
+    "readerVerdict": "PASS_PRESERVE_ORIGINAL_SCOPE_NO_RECOUNT",
+    "reason": [
+      {
+        "group": "STORE_RECORD_AUTHORITY",
+        "basis": "Independently reviewed state/wait operation/encoding/fence/size/read/retention extensions preserve canonical Core authority and backup/encryption/LiteLLM limits; style splits only assertions, not test execution.",
+        "exactIntersections": [
+          "docs/site/understand/data-and-state.md"
+        ],
+        "transitiveOnly": false
+      }
+    ],
+    "originalFieldsUnchanged": true
+  },
+  {
+    "id": "AP09-closeout-config-reference-20261020",
+    "originalRecordCanonicalSha256": "ba34b642a07518ba19fe392963b4361f632a36af623201ee57cc1e2d602ffaf4",
+    "originalRecordRawObjectSha256": "d4a512528b7317413356d30855e94a61292c0cdf5fa6780fe0b572127fab2469",
+    "affected": true,
+    "renderedCorpusOutputAffected": true,
+    "sourceAffected": true,
+    "requiredCurrentReaderEvidence": [
+      "R1",
+      "R2",
+      "R3",
+      "R5"
+    ],
+    "focusedChangedCanonicalPages": [],
+    "readerVerdict": "PASS_PRESERVE_ORIGINAL_SCOPE_NO_RECOUNT",
+    "reason": [
+      {
+        "group": "PURPOSE_THREE_PLUS_CHILD_ONE",
+        "basis": "Root nonauthor four-value reversal/completeconsumer Source review and8actual purpose-routing controls support only3purpose-input+1literalchildSHA identities. All107recipes/facts/selectors/native/guards/code remain exact; no current fullconsumer/native/role qualification inferred.",
+        "exactIntersections": [],
+        "transitiveOnly": true
+      },
+      {
+        "group": "SCALAR_TWO_DATA_LITERALS",
+        "basis": "Only2original graph/caller guard digests adopted after complete original DATA/full-record multiset/13Source-purpose nonauthor proof. Profiles/anchors/actual deployment receivers/UNKNOWN/WeakSet/cache and runtime/API false unchanged. Actualfullconsumer and native4/115/public/alias/dynamic/module guards remain separate and can STOP.",
+        "exactIntersections": [],
+        "transitiveOnly": true
+      }
+    ],
+    "originalFieldsUnchanged": true
+  },
+  {
+    "id": "AP09-closeout-developer-maintenance-20261020",
+    "originalRecordCanonicalSha256": "8d36219d79e73070035ff70f60ca1a923a0fa978649061dc3acda82126766967",
+    "originalRecordRawObjectSha256": "c80660c643022083d09ad1b3b87fc4e3309a4e6915eb324acf35c4ec13680a6d",
+    "affected": true,
+    "renderedCorpusOutputAffected": true,
+    "sourceAffected": true,
+    "requiredCurrentReaderEvidence": [
+      "R1",
+      "R2",
+      "R3",
+      "R5"
+    ],
+    "focusedChangedCanonicalPages": [],
+    "readerVerdict": "PASS_PRESERVE_ORIGINAL_SCOPE_NO_RECOUNT",
+    "reason": [
+      {
+        "group": "PURPOSE_THREE_PLUS_CHILD_ONE",
+        "basis": "Root nonauthor four-value reversal/completeconsumer Source review and8actual purpose-routing controls support only3purpose-input+1literalchildSHA identities. All107recipes/facts/selectors/native/guards/code remain exact; no current fullconsumer/native/role qualification inferred.",
+        "exactIntersections": [],
+        "transitiveOnly": true
+      },
+      {
+        "group": "SCALAR_TWO_DATA_LITERALS",
+        "basis": "Only2original graph/caller guard digests adopted after complete original DATA/full-record multiset/13Source-purpose nonauthor proof. Profiles/anchors/actual deployment receivers/UNKNOWN/WeakSet/cache and runtime/API false unchanged. Actualfullconsumer and native4/115/public/alias/dynamic/module guards remain separate and can STOP.",
+        "exactIntersections": [],
+        "transitiveOnly": true
+      }
+    ],
+    "originalFieldsUnchanged": true
+  },
+  {
+    "id": "AP09-closeout-ARC006-20261020",
+    "originalRecordCanonicalSha256": "2508bd6c838f7dae1a5fc25bd98c77f28d13b246f6a375bef900136c6abf5afb",
+    "originalRecordRawObjectSha256": "93ff08691b9b8816e0834858e9ae07d7ca0b01a9bfd961ad8a45a6c60e10fef6",
+    "affected": false,
+    "renderedCorpusOutputAffected": false,
+    "sourceAffected": false,
+    "requiredCurrentReaderEvidence": [
+      "R1",
+      "R2",
+      "R3",
+      "R5"
+    ],
+    "focusedChangedCanonicalPages": [],
+    "readerVerdict": "PASS_PRESERVE_ORIGINAL_SCOPE_NO_RECOUNT",
+    "reason": [
+      {
+        "group": "NO_IDENTIFIED_SCOPE_DELTA",
+        "basis": "Ownrevision and latestaccepted-impact actualGitdiffs have no declaredpage/source-prefix intersection; actual changed3code import ancestry has no boundsource intersection. No semantic readoption is needed; retain originalscope/verdict/evidence/limits and pendingcurrentartifact binding only."
+      }
+    ],
+    "originalFieldsUnchanged": true
+  },
+  {
+    "id": "AP09-first-project-example-20261020",
+    "originalRecordCanonicalSha256": "d569334aa236f9be57606492eb46f0fc36cc20683560f6d21ca58e34f79c6bcd",
+    "originalRecordRawObjectSha256": "863dfbada3efe0112a6caf8a59305b49c5f237c51554bf72f3878e8d01d1d2a7",
+    "affected": false,
+    "renderedCorpusOutputAffected": false,
+    "sourceAffected": false,
+    "requiredCurrentReaderEvidence": [
+      "R1",
+      "R2",
+      "R3",
+      "R5"
+    ],
+    "focusedChangedCanonicalPages": [],
+    "readerVerdict": "PASS_PRESERVE_ORIGINAL_SCOPE_NO_RECOUNT",
+    "reason": [
+      {
+        "group": "NO_IDENTIFIED_SCOPE_DELTA",
+        "basis": "Ownrevision and latestaccepted-impact actualGitdiffs have no declaredpage/source-prefix intersection; actual changed3code import ancestry has no boundsource intersection. No semantic readoption is needed; retain originalscope/verdict/evidence/limits and pendingcurrentartifact binding only."
+      }
+    ],
+    "originalFieldsUnchanged": true
+  },
+  {
+    "id": "AP09-buster-lease-reference-20261020",
+    "originalRecordCanonicalSha256": "4a2b231e591979152d329899a963411db940fc8e23ad4f924f9876c0cae5d24a",
+    "originalRecordRawObjectSha256": "24b45413bd3c57e2fa128d6162c81633dfab89a378373d6a1fb83635babb7c93",
+    "affected": false,
+    "renderedCorpusOutputAffected": false,
+    "sourceAffected": false,
+    "requiredCurrentReaderEvidence": [
+      "R1",
+      "R2",
+      "R3",
+      "R5"
+    ],
+    "focusedChangedCanonicalPages": [],
+    "readerVerdict": "PASS_PRESERVE_ORIGINAL_SCOPE_NO_RECOUNT",
+    "reason": [
+      {
+        "group": "NO_IDENTIFIED_SCOPE_DELTA",
+        "basis": "Ownrevision and latestaccepted-impact actualGitdiffs have no declaredpage/source-prefix intersection; actual changed3code import ancestry has no boundsource intersection. No semantic readoption is needed; retain originalscope/verdict/evidence/limits and pendingcurrentartifact binding only."
+      }
+    ],
+    "originalFieldsUnchanged": true
+  },
+  {
+    "id": "AP09-complete-public-cli-20261020",
+    "originalRecordCanonicalSha256": "0fbe248d9b5e525f0e3891f69cafe750d455991d22a8922c58267ea2bfaa9dec",
+    "originalRecordRawObjectSha256": "39cddb7a5df31a852df500ad712c42715891c48abe7946712f9798665eda5fa5",
+    "affected": true,
+    "renderedCorpusOutputAffected": true,
+    "sourceAffected": true,
+    "requiredCurrentReaderEvidence": [
+      "R1",
+      "R2",
+      "R3",
+      "R5"
+    ],
+    "focusedChangedCanonicalPages": [],
+    "readerVerdict": "PASS_PRESERVE_ORIGINAL_SCOPE_NO_RECOUNT",
+    "reason": [
+      {
+        "group": "ERROR_OWNER_13_PLUS_2",
+        "basis": "Exact original fixed AST producer adds13static diagnosis/occurrence entries and2outcome prose strings only; full66production Source bytes/stable census and fixed writer/check unchanged. Actual original two write/write/check sets and exact generated row/preamble deltas independently verified. Public CLI selectors/defaults unchanged; this does not accept full REF005/error universe.",
+        "exactIntersections": [
+          "scripts/generate-buster-error-reference.mjs"
+        ],
+        "transitiveOnly": false
+      },
+      {
+        "group": "PURPOSE_THREE_PLUS_CHILD_ONE",
+        "basis": "Root nonauthor four-value reversal/completeconsumer Source review and8actual purpose-routing controls support only3purpose-input+1literalchildSHA identities. All107recipes/facts/selectors/native/guards/code remain exact; no current fullconsumer/native/role qualification inferred.",
+        "exactIntersections": [],
+        "transitiveOnly": true
+      },
+      {
+        "group": "SCALAR_TWO_DATA_LITERALS",
+        "basis": "Only2original graph/caller guard digests adopted after complete original DATA/full-record multiset/13Source-purpose nonauthor proof. Profiles/anchors/actual deployment receivers/UNKNOWN/WeakSet/cache and runtime/API false unchanged. Actualfullconsumer and native4/115/public/alias/dynamic/module guards remain separate and can STOP.",
+        "exactIntersections": [],
+        "transitiveOnly": true
+      }
+    ],
+    "originalFieldsUnchanged": true
+  },
+  {
+    "id": "AP09-compiler-import-provider-diagnosis-20261021",
+    "originalRecordCanonicalSha256": "d21189e52150a759d8acafb3374411eeb27ac34b97a46f1394d1bec6c92a7ae4",
+    "originalRecordRawObjectSha256": "78932d508aea84cb2ab4b595b71a515228eeb693535a31024b6a932d8813aaeb",
+    "affected": false,
+    "renderedCorpusOutputAffected": false,
+    "sourceAffected": false,
+    "requiredCurrentReaderEvidence": [
+      "R1",
+      "R2",
+      "R3",
+      "R5"
+    ],
+    "focusedChangedCanonicalPages": [],
+    "readerVerdict": "PASS_PRESERVE_ORIGINAL_SCOPE_NO_RECOUNT",
+    "reason": [
+      {
+        "group": "NO_IDENTIFIED_SCOPE_DELTA",
+        "basis": "Ownrevision and latestaccepted-impact actualGitdiffs have no declaredpage/source-prefix intersection; actual changed3code import ancestry has no boundsource intersection. No semantic readoption is needed; retain originalscope/verdict/evidence/limits and pendingcurrentartifact binding only."
+      }
+    ],
+    "originalFieldsUnchanged": true
+  },
+  {
+    "id": "AP09-confidential-adapter-lifecycle-20261021",
+    "originalRecordCanonicalSha256": "92644ea121cc7d2db7b59e7e8d53701ce07e8f41f4a925f85fd10e2b0a32ff98",
+    "originalRecordRawObjectSha256": "d468a06b13eea61a4be2dee9daf39cc959076fa4fc64f3188f2af5e15d11ed6f",
+    "affected": false,
+    "renderedCorpusOutputAffected": false,
+    "sourceAffected": false,
+    "requiredCurrentReaderEvidence": [
+      "R1",
+      "R2",
+      "R3",
+      "R5"
+    ],
+    "focusedChangedCanonicalPages": [],
+    "readerVerdict": "PASS_PRESERVE_ORIGINAL_SCOPE_NO_RECOUNT",
+    "reason": [
+      {
+        "group": "NO_IDENTIFIED_SCOPE_DELTA",
+        "basis": "Ownrevision and latestaccepted-impact actualGitdiffs have no declaredpage/source-prefix intersection; actual changed3code import ancestry has no boundsource intersection. No semantic readoption is needed; retain originalscope/verdict/evidence/limits and pendingcurrentartifact binding only."
+      }
+    ],
+    "originalFieldsUnchanged": true
+  },
+  {
+    "id": "AP09-selected-model-gateway-20261021",
+    "originalRecordCanonicalSha256": "0f5709e67d4c182915f8a88f4c57586188e368e6d8d6ca6c10c67dc343d5cd6e",
+    "originalRecordRawObjectSha256": "fb4b973688c9d5a19be160faef2facb47bf09e465fee41b4796ab18320ca702a",
+    "affected": false,
+    "renderedCorpusOutputAffected": false,
+    "sourceAffected": false,
+    "requiredCurrentReaderEvidence": [
+      "R1",
+      "R2",
+      "R3",
+      "R5"
+    ],
+    "focusedChangedCanonicalPages": [],
+    "readerVerdict": "PASS_PRESERVE_ORIGINAL_SCOPE_NO_RECOUNT",
+    "reason": [
+      {
+        "group": "NO_IDENTIFIED_SCOPE_DELTA",
+        "basis": "Ownrevision and latestaccepted-impact actualGitdiffs have no declaredpage/source-prefix intersection; actual changed3code import ancestry has no boundsource intersection. No semantic readoption is needed; retain originalscope/verdict/evidence/limits and pendingcurrentartifact binding only."
+      }
+    ],
+    "originalFieldsUnchanged": true
+  },
+  {
+    "id": "AP09-contributor-baselines-and-migrations-20261021",
+    "originalRecordCanonicalSha256": "979a3429e0ca7d0f93114ce8dd1baa6669d35c4a0881c58c71afad5a9539cd2d",
+    "originalRecordRawObjectSha256": "37d6bc6744f646b33cff706d5255d11e5387943e61252a14537c09ec31a29515",
+    "affected": false,
+    "renderedCorpusOutputAffected": false,
+    "sourceAffected": false,
+    "requiredCurrentReaderEvidence": [
+      "R1",
+      "R2",
+      "R3",
+      "R5"
+    ],
+    "focusedChangedCanonicalPages": [],
+    "readerVerdict": "PASS_PRESERVE_ORIGINAL_SCOPE_NO_RECOUNT",
+    "reason": [
+      {
+        "group": "NO_IDENTIFIED_SCOPE_DELTA",
+        "basis": "Ownrevision and latestaccepted-impact actualGitdiffs have no declaredpage/source-prefix intersection; actual changed3code import ancestry has no boundsource intersection. No semantic readoption is needed; retain originalscope/verdict/evidence/limits and pendingcurrentartifact binding only."
+      }
+    ],
+    "originalFieldsUnchanged": true
+  },
+  {
+    "id": "AP09-install-maintenance-project-entry-20261021",
+    "originalRecordCanonicalSha256": "321f3d1bd029fe5fc4a81ae7f25fc6df1bf2fa7989c9ec62a87e918caa6b6542",
+    "originalRecordRawObjectSha256": "2dae1ebe5725def54e77de050430d55eb092efcdc6a702ab3fd5aeb9beae5896",
+    "affected": false,
+    "renderedCorpusOutputAffected": false,
+    "sourceAffected": false,
+    "requiredCurrentReaderEvidence": [
+      "R1",
+      "R2",
+      "R3",
+      "R5"
+    ],
+    "focusedChangedCanonicalPages": [],
+    "readerVerdict": "PASS_PRESERVE_ORIGINAL_SCOPE_NO_RECOUNT",
+    "reason": [
+      {
+        "group": "NO_IDENTIFIED_SCOPE_DELTA",
+        "basis": "Ownrevision and latestaccepted-impact actualGitdiffs have no declaredpage/source-prefix intersection; actual changed3code import ancestry has no boundsource intersection. No semantic readoption is needed; retain originalscope/verdict/evidence/limits and pendingcurrentartifact binding only."
+      }
+    ],
+    "originalFieldsUnchanged": true
+  },
+  {
+    "id": "AP09-ops-mcp-complete-contract-20261021",
+    "originalRecordCanonicalSha256": "58d9b3be11743fc0e1029d043eb2d769e8809beb1ad7934cf9a714281b0bb5eb",
+    "originalRecordRawObjectSha256": "7cc2c1214e0bff906c2c180fe8666de33f9fc12415242bb30c22a36458403714",
+    "affected": false,
+    "renderedCorpusOutputAffected": false,
+    "sourceAffected": false,
+    "requiredCurrentReaderEvidence": [
+      "R1",
+      "R2",
+      "R3",
+      "R5"
+    ],
+    "focusedChangedCanonicalPages": [],
+    "readerVerdict": "PASS_PRESERVE_ORIGINAL_SCOPE_NO_RECOUNT",
+    "reason": [
+      {
+        "group": "NO_IDENTIFIED_SCOPE_DELTA",
+        "basis": "Ownrevision and latestaccepted-impact actualGitdiffs have no declaredpage/source-prefix intersection; actual changed3code import ancestry has no boundsource intersection. No semantic readoption is needed; retain originalscope/verdict/evidence/limits and pendingcurrentartifact binding only."
+      }
+    ],
+    "originalFieldsUnchanged": true
+  },
+  {
+    "id": "AP09-communication-complete-contracts-20261021",
+    "originalRecordCanonicalSha256": "6c8c73c71cbcefd337449acc3e738cfb473830d03f6f3ea60aa12c0b6c1c851c",
+    "originalRecordRawObjectSha256": "096821f8d14cd7a871f08ed6eda957758963a82610b488efd831aabd9679563a",
+    "affected": false,
+    "renderedCorpusOutputAffected": false,
+    "sourceAffected": false,
+    "requiredCurrentReaderEvidence": [
+      "R1",
+      "R2",
+      "R3",
+      "R5"
+    ],
+    "focusedChangedCanonicalPages": [],
+    "readerVerdict": "PASS_PRESERVE_ORIGINAL_SCOPE_NO_RECOUNT",
+    "reason": [
+      {
+        "group": "NO_IDENTIFIED_SCOPE_DELTA",
+        "basis": "Ownrevision and latestaccepted-impact actualGitdiffs have no declaredpage/source-prefix intersection; actual changed3code import ancestry has no boundsource intersection. No semantic readoption is needed; retain originalscope/verdict/evidence/limits and pendingcurrentartifact binding only."
+      }
+    ],
+    "originalFieldsUnchanged": true
+  },
+  {
+    "id": "AP09-private-routes-complete-20261021",
+    "originalRecordCanonicalSha256": "89b84dcf134fc73b321a15ecda818d02753cee9d8306d65ff7d542a943d66f9e",
+    "originalRecordRawObjectSha256": "59b29655f5063b0eb393afa375382fec6799f0f8958dc8d588fab16100a46763",
+    "affected": false,
+    "renderedCorpusOutputAffected": false,
+    "sourceAffected": false,
+    "requiredCurrentReaderEvidence": [
+      "R1",
+      "R2",
+      "R3",
+      "R5"
+    ],
+    "focusedChangedCanonicalPages": [],
+    "readerVerdict": "PASS_PRESERVE_ORIGINAL_SCOPE_NO_RECOUNT",
+    "reason": [
+      {
+        "group": "NO_IDENTIFIED_SCOPE_DELTA",
+        "basis": "Ownrevision and latestaccepted-impact actualGitdiffs have no declaredpage/source-prefix intersection; actual changed3code import ancestry has no boundsource intersection. No semantic readoption is needed; retain originalscope/verdict/evidence/limits and pendingcurrentartifact binding only."
+      }
+    ],
+    "originalFieldsUnchanged": true
+  },
+  {
+    "id": "AP09-complete-state-content-20261021",
+    "originalRecordCanonicalSha256": "c1f2179bd2099036d550a887313c400aab2ac6d9ef541d120778645aca4c8d43",
+    "originalRecordRawObjectSha256": "0ad67db553ce7240352eef0c3f1bcfb8ad3f944419f0d572ea0caaf1c101d324",
+    "affected": true,
+    "renderedCorpusOutputAffected": true,
+    "sourceAffected": true,
+    "requiredCurrentReaderEvidence": [
+      "R1",
+      "R2",
+      "R3",
+      "R4",
+      "R5",
+      "R6"
+    ],
+    "focusedChangedCanonicalPages": [
+      "docs/site/understand/data-and-state.md"
+    ],
+    "readerVerdict": "PASS_PRESERVE_ORIGINAL_SCOPE_NO_RECOUNT",
+    "reason": [
+      {
+        "group": "STORE_RECORD_AUTHORITY",
+        "basis": "Independently reviewed state/wait operation/encoding/fence/size/read/retention extensions preserve canonical Core authority and backup/encryption/LiteLLM limits; style splits only assertions, not test execution.",
+        "exactIntersections": [
+          "docs/site/understand/data-and-state.md"
+        ],
+        "transitiveOnly": false
+      }
+    ],
+    "originalFieldsUnchanged": true
+  },
+  {
+    "id": "AP09-decision-record-content-20261021",
+    "originalRecordCanonicalSha256": "12541bb7db3cda047128c08a3d15cc1072c11bb12a270cb22a5cfaa4ebc09b23",
+    "originalRecordRawObjectSha256": "8ee27d26edf946aa5dd7b86f93701451ae26a05a7cf4ddb164f166a716e68bb0",
+    "affected": false,
+    "renderedCorpusOutputAffected": false,
+    "sourceAffected": false,
+    "requiredCurrentReaderEvidence": [
+      "R1",
+      "R2",
+      "R3",
+      "R5"
+    ],
+    "focusedChangedCanonicalPages": [],
+    "readerVerdict": "PASS_PRESERVE_ORIGINAL_SCOPE_NO_RECOUNT",
+    "reason": [
+      {
+        "group": "NO_IDENTIFIED_SCOPE_DELTA",
+        "basis": "Ownrevision and latestaccepted-impact actualGitdiffs have no declaredpage/source-prefix intersection; actual changed3code import ancestry has no boundsource intersection. No semantic readoption is needed; retain originalscope/verdict/evidence/limits and pendingcurrentartifact binding only."
+      }
+    ],
+    "originalFieldsUnchanged": true
+  },
+  {
+    "id": "AP09-documentation-agent-maintenance-20261021",
+    "originalRecordCanonicalSha256": "8b045b1c6259f3bba88954ca2d6bb7fec621bdf3aae3c525ef9c879b727157f0",
+    "originalRecordRawObjectSha256": "50c1dfa6c776f758dab630fd17075e25bbfe23b4062e9466335e65a119e60427",
+    "affected": true,
+    "renderedCorpusOutputAffected": true,
+    "sourceAffected": true,
+    "requiredCurrentReaderEvidence": [
+      "R1",
+      "R2",
+      "R3",
+      "R5"
+    ],
+    "focusedChangedCanonicalPages": [],
+    "readerVerdict": "PASS_PRESERVE_ORIGINAL_SCOPE_NO_RECOUNT",
+    "reason": [
+      {
+        "group": "PURPOSE_THREE_PLUS_CHILD_ONE",
+        "basis": "Root nonauthor four-value reversal/completeconsumer Source review and8actual purpose-routing controls support only3purpose-input+1literalchildSHA identities. All107recipes/facts/selectors/native/guards/code remain exact; no current fullconsumer/native/role qualification inferred.",
+        "exactIntersections": [],
+        "transitiveOnly": true
+      },
+      {
+        "group": "SCALAR_TWO_DATA_LITERALS",
+        "basis": "Only2original graph/caller guard digests adopted after complete original DATA/full-record multiset/13Source-purpose nonauthor proof. Profiles/anchors/actual deployment receivers/UNKNOWN/WeakSet/cache and runtime/API false unchanged. Actualfullconsumer and native4/115/public/alias/dynamic/module guards remain separate and can STOP.",
+        "exactIntersections": [],
+        "transitiveOnly": true
+      }
+    ],
+    "originalFieldsUnchanged": true
+  },
+  {
+    "id": "AP09-specialists-whole-gate-20261021",
+    "originalRecordCanonicalSha256": "27f6a07cb69919b8384f85c77ae36691f3419a87b8b96bc7830be463a097ed1b",
+    "originalRecordRawObjectSha256": "06b4cead6cb5b3d9ee5f5480d6ea1a5d411211ff631d1a21ba61960176070592",
+    "affected": true,
+    "renderedCorpusOutputAffected": true,
+    "sourceAffected": true,
+    "requiredCurrentReaderEvidence": [
+      "R1",
+      "R2",
+      "R3",
+      "R4",
+      "R5",
+      "R6"
+    ],
+    "focusedChangedCanonicalPages": [
+      "docs/site/understand/echo.md",
+      "docs/site/understand/openclaw.md"
+    ],
+    "readerVerdict": "PASS_PRESERVE_ORIGINAL_SCOPE_NO_RECOUNT",
+    "reason": [
+      {
+        "group": "REVIEW_OPERATOR_AND_EVIDENCE",
+        "basis": "Root follow-up/completeness and lexical simplification corrections plus custody-reviewed supervisor/status/lease/resource/livepreflight path preserve fixed subject/policy/cache/authority and no-new-execution limits. Author does not selfaccept own supervisor/style; custody and Root nonauthor reports supply those deltas.",
+        "exactIntersections": [
+          "docs/site/understand/echo.md"
+        ],
+        "transitiveOnly": false
+      },
+      {
+        "group": "SOURCE_INGRESS",
+        "basis": "Root-authored/custody-reviewed enqueue/status/pressure/drain/shutdown semantics preserve host event provenance and downstream authority split; emit error is not durable ACK or a new source retry. Short labels preserve claims/URLs.",
+        "exactIntersections": [
+          "docs/site/understand/openclaw.md"
+        ],
+        "transitiveOnly": false
+      }
+    ],
+    "originalFieldsUnchanged": true
+  },
+  {
+    "id": "AP09-complete-platform-change-content-20261021",
+    "originalRecordCanonicalSha256": "f070a331540bf8205f28d615573cc5fdc141fcb80c0b16c4ee20370a4748a98f",
+    "originalRecordRawObjectSha256": "7cae5f829bb6efaec1f20da8bd0805c4fca1551fe0b906df8b88b1c09159ec84",
+    "affected": true,
+    "renderedCorpusOutputAffected": true,
+    "sourceAffected": true,
+    "requiredCurrentReaderEvidence": [
+      "R1",
+      "R2",
+      "R3",
+      "R5"
+    ],
+    "focusedChangedCanonicalPages": [],
+    "readerVerdict": "PASS_PRESERVE_ORIGINAL_SCOPE_NO_RECOUNT",
+    "reason": [
+      {
+        "group": "PURPOSE_THREE_PLUS_CHILD_ONE",
+        "basis": "Root nonauthor four-value reversal/completeconsumer Source review and8actual purpose-routing controls support only3purpose-input+1literalchildSHA identities. All107recipes/facts/selectors/native/guards/code remain exact; no current fullconsumer/native/role qualification inferred.",
+        "exactIntersections": [],
+        "transitiveOnly": true
+      },
+      {
+        "group": "SCALAR_TWO_DATA_LITERALS",
+        "basis": "Only2original graph/caller guard digests adopted after complete original DATA/full-record multiset/13Source-purpose nonauthor proof. Profiles/anchors/actual deployment receivers/UNKNOWN/WeakSet/cache and runtime/API false unchanged. Actualfullconsumer and native4/115/public/alias/dynamic/module guards remain separate and can STOP.",
+        "exactIntersections": [],
+        "transitiveOnly": true
+      }
+    ],
+    "originalFieldsUnchanged": true
+  },
+  {
+    "id": "AP09-registry-data-path-20261021",
+    "originalRecordCanonicalSha256": "7f4123e6a2db211c9c281f90d81b0a06b03905a94dfdf1614eab9de7fa8e0e0c",
+    "originalRecordRawObjectSha256": "5bf6320415f0bc6299b652fdd790108836883e79fa7bff5d415e9556973dc022",
+    "affected": false,
+    "renderedCorpusOutputAffected": false,
+    "sourceAffected": false,
+    "requiredCurrentReaderEvidence": [
+      "R1",
+      "R2",
+      "R3",
+      "R5"
+    ],
+    "focusedChangedCanonicalPages": [],
+    "readerVerdict": "PASS_PRESERVE_ORIGINAL_SCOPE_NO_RECOUNT",
+    "reason": [
+      {
+        "group": "NO_IDENTIFIED_SCOPE_DELTA",
+        "basis": "Ownrevision and latestaccepted-impact actualGitdiffs have no declaredpage/source-prefix intersection; actual changed3code import ancestry has no boundsource intersection. No semantic readoption is needed; retain originalscope/verdict/evidence/limits and pendingcurrentartifact binding only."
+      }
+    ],
+    "originalFieldsUnchanged": true
+  },
+  {
+    "id": "AP09-studio-complete-journey-20261021",
+    "originalRecordCanonicalSha256": "69e8a88c205670570b9f95ba807cb1fce334a839e2427a2120db21b1402eae0c",
+    "originalRecordRawObjectSha256": "8d24997443b738f14fddcca2a12dbe8ed3329cc6a775578e2415c055a9a2d849",
+    "affected": false,
+    "renderedCorpusOutputAffected": false,
+    "sourceAffected": false,
+    "requiredCurrentReaderEvidence": [
+      "R1",
+      "R2",
+      "R3",
+      "R5"
+    ],
+    "focusedChangedCanonicalPages": [],
+    "readerVerdict": "PASS_PRESERVE_ORIGINAL_SCOPE_NO_RECOUNT",
+    "reason": [
+      {
+        "group": "NO_IDENTIFIED_SCOPE_DELTA",
+        "basis": "Ownrevision and latestaccepted-impact actualGitdiffs have no declaredpage/source-prefix intersection; actual changed3code import ancestry has no boundsource intersection. No semantic readoption is needed; retain originalscope/verdict/evidence/limits and pendingcurrentartifact binding only."
+      }
+    ],
+    "originalFieldsUnchanged": true
+  },
+  {
+    "id": "AP09-complete-plugin-maintenance-mechanisms-20261021",
+    "originalRecordCanonicalSha256": "d8e0d01211bcb8d9ba8df728acbbceaa3c51870c39e926d004c04edc256b3231",
+    "originalRecordRawObjectSha256": "bbe0db182dd22edba06366b79dbb8b0c0f63cd6e40786174578e46a953059fcc",
+    "affected": false,
+    "renderedCorpusOutputAffected": false,
+    "sourceAffected": false,
+    "requiredCurrentReaderEvidence": [
+      "R1",
+      "R2",
+      "R3",
+      "R5"
+    ],
+    "focusedChangedCanonicalPages": [],
+    "readerVerdict": "PASS_PRESERVE_ORIGINAL_SCOPE_NO_RECOUNT",
+    "reason": [
+      {
+        "group": "NO_IDENTIFIED_SCOPE_DELTA",
+        "basis": "Ownrevision and latestaccepted-impact actualGitdiffs have no declaredpage/source-prefix intersection; actual changed3code import ancestry has no boundsource intersection. No semantic readoption is needed; retain originalscope/verdict/evidence/limits and pendingcurrentartifact binding only."
+      }
+    ],
+    "originalFieldsUnchanged": true
+  },
+  {
+    "id": "AP09-litellm-complete-data-contract-20261021",
+    "originalRecordCanonicalSha256": "ab09331e30cbd403bc51c06674f8b0d86af27d8f93c4e796dd015edada57387f",
+    "originalRecordRawObjectSha256": "bd7646d2581cd467ca2194a679a18703a8490405203af9b784c451423235086f",
+    "affected": true,
+    "renderedCorpusOutputAffected": true,
+    "sourceAffected": true,
+    "requiredCurrentReaderEvidence": [
+      "R1",
+      "R2",
+      "R3",
+      "R4",
+      "R5",
+      "R6"
+    ],
+    "focusedChangedCanonicalPages": [
+      "docs/site/understand/data-and-state.md"
+    ],
+    "readerVerdict": "PASS_PRESERVE_ORIGINAL_SCOPE_NO_RECOUNT",
+    "reason": [
+      {
+        "group": "STORE_RECORD_AUTHORITY",
+        "basis": "Independently reviewed state/wait operation/encoding/fence/size/read/retention extensions preserve canonical Core authority and backup/encryption/LiteLLM limits; style splits only assertions, not test execution.",
+        "exactIntersections": [
+          "docs/site/understand/data-and-state.md"
+        ],
+        "transitiveOnly": false
+      }
+    ],
+    "originalFieldsUnchanged": true
+  },
+  {
+    "id": "AP09-complete-publication-reference-navigation-20261021",
+    "originalRecordCanonicalSha256": "24aa6e428b63ba3ec41756ca595c3530d575671a4dfd555f707ae3ca18e20c7a",
+    "originalRecordRawObjectSha256": "d7fd263518505921fd7c4687086abe718206c60ba4e7c3e468d748cc07fa43a2",
+    "affected": true,
+    "renderedCorpusOutputAffected": true,
+    "sourceAffected": true,
+    "requiredCurrentReaderEvidence": [
+      "R1",
+      "R2",
+      "R3",
+      "R5",
+      "R7"
+    ],
+    "focusedChangedCanonicalPages": [],
+    "readerVerdict": "PASS_PRESERVE_ORIGINAL_SCOPE_NO_RECOUNT",
+    "reason": [
+      {
+        "group": "PURPOSE_THREE_PLUS_CHILD_ONE",
+        "basis": "Root nonauthor four-value reversal/completeconsumer Source review and8actual purpose-routing controls support only3purpose-input+1literalchildSHA identities. All107recipes/facts/selectors/native/guards/code remain exact; no current fullconsumer/native/role qualification inferred.",
+        "exactIntersections": [],
+        "transitiveOnly": true
+      },
+      {
+        "group": "SCALAR_TWO_DATA_LITERALS",
+        "basis": "Only2original graph/caller guard digests adopted after complete original DATA/full-record multiset/13Source-purpose nonauthor proof. Profiles/anchors/actual deployment receivers/UNKNOWN/WeakSet/cache and runtime/API false unchanged. Actualfullconsumer and native4/115/public/alias/dynamic/module guards remain separate and can STOP.",
+        "exactIntersections": [],
+        "transitiveOnly": true
+      }
+    ],
+    "originalFieldsUnchanged": true
+  },
+  {
+    "id": "AP09-complete-developer-reader-contracts-20261021",
+    "originalRecordCanonicalSha256": "31a206649d95ea9c95b1babb1011fb89da97e5584d2970d0c87bf1feb7c44be9",
+    "originalRecordRawObjectSha256": "6b39127beb99fb9d8e906f27859f062b339577ef7664e667794bfee517d7b904",
+    "affected": true,
+    "renderedCorpusOutputAffected": true,
+    "sourceAffected": true,
+    "requiredCurrentReaderEvidence": [
+      "R1",
+      "R2",
+      "R3",
+      "R5"
+    ],
+    "focusedChangedCanonicalPages": [],
+    "readerVerdict": "PASS_PRESERVE_ORIGINAL_SCOPE_NO_RECOUNT",
+    "reason": [
+      {
+        "group": "PURPOSE_THREE_PLUS_CHILD_ONE",
+        "basis": "Root nonauthor four-value reversal/completeconsumer Source review and8actual purpose-routing controls support only3purpose-input+1literalchildSHA identities. All107recipes/facts/selectors/native/guards/code remain exact; no current fullconsumer/native/role qualification inferred.",
+        "exactIntersections": [],
+        "transitiveOnly": true
+      },
+      {
+        "group": "SCALAR_TWO_DATA_LITERALS",
+        "basis": "Only2original graph/caller guard digests adopted after complete original DATA/full-record multiset/13Source-purpose nonauthor proof. Profiles/anchors/actual deployment receivers/UNKNOWN/WeakSet/cache and runtime/API false unchanged. Actualfullconsumer and native4/115/public/alias/dynamic/module guards remain separate and can STOP.",
+        "exactIntersections": [],
+        "transitiveOnly": true
+      }
+    ],
+    "originalFieldsUnchanged": true
+  },
+  {
+    "id": "AP09-complete-static-reader-search-20261021",
+    "originalRecordCanonicalSha256": "6f3a9cb703f42a8e5fb46f87628d8bb24ed73a372bd674c533b4aa79216d6b85",
+    "originalRecordRawObjectSha256": "36e7826ddd11d6bd7c4f2ace4f04af8650db442c901e1a8b6fc6cc584c6861e1",
+    "affected": true,
+    "renderedCorpusOutputAffected": true,
+    "sourceAffected": true,
+    "requiredCurrentReaderEvidence": [
+      "R1",
+      "R2",
+      "R3",
+      "R4",
+      "R5",
+      "R6",
+      "R7"
+    ],
+    "focusedChangedCanonicalPages": [
+      "docs/site/extend/lint.md",
+      "docs/site/reference/buster-error-codes.md",
+      "docs/site/reference/buster-suites.md",
+      "docs/site/reference/lint-policy.md",
+      "docs/site/reference/lint-rules.md",
+      "docs/site/understand/buster.md",
+      "docs/site/understand/data-and-state.md",
+      "docs/site/understand/echo.md",
+      "docs/site/understand/openclaw.md",
+      "docs/site/understand/telemetry.md",
+      "docs/site/use/workflows/wait-resume.md"
+    ],
+    "readerVerdict": "PASS_PRESERVE_ORIGINAL_SCOPE_NO_RECOUNT",
+    "reason": [
+      {
+        "group": "BUSTER_RECURSIVE_SUITES",
+        "basis": "Seven independently corrected provider mechanisms: cancellation vs cleanup, supported OpenAPI subset, HTTP/build outcome, browser companions, JUnit roots/entities/bounds, Size baseline/growth and fixed parser safe actions. Prior accepted provider input/workflow/classification boundaries retained; no native/live/newprovider authority. Root nonauthor style+seven equal-source URL correction supplies this reviewer authored delta acceptance.",
+        "exactIntersections": [
+          "docs/site/reference/buster-suites.md"
+        ],
+        "transitiveOnly": false
+      },
+      {
+        "group": "OPTIONAL_QUALITY_EVALUATOR",
+        "basis": "Independently reviewed native-first evaluator output identity/branch/artifact/error boundary added; nonpassing native cannot be overruled. Four-field illustrative table and split test sentences preserve Source-only evidence and unchanged native production/recovery route.",
+        "exactIntersections": [
+          "docs/site/understand/buster.md"
+        ],
+        "transitiveOnly": false
+      },
+      {
+        "group": "REVIEW_OPERATOR_AND_EVIDENCE",
+        "basis": "Root follow-up/completeness and lexical simplification corrections plus custody-reviewed supervisor/status/lease/resource/livepreflight path preserve fixed subject/policy/cache/authority and no-new-execution limits. Author does not selfaccept own supervisor/style; custody and Root nonauthor reports supply those deltas.",
+        "exactIntersections": [
+          "docs/site/understand/echo.md"
+        ],
+        "transitiveOnly": false
+      },
+      {
+        "group": "STORE_RECORD_AUTHORITY",
+        "basis": "Independently reviewed state/wait operation/encoding/fence/size/read/retention extensions preserve canonical Core authority and backup/encryption/LiteLLM limits; style splits only assertions, not test execution.",
+        "exactIntersections": [
+          "docs/site/understand/data-and-state.md"
+        ],
+        "transitiveOnly": false
+      },
+      {
+        "group": "TELEMETRY_OBSERVER_LIMITS",
+        "basis": "Independently reviewed required/best_effort observer, Redis receipt/replay/retirement and exact write/queue boundaries clarify prior accepted event/retention/recovery scopes. No native Redis/live outage, broader host journal replay or canonical retirement inferred.",
+        "exactIntersections": [
+          "docs/site/understand/telemetry.md"
+        ],
+        "transitiveOnly": false
+      },
+      {
+        "group": "SOURCE_INGRESS",
+        "basis": "Root-authored/custody-reviewed enqueue/status/pressure/drain/shutdown semantics preserve host event provenance and downstream authority split; emit error is not durable ACK or a new source retry. Short labels preserve claims/URLs.",
+        "exactIntersections": [
+          "docs/site/understand/openclaw.md"
+        ],
+        "transitiveOnly": false
+      },
+      {
+        "group": "OPERATOR_DELIVERY",
+        "basis": "Independently reviewed signed/confidential wire, retained reservation/reconstructed receipt and lost-ACK authority sharpen no-second-send/same-identity stop. Existing approval/resume, external uncertainty, actual bounded fixtures and no live service limits remain.",
+        "exactIntersections": [
+          "docs/site/use/workflows/wait-resume.md"
+        ],
+        "transitiveOnly": false
+      },
+      {
+        "group": "LINT_SUPPORTED_PARSER_BOUNDARY",
+        "basis": "Independent complete31-tool engine review and bounded four-document correction distinguish ignored native shape/nonzero empty results from unsupported product fix. Policy/rule/config routes and already accepted scope remain; known parser/exit-result product weakness is explicit, not green native Lint assurance.",
+        "exactIntersections": [
+          "docs/site/extend/lint.md",
+          "docs/site/reference/lint-policy.md",
+          "docs/site/reference/lint-rules.md"
+        ],
+        "transitiveOnly": false
+      },
+      {
+        "group": "ERROR_OWNER_13_PLUS_2",
+        "basis": "Exact original fixed AST producer adds13static diagnosis/occurrence entries and2outcome prose strings only; full66production Source bytes/stable census and fixed writer/check unchanged. Actual original two write/write/check sets and exact generated row/preamble deltas independently verified. Public CLI selectors/defaults unchanged; this does not accept full REF005/error universe.",
+        "exactIntersections": [
+          "docs/site/reference/buster-error-codes.md"
+        ],
+        "transitiveOnly": false
+      },
+      {
+        "group": "PURPOSE_THREE_PLUS_CHILD_ONE",
+        "basis": "Root nonauthor four-value reversal/completeconsumer Source review and8actual purpose-routing controls support only3purpose-input+1literalchildSHA identities. All107recipes/facts/selectors/native/guards/code remain exact; no current fullconsumer/native/role qualification inferred.",
+        "exactIntersections": [
+          "scripts/docs-api-documentation-role-custody.mjs"
+        ],
+        "transitiveOnly": false
+      }
+    ],
+    "originalFieldsUnchanged": true
+  },
+  {
+    "id": "AP09-search-reader-gate-20261021",
+    "originalRecordCanonicalSha256": "948abbac5de37eacdab82c3f852d16eb72352a1b4eb598bc71e46f238c52bc49",
+    "originalRecordRawObjectSha256": "582ad40392dc6f04e810dd731967266b274a59a6c1e5aa4d91703cf7e58df8c4",
+    "affected": true,
+    "renderedCorpusOutputAffected": true,
+    "sourceAffected": true,
+    "requiredCurrentReaderEvidence": [
+      "R1",
+      "R2",
+      "R3",
+      "R5",
+      "R7"
+    ],
+    "focusedChangedCanonicalPages": [],
+    "readerVerdict": "PASS_PRESERVE_ORIGINAL_SCOPE_NO_RECOUNT",
+    "reason": [
+      {
+        "group": "PURPOSE_THREE_PLUS_CHILD_ONE",
+        "basis": "Root nonauthor four-value reversal/completeconsumer Source review and8actual purpose-routing controls support only3purpose-input+1literalchildSHA identities. All107recipes/facts/selectors/native/guards/code remain exact; no current fullconsumer/native/role qualification inferred.",
+        "exactIntersections": [
+          "scripts/docs-api-documentation-role-custody.mjs"
+        ],
+        "transitiveOnly": false
+      }
+    ],
+    "originalFieldsUnchanged": true
+  },
+  {
+    "id": "AP09-rendered-source-bounds-gate-20261021",
+    "originalRecordCanonicalSha256": "0b13db19efbc12626100c1d239dce6ae8e13c532eb96488ff8504d4eaa8e6c8d",
+    "originalRecordRawObjectSha256": "8b0675127b846f10ca6cc93b8eb567ddbdbadfdea1b7fdf8a46efede4488db61",
+    "affected": true,
+    "renderedCorpusOutputAffected": true,
+    "sourceAffected": true,
+    "requiredCurrentReaderEvidence": [
+      "R1",
+      "R2",
+      "R3",
+      "R5",
+      "R7"
+    ],
+    "focusedChangedCanonicalPages": [],
+    "readerVerdict": "PASS_PRESERVE_ORIGINAL_SCOPE_NO_RECOUNT",
+    "reason": [
+      {
+        "group": "PURPOSE_THREE_PLUS_CHILD_ONE",
+        "basis": "Root nonauthor four-value reversal/completeconsumer Source review and8actual purpose-routing controls support only3purpose-input+1literalchildSHA identities. All107recipes/facts/selectors/native/guards/code remain exact; no current fullconsumer/native/role qualification inferred.",
+        "exactIntersections": [
+          "scripts/docs-api-documentation-role-custody.mjs"
+        ],
+        "transitiveOnly": false
+      }
+    ],
+    "originalFieldsUnchanged": true
+  },
+  {
+    "id": "AP09-complete-static-offline-fallback-20261021",
+    "originalRecordCanonicalSha256": "4e46eed614841d1f6f836be768477cc6546d1dd6b98b359a227085928d771eb1",
+    "originalRecordRawObjectSha256": "b89d6d0e89b980fc350aef2ad23fa352ff32a8b2fd787c7fb244918bd0b5e165",
+    "affected": true,
+    "renderedCorpusOutputAffected": true,
+    "sourceAffected": false,
+    "requiredCurrentReaderEvidence": [
+      "R1",
+      "R2",
+      "R3",
+      "R4",
+      "R5",
+      "R6",
+      "R7"
+    ],
+    "focusedChangedCanonicalPages": [],
+    "readerVerdict": "PASS_PRESERVE_ORIGINAL_SCOPE_NO_RECOUNT",
+    "reason": [
+      {
+        "group": "NO_IDENTIFIED_SCOPE_DELTA",
+        "basis": "Ownrevision and latestaccepted-impact actualGitdiffs have no declaredpage/source-prefix intersection; actual changed3code import ancestry has no boundsource intersection. No semantic readoption is needed; retain originalscope/verdict/evidence/limits and pendingcurrentartifact binding only."
+      },
+      {
+        "group": "CURRENT_RENDERED_CORPUS_ONLY",
+        "basis": "Underlying owned Source/pages remain exact within declaredscope, but whole reader/noJS/offline/redirect/page-record output universe incorporates12changedcanonical inputs. Require original currentartifact/pageRecords/Source/packaging checks and bounded fallback evidence without reaccepting unchanged mechanism."
+      }
+    ],
+    "originalFieldsUnchanged": true
+  },
+  {
+    "id": "AP09-complete-same-source-code-preview-20261021",
+    "originalRecordCanonicalSha256": "c442d367d972c32b855c4f62c3300d99babd00fa114de6557446abbfa6dd2470",
+    "originalRecordRawObjectSha256": "37f0633e19e979a063d58864076bd69f7b89cc7855e41e8636fdc4f39a9a80da",
+    "affected": true,
+    "renderedCorpusOutputAffected": true,
+    "sourceAffected": true,
+    "requiredCurrentReaderEvidence": [
+      "R1",
+      "R2",
+      "R3",
+      "R4",
+      "R5",
+      "R6",
+      "R7"
+    ],
+    "focusedChangedCanonicalPages": [],
+    "readerVerdict": "PASS_PRESERVE_ORIGINAL_SCOPE_NO_RECOUNT",
+    "reason": [
+      {
+        "group": "PURPOSE_THREE_PLUS_CHILD_ONE",
+        "basis": "Root nonauthor four-value reversal/completeconsumer Source review and8actual purpose-routing controls support only3purpose-input+1literalchildSHA identities. All107recipes/facts/selectors/native/guards/code remain exact; no current fullconsumer/native/role qualification inferred.",
+        "exactIntersections": [
+          "scripts/docs-api-documentation-role-custody.mjs"
+        ],
+        "transitiveOnly": false
+      }
+    ],
+    "originalFieldsUnchanged": true
+  },
+  {
+    "id": "AP09-complete-responsive-reader-layout-20261021",
+    "originalRecordCanonicalSha256": "2b9a49d5447e3c48a4f18ec247553df28b53585dfb78978a87898af8cda712d4",
+    "originalRecordRawObjectSha256": "58b79c3e575877b40f39d2f879697e8dd90efaed3dae80815861794ab961522a",
+    "affected": true,
+    "renderedCorpusOutputAffected": true,
+    "sourceAffected": true,
+    "requiredCurrentReaderEvidence": [
+      "R1",
+      "R2",
+      "R3",
+      "R4",
+      "R5",
+      "R6",
+      "R7"
+    ],
+    "focusedChangedCanonicalPages": [],
+    "readerVerdict": "PASS_PRESERVE_ORIGINAL_SCOPE_NO_RECOUNT",
+    "reason": [
+      {
+        "group": "PURPOSE_THREE_PLUS_CHILD_ONE",
+        "basis": "Root nonauthor four-value reversal/completeconsumer Source review and8actual purpose-routing controls support only3purpose-input+1literalchildSHA identities. All107recipes/facts/selectors/native/guards/code remain exact; no current fullconsumer/native/role qualification inferred.",
+        "exactIntersections": [
+          "scripts/docs-api-documentation-role-custody.mjs"
+        ],
+        "transitiveOnly": false
+      }
+    ],
+    "originalFieldsUnchanged": true
+  },
+  {
+    "id": "AP09-complete-source-backed-diagrams-20261021",
+    "originalRecordCanonicalSha256": "289f43f01bd639c3c3a54f6419dd975413441edf9145b036d4376c5b940bc4ec",
+    "originalRecordRawObjectSha256": "e58c3e6fa2b09dc75bcda3ed5e8f1fc395f7d421669a62814161747513f87932",
+    "affected": true,
+    "renderedCorpusOutputAffected": true,
+    "sourceAffected": true,
+    "requiredCurrentReaderEvidence": [
+      "R1",
+      "R2",
+      "R3",
+      "R4",
+      "R5",
+      "R6",
+      "R7"
+    ],
+    "focusedChangedCanonicalPages": [
+      "docs/site/extend/lint.md",
+      "docs/site/understand/buster.md",
+      "docs/site/understand/telemetry.md"
+    ],
+    "readerVerdict": "PASS_PRESERVE_ORIGINAL_SCOPE_NO_RECOUNT",
+    "reason": [
+      {
+        "group": "OPTIONAL_QUALITY_EVALUATOR",
+        "basis": "Independently reviewed native-first evaluator output identity/branch/artifact/error boundary added; nonpassing native cannot be overruled. Four-field illustrative table and split test sentences preserve Source-only evidence and unchanged native production/recovery route.",
+        "exactIntersections": [
+          "docs/site/understand/buster.md"
+        ],
+        "transitiveOnly": false
+      },
+      {
+        "group": "TELEMETRY_OBSERVER_LIMITS",
+        "basis": "Independently reviewed required/best_effort observer, Redis receipt/replay/retirement and exact write/queue boundaries clarify prior accepted event/retention/recovery scopes. No native Redis/live outage, broader host journal replay or canonical retirement inferred.",
+        "exactIntersections": [
+          "docs/site/understand/telemetry.md"
+        ],
+        "transitiveOnly": false
+      },
+      {
+        "group": "LINT_SUPPORTED_PARSER_BOUNDARY",
+        "basis": "Independent complete31-tool engine review and bounded four-document correction distinguish ignored native shape/nonzero empty results from unsupported product fix. Policy/rule/config routes and already accepted scope remain; known parser/exit-result product weakness is explicit, not green native Lint assurance.",
+        "exactIntersections": [
+          "docs/site/extend/lint.md"
+        ],
+        "transitiveOnly": false
+      }
+    ],
+    "originalFieldsUnchanged": true
+  },
+  {
+    "id": "AP09-whole-platform-discovery-and-drift-20261021",
+    "originalRecordCanonicalSha256": "ec75e7c190a0088f79eaf75618aef7d6f24b0a07f50846d9219abc37e858d339",
+    "originalRecordRawObjectSha256": "241a764893df9579f2d95da2d2ac7c9b1a1305103678c0cda2d1d3e42d9b959c",
+    "affected": false,
+    "renderedCorpusOutputAffected": false,
+    "sourceAffected": false,
+    "requiredCurrentReaderEvidence": [
+      "R1",
+      "R2",
+      "R3",
+      "R5"
+    ],
+    "focusedChangedCanonicalPages": [],
+    "readerVerdict": "PASS_PRESERVE_ORIGINAL_SCOPE_NO_RECOUNT",
+    "reason": [
+      {
+        "group": "NO_IDENTIFIED_SCOPE_DELTA",
+        "basis": "Ownrevision and latestaccepted-impact actualGitdiffs have no declaredpage/source-prefix intersection; actual changed3code import ancestry has no boundsource intersection. No semantic readoption is needed; retain originalscope/verdict/evidence/limits and pendingcurrentartifact binding only."
+      }
+    ],
+    "originalFieldsUnchanged": true
+  },
+  {
+    "id": "AP09-whole-store-contract-20261021",
+    "originalRecordCanonicalSha256": "cb10362aab4c912876c1a62345d2e51314dcc45016b4a9e6e2197649128fc409",
+    "originalRecordRawObjectSha256": "4dab99c915c52bb156ad5849a208bab19ad3692fb74bc30f581302bda26b0474",
+    "affected": true,
+    "renderedCorpusOutputAffected": true,
+    "sourceAffected": true,
+    "requiredCurrentReaderEvidence": [
+      "R1",
+      "R2",
+      "R3",
+      "R4",
+      "R5",
+      "R6"
+    ],
+    "focusedChangedCanonicalPages": [
+      "docs/site/understand/data-and-state.md"
+    ],
+    "readerVerdict": "PASS_PRESERVE_ORIGINAL_SCOPE_NO_RECOUNT",
+    "reason": [
+      {
+        "group": "STORE_RECORD_AUTHORITY",
+        "basis": "Independently reviewed state/wait operation/encoding/fence/size/read/retention extensions preserve canonical Core authority and backup/encryption/LiteLLM limits; style splits only assertions, not test execution.",
+        "exactIntersections": [
+          "docs/site/understand/data-and-state.md"
+        ],
+        "transitiveOnly": false
+      }
+    ],
+    "originalFieldsUnchanged": true
+  },
+  {
+    "id": "AP09-whole-trust-and-spiffe-contract-20261021",
+    "originalRecordCanonicalSha256": "4b238e53382e4c7d4d9c1cafcbe13df3356de1596d9d842f6cf6cb9cb7e1584a",
+    "originalRecordRawObjectSha256": "d1a23dd862c8b53822ebc52ee4039b05fb558950773a84574842f1be7439445c",
+    "affected": false,
+    "renderedCorpusOutputAffected": false,
+    "sourceAffected": false,
+    "requiredCurrentReaderEvidence": [
+      "R1",
+      "R2",
+      "R3",
+      "R5"
+    ],
+    "focusedChangedCanonicalPages": [],
+    "readerVerdict": "PASS_PRESERVE_ORIGINAL_SCOPE_NO_RECOUNT",
+    "reason": [
+      {
+        "group": "NO_IDENTIFIED_SCOPE_DELTA",
+        "basis": "Ownrevision and latestaccepted-impact actualGitdiffs have no declaredpage/source-prefix intersection; actual changed3code import ancestry has no boundsource intersection. No semantic readoption is needed; retain originalscope/verdict/evidence/limits and pendingcurrentartifact binding only."
+      }
+    ],
+    "originalFieldsUnchanged": true
+  },
+  {
+    "id": "AP09-whole-dependency-decision-traces-20261021",
+    "originalRecordCanonicalSha256": "88d375ddecccacac5584e373437e8bd73090c37dd193d4ae22577252eb892121",
+    "originalRecordRawObjectSha256": "7a451192459fc42b50119f932cbcb4cb97120b9c9441f2d8e8818b4497f93c9f",
+    "affected": false,
+    "renderedCorpusOutputAffected": false,
+    "sourceAffected": false,
+    "requiredCurrentReaderEvidence": [
+      "R1",
+      "R2",
+      "R3",
+      "R5"
+    ],
+    "focusedChangedCanonicalPages": [],
+    "readerVerdict": "PASS_PRESERVE_ORIGINAL_SCOPE_NO_RECOUNT",
+    "reason": [
+      {
+        "group": "NO_IDENTIFIED_SCOPE_DELTA",
+        "basis": "Ownrevision and latestaccepted-impact actualGitdiffs have no declaredpage/source-prefix intersection; actual changed3code import ancestry has no boundsource intersection. No semantic readoption is needed; retain originalscope/verdict/evidence/limits and pendingcurrentartifact binding only."
+      }
+    ],
+    "originalFieldsUnchanged": true
+  },
+  {
+    "id": "AP09-whole-install-and-readiness-20261021",
+    "originalRecordCanonicalSha256": "5f3a36e1f11231013776a6bdea794e929453989ab4ca2b53a62f87307b14e11d",
+    "originalRecordRawObjectSha256": "605269d063a24b29cf47c0b8a86fb6ed41d7b8447b2a508a4c62d1c16e24d115",
+    "affected": false,
+    "renderedCorpusOutputAffected": false,
+    "sourceAffected": false,
+    "requiredCurrentReaderEvidence": [
+      "R1",
+      "R2",
+      "R3",
+      "R5"
+    ],
+    "focusedChangedCanonicalPages": [],
+    "readerVerdict": "PASS_PRESERVE_ORIGINAL_SCOPE_NO_RECOUNT",
+    "reason": [
+      {
+        "group": "NO_IDENTIFIED_SCOPE_DELTA",
+        "basis": "Ownrevision and latestaccepted-impact actualGitdiffs have no declaredpage/source-prefix intersection; actual changed3code import ancestry has no boundsource intersection. No semantic readoption is needed; retain originalscope/verdict/evidence/limits and pendingcurrentartifact binding only."
+      }
+    ],
+    "originalFieldsUnchanged": true
+  },
+  {
+    "id": "AP09-whole-upgrade-and-retirement-20261021",
+    "originalRecordCanonicalSha256": "1e3c4924e8107000eba469d86fc2306a8b638ae50fdf3d1c50d4756a2d64d0ff",
+    "originalRecordRawObjectSha256": "07149603cc3131ca2976c726d199ef80253f7d07ab7011004e17c1cea9f44451",
+    "affected": false,
+    "renderedCorpusOutputAffected": false,
+    "sourceAffected": false,
+    "requiredCurrentReaderEvidence": [
+      "R1",
+      "R2",
+      "R3",
+      "R5"
+    ],
+    "focusedChangedCanonicalPages": [],
+    "readerVerdict": "PASS_PRESERVE_ORIGINAL_SCOPE_NO_RECOUNT",
+    "reason": [
+      {
+        "group": "NO_IDENTIFIED_SCOPE_DELTA",
+        "basis": "Ownrevision and latestaccepted-impact actualGitdiffs have no declaredpage/source-prefix intersection; actual changed3code import ancestry has no boundsource intersection. No semantic readoption is needed; retain originalscope/verdict/evidence/limits and pendingcurrentartifact binding only."
+      }
+    ],
+    "originalFieldsUnchanged": true
+  },
+  {
+    "id": "AP09-whole-studio-demo-journey-20261021",
+    "originalRecordCanonicalSha256": "e14599bc0273c8a7ed5574cc16f183655adbca9fc222c0b4594658490e293757",
+    "originalRecordRawObjectSha256": "6c2afb84f1a74e24e185834e93b9e2e0dac0f2a3130bf35bf319ff30ba85b921",
+    "affected": false,
+    "renderedCorpusOutputAffected": false,
+    "sourceAffected": false,
+    "requiredCurrentReaderEvidence": [
+      "R1",
+      "R2",
+      "R3",
+      "R5"
+    ],
+    "focusedChangedCanonicalPages": [],
+    "readerVerdict": "PASS_PRESERVE_ORIGINAL_SCOPE_NO_RECOUNT",
+    "reason": [
+      {
+        "group": "NO_IDENTIFIED_SCOPE_DELTA",
+        "basis": "Ownrevision and latestaccepted-impact actualGitdiffs have no declaredpage/source-prefix intersection; actual changed3code import ancestry has no boundsource intersection. No semantic readoption is needed; retain originalscope/verdict/evidence/limits and pendingcurrentartifact binding only."
+      }
+    ],
+    "originalFieldsUnchanged": true
+  },
+  {
+    "id": "AP09-complete-event-producer-consumer-catalogue-20261021",
+    "originalRecordCanonicalSha256": "c2d7d478153f10f683d55772492d7cc18e68db44dafc4d2aaa5d66c3eeb151e1",
+    "originalRecordRawObjectSha256": "d0d9fe484050e82a44a4aa4bab4fddc5ddf97fa17120f0970015463b198dd5a0",
+    "affected": true,
+    "renderedCorpusOutputAffected": true,
+    "sourceAffected": true,
+    "requiredCurrentReaderEvidence": [
+      "R1",
+      "R2",
+      "R3",
+      "R4",
+      "R5",
+      "R6"
+    ],
+    "focusedChangedCanonicalPages": [
+      "docs/site/understand/telemetry.md"
+    ],
+    "readerVerdict": "PASS_PRESERVE_ORIGINAL_SCOPE_NO_RECOUNT",
+    "reason": [
+      {
+        "group": "TELEMETRY_OBSERVER_LIMITS",
+        "basis": "Independently reviewed required/best_effort observer, Redis receipt/replay/retirement and exact write/queue boundaries clarify prior accepted event/retention/recovery scopes. No native Redis/live outage, broader host journal replay or canonical retirement inferred.",
+        "exactIntersections": [
+          "docs/site/understand/telemetry.md"
+        ],
+        "transitiveOnly": false
+      }
+    ],
+    "originalFieldsUnchanged": true
+  },
+  {
+    "id": "A99-02-whole-content-20261021",
+    "originalRecordCanonicalSha256": "61276695feb78df4903ec26adf47ede0992ce63e1073cf7cf556cfe767bc8a18",
+    "originalRecordRawObjectSha256": "dc85fb1377f9997f7a5c42728a164296ae184232eec0754ac622cd3229b16de0",
+    "affected": false,
+    "renderedCorpusOutputAffected": false,
+    "sourceAffected": false,
+    "requiredCurrentReaderEvidence": [
+      "R1",
+      "R2",
+      "R3",
+      "R5"
+    ],
+    "focusedChangedCanonicalPages": [],
+    "readerVerdict": "PASS_PRESERVE_ORIGINAL_SCOPE_NO_RECOUNT",
+    "reason": [
+      {
+        "group": "NO_IDENTIFIED_SCOPE_DELTA",
+        "basis": "Ownrevision and latestaccepted-impact actualGitdiffs have no declaredpage/source-prefix intersection; actual changed3code import ancestry has no boundsource intersection. No semantic readoption is needed; retain originalscope/verdict/evidence/limits and pendingcurrentartifact binding only."
+      }
+    ],
+    "originalFieldsUnchanged": true
+  },
+  {
+    "id": "A99-03-whole-content-20261021",
+    "originalRecordCanonicalSha256": "f055d2ddb1752aa5ffd8169580803af2127779865d688079977a41f431999bf6",
+    "originalRecordRawObjectSha256": "b4f1eafcf3919262984dea3b072338814d3fd932134c16c886a96deaa5713a3c",
+    "affected": false,
+    "renderedCorpusOutputAffected": false,
+    "sourceAffected": false,
+    "requiredCurrentReaderEvidence": [
+      "R1",
+      "R2",
+      "R3",
+      "R5"
+    ],
+    "focusedChangedCanonicalPages": [],
+    "readerVerdict": "PASS_PRESERVE_ORIGINAL_SCOPE_NO_RECOUNT",
+    "reason": [
+      {
+        "group": "NO_IDENTIFIED_SCOPE_DELTA",
+        "basis": "Ownrevision and latestaccepted-impact actualGitdiffs have no declaredpage/source-prefix intersection; actual changed3code import ancestry has no boundsource intersection. No semantic readoption is needed; retain originalscope/verdict/evidence/limits and pendingcurrentartifact binding only."
+      }
+    ],
+    "originalFieldsUnchanged": true
+  },
+  {
+    "id": "A99-04-whole-content-20261021",
+    "originalRecordCanonicalSha256": "ebdc251edd165f2c8b4a623c6c4105f4108ced00b3799ca4389346796713fc54",
+    "originalRecordRawObjectSha256": "1eda544a21014be89e14b51b319fe2ca112a4d5e7bc53b1e202401c7e96ebe88",
+    "affected": true,
+    "renderedCorpusOutputAffected": true,
+    "sourceAffected": true,
+    "requiredCurrentReaderEvidence": [
+      "R1",
+      "R2",
+      "R3",
+      "R4",
+      "R5",
+      "R6"
+    ],
+    "focusedChangedCanonicalPages": [
+      "docs/site/use/workflows/wait-resume.md"
+    ],
+    "readerVerdict": "PASS_PRESERVE_ORIGINAL_SCOPE_NO_RECOUNT",
+    "reason": [
+      {
+        "group": "OPERATOR_DELIVERY",
+        "basis": "Independently reviewed signed/confidential wire, retained reservation/reconstructed receipt and lost-ACK authority sharpen no-second-send/same-identity stop. Existing approval/resume, external uncertainty, actual bounded fixtures and no live service limits remain.",
+        "exactIntersections": [
+          "docs/site/use/workflows/wait-resume.md"
+        ],
+        "transitiveOnly": false
+      }
+    ],
+    "originalFieldsUnchanged": true
+  },
+  {
+    "id": "A99-05-whole-content-20261021",
+    "originalRecordCanonicalSha256": "8a3000f50fc155236ee5ed887669c230d5e0ed3509aa9a6563e14397169e902f",
+    "originalRecordRawObjectSha256": "036a794fc10fe1605ad54ca78f5c13a346f766db5b3db2df2e42bacf92ff3e2e",
+    "affected": false,
+    "renderedCorpusOutputAffected": false,
+    "sourceAffected": false,
+    "requiredCurrentReaderEvidence": [
+      "R1",
+      "R2",
+      "R3",
+      "R5"
+    ],
+    "focusedChangedCanonicalPages": [],
+    "readerVerdict": "PASS_PRESERVE_ORIGINAL_SCOPE_NO_RECOUNT",
+    "reason": [
+      {
+        "group": "NO_IDENTIFIED_SCOPE_DELTA",
+        "basis": "Ownrevision and latestaccepted-impact actualGitdiffs have no declaredpage/source-prefix intersection; actual changed3code import ancestry has no boundsource intersection. No semantic readoption is needed; retain originalscope/verdict/evidence/limits and pendingcurrentartifact binding only."
+      }
+    ],
+    "originalFieldsUnchanged": true
+  },
+  {
+    "id": "A910-01-whole-content-20261021",
+    "originalRecordCanonicalSha256": "986b5220b87e9216000685ef4df797482369fe43961947d4ef0778e233100d7d",
+    "originalRecordRawObjectSha256": "e65bcb4365e465fd2d7f3add5530662d47efa3da248de3972f25118df5ca84aa",
+    "affected": false,
+    "renderedCorpusOutputAffected": false,
+    "sourceAffected": false,
+    "requiredCurrentReaderEvidence": [
+      "R1",
+      "R2",
+      "R3",
+      "R5"
+    ],
+    "focusedChangedCanonicalPages": [],
+    "readerVerdict": "PASS_PRESERVE_ORIGINAL_SCOPE_NO_RECOUNT",
+    "reason": [
+      {
+        "group": "NO_IDENTIFIED_SCOPE_DELTA",
+        "basis": "Ownrevision and latestaccepted-impact actualGitdiffs have no declaredpage/source-prefix intersection; actual changed3code import ancestry has no boundsource intersection. No semantic readoption is needed; retain originalscope/verdict/evidence/limits and pendingcurrentartifact binding only."
+      }
+    ],
+    "originalFieldsUnchanged": true
+  },
+  {
+    "id": "A910-11-whole-content-20261021",
+    "originalRecordCanonicalSha256": "bdef1c7ae5f0f32f6ca99f7d921bb28b92c005caafe6e70db4ca9460cf12cb97",
+    "originalRecordRawObjectSha256": "188d4767c05021afa48dfbe45fabfe235076d888a074c6b4225bbde45671b5b8",
+    "affected": false,
+    "renderedCorpusOutputAffected": false,
+    "sourceAffected": false,
+    "requiredCurrentReaderEvidence": [
+      "R1",
+      "R2",
+      "R3",
+      "R5"
+    ],
+    "focusedChangedCanonicalPages": [],
+    "readerVerdict": "PASS_PRESERVE_ORIGINAL_SCOPE_NO_RECOUNT",
+    "reason": [
+      {
+        "group": "NO_IDENTIFIED_SCOPE_DELTA",
+        "basis": "Ownrevision and latestaccepted-impact actualGitdiffs have no declaredpage/source-prefix intersection; actual changed3code import ancestry has no boundsource intersection. No semantic readoption is needed; retain originalscope/verdict/evidence/limits and pendingcurrentartifact binding only."
+      }
+    ],
+    "originalFieldsUnchanged": true
+  },
+  {
+    "id": "A99-01-whole-recursive-input-content-20261021",
+    "originalRecordCanonicalSha256": "7f885a314e62f3fd54b33352a08b9ff917676d3f5564bbf1df4b265a2a8768e2",
+    "originalRecordRawObjectSha256": "699f082ad33d257bc8400440d57f179868fd86ca9694784c852a4bb1fb74535b",
+    "affected": true,
+    "renderedCorpusOutputAffected": true,
+    "sourceAffected": true,
+    "requiredCurrentReaderEvidence": [
+      "R1",
+      "R2",
+      "R3",
+      "R4",
+      "R5",
+      "R6"
+    ],
+    "focusedChangedCanonicalPages": [
+      "docs/site/reference/buster-suites.md"
+    ],
+    "readerVerdict": "PASS_PRESERVE_ORIGINAL_SCOPE_NO_RECOUNT",
+    "reason": [
+      {
+        "group": "BUSTER_RECURSIVE_SUITES",
+        "basis": "Seven independently corrected provider mechanisms: cancellation vs cleanup, supported OpenAPI subset, HTTP/build outcome, browser companions, JUnit roots/entities/bounds, Size baseline/growth and fixed parser safe actions. Prior accepted provider input/workflow/classification boundaries retained; no native/live/newprovider authority. Root nonauthor style+seven equal-source URL correction supplies this reviewer authored delta acceptance.",
+        "exactIntersections": [
+          "docs/site/reference/buster-suites.md"
+        ],
+        "transitiveOnly": false
+      }
+    ],
+    "originalFieldsUnchanged": true
+  },
+  {
+    "id": "AP09-whole-current-communication-union-20261021-d477",
+    "originalRecordCanonicalSha256": "b64bc3bbe51b3bc663990d9fb2b771cc309e76e523883dbda37ae284d4075d52",
+    "originalRecordRawObjectSha256": "f60fade9499a3e3a3316a17e68da931ba102eda0db5db6a61b293d5bb26ae0ae",
+    "affected": true,
+    "renderedCorpusOutputAffected": true,
+    "sourceAffected": true,
+    "requiredCurrentReaderEvidence": [
+      "R1",
+      "R2",
+      "R3",
+      "R4",
+      "R5",
+      "R6"
+    ],
+    "focusedChangedCanonicalPages": [
+      "docs/site/understand/openclaw.md"
+    ],
+    "readerVerdict": "PASS_PRESERVE_ORIGINAL_SCOPE_NO_RECOUNT",
+    "reason": [
+      {
+        "group": "SOURCE_INGRESS",
+        "basis": "Root-authored/custody-reviewed enqueue/status/pressure/drain/shutdown semantics preserve host event provenance and downstream authority split; emit error is not durable ACK or a new source retry. Short labels preserve claims/URLs.",
+        "exactIntersections": [
+          "docs/site/understand/openclaw.md"
+        ],
+        "transitiveOnly": false
+      }
+    ],
+    "originalFieldsUnchanged": true
+  },
+  {
+    "id": "AP09-whole-current-telemetry-union-20261021-d477",
+    "originalRecordCanonicalSha256": "e41207f35a5b41f32319752cf6f27058f8b3ca8709fa433a4de75788f65f70f1",
+    "originalRecordRawObjectSha256": "226e706cd0359c92ed600436705f2cdbdda4768deab2a47323a7cb149be955d3",
+    "affected": true,
+    "renderedCorpusOutputAffected": true,
+    "sourceAffected": true,
+    "requiredCurrentReaderEvidence": [
+      "R1",
+      "R2",
+      "R3",
+      "R4",
+      "R5",
+      "R6"
+    ],
+    "focusedChangedCanonicalPages": [
+      "docs/site/understand/data-and-state.md",
+      "docs/site/understand/telemetry.md"
+    ],
+    "readerVerdict": "PASS_PRESERVE_ORIGINAL_SCOPE_NO_RECOUNT",
+    "reason": [
+      {
+        "group": "STORE_RECORD_AUTHORITY",
+        "basis": "Independently reviewed state/wait operation/encoding/fence/size/read/retention extensions preserve canonical Core authority and backup/encryption/LiteLLM limits; style splits only assertions, not test execution.",
+        "exactIntersections": [
+          "docs/site/understand/data-and-state.md"
+        ],
+        "transitiveOnly": false
+      },
+      {
+        "group": "TELEMETRY_OBSERVER_LIMITS",
+        "basis": "Independently reviewed required/best_effort observer, Redis receipt/replay/retirement and exact write/queue boundaries clarify prior accepted event/retention/recovery scopes. No native Redis/live outage, broader host journal replay or canonical retirement inferred.",
+        "exactIntersections": [
+          "docs/site/understand/telemetry.md"
+        ],
+        "transitiveOnly": false
+      }
+    ],
+    "originalFieldsUnchanged": true
+  },
+  {
+    "id": "AP09-whole-independent-platform-decision-review-20261021-d477",
+    "originalRecordCanonicalSha256": "cdb63feaf8cd09352ca507433ad641dd906ef80d9593cf7128d95b77fcc80a12",
+    "originalRecordRawObjectSha256": "a791a3779c6c66582c348a23cb0d94797380c962ec6c3d4e51c6e579c32799ac",
+    "affected": true,
+    "renderedCorpusOutputAffected": true,
+    "sourceAffected": true,
+    "requiredCurrentReaderEvidence": [
+      "R1",
+      "R2",
+      "R3",
+      "R4",
+      "R5",
+      "R6"
+    ],
+    "focusedChangedCanonicalPages": [
+      "docs/site/understand/data-and-state.md",
+      "docs/site/understand/openclaw.md",
+      "docs/site/understand/telemetry.md"
+    ],
+    "readerVerdict": "PASS_PRESERVE_ORIGINAL_SCOPE_NO_RECOUNT",
+    "reason": [
+      {
+        "group": "STORE_RECORD_AUTHORITY",
+        "basis": "Independently reviewed state/wait operation/encoding/fence/size/read/retention extensions preserve canonical Core authority and backup/encryption/LiteLLM limits; style splits only assertions, not test execution.",
+        "exactIntersections": [
+          "docs/site/understand/data-and-state.md"
+        ],
+        "transitiveOnly": false
+      },
+      {
+        "group": "TELEMETRY_OBSERVER_LIMITS",
+        "basis": "Independently reviewed required/best_effort observer, Redis receipt/replay/retirement and exact write/queue boundaries clarify prior accepted event/retention/recovery scopes. No native Redis/live outage, broader host journal replay or canonical retirement inferred.",
+        "exactIntersections": [
+          "docs/site/understand/telemetry.md"
+        ],
+        "transitiveOnly": false
+      },
+      {
+        "group": "SOURCE_INGRESS",
+        "basis": "Root-authored/custody-reviewed enqueue/status/pressure/drain/shutdown semantics preserve host event provenance and downstream authority split; emit error is not durable ACK or a new source retry. Short labels preserve claims/URLs.",
+        "exactIntersections": [
+          "docs/site/understand/openclaw.md"
+        ],
+        "transitiveOnly": false
+      }
+    ],
+    "originalFieldsUnchanged": true
+  },
+  {
+    "id": "AP09-reference-network-paths-80178-20261021",
+    "originalRecordCanonicalSha256": "fdec911fd5e492741cb2f94e918f7c60cbac2925470d9839d7c076cd68cd9e6a",
+    "originalRecordRawObjectSha256": "1c3d52afde7056799040dde5fab74a39473a0450d27b5c1feff57de7fe2913b2",
+    "affected": true,
+    "renderedCorpusOutputAffected": true,
+    "sourceAffected": true,
+    "requiredCurrentReaderEvidence": [
+      "R1",
+      "R2",
+      "R3",
+      "R4",
+      "R5",
+      "R6"
+    ],
+    "focusedChangedCanonicalPages": [
+      "docs/site/understand/openclaw.md"
+    ],
+    "readerVerdict": "PASS_PRESERVE_ORIGINAL_SCOPE_NO_RECOUNT",
+    "reason": [
+      {
+        "group": "SOURCE_INGRESS",
+        "basis": "Root-authored/custody-reviewed enqueue/status/pressure/drain/shutdown semantics preserve host event provenance and downstream authority split; emit error is not durable ACK or a new source retry. Short labels preserve claims/URLs.",
+        "exactIntersections": [
+          "docs/site/understand/openclaw.md"
+        ],
+        "transitiveOnly": false
+      },
+      {
+        "group": "PURPOSE_THREE_PLUS_CHILD_ONE",
+        "basis": "Root nonauthor four-value reversal/completeconsumer Source review and8actual purpose-routing controls support only3purpose-input+1literalchildSHA identities. All107recipes/facts/selectors/native/guards/code remain exact; no current fullconsumer/native/role qualification inferred.",
+        "exactIntersections": [],
+        "transitiveOnly": true
+      },
+      {
+        "group": "SCALAR_TWO_DATA_LITERALS",
+        "basis": "Only2original graph/caller guard digests adopted after complete original DATA/full-record multiset/13Source-purpose nonauthor proof. Profiles/anchors/actual deployment receivers/UNKNOWN/WeakSet/cache and runtime/API false unchanged. Actualfullconsumer and native4/115/public/alias/dynamic/module guards remain separate and can STOP.",
+        "exactIntersections": [],
+        "transitiveOnly": true
+      }
+    ],
+    "originalFieldsUnchanged": true
+  },
+  {
+    "id": "AP09-reference-event-payloads-80178-20261021",
+    "originalRecordCanonicalSha256": "b3f46560d2f23d18c7aad3df822da1fd4ebe2b01212092749bb94d52b548a76d",
+    "originalRecordRawObjectSha256": "92726e94ff4ede1ded21a14328c372d206bb747eebe16ee0bb2be113ae75d18c",
+    "affected": true,
+    "renderedCorpusOutputAffected": true,
+    "sourceAffected": true,
+    "requiredCurrentReaderEvidence": [
+      "R1",
+      "R2",
+      "R3",
+      "R4",
+      "R5",
+      "R6"
+    ],
+    "focusedChangedCanonicalPages": [
+      "docs/site/understand/buster.md",
+      "docs/site/understand/telemetry.md"
+    ],
+    "readerVerdict": "PASS_PRESERVE_ORIGINAL_SCOPE_NO_RECOUNT",
+    "reason": [
+      {
+        "group": "OPTIONAL_QUALITY_EVALUATOR",
+        "basis": "Independently reviewed native-first evaluator output identity/branch/artifact/error boundary added; nonpassing native cannot be overruled. Four-field illustrative table and split test sentences preserve Source-only evidence and unchanged native production/recovery route.",
+        "exactIntersections": [
+          "docs/site/understand/buster.md"
+        ],
+        "transitiveOnly": false
+      },
+      {
+        "group": "TELEMETRY_OBSERVER_LIMITS",
+        "basis": "Independently reviewed required/best_effort observer, Redis receipt/replay/retirement and exact write/queue boundaries clarify prior accepted event/retention/recovery scopes. No native Redis/live outage, broader host journal replay or canonical retirement inferred.",
+        "exactIntersections": [
+          "docs/site/understand/telemetry.md"
+        ],
+        "transitiveOnly": false
+      }
+    ],
+    "originalFieldsUnchanged": true
+  },
+  {
+    "id": "AP09-reference-stores-retention-80178-20261021",
+    "originalRecordCanonicalSha256": "93a92d7a71b0b53d169bf46eb0232063e0d20ce204126a6580488fbe0d1033c3",
+    "originalRecordRawObjectSha256": "2084df17db5a89934a7591de054956f7fca078311acb9f2c456c07df6ad53b74",
+    "affected": true,
+    "renderedCorpusOutputAffected": true,
+    "sourceAffected": true,
+    "requiredCurrentReaderEvidence": [
+      "R1",
+      "R2",
+      "R3",
+      "R4",
+      "R5",
+      "R6"
+    ],
+    "focusedChangedCanonicalPages": [
+      "docs/site/understand/data-and-state.md"
+    ],
+    "readerVerdict": "PASS_PRESERVE_ORIGINAL_SCOPE_NO_RECOUNT",
+    "reason": [
+      {
+        "group": "STORE_RECORD_AUTHORITY",
+        "basis": "Independently reviewed state/wait operation/encoding/fence/size/read/retention extensions preserve canonical Core authority and backup/encryption/LiteLLM limits; style splits only assertions, not test execution.",
+        "exactIntersections": [
+          "docs/site/understand/data-and-state.md"
+        ],
+        "transitiveOnly": false
+      }
+    ],
+    "originalFieldsUnchanged": true
+  },
+  {
+    "id": "FLW010-uncertain-effect-supported-boundary-20261021",
+    "originalRecordCanonicalSha256": "d3003029ffc9a7b596c62171db733b19a5a84b5b52fa78b3815995147717c885",
+    "originalRecordRawObjectSha256": "a444d5fa63e12ec2587b3f357fca47d10e19ae93c3f0061c5c3ef4021df9b050",
+    "affected": false,
+    "renderedCorpusOutputAffected": false,
+    "sourceAffected": false,
+    "requiredCurrentReaderEvidence": [
+      "R1",
+      "R2",
+      "R3",
+      "R5"
+    ],
+    "focusedChangedCanonicalPages": [],
+    "readerVerdict": "PASS_PRESERVE_ORIGINAL_SCOPE_NO_RECOUNT",
+    "reason": [
+      {
+        "group": "NO_IDENTIFIED_SCOPE_DELTA",
+        "basis": "Ownrevision and latestaccepted-impact actualGitdiffs have no declaredpage/source-prefix intersection; actual changed3code import ancestry has no boundsource intersection. No semantic readoption is needed; retain originalscope/verdict/evidence/limits and pendingcurrentartifact binding only."
+      }
+    ],
+    "originalFieldsUnchanged": true
+  },
+  {
+    "id": "FLW014-plugin-operator-supported-lifecycle-20261021",
+    "originalRecordCanonicalSha256": "6a38bd01d9e1e05a325ff2fa59945e2f9780d6abcf4e1376144ae0ae734243cc",
+    "originalRecordRawObjectSha256": "02b081639600f4198c2a0f646aa5d26be62449c11a8224760a188bc38c5a3218",
+    "affected": false,
+    "renderedCorpusOutputAffected": false,
+    "sourceAffected": false,
+    "requiredCurrentReaderEvidence": [
+      "R1",
+      "R2",
+      "R3",
+      "R5"
+    ],
+    "focusedChangedCanonicalPages": [],
+    "readerVerdict": "PASS_PRESERVE_ORIGINAL_SCOPE_NO_RECOUNT",
+    "reason": [
+      {
+        "group": "NO_IDENTIFIED_SCOPE_DELTA",
+        "basis": "Ownrevision and latestaccepted-impact actualGitdiffs have no declaredpage/source-prefix intersection; actual changed3code import ancestry has no boundsource intersection. No semantic readoption is needed; retain originalscope/verdict/evidence/limits and pendingcurrentartifact binding only."
+      }
+    ],
+    "originalFieldsUnchanged": true
+  },
+  {
+    "id": "FLW017-demo-supported-contract-and-live-gap-20261021",
+    "originalRecordCanonicalSha256": "bae11da9dbf5758864d00a9808ac60bfef317203d4ddb075f6fdbf7fb7454fe9",
+    "originalRecordRawObjectSha256": "f7d1c83815831cb2fe22571e3f35aab36ae9837d33377a5a05743eb2db08eab3",
+    "affected": false,
+    "renderedCorpusOutputAffected": false,
+    "sourceAffected": false,
+    "requiredCurrentReaderEvidence": [
+      "R1",
+      "R2",
+      "R3",
+      "R5"
+    ],
+    "focusedChangedCanonicalPages": [],
+    "readerVerdict": "PASS_PRESERVE_ORIGINAL_SCOPE_NO_RECOUNT",
+    "reason": [
+      {
+        "group": "NO_IDENTIFIED_SCOPE_DELTA",
+        "basis": "Ownrevision and latestaccepted-impact actualGitdiffs have no declaredpage/source-prefix intersection; actual changed3code import ancestry has no boundsource intersection. No semantic readoption is needed; retain originalscope/verdict/evidence/limits and pendingcurrentartifact binding only."
+      }
+    ],
+    "originalFieldsUnchanged": true
+  },
+  {
+    "id": "A99-09-whole-workflow-security-content-20261021",
+    "originalRecordCanonicalSha256": "ca73574d8eb70ded48e393068c5dda74055db16f7f8df5cade9a5d8827c6dbc4",
+    "originalRecordRawObjectSha256": "dd0a9b22b2176bd559467de42684dc77174d1e3983508df519a45a9a757ecbf3",
+    "affected": true,
+    "renderedCorpusOutputAffected": true,
+    "sourceAffected": true,
+    "requiredCurrentReaderEvidence": [
+      "R1",
+      "R2",
+      "R3",
+      "R4",
+      "R5",
+      "R6"
+    ],
+    "focusedChangedCanonicalPages": [
+      "docs/site/use/workflows/wait-resume.md"
+    ],
+    "readerVerdict": "PASS_PRESERVE_ORIGINAL_SCOPE_NO_RECOUNT",
+    "reason": [
+      {
+        "group": "OPERATOR_DELIVERY",
+        "basis": "Independently reviewed signed/confidential wire, retained reservation/reconstructed receipt and lost-ACK authority sharpen no-second-send/same-identity stop. Existing approval/resume, external uncertainty, actual bounded fixtures and no live service limits remain.",
+        "exactIntersections": [
+          "docs/site/use/workflows/wait-resume.md"
+        ],
+        "transitiveOnly": false
+      }
+    ],
+    "originalFieldsUnchanged": true
+  },
+  {
+    "id": "A99-10-whole-workflow-compatibility-content-20261021",
+    "originalRecordCanonicalSha256": "1bfddf65842ed288271d26c9df3556032f1c530a49c83197ee2f0129f9855cc1",
+    "originalRecordRawObjectSha256": "846e9928dfa5c8915a5d0f0f6cdbe90250aa8bfebed535106da7f1f3bc38dc1d",
+    "affected": false,
+    "renderedCorpusOutputAffected": false,
+    "sourceAffected": false,
+    "requiredCurrentReaderEvidence": [
+      "R1",
+      "R2",
+      "R3",
+      "R5"
+    ],
+    "focusedChangedCanonicalPages": [],
+    "readerVerdict": "PASS_PRESERVE_ORIGINAL_SCOPE_NO_RECOUNT",
+    "reason": [
+      {
+        "group": "NO_IDENTIFIED_SCOPE_DELTA",
+        "basis": "Ownrevision and latestaccepted-impact actualGitdiffs have no declaredpage/source-prefix intersection; actual changed3code import ancestry has no boundsource intersection. No semantic readoption is needed; retain originalscope/verdict/evidence/limits and pendingcurrentartifact binding only."
+      }
+    ],
+    "originalFieldsUnchanged": true
+  },
+  {
+    "id": "FLW006-local-core-same-run-audit-artifact-telemetry-20261021",
+    "originalRecordCanonicalSha256": "67872b5f302b8b59657a7e689a9b83aa646973ad273d67c54361dd6db325c79b",
+    "originalRecordRawObjectSha256": "694fc637701a5fa8152f583f5c4711c935c7de024873ad551bd7031b26811419",
+    "affected": false,
+    "renderedCorpusOutputAffected": false,
+    "sourceAffected": false,
+    "requiredCurrentReaderEvidence": [
+      "R1",
+      "R2",
+      "R3",
+      "R5"
+    ],
+    "focusedChangedCanonicalPages": [],
+    "readerVerdict": "PASS_PRESERVE_ORIGINAL_SCOPE_NO_RECOUNT",
+    "reason": [
+      {
+        "group": "NO_IDENTIFIED_SCOPE_DELTA",
+        "basis": "Ownrevision and latestaccepted-impact actualGitdiffs have no declaredpage/source-prefix intersection; actual changed3code import ancestry has no boundsource intersection. No semantic readoption is needed; retain originalscope/verdict/evidence/limits and pendingcurrentartifact binding only."
+      }
+    ],
+    "originalFieldsUnchanged": true
+  },
+  {
+    "id": "FLW001-A9906-exact-compile-obligation-20261021",
+    "originalRecordCanonicalSha256": "db08888466e99a02b1513bbcd25fac7787019400da9dcb711cf3d29182318a13",
+    "originalRecordRawObjectSha256": "d70c3cd3fe07888474ad19d2e1f1c64377fd970658d413545bb56fcd1a314e38",
+    "affected": false,
+    "renderedCorpusOutputAffected": false,
+    "sourceAffected": false,
+    "requiredCurrentReaderEvidence": [
+      "R1",
+      "R2",
+      "R3",
+      "R5"
+    ],
+    "focusedChangedCanonicalPages": [],
+    "readerVerdict": "PASS_PRESERVE_ORIGINAL_SCOPE_NO_RECOUNT",
+    "reason": [
+      {
+        "group": "NO_IDENTIFIED_SCOPE_DELTA",
+        "basis": "Ownrevision and latestaccepted-impact actualGitdiffs have no declaredpage/source-prefix intersection; actual changed3code import ancestry has no boundsource intersection. No semantic readoption is needed; retain originalscope/verdict/evidence/limits and pendingcurrentartifact binding only."
+      }
+    ],
+    "originalFieldsUnchanged": true
+  },
+  {
+    "id": "A99-07-representative-buster-workflow-content-20261021",
+    "originalRecordCanonicalSha256": "05a18bc7f16985b45c1d8f145382166718f9498ee4ce8fc318f64e4bb2399a35",
+    "originalRecordRawObjectSha256": "ef36b0fa0465c27a81cb6a90bbe1e5f3d707843596fa38bd7f180d40e2dd87ee",
+    "affected": true,
+    "renderedCorpusOutputAffected": true,
+    "sourceAffected": true,
+    "requiredCurrentReaderEvidence": [
+      "R1",
+      "R2",
+      "R3",
+      "R4",
+      "R5",
+      "R6"
+    ],
+    "focusedChangedCanonicalPages": [
+      "docs/site/reference/buster-suites.md",
+      "docs/site/understand/buster.md"
+    ],
+    "readerVerdict": "PASS_PRESERVE_ORIGINAL_SCOPE_NO_RECOUNT",
+    "reason": [
+      {
+        "group": "BUSTER_RECURSIVE_SUITES",
+        "basis": "Seven independently corrected provider mechanisms: cancellation vs cleanup, supported OpenAPI subset, HTTP/build outcome, browser companions, JUnit roots/entities/bounds, Size baseline/growth and fixed parser safe actions. Prior accepted provider input/workflow/classification boundaries retained; no native/live/newprovider authority. Root nonauthor style+seven equal-source URL correction supplies this reviewer authored delta acceptance.",
+        "exactIntersections": [
+          "docs/site/reference/buster-suites.md"
+        ],
+        "transitiveOnly": false
+      },
+      {
+        "group": "OPTIONAL_QUALITY_EVALUATOR",
+        "basis": "Independently reviewed native-first evaluator output identity/branch/artifact/error boundary added; nonpassing native cannot be overruled. Four-field illustrative table and split test sentences preserve Source-only evidence and unchanged native production/recovery route.",
+        "exactIntersections": [
+          "docs/site/understand/buster.md"
+        ],
+        "transitiveOnly": false
+      }
+    ],
+    "originalFieldsUnchanged": true
+  },
+  {
+    "id": "REF010-current-contract-directions-20261021",
+    "originalRecordCanonicalSha256": "184937af4464dff88e63f06c9a0e685e367a05c4659b421070b09dd2f65ec0e0",
+    "originalRecordRawObjectSha256": "747eccd1adca0a8a75ffe22ebdb61a849217244fa45dc432164d6f15d098628a",
+    "affected": false,
+    "renderedCorpusOutputAffected": false,
+    "sourceAffected": false,
+    "requiredCurrentReaderEvidence": [
+      "R1",
+      "R2",
+      "R3",
+      "R5"
+    ],
+    "focusedChangedCanonicalPages": [],
+    "readerVerdict": "PASS_PRESERVE_ORIGINAL_SCOPE_NO_RECOUNT",
+    "reason": [
+      {
+        "group": "NO_IDENTIFIED_SCOPE_DELTA",
+        "basis": "Ownrevision and latestaccepted-impact actualGitdiffs have no declaredpage/source-prefix intersection; actual changed3code import ancestry has no boundsource intersection. No semantic readoption is needed; retain originalscope/verdict/evidence/limits and pendingcurrentartifact binding only."
+      }
+    ],
+    "originalFieldsUnchanged": true
+  },
+  {
+    "id": "FLW007-supported-failure-task-20261021",
+    "originalRecordCanonicalSha256": "4e48e7db5693bf4eb505b5ba98559d7db50a4b2aa0c0d356c7f523400dcec41b",
+    "originalRecordRawObjectSha256": "981df8a4ee9107d5f12b63c6fd86d57e56a7c041678ffc059a350ee12725662b",
+    "affected": false,
+    "renderedCorpusOutputAffected": false,
+    "sourceAffected": false,
+    "requiredCurrentReaderEvidence": [
+      "R1",
+      "R2",
+      "R3",
+      "R5"
+    ],
+    "focusedChangedCanonicalPages": [],
+    "readerVerdict": "PASS_PRESERVE_ORIGINAL_SCOPE_NO_RECOUNT",
+    "reason": [
+      {
+        "group": "NO_IDENTIFIED_SCOPE_DELTA",
+        "basis": "Ownrevision and latestaccepted-impact actualGitdiffs have no declaredpage/source-prefix intersection; actual changed3code import ancestry has no boundsource intersection. No semantic readoption is needed; retain originalscope/verdict/evidence/limits and pendingcurrentartifact binding only."
+      }
+    ],
+    "originalFieldsUnchanged": true
+  },
+  {
+    "id": "FLW009-supported-failure-task-20261021",
+    "originalRecordCanonicalSha256": "32fd111b23c02dd453fe8336a68853c4f8517f8a9984d1468c46dc8a0c42ccf0",
+    "originalRecordRawObjectSha256": "6698129ac42b40ea10486bdf2b65880739de3a9ddda57e45ac7e3e6caa8c6ef4",
+    "affected": false,
+    "renderedCorpusOutputAffected": false,
+    "sourceAffected": false,
+    "requiredCurrentReaderEvidence": [
+      "R1",
+      "R2",
+      "R3",
+      "R5"
+    ],
+    "focusedChangedCanonicalPages": [],
+    "readerVerdict": "PASS_PRESERVE_ORIGINAL_SCOPE_NO_RECOUNT",
+    "reason": [
+      {
+        "group": "NO_IDENTIFIED_SCOPE_DELTA",
+        "basis": "Ownrevision and latestaccepted-impact actualGitdiffs have no declaredpage/source-prefix intersection; actual changed3code import ancestry has no boundsource intersection. No semantic readoption is needed; retain originalscope/verdict/evidence/limits and pendingcurrentartifact binding only."
+      }
+    ],
+    "originalFieldsUnchanged": true
+  },
+  {
+    "id": "FLW015-supported-failure-task-20261021",
+    "originalRecordCanonicalSha256": "af4218f1be8ee8c76b204f6de1f4d9835a58a62f4b63331f65105445f1b2a19f",
+    "originalRecordRawObjectSha256": "82b48192cf9ffc457bb6bad2e7704a257dfc8b69bd8e3303399ad70ade0be896",
+    "affected": true,
+    "renderedCorpusOutputAffected": true,
+    "sourceAffected": true,
+    "requiredCurrentReaderEvidence": [
+      "R1",
+      "R2",
+      "R3",
+      "R4",
+      "R5",
+      "R6"
+    ],
+    "focusedChangedCanonicalPages": [
+      "docs/site/use/workflows/redis-replay-recovery.md"
+    ],
+    "readerVerdict": "PASS_PRESERVE_ORIGINAL_SCOPE_NO_RECOUNT",
+    "reason": [
+      {
+        "group": "TELEMETRY_OBSERVER_LIMITS",
+        "basis": "Independently reviewed required/best_effort observer, Redis receipt/replay/retirement and exact write/queue boundaries clarify prior accepted event/retention/recovery scopes. No native Redis/live outage, broader host journal replay or canonical retirement inferred.",
+        "exactIntersections": [
+          "docs/site/use/workflows/redis-replay-recovery.md"
+        ],
+        "transitiveOnly": false
+      }
+    ],
+    "originalFieldsUnchanged": true
+  },
+  {
+    "id": "FLW016-supported-failure-task-20261021",
+    "originalRecordCanonicalSha256": "8c3e682c17ae4c30149736e4e8998909d552ffb6fc3c4359f257a598d63b4b21",
+    "originalRecordRawObjectSha256": "1d33fb0d9af626b71e02052de3401623a8af4bf858247e7f0a435959e9a3839c",
+    "affected": false,
+    "renderedCorpusOutputAffected": false,
+    "sourceAffected": false,
+    "requiredCurrentReaderEvidence": [
+      "R1",
+      "R2",
+      "R3",
+      "R5"
+    ],
+    "focusedChangedCanonicalPages": [],
+    "readerVerdict": "PASS_PRESERVE_ORIGINAL_SCOPE_NO_RECOUNT",
+    "reason": [
+      {
+        "group": "NO_IDENTIFIED_SCOPE_DELTA",
+        "basis": "Ownrevision and latestaccepted-impact actualGitdiffs have no declaredpage/source-prefix intersection; actual changed3code import ancestry has no boundsource intersection. No semantic readoption is needed; retain originalscope/verdict/evidence/limits and pendingcurrentartifact binding only."
+      }
+    ],
+    "originalFieldsUnchanged": true
+  },
+  {
+    "id": "FLW012-supported-failure-task-20261021",
+    "originalRecordCanonicalSha256": "bbf428f15f28fc8aa674debc05a35fa3eb937bd8a9e694f2cad9d8c35f5ca990",
+    "originalRecordRawObjectSha256": "41d7c7b0ffc496459db630f0d74bb7f9558e1c24ba519362c16df635c016f861",
+    "affected": false,
+    "renderedCorpusOutputAffected": false,
+    "sourceAffected": false,
+    "requiredCurrentReaderEvidence": [
+      "R1",
+      "R2",
+      "R3",
+      "R5"
+    ],
+    "focusedChangedCanonicalPages": [],
+    "readerVerdict": "PASS_PRESERVE_ORIGINAL_SCOPE_NO_RECOUNT",
+    "reason": [
+      {
+        "group": "NO_IDENTIFIED_SCOPE_DELTA",
+        "basis": "Ownrevision and latestaccepted-impact actualGitdiffs have no declaredpage/source-prefix intersection; actual changed3code import ancestry has no boundsource intersection. No semantic readoption is needed; retain originalscope/verdict/evidence/limits and pendingcurrentartifact binding only."
+      }
+    ],
+    "originalFieldsUnchanged": true
+  },
+  {
+    "id": "FLW013-supported-failure-task-20261021",
+    "originalRecordCanonicalSha256": "478091dab501be642f14131c2d5c43b29d37466228b2198e4521e6853a3083da",
+    "originalRecordRawObjectSha256": "f7b9721f72b70fad9b963f3de1c35a2836dc1e6df361a502c31d3075a841583d",
+    "affected": false,
+    "renderedCorpusOutputAffected": false,
+    "sourceAffected": false,
+    "requiredCurrentReaderEvidence": [
+      "R1",
+      "R2",
+      "R3",
+      "R5"
+    ],
+    "focusedChangedCanonicalPages": [],
+    "readerVerdict": "PASS_PRESERVE_ORIGINAL_SCOPE_NO_RECOUNT",
+    "reason": [
+      {
+        "group": "NO_IDENTIFIED_SCOPE_DELTA",
+        "basis": "Ownrevision and latestaccepted-impact actualGitdiffs have no declaredpage/source-prefix intersection; actual changed3code import ancestry has no boundsource intersection. No semantic readoption is needed; retain originalscope/verdict/evidence/limits and pendingcurrentartifact binding only."
+      }
+    ],
+    "originalFieldsUnchanged": true
+  },
+  {
+    "id": "A99-08-complete-supported-failure-journey-union-20261021",
+    "originalRecordCanonicalSha256": "66a0760ac14aa043cab9ff58ee35c4abf3c942b86fb353a05d633fef934dc9fd",
+    "originalRecordRawObjectSha256": "96a4b82223f0352a28b76a6cf8530bff4713d3132c15bedd5cc64a27e60d18f4",
+    "affected": true,
+    "renderedCorpusOutputAffected": true,
+    "sourceAffected": true,
+    "requiredCurrentReaderEvidence": [
+      "R1",
+      "R2",
+      "R3",
+      "R4",
+      "R5",
+      "R6"
+    ],
+    "focusedChangedCanonicalPages": [
+      "docs/site/use/workflows/redis-replay-recovery.md"
+    ],
+    "readerVerdict": "PASS_PRESERVE_ORIGINAL_SCOPE_NO_RECOUNT",
+    "reason": [
+      {
+        "group": "TELEMETRY_OBSERVER_LIMITS",
+        "basis": "Independently reviewed required/best_effort observer, Redis receipt/replay/retirement and exact write/queue boundaries clarify prior accepted event/retention/recovery scopes. No native Redis/live outage, broader host journal replay or canonical retirement inferred.",
+        "exactIntersections": [
+          "docs/site/use/workflows/redis-replay-recovery.md"
+        ],
+        "transitiveOnly": false
+      }
+    ],
+    "originalFieldsUnchanged": true
+  },
+  {
+    "id": "A912-03-supported-redirect-paths-20261021",
+    "originalRecordCanonicalSha256": "b939d83b6214e6890e340147f871f1259163e1a01b831a4e732d6d8b0e7c29b7",
+    "originalRecordRawObjectSha256": "fb19f07ea89668f9ed6d8b92a8535c97da5e6d00d3fdca481f26939483ee7070",
+    "affected": true,
+    "renderedCorpusOutputAffected": true,
+    "sourceAffected": false,
+    "requiredCurrentReaderEvidence": [
+      "R1",
+      "R2",
+      "R3",
+      "R5",
+      "R7"
+    ],
+    "focusedChangedCanonicalPages": [],
+    "readerVerdict": "PASS_PRESERVE_ORIGINAL_SCOPE_NO_RECOUNT",
+    "reason": [
+      {
+        "group": "NO_IDENTIFIED_SCOPE_DELTA",
+        "basis": "Ownrevision and latestaccepted-impact actualGitdiffs have no declaredpage/source-prefix intersection; actual changed3code import ancestry has no boundsource intersection. No semantic readoption is needed; retain originalscope/verdict/evidence/limits and pendingcurrentartifact binding only."
+      },
+      {
+        "group": "CURRENT_RENDERED_CORPUS_ONLY",
+        "basis": "Underlying owned Source/pages remain exact within declaredscope, but whole reader/noJS/offline/redirect/page-record output universe incorporates12changedcanonical inputs. Require original currentartifact/pageRecords/Source/packaging checks and bounded fallback evidence without reaccepting unchanged mechanism."
+      }
+    ],
+    "originalFieldsUnchanged": true
+  },
+  {
+    "id": "A912-11-deterministic-page-records-20261022",
+    "originalRecordCanonicalSha256": "2c93a5724eb06a43f2079ffa16f08f76f435b45a7017d1f3157afe07ddd84a03",
+    "originalRecordRawObjectSha256": "4d2a2ab158579251f7c86c9a9bf3e63c2b89ee6f2b09f691ce6bc0afbb32ecbf",
+    "affected": true,
+    "renderedCorpusOutputAffected": true,
+    "sourceAffected": false,
+    "requiredCurrentReaderEvidence": [
+      "R1",
+      "R2",
+      "R3",
+      "R5",
+      "R7"
+    ],
+    "focusedChangedCanonicalPages": [],
+    "readerVerdict": "PASS_PRESERVE_ORIGINAL_SCOPE_NO_RECOUNT",
+    "reason": [
+      {
+        "group": "NO_IDENTIFIED_SCOPE_DELTA",
+        "basis": "Ownrevision and latestaccepted-impact actualGitdiffs have no declaredpage/source-prefix intersection; actual changed3code import ancestry has no boundsource intersection. No semantic readoption is needed; retain originalscope/verdict/evidence/limits and pendingcurrentartifact binding only."
+      },
+      {
+        "group": "CURRENT_RENDERED_CORPUS_ONLY",
+        "basis": "Underlying owned Source/pages remain exact within declaredscope, but whole reader/noJS/offline/redirect/page-record output universe incorporates12changedcanonical inputs. Require original currentartifact/pageRecords/Source/packaging checks and bounded fallback evidence without reaccepting unchanged mechanism."
+      }
+    ],
+    "originalFieldsUnchanged": true
+  },
+  {
+    "id": "AP09-publication-positive-scope-7ef16585",
+    "originalRecordCanonicalSha256": "4e348ac78b14b77fad6b029cd69a41e9262cc424a4ab0889a52be1cca27077e4",
+    "originalRecordRawObjectSha256": "c16810b9fca23c10603fdb4e79c3f7a4f6f432723a52398362ea08c075140cf1",
+    "affected": true,
+    "renderedCorpusOutputAffected": true,
+    "sourceAffected": true,
+    "requiredCurrentReaderEvidence": [
+      "R1",
+      "R2",
+      "R3",
+      "R4",
+      "R5",
+      "R6",
+      "R7"
+    ],
+    "focusedChangedCanonicalPages": [
+      "docs/site/extend/lint.md",
+      "docs/site/reference/buster-error-codes.md",
+      "docs/site/reference/buster-suites.md",
+      "docs/site/reference/lint-policy.md",
+      "docs/site/reference/lint-rules.md",
+      "docs/site/understand/buster.md",
+      "docs/site/understand/data-and-state.md",
+      "docs/site/understand/echo.md",
+      "docs/site/understand/openclaw.md",
+      "docs/site/understand/telemetry.md",
+      "docs/site/use/workflows/redis-replay-recovery.md",
+      "docs/site/use/workflows/wait-resume.md"
+    ],
+    "readerVerdict": "PASS_PRESERVE_ORIGINAL_SCOPE_NO_RECOUNT",
+    "reason": [
+      {
+        "group": "BUSTER_RECURSIVE_SUITES",
+        "basis": "Seven independently corrected provider mechanisms: cancellation vs cleanup, supported OpenAPI subset, HTTP/build outcome, browser companions, JUnit roots/entities/bounds, Size baseline/growth and fixed parser safe actions. Prior accepted provider input/workflow/classification boundaries retained; no native/live/newprovider authority. Root nonauthor style+seven equal-source URL correction supplies this reviewer authored delta acceptance.",
+        "exactIntersections": [
+          "docs/site/reference/buster-suites.md"
+        ],
+        "transitiveOnly": false
+      },
+      {
+        "group": "OPTIONAL_QUALITY_EVALUATOR",
+        "basis": "Independently reviewed native-first evaluator output identity/branch/artifact/error boundary added; nonpassing native cannot be overruled. Four-field illustrative table and split test sentences preserve Source-only evidence and unchanged native production/recovery route.",
+        "exactIntersections": [
+          "docs/site/understand/buster.md"
+        ],
+        "transitiveOnly": false
+      },
+      {
+        "group": "REVIEW_OPERATOR_AND_EVIDENCE",
+        "basis": "Root follow-up/completeness and lexical simplification corrections plus custody-reviewed supervisor/status/lease/resource/livepreflight path preserve fixed subject/policy/cache/authority and no-new-execution limits. Author does not selfaccept own supervisor/style; custody and Root nonauthor reports supply those deltas.",
+        "exactIntersections": [
+          "docs/site/understand/echo.md"
+        ],
+        "transitiveOnly": false
+      },
+      {
+        "group": "STORE_RECORD_AUTHORITY",
+        "basis": "Independently reviewed state/wait operation/encoding/fence/size/read/retention extensions preserve canonical Core authority and backup/encryption/LiteLLM limits; style splits only assertions, not test execution.",
+        "exactIntersections": [
+          "docs/site/understand/data-and-state.md"
+        ],
+        "transitiveOnly": false
+      },
+      {
+        "group": "TELEMETRY_OBSERVER_LIMITS",
+        "basis": "Independently reviewed required/best_effort observer, Redis receipt/replay/retirement and exact write/queue boundaries clarify prior accepted event/retention/recovery scopes. No native Redis/live outage, broader host journal replay or canonical retirement inferred.",
+        "exactIntersections": [
+          "docs/site/understand/telemetry.md",
+          "docs/site/use/workflows/redis-replay-recovery.md"
+        ],
+        "transitiveOnly": false
+      },
+      {
+        "group": "SOURCE_INGRESS",
+        "basis": "Root-authored/custody-reviewed enqueue/status/pressure/drain/shutdown semantics preserve host event provenance and downstream authority split; emit error is not durable ACK or a new source retry. Short labels preserve claims/URLs.",
+        "exactIntersections": [
+          "docs/site/understand/openclaw.md"
+        ],
+        "transitiveOnly": false
+      },
+      {
+        "group": "OPERATOR_DELIVERY",
+        "basis": "Independently reviewed signed/confidential wire, retained reservation/reconstructed receipt and lost-ACK authority sharpen no-second-send/same-identity stop. Existing approval/resume, external uncertainty, actual bounded fixtures and no live service limits remain.",
+        "exactIntersections": [
+          "docs/site/use/workflows/wait-resume.md"
+        ],
+        "transitiveOnly": false
+      },
+      {
+        "group": "LINT_SUPPORTED_PARSER_BOUNDARY",
+        "basis": "Independent complete31-tool engine review and bounded four-document correction distinguish ignored native shape/nonzero empty results from unsupported product fix. Policy/rule/config routes and already accepted scope remain; known parser/exit-result product weakness is explicit, not green native Lint assurance.",
+        "exactIntersections": [
+          "docs/site/extend/lint.md",
+          "docs/site/reference/lint-policy.md",
+          "docs/site/reference/lint-rules.md"
+        ],
+        "transitiveOnly": false
+      },
+      {
+        "group": "ERROR_OWNER_13_PLUS_2",
+        "basis": "Exact original fixed AST producer adds13static diagnosis/occurrence entries and2outcome prose strings only; full66production Source bytes/stable census and fixed writer/check unchanged. Actual original two write/write/check sets and exact generated row/preamble deltas independently verified. Public CLI selectors/defaults unchanged; this does not accept full REF005/error universe.",
+        "exactIntersections": [
+          "docs/site/reference/buster-error-codes.md"
+        ],
+        "transitiveOnly": false
+      }
+    ],
+    "originalFieldsUnchanged": true
+  },
+  {
+    "id": "A912-05-whole-source-excerpt-callouts-20261022",
+    "originalRecordCanonicalSha256": "a0774c0899d709a3318857aa25c712d32c178a1e23ea7faeeccf1c36116643be",
+    "originalRecordRawObjectSha256": "14d534793fc51473b9df0ed668690825ed4345478f0fd8ed418ab351398b1c13",
+    "affected": true,
+    "renderedCorpusOutputAffected": true,
+    "sourceAffected": true,
+    "requiredCurrentReaderEvidence": [
+      "R1",
+      "R2",
+      "R3",
+      "R4",
+      "R5",
+      "R6",
+      "R7"
+    ],
+    "focusedChangedCanonicalPages": [
+      "docs/site/understand/buster.md",
+      "docs/site/understand/data-and-state.md",
+      "docs/site/understand/echo.md",
+      "docs/site/understand/openclaw.md",
+      "docs/site/understand/telemetry.md",
+      "docs/site/use/workflows/wait-resume.md"
+    ],
+    "readerVerdict": "PASS_PRESERVE_ORIGINAL_SCOPE_NO_RECOUNT",
+    "reason": [
+      {
+        "group": "OPTIONAL_QUALITY_EVALUATOR",
+        "basis": "Independently reviewed native-first evaluator output identity/branch/artifact/error boundary added; nonpassing native cannot be overruled. Four-field illustrative table and split test sentences preserve Source-only evidence and unchanged native production/recovery route.",
+        "exactIntersections": [
+          "docs/site/understand/buster.md"
+        ],
+        "transitiveOnly": false
+      },
+      {
+        "group": "REVIEW_OPERATOR_AND_EVIDENCE",
+        "basis": "Root follow-up/completeness and lexical simplification corrections plus custody-reviewed supervisor/status/lease/resource/livepreflight path preserve fixed subject/policy/cache/authority and no-new-execution limits. Author does not selfaccept own supervisor/style; custody and Root nonauthor reports supply those deltas.",
+        "exactIntersections": [
+          "docs/site/understand/echo.md"
+        ],
+        "transitiveOnly": false
+      },
+      {
+        "group": "STORE_RECORD_AUTHORITY",
+        "basis": "Independently reviewed state/wait operation/encoding/fence/size/read/retention extensions preserve canonical Core authority and backup/encryption/LiteLLM limits; style splits only assertions, not test execution.",
+        "exactIntersections": [
+          "docs/site/understand/data-and-state.md"
+        ],
+        "transitiveOnly": false
+      },
+      {
+        "group": "TELEMETRY_OBSERVER_LIMITS",
+        "basis": "Independently reviewed required/best_effort observer, Redis receipt/replay/retirement and exact write/queue boundaries clarify prior accepted event/retention/recovery scopes. No native Redis/live outage, broader host journal replay or canonical retirement inferred.",
+        "exactIntersections": [
+          "docs/site/understand/telemetry.md"
+        ],
+        "transitiveOnly": false
+      },
+      {
+        "group": "SOURCE_INGRESS",
+        "basis": "Root-authored/custody-reviewed enqueue/status/pressure/drain/shutdown semantics preserve host event provenance and downstream authority split; emit error is not durable ACK or a new source retry. Short labels preserve claims/URLs.",
+        "exactIntersections": [
+          "docs/site/understand/openclaw.md"
+        ],
+        "transitiveOnly": false
+      },
+      {
+        "group": "OPERATOR_DELIVERY",
+        "basis": "Independently reviewed signed/confidential wire, retained reservation/reconstructed receipt and lost-ACK authority sharpen no-second-send/same-identity stop. Existing approval/resume, external uncertainty, actual bounded fixtures and no live service limits remain.",
+        "exactIntersections": [
+          "docs/site/use/workflows/wait-resume.md"
+        ],
+        "transitiveOnly": false
+      }
+    ],
+    "originalFieldsUnchanged": true
+  },
+  {
+    "id": "A98-02-13-whole-operator-procedure-contract-20261022",
+    "originalRecordCanonicalSha256": "5f8fbd0953438771b740c8117875206e48dd74da2f260973abb9ff19181e2387",
+    "originalRecordRawObjectSha256": "ea7bd7a0f754b064cb9a6f2a479ea8a83ad102a6935a483c7d53c48d692e76fa",
+    "affected": true,
+    "renderedCorpusOutputAffected": true,
+    "sourceAffected": true,
+    "requiredCurrentReaderEvidence": [
+      "R1",
+      "R2",
+      "R3",
+      "R4",
+      "R5",
+      "R6"
+    ],
+    "focusedChangedCanonicalPages": [
+      "docs/site/use/workflows/redis-replay-recovery.md",
+      "docs/site/use/workflows/wait-resume.md"
+    ],
+    "readerVerdict": "PASS_PRESERVE_ORIGINAL_SCOPE_NO_RECOUNT",
+    "reason": [
+      {
+        "group": "TELEMETRY_OBSERVER_LIMITS",
+        "basis": "Independently reviewed required/best_effort observer, Redis receipt/replay/retirement and exact write/queue boundaries clarify prior accepted event/retention/recovery scopes. No native Redis/live outage, broader host journal replay or canonical retirement inferred.",
+        "exactIntersections": [
+          "docs/site/use/workflows/redis-replay-recovery.md"
+        ],
+        "transitiveOnly": false
+      },
+      {
+        "group": "OPERATOR_DELIVERY",
+        "basis": "Independently reviewed signed/confidential wire, retained reservation/reconstructed receipt and lost-ACK authority sharpen no-second-send/same-identity stop. Existing approval/resume, external uncertainty, actual bounded fixtures and no live service limits remain.",
+        "exactIntersections": [
+          "docs/site/use/workflows/wait-resume.md"
+        ],
+        "transitiveOnly": false
+      },
+      {
+        "group": "PURPOSE_THREE_PLUS_CHILD_ONE",
+        "basis": "Root nonauthor four-value reversal/completeconsumer Source review and8actual purpose-routing controls support only3purpose-input+1literalchildSHA identities. All107recipes/facts/selectors/native/guards/code remain exact; no current fullconsumer/native/role qualification inferred.",
+        "exactIntersections": [],
+        "transitiveOnly": true
+      },
+      {
+        "group": "SCALAR_TWO_DATA_LITERALS",
+        "basis": "Only2original graph/caller guard digests adopted after complete original DATA/full-record multiset/13Source-purpose nonauthor proof. Profiles/anchors/actual deployment receivers/UNKNOWN/WeakSet/cache and runtime/API false unchanged. Actualfullconsumer and native4/115/public/alias/dynamic/module guards remain separate and can STOP.",
+        "exactIntersections": [],
+        "transitiveOnly": true
+      }
+    ],
+    "originalFieldsUnchanged": true
+  },
+  {
+    "id": "A910-03-whole-command-prerequisite-contract-20261022",
+    "originalRecordCanonicalSha256": "329fac16a915809ab859b4810929aa87d75ac7f5d628c53ea8d4b84152a8753f",
+    "originalRecordRawObjectSha256": "6aa045f7ac8ca88a3848e8a11fc043bdb37a332735e0d3930fbc662406a73212",
+    "affected": true,
+    "renderedCorpusOutputAffected": true,
+    "sourceAffected": true,
+    "requiredCurrentReaderEvidence": [
+      "R1",
+      "R2",
+      "R3",
+      "R5"
+    ],
+    "focusedChangedCanonicalPages": [],
+    "readerVerdict": "PASS_PRESERVE_ORIGINAL_SCOPE_NO_RECOUNT",
+    "reason": [
+      {
+        "group": "PURPOSE_THREE_PLUS_CHILD_ONE",
+        "basis": "Root nonauthor four-value reversal/completeconsumer Source review and8actual purpose-routing controls support only3purpose-input+1literalchildSHA identities. All107recipes/facts/selectors/native/guards/code remain exact; no current fullconsumer/native/role qualification inferred.",
+        "exactIntersections": [],
+        "transitiveOnly": true
+      },
+      {
+        "group": "SCALAR_TWO_DATA_LITERALS",
+        "basis": "Only2original graph/caller guard digests adopted after complete original DATA/full-record multiset/13Source-purpose nonauthor proof. Profiles/anchors/actual deployment receivers/UNKNOWN/WeakSet/cache and runtime/API false unchanged. Actualfullconsumer and native4/115/public/alias/dynamic/module guards remain separate and can STOP.",
+        "exactIntersections": [],
+        "transitiveOnly": true
+      }
+    ],
+    "originalFieldsUnchanged": true
+  },
+  {
+    "id": "A910-04-whole-sdk-export-semantics-20261022",
+    "originalRecordCanonicalSha256": "1357e7649d1572f6fba8cc60a336afb153c5d68086af6ea743e7b833e8b67cd7",
+    "originalRecordRawObjectSha256": "2d92cd678254b9fc782d54436184d63b5816616013ef49407484eceac1f1ae10",
+    "affected": false,
+    "renderedCorpusOutputAffected": false,
+    "sourceAffected": false,
+    "requiredCurrentReaderEvidence": [
+      "R1",
+      "R2",
+      "R3",
+      "R5"
+    ],
+    "focusedChangedCanonicalPages": [],
+    "readerVerdict": "PASS_PRESERVE_ORIGINAL_SCOPE_NO_RECOUNT",
+    "reason": [
+      {
+        "group": "NO_IDENTIFIED_SCOPE_DELTA",
+        "basis": "Ownrevision and latestaccepted-impact actualGitdiffs have no declaredpage/source-prefix intersection; actual changed3code import ancestry has no boundsource intersection. No semantic readoption is needed; retain originalscope/verdict/evidence/limits and pendingcurrentartifact binding only."
+      }
+    ],
+    "originalFieldsUnchanged": true
+  },
+  {
+    "id": "A910-06-whole-justified-classification-20261022",
+    "originalRecordCanonicalSha256": "d29b525054666dca390c7c982ff34fb4fcc9b65b673b60cdc965bcf1322fe3f5",
+    "originalRecordRawObjectSha256": "9d9eafbeb36e195c3939d24ca14b88d518da6c6fd640c7f6b6925b2d687f4dd4",
+    "affected": true,
+    "renderedCorpusOutputAffected": true,
+    "sourceAffected": true,
+    "requiredCurrentReaderEvidence": [
+      "R1",
+      "R2",
+      "R3",
+      "R4",
+      "R5",
+      "R6"
+    ],
+    "focusedChangedCanonicalPages": [
+      "docs/site/extend/lint.md",
+      "docs/site/reference/buster-suites.md",
+      "docs/site/understand/buster.md",
+      "docs/site/understand/data-and-state.md",
+      "docs/site/understand/echo.md",
+      "docs/site/understand/openclaw.md",
+      "docs/site/understand/telemetry.md",
+      "docs/site/use/workflows/wait-resume.md"
+    ],
+    "readerVerdict": "PASS_PRESERVE_ORIGINAL_SCOPE_NO_RECOUNT",
+    "reason": [
+      {
+        "group": "BUSTER_RECURSIVE_SUITES",
+        "basis": "Seven independently corrected provider mechanisms: cancellation vs cleanup, supported OpenAPI subset, HTTP/build outcome, browser companions, JUnit roots/entities/bounds, Size baseline/growth and fixed parser safe actions. Prior accepted provider input/workflow/classification boundaries retained; no native/live/newprovider authority. Root nonauthor style+seven equal-source URL correction supplies this reviewer authored delta acceptance.",
+        "exactIntersections": [
+          "docs/site/reference/buster-suites.md"
+        ],
+        "transitiveOnly": false
+      },
+      {
+        "group": "OPTIONAL_QUALITY_EVALUATOR",
+        "basis": "Independently reviewed native-first evaluator output identity/branch/artifact/error boundary added; nonpassing native cannot be overruled. Four-field illustrative table and split test sentences preserve Source-only evidence and unchanged native production/recovery route.",
+        "exactIntersections": [
+          "docs/site/understand/buster.md"
+        ],
+        "transitiveOnly": false
+      },
+      {
+        "group": "REVIEW_OPERATOR_AND_EVIDENCE",
+        "basis": "Root follow-up/completeness and lexical simplification corrections plus custody-reviewed supervisor/status/lease/resource/livepreflight path preserve fixed subject/policy/cache/authority and no-new-execution limits. Author does not selfaccept own supervisor/style; custody and Root nonauthor reports supply those deltas.",
+        "exactIntersections": [
+          "docs/site/understand/echo.md"
+        ],
+        "transitiveOnly": false
+      },
+      {
+        "group": "STORE_RECORD_AUTHORITY",
+        "basis": "Independently reviewed state/wait operation/encoding/fence/size/read/retention extensions preserve canonical Core authority and backup/encryption/LiteLLM limits; style splits only assertions, not test execution.",
+        "exactIntersections": [
+          "docs/site/understand/data-and-state.md"
+        ],
+        "transitiveOnly": false
+      },
+      {
+        "group": "TELEMETRY_OBSERVER_LIMITS",
+        "basis": "Independently reviewed required/best_effort observer, Redis receipt/replay/retirement and exact write/queue boundaries clarify prior accepted event/retention/recovery scopes. No native Redis/live outage, broader host journal replay or canonical retirement inferred.",
+        "exactIntersections": [
+          "docs/site/understand/telemetry.md"
+        ],
+        "transitiveOnly": false
+      },
+      {
+        "group": "SOURCE_INGRESS",
+        "basis": "Root-authored/custody-reviewed enqueue/status/pressure/drain/shutdown semantics preserve host event provenance and downstream authority split; emit error is not durable ACK or a new source retry. Short labels preserve claims/URLs.",
+        "exactIntersections": [
+          "docs/site/understand/openclaw.md"
+        ],
+        "transitiveOnly": false
+      },
+      {
+        "group": "OPERATOR_DELIVERY",
+        "basis": "Independently reviewed signed/confidential wire, retained reservation/reconstructed receipt and lost-ACK authority sharpen no-second-send/same-identity stop. Existing approval/resume, external uncertainty, actual bounded fixtures and no live service limits remain.",
+        "exactIntersections": [
+          "docs/site/use/workflows/wait-resume.md"
+        ],
+        "transitiveOnly": false
+      },
+      {
+        "group": "LINT_SUPPORTED_PARSER_BOUNDARY",
+        "basis": "Independent complete31-tool engine review and bounded four-document correction distinguish ignored native shape/nonzero empty results from unsupported product fix. Policy/rule/config routes and already accepted scope remain; known parser/exit-result product weakness is explicit, not green native Lint assurance.",
+        "exactIntersections": [
+          "docs/site/extend/lint.md"
+        ],
+        "transitiveOnly": false
+      },
+      {
+        "group": "535_CLASSIFICATION_INPUTS",
+        "basis": "All535original physical policybinding cells/485unique inputs and policy19ad currentexact, original51assignment rows unchanged. Changed guide explanations improve supporteddepth, not complexityjudgments/reclassification; A91007/08/09/13 remain unaccepted by this record."
+      }
+    ],
+    "originalFieldsUnchanged": true
+  }
+]
