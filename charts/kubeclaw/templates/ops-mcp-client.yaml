@@ -6,4 +6,6 @@ metadata:
 data:
   client.mjs: |
 {{ .Files.Get "files/ops-mcp-client.mjs" | indent 4 }}
+  stdio.mjs: |
+{{ .Files.Get "files/ops-mcp-stdio.mjs" | indent 4 }}
 {{- end }}

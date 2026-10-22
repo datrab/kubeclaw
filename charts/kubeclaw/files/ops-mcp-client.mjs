@@ -2,14 +2,14 @@
 import { request } from 'node:https';
 import { readFileSync } from 'node:fs';
 
-export async function callMcp(method, params, environment = process.env) {
+export async function callMcp(method, params, environment = process.env, options = {}) {
   const url = new URL(environment.OPS_MCP_URL);
   if (url.protocol !== 'https:' || url.username || url.password || url.search || url.hash) throw new Error('OPS_MCP_URL must use HTTPS without embedded credentials');
   const token = readFileSync(environment.OPS_MCP_TOKEN_FILE, 'utf8').trim();
   if (!/^[A-Za-z0-9._~-]{32,512}$/.test(token)) throw new Error('Invalid MCP credential');
   const body = JSON.stringify({ jsonrpc: '2.0', id: 1, method, params });
   return new Promise((resolve, reject) => {
-    const req = request(url, { method: 'POST', ca: readFileSync(environment.OPS_MCP_CA_FILE), rejectUnauthorized: true,
+    const req = request(url, { method: 'POST', ca: readFileSync(environment.OPS_MCP_CA_FILE), rejectUnauthorized: true, signal: options.signal,
       headers: { 'content-type': 'application/json', accept: 'application/json, text/event-stream', authorization: `Bearer ${token}` } }, res => {
       let bytes = 0; const chunks = [];
       res.on('data', chunk => { bytes += chunk.length; if (bytes > 2 * 1024 * 1024) req.destroy(new Error('MCP response exceeds limit')); else chunks.push(chunk); });
@@ -21,7 +21,7 @@ export async function callMcp(method, params, environment = process.env) {
           const result = res.headers['content-type']?.includes('text/event-stream')
             ? text.split(/\r?\n/).filter(line => line.startsWith('data:')).map(line => JSON.parse(line.slice(5))).find(message => message.id === 1)
             : JSON.parse(text);
-          if (!result || result.error || result.result?.isError) throw new Error(JSON.stringify(result?.error ?? result?.result ?? 'Invalid MCP response'));
+          if (!result || result.error || (!options.preserveToolErrors && result.result?.isError)) throw new Error(JSON.stringify(result?.error ?? result?.result ?? 'Invalid MCP response'));
           resolve(result.result);
         } catch (error) { reject(error); }
       });
