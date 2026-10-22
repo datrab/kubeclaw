@@ -1,0 +1,4 @@
+# Generated from versions.json; use scripts/versions.mjs
+ruff==0.15.22
+mypy==2.3.0
+pip-audit==2.10.1

@@ -1,0 +1,78 @@
+name: Update policy acceptance
+on:
+  pull_request:
+  workflow_call:
+permissions:
+  contents: read
+  actions: read
+jobs:
+  policy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
+        with:
+          node-version: 24
+      - run: npm ci --ignore-scripts --no-audit --no-fund
+      - uses: azure/setup-helm@1a275c3b69536ee54be43f2070a358922e12c8d4 # v4
+        with:
+          version: v3.18.4
+      - name: Check generated versions and release receipt validation
+        run: |
+          sudo apt-get update -qq && sudo apt-get install -y lua5.1
+          LUA_BIN=lua5.1 node --test tests/verification/deployment/gitops-health.test.mjs
+          node scripts/check-action-pins.mjs
+          node --test tests/verification/contracts/action-pins.test.mjs tests/verification/deployment/upstream-fetch.test.mjs
+          node scripts/versions.mjs --check
+          node scripts/argocd-self-management.mjs --check
+          node scripts/check-monitoring.mjs --validate-alloy
+          node scripts/check-platform-services.mjs
+          python3 tests/verification/deployment/data-plane-inventory_test.py
+          node --test tests/verification/deployment/node-registry-inventory.test.mjs
+          node --test tests/verification/deployment/ax41-buster-overlay.test.mjs
+          node --test tests/verification/deployment/archviewer-policy-provider.test.mjs
+          node --test tests/verification/deployment/browser-pool-maintenance.test.mjs
+          node --test tests/verification/deployment/gitops-adoption-shape.test.mjs
+          node --test tests/verification/deployment/prism-backup.test.mts
+          node --test tests/verification/deployment/prism-agent-health.test.mjs
+          node --test tests/verification/deployment/runtime-image-workflows.test.mjs tests/verification/deployment/versions.test.mjs tests/verification/deployment/release-images.test.mjs tests/verification/deployment/oci-image-identity.test.mjs tests/verification/deployment/release-configuration.test.mjs tests/verification/deployment/prism-release-evidence.test.mjs tests/verification/deployment/plugin-project-reset.test.mjs
+          node --test tests/verification/deployment/gitops-continuous.test.mjs tests/verification/deployment/code-release.test.mjs
+          node --test tests/verification/deployment/gitops-release.test.mjs
+          if test -f gitops/production/selection.json; then
+            bundle="$(node -p 'JSON.parse(require("fs").readFileSync("gitops/production/selection.json", "utf8")).directory')"
+            node scripts/gitops-continuous.mjs check "$bundle" "https://github.com/$GITHUB_REPOSITORY.git" "$(git rev-parse HEAD)"
+          elif test -f releases/runtime-images.json; then
+            node scripts/updates/materialize-release.mjs --check --check-selected-source
+          fi
+          if test -f releases/ops-images.json; then
+            node scripts/updates/materialize-release.mjs --check --check-selected-source --family=ops
+          fi
+      - name: Verify selected digests against successful source workflow receipts
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: node scripts/updates/verify-release-source.mjs
+      - name: Validate with the actual pinned Renovate executable
+        run: |
+          image="$(node -p 'require("./versions.json").automation.renovate')"
+          docker run --rm -v "$PWD/renovate.json:/proof/renovate.json:ro" --entrypoint renovate-config-validator "$image" --strict /proof/renovate.json
+          docker run --rm -v "$PWD:/proof:ro" -w /proof --entrypoint node "$image" scripts/updates/check-renovate.mjs
+  envoy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+      - name: Exercise actual Envoy mTLS with positive and negative controls
+        run: bash tests/verification/deployment/check-envoy-image.sh "$(node -p 'require("./versions.json").infrastructure.envoy')"
+  upstream-checksums:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
+        with:
+          node-version: 24
+      - name: Exercise updater against real release metadata and binary bytes
+        env:
+          RENOVATE_TOKEN: ${{ github.token }}
+        run: node scripts/updates/check-upstream-refresh.mjs

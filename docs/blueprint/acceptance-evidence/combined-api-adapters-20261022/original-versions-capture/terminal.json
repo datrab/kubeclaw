@@ -1,0 +1,12 @@
+{
+  "schemaVersion": "versions-map-acquisition-terminal.v1",
+  "completed": true,
+  "originalFunctionCalls": 1,
+  "memberCount": 45,
+  "totalBytes": 296338,
+  "apiRoots": 14,
+  "sealSha256": "63af7217f70ec063aab28abb1d684461f6a5bb4e428a67fd68b1b72d62377c88",
+  "finishedAt": "2026-10-22T19:59:15.173Z",
+  "runtimeExecutionAuthorized": false,
+  "apiApplyAuthorized": false
+}

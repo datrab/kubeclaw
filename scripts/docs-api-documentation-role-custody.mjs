@@ -15,6 +15,88 @@ import { serializedOutputSinkSites, deriveNativeOperationFacts, nativeOperationF
 // Only their native closure facts and changed discovery/governance selectors
 // change; caller/child authority and canonical product roles stay unchanged.
 export const documentationExecutableRoleRecipes = {
+  "scripts/docs-api-probe39-original-output.mjs": {
+    "role": "documentation-consumer",
+    "qualificationKind": "reviewed-documentation-consumer/v1",
+    "sourceSha256": "708a16b722f062f4975101116666b473f2efecd6ec3949a7ab99447c5c7e9756",
+    "consumer": "Source-native documentation inventory consumer of one immutable original API-probe renderer terminal capture. Revalidates original source/helper/input bytes, actual loaded maintained YAML parser, loader absence, incoming graph and canonical output slot; returns the captured ConfigMap/Job as documentation DATA only. Does not execute renderer, embedded probe, network requests, apply, or observe any live Pod.",
+    "selectors": [
+      {
+        "expressionSha256": "337d217b4c8c1332d1a7352cc3d24e155fe5d628e62454c462e0aa874cd1ccd5"
+      },
+      {
+        "expressionSha256": "d41a8ea4a52bb1a07592b1f251be5d434240b82ff333092e60afbfdd14eb4781"
+      },
+      {
+        "expressionSha256": "3bd42e15e5427f946b98b898212af900ed0a4068cff03a37aa2ce1d3a081f2ec"
+      },
+      {
+        "expressionSha256": "99a8a8a7117b1395e3a209cdc8ba5a70424687458932bc4dc8a7b6e59ff53868"
+      },
+      {
+        "expressionSha256": "113f0af17fdf683cf360ab9d03b7eff1b572d3475e83119031d47ee4331621aa"
+      },
+      {
+        "expressionSha256": "7e25a3ca18b2b53c8848b179d637fb477a677b4401c4318a7e621cbb03c63964"
+      },
+      {
+        "expressionSha256": "d37409f3aec6d92901e0978436cecceb691e341bc16ec749d2215903156541a3"
+      },
+      {
+        "expressionSha256": "678667d049791be8f06cb8627716bcc93d1eed1aba0c71e574839834055b2678"
+      }
+    ],
+    "factsDigest": "4c705633da5c312e90c3aa45e129f24a884cdaf2073d9d95e67f56bc80f8e5f3",
+    "authorityInputs": [],
+    "purposeInputs": [
+      {
+        "path": "scripts/docs-api-probe39-original-authority.json",
+        "canonical": "scripts/docs-api-probe39-original-authority.json",
+        "sha256": "9456ac654f9f28d3891889f906b37d2f91e421c884b9707ff0c0778742f097cc"
+      }
+    ]
+  },
+  "scripts/docs-api-versions-map-output.mjs": {
+    "role": "documentation-consumer",
+    "qualificationKind": "reviewed-documentation-consumer/v1",
+    "sourceSha256": "9e267f3c64e8d617f0c0c5503c5f8a1bc28753ed8752734f532f3cd6bfa9e4b0",
+    "consumer": "Source-native documentation inventory consumer of immutable original complete mixed versions Map DATA and exact current member bytes. Revalidates maintained parser closure and roster, original input/caller/public-entry/descriptor/member vectors; derives only documented API roots while preserving canonical raw UNKNOWN and typed non-API members. Does not execute versions.mjs, syncVersions, writer, schema/lock/apply or runtime checks.",
+    "selectors": [
+      {
+        "expressionSha256": "eab51ecbba0dd723c24e1442d67149ff14a395579e61e90900752d55fe82edcc"
+      },
+      {
+        "expressionSha256": "aca139b0425b7991a67f734e616ecec1c3afa18052c52dab01c4ee653a95016c"
+      },
+      {
+        "expressionSha256": "3ef9a780a699b15c4908ef64826e5d613a6b43f89004d7a92a1ab035a1910a29"
+      },
+      {
+        "expressionSha256": "3bd42e15e5427f946b98b898212af900ed0a4068cff03a37aa2ce1d3a081f2ec"
+      },
+      {
+        "expressionSha256": "99a8a8a7117b1395e3a209cdc8ba5a70424687458932bc4dc8a7b6e59ff53868"
+      },
+      {
+        "expressionSha256": "113f0af17fdf683cf360ab9d03b7eff1b572d3475e83119031d47ee4331621aa"
+      },
+      {
+        "expressionSha256": "7e25a3ca18b2b53c8848b179d637fb477a677b4401c4318a7e621cbb03c63964"
+      },
+      {
+        "expressionSha256": "d37409f3aec6d92901e0978436cecceb691e341bc16ec749d2215903156541a3"
+      }
+    ],
+    "factsDigest": "66d4b4b6dac5a3c50b05767334342c19f786701686eb14800b6844cd4d7e9c10",
+    "authorityInputs": [],
+    "purposeInputs": [
+      {
+        "path": "scripts/docs-api-versions-map-output-authority.json",
+        "canonical": "scripts/docs-api-versions-map-output-authority.json",
+        "sha256": "d29fad9dcecad5c4883092514292fd1bbc73860a56d06f09785cde85e65c5769"
+      }
+    ]
+  },
   "scripts/docs-ap09-catalogue.mjs": {
     "role": "documentation-consumer",
     "consumer": "Repository documentation inventory, coverage, parity/status or tree-boundary artifact and diagnostic consumer; local documentation/configuration/evidence files, not product API bodies.",
@@ -333,7 +415,7 @@ export const documentationExecutableRoleRecipes = {
         "expressionSha256": "5a61aace8ba69be1179466f6c1b6ff69114de4d3bc786724ce21f78f06627702"
       },
       {
-        "expressionSha256": "7065337db6a631d8504d844836f9e394e00373216d392b3d6554b63a544e40db"
+        "expressionSha256": "084a822e5715a3cdd4954d0917f3e5f7e5dd7d5b72c55dccec5528f496847832"
       },
       {
         "expressionSha256": "1cbd339d9613dcdce3ecbc06beeebdf6320e9bb76de8f88770dc76f0259dbcc2"
@@ -342,7 +424,7 @@ export const documentationExecutableRoleRecipes = {
         "expressionSha256": "c8ddaea1f14c4b8a1bcbb6c7b193a9f756263ff4f26fbe6192fca3f30df82fa7"
       },
       {
-        "expressionSha256": "4983224281401e881d5e60b88fb80b08eddd9ecb20be87485c37f5d7a50b2c39"
+        "expressionSha256": "637dc23589129f3faf51bf5ed7f5306d6f05559bc29cec84d50a69a25c628f06"
       },
       {
         "expressionSha256": "02922e8453bb5e7401332bbcf78311f6606627413665ef7b4c9d42b8df130b7a"
@@ -483,7 +565,13 @@ export const documentationExecutableRoleRecipes = {
         "expressionSha256": "0dea52aa29095a9c3bd61034e6c0adbd7b466cf4553a9131f6d925682de010a6"
       },
       {
+        "expressionSha256": "2622126f748ecb921e36ef23523ff970251ea6e66431b89d3b8efc913e7f780a"
+      },
+      {
         "expressionSha256": "fe8b7e0d51b4c69a47f21772740add286eb683621b2c273ebdc05a3f53e3ff2b"
+      },
+      {
+        "expressionSha256": "76d7338c29c7149ddaff1061573f03f59f63c2085d7f4de6c8248de84017dfca"
       },
       {
         "expressionSha256": "c2865402a65517e0f02b00d28ebaf49bc1d00800b90da4637b6306f32fd2215e"
@@ -615,7 +703,7 @@ export const documentationExecutableRoleRecipes = {
         "expressionSha256": "328f8dd702f5cb8ccffb9ae17cc3d577e76cd8ec81456fffa49b452e908adb55"
       }
     ],
-    "factsDigest": "b8a26466b5587ca7a1770f2a9ae709ce5e1da60b2f067f5e00cc14326b931366",
+    "factsDigest": "c0b81cbe2d467b85fcc9171f8472554fbd04293c3d56ae72501b17e450af8776",
     "authorityInputs": [
       {
         "path": "scripts/docs-api-go-output-role-adapter.go",
@@ -833,7 +921,7 @@ export const documentationExecutableRoleRecipes = {
         "expressionSha256": "041aa7206a41cf5c3bdd66f61797f9b67c06085f6d0076ce1f84e2a9c8d57db8"
       }
     ],
-    "factsDigest": "00fb461a7900bd0310d1bd8779a507264af447262d0f68a13e3992848740f7e3",
+    "factsDigest": "cdbcc809bd3979f1e656c59000ab1dfdb5d6a2d333e677fe67ca3d831a3dcc66",
     "authorityInputs": []
   },
   "scripts/docs-api-python-output-adapter.py": {
@@ -1112,7 +1200,7 @@ export const documentationExecutableRoleRecipes = {
         "expressionSha256": "9efac25cb0d8a53fc3a31aec649afa2cd99102c34366428833c403eccaef3fbe"
       }
     ],
-    "factsDigest": "ffba5d6a417fb783e7ab0aeb7e18a69d6da081186e188bd986f133529ae99e1f",
+    "factsDigest": "e905206e211e24de09afa3950145ce85408f45c5e055f58bdcb8fde032652289",
     "authorityInputs": []
   },
   "scripts/docs-api-schema-authorities.mjs": {
@@ -1908,7 +1996,7 @@ export const documentationExecutableRoleRecipes = {
         "expressionSha256": "7602a8f927b47cd0b4b4f2501bccd41bb8e4e4ea43e571cf4bce62f3c3717191"
       }
     ],
-    "factsDigest": "2fd0672210c8aa3310fe42df3bedb2f6c557b1b0fdf75ddcf2e7751ac3aed124",
+    "factsDigest": "18f92eefe3df2b150fe7c71968a9e06b5fc2d1e1127679ee87d26e970e8639a2",
     "authorityInputs": [
       {
         "path": "scripts/vendor-external-helm-authorities.mjs",
@@ -2011,7 +2099,7 @@ export const documentationExecutableRoleRecipes = {
         "expressionSha256": "cba76d80649d6ce8d92897a224d01ee9877a1807a9de9e765cdad79d29f912ce"
       }
     ],
-    "factsDigest": "96a54a75464bfa5f67606d13739761918f2b8892f205eaa0dc030a451f5bb585",
+    "factsDigest": "d94432c228bb4058fb8daab7d4ee851c1def21d53611237e715889297a606325",
     "authorityInputs": []
   },
   "scripts/docs-governance.mjs": {

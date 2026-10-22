@@ -1,0 +1,1 @@
+{"results":[{"source":"scripts/docs-api-probe39-original-output.mjs","nativeGuard":"PASS","warmGuard":"PASS","sourceMutationRejected":true,"purposeInputMutationRejected":true},{"source":"scripts/docs-api-versions-map-output.mjs","nativeGuard":"PASS","warmGuard":"PASS","sourceMutationRejected":true,"purposeInputMutationRejected":true}],"productionTreeMutated":false}

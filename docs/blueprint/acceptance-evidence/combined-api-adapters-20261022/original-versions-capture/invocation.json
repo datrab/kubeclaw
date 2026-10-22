@@ -1,0 +1,23 @@
+{
+  "schemaVersion": "versions-map-acquisition-invocation.v1",
+  "argv": [
+    "/usr/local/bin/node",
+    "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/versions-map-current-data-acquire-v2.mjs",
+    "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/versions-map-current-data-seal-v2.json"
+  ],
+  "cwd": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021",
+  "environment": {
+    "PATH": "/usr/local/bin:/usr/bin:/bin",
+    "LANG": "C.UTF-8",
+    "LC_ALL": "C.UTF-8",
+    "TZ": "UTC"
+  },
+  "stdin": "not consumed",
+  "nodeVersion": "v24.21.0",
+  "execPath": "/usr/local/bin/node",
+  "sealSha256": "63af7217f70ec063aab28abb1d684461f6a5bb4e428a67fd68b1b72d62377c88",
+  "startedAt": "2026-10-22T19:59:14.968Z",
+  "selectedExport": "versionOutputs",
+  "calls": 1,
+  "fixtureRoot": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/versions-map-current-data-capture-v2/fixture"
+}

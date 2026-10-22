@@ -1,0 +1,6 @@
+{
+  "findings": [],
+  "overall_correctness": "patch is correct",
+  "overall_explanation": "No actionable defects identified in the supplied diff. The added checks validate the actual importer\u2019s YAML resolution, pinned package/runtime bytes, and runtime roster, while the regression test isolates parser mutations in disposable copies. Confidence is limited because filesystem inspection was blocked by the execution environment; tests were not run.",
+  "overall_confidence": 0.76
+}

@@ -1,0 +1,127 @@
+[
+  {
+    "apiVersion": "v1",
+    "kind": "ConfigMap",
+    "metadata": {
+      "name": "api-policy-proof-7346a9c1-e5e0-4896-a43a-53f531bda328",
+      "namespace": "documentation-fixture",
+      "annotations": {
+        "kubeclaw.io/source-pod-uid": "00000000-0000-4000-8000-000000000039",
+        "kubeclaw.io/source-pod-name": "documentation-api-source-fixture"
+      }
+    },
+    "data": {
+      "probe.mjs": "import fs from 'node:fs';\nimport https from 'node:https';\nimport path from 'node:path';\nimport { fileURLToPath } from 'node:url';\nimport { isIP } from 'node:net';\n\nexport function validateApiOrigins(origins) {\n  if (!Array.isArray(origins) || origins.length < 2 || origins.length > 32 || new Set(origins).size !== origins.length) {\n    throw new Error('API_SERVICE_AND_ENDPOINT_ORIGINS_REQUIRED');\n  }\n  for (const [index, origin] of origins.entries()) {\n    const url = new URL(origin);\n    validateHttpsOrigin(url);\n    if (index === 0) {\n      if (url.hostname !== 'kubernetes.default.svc' || url.port) throw new Error('API_PROBE_SERVICE_443_REQUIRED');\n    } else if (!isIP(url.hostname.replace(/^\\[|\\]$/g, ''))) throw new Error('API_PROBE_ENDPOINT_IP_REQUIRED');\n  }\n}\n\nfunction validateHttpsOrigin(url) {\n  if (url.protocol !== 'https:' || url.username || url.password || url.pathname !== '/' || url.search || url.hash) {\n    throw new Error('API_PROBE_HTTPS_ORIGIN_REQUIRED');\n  }\n}\n\n/** Read-only probe run under the actual workload SA and CNI identity. */\nexport async function verifyKubernetesApiPaths(options) {\n  const { namespace, serviceAccount, origins, tokenFile, caFile } = options;\n  for (const value of [namespace, serviceAccount]) {\n    if (!/^[a-z0-9](?:[a-z0-9.-]{0,251}[a-z0-9])?$/.test(value)) throw new Error('API_PROBE_IDENTITY_INVALID');\n  }\n  validateApiOrigins(origins);\n  const token = fs.readFileSync(tokenFile, 'utf8').trim();\n  const claims = JSON.parse(Buffer.from(token.split('.')[1], 'base64url').toString('utf8'));\n  if (claims.sub !== `system:serviceaccount:${namespace}:${serviceAccount}`) throw new Error('API_PROBE_WRONG_SERVICE_ACCOUNT');\n  const ca = fs.readFileSync(caFile);\n  for (const origin of origins) {\n    const url = new URL(origin);\n    url.pathname = `/api/v1/namespaces/${namespace}/services`;\n    url.search = '?limit=1';\n    const body = await getApi(url, ca, token);\n    if (body.kind !== 'ServiceList' || !Array.isArray(body.items)) throw new Error('API_PROBE_NOT_KUBERNETES_SERVICE_LIST');\n  }\n  return { ok: true, serviceAccount: claims.sub, checkedOrigins: origins,\n    excluded: ['negative-private-target', 'CNI-drop-verdict', 'controller-reconciliation'] };\n}\n\nfunction getApi(url, ca, token) {\n  return new Promise((resolve, reject) => {\n    const request = https.get(url, { ca, servername: 'kubernetes.default.svc', rejectUnauthorized: true,\n      signal: AbortSignal.timeout(15000), headers: { authorization: `Bearer ${token}` } }, response => {\n      if (response.statusCode !== 200) { response.destroy(); reject(new Error(`API_PROBE_HTTP_${response.statusCode}`)); return; }\n      const chunks = []; let size = 0;\n      response.on('data', bytes => {\n        size += bytes.length;\n        if (size > 8 * 1024 * 1024) { response.destroy(new Error('API_PROBE_RESPONSE_LIMIT')); return; }\n        chunks.push(bytes);\n      });\n      response.on('error', reject);\n      response.on('end', () => {\n        try { resolve(JSON.parse(Buffer.concat(chunks).toString('utf8'))); } catch { reject(new Error('API_PROBE_RESPONSE_INVALID')); }\n      });\n    });\n    request.on('error', reject);\n  });\n}\n\nif (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {\n  if (process.argv.length !== 3) throw new Error('Usage: kubernetes-api-probe.mjs OPTIONS_JSON_FILE');\n  const result = await verifyKubernetesApiPaths(JSON.parse(fs.readFileSync(process.argv[2], 'utf8')));\n  process.stdout.write(JSON.stringify(result) + '\\n');\n}\n",
+      "options.json": "{\"namespace\":\"documentation-fixture\",\"serviceAccount\":\"documentation-fixture\",\"origins\":[\"https://kubernetes.default.svc\",\"https://192.0.2.39:6443\"],\"tokenFile\":\"/var/run/secrets/kubernetes.io/serviceaccount/token\",\"caFile\":\"/var/run/secrets/kubernetes.io/serviceaccount/ca.crt\"}"
+    }
+  },
+  {
+    "apiVersion": "batch/v1",
+    "kind": "Job",
+    "metadata": {
+      "name": "api-policy-proof-7346a9c1-e5e0-4896-a43a-53f531bda328",
+      "namespace": "documentation-fixture",
+      "annotations": {
+        "kubeclaw.io/source-pod-uid": "00000000-0000-4000-8000-000000000039",
+        "kubeclaw.io/source-pod-name": "documentation-api-source-fixture"
+      }
+    },
+    "spec": {
+      "backoffLimit": 0,
+      "activeDeadlineSeconds": 600,
+      "template": {
+        "metadata": {
+          "labels": {
+            "app.kubernetes.io/name": "documentation-fixture",
+            "kubeclaw.io/api-policy-proof": "api-policy-proof-7346a9c1-e5e0-4896-a43a-53f531bda328"
+          }
+        },
+        "spec": {
+          "restartPolicy": "Never",
+          "serviceAccountName": "documentation-fixture",
+          "automountServiceAccountToken": true,
+          "affinity": {
+            "nodeAffinity": {
+              "requiredDuringSchedulingIgnoredDuringExecution": {
+                "nodeSelectorTerms": [
+                  {
+                    "matchFields": [
+                      {
+                        "key": "metadata.name",
+                        "operator": "In",
+                        "values": [
+                          "documentation-fixture-node"
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          },
+          "containers": [
+            {
+              "name": "probe",
+              "image": "node:24.15.0-bookworm-slim@sha256:4e6b70dd6cbfc88c8157ba19aa3d9f9cce6ba4703576d55459e45efcbc9c5f5d",
+              "command": [
+                "node",
+                "/probe/probe.mjs",
+                "/probe/options.json"
+              ],
+              "readinessProbe": {
+                "exec": {
+                  "command": [
+                    "node",
+                    "-e",
+                    "process.exit(1)"
+                  ]
+                },
+                "periodSeconds": 1
+              },
+              "resources": {
+                "requests": {
+                  "cpu": "25m",
+                  "memory": "64Mi"
+                },
+                "limits": {
+                  "cpu": "500m",
+                  "memory": "256Mi"
+                }
+              },
+              "securityContext": {
+                "runAsUser": 1000,
+                "runAsGroup": 1000,
+                "runAsNonRoot": true,
+                "readOnlyRootFilesystem": true,
+                "allowPrivilegeEscalation": false,
+                "capabilities": {
+                  "drop": [
+                    "ALL"
+                  ]
+                },
+                "seccompProfile": {
+                  "type": "RuntimeDefault"
+                }
+              },
+              "volumeMounts": [
+                {
+                  "name": "probe",
+                  "mountPath": "/probe",
+                  "readOnly": true
+                }
+              ]
+            }
+          ],
+          "volumes": [
+            {
+              "name": "probe",
+              "configMap": {
+                "name": "api-policy-proof-7346a9c1-e5e0-4896-a43a-53f531bda328"
+              }
+            }
+          ]
+        }
+      }
+    }
+  }
+]

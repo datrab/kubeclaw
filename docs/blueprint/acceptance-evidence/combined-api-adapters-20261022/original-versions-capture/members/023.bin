@@ -1,0 +1,25 @@
+# Production values: PostgreSQL 18.6 update; preserve existing storage and credentials.
+# Image selection is managed by versions.json postgresqlProduction.
+image:
+  registry: registry-1.docker.io
+  repository: bitnami/postgresql
+  tag: latest
+  digest: sha256:b69d1fca390fb131639e86e820f248acfc5d911339dc884796f8009260c598d7
+architecture: standalone
+auth:
+  database: litellm
+  username: litellm
+  existingSecret: postgresql-secrets
+  secretKeys:
+    adminPasswordKey: postgres-password
+    userPasswordKey: litellm-password
+primary:
+  persistence:
+    size: 1Gi
+  resources:
+    limits:
+      cpu: 250m
+      memory: 256Mi
+    requests:
+      cpu: 50m
+      memory: 128Mi

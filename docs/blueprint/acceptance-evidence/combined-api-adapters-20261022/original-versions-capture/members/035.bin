@@ -1,0 +1,33 @@
+{
+  "type": "module",
+  "private": true,
+  "name": "@kubeclaw/openclaw-agent-observer",
+  "version": "0.0.0",
+  "description": "OpenClaw hook observer that writes kubeclaw agent-observability Redis streams",
+  "openclaw": {
+    "extensions": [
+      "./src/index.ts"
+    ],
+    "runtimeExtensions": [
+      "./dist/index.js"
+    ],
+    "compat": {
+      "pluginApi": ">=2026.9.1",
+      "minGatewayVersion": "2026.9.1"
+    },
+    "build": {
+      "openclawVersion": "2026.10.3"
+    }
+  },
+  "scripts": {
+    "sync-contract": "node scripts/sync-contract.mjs",
+    "pretypecheck": "npm run sync-contract",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "build": "node scripts/build.mjs",
+    "test": "node tests/clean-build.test.mjs && node --check scripts/build.mjs && node --check scripts/sync-contract.mjs && npm run typecheck && node tests/config.test.mjs && node tests/live-function.test.ts && node tests/package-boundary.test.mjs && node --test tests/remediation.test.ts"
+  },
+  "devDependencies": {
+    "@types/node": "24.13.3",
+    "typescript": "5.9.3"
+  }
+}

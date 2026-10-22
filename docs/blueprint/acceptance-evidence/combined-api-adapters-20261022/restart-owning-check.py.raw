@@ -1,0 +1,12 @@
+import json,pathlib,subprocess,datetime,hashlib,sys
+base=pathlib.Path('/home/node/.openclaw/workspace/tmp/pr13-finish-20261021')
+old=json.loads((base/'recovered-eleven-purpose-owning-check/invocation.json').read_text())
+out=base/sys.argv[1];out.mkdir()
+root=pathlib.Path(old['cwd'])
+files=['scripts/docs-api-output-discovery.mjs','scripts/docs-api-documentation-role-custody.mjs','scripts/docs-deployment-scalar-occurrence-custody.mjs','scripts/docs-api-producer-adapter-authorities.json','scripts/docs-api-probe39-original-output.mjs','scripts/docs-api-probe39-original-authority.json','scripts/docs-api-versions-map-output.mjs','scripts/docs-api-versions-map-output-authority.json']
+record={'argv':old['argv'],'cwd':old['cwd'],'environment':old['environment'],'startedAt':datetime.datetime.now(datetime.timezone.utc).isoformat(),'inputs':{p:hashlib.sha256((root/p).read_bytes()).hexdigest() for p in files},'scope':'Original owning check after finite combined adapters and exact documentation helper purposes; no runtime or aggregate acceptance inferred'}
+(out/'invocation.json').write_text(json.dumps(record,indent=2)+'\n')
+with (out/'stdout.raw').open('wb') as stdout,(out/'stderr.raw').open('wb') as stderr:
+ p=subprocess.run(record['argv'],cwd=root,env=record['environment'],stdout=stdout,stderr=stderr)
+result={'exitCode':p.returncode,'finishedAt':datetime.datetime.now(datetime.timezone.utc).isoformat(),'streams':{f:hashlib.sha256((out/f).read_bytes()).hexdigest() for f in ['stdout.raw','stderr.raw']},'inputsUnchanged':all(hashlib.sha256((root/f).read_bytes()).hexdigest()==h for f,h in record['inputs'].items())}
+(out/'result.json').write_text(json.dumps(result,indent=2)+'\n');print(json.dumps(result))

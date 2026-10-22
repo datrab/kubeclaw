@@ -1,0 +1,95 @@
+{
+  "schemaVersion": "restart-final-guard-review.v1",
+  "verdict": "PASS_BOUNDED_FINAL_METADATA",
+  "findings": [],
+  "unreadAssignedRecords": 0,
+  "scope": "Final five role recipe renewal plus two scalar guard constants only; no new acceptance or runtime authority.",
+  "records": [
+    {
+      "source": "scripts/docs-api-output-discovery.mjs",
+      "beforeFacts": 248,
+      "afterFacts": 270,
+      "orderedChangeBlocks": 7,
+      "oldDigest": "b8a26466b5587ca7a1770f2a9ae709ce5e1da60b2f067f5e00cc14326b931366",
+      "newDigest": "c0b81cbe2d467b85fcc9171f8472554fbd04293c3d56ae72501b17e450af8776",
+      "selectorsBefore": 142,
+      "selectorsAfter": 144,
+      "childAuthorityUnchanged": true
+    },
+    {
+      "source": "scripts/docs-api-product-scope.mjs",
+      "beforeFacts": 1441,
+      "afterFacts": 1463,
+      "orderedChangeBlocks": 6,
+      "oldDigest": "00fb461a7900bd0310d1bd8779a507264af447262d0f68a13e3992848740f7e3",
+      "newDigest": "cdbcc809bd3979f1e656c59000ab1dfdb5d6a2d333e677fe67ca3d831a3dcc66",
+      "selectorsBefore": 42,
+      "selectorsAfter": 42,
+      "childAuthorityUnchanged": true
+    },
+    {
+      "source": "scripts/docs-api-reference.mjs",
+      "beforeFacts": 1463,
+      "afterFacts": 1485,
+      "orderedChangeBlocks": 6,
+      "oldDigest": "ffba5d6a417fb783e7ab0aeb7e18a69d6da081186e188bd986f133529ae99e1f",
+      "newDigest": "e905206e211e24de09afa3950145ce85408f45c5e055f58bdcb8fde032652289",
+      "selectorsBefore": 13,
+      "selectorsAfter": 13,
+      "childAuthorityUnchanged": true
+    },
+    {
+      "source": "scripts/docs-configuration-inventory.mjs",
+      "beforeFacts": 2233,
+      "afterFacts": 2255,
+      "orderedChangeBlocks": 6,
+      "oldDigest": "2fd0672210c8aa3310fe42df3bedb2f6c557b1b0fdf75ddcf2e7751ac3aed124",
+      "newDigest": "18f92eefe3df2b150fe7c71968a9e06b5fc2d1e1127679ee87d26e970e8639a2",
+      "selectorsBefore": 142,
+      "selectorsAfter": 142,
+      "childAuthorityUnchanged": true
+    },
+    {
+      "source": "scripts/docs-generate.mjs",
+      "beforeFacts": 1559,
+      "afterFacts": 1581,
+      "orderedChangeBlocks": 6,
+      "oldDigest": "96a54a75464bfa5f67606d13739761918f2b8892f205eaa0dc030a451f5bb585",
+      "newDigest": "d94432c228bb4058fb8daab7d4ee851c1def21d53611237e715889297a606325",
+      "selectorsBefore": 22,
+      "selectorsAfter": 22,
+      "childAuthorityUnchanged": true
+    }
+  ],
+  "assignedFactRowsCompared": 13998,
+  "checks": {
+    "fullOrderedVectorsCompared": true,
+    "deltaArtifactIndependentlyRecomputed": true,
+    "noRemovedFactsOrChildAuthority": true,
+    "noRecipeMembershipOrRoleChange": true,
+    "onlyTwoFunctionsAndTwoImportSelectorChanges": true,
+    "otherFourSelectorsUnchanged": true,
+    "scalarConstantsMatchIndependentReviewedVectors": true,
+    "sixExistingAcceptanceScopesPreserved": true,
+    "sourceOnlyScopePreserved": true
+  },
+  "sourceSha256": {
+    "scripts/docs-api-documentation-role-custody.mjs": "5b6a9e7b4921e7d7689be0a1ca5cd3c24cc355940e3a823190e1001fec368ffc",
+    "scripts/docs-deployment-scalar-occurrence-custody.mjs": "5c8833cb68c10cd962b93e451664e339457031840a9679f5b64a56f14826095d",
+    "scripts/docs-api-output-discovery.mjs": "18490b3ea38f27fa98c93c9f4f95dcc5bb929bd3236710197c91a4b8c8edfbbc",
+    "scripts/docs-api-probe39-original-output.mjs": "708a16b722f062f4975101116666b473f2efecd6ec3949a7ab99447c5c7e9756",
+    "scripts/docs-api-versions-map-output.mjs": "9e267f3c64e8d617f0c0c5503c5f8a1bc28753ed8752734f532f3cd6bfa9e4b0"
+  },
+  "evidenceSha256": {
+    "recovered-eleven-purpose-peer-native-recipes.json": "f26db0d8e74f0150863c50bee1ed998d307842c112f4ba3624fafd260010e807",
+    "combined-probe-versions-native/current-before-recipe-renewal.json": "80e52f89f104785c5211dbd14bfd81ee344a57fc850355efe371f5ad3f366b36",
+    "combined-probe-versions-native/five-recipe-ordered-semantic-delta.json": "b8810d039d86b7e8e7e63958e554f88b8ba485721714e102ebb4cca5713f8715",
+    "combined-api-adapter-guard-renewal-independent-review.json": "ea8d7dee5add38d775850dd770317a560670b88da2ffdf8e8308c4e6a36cfc0c",
+    "combined-probe-versions-integration-independent-review.json": "3eb224e4d1e693bfbf820f9a7c7d48212a79b3fdd7fa45e112a8e9a3138a7f84"
+  },
+  "limits": [
+    "No expensive checks or generator run executed; parent owns current native recapture and owning check.",
+    "Adapter implementations and complete scalar vectors rely on specifically cited previous independent reviews; not re-audited.",
+    "Preserves MNT-017, PUB-002, A912-04, A912-09, PUB-004, A912-07 limits; no new requirement/gate/runtime approval."
+  ]
+}

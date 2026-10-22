@@ -1,0 +1,19 @@
+{
+  "originalDocuments": 2,
+  "kinds": [
+    "ConfigMap",
+    "Job"
+  ],
+  "originalGeneratedName": "api-policy-proof-7346a9c1-e5e0-4896-a43a-53f531bda328",
+  "originalStdoutHash": "cc0412e305420a57e10f2317772621b9f3ee8976f268234f01169b47f290b767",
+  "constructorAndFixtureChecks": "PASS",
+  "schemaAdmission": "NOT_RUN",
+  "actualPodIdentity": "NOT_CLAIMED",
+  "networkProbe": "NOT_RUN",
+  "limits": [
+    "Pod is explicit authoredinputfixture,not observed live/runningPod or validatedworkloadidentity.",
+    "Selected originalrenderer imports helper whose ownnetworkCLIguard is false;onlyvalidateApiOrigins called. No network/probe/token/CA/clustercommand.",
+    "Only originalstdout2YAMLdocs captured with actualrandomUUID retained. No sourceoutputsubstitution,fakeresponse,APIapplyorproductionreceipt.",
+    "Parsing/constructorassertions only;not Kubernetes schemas/admission/network/identity/reachability proof."
+  ]
+}

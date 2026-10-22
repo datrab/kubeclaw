@@ -1,0 +1,22 @@
+# Version defaults are generated from versions.json; run npm run versions:sync.
+ARG ARCHVIEWER_BASE=docker.io/library/nginx:1.29-alpine@sha256:5616878291a2eed594aee8db4dade5878cf7edcb475e59193904b198d9b830de
+
+# =============================================================================
+# KubeClaw Archviewer — Lightweight architecture presentation server
+# =============================================================================
+# Serves Nova's HTML architecture presentations from /designs on port 3456.
+# It is independent from Prism Studio and has no Prism design authority. The
+# Nova sidecar retains the historical workspace/prism/designs storage subpath.
+#
+# Build:  docker build -f docker/Dockerfile.archviewer -t ghcr.io/datrab/kubeclaw-archviewer:latest .
+# Run with /designs read-only and an htpasswd file at /etc/archviewer-auth/htpasswd.
+# Publish through the authenticated Tailnet ingress configured by the chart.
+# =============================================================================
+FROM ${ARCHVIEWER_BASE}
+
+COPY docker/archviewer.nginx.conf /etc/nginx/conf.d/default.conf
+
+EXPOSE 3456
+
+# An empty document directory is valid; /healthz remains available to probes.
+RUN mkdir -p /designs

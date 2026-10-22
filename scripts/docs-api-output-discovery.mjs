@@ -1,3 +1,5 @@
+import {checkedOriginalProbe39Output, selectedOriginalProbe39Output} from './docs-api-probe39-original-output.mjs';
+import {checkedVersionsMapOutputs,selectedVersionsMapOutput} from './docs-api-versions-map-output.mjs';
 import {checkedTopLevelScriptPurposes,selectedTopLevelScriptPurpose} from './docs-api-top-level-script-purpose.mjs';
 import {assertDocumentationOwnerPurpose,assertDocumentationOwnerAncestry,documentationOwnerNativeEntryMatches,reviewedDocumentationOwnerPurposes,assertReaderArtifactExternalCiPurpose,addReaderArtifactExternalCiSeed} from './docs-documentation-owner-purpose-custody.mjs';
 import {minimalPluginFixtureOutputCustody, minimalPluginFixtureOutputRole} from './docs-minimal-plugin-fixture-output-custody.mjs';
@@ -1787,12 +1789,14 @@ export function discoverScriptApiOutputs(root) {
   const sourcePurposeSources=executableSources.filter(file=>!validatedDocumentationTools.has(file));
   const sourcePurposeClassifier=createSerializedOutputRoleClassifier(root,sourcePurposeSources);
   const topLevelPurposes=checkedTopLevelScriptPurposes(root,documentationGraphCache.get(root),sourcePurposeClassifier,sourcePurposeSources);
+  const probe39=checkedOriginalProbe39Output(root,documentationGraphCache.get(root),sourcePurposeClassifier,sourcePurposeSources);
+  const versionsMap=checkedVersionsMapOutputs(root,documentationGraphCache.get(root),sourcePurposeClassifier,sourcePurposeSources);
   const sourceInputs=walkProductSources(root,producerRoots,()=>true);
   if(fs.existsSync(path.join(root,'package.json')))sourceInputs.push('package.json');
-  const inputKey=hash(JSON.stringify([documentationGraphCache.get(root).inputKey,topLevelPurposes?.inputDigest??null,gitOpsProfile?.witnessDigest??null,infrastructureProfile?.witnessDigest??null,disabledRegistration?.witnessDigest??null,bundleCopy?.inputDigest??null,configOutput?.inputDigest??null,minimalPlugin?.inputDigest??null,[...scalarOccurrences].map(([source,receipt])=>[source,receipt.inputDigest]),sourceInputs.map(source=>[source,hash(fs.readFileSync(path.join(root,source)))])]));
+  const inputKey=hash(JSON.stringify([documentationGraphCache.get(root).inputKey,topLevelPurposes?.inputDigest??null,probe39?.inputDigest??null,versionsMap?.inputDigest??null,gitOpsProfile?.witnessDigest??null,infrastructureProfile?.witnessDigest??null,disabledRegistration?.witnessDigest??null,bundleCopy?.inputDigest??null,configOutput?.inputDigest??null,minimalPlugin?.inputDigest??null,[...scalarOccurrences].map(([source,receipt])=>[source,receipt.inputDigest]),sourceInputs.map(source=>[source,hash(fs.readFileSync(path.join(root,source)))])]));
   const cached=scriptOutputCache.get(root);
   if(cached?.inputKey===inputKey&&cached.dependencies.every(([source,digest])=>fs.existsSync(path.join(root,source))&&hash(fs.readFileSync(path.join(root,source)))===digest))return cached.result;
-  const classifiedDependencies=new Set([...(topLevelPurposes?.dependencies??[]),...(infrastructureProfile?.dependencies??[]),...(disabledRegistration?.dependencies??[])]);
+  const classifiedDependencies=new Set([...(probe39?.dependencies??[]),...(topLevelPurposes?.dependencies??[]),...(versionsMap?.dependencies??[]),...(infrastructureProfile?.dependencies??[]),...(disabledRegistration?.dependencies??[])]);
   const result=[];
   for(const source of walkProductSources(root,producerRoots,file=>!executableSourceSet.has(path.relative(root,fs.realpathSync(path.join(root,file))).replaceAll(path.sep,'/'))&&!/\.(?:[cm]?js|[cm]?ts|py|sh|go|ya?ml|json|md|txt|toml|lock|pem|crt)$/u.test(file))) {
     const bytes=fs.readFileSync(path.join(root,source),'utf8');
@@ -1864,15 +1868,19 @@ export function discoverScriptApiOutputs(root) {
       // Evaluate the sealed-source check before any ordinary role fallback:
       // mutable contracts cannot relabel these two raw pathname slots.
       const topLevelPurpose=selectedTopLevelScriptPurpose(source,role,topLevelPurposes);
+      const probe39Slot=selectedOriginalProbe39Output(source,role,probe39);
+      const versionsMapPurpose=selectedVersionsMapOutput(source,role,versionsMap);
       const infrastructureSlot=selectedInfrastructureOutputProfile(source,role,infrastructureProfile);
       const disabledRegistrationSlot=selectedDisabledRegistrationOutput(source,role,disabledRegistration);
       assert(scalarOccurrences.has(source)
         ?selectedDeploymentScalarOccurrences(role,scalarOccurrences.get(source))
-        :topLevelPurpose||infrastructureSlot||disabledRegistrationSlot||role.role!=='unknown',
+        :probe39Slot||topLevelPurpose||versionsMapPurpose||infrastructureSlot||disabledRegistrationSlot||role.role!=='unknown',
         `API_PRODUCT_SCRIPT_OUTPUT_ROLE_UNQUALIFIED: ${source}:${role.line}: ${role.expression}`);
     }
+    if(source==='scripts/render-kubernetes-api-probe.mjs'&&probe39){result.push(...probe39.outputs);continue;}
     if(witness){result.push(...witness.outputs);continue;}
     if(gitOpsProfile?.sources.includes(source)){result.push(...gitOpsProfile.outputs.filter(output=>output.context.path===source));continue;}
+    if(source==='scripts/versions.mjs'&&versionsMap){result.push(...versionsMap.outputs);continue;}
     if(!outputRoles.some(role=>role.role==='api')&&(!/apiVersion/u.test(bytes)||!/(?:kind\s*:|['"]kind['"]\s*:)/u.test(bytes)))continue;
     const tree=ts.createSourceFile(source,bytes,ts.ScriptTarget.Latest,true,/\.[cm]?ts$/u.test(source)?ts.ScriptKind.TS:ts.ScriptKind.JS);
     assert(!tree.parseDiagnostics.length,`API_PRODUCT_PRODUCER_PARSE_FAILED: ${source}`);
@@ -2173,6 +2181,7 @@ export function discoverScriptOutputRoleClassifications(root) {
   const sources=nodeOutputExecutableSources(root).filter(file=>!documentationTools.has(file));
   const classify=createSerializedOutputRoleClassifier(root,sources);
   const topLevelPurposes=checkedTopLevelScriptPurposes(root,documentationGraphCache.get(root),classify,sources);
+  const versionsMap=checkedVersionsMapOutputs(root,documentationGraphCache.get(root),classify,sources);
   const observations=discoverDeploymentNodeOutputObservations(root);
   const gitOpsProfile=checkedGitOpsOutputProfiles(root,documentationGraphCache.get(root));
   const infrastructureProfile=checkedInfrastructureOutputProfiles(root,documentationGraphCache.get(root));
@@ -2196,13 +2205,15 @@ export function discoverScriptOutputRoleClassifications(root) {
     const qualifiedScalarUses=scalarOccurrences.has(source)?selectedDeploymentScalarOccurrences(role,scalarOccurrences.get(source)):null;
     if(scalarOccurrences.has(source))assert(qualifiedScalarUses,`DEPLOYMENT_SCALAR_OCCURRENCE_UNQUALIFIED: ${source}; canonical stdout must remain unknown`);
     const topLevelPurpose=selectedTopLevelScriptPurpose(source,role,topLevelPurposes);
+    const versionsMapPurpose=selectedVersionsMapOutput(source,role,versionsMap);
     const qualifiedInfrastructureProfile=selectedInfrastructureOutputProfile(source,role,infrastructureProfile);
     const qualifiedDisabledRegistrationProfile=selectedDisabledRegistrationOutput(source,role,disabledRegistration);
     const context={...role,path:source,sourceDigest:hash(fs.readFileSync(path.join(root,source))),
-      dependencies:[...new Set([...role.dependencies,...(topLevelPurpose?topLevelPurposes.dependencies:[])])],
-      dependencyDigests:Object.fromEntries([...new Set([...role.dependencies,...(topLevelPurpose?topLevelPurposes.dependencies:[])])].map(file=>[file,hash(fs.readFileSync(path.join(root,file)))])),
+      dependencies:[...new Set([...role.dependencies,...(topLevelPurpose?topLevelPurposes.dependencies:[]),...(versionsMapPurpose?versionsMap.dependencies:[])])],
+      dependencyDigests:Object.fromEntries([...new Set([...role.dependencies,...(topLevelPurpose?topLevelPurposes.dependencies:[]),...(versionsMapPurpose?versionsMap.dependencies:[])])].map(file=>[file,hash(fs.readFileSync(path.join(root,file)))])),
       ...(selectedOccurrences.length?{selectedOccurrences}:{} ),
       ...(topLevelPurpose?{sourceOwnedOutputPurpose:topLevelPurpose,runtimeExecutionAuthorized:false,apiApplyAuthorized:false}:{}),
+      ...(versionsMapPurpose?{versionsMapOutputPurpose:versionsMapPurpose,runtimeExecutionAuthorized:false,apiApplyAuthorized:false}:{}),
       ...(qualifiedScalarUses?{qualifiedScalarUses,standaloneOutputRole:'unknown'}:{}),
       ...(qualifiedInfrastructureProfile?{historicalInfrastructureProfile:infrastructureProfile.witnessDigest,executionAuthority:false,standaloneOutputRole:'unknown'}:{}),
       ...(qualifiedDisabledRegistrationProfile?{selectedDisabledRegistration:disabledRegistration.witnessDigest,registrationDisabledByCurrentConfiguration:true,runtimeExecutionAuthorized:false,apiApplyAuthorized:false}:{})};

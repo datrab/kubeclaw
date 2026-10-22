@@ -1,0 +1,15 @@
+✔ native current classifier retains mixed UNKNOWN while all original member/API streams are received (150.418645ms)
+✔ warm validation rejects whole versions whitespace and unchanged-value input/source/parser drift (191.483652ms)
+✔ new Docker member, missing current output, parser member and loader boundary invalidate reuse (84.396532ms)
+✔ changed role, omitted/reordered slots, new caller or public alias fail before fallback (89.783439ms)
+✔ persisted drop with adjusted advertised count or unrelated existing API profile cannot self-baseline (31.173905ms)
+✔ API document addition to a previously config-only member is not a metadata waiver (53.283078ms)
+✔ actual importer parser drift rejects even when the supplied fixture parser remains sealed (988.287688ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2071.747913

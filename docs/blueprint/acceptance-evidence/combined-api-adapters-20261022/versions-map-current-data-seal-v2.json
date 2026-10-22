@@ -1,0 +1,496 @@
+{
+  "schemaVersion": "versions-map-current-data-seal.v1",
+  "sourceRoot": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery",
+  "captureDirectory": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/versions-map-current-data-capture-v2",
+  "sourceModules": [
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/versions.mjs",
+      "sha256": "c837f871d19a8d37bc1748c3f85db9cb46ccdf9d53b1c0aaa6f64c7c6efbf00b",
+      "bytes": 13061,
+      "mode": 436,
+      "relative": "scripts/versions.mjs"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/infrastructure-chart-lock.mjs",
+      "sha256": "8884d8e41166f9739ea8f5986cbd8a4c8ae66e8756f0fa3ccb8712e9124601e5",
+      "bytes": 1271,
+      "mode": 436,
+      "relative": "scripts/infrastructure-chart-lock.mjs"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/runtime-tool-locks.mjs",
+      "sha256": "df643a11bbb1327b5502151002bb5b88c21d83d35922ba1fee4e0c38bf5a6c25",
+      "bytes": 5456,
+      "mode": 436,
+      "relative": "scripts/runtime-tool-locks.mjs"
+    }
+  ],
+  "selectedInputs": [
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/versions.json",
+      "sha256": "04281d9b2addd93073bd548293ea9ba6e1d88c2a18fff0f34cbdbc14ca7fe2c1",
+      "bytes": 7603,
+      "mode": 436,
+      "relative": "versions.json"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/docker/Dockerfile.archviewer",
+      "sha256": "3ec0c58abec0095d35a0bc6570ac65812cd55169836f45fa4928a0270deef5df",
+      "bytes": 1222,
+      "mode": 436,
+      "relative": "docker/Dockerfile.archviewer"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/docker/Dockerfile.buster-gateway",
+      "sha256": "7b0df7010b8168ea0d0b413971e66bddbdd43cd4802ae045d36ad2c58ddcb5a0",
+      "bytes": 6162,
+      "mode": 436,
+      "relative": "docker/Dockerfile.buster-gateway"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/docker/Dockerfile.buster-runtime",
+      "sha256": "a312398adeaf6addfd875940cbe04cd4bc53611fb8f26422020fe290d7fcc27c",
+      "bytes": 8898,
+      "mode": 436,
+      "relative": "docker/Dockerfile.buster-runtime"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/docker/Dockerfile.namespace-controller",
+      "sha256": "7d11f9ddce2ba3c5083645531a59b298a1996743306fbadb7f3b47819ab68384",
+      "bytes": 1251,
+      "mode": 436,
+      "relative": "docker/Dockerfile.namespace-controller"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/docker/Dockerfile.nova",
+      "sha256": "20c9013643e16f20c90c198b5f4c27b42fc1ff7ea841433e9093319020b80795",
+      "bytes": 16367,
+      "mode": 436,
+      "relative": "docker/Dockerfile.nova"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/docker/Dockerfile.prism-agent",
+      "sha256": "250e0f00b301e415ba6e92642d6bd501313b000f2ca288d9865a74d0cfd41792",
+      "bytes": 7227,
+      "mode": 436,
+      "relative": "docker/Dockerfile.prism-agent"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/docker/Dockerfile.prism-control",
+      "sha256": "3e88f611da0e5de7f3f0e72b5ec8446735e8011f4d9bc22b6e8287c2806f0bc1",
+      "bytes": 1118,
+      "mode": 436,
+      "relative": "docker/Dockerfile.prism-control"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/docker/Dockerfile.prism-ingestion",
+      "sha256": "7562bbf083164dba931091011aa3d9e3178797fe51053a08c38afaf3ea2f2a88",
+      "bytes": 1001,
+      "mode": 436,
+      "relative": "docker/Dockerfile.prism-ingestion"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/docker/Dockerfile.prism-studio",
+      "sha256": "23cad6d5c43ef93ecd26c7be2698ff0351533c489ff9abcde0cfdc184c1793d3",
+      "bytes": 1001,
+      "mode": 436,
+      "relative": "docker/Dockerfile.prism-studio"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/docker/Dockerfile.prism-worker",
+      "sha256": "1637229ea33938f262561323c2ab6aea0c6d1e5adcf76c42fb135f29875c9033",
+      "bytes": 2765,
+      "mode": 436,
+      "relative": "docker/Dockerfile.prism-worker"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/ops/pod/Dockerfile",
+      "sha256": "0b3567215fe9bbd7a282aec80699019dc05abfe652dcad20c9b528365f8464b9",
+      "bytes": 5227,
+      "mode": 436,
+      "relative": "ops/pod/Dockerfile"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/tools/ops-mcp/Dockerfile",
+      "sha256": "cd30a47448ac65be1e85addebe7600c3a3edff3337cfa0c64c18d533359937e5",
+      "bytes": 1847,
+      "mode": 436,
+      "relative": "tools/ops-mcp/Dockerfile"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/deploy.sh",
+      "sha256": "97c1e39bf9cec6c1d5d8e11198af90ed04efd15a6077f2bbac1129c2ea0741e2",
+      "bytes": 147376,
+      "mode": 509,
+      "relative": "scripts/deploy.sh"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/gitops/platform/bootstrap/spire.yaml",
+      "sha256": "b6bb6863509706131898ce576c14249e1d483209ce99f201142dc758ba3521dd",
+      "bytes": 1403,
+      "mode": 436,
+      "relative": "gitops/platform/bootstrap/spire.yaml"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/gitops/platform/bootstrap/spire-crds.yaml",
+      "sha256": "0e4d2e2b54c905eaa372749b99a8a2a65585a238875e5fa7c5ea880869276278",
+      "bytes": 835,
+      "mode": 436,
+      "relative": "gitops/platform/bootstrap/spire-crds.yaml"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/gitops/platform/bootstrap/csi-driver-smb.yaml",
+      "sha256": "ce561dc5a9a2b5f8b06fbb80c59f5590fcab9b43906a6acc5df12ca62122c99e",
+      "bytes": 859,
+      "mode": 436,
+      "relative": "gitops/platform/bootstrap/csi-driver-smb.yaml"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/gitops/platform/litellm/resources.yaml",
+      "sha256": "faf5a32f91568604ee1726ac60a58c7490fb95802d61a0019171006423474637",
+      "bytes": 1857,
+      "mode": 436,
+      "relative": "gitops/platform/litellm/resources.yaml"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/gitops/platform/bootstrap/prometheus.yaml",
+      "sha256": "d9c81c5644d744237997d336031cce970159da626024f3573cd7b4d0b55a7d44",
+      "bytes": 827,
+      "mode": 436,
+      "relative": "gitops/platform/bootstrap/prometheus.yaml"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/gitops/platform/bootstrap/loki.yaml",
+      "sha256": "2b3721a57154eb14e92ebccd1e9cabf82499cddf9c98369b88b195e042958c6e",
+      "bytes": 790,
+      "mode": 436,
+      "relative": "gitops/platform/bootstrap/loki.yaml"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/gitops/platform/bootstrap/alloy.yaml",
+      "sha256": "b2c06f6acba94c24edd5b30980376675ba920a9ea6f92c403577d2a236073434",
+      "bytes": 783,
+      "mode": 436,
+      "relative": "gitops/platform/bootstrap/alloy.yaml"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/gitops/platform/bootstrap/promtail.yaml",
+      "sha256": "f6d4fe2568c154f4db415d404cb9c4087d05ea373492eb7fa7160830de169855",
+      "bytes": 803,
+      "mode": 436,
+      "relative": "gitops/platform/bootstrap/promtail.yaml"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/gitops/platform/values/redis.yaml",
+      "sha256": "e0523d1b0ca368d5567e9be9275c6a8ce54793315d346805b41b8979bb69d8ca",
+      "bytes": 509,
+      "mode": 436,
+      "relative": "gitops/platform/values/redis.yaml"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/gitops/platform/bootstrap/redis.yaml",
+      "sha256": "79b2c61df2d6feee7a3946da486ebaefc64af6365c5655600c514971bc4dc47d",
+      "bytes": 752,
+      "mode": 436,
+      "relative": "gitops/platform/bootstrap/redis.yaml"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/gitops/platform/values/postgresql.yaml",
+      "sha256": "6e317137b18b6888c99d872a9cd58509aeb1ebf77b001d42eaab448f2bcddb7b",
+      "bytes": 673,
+      "mode": 436,
+      "relative": "gitops/platform/values/postgresql.yaml"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/gitops/platform/bootstrap/postgresql.yaml",
+      "sha256": "97755ce4b6dfe852cf5492d27c8ab7e33a7dd3d9278cb755d184b72239ea0256",
+      "bytes": 773,
+      "mode": 436,
+      "relative": "gitops/platform/bootstrap/postgresql.yaml"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/my-values/infra/redis-values.yaml",
+      "sha256": "929dec7ffac0922517188e0fb318b746e276292acad2723c59da802e5962c9b2",
+      "bytes": 843,
+      "mode": 436,
+      "relative": "my-values/infra/redis-values.yaml"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/my-values/infra/postgresql-values.yaml",
+      "sha256": "b7c1445d47350c6fcae2fc7de901e930dec1f8309331bf0db69c70c1f3404994",
+      "bytes": 502,
+      "mode": 436,
+      "relative": "my-values/infra/postgresql-values.yaml"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/my-values/infra/tailscale-operator-values.yaml",
+      "sha256": "8c8f44a3f243b519973ea250d283da3c6a08b31a9224ee3b34012b4e28f36110",
+      "bytes": 931,
+      "mode": 436,
+      "relative": "my-values/infra/tailscale-operator-values.yaml"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/my-values/infra/registry-mirror.yaml",
+      "sha256": "383c470fb991a43aa9dfc1634d2399c53a1e77c19f37d5bb4b8bc0d26ef207f5",
+      "bytes": 2571,
+      "mode": 436,
+      "relative": "my-values/infra/registry-mirror.yaml"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/charts/kubeclaw/values.yaml",
+      "sha256": "2bff3214d88e912445b1c435b6353cfb438cd5184124b3eb0cc9f7394dfc05aa",
+      "bytes": 18869,
+      "mode": 436,
+      "relative": "charts/kubeclaw/values.yaml"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/charts/prism/values.yaml",
+      "sha256": "add69f96f117b8faed83b42133b7804eacca58ef850ef7428ea039842028d298",
+      "bytes": 3474,
+      "mode": 436,
+      "relative": "charts/prism/values.yaml"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/charts/kubeclaw/Chart.yaml",
+      "sha256": "07500eebfb03ffb4b9fc4cd67b5cb5d50edb94147111f5fcb11d313a89483521",
+      "bytes": 860,
+      "mode": 436,
+      "relative": "charts/kubeclaw/Chart.yaml"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/ops/pod/package.json",
+      "sha256": "30867c450d00584fc4faa0345d1b9fb4e6f67039016938275a32119505597e1a",
+      "bytes": 264,
+      "mode": 436,
+      "relative": "ops/pod/package.json"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/charts/ops-pod/Chart.yaml",
+      "sha256": "d5ed5d7d690d4bd753e287dcff386c482599fad12050ba315a6c6f137f78b3f2",
+      "bytes": 161,
+      "mode": 436,
+      "relative": "charts/ops-pod/Chart.yaml"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/charts/kubeclaw/files/config/lint-policy.json",
+      "sha256": "2c3a9eb507d31524d8718febaed5df780e12438037e0e61fcedf438748802993",
+      "bytes": 25145,
+      "mode": 436,
+      "relative": "charts/kubeclaw/files/config/lint-policy.json"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/skills/common/plugins/openclaw-agent-observer/package.json",
+      "sha256": "3685149c841d4a5a65e8e1b99e20fcf405fe0020c608f965ee334045997d60ce",
+      "bytes": 1073,
+      "mode": 436,
+      "relative": "skills/common/plugins/openclaw-agent-observer/package.json"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/.github/workflows/build-ops-mcp.yaml",
+      "sha256": "79cb301569d096bfff6c82135c6d4ee84df487da8cc2f0ccf1ee1b6e196460ba",
+      "bytes": 9504,
+      "mode": 436,
+      "relative": ".github/workflows/build-ops-mcp.yaml"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/.github/workflows/update-checks.yaml",
+      "sha256": "9e79cbe1038aebffe367916d5b0705e617c27d672d87082839902694f97c910f",
+      "bytes": 4582,
+      "mode": 436,
+      "relative": ".github/workflows/update-checks.yaml"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/.github/workflows/pipeline-reliability.yaml",
+      "sha256": "e338f143d87d8fcbf16830fdf82a0f7a9396f53376a780f4076ee4fb5e87ac4a",
+      "bytes": 10476,
+      "mode": 436,
+      "relative": ".github/workflows/pipeline-reliability.yaml"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/scan-runtime-images.sh",
+      "sha256": "c0eaacd1d6553ff5f1c01c0bdf888f0ea3af160ae0fa7cb819a6025076b0d684",
+      "bytes": 4234,
+      "mode": 509,
+      "relative": "scripts/scan-runtime-images.sh"
+    }
+  ],
+  "scopeInputs": [
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/package.json",
+      "sha256": "4ab1e90c2259aeb96acfdc877e5a9eed330f605abff46d7eca85faded0f020c3",
+      "bytes": 53756,
+      "mode": 436,
+      "relative": "package.json"
+    }
+  ],
+  "dockerDirectory": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/docker",
+  "dockerRoster": [
+    "Dockerfile.archviewer",
+    "Dockerfile.buster-gateway",
+    "Dockerfile.buster-runtime",
+    "Dockerfile.namespace-controller",
+    "Dockerfile.nova",
+    "Dockerfile.prism-agent",
+    "Dockerfile.prism-control",
+    "Dockerfile.prism-ingestion",
+    "Dockerfile.prism-studio",
+    "Dockerfile.prism-worker"
+  ],
+  "dockerSelector": "fs.readdirSync(path.join(root,'docker')).filter(file=>file.startsWith('Dockerfile.')).sort()",
+  "expectedOrderedMapMembers": [
+    "docker/Dockerfile.archviewer",
+    "docker/Dockerfile.buster-gateway",
+    "docker/Dockerfile.buster-runtime",
+    "docker/Dockerfile.namespace-controller",
+    "docker/Dockerfile.nova",
+    "docker/Dockerfile.prism-agent",
+    "docker/Dockerfile.prism-control",
+    "docker/Dockerfile.prism-ingestion",
+    "docker/Dockerfile.prism-studio",
+    "docker/Dockerfile.prism-worker",
+    "ops/pod/Dockerfile",
+    "tools/ops-mcp/Dockerfile",
+    "scripts/deploy.sh",
+    "gitops/platform/bootstrap/spire.yaml",
+    "gitops/platform/bootstrap/spire-crds.yaml",
+    "gitops/platform/bootstrap/csi-driver-smb.yaml",
+    "gitops/platform/litellm/resources.yaml",
+    "gitops/platform/bootstrap/prometheus.yaml",
+    "gitops/platform/bootstrap/loki.yaml",
+    "gitops/platform/bootstrap/alloy.yaml",
+    "gitops/platform/bootstrap/promtail.yaml",
+    "gitops/platform/values/redis.yaml",
+    "gitops/platform/bootstrap/redis.yaml",
+    "gitops/platform/values/postgresql.yaml",
+    "gitops/platform/bootstrap/postgresql.yaml",
+    "my-values/infra/redis-values.yaml",
+    "my-values/infra/postgresql-values.yaml",
+    "my-values/infra/tailscale-operator-values.yaml",
+    "my-values/infra/registry-mirror.yaml",
+    "charts/kubeclaw/values.yaml",
+    "charts/prism/values.yaml",
+    "charts/kubeclaw/Chart.yaml",
+    "ops/pod/package.json",
+    "charts/ops-pod/Chart.yaml",
+    "charts/kubeclaw/files/config/lint-policy.json",
+    "skills/common/plugins/openclaw-agent-observer/package.json",
+    ".github/workflows/build-ops-mcp.yaml",
+    ".github/workflows/update-checks.yaml",
+    ".github/workflows/pipeline-reliability.yaml",
+    "scripts/scan-runtime-images.sh",
+    "docker/python-tools/common.in",
+    "docker/python-tools/semgrep-nova.in",
+    "docker/python-tools/buster.in",
+    "docker/go-tools/requirements.json",
+    "docs/generated/inventory/ops-tool-versions.json"
+  ],
+  "expectedMembershipBasis": "Independent complete source trace, not observed function output; mismatch rejects.",
+  "nodeExecutable": {
+    "path": "/usr/local/bin/node",
+    "sha256": "7fde7b8afa198da66257f42ee2001d874c7355631e6d1579a5fb5ef1f246df4c",
+    "bytes": 126595440,
+    "mode": 493
+  },
+  "parserEntry": {
+    "path": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/node_modules/js-yaml/dist/js-yaml.mjs",
+    "sha256": "33e98d04719e7a7fc8e0433803ad4b26a6f72d4545d279a5b053d45bd7871c7a",
+    "bytes": 103891,
+    "mode": 436
+  },
+  "parserPackage": {
+    "path": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/node_modules/js-yaml/package.json",
+    "sha256": "82b932c87c5da7901c6a8f984698c57912570146fffd3156dcdc96a6c210d847",
+    "bytes": 2281,
+    "mode": 436
+  },
+  "packageScopes": [
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/package.json",
+      "sha256": "4ab1e90c2259aeb96acfdc877e5a9eed330f605abff46d7eca85faded0f020c3",
+      "bytes": 53756,
+      "mode": 436,
+      "state": "regular"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/package.json",
+      "state": "absent"
+    },
+    {
+      "path": "/home/node/.openclaw/package.json",
+      "state": "absent"
+    },
+    {
+      "path": "/home/node/package.json",
+      "state": "absent"
+    },
+    {
+      "path": "/home/package.json",
+      "state": "absent"
+    },
+    {
+      "path": "/package.json",
+      "state": "absent"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/package.json",
+      "state": "absent"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/package.json",
+      "state": "absent"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/node_modules/js-yaml/dist/package.json",
+      "state": "absent"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/node_modules/js-yaml/package.json",
+      "sha256": "82b932c87c5da7901c6a8f984698c57912570146fffd3156dcdc96a6c210d847",
+      "bytes": 2281,
+      "mode": 436,
+      "state": "regular"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/node_modules/package.json",
+      "state": "absent"
+    }
+  ],
+  "environment": {
+    "PATH": "/usr/local/bin:/usr/bin:/bin",
+    "LANG": "C.UTF-8",
+    "LC_ALL": "C.UTF-8",
+    "TZ": "UTC"
+  },
+  "loaderResolution": {
+    "bareModuleImports": [],
+    "nearerBarePackageCandidates": [],
+    "reason": "Explicit node: builtins and exact relative mjs product imports; standalone original maintained ESM parser loaded by absolute file URL, has no imports. No NODE_OPTIONS/NODE_PATH/preload/loader. Thus no bare resolution or nearer candidate to borrow."
+  },
+  "limits": {
+    "maximumMemberBytes": 16777216,
+    "maximumTotalMapBytes": 67108864,
+    "maximumYamlDocumentsPerMember": 10000
+  },
+  "executionConstraints": [
+    "Exactly one original versionOutputs(ownedFixtureRoot); no syncVersions, CLI main, runtime lock calls.",
+    "Original byte-identical modules/input copies, no mocks/loaders/rewrites.",
+    "No network, runtime, deploy, version writes or child launch.",
+    "Parser actual API roots and List entries, never hardcoded14; full streams of every member.",
+    "Size ceilings are post-Map-computation rejection ceilings, not live memory limits."
+  ],
+  "acquisitionScript": {
+    "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/versions-map-current-data-acquire-v2.mjs",
+    "sha256": "78ac7094da93c610ff9d1498731b2d733e39274f4e83fb40c2152ecbfb5d4e9a",
+    "bytes": 8170
+  },
+  "predecessor": {
+    "seal": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/versions-map-current-data-seal.json",
+    "sealSha256": "b6cb281e2e84a045a98488ff40e459414402e925ee57404b8baeeda5c9ce3eb1",
+    "script": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/versions-map-current-data-acquire.mjs",
+    "scriptSha256": "3318f41a7792fe6a6971809e4bb965cbc671e3b6705e9cdb55479cefe03048c5",
+    "failure": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/versions-map-current-data-capture-v1/failure.json",
+    "failureSha256": "b4675ee211747055f230706876ce4ce9bf86e451432aa7d8a0eb250554885d28",
+    "actualOriginalFunctionCalls": 0,
+    "reason": "Sealed copied file mode mismatch before parser/product module import and before original function call. v1 exact inputs/evidence preserved."
+  }
+}

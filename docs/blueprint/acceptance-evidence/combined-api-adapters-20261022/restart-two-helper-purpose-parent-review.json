@@ -1,0 +1,21 @@
+{
+  "verdict": "PASS_BOUNDED_PARENT_INDEPENDENT_TWO_HELPER_PURPOSE",
+  "existingRecipesUnchanged": 107,
+  "addedRecipes": 2,
+  "addedQualifications": 2,
+  "noOtherRegistrySemanticDelta": true,
+  "parentReadWholeHelpers": {
+    "probe": 81,
+    "versions": 135
+  },
+  "allQualificationGraphAndUnresolvedRecordsCompared": true,
+  "scopePreserved": "Exact six prior accepted scopes; no page/renderer/search/layout changes or new acceptance. Existing registry not a source of any accepted record. Full original generator remains separate.",
+  "scalarFullCurrentByteVectorsVerified": {
+    "selected": 1248,
+    "callers": 1005
+  },
+  "files": {
+    "scripts/docs-api-documentation-role-custody.mjs": "218a28cb337b0b57dd9c850a60dfba417f730ee53e9d2185266693b128b2b2b1",
+    "scripts/docs-api-producer-adapter-authorities.json": "a1d3da4f599b5406dde827756fc26385cdc6a0b276f8b4611c13f2d2a773bad4"
+  }
+}

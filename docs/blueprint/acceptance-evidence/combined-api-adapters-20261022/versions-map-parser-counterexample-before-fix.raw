@@ -1,0 +1,41 @@
+✔ native current classifier retains mixed UNKNOWN while all original member/API streams are received (139.514547ms)
+✔ warm validation rejects whole versions whitespace and unchanged-value input/source/parser drift (208.854033ms)
+✔ new Docker member, missing current output, parser member and loader boundary invalidate reuse (78.45971ms)
+✔ changed role, omitted/reordered slots, new caller or public alias fail before fallback (56.836089ms)
+✔ persisted drop with adjusted advertised count or unrelated existing API profile cannot self-baseline (390.065404ms)
+✔ API document addition to a previously config-only member is not a metadata waiver (85.297614ms)
+✖ actual importer parser drift rejects even when the supplied fixture parser remains sealed (1426.675139ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 6
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2856.599503
+
+✖ failing tests:
+
+test at scripts/tests/docs-api-versions-map-output.test.mjs:84:1
+✖ actual importer parser drift rejects even when the supplied fixture parser remains sealed (1426.675139ms)
+  AssertionError [ERR_ASSERTION]: {"outputs":14,"replicas":777}
+  
+  
+  0 !== 1
+  
+      at file:///home/node/.openclaw/workspace/kubeclaw-pr13-versions-map/scripts/tests/docs-api-versions-map-output.test.mjs:103:33
+      at fixture (file:///home/node/.openclaw/workspace/kubeclaw-pr13-versions-map/scripts/tests/docs-api-versions-map-output.test.mjs:26:3)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-pr13-versions-map/scripts/tests/docs-api-versions-map-output.test.mjs:84:102)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 1,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

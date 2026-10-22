@@ -1,0 +1,17 @@
+import fs from 'node:fs';import path from 'node:path';import os from 'node:os';import assert from 'node:assert/strict';
+import {assertDocumentationExecutableRole,documentationExecutableRoleRecipes} from '/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/docs-api-documentation-role-custody.mjs';
+const repo='/home/node/.openclaw/workspace/kubeclaw-pr13-recovery';
+const base='/home/node/.openclaw/workspace/tmp/pr13-finish-20261021';
+const native=JSON.parse(fs.readFileSync(base+'/combined-probe-versions-native/restart-current-recipes.json'));
+const selected=['scripts/docs-api-output-discovery.mjs','scripts/docs-api-product-scope.mjs','scripts/docs-api-reference.mjs','scripts/docs-configuration-inventory.mjs','scripts/docs-generate.mjs'];
+const records=native.records.filter(r=>selected.includes(r.source));
+const files=new Set(['package.json',...records.flatMap(r=>[r.source,...r.facts.map(x=>x.source),...r.child.map(x=>x.path)]),...selected.flatMap(s=>(documentationExecutableRoleRecipes[s].purposeInputs??[]).map(x=>x.path))]);
+const root=fs.mkdtempSync(path.join(os.tmpdir(),'pr13-renewed-recipes-'));
+try{
+for(const file of files){if(!fs.existsSync(path.join(repo,file)))continue;const target=path.join(root,file);fs.mkdirSync(path.dirname(target),{recursive:true});fs.copyFileSync(path.join(repo,file),target);}
+for(const source of selected){assertDocumentationExecutableRole(root,source);assertDocumentationExecutableRole(root,source);}
+const target=path.join(root,'scripts/docs-api-probe39-original-output.mjs'),bytes=fs.readFileSync(target,'utf8');
+assert(bytes.includes('return receipt;'));fs.writeFileSync(target,bytes.replace('return receipt;','return null;'));
+for(const source of selected)assert.throws(()=>assertDocumentationExecutableRole(root,source),/selected producer\/helper\/initialization custody changed/u,source);
+console.log(JSON.stringify({positiveNativeGuards:5,warmedNativeGuards:5,changedHelperRejected:5,fixtureRoot:root,productionTreeMutated:false}));
+}finally{fs.rmSync(root,{recursive:true,force:true});}

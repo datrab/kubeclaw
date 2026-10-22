@@ -1,0 +1,14 @@
+✔ actual canonical UNKNOWN and original ordered capture; no execution or live Pod claim (97.562097ms)
+✔ every pinned source/helper/values/parser input change rejects after warm acquisition (205.245703ms)
+✔ new callers, alias and loader/package boundary reject warm reuse (15.872575ms)
+✔ role promotion, descriptor mutation, missing and extra native slots reject (6.038104ms)
+✔ capture, member, UUID, fixture, ordering and extra API cannot mutate the immutable authority (22.643987ms)
+✔ parser actually loaded by adapter is pinned even for a different supplied fixture root (32.18722ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 721.528896

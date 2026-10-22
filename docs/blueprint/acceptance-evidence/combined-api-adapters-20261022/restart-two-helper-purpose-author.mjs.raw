@@ -1,0 +1,34 @@
+import fs from 'node:fs';
+import path from 'node:path';
+import assert from 'node:assert/strict';
+import {createHash} from 'node:crypto';
+import {pathToFileURL} from 'node:url';
+const root='/home/node/.openclaw/workspace/kubeclaw-pr13-recovery',out='/home/node/.openclaw/workspace/tmp/pr13-finish-20261021';
+const hash=x=>createHash('sha256').update(x).digest('hex');
+const custody=await import(pathToFileURL(root+'/scripts/docs-api-documentation-role-custody.mjs'));
+const native=await import(pathToFileURL(root+'/scripts/docs-api-output-role-classification.mjs'));
+const discovery=await import(pathToFileURL(root+'/scripts/docs-api-output-discovery.mjs'));
+const graph=JSON.parse(fs.readFileSync(out+'/restart-two-helper-purpose-acquisition.json'));
+const scalar=JSON.parse(fs.readFileSync(out+'/combined-probe-versions-native/top-purpose-scalar-current-native.json'));
+assert.deepEqual(graph.edges,scalar.graph.edges);assert.deepEqual(graph.publicEntries,scalar.graph.publicEntries);assert.deepEqual(graph.closureSources,scalar.graph.closureSources);
+const registryFile=root+'/scripts/docs-api-producer-adapter-authorities.json',roleFile=root+'/scripts/docs-api-documentation-role-custody.mjs';
+const registryBytes=fs.readFileSync(registryFile),roleBytes=fs.readFileSync(roleFile);
+assert.equal(hash(registryBytes),graph.registrySha256);assert.equal(hash(fs.readFileSync(root+'/package.json')),graph.packageSha256);
+fs.writeFileSync(out+'/restart-two-helper-purpose-registry-before.json',registryBytes);fs.writeFileSync(out+'/restart-two-helper-purpose-role-before.mjs',roleBytes);
+const registry=JSON.parse(registryBytes),boundary=registry.documentationToolBoundary;
+const profiles=[{source:'scripts/docs-api-probe39-original-output.mjs',authority:'scripts/docs-api-probe39-original-authority.json',consumer:'Source-native documentation inventory consumer of one immutable original API-probe renderer terminal capture. Revalidates original source/helper/input bytes, actual loaded maintained YAML parser, loader absence, incoming graph and canonical output slot; returns the captured ConfigMap/Job as documentation DATA only. Does not execute renderer, embedded probe, network requests, apply, or observe any live Pod.'},{source:'scripts/docs-api-versions-map-output.mjs',authority:'scripts/docs-api-versions-map-output-authority.json',consumer:'Source-native documentation inventory consumer of immutable original complete mixed versions Map DATA and exact current member bytes. Revalidates maintained parser closure and roster, original input/caller/public-entry/descriptor/member vectors; derives only documented API roots while preserving canonical raw UNKNOWN and typed non-API members. Does not execute versions.mjs, syncVersions, writer, schema/lock/apply or runtime checks.'}];
+const recipes={},qualifications=[],records=[];
+for(const profile of profiles){const {source,authority,consumer}=profile;assert(!custody.documentationExecutableRoleRecipes[source]);assert(!boundary.sources.includes(source));const bytes=fs.readFileSync(root+'/'+source,'utf8'),selectors=custody.documentationExecutableSelectors(source,bytes,root),facts=native.deriveNativeOperationFacts(root,source,selectors,{trustAnchorSources:['scripts/docs-api-documentation-role-custody.mjs']}),child=custody.documentationChildSourceAuthority(root,source);assert(facts?.length);
+const authorityFile=root+'/'+authority;assert.equal(fs.realpathSync(authorityFile),authorityFile);const purposeInputs=[{path:authority,canonical:authority,sha256:hash(fs.readFileSync(authorityFile))}];
+recipes[source]={role:'documentation-consumer',qualificationKind:'reviewed-documentation-consumer/v1',sourceSha256:hash(bytes),consumer,selectors:custody.documentationSelectorReceipt(selectors),factsDigest:native.nativeOperationFactDigest(facts),authorityInputs:child,purposeInputs};
+const ancestors=new Set([source]);let changed=true;while(changed){changed=false;for(const edge of graph.edges)if(ancestors.has(edge.target)&&!ancestors.has(edge.source)){ancestors.add(edge.source);changed=true;}}
+const stem=path.posix.basename(source).replace(/\.[^.]+$/u,'');
+const qualification={kind:'reviewed-documentation-consumer/v1',source,sha256:hash(bytes),operationRecipe:discovery.producerAdapterOperationRecipe(source,bytes),graphEdges:graph.edges.filter(edge=>ancestors.has(edge.target)),documentationEntries:graph.documentationEntries.filter(entry=>ancestors.has(entry.source)),dynamicGraphOperations:graph.dynamicOperations.filter(operation=>ancestors.has(operation.source)||operation.hints.some(hint=>{const basename=path.posix.basename(hint);return basename&&stem.startsWith(basename.replace(/\.[^.]+$/u,''));})),unresolvedModuleOperations:graph.dynamicOperations.map(({source,expression,operation,hints})=>({source,expression,operationSha256:hash(operation),hints}))};
+assert(qualification.documentationEntries.length);qualifications.push(qualification);records.push({source,sourceSha256:hash(bytes),selectors:recipes[source].selectors,facts,factsDigest:recipes[source].factsDigest,child,purposeInputs,ancestors:[...ancestors].sort(),qualification});
+}
+fs.writeFileSync(out+'/restart-two-helper-purpose-additions.json',JSON.stringify({recipes,qualifications,records},null,2)+'\n');
+// Insert at beginning of recipe object so all existing recipe bytes remain exact.
+const marker='export const documentationExecutableRoleRecipes = {\n',text=roleBytes.toString();assert.equal(text.split(marker).length,2);
+const additions=JSON.stringify(recipes,null,2).slice(2,-2);fs.writeFileSync(roleFile,text.replace(marker,marker+additions+',\n'));
+boundary.sources.push(...profiles.map(x=>x.source));boundary.qualifications.push(...qualifications);fs.writeFileSync(registryFile,JSON.stringify(registry,null,2)+'\n');
+console.log(JSON.stringify(records.map(({source,facts,ancestors,qualification,child})=>({source,facts:facts.length,ancestors:ancestors.length,edges:qualification.graphEdges.length,entries:qualification.documentationEntries.length,dynamics:qualification.dynamicGraphOperations.length,unresolved:qualification.unresolvedModuleOperations.length,child})),null,2));

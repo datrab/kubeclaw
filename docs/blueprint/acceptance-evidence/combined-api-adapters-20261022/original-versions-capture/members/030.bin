@@ -1,0 +1,92 @@
+images:
+  control: { repository: ghcr.io/datrab/kubeclaw-prism-control, digest: "", pullPolicy: IfNotPresent }
+  studio: { repository: ghcr.io/datrab/kubeclaw-prism-studio, digest: "", pullPolicy: IfNotPresent }
+  worker: { repository: ghcr.io/datrab/kubeclaw-prism-worker, digest: "", pullPolicy: IfNotPresent }
+  ingestion: { repository: ghcr.io/datrab/kubeclaw-prism-ingestion, digest: "", pullPolicy: IfNotPresent }
+imagePullSecrets:
+  - name: ghcr-secret
+control:
+  # Explicit human decision authority. No operator, issuer or endpoint is inferred.
+  productDecisions:
+    enabled: false
+    issuer: ""
+    operators: []
+    origin: ""
+    authorityRevision: ""
+    signingSecretName: ""
+    signingSecretKey: private-key.pem
+    controllerUrl: ""
+    controllerNamespace: ""
+    controllerRelease: ""
+    controllerCaSecretName: ""
+    controllerCaSecretKey: ca.crt
+    tokenAudience: ""
+    tokenExpirationSeconds: 600
+  # Existing authenticated Prism subject; empty disables pipeline personal learning.
+  pipelinePreferenceSubject: ""
+  replicas: 1
+  resources: { requests: { cpu: 500m, memory: 1Gi }, limits: { cpu: "4", memory: 4Gi } }
+studio:
+  replicas: 1
+  resources: { requests: { cpu: 250m, memory: 256Mi }, limits: { cpu: "2", memory: 1Gi } }
+worker:
+  # Required host binding for the sole native worker runtime.
+  # Use the generated prism-native-values.yaml after host preflight.
+  native:
+    nodeName: ""
+    namespace: ""
+    policyDigest: ""
+    closeTimeoutMs: 105000
+  shutdownTimeoutMs: 120000
+  terminationGracePeriodSeconds: 150
+  replicas: 1
+  resources: { requests: { cpu: "1", memory: 2Gi }, limits: { cpu: "8", memory: 8Gi } }
+ingestion:
+  enabled: false
+  replicas: 1
+  # Required operator sizing when enabled; no host capacity is assumed.
+  resources:
+    requests: { cpu: "", memory: "" }
+    limits: { cpu: "", memory: "" }
+  # Acquired quarantine content only; this does not expire logs or reports.
+  quarantineTtlMs: 3600000
+postgresql:
+  enabled: true
+  image: pgvector/pgvector:pg17@sha256:cf134a767f474095eeba57e0117be8e568e011a63f33fbf252f14c9b760f8e6f
+  storage: 100Gi
+  storageClass: ""
+  existingSecret: ""
+  resources: { requests: { cpu: 500m, memory: 1Gi }, limits: { cpu: "4", memory: 8Gi } }
+secrets:
+  runtime: prism-runtime
+  database: prism-postgresql-auth
+artifactStorage: { storage: 100Gi, storageClass: "" }
+backup:
+  schedule: "0 2 * * *"
+  verificationSchedule: "0 3 * * 0"
+  databaseProofSchedule: "0 4 * * 0"
+  # Local capacity ceilings; no automatic expiry. Independent off-host copies
+  # and the complete external credential/journal recovery set remain required.
+  maximumBytes: "85899345920"
+  maximumRetainedBytes: "96636764160"
+  maximumDurationSeconds: 3600
+  resources: { requests: { cpu: 250m, memory: 256Mi }, limits: { cpu: "2", memory: 2Gi } }
+tailscale: { enabled: true, hostname: prism-studio, operatorNamespace: tailscale }
+workerTrust:
+  spiffe:
+    enabled: false
+    trustDomain: kubeclaw.internal
+    novaNamespace: kubeclaw
+    novaServiceAccount: agent-nova
+    agentNamespace: kubeclaw
+    agentServiceAccount: agent-prism
+    socketPath: /run/spire/sockets/spire-agent.sock
+    csiDriver: csi.spiffe.io
+    envoy:
+      repository: envoyproxy/envoy
+      tag: v1.39.0
+      digest: "sha256:d59f7f5fa10cff6d5892b6c5e7df5c9297ddfb2c3683e33fbfb82da24de4fa66"
+      pullPolicy: IfNotPresent
+      resources:
+        requests: { cpu: 50m, memory: 64Mi }
+        limits: { cpu: 500m, memory: 256Mi }

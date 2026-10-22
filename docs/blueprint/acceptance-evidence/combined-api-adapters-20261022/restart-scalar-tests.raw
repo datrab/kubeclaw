@@ -1,0 +1,22 @@
+✔ canonical stdout remains UNKNOWN while only six genuine consumer occurrences are qualified (984.472069ms)
+✔ warm occurrence custody rejects changed source (780.032327ms)
+✔ warm occurrence custody rejects changed caller or pipe receiver (870.77091ms)
+✔ warm occurrence custody rejects changed new computed caller (847.941098ms)
+✔ warm occurrence custody rejects changed new public package entry (767.071786ms)
+✔ warm occurrence custody rejects changed new filesystem alias (714.044605ms)
+✔ warm occurrence custody rejects changed new package boundary (773.683175ms)
+✔ warm occurrence custody rejects changed new shadowing dependency (812.997247ms)
+✔ new imported or aliased entry does not borrow original captured-use receipts (491.043309ms)
+✔ warm occurrence custody binds selected excluded test bytes and newly selected docs membership (1101.658968ms)
+✔ actual direct CLI can emit an API-shaped string: it receives no global non-API role (92.94944ms)
+✔ actual original capture and append preserve an API-shaped scalar as one configuration value (88.827845ms)
+✔ resource assignment return and stdout stay unknown outside their single --set-json capture (959.702668ms)
+✔ actual resource CLI emits only the selected resource assignment and rejects document-shaped quantities (355.729239ms)
+ℹ tests 14
+ℹ suites 0
+ℹ pass 14
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 29939.541013

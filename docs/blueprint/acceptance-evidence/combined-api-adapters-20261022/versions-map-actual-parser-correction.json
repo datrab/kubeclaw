@@ -1,0 +1,67 @@
+{
+  "schemaVersion": "versions-map-actual-parser-counterexample-correction.v1",
+  "createdAt": "2026-10-22T22:07:06.182545+00:00",
+  "baseCommit": "029f89b6352516020628316bfe1e71a797629ba2",
+  "finding": {
+    "priority": "P1",
+    "oldReview": "recovered-versions-adapter-independent-review.json",
+    "oldReviewUnchanged": true,
+    "oldHelperSha256": "43a4e501d80dca2bb705706ebd724e2b8b8bb9e616998a20a6c2714d2b2e5f41",
+    "description": "Supplied-root pinned parser did not bind actual importer parser; a separate copied importer with changed Document.toJS returned original 14 API roots but nested Deployment replicas777.",
+    "reproduction": "Disposable copied original adapter and yaml package/runtime, separate complete unmodified original-input fixture. Neither main nor isolated repository parser mutated.",
+    "nativeBeforeFix": {
+      "testExitCode": 1,
+      "expectedRejectActualExitCode": 0,
+      "counterexampleStdout": {
+        "outputs": 14,
+        "replicas": 777
+      },
+      "raw": "versions-map-parser-counterexample-before-fix.raw"
+    }
+  },
+  "correction": {
+    "actualImportResolution": "import.meta.resolve yaml -> exact canonical actual importer-root/node_modules/yaml/dist/index.js",
+    "pins": "Every 75 actual package/full JS runtime pin plus exact 74JS roster and new nested-package absence; actual importer physical paths regular/no aliases. Before parse/cache.",
+    "authorityChanged": false,
+    "discoveryChanged": false,
+    "rawUnknownOrApiRolesChanged": false,
+    "runtimeOrApplyGrant": false
+  },
+  "files": [
+    {
+      "path": "scripts/docs-api-versions-map-output.mjs",
+      "bytes": 10312,
+      "sha256": "9e267f3c64e8d617f0c0c5503c5f8a1bc28753ed8752734f532f3cd6bfa9e4b0"
+    },
+    {
+      "path": "scripts/tests/docs-api-versions-map-output.test.mjs",
+      "bytes": 9103,
+      "sha256": "413e98201a3c17014fdab10858e9f0085877eb94eab034f5163b89cf848cdc53"
+    }
+  ],
+  "patch": {
+    "path": "versions-map-actual-parser-correction.patch",
+    "sha256": "7652d658b7556553d16ecd8a5bcfacd19b811e46cf07c32e56f6abc822398e02",
+    "bytes": 6905
+  },
+  "tests": {
+    "argv": [
+      "node",
+      "--test",
+      "scripts/tests/docs-api-versions-map-output.test.mjs"
+    ],
+    "exitCode": 0,
+    "passed": 7,
+    "failed": 0,
+    "skipped": 0,
+    "raw": "versions-map-parser-correction-tests.raw"
+  },
+  "autoreview": {
+    "exitCode": 0,
+    "findings": 0,
+    "report": "versions-map-parser-correction-autoreview.json",
+    "limitation": "Reviewer filesystem inspection blocked by execution environment; bundle-only advice. Actual7tests executed by author."
+  },
+  "mainEdited": false,
+  "next": "Parent applies exactly helper+test patch, independently reviews corrected Source and combined merge, reacquires final metadata after both adapters; no full generator success claimed."
+}

@@ -1,0 +1,89 @@
+// Preparation artifact only. Run once ONLY after independent packet approval.
+import fs from 'node:fs';
+import path from 'node:path';
+import crypto from 'node:crypto';
+import {fileURLToPath,pathToFileURL} from 'node:url';
+const hash = value => crypto.createHash('sha256').update(value).digest('hex');
+const same = (a,b,label) => { if (JSON.stringify(a)!==JSON.stringify(b)) throw new Error(`SEAL_MISMATCH:${label}`); };
+const sealPath=path.resolve(process.argv[2]??'');
+if(process.argv.length!==3)throw new Error('ONE_SEAL_ARGUMENT_REQUIRED');
+const sealBytes=fs.readFileSync(sealPath),seal=JSON.parse(sealBytes);
+if(seal.schemaVersion!=='versions-map-current-data-seal.v1')throw new Error('SEAL_VERSION');
+same(Object.fromEntries(Object.entries(process.env).sort()),Object.fromEntries(Object.entries(seal.environment).sort()),'complete-environment');
+same(process.cwd(),path.dirname(sealPath),'cwd');
+const self=fileURLToPath(import.meta.url);
+same(hash(fs.readFileSync(self)),seal.acquisitionScript.sha256,'acquisition-script');
+function readChecked(record) {
+  const initial=fs.lstatSync(record.path);
+  if(!initial.isFile()||initial.isSymbolicLink()||fs.realpathSync(record.path)!==record.path)throw new Error(`NON_REGULAR_OR_ALIAS:${record.path}`);
+  same(initial.mode&0o777,record.mode,`mode:${record.path}`);
+  const fd=fs.openSync(record.path,fs.constants.O_RDONLY|fs.constants.O_NOFOLLOW);
+  try {
+    const before=fs.fstatSync(fd),bytes=fs.readFileSync(fd),after=fs.fstatSync(fd);
+    same([before.dev,before.ino,before.size,before.mtimeMs],[after.dev,after.ino,after.size,after.mtimeMs],`stable:${record.path}`);
+    same([bytes.length,hash(bytes)],[record.bytes,record.sha256],`bytes:${record.path}`);
+    return bytes;
+  } finally { fs.closeSync(fd); }
+}
+const roster=root=>fs.readdirSync(path.join(root,'docker')).filter(file=>file.startsWith('Dockerfile.')).sort();
+function verifySource() {
+  for(const r of [...seal.sourceModules,...seal.selectedInputs,...seal.scopeInputs,seal.nodeExecutable,seal.parserEntry,seal.parserPackage])readChecked(r);
+  for(const r of seal.packageScopes) {
+    if(r.state==='regular')readChecked(r);
+    else { try {fs.lstatSync(r.path);throw new Error(`NEW_PACKAGE_SCOPE:${r.path}`);}catch(e){if(e.code!=='ENOENT')throw e;} }
+  }
+  same(roster(seal.sourceRoot),seal.dockerRoster,'source-docker-selector');
+  same(fs.realpathSync(process.execPath),seal.nodeExecutable.path,'actual-node-executable');
+}
+verifySource();
+const out=seal.captureDirectory;
+if(path.dirname(out)!==path.dirname(sealPath))throw new Error('CAPTURE_ROOT_NOT_OWNED_SIBLING');
+fs.mkdirSync(out,{mode:0o700}); // EEXIST is terminal; never reuse a partial capture.
+const fixture=path.join(out,'fixture'),members=path.join(out,'members');
+fs.mkdirSync(fixture,{mode:0o700});fs.mkdirSync(members,{mode:0o700});
+const write=(name,value)=>fs.writeFileSync(path.join(out,name),`${JSON.stringify(value,null,2)}\n`,{flag:'wx',mode:0o600});
+const invocation={schemaVersion:'versions-map-acquisition-invocation.v1',argv:process.argv,cwd:process.cwd(),environment:process.env,stdin:'not consumed',nodeVersion:process.version,execPath:process.execPath,sealSha256:hash(sealBytes),startedAt:new Date().toISOString(),selectedExport:'versionOutputs',calls:1,fixtureRoot:fixture};
+write('invocation.json',invocation);
+try {
+  for(const record of [...seal.sourceModules,...seal.selectedInputs,...seal.scopeInputs]) {
+    if(path.isAbsolute(record.relative)||record.relative.split('/').some(p=>p==='..'||p===''))throw new Error('RELATIVE_INPUT_INVALID');
+    const target=path.join(fixture,record.relative);fs.mkdirSync(path.dirname(target),{recursive:true,mode:0o700});
+    fs.writeFileSync(target,readChecked(record),{flag:'wx',mode:record.mode});
+    fs.chmodSync(target,record.mode); // Restore sealed mode explicitly; never mutate process umask.
+  }
+  same(roster(fixture),seal.dockerRoster,'owned-docker-selector');
+  for(const record of [...seal.sourceModules,...seal.selectedInputs,...seal.scopeInputs])readChecked({...record,path:path.join(fixture,record.relative)});
+  // Exact file imports: no bare package resolution, preload, loader or rewritten module.
+  const parser=await import(pathToFileURL(seal.parserEntry.path).href);
+  const original=await import(pathToFileURL(path.join(fixture,'scripts/versions.mjs')).href);
+  if(typeof original.versionOutputs!=='function'||typeof parser.loadAll!=='function')throw new Error('ORIGINAL_EXPORT_MISSING');
+  const outputMap=original.versionOutputs(fixture); // THE ONLY PRODUCT FUNCTION CALL.
+  if(!(outputMap instanceof Map))throw new Error('ORIGINAL_MAP_REQUIRED');
+  same([...outputMap.keys()],seal.expectedOrderedMapMembers,'ordered-map-membership');
+  const records=[];let total=0;const api=[];
+  for(const [index,[name,content]] of [...outputMap].entries()) {
+    if(typeof content!=='string')throw new Error(`NON_STRING_MEMBER:${name}`);
+    const bytes=Buffer.from(content,'utf8');total+=bytes.length;
+    if(bytes.length>seal.limits.maximumMemberBytes||total>seal.limits.maximumTotalMapBytes)throw new Error('POST_COMPUTATION_BYTE_CEILING');
+    const filename=`${String(index).padStart(3,'0')}.bin`;
+    fs.writeFileSync(path.join(members,filename),bytes,{flag:'wx',mode:0o600});
+    let parsed=[],parseKind='opaque-code-or-requirements';
+    if(/\.ya?ml$/u.test(name)){parseKind='maintained-js-yaml-loadAll';parsed=parser.loadAll(content);}
+    else if(name.endsWith('.json')){parseKind='native-JSON.parse';parsed=[JSON.parse(content)];}
+    if(parsed.length>seal.limits.maximumYamlDocumentsPerMember)throw new Error('POST_PARSE_DOCUMENT_CEILING');
+    const roots=parsed.map((value,ordinal)=>({ordinal,type:value===null?'null':Array.isArray(value)?'array':typeof value,apiVersion:value&&typeof value==='object'&&typeof value.apiVersion==='string'?value.apiVersion:null,kind:value&&typeof value==='object'&&typeof value.kind==='string'?value.kind:null}));
+    const queue=parsed.map((value,ordinal)=>({value,document:ordinal,pointer:''}));const visited=new WeakSet();
+    while(queue.length){const x=queue.shift(),v=x.value;if(!v||typeof v!=='object'||Array.isArray(v))continue;if(visited.has(v))throw new Error('CYCLIC_OR_REUSED_API_ROOT');visited.add(v);
+      if(typeof v.apiVersion==='string'&&typeof v.kind==='string')api.push({member:index,path:name,document:x.document,pointer:x.pointer,apiVersion:v.apiVersion,kind:v.kind,name:typeof v.metadata?.name==='string'?v.metadata.name:null,namespace:typeof v.metadata?.namespace==='string'?v.metadata.namespace:null});
+      if(v.kind==='List'&&Array.isArray(v.items))v.items.forEach((value,i)=>queue.push({value,document:x.document,pointer:`${x.pointer}/items/${i}`}));
+    }
+    records.push({index,path:name,streamFile:`members/${filename}`,bytes:bytes.length,sha256:hash(bytes),parseKind,documents:roots});
+  }
+  write('ordered-members.json',{members:records,totalBytes:total});
+  write('parsed-api-roots.json',{parser:seal.parserEntry,parserPackage:seal.parserPackage,apiRoots:api,actualApiDocumentCount:api.length,apiMemberPaths:[...new Set(api.map(x=>x.path))],meaning:'Parsed API-shaped input/data; not schema correctness, supported-version or runtime/apply acceptance. No hardcoded API count.'});
+  verifySource();same(hash(fs.readFileSync(sealPath)),hash(sealBytes),'seal-closeout');
+  for(const record of [...seal.sourceModules,...seal.selectedInputs,...seal.scopeInputs])readChecked({...record,path:path.join(fixture,record.relative)});
+  same(roster(fixture),seal.dockerRoster,'owned-docker-closeout');
+  write('terminal.json',{schemaVersion:'versions-map-acquisition-terminal.v1',completed:true,originalFunctionCalls:1,memberCount:records.length,totalBytes:total,apiRoots:api.length,sealSha256:hash(sealBytes),finishedAt:new Date().toISOString(),runtimeExecutionAuthorized:false,apiApplyAuthorized:false});
+  process.stdout.write(`${JSON.stringify({ok:true,captureDirectory:out,members:records.length,parsedApiRoots:api.length})}\n`);
+}catch(error){write('failure.json',{completed:false,message:error?.message??String(error),finishedAt:new Date().toISOString()});process.stderr.write(`${error?.stack??String(error)}\n`);process.exitCode=1;}

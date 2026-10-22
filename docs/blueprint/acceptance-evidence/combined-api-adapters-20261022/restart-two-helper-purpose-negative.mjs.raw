@@ -1,0 +1,18 @@
+import fs from 'node:fs';import os from 'node:os';import path from 'node:path';import assert from 'node:assert/strict';
+import {assertDocumentationExecutableRole,documentationExecutableRoleRecipes} from '/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/docs-api-documentation-role-custody.mjs';
+const repo='/home/node/.openclaw/workspace/kubeclaw-pr13-recovery',sources=['scripts/docs-api-probe39-original-output.mjs','scripts/docs-api-versions-map-output.mjs'];
+const results=[];
+for(const source of sources){
+ const root=fs.mkdtempSync(path.join(os.tmpdir(),'pr13-helper-purpose-'));
+ try{
+  const recipe=documentationExecutableRoleRecipes[source],files=[source,...recipe.purposeInputs.map(x=>x.path)];
+  for(const file of files){const target=path.join(root,file);fs.mkdirSync(path.dirname(target),{recursive:true});fs.copyFileSync(path.join(repo,file),target);}
+  assertDocumentationExecutableRole(root,source);assertDocumentationExecutableRole(root,source);
+  const actual=path.join(root,source),bytes=fs.readFileSync(actual);fs.appendFileSync(actual,'\nexport const unreviewed=1;');
+  assert.throws(()=>assertDocumentationExecutableRole(root,source),/DOCUMENTATION_TOOL_PURPOSE_SOURCE_DRIFT/u);fs.writeFileSync(actual,bytes);
+  assertDocumentationExecutableRole(root,source);
+  for(const input of recipe.purposeInputs){const file=path.join(root,input.path);fs.appendFileSync(file,'\n ');assert.throws(()=>assertDocumentationExecutableRole(root,source),/DOCUMENTATION_TOOL_PURPOSE_INPUT_DRIFT/u);}
+  results.push({source,nativeGuard:'PASS',warmGuard:'PASS',sourceMutationRejected:true,purposeInputMutationRejected:true});
+ }finally{fs.rmSync(root,{recursive:true,force:true});}
+}
+console.log(JSON.stringify({results,productionTreeMutated:false}));

@@ -1,0 +1,42 @@
+{
+  "schemaVersion": "prepared-original-probe39-cli-packet.v1",
+  "state": "PREPARED_NOT_EXECUTED",
+  "root": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery",
+  "sourceRevisionAtPreparation": "4c0f754d6b62e69df15a13b06ac453747c2d32c2",
+  "node": {
+    "path": "/usr/local/bin/node",
+    "sha256": "7fde7b8afa198da66257f42ee2001d874c7355631e6d1579a5fb5ef1f246df4c",
+    "version": "v24.21.0"
+  },
+  "sourceFiles": {
+    "scripts/render-kubernetes-api-probe.mjs": "f081a58cdce9aea6a958ae9bd543c0c440b47c97b4a4d5d284a66262e8753eb0",
+    "scripts/kubernetes-api-probe.mjs": "ee81430754dfd3f936e86ce8c18ce13441b3c5aaaaf430dd90bfbffcfa242817",
+    "versions.json": "04281d9b2addd93073bd548293ea9ba6e1d88c2a18fff0f34cbdbc14ca7fe2c1",
+    "package.json": "4ab1e90c2259aeb96acfdc877e5a9eed330f605abff46d7eca85faded0f020c3",
+    "package-lock.json": "9a75a764e3a27a2163736ec097e99b305a05d9ec2748cb7e38a19b8f88d7fafe",
+    "node_modules/js-yaml/package.json": "82b932c87c5da7901c6a8f984698c57912570146fffd3156dcdc96a6c210d847",
+    "node_modules/js-yaml/dist/js-yaml.mjs": "33e98d04719e7a7fc8e0433803ad4b26a6f72d4545d279a5b053d45bd7871c7a"
+  },
+  "actualEsmResolution": "file:///home/node/.openclaw/workspace/kubeclaw-pr13-recovery/node_modules/js-yaml/dist/js-yaml.mjs",
+  "esmClosure": "Actual bare js-yaml import export resolves dist/js-yaml.mjs,not CJS index.js. Bundle has no external imports/requires;declared argparse dependency belongs CJS/bin path and is not eagerly reached by selected ESM dump/loadAll path. Package+wholeESMbundle pinned.",
+  "absentBoundaries": [
+    "scripts/package.json",
+    "scripts/node_modules"
+  ],
+  "inputFiles": {
+    "inputs/pod.fixture.json": "c8a049a1776f3026877712002b7143bee4fccb89e7c6efd3edb3b5106ac1ff5a",
+    "inputs/origins.fixture.json": "469fef2a1f06ddce707928dcfcc0d45885175b4fa85a0886091c11cc24c93a67"
+  },
+  "childEnv": {
+    "PATH": "/usr/local/bin:/usr/bin:/bin",
+    "LANG": "C.UTF-8",
+    "LC_ALL": "C.UTF-8",
+    "TZ": "UTC"
+  },
+  "limits": [
+    "Pod is explicit authoredinputfixture,not observed live/runningPod or validatedworkloadidentity.",
+    "Selected originalrenderer imports helper whose ownnetworkCLIguard is false;onlyvalidateApiOrigins called. No network/probe/token/CA/clustercommand.",
+    "Only originalstdout2YAMLdocs captured with actualrandomUUID retained. No sourceoutputsubstitution,fakeresponse,APIapplyorproductionreceipt.",
+    "Parsing/constructorassertions only;not Kubernetes schemas/admission/network/identity/reachability proof."
+  ]
+}

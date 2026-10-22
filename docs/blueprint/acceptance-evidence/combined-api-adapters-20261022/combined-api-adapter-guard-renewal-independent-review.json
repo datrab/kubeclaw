@@ -1,0 +1,126 @@
+{
+  "fullVectorsCurrentCanonicalBytePinsVerified": true,
+  "changes": {
+    "callers": {
+      "oldCount": 1003,
+      "newCount": 1005,
+      "changes": [
+        {
+          "path": "scripts/docs-api-output-discovery.mjs",
+          "before": {
+            "path": "scripts/docs-api-output-discovery.mjs",
+            "sha256": "d7c12d4734a9a828bff799a50e89a92c82c859f6dd86453434a46de482ff85a0"
+          },
+          "after": {
+            "path": "scripts/docs-api-output-discovery.mjs",
+            "sha256": "18490b3ea38f27fa98c93c9f4f95dcc5bb929bd3236710197c91a4b8c8edfbbc"
+          }
+        },
+        {
+          "path": "scripts/docs-api-probe39-original-output.mjs",
+          "before": null,
+          "after": {
+            "path": "scripts/docs-api-probe39-original-output.mjs",
+            "sha256": "708a16b722f062f4975101116666b473f2efecd6ec3949a7ab99447c5c7e9756"
+          }
+        },
+        {
+          "path": "scripts/docs-api-versions-map-output.mjs",
+          "before": null,
+          "after": {
+            "path": "scripts/docs-api-versions-map-output.mjs",
+            "sha256": "9e267f3c64e8d617f0c0c5503c5f8a1bc28753ed8752734f532f3cd6bfa9e4b0"
+          }
+        }
+      ],
+      "removed": [],
+      "digest": "de16df8b0855c7816372fcd601103f1e9edef2dfd2ec5273c7afa46bdfe19507"
+    },
+    "selected": {
+      "oldCount": 1246,
+      "newCount": 1248,
+      "changes": [
+        {
+          "path": "scripts/docs-api-output-discovery.mjs",
+          "before": {
+            "path": "scripts/docs-api-output-discovery.mjs",
+            "sha256": "d7c12d4734a9a828bff799a50e89a92c82c859f6dd86453434a46de482ff85a0"
+          },
+          "after": {
+            "path": "scripts/docs-api-output-discovery.mjs",
+            "sha256": "18490b3ea38f27fa98c93c9f4f95dcc5bb929bd3236710197c91a4b8c8edfbbc"
+          }
+        },
+        {
+          "path": "scripts/docs-api-probe39-original-output.mjs",
+          "before": null,
+          "after": {
+            "path": "scripts/docs-api-probe39-original-output.mjs",
+            "sha256": "708a16b722f062f4975101116666b473f2efecd6ec3949a7ab99447c5c7e9756"
+          }
+        },
+        {
+          "path": "scripts/docs-api-versions-map-output.mjs",
+          "before": null,
+          "after": {
+            "path": "scripts/docs-api-versions-map-output.mjs",
+            "sha256": "9e267f3c64e8d617f0c0c5503c5f8a1bc28753ed8752734f532f3cd6bfa9e4b0"
+          }
+        }
+      ],
+      "removed": [],
+      "digest": "41215d66938d86a77208acc552d1f3dea8eed3dde368446c6e64c3b5f4b966e8"
+    }
+  },
+  "graphDelta": {
+    "closureSources": {
+      "added": [
+        "scripts/docs-api-probe39-original-output.mjs",
+        "scripts/docs-api-versions-map-output.mjs"
+      ],
+      "removed": []
+    },
+    "edges": {
+      "added": [
+        {
+          "source": "scripts/docs-api-output-discovery.mjs",
+          "target": "scripts/docs-api-probe39-original-output.mjs",
+          "kind": "import",
+          "operation": "import {checkedOriginalProbe39Output, selectedOriginalProbe39Output} from './docs-api-probe39-original-output.mjs';"
+        },
+        {
+          "source": "scripts/docs-api-output-discovery.mjs",
+          "target": "scripts/docs-api-versions-map-output.mjs",
+          "kind": "import",
+          "operation": "import {checkedVersionsMapOutputs,selectedVersionsMapOutput} from './docs-api-versions-map-output.mjs';"
+        }
+      ],
+      "removed": []
+    },
+    "publicEntries": {
+      "added": [
+        {
+          "path": "scripts/docs-api-probe39-original-output.mjs",
+          "canonicalSource": "scripts/docs-api-probe39-original-output.mjs"
+        },
+        {
+          "path": "scripts/docs-api-versions-map-output.mjs",
+          "canonicalSource": "scripts/docs-api-versions-map-output.mjs"
+        }
+      ],
+      "removed": []
+    }
+  },
+  "nativeGraphAcquisitionError": null,
+  "scope": "Frozen combined adapter graph before final role recipe renewal; trust-anchor metadata excluded exactly as original implementation, no new exclusion.",
+  "schemaVersion": "combined-api-adapter-guard-renewal-independent-review.v1",
+  "status": "SCALAR PASS; final five recipe semantic-vector review pending parent acquisition",
+  "typedOccurrenceCount": 8,
+  "typedOccurrencesExactBothPriorNative": true,
+  "allNativeCount": 10,
+  "initialComparisonCorrection": "Unfiltered current enumerator has10 versus old8 because separate bundle-override configuration observations are present. Only two scalar owners are selected in original scalar custody; their8 whole observations exactly equal both historical native arrays. No blanket observation-count claim.",
+  "reviewerAuthoredVersionParserCorrection": true,
+  "scopeLimit": "This review independently checks combined guard renewal records and unchanged scalar claims, not self-approval of authored version parser fix. Parent independently owns corrected adapter Source review.",
+  "recipeReviewPending": true,
+  "mainWrites": false
+}

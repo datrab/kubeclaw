@@ -1,0 +1,56 @@
+{
+  "reviewer": "/root/review_recovered_eleven_purposes",
+  "reviewedAt": "2026-10-22T22:00:10.247554+00:00",
+  "verdict": "PASS_BOUNDED_ORIGINAL_DATA",
+  "findings": [],
+  "sourceRenderer": "scripts/render-kubernetes-api-probe.mjs:39",
+  "originalStdoutSha256": "cc0412e305420a57e10f2317772621b9f3ee8976f268234f01169b47f290b767",
+  "originalCliStatus": 0,
+  "originalStderrBytes": 0,
+  "documents": [
+    {
+      "index": 0,
+      "apiVersion": "v1",
+      "kind": "ConfigMap"
+    },
+    {
+      "index": 1,
+      "apiVersion": "batch/v1",
+      "kind": "Job"
+    }
+  ],
+  "generatedName": "api-policy-proof-7346a9c1-e5e0-4896-a43a-53f531bda328",
+  "checks": [
+    "All outer sealed physical pins independently rehashed current.",
+    "Original stdout hash, empty stderr, null error/signal and exit0 verified.",
+    "Original raw stream independently reparsed with sealed maintained ESM js-yaml; exact equality to retained parsed documents.",
+    "ConfigMap and Job metadata identical; namespace/name/UID/serviceAccount/node/labels exactly mapped from explicit Pod fixture.",
+    "Embedded probe.mjs byte-for-byte equals entire original76-line helper.",
+    "options.json exact namespace/serviceAccount/origins/tokenFile/caFile projection.",
+    "Job image exactly versions.buildArgs.NODE_BASE, command/volume ConfigMap linkage and deliberately failing readiness command match original constructor.",
+    "Whole renderer, helper, capture script and seal read; helper network CLIguard false in original renderer execution."
+  ],
+  "actualPodObserved": false,
+  "networkProbeExecuted": false,
+  "schemaAdmissionExecuted": false,
+  "apiApplyAuthorized": false,
+  "productionRuntimeExecuted": false,
+  "recommendation": {
+    "existingIntegration": "discoverTransformedApiOutputs original-renderer recipe path plus exact Source-bound selected-output witness in discoverScriptApiOutputs",
+    "scope": "Only render-kubernetes-api-probe.mjs:39 original two-document stdout using this explicit fixture profile; no generic interpreter or new qualification subsystem.",
+    "requirements": [
+      "Preserve canonical UNKNOWN and24-slot/68-input seal; private source-owned selected-profile receipt, not global registry relabel.",
+      "Pin renderer+helper+versions+fixtures+actual parser+package resolution and exact CLIargv/env before existing cache; imported helper network entry remains uncalled.",
+      "Have existing original child/render/parse path return actual2documents, per-member ordered provenance/digests and fixture profile identity.",
+      "Do not add renderer to deploy.sh expected invocations: no such caller exists in current Source. Treat this explicit standalone documentation fixture separately from deploy-default recipes.",
+      "Retain actual randomUUID in DATA; no UUID normalization or invented output fields. Cache binds actual captured bytes/profile; deterministic whole-build claim remains separate.",
+      "Negative controls: changed helper/values/fixture/caller/loader/descriptor after warmcache rejected; do not extend grant to helper network CLI or arbitrary Pod input."
+    ]
+  },
+  "limits": [
+    "Captured fixture is authored Pod-shaped input, not a running Pod, validated workload identity or observed cluster state.",
+    "Valid parsed constructors are not Kubernetes schema/admission or API-server reachability proof.",
+    "Token/CA/network helper code is embedded DATA only; not executed.",
+    "No registryrole/sourcecensus/acceptance edits made; concrete adapter authoring/integration review remains next work."
+  ]
+}

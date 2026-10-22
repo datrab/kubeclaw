@@ -1,0 +1,94 @@
+# =============================================================================
+# Registry Mirror — Pull-Through Cache for Docker Hub
+# =============================================================================
+# Docker Hub pull-through cache. A running Pod does not configure any client.
+# Set runtimeInfrastructure.dockerHubMirror explicitly for BuildKit and generate
+# node configuration separately. GHCR/private registries are not mirrored here.
+# Cache hits/misses and upstream availability need actual client verification.
+# See docs/site/understand/platform-and-operations.md#writable-local-oci-registry.
+#
+# Deploy: kubectl apply -n kubeclaw -f registry-mirror.yaml
+# =============================================================================
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: registry-mirror-cache
+  labels:
+    app: registry-mirror
+spec:
+  accessModes: ["ReadWriteOnce"]
+  resources:
+    requests:
+      storage: 5Gi
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: registry-mirror
+  labels:
+    app: registry-mirror
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: registry-mirror
+  template:
+    metadata:
+      labels:
+        app: registry-mirror
+    spec:
+      containers:
+        - name: registry
+          image: docker.io/library/registry:2.8.3@sha256:a3d8aaa63ed8681a604f1dea0aa03f100d5895b6a58ace528858a7b332415373
+          ports:
+            - containerPort: 5000
+          env:
+            - name: REGISTRY_PROXY_REMOTEURL
+              value: "https://registry-1.docker.io"
+            - name: REGISTRY_STORAGE_DELETE_ENABLED
+              value: "true"
+          volumeMounts:
+            - name: cache
+              mountPath: /var/lib/registry
+          resources:
+            requests:
+              cpu: 50m
+              memory: 64Mi
+            limits:
+              cpu: 500m
+              memory: 256Mi
+          readinessProbe:
+            httpGet:
+              path: /v2/
+              port: 5000
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /v2/
+              port: 5000
+            initialDelaySeconds: 10
+            periodSeconds: 30
+      volumes:
+        - name: cache
+          persistentVolumeClaim:
+            claimName: registry-mirror-cache
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: registry-mirror
+  labels:
+    app: registry-mirror
+spec:
+  type: ClusterIP
+  ports:
+    - port: 5000
+      targetPort: 5000
+      protocol: TCP
+  selector:
+    app: registry-mirror

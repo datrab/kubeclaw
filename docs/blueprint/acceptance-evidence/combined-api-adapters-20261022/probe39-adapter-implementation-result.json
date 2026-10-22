@@ -1,0 +1,27 @@
+{
+  "verdict": "AUTHOR_READY_FOR_INDEPENDENT_INTEGRATION",
+  "focusedTests": {
+    "tests": 6,
+    "pass": 6,
+    "fail": 0,
+    "skip": 0
+  },
+  "review": {
+    "finalExitCode": 0,
+    "actionableFindings": 0,
+    "bundleChars": 40310,
+    "surroundingShellInspection": "UNAVAILABLE",
+    "initialParserFinding": "ACCEPTED_FIXED_AND_NEGATIVE_TESTED",
+    "parentTestSafetyFinding": "FIXED_DISPOSABLE_ACTUAL_IMPORTER",
+    "parentReceivingLineFinding": "FIXED_CONTEXT_LINE39"
+  },
+  "files": {
+    "scripts/docs-api-probe39-original-authority.json": "9456ac654f9f28d3891889f906b37d2f91e421c884b9707ff0c0778742f097cc",
+    "scripts/docs-api-probe39-original-output.mjs": "708a16b722f062f4975101116666b473f2efecd6ec3949a7ab99447c5c7e9756",
+    "scripts/tests/docs-api-probe39-original-output.test.mjs": "2f23216a42459084dc391fc65102aa7625636872861ee4053ce4e66aa9f22806",
+    "scripts/docs-api-output-discovery.mjs": "2f5fbdc781493681a7218fe5c38c5a3f34f177823d5639270c1916f835a25a63"
+  },
+  "productRendererReexecuted": false,
+  "mainWritten": false,
+  "sharedMetadataWritten": false
+}

@@ -1,0 +1,171 @@
+{
+  "parser": {
+    "path": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/node_modules/js-yaml/dist/js-yaml.mjs",
+    "sha256": "33e98d04719e7a7fc8e0433803ad4b26a6f72d4545d279a5b053d45bd7871c7a",
+    "bytes": 103891,
+    "mode": 436
+  },
+  "parserPackage": {
+    "path": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/node_modules/js-yaml/package.json",
+    "sha256": "82b932c87c5da7901c6a8f984698c57912570146fffd3156dcdc96a6c210d847",
+    "bytes": 2281,
+    "mode": 436
+  },
+  "apiRoots": [
+    {
+      "member": 13,
+      "path": "gitops/platform/bootstrap/spire.yaml",
+      "document": 0,
+      "pointer": "",
+      "apiVersion": "argoproj.io/v1alpha1",
+      "kind": "Application",
+      "name": "spire",
+      "namespace": "argocd"
+    },
+    {
+      "member": 14,
+      "path": "gitops/platform/bootstrap/spire-crds.yaml",
+      "document": 0,
+      "pointer": "",
+      "apiVersion": "argoproj.io/v1alpha1",
+      "kind": "Application",
+      "name": "spire-crds",
+      "namespace": "argocd"
+    },
+    {
+      "member": 15,
+      "path": "gitops/platform/bootstrap/csi-driver-smb.yaml",
+      "document": 0,
+      "pointer": "",
+      "apiVersion": "argoproj.io/v1alpha1",
+      "kind": "Application",
+      "name": "csi-driver-smb",
+      "namespace": "argocd"
+    },
+    {
+      "member": 16,
+      "path": "gitops/platform/litellm/resources.yaml",
+      "document": 0,
+      "pointer": "",
+      "apiVersion": "apps/v1",
+      "kind": "Deployment",
+      "name": "litellm",
+      "namespace": "kubeclaw"
+    },
+    {
+      "member": 16,
+      "path": "gitops/platform/litellm/resources.yaml",
+      "document": 1,
+      "pointer": "",
+      "apiVersion": "v1",
+      "kind": "Service",
+      "name": "litellm",
+      "namespace": "kubeclaw"
+    },
+    {
+      "member": 17,
+      "path": "gitops/platform/bootstrap/prometheus.yaml",
+      "document": 0,
+      "pointer": "",
+      "apiVersion": "argoproj.io/v1alpha1",
+      "kind": "Application",
+      "name": "prometheus",
+      "namespace": "argocd"
+    },
+    {
+      "member": 18,
+      "path": "gitops/platform/bootstrap/loki.yaml",
+      "document": 0,
+      "pointer": "",
+      "apiVersion": "argoproj.io/v1alpha1",
+      "kind": "Application",
+      "name": "loki",
+      "namespace": "argocd"
+    },
+    {
+      "member": 19,
+      "path": "gitops/platform/bootstrap/alloy.yaml",
+      "document": 0,
+      "pointer": "",
+      "apiVersion": "argoproj.io/v1alpha1",
+      "kind": "Application",
+      "name": "alloy",
+      "namespace": "argocd"
+    },
+    {
+      "member": 20,
+      "path": "gitops/platform/bootstrap/promtail.yaml",
+      "document": 0,
+      "pointer": "",
+      "apiVersion": "argoproj.io/v1alpha1",
+      "kind": "Application",
+      "name": "promtail",
+      "namespace": "argocd"
+    },
+    {
+      "member": 22,
+      "path": "gitops/platform/bootstrap/redis.yaml",
+      "document": 0,
+      "pointer": "",
+      "apiVersion": "argoproj.io/v1alpha1",
+      "kind": "Application",
+      "name": "redis",
+      "namespace": "argocd"
+    },
+    {
+      "member": 24,
+      "path": "gitops/platform/bootstrap/postgresql.yaml",
+      "document": 0,
+      "pointer": "",
+      "apiVersion": "argoproj.io/v1alpha1",
+      "kind": "Application",
+      "name": "postgresql",
+      "namespace": "argocd"
+    },
+    {
+      "member": 28,
+      "path": "my-values/infra/registry-mirror.yaml",
+      "document": 0,
+      "pointer": "",
+      "apiVersion": "v1",
+      "kind": "PersistentVolumeClaim",
+      "name": "registry-mirror-cache",
+      "namespace": null
+    },
+    {
+      "member": 28,
+      "path": "my-values/infra/registry-mirror.yaml",
+      "document": 1,
+      "pointer": "",
+      "apiVersion": "apps/v1",
+      "kind": "Deployment",
+      "name": "registry-mirror",
+      "namespace": null
+    },
+    {
+      "member": 28,
+      "path": "my-values/infra/registry-mirror.yaml",
+      "document": 2,
+      "pointer": "",
+      "apiVersion": "v1",
+      "kind": "Service",
+      "name": "registry-mirror",
+      "namespace": null
+    }
+  ],
+  "actualApiDocumentCount": 14,
+  "apiMemberPaths": [
+    "gitops/platform/bootstrap/spire.yaml",
+    "gitops/platform/bootstrap/spire-crds.yaml",
+    "gitops/platform/bootstrap/csi-driver-smb.yaml",
+    "gitops/platform/litellm/resources.yaml",
+    "gitops/platform/bootstrap/prometheus.yaml",
+    "gitops/platform/bootstrap/loki.yaml",
+    "gitops/platform/bootstrap/alloy.yaml",
+    "gitops/platform/bootstrap/promtail.yaml",
+    "gitops/platform/bootstrap/redis.yaml",
+    "gitops/platform/bootstrap/postgresql.yaml",
+    "my-values/infra/registry-mirror.yaml"
+  ],
+  "meaning": "Parsed API-shaped input/data; not schema correctness, supported-version or runtime/apply acceptance. No hardcoded API count."
+}

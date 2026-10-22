@@ -1,0 +1,22 @@
+{
+  "node": {
+    "path": "/usr/local/bin/node",
+    "sha256": "7fde7b8afa198da66257f42ee2001d874c7355631e6d1579a5fb5ef1f246df4c",
+    "version": "v24.21.0"
+  },
+  "argv": [
+    "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/render-kubernetes-api-probe.mjs",
+    "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/probe39-original-cli-packet/inputs/pod.fixture.json",
+    "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/probe39-original-cli-packet/inputs/origins.fixture.json"
+  ],
+  "cwd": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery",
+  "env": {
+    "PATH": "/usr/local/bin:/usr/bin:/bin",
+    "LANG": "C.UTF-8",
+    "LC_ALL": "C.UTF-8",
+    "TZ": "UTC"
+  },
+  "sealSha256": "ebf2311d21672189431f6187b076383ad32bdc0052f7ee4b6fe9337c79484485",
+  "inputKind": "explicit owned fixture,not observed actualPod",
+  "preparedRevision": "4c0f754d6b62e69df15a13b06ac453747c2d32c2"
+}

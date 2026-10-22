@@ -1,0 +1,17 @@
+{
+  "argv": [
+    "/usr/local/bin/node",
+    "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/versions-map-current-data-acquire-v2.mjs",
+    "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/versions-map-current-data-seal-v2.json"
+  ],
+  "cwd": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021",
+  "environment": {
+    "PATH": "/usr/local/bin:/usr/bin:/bin",
+    "LANG": "C.UTF-8",
+    "LC_ALL": "C.UTF-8",
+    "TZ": "UTC"
+  },
+  "exitCode": 0,
+  "signal": null,
+  "completedAt": "2026-10-22T19:59:15.192695+00:00"
+}

@@ -1,0 +1,39 @@
+{
+  "observedAt": "2026-10-22T22:54:45.777378+00:00",
+  "adapterTests": {
+    "passed": 13,
+    "failed": 0,
+    "evidenceKind": "direct terminal observation in resumed parent tool output; previous exact helper tests retained separately as raw"
+  },
+  "scalarTests": {
+    "passed": 14,
+    "failed": 0,
+    "raw": "restart-scalar-tests.raw"
+  },
+  "nativeExistingRecipes": {
+    "checked": 103,
+    "mismatches": 0,
+    "selectorsChanged": 0,
+    "childAuthorityChanged": 0
+  },
+  "renewedOldNativeGuardFixture": {
+    "positive": 5,
+    "warm": 5,
+    "helperMutationRejected": 5,
+    "raw": "restart-recipe-negative.raw"
+  },
+  "twoNewHelperNativeGuardFixture": {
+    "positive": 2,
+    "warm": 2,
+    "sourceMutationRejected": 2,
+    "purposeInputMutationRejected": 2,
+    "raw": "restart-two-helper-purpose-negative.raw"
+  },
+  "owningCheck": {
+    "exitCode": 1,
+    "error": "API_PRODUCT_SCRIPT_OUTPUT_ROLE_UNQUALIFIED: scripts/render-stateful-network-policies.mjs:68: undefined",
+    "result": "qualified-owning-check/result.json",
+    "inputsUnchanged": true
+  },
+  "noAggregateOrRuntimeAcceptance": true
+}

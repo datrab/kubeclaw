@@ -1,0 +1,16 @@
+{
+  "apiVersion": "v1",
+  "kind": "Pod",
+  "metadata": {
+    "name": "documentation-api-source-fixture",
+    "namespace": "documentation-fixture",
+    "uid": "00000000-0000-4000-8000-000000000039",
+    "labels": {
+      "app.kubernetes.io/name": "documentation-fixture"
+    }
+  },
+  "spec": {
+    "serviceAccountName": "documentation-fixture",
+    "nodeName": "documentation-fixture-node"
+  }
+}

@@ -1,0 +1,97 @@
+[
+  {
+    "id": "AP09-documentation-agent-maintenance-20261021",
+    "gateIds": [],
+    "requirementIds": [
+      "MNT-017"
+    ],
+    "intersection": [
+      "scripts/docs-api-output-discovery.mjs"
+    ],
+    "limits": [
+      "Source-backed documentation acceptance only; no deployed encryption assurance, live restore, native host, rendered site or whole global generator/drift claim.",
+      "Other MNT global discovery/generator/drift obligations are NOT accepted from this authored maintenance guide audit; see scope.json."
+    ]
+  },
+  {
+    "id": "AP09-complete-static-reader-search-20261021",
+    "gateIds": [],
+    "requirementIds": [
+      "PUB-002"
+    ],
+    "intersection": [
+      "scripts/docs-api-documentation-role-custody.mjs"
+    ],
+    "limits": [
+      "Only whole PUB-002. Ranked/synonym reader search questions in A912-04 remain unaccepted; substring full-text search is stated honestly.",
+      "No other publication gate or whole documentation package acceptance.",
+      "Local HTML/search output is not external hosting, actual cluster/runtime behavior, rendered Mermaid, source-preview or human screenreader acceptance.",
+      "Global API source/caller discovery still blocked at bundle copier; site boundary still has three unchanged Helm generated-prose diagnostics."
+    ]
+  },
+  {
+    "id": "AP09-search-reader-gate-20261021",
+    "gateIds": [
+      "A912-04"
+    ],
+    "requirementIds": [],
+    "intersection": [
+      "scripts/docs-api-documentation-role-custody.mjs"
+    ],
+    "limits": [
+      "Whole A912-04 only; finite declared reader synonyms, not universal semantic or natural-language search.",
+      "No other publication gate, all-page/human-screenreader, rendered-Mermaid/source-preview/externalhosting acceptance.",
+      "Global API bundle input/caller closure and three unchanged generated Helm-language diagnostics remain open."
+    ]
+  },
+  {
+    "id": "AP09-rendered-source-bounds-gate-20261021",
+    "gateIds": [
+      "A912-09"
+    ],
+    "requirementIds": [],
+    "intersection": [
+      "scripts/docs-api-documentation-role-custody.mjs"
+    ],
+    "limits": [
+      "Exact source location/object/type/byte/range checks, not semantic correctness of every claim, signatures, live runtime or hosting.",
+      "Local Source objects were observed in actual Git; GitHub reachability follows pushed ancestors, not a substituted upstream HTTP proof.",
+      "Native documentation purposes preserve source/caller identity and do not waive the global API bundle-copier boundary.",
+      "Whole A912-09 only; remaining publication/accessibility/diagram/preview/full-workflow gates not automatically accepted.",
+      "Three unchanged stale generated Helm phrases and global API bundle input/caller gap remain open."
+    ]
+  },
+  {
+    "id": "AP09-complete-same-source-code-preview-20261021",
+    "gateIds": [],
+    "requirementIds": [
+      "PUB-004"
+    ],
+    "intersection": [
+      "scripts/docs-api-documentation-role-custody.mjs"
+    ],
+    "limits": [
+      "WholePUB004 only; A91205 all-six-field canonical format not established for every older evidence box and remains unaccepted.",
+      "Preserves originalclaims/contracts/tests/limits; missing author evidence not fabricated and source snippets do not prove live or semantic correctness.",
+      "ThreeSource boxes containingonlydirectory/named-anchor references remain ordinarylinks, not fake code previews.",
+      "No diagram/layoutgate, humanScreenReader, freshuser, hosting, globalAPI or productruntime approval.",
+      "GlobalAPIbundlecopier74 andthreeunchangedstaleHelmphrases stayopen."
+    ]
+  },
+  {
+    "id": "AP09-complete-responsive-reader-layout-20261021",
+    "gateIds": [
+      "A912-07"
+    ],
+    "requirementIds": [],
+    "intersection": [
+      "scripts/docs-api-documentation-role-custody.mjs"
+    ],
+    "limits": [
+      "Whole responsive-layout gate only; PUB005/A91206 semantic diagram completeness NOT_READY:16/27 scoped supported,6system and5service proofs incomplete;capacity failures preserved.",
+      "Human screenreader/fresh-role user/hosting/live workflows/global API not accepted by automated browser or byte checks.",
+      "Native table/code/diagram internal horizontal scroll is intentional and focus/keyboard tested; no horizontal PAGE navigation.",
+      "Global bundle-copier and three stale generated Helm phrases remain open."
+    ]
+  }
+]

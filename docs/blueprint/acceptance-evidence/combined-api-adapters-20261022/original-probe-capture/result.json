@@ -1,0 +1,11 @@
+{
+  "status": 0,
+  "signal": null,
+  "error": null,
+  "stdoutSha256": "cc0412e305420a57e10f2317772621b9f3ee8976f268234f01169b47f290b767",
+  "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "originalUuidPreserved": true,
+  "productProbeExecuted": false,
+  "apiApplyAuthorized": false,
+  "runtimeExecutionAuthorized": false
+}

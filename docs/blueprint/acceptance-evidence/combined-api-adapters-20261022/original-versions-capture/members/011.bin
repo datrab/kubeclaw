@@ -1,0 +1,47 @@
+# Version defaults are generated from versions.json; run npm run versions:sync.
+ARG OPS_MCP_NODE_BASE=node:24.21.0-alpine3.24@sha256:be80f76cf40ec8e42b9bec49f60a55e0660f30af58d3e5a25530785b30ea67e2
+
+ARG OPS_TOOLS_GO_BASE=golang:1.26.9-alpine3.24@sha256:cdfd4fe2da6b225d8b40c6b7a105736e548e83ff56d5d8f9394446eeb5eb84e0
+
+FROM ${OPS_TOOLS_GO_BASE} AS hubble-build
+ARG TARGETARCH=amd64
+ENV GOTOOLCHAIN=local
+WORKDIR /src
+# Keep Cilium 1.20.1's CLI, rebuilding with patched Go/gRPC/text dependencies.
+COPY hubble/go.mod hubble/go.sum ./
+# Retry bounded module transfers over HTTP/1.1 after observed proxy HTTP/2 stream failures.
+RUN attempt=1; until GODEBUG=http2client=0 timeout 180 go mod download; do \
+      if [ "$attempt" -ge 3 ]; then exit 1; fi; \
+      sleep "$((attempt * 5))"; attempt="$((attempt + 1))"; \
+    done
+COPY hubble/main.go hubble/LICENSE ./
+RUN GOPROXY=off CGO_ENABLED=0 GOOS=linux GOARCH=${TARGETARCH} go build -mod=readonly -trimpath -o /out/hubble .
+
+FROM ${OPS_MCP_NODE_BASE}
+
+WORKDIR /app
+RUN apk upgrade --no-cache
+
+COPY package.json package-lock.json ./
+RUN npm ci --omit=dev --ignore-scripts \
+    && npm cache clean --force \
+    && rm -rf /usr/local/lib/node_modules /opt/yarn-* \
+    && rm -f /usr/local/bin/npm /usr/local/bin/npx /usr/local/bin/corepack /usr/local/bin/yarn /usr/local/bin/yarnpkg
+
+COPY src ./src
+COPY --from=hubble-build /out/hubble /usr/local/bin/hubble
+COPY hubble/LICENSE /usr/local/share/licenses/hubble/LICENSE
+RUN node --check src/server.mjs \
+    && /usr/local/bin/hubble version >/dev/null
+
+ENV NODE_ENV=production \
+    PORT=8080 \
+    HOST=0.0.0.0 \
+    HUBBLE_BIN=/usr/local/bin/hubble \
+    HUBBLE_SERVER=hubble-relay.cilium.svc.cluster.local:4245 \
+    NODE_EXTRA_CA_CERTS=/var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+
+USER 1000:1000
+EXPOSE 8080
+
+CMD ["node", "src/server.mjs"]

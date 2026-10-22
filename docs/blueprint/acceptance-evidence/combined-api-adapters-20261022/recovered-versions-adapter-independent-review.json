@@ -1,0 +1,81 @@
+{
+  "schemaVersion": "recovered-versions-adapter-independent-review.v1",
+  "reviewedAt": "2026-10-22T21:57:48.199478+00:00",
+  "commit": "029f89b6352516020628316bfe1e71a797629ba2",
+  "verdict": "PASS bounded Source/adapter review; native generator qualification remains pending",
+  "findings": [],
+  "reviewedFiles": [
+    {
+      "path": "scripts/docs-api-output-discovery.mjs",
+      "bytes": 439070,
+      "sha256": "02807d629df78c887522ff5d012f2969f3a595fe4106db16eff5a74325622ac7"
+    },
+    {
+      "path": "scripts/docs-api-versions-map-output.mjs",
+      "bytes": 8620,
+      "sha256": "43a4e501d80dca2bb705706ebd724e2b8b8bb9e616998a20a6c2714d2b2e5f41"
+    },
+    {
+      "path": "scripts/docs-api-versions-map-output-authority.json",
+      "bytes": 368541,
+      "sha256": "d29fad9dcecad5c4883092514292fd1bbc73860a56d06f09785cde85e65c5769"
+    },
+    {
+      "path": "scripts/tests/docs-api-versions-map-output.test.mjs",
+      "bytes": 5986,
+      "sha256": "02ac28615d1142b197a1844192deb6702c92c29962ee4af5c10f78fabe1c435e"
+    }
+  ],
+  "scope": {
+    "wholeHelper": true,
+    "wholeTests": true,
+    "wholeDiscoveryDeltaAndOwningContexts": true,
+    "allAuthorityLogicalMembers": 45,
+    "allAuthorityInputPins": 129,
+    "originalConstructorInputPins": 41,
+    "sourceModules": 3,
+    "rawCapturedStreamsCompared": 45,
+    "rawBytes": 296338,
+    "nativeReceiptArtifactsRehashed": 10,
+    "apiStreamCount": 11,
+    "apiRootCount": 14,
+    "nonApiMemberCount": 34
+  },
+  "conclusions": [
+    "All 45 embedded contents equal original native v2 stream files AND current physical member files byte-for-byte, not manually copied replacement API objects. Every original module/input seal agrees with the corresponding immutable authority pin.",
+    "Original versionOutputs returns the complete mixed Map; syncVersions writer not executed. Original CLI gates and lock functions are not invoked by the adapter.",
+    "Canonical original three-slot vector is checked before purpose selection, with versions:181 UNKNOWN preserved; private annotation does not convert all test/code/config members to non-API.",
+    "Immutable full-authority hash prevents self-baselining via member omission, adjusted counts, substitution or API additions; fresh checks bind source/helper/input bytes, parser runtime roster, Docker selector, package-boundary absences, caller/public-entry and all ordered descriptor/member/API vectors.",
+    "Both main API output discovery and public role discovery acquire the checked receipt before cache or mutable fallback. Main API loop pushes all 14 original parsed roots with version-source digest and member path/ordinal/document/bytes digest. Existing product-scope fallback dispatches this producer back to discoverScriptApiOutputs, matching full output context and digest.",
+    "WeakSet receipt identity and recursive freeze prevent forged receipt copies and mutation. Actual native YAML parser shape agrees with recorded original parser shapes; Chart apiVersion v2 without kind remains metadata.",
+    "No runtime, schema, supported-version, lock or API-apply grant follows; source/document provenance and unknown raw role remain visible."
+  ],
+  "tests": {
+    "cwd": "/home/node/.openclaw/workspace/kubeclaw-pr13-versions-map",
+    "argv": [
+      "node",
+      "--test",
+      "scripts/tests/docs-api-versions-map-output.test.mjs"
+    ],
+    "exitCode": 0,
+    "passed": 6,
+    "failed": 0,
+    "skipped": 0,
+    "negativeCases": [
+      "warm whole-version whitespace/source/input/parser drift",
+      "new Docker member, missing member and new parser JS",
+      "nearer loader package boundary",
+      "role inversion, omitted/reordered slots, new caller and public alias",
+      "immutable authority drop with adjusted count or unrelated existing member substitution",
+      "unexpected API document added to previous configuration member",
+      "forged receipt copy"
+    ]
+  },
+  "limits": [
+    "Native discoverScriptApiOutputs/generator success NOT claimed: retained author native FAIL at preexisting canonical dependency-root custody precedes this integration. Parent must integrate combined changes, qualify exact source/custody delta and run the unchanged owning check.",
+    "Focused fixture negatives reuse actual native role records; their graph is the frozen authoritative graph, not a separate complete runtime graph acquisition. Actual graph and receiver integration are reviewed in Source but not executed end-to-end here.",
+    "No original constructor, updater, lock, deployment, schema, Kubernetes apply or product runtime command executed by this review.",
+    "Concurrent parent purpose/scalar changes not included; discovery merge must receive parent delta review and tests."
+  ],
+  "mainWorktreeEdited": false
+}

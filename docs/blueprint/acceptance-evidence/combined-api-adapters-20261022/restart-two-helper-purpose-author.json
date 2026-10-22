@@ -1,0 +1,172 @@
+{
+  "schemaVersion": "restart-two-helper-purpose-author.v1",
+  "status": "AUTHORED_PARENT_INDEPENDENT_REVIEW_REQUIRED",
+  "files": {
+    "scripts/docs-api-documentation-role-custody.mjs": "218a28cb337b0b57dd9c850a60dfba417f730ee53e9d2185266693b128b2b2b1",
+    "scripts/docs-api-producer-adapter-authorities.json": "a1d3da4f599b5406dde827756fc26385cdc6a0b276f8b4611c13f2d2a773bad4"
+  },
+  "nativeHelperRoleVerdicts": {
+    "scripts/docs-api-probe39-original-output.mjs": "PASS",
+    "scripts/docs-api-versions-map-output.mjs": "PASS"
+  },
+  "existingRecipesUnchanged": 107,
+  "existingJavascriptRecipesUnchanged": 103,
+  "registryOnlyDelta": "append two sources and two qualifications; all other semantic fields unchanged",
+  "records": [
+    {
+      "source": "scripts/docs-api-probe39-original-output.mjs",
+      "sourceSha256": "708a16b722f062f4975101116666b473f2efecd6ec3949a7ab99447c5c7e9756",
+      "factsDigest": "4c705633da5c312e90c3aa45e129f24a884cdaf2073d9d95e67f56bc80f8e5f3",
+      "facts": 16,
+      "selectors": 8,
+      "ancestors": [
+        "scripts/docs-api-output-discovery.mjs",
+        "scripts/docs-api-probe39-original-output.mjs",
+        "scripts/docs-api-product-scope.mjs",
+        "scripts/docs-api-receiver-coverage.mjs",
+        "scripts/docs-api-reference.mjs",
+        "scripts/docs-api-schema-authorities.mjs",
+        "scripts/docs-configuration-inventory.mjs",
+        "scripts/docs-generate.mjs",
+        "scripts/docs-kubernetes-core-receiver-contracts.mjs",
+        "scripts/docs-kubernetes-workload-receiver-contracts.mjs",
+        "scripts/docs-local-helm-authorities.mjs",
+        "scripts/generate-local-helm-authorities.mjs"
+      ],
+      "edges": 22,
+      "documentationEntries": [
+        {
+          "name": "docs:drift:config:check",
+          "command": "node scripts/docs-configuration-inventory.mjs --check",
+          "source": "scripts/docs-configuration-inventory.mjs"
+        },
+        {
+          "name": "docs:generate",
+          "command": "node scripts/docs-generate.mjs",
+          "source": "scripts/docs-generate.mjs"
+        },
+        {
+          "name": "docs:generate:check",
+          "command": "node scripts/docs-generate.mjs --check",
+          "source": "scripts/docs-generate.mjs"
+        },
+        {
+          "name": "docs:inventory:config",
+          "command": "node scripts/docs-configuration-inventory.mjs",
+          "source": "scripts/docs-configuration-inventory.mjs"
+        },
+        {
+          "name": "docs:inventory:config:check",
+          "command": "node scripts/docs-configuration-inventory.mjs --check",
+          "source": "scripts/docs-configuration-inventory.mjs"
+        },
+        {
+          "name": "docs:inventory:local-helm",
+          "command": "node scripts/generate-local-helm-authorities.mjs",
+          "source": "scripts/generate-local-helm-authorities.mjs"
+        },
+        {
+          "name": "docs:inventory:local-helm:check",
+          "command": "node scripts/generate-local-helm-authorities.mjs --check && node scripts/check-local-helm-boolean-semantics.mjs",
+          "source": "scripts/generate-local-helm-authorities.mjs"
+        }
+      ],
+      "dynamicOperations": 7,
+      "unresolvedOperations": 77,
+      "purposeInputs": [
+        {
+          "path": "scripts/docs-api-probe39-original-authority.json",
+          "canonical": "scripts/docs-api-probe39-original-authority.json",
+          "sha256": "9456ac654f9f28d3891889f906b37d2f91e421c884b9707ff0c0778742f097cc"
+        }
+      ],
+      "child": []
+    },
+    {
+      "source": "scripts/docs-api-versions-map-output.mjs",
+      "sourceSha256": "9e267f3c64e8d617f0c0c5503c5f8a1bc28753ed8752734f532f3cd6bfa9e4b0",
+      "factsDigest": "66d4b4b6dac5a3c50b05767334342c19f786701686eb14800b6844cd4d7e9c10",
+      "facts": 16,
+      "selectors": 8,
+      "ancestors": [
+        "scripts/docs-api-output-discovery.mjs",
+        "scripts/docs-api-product-scope.mjs",
+        "scripts/docs-api-receiver-coverage.mjs",
+        "scripts/docs-api-reference.mjs",
+        "scripts/docs-api-schema-authorities.mjs",
+        "scripts/docs-api-versions-map-output.mjs",
+        "scripts/docs-configuration-inventory.mjs",
+        "scripts/docs-generate.mjs",
+        "scripts/docs-kubernetes-core-receiver-contracts.mjs",
+        "scripts/docs-kubernetes-workload-receiver-contracts.mjs",
+        "scripts/docs-local-helm-authorities.mjs",
+        "scripts/generate-local-helm-authorities.mjs"
+      ],
+      "edges": 22,
+      "documentationEntries": [
+        {
+          "name": "docs:drift:config:check",
+          "command": "node scripts/docs-configuration-inventory.mjs --check",
+          "source": "scripts/docs-configuration-inventory.mjs"
+        },
+        {
+          "name": "docs:generate",
+          "command": "node scripts/docs-generate.mjs",
+          "source": "scripts/docs-generate.mjs"
+        },
+        {
+          "name": "docs:generate:check",
+          "command": "node scripts/docs-generate.mjs --check",
+          "source": "scripts/docs-generate.mjs"
+        },
+        {
+          "name": "docs:inventory:config",
+          "command": "node scripts/docs-configuration-inventory.mjs",
+          "source": "scripts/docs-configuration-inventory.mjs"
+        },
+        {
+          "name": "docs:inventory:config:check",
+          "command": "node scripts/docs-configuration-inventory.mjs --check",
+          "source": "scripts/docs-configuration-inventory.mjs"
+        },
+        {
+          "name": "docs:inventory:local-helm",
+          "command": "node scripts/generate-local-helm-authorities.mjs",
+          "source": "scripts/generate-local-helm-authorities.mjs"
+        },
+        {
+          "name": "docs:inventory:local-helm:check",
+          "command": "node scripts/generate-local-helm-authorities.mjs --check && node scripts/check-local-helm-boolean-semantics.mjs",
+          "source": "scripts/generate-local-helm-authorities.mjs"
+        }
+      ],
+      "dynamicOperations": 7,
+      "unresolvedOperations": 77,
+      "purposeInputs": [
+        {
+          "path": "scripts/docs-api-versions-map-output-authority.json",
+          "canonical": "scripts/docs-api-versions-map-output-authority.json",
+          "sha256": "d29fad9dcecad5c4883092514292fd1bbc73860a56d06f09785cde85e65c5769"
+        }
+      ],
+      "child": []
+    }
+  ],
+  "graphAcquisition": {
+    "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/restart-two-helper-purpose-acquisition.json",
+    "sha256": "e502d2d1f415cc8528d703ab9b8588d6ee24a2e9f40ca455da1ae2caf9503c0b",
+    "native": true,
+    "graphEqualsPreviousScalar": true
+  },
+  "predictedGuardEffects": {
+    "existingRoleRegistryFacts": [],
+    "roleTrustAnchor": "Excluded by unchanged native trustAnchorSources; previous103 executable fact recipes expected unchanged.",
+    "scalar": "Registry is absent from both saved selected graph vector and caller census; helper recipe edits are existing excluded trust-anchor metadata. No scalar digest change predicted. Fresh actual scalar verification remains parent-owned.",
+    "qualificationGraph": "Only boundary membership/qualification metadata changes, no source imports/public entries, package or unresolved loader operation changes."
+  },
+  "limits": [
+    "Authoring is not independent review.",
+    "No owning generator, product renderer, versions source, writer, network probe, live API apply or expensive tests executed.",
+    "No new framework, qualifier kind, discovery change, exclusion or acceptance grant."
+  ]
+}
