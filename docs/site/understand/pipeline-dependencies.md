@@ -151,6 +151,13 @@ A failed optional adapter can block its stages while the canonical run record re
 > [The entry point exports Core and starts the project CLI as a separate layer](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/skills/nova/pipeline.ts#L5-L14).
 >
 > [Core writes the graph and registry snapshots before it runs the pipeline](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/skills/nova/core/execution/engine-run.ts#L36-L43).
+>
+> **Claim:** Nova role composition includes Core, project compilation and integrations; Core persists graph/registry identity before execution.
+> **Implementation:** The role lists package/plugin identities; `pipeline.ts` separates library exports from CLI execution, and `runNewPipeline()` writes snapshots first.
+> **Contract or setting:** Role membership is explicit; the prepared graph and registry snapshot bind one durable run rather than selecting an arbitrary runtime package.
+> **Test evidence:** This inspection did not assemble roles or execute a composed Nova run; these role/snapshot sources do not record runtime success.
+> **Revision:** `85e73b1885f04a9494f388cf6622ad0bde2db447`; the linked Nova role, entrypoint and engine-run sources remain byte-identical.
+> **Limit:** Role declaration and snapshot ordering do not establish installed bundle contents, every integration or external service readiness.
 
 ## Git Source and the Missing Git Mirror
 
@@ -183,6 +190,13 @@ Do not replace it with a newer branch head during recovery.
 > [The deployment clones the configured repository and later fetches its origin](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/charts/kubeclaw/templates/deployment.yaml#L374-L409).
 >
 > **Current limit:** No source file declares a supported Git mirror service or mirror failover contract.
+>
+> **Claim:** Nova selects Git adapters and workspace clone/fetch; an OCI mirror is not a Git origin/cache failover contract.
+> **Implementation:** The Nova role selects Git workspace/repository adapters, and the deployment initialization clones or fetches its configured origin.
+> **Contract or setting:** Configured origin and existing-workspace guards govern synchronization; recovery still requires the original run-bound revision.
+> **Test evidence:** No clone/fetch or Git-origin outage test ran for this inspection; a retained workspace is not successful fresh acquisition evidence.
+> **Revision:** `85e73b1885f04a9494f388cf6622ad0bde2db447`; role bytes match current; later deployment changes preserve the cited clone/fetch branch.
+> **Limit:** These clone/fetch sources establish no shared Git mirror, failover mechanism or availability of a missing historical revision.
 
 ## Redis: Transport and Projection, Not Lifecycle Authority
 
@@ -218,6 +232,13 @@ Do not infer missing pipeline events from an empty Redis stream.
 > [The adapter accepts bounded publish operations and resolves its password through a secret capability](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/skills/common/plugins/redis-transport/src/adapter.ts#L57-L84).
 >
 > [Nova writes its canonical run journal before the runner controls stage progress](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/skills/nova/core/execution/engine-run.ts#L36-L43).
+>
+> **Claim:** Redis publishes bounded selected transport/telemetry data while Nova retains canonical run history in its journal.
+> **Implementation:** The Redis adapter resolves a secret and performs keyed Lua publication; `runNewPipeline()` opens the durable journal before stage execution.
+> **Contract or setting:** Publication binds operation/resource type, caps JSON payload at 1 MiB and deduplicates only while the configured Redis TTL key survives.
+> **Test evidence:** No Redis exchange/deduplication or journal recovery test ran for this inspection; publication code is not an observed delivery.
+> **Revision:** `85e73b1885f04a9494f388cf6622ad0bde2db447`; linked Nova role, Redis adapter and engine-run files remain byte-identical.
+> **Limit:** An acknowledged stream entry is not complete lifecycle history; TTL expiry, lost Redis state or host queue loss require producer-specific recovery.
 
 ## PostgreSQL: Two Different Data Owners
 
@@ -252,6 +273,13 @@ Neither failure proves that Nova lost its run journal.
 > [The Prism chart creates a separate PostgreSQL workload and four database identities](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/charts/prism/templates/postgresql.yaml#L1-L52).
 >
 > [The Prism chart gives that database its own persistent volume](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/charts/prism/templates/postgresql.yaml#L54-L73).
+>
+> **Claim:** The selected LiteLLM and Prism PostgreSQL deployments use distinct credentials, workloads and recovery ownership.
+> **Implementation:** LiteLLM imports its dedicated Secret; the conditional Prism StatefulSet initializes separate database roles and owns its volume claim.
+> **Contract or setting:** Prism PostgreSQL renders only when enabled and requires its existing Secret; LiteLLM selects database-backed model storage through its deployment settings.
+> **Test evidence:** No database start, credential, backup or restore test ran for this inspection; template references are not observed SQL readiness.
+> **Revision:** `85e73b1885f04a9494f388cf6622ad0bde2db447`; the linked LiteLLM deployment and Prism PostgreSQL template remain byte-identical.
+> **Limit:** Secret references do not prove actual credential values or connectivity; these databases do not replace Nova run storage.
 
 ## BuildKit, Local OCI Registry, and Pull-Through Mirror
 
@@ -312,6 +340,13 @@ Do not claim success from a tag, a BuildKit exit code, or a registry health resp
 > [The lab OCI registry uses retained storage and one writer during service replacement](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/my-values/infra/registry-local.yaml#L1-L45).
 >
 > [The separate mirror caches Docker Hub content and keeps its own cache volume](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/my-values/infra/registry-mirror.yaml#L14-L78).
+>
+> **Claim:** BuildKit builds/pushes images; a writable registry stores results, while an explicitly selected mirror caches public base pulls.
+> **Implementation:** Buster starts configured rootless BuildKit; container-build runtime verifies the pushed manifest digest before returning an immutable image reference.
+> **Contract or setting:** `registry-clients.v1` separates writable-registry and optional mirror endpoints; provider policy bounds build arguments, platforms, logs and execution time.
+> **Test evidence:** No BuildKit, registry write/read or uncached node pull ran for this inspection; the linked build path does not establish deployment success.
+> **Revision:** `85e73b1885f04a9494f388cf6622ad0bde2db447`; container-build bytes match current; later client/entrypoint changes retain this build/registry separation.
+> **Limit:** The old retained-registry template is not the separate ephemeral GitOps profile, and mirror availability does not establish upstream cache-miss success.
 
 ## Tailscale: Required Platform Service With Two Consumers
 
@@ -349,6 +384,13 @@ Do not create a second exposure for an uncertain attempt.
 > [The provider requires only the bounded Kubernetes exposure capability](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/skills/buster/plugins/tailscale-exposure/plugin.json#L1-L25).
 >
 > [Prism Studio can select a private Tailscale ingress without changing internal worker routes](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/charts/prism/templates/services.yaml#L38-L47).
+>
+> **Claim:** Tailscale exposure providers and private user/operator ingress are separate selected consumers, not lifecycle authorities.
+> **Implementation:** Buster includes the exposure provider; Prism conditionally renders a Tailscale-class Studio ingress without rerouting internal Worker services.
+> **Contract or setting:** The provider requires `kubernetes.exposure`; Prism ingress renders only when `tailscale.enabled` selects its hostname.
+> **Test evidence:** No exposure lease, ACL, DNS, private access or release test ran for this inspection; role/ingress declarations are not traffic observations.
+> **Revision:** `85e73b1885f04a9494f388cf6622ad0bde2db447`; linked Buster role, provider manifest and Prism service template remain byte-identical.
+> **Limit:** Manifest capability requirements do not prove effective grants, live private routing or cleanup of an uncertain exposure lease.
 
 ## Failure and Recovery Summary
 

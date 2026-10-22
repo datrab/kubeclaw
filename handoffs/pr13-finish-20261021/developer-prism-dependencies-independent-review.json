@@ -1,0 +1,841 @@
+{
+  "reviewer": "/root/custody_review; independent of workflow author",
+  "status": "BOUNDED_SOURCE_SEMANTIC_READER_QUALITY_PASS",
+  "review": {
+    "sourceAccuracy": "PASS",
+    "readerUsability": "PASS",
+    "quality": "PASS"
+  },
+  "materialFindings": [],
+  "scope": {
+    "allDispositions": 54,
+    "newFieldSets": 25,
+    "unchangedComplete": 29,
+    "newByPage": {
+      "docs/site/extend/README.md": 6,
+      "docs/site/extend/platform/prism.md": 13,
+      "docs/site/understand/pipeline-dependencies.md": 6
+    },
+    "handbookUnchangedBoxes": 28,
+    "mirrorUnchangedBoxes": 1
+  },
+  "files": [
+    {
+      "path": "docs/site/extend/developer-handbook.md",
+      "baselineSha256": "6a03109c275f0d8c8814ee14c3b06e80db74a90f2a5c1750ae77f24cf5878f27",
+      "candidateSha256": "6a03109c275f0d8c8814ee14c3b06e80db74a90f2a5c1750ae77f24cf5878f27",
+      "currentMainEqualsBaseline": true,
+      "same": true
+    },
+    {
+      "path": "docs/site/extend/README.md",
+      "baselineSha256": "7569bcbbb93d1fa8cc9346324705ec64cbae5373668a2a0da3bc15b86fa6bd75",
+      "candidateSha256": "ea649deae6373d9b45a9b058867099522562cd2f6314a96f2cb7435bac914a2a",
+      "currentMainEqualsBaseline": true,
+      "same": false
+    },
+    {
+      "path": "docs/site/extend/platform/prism.md",
+      "baselineSha256": "9c7b43487328edd95695c7581468b768f21d538dd2d7e429aa62e6a9ec6badeb",
+      "candidateSha256": "b95d48a400338e6b50eb211b07af8a85a527aa4c74be82edbb852e179b22df7b",
+      "currentMainEqualsBaseline": true,
+      "same": false
+    },
+    {
+      "path": "docs/site/understand/pipeline-dependencies.md",
+      "baselineSha256": "84f5f386072d54b3562fe13f5cda24f25986a48cf3fc0c149a11900bc1e6d843",
+      "candidateSha256": "f84bf3115566c06b3db958ed560497a8c4b0b8bc7dfa2bdfb90755c63b461671",
+      "currentMainEqualsBaseline": true,
+      "same": false
+    }
+  ],
+  "perBoxDispositions": [
+    {
+      "index": 1,
+      "page": "docs/site/extend/developer-handbook.md",
+      "title": "> **Source evidence \u2014 checkout baseline**",
+      "disposition": "PRESERVE_EXACT_EXISTING_COMPLETE_SCOPE_NOT_RECOUNTED",
+      "review": null,
+      "reason": "Entire handbook and its28complete boxes are byte-identical;reuse named A91001/A91011/relevant accepted developer scopes only. Historical changed Source pins/results are not current-whole-source or fresh execution claims.",
+      "baselineBoxSha256": "0810e8d58a5978cb4e2acde78afdc94e6d3aaac8a5ab2d395ffdd2badcd47cd0",
+      "candidateBoxSha256": "0810e8d58a5978cb4e2acde78afdc94e6d3aaac8a5ab2d395ffdd2badcd47cd0",
+      "testOrLiveExecution": "NOT_RUN_BY_THIS_REVIEW",
+      "limits": "No whole54box/newrequirement/gate/corpus/runtime/hosting/release acceptance;original limits preserved."
+    },
+    {
+      "index": 2,
+      "page": "docs/site/extend/developer-handbook.md",
+      "title": "> **Source evidence \u2014 separate environments**",
+      "disposition": "PRESERVE_EXACT_EXISTING_COMPLETE_SCOPE_NOT_RECOUNTED",
+      "review": null,
+      "reason": "Entire handbook and its28complete boxes are byte-identical;reuse named A91001/A91011/relevant accepted developer scopes only. Historical changed Source pins/results are not current-whole-source or fresh execution claims.",
+      "baselineBoxSha256": "35758dc3bc86ed85b167e230fbd37e2da39ddf6f2d65c631eea592d268a77654",
+      "candidateBoxSha256": "35758dc3bc86ed85b167e230fbd37e2da39ddf6f2d65c631eea592d268a77654",
+      "testOrLiveExecution": "NOT_RUN_BY_THIS_REVIEW",
+      "limits": "No whole54box/newrequirement/gate/corpus/runtime/hosting/release acceptance;original limits preserved."
+    },
+    {
+      "index": 3,
+      "page": "docs/site/extend/developer-handbook.md",
+      "title": "> **Source evidence \u2014 ownership and source rules**",
+      "disposition": "PRESERVE_EXACT_EXISTING_COMPLETE_SCOPE_NOT_RECOUNTED",
+      "review": null,
+      "reason": "Entire handbook and its28complete boxes are byte-identical;reuse named A91001/A91011/relevant accepted developer scopes only. Historical changed Source pins/results are not current-whole-source or fresh execution claims.",
+      "baselineBoxSha256": "f736128c031eaddb6f997113c73d8a4f47576963d79da22e110161cdcdea634a",
+      "candidateBoxSha256": "f736128c031eaddb6f997113c73d8a4f47576963d79da22e110161cdcdea634a",
+      "testOrLiveExecution": "NOT_RUN_BY_THIS_REVIEW",
+      "limits": "No whole54box/newrequirement/gate/corpus/runtime/hosting/release acceptance;original limits preserved."
+    },
+    {
+      "index": 4,
+      "page": "docs/site/extend/developer-handbook.md",
+      "title": "> **Source evidence \u2014 code generation**",
+      "disposition": "PRESERVE_EXACT_EXISTING_COMPLETE_SCOPE_NOT_RECOUNTED",
+      "review": null,
+      "reason": "Entire handbook and its28complete boxes are byte-identical;reuse named A91001/A91011/relevant accepted developer scopes only. Historical changed Source pins/results are not current-whole-source or fresh execution claims.",
+      "baselineBoxSha256": "cf7df0a3f265cfd590f51945ac52adbe165931282596f61c5540429b9eeb01bc",
+      "candidateBoxSha256": "cf7df0a3f265cfd590f51945ac52adbe165931282596f61c5540429b9eeb01bc",
+      "testOrLiveExecution": "NOT_RUN_BY_THIS_REVIEW",
+      "limits": "No whole54box/newrequirement/gate/corpus/runtime/hosting/release acceptance;original limits preserved."
+    },
+    {
+      "index": 5,
+      "page": "docs/site/extend/developer-handbook.md",
+      "title": "> **Source evidence \u2014 aggregate check limits**",
+      "disposition": "PRESERVE_EXACT_EXISTING_COMPLETE_SCOPE_NOT_RECOUNTED",
+      "review": null,
+      "reason": "Entire handbook and its28complete boxes are byte-identical;reuse named A91001/A91011/relevant accepted developer scopes only. Historical changed Source pins/results are not current-whole-source or fresh execution claims.",
+      "baselineBoxSha256": "0f75dbed2275bb92cb006be6681ae65028b44969adcc622c330d6b93e039bef0",
+      "candidateBoxSha256": "0f75dbed2275bb92cb006be6681ae65028b44969adcc622c330d6b93e039bef0",
+      "testOrLiveExecution": "NOT_RUN_BY_THIS_REVIEW",
+      "limits": "No whole54box/newrequirement/gate/corpus/runtime/hosting/release acceptance;original limits preserved."
+    },
+    {
+      "index": 6,
+      "page": "docs/site/extend/developer-handbook.md",
+      "title": "> **Source evidence \u2014 Lint check and exit contract**",
+      "disposition": "PRESERVE_EXACT_EXISTING_COMPLETE_SCOPE_NOT_RECOUNTED",
+      "review": null,
+      "reason": "Entire handbook and its28complete boxes are byte-identical;reuse named A91001/A91011/relevant accepted developer scopes only. Historical changed Source pins/results are not current-whole-source or fresh execution claims.",
+      "baselineBoxSha256": "3e603e19d4b57186e305eb80324abf16c7494540721115552359ff46f5d85d33",
+      "candidateBoxSha256": "3e603e19d4b57186e305eb80324abf16c7494540721115552359ff46f5d85d33",
+      "testOrLiveExecution": "NOT_RUN_BY_THIS_REVIEW",
+      "limits": "No whole54box/newrequirement/gate/corpus/runtime/hosting/release acceptance;original limits preserved."
+    },
+    {
+      "index": 7,
+      "page": "docs/site/extend/developer-handbook.md",
+      "title": "> **Source evidence \u2014 lifecycle and restart**",
+      "disposition": "PRESERVE_EXACT_EXISTING_COMPLETE_SCOPE_NOT_RECOUNTED",
+      "review": null,
+      "reason": "Entire handbook and its28complete boxes are byte-identical;reuse named A91001/A91011/relevant accepted developer scopes only. Historical changed Source pins/results are not current-whole-source or fresh execution claims.",
+      "baselineBoxSha256": "3870dea53208e5071dcbb4a2c8937cd73049ba564da389d2b369b8b6e2f484c3",
+      "candidateBoxSha256": "3870dea53208e5071dcbb4a2c8937cd73049ba564da389d2b369b8b6e2f484c3",
+      "testOrLiveExecution": "NOT_RUN_BY_THIS_REVIEW",
+      "limits": "No whole54box/newrequirement/gate/corpus/runtime/hosting/release acceptance;original limits preserved."
+    },
+    {
+      "index": 8,
+      "page": "docs/site/extend/developer-handbook.md",
+      "title": "> **Source evidence \u2014 Worker route**",
+      "disposition": "PRESERVE_EXACT_EXISTING_COMPLETE_SCOPE_NOT_RECOUNTED",
+      "review": null,
+      "reason": "Entire handbook and its28complete boxes are byte-identical;reuse named A91001/A91011/relevant accepted developer scopes only. Historical changed Source pins/results are not current-whole-source or fresh execution claims.",
+      "baselineBoxSha256": "6013361f1603730d7e94fc0e58dfa8d6abb1f423c216fbc3a599be2c9c00cc9a",
+      "candidateBoxSha256": "6013361f1603730d7e94fc0e58dfa8d6abb1f423c216fbc3a599be2c9c00cc9a",
+      "testOrLiveExecution": "NOT_RUN_BY_THIS_REVIEW",
+      "limits": "No whole54box/newrequirement/gate/corpus/runtime/hosting/release acceptance;original limits preserved."
+    },
+    {
+      "index": 9,
+      "page": "docs/site/extend/developer-handbook.md",
+      "title": "> **Source evidence \u2014 native-runtime tool and race boundary**",
+      "disposition": "PRESERVE_EXACT_EXISTING_COMPLETE_SCOPE_NOT_RECOUNTED",
+      "review": null,
+      "reason": "Entire handbook and its28complete boxes are byte-identical;reuse named A91001/A91011/relevant accepted developer scopes only. Historical changed Source pins/results are not current-whole-source or fresh execution claims.",
+      "baselineBoxSha256": "ad49d6f6d21f2c94397b7e39579e05dd0b949a8b279fe0dee4ed7e1aa39ecc77",
+      "candidateBoxSha256": "ad49d6f6d21f2c94397b7e39579e05dd0b949a8b279fe0dee4ed7e1aa39ecc77",
+      "testOrLiveExecution": "NOT_RUN_BY_THIS_REVIEW",
+      "limits": "No whole54box/newrequirement/gate/corpus/runtime/hosting/release acceptance;original limits preserved."
+    },
+    {
+      "index": 10,
+      "page": "docs/site/extend/developer-handbook.md",
+      "title": "> **Source evidence \u2014 native fixture authority**",
+      "disposition": "PRESERVE_EXACT_EXISTING_COMPLETE_SCOPE_NOT_RECOUNTED",
+      "review": null,
+      "reason": "Entire handbook and its28complete boxes are byte-identical;reuse named A91001/A91011/relevant accepted developer scopes only. Historical changed Source pins/results are not current-whole-source or fresh execution claims.",
+      "baselineBoxSha256": "de7b005951c145b94c1af8540cb4f9d21c76df0df1885dc728c9187db26832e0",
+      "candidateBoxSha256": "de7b005951c145b94c1af8540cb4f9d21c76df0df1885dc728c9187db26832e0",
+      "testOrLiveExecution": "NOT_RUN_BY_THIS_REVIEW",
+      "limits": "No whole54box/newrequirement/gate/corpus/runtime/hosting/release acceptance;original limits preserved."
+    },
+    {
+      "index": 11,
+      "page": "docs/site/extend/developer-handbook.md",
+      "title": "> **Source evidence \u2014 fixed remote archive executable**",
+      "disposition": "PRESERVE_EXACT_EXISTING_COMPLETE_SCOPE_NOT_RECOUNTED",
+      "review": null,
+      "reason": "Entire handbook and its28complete boxes are byte-identical;reuse named A91001/A91011/relevant accepted developer scopes only. Historical changed Source pins/results are not current-whole-source or fresh execution claims.",
+      "baselineBoxSha256": "dfe27e052c2ec11c4138b86f200fc9dc80d10ddc205b6f3f0a1c52b39e8ddb2a",
+      "candidateBoxSha256": "dfe27e052c2ec11c4138b86f200fc9dc80d10ddc205b6f3f0a1c52b39e8ddb2a",
+      "testOrLiveExecution": "NOT_RUN_BY_THIS_REVIEW",
+      "limits": "No whole54box/newrequirement/gate/corpus/runtime/hosting/release acceptance;original limits preserved."
+    },
+    {
+      "index": 12,
+      "page": "docs/site/extend/developer-handbook.md",
+      "title": "> **Source evidence \u2014 Buster chain**",
+      "disposition": "PRESERVE_EXACT_EXISTING_COMPLETE_SCOPE_NOT_RECOUNTED",
+      "review": null,
+      "reason": "Entire handbook and its28complete boxes are byte-identical;reuse named A91001/A91011/relevant accepted developer scopes only. Historical changed Source pins/results are not current-whole-source or fresh execution claims.",
+      "baselineBoxSha256": "eead6d021de823bdf653a016653d6a4e4bb73b5fe8456268039ca977aad85044",
+      "candidateBoxSha256": "eead6d021de823bdf653a016653d6a4e4bb73b5fe8456268039ca977aad85044",
+      "testOrLiveExecution": "NOT_RUN_BY_THIS_REVIEW",
+      "limits": "No whole54box/newrequirement/gate/corpus/runtime/hosting/release acceptance;original limits preserved."
+    },
+    {
+      "index": 13,
+      "page": "docs/site/extend/developer-handbook.md",
+      "title": "> **Source evidence \u2014 pooled transaction setup and retained state**",
+      "disposition": "PRESERVE_EXACT_EXISTING_COMPLETE_SCOPE_NOT_RECOUNTED",
+      "review": null,
+      "reason": "Entire handbook and its28complete boxes are byte-identical;reuse named A91001/A91011/relevant accepted developer scopes only. Historical changed Source pins/results are not current-whole-source or fresh execution claims.",
+      "baselineBoxSha256": "2c402b27ca89e30402bf261f928819c1b03f78969b715147b4a3da20d665b102",
+      "candidateBoxSha256": "2c402b27ca89e30402bf261f928819c1b03f78969b715147b4a3da20d665b102",
+      "testOrLiveExecution": "NOT_RUN_BY_THIS_REVIEW",
+      "limits": "No whole54box/newrequirement/gate/corpus/runtime/hosting/release acceptance;original limits preserved."
+    },
+    {
+      "index": 14,
+      "page": "docs/site/extend/developer-handbook.md",
+      "title": "> **Source evidence \u2014 ordered native dispatch**",
+      "disposition": "PRESERVE_EXACT_EXISTING_COMPLETE_SCOPE_NOT_RECOUNTED",
+      "review": null,
+      "reason": "Entire handbook and its28complete boxes are byte-identical;reuse named A91001/A91011/relevant accepted developer scopes only. Historical changed Source pins/results are not current-whole-source or fresh execution claims.",
+      "baselineBoxSha256": "9d2eae86c0875b766d873db23cfd7edc0cebb2b3f444e1afa83cc6c857a2ad03",
+      "candidateBoxSha256": "9d2eae86c0875b766d873db23cfd7edc0cebb2b3f444e1afa83cc6c857a2ad03",
+      "testOrLiveExecution": "NOT_RUN_BY_THIS_REVIEW",
+      "limits": "No whole54box/newrequirement/gate/corpus/runtime/hosting/release acceptance;original limits preserved."
+    },
+    {
+      "index": 15,
+      "page": "docs/site/extend/developer-handbook.md",
+      "title": "> **Source evidence \u2014 Prism startup and selection**",
+      "disposition": "PRESERVE_EXACT_EXISTING_COMPLETE_SCOPE_NOT_RECOUNTED",
+      "review": null,
+      "reason": "Entire handbook and its28complete boxes are byte-identical;reuse named A91001/A91011/relevant accepted developer scopes only. Historical changed Source pins/results are not current-whole-source or fresh execution claims.",
+      "baselineBoxSha256": "07cd75275bd1c67fa8761e14faeb995c054169f7341a63346226da123110c29e",
+      "candidateBoxSha256": "07cd75275bd1c67fa8761e14faeb995c054169f7341a63346226da123110c29e",
+      "testOrLiveExecution": "NOT_RUN_BY_THIS_REVIEW",
+      "limits": "No whole54box/newrequirement/gate/corpus/runtime/hosting/release acceptance;original limits preserved."
+    },
+    {
+      "index": 16,
+      "page": "docs/site/extend/developer-handbook.md",
+      "title": "> **Source evidence \u2014 Registry distinction**",
+      "disposition": "PRESERVE_EXACT_EXISTING_COMPLETE_SCOPE_NOT_RECOUNTED",
+      "review": null,
+      "reason": "Entire handbook and its28complete boxes are byte-identical;reuse named A91001/A91011/relevant accepted developer scopes only. Historical changed Source pins/results are not current-whole-source or fresh execution claims.",
+      "baselineBoxSha256": "26ed0fdf80e564fc7b14bc292e202a8e5ea9756a609d0701ef2bba5eff73c59f",
+      "candidateBoxSha256": "26ed0fdf80e564fc7b14bc292e202a8e5ea9756a609d0701ef2bba5eff73c59f",
+      "testOrLiveExecution": "NOT_RUN_BY_THIS_REVIEW",
+      "limits": "No whole54box/newrequirement/gate/corpus/runtime/hosting/release acceptance;original limits preserved."
+    },
+    {
+      "index": 17,
+      "page": "docs/site/extend/developer-handbook.md",
+      "title": "> **Source evidence \u2014 SDK boundary**",
+      "disposition": "PRESERVE_EXACT_EXISTING_COMPLETE_SCOPE_NOT_RECOUNTED",
+      "review": null,
+      "reason": "Entire handbook and its28complete boxes are byte-identical;reuse named A91001/A91011/relevant accepted developer scopes only. Historical changed Source pins/results are not current-whole-source or fresh execution claims.",
+      "baselineBoxSha256": "3908c024906a1b50fc04a356782edc0ce2ca0b18e17695f4ab571a1a68222b1f",
+      "candidateBoxSha256": "3908c024906a1b50fc04a356782edc0ce2ca0b18e17695f4ab571a1a68222b1f",
+      "testOrLiveExecution": "NOT_RUN_BY_THIS_REVIEW",
+      "limits": "No whole54box/newrequirement/gate/corpus/runtime/hosting/release acceptance;original limits preserved."
+    },
+    {
+      "index": 18,
+      "page": "docs/site/extend/developer-handbook.md",
+      "title": "> **Source evidence \u2014 telemetry generation and reconciliation**",
+      "disposition": "PRESERVE_EXACT_EXISTING_COMPLETE_SCOPE_NOT_RECOUNTED",
+      "review": null,
+      "reason": "Entire handbook and its28complete boxes are byte-identical;reuse named A91001/A91011/relevant accepted developer scopes only. Historical changed Source pins/results are not current-whole-source or fresh execution claims.",
+      "baselineBoxSha256": "03a34ae99ad0c8e3e671b4e3ec2bf659080d46d0ab983ae718d2cbd2b6f4fe0d",
+      "candidateBoxSha256": "03a34ae99ad0c8e3e671b4e3ec2bf659080d46d0ab983ae718d2cbd2b6f4fe0d",
+      "testOrLiveExecution": "NOT_RUN_BY_THIS_REVIEW",
+      "limits": "No whole54box/newrequirement/gate/corpus/runtime/hosting/release acceptance;original limits preserved."
+    },
+    {
+      "index": 19,
+      "page": "docs/site/extend/developer-handbook.md",
+      "title": "> **Source evidence \u2014 Chart and GitOps route**",
+      "disposition": "PRESERVE_EXACT_EXISTING_COMPLETE_SCOPE_NOT_RECOUNTED",
+      "review": null,
+      "reason": "Entire handbook and its28complete boxes are byte-identical;reuse named A91001/A91011/relevant accepted developer scopes only. Historical changed Source pins/results are not current-whole-source or fresh execution claims.",
+      "baselineBoxSha256": "b7774703361057f2d0cf4c5dfc486dccc66c9c38bda73c523caf9b30321309c4",
+      "candidateBoxSha256": "b7774703361057f2d0cf4c5dfc486dccc66c9c38bda73c523caf9b30321309c4",
+      "testOrLiveExecution": "NOT_RUN_BY_THIS_REVIEW",
+      "limits": "No whole54box/newrequirement/gate/corpus/runtime/hosting/release acceptance;original limits preserved."
+    },
+    {
+      "index": 20,
+      "page": "docs/site/extend/developer-handbook.md",
+      "title": "> **Source evidence \u2014 policy test's Python dependency**",
+      "disposition": "PRESERVE_EXACT_EXISTING_COMPLETE_SCOPE_NOT_RECOUNTED",
+      "review": null,
+      "reason": "Entire handbook and its28complete boxes are byte-identical;reuse named A91001/A91011/relevant accepted developer scopes only. Historical changed Source pins/results are not current-whole-source or fresh execution claims.",
+      "baselineBoxSha256": "d39d031b0376e4bbbbf3b597a24478d51facfc5b1571cddcdaf9c40fb3007381",
+      "candidateBoxSha256": "d39d031b0376e4bbbbf3b597a24478d51facfc5b1571cddcdaf9c40fb3007381",
+      "testOrLiveExecution": "NOT_RUN_BY_THIS_REVIEW",
+      "limits": "No whole54box/newrequirement/gate/corpus/runtime/hosting/release acceptance;original limits preserved."
+    },
+    {
+      "index": 21,
+      "page": "docs/site/extend/developer-handbook.md",
+      "title": "> **Source evidence \u2014 MCP local and image boundary**",
+      "disposition": "PRESERVE_EXACT_EXISTING_COMPLETE_SCOPE_NOT_RECOUNTED",
+      "review": null,
+      "reason": "Entire handbook and its28complete boxes are byte-identical;reuse named A91001/A91011/relevant accepted developer scopes only. Historical changed Source pins/results are not current-whole-source or fresh execution claims.",
+      "baselineBoxSha256": "dbade00635adb0431c3b58a77fb541e6dece92e68ec4a40674a64966bacb6fdd",
+      "candidateBoxSha256": "dbade00635adb0431c3b58a77fb541e6dece92e68ec4a40674a64966bacb6fdd",
+      "testOrLiveExecution": "NOT_RUN_BY_THIS_REVIEW",
+      "limits": "No whole54box/newrequirement/gate/corpus/runtime/hosting/release acceptance;original limits preserved."
+    },
+    {
+      "index": 22,
+      "page": "docs/site/extend/developer-handbook.md",
+      "title": "> **Source evidence \u2014 UI routes**",
+      "disposition": "PRESERVE_EXACT_EXISTING_COMPLETE_SCOPE_NOT_RECOUNTED",
+      "review": null,
+      "reason": "Entire handbook and its28complete boxes are byte-identical;reuse named A91001/A91011/relevant accepted developer scopes only. Historical changed Source pins/results are not current-whole-source or fresh execution claims.",
+      "baselineBoxSha256": "0805f09e4bee0ab6095914cf768e4ba582e897f330151b81f2fdb4abd3a5cca5",
+      "candidateBoxSha256": "0805f09e4bee0ab6095914cf768e4ba582e897f330151b81f2fdb4abd3a5cca5",
+      "testOrLiveExecution": "NOT_RUN_BY_THIS_REVIEW",
+      "limits": "No whole54box/newrequirement/gate/corpus/runtime/hosting/release acceptance;original limits preserved."
+    },
+    {
+      "index": 23,
+      "page": "docs/site/extend/developer-handbook.md",
+      "title": "> **Source evidence \u2014 security and scale limits**",
+      "disposition": "PRESERVE_EXACT_EXISTING_COMPLETE_SCOPE_NOT_RECOUNTED",
+      "review": null,
+      "reason": "Entire handbook and its28complete boxes are byte-identical;reuse named A91001/A91011/relevant accepted developer scopes only. Historical changed Source pins/results are not current-whole-source or fresh execution claims.",
+      "baselineBoxSha256": "d1028651e131d8e19fc681b16c3d36aacd97ba584158943b182efd058f39220c",
+      "candidateBoxSha256": "d1028651e131d8e19fc681b16c3d36aacd97ba584158943b182efd058f39220c",
+      "testOrLiveExecution": "NOT_RUN_BY_THIS_REVIEW",
+      "limits": "No whole54box/newrequirement/gate/corpus/runtime/hosting/release acceptance;original limits preserved."
+    },
+    {
+      "index": 24,
+      "page": "docs/site/extend/developer-handbook.md",
+      "title": "> **Source evidence \u2014 workflow authority**",
+      "disposition": "PRESERVE_EXACT_EXISTING_COMPLETE_SCOPE_NOT_RECOUNTED",
+      "review": null,
+      "reason": "Entire handbook and its28complete boxes are byte-identical;reuse named A91001/A91011/relevant accepted developer scopes only. Historical changed Source pins/results are not current-whole-source or fresh execution claims.",
+      "baselineBoxSha256": "26e6abde3b72c7cea6f906d52378f9d8186bb9dc1c4ac4225355adf3158636d6",
+      "candidateBoxSha256": "26e6abde3b72c7cea6f906d52378f9d8186bb9dc1c4ac4225355adf3158636d6",
+      "testOrLiveExecution": "NOT_RUN_BY_THIS_REVIEW",
+      "limits": "No whole54box/newrequirement/gate/corpus/runtime/hosting/release acceptance;original limits preserved."
+    },
+    {
+      "index": 25,
+      "page": "docs/site/extend/developer-handbook.md",
+      "title": "> **Source evidence \u2014 version, receipt, promotion, rollback**",
+      "disposition": "PRESERVE_EXACT_EXISTING_COMPLETE_SCOPE_NOT_RECOUNTED",
+      "review": null,
+      "reason": "Entire handbook and its28complete boxes are byte-identical;reuse named A91001/A91011/relevant accepted developer scopes only. Historical changed Source pins/results are not current-whole-source or fresh execution claims.",
+      "baselineBoxSha256": "360c6302e4181419260e22fc5e05f6e3879541e253aa76cf5659e33bfcde272b",
+      "candidateBoxSha256": "360c6302e4181419260e22fc5e05f6e3879541e253aa76cf5659e33bfcde272b",
+      "testOrLiveExecution": "NOT_RUN_BY_THIS_REVIEW",
+      "limits": "No whole54box/newrequirement/gate/corpus/runtime/hosting/release acceptance;original limits preserved."
+    },
+    {
+      "index": 26,
+      "page": "docs/site/extend/developer-handbook.md",
+      "title": "> **Source evidence \u2014 protected Core guide revision guard**",
+      "disposition": "PRESERVE_EXACT_EXISTING_COMPLETE_SCOPE_NOT_RECOUNTED",
+      "review": null,
+      "reason": "Entire handbook and its28complete boxes are byte-identical;reuse named A91001/A91011/relevant accepted developer scopes only. Historical changed Source pins/results are not current-whole-source or fresh execution claims.",
+      "baselineBoxSha256": "2d571852d5f375fedc9195734cc5a650633f0fdd3097d32f6427fc43a3116772",
+      "candidateBoxSha256": "2d571852d5f375fedc9195734cc5a650633f0fdd3097d32f6427fc43a3116772",
+      "testOrLiveExecution": "NOT_RUN_BY_THIS_REVIEW",
+      "limits": "No whole54box/newrequirement/gate/corpus/runtime/hosting/release acceptance;original limits preserved."
+    },
+    {
+      "index": 27,
+      "page": "docs/site/extend/developer-handbook.md",
+      "title": "> **Source evidence \u2014 maintenance routing**",
+      "disposition": "PRESERVE_EXACT_EXISTING_COMPLETE_SCOPE_NOT_RECOUNTED",
+      "review": null,
+      "reason": "Entire handbook and its28complete boxes are byte-identical;reuse named A91001/A91011/relevant accepted developer scopes only. Historical changed Source pins/results are not current-whole-source or fresh execution claims.",
+      "baselineBoxSha256": "9145376a66bd91ecf8a889bbc9d88395e398d3e89512047bc840a58b63c82ea1",
+      "candidateBoxSha256": "9145376a66bd91ecf8a889bbc9d88395e398d3e89512047bc840a58b63c82ea1",
+      "testOrLiveExecution": "NOT_RUN_BY_THIS_REVIEW",
+      "limits": "No whole54box/newrequirement/gate/corpus/runtime/hosting/release acceptance;original limits preserved."
+    },
+    {
+      "index": 28,
+      "page": "docs/site/extend/developer-handbook.md",
+      "title": "> **Source evidence \u2014 publication input selection**",
+      "disposition": "PRESERVE_EXACT_EXISTING_COMPLETE_SCOPE_NOT_RECOUNTED",
+      "review": null,
+      "reason": "Entire handbook and its28complete boxes are byte-identical;reuse named A91001/A91011/relevant accepted developer scopes only. Historical changed Source pins/results are not current-whole-source or fresh execution claims.",
+      "baselineBoxSha256": "253645e635dd3b7a046feaf979757d0c8314a4380588382031c20176b2116d84",
+      "candidateBoxSha256": "253645e635dd3b7a046feaf979757d0c8314a4380588382031c20176b2116d84",
+      "testOrLiveExecution": "NOT_RUN_BY_THIS_REVIEW",
+      "limits": "No whole54box/newrequirement/gate/corpus/runtime/hosting/release acceptance;original limits preserved."
+    },
+    {
+      "index": 29,
+      "page": "docs/site/extend/README.md",
+      "title": "> **Source evidence \u2014 configuration selects but does not create authority**",
+      "disposition": "PASS_BOUNDED_NEW_FIELDS",
+      "review": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "reason": "Platform config owns roots/trust/provider/grants. prepareRuntime validates definition, discovers/builds registry, resolves grants/config and activates selected surfaces; actual provider policy targets adapters. Existing negative platform assertion/datetext retained.",
+      "baselineBoxSha256": "48e31d74b1095b316de0b5a565b13109dd398c8950b8b9ef81fcfd9fc0495f12",
+      "candidateBoxSha256": "982b380f97e35d6d3a9acca5d13c9f0eed9e953ec38ea574767db378bdc4b9c7",
+      "testOrLiveExecution": "NOT_RUN_BY_THIS_REVIEW",
+      "limits": "No whole54box/newrequirement/gate/corpus/runtime/hosting/release acceptance;original limits preserved."
+    },
+    {
+      "index": 30,
+      "page": "docs/site/extend/README.md",
+      "title": "> **Source evidence \u2014 five different registration contracts**",
+      "disposition": "PASS_BOUNDED_NEW_FIELDS",
+      "review": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "reason": "Five separate manifest arrays and registry indexes/conflict checks remain distinct. Dated contract/registry results are not new runs; provider/report execution not inferred.",
+      "baselineBoxSha256": "e53cafa9be3a60f7e2d27a0f3df0e0b3330c5e4b0649af71593ba7b2635f3417",
+      "candidateBoxSha256": "f9085fd14c48bf201e2aa185831c0a955ccca754ec4fbe1a4fe632a4202da274",
+      "testOrLiveExecution": "NOT_RUN_BY_THIS_REVIEW",
+      "limits": "No whole54box/newrequirement/gate/corpus/runtime/hosting/release acceptance;original limits preserved."
+    },
+    {
+      "index": 31,
+      "page": "docs/site/extend/README.md",
+      "title": "> **Source evidence \u2014 inert discovery before selected activation**",
+      "disposition": "PASS_BOUNDED_NEW_FIELDS",
+      "review": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "reason": "Discovery is inert JSON/provenance; Nova activation handles only stage/observer/adapter. External adapter rejection is explicit; Buster resolver selects contracts and separate package snapshots/digests govern provider/report execution.",
+      "baselineBoxSha256": "9bbef387cdf6f01a3711107401692fa33ce4adc5ecf4c5ac4bc41bf25e2399dd",
+      "candidateBoxSha256": "34821c15918c31bbd48f9657909d48c480f5f226610460d99f420fc939c2073f",
+      "testOrLiveExecution": "NOT_RUN_BY_THIS_REVIEW",
+      "limits": "No whole54box/newrequirement/gate/corpus/runtime/hosting/release acceptance;original limits preserved."
+    },
+    {
+      "index": 32,
+      "page": "docs/site/extend/README.md",
+      "title": "> **Source evidence \u2014 host manifests remain separate**",
+      "disposition": "PASS_BOUNDED_NEW_FIELDS",
+      "review": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "reason": "Actual observer/Prism/Codex manifests respectively declare startup/two tools/skill directory. Host schema/config and actual activation remain separate from Nova grants; existing Limit unchanged.",
+      "baselineBoxSha256": "c14c98f718a5a411786042a1035cc867b13fd93fe02eb14fec8c7f6ff47c0495",
+      "candidateBoxSha256": "82b05406fc0a10ac46f1e2ab13b09a104f83ac65ed0c7c2ff778d436c866c692",
+      "testOrLiveExecution": "NOT_RUN_BY_THIS_REVIEW",
+      "limits": "No whole54box/newrequirement/gate/corpus/runtime/hosting/release acceptance;original limits preserved."
+    },
+    {
+      "index": 33,
+      "page": "docs/site/extend/README.md",
+      "title": "> **Source evidence \u2014 engines and roles are package boundaries**",
+      "disposition": "PASS_BOUNDED_NEW_FIELDS",
+      "review": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "reason": "WorkerProfile engine contains identity/contract/version/digest; attempt hooks and explicit role/package ownership do not define a generic engine manifest or prove installed bundle/native execution. Dated local result unchanged.",
+      "baselineBoxSha256": "e407fdc2a27d8f3f772ad621098d5748f8fca70368a2dd73e570b5a99f54790f",
+      "candidateBoxSha256": "1ad17086b8203311c31eed698b6a0415a13c19f7e1ffe67e944cd2f225ae265e",
+      "testOrLiveExecution": "NOT_RUN_BY_THIS_REVIEW",
+      "limits": "No whole54box/newrequirement/gate/corpus/runtime/hosting/release acceptance;original limits preserved."
+    },
+    {
+      "index": 34,
+      "page": "docs/site/extend/README.md",
+      "title": "> **Source evidence \u2014 Core keeps control authority**",
+      "disposition": "PASS_BOUNDED_NEW_FIELDS",
+      "review": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "reason": "Four Core-only IDs excluded from closed public capability definitions; unknown constraints throw REGISTRY_CAPABILITY_UNKNOWN. Vocabulary rejection is not all-caller/OS containment proof.",
+      "baselineBoxSha256": "8c2c7a231db1d611a35105e05c6fdbe328939189e8c3a900046747f5622f0f78",
+      "candidateBoxSha256": "92c17411ae7c735a09d996a1170691373b892bfe5701b0daae9da681611c7561",
+      "testOrLiveExecution": "NOT_RUN_BY_THIS_REVIEW",
+      "limits": "No whole54box/newrequirement/gate/corpus/runtime/hosting/release acceptance;original limits preserved."
+    },
+    {
+      "index": 35,
+      "page": "docs/site/extend/platform/prism.md",
+      "title": "> **Source evidence \u2014 ownership boundary**",
+      "disposition": "PASS_BOUNDED_NEW_FIELDS",
+      "review": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "reason": "Runtime exports/worker binding admit exactly five specialist operation names and installed request/result schema identities; neutral Worker dependency remains separate. Named unknown-operation/opaque-transport assertions match source.",
+      "baselineBoxSha256": "e3f87bf515cd966d0be75147e31fe1fa8ad2525b767920162435d515e6313141",
+      "candidateBoxSha256": "6dd37c79a27eec3fef2cb140b24c9ebe03f3f3710fbdda66f8cdf35377b4c5a1",
+      "testOrLiveExecution": "NOT_RUN_BY_THIS_REVIEW",
+      "limits": "No whole54box/newrequirement/gate/corpus/runtime/hosting/release acceptance;original limits preserved."
+    },
+    {
+      "index": 36,
+      "page": "docs/site/extend/platform/prism.md",
+      "title": "> **Source evidence \u2014 maintained commands**",
+      "disposition": "PASS_BOUNDED_NEW_FIELDS",
+      "review": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "reason": "Actual package scripts select component tests; contract pretest/pretypecheck and Studio prebuild generate files. No execution or prepared environment inferred from command definitions.",
+      "baselineBoxSha256": "15b334732bf511023d0d59b5c65bc10a75a63918db1e90c73756c3aa855dfb58",
+      "candidateBoxSha256": "ed4e7b9654d409a7a428ec0978a2a9b3b718d3b9932236833535b078fe7eb1ca",
+      "testOrLiveExecution": "NOT_RUN_BY_THIS_REVIEW",
+      "limits": "No whole54box/newrequirement/gate/corpus/runtime/hosting/release acceptance;original limits preserved."
+    },
+    {
+      "index": 37,
+      "page": "docs/site/extend/platform/prism.md",
+      "title": "> **Source evidence \u2014 contract change path**",
+      "disposition": "PASS_BOUNDED_NEW_FIELDS",
+      "review": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "reason": "Original complexity guard bounds depth256/nodes1M/properties1M/encoded32MiB; normal and engine validators apply it, semantic document validation is separate; standalone generator actually writes output. No old/new migration proof.",
+      "baselineBoxSha256": "1f1a648266eda1334dc2005c49662349178e1ead541b9f1ebba4a526519cdfe0",
+      "candidateBoxSha256": "c9aedce65f1c031f80662e8fd17882982d93b6f435af4aca0ee1bc2f47b4b43d",
+      "testOrLiveExecution": "NOT_RUN_BY_THIS_REVIEW",
+      "limits": "No whole54box/newrequirement/gate/corpus/runtime/hosting/release acceptance;original limits preserved."
+    },
+    {
+      "index": 38,
+      "page": "docs/site/extend/platform/prism.md",
+      "title": "> **Source evidence \u2014 operation authority**",
+      "disposition": "PASS_BOUNDED_NEW_FIELDS",
+      "review": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "reason": "Domain clones before mutable operations, checks base revision and validates full result. Agent route separately validates trusted peer/project/generation/current job/exact revision before repository replacement; pure tests do not prove DB/auth.",
+      "baselineBoxSha256": "d15dcf22d7fb313ed6069736cb24b863281fe7b92e5afad7b4430a0eb1429d8e",
+      "candidateBoxSha256": "b2ad6f21b22db9d1d762f5db48e6f17a166253789c60d15104657366d71ac46c",
+      "testOrLiveExecution": "NOT_RUN_BY_THIS_REVIEW",
+      "limits": "No whole54box/newrequirement/gate/corpus/runtime/hosting/release acceptance;original limits preserved."
+    },
+    {
+      "index": 39,
+      "page": "docs/site/extend/platform/prism.md",
+      "title": "> **Source evidence \u2014 rendering boundary**",
+      "disposition": "PASS_BOUNDED_NEW_FIELDS",
+      "review": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "reason": "Renderer explicitly selects node branches and escapes output; document semantics control component references/patches. Contract-governed output does not imply layout/CSP/accessibility/external asset safety.",
+      "baselineBoxSha256": "8e8b41bd4c7f877a4c0b18e03ca4f3dfaece471a4fc3b12862e81e2353bc9919",
+      "candidateBoxSha256": "b9c7fbac997b0412a32f0c36faee65b499af9006dfa00dd08f17e40450b53bbc",
+      "testOrLiveExecution": "NOT_RUN_BY_THIS_REVIEW",
+      "limits": "No whole54box/newrequirement/gate/corpus/runtime/hosting/release acceptance;original limits preserved."
+    },
+    {
+      "index": 40,
+      "page": "docs/site/extend/platform/prism.md",
+      "title": "> **Source evidence \u2014 provider containment**",
+      "disposition": "PASS_BOUNDED_NEW_FIELDS",
+      "review": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "reason": "Engine owns cloned request operation/input fingerprint, finite cache identity and Domain reductions; ingest coerces/trim-bounds text and requires finite nonempty vector. Concurrent/conflicting-key assertions match; not live provider evidence.",
+      "baselineBoxSha256": "1e6d44343579bdb8f985a5ea5cd7a48f2a60a3095947bf204b403ce60b0720a7",
+      "candidateBoxSha256": "d7924eed15cfbc14135b4f1600045428cea525beef06e31740105d1005f7a7cc",
+      "testOrLiveExecution": "NOT_RUN_BY_THIS_REVIEW",
+      "limits": "No whole54box/newrequirement/gate/corpus/runtime/hosting/release acceptance;original limits preserved."
+    },
+    {
+      "index": 41,
+      "page": "docs/site/extend/platform/prism.md",
+      "title": "> **Source evidence \u2014 corpus safety**",
+      "disposition": "PASS_BOUNDED_NEW_FIELDS",
+      "review": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "reason": "Corpus identical-input advisory transaction lock precedes related rights/revision/pointer/embedding writes. SQL eligibility/model filtering and final diversity remain distinct from external acquisition/quarantine safety.",
+      "baselineBoxSha256": "f75746e18ae1a32dc16fc8bc4f41a07ea286620d530c42b244a6c9a49a45323f",
+      "candidateBoxSha256": "289d8bcc6aad2b25198d2ab48a7b3027d8fca5ed5820375db90e2a938d468c43",
+      "testOrLiveExecution": "NOT_RUN_BY_THIS_REVIEW",
+      "limits": "No whole54box/newrequirement/gate/corpus/runtime/hosting/release acceptance;original limits preserved."
+    },
+    {
+      "index": 42,
+      "page": "docs/site/extend/platform/prism.md",
+      "title": "> **Source evidence \u2014 evaluation and preference boundaries**",
+      "disposition": "PASS_BOUNDED_NEW_FIELDS",
+      "review": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "reason": "Evaluator stable finding hash/status and preference identity/retraction/time decay support claims. quality tests actually assert blocked cases/retraction/decay; no visual-quality emission or human approval.",
+      "baselineBoxSha256": "0f6d9f8fcb39366a23fcfc930a6527840e0842cfb052f5996927e65e9f6e711c",
+      "candidateBoxSha256": "8b920e8eca0bc9c59257d6ce727678a97772428a9810dedd6de50838d60d8d57",
+      "testOrLiveExecution": "NOT_RUN_BY_THIS_REVIEW",
+      "limits": "No whole54box/newrequirement/gate/corpus/runtime/hosting/release acceptance;original limits preserved."
+    },
+    {
+      "index": 43,
+      "page": "docs/site/extend/platform/prism.md",
+      "title": "> **Source evidence \u2014 Control boundary**",
+      "disposition": "PASS_BOUNDED_NEW_FIELDS",
+      "review": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "reason": "Actual shared session/CSRF helper authenticates without general project role enforcement; body helper byte-bound/no deadline and broad422 limits remain explicit. Router inventory not precise deployed authorization proof.",
+      "baselineBoxSha256": "09d6c38694dc9ab3edb7617383afb2c39a8de3186da9a019d364cb8211848747",
+      "candidateBoxSha256": "4aac20a374f71b11261c26c817e5ab8eb608208ebe3057850bb1e96e0ad309cd",
+      "testOrLiveExecution": "NOT_RUN_BY_THIS_REVIEW",
+      "limits": "No whole54box/newrequirement/gate/corpus/runtime/hosting/release acceptance;original limits preserved."
+    },
+    {
+      "index": 44,
+      "page": "docs/site/extend/platform/prism.md",
+      "title": "> **Source evidence \u2014 worker integration**",
+      "disposition": "PASS_BOUNDED_NEW_FIELDS",
+      "review": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "reason": "HTTP service authenticates/validates and checks native.ready before dispatch; native execution recovers journal and fixes host environment. New attempts require profile/maxima, recovered branches remain distinct. No native host/cleanup/result-seal execution.",
+      "baselineBoxSha256": "b898244181bbc113cca2dc60d764df2b3212ed6cd84e41a0bad9f3fec1ba611b",
+      "candidateBoxSha256": "e155afe4ad8891c5d7415b33547099f3bf32b9b7c4e16239b5b1d5695dc65016",
+      "testOrLiveExecution": "NOT_RUN_BY_THIS_REVIEW",
+      "limits": "No whole54box/newrequirement/gate/corpus/runtime/hosting/release acceptance;original limits preserved."
+    },
+    {
+      "index": 45,
+      "page": "docs/site/extend/platform/prism.md",
+      "title": "> **Source evidence \u2014 Studio boundary**",
+      "disposition": "PASS_BOUNDED_NEW_FIELDS",
+      "review": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "reason": "Studio declared flow matching and /v1/ proxy/current ingresssecret/timeout are separate from durable Control authority. Lexical static containment and broad proxy prefix do not imply symlink isolation/per-route authorization/readiness.",
+      "baselineBoxSha256": "b8c28dc0b2e34d951edbb0eae30596817c4a7b1f248a62df64ad1cee58ad69f7",
+      "candidateBoxSha256": "d1a453f544a9d527ffa58b7e84fe4a01bef4af6536f2f0c8099aa2294910fc69",
+      "testOrLiveExecution": "NOT_RUN_BY_THIS_REVIEW",
+      "limits": "No whole54box/newrequirement/gate/corpus/runtime/hosting/release acceptance;original limits preserved."
+    },
+    {
+      "index": 46,
+      "page": "docs/site/extend/platform/prism.md",
+      "title": "> **Source evidence \u2014 storage change path**",
+      "disposition": "PASS_BOUNDED_NEW_FIELDS",
+      "review": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "reason": "Migration transaction/advisory lock tracks applied filenames without SQL digest. Revision writes use CAS; content-addressed artifact store verifies existing bytes and publishes no-replace. Mock query-order assertion and PGlite revision/artifact assertions do not establish native concurrency/privileges/crash restore.",
+      "baselineBoxSha256": "24ff6a3eb5eac5be0a5f8e66a517a731915dee3ae119f3f280dd35e0c1b5a130",
+      "candidateBoxSha256": "6e0fd83c35c1d51df0f80228aac65bbf21c058cc673287dee74f9ea770f9ea47",
+      "testOrLiveExecution": "NOT_RUN_BY_THIS_REVIEW",
+      "limits": "No whole54box/newrequirement/gate/corpus/runtime/hosting/release acceptance;original limits preserved."
+    },
+    {
+      "index": 47,
+      "page": "docs/site/extend/platform/prism.md",
+      "title": "> **Source evidence \u2014 downstream binding**",
+      "disposition": "PASS_BOUNDED_NEW_FIELDS",
+      "review": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "reason": "Pure adapter maps fixed viewports/read-only targets and rejects unknown IDs; Nova stage verifies run/architecture/guidance issuer/approval/bundle before import. Digest mapping is not human authentication or full deployed journey.",
+      "baselineBoxSha256": "b6a6e77a07c455a105a4d561e775eeb0f350ad48639e10633669a40ee910bab0",
+      "candidateBoxSha256": "a1340cfad9d4a6a67d407844c93915c07f95e12e5cf13e35bab74cd3d05f24c7",
+      "testOrLiveExecution": "NOT_RUN_BY_THIS_REVIEW",
+      "limits": "No whole54box/newrequirement/gate/corpus/runtime/hosting/release acceptance;original limits preserved."
+    },
+    {
+      "index": 48,
+      "page": "docs/site/understand/pipeline-dependencies.md",
+      "title": "> **Source evidence \u2014 Mirror routing needs an explicit client selection**",
+      "disposition": "PRESERVE_EXACT_EXISTING_COMPLETE_SCOPE_NOT_RECOUNTED",
+      "review": null,
+      "reason": "Existing complete mirror-routing box is byte-identical;explicit selected mirror/client configuration and no node-install/pull guarantee remain in original reviewed scope.",
+      "baselineBoxSha256": "af6c42a7bc3b668735ecdd6bed10d1e1f727231bdff6feaae460718f78612ccc",
+      "candidateBoxSha256": "af6c42a7bc3b668735ecdd6bed10d1e1f727231bdff6feaae460718f78612ccc",
+      "testOrLiveExecution": "NOT_RUN_BY_THIS_REVIEW",
+      "limits": "No whole54box/newrequirement/gate/corpus/runtime/hosting/release acceptance;original limits preserved."
+    },
+    {
+      "index": 49,
+      "page": "docs/site/understand/pipeline-dependencies.md",
+      "title": "> **Source evidence \u2014 Nova contains more than Core**",
+      "disposition": "PASS_BOUNDED_NEW_FIELDS",
+      "review": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "reason": "Role lists packages/plugins separately from pipeline exports/CLI. runNewPipeline writes graph and registry snapshots before execution; no composed runtime success inferred.",
+      "baselineBoxSha256": "cdef1f89ab6d1a66133e8701161824b0361270d8657d4c33244046b5f6f4449c",
+      "candidateBoxSha256": "0d9f3cbdf4d23d8a3323aa8bcf55818f8aaadfc717aead75c57939e4cdb9e789",
+      "testOrLiveExecution": "NOT_RUN_BY_THIS_REVIEW",
+      "limits": "No whole54box/newrequirement/gate/corpus/runtime/hosting/release acceptance;original limits preserved."
+    },
+    {
+      "index": 50,
+      "page": "docs/site/understand/pipeline-dependencies.md",
+      "title": "> **Source evidence \u2014 current Git path**",
+      "disposition": "PASS_BOUNDED_NEW_FIELDS",
+      "review": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "reason": "Full historical/current deployment diff preserves actual clone/fetch/ff-only branch; other startup/doctor/checksum/Qdrant changes do not create Git mirror. Recovery still names original run revision.",
+      "baselineBoxSha256": "36212fa23ab56991c6c9ac855c74fc05c606c1921658605fd5bdd6c1d0cac1b1",
+      "candidateBoxSha256": "ebbfcfbad7171ec074b6e0ee5c55c328f6f02993e3e8098be7d0a938d159bcf7",
+      "testOrLiveExecution": "NOT_RUN_BY_THIS_REVIEW",
+      "limits": "No whole54box/newrequirement/gate/corpus/runtime/hosting/release acceptance;original limits preserved."
+    },
+    {
+      "index": 51,
+      "page": "docs/site/understand/pipeline-dependencies.md",
+      "title": "> **Source evidence \u2014 bounded Redis use**",
+      "disposition": "PASS_BOUNDED_NEW_FIELDS",
+      "review": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "reason": "Redis validates exact operation/resource, caps JSON1MiB and Lua returns prior only while TTL key survives; original Core journal remains authoritative. No automatic stream replay/whole lifecycle completeness.",
+      "baselineBoxSha256": "629a4dc69c5c98428140daed6ac5e4b3d2a671241de099957f94e6f263183c1c",
+      "candidateBoxSha256": "8553d510104e75399722f1f1a865c8f741770c8c581ed15641ff0e3f1ece794b",
+      "testOrLiveExecution": "NOT_RUN_BY_THIS_REVIEW",
+      "limits": "No whole54box/newrequirement/gate/corpus/runtime/hosting/release acceptance;original limits preserved."
+    },
+    {
+      "index": 52,
+      "page": "docs/site/understand/pipeline-dependencies.md",
+      "title": "> **Source evidence \u2014 separate PostgreSQL owners**",
+      "disposition": "PASS_BOUNDED_NEW_FIELDS",
+      "review": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "reason": "Actual LiteLLM Secret/env DB selection and conditional Prism PostgreSQL/own Secret/volume support separate state/credential/recovery owners; references are not credentials or SQL readiness.",
+      "baselineBoxSha256": "9a6f769b150c1479673c7d536484c051229dcac93bac573128e1ce4883120cb3",
+      "candidateBoxSha256": "076e37a62821a4ddd156371261fc40aa5f7964caa99ed2d01a345157d15e46ae",
+      "testOrLiveExecution": "NOT_RUN_BY_THIS_REVIEW",
+      "limits": "No whole54box/newrequirement/gate/corpus/runtime/hosting/release acceptance;original limits preserved."
+    },
+    {
+      "index": 53,
+      "page": "docs/site/understand/pipeline-dependencies.md",
+      "title": "> **Source evidence \u2014 image production chain**",
+      "disposition": "PASS_BOUNDED_NEW_FIELDS",
+      "review": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "reason": "BuildKit rootless startup and bounded build/push then registry manifest hash verification return immutable digest; historical client/comment/cgroup changes do not merge registry/mirror ownership. Retained direct versus ephemeral GitOps profiles remain explicit.",
+      "baselineBoxSha256": "241165a6efc453cb43700179020d6d20e8eb7032edfadf67afe8b81b9fcc5500",
+      "candidateBoxSha256": "07a557bcbfe26e0b026a5f61857bdb7833f817ec16ed847f5952c5c708a357e4",
+      "testOrLiveExecution": "NOT_RUN_BY_THIS_REVIEW",
+      "limits": "No whole54box/newrequirement/gate/corpus/runtime/hosting/release acceptance;original limits preserved."
+    },
+    {
+      "index": 54,
+      "page": "docs/site/understand/pipeline-dependencies.md",
+      "title": "> **Source evidence \u2014 conditional exposure**",
+      "disposition": "PASS_BOUNDED_NEW_FIELDS",
+      "review": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "reason": "Buster role/provider requires kubernetes.exposure; conditional Prism Tailscale ingress selects Studio only. Manifest requirement is not effective grant/liveACL/DNS/cleanup proof.",
+      "baselineBoxSha256": "22941527b4df6f5da505c47d2c77c49e0278bd28b73d89d4ba0fac1bc200b4cb",
+      "candidateBoxSha256": "4ebdeea04327c9965d57ac4c3440ad8cd08306197766a03bd27cba36a7e241c0",
+      "testOrLiveExecution": "NOT_RUN_BY_THIS_REVIEW",
+      "limits": "No whole54box/newrequirement/gate/corpus/runtime/hosting/release acceptance;original limits preserved."
+    }
+  ],
+  "coherentSourceBasis": "All25newfieldsets/surrounding source boxes and complete Prism/dependency context read; fresh controlling branches/assertions plus named completed unchanged plugin/Prism/handbook/platform scopes; no blanket162objectfreshsemanticclaim. Full5historicaldiffs read and independently exact-recomputed.",
+  "namedReuse": [
+    "AP09.2-ready-topics-20261020 actual previously accepted plugin authority/discovery/config scopes only; old explicit gaps retained",
+    "AP09.4-ready-prism-topics-20261020 actual component/data/revision/approval/developer scope only; old whole3094-line/liveStudio exclusions retained",
+    "AP09-reader-developers-20261020 only unchanged relevant product mechanisms; changed documentation workflow/publication sources excluded",
+    "A910-01-whole-content-20261021 and A910-11-whole-content-20261021 exact unchanged handbook/route definitions; no new cleancheckout/test execution",
+    "AP09-whole-dependency-decision-traces-20261021 unchanged original owner/identity/failure trace; no livefullshowcase",
+    "handoffs/pr13-finish-20261021/workflow-developer-acceptance.md and operator-platform-acceptance.md named bounded reports read; subsequent accepted topic scopes/limits retained"
+  ],
+  "independentChecks": [
+    {
+      "step": "InstalledMarkdownIt inert document parser,productiontop-levelSource selection",
+      "exitCode": 0,
+      "observation": "54blocks/25changed/29exactcomplete;all6semanticfieldswithinoneactualblock;orderedURLs/headings/outsidebytesexact;plainNegativeTest/LocalResult/CheckedRevisionsemantics retained."
+    },
+    {
+      "step": "Inert originalGit/current-source/baseline/candidate comparison",
+      "exitCode": 0,
+      "observation": "All4candidate/baselinehashesverify;all4mainpagesequalbaseline. All162originalimmutableobjects/hash/ranges verify;139wholecurrentequal/23historicaldifferent. Authored62objects=57equal+5explicitdifferent;no repinning."
+    },
+    {
+      "step": "Independentfullfivehistorical/currentdiff reconstruction",
+      "exitCode": 0,
+      "observation": "Exactauthorretaineddiff;deploymentclonebranchpreserved,client/commentroutingchangesandseparatenativecgroupchangesexplicitlybounded."
+    },
+    {
+      "step": "Inertmanifestdenominatorconstructor",
+      "exitCode": 0,
+      "observation": "51trackedmanifestroster,48pipelineapiVersionpackages;21stages+5observers+21adapters+19testProviders+1reportAdapter=67;outsidecountsentencecorrectandunchanged."
+    }
+  ],
+  "structuralProof": "../developer-prism-dependencies-independent-structure.json",
+  "bindingProof": "bindings.json",
+  "limits": [
+    "No main/register/qualificationdatawrite,producer/targetmoduleimport/producttests/generator/currentDATA/Reader/browser/gate run. MarkdownIt parses inert docs only.",
+    "Source/test assertions are not new execution;historicaldates/results retained. Native/DB/browser/provider/cluster/controlavailability remains explicit.",
+    "Not wholeA91205/54newcontentapprovals/compoundbatch/globalreview;25newfieldsetsplus29preservedcompleteblocks only.",
+    "Root owns final exact integration,publication/language/Source checks,builtReader and any acceptance decision. CurrentfactsSourcefreeze stillpending capabilitytemplate/pins."
+  ]
+}

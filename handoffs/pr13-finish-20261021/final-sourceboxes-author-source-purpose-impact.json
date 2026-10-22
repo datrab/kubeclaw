@@ -1,0 +1,37 @@
+[
+  {
+    "table": "ownerPurposes",
+    "source": "scripts/check-capability-registrations-drift-controls.mjs",
+    "field": "purposeInputs",
+    "path": "docs/site/reference/capabilities.md",
+    "oldSha256": "ce5995d8150fe4c12fa1f8ea671bf7fc65e0a9f64ef70d74043c0821a791d627"
+  },
+  {
+    "table": "roles",
+    "source": "scripts/check-capability-drift-mutations.mjs",
+    "field": "purposeInputs",
+    "path": "scripts/docs-publication.mjs",
+    "oldSha256": "29d0305b4b4ad0de7fcea5810372e700b4b2a4d810e8cce22fbdd2bfd964cda8"
+  },
+  {
+    "table": "roles",
+    "source": "scripts/check-capability-swarm-boundary.mjs",
+    "field": "purposeInputs",
+    "path": "scripts/docs-publication.mjs",
+    "oldSha256": "29d0305b4b4ad0de7fcea5810372e700b4b2a4d810e8cce22fbdd2bfd964cda8"
+  },
+  {
+    "table": "roles",
+    "source": "scripts/check-capability-swarm-boundary.mjs",
+    "field": "authorityInputs",
+    "path": "scripts/docs-publication.mjs",
+    "oldSha256": "29d0305b4b4ad0de7fcea5810372e700b4b2a4d810e8cce22fbdd2bfd964cda8"
+  },
+  {
+    "table": "externalCiPurpose",
+    "source": "scripts/docs-reader/check-artifact.mjs",
+    "field": "inputs",
+    "path": "scripts/docs-publication.mjs",
+    "oldSha256": "29d0305b4b4ad0de7fcea5810372e700b4b2a4d810e8cce22fbdd2bfd964cda8"
+  }
+]

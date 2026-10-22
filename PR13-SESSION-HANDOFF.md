@@ -1,3 +1,12 @@
+## Integrated final Source-callout content — 2026-10-22
+
+- Developer/Prism/dependency batch:25 new fieldsets;29 existing dispositions retained unchanged. Final reference/trust/architecture batch:17 new fieldsets;13 existing dispositions retained unchanged. Whole411-box structural ledger is separate from semantic acceptance; no new gate/count here.
+- Both complete bounded Source/reader-informed/quality reviews PASS. Three publication passive-voice findings corrected with separate independent exact-three-sentence review; original failed logs retained. Actual original publication check now PASS(177pages/51plugins).
+- Capability fields come from the exact reviewed capabilityPage owner template. Actual original `node scripts/docs-publication.mjs generate` terminal0 changed only capabilities.md; every other site file and publication manifest unchanged. No generated page copied by hand. Five narrowly supported purpose-input renewals remain pending, not current facts or role approval.
+- Latest actual delivered Reader remains0ded6b68; new content still needs grouped Reader checks,411-box visible-field verification and affected-scope preservation. Current register remains45/89gates,223/261requirements; checkpoint is not aggregate acceptance.
+- Exact two-file external-CI applicability regression correction is frozen off-tree pending independent review:50/50owningcontrols plus originalServecold/warm1/1PASS; fullrouting19/21NOTPASS with two oldredirectSource bindings still disclosed. Final currentfacts/graph acquisition must follow clean finalSource and independent scope seal.
+- Runtime stop `RELEASE_CONFIGURATION_CHANGED: charts/kubeclaw/files/config/knip.json` unchanged. No receipt rewrite,AP10deletion,globalclassification/generation/CI/runtime/release approval.
+
 # PR13 continuation — 2026-10-21
 
 ## Current continuation checkpoint — 2026-10-22

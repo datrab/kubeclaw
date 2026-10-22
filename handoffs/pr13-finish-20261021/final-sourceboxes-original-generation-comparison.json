@@ -1,0 +1,14 @@
+{
+  "command": "node scripts/docs-publication.mjs generate",
+  "exitCode": 0,
+  "sourcePurpose": "Exact fixed capabilityPage field template only; current full Source/normal eager-init/generate target semantics independently reviewed; no scanned product module imports or API/runtime execution.",
+  "actualChangedOutputs": [
+    "docs/site/reference/capabilities.md"
+  ],
+  "allReviewedFinalTargetHashesMatch": true,
+  "allOtherSiteBytesAndPublicationManifestUnchanged": true,
+  "limits": [
+    "Original actual documentation publisher generation only, not global configuration/Helm/reference owner generation or current classification qualification.",
+    "No generated capabilities page copied by hand; original generator produced exact independently reviewed candidate bytes."
+  ]
+}

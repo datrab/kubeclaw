@@ -1,0 +1,363 @@
+{
+  "author": "/root/operator_acceptance",
+  "reviewer": "/root/workflow_acceptance",
+  "verdict": {
+    "sourceAccuracy": "PASS",
+    "readerUsability": "PASS_SEMANTIC_SOURCE_READER_ONLY",
+    "quality": "PASS_BOUNDED"
+  },
+  "materialFindings": [],
+  "scope": {
+    "actualBoxes": 30,
+    "additive": 17,
+    "completeUnchanged": 13,
+    "shippingTargets": [
+      {
+        "path": "docs/site/reference/buster-runtime-configuration.md",
+        "baselineSha256": "2e9e821d6ca4880b82d8017273c452cd65938c3d838a4c9806beb6fd6b57a03a",
+        "candidateSha256": "cca61ece09026e023b8482d3058a61acfdd78b8c99b30be5b74b04ab0dcd48c9",
+        "changed": true
+      },
+      {
+        "path": "docs/site/reference/capabilities.md",
+        "baselineSha256": "ce5995d8150fe4c12fa1f8ea671bf7fc65e0a9f64ef70d74043c0821a791d627",
+        "candidateSha256": "1785cb37214915c9a52658cb68426fcb7d4ae1acd576052b5b7a398f50a9dfd4",
+        "changed": true
+      },
+      {
+        "path": "docs/site/reference/contracts.md",
+        "baselineSha256": "12b033270df858c2a6adb4f1ce160c447dc075f54dfb05f806e5a1458df7384e",
+        "candidateSha256": "24bf33eb594dfea0dff81bcd49204b6b108d964dfffc5b167ef6208494310737",
+        "changed": true
+      },
+      {
+        "path": "docs/site/reference/errors.md",
+        "baselineSha256": "4548aaee9982fc5f29408734078a1cd751d2fd4da7ddf881c2070dc2048b0a0a",
+        "candidateSha256": "31273210b06afeb12b876bd8f1c1db59f63a84eb75fabf7ca19880ad782a976c",
+        "changed": true
+      },
+      {
+        "path": "docs/site/reference/nova-project.md",
+        "baselineSha256": "95a4f241b276ad604cae43f38965bb055a5a63cbdf760138feb06eb8021e60f0",
+        "candidateSha256": "bef3c904adc904f3f81d4ee854049a754ea0cf502b88ff86a0a146567f22ad51",
+        "changed": true
+      },
+      {
+        "path": "docs/site/understand/README.md",
+        "baselineSha256": "18c4d77cbc3fe86d86b9cea83b53f904c5e995a7470102c95aef97d8bde626c7",
+        "candidateSha256": "801d7095645abc6548c78ecda6dfbfa0764181275895b99c625f2f0d1b478593",
+        "changed": true
+      },
+      {
+        "path": "docs/site/understand/prism.md",
+        "baselineSha256": "630443355414a9021f00732446bad4bbfcd66fa6e209d452374a94b3b27f61db",
+        "candidateSha256": "83b7badc23f5cdf82f77c0da63a4a5a45ea7539eb42c8c656e37aece5198d110",
+        "changed": true
+      },
+      {
+        "path": "docs/site/understand/worker-trust.md",
+        "baselineSha256": "3c565e86c9591c8506ac74031731eb2818f738a62ee0770c0c05dfb4dc57e0e6",
+        "candidateSha256": "b0f2b794daa853d070af694ee0d3f396c43c4d9140c6c4f29eed46b5d0897a2a",
+        "changed": true
+      },
+      {
+        "path": "docs/site/use/worker-trust.md",
+        "baselineSha256": "a70940e54909612ecc41246e7900c3c4e910119ee09e12b83b3eda1255168315",
+        "candidateSha256": "c879d5ad08934c845cca4a57dea74f67ca5861e2ce98dc1264e9c27ca1a4cecf",
+        "changed": true
+      },
+      {
+        "path": "scripts/docs-publication.mjs",
+        "baselineSha256": "29d0305b4b4ad0de7fcea5810372e700b4b2a4d810e8cce22fbdd2bfd964cda8",
+        "candidateSha256": "fdae9667aa99505d4fcc90681f081fb45717ab9f9d4333a30544abdea33525a4",
+        "changed": true
+      }
+    ],
+    "publisherTemplateOnly": "six fixed Sourcebox fields inside capabilityPage; no selector, table, route, write or execution-authority change"
+  },
+  "perBoxDispositions": [
+    {
+      "index": 1,
+      "page": "docs/site/extend/documentation-maintenance.md",
+      "disposition": "EXACT_COMPLETE_PRESERVATION",
+      "verdict": "PASS",
+      "scope": "Added semantic fields and full same-box/context meaning; existing execution/history/runtime limits preserved. Not a fresh whole-page/product acceptance."
+    },
+    {
+      "index": 2,
+      "page": "docs/site/reference/buster-runtime-configuration.md",
+      "disposition": "ADDITIVE_MISSING_FIELDS_AUTHOR",
+      "verdict": "PASS",
+      "scope": "Added semantic fields and full same-box/context meaning; existing execution/history/runtime limits preserved. Not a fresh whole-page/product acceptance."
+    },
+    {
+      "index": 3,
+      "page": "docs/site/reference/buster-runtime-configuration.md",
+      "disposition": "EXACT_COMPLETE_PRESERVATION",
+      "verdict": "PASS",
+      "scope": "Added semantic fields and full same-box/context meaning; existing execution/history/runtime limits preserved. Not a fresh whole-page/product acceptance."
+    },
+    {
+      "index": 4,
+      "page": "docs/site/reference/capabilities.md",
+      "disposition": "ADDITIVE_MISSING_FIELDS_AUTHOR",
+      "verdict": "PASS",
+      "scope": "Added semantic fields and full same-box/context meaning; existing execution/history/runtime limits preserved. Not a fresh whole-page/product acceptance."
+    },
+    {
+      "index": 5,
+      "page": "docs/site/reference/contracts.md",
+      "disposition": "ADDITIVE_MISSING_FIELDS_AUTHOR",
+      "verdict": "PASS",
+      "scope": "Added semantic fields and full same-box/context meaning; existing execution/history/runtime limits preserved. Not a fresh whole-page/product acceptance."
+    },
+    {
+      "index": 6,
+      "page": "docs/site/reference/documentation-site.md",
+      "disposition": "EXACT_COMPLETE_PRESERVATION",
+      "verdict": "PASS",
+      "scope": "Added semantic fields and full same-box/context meaning; existing execution/history/runtime limits preserved. Not a fresh whole-page/product acceptance."
+    },
+    {
+      "index": 7,
+      "page": "docs/site/reference/errors.md",
+      "disposition": "ADDITIVE_MISSING_FIELDS_AUTHOR",
+      "verdict": "PASS",
+      "scope": "Added semantic fields and full same-box/context meaning; existing execution/history/runtime limits preserved. Not a fresh whole-page/product acceptance."
+    },
+    {
+      "index": 8,
+      "page": "docs/site/reference/errors.md",
+      "disposition": "EXACT_COMPLETE_PRESERVATION",
+      "verdict": "PASS",
+      "scope": "Added semantic fields and full same-box/context meaning; existing execution/history/runtime limits preserved. Not a fresh whole-page/product acceptance."
+    },
+    {
+      "index": 9,
+      "page": "docs/site/reference/errors.md",
+      "disposition": "EXACT_COMPLETE_PRESERVATION",
+      "verdict": "PASS",
+      "scope": "Added semantic fields and full same-box/context meaning; existing execution/history/runtime limits preserved. Not a fresh whole-page/product acceptance."
+    },
+    {
+      "index": 10,
+      "page": "docs/site/reference/nova-project.md",
+      "disposition": "ADDITIVE_MISSING_FIELDS_AUTHOR",
+      "verdict": "PASS",
+      "scope": "Added semantic fields and full same-box/context meaning; existing execution/history/runtime limits preserved. Not a fresh whole-page/product acceptance."
+    },
+    {
+      "index": 11,
+      "page": "docs/site/reference/nova-project.md",
+      "disposition": "ADDITIVE_MISSING_FIELDS_AUTHOR",
+      "verdict": "PASS",
+      "scope": "Added semantic fields and full same-box/context meaning; existing execution/history/runtime limits preserved. Not a fresh whole-page/product acceptance."
+    },
+    {
+      "index": 12,
+      "page": "docs/site/reference/nova-project.md",
+      "disposition": "EXACT_COMPLETE_PRESERVATION",
+      "verdict": "PASS",
+      "scope": "Added semantic fields and full same-box/context meaning; existing execution/history/runtime limits preserved. Not a fresh whole-page/product acceptance."
+    },
+    {
+      "index": 13,
+      "page": "docs/site/understand/README.md",
+      "disposition": "ADDITIVE_MISSING_FIELDS_AUTHOR",
+      "verdict": "PASS",
+      "scope": "Added semantic fields and full same-box/context meaning; existing execution/history/runtime limits preserved. Not a fresh whole-page/product acceptance."
+    },
+    {
+      "index": 14,
+      "page": "docs/site/understand/README.md",
+      "disposition": "ADDITIVE_MISSING_FIELDS_AUTHOR",
+      "verdict": "PASS",
+      "scope": "Added semantic fields and full same-box/context meaning; existing execution/history/runtime limits preserved. Not a fresh whole-page/product acceptance."
+    },
+    {
+      "index": 15,
+      "page": "docs/site/understand/README.md",
+      "disposition": "ADDITIVE_MISSING_FIELDS_AUTHOR",
+      "verdict": "PASS",
+      "scope": "Added semantic fields and full same-box/context meaning; existing execution/history/runtime limits preserved. Not a fresh whole-page/product acceptance."
+    },
+    {
+      "index": 16,
+      "page": "docs/site/understand/prism.md",
+      "disposition": "ADDITIVE_MISSING_FIELDS_AUTHOR",
+      "verdict": "PASS",
+      "scope": "Added semantic fields and full same-box/context meaning; existing execution/history/runtime limits preserved. Not a fresh whole-page/product acceptance."
+    },
+    {
+      "index": 17,
+      "page": "docs/site/understand/prism.md",
+      "disposition": "ADDITIVE_MISSING_FIELDS_AUTHOR",
+      "verdict": "PASS",
+      "scope": "Added semantic fields and full same-box/context meaning; existing execution/history/runtime limits preserved. Not a fresh whole-page/product acceptance."
+    },
+    {
+      "index": 18,
+      "page": "docs/site/understand/prism.md",
+      "disposition": "ADDITIVE_MISSING_FIELDS_AUTHOR",
+      "verdict": "PASS",
+      "scope": "Added semantic fields and full same-box/context meaning; existing execution/history/runtime limits preserved. Not a fresh whole-page/product acceptance."
+    },
+    {
+      "index": 19,
+      "page": "docs/site/understand/prism.md",
+      "disposition": "ADDITIVE_MISSING_FIELDS_AUTHOR",
+      "verdict": "PASS",
+      "scope": "Added semantic fields and full same-box/context meaning; existing execution/history/runtime limits preserved. Not a fresh whole-page/product acceptance."
+    },
+    {
+      "index": 20,
+      "page": "docs/site/understand/worker-trust.md",
+      "disposition": "ADDITIVE_MISSING_FIELDS_AUTHOR",
+      "verdict": "PASS",
+      "scope": "Added semantic fields and full same-box/context meaning; existing execution/history/runtime limits preserved. Not a fresh whole-page/product acceptance."
+    },
+    {
+      "index": 21,
+      "page": "docs/site/understand/worker-trust.md",
+      "disposition": "ADDITIVE_MISSING_FIELDS_AUTHOR",
+      "verdict": "PASS",
+      "scope": "Added semantic fields and full same-box/context meaning; existing execution/history/runtime limits preserved. Not a fresh whole-page/product acceptance."
+    },
+    {
+      "index": 22,
+      "page": "docs/site/understand/worker-trust.md",
+      "disposition": "ADDITIVE_MISSING_FIELDS_AUTHOR",
+      "verdict": "PASS",
+      "scope": "Added semantic fields and full same-box/context meaning; existing execution/history/runtime limits preserved. Not a fresh whole-page/product acceptance."
+    },
+    {
+      "index": 23,
+      "page": "docs/site/use/capacity.md",
+      "disposition": "EXACT_COMPLETE_PRESERVATION",
+      "verdict": "PASS",
+      "scope": "Added semantic fields and full same-box/context meaning; existing execution/history/runtime limits preserved. Not a fresh whole-page/product acceptance."
+    },
+    {
+      "index": 24,
+      "page": "docs/site/use/capacity.md",
+      "disposition": "EXACT_COMPLETE_PRESERVATION",
+      "verdict": "PASS",
+      "scope": "Added semantic fields and full same-box/context meaning; existing execution/history/runtime limits preserved. Not a fresh whole-page/product acceptance."
+    },
+    {
+      "index": 25,
+      "page": "docs/site/use/capacity.md",
+      "disposition": "EXACT_COMPLETE_PRESERVATION",
+      "verdict": "PASS",
+      "scope": "Added semantic fields and full same-box/context meaning; existing execution/history/runtime limits preserved. Not a fresh whole-page/product acceptance."
+    },
+    {
+      "index": 26,
+      "page": "docs/site/use/capacity.md",
+      "disposition": "EXACT_COMPLETE_PRESERVATION",
+      "verdict": "PASS",
+      "scope": "Added semantic fields and full same-box/context meaning; existing execution/history/runtime limits preserved. Not a fresh whole-page/product acceptance."
+    },
+    {
+      "index": 27,
+      "page": "docs/site/use/worker-trust.md",
+      "disposition": "EXACT_COMPLETE_PRESERVATION",
+      "verdict": "PASS",
+      "scope": "Added semantic fields and full same-box/context meaning; existing execution/history/runtime limits preserved. Not a fresh whole-page/product acceptance."
+    },
+    {
+      "index": 28,
+      "page": "docs/site/use/worker-trust.md",
+      "disposition": "EXACT_COMPLETE_PRESERVATION",
+      "verdict": "PASS",
+      "scope": "Added semantic fields and full same-box/context meaning; existing execution/history/runtime limits preserved. Not a fresh whole-page/product acceptance."
+    },
+    {
+      "index": 29,
+      "page": "docs/site/use/worker-trust.md",
+      "disposition": "EXACT_COMPLETE_PRESERVATION",
+      "verdict": "PASS",
+      "scope": "Added semantic fields and full same-box/context meaning; existing execution/history/runtime limits preserved. Not a fresh whole-page/product acceptance."
+    },
+    {
+      "index": 30,
+      "page": "docs/site/use/worker-trust.md",
+      "disposition": "ADDITIVE_MISSING_FIELDS_AUTHOR",
+      "verdict": "PASS",
+      "scope": "Added semantic fields and full same-box/context meaning; existing execution/history/runtime limits preserved. Not a fresh whole-page/product acceptance."
+    }
+  ],
+  "sourcePurposeRebindingAssessment": [
+    {
+      "table": "ownerPurposes",
+      "source": "scripts/check-capability-registrations-drift-controls.mjs",
+      "field": "purposeInputs",
+      "path": "docs/site/reference/capabilities.md",
+      "oldSha256": "ce5995d8150fe4c12fa1f8ea671bf7fc65e0a9f64ef70d74043c0821a791d627",
+      "newSha256": "1785cb37214915c9a52658cb68426fcb7d4ae1acd576052b5b7a398f50a9dfd4",
+      "verdict": "PURPOSE_PRESERVED_FOR_EXACT_DECLARATION_ONLY; actual integration/current DATA/guards remain parent-owned"
+    },
+    {
+      "table": "roles",
+      "source": "scripts/check-capability-drift-mutations.mjs",
+      "field": "purposeInputs",
+      "path": "scripts/docs-publication.mjs",
+      "oldSha256": "29d0305b4b4ad0de7fcea5810372e700b4b2a4d810e8cce22fbdd2bfd964cda8",
+      "newSha256": "fdae9667aa99505d4fcc90681f081fb45717ab9f9d4333a30544abdea33525a4",
+      "verdict": "PURPOSE_PRESERVED_FOR_EXACT_DECLARATION_ONLY; actual integration/current DATA/guards remain parent-owned"
+    },
+    {
+      "table": "roles",
+      "source": "scripts/check-capability-swarm-boundary.mjs",
+      "field": "purposeInputs",
+      "path": "scripts/docs-publication.mjs",
+      "oldSha256": "29d0305b4b4ad0de7fcea5810372e700b4b2a4d810e8cce22fbdd2bfd964cda8",
+      "newSha256": "fdae9667aa99505d4fcc90681f081fb45717ab9f9d4333a30544abdea33525a4",
+      "verdict": "PURPOSE_PRESERVED_FOR_EXACT_DECLARATION_ONLY; actual integration/current DATA/guards remain parent-owned"
+    },
+    {
+      "table": "roles",
+      "source": "scripts/check-capability-swarm-boundary.mjs",
+      "field": "authorityInputs",
+      "path": "scripts/docs-publication.mjs",
+      "oldSha256": "29d0305b4b4ad0de7fcea5810372e700b4b2a4d810e8cce22fbdd2bfd964cda8",
+      "newSha256": "fdae9667aa99505d4fcc90681f081fb45717ab9f9d4333a30544abdea33525a4",
+      "verdict": "PURPOSE_PRESERVED_FOR_EXACT_DECLARATION_ONLY; actual integration/current DATA/guards remain parent-owned"
+    },
+    {
+      "table": "externalCiPurpose",
+      "source": "scripts/docs-reader/check-artifact.mjs",
+      "field": "inputs",
+      "path": "scripts/docs-publication.mjs",
+      "oldSha256": "29d0305b4b4ad0de7fcea5810372e700b4b2a4d810e8cce22fbdd2bfd964cda8",
+      "newSha256": "fdae9667aa99505d4fcc90681f081fb45717ab9f9d4333a30544abdea33525a4",
+      "verdict": "PURPOSE_PRESERVED_FOR_EXACT_DECLARATION_ONLY; actual integration/current DATA/guards remain parent-owned"
+    }
+  ],
+  "checks": [
+    {
+      "command": "node final-sourceboxes-independent/check.mjs",
+      "exitCode": 0,
+      "toolChunk": "cdbbfe",
+      "observation": "30 same parsed boxes;17additions;13exactcomplete;211full pinned objects201equal;old links/headings/outsidebytes exact;own fixed-template/static-output agreement"
+    },
+    {
+      "command": "node final-sourceboxes-independent/boundary-fixture/scripts/check-site-reader-boundary.mjs",
+      "exitCode": 0,
+      "toolChunk": "872de9",
+      "observation": "Original unchanged CLI; isolated12candidatepages only;Reader-site boundary passed"
+    },
+    {
+      "command": "node --check final-sourceboxes-author/scripts/docs-publication.mjs",
+      "exitCode": 0,
+      "toolChunk": "209534",
+      "observation": "syntax only; no producer execution"
+    }
+  ],
+  "limits": [
+    "No main/candidate/register writes; independent evidence directory only.",
+    "No producer import/generation, original current DATA acquisition, product/runtime/live test or browser/rendered Reader execution.",
+    "No whole211object fresh semantic review from hash equality; named prior full-topic proofs/source reads reused with exact scope.",
+    "No whole A91205/corpus/CI/publication/gate/runtime/release approval; actual original generation/output agreement remains to be witnessed by parent."
+  ]
+}

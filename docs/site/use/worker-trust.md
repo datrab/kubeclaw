@@ -453,6 +453,16 @@ URL before any request can claim SPIFFE proxy authentication.
 > [remote-suite endpoint check](https://github.com/datrab/kubeclaw/blob/8da6157b77247dcbdf209ef12f491f0b92ca858a/skills/nova/plugins/remote-test-gate/src/adapter.ts#L46-L61) ·
 > [Nova transport endpoint check](https://github.com/datrab/kubeclaw/blob/8da6157b77247dcbdf209ef12f491f0b92ca858a/skills/nova/core/test-gates/remote-dispatch.ts#L109-L132) ·
 > [Nova private-key checks](https://github.com/datrab/kubeclaw/blob/8da6157b77247dcbdf209ef12f491f0b92ca858a/skills/nova/core/test-gates/runtime-config.ts#L51-L68).
+>
+> **Claim:** Trust, proxy endpoint and source-key failures stop the corresponding admission path rather than weakening authentication.
+>
+> **Contract or setting:** Trusted loopback forwarding, exact allowed peers and valid configured Ed25519 source keys apply at their selected boundaries.
+>
+> **Test evidence:** No fresh wrong-peer, remote-proxy or invalid-source-key execution accompanies these implementation links.
+>
+> **Limit:** Repair the rejecting owner and retain original identities; a retry or broader network allow does not resolve authentication failure.
+>
+> **Revision:** `8da6157b77247dcbdf209ef12f491f0b92ca858a`. Source bindings, not execution receipts.
 
 ### Recovery, rotation boundary, and evidence
 

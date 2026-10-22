@@ -59,6 +59,13 @@ Worker binding.
 > [The Worker binding admits only the five Prism operations and validates exact request and result schema identities](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/engine/worker-binding.ts#L1-L49).
 >
 > [The Prism role declares neutral Worker Core as a separate package dependency](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/packaging/runtime/roles/prism.json#L1-L28).
+>
+> **Claim:** Prism owns specialist design meaning while its runtime and role consume neutral Worker Core separately.
+> **Implementation:** The runtime exports Engine, Worker binding and Domain; `executePrismOperation()` validates the specialist request and result contracts.
+> **Contract or setting:** Only `generate`, `render`, `evaluate`, `ingest` and `publish` belong to `kubeclaw.prism-design-engine@1`.
+> **Test evidence:** `engine.test.mts` asserts opaque Worker transport and unknown-operation rejection; inspected, not executed for this batch.
+> **Revision:** `4e52c72788ac002788bc036a497d76c13e6a35fd`; the linked runtime, Worker binding and role remain byte-identical.
+> **Limit:** A valid specialist operation or role declaration does not prove admitted native execution or a deployed Worker.
 
 ## Prepare a Development Checkout
 
@@ -79,6 +86,13 @@ and deployment checks require their named environment.
 > [The Prism package defines focused Domain, Renderer, Storage, Engine, Corpus, Quality, Pipeline, Studio, and native-worker commands](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/package.json#L1-L48).
 >
 > [The contract package keeps schema generation, contract tests, and type checking together](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/contracts/prism/v1/package.json).
+>
+> **Claim:** Prism exposes focused component commands; contract generation and environment-dependent checks remain separate prerequisites.
+> **Implementation:** Prism and contract package scripts select their own tests, generation, type checking and service/build entrypoints.
+> **Contract or setting:** Contract `pretest`/`pretypecheck` generate validators; Studio `prebuild:studio` does likewise, so selected checks can write generated files.
+> **Test evidence:** Package scripts were inspected, not executed; no component, browser, PostgreSQL or native-worker result follows from their declarations.
+> **Revision:** `4e52c72788ac002788bc036a497d76c13e6a35fd`; both linked package definitions remain byte-identical.
+> **Limit:** Command availability does not supply its dependencies, native authority or a successful prepared checkout.
 
 ## Change a Public Contract
 
@@ -112,6 +126,13 @@ Increasing a transport limit does not increase the contract limit.
 > [Complexity admission defines the depth, visit, and encoded-byte ceilings](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/contracts/prism/v1/src/complexity.ts).
 >
 > [The generator creates browser-compatible standalone validators from the maintained schemas](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/contracts/prism/v1/scripts/generate-validators.mjs).
+>
+> **Claim:** Public Prism validation combines generated schemas, semantic rules and bounded JSON-complexity admission.
+> **Implementation:** `validatePrism()` and engine validators apply complexity checks; the generator writes browser-compatible standalone validators from maintained schemas.
+> **Contract or setting:** Public JSON ceilings are depth 256, one million visited nodes/properties and 32 MiB encoded bytes; transport limits may be smaller.
+> **Test evidence:** No contract test or validator generation ran here; schema and generator inspection does not prove old/new consumer compatibility.
+> **Revision:** `4e52c72788ac002788bc036a497d76c13e6a35fd`; the linked validation entry, complexity guard and generator retain those bytes.
+> **Limit:** Fresh-schema validation does not establish migration of durable old records or all browser/service consumers.
 
 ## Add or Change a Document Operation
 
@@ -156,6 +177,13 @@ unsafe.
 > [The Puck adapter converts supported editor changes into typed Prism operations](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/studio/puck-adapter.ts#L204-L263).
 >
 > [The fenced Agent revision route validates a complete next document before repository replacement](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/server/control-server.ts#L265-L277).
+>
+> **Claim:** Browser edits use typed base-revision operations; fenced Agent replacement is a distinct privileged complete-document path.
+> **Implementation:** `applyOperation()` clones and validates the result; the Agent route checks job, project, generation and exact next revision before replacement.
+> **Contract or setting:** An operation must match the source revision; Agent replacement additionally requires its current job fence and complete document validation.
+> **Test evidence:** `domain.test.mts` asserts stale-revision rejection and no partial source mutation; inspected, not run for this batch.
+> **Revision:** `4e52c72788ac002788bc036a497d76c13e6a35fd`; linked Domain, Puck adapter and Agent route retain those bytes.
+> **Limit:** Pure Domain assertions do not prove database compare-and-swap, Agent authentication or concurrent deployed editing.
 
 ## Add a Node Type or Renderer Feature
 
@@ -181,6 +209,13 @@ execution authority.
 > [The renderer checks the contract node catalogue, resolves bounded tokens and data, escapes output, and selects explicit render branches](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/renderer/index.ts#L1-L225).
 >
 > [Document semantics prevent component-type replacement through state and responsive patches](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/contracts/prism/v1/src/document-semantics.ts).
+>
+> **Claim:** Renderer changes must preserve contract-governed nodes and escaped output rather than treating design data as executable markup.
+> **Implementation:** The renderer resolves declared tokens/data and explicit node branches; document semantics reject component-type changes through patches.
+> **Contract or setting:** Node catalogue and document semantics constrain supported properties; a new renderer feature cannot bypass those input rules.
+> **Test evidence:** The maintained `test:renderer` command selects renderer/remediation assertions; it was not executed for this inspection.
+> **Revision:** `4e52c72788ac002788bc036a497d76c13e6a35fd`; linked renderer and document-semantics files remain byte-identical.
+> **Limit:** Escaped renderer output does not prove browser layout, CSP isolation, accessibility or arbitrary external asset safety.
 
 ## Change a Design Provider
 
@@ -209,6 +244,13 @@ provider-only change.
 > [The provider interface returns typed operations and model-bound embeddings](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/engine/index.ts#L12-L34).
 >
 > [The Engine fingerprints operation and input, owns idempotent execution, validates documents, and applies provider operations itself](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/engine/index.ts#L69-L176).
+>
+> **Claim:** Providers propose typed operations or model-bound embeddings; Engine owns validated document mutation and idempotent request identity.
+> **Implementation:** Engine fingerprints operation/input, shares cached execution and applies provider operations through Domain before returning the result.
+> **Contract or setting:** Generation accepts declared operation input; ingest requires nonempty bounded text and a nonempty finite embedding vector.
+> **Test evidence:** `engine.test.mts` asserts shared concurrent execution and conflicting-key rejection; inspected, not executed for this batch.
+> **Revision:** `4e52c72788ac002788bc036a497d76c13e6a35fd`; the linked Engine/provider interface retains those bytes.
+> **Limit:** Deterministic-provider assertions do not prove live provider cancellation, network limits, persistence or human publication approval.
 
 ## Change Retrieval or Ingestion
 
@@ -246,6 +288,13 @@ admission.
 > [Corpus ingestion validates source and rights data, serializes duplicate inputs, and commits the rights, revision, current pointer, and embedding together](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/corpus/index.ts#L30-L148).
 >
 > [Search filters current usable records and combines text and vector candidates with deterministic ranking and source-family limits](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/corpus/index.ts#L150-L238).
+>
+> **Claim:** Corpus ingestion and retrieval retain separate admission, transactional ownership and eligibility/ranking responsibilities.
+> **Implementation:** `ingest()` serializes equal input digests and writes related rows transactionally; `search()` filters eligible current records before final selection.
+> **Contract or setting:** Retrieval requires active, rights-eligible, unexpired records; vector retrieval also matches the requested embedding model before ranking.
+> **Test evidence:** The maintained `test:corpus` command selects corpus assertions; no native PostgreSQL/pgvector or acquisition test ran for this inspection.
+> **Revision:** `4e52c72788ac002788bc036a497d76c13e6a35fd`; the linked corpus implementation remains byte-identical.
+> **Limit:** Corpus row admission does not prove Ingestion TLS/address/quarantine enforcement or representative retrieval quality.
 
 ## Change Evaluation or Preferences
 
@@ -271,6 +320,13 @@ Do not replace source events with one mutable preference score.
 > [The evaluator emits stable findings but does not emit its reserved visual-quality gate](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/evaluation/index.ts#L4-L180).
 >
 > [Preference projection validates events, deduplicates identity, applies retractions, retains origins, and calculates time-dependent effective scores](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/preferences/index.ts#L1-L89).
+>
+> **Claim:** Evaluation findings and time-dependent preference projections supply evidence, not human approval or replacement source history.
+> **Implementation:** The evaluator hashes stable finding content; preference projection validates identities, rejects conflicting duplicates and honors retractions before scoring.
+> **Contract or setting:** Finding levels remain blocking/review/information; effective preference scores depend on the supplied projection time and retained origins.
+> **Test evidence:** `quality.test.mts` asserts blocked findings, preference retraction and decay; inspected, not executed; no human approval result follows.
+> **Revision:** `4e52c72788ac002788bc036a497d76c13e6a35fd`; the linked evaluator and preference projection retain those bytes.
+> **Limit:** No visual-quality gate or approval follows from deterministic findings, and projection scores do not erase original preference events.
 
 ## Change Control or an HTTP Route
 
@@ -315,6 +371,13 @@ Studio proxy.
 > [The Control server separates health, session, dispatch, agent, project, document, revision, approval, baseline, artifact, corpus, and preference routes](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/server/control-server.ts#L142-L940).
 >
 > [Session exchange signs a bounded Prism audience and derives identity from the trusted ingress boundary](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/control/session.ts#L3-L20).
+>
+> **Claim:** Control separates product, internal and Agent routes; session authentication does not supply missing general project-role authorization.
+> **Implementation:** The Control router selects explicit handlers; session exchange derives its Prism audience from the trusted ingress identity.
+> **Contract or setting:** Session verification and CSRF protect browser authentication; the shared body helper bounds bytes but provides no body-read deadline.
+> **Test evidence:** No Control HTTP or database test ran for this inspection; existing role-authorization, body-deadline and broad 422 limits remain.
+> **Revision:** `4e52c72788ac002788bc036a497d76c13e6a35fd`; linked Control and session sources remain byte-identical.
+> **Limit:** Router/session code alone does not establish deployed ingress identity, per-project authorization or precise failure-status classification.
 
 ## Change Worker Execution
 
@@ -345,6 +408,13 @@ native boundary in production.
 > [The worker service limits probes and attempts and routes accepted work through the configured attempt executor](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/server/worker-service.ts#L1-L107).
 >
 > [Native execution binds the fixed host entry, environment, browser path, Control URL, and runtime policy](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/server/native-worker-execution.ts#L1-L38).
+>
+> **Claim:** Prism Worker admits neutral envelopes through its configured native executor rather than a production in-process specialist fallback.
+> **Implementation:** The HTTP service authenticates and validates attempts; native execution recovers ownership/journal state and fixes the per-attempt host command/environment.
+> **Contract or setting:** Native readiness gates dispatch; new attempts require the accepted profile and requested resource budgets within supervisor policy.
+> **Test evidence:** No worker-service or native-host fixture ran for this inspection; configured execution and reconciliation gates are Source evidence only.
+> **Revision:** `4e52c72788ac002788bc036a497d76c13e6a35fd`; linked Worker service and native-execution implementations retain those bytes.
+> **Limit:** A readiness branch does not establish host authority, descendant cleanup, artifact hydration or final result sealing in deployment.
 
 ## Change Studio
 
@@ -370,6 +440,13 @@ For a Studio change:
 > [Studio derives flow transitions only from declared Design Document actions](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/studio/flows.ts#L1-L47).
 >
 > [The Studio server separates health, approved proxy routes, and static-file containment](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/server/studio-request.ts#L1-L139).
+>
+> **Claim:** Studio follows declared flow actions and proxies Control requests without acquiring durable state or approval authority.
+> **Implementation:** Flow helpers validate document actions; the Studio server separates health, `/v1/` forwarding and contained static-path resolution.
+> **Contract or setting:** Preview actions must match declared source location/action/node; proxying needs its configured ingress secret and bounded upstream timeout.
+> **Test evidence:** `studio-roundtrip.test.mts` asserts projection/edit preservation; inspected, not run; no browser or proxy execution occurred.
+> **Revision:** `4e52c72788ac002788bc036a497d76c13e6a35fd`; linked flow and Studio-request implementations retain those bytes.
+> **Limit:** Static-path containment is not symlink isolation; `/v1/` forwarding is not a per-route authorization allowlist or Control health proof.
 
 ## Change Storage or Add a Migration
 
@@ -399,6 +476,13 @@ commit the database reference.
 > [The revision repository creates immutable revisions and advances the current pointer with a compare-and-swap update](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/storage/index.ts#L262-L330).
 >
 > [The content-addressed artifact store verifies bytes and uses no-replace publication](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/storage/artifacts.ts#L39-L67).
+>
+> **Claim:** Migration ordering, immutable revision advancement and content-addressed artifacts protect different durable boundaries.
+> **Implementation:** Migration records filenames under its transaction lock; revision writes use compare-and-swap, while artifact publication verifies bytes without replacing existing objects.
+> **Contract or setting:** An applied migration filename skips reapplication without SQL-content hashing; artifact IDs must name their verified SHA-256 bytes.
+> **Test evidence:** `storage.test.mts` asserts migration locking, revision conflicts and artifact roundtrip with PGlite; inspected, not executed here.
+> **Revision:** `4e52c72788ac002788bc036a497d76c13e6a35fd`; linked storage/revision and artifact-store implementations retain those bytes.
+> **Limit:** PGlite assertions do not prove native PostgreSQL privileges, SQL-content drift detection, crash durability or a matched application restore.
 
 ## Change Publication or Pipeline Handoff
 
@@ -424,6 +508,13 @@ For a handoff change:
 > [The pipeline adapter rejects a missing digest or target and creates fixed Buster targets and read-only Forge assignments](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/pipeline-adapter/index.ts#L1-L57).
 >
 > [The Nova Prism stage verifies architecture and approval identity before it returns a baseline](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/nova/plugins/prism-design/src/stage.ts).
+>
+> **Claim:** Downstream plans and assignments preserve approved baseline identity without granting Buster or Forge design-approval authority.
+> **Implementation:** The adapter maps fixed visual targets/read-only module assignments; the Nova stage verifies architecture references and imports the approved archive.
+> **Contract or setting:** Handoff needs a valid baseline digest; Forge assignments reject unknown targets, while Nova approval binds issuer, architecture and approved bundle digest.
+> **Test evidence:** `pipeline-adapter.test.mts` asserts malformed-digest rejection and read-only module targets; inspected, not executed for this batch.
+> **Revision:** `4e52c72788ac002788bc036a497d76c13e6a35fd`; linked pipeline adapter and Nova Prism stage retain those bytes.
+> **Limit:** A mapped digest alone does not authenticate human approval or prove the complete Nova-to-Prism-to-Forge/Buster deployment path.
 
 ## Verification Matrix
 

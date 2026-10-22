@@ -145,6 +145,18 @@ and [lint policy](lint-policy.md) own the detailed procedures and inputs.
 > [Publisher request, completed receipt and attempt reservation](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/skills/common/plugins/transport-publisher/src/adapter.ts#L197-L253).
 >
 > [Publisher receipt/failure CAS and retained terminal outcomes](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/skills/common/plugins/transport-publisher/src/adapter.ts#L283-L339).
+>
+> **Claim:** Compatibility follows each actual producer and retained reader, including selected versions, supported normalization and explicit rejection.
+>
+> **Implementation:** The linked profiles, journals, caches, envelopes and archives expose their owning version branches.
+>
+> **Contract or setting:** Run-selected versions, exact identities and original-reader rules govern compatibility; legacy normalization is not universal migration.
+>
+> **Test evidence:** No new migration, rollback or retained-reader execution accompanies these source links; existing chapter evidence retains its recorded scope.
+>
+> **Limit:** Changing a tag or rewriting retained bytes does not create compatibility; preserve original readers and stop at unsupported transitions.
+>
+> **Revision:** `0e35889a3c4e65d5c47ba88e924611aace67eb1d`. Source bindings, not execution receipts.
 
 ### Publisher records do not migrate one another
 

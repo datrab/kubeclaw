@@ -353,6 +353,18 @@ to make a maintained integration fixture pass.
 > [Durable request conflict at existing-record lookup](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/skills/common/plugin-runtime/foundation/observability/record-retirement.ts#L121-L136).
 >
 > [Durable CAS, capacity, retirement and write errors](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/skills/common/plugin-runtime/foundation/observability/durable-records.ts#L183-L219).
+>
+> **Claim:** HTTP failures retain adapter-specific diagnostics; Core translates receipts and unresolved recovery into bounded lifecycle decisions.
+>
+> **Implementation:** The linked helpers, admission paths, network calls, durable transitions and Core consumers define distinct failure boundaries.
+>
+> **Contract or setting:** Closed configuration, request identity, target, Secret, fence and retained-state checks apply at their named boundaries.
+>
+> **Test evidence:** No new network, failed-transition or Core integration execution accompanies these throw-site and consumer links.
+>
+> **Limit:** An HTTP status alone does not establish admission order, a durable outcome or safe replacement work.
+>
+> **Revision:** `0e35889a3c4e65d5c47ba88e924611aace67eb1d`. Source bindings, not execution receipts.
 
 ## Native NRI policy and callback diagnostics
 

@@ -1,0 +1,71 @@
+[
+  {
+    "id": "AP09.4-ready-prism-topics-20261020",
+    "revision": "0ded6b68eb6170c4ea5e76251ad5e13adf2f664b",
+    "summary": "Independent PASS for Prism component authority, data/revision/CAS/approval/publication/retention boundaries and developer change ownership.",
+    "limits": [
+      "Source and documentation acceptance only; no live deployment or global publication acceptance.",
+      "OPR-010 full Studio journey remains NOT_READY; not all3094 lines reviewed.",
+      "Whole-file package.json guide pin check failed; unchanged inspected Prism source claims independently verified, no aggregate guide PASS."
+    ],
+    "changedDeclaredSources": [],
+    "sourceCount": 37
+  },
+  {
+    "id": "AP09-compiler-import-provider-diagnosis-20261021",
+    "revision": "0ded6b68eb6170c4ea5e76251ad5e13adf2f664b",
+    "summary": "Closes complete compiler/admission, import audit, capability provider resolution and symptom-first safe diagnosis after independent current-source review.",
+    "limits": [
+      "Documentation and repository evidence only; no live deployment, outage, provider embedding, native isolation or production restore claim.",
+      "No global documentation/publication/Helm-generation acceptance; unsupported importer-relative resolution remains an explicit global blocker."
+    ],
+    "changedDeclaredSources": [],
+    "sourceCount": 8
+  },
+  {
+    "id": "AP09-install-maintenance-project-entry-20261021",
+    "revision": "cfc97be096908c1193877d054bb80662120f1eca",
+    "summary": "Complete safe install/preflight, maintain/retire, project reference and connected first-reader routes accepted. First-project input omission corrected; current compiler contract check now passes.",
+    "limits": [
+      "Documentation/source and bounded local compiler evidence only; no live install/readiness, upgrade/rollback, restore, provider/pipeline execution, clean dependency installation or native isolation certified.",
+      "No A98-03/A98-08/A98-09 or global generator/publication/UI gates accepted by these four requirements.",
+      "Historical composite findings retain other-page scopes. Only the accepted canonical-page namespace/status/decision-reason facets are closed."
+    ],
+    "changedDeclaredSources": [],
+    "sourceCount": 8
+  },
+  {
+    "id": "REF010-current-contract-directions-20261021",
+    "revision": "af1b987ee4d461fc6205a18553db3e21461ca203",
+    "summary": "Whole authored compatibility hub distinguishes logical/package/API/content/schema/record/encoding/migration identity; existing9overview families corrected;16actual selected-reader/version/normalization/rejection groups and9canonical owner groups explain supported write/read/recovery/reject directions, retained schema-only and external-reader boundaries. Source/reader review reconciles25observed multi-version stems through actual producer/reader branches; four publisher states are distinct records, not four versions or whole-contract coverage alone. Unsupported migration/downgrade/retirement stays explicit and routed to exact owner.",
+    "limits": [
+      "Content reference PASS, not global schema/config-generation freshness, absent external readers, universal compatibility, conversion, deployed upgrade, live migration/retirement/recovery or aggregate reference/release acceptance. Exact fields remain with canonical schema authorities."
+    ],
+    "changedDeclaredSources": [],
+    "sourceCount": 38
+  },
+  {
+    "id": "A99-08-complete-supported-failure-journey-union-20261021",
+    "revision": "0ded6b68eb6170c4ea5e76251ad5e13adf2f664b",
+    "summary": "Whole documentation gate covers all six required failure families through independently reviewed coherent procedures: Redis, registry/image, Tailnet, Worker abort, uncertain external effect and demo rejection. Current index routes each named task; actual new recovery helper and bounded native fixtures support their stated claims. Unavailable live controls have explicit original-identity retention, owning authority, follow-up inputs, stop and cleanup boundaries, as required by compact contract1\u20134.",
+    "limits": [
+      "Documentation-content gate only. Native Redis/delegated Worker/live registry/Tailnet/demo-human execution are not claimed passed.",
+      "No independent fresh-context A99-12 or full AP09.9 acceptance. Existing product/closure and runtime Knip release stops retained."
+    ],
+    "changedDeclaredSources": [],
+    "sourceCount": 65
+  },
+  {
+    "id": "AP09-whole-trust-and-spiffe-contract-20261021",
+    "revision": "0ded6b68eb6170c4ea5e76251ad5e13adf2f664b",
+    "summary": "Pages: understand/security-and-trust.md and deployment-and-trust.md; reference/secrets.md; use/worker-trust.md. Sources: skills/worker/core/worker/trust.ts17\u201352, skills/nova/core/execution/authorization.ts, source-snapshot.ts, my-values/infra/spire-values.yaml, charts/kubeclaw/templates/{configmap-worker-trust,serviceaccount,rbac}.yaml, charts/prism/templates/networkpolicy.yaml, charts/ops-pod/templates/{network,rbac,workload}.yaml, my-values/setup-secrets.sh. Reuse accepted SEC001\u2013007; independently checked SPIFFE exact allowlist plus loopback proxy proof, session/CSRF versus workload identity, capability grants, default-deny enforcement limit, secret rotation, digest-versus-provenance distinctions and mutable Ops Tailscale exception. Render intent is not live enforcement. Correctly asks for positive and negative controls without asserting they ran.",
+    "limits": [
+      "COM011 preservation after planned communication model/mention correction: compare diff and confirm SPIFFE section664\u2013678 and security cross-referenced contract unchanged before carrying acceptance forward.",
+      "No live SPIRE/CNI/ACL enforcement or credential rotation claimed.",
+      "Listed documentation scope only; no live deployment, release or product approval. RELEASE_CONFIGURATION_CHANGED: charts/kubeclaw/files/config/knip.json remains a stop.",
+      "Parallel custody-metadata and negative-test corrections do not alter reviewed named product-source claims; changes to those sources or reader claims require bounded impact review. Unrelated whole-source generator/source-pin failures are not passed checks here."
+    ],
+    "changedDeclaredSources": [],
+    "sourceCount": 14
+  }
+]

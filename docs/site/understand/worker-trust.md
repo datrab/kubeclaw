@@ -139,6 +139,12 @@ in one layer does not turn either of the other layers into an allow rule.
 >
 > **Limit:** A rendered manifest proves the intended wiring. Only the live
 > positive and negative checks prove the wiring of a running cluster.
+>
+> **Contract or setting:** Protected sidecar ports, exact permitted peer identities and trusted loopback forwarding must agree on the selected route.
+>
+> **Test evidence:** No fresh deployed listener, wrong-SVID or bypass-denial exercise accompanies these wiring links.
+>
+> **Revision:** `8da6157b77247dcbdf209ef12f491f0b92ca858a`. Source bindings, not execution receipts.
 
 ## Nova-to-Buster Provenance
 
@@ -162,6 +168,16 @@ and signature before it extracts or executes source.
 >
 > **Implementation:** [The source-snapshot contract constructs the exact signed bytes](https://github.com/datrab/kubeclaw/blob/8da6157b77247dcbdf209ef12f491f0b92ca858a/contracts/pipeline-test-gate/v1/src/remote.ts#L61-L75) ·
 > [the deployment gives Buster only the public key](https://github.com/datrab/kubeclaw/blob/8da6157b77247dcbdf209ef12f491f0b92ca858a/my-values/buster-values.yaml#L90-L104).
+>
+> **Claim:** Nova signs canonical source-snapshot metadata; Buster receives the public verification key, not the private signing key.
+>
+> **Contract or setting:** The source-snapshot domain separator and canonical unsigned metadata determine the signed message.
+>
+> **Test evidence:** No fresh source-signature rejection, key rotation or live dispatch exercise accompanies these contract/deployment links.
+>
+> **Limit:** Source attestation does not establish image provenance, Prism artifact signing or a successful remote job.
+>
+> **Revision:** `8da6157b77247dcbdf209ef12f491f0b92ca858a`. Source bindings, not execution receipts.
 
 This signature does not depend on GitHub artifact attestations. It does not
 create public supply-chain provenance.
@@ -188,6 +204,14 @@ does not create or verify this envelope.
 > [signature and verification rules](https://github.com/datrab/kubeclaw/blob/8da6157b77247dcbdf209ef12f491f0b92ca858a/contracts/pipeline-worker-core/v1/src/trust.ts#L7-L43).
 >
 > **Limit:** A reusable contract does not prove that a product path uses it.
+>
+> **Claim:** The neutral Worker trust envelope signs request or artifact identities; its existence does not establish Prism use.
+>
+> **Implementation:** Signing and verification below use a canonical domain-separated message and explicit Ed25519 key validation.
+>
+> **Test evidence:** No fresh envelope-signature, expiry or deployment-path execution accompanies these reusable contract links.
+>
+> **Revision:** `8da6157b77247dcbdf209ef12f491f0b92ca858a`. Source bindings, not execution receipts.
 
 ## Leased Prism Namespaces
 

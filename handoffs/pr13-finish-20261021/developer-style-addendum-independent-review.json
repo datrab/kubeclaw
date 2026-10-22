@@ -1,0 +1,59 @@
+{
+  "reviewer": "/root/custody_review; independent of root-authored style changes",
+  "scope": "Exactly three passive-to-active nonexecution sentences; prior25-fieldset review unchanged/not recounted",
+  "review": {
+    "sourceAccuracy": "PASS",
+    "readerUsability": "PASS",
+    "quality": "PASS"
+  },
+  "findings": [],
+  "files": [
+    {
+      "path": "docs/site/extend/README.md",
+      "beforeSha256": "ea649deae6373d9b45a9b058867099522562cd2f6314a96f2cb7435bac914a2a",
+      "afterSha256": "ecf197374d1d15d13cb43f8035f703b7b6da13c79796782fd28a483ecd3afbe7",
+      "beforeEqualsPriorReviewedCandidate": true,
+      "afterEqualsMain": true,
+      "lineCountUnchanged": true,
+      "orderedURLsExact": true,
+      "changes": [
+        {
+          "line": 414,
+          "before": "> **Test evidence:** No OpenClaw or Codex activation/invocation was executed; these three manifest declarations supply no host execution result.",
+          "after": "> **Test evidence:** This inspection did not activate or invoke OpenClaw or Codex; these three manifest declarations supply no host execution result."
+        },
+        {
+          "line": 493,
+          "before": "> **Test evidence:** No capability-denial check was executed for this inspection; the linked vocabulary defines rejection rather than a runtime test result.",
+          "after": "> **Test evidence:** This inspection did not execute a capability-denial check; the linked vocabulary defines rejection rather than a runtime test result."
+        }
+      ]
+    },
+    {
+      "path": "docs/site/understand/pipeline-dependencies.md",
+      "beforeSha256": "f84bf3115566c06b3db958ed560497a8c4b0b8bc7dfa2bdfb90755c63b461671",
+      "afterSha256": "6805be36685c4fcc13f895dfa2e8d4a43bd1bfeff55fdf80774a5652760b6755",
+      "beforeEqualsPriorReviewedCandidate": true,
+      "afterEqualsMain": true,
+      "lineCountUnchanged": true,
+      "orderedURLsExact": true,
+      "changes": [
+        {
+          "line": 158,
+          "before": "> **Test evidence:** No role assembly or composed Nova run was executed for this inspection; these role/snapshot sources do not record runtime success.",
+          "after": "> **Test evidence:** This inspection did not assemble roles or execute a composed Nova run; these role/snapshot sources do not record runtime success."
+        }
+      ]
+    }
+  ],
+  "semanticAssessment": [
+    "Inspection did not activate/invoke either host; manifest declarations still supply no host execution result.",
+    "Inspection did not execute capability-denial check; vocabulary rejection is still Source, not runtime result.",
+    "Inspection did not assemble roles/execute composed Nova run; roles/snapshots still not runtime-success proof."
+  ],
+  "preserved": "All other bytes, Claim/Implementation/Contract/Revision/Limit text, URLs/order, headings, line counts and historical results unchanged. No new execution claim, no limit widening/no changed product Source.",
+  "basis": "../developer-prism-dependencies-independent/review.md and exact before hashes",
+  "checks": "Independent inert whole-byte/hash/line/URL comparisons; no product tests/Reader/gate/currentDATA run",
+  "initialDiagnostic": "First scratch review command had Python conditional-expression spacing SyntaxError before execution/writes. Corrected review script then completed; no candidate change.",
+  "held": "Facts roster preparer/capture NOT RUN; final Source/READY approval still pending Root"
+}

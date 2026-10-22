@@ -1,0 +1,1659 @@
+{
+  "status": "INERT_BINDINGS_NOT_SEMANTIC_OR_EXECUTION_BY_HASH",
+  "observedHead": "935cfe511fc180dce6c62ddd44869e915e38ba57",
+  "candidateFiles": [
+    {
+      "path": "docs/site/extend/developer-handbook.md",
+      "baselineSha256": "6a03109c275f0d8c8814ee14c3b06e80db74a90f2a5c1750ae77f24cf5878f27",
+      "candidateSha256": "6a03109c275f0d8c8814ee14c3b06e80db74a90f2a5c1750ae77f24cf5878f27",
+      "currentMainEqualsBaseline": true,
+      "same": true
+    },
+    {
+      "path": "docs/site/extend/README.md",
+      "baselineSha256": "7569bcbbb93d1fa8cc9346324705ec64cbae5373668a2a0da3bc15b86fa6bd75",
+      "candidateSha256": "ea649deae6373d9b45a9b058867099522562cd2f6314a96f2cb7435bac914a2a",
+      "currentMainEqualsBaseline": true,
+      "same": false
+    },
+    {
+      "path": "docs/site/extend/platform/prism.md",
+      "baselineSha256": "9c7b43487328edd95695c7581468b768f21d538dd2d7e429aa62e6a9ec6badeb",
+      "candidateSha256": "b95d48a400338e6b50eb211b07af8a85a527aa4c74be82edbb852e179b22df7b",
+      "currentMainEqualsBaseline": true,
+      "same": false
+    },
+    {
+      "path": "docs/site/understand/pipeline-dependencies.md",
+      "baselineSha256": "84f5f386072d54b3562fe13f5cda24f25986a48cf3fc0c149a11900bc1e6d843",
+      "candidateSha256": "f84bf3115566c06b3db958ed560497a8c4b0b8bc7dfa2bdfb90755c63b461671",
+      "currentMainEqualsBaseline": true,
+      "same": false
+    }
+  ],
+  "allOriginalObjects": [
+    {
+      "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+      "path": "package.json",
+      "sha256": "bcb57a4722e887f77da3e46767b751257777689f6be241e1cf29c59715e1e746",
+      "currentEqual": false,
+      "lines": 317,
+      "observedCurrentSha256": "4ab1e90c2259aeb96acfdc877e5a9eed330f605abff46d7eca85faded0f020c3",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+      "path": "scripts/build-plugin-sandbox.mjs",
+      "sha256": "ea546fd31e572312986730c4f8c89aacf0943aeb37b560cc63281cf67a9f92ec",
+      "currentEqual": true,
+      "lines": 25,
+      "observedCurrentSha256": "ea546fd31e572312986730c4f8c89aacf0943aeb37b560cc63281cf67a9f92ec",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+      "path": "skills/nova/core/state/journal.ts",
+      "sha256": "25be25a991c93c0e523178e3c45e2f7fb15ecad6e1a03566fca241d6b27f40bf",
+      "currentEqual": true,
+      "lines": 197,
+      "observedCurrentSha256": "25be25a991c93c0e523178e3c45e2f7fb15ecad6e1a03566fca241d6b27f40bf",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+      "path": "skills/nova/core/state/file-mutex.ts",
+      "sha256": "d6d347d6b615796ff761c0c608ed6a4d9f4f834bea92ddd2870d2312b5d04c7c",
+      "currentEqual": true,
+      "lines": 24,
+      "observedCurrentSha256": "d6d347d6b615796ff761c0c608ed6a4d9f4f834bea92ddd2870d2312b5d04c7c",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+      "path": ".github/workflows/pipeline-reliability.yaml",
+      "sha256": "e338f143d87d8fcbf16830fdf82a0f7a9396f53376a780f4076ee4fb5e87ac4a",
+      "currentEqual": true,
+      "lines": 223,
+      "observedCurrentSha256": "e338f143d87d8fcbf16830fdf82a0f7a9396f53376a780f4076ee4fb5e87ac4a",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+      "path": "scripts/bootstrap-prism-tests.sh",
+      "sha256": "58ed194facfe2f3691e583856f480a1dfa93a5ada272dff338523c0a1c35317d",
+      "currentEqual": true,
+      "lines": 8,
+      "observedCurrentSha256": "58ed194facfe2f3691e583856f480a1dfa93a5ada272dff338523c0a1c35317d",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+      "path": "scripts/prepare-reliability-services.sh",
+      "sha256": "dcb1f070411978b3cdee41dddabd8fc894f49dab65d25c8e7a98e6ec35d1a92b",
+      "currentEqual": true,
+      "lines": 39,
+      "observedCurrentSha256": "dcb1f070411978b3cdee41dddabd8fc894f49dab65d25c8e7a98e6ec35d1a92b",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+      "path": ".github/workflows/remediation-native.yaml",
+      "sha256": "b7b25ef45d106eece91c72295db6f8d69f7cb52403c248082e1fc601a84d93df",
+      "currentEqual": true,
+      "lines": 130,
+      "observedCurrentSha256": "b7b25ef45d106eece91c72295db6f8d69f7cb52403c248082e1fc601a84d93df",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+      "path": "tools/native-worker-nri/go.mod",
+      "sha256": "2e4ff78b7fb9a5cd83284d4b002104d7035c67d404de25082c3681945419bd73",
+      "currentEqual": true,
+      "lines": 27,
+      "observedCurrentSha256": "2e4ff78b7fb9a5cd83284d4b002104d7035c67d404de25082c3681945419bd73",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+      "path": "go.mod",
+      "sha256": "cfc02fe76ba47aadcb622e3d6fc7acaba6358b8d5d8a950b7dc5d67bb2d5c91f",
+      "currentEqual": true,
+      "lines": 3,
+      "observedCurrentSha256": "cfc02fe76ba47aadcb622e3d6fc7acaba6358b8d5d8a950b7dc5d67bb2d5c91f",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+      "path": ".github/workflows/docs-checks.yaml",
+      "sha256": "5349499f1936d361a0d269bc45664550580fb8b1af5773391fbdd30dd08a35d7",
+      "currentEqual": false,
+      "lines": 166,
+      "observedCurrentSha256": "96e54e68a99450a6b4cdd1568cd4309cf290ee54f8b368efa76b032f2c7b48b4",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+      "path": "skills/prism/studio/playwright.config.mjs",
+      "sha256": "b7a8e95cac93fae2ccc04cf5d4c79bab218b9e308164a1605667811ddb690655",
+      "currentEqual": true,
+      "lines": 7,
+      "observedCurrentSha256": "b7a8e95cac93fae2ccc04cf5d4c79bab218b9e308164a1605667811ddb690655",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+      "path": "tests/verification/integration/registry-local-gc.test.mjs",
+      "sha256": "b005d22587197f00d2b5e07c3b2597bf188e737851d2e8729e8d0580937e3440",
+      "currentEqual": true,
+      "lines": 87,
+      "observedCurrentSha256": "b005d22587197f00d2b5e07c3b2597bf188e737851d2e8729e8d0580937e3440",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+      "path": "ops/pod/package.json",
+      "sha256": "394f5bf0cad23cb3cce8d598d463fd5ec07588eb5467e63035b7594e59695895",
+      "currentEqual": false,
+      "lines": 8,
+      "observedCurrentSha256": "30867c450d00584fc4faa0345d1b9fb4e6f67039016938275a32119505597e1a",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+      "path": "scripts/check-runtime-package-ownership.mjs",
+      "sha256": "b5c50c08abdf1bcf8f18e64f2a623762642062474496a4bf8ab9c4d27b6d8d8a",
+      "currentEqual": true,
+      "lines": 155,
+      "observedCurrentSha256": "b5c50c08abdf1bcf8f18e64f2a623762642062474496a4bf8ab9c4d27b6d8d8a",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+      "path": "scripts/check-erasable-typescript.mjs",
+      "sha256": "e13ce31f4506756cb8840c6081897f8fd9803091a45ecd0f61e59e40c52cdf42",
+      "currentEqual": true,
+      "lines": 96,
+      "observedCurrentSha256": "e13ce31f4506756cb8840c6081897f8fd9803091a45ecd0f61e59e40c52cdf42",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+      "path": "packaging/runtime/package-ownership.json",
+      "sha256": "0723d0a55eba3fdcc6c041132616db3330c3397db6a24f1d0abbf874bd28cab8",
+      "currentEqual": true,
+      "lines": 81,
+      "observedCurrentSha256": "0723d0a55eba3fdcc6c041132616db3330c3397db6a24f1d0abbf874bd28cab8",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+      "path": "tsconfig.base.json",
+      "sha256": "edf7efcc1466d14a9f436dffe1134ca81561333d91f4660b08e5ec33e92b148d",
+      "currentEqual": true,
+      "lines": 16,
+      "observedCurrentSha256": "edf7efcc1466d14a9f436dffe1134ca81561333d91f4660b08e5ec33e92b148d",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+      "path": "scripts/build-v2-plugins.mjs",
+      "sha256": "bfe2f8682b512529d78ee21d00740de6cb6f43dca446d560a9ee1a0fcb52c0bd",
+      "currentEqual": true,
+      "lines": 47,
+      "observedCurrentSha256": "bfe2f8682b512529d78ee21d00740de6cb6f43dca446d560a9ee1a0fcb52c0bd",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+      "path": "scripts/generate-plugin-sdk-types.mjs",
+      "sha256": "3fe20ad1f2e5d604f4197d3fb7dd6e897f2ad3f6e6fd6b013412fc0eba8aed0b",
+      "currentEqual": true,
+      "lines": 33,
+      "observedCurrentSha256": "3fe20ad1f2e5d604f4197d3fb7dd6e897f2ad3f6e6fd6b013412fc0eba8aed0b",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+      "path": "scripts/generate-telemetry-contracts.mjs",
+      "sha256": "71f894da41b2bda7462f785f2c0adbab863e4037a91dd649cd968f02547c5a0c",
+      "currentEqual": true,
+      "lines": 186,
+      "observedCurrentSha256": "71f894da41b2bda7462f785f2c0adbab863e4037a91dd649cd968f02547c5a0c",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+      "path": "contracts/prism/v1/package.json",
+      "sha256": "88ab4aa94f1fa8d02e55d36d790361ad06247e0058ab87b878ea316af3f3cf1f",
+      "currentEqual": true,
+      "lines": 22,
+      "observedCurrentSha256": "88ab4aa94f1fa8d02e55d36d790361ad06247e0058ab87b878ea316af3f3cf1f",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+      "path": "scripts/reliability-tests.mjs",
+      "sha256": "0f563997afb6c49c3eb0d35ee440da496a32d8e1abbbc36c7e2d0d98c550ff05",
+      "currentEqual": true,
+      "lines": 48,
+      "observedCurrentSha256": "0f563997afb6c49c3eb0d35ee440da496a32d8e1abbbc36c7e2d0d98c550ff05",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+      "path": "skills/common/plugin-runtime/sdk/package.json",
+      "sha256": "e1f4ad759281d02de47f86d066cc372192ae919f8034b167f20fe09b38488770",
+      "currentEqual": true,
+      "lines": 16,
+      "observedCurrentSha256": "e1f4ad759281d02de47f86d066cc372192ae919f8034b167f20fe09b38488770",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+      "path": "skills/prism/package.json",
+      "sha256": "19457da92aed9c48e1bc81e082463bba0e406c662adeaff7699e0c674b45709c",
+      "currentEqual": true,
+      "lines": 55,
+      "observedCurrentSha256": "19457da92aed9c48e1bc81e082463bba0e406c662adeaff7699e0c674b45709c",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+      "path": "skills/nova/plugins/lint/package.json",
+      "sha256": "e59b6a3c158ebdc59f69aac1f9a35e7af770fd72acb976cd1a57d43ce7cadc98",
+      "currentEqual": true,
+      "lines": 16,
+      "observedCurrentSha256": "e59b6a3c158ebdc59f69aac1f9a35e7af770fd72acb976cd1a57d43ce7cadc98",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+      "path": "scripts/run-lint-report.mjs",
+      "sha256": "f573289218ef67cf09abe24b1b7ad830f03ace2fa3ccd18022d72bd6d3d29070",
+      "currentEqual": true,
+      "lines": 146,
+      "observedCurrentSha256": "f573289218ef67cf09abe24b1b7ad830f03ace2fa3ccd18022d72bd6d3d29070",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+      "path": "tests/skills/nova/project_setup/progress-scaffold.test.mjs",
+      "sha256": "fbe5eecf6395e623820349b575e6f664b8afe9f2f95d70f4ce816c906868a084",
+      "currentEqual": true,
+      "lines": 602,
+      "observedCurrentSha256": "fbe5eecf6395e623820349b575e6f664b8afe9f2f95d70f4ce816c906868a084",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+      "path": "skills/nova/core/lifecycle/reducer.ts",
+      "sha256": "13982ba82b9b619f5df89dc0b9932c7802f0b78968e450263ab302726d4f552d",
+      "currentEqual": true,
+      "lines": 136,
+      "observedCurrentSha256": "13982ba82b9b619f5df89dc0b9932c7802f0b78968e450263ab302726d4f552d",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+      "path": "skills/nova/core/execution/run-decisions.ts",
+      "sha256": "a509f00aa74367e90d396f338db55acff2610075ac0063d14fa8bec4ba9d1171",
+      "currentEqual": true,
+      "lines": 133,
+      "observedCurrentSha256": "a509f00aa74367e90d396f338db55acff2610075ac0063d14fa8bec4ba9d1171",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+      "path": "skills/nova/core/lifecycle/recovery-state.ts",
+      "sha256": "bc20a1e3f27ba2f4f67ce0f33df0f41bc4ebadcc40dcce8606ba37213660c99f",
+      "currentEqual": true,
+      "lines": 180,
+      "observedCurrentSha256": "bc20a1e3f27ba2f4f67ce0f33df0f41bc4ebadcc40dcce8606ba37213660c99f",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+      "path": "tests/verification/reliability/lifecycle.test.mts",
+      "sha256": "3ff75f78dc7ce12b4d362a7fc40292178d49eafd28eab5cada3c4508ccda9ace",
+      "currentEqual": true,
+      "lines": 81,
+      "observedCurrentSha256": "3ff75f78dc7ce12b4d362a7fc40292178d49eafd28eab5cada3c4508ccda9ace",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+      "path": "tests/verification/reliability/project-recovery-version.test.mjs",
+      "sha256": "8021b08d4705488a00356cd9aa1f40df7df44ba61731692dba35f64fb41fc2ef",
+      "currentEqual": true,
+      "lines": 34,
+      "observedCurrentSha256": "8021b08d4705488a00356cd9aa1f40df7df44ba61731692dba35f64fb41fc2ef",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+      "path": "skills/worker/core/BOUNDARIES.md",
+      "sha256": "7f65a0ef5f813473bc427a18f18dda996e05c4cefca473bda401d3ad73454b02",
+      "currentEqual": true,
+      "lines": 5,
+      "observedCurrentSha256": "7f65a0ef5f813473bc427a18f18dda996e05c4cefca473bda401d3ad73454b02",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+      "path": "tests/verification/deployment/prism-native-runtime.test.mjs",
+      "sha256": "8a103340311017870f682947f0003e59849048e344035bb55842851ee7d5531d",
+      "currentEqual": true,
+      "lines": 78,
+      "observedCurrentSha256": "8a103340311017870f682947f0003e59849048e344035bb55842851ee7d5531d",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+      "path": "scripts/build-native-worker-nri.mjs",
+      "sha256": "2030ab287fd08b0acbe476b2248c92a44518117d68e278db94737516b7ec2dd8",
+      "currentEqual": false,
+      "lines": 18,
+      "observedCurrentSha256": "f74f19215dbf5a6f6fff57aa7444d47f0051f2c20fb50c85a09a459b888a54db",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+      "path": "tests/verification/reliability/worker-native-scope-live.mts",
+      "sha256": "9b4011f87c171973653b10c7a7e5e9240506d4d1d226e131477edb9aac75e468",
+      "currentEqual": true,
+      "lines": 175,
+      "observedCurrentSha256": "9b4011f87c171973653b10c7a7e5e9240506d4d1d226e131477edb9aac75e468",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+      "path": "scripts/render-native-worker-node.mjs",
+      "sha256": "8f19768e2555221631a57c876e8a27400048486cce84c39c2fd06f1b99376a0e",
+      "currentEqual": false,
+      "lines": 74,
+      "observedCurrentSha256": "fe49ebbe3640b340c7b51a6284515f18101f3160c4817fa8f92876ef66f9dcc9",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+      "path": "scripts/prepare-native-worker-pools.mjs",
+      "sha256": "86af292b9cbaf4bd3009ee880b127079f33835b46660d71d482f38025a27e485",
+      "currentEqual": false,
+      "lines": 121,
+      "observedCurrentSha256": "af6c04981c6876e4617aed8a3c95027a5d3a066489c880825a730a528f9a94d3",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+      "path": "versions.json",
+      "sha256": "00a5c00ee4b7ef19d756e06ce315dfb033d39467be3762d8fdd47e354ec4ae28",
+      "currentEqual": false,
+      "lines": 142,
+      "observedCurrentSha256": "04281d9b2addd93073bd548293ea9ba6e1d88c2a18fff0f34cbdbc14ca7fe2c1",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+      "path": "skills/worker/core/worker/native-resource-observation.ts",
+      "sha256": "903fe22c2b9c51c908111361bb0423819a32ce1a4bf99b49b08cb39f490b976c",
+      "currentEqual": true,
+      "lines": 67,
+      "observedCurrentSha256": "903fe22c2b9c51c908111361bb0423819a32ce1a4bf99b49b08cb39f490b976c",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+      "path": "skills/worker/core/worker/native-worker-ownership.ts",
+      "sha256": "e297616eae31d0c14a0e319c18f1c64090bd39e42603bb661c0ea096c4dc8bfd",
+      "currentEqual": true,
+      "lines": 283,
+      "observedCurrentSha256": "e297616eae31d0c14a0e319c18f1c64090bd39e42603bb661c0ea096c4dc8bfd",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+      "path": "skills/worker/core/worker/native-resource-pool.ts",
+      "sha256": "2a002b796bae216210186f258d32f5dd267ec10a4940f4d0fc2f12ea72bd93ee",
+      "currentEqual": true,
+      "lines": 64,
+      "observedCurrentSha256": "2a002b796bae216210186f258d32f5dd267ec10a4940f4d0fc2f12ea72bd93ee",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+      "path": "skills/worker/core/worker/native-resource-scope.ts",
+      "sha256": "2aa1a46145ff77451e85796c1ce13ade3c4eaf7beba5063cabf0acb081190d4c",
+      "currentEqual": true,
+      "lines": 178,
+      "observedCurrentSha256": "2aa1a46145ff77451e85796c1ce13ade3c4eaf7beba5063cabf0acb081190d4c",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+      "path": "skills/worker/core/worker/native-supervisor-authority.ts",
+      "sha256": "2a710c00d935777144fc2055e435f1610bc66a01976a002047de751862e18650",
+      "currentEqual": true,
+      "lines": 22,
+      "observedCurrentSha256": "2a710c00d935777144fc2055e435f1610bc66a01976a002047de751862e18650",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+      "path": "scripts/native-worker-node-preflight.mjs",
+      "sha256": "cf8cc5f0cf9302d340749e985bd06b04a49c32b97153213e4bac6d03610beb2c",
+      "currentEqual": false,
+      "lines": 52,
+      "observedCurrentSha256": "e17c6c2570d3a4926b063330adfbdb67f3c0014915f570d6ad8b95333e1c2e56",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+      "path": "tests/verification/deployment/native-worker-node.test.mjs",
+      "sha256": "cc44b880bf366f9ac0153c80a41054379967946bee7d215fedf07644821fc6da",
+      "currentEqual": true,
+      "lines": 101,
+      "observedCurrentSha256": "cc44b880bf366f9ac0153c80a41054379967946bee7d215fedf07644821fc6da",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+      "path": "skills/prism/config/native-worker.ts",
+      "sha256": "00296097bfd5eaf337bb4782191f0d219008f890985f90a0e9a528ee15060367",
+      "currentEqual": true,
+      "lines": 84,
+      "observedCurrentSha256": "00296097bfd5eaf337bb4782191f0d219008f890985f90a0e9a528ee15060367",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+      "path": "skills/prism/tests/native/worker-harness.mts",
+      "sha256": "f464f0f8206211fa9bc7547e64061a2dd0143b5a45f841be836761e2967a4b1c",
+      "currentEqual": true,
+      "lines": 36,
+      "observedCurrentSha256": "f464f0f8206211fa9bc7547e64061a2dd0143b5a45f841be836761e2967a4b1c",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+      "path": "tests/verification/contracts/check-pipeline-remote-plan-runtime.mts",
+      "sha256": "456bdf9ad5926084bb89bbf9b4bc7ec5e58c1b4f426cffbfd79531b417c4db38",
+      "currentEqual": true,
+      "lines": 468,
+      "observedCurrentSha256": "456bdf9ad5926084bb89bbf9b4bc7ec5e58c1b4f426cffbfd79531b417c4db38",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+      "path": "tests/verification/contracts/check-pipeline-remote-process-restart.mts",
+      "sha256": "5494a3c11b36495d7382f9b99932c1e08f510e67b674545575bd436673746aeb",
+      "currentEqual": true,
+      "lines": 262,
+      "observedCurrentSha256": "5494a3c11b36495d7382f9b99932c1e08f510e67b674545575bd436673746aeb",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+      "path": "tests/verification/contracts/check-pipeline-remote-real-provider.mts",
+      "sha256": "fb5b0bf78dfe2b19857906b89628b61dd033db4c8437dcc6fb87dc4a95d2cadf",
+      "currentEqual": true,
+      "lines": 185,
+      "observedCurrentSha256": "fb5b0bf78dfe2b19857906b89628b61dd033db4c8437dcc6fb87dc4a95d2cadf",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+      "path": "scripts/package-agent-skill-bundle.sh",
+      "sha256": "dc4cc8626b5b303d2c28085bab83adf090932b4f31b0b4355a6dc188ac0a562c",
+      "currentEqual": true,
+      "lines": 44,
+      "observedCurrentSha256": "dc4cc8626b5b303d2c28085bab83adf090932b4f31b0b4355a6dc188ac0a562c",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+      "path": "skills/buster/engine/BOUNDARIES.md",
+      "sha256": "c3bf3348a8e9d31a4016d7844beb3e4c9f52ec7f7edbe67af69086f472054009",
+      "currentEqual": true,
+      "lines": 5,
+      "observedCurrentSha256": "c3bf3348a8e9d31a4016d7844beb3e4c9f52ec7f7edbe67af69086f472054009",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+      "path": "skills/buster/engine/package.json",
+      "sha256": "053f442cfaf9cd15bead8a36cc98286b614443b03e1bf91057674431c3c1ec66",
+      "currentEqual": true,
+      "lines": 26,
+      "observedCurrentSha256": "053f442cfaf9cd15bead8a36cc98286b614443b03e1bf91057674431c3c1ec66",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+      "path": "tests/verification/contracts/check-prism-postgres-transactions.mts",
+      "sha256": "85e8fab3340bffd4fe2693f75b8af0a5fe053d3662e018d78aace337aaa2e860",
+      "currentEqual": true,
+      "lines": 79,
+      "observedCurrentSha256": "85e8fab3340bffd4fe2693f75b8af0a5fe053d3662e018d78aace337aaa2e860",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+      "path": "skills/prism/tests/native/operation-journal.mts",
+      "sha256": "a3bfd67c266032f61e1b39604057f8fcf76c04974176ae9f7c34787901547f60",
+      "currentEqual": true,
+      "lines": 113,
+      "observedCurrentSha256": "a3bfd67c266032f61e1b39604057f8fcf76c04974176ae9f7c34787901547f60",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+      "path": "skills/prism/tests/native/operation-http.mts",
+      "sha256": "bb716f60910757ec3b9303bbdec5906d6bb394eea6f166a0c8d8e9eb7b1dd11f",
+      "currentEqual": true,
+      "lines": 47,
+      "observedCurrentSha256": "bb716f60910757ec3b9303bbdec5906d6bb394eea6f166a0c8d8e9eb7b1dd11f",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+      "path": "skills/prism/server/database-roles.ts",
+      "sha256": "f9b1b0048c2cc881969e33d7db58a74293a311079a50c8d391827996eaf5ae3a",
+      "currentEqual": true,
+      "lines": 58,
+      "observedCurrentSha256": "f9b1b0048c2cc881969e33d7db58a74293a311079a50c8d391827996eaf5ae3a",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+      "path": "skills/prism/server/control.ts",
+      "sha256": "b99be63fc90f0096a6acfef54c26c86b247ae7b1ad85066df064abca60600cd3",
+      "currentEqual": true,
+      "lines": 9,
+      "observedCurrentSha256": "b99be63fc90f0096a6acfef54c26c86b247ae7b1ad85066df064abca60600cd3",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+      "path": "skills/prism/server/worker.ts",
+      "sha256": "b8e882d4c0a5ea6001c5882a73c5a48ce079514ca758dacac7a623c529c4c376",
+      "currentEqual": true,
+      "lines": 60,
+      "observedCurrentSha256": "b8e882d4c0a5ea6001c5882a73c5a48ce079514ca758dacac7a623c529c4c376",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+      "path": "skills/prism/server/control-config.ts",
+      "sha256": "9da649103dd1bf2c1a95f533725942bd760e80f1353d4e0db924c4053c8dcd7a",
+      "currentEqual": true,
+      "lines": 73,
+      "observedCurrentSha256": "9da649103dd1bf2c1a95f533725942bd760e80f1353d4e0db924c4053c8dcd7a",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+      "path": "skills/prism/server/studio-config.ts",
+      "sha256": "fe231f8ab35b6dce042f237a56e44d08814405af5349c1f6106987ef776a7d18",
+      "currentEqual": true,
+      "lines": 18,
+      "observedCurrentSha256": "fe231f8ab35b6dce042f237a56e44d08814405af5349c1f6106987ef776a7d18",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+      "path": "skills/common/plugin-runtime/sdk/tsconfig.build.json",
+      "sha256": "d9ed6d6f6d716c448544c14cc24491d5aa42134257a06192b1c00ee47c49473a",
+      "currentEqual": true,
+      "lines": 21,
+      "observedCurrentSha256": "d9ed6d6f6d716c448544c14cc24491d5aa42134257a06192b1c00ee47c49473a",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+      "path": "contracts/telemetry/v1/tests/contracts.test.mjs",
+      "sha256": "fc87751f917d91828b267cdaf273ff47d4238256f7c87a94cb61cfd630a1a857",
+      "currentEqual": true,
+      "lines": 159,
+      "observedCurrentSha256": "fc87751f917d91828b267cdaf273ff47d4238256f7c87a94cb61cfd630a1a857",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+      "path": "contracts/pipeline-observability/v1/go/go.mod",
+      "sha256": "0ee7807bf53fc5945862998e32c925210d98ff4101ee3486b86e9a282cf89d23",
+      "currentEqual": true,
+      "lines": 5,
+      "observedCurrentSha256": "0ee7807bf53fc5945862998e32c925210d98ff4101ee3486b86e9a282cf89d23",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+      "path": "contracts/pipeline-observability/v1/go/go.sum",
+      "sha256": "9c7702a6a4af981a1023e29b601d7c61342d1353f052fd7c785b820860f81d88",
+      "currentEqual": true,
+      "lines": 2,
+      "observedCurrentSha256": "9c7702a6a4af981a1023e29b601d7c61342d1353f052fd7c785b820860f81d88",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+      "path": "tests/verification/contracts/check-pipeline-observability-contracts.mts",
+      "sha256": "7f1c0cfe62784505ebdf75876620122ec949d50b0060eba84d30d62654bf57dc",
+      "currentEqual": true,
+      "lines": 52,
+      "observedCurrentSha256": "7f1c0cfe62784505ebdf75876620122ec949d50b0060eba84d30d62654bf57dc",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+      "path": ".github/workflows/update-checks.yaml",
+      "sha256": "5747c7ad7c4b9514016e0609b5bedd968f645373278b5935313fbb1d1d78dc02",
+      "currentEqual": false,
+      "lines": 68,
+      "observedCurrentSha256": "9e79cbe1038aebffe367916d5b0705e617c27d672d87082839902694f97c910f",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+      "path": ".github/workflows/rollback-runtime.yaml",
+      "sha256": "be392f5c8fbe2261c0273d6a88dd054e0a72b4cc61ecca39f6979f0c2428b0e8",
+      "currentEqual": true,
+      "lines": 64,
+      "observedCurrentSha256": "be392f5c8fbe2261c0273d6a88dd054e0a72b4cc61ecca39f6979f0c2428b0e8",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+      "path": "tools/ops-mcp/test/kubernetes.test.mjs",
+      "sha256": "8e33058e60ae3646ac61133ed77573912271418f9996c73deba9f8b8f1ec997b",
+      "currentEqual": true,
+      "lines": 84,
+      "observedCurrentSha256": "8e33058e60ae3646ac61133ed77573912271418f9996c73deba9f8b8f1ec997b",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+      "path": "tools/ops-mcp/test/policy_contract_test.py",
+      "sha256": "7b604b22b3127766463cd6661dea8d2e833d50c8fb4bb3183290cc162a48c7cc",
+      "currentEqual": true,
+      "lines": 57,
+      "observedCurrentSha256": "7b604b22b3127766463cd6661dea8d2e833d50c8fb4bb3183290cc162a48c7cc",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+      "path": ".github/workflows/build-ops-mcp.yaml",
+      "sha256": "79cb301569d096bfff6c82135c6d4ee84df487da8cc2f0ccf1ee1b6e196460ba",
+      "currentEqual": true,
+      "lines": 248,
+      "observedCurrentSha256": "79cb301569d096bfff6c82135c6d4ee84df487da8cc2f0ccf1ee1b6e196460ba",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+      "path": "tools/ops-mcp/src/config.mjs",
+      "sha256": "3bb1b2b4caf43be233ad6fafaccf644702507442b93de1139e1be8babd9f529c",
+      "currentEqual": true,
+      "lines": 23,
+      "observedCurrentSha256": "3bb1b2b4caf43be233ad6fafaccf644702507442b93de1139e1be8babd9f529c",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+      "path": "tools/ops-mcp/src/authentication.mjs",
+      "sha256": "d816c6dd9354166a009ffdfc5db423f030345b94a16c4009e2aec639d57d0049",
+      "currentEqual": true,
+      "lines": 38,
+      "observedCurrentSha256": "d816c6dd9354166a009ffdfc5db423f030345b94a16c4009e2aec639d57d0049",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+      "path": "tools/ops-mcp/package.json",
+      "sha256": "39068dc2d3637504c980eccd1d0a3dd4950297b745c687f10ed3858ff1f7db2d",
+      "currentEqual": true,
+      "lines": 22,
+      "observedCurrentSha256": "39068dc2d3637504c980eccd1d0a3dd4950297b745c687f10ed3858ff1f7db2d",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+      "path": "tools/ops-mcp/test/local.test.mjs",
+      "sha256": "88d0fbd1c6b51ec219be156fa91369e5c3837134a4c9b35dd0f6e10a7a798ad7",
+      "currentEqual": true,
+      "lines": 51,
+      "observedCurrentSha256": "88d0fbd1c6b51ec219be156fa91369e5c3837134a4c9b35dd0f6e10a7a798ad7",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+      "path": "docker/archviewer.nginx.conf",
+      "sha256": "4af2c8146b2c62534c271701986ca3eb531a605294886fafcc0f4c3cd09462c4",
+      "currentEqual": true,
+      "lines": 21,
+      "observedCurrentSha256": "4af2c8146b2c62534c271701986ca3eb531a605294886fafcc0f4c3cd09462c4",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+      "path": "tests/verification/reliability/archviewer-native.test.mjs",
+      "sha256": "63d542fffbb34c56aaadd7c7510b3046f610a8c7611427ad66b36b4ceb79922b",
+      "currentEqual": true,
+      "lines": 56,
+      "observedCurrentSha256": "63d542fffbb34c56aaadd7c7510b3046f610a8c7611427ad66b36b4ceb79922b",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+      "path": "scripts/scan-runtime-images.sh",
+      "sha256": "c0eaacd1d6553ff5f1c01c0bdf888f0ea3af160ae0fa7cb819a6025076b0d684",
+      "currentEqual": true,
+      "lines": 145,
+      "observedCurrentSha256": "c0eaacd1d6553ff5f1c01c0bdf888f0ea3af160ae0fa7cb819a6025076b0d684",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+      "path": "tests/verification/contracts/check-nova-journal-scale.mts",
+      "sha256": "105aa899e31409455bb6deb9febcc1c38a47d66607070e5f18029939cbb61949",
+      "currentEqual": true,
+      "lines": 37,
+      "observedCurrentSha256": "105aa899e31409455bb6deb9febcc1c38a47d66607070e5f18029939cbb61949",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+      "path": "skills/prism/integration/engine-capture-retention.mts",
+      "sha256": "83e1cbdd48b997c5fd0d59f183bd6057d82e10df9ba25e2e7e7f4162a0eac74a",
+      "currentEqual": true,
+      "lines": 142,
+      "observedCurrentSha256": "83e1cbdd48b997c5fd0d59f183bd6057d82e10df9ba25e2e7e7f4162a0eac74a",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+      "path": ".github/workflows/role-images.yaml",
+      "sha256": "9f39ecb3503ee4564f65353cffb7e1e523fcbc178dcd11518fe93c44508c8959",
+      "currentEqual": true,
+      "lines": 59,
+      "observedCurrentSha256": "9f39ecb3503ee4564f65353cffb7e1e523fcbc178dcd11518fe93c44508c8959",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+      "path": ".github/workflows/build-images.yaml",
+      "sha256": "8fe4c8b087a816429e08cf5901a4db6e55dd9e3e17211528541bd142a731f06d",
+      "currentEqual": true,
+      "lines": 233,
+      "observedCurrentSha256": "8fe4c8b087a816429e08cf5901a4db6e55dd9e3e17211528541bd142a731f06d",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+      "path": ".github/workflows/publish-image-receipts.yaml",
+      "sha256": "dcbba52eb6c0c7bbae79681c7401fabed6f6182213e5b8410081d6d79380ffe5",
+      "currentEqual": true,
+      "lines": 35,
+      "observedCurrentSha256": "dcbba52eb6c0c7bbae79681c7401fabed6f6182213e5b8410081d6d79380ffe5",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+      "path": ".github/workflows/promote-runtime.yaml",
+      "sha256": "22867f17cf940d7b1137068e308d3b8216714d8da37dff1fd257eb8664f69981",
+      "currentEqual": false,
+      "lines": 113,
+      "observedCurrentSha256": "e780ca12d34fccd047f130ea8dce2d82e82c645236160fea97651cc0ee12c2fd",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+      "path": ".github/workflows/auto-promote-runtime.yaml",
+      "sha256": "e233296becb27f3da4f188298e397e487952f89f02639d04ef114e4968ced0e9",
+      "currentEqual": true,
+      "lines": 61,
+      "observedCurrentSha256": "e233296becb27f3da4f188298e397e487952f89f02639d04ef114e4968ced0e9",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+      "path": ".github/workflows/dependency-updates.yaml",
+      "sha256": "396e85ad69ba9161bdab64c88387a5e12a8c3d2afa85915e4cfcd40f5a353a4d",
+      "currentEqual": false,
+      "lines": 56,
+      "observedCurrentSha256": "cd69649aaed977e116aa7e8c113480601305dc168d0407f72d7f33be3b56cc3c",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+      "path": ".github/workflows/release-security.yaml",
+      "sha256": "45c6ab961771d95be929cd162f5f5f43de6cc737db56239b98ade2c12a012271",
+      "currentEqual": true,
+      "lines": 43,
+      "observedCurrentSha256": "45c6ab961771d95be929cd162f5f5f43de6cc737db56239b98ade2c12a012271",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "f99aecbb00cb399b46dfbbeb3ddb375fba6218e7",
+      "path": ".github/workflows/promote-runtime.yaml",
+      "sha256": "e780ca12d34fccd047f130ea8dce2d82e82c645236160fea97651cc0ee12c2fd",
+      "currentEqual": true,
+      "lines": 131,
+      "observedCurrentSha256": "e780ca12d34fccd047f130ea8dce2d82e82c645236160fea97651cc0ee12c2fd",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+      "path": "scripts/runtime-tool-locks.mjs",
+      "sha256": "df643a11bbb1327b5502151002bb5b88c21d83d35922ba1fee4e0c38bf5a6c25",
+      "currentEqual": true,
+      "lines": 92,
+      "observedCurrentSha256": "df643a11bbb1327b5502151002bb5b88c21d83d35922ba1fee4e0c38bf5a6c25",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+      "path": "scripts/versions.mjs",
+      "sha256": "5f7b15d0a9a033083b4fd438b2869295987f73e2fc559eda56ccaf457991c48c",
+      "currentEqual": false,
+      "lines": 182,
+      "observedCurrentSha256": "c837f871d19a8d37bc1748c3f85db9cb46ccdf9d53b1c0aaa6f64c7c6efbf00b",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+      "path": "scripts/check-core-architecture-guides.mjs",
+      "sha256": "05e0c0421afda55921950e88adbb005e3455111830ee0953204c1f0f0ebce01e",
+      "currentEqual": false,
+      "lines": 306,
+      "observedCurrentSha256": "0d6aabeb99bd3af14f66b98226c4f75c62c10d33ffef3920ea965a2c064f7dac",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+      "path": "scripts/docs-generate.mjs",
+      "sha256": "26b5d9803a88afd112d079114071c6e2967bee2ce08a8aaa2b0a5271cabe846e",
+      "currentEqual": false,
+      "lines": 851,
+      "observedCurrentSha256": "aad4c1a16b693443bdd5ff1f663f59659c1a5da74efb62e65ae0b049f74a500e",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+      "path": "scripts/docs-governance.mjs",
+      "sha256": "d3ecffefe0110e070532621c9535360a147267c9443a2665f0345bbd8d577bb7",
+      "currentEqual": false,
+      "lines": 140,
+      "observedCurrentSha256": "a7a194f1cbc8b6796bb3f33ab0121b950c9327c59afb00d30aac1d4d338c4a96",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+      "path": "scripts/docs-publication.mjs",
+      "sha256": "c5eeab7ccabf48343ff7a118c8d74da2dd3300dfbe57271008f5248bbc2ecd70",
+      "currentEqual": false,
+      "lines": 1047,
+      "observedCurrentSha256": "29d0305b4b4ad0de7fcea5810372e700b4b2a4d810e8cce22fbdd2bfd964cda8",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "30824cc555fa2623142752646f26dcc43072b5f7",
+      "path": "scripts/lib/docs-publication-assets.mjs",
+      "sha256": "c930b8710a03c58f61b2fab0beda06a7d12dd0fde456ea4d1507c586bf458f65",
+      "currentEqual": false,
+      "lines": 88,
+      "observedCurrentSha256": "239950ea0ebc87501d03aa178d07b99922cb4ec7dabdded3fbf8f8ab5c5de6f0",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "30824cc555fa2623142752646f26dcc43072b5f7",
+      "path": "scripts/tests/docs-publication-assets.test.mjs",
+      "sha256": "806414115958609e3342f08ddf54c47dcd46b307f081a006f80b79eb83cbc5fa",
+      "currentEqual": false,
+      "lines": 97,
+      "observedCurrentSha256": "94b4a2b00bd44de2375568735b886e033595c25ec1b0ac863419baa427f3daf8",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
+      "path": "skills/common/plugin-runtime/foundation/registry/types.ts",
+      "sha256": "6667bd4389377d33ba41c2c7166f3488c40f0cad1fc0e7c067fb37a6f2eca291",
+      "currentEqual": true,
+      "lines": 81,
+      "observedCurrentSha256": "6667bd4389377d33ba41c2c7166f3488c40f0cad1fc0e7c067fb37a6f2eca291",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
+      "path": "skills/common/plugin-runtime/foundation/config/platform.ts",
+      "sha256": "4bce96fe0b9556266c7586aa7803f6ff790dfd7f74e4952ddc5ebd25f9ebc7e8",
+      "currentEqual": true,
+      "lines": 70,
+      "observedCurrentSha256": "4bce96fe0b9556266c7586aa7803f6ff790dfd7f74e4952ddc5ebd25f9ebc7e8",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
+      "path": "skills/common/plugin-runtime/foundation/registry/capabilities.ts",
+      "sha256": "eeebd66fcb6a813fdad60188261e14d530c5d09f6c61f9972bc0428ecff151b6",
+      "currentEqual": true,
+      "lines": 221,
+      "observedCurrentSha256": "eeebd66fcb6a813fdad60188261e14d530c5d09f6c61f9972bc0428ecff151b6",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
+      "path": "skills/nova/core/execution/engine-runtime.ts",
+      "sha256": "de279faaeffc78713d3b3049d43a2efb9add45e4ad05a89c0f4efde1dbe120ec",
+      "currentEqual": true,
+      "lines": 99,
+      "observedCurrentSha256": "de279faaeffc78713d3b3049d43a2efb9add45e4ad05a89c0f4efde1dbe120ec",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
+      "path": "skills/nova/project/compiler.ts",
+      "sha256": "9d8ccdb3a1ccc56c58c1ec510aed54473f7db6d4135d28b2e265bbf90d7f1ef5",
+      "currentEqual": true,
+      "lines": 193,
+      "observedCurrentSha256": "9d8ccdb3a1ccc56c58c1ec510aed54473f7db6d4135d28b2e265bbf90d7f1ef5",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
+      "path": "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json",
+      "sha256": "837efd7975991aa21b8c92b57881194e9bc8c7adc4370f238d1a15b6d85d44db",
+      "currentEqual": true,
+      "lines": 1179,
+      "observedCurrentSha256": "837efd7975991aa21b8c92b57881194e9bc8c7adc4370f238d1a15b6d85d44db",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
+      "path": "tests/verification/contracts/check-plugin-system-v2-platform-config.mjs",
+      "sha256": "99738b9cf1161f814a29cd259595e18f37c7c878d3d2098300d8bb041662c2c7",
+      "currentEqual": true,
+      "lines": 68,
+      "observedCurrentSha256": "99738b9cf1161f814a29cd259595e18f37c7c878d3d2098300d8bb041662c2c7",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
+      "path": "skills/common/plugin-runtime/foundation/registry/build.ts",
+      "sha256": "c65248d6d4dc09dcfe762e9cddd6dd27d5864cbdab7cc421d87256e712873867",
+      "currentEqual": true,
+      "lines": 318,
+      "observedCurrentSha256": "c65248d6d4dc09dcfe762e9cddd6dd27d5864cbdab7cc421d87256e712873867",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
+      "path": "skills/common/plugin-runtime/sdk/src/index.ts",
+      "sha256": "464a94399315ad25f40511b8d1ee93c76b3535a82cd90fbde06bf0a58aa0cc9a",
+      "currentEqual": true,
+      "lines": 33,
+      "observedCurrentSha256": "464a94399315ad25f40511b8d1ee93c76b3535a82cd90fbde06bf0a58aa0cc9a",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
+      "path": "skills/common/plugin-runtime/foundation/registry/discovery.ts",
+      "sha256": "1f2742573de8a2f37067238bc53edcb4b031e881f04da94519687c79eb758a87",
+      "currentEqual": true,
+      "lines": 138,
+      "observedCurrentSha256": "1f2742573de8a2f37067238bc53edcb4b031e881f04da94519687c79eb758a87",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
+      "path": "skills/common/plugin-runtime/foundation/registry/activation.ts",
+      "sha256": "2d1ba3633fd9ba8549488f953a21909fdebd7d70c056fad1c688316d2ca8ee67",
+      "currentEqual": true,
+      "lines": 138,
+      "observedCurrentSha256": "2d1ba3633fd9ba8549488f953a21909fdebd7d70c056fad1c688316d2ca8ee67",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
+      "path": "skills/nova/core/test-gates/resolver.ts",
+      "sha256": "56eab5e577fe39e157a2117ad4fddd96d5282d4ff5a8270a3677ee0361a385c3",
+      "currentEqual": true,
+      "lines": 754,
+      "observedCurrentSha256": "56eab5e577fe39e157a2117ad4fddd96d5282d4ff5a8270a3677ee0361a385c3",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
+      "path": "skills/buster/engine/test-gates/provider-loader.ts",
+      "sha256": "8453535b799916c74d2f036ca09a5bc973f600eb402ade0da57f93ab24ab6c85",
+      "currentEqual": true,
+      "lines": 425,
+      "observedCurrentSha256": "8453535b799916c74d2f036ca09a5bc973f600eb402ade0da57f93ab24ab6c85",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
+      "path": "skills/buster/engine/test-gates/report-adapter-runtime.ts",
+      "sha256": "0675902bcfebf7842d10eade9965c1b49d21e2083acaa9a7b7e6f03c248e24a9",
+      "currentEqual": true,
+      "lines": 365,
+      "observedCurrentSha256": "0675902bcfebf7842d10eade9965c1b49d21e2083acaa9a7b7e6f03c248e24a9",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
+      "path": "skills/common/plugins/openclaw-agent-observer/openclaw.plugin.json",
+      "sha256": "651bf5310a5261ee309e219453e534754e7738fdd86152e582183e3ba95ec5eb",
+      "currentEqual": true,
+      "lines": 35,
+      "observedCurrentSha256": "651bf5310a5261ee309e219453e534754e7738fdd86152e582183e3ba95ec5eb",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
+      "path": "skills/prism/openclaw-plugin/openclaw.plugin.json",
+      "sha256": "1cf3f06268870973f2d7131cf64d469e516a62bf4b5f3a9d5b6d6a1c9bdd0588",
+      "currentEqual": true,
+      "lines": 17,
+      "observedCurrentSha256": "1cf3f06268870973f2d7131cf64d469e516a62bf4b5f3a9d5b6d6a1c9bdd0588",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
+      "path": "plugins/kubeclaw-ops/.codex-plugin/plugin.json",
+      "sha256": "906bd92fc84b1ea15e3e76c8b39d8262d0cbaa5458c9923478233660521ff1e5",
+      "currentEqual": true,
+      "lines": 26,
+      "observedCurrentSha256": "906bd92fc84b1ea15e3e76c8b39d8262d0cbaa5458c9923478233660521ff1e5",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
+      "path": "contracts/pipeline-worker-core/v1/src/types.ts",
+      "sha256": "399e42c696f561fbea8f38305252f873179f1b71115f7eacd961f7b5f899ec43",
+      "currentEqual": true,
+      "lines": 274,
+      "observedCurrentSha256": "399e42c696f561fbea8f38305252f873179f1b71115f7eacd961f7b5f899ec43",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
+      "path": "skills/worker/core/worker/attempt-executor.ts",
+      "sha256": "2ae7f5897a79042c601d58da5af682baba0e416e0c4ab302108386e3b619db42",
+      "currentEqual": true,
+      "lines": 704,
+      "observedCurrentSha256": "2ae7f5897a79042c601d58da5af682baba0e416e0c4ab302108386e3b619db42",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
+      "path": "packaging/runtime/package-ownership.json",
+      "sha256": "0723d0a55eba3fdcc6c041132616db3330c3397db6a24f1d0abbf874bd28cab8",
+      "currentEqual": true,
+      "lines": 81,
+      "observedCurrentSha256": "0723d0a55eba3fdcc6c041132616db3330c3397db6a24f1d0abbf874bd28cab8",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
+      "path": "packaging/runtime/roles/nova.json",
+      "sha256": "1c9de75dde812cb7ac118cfc074aa3a57bef7f428b789f11e9051ea713f0dc23",
+      "currentEqual": true,
+      "lines": 62,
+      "observedCurrentSha256": "1c9de75dde812cb7ac118cfc074aa3a57bef7f428b789f11e9051ea713f0dc23",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
+      "path": "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+      "sha256": "147fae4d867752edcb4cb1bf9966ed62372e77a5e90402a9f8fac9a8ab170fa0",
+      "currentEqual": true,
+      "lines": 198,
+      "observedCurrentSha256": "147fae4d867752edcb4cb1bf9966ed62372e77a5e90402a9f8fac9a8ab170fa0",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "4e52c72788ac002788bc036a497d76c13e6a35fd",
+      "path": "skills/prism/runtime.ts",
+      "sha256": "fcc61820c10a97126ebceae91c32f6867ebb8d8bef6428f005d3aae8ff3bcd9d",
+      "currentEqual": true,
+      "lines": 3,
+      "observedCurrentSha256": "fcc61820c10a97126ebceae91c32f6867ebb8d8bef6428f005d3aae8ff3bcd9d",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "4e52c72788ac002788bc036a497d76c13e6a35fd",
+      "path": "skills/prism/engine/worker-binding.ts",
+      "sha256": "c7480a44ddfcac32fea7c95a02560b4940dc86509b0463aea951584f6b8f659e",
+      "currentEqual": true,
+      "lines": 50,
+      "observedCurrentSha256": "c7480a44ddfcac32fea7c95a02560b4940dc86509b0463aea951584f6b8f659e",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "4e52c72788ac002788bc036a497d76c13e6a35fd",
+      "path": "packaging/runtime/roles/prism.json",
+      "sha256": "8723f462ad3597f2f1bfd2dd6f1028274c3a442af6c4485c1ae3597c12c4b3fe",
+      "currentEqual": true,
+      "lines": 29,
+      "observedCurrentSha256": "8723f462ad3597f2f1bfd2dd6f1028274c3a442af6c4485c1ae3597c12c4b3fe",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "4e52c72788ac002788bc036a497d76c13e6a35fd",
+      "path": "skills/prism/package.json",
+      "sha256": "19457da92aed9c48e1bc81e082463bba0e406c662adeaff7699e0c674b45709c",
+      "currentEqual": true,
+      "lines": 55,
+      "observedCurrentSha256": "19457da92aed9c48e1bc81e082463bba0e406c662adeaff7699e0c674b45709c",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "4e52c72788ac002788bc036a497d76c13e6a35fd",
+      "path": "contracts/prism/v1/package.json",
+      "sha256": "88ab4aa94f1fa8d02e55d36d790361ad06247e0058ab87b878ea316af3f3cf1f",
+      "currentEqual": true,
+      "lines": 22,
+      "observedCurrentSha256": "88ab4aa94f1fa8d02e55d36d790361ad06247e0058ab87b878ea316af3f3cf1f",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "4e52c72788ac002788bc036a497d76c13e6a35fd",
+      "path": "contracts/prism/v1/src/index.ts",
+      "sha256": "441cbe7b6ad9c471c3d8144de958497377d3785cff53904ac45943cfaf4a7c18",
+      "currentEqual": true,
+      "lines": 150,
+      "observedCurrentSha256": "441cbe7b6ad9c471c3d8144de958497377d3785cff53904ac45943cfaf4a7c18",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "4e52c72788ac002788bc036a497d76c13e6a35fd",
+      "path": "contracts/prism/v1/src/complexity.ts",
+      "sha256": "041bfa7037f86afaf6f9667bc90a07db4fe088924dcb3e7ef650841dfd1c60df",
+      "currentEqual": true,
+      "lines": 69,
+      "observedCurrentSha256": "041bfa7037f86afaf6f9667bc90a07db4fe088924dcb3e7ef650841dfd1c60df",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "4e52c72788ac002788bc036a497d76c13e6a35fd",
+      "path": "contracts/prism/v1/scripts/generate-validators.mjs",
+      "sha256": "3aa33ba91680dd24360d299c99b6eccdb1a35aae5ef175e4caf2b6a8a9b5bfd1",
+      "currentEqual": true,
+      "lines": 80,
+      "observedCurrentSha256": "3aa33ba91680dd24360d299c99b6eccdb1a35aae5ef175e4caf2b6a8a9b5bfd1",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "4e52c72788ac002788bc036a497d76c13e6a35fd",
+      "path": "skills/prism/domain/index.ts",
+      "sha256": "710ff6fd047d301aef22477cb8cdecfd1fe1c9bd224c069abc6af9d805462838",
+      "currentEqual": true,
+      "lines": 136,
+      "observedCurrentSha256": "710ff6fd047d301aef22477cb8cdecfd1fe1c9bd224c069abc6af9d805462838",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "4e52c72788ac002788bc036a497d76c13e6a35fd",
+      "path": "skills/prism/studio/puck-adapter.ts",
+      "sha256": "186602f28c827a7f347eee8ce594234febc0a9b1ed3e91f41554bd5db9b81415",
+      "currentEqual": true,
+      "lines": 287,
+      "observedCurrentSha256": "186602f28c827a7f347eee8ce594234febc0a9b1ed3e91f41554bd5db9b81415",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "4e52c72788ac002788bc036a497d76c13e6a35fd",
+      "path": "skills/prism/server/control-server.ts",
+      "sha256": "c165fb6b20bc6b608ae2bc859f52fc5700856e6cea3798916df921dcac5ce8ac",
+      "currentEqual": true,
+      "lines": 942,
+      "observedCurrentSha256": "c165fb6b20bc6b608ae2bc859f52fc5700856e6cea3798916df921dcac5ce8ac",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "4e52c72788ac002788bc036a497d76c13e6a35fd",
+      "path": "skills/prism/renderer/index.ts",
+      "sha256": "a96197346ae06317f68b5dd3fd68de35bb02780af6d17e2f7ac5683f17751552",
+      "currentEqual": true,
+      "lines": 304,
+      "observedCurrentSha256": "a96197346ae06317f68b5dd3fd68de35bb02780af6d17e2f7ac5683f17751552",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "4e52c72788ac002788bc036a497d76c13e6a35fd",
+      "path": "contracts/prism/v1/src/document-semantics.ts",
+      "sha256": "0a467d617890be691aaff6eb114b4acbb5de4efca55a5888879b7518a7f4cef2",
+      "currentEqual": true,
+      "lines": 136,
+      "observedCurrentSha256": "0a467d617890be691aaff6eb114b4acbb5de4efca55a5888879b7518a7f4cef2",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "4e52c72788ac002788bc036a497d76c13e6a35fd",
+      "path": "skills/prism/engine/index.ts",
+      "sha256": "8502a5bf60bc3b352556ed72464f743581b67fd4e70d70d3734a832c25a9ad16",
+      "currentEqual": true,
+      "lines": 180,
+      "observedCurrentSha256": "8502a5bf60bc3b352556ed72464f743581b67fd4e70d70d3734a832c25a9ad16",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "4e52c72788ac002788bc036a497d76c13e6a35fd",
+      "path": "skills/prism/corpus/index.ts",
+      "sha256": "99ee5eee2282734c9df492c5ac1219903b9680f3dff37f3c513bfa4cff2c6343",
+      "currentEqual": true,
+      "lines": 256,
+      "observedCurrentSha256": "99ee5eee2282734c9df492c5ac1219903b9680f3dff37f3c513bfa4cff2c6343",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "4e52c72788ac002788bc036a497d76c13e6a35fd",
+      "path": "skills/prism/evaluation/index.ts",
+      "sha256": "3c05396fdea1ada5bcc32fa5f45215e9ff2492f73e3c3987a4c0eb994a68416a",
+      "currentEqual": true,
+      "lines": 236,
+      "observedCurrentSha256": "3c05396fdea1ada5bcc32fa5f45215e9ff2492f73e3c3987a4c0eb994a68416a",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "4e52c72788ac002788bc036a497d76c13e6a35fd",
+      "path": "skills/prism/preferences/index.ts",
+      "sha256": "2a86ae6f5c2fb5e0bc0b6dc2f60a6f7c3dad1d2695e1bde2cf9e00b6134b6c7d",
+      "currentEqual": true,
+      "lines": 90,
+      "observedCurrentSha256": "2a86ae6f5c2fb5e0bc0b6dc2f60a6f7c3dad1d2695e1bde2cf9e00b6134b6c7d",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "4e52c72788ac002788bc036a497d76c13e6a35fd",
+      "path": "skills/prism/control/session.ts",
+      "sha256": "0d4f5e3842275055aaf928b51580f3879655538584dfd607ff80b31fc2aef77b",
+      "currentEqual": true,
+      "lines": 20,
+      "observedCurrentSha256": "0d4f5e3842275055aaf928b51580f3879655538584dfd607ff80b31fc2aef77b",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "4e52c72788ac002788bc036a497d76c13e6a35fd",
+      "path": "skills/prism/server/worker-service.ts",
+      "sha256": "90174f5edf19c85ef1642da95a51aac46854f9a1ce7172d876045a5bac1595e4",
+      "currentEqual": true,
+      "lines": 107,
+      "observedCurrentSha256": "90174f5edf19c85ef1642da95a51aac46854f9a1ce7172d876045a5bac1595e4",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "4e52c72788ac002788bc036a497d76c13e6a35fd",
+      "path": "skills/prism/server/native-worker-execution.ts",
+      "sha256": "c6618f0f1dfdf61b2c2a126700f3aded99519b20a7ce3b553f21c27f53f3a406",
+      "currentEqual": true,
+      "lines": 50,
+      "observedCurrentSha256": "c6618f0f1dfdf61b2c2a126700f3aded99519b20a7ce3b553f21c27f53f3a406",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "4e52c72788ac002788bc036a497d76c13e6a35fd",
+      "path": "skills/prism/studio/flows.ts",
+      "sha256": "a48cd934ead75e3cffccbfe3dcf0eae307f08e8f4f6c994575a6542b82cb4159",
+      "currentEqual": true,
+      "lines": 47,
+      "observedCurrentSha256": "a48cd934ead75e3cffccbfe3dcf0eae307f08e8f4f6c994575a6542b82cb4159",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "4e52c72788ac002788bc036a497d76c13e6a35fd",
+      "path": "skills/prism/server/studio-request.ts",
+      "sha256": "efca0f821ef3da9f441e9c6c5458a33d8c525f8e7db3a63aea1a8e7f37e93bbb",
+      "currentEqual": true,
+      "lines": 139,
+      "observedCurrentSha256": "efca0f821ef3da9f441e9c6c5458a33d8c525f8e7db3a63aea1a8e7f37e93bbb",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "4e52c72788ac002788bc036a497d76c13e6a35fd",
+      "path": "skills/prism/storage/index.ts",
+      "sha256": "e5105909e5f1abf1eb2178270dd63d1b8e2aa337177dcb620b6ae43199a3a199",
+      "currentEqual": true,
+      "lines": 332,
+      "observedCurrentSha256": "e5105909e5f1abf1eb2178270dd63d1b8e2aa337177dcb620b6ae43199a3a199",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "4e52c72788ac002788bc036a497d76c13e6a35fd",
+      "path": "skills/prism/storage/artifacts.ts",
+      "sha256": "8177fe9d5199d1af866a2ad7d5d7fdfa82b99b0fe6df5b7f0c3c04e96536ef1f",
+      "currentEqual": true,
+      "lines": 68,
+      "observedCurrentSha256": "8177fe9d5199d1af866a2ad7d5d7fdfa82b99b0fe6df5b7f0c3c04e96536ef1f",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "4e52c72788ac002788bc036a497d76c13e6a35fd",
+      "path": "skills/prism/pipeline-adapter/index.ts",
+      "sha256": "3bfc0d88143f358aa3c78a404f9bc9819095bc8dfda27ed3e3d4750c6e6ff359",
+      "currentEqual": true,
+      "lines": 57,
+      "observedCurrentSha256": "3bfc0d88143f358aa3c78a404f9bc9819095bc8dfda27ed3e3d4750c6e6ff359",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "4e52c72788ac002788bc036a497d76c13e6a35fd",
+      "path": "skills/nova/plugins/prism-design/src/stage.ts",
+      "sha256": "20bee389c4868070dc7450d366b85745c2f26acb88e8d526463c3cb5a599db88",
+      "currentEqual": true,
+      "lines": 36,
+      "observedCurrentSha256": "20bee389c4868070dc7450d366b85745c2f26acb88e8d526463c3cb5a599db88",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "85e73b1885f04a9494f388cf6622ad0bde2db447",
+      "path": "scripts/registry-client-config.mjs",
+      "sha256": "e67a3568c4a6a33ad23bd2b47b6479ed694b79d25e03fcc5dc461532a8cea1c2",
+      "currentEqual": false,
+      "lines": 119,
+      "observedCurrentSha256": "51d00a4883b7e0e9bb63b4e490b4dad1f512053956b116b4a2da9d9d7d1fe210",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "85e73b1885f04a9494f388cf6622ad0bde2db447",
+      "path": "docker/buster-runtime-entrypoint.sh",
+      "sha256": "28c93fdced03924c24119205d75a9954e49066acac9314619dfb3c65e1ed3c44",
+      "currentEqual": false,
+      "lines": 340,
+      "observedCurrentSha256": "1b13228deb6e53e66580b96752c34abcada89ecef278ea3dff9b1ed980f68225",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "85e73b1885f04a9494f388cf6622ad0bde2db447",
+      "path": "tests/verification/deployment/registry-client-config.test.mjs",
+      "sha256": "899b1cc7f9032e26165569c8dace78190252780a11d120c85d8d0ace05e6b3cf",
+      "currentEqual": true,
+      "lines": 76,
+      "observedCurrentSha256": "899b1cc7f9032e26165569c8dace78190252780a11d120c85d8d0ace05e6b3cf",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "85e73b1885f04a9494f388cf6622ad0bde2db447",
+      "path": "packaging/runtime/roles/nova.json",
+      "sha256": "1c9de75dde812cb7ac118cfc074aa3a57bef7f428b789f11e9051ea713f0dc23",
+      "currentEqual": true,
+      "lines": 62,
+      "observedCurrentSha256": "1c9de75dde812cb7ac118cfc074aa3a57bef7f428b789f11e9051ea713f0dc23",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "85e73b1885f04a9494f388cf6622ad0bde2db447",
+      "path": "skills/nova/pipeline.ts",
+      "sha256": "57df2fece0a125211784d8ffdea446860e031f50b03fa5ae09a99f50177db821",
+      "currentEqual": true,
+      "lines": 14,
+      "observedCurrentSha256": "57df2fece0a125211784d8ffdea446860e031f50b03fa5ae09a99f50177db821",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "85e73b1885f04a9494f388cf6622ad0bde2db447",
+      "path": "skills/nova/core/execution/engine-run.ts",
+      "sha256": "eca97e2a488bd31d597c0dd71cd9971beffc9a5dc94fad1dbccf8867aa8f4819",
+      "currentEqual": true,
+      "lines": 122,
+      "observedCurrentSha256": "eca97e2a488bd31d597c0dd71cd9971beffc9a5dc94fad1dbccf8867aa8f4819",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "85e73b1885f04a9494f388cf6622ad0bde2db447",
+      "path": "charts/kubeclaw/templates/deployment.yaml",
+      "sha256": "d66852093b6643287ca38d6234f543db6fba144417d68e8c6925607838233077",
+      "currentEqual": false,
+      "lines": 1702,
+      "observedCurrentSha256": "8e780bc0033c3da5c0a3d4db53e8ba9e0753200a072ce0ed63a598c461231883",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "85e73b1885f04a9494f388cf6622ad0bde2db447",
+      "path": "skills/common/plugins/redis-transport/src/adapter.ts",
+      "sha256": "15c91e7eed9a98784d6fbdcb931160202295ea6ef20b1c18367bcd9eaab4cc01",
+      "currentEqual": true,
+      "lines": 91,
+      "observedCurrentSha256": "15c91e7eed9a98784d6fbdcb931160202295ea6ef20b1c18367bcd9eaab4cc01",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "85e73b1885f04a9494f388cf6622ad0bde2db447",
+      "path": "my-values/infra/litellm-deployment.yaml",
+      "sha256": "21136d7cc63b549db0d9e1f3a32d449c5bf3c2644790d144d47d476372c56bab",
+      "currentEqual": true,
+      "lines": 97,
+      "observedCurrentSha256": "21136d7cc63b549db0d9e1f3a32d449c5bf3c2644790d144d47d476372c56bab",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "85e73b1885f04a9494f388cf6622ad0bde2db447",
+      "path": "charts/prism/templates/postgresql.yaml",
+      "sha256": "e81248bfa623695e0e79f36ddf347ad75a1d7bc449a4250287a96a80e17742c1",
+      "currentEqual": true,
+      "lines": 78,
+      "observedCurrentSha256": "e81248bfa623695e0e79f36ddf347ad75a1d7bc449a4250287a96a80e17742c1",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "85e73b1885f04a9494f388cf6622ad0bde2db447",
+      "path": "skills/buster/engine/test-gates/container-build-runtime.ts",
+      "sha256": "9316f1e642640c768f268aa7f236f075e9290516543ded5148869914e91f907e",
+      "currentEqual": true,
+      "lines": 280,
+      "observedCurrentSha256": "9316f1e642640c768f268aa7f236f075e9290516543ded5148869914e91f907e",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "85e73b1885f04a9494f388cf6622ad0bde2db447",
+      "path": "my-values/infra/registry-local.yaml",
+      "sha256": "3fe00107c5ee2387313626219668bdc02d994a96c32776a7dd2138bdd16f10ae",
+      "currentEqual": false,
+      "lines": 106,
+      "observedCurrentSha256": "966ab5af3851d5a6f9305d8819574301ca78d6c20f6d19074d078bf3b8e28d53",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "85e73b1885f04a9494f388cf6622ad0bde2db447",
+      "path": "my-values/infra/registry-mirror.yaml",
+      "sha256": "19673e314634c078740c21094e2de9a3db3fe9a5eaccc5be1b597f4454a11645",
+      "currentEqual": false,
+      "lines": 94,
+      "observedCurrentSha256": "383c470fb991a43aa9dfc1634d2399c53a1e77c19f37d5bb4b8bc0d26ef207f5",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "85e73b1885f04a9494f388cf6622ad0bde2db447",
+      "path": "packaging/runtime/roles/buster.json",
+      "sha256": "a049283b5964eba52cc3b4b71c356bc0e4ae441483d7aadf8c0eb88aed26d6dc",
+      "currentEqual": true,
+      "lines": 61,
+      "observedCurrentSha256": "a049283b5964eba52cc3b4b71c356bc0e4ae441483d7aadf8c0eb88aed26d6dc",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "85e73b1885f04a9494f388cf6622ad0bde2db447",
+      "path": "skills/buster/plugins/tailscale-exposure/plugin.json",
+      "sha256": "c61695a3a068a240a335949e27287829fa8183b465bd648662525da67fc9648b",
+      "currentEqual": true,
+      "lines": 26,
+      "observedCurrentSha256": "c61695a3a068a240a335949e27287829fa8183b465bd648662525da67fc9648b",
+      "originalObjectVerified": true
+    },
+    {
+      "revision": "85e73b1885f04a9494f388cf6622ad0bde2db447",
+      "path": "charts/prism/templates/services.yaml",
+      "sha256": "c09a05501eca8a1876e44c1d70898fb5dd6770210e777353d6eff0ee9cd9ae1b",
+      "currentEqual": true,
+      "lines": 47,
+      "observedCurrentSha256": "c09a05501eca8a1876e44c1d70898fb5dd6770210e777353d6eff0ee9cd9ae1b",
+      "originalObjectVerified": true
+    }
+  ],
+  "sourceObjectCount": 162,
+  "currentEqual": 139,
+  "historicalDifferent": 23,
+  "authoredScopeCount": 62,
+  "authoredCurrentEqual": 57,
+  "fiveHistoricalDiffsExact": true,
+  "historicalChangedAuthoredSources": [
+    {
+      "revision": "85e73b1885f04a9494f388cf6622ad0bde2db447",
+      "path": "scripts/registry-client-config.mjs",
+      "sha256": "e67a3568c4a6a33ad23bd2b47b6479ed694b79d25e03fcc5dc461532a8cea1c2",
+      "currentEqual": false,
+      "lines": 119
+    },
+    {
+      "revision": "85e73b1885f04a9494f388cf6622ad0bde2db447",
+      "path": "docker/buster-runtime-entrypoint.sh",
+      "sha256": "28c93fdced03924c24119205d75a9954e49066acac9314619dfb3c65e1ed3c44",
+      "currentEqual": false,
+      "lines": 340
+    },
+    {
+      "revision": "85e73b1885f04a9494f388cf6622ad0bde2db447",
+      "path": "charts/kubeclaw/templates/deployment.yaml",
+      "sha256": "d66852093b6643287ca38d6234f543db6fba144417d68e8c6925607838233077",
+      "currentEqual": false,
+      "lines": 1702
+    },
+    {
+      "revision": "85e73b1885f04a9494f388cf6622ad0bde2db447",
+      "path": "my-values/infra/registry-local.yaml",
+      "sha256": "3fe00107c5ee2387313626219668bdc02d994a96c32776a7dd2138bdd16f10ae",
+      "currentEqual": false,
+      "lines": 106
+    },
+    {
+      "revision": "85e73b1885f04a9494f388cf6622ad0bde2db447",
+      "path": "my-values/infra/registry-mirror.yaml",
+      "sha256": "19673e314634c078740c21094e2de9a3db3fe9a5eaccc5be1b597f4454a11645",
+      "currentEqual": false,
+      "lines": 94
+    }
+  ],
+  "countDenominator": {
+    "allTrackedManifests": 51,
+    "pipelinePackages": 48,
+    "registrationCounts": {
+      "stages": 21,
+      "observers": 5,
+      "adapters": 21,
+      "testProviders": 19,
+      "reportAdapters": 1
+    },
+    "registrationTotal": 67
+  },
+  "reuseNamedRecords": [
+    {
+      "id": "AP09.2-ready-topics-20261020",
+      "revision": "d0bb52c4d8bcf323c0ff32b95e8e3120ffa6eefb",
+      "summary": "Independent PASS for named authority/architecture, execution/graph/state/repair/effects/wait/recovery/audit/result import and plugin contract/discovery/configuration/isolation/removal/extension scopes.",
+      "limits": [
+        "Source and documentation acceptance only; no live deployment or global publication acceptance.",
+        "ARC-003/006 and PLG-004/012 have material content gaps and are not accepted.",
+        "NVC-002/003,PLG-006/008/009/011 remain NOT_READY; missing workspace dependency or stale capability-security fixture blocks their checks.",
+        "Kernel isolation remains environment-dependent; no whole-AP09.2 or gate acceptance."
+      ],
+      "review": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "declaredProductSourceCount": 54,
+      "changedDeclaredProductSources": []
+    },
+    {
+      "id": "AP09.4-ready-prism-topics-20261020",
+      "revision": "310b8dca1377e0ef3b5c307fc1f917af8a3c89de",
+      "summary": "Independent PASS for Prism component authority, data/revision/CAS/approval/publication/retention boundaries and developer change ownership.",
+      "limits": [
+        "Source and documentation acceptance only; no live deployment or global publication acceptance.",
+        "OPR-010 full Studio journey remains NOT_READY; not all3094 lines reviewed.",
+        "Whole-file package.json guide pin check failed; unchanged inspected Prism source claims independently verified, no aggregate guide PASS."
+      ],
+      "review": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "declaredProductSourceCount": 35,
+      "changedDeclaredProductSources": []
+    },
+    {
+      "id": "AP09-reader-developers-20261020",
+      "revision": "8522e25d9b284e9bf1a34dedf313a806d97c28ee",
+      "summary": "Independent topic acceptance for DEV-001, DEV-003, DEV-004, DEV-006, DEV-009, EXT-001, EXT-002, EXT-003, EXT-004, EXT-009, CDV-001, CDV-002, CDV-004, CDV-011; whole-gate acceptance only for explicitly reviewed A910-02.",
+      "limits": [
+        "Documentation/source acceptance only; no live deployment or globally green publication/CI claim.",
+        "SDKgeneration missing json-schema-to-typescript; capability-security fixture stale; external-effect import admission,Prism deployment fixture and missing pglite keep assigned scopes NOT_READY.",
+        "Ops promotion authority,host version,same-ID replacement roots and missing capability/Forge/Echo change tasks remain FAIL. Inventory word-count freshness and choice-guide metadata check not green."
+      ],
+      "review": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "declaredProductSourceCount": 67,
+      "changedDeclaredProductSources": [
+        ".github/workflows/docs-checks.yaml",
+        "scripts/docs-publication.mjs"
+      ]
+    },
+    {
+      "id": "AP09-whole-dependency-decision-traces-20261021",
+      "revision": "d0bb52c4d8bcf323c0ff32b95e8e3120ffa6eefb",
+      "summary": "Page: understand/communication.md979\u20131135 and linked request-trace-success.json/request-trace-redis-unavailable.json. Sources: skills/nova/core/execution, skills/nova/plugins/demo-handoff, skills/buster/engine/test-gates, skills/prism/control/agent-jobs.ts, docker/buster-runtime-entrypoint.sh, registry client configuration. Full showcase target trace follows every owner and durable identity through separate human acceptance; explicitly target/contract-only, not observed success. Redis, both PostgreSQL owners, registry/BuildKit, Tailscale, LiteLLM/provider, and exact Git revision failures end in classified narrow repair, uncertain-outcome reconciliation and original identity. The model/Discord row errors below do not alter the inspected ordered success/failure trace.",
+      "limits": [
+        "Contract/target trace is not observed live execution.",
+        "Other communication model/Discord rows remain separately open COM001/COM008/A9705; confirm ordered traces preserved after those edits.",
+        "Listed documentation scope only; no live deployment, release or product approval. RELEASE_CONFIGURATION_CHANGED: charts/kubeclaw/files/config/knip.json remains a stop.",
+        "Parallel custody-metadata and negative-test corrections do not alter reviewed named product-source claims; changes to those sources or reader claims require bounded impact review. Unrelated whole-source generator/source-pin failures are not passed checks here."
+      ],
+      "review": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS",
+        "report": "handoffs/pr13-finish-20261021/operator-platform-acceptance.md"
+      },
+      "declaredProductSourceCount": 5,
+      "changedDeclaredProductSources": []
+    },
+    {
+      "id": "A910-01-whole-content-20261021",
+      "revision": "d0bb52c4d8bcf323c0ff32b95e8e3120ffa6eefb",
+      "summary": "Clean-checkout preparation fully specifies toolchains,services,credentials,local dependencies,locked installation and baseline checks with expected results and safe-stop boundaries.",
+      "limits": [
+        "Documentation/source acceptance only; no live deployment,production/provider execution,release,clean installation or platform restore newly certified.",
+        "Already accepted catalogue requirements are not re-counted; no unrelated FLW requirement or whole package acceptance."
+      ],
+      "review": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS",
+        "report": "handoffs/pr13-finish-20261021/workflow-developer-acceptance.md"
+      },
+      "declaredProductSourceCount": 10,
+      "changedDeclaredProductSources": []
+    },
+    {
+      "id": "A910-11-whole-content-20261021",
+      "revision": "d0bb52c4d8bcf323c0ff32b95e8e3120ffa6eefb",
+      "summary": "All specified component-change routes explain distinct smallest complete chains,tools/credentials,expected outcomes,error/skip interpretation,activation/evidence class and cleanup.",
+      "limits": [
+        "Documentation/source acceptance only; no live deployment,production/provider execution,release,clean installation or platform restore newly certified.",
+        "Already accepted catalogue requirements are not re-counted; no unrelated FLW requirement or whole package acceptance."
+      ],
+      "review": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS",
+        "report": "handoffs/pr13-finish-20261021/workflow-developer-acceptance.md"
+      },
+      "declaredProductSourceCount": 8,
+      "changedDeclaredProductSources": []
+    }
+  ]
+}

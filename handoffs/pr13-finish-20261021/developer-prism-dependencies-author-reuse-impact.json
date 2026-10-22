@@ -1,0 +1,110 @@
+[
+  {
+    "id": "AP09.2-ready-topics-20261020",
+    "revision": "d0bb52c4d8bcf323c0ff32b95e8e3120ffa6eefb",
+    "summary": "Independent PASS for named authority/architecture, execution/graph/state/repair/effects/wait/recovery/audit/result import and plugin contract/discovery/configuration/isolation/removal/extension scopes.",
+    "limits": [
+      "Source and documentation acceptance only; no live deployment or global publication acceptance.",
+      "ARC-003/006 and PLG-004/012 have material content gaps and are not accepted.",
+      "NVC-002/003,PLG-006/008/009/011 remain NOT_READY; missing workspace dependency or stale capability-security fixture blocks their checks.",
+      "Kernel isolation remains environment-dependent; no whole-AP09.2 or gate acceptance."
+    ],
+    "review": {
+      "sourceAccuracy": "PASS",
+      "readerUsability": "PASS",
+      "quality": "PASS"
+    },
+    "declaredProductSourceCount": 54,
+    "changedDeclaredProductSources": []
+  },
+  {
+    "id": "AP09.4-ready-prism-topics-20261020",
+    "revision": "310b8dca1377e0ef3b5c307fc1f917af8a3c89de",
+    "summary": "Independent PASS for Prism component authority, data/revision/CAS/approval/publication/retention boundaries and developer change ownership.",
+    "limits": [
+      "Source and documentation acceptance only; no live deployment or global publication acceptance.",
+      "OPR-010 full Studio journey remains NOT_READY; not all3094 lines reviewed.",
+      "Whole-file package.json guide pin check failed; unchanged inspected Prism source claims independently verified, no aggregate guide PASS."
+    ],
+    "review": {
+      "sourceAccuracy": "PASS",
+      "readerUsability": "PASS",
+      "quality": "PASS"
+    },
+    "declaredProductSourceCount": 35,
+    "changedDeclaredProductSources": []
+  },
+  {
+    "id": "AP09-reader-developers-20261020",
+    "revision": "8522e25d9b284e9bf1a34dedf313a806d97c28ee",
+    "summary": "Independent topic acceptance for DEV-001, DEV-003, DEV-004, DEV-006, DEV-009, EXT-001, EXT-002, EXT-003, EXT-004, EXT-009, CDV-001, CDV-002, CDV-004, CDV-011; whole-gate acceptance only for explicitly reviewed A910-02.",
+    "limits": [
+      "Documentation/source acceptance only; no live deployment or globally green publication/CI claim.",
+      "SDKgeneration missing json-schema-to-typescript; capability-security fixture stale; external-effect import admission,Prism deployment fixture and missing pglite keep assigned scopes NOT_READY.",
+      "Ops promotion authority,host version,same-ID replacement roots and missing capability/Forge/Echo change tasks remain FAIL. Inventory word-count freshness and choice-guide metadata check not green."
+    ],
+    "review": {
+      "sourceAccuracy": "PASS",
+      "readerUsability": "PASS",
+      "quality": "PASS"
+    },
+    "declaredProductSourceCount": 67,
+    "changedDeclaredProductSources": [
+      ".github/workflows/docs-checks.yaml",
+      "scripts/docs-publication.mjs"
+    ]
+  },
+  {
+    "id": "AP09-whole-dependency-decision-traces-20261021",
+    "revision": "d0bb52c4d8bcf323c0ff32b95e8e3120ffa6eefb",
+    "summary": "Page: understand/communication.md979\u20131135 and linked request-trace-success.json/request-trace-redis-unavailable.json. Sources: skills/nova/core/execution, skills/nova/plugins/demo-handoff, skills/buster/engine/test-gates, skills/prism/control/agent-jobs.ts, docker/buster-runtime-entrypoint.sh, registry client configuration. Full showcase target trace follows every owner and durable identity through separate human acceptance; explicitly target/contract-only, not observed success. Redis, both PostgreSQL owners, registry/BuildKit, Tailscale, LiteLLM/provider, and exact Git revision failures end in classified narrow repair, uncertain-outcome reconciliation and original identity. The model/Discord row errors below do not alter the inspected ordered success/failure trace.",
+    "limits": [
+      "Contract/target trace is not observed live execution.",
+      "Other communication model/Discord rows remain separately open COM001/COM008/A9705; confirm ordered traces preserved after those edits.",
+      "Listed documentation scope only; no live deployment, release or product approval. RELEASE_CONFIGURATION_CHANGED: charts/kubeclaw/files/config/knip.json remains a stop.",
+      "Parallel custody-metadata and negative-test corrections do not alter reviewed named product-source claims; changes to those sources or reader claims require bounded impact review. Unrelated whole-source generator/source-pin failures are not passed checks here."
+    ],
+    "review": {
+      "sourceAccuracy": "PASS",
+      "readerUsability": "PASS",
+      "quality": "PASS",
+      "report": "handoffs/pr13-finish-20261021/operator-platform-acceptance.md"
+    },
+    "declaredProductSourceCount": 5,
+    "changedDeclaredProductSources": []
+  },
+  {
+    "id": "A910-01-whole-content-20261021",
+    "revision": "d0bb52c4d8bcf323c0ff32b95e8e3120ffa6eefb",
+    "summary": "Clean-checkout preparation fully specifies toolchains,services,credentials,local dependencies,locked installation and baseline checks with expected results and safe-stop boundaries.",
+    "limits": [
+      "Documentation/source acceptance only; no live deployment,production/provider execution,release,clean installation or platform restore newly certified.",
+      "Already accepted catalogue requirements are not re-counted; no unrelated FLW requirement or whole package acceptance."
+    ],
+    "review": {
+      "sourceAccuracy": "PASS",
+      "readerUsability": "PASS",
+      "quality": "PASS",
+      "report": "handoffs/pr13-finish-20261021/workflow-developer-acceptance.md"
+    },
+    "declaredProductSourceCount": 10,
+    "changedDeclaredProductSources": []
+  },
+  {
+    "id": "A910-11-whole-content-20261021",
+    "revision": "d0bb52c4d8bcf323c0ff32b95e8e3120ffa6eefb",
+    "summary": "All specified component-change routes explain distinct smallest complete chains,tools/credentials,expected outcomes,error/skip interpretation,activation/evidence class and cleanup.",
+    "limits": [
+      "Documentation/source acceptance only; no live deployment,production/provider execution,release,clean installation or platform restore newly certified.",
+      "Already accepted catalogue requirements are not re-counted; no unrelated FLW requirement or whole package acceptance."
+    ],
+    "review": {
+      "sourceAccuracy": "PASS",
+      "readerUsability": "PASS",
+      "quality": "PASS",
+      "report": "handoffs/pr13-finish-20261021/workflow-developer-acceptance.md"
+    },
+    "declaredProductSourceCount": 8,
+    "changedDeclaredProductSources": []
+  }
+]

@@ -211,6 +211,12 @@ non-zero exit status.
 > **Implementation:** [argument and request handling](https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/nova/core/test-gates/remote-gate-cli.ts#L9-L37)
 >
 > **Revision:** `3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f`
+>
+> **Contract or setting:** Configuration/job paths and a positive safe-integer timeout are required; grants must be an object before gate execution.
+>
+> **Test evidence:** No fresh remote-gate command execution accompanies these argument and request-handling links.
+>
+> **Limit:** Command completion and its exit code do not establish every provider grant, live route or retained-result recovery.
 
 For the minimal file, the response must have HTTP 200, `ready: true`, and code
 `BUSTER_READY`. Use HTTPS and the deployed address when `tls` or a network

@@ -1,0 +1,659 @@
+[
+  {
+    "path": "skills/prism/package.json",
+    "sha256": "19457da92aed9c48e1bc81e082463bba0e406c662adeaff7699e0c674b45709c",
+    "readRanges": [
+      [
+        1,
+        55
+      ]
+    ],
+    "scope": "Complete inert current Source/assertion read; no import or execution"
+  },
+  {
+    "path": "contracts/prism/v1/package.json",
+    "sha256": "88ab4aa94f1fa8d02e55d36d790361ad06247e0058ab87b878ea316af3f3cf1f",
+    "readRanges": [
+      [
+        1,
+        22
+      ]
+    ],
+    "scope": "Complete inert current Source/assertion read; no import or execution"
+  },
+  {
+    "path": "contracts/prism/v1/src/complexity.ts",
+    "sha256": "041bfa7037f86afaf6f9667bc90a07db4fe088924dcb3e7ef650841dfd1c60df",
+    "readRanges": [
+      [
+        1,
+        69
+      ]
+    ],
+    "scope": "Complete inert current Source/assertion read; no import or execution"
+  },
+  {
+    "path": "contracts/prism/v1/src/index.ts",
+    "sha256": "441cbe7b6ad9c471c3d8144de958497377d3785cff53904ac45943cfaf4a7c18",
+    "readRanges": [
+      [
+        1,
+        150
+      ]
+    ],
+    "scope": "Complete inert current Source/assertion read; no import or execution"
+  },
+  {
+    "path": "contracts/prism/v1/scripts/generate-validators.mjs",
+    "sha256": "3aa33ba91680dd24360d299c99b6eccdb1a35aae5ef175e4caf2b6a8a9b5bfd1",
+    "readRanges": [
+      [
+        1,
+        80
+      ]
+    ],
+    "scope": "Complete inert current Source/assertion read; no import or execution"
+  },
+  {
+    "path": "contracts/prism/v1/src/document-semantics.ts",
+    "sha256": "0a467d617890be691aaff6eb114b4acbb5de4efca55a5888879b7518a7f4cef2",
+    "readRanges": [
+      [
+        1,
+        136
+      ]
+    ],
+    "scope": "Complete inert current Source/assertion read; no import or execution"
+  },
+  {
+    "path": "skills/prism/runtime.ts",
+    "sha256": "fcc61820c10a97126ebceae91c32f6867ebb8d8bef6428f005d3aae8ff3bcd9d",
+    "readRanges": [
+      [
+        1,
+        3
+      ]
+    ],
+    "scope": "Complete inert current Source/assertion read; no import or execution"
+  },
+  {
+    "path": "skills/prism/engine/worker-binding.ts",
+    "sha256": "c7480a44ddfcac32fea7c95a02560b4940dc86509b0463aea951584f6b8f659e",
+    "readRanges": [
+      [
+        1,
+        50
+      ]
+    ],
+    "scope": "Complete inert current Source/assertion read; no import or execution"
+  },
+  {
+    "path": "packaging/runtime/roles/prism.json",
+    "sha256": "8723f462ad3597f2f1bfd2dd6f1028274c3a442af6c4485c1ae3597c12c4b3fe",
+    "readRanges": [
+      [
+        1,
+        29
+      ]
+    ],
+    "scope": "Complete inert current Source/assertion read; no import or execution"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/config/platform.ts",
+    "sha256": "4bce96fe0b9556266c7586aa7803f6ff790dfd7f74e4952ddc5ebd25f9ebc7e8",
+    "readRanges": [
+      [
+        1,
+        70
+      ]
+    ],
+    "scope": "Complete inert current Source/assertion read; no import or execution"
+  },
+  {
+    "path": "tests/verification/contracts/check-plugin-system-v2-platform-config.mjs",
+    "sha256": "99738b9cf1161f814a29cd259595e18f37c7c878d3d2098300d8bb041662c2c7",
+    "readRanges": [
+      [
+        1,
+        68
+      ]
+    ],
+    "scope": "Complete inert current Source/assertion read; no import or execution"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+    "sha256": "147fae4d867752edcb4cb1bf9966ed62372e77a5e90402a9f8fac9a8ab170fa0",
+    "readRanges": [
+      [
+        1,
+        198
+      ]
+    ],
+    "scope": "Complete inert current Source/assertion read; no import or execution"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/registry/activation.ts",
+    "sha256": "2d1ba3633fd9ba8549488f953a21909fdebd7d70c056fad1c688316d2ca8ee67",
+    "readRanges": [
+      [
+        1,
+        138
+      ]
+    ],
+    "scope": "Complete inert current Source/assertion read; no import or execution"
+  },
+  {
+    "path": "skills/nova/core/execution/engine-runtime.ts",
+    "sha256": "de279faaeffc78713d3b3049d43a2efb9add45e4ad05a89c0f4efde1dbe120ec",
+    "readRanges": [
+      [
+        1,
+        99
+      ]
+    ],
+    "scope": "Complete inert current Source/assertion read; no import or execution"
+  },
+  {
+    "path": "skills/prism/tests/engine.test.mts",
+    "sha256": "1052180e5bb83a27441f0a6ba82505d793dda058f5a0c1f0593508cfd6f42317",
+    "readRanges": [
+      [
+        1,
+        161
+      ]
+    ],
+    "scope": "Complete inert current Source/assertion read; no import or execution"
+  },
+  {
+    "path": "skills/prism/tests/pipeline-adapter.test.mts",
+    "sha256": "10127c6093a7b2f19e12c33e369196ab84d1696fa196ee6d76902034dae13fa3",
+    "readRanges": [
+      [
+        1,
+        49
+      ]
+    ],
+    "scope": "Complete inert current Source/assertion read; no import or execution"
+  },
+  {
+    "path": "skills/prism/tests/domain.test.mts",
+    "sha256": "908b10cb397e3646c5f8d9a594d38e8dfa97e3bd9345628a42569b7736149b33",
+    "readRanges": [
+      [
+        1,
+        112
+      ]
+    ],
+    "scope": "Complete inert current Source/assertion read; no import or execution"
+  },
+  {
+    "path": "skills/prism/tests/quality.test.mts",
+    "sha256": "9a35f960cc4743c59d42e04afb136ef324a2fb6b2ce5214d4002ca9d43b83540",
+    "readRanges": [
+      [
+        1,
+        129
+      ]
+    ],
+    "scope": "Complete inert current Source/assertion read; no import or execution"
+  },
+  {
+    "path": "skills/prism/tests/storage.test.mts",
+    "sha256": "e0c946d29a52a75c8488582659582600ce7da317910a8811576897d0fd84cca0",
+    "readRanges": [
+      [
+        1,
+        49
+      ]
+    ],
+    "scope": "Complete inert current Source/assertion read; no import or execution"
+  },
+  {
+    "path": "skills/prism/tests/studio-roundtrip.test.mts",
+    "sha256": "b0b51706623cd9427514e485f0173b9ef3bd4c130fd4b71828dde5612467409c",
+    "readRanges": [
+      [
+        1,
+        48
+      ]
+    ],
+    "scope": "Complete inert current Source/assertion read; no import or execution"
+  },
+  {
+    "path": "skills/prism/domain/index.ts",
+    "sha256": "710ff6fd047d301aef22477cb8cdecfd1fe1c9bd224c069abc6af9d805462838",
+    "readRanges": [
+      [
+        1,
+        136
+      ]
+    ],
+    "scope": "Complete inert current Source/assertion read; no import or execution"
+  },
+  {
+    "path": "skills/prism/pipeline-adapter/index.ts",
+    "sha256": "3bfc0d88143f358aa3c78a404f9bc9819095bc8dfda27ed3e3d4750c6e6ff359",
+    "readRanges": [
+      [
+        1,
+        57
+      ]
+    ],
+    "scope": "Complete inert current Source/assertion read; no import or execution"
+  },
+  {
+    "path": "skills/nova/plugins/prism-design/src/stage.ts",
+    "sha256": "20bee389c4868070dc7450d366b85745c2f26acb88e8d526463c3cb5a599db88",
+    "readRanges": [
+      [
+        1,
+        36
+      ]
+    ],
+    "scope": "Complete inert current Source/assertion read; no import or execution"
+  },
+  {
+    "path": "skills/prism/preferences/index.ts",
+    "sha256": "2a86ae6f5c2fb5e0bc0b6dc2f60a6f7c3dad1d2695e1bde2cf9e00b6134b6c7d",
+    "readRanges": [
+      [
+        1,
+        90
+      ]
+    ],
+    "scope": "Complete inert current Source/assertion read; no import or execution"
+  },
+  {
+    "path": "skills/prism/studio/flows.ts",
+    "sha256": "a48cd934ead75e3cffccbfe3dcf0eae307f08e8f4f6c994575a6542b82cb4159",
+    "readRanges": [
+      [
+        1,
+        47
+      ]
+    ],
+    "scope": "Complete inert current Source/assertion read; no import or execution"
+  },
+  {
+    "path": "skills/prism/engine/index.ts",
+    "sha256": "8502a5bf60bc3b352556ed72464f743581b67fd4e70d70d3734a832c25a9ad16",
+    "readRanges": [
+      [
+        1,
+        180
+      ]
+    ],
+    "scope": "Complete inert current Source/assertion read; no import or execution"
+  },
+  {
+    "path": "skills/prism/server/worker-service.ts",
+    "sha256": "90174f5edf19c85ef1642da95a51aac46854f9a1ce7172d876045a5bac1595e4",
+    "readRanges": [
+      [
+        1,
+        107
+      ]
+    ],
+    "scope": "Complete inert current Source/assertion read; no import or execution"
+  },
+  {
+    "path": "skills/prism/server/native-worker-execution.ts",
+    "sha256": "c6618f0f1dfdf61b2c2a126700f3aded99519b20a7ce3b553f21c27f53f3a406",
+    "readRanges": [
+      [
+        1,
+        50
+      ]
+    ],
+    "scope": "Complete inert current Source/assertion read; no import or execution"
+  },
+  {
+    "path": "skills/prism/control/session.ts",
+    "sha256": "0d4f5e3842275055aaf928b51580f3879655538584dfd607ff80b31fc2aef77b",
+    "readRanges": [
+      [
+        1,
+        20
+      ]
+    ],
+    "scope": "Complete inert current Source/assertion read; no import or execution"
+  },
+  {
+    "path": "skills/prism/server/studio-request.ts",
+    "sha256": "efca0f821ef3da9f441e9c6c5458a33d8c525f8e7db3a63aea1a8e7f37e93bbb",
+    "readRanges": [
+      [
+        1,
+        139
+      ]
+    ],
+    "scope": "Complete inert current Source/assertion read; no import or execution"
+  },
+  {
+    "path": "skills/prism/storage/artifacts.ts",
+    "sha256": "8177fe9d5199d1af866a2ad7d5d7fdfa82b99b0fe6df5b7f0c3c04e96536ef1f",
+    "readRanges": [
+      [
+        1,
+        68
+      ]
+    ],
+    "scope": "Complete inert current Source/assertion read; no import or execution"
+  },
+  {
+    "path": "skills/prism/renderer/index.ts",
+    "sha256": "a96197346ae06317f68b5dd3fd68de35bb02780af6d17e2f7ac5683f17751552",
+    "readRanges": [
+      [
+        1,
+        304
+      ]
+    ],
+    "scope": "Complete inert current Source/assertion read; no import or execution"
+  },
+  {
+    "path": "skills/prism/corpus/index.ts",
+    "sha256": "99ee5eee2282734c9df492c5ac1219903b9680f3dff37f3c513bfa4cff2c6343",
+    "readRanges": [
+      [
+        1,
+        256
+      ]
+    ],
+    "scope": "Complete inert current Source/assertion read; no import or execution"
+  },
+  {
+    "path": "skills/prism/evaluation/index.ts",
+    "sha256": "3c05396fdea1ada5bcc32fa5f45215e9ff2492f73e3c3987a4c0eb994a68416a",
+    "readRanges": [
+      [
+        1,
+        236
+      ]
+    ],
+    "scope": "Complete inert current Source/assertion read; no import or execution"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/registry/types.ts",
+    "sha256": "6667bd4389377d33ba41c2c7166f3488c40f0cad1fc0e7c067fb37a6f2eca291",
+    "readRanges": [
+      [
+        1,
+        81
+      ]
+    ],
+    "scope": "Complete inert current Source/assertion read; no import or execution"
+  },
+  {
+    "path": "skills/common/plugins/openclaw-agent-observer/openclaw.plugin.json",
+    "sha256": "651bf5310a5261ee309e219453e534754e7738fdd86152e582183e3ba95ec5eb",
+    "readRanges": [
+      [
+        1,
+        35
+      ]
+    ],
+    "scope": "Complete inert current Source/assertion read; no import or execution"
+  },
+  {
+    "path": "skills/prism/openclaw-plugin/openclaw.plugin.json",
+    "sha256": "1cf3f06268870973f2d7131cf64d469e516a62bf4b5f3a9d5b6d6a1c9bdd0588",
+    "readRanges": [
+      [
+        1,
+        17
+      ]
+    ],
+    "scope": "Complete inert current Source/assertion read; no import or execution"
+  },
+  {
+    "path": "plugins/kubeclaw-ops/.codex-plugin/plugin.json",
+    "sha256": "906bd92fc84b1ea15e3e76c8b39d8262d0cbaa5458c9923478233660521ff1e5",
+    "readRanges": [
+      [
+        1,
+        26
+      ]
+    ],
+    "scope": "Complete inert current Source/assertion read; no import or execution"
+  },
+  {
+    "path": "contracts/pipeline-worker-core/v1/src/types.ts",
+    "sha256": "399e42c696f561fbea8f38305252f873179f1b71115f7eacd961f7b5f899ec43",
+    "readRanges": [
+      [
+        1,
+        274
+      ]
+    ],
+    "scope": "Complete inert current Source/assertion read; no import or execution"
+  },
+  {
+    "path": "packaging/runtime/package-ownership.json",
+    "sha256": "0723d0a55eba3fdcc6c041132616db3330c3397db6a24f1d0abbf874bd28cab8",
+    "readRanges": [
+      [
+        1,
+        81
+      ]
+    ],
+    "scope": "Complete inert current Source/assertion read; no import or execution"
+  },
+  {
+    "path": "packaging/runtime/roles/nova.json",
+    "sha256": "1c9de75dde812cb7ac118cfc074aa3a57bef7f428b789f11e9051ea713f0dc23",
+    "readRanges": [
+      [
+        1,
+        62
+      ]
+    ],
+    "scope": "Complete inert current Source/assertion read; no import or execution"
+  },
+  {
+    "path": "skills/nova/core/execution/engine-run.ts",
+    "sha256": "eca97e2a488bd31d597c0dd71cd9971beffc9a5dc94fad1dbccf8867aa8f4819",
+    "readRanges": [
+      [
+        1,
+        122
+      ]
+    ],
+    "scope": "Complete inert current Source/assertion read; no import or execution"
+  },
+  {
+    "path": "skills/nova/pipeline.ts",
+    "sha256": "57df2fece0a125211784d8ffdea446860e031f50b03fa5ae09a99f50177db821",
+    "readRanges": [
+      [
+        1,
+        14
+      ]
+    ],
+    "scope": "Complete inert current Source/assertion read; no import or execution"
+  },
+  {
+    "path": "scripts/registry-client-config.mjs",
+    "sha256": "51d00a4883b7e0e9bb63b4e490b4dad1f512053956b116b4a2da9d9d7d1fe210",
+    "readRanges": [
+      [
+        1,
+        119
+      ]
+    ],
+    "scope": "Complete inert current Source/assertion read; no import or execution"
+  },
+  {
+    "path": "tests/verification/deployment/registry-client-config.test.mjs",
+    "sha256": "899b1cc7f9032e26165569c8dace78190252780a11d120c85d8d0ace05e6b3cf",
+    "readRanges": [
+      [
+        1,
+        76
+      ]
+    ],
+    "scope": "Complete inert current Source/assertion read; no import or execution"
+  },
+  {
+    "path": "docker/buster-runtime-entrypoint.sh",
+    "sha256": "1b13228deb6e53e66580b96752c34abcada89ecef278ea3dff9b1ed980f68225",
+    "readRanges": [
+      [
+        1,
+        347
+      ]
+    ],
+    "scope": "Complete inert current Source/assertion read; no import or execution"
+  },
+  {
+    "path": "skills/common/plugins/redis-transport/src/adapter.ts",
+    "sha256": "15c91e7eed9a98784d6fbdcb931160202295ea6ef20b1c18367bcd9eaab4cc01",
+    "readRanges": [
+      [
+        1,
+        91
+      ]
+    ],
+    "scope": "Complete inert current Source/assertion read; no import or execution"
+  },
+  {
+    "path": "my-values/infra/litellm-deployment.yaml",
+    "sha256": "21136d7cc63b549db0d9e1f3a32d449c5bf3c2644790d144d47d476372c56bab",
+    "readRanges": [
+      [
+        1,
+        97
+      ]
+    ],
+    "scope": "Complete inert current Source/assertion read; no import or execution"
+  },
+  {
+    "path": "charts/prism/templates/postgresql.yaml",
+    "sha256": "e81248bfa623695e0e79f36ddf347ad75a1d7bc449a4250287a96a80e17742c1",
+    "readRanges": [
+      [
+        1,
+        78
+      ]
+    ],
+    "scope": "Complete inert current Source/assertion read; no import or execution"
+  },
+  {
+    "path": "skills/buster/plugins/tailscale-exposure/plugin.json",
+    "sha256": "c61695a3a068a240a335949e27287829fa8183b465bd648662525da67fc9648b",
+    "readRanges": [
+      [
+        1,
+        26
+      ]
+    ],
+    "scope": "Complete inert current Source/assertion read; no import or execution"
+  },
+  {
+    "path": "charts/prism/templates/services.yaml",
+    "sha256": "c09a05501eca8a1876e44c1d70898fb5dd6770210e777353d6eff0ee9cd9ae1b",
+    "readRanges": [
+      [
+        1,
+        47
+      ]
+    ],
+    "scope": "Complete inert current Source/assertion read; no import or execution"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/container-build-runtime.ts",
+    "sha256": "9316f1e642640c768f268aa7f236f075e9290516543ded5148869914e91f907e",
+    "readRanges": [
+      [
+        1,
+        280
+      ]
+    ],
+    "scope": "Complete inert current Source/assertion read; no import or execution"
+  },
+  {
+    "path": "my-values/infra/registry-local.yaml",
+    "sha256": "966ab5af3851d5a6f9305d8819574301ca78d6c20f6d19074d078bf3b8e28d53",
+    "readRanges": [
+      [
+        1,
+        106
+      ]
+    ],
+    "scope": "Complete inert current Source/assertion read; no import or execution"
+  },
+  {
+    "path": "my-values/infra/registry-mirror.yaml",
+    "sha256": "383c470fb991a43aa9dfc1634d2399c53a1e77c19f37d5bb4b8bc0d26ef207f5",
+    "readRanges": [
+      [
+        1,
+        94
+      ]
+    ],
+    "scope": "Complete inert current Source/assertion read; no import or execution"
+  },
+  {
+    "path": "scripts/check-extension-class-drift.mjs",
+    "sha256": "61cda6e05a7e12b28a8d16adb0a3de5b439418645a738b3e0a284522df68ef74",
+    "readRanges": [
+      [
+        1,
+        30
+      ]
+    ],
+    "scope": "Complete inert current Source/assertion read; no import or execution"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/registry/build.ts",
+    "sha256": "c65248d6d4dc09dcfe762e9cddd6dd27d5864cbdab7cc421d87256e712873867",
+    "readRanges": [
+      [
+        240,
+        317
+      ]
+    ],
+    "scope": "Bounded complete relevant original functions/branches; not a fresh whole-file review"
+  },
+  {
+    "path": "skills/prism/storage/index.ts",
+    "sha256": "e5105909e5f1abf1eb2178270dd63d1b8e2aa337177dcb620b6ae43199a3a199",
+    "readRanges": [
+      [
+        1,
+        88
+      ],
+      [
+        250,
+        332
+      ]
+    ],
+    "scope": "Bounded complete relevant original functions/branches; not a fresh whole-file review"
+  },
+  {
+    "path": "skills/prism/server/control-server.ts",
+    "sha256": "c165fb6b20bc6b608ae2bc859f52fc5700856e6cea3798916df921dcac5ce8ac",
+    "readRanges": [
+      [
+        1,
+        140
+      ],
+      [
+        240,
+        283
+      ]
+    ],
+    "scope": "Bounded complete relevant original functions/branches; not a fresh whole-file review"
+  },
+  {
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "sha256": "8e780bc0033c3da5c0a3d4db53e8ba9e0753200a072ce0ed63a598c461231883",
+    "readRanges": [
+      [
+        390,
+        458
+      ]
+    ],
+    "scope": "Bounded complete relevant original functions/branches; not a fresh whole-file review"
+  }
+]

@@ -1,0 +1,90 @@
+{
+  "reviewFiles": [
+    {
+      "path": "review.md",
+      "sha256": "42249b64903f79bc640293c7dd8c1c4adc61d32e275a472694802fd931898cdd"
+    },
+    {
+      "path": "review.json",
+      "sha256": "d5009e9389c38a1563b53f3bab5762dc2655e328b3fff8567a7a5db5176e6a1c"
+    },
+    {
+      "path": "source-read-ranges.json",
+      "sha256": "54c99b41f992eeedebdea8e9998185997e097eed8aa7057a4531625fb2c1a09a"
+    },
+    {
+      "path": "static.json",
+      "sha256": "680a80c571228911a4f2299a7ecbc6d72744e2b747e6926762676fbf05627d8f"
+    },
+    {
+      "path": "reuse.json",
+      "sha256": "896a0d6aad1d710c5d78ab7f87d67ea5de74d657b7b5e85878078ea0ff85e83f"
+    },
+    {
+      "path": "check.mjs",
+      "sha256": "83f7a0cd9b1106085bb45dbe471ef250ab2084eda896e76c42aa23e9c7a1acda"
+    }
+  ],
+  "frozenAuthorShippingTargets": [
+    {
+      "path": "docs/site/reference/buster-runtime-configuration.md",
+      "baselineSha256": "2e9e821d6ca4880b82d8017273c452cd65938c3d838a4c9806beb6fd6b57a03a",
+      "candidateSha256": "cca61ece09026e023b8482d3058a61acfdd78b8c99b30be5b74b04ab0dcd48c9",
+      "changed": true
+    },
+    {
+      "path": "docs/site/reference/capabilities.md",
+      "baselineSha256": "ce5995d8150fe4c12fa1f8ea671bf7fc65e0a9f64ef70d74043c0821a791d627",
+      "candidateSha256": "1785cb37214915c9a52658cb68426fcb7d4ae1acd576052b5b7a398f50a9dfd4",
+      "changed": true
+    },
+    {
+      "path": "docs/site/reference/contracts.md",
+      "baselineSha256": "12b033270df858c2a6adb4f1ce160c447dc075f54dfb05f806e5a1458df7384e",
+      "candidateSha256": "24bf33eb594dfea0dff81bcd49204b6b108d964dfffc5b167ef6208494310737",
+      "changed": true
+    },
+    {
+      "path": "docs/site/reference/errors.md",
+      "baselineSha256": "4548aaee9982fc5f29408734078a1cd751d2fd4da7ddf881c2070dc2048b0a0a",
+      "candidateSha256": "31273210b06afeb12b876bd8f1c1db59f63a84eb75fabf7ca19880ad782a976c",
+      "changed": true
+    },
+    {
+      "path": "docs/site/reference/nova-project.md",
+      "baselineSha256": "95a4f241b276ad604cae43f38965bb055a5a63cbdf760138feb06eb8021e60f0",
+      "candidateSha256": "bef3c904adc904f3f81d4ee854049a754ea0cf502b88ff86a0a146567f22ad51",
+      "changed": true
+    },
+    {
+      "path": "docs/site/understand/README.md",
+      "baselineSha256": "18c4d77cbc3fe86d86b9cea83b53f904c5e995a7470102c95aef97d8bde626c7",
+      "candidateSha256": "801d7095645abc6548c78ecda6dfbfa0764181275895b99c625f2f0d1b478593",
+      "changed": true
+    },
+    {
+      "path": "docs/site/understand/prism.md",
+      "baselineSha256": "630443355414a9021f00732446bad4bbfcd66fa6e209d452374a94b3b27f61db",
+      "candidateSha256": "83b7badc23f5cdf82f77c0da63a4a5a45ea7539eb42c8c656e37aece5198d110",
+      "changed": true
+    },
+    {
+      "path": "docs/site/understand/worker-trust.md",
+      "baselineSha256": "3c565e86c9591c8506ac74031731eb2818f738a62ee0770c0c05dfb4dc57e0e6",
+      "candidateSha256": "b0f2b794daa853d070af694ee0d3f396c43c4d9140c6c4f29eed46b5d0897a2a",
+      "changed": true
+    },
+    {
+      "path": "docs/site/use/worker-trust.md",
+      "baselineSha256": "a70940e54909612ecc41246e7900c3c4e910119ee09e12b83b3eda1255168315",
+      "candidateSha256": "c879d5ad08934c845cca4a57dea74f67ca5861e2ce98dc1264e9c27ca1a4cecf",
+      "changed": true
+    },
+    {
+      "path": "scripts/docs-publication.mjs",
+      "baselineSha256": "29d0305b4b4ad0de7fcea5810372e700b4b2a4d810e8cce22fbdd2bfd964cda8",
+      "candidateSha256": "fdae9667aa99505d4fcc90681f081fb45717ab9f9d4333a30544abdea33525a4",
+      "changed": true
+    }
+  ]
+}

@@ -92,6 +92,12 @@ A specialist returns a typed result, but cannot declare the full run successful.
 > **Decision record:** [ADR-001 explains why Core owns lifecycle state](../decisions/core-and-plugins.md#adr-001-core-owns-canonical-lifecycle-authority).
 >
 > **Revision:** `85e73b1885f04a9494f388cf6622ad0bde2db447`.
+>
+> **Claim:** Core records canonical lifecycle decisions; specialists return typed results rather than directly mutating run state.
+>
+> **Test evidence:** No fresh scheduling, illegal-result or terminal-closure execution accompanies these source and decision links.
+>
+> **Limit:** A specialist response does not acquire scheduler authority or prove the complete run succeeded.
 
 ## One Representative Request
 
@@ -156,6 +162,12 @@ They are not separate runtime roles in the current package inventory.
 > **Package ownership:** [The ownership file assigns packages to their runtime roles](https://github.com/datrab/kubeclaw/blob/d8c38328ae305d431574aed008c4e1333e4b49f5/packaging/runtime/package-ownership.json).
 >
 > **Limit:** A role declaration proves intended package assembly. It does not prove deployment or reachability.
+>
+> **Claim:** Runtime roles assemble bounded package sets; package ownership does not itself activate registrations or grant operations.
+>
+> **Test evidence:** No fresh bundle assembly, activation or runtime reachability exercise accompanies these declarations.
+>
+> **Revision:** `d8c38328ae305d431574aed008c4e1333e4b49f5`. Source bindings, not execution receipts.
 
 ## Three Questions That Prevent False Claims
 
@@ -186,6 +198,14 @@ They are not separate runtime roles in the current role inventory.
 > **Prism:** [role manifest, Worker Core dependency, and source access](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/packaging/runtime/roles/prism.json#L1-L28).
 >
 > **Current limit:** Role membership proves packaging intent. It does not prove live deployment or acceptance.
+>
+> **Claim:** Nova, Buster and Prism role manifests declare their distinct packaged inputs and capabilities.
+>
+> **Contract or setting:** Role-specific assembly precedes the separate registry, activation, invocation and application-admission checks.
+>
+> **Test evidence:** No fresh role startup, enabled-registration or live acceptance result accompanies these manifests.
+>
+> **Revision:** `85e73b1885f04a9494f388cf6622ad0bde2db447`. Source bindings, not execution receipts.
 
 ## What This Documentation Claims
 

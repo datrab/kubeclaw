@@ -18,6 +18,18 @@ A shared name does not transfer a Nova grant into Buster or a Buster route into 
 > [Nova defines operations, resource types, and grant constraints](https://github.com/datrab/kubeclaw/blob/7994a51e16bc752357c3a801190b12b7d6a191a4/skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts).
 >
 > [Buster builds explicit runtime routes for allowed test-provider capabilities](https://github.com/datrab/kubeclaw/blob/7994a51e16bc752357c3a801190b12b7d6a191a4/skills/buster/engine/test-gates/remote-plan-service.ts).
+>
+> **Claim:** Nova grants and Buster provider-runtime capabilities belong to separate admission systems.
+>
+> **Implementation:** The vocabulary and runtime-route builders below define their respective operations and resource constraints.
+>
+> **Contract or setting:** A Nova grant does not install a Buster route; provider declarations and runtime allowlists still require their own admission.
+>
+> **Test evidence:** No fresh cross-namespace grant-denial or provider-route execution accompanies this generated source summary.
+>
+> **Limit:** Matching capability names do not grant Kubernetes RBAC, deployment reachability or authority in another namespace.
+>
+> **Revision:** `7994a51e16bc752357c3a801190b12b7d6a191a4`. Source bindings, not execution receipts.
 
 ## Choose the Owning Authority
 

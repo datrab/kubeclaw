@@ -1,0 +1,12 @@
+[
+  {
+    "path": "docs/site/extend/README.md",
+    "beforeSha256": "ea649deae6373d9b45a9b058867099522562cd2f6314a96f2cb7435bac914a2a",
+    "afterSha256": "ecf197374d1d15d13cb43f8035f703b7b6da13c79796782fd28a483ecd3afbe7"
+  },
+  {
+    "path": "docs/site/understand/pipeline-dependencies.md",
+    "beforeSha256": "f84bf3115566c06b3db958ed560497a8c4b0b8bc7dfa2bdfb90755c63b461671",
+    "afterSha256": "6805be36685c4fcc13f895dfa2e8d4a43bd1bfeff55fdf80774a5652760b6755"
+  }
+]

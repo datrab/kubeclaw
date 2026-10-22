@@ -1,0 +1,74 @@
+{
+  "author": "/root/workflow_acceptance",
+  "status": "OFFTREE_AUTHOR_CANDIDATE_REQUIRES_INDEPENDENT_REVIEW",
+  "baseline": {
+    "HEAD": "1fc619b56359e964f5fb8de382cf41367ab7c627",
+    "files": [
+      {
+        "path": "docs/site/extend/developer-handbook.md",
+        "sha256": "6a03109c275f0d8c8814ee14c3b06e80db74a90f2a5c1750ae77f24cf5878f27",
+        "HEADMatches": true
+      },
+      {
+        "path": "docs/site/extend/README.md",
+        "sha256": "7569bcbbb93d1fa8cc9346324705ec64cbae5373668a2a0da3bc15b86fa6bd75",
+        "HEADMatches": true
+      },
+      {
+        "path": "docs/site/extend/platform/prism.md",
+        "sha256": "9c7b43487328edd95695c7581468b768f21d538dd2d7e429aa62e6a9ec6badeb",
+        "HEADMatches": true
+      },
+      {
+        "path": "docs/site/understand/pipeline-dependencies.md",
+        "sha256": "84f5f386072d54b3562fe13f5cda24f25986a48cf3fc0c149a11900bc1e6d843",
+        "HEADMatches": true
+      }
+    ]
+  },
+  "files": [
+    {
+      "path": "docs/site/extend/developer-handbook.md",
+      "baselineSha256": "6a03109c275f0d8c8814ee14c3b06e80db74a90f2a5c1750ae77f24cf5878f27",
+      "candidateSha256": "6a03109c275f0d8c8814ee14c3b06e80db74a90f2a5c1750ae77f24cf5878f27",
+      "SourceBoxes": 28,
+      "appendedFieldSets": 0,
+      "headingsUnchanged": true,
+      "URLsExact": true,
+      "outsideSourceBytesExact": true
+    },
+    {
+      "path": "docs/site/extend/README.md",
+      "baselineSha256": "7569bcbbb93d1fa8cc9346324705ec64cbae5373668a2a0da3bc15b86fa6bd75",
+      "candidateSha256": "ea649deae6373d9b45a9b058867099522562cd2f6314a96f2cb7435bac914a2a",
+      "SourceBoxes": 6,
+      "appendedFieldSets": 6,
+      "headingsUnchanged": true,
+      "URLsExact": true,
+      "outsideSourceBytesExact": true
+    },
+    {
+      "path": "docs/site/extend/platform/prism.md",
+      "baselineSha256": "9c7b43487328edd95695c7581468b768f21d538dd2d7e429aa62e6a9ec6badeb",
+      "candidateSha256": "b95d48a400338e6b50eb211b07af8a85a527aa4c74be82edbb852e179b22df7b",
+      "SourceBoxes": 13,
+      "appendedFieldSets": 13,
+      "headingsUnchanged": true,
+      "URLsExact": true,
+      "outsideSourceBytesExact": true
+    },
+    {
+      "path": "docs/site/understand/pipeline-dependencies.md",
+      "baselineSha256": "84f5f386072d54b3562fe13f5cda24f25986a48cf3fc0c149a11900bc1e6d843",
+      "candidateSha256": "f84bf3115566c06b3db958ed560497a8c4b0b8bc7dfa2bdfb90755c63b461671",
+      "SourceBoxes": 7,
+      "appendedFieldSets": 6,
+      "headingsUnchanged": true,
+      "URLsExact": true,
+      "outsideSourceBytesExact": true
+    }
+  ],
+  "sourceBindings": "source-bindings.json",
+  "outsideClaimChanges": [],
+  "execution": "Inert text/Git reads and actual MarkdownIt prose parser only; no product tests/imports, generator or rendered Reader."
+}

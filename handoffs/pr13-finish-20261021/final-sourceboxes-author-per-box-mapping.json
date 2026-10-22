@@ -1,0 +1,402 @@
+{
+  "boxes": [
+    {
+      "index": 1,
+      "page": "docs/site/extend/documentation-maintenance.md",
+      "title": "> **Source \u2014 ownership records and generator selection**",
+      "disposition": "EXACT_COMPLETE_PRESERVATION",
+      "fieldsAdded": {},
+      "equivalence": "Explicit ownership/Implementation snapshot/Contract/Validation/committed snapshot hashes/Limit already complete.",
+      "oldBoxSha256": "27be7a86e7afae49b5c9d65a13849394496e2b136fcaabdc0b244e3a5efb40f6",
+      "candidateBoxSha256": "27be7a86e7afae49b5c9d65a13849394496e2b136fcaabdc0b244e3a5efb40f6"
+    },
+    {
+      "index": 2,
+      "page": "docs/site/reference/buster-runtime-configuration.md",
+      "title": "> **Source evidence \u2014 Nova remote-gate command**",
+      "disposition": "ADDITIVE_MISSING_FIELDS_AUTHOR",
+      "fieldsAdded": {
+        "Contract or setting": "Configuration/job paths and a positive safe-integer timeout are required; grants must be an object before gate execution.",
+        "Test evidence": "No fresh remote-gate command execution accompanies these argument and request-handling links.",
+        "Limit": "Command completion and its exit code do not establish every provider grant, live route or retained-result recovery."
+      },
+      "equivalence": null,
+      "oldBoxSha256": "d5ea8ba5c58eef658ecd5c07376e3df3a14a8ba16a9f5d6856619ff6cf10a926",
+      "candidateBoxSha256": "2bf89958ea7fa24efecbf907e23b9612ccd66c2dcbe59114c27ccee3b9780a6a"
+    },
+    {
+      "index": 3,
+      "page": "docs/site/reference/buster-runtime-configuration.md",
+      "title": "> **Source evidence \u2014 service entry point**",
+      "disposition": "EXACT_COMPLETE_PRESERVATION",
+      "fieldsAdded": {},
+      "equivalence": "Existing six fields with historical tar-prerequisite result retained.",
+      "oldBoxSha256": "e0b53d5e337118a18f6c54fed2c1af97bb689f103342568c95f456359f59c398",
+      "candidateBoxSha256": "e0b53d5e337118a18f6c54fed2c1af97bb689f103342568c95f456359f59c398"
+    },
+    {
+      "index": 4,
+      "page": "docs/site/reference/capabilities.md",
+      "title": "> **Source evidence \u2014 separate authority systems**",
+      "disposition": "ADDITIVE_MISSING_FIELDS_AUTHOR",
+      "fieldsAdded": {
+        "Claim": "Nova grants and Buster provider-runtime capabilities belong to separate admission systems.",
+        "Implementation": "The vocabulary and runtime-route builders below define their respective operations and resource constraints.",
+        "Contract or setting": "A Nova grant does not install a Buster route; provider declarations and runtime allowlists still require their own admission.",
+        "Test evidence": "No fresh cross-namespace grant-denial or provider-route execution accompanies this generated source summary.",
+        "Limit": "Matching capability names do not grant Kubernetes RBAC, deployment reachability or authority in another namespace.",
+        "Revision": "`7994a51e16bc752357c3a801190b12b7d6a191a4`. Source bindings, not execution receipts."
+      },
+      "equivalence": null,
+      "oldBoxSha256": "50d7c2fb049023c5b9fbc3eed308f0689ee8b19346aad0592bf41377efa3cc4f",
+      "candidateBoxSha256": "727f693691ee3e56a256eb6644ce77c54f0935e434b432d7a38f16f71dcc1089"
+    },
+    {
+      "index": 5,
+      "page": "docs/site/reference/contracts.md",
+      "title": "> **Source \u2014 actual selected writers, retained readers and rejection branches**",
+      "disposition": "ADDITIVE_MISSING_FIELDS_AUTHOR",
+      "fieldsAdded": {
+        "Claim": "Compatibility follows each actual producer and retained reader, including selected versions, supported normalization and explicit rejection.",
+        "Implementation": "The linked profiles, journals, caches, envelopes and archives expose their owning version branches.",
+        "Contract or setting": "Run-selected versions, exact identities and original-reader rules govern compatibility; legacy normalization is not universal migration.",
+        "Test evidence": "No new migration, rollback or retained-reader execution accompanies these source links; existing chapter evidence retains its recorded scope.",
+        "Limit": "Changing a tag or rewriting retained bytes does not create compatibility; preserve original readers and stop at unsupported transitions.",
+        "Revision": "`0e35889a3c4e65d5c47ba88e924611aace67eb1d`. Source bindings, not execution receipts."
+      },
+      "equivalence": null,
+      "oldBoxSha256": "eb331bebe3b4a80c7b7787b7d1802064c5fec889afb441a286bf2c3d19c55e6a",
+      "candidateBoxSha256": "04a1e23450d4a904160bb1c01e6d3c36e83b7dc318029f42d51ecb73e7ecfebe"
+    },
+    {
+      "index": 6,
+      "page": "docs/site/reference/documentation-site.md",
+      "title": "> **Source \u2014 evidence revisions**",
+      "disposition": "EXACT_COMPLETE_PRESERVATION",
+      "fieldsAdded": {},
+      "equivalence": "Claim/Implementation/Contract/Validation plus exact immutable revision and Source-binding limits already complete.",
+      "oldBoxSha256": "eacc3cfc1d4c93d688e1183644c768137383b4230d02bfc3fceecded1774e445",
+      "candidateBoxSha256": "eacc3cfc1d4c93d688e1183644c768137383b4230d02bfc3fceecded1774e445"
+    },
+    {
+      "index": 7,
+      "page": "docs/site/reference/errors.md",
+      "title": "> **Source \u2014 exact throw/helper sites and consuming translation**",
+      "disposition": "ADDITIVE_MISSING_FIELDS_AUTHOR",
+      "fieldsAdded": {
+        "Claim": "HTTP failures retain adapter-specific diagnostics; Core translates receipts and unresolved recovery into bounded lifecycle decisions.",
+        "Implementation": "The linked helpers, admission paths, network calls, durable transitions and Core consumers define distinct failure boundaries.",
+        "Contract or setting": "Closed configuration, request identity, target, Secret, fence and retained-state checks apply at their named boundaries.",
+        "Test evidence": "No new network, failed-transition or Core integration execution accompanies these throw-site and consumer links.",
+        "Limit": "An HTTP status alone does not establish admission order, a durable outcome or safe replacement work.",
+        "Revision": "`0e35889a3c4e65d5c47ba88e924611aace67eb1d`. Source bindings, not execution receipts."
+      },
+      "equivalence": null,
+      "oldBoxSha256": "6d9dd0db6f69b3a3c344abb35cd18dee9ae223be7d362931e9198a02273df8c0",
+      "candidateBoxSha256": "92dc52c3a37a47c7497f0b98c87a87704400e158448e110d9e404a23c0a589f0"
+    },
+    {
+      "index": 8,
+      "page": "docs/site/reference/errors.md",
+      "title": "> **Source \u2014 exact emitter, entry mode and selected callers**",
+      "disposition": "EXACT_COMPLETE_PRESERVATION",
+      "fieldsAdded": {},
+      "equivalence": "Complete NRI six-field Source and bounded actual unit evidence unchanged.",
+      "oldBoxSha256": "a03e27162cb5b518f575156b33372e7e4f9d6683a2bbcc1b4b32ac03a2c74e04",
+      "candidateBoxSha256": "a03e27162cb5b518f575156b33372e7e4f9d6683a2bbcc1b4b32ac03a2c74e04"
+    },
+    {
+      "index": 9,
+      "page": "docs/site/reference/errors.md",
+      "title": "> **Source \u2014 standalone renderer, read-only request and actual result**",
+      "disposition": "EXACT_COMPLETE_PRESERVATION",
+      "fieldsAdded": {},
+      "equivalence": "Complete API probe six-field Source and bounded historical controls unchanged.",
+      "oldBoxSha256": "357daaa281fa397e7a1dd628d46c71a883945f61262f874f2dec76f3aeaa2aec",
+      "candidateBoxSha256": "357daaa281fa397e7a1dd628d46c71a883945f61262f874f2dec76f3aeaa2aec"
+    },
+    {
+      "index": 10,
+      "page": "docs/site/reference/nova-project.md",
+      "title": "> **Source evidence \u2014 legacy import command**",
+      "disposition": "ADDITIVE_MISSING_FIELDS_AUTHOR",
+      "fieldsAdded": {
+        "Contract or setting": "Exactly four distinct supported flag/value pairs, canonical repository input and exclusive output creation constrain import.",
+        "Test evidence": "No fresh import-mode execution accompanies this callout; the compiler\u2019s separately recorded result retains its own scope.",
+        "Limit": "Converted authoring input and runtime validation do not execute the emitted graph or overwrite an existing output."
+      },
+      "equivalence": null,
+      "oldBoxSha256": "51a8521ed3b75badc23f075e6bc4048b122fcede0417af04c921e65b292d5f97",
+      "candidateBoxSha256": "822c96b9013808442954ef39c57e51a0fd033e41b97ed88602524eef7720a808"
+    },
+    {
+      "index": 11,
+      "page": "docs/site/reference/nova-project.md",
+      "title": "> **Source evidence \u2014 unsupported project shapes fail at discovery**",
+      "disposition": "ADDITIVE_MISSING_FIELDS_AUTHOR",
+      "fieldsAdded": {
+        "Claim": "Discovery rejects retired accessibility, performance, visual, end-to-end and security configuration instead of inferring replacement test definitions.",
+        "Contract or setting": "Project-owned provider nodes replace the rejected shapes; invalid accessibility paths/timeouts and retired numeric thresholds fail explicitly.",
+        "Test evidence": "No fresh legacy-shape rejection or replacement-provider execution accompanies this source summary.",
+        "Limit": "Rejection is not automatic migration, generated coverage or successful provider execution."
+      },
+      "equivalence": null,
+      "oldBoxSha256": "90e659da9c07e26246f3c90e3032f8992d1e590ef5f748564b7d61c8f01b5fcf",
+      "candidateBoxSha256": "7af621910206cfb9740474d79523d9b4690fe6aa9fb226f1698a7bd204653041"
+    },
+    {
+      "index": 12,
+      "page": "docs/site/reference/nova-project.md",
+      "title": "> **Source evidence \u2014 compiler contract**",
+      "disposition": "EXACT_COMPLETE_PRESERVATION",
+      "fieldsAdded": {},
+      "equivalence": "Complete compiler six-field Source and dated execution scope unchanged.",
+      "oldBoxSha256": "b2c100aa840590a02629f002d01f400bb3a0c56b7dc40b99460fc37b45285752",
+      "candidateBoxSha256": "b2c100aa840590a02629f002d01f400bb3a0c56b7dc40b99460fc37b45285752"
+    },
+    {
+      "index": 13,
+      "page": "docs/site/understand/README.md",
+      "title": "> **Source evidence \u2014 one lifecycle authority**",
+      "disposition": "ADDITIVE_MISSING_FIELDS_AUTHOR",
+      "fieldsAdded": {
+        "Claim": "Core records canonical lifecycle decisions; specialists return typed results rather than directly mutating run state.",
+        "Test evidence": "No fresh scheduling, illegal-result or terminal-closure execution accompanies these source and decision links.",
+        "Limit": "A specialist response does not acquire scheduler authority or prove the complete run succeeded."
+      },
+      "equivalence": null,
+      "oldBoxSha256": "93a5b95c8722a58d50448c036e400163a0f2ae3f6a6b40ef0a6b1551df540dcb",
+      "candidateBoxSha256": "067021310d64e828a5b40bfa063181ea4aaba01bc5420657e22f051320e562ff"
+    },
+    {
+      "index": 14,
+      "page": "docs/site/understand/README.md",
+      "title": "> **Source evidence \u2014 role and package boundary**",
+      "disposition": "ADDITIVE_MISSING_FIELDS_AUTHOR",
+      "fieldsAdded": {
+        "Claim": "Runtime roles assemble bounded package sets; package ownership does not itself activate registrations or grant operations.",
+        "Test evidence": "No fresh bundle assembly, activation or runtime reachability exercise accompanies these declarations.",
+        "Revision": "`d8c38328ae305d431574aed008c4e1333e4b49f5`. Source bindings, not execution receipts."
+      },
+      "equivalence": null,
+      "oldBoxSha256": "dd5aec5f712c98d2bf8cdcb2ca0c08ef51341caa823e4668cfdf244eb6eda609",
+      "candidateBoxSha256": "a3b37c8029952b289bc3ffd08df4e33f804b50e508eaa53001cf59ea8d9838fc"
+    },
+    {
+      "index": 15,
+      "page": "docs/site/understand/README.md",
+      "title": "> **Source evidence \u2014 declared roles**",
+      "disposition": "ADDITIVE_MISSING_FIELDS_AUTHOR",
+      "fieldsAdded": {
+        "Claim": "Nova, Buster and Prism role manifests declare their distinct packaged inputs and capabilities.",
+        "Contract or setting": "Role-specific assembly precedes the separate registry, activation, invocation and application-admission checks.",
+        "Test evidence": "No fresh role startup, enabled-registration or live acceptance result accompanies these manifests.",
+        "Revision": "`85e73b1885f04a9494f388cf6622ad0bde2db447`. Source bindings, not execution receipts."
+      },
+      "equivalence": null,
+      "oldBoxSha256": "b090aec2dcb680dcee91120f2c6e1c105990e79a19c14f385347403b8ba74d47",
+      "candidateBoxSha256": "65ccac27da6041a5585aa6401232a898a6e788536044705996345fdfa8f3e242"
+    },
+    {
+      "index": 16,
+      "page": "docs/site/understand/prism.md",
+      "title": "> **Source evidence \u2014 product and runtime boundary**",
+      "disposition": "ADDITIVE_MISSING_FIELDS_AUTHOR",
+      "fieldsAdded": {
+        "Claim": "Prism separates domain rules, specialist execution and Worker binding from packaging and pipeline handoffs.",
+        "Implementation": "Runtime exports, the role manifest and pipeline adapter below identify those distinct responsibilities.",
+        "Contract or setting": "Digest-bound design baselines constrain test targets and read-only implementation assignments; packaging does not grant lifecycle authority.",
+        "Test evidence": "No fresh design-to-assignment execution or deployed Prism path accompanies these source links.",
+        "Limit": "An implementation or role declaration is not activation, durable artifact signing or live availability.",
+        "Revision": "`4e52c72788ac002788bc036a497d76c13e6a35fd`. Source bindings, not execution receipts."
+      },
+      "equivalence": null,
+      "oldBoxSha256": "16862d33eb7cbb5f76a67456b0b7ac94a9396b42fc45fc7f19f44884d43e0edc",
+      "candidateBoxSha256": "13150d0d71d5ef726f840fd714b90ba94d30a4a43710b39204cba43eccd7f18b"
+    },
+    {
+      "index": 17,
+      "page": "docs/site/understand/prism.md",
+      "title": "> **Source evidence \u2014 durable spine**",
+      "disposition": "ADDITIVE_MISSING_FIELDS_AUTHOR",
+      "fieldsAdded": {
+        "Claim": "Prism validates revisioned domain changes and commits canonical state through transactional and content-addressed boundaries.",
+        "Implementation": "Domain application, relational transitions, revision CAS and artifact publication below enforce different parts of that boundary.",
+        "Contract or setting": "Base revisions, row locks, current-pointer comparison and immutable artifact identity constrain accepted changes.",
+        "Test evidence": "No fresh concurrent-update, artifact-loss or matched-restore exercise accompanies these source links.",
+        "Limit": "A local transaction or artifact digest does not prove cross-store backup completeness, off-host durability or product approval.",
+        "Revision": "`4e52c72788ac002788bc036a497d76c13e6a35fd`. Source bindings, not execution receipts."
+      },
+      "equivalence": null,
+      "oldBoxSha256": "f314a548158283ab6e0e38e62c30e227b56be0a759bc4259283ebe61b29537f8",
+      "candidateBoxSha256": "2c1f4a3ff3c3ed30896d80367db0b336dbe2853d940c3429f9eb980e2ec6ba52"
+    },
+    {
+      "index": 18,
+      "page": "docs/site/understand/prism.md",
+      "title": "> **Source evidence \u2014 engine boundary**",
+      "disposition": "ADDITIVE_MISSING_FIELDS_AUTHOR",
+      "fieldsAdded": {
+        "Claim": "The Prism Engine owns specialist execution; Worker binding admits and validates its supported operation contracts.",
+        "Implementation": "The operation-specific binding and Engine execution paths below separate transport admission from specialist state changes.",
+        "Contract or setting": "Operation kind, schema-valid request/result, fingerprint and retained identity constrain execution and reuse.",
+        "Test evidence": "No fresh five-operation execution or deployment-host Worker exercise accompanies these implementation links.",
+        "Limit": "Worker admission does not replace domain validation, operator approval or an actual persisted result.",
+        "Revision": "`4e52c72788ac002788bc036a497d76c13e6a35fd`. Source bindings, not execution receipts."
+      },
+      "equivalence": null,
+      "oldBoxSha256": "2f97e68beb0beed4df7cefa8c72636c3720fc8de4c3b5476171c19817e90c6c7",
+      "candidateBoxSha256": "32e0450c845956759b69c003a5026ac798548ded6db6be504551fabc4c6607a4"
+    },
+    {
+      "index": 19,
+      "page": "docs/site/understand/prism.md",
+      "title": "> **Source evidence \u2014 retrieval and learning**",
+      "disposition": "ADDITIVE_MISSING_FIELDS_AUTHOR",
+      "fieldsAdded": {
+        "Claim": "Prism retrieval admits eligible current corpus records; preference projection separately retains event and retraction provenance.",
+        "Implementation": "Corpus ingestion/search and preference projection below own transaction, filtering, ranking and learning state.",
+        "Contract or setting": "Rights/current-revision eligibility precedes corpus ranking; deduplication, retractions and recorded origins constrain preference scores.",
+        "Test evidence": "No fresh ingestion, ranking, rights-revocation or preference-replay execution accompanies these source links.",
+        "Limit": "Retrieved material or a preference score does not become product acceptance or permission to reuse restricted content.",
+        "Revision": "`4e52c72788ac002788bc036a497d76c13e6a35fd`. Source bindings, not execution receipts."
+      },
+      "equivalence": null,
+      "oldBoxSha256": "27add05db99f36d758c68a0dac839cba2d04f7dbdfab80d1deceb49bc4acad3a",
+      "candidateBoxSha256": "0f8f10534acd8cf184ec11d4249ea161a87657e448bce4137113fbb13c9f1273"
+    },
+    {
+      "index": 20,
+      "page": "docs/site/understand/worker-trust.md",
+      "title": "> **Source evidence \u2014 listeners cannot bypass trust**",
+      "disposition": "ADDITIVE_MISSING_FIELDS_AUTHOR",
+      "fieldsAdded": {
+        "Contract or setting": "Protected sidecar ports, exact permitted peer identities and trusted loopback forwarding must agree on the selected route.",
+        "Test evidence": "No fresh deployed listener, wrong-SVID or bypass-denial exercise accompanies these wiring links.",
+        "Revision": "`8da6157b77247dcbdf209ef12f491f0b92ca858a`. Source bindings, not execution receipts."
+      },
+      "equivalence": null,
+      "oldBoxSha256": "64fa71c98f9c0e52c75d257ef2da745bf09a30c034312da5832b101a8712d53e",
+      "candidateBoxSha256": "c3f7545966542aaeb191fa56e171beebfec3ab1d4d54c51a875ce410ee474a2f"
+    },
+    {
+      "index": 21,
+      "page": "docs/site/understand/worker-trust.md",
+      "title": "> **Source evidence \u2014 source bytes and key direction**",
+      "disposition": "ADDITIVE_MISSING_FIELDS_AUTHOR",
+      "fieldsAdded": {
+        "Claim": "Nova signs canonical source-snapshot metadata; Buster receives the public verification key, not the private signing key.",
+        "Contract or setting": "The source-snapshot domain separator and canonical unsigned metadata determine the signed message.",
+        "Test evidence": "No fresh source-signature rejection, key rotation or live dispatch exercise accompanies these contract/deployment links.",
+        "Limit": "Source attestation does not establish image provenance, Prism artifact signing or a successful remote job.",
+        "Revision": "`8da6157b77247dcbdf209ef12f491f0b92ca858a`. Source bindings, not execution receipts."
+      },
+      "equivalence": null,
+      "oldBoxSha256": "da5d65b4690642828e379e6d013c72fc7bce809b2e817dc9d40b7b6b933fe48c",
+      "candidateBoxSha256": "c043766853d7e9652ac5af3fff8bdfe89e60dced7f08f8b80b64c73b4727b8f3"
+    },
+    {
+      "index": 22,
+      "page": "docs/site/understand/worker-trust.md",
+      "title": "> **Source evidence \u2014 the neutral envelope is a contract, not a Prism claim**",
+      "disposition": "ADDITIVE_MISSING_FIELDS_AUTHOR",
+      "fieldsAdded": {
+        "Claim": "The neutral Worker trust envelope signs request or artifact identities; its existence does not establish Prism use.",
+        "Implementation": "Signing and verification below use a canonical domain-separated message and explicit Ed25519 key validation.",
+        "Test evidence": "No fresh envelope-signature, expiry or deployment-path execution accompanies these reusable contract links.",
+        "Revision": "`8da6157b77247dcbdf209ef12f491f0b92ca858a`. Source bindings, not execution receipts."
+      },
+      "equivalence": null,
+      "oldBoxSha256": "03837eac176ac1356437a8614c4e7a4ad0dd08bb705857918a3857bdc82f50f1",
+      "candidateBoxSha256": "8350980783c835450084cd9e5840789edb9f144cc76aa04da35b09975a297ead"
+    },
+    {
+      "index": 23,
+      "page": "docs/site/use/capacity.md",
+      "title": "> **Source evidence \u2014 quarantine**",
+      "disposition": "EXACT_COMPLETE_PRESERVATION",
+      "fieldsAdded": {},
+      "equivalence": "Complete plain six-field quarantine block unchanged.",
+      "oldBoxSha256": "e67a035dceaa7ba632bc23822b8fd0121aa1c38cae20e82e5e4c7c368bcdd0db",
+      "candidateBoxSha256": "e67a035dceaa7ba632bc23822b8fd0121aa1c38cae20e82e5e4c7c368bcdd0db"
+    },
+    {
+      "index": 24,
+      "page": "docs/site/use/capacity.md",
+      "title": "> **Source evidence \u2014 Worker admission**",
+      "disposition": "EXACT_COMPLETE_PRESERVATION",
+      "fieldsAdded": {},
+      "equivalence": "Complete plain six-field Worker capacity block unchanged.",
+      "oldBoxSha256": "3ca30a6bfb6ee3539e52e7b0d877e55a68705e5dbc9ce257edcd2fa66d03bac2",
+      "candidateBoxSha256": "3ca30a6bfb6ee3539e52e7b0d877e55a68705e5dbc9ce257edcd2fa66d03bac2"
+    },
+    {
+      "index": 25,
+      "page": "docs/site/use/capacity.md",
+      "title": "> **Source evidence \u2014 separate backup liabilities**",
+      "disposition": "EXACT_COMPLETE_PRESERVATION",
+      "fieldsAdded": {},
+      "equivalence": "Complete plain six-field backup liabilities block unchanged.",
+      "oldBoxSha256": "db019a84e45b735caab82719abad712a00695bd59f9ab7638905c49baa0e85c1",
+      "candidateBoxSha256": "db019a84e45b735caab82719abad712a00695bd59f9ab7638905c49baa0e85c1"
+    },
+    {
+      "index": 26,
+      "page": "docs/site/use/capacity.md",
+      "title": "> **Source evidence \u2014 retained authority**",
+      "disposition": "EXACT_COMPLETE_PRESERVATION",
+      "fieldsAdded": {},
+      "equivalence": "Complete plain six-field retained-authority block unchanged.",
+      "oldBoxSha256": "9358eb6b1158b19d94882a81933c53f87c1adb1fc45fb1429b51b9c0221d63d3",
+      "candidateBoxSha256": "9358eb6b1158b19d94882a81933c53f87c1adb1fc45fb1429b51b9c0221d63d3"
+    },
+    {
+      "index": 27,
+      "page": "docs/site/use/worker-trust.md",
+      "title": "> **Source evidence \u2014 separate receipt authority**",
+      "disposition": "EXACT_COMPLETE_PRESERVATION",
+      "fieldsAdded": {},
+      "equivalence": "Complete worker-trust receipt authority block unchanged.",
+      "oldBoxSha256": "5fc7f5d465e5f4250f790c4bfa9d7d3ba078e9f72c626f62d04993f4b1f97b79",
+      "candidateBoxSha256": "5fc7f5d465e5f4250f790c4bfa9d7d3ba078e9f72c626f62d04993f4b1f97b79"
+    },
+    {
+      "index": 28,
+      "page": "docs/site/use/worker-trust.md",
+      "title": "> **Source evidence \u2014 negative probe limits**",
+      "disposition": "EXACT_COMPLETE_PRESERVATION",
+      "fieldsAdded": {},
+      "equivalence": "Complete negative-probe six-field block unchanged.",
+      "oldBoxSha256": "0e04011066b8b93986843f46c95116f81dac4342f3addd0025c3213c614d7433",
+      "candidateBoxSha256": "0e04011066b8b93986843f46c95116f81dac4342f3addd0025c3213c614d7433"
+    },
+    {
+      "index": 29,
+      "page": "docs/site/use/worker-trust.md",
+      "title": "> **Source evidence \u2014 live effects and separate receipts**",
+      "disposition": "EXACT_COMPLETE_PRESERVATION",
+      "fieldsAdded": {},
+      "equivalence": "Complete live-effects/receipt six-field block unchanged.",
+      "oldBoxSha256": "047ede460d4d058fa8abc9093e71461d98e1e3ad503878d28e3ef59deec62d9a",
+      "candidateBoxSha256": "047ede460d4d058fa8abc9093e71461d98e1e3ad503878d28e3ef59deec62d9a"
+    },
+    {
+      "index": 30,
+      "page": "docs/site/use/worker-trust.md",
+      "title": "> **Source evidence \u2014 failures are deliberate admission stops**",
+      "disposition": "ADDITIVE_MISSING_FIELDS_AUTHOR",
+      "fieldsAdded": {
+        "Claim": "Trust, proxy endpoint and source-key failures stop the corresponding admission path rather than weakening authentication.",
+        "Contract or setting": "Trusted loopback forwarding, exact allowed peers and valid configured Ed25519 source keys apply at their selected boundaries.",
+        "Test evidence": "No fresh wrong-peer, remote-proxy or invalid-source-key execution accompanies these implementation links.",
+        "Limit": "Repair the rejecting owner and retain original identities; a retry or broader network allow does not resolve authentication failure.",
+        "Revision": "`8da6157b77247dcbdf209ef12f491f0b92ca858a`. Source bindings, not execution receipts."
+      },
+      "equivalence": null,
+      "oldBoxSha256": "69c1d4876cdd896dca0b192f3707cc9066372b27652b72cc8a0b8034772b42e5",
+      "candidateBoxSha256": "5a1be2bbd4d04d8b0441e3a79b92f3cfa4e6531eb32e5a001c69506bbd665ab6"
+    }
+  ],
+  "completeUnchanged": 13,
+  "additiveBoxes": 17
+}

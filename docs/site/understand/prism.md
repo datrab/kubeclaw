@@ -61,6 +61,18 @@ Operators must be able to trace those identities across the boundary.
 > [The runtime role assembles Prism with neutral Worker Core and explicit package and capability inputs](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/packaging/runtime/roles/prism.json#L1-L28).
 >
 > [The pipeline adapter creates digest-bound Buster targets and read-only Forge assignments](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/pipeline-adapter/index.ts#L1-L57).
+>
+> **Claim:** Prism separates domain rules, specialist execution and Worker binding from packaging and pipeline handoffs.
+>
+> **Implementation:** Runtime exports, the role manifest and pipeline adapter below identify those distinct responsibilities.
+>
+> **Contract or setting:** Digest-bound design baselines constrain test targets and read-only implementation assignments; packaging does not grant lifecycle authority.
+>
+> **Test evidence:** No fresh design-to-assignment execution or deployed Prism path accompanies these source links.
+>
+> **Limit:** An implementation or role declaration is not activation, durable artifact signing or live availability.
+>
+> **Revision:** `4e52c72788ac002788bc036a497d76c13e6a35fd`. Source bindings, not execution receipts.
 
 ## One Request Through the System
 
@@ -185,6 +197,18 @@ artifact cleanup need explicit rules.
 > [Revision writes advance the current pointer with a compare-and-swap condition](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/storage/index.ts#L262-L292).
 >
 > [The artifact store verifies content identity and publishes with no-replace behavior](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/storage/artifacts.ts#L39-L67).
+>
+> **Claim:** Prism validates revisioned domain changes and commits canonical state through transactional and content-addressed boundaries.
+>
+> **Implementation:** Domain application, relational transitions, revision CAS and artifact publication below enforce different parts of that boundary.
+>
+> **Contract or setting:** Base revisions, row locks, current-pointer comparison and immutable artifact identity constrain accepted changes.
+>
+> **Test evidence:** No fresh concurrent-update, artifact-loss or matched-restore exercise accompanies these source links.
+>
+> **Limit:** A local transaction or artifact digest does not prove cross-store backup completeness, off-host durability or product approval.
+>
+> **Revision:** `4e52c72788ac002788bc036a497d76c13e6a35fd`. Source bindings, not execution receipts.
 
 ## Five Engine Operations
 
@@ -215,6 +239,18 @@ Engine operations.
 > [The Worker binding admits exactly five operations and validates operation-specific request and result schemas](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/engine/worker-binding.ts#L1-L49).
 >
 > [The Engine owns fingerprinting, idempotent execution, document validation, and application of provider operations](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/engine/index.ts#L69-L176).
+>
+> **Claim:** The Prism Engine owns specialist execution; Worker binding admits and validates its supported operation contracts.
+>
+> **Implementation:** The operation-specific binding and Engine execution paths below separate transport admission from specialist state changes.
+>
+> **Contract or setting:** Operation kind, schema-valid request/result, fingerprint and retained identity constrain execution and reuse.
+>
+> **Test evidence:** No fresh five-operation execution or deployment-host Worker exercise accompanies these implementation links.
+>
+> **Limit:** Worker admission does not replace domain validation, operator approval or an actual persisted result.
+>
+> **Revision:** `4e52c72788ac002788bc036a497d76c13e6a35fd`. Source bindings, not execution receipts.
 
 ## Retrieval, Rights, and Preference Evidence
 
@@ -244,6 +280,18 @@ nearest-neighbor query.
 > [Corpus search filters eligible current records before deterministic text and vector ranking](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/corpus/index.ts#L150-L238).
 >
 > [Preference projection deduplicates events, applies retractions, retains origins, and calculates time-dependent scores](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/preferences/index.ts#L1-L89).
+>
+> **Claim:** Prism retrieval admits eligible current corpus records; preference projection separately retains event and retraction provenance.
+>
+> **Implementation:** Corpus ingestion/search and preference projection below own transaction, filtering, ranking and learning state.
+>
+> **Contract or setting:** Rights/current-revision eligibility precedes corpus ranking; deduplication, retractions and recorded origins constrain preference scores.
+>
+> **Test evidence:** No fresh ingestion, ranking, rights-revocation or preference-replay execution accompanies these source links.
+>
+> **Limit:** Retrieved material or a preference score does not become product acceptance or permission to reuse restricted content.
+>
+> **Revision:** `4e52c72788ac002788bc036a497d76c13e6a35fd`. Source bindings, not execution receipts.
 
 ## Failure Is Part of the Design
 

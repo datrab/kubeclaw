@@ -1,0 +1,2999 @@
+{
+  "boxes": [
+    {
+      "index": 1,
+      "page": "docs/site/extend/developer-handbook.md",
+      "title": "> **Source evidence \u2014 checkout baseline**",
+      "disposition": "EXISTING_COMPLETE_EXACT_PRESERVED",
+      "oldStartLine": 178,
+      "oldEndLine": 188,
+      "candidateStartLine": 178,
+      "candidateEndLine": 188,
+      "baselineBoxSha256": "0810e8d58a5978cb4e2acde78afdc94e6d3aaac8a5ab2d395ffdd2badcd47cd0",
+      "candidateBoxSha256": "0810e8d58a5978cb4e2acde78afdc94e6d3aaac8a5ab2d395ffdd2badcd47cd0",
+      "semanticFields": {
+        "Claim": "the root install owns the listed workspaces; CI uses Node 24 and an explicit launcher build.",
+        "Implementation": "[workspace membership](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/package.json#L1-L25), [launcher build](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/scripts/build-plugin-sandbox.mjs#L1-L25).",
+        "Contract": "[journal append and fsync](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/skills/nova/core/state/journal.ts#L125-L156).",
+        "Test": "no focused test is identified for this claim. Status: source-only; no execution result is asserted.",
+        "Revision": "`671234b056bf5f5f503e51e8db30f843e781ba6e`.",
+        "Limit": "local contract checks do not establish native isolation, deployment, or live service readiness."
+      },
+      "authoredFields": {},
+      "originalSourceBindings": [
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": "package.json",
+          "range": "L1-L25"
+        },
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": "scripts/build-plugin-sandbox.mjs",
+          "range": "L1-L25"
+        },
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": "skills/nova/core/state/journal.ts",
+          "range": "L125-L156"
+        },
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": "skills/nova/core/state/file-mutex.ts",
+          "range": "L4-L23"
+        },
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": ".github/workflows/pipeline-reliability.yaml",
+          "range": "L9-L37"
+        }
+      ],
+      "limits": "Author Source inspection/prose only; original historical results and runtime/live limitations retained; no independent or gate approval.",
+      "namedTestAssertionSources": [],
+      "topicReuse": [
+        "A910-01-whole-content-20261021",
+        "A910-11-whole-content-20261021"
+      ],
+      "reuseLimit": "Existing complete Source block and entire handbook page unchanged. Historical scope only; no new verdict for current altered legacy source files or historical test-absence wording."
+    },
+    {
+      "index": 2,
+      "page": "docs/site/extend/developer-handbook.md",
+      "title": "> **Source evidence \u2014 separate environments**",
+      "disposition": "EXISTING_COMPLETE_EXACT_PRESERVED",
+      "oldStartLine": 269,
+      "oldEndLine": 282,
+      "candidateStartLine": 269,
+      "candidateEndLine": 282,
+      "baselineBoxSha256": "35758dc3bc86ed85b167e230fbd37e2da39ddf6f2d65c631eea592d268a77654",
+      "candidateBoxSha256": "35758dc3bc86ed85b167e230fbd37e2da39ddf6f2d65c631eea592d268a77654",
+      "semanticFields": {
+        "Claim": "browser, service, Go, documentation, and separately locked package setup are distinct.",
+        "Implementation": "[Prism bootstrap](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/scripts/bootstrap-prism-tests.sh#L1-L8).",
+        "Contract": "[NRI toolchain](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/tools/native-worker-nri/go.mod#L1-L13).",
+        "Test": "[native Registry fixture prerequisites](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/tests/verification/integration/registry-local-gc.test.mjs#L14-L45). Status: source-only; no execution result is asserted.",
+        "Revision": "`671234b056bf5f5f503e51e8db30f843e781ba6e`.",
+        "Limit": "an installed tool or a rendered configuration does not prove external access."
+      },
+      "authoredFields": {},
+      "originalSourceBindings": [
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": "scripts/bootstrap-prism-tests.sh",
+          "range": "L1-L8"
+        },
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": "scripts/prepare-reliability-services.sh",
+          "range": "L1-L38"
+        },
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": ".github/workflows/remediation-native.yaml",
+          "range": "L20-L37"
+        },
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": "tools/native-worker-nri/go.mod",
+          "range": "L1-L13"
+        },
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": "go.mod",
+          "range": "L1-L3"
+        },
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": ".github/workflows/docs-checks.yaml",
+          "range": "L20-L38"
+        },
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": "skills/prism/studio/playwright.config.mjs",
+          "range": "L1-L7"
+        },
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": "tests/verification/integration/registry-local-gc.test.mjs",
+          "range": "L14-L45"
+        },
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": "tests/verification/integration/registry-local-gc.test.mjs",
+          "range": "L14-L45"
+        }
+      ],
+      "limits": "Author Source inspection/prose only; original historical results and runtime/live limitations retained; no independent or gate approval.",
+      "namedTestAssertionSources": [],
+      "topicReuse": [
+        "A910-01-whole-content-20261021",
+        "A910-11-whole-content-20261021"
+      ],
+      "reuseLimit": "Existing complete Source block and entire handbook page unchanged. Historical scope only; no new verdict for current altered legacy source files or historical test-absence wording."
+    },
+    {
+      "index": 3,
+      "page": "docs/site/extend/developer-handbook.md",
+      "title": "> **Source evidence \u2014 ownership and source rules**",
+      "disposition": "EXISTING_COMPLETE_EXACT_PRESERVED",
+      "oldStartLine": 341,
+      "oldEndLine": 352,
+      "candidateStartLine": 341,
+      "candidateEndLine": 352,
+      "baselineBoxSha256": "f736128c031eaddb6f997113c73d8a4f47576963d79da22e110161cdcdea634a",
+      "candidateBoxSha256": "f736128c031eaddb6f997113c73d8a4f47576963d79da22e110161cdcdea634a",
+      "semanticFields": {
+        "Claim": "package/import direction, role membership, erasable source, and generated-file rules are enforced separately.",
+        "Implementation": "[dependency checks](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/scripts/check-runtime-package-ownership.mjs#L110-L118).",
+        "Contract": "[owner directions](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/packaging/runtime/package-ownership.json#L54-L80), [compiler options](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/tsconfig.base.json#L1-L16).",
+        "Test": "no focused test is identified for this claim. Status: source-only; no execution result is asserted.",
+        "Revision": "`671234b056bf5f5f503e51e8db30f843e781ba6e`.",
+        "Limit": "a dependency check does not prove that the installed runtime role contains a changed package."
+      },
+      "authoredFields": {},
+      "originalSourceBindings": [
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": "scripts/check-runtime-package-ownership.mjs",
+          "range": "L110-L118"
+        },
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": "scripts/check-runtime-package-ownership.mjs",
+          "range": "L138-L151"
+        },
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": "scripts/check-erasable-typescript.mjs",
+          "range": "L7-L42"
+        },
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": "scripts/check-erasable-typescript.mjs",
+          "range": "L43-L95"
+        },
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": "packaging/runtime/package-ownership.json",
+          "range": "L54-L80"
+        },
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": "tsconfig.base.json",
+          "range": "L1-L16"
+        },
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": "scripts/build-v2-plugins.mjs",
+          "range": "L6-L43"
+        }
+      ],
+      "limits": "Author Source inspection/prose only; original historical results and runtime/live limitations retained; no independent or gate approval.",
+      "namedTestAssertionSources": [],
+      "topicReuse": [
+        "A910-01-whole-content-20261021",
+        "A910-11-whole-content-20261021"
+      ],
+      "reuseLimit": "Existing complete Source block and entire handbook page unchanged. Historical scope only; no new verdict for current altered legacy source files or historical test-absence wording."
+    },
+    {
+      "index": 4,
+      "page": "docs/site/extend/developer-handbook.md",
+      "title": "> **Source evidence \u2014 code generation**",
+      "disposition": "EXISTING_COMPLETE_EXACT_PRESERVED",
+      "oldStartLine": 396,
+      "oldEndLine": 404,
+      "candidateStartLine": 396,
+      "candidateEndLine": 404,
+      "baselineBoxSha256": "cf7df0a3f265cfd590f51945ac52adbe165931282596f61c5540429b9eeb01bc",
+      "candidateBoxSha256": "cf7df0a3f265cfd590f51945ac52adbe165931282596f61c5540429b9eeb01bc",
+      "semanticFields": {
+        "Claim": "generated source has a specific authority and order; some check hooks regenerate it.",
+        "Implementation": "[SDK generation and byte comparison](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/scripts/generate-plugin-sdk-types.mjs#L1-L33), [telemetry check/write boundary](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/scripts/generate-telemetry-contracts.mjs#L9-L39).",
+        "Contract": "[Prism hooks](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/contracts/prism/v1/package.json#L1-L22), [root build scripts](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/package.json#L153-L174).",
+        "Test": "no focused test is identified for this claim. Status: source-only; no execution result is asserted.",
+        "Revision": "`671234b056bf5f5f503e51e8db30f843e781ba6e`.",
+        "Limit": "generation proves agreement of representations, not compatible interpretation by old consumers."
+      },
+      "authoredFields": {},
+      "originalSourceBindings": [
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": "scripts/generate-plugin-sdk-types.mjs",
+          "range": "L1-L33"
+        },
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": "scripts/generate-telemetry-contracts.mjs",
+          "range": "L9-L39"
+        },
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": "contracts/prism/v1/package.json",
+          "range": "L1-L22"
+        },
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": "package.json",
+          "range": "L153-L174"
+        }
+      ],
+      "limits": "Author Source inspection/prose only; original historical results and runtime/live limitations retained; no independent or gate approval.",
+      "namedTestAssertionSources": [],
+      "topicReuse": [
+        "A910-01-whole-content-20261021",
+        "A910-11-whole-content-20261021"
+      ],
+      "reuseLimit": "Existing complete Source block and entire handbook page unchanged. Historical scope only; no new verdict for current altered legacy source files or historical test-absence wording."
+    },
+    {
+      "index": 5,
+      "page": "docs/site/extend/developer-handbook.md",
+      "title": "> **Source evidence \u2014 aggregate check limits**",
+      "disposition": "EXISTING_COMPLETE_EXACT_PRESERVED",
+      "oldStartLine": 459,
+      "oldEndLine": 467,
+      "candidateStartLine": 459,
+      "candidateEndLine": 467,
+      "baselineBoxSha256": "0f75dbed2275bb92cb006be6681ae65028b44969adcc622c330d6b93e039bef0",
+      "candidateBoxSha256": "0f75dbed2275bb92cb006be6681ae65028b44969adcc622c330d6b93e039bef0",
+      "semanticFields": {
+        "Claim": "broad gates have prerequisites and side effects beyond a unit test.",
+        "Implementation": "[runtime aggregate](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/package.json#L258-L265), [reliability group prerequisite checks](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/scripts/reliability-tests.mjs#L9-L48).",
+        "Contract": "[accounted native CI scope](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/.github/workflows/pipeline-reliability.yaml#L102-L118).",
+        "Test": "no focused test is identified for this claim. Status: source-only; no execution result is asserted.",
+        "Revision": "`671234b056bf5f5f503e51e8db30f843e781ba6e`.",
+        "Limit": "a failed prerequisite establishes no recovery result."
+      },
+      "authoredFields": {},
+      "originalSourceBindings": [
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": "package.json",
+          "range": "L258-L265"
+        },
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": "scripts/reliability-tests.mjs",
+          "range": "L9-L48"
+        },
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": ".github/workflows/pipeline-reliability.yaml",
+          "range": "L102-L118"
+        }
+      ],
+      "limits": "Author Source inspection/prose only; original historical results and runtime/live limitations retained; no independent or gate approval.",
+      "namedTestAssertionSources": [],
+      "topicReuse": [
+        "A910-01-whole-content-20261021",
+        "A910-11-whole-content-20261021"
+      ],
+      "reuseLimit": "Existing complete Source block and entire handbook page unchanged. Historical scope only; no new verdict for current altered legacy source files or historical test-absence wording."
+    },
+    {
+      "index": 6,
+      "page": "docs/site/extend/developer-handbook.md",
+      "title": "> **Source evidence \u2014 Lint check and exit contract**",
+      "disposition": "EXISTING_COMPLETE_EXACT_PRESERVED",
+      "oldStartLine": 561,
+      "oldEndLine": 571,
+      "candidateStartLine": 561,
+      "candidateEndLine": 571,
+      "baselineBoxSha256": "3e603e19d4b57186e305eb80324abf16c7494540721115552359ff46f5d85d33",
+      "candidateBoxSha256": "3e603e19d4b57186e305eb80324abf16c7494540721115552359ff46f5d85d33",
+      "semanticFields": {
+        "Claim": "focused, live, and report paths have distinct prerequisites and outcomes.",
+        "Implementation": "[package check sequence](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/skills/nova/plugins/lint/package.json#L1-L16).",
+        "Contract": "the linked Lint policy/extension guides own policy and deployment limits.",
+        "Test": "no focused test is identified for this claim. Status: source-only; no execution result is asserted.",
+        "Revision": "`671234b056bf5f5f503e51e8db30f843e781ba6e`.",
+        "Limit": "an engine report is not a deployed stage or authorization proof."
+      },
+      "authoredFields": {},
+      "originalSourceBindings": [
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": "skills/nova/plugins/lint/package.json",
+          "range": "L1-L16"
+        },
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": "scripts/run-lint-report.mjs",
+          "range": "L8-L28"
+        },
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": "scripts/run-lint-report.mjs",
+          "range": "L110-L145"
+        }
+      ],
+      "limits": "Author Source inspection/prose only; original historical results and runtime/live limitations retained; no independent or gate approval.",
+      "namedTestAssertionSources": [],
+      "topicReuse": [
+        "A910-01-whole-content-20261021",
+        "A910-11-whole-content-20261021"
+      ],
+      "reuseLimit": "Existing complete Source block and entire handbook page unchanged. Historical scope only; no new verdict for current altered legacy source files or historical test-absence wording."
+    },
+    {
+      "index": 7,
+      "page": "docs/site/extend/developer-handbook.md",
+      "title": "> **Source evidence \u2014 lifecycle and restart**",
+      "disposition": "EXISTING_COMPLETE_EXACT_PRESERVED",
+      "oldStartLine": 651,
+      "oldEndLine": 661,
+      "candidateStartLine": 651,
+      "candidateEndLine": 661,
+      "baselineBoxSha256": "3870dea53208e5071dcbb4a2c8937cd73049ba564da389d2b369b8b6e2f484c3",
+      "candidateBoxSha256": "3870dea53208e5071dcbb4a2c8937cd73049ba564da389d2b369b8b6e2f484c3",
+      "semanticFields": {
+        "Claim": "live result handling and replay must preserve the same bounded lifecycle decision.",
+        "Implementation": "[result guard and accounting](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/skills/nova/core/lifecycle/reducer.ts#L96-L136).",
+        "Contract": "[completed-attempt replay](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/skills/nova/core/lifecycle/recovery-state.ts#L39-L69), [interrupted state reset](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/skills/nova/core/lifecycle/recovery-state.ts#L153-L180).",
+        "Test": "[Process-death fixture](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/tests/verification/reliability/lifecycle.test.mts#L61-L81). Status: source-only; no execution result is asserted.",
+        "Revision": "`671234b056bf5f5f503e51e8db30f843e781ba6e`.",
+        "Limit": "this fixture proves only its registered journal boundary when executed; it is not a deployed restart proof."
+      },
+      "authoredFields": {},
+      "originalSourceBindings": [
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": "skills/nova/core/lifecycle/reducer.ts",
+          "range": "L96-L136"
+        },
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": "skills/nova/core/execution/run-decisions.ts",
+          "range": "L29-L60"
+        },
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": "skills/nova/core/execution/run-decisions.ts",
+          "range": "L103-L129"
+        },
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": "skills/nova/core/lifecycle/recovery-state.ts",
+          "range": "L39-L69"
+        },
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": "skills/nova/core/lifecycle/recovery-state.ts",
+          "range": "L153-L180"
+        },
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": "tests/verification/reliability/lifecycle.test.mts",
+          "range": "L61-L81"
+        },
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": "tests/verification/reliability/project-recovery-version.test.mjs",
+          "range": "L14-L34"
+        },
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": "tests/verification/reliability/lifecycle.test.mts",
+          "range": "L61-L81"
+        }
+      ],
+      "limits": "Author Source inspection/prose only; original historical results and runtime/live limitations retained; no independent or gate approval.",
+      "namedTestAssertionSources": [],
+      "topicReuse": [
+        "A910-01-whole-content-20261021",
+        "A910-11-whole-content-20261021"
+      ],
+      "reuseLimit": "Existing complete Source block and entire handbook page unchanged. Historical scope only; no new verdict for current altered legacy source files or historical test-absence wording."
+    },
+    {
+      "index": 8,
+      "page": "docs/site/extend/developer-handbook.md",
+      "title": "> **Source evidence \u2014 Worker route**",
+      "disposition": "EXISTING_COMPLETE_EXACT_PRESERVED",
+      "oldStartLine": 769,
+      "oldEndLine": 777,
+      "candidateStartLine": 769,
+      "candidateEndLine": 777,
+      "baselineBoxSha256": "6013361f1603730d7e94fc0e58dfa8d6abb1f423c216fbc3a599be2c9c00cc9a",
+      "candidateBoxSha256": "6013361f1603730d7e94fc0e58dfa8d6abb1f423c216fbc3a599be2c9c00cc9a",
+      "semanticFields": {
+        "Claim": "contract/local checks and native/role/trust checks protect different boundaries.",
+        "Implementation": "[maintained Worker commands](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/package.json#L153-L166), [NRI/native command](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/package.json#L288-L295).",
+        "Contract": "[Worker ownership statement](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/skills/worker/core/BOUNDARIES.md#L1-L5), [native CI authority](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/.github/workflows/pipeline-reliability.yaml#L102-L118).",
+        "Test": "no focused test is identified for this claim. Status: source-only; no execution result is asserted.",
+        "Revision": "`671234b056bf5f5f503e51e8db30f843e781ba6e`.",
+        "Limit": "a local attempt test cannot establish native process authority or cluster trust."
+      },
+      "authoredFields": {},
+      "originalSourceBindings": [
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": "package.json",
+          "range": "L153-L166"
+        },
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": "package.json",
+          "range": "L288-L295"
+        },
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": "skills/worker/core/BOUNDARIES.md",
+          "range": "L1-L5"
+        },
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": ".github/workflows/pipeline-reliability.yaml",
+          "range": "L102-L118"
+        }
+      ],
+      "limits": "Author Source inspection/prose only; original historical results and runtime/live limitations retained; no independent or gate approval.",
+      "namedTestAssertionSources": [],
+      "topicReuse": [
+        "A910-01-whole-content-20261021",
+        "A910-11-whole-content-20261021"
+      ],
+      "reuseLimit": "Existing complete Source block and entire handbook page unchanged. Historical scope only; no new verdict for current altered legacy source files or historical test-absence wording."
+    },
+    {
+      "index": 9,
+      "page": "docs/site/extend/developer-handbook.md",
+      "title": "> **Source evidence \u2014 native-runtime tool and race boundary**",
+      "disposition": "EXISTING_COMPLETE_EXACT_PRESERVED",
+      "oldStartLine": 825,
+      "oldEndLine": 834,
+      "candidateStartLine": 825,
+      "candidateEndLine": 834,
+      "baselineBoxSha256": "ad49d6f6d21f2c94397b7e39579e05dd0b949a8b279fe0dee4ed7e1aa39ecc77",
+      "candidateBoxSha256": "ad49d6f6d21f2c94397b7e39579e05dd0b949a8b279fe0dee4ed7e1aa39ecc77",
+      "semanticFields": {
+        "Claim": "native-runtime contains real Helm rendering, a static NRI build and a separate mandatory race-enabled Go test.",
+        "Implementation": "[Helm render call](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/tests/verification/deployment/prism-native-runtime.test.mjs#L14-L21), [negative Helm renders and owned temp cleanup](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/tests/verification/deployment/prism-native-runtime.test.mjs#L58-L64).",
+        "Contract": "[complete native-runtime command](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/package.json#L291-L291).",
+        "Test": "[original static binary and cleanup](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/tests/verification/deployment/prism-native-runtime.test.mjs#L66-L78). Status: source-only; no render, build or race-test result is asserted.",
+        "Revision": "`671234b056bf5f5f503e51e8db30f843e781ba6e` for repository definitions; upstream race requirements were inspected separately.",
+        "Limit": "setup observations do not prove test completion, native-host ownership or cluster execution."
+      },
+      "authoredFields": {},
+      "originalSourceBindings": [
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": "tests/verification/deployment/prism-native-runtime.test.mjs",
+          "range": "L14-L21"
+        },
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": "tests/verification/deployment/prism-native-runtime.test.mjs",
+          "range": "L58-L64"
+        },
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": "package.json",
+          "range": "L291-L291"
+        },
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": "scripts/build-native-worker-nri.mjs",
+          "range": "L10-L18"
+        },
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": "tests/verification/deployment/prism-native-runtime.test.mjs",
+          "range": "L66-L78"
+        }
+      ],
+      "limits": "Author Source inspection/prose only; original historical results and runtime/live limitations retained; no independent or gate approval.",
+      "namedTestAssertionSources": [],
+      "topicReuse": [
+        "A910-01-whole-content-20261021",
+        "A910-11-whole-content-20261021"
+      ],
+      "reuseLimit": "Existing complete Source block and entire handbook page unchanged. Historical scope only; no new verdict for current altered legacy source files or historical test-absence wording."
+    },
+    {
+      "index": 10,
+      "page": "docs/site/extend/developer-handbook.md",
+      "title": "> **Source evidence \u2014 native fixture authority**",
+      "disposition": "EXISTING_COMPLETE_EXACT_PRESERVED",
+      "oldStartLine": 955,
+      "oldEndLine": 977,
+      "candidateStartLine": 955,
+      "candidateEndLine": 977,
+      "baselineBoxSha256": "de7b005951c145b94c1af8540cb4f9d21c76df0df1885dc728c9187db26832e0",
+      "candidateBoxSha256": "de7b005951c145b94c1af8540cb4f9d21c76df0df1885dc728c9187db26832e0",
+      "semanticFields": {
+        "Claim": "native tests require actual accounted pools, exact fixture inputs and supervisor authority; rendering a setup bundle is not preparing a host.",
+        "Implementation": "[mandatory live cgroup input](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/tests/verification/reliability/worker-native-scope-live.mts#L19-L20).",
+        "Contract": "[central Node and separate Ops selections](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/versions.json#L27-L29).",
+        "Test": "[Prism isolated-pool harness and owned shutdown](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/skills/prism/tests/native/worker-harness.mts#L14-L36). Status: source-only; no host preparation or test execution is asserted.",
+        "Revision": "`671234b056bf5f5f503e51e8db30f843e781ba6e`.",
+        "Limit": "input preflight and host receipt do not prove fixture completion or deployed trust."
+      },
+      "authoredFields": {},
+      "originalSourceBindings": [
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": "tests/verification/reliability/worker-native-scope-live.mts",
+          "range": "L19-L20"
+        },
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": "tests/verification/reliability/worker-native-scope-live.mts",
+          "range": "L95-L136"
+        },
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": "scripts/render-native-worker-node.mjs",
+          "range": "L9-L70"
+        },
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": "scripts/prepare-native-worker-pools.mjs",
+          "range": "L81-L121"
+        },
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": "versions.json",
+          "range": "L27-L29"
+        },
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": "skills/worker/core/worker/native-resource-observation.ts",
+          "range": "L52-L67"
+        },
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": "skills/worker/core/worker/native-worker-ownership.ts",
+          "range": "L244-L251"
+        },
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": "scripts/render-native-worker-node.mjs",
+          "range": "L12-L15"
+        },
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": "scripts/render-native-worker-node.mjs",
+          "range": "L49-L56"
+        },
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": "scripts/prepare-native-worker-pools.mjs",
+          "range": "L8-L18"
+        },
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": "skills/worker/core/worker/native-resource-pool.ts",
+          "range": "L33-L61"
+        },
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": "skills/worker/core/worker/native-resource-scope.ts",
+          "range": "L15-L28"
+        },
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": "skills/worker/core/worker/native-supervisor-authority.ts",
+          "range": "L4-L22"
+        },
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": "scripts/native-worker-node-preflight.mjs",
+          "range": "L26-L48"
+        },
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": "scripts/build-native-worker-nri.mjs",
+          "range": "L7-L18"
+        },
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": "tests/verification/deployment/native-worker-node.test.mjs",
+          "range": "L30-L47"
+        },
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": "skills/prism/config/native-worker.ts",
+          "range": "L53-L84"
+        },
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": "skills/prism/tests/native/worker-harness.mts",
+          "range": "L14-L36"
+        }
+      ],
+      "limits": "Author Source inspection/prose only; original historical results and runtime/live limitations retained; no independent or gate approval.",
+      "namedTestAssertionSources": [],
+      "topicReuse": [
+        "A910-01-whole-content-20261021",
+        "A910-11-whole-content-20261021"
+      ],
+      "reuseLimit": "Existing complete Source block and entire handbook page unchanged. Historical scope only; no new verdict for current altered legacy source files or historical test-absence wording."
+    },
+    {
+      "index": 11,
+      "page": "docs/site/extend/developer-handbook.md",
+      "title": "> **Source evidence \u2014 fixed remote archive executable**",
+      "disposition": "EXISTING_COMPLETE_EXACT_PRESERVED",
+      "oldStartLine": 1043,
+      "oldEndLine": 1053,
+      "candidateStartLine": 1043,
+      "candidateEndLine": 1053,
+      "baselineBoxSha256": "dfe27e052c2ec11c4138b86f200fc9dc80d10ddc205b6f3f0a1c52b39e8ddb2a",
+      "candidateBoxSha256": "dfe27e052c2ec11c4138b86f200fc9dc80d10ddc205b6f3f0a1c52b39e8ddb2a",
+      "semanticFields": {
+        "Claim": "these remote fixtures require the absolute tar path; generic bundle scripts use PATH selection.",
+        "Implementation": "[remote archive creation](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/tests/verification/contracts/check-pipeline-remote-plan-runtime.mts#L43-L51).",
+        "Contract": "[generic bundle tar selection](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/scripts/package-agent-skill-bundle.sh#L27-L44).",
+        "Test": "[remote archive creation](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/tests/verification/contracts/check-pipeline-remote-plan-runtime.mts#L43-L51). Status: source-only; no execution result is asserted.",
+        "Revision": "`671234b056bf5f5f503e51e8db30f843e781ba6e`.",
+        "Limit": "archive-tool readiness does not establish restart, isolated provider, or deployed runtime behavior."
+      },
+      "authoredFields": {},
+      "originalSourceBindings": [
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": "tests/verification/contracts/check-pipeline-remote-plan-runtime.mts",
+          "range": "L43-L51"
+        },
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": "tests/verification/contracts/check-pipeline-remote-process-restart.mts",
+          "range": "L169-L180"
+        },
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": "tests/verification/contracts/check-pipeline-remote-real-provider.mts",
+          "range": "L108-L119"
+        },
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": "scripts/package-agent-skill-bundle.sh",
+          "range": "L27-L44"
+        },
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": "tests/verification/contracts/check-pipeline-remote-plan-runtime.mts",
+          "range": "L43-L51"
+        }
+      ],
+      "limits": "Author Source inspection/prose only; original historical results and runtime/live limitations retained; no independent or gate approval.",
+      "namedTestAssertionSources": [],
+      "topicReuse": [
+        "A910-01-whole-content-20261021",
+        "A910-11-whole-content-20261021"
+      ],
+      "reuseLimit": "Existing complete Source block and entire handbook page unchanged. Historical scope only; no new verdict for current altered legacy source files or historical test-absence wording."
+    },
+    {
+      "index": 12,
+      "page": "docs/site/extend/developer-handbook.md",
+      "title": "> **Source evidence \u2014 Buster chain**",
+      "disposition": "EXISTING_COMPLETE_EXACT_PRESERVED",
+      "oldStartLine": 1073,
+      "oldEndLine": 1081,
+      "candidateStartLine": 1073,
+      "candidateEndLine": 1081,
+      "baselineBoxSha256": "eead6d021de823bdf653a016653d6a4e4bb73b5fe8456268039ca977aad85044",
+      "candidateBoxSha256": "eead6d021de823bdf653a016653d6a4e4bb73b5fe8456268039ca977aad85044",
+      "semanticFields": {
+        "Claim": "provider resolution, plan execution, remote transport, and result import have separate checks.",
+        "Implementation": "[resolver and remote check scripts](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/package.json#L72-L88).",
+        "Contract": "[Buster ownership statement](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/skills/buster/engine/BOUNDARIES.md#L1-L5), [engine dependencies and entrypoint](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/skills/buster/engine/package.json#L1-L26).",
+        "Test": "no focused test is identified for this claim. Status: source-only; no execution result is asserted.",
+        "Revision": "`671234b056bf5f5f503e51e8db30f843e781ba6e`.",
+        "Limit": "provider facts cannot approve their own pipeline gate."
+      },
+      "authoredFields": {},
+      "originalSourceBindings": [
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": "package.json",
+          "range": "L72-L88"
+        },
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": "skills/buster/engine/BOUNDARIES.md",
+          "range": "L1-L5"
+        },
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": "skills/buster/engine/package.json",
+          "range": "L1-L26"
+        }
+      ],
+      "limits": "Author Source inspection/prose only; original historical results and runtime/live limitations retained; no independent or gate approval.",
+      "namedTestAssertionSources": [],
+      "topicReuse": [
+        "A910-01-whole-content-20261021",
+        "A910-11-whole-content-20261021"
+      ],
+      "reuseLimit": "Existing complete Source block and entire handbook page unchanged. Historical scope only; no new verdict for current altered legacy source files or historical test-absence wording."
+    },
+    {
+      "index": 13,
+      "page": "docs/site/extend/developer-handbook.md",
+      "title": "> **Source evidence \u2014 pooled transaction setup and retained state**",
+      "disposition": "EXISTING_COMPLETE_EXACT_PRESERVED",
+      "oldStartLine": 1180,
+      "oldEndLine": 1187,
+      "candidateStartLine": 1180,
+      "candidateEndLine": 1187,
+      "baselineBoxSha256": "2c402b27ca89e30402bf261f928819c1b03f78969b715147b4a3da20d665b102",
+      "candidateBoxSha256": "2c402b27ca89e30402bf261f928819c1b03f78969b715147b4a3da20d665b102",
+      "semanticFields": {
+        "Claim": "the transaction fixture requires an absent schema and its own creation authority, and retains database objects after success or failure.",
+        "Implementation": "[required URL, unconditional schema and migration slices](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/tests/verification/contracts/check-prism-postgres-transactions.mts#L7-L25), [function/trigger failure injection and successful trigger removal](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/tests/verification/contracts/check-prism-postgres-transactions.mts#L45-L53).",
+        "Contract": "[separate transaction PostgreSQL CI selection](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/.github/workflows/pipeline-reliability.yaml#L196-L223).",
+        "Test": "[transaction/rollback assertions](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/tests/verification/contracts/check-prism-postgres-transactions.mts#L26-L44), [final probes, pool-only cleanup and result](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/tests/verification/contracts/check-prism-postgres-transactions.mts#L75-L79). Status: source-only; no SQL or fixture execution is asserted.",
+        "Revision": "`671234b056bf5f5f503e51e8db30f843e781ba6e`.",
+        "Limit": "pooled transaction assertions do not establish role grants, native admission or cleanup of the selected database."
+      },
+      "authoredFields": {},
+      "originalSourceBindings": [
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": "tests/verification/contracts/check-prism-postgres-transactions.mts",
+          "range": "L7-L25"
+        },
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": "tests/verification/contracts/check-prism-postgres-transactions.mts",
+          "range": "L45-L53"
+        },
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": ".github/workflows/pipeline-reliability.yaml",
+          "range": "L196-L223"
+        },
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": "tests/verification/contracts/check-prism-postgres-transactions.mts",
+          "range": "L26-L44"
+        },
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": "tests/verification/contracts/check-prism-postgres-transactions.mts",
+          "range": "L75-L79"
+        }
+      ],
+      "limits": "Author Source inspection/prose only; original historical results and runtime/live limitations retained; no independent or gate approval.",
+      "namedTestAssertionSources": [],
+      "topicReuse": [
+        "A910-01-whole-content-20261021",
+        "A910-11-whole-content-20261021"
+      ],
+      "reuseLimit": "Existing complete Source block and entire handbook page unchanged. Historical scope only; no new verdict for current altered legacy source files or historical test-absence wording."
+    },
+    {
+      "index": 14,
+      "page": "docs/site/extend/developer-handbook.md",
+      "title": "> **Source evidence \u2014 ordered native dispatch**",
+      "disposition": "EXISTING_COMPLETE_EXACT_PRESERVED",
+      "oldStartLine": 1244,
+      "oldEndLine": 1253,
+      "candidateStartLine": 1244,
+      "candidateEndLine": 1253,
+      "baselineBoxSha256": "9d2eae86c0875b766d873db23cfd7edc0cebb2b3f444e1afa83cc6c857a2ad03",
+      "candidateBoxSha256": "9d2eae86c0875b766d873db23cfd7edc0cebb2b3f444e1afa83cc6c857a2ad03",
+      "semanticFields": {
+        "Claim": "the two tests have separate admin/runtime authorities and retain database state between processes.",
+        "Implementation": "[admin guards, creation and migration](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/skills/prism/tests/native/operation-journal.mts#L19-L42), [journal connection/temp cleanup](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/skills/prism/tests/native/operation-journal.mts#L57-L61).",
+        "Contract": "[runtime URL/user/database guards](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/skills/prism/tests/native/operation-http.mts#L15-L19).",
+        "Test": "[real refusal, retained identity and temp cleanup](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/skills/prism/tests/native/operation-http.mts#L21-L47). Status: source-only; no database or command execution is asserted.",
+        "Revision": "`671234b056bf5f5f503e51e8db30f843e781ba6e`.",
+        "Limit": "real SQL/refusal checks do not prove a running native Worker or live design delivery."
+      },
+      "authoredFields": {},
+      "originalSourceBindings": [
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": "skills/prism/tests/native/operation-journal.mts",
+          "range": "L19-L42"
+        },
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": "skills/prism/tests/native/operation-journal.mts",
+          "range": "L57-L61"
+        },
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": "skills/prism/tests/native/operation-http.mts",
+          "range": "L15-L19"
+        },
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": "skills/prism/server/database-roles.ts",
+          "range": "L43-L58"
+        },
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": "package.json",
+          "range": "L292-L292"
+        },
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": "skills/prism/tests/native/operation-http.mts",
+          "range": "L21-L47"
+        }
+      ],
+      "limits": "Author Source inspection/prose only; original historical results and runtime/live limitations retained; no independent or gate approval.",
+      "namedTestAssertionSources": [],
+      "topicReuse": [
+        "A910-01-whole-content-20261021",
+        "A910-11-whole-content-20261021"
+      ],
+      "reuseLimit": "Existing complete Source block and entire handbook page unchanged. Historical scope only; no new verdict for current altered legacy source files or historical test-absence wording."
+    },
+    {
+      "index": 15,
+      "page": "docs/site/extend/developer-handbook.md",
+      "title": "> **Source evidence \u2014 Prism startup and selection**",
+      "disposition": "EXISTING_COMPLETE_EXACT_PRESERVED",
+      "oldStartLine": 1286,
+      "oldEndLine": 1298,
+      "candidateStartLine": 1286,
+      "candidateEndLine": 1298,
+      "baselineBoxSha256": "07cd75275bd1c67fa8761e14faeb995c054169f7341a63346226da123110c29e",
+      "candidateBoxSha256": "07cd75275bd1c67fa8761e14faeb995c054169f7341a63346226da123110c29e",
+      "semanticFields": {
+        "Claim": "component tests and real services have distinct entrypoints and configuration.",
+        "Implementation": "[package commands](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/skills/prism/package.json#L1-L44).",
+        "Contract": "[Control secrets/trust/endpoints](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/skills/prism/server/control-config.ts#L22-L59).",
+        "Test": "no focused test is identified for this claim. Status: source-only; no execution result is asserted.",
+        "Revision": "`671234b056bf5f5f503e51e8db30f843e781ba6e`.",
+        "Limit": "service startup does not prove design publication, provider fidelity, or independent human acceptance."
+      },
+      "authoredFields": {},
+      "originalSourceBindings": [
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": "skills/prism/package.json",
+          "range": "L1-L44"
+        },
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": "skills/prism/server/control.ts",
+          "range": "L1-L9"
+        },
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": "skills/prism/server/worker.ts",
+          "range": "L12-L36"
+        },
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": "skills/prism/server/control-config.ts",
+          "range": "L22-L59"
+        },
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": "skills/prism/server/studio-config.ts",
+          "range": "L1-L18"
+        },
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": ".github/workflows/pipeline-reliability.yaml",
+          "range": "L196-L223"
+        }
+      ],
+      "limits": "Author Source inspection/prose only; original historical results and runtime/live limitations retained; no independent or gate approval.",
+      "namedTestAssertionSources": [],
+      "topicReuse": [
+        "A910-01-whole-content-20261021",
+        "A910-11-whole-content-20261021"
+      ],
+      "reuseLimit": "Existing complete Source block and entire handbook page unchanged. Historical scope only; no new verdict for current altered legacy source files or historical test-absence wording."
+    },
+    {
+      "index": 16,
+      "page": "docs/site/extend/developer-handbook.md",
+      "title": "> **Source evidence \u2014 Registry distinction**",
+      "disposition": "EXISTING_COMPLETE_EXACT_PRESERVED",
+      "oldStartLine": 1352,
+      "oldEndLine": 1360,
+      "candidateStartLine": 1352,
+      "candidateEndLine": 1360,
+      "baselineBoxSha256": "26ed0fdf80e564fc7b14bc292e202a8e5ea9756a609d0701ef2bba5eff73c59f",
+      "candidateBoxSha256": "26ed0fdf80e564fc7b14bc292e202a8e5ea9756a609d0701ef2bba5eff73c59f",
+      "semanticFields": {
+        "Claim": "native OCI retention tests are separate from plugin registry validation.",
+        "Implementation": "[maintained OCI checks](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/package.json#L288-L289), [original registry start and storage](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/tests/verification/integration/registry-local-gc.test.mjs#L14-L51).",
+        "Contract": "[manifest retention, offline GC and restart checks](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/tests/verification/integration/registry-local-gc.test.mjs#L67-L87).",
+        "Test": "[original registry start and storage](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/tests/verification/integration/registry-local-gc.test.mjs#L14-L51). Status: source-only; no execution result is asserted.",
+        "Revision": "`671234b056bf5f5f503e51e8db30f843e781ba6e`.",
+        "Limit": "the native fixture does not certify a production registry, its authentication, or its backup path."
+      },
+      "authoredFields": {},
+      "originalSourceBindings": [
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": "package.json",
+          "range": "L288-L289"
+        },
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": "tests/verification/integration/registry-local-gc.test.mjs",
+          "range": "L14-L51"
+        },
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": "tests/verification/integration/registry-local-gc.test.mjs",
+          "range": "L67-L87"
+        },
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": "tests/verification/integration/registry-local-gc.test.mjs",
+          "range": "L14-L51"
+        }
+      ],
+      "limits": "Author Source inspection/prose only; original historical results and runtime/live limitations retained; no independent or gate approval.",
+      "namedTestAssertionSources": [],
+      "topicReuse": [
+        "A910-01-whole-content-20261021",
+        "A910-11-whole-content-20261021"
+      ],
+      "reuseLimit": "Existing complete Source block and entire handbook page unchanged. Historical scope only; no new verdict for current altered legacy source files or historical test-absence wording."
+    },
+    {
+      "index": 17,
+      "page": "docs/site/extend/developer-handbook.md",
+      "title": "> **Source evidence \u2014 SDK boundary**",
+      "disposition": "EXISTING_COMPLETE_EXACT_PRESERVED",
+      "oldStartLine": 1411,
+      "oldEndLine": 1419,
+      "candidateStartLine": 1411,
+      "candidateEndLine": 1419,
+      "baselineBoxSha256": "3908c024906a1b50fc04a356782edc0ce2ca0b18e17695f4ab571a1a68222b1f",
+      "candidateBoxSha256": "3908c024906a1b50fc04a356782edc0ce2ca0b18e17695f4ab571a1a68222b1f",
+      "semanticFields": {
+        "Claim": "public/testing exports, schema generation, and historical compatibility are separate responsibilities.",
+        "Implementation": "[SDK package exports](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/skills/common/plugin-runtime/sdk/package.json#L1-L16), [local compatibility command](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/package.json#L290-L290).",
+        "Contract": "[schema generator](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/scripts/generate-plugin-sdk-types.mjs#L1-L33), [declaration-only build output](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/skills/common/plugin-runtime/sdk/tsconfig.build.json#L9-L16).",
+        "Test": "no focused test is identified for this claim. Status: source-only; no execution result is asserted.",
+        "Revision": "`671234b056bf5f5f503e51e8db30f843e781ba6e`.",
+        "Limit": "generated type freshness does not prove runtime compatibility or every public export's semantics."
+      },
+      "authoredFields": {},
+      "originalSourceBindings": [
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": "skills/common/plugin-runtime/sdk/package.json",
+          "range": "L1-L16"
+        },
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": "package.json",
+          "range": "L290-L290"
+        },
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": "scripts/generate-plugin-sdk-types.mjs",
+          "range": "L1-L33"
+        },
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": "skills/common/plugin-runtime/sdk/tsconfig.build.json",
+          "range": "L9-L16"
+        }
+      ],
+      "limits": "Author Source inspection/prose only; original historical results and runtime/live limitations retained; no independent or gate approval.",
+      "namedTestAssertionSources": [],
+      "topicReuse": [
+        "A910-01-whole-content-20261021",
+        "A910-11-whole-content-20261021"
+      ],
+      "reuseLimit": "Existing complete Source block and entire handbook page unchanged. Historical scope only; no new verdict for current altered legacy source files or historical test-absence wording."
+    },
+    {
+      "index": 18,
+      "page": "docs/site/extend/developer-handbook.md",
+      "title": "> **Source evidence \u2014 telemetry generation and reconciliation**",
+      "disposition": "EXISTING_COMPLETE_EXACT_PRESERVED",
+      "oldStartLine": 1508,
+      "oldEndLine": 1519,
+      "candidateStartLine": 1508,
+      "candidateEndLine": 1519,
+      "baselineBoxSha256": "03a34ae99ad0c8e3e671b4e3ec2bf659080d46d0ab983ae718d2cbd2b6f4fe0d",
+      "candidateBoxSha256": "03a34ae99ad0c8e3e671b4e3ec2bf659080d46d0ab983ae718d2cbd2b6f4fe0d",
+      "semanticFields": {
+        "Claim": "generated representations are byte-checked and pipeline reconciliation has distinct durability/reader checks.",
+        "Implementation": "[gofmt and byte drift behavior](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/scripts/generate-telemetry-contracts.mjs#L9-L39), [reconciliation check chain](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/package.json#L84-L84).",
+        "Contract": "[contract generator assertions and PATH Go invocation](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/contracts/telemetry/v1/tests/contracts.test.mjs#L130-L150).",
+        "Test": "[contract generator assertions and PATH Go invocation](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/contracts/telemetry/v1/tests/contracts.test.mjs#L130-L150). Status: source-only; no execution result is asserted.",
+        "Revision": "`671234b056bf5f5f503e51e8db30f843e781ba6e`.",
+        "Limit": "stored events do not alone prove complete end-to-end observability."
+      },
+      "authoredFields": {},
+      "originalSourceBindings": [
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": "scripts/generate-telemetry-contracts.mjs",
+          "range": "L9-L39"
+        },
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": "package.json",
+          "range": "L84-L84"
+        },
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": "contracts/telemetry/v1/tests/contracts.test.mjs",
+          "range": "L130-L150"
+        },
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": "contracts/pipeline-observability/v1/go/go.mod",
+          "range": "L1-L5"
+        },
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": "contracts/pipeline-observability/v1/go/go.sum",
+          "range": "L1-L2"
+        },
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": "tests/verification/contracts/check-pipeline-observability-contracts.mts",
+          "range": "L45-L52"
+        },
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": "contracts/telemetry/v1/tests/contracts.test.mjs",
+          "range": "L130-L150"
+        }
+      ],
+      "limits": "Author Source inspection/prose only; original historical results and runtime/live limitations retained; no independent or gate approval.",
+      "namedTestAssertionSources": [],
+      "topicReuse": [
+        "A910-01-whole-content-20261021",
+        "A910-11-whole-content-20261021"
+      ],
+      "reuseLimit": "Existing complete Source block and entire handbook page unchanged. Historical scope only; no new verdict for current altered legacy source files or historical test-absence wording."
+    },
+    {
+      "index": 19,
+      "page": "docs/site/extend/developer-handbook.md",
+      "title": "> **Source evidence \u2014 Chart and GitOps route**",
+      "disposition": "EXISTING_COMPLETE_EXACT_PRESERVED",
+      "oldStartLine": 1579,
+      "oldEndLine": 1587,
+      "candidateStartLine": 1579,
+      "candidateEndLine": 1587,
+      "baselineBoxSha256": "b7774703361057f2d0cf4c5dfc486dccc66c9c38bda73c523caf9b30321309c4",
+      "candidateBoxSha256": "b7774703361057f2d0cf4c5dfc486dccc66c9c38bda73c523caf9b30321309c4",
+      "semanticFields": {
+        "Claim": "role rendering, selection checks, and live synchronization are different boundaries.",
+        "Implementation": "[CI role render](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/.github/workflows/pipeline-reliability.yaml#L60-L79), [selection check chain](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/.github/workflows/update-checks.yaml#L24-L52).",
+        "Contract": "[rollback's preserved data/resource limit](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/.github/workflows/rollback-runtime.yaml#L47-L64).",
+        "Test": "no focused test is identified for this claim. Status: source-only; no execution result is asserted.",
+        "Revision": "`671234b056bf5f5f503e51e8db30f843e781ba6e`.",
+        "Limit": "local YAML/selection tests do not prove a live admission, restore, or rollout."
+      },
+      "authoredFields": {},
+      "originalSourceBindings": [
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": ".github/workflows/pipeline-reliability.yaml",
+          "range": "L60-L79"
+        },
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": ".github/workflows/update-checks.yaml",
+          "range": "L24-L52"
+        },
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": ".github/workflows/rollback-runtime.yaml",
+          "range": "L47-L64"
+        }
+      ],
+      "limits": "Author Source inspection/prose only; original historical results and runtime/live limitations retained; no independent or gate approval.",
+      "namedTestAssertionSources": [],
+      "topicReuse": [
+        "A910-01-whole-content-20261021",
+        "A910-11-whole-content-20261021"
+      ],
+      "reuseLimit": "Existing complete Source block and entire handbook page unchanged. Historical scope only; no new verdict for current altered legacy source files or historical test-absence wording."
+    },
+    {
+      "index": 20,
+      "page": "docs/site/extend/developer-handbook.md",
+      "title": "> **Source evidence \u2014 policy test's Python dependency**",
+      "disposition": "EXISTING_COMPLETE_EXACT_PRESERVED",
+      "oldStartLine": 1683,
+      "oldEndLine": 1691,
+      "candidateStartLine": 1683,
+      "candidateEndLine": 1691,
+      "baselineBoxSha256": "d39d031b0376e4bbbbf3b597a24478d51facfc5b1571cddcdaf9c40fb3007381",
+      "candidateBoxSha256": "d39d031b0376e4bbbbf3b597a24478d51facfc5b1571cddcdaf9c40fb3007381",
+      "semanticFields": {
+        "Claim": "the actual policy test imports PyYAML and CI selects version 6.0.3.",
+        "Implementation": "[policy imports and document reader](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/tools/ops-mcp/test/policy_contract_test.py#L1-L12).",
+        "Contract": "[validation dependency and command](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/.github/workflows/build-ops-mcp.yaml#L69-L73), [publication dependency and command](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/.github/workflows/build-ops-mcp.yaml#L162-L166).",
+        "Test": "no focused test is identified for this claim. Status: source-only; no execution result is asserted.",
+        "Revision": "`671234b056bf5f5f503e51e8db30f843e781ba6e`.",
+        "Limit": "source policy assertions and dependency setup cannot prove deployed network enforcement."
+      },
+      "authoredFields": {},
+      "originalSourceBindings": [
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": "tools/ops-mcp/test/policy_contract_test.py",
+          "range": "L1-L12"
+        },
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": ".github/workflows/build-ops-mcp.yaml",
+          "range": "L69-L73"
+        },
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": ".github/workflows/build-ops-mcp.yaml",
+          "range": "L162-L166"
+        }
+      ],
+      "limits": "Author Source inspection/prose only; original historical results and runtime/live limitations retained; no independent or gate approval.",
+      "namedTestAssertionSources": [],
+      "topicReuse": [
+        "A910-01-whole-content-20261021",
+        "A910-11-whole-content-20261021"
+      ],
+      "reuseLimit": "Existing complete Source block and entire handbook page unchanged. Historical scope only; no new verdict for current altered legacy source files or historical test-absence wording."
+    },
+    {
+      "index": 21,
+      "page": "docs/site/extend/developer-handbook.md",
+      "title": "> **Source evidence \u2014 MCP local and image boundary**",
+      "disposition": "EXISTING_COMPLETE_EXACT_PRESERVED",
+      "oldStartLine": 1716,
+      "oldEndLine": 1724,
+      "candidateStartLine": 1716,
+      "candidateEndLine": 1724,
+      "baselineBoxSha256": "dbade00635adb0431c3b58a77fb541e6dece92e68ec4a40674a64966bacb6fdd",
+      "candidateBoxSha256": "dbade00635adb0431c3b58a77fb541e6dece92e68ec4a40674a64966bacb6fdd",
+      "semanticFields": {
+        "Claim": "bearer authentication stays required locally, while unavailable Kubernetes reads remain errors.",
+        "Implementation": "[listener configuration](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/tools/ops-mcp/src/config.mjs#L1-L23), [authentication source/rotation](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/tools/ops-mcp/src/authentication.mjs#L4-L38).",
+        "Contract": "[Ops package scripts](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/tools/ops-mcp/package.json#L1-L22), [CI package/image separation](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/.github/workflows/build-ops-mcp.yaml#L62-L113).",
+        "Test": "[local tool/read fixture](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/tools/ops-mcp/test/local.test.mjs#L10-L50). Status: source-only; no execution result is asserted.",
+        "Revision": "`671234b056bf5f5f503e51e8db30f843e781ba6e`.",
+        "Limit": "package or image success cannot prove live Kubernetes authorization."
+      },
+      "authoredFields": {},
+      "originalSourceBindings": [
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": "tools/ops-mcp/src/config.mjs",
+          "range": "L1-L23"
+        },
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": "tools/ops-mcp/src/authentication.mjs",
+          "range": "L4-L38"
+        },
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": "tools/ops-mcp/package.json",
+          "range": "L1-L22"
+        },
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": ".github/workflows/build-ops-mcp.yaml",
+          "range": "L62-L113"
+        },
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": "tools/ops-mcp/test/local.test.mjs",
+          "range": "L10-L50"
+        },
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": "tools/ops-mcp/test/local.test.mjs",
+          "range": "L10-L50"
+        }
+      ],
+      "limits": "Author Source inspection/prose only; original historical results and runtime/live limitations retained; no independent or gate approval.",
+      "namedTestAssertionSources": [],
+      "topicReuse": [
+        "A910-01-whole-content-20261021",
+        "A910-11-whole-content-20261021"
+      ],
+      "reuseLimit": "Existing complete Source block and entire handbook page unchanged. Historical scope only; no new verdict for current altered legacy source files or historical test-absence wording."
+    },
+    {
+      "index": 22,
+      "page": "docs/site/extend/developer-handbook.md",
+      "title": "> **Source evidence \u2014 UI routes**",
+      "disposition": "EXISTING_COMPLETE_EXACT_PRESERVED",
+      "oldStartLine": 1778,
+      "oldEndLine": 1786,
+      "candidateStartLine": 1778,
+      "candidateEndLine": 1786,
+      "baselineBoxSha256": "0805f09e4bee0ab6095914cf768e4ba582e897f330151b81f2fdb4abd3a5cca5",
+      "candidateBoxSha256": "0805f09e4bee0ab6095914cf768e4ba582e897f330151b81f2fdb4abd3a5cca5",
+      "semanticFields": {
+        "Claim": "Studio development, build, browser checks, and native Archviewer are separate routes.",
+        "Implementation": "[Studio scripts](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/skills/prism/package.json#L15-L36), [browser viewports and managed server](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/skills/prism/studio/playwright.config.mjs#L1-L7).",
+        "Contract": "[static authenticated document route](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/docker/archviewer.nginx.conf#L1-L19), [native service group](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/scripts/reliability-tests.mjs#L11-L38).",
+        "Test": "[actual nginx authentication and failure controls](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/tests/verification/reliability/archviewer-native.test.mjs#L10-L56). Status: source-only; no execution result is asserted.",
+        "Revision": "`671234b056bf5f5f503e51e8db30f843e781ba6e`.",
+        "Limit": "client assertions do not approve design content or prove source-service completeness."
+      },
+      "authoredFields": {},
+      "originalSourceBindings": [
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": "skills/prism/package.json",
+          "range": "L15-L36"
+        },
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": "skills/prism/studio/playwright.config.mjs",
+          "range": "L1-L7"
+        },
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": "docker/archviewer.nginx.conf",
+          "range": "L1-L19"
+        },
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": "scripts/reliability-tests.mjs",
+          "range": "L11-L38"
+        },
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": "tests/verification/reliability/archviewer-native.test.mjs",
+          "range": "L10-L56"
+        },
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": "tests/verification/reliability/archviewer-native.test.mjs",
+          "range": "L10-L56"
+        }
+      ],
+      "limits": "Author Source inspection/prose only; original historical results and runtime/live limitations retained; no independent or gate approval.",
+      "namedTestAssertionSources": [],
+      "topicReuse": [
+        "A910-01-whole-content-20261021",
+        "A910-11-whole-content-20261021"
+      ],
+      "reuseLimit": "Existing complete Source block and entire handbook page unchanged. Historical scope only; no new verdict for current altered legacy source files or historical test-absence wording."
+    },
+    {
+      "index": 23,
+      "page": "docs/site/extend/developer-handbook.md",
+      "title": "> **Source evidence \u2014 security and scale limits**",
+      "disposition": "EXISTING_COMPLETE_EXACT_PRESERVED",
+      "oldStartLine": 1850,
+      "oldEndLine": 1862,
+      "candidateStartLine": 1850,
+      "candidateEndLine": 1862,
+      "baselineBoxSha256": "d1028651e131d8e19fc681b16c3d36aacd97ba584158943b182efd058f39220c",
+      "candidateBoxSha256": "d1028651e131d8e19fc681b16c3d36aacd97ba584158943b182efd058f39220c",
+      "semanticFields": {
+        "Claim": "scanner data and journal scale checks require real dependencies and have bounded proof.",
+        "Implementation": "[scanner report and nonzero failure contract](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/scripts/scan-runtime-images.sh#L118-L145).",
+        "Contract": "[required predeclared retention budget](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/skills/prism/integration/engine-capture-retention.mts#L10-L29).",
+        "Test": "[journal load, timing and cleanup](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/tests/verification/contracts/check-nova-journal-scale.mts#L7-L37). Status: source-only; no execution result is asserted.",
+        "Revision": "`671234b056bf5f5f503e51e8db30f843e781ba6e`.",
+        "Limit": "one fixture and one environment cannot establish production capacity or security enforcement."
+      },
+      "authoredFields": {},
+      "originalSourceBindings": [
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": "scripts/scan-runtime-images.sh",
+          "range": "L118-L145"
+        },
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": ".github/workflows/pipeline-reliability.yaml",
+          "range": "L174-L194"
+        },
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": "tests/verification/contracts/check-nova-journal-scale.mts",
+          "range": "L7-L37"
+        },
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": "skills/prism/integration/engine-capture-retention.mts",
+          "range": "L10-L29"
+        },
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": "skills/prism/integration/engine-capture-retention.mts",
+          "range": "L98-L136"
+        },
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": "skills/prism/package.json",
+          "range": "L31-L31"
+        },
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": "tests/verification/contracts/check-nova-journal-scale.mts",
+          "range": "L7-L37"
+        }
+      ],
+      "limits": "Author Source inspection/prose only; original historical results and runtime/live limitations retained; no independent or gate approval.",
+      "namedTestAssertionSources": [],
+      "topicReuse": [
+        "A910-01-whole-content-20261021",
+        "A910-11-whole-content-20261021"
+      ],
+      "reuseLimit": "Existing complete Source block and entire handbook page unchanged. Historical scope only; no new verdict for current altered legacy source files or historical test-absence wording."
+    },
+    {
+      "index": 24,
+      "page": "docs/site/extend/developer-handbook.md",
+      "title": "> **Source evidence \u2014 workflow authority**",
+      "disposition": "EXISTING_COMPLETE_EXACT_PRESERVED",
+      "oldStartLine": 1908,
+      "oldEndLine": 1924,
+      "candidateStartLine": 1908,
+      "candidateEndLine": 1924,
+      "baselineBoxSha256": "26e6abde3b72c7cea6f906d52378f9d8186bb9dc1c4ac4225355adf3158636d6",
+      "candidateBoxSha256": "26e6abde3b72c7cea6f906d52378f9d8186bb9dc1c4ac4225355adf3158636d6",
+      "semanticFields": {
+        "Claim": "trigger, trust, conditional image build, and promotion are separate controls.",
+        "Implementation": "[image dependency/matrix selection](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/.github/workflows/build-images.yaml#L1-L50).",
+        "Contract": "[Ops event boundary](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/.github/workflows/build-ops-mcp.yaml#L1-L50).",
+        "Test": "no focused test is identified for this claim. Status: source-only; no execution result is asserted.",
+        "Revision": "`671234b056bf5f5f503e51e8db30f843e781ba6e`.",
+        "Limit": "workflow source cannot establish branch-protection settings, available secrets, or actual job execution."
+      },
+      "authoredFields": {},
+      "originalSourceBindings": [
+        {
+          "revision": "f99aecbb00cb399b46dfbbeb3ddb375fba6218e7",
+          "path": ".github/workflows/promote-runtime.yaml",
+          "range": "L80-L92"
+        },
+        {
+          "revision": "f99aecbb00cb399b46dfbbeb3ddb375fba6218e7",
+          "path": ".github/workflows/promote-runtime.yaml",
+          "range": "L93-L130"
+        },
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": ".github/workflows/build-images.yaml",
+          "range": "L1-L50"
+        },
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": ".github/workflows/build-images.yaml",
+          "range": "L188-L224"
+        },
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": ".github/workflows/docs-checks.yaml",
+          "range": "L1-L19"
+        },
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": ".github/workflows/build-ops-mcp.yaml",
+          "range": "L1-L50"
+        },
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": ".github/workflows/promote-runtime.yaml",
+          "range": "L1-L59"
+        },
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": ".github/workflows/release-security.yaml",
+          "range": "L1-L43"
+        },
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": ".github/workflows/pipeline-reliability.yaml",
+          "range": "L82-L137"
+        },
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": ".github/workflows/pipeline-reliability.yaml",
+          "range": "L139-L194"
+        },
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": ".github/workflows/pipeline-reliability.yaml",
+          "range": "L196-L223"
+        }
+      ],
+      "limits": "Author Source inspection/prose only; original historical results and runtime/live limitations retained; no independent or gate approval.",
+      "namedTestAssertionSources": [],
+      "topicReuse": [
+        "A910-01-whole-content-20261021",
+        "A910-11-whole-content-20261021"
+      ],
+      "reuseLimit": "Existing complete Source block and entire handbook page unchanged. Historical scope only; no new verdict for current altered legacy source files or historical test-absence wording."
+    },
+    {
+      "index": 25,
+      "page": "docs/site/extend/developer-handbook.md",
+      "title": "> **Source evidence \u2014 version, receipt, promotion, rollback**",
+      "disposition": "EXISTING_COMPLETE_EXACT_PRESERVED",
+      "oldStartLine": 2061,
+      "oldEndLine": 2074,
+      "candidateStartLine": 2061,
+      "candidateEndLine": 2074,
+      "baselineBoxSha256": "360c6302e4181419260e22fc5e05f6e3879541e253aa76cf5659e33bfcde272b",
+      "candidateBoxSha256": "360c6302e4181419260e22fc5e05f6e3879541e253aa76cf5659e33bfcde272b",
+      "semanticFields": {
+        "Claim": "generated versions and immutable release selection have separate authorities; rollback does not restore data.",
+        "Implementation": "[central tool/image inputs](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/versions.json#L1-L59).",
+        "Contract": "[bundle checksums/source release](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/.github/workflows/build-images.yaml#L142-L178).",
+        "Test": "no focused test is identified for this claim. Status: source-only; no execution result is asserted.",
+        "Revision": "`671234b056bf5f5f503e51e8db30f843e781ba6e`.",
+        "Limit": "selected bytes and successful source fixtures do not establish production rollout or data recovery."
+      },
+      "authoredFields": {},
+      "originalSourceBindings": [
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": "versions.json",
+          "range": "L1-L59"
+        },
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": "scripts/versions.mjs",
+          "range": "L178-L181"
+        },
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": ".github/workflows/build-images.yaml",
+          "range": "L86-L105"
+        },
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": ".github/workflows/build-images.yaml",
+          "range": "L142-L178"
+        },
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": ".github/workflows/promote-runtime.yaml",
+          "range": "L84-L113"
+        },
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": ".github/workflows/rollback-runtime.yaml",
+          "range": "L1-L35"
+        },
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": ".github/workflows/rollback-runtime.yaml",
+          "range": "L47-L64"
+        }
+      ],
+      "limits": "Author Source inspection/prose only; original historical results and runtime/live limitations retained; no independent or gate approval.",
+      "namedTestAssertionSources": [],
+      "topicReuse": [
+        "A910-01-whole-content-20261021",
+        "A910-11-whole-content-20261021"
+      ],
+      "reuseLimit": "Existing complete Source block and entire handbook page unchanged. Historical scope only; no new verdict for current altered legacy source files or historical test-absence wording."
+    },
+    {
+      "index": 26,
+      "page": "docs/site/extend/developer-handbook.md",
+      "title": "> **Source evidence \u2014 protected Core guide revision guard**",
+      "disposition": "EXISTING_COMPLETE_EXACT_PRESERVED",
+      "oldStartLine": 2258,
+      "oldEndLine": 2272,
+      "candidateStartLine": 2258,
+      "candidateEndLine": 2272,
+      "baselineBoxSha256": "2d571852d5f375fedc9195734cc5a650633f0fdd3097d32f6427fc43a3116772",
+      "candidateBoxSha256": "2d571852d5f375fedc9195734cc5a650633f0fdd3097d32f6427fc43a3116772",
+      "semanticFields": {
+        "Claim": "one hardcoded revision controls the three Core guides, and the checker compares each linked current file with immutable Git source before checking its ranges.",
+        "Implementation": "[shared revision](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/scripts/check-core-architecture-guides.mjs#L9-L10).",
+        "Contract": "[common generator full-commit selection and lock-write boundary](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/scripts/docs-generate.mjs#L24-L52).",
+        "Test": "[local terminal guard result fields](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/scripts/check-core-architecture-guides.mjs#L300-L306). Status: source-only; no change-repin execution is asserted.",
+        "Revision": "`671234b056bf5f5f503e51e8db30f843e781ba6e` for the unchanged selected Core checker and the cited common source-revision/write guards. The current common generator has additional source changes; these narrow unchanged guards do not certify its full current implementation.",
+        "Limit": "local equality/metadata success does not prove source URL availability, complete semantic correctness, rendered output or the changed lifecycle task."
+      },
+      "authoredFields": {},
+      "originalSourceBindings": [
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": "scripts/check-core-architecture-guides.mjs",
+          "range": "L9-L10"
+        },
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": "scripts/check-core-architecture-guides.mjs",
+          "range": "L20-L23"
+        },
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": "scripts/check-core-architecture-guides.mjs",
+          "range": "L52-L54"
+        },
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": "scripts/check-core-architecture-guides.mjs",
+          "range": "L77-L79"
+        },
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": "scripts/check-core-architecture-guides.mjs",
+          "range": "L103-L132"
+        },
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": "scripts/docs-generate.mjs",
+          "range": "L24-L52"
+        },
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": "scripts/docs-generate.mjs",
+          "range": "L54-L69"
+        },
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": "scripts/check-core-architecture-guides.mjs",
+          "range": "L142-L157"
+        },
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": "scripts/check-core-architecture-guides.mjs",
+          "range": "L300-L306"
+        }
+      ],
+      "limits": "Author Source inspection/prose only; original historical results and runtime/live limitations retained; no independent or gate approval.",
+      "namedTestAssertionSources": [],
+      "topicReuse": [
+        "A910-01-whole-content-20261021",
+        "A910-11-whole-content-20261021"
+      ],
+      "reuseLimit": "Existing complete Source block and entire handbook page unchanged. Historical scope only; no new verdict for current altered legacy source files or historical test-absence wording."
+    },
+    {
+      "index": 27,
+      "page": "docs/site/extend/developer-handbook.md",
+      "title": "> **Source evidence \u2014 maintenance routing**",
+      "disposition": "EXISTING_COMPLETE_EXACT_PRESERVED",
+      "oldStartLine": 2343,
+      "oldEndLine": 2351,
+      "candidateStartLine": 2343,
+      "candidateEndLine": 2351,
+      "baselineBoxSha256": "9145376a66bd91ecf8a889bbc9d88395e398d3e89512047bc840a58b63c82ea1",
+      "candidateBoxSha256": "9145376a66bd91ecf8a889bbc9d88395e398d3e89512047bc840a58b63c82ea1",
+      "semanticFields": {
+        "Claim": "page metadata supplies ownership and checks while source-derived references remain separate from authored prose.",
+        "Implementation": "[map inputs and check routing](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/scripts/docs-governance.mjs#L85-L105).",
+        "Contract": "[authored/generated page classification](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/scripts/docs-governance.mjs#L63-L80), [Markdown staging and approved asset copy](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/scripts/docs-publication.mjs#L993-L1028).",
+        "Test": "no focused test is identified for this claim. Status: source-only; no execution result is asserted.",
+        "Revision": "`671234b056bf5f5f503e51e8db30f843e781ba6e`.",
+        "Limit": "the map routes known dependencies; it does not prove a semantic explanation complete or an unknown source surface discovered."
+      },
+      "authoredFields": {},
+      "originalSourceBindings": [
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": "scripts/docs-governance.mjs",
+          "range": "L85-L105"
+        },
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": "scripts/docs-governance.mjs",
+          "range": "L63-L80"
+        },
+        {
+          "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+          "path": "scripts/docs-publication.mjs",
+          "range": "L993-L1028"
+        }
+      ],
+      "limits": "Author Source inspection/prose only; original historical results and runtime/live limitations retained; no independent or gate approval.",
+      "namedTestAssertionSources": [],
+      "topicReuse": [
+        "A910-01-whole-content-20261021",
+        "A910-11-whole-content-20261021"
+      ],
+      "reuseLimit": "Existing complete Source block and entire handbook page unchanged. Historical scope only; no new verdict for current altered legacy source files or historical test-absence wording."
+    },
+    {
+      "index": 28,
+      "page": "docs/site/extend/developer-handbook.md",
+      "title": "> **Source evidence \u2014 publication input selection**",
+      "disposition": "EXISTING_COMPLETE_EXACT_PRESERVED",
+      "oldStartLine": 2353,
+      "oldEndLine": 2360,
+      "candidateStartLine": 2353,
+      "candidateEndLine": 2360,
+      "baselineBoxSha256": "253645e635dd3b7a046feaf979757d0c8314a4380588382031c20176b2116d84",
+      "candidateBoxSha256": "253645e635dd3b7a046feaf979757d0c8314a4380588382031c20176b2116d84",
+      "semanticFields": {
+        "Claim": "publication staging selects explicitly classified regular Markdown pages and separately allowed regular assets; it rejects symlinks and unexpected inputs.",
+        "Implementation": "[publicationPages classification and regular-file guards](https://github.com/datrab/kubeclaw/blob/30824cc555fa2623142752646f26dcc43072b5f7/scripts/lib/docs-publication-assets.mjs#L25-L59).",
+        "Contract": "[separate asset allowance](https://github.com/datrab/kubeclaw/blob/30824cc555fa2623142752646f26dcc43072b5f7/scripts/lib/docs-publication-assets.mjs#L5-L23), [publicationAssets regular-file and allowance guards](https://github.com/datrab/kubeclaw/blob/30824cc555fa2623142752646f26dcc43072b5f7/scripts/lib/docs-publication-assets.mjs#L62-L79).",
+        "Test": "[selected/unexpected-page tests](https://github.com/datrab/kubeclaw/blob/30824cc555fa2623142752646f26dcc43072b5f7/scripts/tests/docs-publication-assets.test.mjs#L67-L85), [unexpected/symlink asset tests](https://github.com/datrab/kubeclaw/blob/30824cc555fa2623142752646f26dcc43072b5f7/scripts/tests/docs-publication-assets.test.mjs#L43-L65). Status: source-only; no execution or rendered result is asserted.",
+        "Revision": "`30824cc555fa2623142752646f26dcc43072b5f7` for this input selector. The earlier staging implementation is separately pinned above.",
+        "Limit": "selecting/copying reader inputs does not create HTML or prove rendered page/route/anchor behavior."
+      },
+      "authoredFields": {},
+      "originalSourceBindings": [
+        {
+          "revision": "30824cc555fa2623142752646f26dcc43072b5f7",
+          "path": "scripts/lib/docs-publication-assets.mjs",
+          "range": "L25-L59"
+        },
+        {
+          "revision": "30824cc555fa2623142752646f26dcc43072b5f7",
+          "path": "scripts/lib/docs-publication-assets.mjs",
+          "range": "L5-L23"
+        },
+        {
+          "revision": "30824cc555fa2623142752646f26dcc43072b5f7",
+          "path": "scripts/lib/docs-publication-assets.mjs",
+          "range": "L62-L79"
+        },
+        {
+          "revision": "30824cc555fa2623142752646f26dcc43072b5f7",
+          "path": "scripts/tests/docs-publication-assets.test.mjs",
+          "range": "L67-L85"
+        },
+        {
+          "revision": "30824cc555fa2623142752646f26dcc43072b5f7",
+          "path": "scripts/tests/docs-publication-assets.test.mjs",
+          "range": "L43-L65"
+        }
+      ],
+      "limits": "Author Source inspection/prose only; original historical results and runtime/live limitations retained; no independent or gate approval.",
+      "namedTestAssertionSources": [],
+      "topicReuse": [
+        "A910-01-whole-content-20261021",
+        "A910-11-whole-content-20261021"
+      ],
+      "reuseLimit": "Existing complete Source block and entire handbook page unchanged. Historical scope only; no new verdict for current altered legacy source files or historical test-absence wording."
+    },
+    {
+      "index": 29,
+      "page": "docs/site/extend/README.md",
+      "title": "> **Source evidence \u2014 configuration selects but does not create authority**",
+      "disposition": "SEMANTIC_FIELDS_APPENDED",
+      "oldStartLine": 211,
+      "oldEndLine": 227,
+      "candidateStartLine": 211,
+      "candidateEndLine": 233,
+      "baselineBoxSha256": "48e31d74b1095b316de0b5a565b13109dd398c8950b8b9ef81fcfd9fc0495f12",
+      "candidateBoxSha256": "982b380f97e35d6d3a9acca5d13c9f0eed9e953ec38ea574767db378bdc4b9c7",
+      "semanticFields": {
+        "Claim": "Project input selects installed behavior; platform policy owns installation roots, trust, provider mappings and grants.",
+        "Implementation": "`prepareRuntime()` discovers packages, resolves grants, validates selected configurations and activates the permitted registrations.",
+        "Contract": "`pipeline-platform.v2.providers` maps capability IDs to adapters, not Buster test-provider contracts.",
+        "Test": "[The platform check rejects project-controlled installation roots](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/tests/verification/contracts/check-plugin-system-v2-platform-config.mjs#L44-L63). | The focused platform-configuration check passed on 2026-09-16.",
+        "Revision": "`bcf032f241b432bf920baa9ee5f727947921447d`; linked configuration, compiler and runtime sources retain those bytes.",
+        "Limit": "The recorded platform check does not establish package installation, external isolation or permission in a deployed host."
+      },
+      "authoredFields": {
+        "Claim": "Project input selects installed behavior; platform policy owns installation roots, trust, provider mappings and grants.",
+        "Implementation": "`prepareRuntime()` discovers packages, resolves grants, validates selected configurations and activates the permitted registrations.",
+        "Contract": "`pipeline-platform.v2.providers` maps capability IDs to adapters, not Buster test-provider contracts.",
+        "Revision": "`bcf032f241b432bf920baa9ee5f727947921447d`; linked configuration, compiler and runtime sources retain those bytes.",
+        "Limit": "The recorded platform check does not establish package installation, external isolation or permission in a deployed host."
+      },
+      "originalSourceBindings": [
+        {
+          "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
+          "path": "skills/common/plugin-runtime/foundation/config/platform.ts",
+          "range": "L6-L27"
+        },
+        {
+          "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
+          "path": "skills/common/plugin-runtime/foundation/registry/capabilities.ts",
+          "range": "L75-L119"
+        },
+        {
+          "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
+          "path": "skills/nova/core/execution/engine-runtime.ts",
+          "range": "L29-L50"
+        },
+        {
+          "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
+          "path": "skills/nova/project/compiler.ts",
+          "range": "L60-L113"
+        },
+        {
+          "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
+          "path": "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json",
+          "range": "L481-L529"
+        },
+        {
+          "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
+          "path": "tests/verification/contracts/check-plugin-system-v2-platform-config.mjs",
+          "range": "L44-L63"
+        }
+      ],
+      "limits": "Author Source inspection/prose only; original historical results and runtime/live limitations retained; no independent or gate approval.",
+      "namedTestAssertionSources": [],
+      "topicReuse": [
+        "AP09.2-ready-topics-20261020",
+        "AP09-reader-developers-20261020"
+      ],
+      "reuseLimit": "Only recorded plugin classification/authority topics and unchanged relevant product sources; unrelated changed documentation implementation is excluded from this reuse."
+    },
+    {
+      "index": 30,
+      "page": "docs/site/extend/README.md",
+      "title": "> **Source evidence \u2014 five different registration contracts**",
+      "disposition": "SEMANTIC_FIELDS_APPENDED",
+      "oldStartLine": 310,
+      "oldEndLine": 320,
+      "candidateStartLine": 316,
+      "candidateEndLine": 332,
+      "baselineBoxSha256": "e53cafa9be3a60f7e2d27a0f3df0e0b3330c5e4b0649af71593ba7b2635f3417",
+      "candidateBoxSha256": "f9085fd14c48bf201e2aa185831c0a955ccca754ec4fbe1a4fe632a4202da274",
+      "semanticFields": {
+        "Claim": "Stages, observers, adapters, test providers and report adapters retain different selection, configuration and execution contracts.",
+        "Implementation": "`buildRegistry()` creates separate registration indexes and rejects conflicting package, registration, stage-type and test-contract ownership.",
+        "Contract": "[The manifest schema defines stage, observer, adapter, test-provider, and report-adapter arrays](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json#L194-L449).",
+        "Test": "The recorded contract/registry passes remain dated 2026-09-16; those checks were not rerun for this inspection.",
+        "Revision": "`bcf032f241b432bf920baa9ee5f727947921447d`; the linked manifest schema, registry builder and SDK exports remain byte-identical.",
+        "Limit": "Recognized registration shapes and conflict checks do not prove activation or successful provider/report execution."
+      },
+      "authoredFields": {
+        "Claim": "Stages, observers, adapters, test providers and report adapters retain different selection, configuration and execution contracts.",
+        "Implementation": "`buildRegistry()` creates separate registration indexes and rejects conflicting package, registration, stage-type and test-contract ownership.",
+        "Test": "The recorded contract/registry passes remain dated 2026-09-16; those checks were not rerun for this inspection.",
+        "Revision": "`bcf032f241b432bf920baa9ee5f727947921447d`; the linked manifest schema, registry builder and SDK exports remain byte-identical.",
+        "Limit": "Recognized registration shapes and conflict checks do not prove activation or successful provider/report execution."
+      },
+      "originalSourceBindings": [
+        {
+          "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
+          "path": "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json",
+          "range": "L194-L449"
+        },
+        {
+          "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
+          "path": "skills/common/plugin-runtime/foundation/registry/build.ts",
+          "range": "L265-L317"
+        },
+        {
+          "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
+          "path": "skills/common/plugin-runtime/sdk/src/index.ts",
+          "range": "L1-L28"
+        }
+      ],
+      "limits": "Author Source inspection/prose only; original historical results and runtime/live limitations retained; no independent or gate approval.",
+      "namedTestAssertionSources": [],
+      "topicReuse": [
+        "AP09.2-ready-topics-20261020",
+        "AP09-reader-developers-20261020"
+      ],
+      "reuseLimit": "Only recorded plugin classification/authority topics and unchanged relevant product sources; unrelated changed documentation implementation is excluded from this reuse."
+    },
+    {
+      "index": 31,
+      "page": "docs/site/extend/README.md",
+      "title": "> **Source evidence \u2014 inert discovery before selected activation**",
+      "disposition": "SEMANTIC_FIELDS_APPENDED",
+      "oldStartLine": 345,
+      "oldEndLine": 359,
+      "candidateStartLine": 357,
+      "candidateEndLine": 378,
+      "baselineBoxSha256": "9bbef387cdf6f01a3711107401692fa33ce4adc5ecf4c5ac4bc41bf25e2399dd",
+      "candidateBoxSha256": "34821c15918c31bbd48f9657909d48c480f5f226610460d99f420fc939c2073f",
+      "semanticFields": {
+        "Claim": "Inert package discovery precedes separate Nova activation and Buster plan-bound execution.",
+        "Implementation": "Discovery records package provenance; activation loads selected Nova surfaces, while Buster verifies and snapshots plan-bound provider/report packages.",
+        "Contract": "External adapters require the missing persistent isolated adapter runtime; `activateRegistry()` does not activate test providers or report adapters.",
+        "Test": "No discovery, activation or Buster sandbox execution was run for this inspection; the links specify their distinct admission checks.",
+        "Revision": "`bcf032f241b432bf920baa9ee5f727947921447d`; all six linked discovery, activation, binding and execution implementations retain those bytes.",
+        "Limit": "Discovery acceptance is not executable activation; external stage/observer isolation and Buster execution require their own supported environments."
+      },
+      "authoredFields": {
+        "Claim": "Inert package discovery precedes separate Nova activation and Buster plan-bound execution.",
+        "Implementation": "Discovery records package provenance; activation loads selected Nova surfaces, while Buster verifies and snapshots plan-bound provider/report packages.",
+        "Contract": "External adapters require the missing persistent isolated adapter runtime; `activateRegistry()` does not activate test providers or report adapters.",
+        "Test": "No discovery, activation or Buster sandbox execution was run for this inspection; the links specify their distinct admission checks.",
+        "Revision": "`bcf032f241b432bf920baa9ee5f727947921447d`; all six linked discovery, activation, binding and execution implementations retain those bytes.",
+        "Limit": "Discovery acceptance is not executable activation; external stage/observer isolation and Buster execution require their own supported environments."
+      },
+      "originalSourceBindings": [
+        {
+          "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
+          "path": "skills/common/plugin-runtime/foundation/registry/discovery.ts",
+          "range": "L77-L137"
+        },
+        {
+          "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
+          "path": "skills/common/plugin-runtime/foundation/registry/activation.ts",
+          "range": "L103-L137"
+        },
+        {
+          "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
+          "path": "skills/common/plugin-runtime/foundation/registry/activation.ts",
+          "range": "L47-L86"
+        },
+        {
+          "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
+          "path": "skills/nova/core/test-gates/resolver.ts",
+          "range": "L512-L585"
+        },
+        {
+          "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
+          "path": "skills/buster/engine/test-gates/provider-loader.ts",
+          "range": "L36-L79"
+        },
+        {
+          "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
+          "path": "skills/buster/engine/test-gates/report-adapter-runtime.ts",
+          "range": "L266-L320"
+        }
+      ],
+      "limits": "Author Source inspection/prose only; original historical results and runtime/live limitations retained; no independent or gate approval.",
+      "namedTestAssertionSources": [],
+      "topicReuse": [
+        "AP09.2-ready-topics-20261020",
+        "AP09-reader-developers-20261020"
+      ],
+      "reuseLimit": "Only recorded plugin classification/authority topics and unchanged relevant product sources; unrelated changed documentation implementation is excluded from this reuse."
+    },
+    {
+      "index": 32,
+      "page": "docs/site/extend/README.md",
+      "title": "> **Source evidence \u2014 host manifests remain separate**",
+      "disposition": "SEMANTIC_FIELDS_APPENDED",
+      "oldStartLine": 382,
+      "oldEndLine": 390,
+      "candidateStartLine": 401,
+      "candidateEndLine": 415,
+      "baselineBoxSha256": "c14c98f718a5a411786042a1035cc867b13fd93fe02eb14fec8c7f6ff47c0495",
+      "candidateBoxSha256": "82b05406fc0a10ac46f1e2ab13b09a104f83ac65ed0c7c2ff778d436c866c692",
+      "semanticFields": {
+        "Claim": "OpenClaw hook/tool manifests and the Codex skill manifest use their hosts, not pipeline registration arrays.",
+        "Implementation": "The observer declares startup activation, Prism declares two tools, and the Codex manifest selects its skill directory.",
+        "Contract": "Host configuration must match the corresponding manifest schema; Nova installation and grants do not activate either host.",
+        "Test": "No OpenClaw or Codex activation/invocation was executed; these three manifest declarations supply no host execution result.",
+        "Revision": "`bcf032f241b432bf920baa9ee5f727947921447d`; the three linked host manifests remain byte-identical.",
+        "Limit": "These manifest links prove repository declarations. They do not prove installation in an OpenClaw or Codex host."
+      },
+      "authoredFields": {
+        "Claim": "OpenClaw hook/tool manifests and the Codex skill manifest use their hosts, not pipeline registration arrays.",
+        "Implementation": "The observer declares startup activation, Prism declares two tools, and the Codex manifest selects its skill directory.",
+        "Contract": "Host configuration must match the corresponding manifest schema; Nova installation and grants do not activate either host.",
+        "Test": "No OpenClaw or Codex activation/invocation was executed; these three manifest declarations supply no host execution result.",
+        "Revision": "`bcf032f241b432bf920baa9ee5f727947921447d`; the three linked host manifests remain byte-identical."
+      },
+      "originalSourceBindings": [
+        {
+          "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
+          "path": "skills/common/plugins/openclaw-agent-observer/openclaw.plugin.json",
+          "range": "L1-L35"
+        },
+        {
+          "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
+          "path": "skills/prism/openclaw-plugin/openclaw.plugin.json",
+          "range": "L1-L17"
+        },
+        {
+          "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
+          "path": "plugins/kubeclaw-ops/.codex-plugin/plugin.json",
+          "range": "L1-L25"
+        }
+      ],
+      "limits": "Author Source inspection/prose only; original historical results and runtime/live limitations retained; no independent or gate approval.",
+      "namedTestAssertionSources": [],
+      "topicReuse": [
+        "AP09.2-ready-topics-20261020",
+        "AP09-reader-developers-20261020"
+      ],
+      "reuseLimit": "Only recorded plugin classification/authority topics and unchanged relevant product sources; unrelated changed documentation implementation is excluded from this reuse."
+    },
+    {
+      "index": 33,
+      "page": "docs/site/extend/README.md",
+      "title": "> **Source evidence \u2014 engines and roles are package boundaries**",
+      "disposition": "SEMANTIC_FIELDS_APPENDED",
+      "oldStartLine": 416,
+      "oldEndLine": 426,
+      "candidateStartLine": 441,
+      "candidateEndLine": 457,
+      "baselineBoxSha256": "e407fdc2a27d8f3f772ad621098d5748f8fca70368a2dd73e570b5a99f54790f",
+      "candidateBoxSha256": "1ad17086b8203311c31eed698b6a0415a13c19f7e1ffe67e944cd2f225ae265e",
+      "semanticFields": {
+        "Claim": "Worker profiles bind specialist engine identity; explicit package ownership and role manifests assemble deployable code.",
+        "Implementation": "`WorkerAttemptOperation` supplies attempt hooks; the package map and Nova role independently select bundled owners and components.",
+        "Contract": "`WorkerProfileV1.engine` contains contract, version and content digest; it is not a generic engine-registration manifest.",
+        "Test": "The runtime-role manifest check passed for all three roles on 2026-09-16.",
+        "Revision": "`bcf032f241b432bf920baa9ee5f727947921447d`; linked profile, attempt interface, ownership map and Nova role retain those bytes.",
+        "Limit": "The recorded role-manifest pass does not prove an installed bundle, native execution or a drop-in engine loader."
+      },
+      "authoredFields": {
+        "Claim": "Worker profiles bind specialist engine identity; explicit package ownership and role manifests assemble deployable code.",
+        "Implementation": "`WorkerAttemptOperation` supplies attempt hooks; the package map and Nova role independently select bundled owners and components.",
+        "Contract": "`WorkerProfileV1.engine` contains contract, version and content digest; it is not a generic engine-registration manifest.",
+        "Revision": "`bcf032f241b432bf920baa9ee5f727947921447d`; linked profile, attempt interface, ownership map and Nova role retain those bytes.",
+        "Limit": "The recorded role-manifest pass does not prove an installed bundle, native execution or a drop-in engine loader."
+      },
+      "originalSourceBindings": [
+        {
+          "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
+          "path": "contracts/pipeline-worker-core/v1/src/types.ts",
+          "range": "L28-L65"
+        },
+        {
+          "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
+          "path": "skills/worker/core/worker/attempt-executor.ts",
+          "range": "L62-L89"
+        },
+        {
+          "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
+          "path": "packaging/runtime/package-ownership.json",
+          "range": "L8-L26"
+        },
+        {
+          "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
+          "path": "packaging/runtime/roles/nova.json",
+          "range": "L1-L61"
+        }
+      ],
+      "limits": "Author Source inspection/prose only; original historical results and runtime/live limitations retained; no independent or gate approval.",
+      "namedTestAssertionSources": [],
+      "topicReuse": [
+        "AP09.2-ready-topics-20261020",
+        "AP09-reader-developers-20261020"
+      ],
+      "reuseLimit": "Only recorded plugin classification/authority topics and unchanged relevant product sources; unrelated changed documentation implementation is excluded from this reuse."
+    },
+    {
+      "index": 34,
+      "page": "docs/site/extend/README.md",
+      "title": "> **Source evidence \u2014 Core keeps control authority**",
+      "disposition": "SEMANTIC_FIELDS_APPENDED",
+      "oldStartLine": 451,
+      "oldEndLine": 457,
+      "candidateStartLine": 482,
+      "candidateEndLine": 495,
+      "baselineBoxSha256": "8c2c7a231db1d611a35105e05c6fdbe328939189e8c3a900046747f5622f0f78",
+      "candidateBoxSha256": "92c17411ae7c735a09d996a1170691373b892bfe5701b0daae9da681611c7561",
+      "semanticFields": {
+        "Claim": "Extensions cannot acquire Core lifecycle, scheduling, canonical-history or registry-mutation authority through grants.",
+        "Implementation": "Foundation recognizes a closed public capability vocabulary and separately identifies the four Core-only names.",
+        "Contract": "Unknown capability constraints reject with `REGISTRY_CAPABILITY_UNKNOWN`; Core-only names are not entries in the public grant vocabulary.",
+        "Test": "No capability-denial check was executed for this inspection; the linked vocabulary defines rejection rather than a runtime test result.",
+        "Revision": "`bcf032f241b432bf920baa9ee5f727947921447d`; the capability vocabulary retains those bytes; linked ADRs explain design boundaries.",
+        "Limit": "Vocabulary rejection alone does not establish every caller, adapter or operating-system containment boundary."
+      },
+      "authoredFields": {
+        "Claim": "Extensions cannot acquire Core lifecycle, scheduling, canonical-history or registry-mutation authority through grants.",
+        "Implementation": "Foundation recognizes a closed public capability vocabulary and separately identifies the four Core-only names.",
+        "Contract": "Unknown capability constraints reject with `REGISTRY_CAPABILITY_UNKNOWN`; Core-only names are not entries in the public grant vocabulary.",
+        "Test": "No capability-denial check was executed for this inspection; the linked vocabulary defines rejection rather than a runtime test result.",
+        "Revision": "`bcf032f241b432bf920baa9ee5f727947921447d`; the capability vocabulary retains those bytes; linked ADRs explain design boundaries.",
+        "Limit": "Vocabulary rejection alone does not establish every caller, adapter or operating-system containment boundary."
+      },
+      "originalSourceBindings": [
+        {
+          "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
+          "path": "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+          "range": "L109-L127"
+        }
+      ],
+      "limits": "Author Source inspection/prose only; original historical results and runtime/live limitations retained; no independent or gate approval.",
+      "namedTestAssertionSources": [],
+      "topicReuse": [
+        "AP09.2-ready-topics-20261020",
+        "AP09-reader-developers-20261020"
+      ],
+      "reuseLimit": "Only recorded plugin classification/authority topics and unchanged relevant product sources; unrelated changed documentation implementation is excluded from this reuse."
+    },
+    {
+      "index": 35,
+      "page": "docs/site/extend/platform/prism.md",
+      "title": "> **Source evidence \u2014 ownership boundary**",
+      "disposition": "SEMANTIC_FIELDS_APPENDED",
+      "oldStartLine": 55,
+      "oldEndLine": 61,
+      "candidateStartLine": 55,
+      "candidateEndLine": 68,
+      "baselineBoxSha256": "e3f87bf515cd966d0be75147e31fe1fa8ad2525b767920162435d515e6313141",
+      "candidateBoxSha256": "6dd37c79a27eec3fef2cb140b24c9ebe03f3f3710fbdda66f8cdf35377b4c5a1",
+      "semanticFields": {
+        "Claim": "Prism owns specialist design meaning while its runtime and role consume neutral Worker Core separately.",
+        "Implementation": "The runtime exports Engine, Worker binding and Domain; `executePrismOperation()` validates the specialist request and result contracts.",
+        "Contract": "Only `generate`, `render`, `evaluate`, `ingest` and `publish` belong to `kubeclaw.prism-design-engine@1`.",
+        "Test": "`engine.test.mts` asserts opaque Worker transport and unknown-operation rejection; inspected, not executed for this batch.",
+        "Revision": "`4e52c72788ac002788bc036a497d76c13e6a35fd`; the linked runtime, Worker binding and role remain byte-identical.",
+        "Limit": "A valid specialist operation or role declaration does not prove admitted native execution or a deployed Worker."
+      },
+      "authoredFields": {
+        "Claim": "Prism owns specialist design meaning while its runtime and role consume neutral Worker Core separately.",
+        "Implementation": "The runtime exports Engine, Worker binding and Domain; `executePrismOperation()` validates the specialist request and result contracts.",
+        "Contract": "Only `generate`, `render`, `evaluate`, `ingest` and `publish` belong to `kubeclaw.prism-design-engine@1`.",
+        "Test": "`engine.test.mts` asserts opaque Worker transport and unknown-operation rejection; inspected, not executed for this batch.",
+        "Revision": "`4e52c72788ac002788bc036a497d76c13e6a35fd`; the linked runtime, Worker binding and role remain byte-identical.",
+        "Limit": "A valid specialist operation or role declaration does not prove admitted native execution or a deployed Worker."
+      },
+      "originalSourceBindings": [
+        {
+          "revision": "4e52c72788ac002788bc036a497d76c13e6a35fd",
+          "path": "skills/prism/runtime.ts",
+          "range": "L1-L3"
+        },
+        {
+          "revision": "4e52c72788ac002788bc036a497d76c13e6a35fd",
+          "path": "skills/prism/engine/worker-binding.ts",
+          "range": "L1-L49"
+        },
+        {
+          "revision": "4e52c72788ac002788bc036a497d76c13e6a35fd",
+          "path": "packaging/runtime/roles/prism.json",
+          "range": "L1-L28"
+        }
+      ],
+      "limits": "Author Source inspection/prose only; original historical results and runtime/live limitations retained; no independent or gate approval.",
+      "namedTestAssertionSources": [
+        "skills/prism/tests/engine.test.mts"
+      ],
+      "topicReuse": [
+        "AP09.4-ready-prism-topics-20261020"
+      ],
+      "reuseLimit": "Prism ownership/data/developer semantics only, supported by fresh controlling functions/assertion reads; no historical whole Studio/operator or aggregate-check acceptance."
+    },
+    {
+      "index": 36,
+      "page": "docs/site/extend/platform/prism.md",
+      "title": "> **Source evidence \u2014 maintained commands**",
+      "disposition": "SEMANTIC_FIELDS_APPENDED",
+      "oldStartLine": 77,
+      "oldEndLine": 81,
+      "candidateStartLine": 84,
+      "candidateEndLine": 95,
+      "baselineBoxSha256": "15b334732bf511023d0d59b5c65bc10a75a63918db1e90c73756c3aa855dfb58",
+      "candidateBoxSha256": "ed4e7b9654d409a7a428ec0978a2a9b3b718d3b9932236833535b078fe7eb1ca",
+      "semanticFields": {
+        "Claim": "Prism exposes focused component commands; contract generation and environment-dependent checks remain separate prerequisites.",
+        "Implementation": "Prism and contract package scripts select their own tests, generation, type checking and service/build entrypoints.",
+        "Contract": "Contract `pretest`/`pretypecheck` generate validators; Studio `prebuild:studio` does likewise, so selected checks can write generated files.",
+        "Test": "Package scripts were inspected, not executed; no component, browser, PostgreSQL or native-worker result follows from their declarations.",
+        "Revision": "`4e52c72788ac002788bc036a497d76c13e6a35fd`; both linked package definitions remain byte-identical.",
+        "Limit": "Command availability does not supply its dependencies, native authority or a successful prepared checkout."
+      },
+      "authoredFields": {
+        "Claim": "Prism exposes focused component commands; contract generation and environment-dependent checks remain separate prerequisites.",
+        "Implementation": "Prism and contract package scripts select their own tests, generation, type checking and service/build entrypoints.",
+        "Contract": "Contract `pretest`/`pretypecheck` generate validators; Studio `prebuild:studio` does likewise, so selected checks can write generated files.",
+        "Test": "Package scripts were inspected, not executed; no component, browser, PostgreSQL or native-worker result follows from their declarations.",
+        "Revision": "`4e52c72788ac002788bc036a497d76c13e6a35fd`; both linked package definitions remain byte-identical.",
+        "Limit": "Command availability does not supply its dependencies, native authority or a successful prepared checkout."
+      },
+      "originalSourceBindings": [
+        {
+          "revision": "4e52c72788ac002788bc036a497d76c13e6a35fd",
+          "path": "skills/prism/package.json",
+          "range": "L1-L48"
+        },
+        {
+          "revision": "4e52c72788ac002788bc036a497d76c13e6a35fd",
+          "path": "contracts/prism/v1/package.json",
+          "range": null
+        }
+      ],
+      "limits": "Author Source inspection/prose only; original historical results and runtime/live limitations retained; no independent or gate approval.",
+      "namedTestAssertionSources": [],
+      "topicReuse": [
+        "AP09.4-ready-prism-topics-20261020"
+      ],
+      "reuseLimit": "Prism ownership/data/developer semantics only, supported by fresh controlling functions/assertion reads; no historical whole Studio/operator or aggregate-check acceptance."
+    },
+    {
+      "index": 37,
+      "page": "docs/site/extend/platform/prism.md",
+      "title": "> **Source evidence \u2014 contract change path**",
+      "disposition": "SEMANTIC_FIELDS_APPENDED",
+      "oldStartLine": 108,
+      "oldEndLine": 114,
+      "candidateStartLine": 122,
+      "candidateEndLine": 135,
+      "baselineBoxSha256": "1f1a648266eda1334dc2005c49662349178e1ead541b9f1ebba4a526519cdfe0",
+      "candidateBoxSha256": "c9aedce65f1c031f80662e8fd17882982d93b6f435af4aca0ee1bc2f47b4b43d",
+      "semanticFields": {
+        "Claim": "Public Prism validation combines generated schemas, semantic rules and bounded JSON-complexity admission.",
+        "Implementation": "`validatePrism()` and engine validators apply complexity checks; the generator writes browser-compatible standalone validators from maintained schemas.",
+        "Contract": "Public JSON ceilings are depth 256, one million visited nodes/properties and 32 MiB encoded bytes; transport limits may be smaller.",
+        "Test": "No contract test or validator generation ran here; schema and generator inspection does not prove old/new consumer compatibility.",
+        "Revision": "`4e52c72788ac002788bc036a497d76c13e6a35fd`; the linked validation entry, complexity guard and generator retain those bytes.",
+        "Limit": "Fresh-schema validation does not establish migration of durable old records or all browser/service consumers."
+      },
+      "authoredFields": {
+        "Claim": "Public Prism validation combines generated schemas, semantic rules and bounded JSON-complexity admission.",
+        "Implementation": "`validatePrism()` and engine validators apply complexity checks; the generator writes browser-compatible standalone validators from maintained schemas.",
+        "Contract": "Public JSON ceilings are depth 256, one million visited nodes/properties and 32 MiB encoded bytes; transport limits may be smaller.",
+        "Test": "No contract test or validator generation ran here; schema and generator inspection does not prove old/new consumer compatibility.",
+        "Revision": "`4e52c72788ac002788bc036a497d76c13e6a35fd`; the linked validation entry, complexity guard and generator retain those bytes.",
+        "Limit": "Fresh-schema validation does not establish migration of durable old records or all browser/service consumers."
+      },
+      "originalSourceBindings": [
+        {
+          "revision": "4e52c72788ac002788bc036a497d76c13e6a35fd",
+          "path": "contracts/prism/v1/src/index.ts",
+          "range": null
+        },
+        {
+          "revision": "4e52c72788ac002788bc036a497d76c13e6a35fd",
+          "path": "contracts/prism/v1/src/complexity.ts",
+          "range": null
+        },
+        {
+          "revision": "4e52c72788ac002788bc036a497d76c13e6a35fd",
+          "path": "contracts/prism/v1/scripts/generate-validators.mjs",
+          "range": null
+        }
+      ],
+      "limits": "Author Source inspection/prose only; original historical results and runtime/live limitations retained; no independent or gate approval.",
+      "namedTestAssertionSources": [],
+      "topicReuse": [
+        "AP09.4-ready-prism-topics-20261020"
+      ],
+      "reuseLimit": "Prism ownership/data/developer semantics only, supported by fresh controlling functions/assertion reads; no historical whole Studio/operator or aggregate-check acceptance."
+    },
+    {
+      "index": 38,
+      "page": "docs/site/extend/platform/prism.md",
+      "title": "> **Source evidence \u2014 operation authority**",
+      "disposition": "SEMANTIC_FIELDS_APPENDED",
+      "oldStartLine": 152,
+      "oldEndLine": 158,
+      "candidateStartLine": 173,
+      "candidateEndLine": 186,
+      "baselineBoxSha256": "d15dcf22d7fb313ed6069736cb24b863281fe7b92e5afad7b4430a0eb1429d8e",
+      "candidateBoxSha256": "b2ad6f21b22db9d1d762f5db48e6f17a166253789c60d15104657366d71ac46c",
+      "semanticFields": {
+        "Claim": "Browser edits use typed base-revision operations; fenced Agent replacement is a distinct privileged complete-document path.",
+        "Implementation": "`applyOperation()` clones and validates the result; the Agent route checks job, project, generation and exact next revision before replacement.",
+        "Contract": "An operation must match the source revision; Agent replacement additionally requires its current job fence and complete document validation.",
+        "Test": "`domain.test.mts` asserts stale-revision rejection and no partial source mutation; inspected, not run for this batch.",
+        "Revision": "`4e52c72788ac002788bc036a497d76c13e6a35fd`; linked Domain, Puck adapter and Agent route retain those bytes.",
+        "Limit": "Pure Domain assertions do not prove database compare-and-swap, Agent authentication or concurrent deployed editing."
+      },
+      "authoredFields": {
+        "Claim": "Browser edits use typed base-revision operations; fenced Agent replacement is a distinct privileged complete-document path.",
+        "Implementation": "`applyOperation()` clones and validates the result; the Agent route checks job, project, generation and exact next revision before replacement.",
+        "Contract": "An operation must match the source revision; Agent replacement additionally requires its current job fence and complete document validation.",
+        "Test": "`domain.test.mts` asserts stale-revision rejection and no partial source mutation; inspected, not run for this batch.",
+        "Revision": "`4e52c72788ac002788bc036a497d76c13e6a35fd`; linked Domain, Puck adapter and Agent route retain those bytes.",
+        "Limit": "Pure Domain assertions do not prove database compare-and-swap, Agent authentication or concurrent deployed editing."
+      },
+      "originalSourceBindings": [
+        {
+          "revision": "4e52c72788ac002788bc036a497d76c13e6a35fd",
+          "path": "skills/prism/domain/index.ts",
+          "range": "L5-L113"
+        },
+        {
+          "revision": "4e52c72788ac002788bc036a497d76c13e6a35fd",
+          "path": "skills/prism/studio/puck-adapter.ts",
+          "range": "L204-L263"
+        },
+        {
+          "revision": "4e52c72788ac002788bc036a497d76c13e6a35fd",
+          "path": "skills/prism/server/control-server.ts",
+          "range": "L265-L277"
+        }
+      ],
+      "limits": "Author Source inspection/prose only; original historical results and runtime/live limitations retained; no independent or gate approval.",
+      "namedTestAssertionSources": [
+        "skills/prism/tests/domain.test.mts"
+      ],
+      "topicReuse": [
+        "AP09.4-ready-prism-topics-20261020"
+      ],
+      "reuseLimit": "Prism ownership/data/developer semantics only, supported by fresh controlling functions/assertion reads; no historical whole Studio/operator or aggregate-check acceptance."
+    },
+    {
+      "index": 39,
+      "page": "docs/site/extend/platform/prism.md",
+      "title": "> **Source evidence \u2014 rendering boundary**",
+      "disposition": "SEMANTIC_FIELDS_APPENDED",
+      "oldStartLine": 179,
+      "oldEndLine": 183,
+      "candidateStartLine": 207,
+      "candidateEndLine": 218,
+      "baselineBoxSha256": "8e8b41bd4c7f877a4c0b18e03ca4f3dfaece471a4fc3b12862e81e2353bc9919",
+      "candidateBoxSha256": "b9c7fbac997b0412a32f0c36faee65b499af9006dfa00dd08f17e40450b53bbc",
+      "semanticFields": {
+        "Claim": "Renderer changes must preserve contract-governed nodes and escaped output rather than treating design data as executable markup.",
+        "Implementation": "The renderer resolves declared tokens/data and explicit node branches; document semantics reject component-type changes through patches.",
+        "Contract": "Node catalogue and document semantics constrain supported properties; a new renderer feature cannot bypass those input rules.",
+        "Test": "The maintained `test:renderer` command selects renderer/remediation assertions; it was not executed for this inspection.",
+        "Revision": "`4e52c72788ac002788bc036a497d76c13e6a35fd`; linked renderer and document-semantics files remain byte-identical.",
+        "Limit": "Escaped renderer output does not prove browser layout, CSP isolation, accessibility or arbitrary external asset safety."
+      },
+      "authoredFields": {
+        "Claim": "Renderer changes must preserve contract-governed nodes and escaped output rather than treating design data as executable markup.",
+        "Implementation": "The renderer resolves declared tokens/data and explicit node branches; document semantics reject component-type changes through patches.",
+        "Contract": "Node catalogue and document semantics constrain supported properties; a new renderer feature cannot bypass those input rules.",
+        "Test": "The maintained `test:renderer` command selects renderer/remediation assertions; it was not executed for this inspection.",
+        "Revision": "`4e52c72788ac002788bc036a497d76c13e6a35fd`; linked renderer and document-semantics files remain byte-identical.",
+        "Limit": "Escaped renderer output does not prove browser layout, CSP isolation, accessibility or arbitrary external asset safety."
+      },
+      "originalSourceBindings": [
+        {
+          "revision": "4e52c72788ac002788bc036a497d76c13e6a35fd",
+          "path": "skills/prism/renderer/index.ts",
+          "range": "L1-L225"
+        },
+        {
+          "revision": "4e52c72788ac002788bc036a497d76c13e6a35fd",
+          "path": "contracts/prism/v1/src/document-semantics.ts",
+          "range": null
+        }
+      ],
+      "limits": "Author Source inspection/prose only; original historical results and runtime/live limitations retained; no independent or gate approval.",
+      "namedTestAssertionSources": [],
+      "topicReuse": [
+        "AP09.4-ready-prism-topics-20261020"
+      ],
+      "reuseLimit": "Prism ownership/data/developer semantics only, supported by fresh controlling functions/assertion reads; no historical whole Studio/operator or aggregate-check acceptance."
+    },
+    {
+      "index": 40,
+      "page": "docs/site/extend/platform/prism.md",
+      "title": "> **Source evidence \u2014 provider containment**",
+      "disposition": "SEMANTIC_FIELDS_APPENDED",
+      "oldStartLine": 207,
+      "oldEndLine": 211,
+      "candidateStartLine": 242,
+      "candidateEndLine": 253,
+      "baselineBoxSha256": "1e6d44343579bdb8f985a5ea5cd7a48f2a60a3095947bf204b403ce60b0720a7",
+      "candidateBoxSha256": "d7924eed15cfbc14135b4f1600045428cea525beef06e31740105d1005f7a7cc",
+      "semanticFields": {
+        "Claim": "Providers propose typed operations or model-bound embeddings; Engine owns validated document mutation and idempotent request identity.",
+        "Implementation": "Engine fingerprints operation/input, shares cached execution and applies provider operations through Domain before returning the result.",
+        "Contract": "Generation accepts declared operation input; ingest requires nonempty bounded text and a nonempty finite embedding vector.",
+        "Test": "`engine.test.mts` asserts shared concurrent execution and conflicting-key rejection; inspected, not executed for this batch.",
+        "Revision": "`4e52c72788ac002788bc036a497d76c13e6a35fd`; the linked Engine/provider interface retains those bytes.",
+        "Limit": "Deterministic-provider assertions do not prove live provider cancellation, network limits, persistence or human publication approval."
+      },
+      "authoredFields": {
+        "Claim": "Providers propose typed operations or model-bound embeddings; Engine owns validated document mutation and idempotent request identity.",
+        "Implementation": "Engine fingerprints operation/input, shares cached execution and applies provider operations through Domain before returning the result.",
+        "Contract": "Generation accepts declared operation input; ingest requires nonempty bounded text and a nonempty finite embedding vector.",
+        "Test": "`engine.test.mts` asserts shared concurrent execution and conflicting-key rejection; inspected, not executed for this batch.",
+        "Revision": "`4e52c72788ac002788bc036a497d76c13e6a35fd`; the linked Engine/provider interface retains those bytes.",
+        "Limit": "Deterministic-provider assertions do not prove live provider cancellation, network limits, persistence or human publication approval."
+      },
+      "originalSourceBindings": [
+        {
+          "revision": "4e52c72788ac002788bc036a497d76c13e6a35fd",
+          "path": "skills/prism/engine/index.ts",
+          "range": "L12-L34"
+        },
+        {
+          "revision": "4e52c72788ac002788bc036a497d76c13e6a35fd",
+          "path": "skills/prism/engine/index.ts",
+          "range": "L69-L176"
+        }
+      ],
+      "limits": "Author Source inspection/prose only; original historical results and runtime/live limitations retained; no independent or gate approval.",
+      "namedTestAssertionSources": [
+        "skills/prism/tests/engine.test.mts"
+      ],
+      "topicReuse": [
+        "AP09.4-ready-prism-topics-20261020"
+      ],
+      "reuseLimit": "Prism ownership/data/developer semantics only, supported by fresh controlling functions/assertion reads; no historical whole Studio/operator or aggregate-check acceptance."
+    },
+    {
+      "index": 41,
+      "page": "docs/site/extend/platform/prism.md",
+      "title": "> **Source evidence \u2014 corpus safety**",
+      "disposition": "SEMANTIC_FIELDS_APPENDED",
+      "oldStartLine": 244,
+      "oldEndLine": 248,
+      "candidateStartLine": 286,
+      "candidateEndLine": 297,
+      "baselineBoxSha256": "f75746e18ae1a32dc16fc8bc4f41a07ea286620d530c42b244a6c9a49a45323f",
+      "candidateBoxSha256": "289d8bcc6aad2b25198d2ab48a7b3027d8fca5ed5820375db90e2a938d468c43",
+      "semanticFields": {
+        "Claim": "Corpus ingestion and retrieval retain separate admission, transactional ownership and eligibility/ranking responsibilities.",
+        "Implementation": "`ingest()` serializes equal input digests and writes related rows transactionally; `search()` filters eligible current records before final selection.",
+        "Contract": "Retrieval requires active, rights-eligible, unexpired records; vector retrieval also matches the requested embedding model before ranking.",
+        "Test": "The maintained `test:corpus` command selects corpus assertions; no native PostgreSQL/pgvector or acquisition test ran for this inspection.",
+        "Revision": "`4e52c72788ac002788bc036a497d76c13e6a35fd`; the linked corpus implementation remains byte-identical.",
+        "Limit": "Corpus row admission does not prove Ingestion TLS/address/quarantine enforcement or representative retrieval quality."
+      },
+      "authoredFields": {
+        "Claim": "Corpus ingestion and retrieval retain separate admission, transactional ownership and eligibility/ranking responsibilities.",
+        "Implementation": "`ingest()` serializes equal input digests and writes related rows transactionally; `search()` filters eligible current records before final selection.",
+        "Contract": "Retrieval requires active, rights-eligible, unexpired records; vector retrieval also matches the requested embedding model before ranking.",
+        "Test": "The maintained `test:corpus` command selects corpus assertions; no native PostgreSQL/pgvector or acquisition test ran for this inspection.",
+        "Revision": "`4e52c72788ac002788bc036a497d76c13e6a35fd`; the linked corpus implementation remains byte-identical.",
+        "Limit": "Corpus row admission does not prove Ingestion TLS/address/quarantine enforcement or representative retrieval quality."
+      },
+      "originalSourceBindings": [
+        {
+          "revision": "4e52c72788ac002788bc036a497d76c13e6a35fd",
+          "path": "skills/prism/corpus/index.ts",
+          "range": "L30-L148"
+        },
+        {
+          "revision": "4e52c72788ac002788bc036a497d76c13e6a35fd",
+          "path": "skills/prism/corpus/index.ts",
+          "range": "L150-L238"
+        }
+      ],
+      "limits": "Author Source inspection/prose only; original historical results and runtime/live limitations retained; no independent or gate approval.",
+      "namedTestAssertionSources": [],
+      "topicReuse": [
+        "AP09.4-ready-prism-topics-20261020"
+      ],
+      "reuseLimit": "Prism ownership/data/developer semantics only, supported by fresh controlling functions/assertion reads; no historical whole Studio/operator or aggregate-check acceptance."
+    },
+    {
+      "index": 42,
+      "page": "docs/site/extend/platform/prism.md",
+      "title": "> **Source evidence \u2014 evaluation and preference boundaries**",
+      "disposition": "SEMANTIC_FIELDS_APPENDED",
+      "oldStartLine": 269,
+      "oldEndLine": 273,
+      "candidateStartLine": 318,
+      "candidateEndLine": 329,
+      "baselineBoxSha256": "0f6d9f8fcb39366a23fcfc930a6527840e0842cfb052f5996927e65e9f6e711c",
+      "candidateBoxSha256": "8b920e8eca0bc9c59257d6ce727678a97772428a9810dedd6de50838d60d8d57",
+      "semanticFields": {
+        "Claim": "Evaluation findings and time-dependent preference projections supply evidence, not human approval or replacement source history.",
+        "Implementation": "The evaluator hashes stable finding content; preference projection validates identities, rejects conflicting duplicates and honors retractions before scoring.",
+        "Contract": "Finding levels remain blocking/review/information; effective preference scores depend on the supplied projection time and retained origins.",
+        "Test": "`quality.test.mts` asserts blocked findings, preference retraction and decay; inspected, not executed; no human approval result follows.",
+        "Revision": "`4e52c72788ac002788bc036a497d76c13e6a35fd`; the linked evaluator and preference projection retain those bytes.",
+        "Limit": "No visual-quality gate or approval follows from deterministic findings, and projection scores do not erase original preference events."
+      },
+      "authoredFields": {
+        "Claim": "Evaluation findings and time-dependent preference projections supply evidence, not human approval or replacement source history.",
+        "Implementation": "The evaluator hashes stable finding content; preference projection validates identities, rejects conflicting duplicates and honors retractions before scoring.",
+        "Contract": "Finding levels remain blocking/review/information; effective preference scores depend on the supplied projection time and retained origins.",
+        "Test": "`quality.test.mts` asserts blocked findings, preference retraction and decay; inspected, not executed; no human approval result follows.",
+        "Revision": "`4e52c72788ac002788bc036a497d76c13e6a35fd`; the linked evaluator and preference projection retain those bytes.",
+        "Limit": "No visual-quality gate or approval follows from deterministic findings, and projection scores do not erase original preference events."
+      },
+      "originalSourceBindings": [
+        {
+          "revision": "4e52c72788ac002788bc036a497d76c13e6a35fd",
+          "path": "skills/prism/evaluation/index.ts",
+          "range": "L4-L180"
+        },
+        {
+          "revision": "4e52c72788ac002788bc036a497d76c13e6a35fd",
+          "path": "skills/prism/preferences/index.ts",
+          "range": "L1-L89"
+        }
+      ],
+      "limits": "Author Source inspection/prose only; original historical results and runtime/live limitations retained; no independent or gate approval.",
+      "namedTestAssertionSources": [
+        "skills/prism/tests/quality.test.mts"
+      ],
+      "topicReuse": [
+        "AP09.4-ready-prism-topics-20261020"
+      ],
+      "reuseLimit": "Prism ownership/data/developer semantics only, supported by fresh controlling functions/assertion reads; no historical whole Studio/operator or aggregate-check acceptance."
+    },
+    {
+      "index": 43,
+      "page": "docs/site/extend/platform/prism.md",
+      "title": "> **Source evidence \u2014 Control boundary**",
+      "disposition": "SEMANTIC_FIELDS_APPENDED",
+      "oldStartLine": 313,
+      "oldEndLine": 317,
+      "candidateStartLine": 369,
+      "candidateEndLine": 380,
+      "baselineBoxSha256": "09d6c38694dc9ab3edb7617383afb2c39a8de3186da9a019d364cb8211848747",
+      "candidateBoxSha256": "4aac20a374f71b11261c26c817e5ab8eb608208ebe3057850bb1e96e0ad309cd",
+      "semanticFields": {
+        "Claim": "Control separates product, internal and Agent routes; session authentication does not supply missing general project-role authorization.",
+        "Implementation": "The Control router selects explicit handlers; session exchange derives its Prism audience from the trusted ingress identity.",
+        "Contract": "Session verification and CSRF protect browser authentication; the shared body helper bounds bytes but provides no body-read deadline.",
+        "Test": "No Control HTTP or database test ran for this inspection; existing role-authorization, body-deadline and broad 422 limits remain.",
+        "Revision": "`4e52c72788ac002788bc036a497d76c13e6a35fd`; linked Control and session sources remain byte-identical.",
+        "Limit": "Router/session code alone does not establish deployed ingress identity, per-project authorization or precise failure-status classification."
+      },
+      "authoredFields": {
+        "Claim": "Control separates product, internal and Agent routes; session authentication does not supply missing general project-role authorization.",
+        "Implementation": "The Control router selects explicit handlers; session exchange derives its Prism audience from the trusted ingress identity.",
+        "Contract": "Session verification and CSRF protect browser authentication; the shared body helper bounds bytes but provides no body-read deadline.",
+        "Test": "No Control HTTP or database test ran for this inspection; existing role-authorization, body-deadline and broad 422 limits remain.",
+        "Revision": "`4e52c72788ac002788bc036a497d76c13e6a35fd`; linked Control and session sources remain byte-identical.",
+        "Limit": "Router/session code alone does not establish deployed ingress identity, per-project authorization or precise failure-status classification."
+      },
+      "originalSourceBindings": [
+        {
+          "revision": "4e52c72788ac002788bc036a497d76c13e6a35fd",
+          "path": "skills/prism/server/control-server.ts",
+          "range": "L142-L940"
+        },
+        {
+          "revision": "4e52c72788ac002788bc036a497d76c13e6a35fd",
+          "path": "skills/prism/control/session.ts",
+          "range": "L3-L20"
+        }
+      ],
+      "limits": "Author Source inspection/prose only; original historical results and runtime/live limitations retained; no independent or gate approval.",
+      "namedTestAssertionSources": [],
+      "topicReuse": [
+        "AP09.4-ready-prism-topics-20261020"
+      ],
+      "reuseLimit": "Prism ownership/data/developer semantics only, supported by fresh controlling functions/assertion reads; no historical whole Studio/operator or aggregate-check acceptance."
+    },
+    {
+      "index": 44,
+      "page": "docs/site/extend/platform/prism.md",
+      "title": "> **Source evidence \u2014 worker integration**",
+      "disposition": "SEMANTIC_FIELDS_APPENDED",
+      "oldStartLine": 343,
+      "oldEndLine": 347,
+      "candidateStartLine": 406,
+      "candidateEndLine": 417,
+      "baselineBoxSha256": "b898244181bbc113cca2dc60d764df2b3212ed6cd84e41a0bad9f3fec1ba611b",
+      "candidateBoxSha256": "e155afe4ad8891c5d7415b33547099f3bf32b9b7c4e16239b5b1d5695dc65016",
+      "semanticFields": {
+        "Claim": "Prism Worker admits neutral envelopes through its configured native executor rather than a production in-process specialist fallback.",
+        "Implementation": "The HTTP service authenticates and validates attempts; native execution recovers ownership/journal state and fixes the per-attempt host command/environment.",
+        "Contract": "Native readiness gates dispatch; new attempts require the accepted profile and requested resource budgets within supervisor policy.",
+        "Test": "No worker-service or native-host fixture ran for this inspection; configured execution and reconciliation gates are Source evidence only.",
+        "Revision": "`4e52c72788ac002788bc036a497d76c13e6a35fd`; linked Worker service and native-execution implementations retain those bytes.",
+        "Limit": "A readiness branch does not establish host authority, descendant cleanup, artifact hydration or final result sealing in deployment."
+      },
+      "authoredFields": {
+        "Claim": "Prism Worker admits neutral envelopes through its configured native executor rather than a production in-process specialist fallback.",
+        "Implementation": "The HTTP service authenticates and validates attempts; native execution recovers ownership/journal state and fixes the per-attempt host command/environment.",
+        "Contract": "Native readiness gates dispatch; new attempts require the accepted profile and requested resource budgets within supervisor policy.",
+        "Test": "No worker-service or native-host fixture ran for this inspection; configured execution and reconciliation gates are Source evidence only.",
+        "Revision": "`4e52c72788ac002788bc036a497d76c13e6a35fd`; linked Worker service and native-execution implementations retain those bytes.",
+        "Limit": "A readiness branch does not establish host authority, descendant cleanup, artifact hydration or final result sealing in deployment."
+      },
+      "originalSourceBindings": [
+        {
+          "revision": "4e52c72788ac002788bc036a497d76c13e6a35fd",
+          "path": "skills/prism/server/worker-service.ts",
+          "range": "L1-L107"
+        },
+        {
+          "revision": "4e52c72788ac002788bc036a497d76c13e6a35fd",
+          "path": "skills/prism/server/native-worker-execution.ts",
+          "range": "L1-L38"
+        }
+      ],
+      "limits": "Author Source inspection/prose only; original historical results and runtime/live limitations retained; no independent or gate approval.",
+      "namedTestAssertionSources": [],
+      "topicReuse": [
+        "AP09.4-ready-prism-topics-20261020"
+      ],
+      "reuseLimit": "Prism ownership/data/developer semantics only, supported by fresh controlling functions/assertion reads; no historical whole Studio/operator or aggregate-check acceptance."
+    },
+    {
+      "index": 45,
+      "page": "docs/site/extend/platform/prism.md",
+      "title": "> **Source evidence \u2014 Studio boundary**",
+      "disposition": "SEMANTIC_FIELDS_APPENDED",
+      "oldStartLine": 368,
+      "oldEndLine": 372,
+      "candidateStartLine": 438,
+      "candidateEndLine": 449,
+      "baselineBoxSha256": "b8c28dc0b2e34d951edbb0eae30596817c4a7b1f248a62df64ad1cee58ad69f7",
+      "candidateBoxSha256": "d1a453f544a9d527ffa58b7e84fe4a01bef4af6536f2f0c8099aa2294910fc69",
+      "semanticFields": {
+        "Claim": "Studio follows declared flow actions and proxies Control requests without acquiring durable state or approval authority.",
+        "Implementation": "Flow helpers validate document actions; the Studio server separates health, `/v1/` forwarding and contained static-path resolution.",
+        "Contract": "Preview actions must match declared source location/action/node; proxying needs its configured ingress secret and bounded upstream timeout.",
+        "Test": "`studio-roundtrip.test.mts` asserts projection/edit preservation; inspected, not run; no browser or proxy execution occurred.",
+        "Revision": "`4e52c72788ac002788bc036a497d76c13e6a35fd`; linked flow and Studio-request implementations retain those bytes.",
+        "Limit": "Static-path containment is not symlink isolation; `/v1/` forwarding is not a per-route authorization allowlist or Control health proof."
+      },
+      "authoredFields": {
+        "Claim": "Studio follows declared flow actions and proxies Control requests without acquiring durable state or approval authority.",
+        "Implementation": "Flow helpers validate document actions; the Studio server separates health, `/v1/` forwarding and contained static-path resolution.",
+        "Contract": "Preview actions must match declared source location/action/node; proxying needs its configured ingress secret and bounded upstream timeout.",
+        "Test": "`studio-roundtrip.test.mts` asserts projection/edit preservation; inspected, not run; no browser or proxy execution occurred.",
+        "Revision": "`4e52c72788ac002788bc036a497d76c13e6a35fd`; linked flow and Studio-request implementations retain those bytes.",
+        "Limit": "Static-path containment is not symlink isolation; `/v1/` forwarding is not a per-route authorization allowlist or Control health proof."
+      },
+      "originalSourceBindings": [
+        {
+          "revision": "4e52c72788ac002788bc036a497d76c13e6a35fd",
+          "path": "skills/prism/studio/flows.ts",
+          "range": "L1-L47"
+        },
+        {
+          "revision": "4e52c72788ac002788bc036a497d76c13e6a35fd",
+          "path": "skills/prism/server/studio-request.ts",
+          "range": "L1-L139"
+        }
+      ],
+      "limits": "Author Source inspection/prose only; original historical results and runtime/live limitations retained; no independent or gate approval.",
+      "namedTestAssertionSources": [
+        "skills/prism/tests/studio-roundtrip.test.mts"
+      ],
+      "topicReuse": [
+        "AP09.4-ready-prism-topics-20261020"
+      ],
+      "reuseLimit": "Prism ownership/data/developer semantics only, supported by fresh controlling functions/assertion reads; no historical whole Studio/operator or aggregate-check acceptance."
+    },
+    {
+      "index": 46,
+      "page": "docs/site/extend/platform/prism.md",
+      "title": "> **Source evidence \u2014 storage change path**",
+      "disposition": "SEMANTIC_FIELDS_APPENDED",
+      "oldStartLine": 395,
+      "oldEndLine": 401,
+      "candidateStartLine": 472,
+      "candidateEndLine": 485,
+      "baselineBoxSha256": "24ff6a3eb5eac5be0a5f8e66a517a731915dee3ae119f3f280dd35e0c1b5a130",
+      "candidateBoxSha256": "6e0fd83c35c1d51df0f80228aac65bbf21c058cc673287dee74f9ea770f9ea47",
+      "semanticFields": {
+        "Claim": "Migration ordering, immutable revision advancement and content-addressed artifacts protect different durable boundaries.",
+        "Implementation": "Migration records filenames under its transaction lock; revision writes use compare-and-swap, while artifact publication verifies bytes without replacing existing objects.",
+        "Contract": "An applied migration filename skips reapplication without SQL-content hashing; artifact IDs must name their verified SHA-256 bytes.",
+        "Test": "`storage.test.mts` asserts migration locking, revision conflicts and artifact roundtrip with PGlite; inspected, not executed here.",
+        "Revision": "`4e52c72788ac002788bc036a497d76c13e6a35fd`; linked storage/revision and artifact-store implementations retain those bytes.",
+        "Limit": "PGlite assertions do not prove native PostgreSQL privileges, SQL-content drift detection, crash durability or a matched application restore."
+      },
+      "authoredFields": {
+        "Claim": "Migration ordering, immutable revision advancement and content-addressed artifacts protect different durable boundaries.",
+        "Implementation": "Migration records filenames under its transaction lock; revision writes use compare-and-swap, while artifact publication verifies bytes without replacing existing objects.",
+        "Contract": "An applied migration filename skips reapplication without SQL-content hashing; artifact IDs must name their verified SHA-256 bytes.",
+        "Test": "`storage.test.mts` asserts migration locking, revision conflicts and artifact roundtrip with PGlite; inspected, not executed here.",
+        "Revision": "`4e52c72788ac002788bc036a497d76c13e6a35fd`; linked storage/revision and artifact-store implementations retain those bytes.",
+        "Limit": "PGlite assertions do not prove native PostgreSQL privileges, SQL-content drift detection, crash durability or a matched application restore."
+      },
+      "originalSourceBindings": [
+        {
+          "revision": "4e52c72788ac002788bc036a497d76c13e6a35fd",
+          "path": "skills/prism/storage/index.ts",
+          "range": "L11-L75"
+        },
+        {
+          "revision": "4e52c72788ac002788bc036a497d76c13e6a35fd",
+          "path": "skills/prism/storage/index.ts",
+          "range": "L262-L330"
+        },
+        {
+          "revision": "4e52c72788ac002788bc036a497d76c13e6a35fd",
+          "path": "skills/prism/storage/artifacts.ts",
+          "range": "L39-L67"
+        }
+      ],
+      "limits": "Author Source inspection/prose only; original historical results and runtime/live limitations retained; no independent or gate approval.",
+      "namedTestAssertionSources": [
+        "skills/prism/tests/storage.test.mts"
+      ],
+      "topicReuse": [
+        "AP09.4-ready-prism-topics-20261020"
+      ],
+      "reuseLimit": "Prism ownership/data/developer semantics only, supported by fresh controlling functions/assertion reads; no historical whole Studio/operator or aggregate-check acceptance."
+    },
+    {
+      "index": 47,
+      "page": "docs/site/extend/platform/prism.md",
+      "title": "> **Source evidence \u2014 downstream binding**",
+      "disposition": "SEMANTIC_FIELDS_APPENDED",
+      "oldStartLine": 422,
+      "oldEndLine": 426,
+      "candidateStartLine": 506,
+      "candidateEndLine": 517,
+      "baselineBoxSha256": "b6a6e77a07c455a105a4d561e775eeb0f350ad48639e10633669a40ee910bab0",
+      "candidateBoxSha256": "a1340cfad9d4a6a67d407844c93915c07f95e12e5cf13e35bab74cd3d05f24c7",
+      "semanticFields": {
+        "Claim": "Downstream plans and assignments preserve approved baseline identity without granting Buster or Forge design-approval authority.",
+        "Implementation": "The adapter maps fixed visual targets/read-only module assignments; the Nova stage verifies architecture references and imports the approved archive.",
+        "Contract": "Handoff needs a valid baseline digest; Forge assignments reject unknown targets, while Nova approval binds issuer, architecture and approved bundle digest.",
+        "Test": "`pipeline-adapter.test.mts` asserts malformed-digest rejection and read-only module targets; inspected, not executed for this batch.",
+        "Revision": "`4e52c72788ac002788bc036a497d76c13e6a35fd`; linked pipeline adapter and Nova Prism stage retain those bytes.",
+        "Limit": "A mapped digest alone does not authenticate human approval or prove the complete Nova-to-Prism-to-Forge/Buster deployment path."
+      },
+      "authoredFields": {
+        "Claim": "Downstream plans and assignments preserve approved baseline identity without granting Buster or Forge design-approval authority.",
+        "Implementation": "The adapter maps fixed visual targets/read-only module assignments; the Nova stage verifies architecture references and imports the approved archive.",
+        "Contract": "Handoff needs a valid baseline digest; Forge assignments reject unknown targets, while Nova approval binds issuer, architecture and approved bundle digest.",
+        "Test": "`pipeline-adapter.test.mts` asserts malformed-digest rejection and read-only module targets; inspected, not executed for this batch.",
+        "Revision": "`4e52c72788ac002788bc036a497d76c13e6a35fd`; linked pipeline adapter and Nova Prism stage retain those bytes.",
+        "Limit": "A mapped digest alone does not authenticate human approval or prove the complete Nova-to-Prism-to-Forge/Buster deployment path."
+      },
+      "originalSourceBindings": [
+        {
+          "revision": "4e52c72788ac002788bc036a497d76c13e6a35fd",
+          "path": "skills/prism/pipeline-adapter/index.ts",
+          "range": "L1-L57"
+        },
+        {
+          "revision": "4e52c72788ac002788bc036a497d76c13e6a35fd",
+          "path": "skills/nova/plugins/prism-design/src/stage.ts",
+          "range": null
+        }
+      ],
+      "limits": "Author Source inspection/prose only; original historical results and runtime/live limitations retained; no independent or gate approval.",
+      "namedTestAssertionSources": [
+        "skills/prism/tests/pipeline-adapter.test.mts"
+      ],
+      "topicReuse": [
+        "AP09.4-ready-prism-topics-20261020"
+      ],
+      "reuseLimit": "Prism ownership/data/developer semantics only, supported by fresh controlling functions/assertion reads; no historical whole Studio/operator or aggregate-check acceptance."
+    },
+    {
+      "index": 48,
+      "page": "docs/site/understand/pipeline-dependencies.md",
+      "title": "> **Source evidence \u2014 Mirror routing needs an explicit client selection**",
+      "disposition": "EXISTING_COMPLETE_EXACT_PRESERVED",
+      "oldStartLine": 132,
+      "oldEndLine": 144,
+      "candidateStartLine": 132,
+      "candidateEndLine": 144,
+      "baselineBoxSha256": "af6c42a7bc3b668735ecdd6bed10d1e1f727231bdff6feaae460718f78612ccc",
+      "candidateBoxSha256": "af6c42a7bc3b668735ecdd6bed10d1e1f727231bdff6feaae460718f78612ccc",
+      "semanticFields": {
+        "Claim": "A configured mirror endpoint adds Docker Hub routing. A deployed mirror alone does not.",
+        "Implementation": "[BuildKit routing and client selection](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/scripts/registry-client-config.mjs#L66-L89); [Runtime consumes the generated BuildKit configuration](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/docker/buster-runtime-entrypoint.sh#L11-L29)",
+        "Contract": "The [registry-clients.v1 consumer](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/scripts/registry-client-config.mjs#L83-L89) requires an explicit registry contract and selects the optional mirror endpoint.",
+        "Test": "[Registry-client configuration tests](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/tests/verification/deployment/registry-client-config.test.mjs) Source inspected; not executed for this correction.",
+        "Revision": "`85e73b1885f04a9494f388cf6622ad0bde2db447`.",
+        "Limit": "This correction does not establish live mirror requests, upstream registry behavior, or any other pipeline-map connection."
+      },
+      "authoredFields": {},
+      "originalSourceBindings": [
+        {
+          "revision": "85e73b1885f04a9494f388cf6622ad0bde2db447",
+          "path": "scripts/registry-client-config.mjs",
+          "range": "L66-L89"
+        },
+        {
+          "revision": "85e73b1885f04a9494f388cf6622ad0bde2db447",
+          "path": "docker/buster-runtime-entrypoint.sh",
+          "range": "L11-L29"
+        },
+        {
+          "revision": "85e73b1885f04a9494f388cf6622ad0bde2db447",
+          "path": "scripts/registry-client-config.mjs",
+          "range": "L83-L89"
+        },
+        {
+          "revision": "85e73b1885f04a9494f388cf6622ad0bde2db447",
+          "path": "tests/verification/deployment/registry-client-config.test.mjs",
+          "range": null
+        }
+      ],
+      "limits": "Author Source inspection/prose only; original historical results and runtime/live limitations retained; no independent or gate approval.",
+      "namedTestAssertionSources": [],
+      "topicReuse": [
+        "AP09-whole-dependency-decision-traces-20261021"
+      ],
+      "reuseLimit": "Target/source dependency ownership only; this cross-page topic does not supply a fresh whole pipeline-map or live service verdict."
+    },
+    {
+      "index": 49,
+      "page": "docs/site/understand/pipeline-dependencies.md",
+      "title": "> **Source evidence \u2014 Nova contains more than Core**",
+      "disposition": "SEMANTIC_FIELDS_APPENDED",
+      "oldStartLine": 147,
+      "oldEndLine": 153,
+      "candidateStartLine": 147,
+      "candidateEndLine": 160,
+      "baselineBoxSha256": "cdef1f89ab6d1a66133e8701161824b0361270d8657d4c33244046b5f6f4449c",
+      "candidateBoxSha256": "0d9f3cbdf4d23d8a3323aa8bcf55818f8aaadfc717aead75c57939e4cdb9e789",
+      "semanticFields": {
+        "Claim": "Nova role composition includes Core, project compilation and integrations; Core persists graph/registry identity before execution.",
+        "Implementation": "The role lists package/plugin identities; `pipeline.ts` separates library exports from CLI execution, and `runNewPipeline()` writes snapshots first.",
+        "Contract": "Role membership is explicit; the prepared graph and registry snapshot bind one durable run rather than selecting an arbitrary runtime package.",
+        "Test": "No role assembly or composed Nova run was executed for this inspection; these role/snapshot sources do not record runtime success.",
+        "Revision": "`85e73b1885f04a9494f388cf6622ad0bde2db447`; the linked Nova role, entrypoint and engine-run sources remain byte-identical.",
+        "Limit": "Role declaration and snapshot ordering do not establish installed bundle contents, every integration or external service readiness."
+      },
+      "authoredFields": {
+        "Claim": "Nova role composition includes Core, project compilation and integrations; Core persists graph/registry identity before execution.",
+        "Implementation": "The role lists package/plugin identities; `pipeline.ts` separates library exports from CLI execution, and `runNewPipeline()` writes snapshots first.",
+        "Contract": "Role membership is explicit; the prepared graph and registry snapshot bind one durable run rather than selecting an arbitrary runtime package.",
+        "Test": "No role assembly or composed Nova run was executed for this inspection; these role/snapshot sources do not record runtime success.",
+        "Revision": "`85e73b1885f04a9494f388cf6622ad0bde2db447`; the linked Nova role, entrypoint and engine-run sources remain byte-identical.",
+        "Limit": "Role declaration and snapshot ordering do not establish installed bundle contents, every integration or external service readiness."
+      },
+      "originalSourceBindings": [
+        {
+          "revision": "85e73b1885f04a9494f388cf6622ad0bde2db447",
+          "path": "packaging/runtime/roles/nova.json",
+          "range": "L11-L56"
+        },
+        {
+          "revision": "85e73b1885f04a9494f388cf6622ad0bde2db447",
+          "path": "skills/nova/pipeline.ts",
+          "range": "L5-L14"
+        },
+        {
+          "revision": "85e73b1885f04a9494f388cf6622ad0bde2db447",
+          "path": "skills/nova/core/execution/engine-run.ts",
+          "range": "L36-L43"
+        }
+      ],
+      "limits": "Author Source inspection/prose only; original historical results and runtime/live limitations retained; no independent or gate approval.",
+      "namedTestAssertionSources": [],
+      "topicReuse": [
+        "AP09-whole-dependency-decision-traces-20261021"
+      ],
+      "reuseLimit": "Target/source dependency ownership only; this cross-page topic does not supply a fresh whole pipeline-map or live service verdict."
+    },
+    {
+      "index": 50,
+      "page": "docs/site/understand/pipeline-dependencies.md",
+      "title": "> **Source evidence \u2014 current Git path**",
+      "disposition": "SEMANTIC_FIELDS_APPENDED",
+      "oldStartLine": 179,
+      "oldEndLine": 185,
+      "candidateStartLine": 186,
+      "candidateEndLine": 199,
+      "baselineBoxSha256": "36212fa23ab56991c6c9ac855c74fc05c606c1921658605fd5bdd6c1d0cac1b1",
+      "candidateBoxSha256": "ebbfcfbad7171ec074b6e0ee5c55c328f6f02993e3e8098be7d0a938d159bcf7",
+      "semanticFields": {
+        "Claim": "Nova selects Git adapters and workspace clone/fetch; an OCI mirror is not a Git origin/cache failover contract.",
+        "Implementation": "The Nova role selects Git workspace/repository adapters, and the deployment initialization clones or fetches its configured origin.",
+        "Contract": "Configured origin and existing-workspace guards govern synchronization; recovery still requires the original run-bound revision.",
+        "Test": "No clone/fetch or Git-origin outage test ran for this inspection; a retained workspace is not successful fresh acquisition evidence.",
+        "Revision": "`85e73b1885f04a9494f388cf6622ad0bde2db447`; role bytes match current; later deployment changes preserve the cited clone/fetch branch.",
+        "Limit": "These clone/fetch sources establish no shared Git mirror, failover mechanism or availability of a missing historical revision."
+      },
+      "authoredFields": {
+        "Claim": "Nova selects Git adapters and workspace clone/fetch; an OCI mirror is not a Git origin/cache failover contract.",
+        "Implementation": "The Nova role selects Git workspace/repository adapters, and the deployment initialization clones or fetches its configured origin.",
+        "Contract": "Configured origin and existing-workspace guards govern synchronization; recovery still requires the original run-bound revision.",
+        "Test": "No clone/fetch or Git-origin outage test ran for this inspection; a retained workspace is not successful fresh acquisition evidence.",
+        "Revision": "`85e73b1885f04a9494f388cf6622ad0bde2db447`; role bytes match current; later deployment changes preserve the cited clone/fetch branch.",
+        "Limit": "These clone/fetch sources establish no shared Git mirror, failover mechanism or availability of a missing historical revision."
+      },
+      "originalSourceBindings": [
+        {
+          "revision": "85e73b1885f04a9494f388cf6622ad0bde2db447",
+          "path": "packaging/runtime/roles/nova.json",
+          "range": "L25-L56"
+        },
+        {
+          "revision": "85e73b1885f04a9494f388cf6622ad0bde2db447",
+          "path": "charts/kubeclaw/templates/deployment.yaml",
+          "range": "L374-L409"
+        }
+      ],
+      "limits": "Author Source inspection/prose only; original historical results and runtime/live limitations retained; no independent or gate approval.",
+      "namedTestAssertionSources": [],
+      "topicReuse": [
+        "AP09-whole-dependency-decision-traces-20261021"
+      ],
+      "reuseLimit": "Target/source dependency ownership only; this cross-page topic does not supply a fresh whole pipeline-map or live service verdict."
+    },
+    {
+      "index": 51,
+      "page": "docs/site/understand/pipeline-dependencies.md",
+      "title": "> **Source evidence \u2014 bounded Redis use**",
+      "disposition": "SEMANTIC_FIELDS_APPENDED",
+      "oldStartLine": 214,
+      "oldEndLine": 220,
+      "candidateStartLine": 228,
+      "candidateEndLine": 241,
+      "baselineBoxSha256": "629a4dc69c5c98428140daed6ac5e4b3d2a671241de099957f94e6f263183c1c",
+      "candidateBoxSha256": "8553d510104e75399722f1f1a865c8f741770c8c581ed15641ff0e3f1ece794b",
+      "semanticFields": {
+        "Claim": "Redis publishes bounded selected transport/telemetry data while Nova retains canonical run history in its journal.",
+        "Implementation": "The Redis adapter resolves a secret and performs keyed Lua publication; `runNewPipeline()` opens the durable journal before stage execution.",
+        "Contract": "Publication binds operation/resource type, caps JSON payload at 1 MiB and deduplicates only while the configured Redis TTL key survives.",
+        "Test": "No Redis exchange/deduplication or journal recovery test ran for this inspection; publication code is not an observed delivery.",
+        "Revision": "`85e73b1885f04a9494f388cf6622ad0bde2db447`; linked Nova role, Redis adapter and engine-run files remain byte-identical.",
+        "Limit": "An acknowledged stream entry is not complete lifecycle history; TTL expiry, lost Redis state or host queue loss require producer-specific recovery."
+      },
+      "authoredFields": {
+        "Claim": "Redis publishes bounded selected transport/telemetry data while Nova retains canonical run history in its journal.",
+        "Implementation": "The Redis adapter resolves a secret and performs keyed Lua publication; `runNewPipeline()` opens the durable journal before stage execution.",
+        "Contract": "Publication binds operation/resource type, caps JSON payload at 1 MiB and deduplicates only while the configured Redis TTL key survives.",
+        "Test": "No Redis exchange/deduplication or journal recovery test ran for this inspection; publication code is not an observed delivery.",
+        "Revision": "`85e73b1885f04a9494f388cf6622ad0bde2db447`; linked Nova role, Redis adapter and engine-run files remain byte-identical.",
+        "Limit": "An acknowledged stream entry is not complete lifecycle history; TTL expiry, lost Redis state or host queue loss require producer-specific recovery."
+      },
+      "originalSourceBindings": [
+        {
+          "revision": "85e73b1885f04a9494f388cf6622ad0bde2db447",
+          "path": "packaging/runtime/roles/nova.json",
+          "range": "L25-L40"
+        },
+        {
+          "revision": "85e73b1885f04a9494f388cf6622ad0bde2db447",
+          "path": "skills/common/plugins/redis-transport/src/adapter.ts",
+          "range": "L57-L84"
+        },
+        {
+          "revision": "85e73b1885f04a9494f388cf6622ad0bde2db447",
+          "path": "skills/nova/core/execution/engine-run.ts",
+          "range": "L36-L43"
+        }
+      ],
+      "limits": "Author Source inspection/prose only; original historical results and runtime/live limitations retained; no independent or gate approval.",
+      "namedTestAssertionSources": [],
+      "topicReuse": [
+        "AP09-whole-dependency-decision-traces-20261021"
+      ],
+      "reuseLimit": "Target/source dependency ownership only; this cross-page topic does not supply a fresh whole pipeline-map or live service verdict."
+    },
+    {
+      "index": 52,
+      "page": "docs/site/understand/pipeline-dependencies.md",
+      "title": "> **Source evidence \u2014 separate PostgreSQL owners**",
+      "disposition": "SEMANTIC_FIELDS_APPENDED",
+      "oldStartLine": 248,
+      "oldEndLine": 254,
+      "candidateStartLine": 269,
+      "candidateEndLine": 282,
+      "baselineBoxSha256": "9a6f769b150c1479673c7d536484c051229dcac93bac573128e1ce4883120cb3",
+      "candidateBoxSha256": "076e37a62821a4ddd156371261fc40aa5f7964caa99ed2d01a345157d15e46ae",
+      "semanticFields": {
+        "Claim": "The selected LiteLLM and Prism PostgreSQL deployments use distinct credentials, workloads and recovery ownership.",
+        "Implementation": "LiteLLM imports its dedicated Secret; the conditional Prism StatefulSet initializes separate database roles and owns its volume claim.",
+        "Contract": "Prism PostgreSQL renders only when enabled and requires its existing Secret; LiteLLM selects database-backed model storage through its deployment settings.",
+        "Test": "No database start, credential, backup or restore test ran for this inspection; template references are not observed SQL readiness.",
+        "Revision": "`85e73b1885f04a9494f388cf6622ad0bde2db447`; the linked LiteLLM deployment and Prism PostgreSQL template remain byte-identical.",
+        "Limit": "Secret references do not prove actual credential values or connectivity; these databases do not replace Nova run storage."
+      },
+      "authoredFields": {
+        "Claim": "The selected LiteLLM and Prism PostgreSQL deployments use distinct credentials, workloads and recovery ownership.",
+        "Implementation": "LiteLLM imports its dedicated Secret; the conditional Prism StatefulSet initializes separate database roles and owns its volume claim.",
+        "Contract": "Prism PostgreSQL renders only when enabled and requires its existing Secret; LiteLLM selects database-backed model storage through its deployment settings.",
+        "Test": "No database start, credential, backup or restore test ran for this inspection; template references are not observed SQL readiness.",
+        "Revision": "`85e73b1885f04a9494f388cf6622ad0bde2db447`; the linked LiteLLM deployment and Prism PostgreSQL template remain byte-identical.",
+        "Limit": "Secret references do not prove actual credential values or connectivity; these databases do not replace Nova run storage."
+      },
+      "originalSourceBindings": [
+        {
+          "revision": "85e73b1885f04a9494f388cf6622ad0bde2db447",
+          "path": "my-values/infra/litellm-deployment.yaml",
+          "range": "L34-L45"
+        },
+        {
+          "revision": "85e73b1885f04a9494f388cf6622ad0bde2db447",
+          "path": "charts/prism/templates/postgresql.yaml",
+          "range": "L1-L52"
+        },
+        {
+          "revision": "85e73b1885f04a9494f388cf6622ad0bde2db447",
+          "path": "charts/prism/templates/postgresql.yaml",
+          "range": "L54-L73"
+        }
+      ],
+      "limits": "Author Source inspection/prose only; original historical results and runtime/live limitations retained; no independent or gate approval.",
+      "namedTestAssertionSources": [],
+      "topicReuse": [
+        "AP09-whole-dependency-decision-traces-20261021"
+      ],
+      "reuseLimit": "Target/source dependency ownership only; this cross-page topic does not supply a fresh whole pipeline-map or live service verdict."
+    },
+    {
+      "index": 53,
+      "page": "docs/site/understand/pipeline-dependencies.md",
+      "title": "> **Source evidence \u2014 image production chain**",
+      "disposition": "SEMANTIC_FIELDS_APPENDED",
+      "oldStartLine": 304,
+      "oldEndLine": 314,
+      "candidateStartLine": 332,
+      "candidateEndLine": 349,
+      "baselineBoxSha256": "241165a6efc453cb43700179020d6d20e8eb7032edfadf67afe8b81b9fcc5500",
+      "candidateBoxSha256": "07a557bcbfe26e0b026a5f61857bdb7833f817ec16ed847f5952c5c708a357e4",
+      "semanticFields": {
+        "Claim": "BuildKit builds/pushes images; a writable registry stores results, while an explicitly selected mirror caches public base pulls.",
+        "Implementation": "Buster starts configured rootless BuildKit; container-build runtime verifies the pushed manifest digest before returning an immutable image reference.",
+        "Contract": "`registry-clients.v1` separates writable-registry and optional mirror endpoints; provider policy bounds build arguments, platforms, logs and execution time.",
+        "Test": "No BuildKit, registry write/read or uncached node pull ran for this inspection; the linked build path does not establish deployment success.",
+        "Revision": "`85e73b1885f04a9494f388cf6622ad0bde2db447`; container-build bytes match current; later client/entrypoint changes retain this build/registry separation.",
+        "Limit": "The old retained-registry template is not the separate ephemeral GitOps profile, and mirror availability does not establish upstream cache-miss success."
+      },
+      "authoredFields": {
+        "Claim": "BuildKit builds/pushes images; a writable registry stores results, while an explicitly selected mirror caches public base pulls.",
+        "Implementation": "Buster starts configured rootless BuildKit; container-build runtime verifies the pushed manifest digest before returning an immutable image reference.",
+        "Contract": "`registry-clients.v1` separates writable-registry and optional mirror endpoints; provider policy bounds build arguments, platforms, logs and execution time.",
+        "Test": "No BuildKit, registry write/read or uncached node pull ran for this inspection; the linked build path does not establish deployment success.",
+        "Revision": "`85e73b1885f04a9494f388cf6622ad0bde2db447`; container-build bytes match current; later client/entrypoint changes retain this build/registry separation.",
+        "Limit": "The old retained-registry template is not the separate ephemeral GitOps profile, and mirror availability does not establish upstream cache-miss success."
+      },
+      "originalSourceBindings": [
+        {
+          "revision": "85e73b1885f04a9494f388cf6622ad0bde2db447",
+          "path": "docker/buster-runtime-entrypoint.sh",
+          "range": "L7-L35"
+        },
+        {
+          "revision": "85e73b1885f04a9494f388cf6622ad0bde2db447",
+          "path": "skills/buster/engine/test-gates/container-build-runtime.ts",
+          "range": "L236-L270"
+        },
+        {
+          "revision": "85e73b1885f04a9494f388cf6622ad0bde2db447",
+          "path": "scripts/registry-client-config.mjs",
+          "range": "L57-L104"
+        },
+        {
+          "revision": "85e73b1885f04a9494f388cf6622ad0bde2db447",
+          "path": "my-values/infra/registry-local.yaml",
+          "range": "L1-L45"
+        },
+        {
+          "revision": "85e73b1885f04a9494f388cf6622ad0bde2db447",
+          "path": "my-values/infra/registry-mirror.yaml",
+          "range": "L14-L78"
+        }
+      ],
+      "limits": "Author Source inspection/prose only; original historical results and runtime/live limitations retained; no independent or gate approval.",
+      "namedTestAssertionSources": [],
+      "topicReuse": [
+        "AP09-whole-dependency-decision-traces-20261021"
+      ],
+      "reuseLimit": "Target/source dependency ownership only; this cross-page topic does not supply a fresh whole pipeline-map or live service verdict."
+    },
+    {
+      "index": 54,
+      "page": "docs/site/understand/pipeline-dependencies.md",
+      "title": "> **Source evidence \u2014 conditional exposure**",
+      "disposition": "SEMANTIC_FIELDS_APPENDED",
+      "oldStartLine": 345,
+      "oldEndLine": 351,
+      "candidateStartLine": 380,
+      "candidateEndLine": 393,
+      "baselineBoxSha256": "22941527b4df6f5da505c47d2c77c49e0278bd28b73d89d4ba0fac1bc200b4cb",
+      "candidateBoxSha256": "4ebdeea04327c9965d57ac4c3440ad8cd08306197766a03bd27cba36a7e241c0",
+      "semanticFields": {
+        "Claim": "Tailscale exposure providers and private user/operator ingress are separate selected consumers, not lifecycle authorities.",
+        "Implementation": "Buster includes the exposure provider; Prism conditionally renders a Tailscale-class Studio ingress without rerouting internal Worker services.",
+        "Contract": "The provider requires `kubernetes.exposure`; Prism ingress renders only when `tailscale.enabled` selects its hostname.",
+        "Test": "No exposure lease, ACL, DNS, private access or release test ran for this inspection; role/ingress declarations are not traffic observations.",
+        "Revision": "`85e73b1885f04a9494f388cf6622ad0bde2db447`; linked Buster role, provider manifest and Prism service template remain byte-identical.",
+        "Limit": "Manifest capability requirements do not prove effective grants, live private routing or cleanup of an uncertain exposure lease."
+      },
+      "authoredFields": {
+        "Claim": "Tailscale exposure providers and private user/operator ingress are separate selected consumers, not lifecycle authorities.",
+        "Implementation": "Buster includes the exposure provider; Prism conditionally renders a Tailscale-class Studio ingress without rerouting internal Worker services.",
+        "Contract": "The provider requires `kubernetes.exposure`; Prism ingress renders only when `tailscale.enabled` selects its hostname.",
+        "Test": "No exposure lease, ACL, DNS, private access or release test ran for this inspection; role/ingress declarations are not traffic observations.",
+        "Revision": "`85e73b1885f04a9494f388cf6622ad0bde2db447`; linked Buster role, provider manifest and Prism service template remain byte-identical.",
+        "Limit": "Manifest capability requirements do not prove effective grants, live private routing or cleanup of an uncertain exposure lease."
+      },
+      "originalSourceBindings": [
+        {
+          "revision": "85e73b1885f04a9494f388cf6622ad0bde2db447",
+          "path": "packaging/runtime/roles/buster.json",
+          "range": "L25-L50"
+        },
+        {
+          "revision": "85e73b1885f04a9494f388cf6622ad0bde2db447",
+          "path": "skills/buster/plugins/tailscale-exposure/plugin.json",
+          "range": "L1-L25"
+        },
+        {
+          "revision": "85e73b1885f04a9494f388cf6622ad0bde2db447",
+          "path": "charts/prism/templates/services.yaml",
+          "range": "L38-L47"
+        }
+      ],
+      "limits": "Author Source inspection/prose only; original historical results and runtime/live limitations retained; no independent or gate approval.",
+      "namedTestAssertionSources": [],
+      "topicReuse": [
+        "AP09-whole-dependency-decision-traces-20261021"
+      ],
+      "reuseLimit": "Target/source dependency ownership only; this cross-page topic does not supply a fresh whole pipeline-map or live service verdict."
+    }
+  ]
+}

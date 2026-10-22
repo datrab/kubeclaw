@@ -80,6 +80,12 @@ than these four option/value pairs fails before the command writes output.
 > **Implementation:** [entry-point dispatch](https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/skills/nova/project/cli.ts#L14-L17); [argument and output handling](https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/skills/nova/project/legacy-import-cli.ts#L8-L27)
 >
 > **Revision:** `c8987b18b450bc27571d5037cb6ce3fb26e0cbd0`
+>
+> **Contract or setting:** Exactly four distinct supported flag/value pairs, canonical repository input and exclusive output creation constrain import.
+>
+> **Test evidence:** No fresh import-mode execution accompanies this callout; the compiler’s separately recorded result retains its own scope.
+>
+> **Limit:** Converted authoring input and runtime validation do not execute the emitted graph or overwrite an existing output.
 
 ## Root fields
 
@@ -313,6 +319,14 @@ definition; do not disable the check.
 > [visual, end-to-end, and security guards](https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/skills/nova/project_setup/tools/progress-scaffold-discovery.ts#L402-L413).
 >
 > **Revision:** `c8987b18b450bc27571d5037cb6ce3fb26e0cbd0`
+>
+> **Claim:** Discovery rejects retired accessibility, performance, visual, end-to-end and security configuration instead of inferring replacement test definitions.
+>
+> **Contract or setting:** Project-owned provider nodes replace the rejected shapes; invalid accessibility paths/timeouts and retired numeric thresholds fail explicitly.
+>
+> **Test evidence:** No fresh legacy-shape rejection or replacement-provider execution accompanies this source summary.
+>
+> **Limit:** Rejection is not automatic migration, generated coverage or successful provider execution.
 
 > **Source evidence — compiler contract**
 >

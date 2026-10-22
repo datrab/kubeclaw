@@ -1,0 +1,17 @@
+{
+  "status": "FROZEN_INDEPENDENT_BOUNDED_REVIEW",
+  "files": [
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/developer-prism-dependencies-independent/review.md",
+      "sha256": "0448923c525e1506ef660d23bdc9a6337c58a17725189b98b78db643ad1edb6d"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/developer-prism-dependencies-independent/review.json",
+      "sha256": "5e6fbe2c28f41cb4eb6b719d6781a7d57d31dc390c6ab510151d8645d8fa1129"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/developer-prism-dependencies-independent/bindings.json",
+      "sha256": "ebf619f9caf1ac30e098ced3a9dc7d228ef6280977e8fbae8d52cc5f1037be10"
+    }
+  ]
+}

@@ -1,0 +1,65 @@
+{
+  "status": "FROZEN_AUTHOR_REQUIRES_NONAUTHOR_REVIEW",
+  "files": [
+    {
+      "path": "author-report.md",
+      "sha256": "99bb9a23ca6ad25b437d755ce90a715d0d3b4cbefe5088d21ad9904dcd8986be"
+    },
+    {
+      "path": "baseline.json",
+      "sha256": "05c7a3d16057f9206e606b110286818bdc91f7ace4a7dbcbe170645e457315dd"
+    },
+    {
+      "path": "source-groups.json",
+      "sha256": "cfdaab962101b3638a84a78d2d35ec9086c9fbc835079ee0623d4f63980e4ad2"
+    },
+    {
+      "path": "per-box-mapping.json",
+      "sha256": "6ce6cba9465ba44b2acdda306420eeb2a326413d85244a4fed583fc427fb7e9a"
+    },
+    {
+      "path": "candidate-hashes.json",
+      "sha256": "dc65e0155779ee0de8edc4378b8fb4713e4e267da5773a5a2d3425409214002d"
+    },
+    {
+      "path": "candidate.patch",
+      "sha256": "deded43a65818349c22710cb8b8d64f931f9454407ae4000ee4e00962f6bfaa3"
+    },
+    {
+      "path": "pages-only.patch",
+      "sha256": "2e4b484be3cfd90476558abba1f83f2ac7e2f6181feffdcbef83724a2f0cbd5a"
+    },
+    {
+      "path": "capability-template-only.patch",
+      "sha256": "eb32e8ed0587ade826783a6f3f752582a41313d149008b43c82922fd15eb7d49"
+    },
+    {
+      "path": "actual-structure.json",
+      "sha256": "14f41bb7a4533d9f0a838de44cf7e34a6444d537a44596388dbfaecc89bff7dd"
+    },
+    {
+      "path": "source-bindings.json",
+      "sha256": "751dd8662b28476777d82d20cefc5e64f4266f7321e526ceef1e57629b372606"
+    },
+    {
+      "path": "reuse-impact.json",
+      "sha256": "b7a8c720961d07f4e4a94fa0dd974a1a122e741858edc9be366d960848355aba"
+    },
+    {
+      "path": "source-purpose-impact.json",
+      "sha256": "3845e417d95c430bf030e542987a02d079838cde403ad3c24f34617f6525140d"
+    },
+    {
+      "path": "static-final.txt",
+      "sha256": "fe325072f5cc8cc883938601f3eecf5c6d462d4c36a7e5341d160d13a8828c39"
+    },
+    {
+      "path": "template-check.json",
+      "sha256": "5fe5b3bd82db53db9f27e2adc016e6b8890a4002f2b1ac836d1ff0ccd933c0af"
+    },
+    {
+      "path": "template-check.txt",
+      "sha256": "8bc8be62d6064eb2f7f670a02f7a5f2eea62ea15021248bcc6d9bbc557471d46"
+    }
+  ]
+}

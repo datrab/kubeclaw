@@ -225,6 +225,12 @@ Combining both powers would let a repository approve its own executable dependen
 > **Decision:** [ADR-007 explains the separate operator grant](../decisions/core-and-plugins.md#adr-007-grant-bounded-capabilities-instead-of-ambient-authority).
 >
 > **Local result:** The focused platform-configuration check passed on 2026-09-16.
+>
+> **Claim:** Project input selects installed behavior; platform policy owns installation roots, trust, provider mappings and grants.
+> **Implementation:** `prepareRuntime()` discovers packages, resolves grants, validates selected configurations and activates the permitted registrations.
+> **Contract or setting:** `pipeline-platform.v2.providers` maps capability IDs to adapters, not Buster test-provider contracts.
+> **Revision:** `bcf032f241b432bf920baa9ee5f727947921447d`; linked configuration, compiler and runtime sources retain those bytes.
+> **Limit:** The recorded platform check does not establish package installation, external isolation or permission in a deployed host.
 
 ## Choose A Pipeline Registration
 
@@ -318,6 +324,12 @@ Do not let a report adapter execute tests or decide gate policy.
 > **Decision:** [ADR-006 explains why one generic hook does not fit all five responsibilities](../decisions/core-and-plugins.md#adr-006-use-five-explicit-registration-surfaces).
 >
 > **Local result:** Contract and registry checks passed on 2026-09-16.
+>
+> **Claim:** Stages, observers, adapters, test providers and report adapters retain different selection, configuration and execution contracts.
+> **Implementation:** `buildRegistry()` creates separate registration indexes and rejects conflicting package, registration, stage-type and test-contract ownership.
+> **Test evidence:** The recorded contract/registry passes remain dated 2026-09-16; those checks were not rerun for this inspection.
+> **Revision:** `bcf032f241b432bf920baa9ee5f727947921447d`; the linked manifest schema, registry builder and SDK exports remain byte-identical.
+> **Limit:** Recognized registration shapes and conflict checks do not prove activation or successful provider/report execution.
 
 ## Understand Discovery, Binding, And Activation
 
@@ -357,6 +369,13 @@ Buster loads them through separate sandboxed runtimes after test-plan binding.
 > **Report execution:** [Buster verifies report bytes and package identity before it runs the selected adapter](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/buster/engine/test-gates/report-adapter-runtime.ts#L266-L320).
 >
 > **Decision:** [ADR-005 explains inert discovery and frozen registration identity](../decisions/core-and-plugins.md#adr-005-discover-inert-manifests-and-freeze-exact-registrations).
+>
+> **Claim:** Inert package discovery precedes separate Nova activation and Buster plan-bound execution.
+> **Implementation:** Discovery records package provenance; activation loads selected Nova surfaces, while Buster verifies and snapshots plan-bound provider/report packages.
+> **Contract or setting:** External adapters require the missing persistent isolated adapter runtime; `activateRegistry()` does not activate test providers or report adapters.
+> **Test evidence:** No discovery, activation or Buster sandbox execution was run for this inspection; the links specify their distinct admission checks.
+> **Revision:** `bcf032f241b432bf920baa9ee5f727947921447d`; all six linked discovery, activation, binding and execution implementations retain those bytes.
+> **Limit:** Discovery acceptance is not executable activation; external stage/observer isolation and Buster execution require their own supported environments.
 
 ## Choose A Host Extension
 
@@ -388,6 +407,12 @@ Use host-specific inspection to prove activation and a real invocation to prove 
 > **Codex:** [The Ops manifest points to its skill directory and declares read capability](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/plugins/kubeclaw-ops/.codex-plugin/plugin.json#L1-L25).
 >
 > **Limit:** These manifest links prove repository declarations. They do not prove installation in an OpenClaw or Codex host.
+>
+> **Claim:** OpenClaw hook/tool manifests and the Codex skill manifest use their hosts, not pipeline registration arrays.
+> **Implementation:** The observer declares startup activation, Prism declares two tools, and the Codex manifest selects its skill directory.
+> **Contract or setting:** Host configuration must match the corresponding manifest schema; Nova installation and grants do not activate either host.
+> **Test evidence:** This inspection did not activate or invoke OpenClaw or Codex; these three manifest declarations supply no host execution result.
+> **Revision:** `bcf032f241b432bf920baa9ee5f727947921447d`; the three linked host manifests remain byte-identical.
 
 ## Choose A Worker Engine Or Runtime Role
 
@@ -424,6 +449,12 @@ The role limits which code and authority reach one deployed process.
 > **Role example:** [The Nova role lists every package, plugin, and host extension in its bundle](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/packaging/runtime/roles/nova.json#L1-L61).
 >
 > **Local result:** The runtime-role manifest check passed for all three roles on 2026-09-16.
+>
+> **Claim:** Worker profiles bind specialist engine identity; explicit package ownership and role manifests assemble deployable code.
+> **Implementation:** `WorkerAttemptOperation` supplies attempt hooks; the package map and Nova role independently select bundled owners and components.
+> **Contract or setting:** `WorkerProfileV1.engine` contains contract, version and content digest; it is not a generic engine-registration manifest.
+> **Revision:** `bcf032f241b432bf920baa9ee5f727947921447d`; linked profile, attempt interface, ownership map and Nova role retain those bytes.
+> **Limit:** The recorded role-manifest pass does not prove an installed bundle, native execution or a drop-in engine loader.
 
 ## Choose A Core Or Foundation Change
 
@@ -455,6 +486,13 @@ These names describe forbidden authority, not grantable capabilities.
 > **Lifecycle decision:** [ADR-001 explains why Core alone changes canonical lifecycle state](../decisions/core-and-plugins.md#adr-001-core-owns-canonical-lifecycle-authority).
 >
 > **Role decision:** [ADR-012 explains exact role-specific runtime bundles](../decisions/core-and-plugins.md#adr-012-assemble-exact-role-specific-runtime-bundles).
+>
+> **Claim:** Extensions cannot acquire Core lifecycle, scheduling, canonical-history or registry-mutation authority through grants.
+> **Implementation:** Foundation recognizes a closed public capability vocabulary and separately identifies the four Core-only names.
+> **Contract or setting:** Unknown capability constraints reject with `REGISTRY_CAPABILITY_UNKNOWN`; Core-only names are not entries in the public grant vocabulary.
+> **Test evidence:** This inspection did not execute a capability-denial check; the linked vocabulary defines rejection rather than a runtime test result.
+> **Revision:** `bcf032f241b432bf920baa9ee5f727947921447d`; the capability vocabulary retains those bytes; linked ADRs explain design boundaries.
+> **Limit:** Vocabulary rejection alone does not establish every caller, adapter or operating-system containment boundary.
 
 ## Unsupported Shortcuts
 

@@ -1,0 +1,442 @@
+{
+  "freshInThisReview": [
+    {
+      "path": "scripts/docs-publication.mjs",
+      "sha256": "29d0305b4b4ad0de7fcea5810372e700b4b2a4d810e8cce22fbdd2bfd964cda8",
+      "readRanges": [
+        [
+          1,
+          270
+        ],
+        [
+          610,
+          837
+        ],
+        [
+          985,
+          1140
+        ]
+      ],
+      "scope": "Explicit inert Source or declaration read; whole file only when ranges cover all its lines. No target import/execution."
+    },
+    {
+      "path": "scripts/check-capability-vocabulary-drift.mjs",
+      "sha256": "c466cfa01aaf23a3f6927538a09dff6f31d1eb8c83c80e204d4853692492c2f7",
+      "readRanges": [
+        [
+          1,
+          48
+        ]
+      ],
+      "scope": "Explicit inert Source or declaration read; whole file only when ranges cover all its lines. No target import/execution."
+    },
+    {
+      "path": "scripts/check-capability-registrations-drift.mjs",
+      "sha256": "8a4d3b81e0f8f2ac374bcda38a6502c78c37308a218230c908e544a7766f0180",
+      "readRanges": [
+        [
+          1,
+          57
+        ]
+      ],
+      "scope": "Explicit inert Source or declaration read; whole file only when ranges cover all its lines. No target import/execution."
+    },
+    {
+      "path": "scripts/check-capability-policy-drift.mjs",
+      "sha256": "4470cc4342ea7c4e39d41f57626734e2c75c79a5fd4a57103e6868b7cdb69924",
+      "readRanges": [
+        [
+          1,
+          25
+        ]
+      ],
+      "scope": "Explicit inert Source or declaration read; whole file only when ranges cover all its lines. No target import/execution."
+    },
+    {
+      "path": "scripts/check-capability-drift.mjs",
+      "sha256": "70847dabcd9771f5fc5a8e430386d5935237bfed265ccef86013d1fbfc1cdca4",
+      "readRanges": [
+        [
+          1,
+          25
+        ]
+      ],
+      "scope": "Explicit inert Source or declaration read; whole file only when ranges cover all its lines. No target import/execution."
+    },
+    {
+      "path": "scripts/check-capability-drift-mutations.mjs",
+      "sha256": "31171d9e192c617b2a56cc752dd19339a485de22b19a97af30759e0d6c9a604f",
+      "readRanges": [
+        [
+          1,
+          86
+        ]
+      ],
+      "scope": "Explicit inert Source or declaration read; whole file only when ranges cover all its lines. No target import/execution."
+    },
+    {
+      "path": "scripts/check-capability-registrations-drift-controls.mjs",
+      "sha256": "e76c88fe7d72eff87a6ba1e2ff63d8630ae6c7ec861e884dc8e3575c0ce5e3cb",
+      "readRanges": [
+        [
+          1,
+          70
+        ]
+      ],
+      "scope": "Explicit inert Source or declaration read; whole file only when ranges cover all its lines. No target import/execution."
+    },
+    {
+      "path": "scripts/check-capability-swarm-boundary.mjs",
+      "sha256": "0147ec6cf172c612023fc3fe55b43ec3848899b84f2b0e729be9c575d9b61aa2",
+      "readRanges": [
+        [
+          1,
+          86
+        ]
+      ],
+      "scope": "Explicit inert Source or declaration read; whole file only when ranges cover all its lines. No target import/execution."
+    },
+    {
+      "path": "scripts/docs-api-documentation-role-custody.mjs",
+      "sha256": "f1b4ed0a0c449d1ddb50605efac68c504e4945b7055ad621053bd0593498cfc6",
+      "readRanges": [
+        [
+          5963,
+          6085
+        ],
+        [
+          6292,
+          6433
+        ]
+      ],
+      "scope": "Explicit inert Source or declaration read; whole file only when ranges cover all its lines. No target import/execution."
+    },
+    {
+      "path": "scripts/docs-documentation-owner-purpose-custody.mjs",
+      "sha256": "1bac65a386940d2049f170ceea25e199603159831460a4fa56ca3270ba49a8a4",
+      "readRanges": [
+        [
+          1,
+          60
+        ],
+        [
+          378,
+          463
+        ]
+      ],
+      "scope": "Explicit inert Source or declaration read; whole file only when ranges cover all its lines. No target import/execution."
+    },
+    {
+      "path": "skills/nova/core/test-gates/remote-gate-cli.ts",
+      "sha256": "e40718d15fff2d21f7fe60e920b968677321b5c318bf18476e7c0b1569f4690c",
+      "readRanges": [
+        [
+          1,
+          40
+        ]
+      ],
+      "scope": "Explicit inert Source or declaration read; whole file only when ranges cover all its lines. No target import/execution."
+    },
+    {
+      "path": "skills/nova/project/legacy-import-cli.ts",
+      "sha256": "61f0e1ebb20a807a5b2fac3e0508931d0935e24aecaf7affa34bb30ee640f824",
+      "readRanges": [
+        [
+          1,
+          30
+        ]
+      ],
+      "scope": "Explicit inert Source or declaration read; whole file only when ranges cover all its lines. No target import/execution."
+    },
+    {
+      "path": "skills/nova/project_setup/tools/progress-scaffold-discovery.ts",
+      "sha256": "29700111f9b009e9b2a9d1bec20f441fb67a8b1f0d13ebdc9a696b505857897b",
+      "readRanges": [
+        [
+          260,
+          295
+        ],
+        [
+          355,
+          430
+        ]
+      ],
+      "scope": "Explicit inert Source or declaration read; whole file only when ranges cover all its lines. No target import/execution."
+    },
+    {
+      "path": "skills/worker/core/worker/trust.ts",
+      "sha256": "722f48ca75fb8546dbc4f4c9cc8eab8e31dfdfeafec7ea7aab587045e78b23fe",
+      "readRanges": [
+        [
+          1,
+          52
+        ]
+      ],
+      "scope": "Explicit inert Source or declaration read; whole file only when ranges cover all its lines. No target import/execution."
+    },
+    {
+      "path": "contracts/pipeline-worker-core/v1/src/trust.ts",
+      "sha256": "c650fdbe7f43b422f36d050df291d2a00fdd4bc694a1dae5d6236b4814743cd5",
+      "readRanges": [
+        [
+          1,
+          44
+        ]
+      ],
+      "scope": "Explicit inert Source or declaration read; whole file only when ranges cover all its lines. No target import/execution."
+    },
+    {
+      "path": "contracts/pipeline-test-gate/v1/src/remote.ts",
+      "sha256": "7f02db208c0728dabdcf51604e149f97b018666019e51b8e2853338e9f7bf9b8",
+      "readRanges": [
+        [
+          1,
+          111
+        ]
+      ],
+      "scope": "Explicit inert Source or declaration read; whole file only when ranges cover all its lines. No target import/execution."
+    },
+    {
+      "path": "skills/nova/core/test-gates/runtime-config.ts",
+      "sha256": "11cf39d73d5efce2328a38057063fdff4e12d1714ad2c2935203a0a53108604a",
+      "readRanges": [
+        [
+          1,
+          77
+        ]
+      ],
+      "scope": "Explicit inert Source or declaration read; whole file only when ranges cover all its lines. No target import/execution."
+    },
+    {
+      "path": "skills/nova/plugins/remote-test-gate/src/adapter.ts",
+      "sha256": "41ae631fac290f59931c6243280b4991278cd0b1659bc70dee4898c16ed33237",
+      "readRanges": [
+        [
+          28,
+          78
+        ]
+      ],
+      "scope": "Explicit inert Source or declaration read; whole file only when ranges cover all its lines. No target import/execution."
+    },
+    {
+      "path": "skills/nova/core/test-gates/remote-dispatch.ts",
+      "sha256": "18bcaabddd476609a44a2447d847f19524a110d001847e07a4e11edb94a254c5",
+      "readRanges": [
+        [
+          85,
+          139
+        ]
+      ],
+      "scope": "Explicit inert Source or declaration read; whole file only when ranges cover all its lines. No target import/execution."
+    },
+    {
+      "path": "skills/nova/core/execution/pipeline-loop.ts",
+      "sha256": "129a77125e5d88a118b9d3cefb06d1bedf734924cabd32be607063a33d985530",
+      "readRanges": [
+        [
+          1,
+          95
+        ]
+      ],
+      "scope": "Explicit inert Source or declaration read; whole file only when ranges cover all its lines. No target import/execution."
+    },
+    {
+      "path": "skills/prism/storage/index.ts",
+      "sha256": "e5105909e5f1abf1eb2178270dd63d1b8e2aa337177dcb620b6ae43199a3a199",
+      "readRanges": [
+        [
+          79,
+          181
+        ]
+      ],
+      "scope": "Explicit inert Source or declaration read; whole file only when ranges cover all its lines. No target import/execution."
+    },
+    {
+      "path": "skills/buster/engine/test-gates/remote-plan-service.ts",
+      "sha256": "3be9e75c8619da96c22bfaabd7fbab548bc07085787d092a83ba1f20130434f9",
+      "readRanges": [
+        [
+          1,
+          175
+        ],
+        [
+          483,
+          516
+        ],
+        [
+          682,
+          782
+        ]
+      ],
+      "scope": "Explicit inert Source or declaration read; whole file only when ranges cover all its lines. No target import/execution."
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/registry/capabilities.ts",
+      "sha256": "eeebd66fcb6a813fdad60188261e14d530c5d09f6c61f9972bc0428ecff151b6",
+      "readRanges": [
+        [
+          1,
+          145
+        ]
+      ],
+      "scope": "Explicit inert Source or declaration read; whole file only when ranges cover all its lines. No target import/execution."
+    },
+    {
+      "path": "my-values/buster-values.yaml",
+      "sha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622",
+      "readRanges": [
+        [
+          72,
+          134
+        ]
+      ],
+      "scope": "Complete selected public-key/listener/env wiring; complete old/current diff also read, comment-only change"
+    }
+  ],
+  "reusedActualOriginalSourceReads": [
+    {
+      "path": "skills/prism/runtime.ts",
+      "sha256": "fcc61820c10a97126ebceae91c32f6867ebb8d8bef6428f005d3aae8ff3bcd9d",
+      "readRanges": [
+        [
+          1,
+          3
+        ]
+      ],
+      "scope": "Complete inert current Source/assertion read; no import or execution"
+    },
+    {
+      "path": "skills/prism/engine/worker-binding.ts",
+      "sha256": "c7480a44ddfcac32fea7c95a02560b4940dc86509b0463aea951584f6b8f659e",
+      "readRanges": [
+        [
+          1,
+          50
+        ]
+      ],
+      "scope": "Complete inert current Source/assertion read; no import or execution"
+    },
+    {
+      "path": "packaging/runtime/roles/prism.json",
+      "sha256": "8723f462ad3597f2f1bfd2dd6f1028274c3a442af6c4485c1ae3597c12c4b3fe",
+      "readRanges": [
+        [
+          1,
+          29
+        ]
+      ],
+      "scope": "Complete inert current Source/assertion read; no import or execution"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+      "sha256": "147fae4d867752edcb4cb1bf9966ed62372e77a5e90402a9f8fac9a8ab170fa0",
+      "readRanges": [
+        [
+          1,
+          198
+        ]
+      ],
+      "scope": "Complete inert current Source/assertion read; no import or execution"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/registry/activation.ts",
+      "sha256": "2d1ba3633fd9ba8549488f953a21909fdebd7d70c056fad1c688316d2ca8ee67",
+      "readRanges": [
+        [
+          1,
+          138
+        ]
+      ],
+      "scope": "Complete inert current Source/assertion read; no import or execution"
+    },
+    {
+      "path": "skills/prism/domain/index.ts",
+      "sha256": "710ff6fd047d301aef22477cb8cdecfd1fe1c9bd224c069abc6af9d805462838",
+      "readRanges": [
+        [
+          1,
+          136
+        ]
+      ],
+      "scope": "Complete inert current Source/assertion read; no import or execution"
+    },
+    {
+      "path": "skills/prism/pipeline-adapter/index.ts",
+      "sha256": "3bfc0d88143f358aa3c78a404f9bc9819095bc8dfda27ed3e3d4750c6e6ff359",
+      "readRanges": [
+        [
+          1,
+          57
+        ]
+      ],
+      "scope": "Complete inert current Source/assertion read; no import or execution"
+    },
+    {
+      "path": "skills/prism/preferences/index.ts",
+      "sha256": "2a86ae6f5c2fb5e0bc0b6dc2f60a6f7c3dad1d2695e1bde2cf9e00b6134b6c7d",
+      "readRanges": [
+        [
+          1,
+          90
+        ]
+      ],
+      "scope": "Complete inert current Source/assertion read; no import or execution"
+    },
+    {
+      "path": "skills/prism/engine/index.ts",
+      "sha256": "8502a5bf60bc3b352556ed72464f743581b67fd4e70d70d3734a832c25a9ad16",
+      "readRanges": [
+        [
+          1,
+          180
+        ]
+      ],
+      "scope": "Complete inert current Source/assertion read; no import or execution"
+    },
+    {
+      "path": "skills/prism/storage/artifacts.ts",
+      "sha256": "8177fe9d5199d1af866a2ad7d5d7fdfa82b99b0fe6df5b7f0c3c04e96536ef1f",
+      "readRanges": [
+        [
+          1,
+          68
+        ]
+      ],
+      "scope": "Complete inert current Source/assertion read; no import or execution"
+    },
+    {
+      "path": "skills/prism/corpus/index.ts",
+      "sha256": "99ee5eee2282734c9df492c5ac1219903b9680f3dff37f3c513bfa4cff2c6343",
+      "readRanges": [
+        [
+          1,
+          256
+        ]
+      ],
+      "scope": "Complete inert current Source/assertion read; no import or execution"
+    },
+    {
+      "path": "packaging/runtime/package-ownership.json",
+      "sha256": "0723d0a55eba3fdcc6c041132616db3330c3397db6a24f1d0abbf874bd28cab8",
+      "readRanges": [
+        [
+          1,
+          81
+        ]
+      ],
+      "scope": "Complete inert current Source/assertion read; no import or execution"
+    },
+    {
+      "path": "packaging/runtime/roles/nova.json",
+      "sha256": "1c9de75dde812cb7ac118cfc074aa3a57bef7f428b789f11e9051ea713f0dc23",
+      "readRanges": [
+        [
+          1,
+          62
+        ]
+      ],
+      "scope": "Complete inert current Source/assertion read; no import or execution"
+    }
+  ],
+  "reuseMeaning": "Same agent complete original Source reads from immediately preceding task, exact physical hashes rechecked. Not reuse of own authored docs as independent acceptance; no fresh product execution."
+}
