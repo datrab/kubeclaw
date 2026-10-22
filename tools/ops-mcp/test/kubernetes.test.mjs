@@ -33,6 +33,13 @@ test('HTTPS verifies CA/hostname, rotates credentials, bounds requests and refus
           data: 'x'.repeat(url.pathname === '/huge-list' ? 2048 : 400) })) }));
       return;
     }
+    if (url.pathname === '/api/v1/namespaces/ops/pods/mcp/log') {
+      // Kubernetes negotiates a supported API representation before its log
+      // streamer writes text/plain. An exclusive text/plain request gets 406.
+      if (!req.headers.accept?.includes('application/json')) { res.writeHead(406); res.end(); return; }
+      res.writeHead(200, { 'content-type': 'text/plain; charset=utf-8' });
+      res.end('line one\nline two\n'); return;
+    }
     if (req.url === '/redirect') { res.writeHead(302, { location: '/leak' }); res.end(); return; }
     if (req.url === '/leak') redirectFollowed = true;
     if (req.url === '/timeout') return;
@@ -51,6 +58,7 @@ test('HTTPS verifies CA/hostname, rotates credentials, bounds requests and refus
   writeFileSync(tokenFile, 'second-token');
   await get('/read');
   assert.deepEqual(authorizations.slice(0, 2), ['Bearer first-token', 'Bearer second-token']);
+  assert.equal(await get('/api/v1/namespaces/ops/pods/mcp/log', { asText: true }), 'line one\nline two\n');
   await assert.rejects(get('/redirect'), /302/);
   assert.equal(redirectFollowed, false);
   await assert.rejects(get('/large'), /byte limit/);
