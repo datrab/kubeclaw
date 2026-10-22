@@ -117,6 +117,26 @@ jobs:
       - run: npm run plugin-system:sandbox:build
       - name: Verify complete test partition
         run: node --test tests/verification/deployment/reliability-groups.test.mjs
+      - name: Install the centrally pinned real kubectl for wire-protocol originals
+        shell: bash
+        run: |
+          # Do not inherit the changing ubuntu-latest client. Use the SAME
+          # version and checksum as the actual Buster/Nova runtime images.
+          install_dir="$RUNNER_TEMP/reliability-kubectl"
+          mkdir -p "$install_dir"
+          read -r version checksum < <(node --input-type=module -e '
+            import fs from "node:fs";
+            const {buildArgs} = JSON.parse(fs.readFileSync("versions.json", "utf8"));
+            console.log(buildArgs.KUBECTL_VERSION, buildArgs.KUBECTL_SHA256_AMD64);
+          ')
+          curl --fail --silent --show-error --location --retry 3 \
+            "https://dl.k8s.io/release/v${version}/bin/linux/amd64/kubectl" -o "$install_dir/kubectl"
+          printf '%s  %s\n' "$checksum" "$install_dir/kubectl" | sha256sum --check --strict
+          chmod 755 "$install_dir/kubectl"
+          # Match the real adapter's restricted child environment; retain
+          # client identity and fail setup before tests if startup is broken.
+          timeout 10s env -i "PATH=$PATH" "$install_dir/kubectl" version --client -o json
+          echo "$install_dir" >> "$GITHUB_PATH"
       - name: Run reliability shard
         id: shard-tests
         shell: bash
