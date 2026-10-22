@@ -19433,6 +19433,41 @@
           "factsDigest": "c9a42406035b50154b9f000c2a7c220eeff8d86c87b427f07bee32a899f0a419"
         }
       ]
+    },
+    {
+      "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+      "sink": "return",
+      "expression": "reviewedDocumentationOwnerPurposes[source]?.allowedNativePackageEntries.some(value=>JSON.stringify(value)===JSON.stringify(entry))??false",
+      "role": "non-api",
+      "basis": "original-source-bound-native-entry-match-boolean",
+      "operations": [
+        {
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "selectors": [
+            {
+              "expression": "reviewedDocumentationOwnerPurposes[source]?.allowedNativePackageEntries.some(value=>JSON.stringify(value)===JSON.stringify(entry))??false"
+            }
+          ],
+          "factsDigest": "75c2cd5415e1eb9779255c2d48aaf384e80354497327725253b2c7989651853f"
+        }
+      ],
+      "roleConsumerEvidence": {
+        "review": "Independent bounded Source review of the exact Boolean-result contract and original package-entry guard; native facts and controls are separate metadata witnesses. No input, effect, runtime or entry-admission authorization.",
+        "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+        "sink": "return",
+        "expression": "reviewedDocumentationOwnerPurposes[source]?.allowedNativePackageEntries.some(value=>JSON.stringify(value)===JSON.stringify(entry))??false",
+        "consumer": "Original documentation graph package-entry guard uses this predicate only to compare a literal package command entry against four frozen owner-purpose profiles. The function returns boolean/false or throws; arbitrary entry serialization is not certified inert.",
+        "evidence": [
+          {
+            "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+            "expression": "reviewedDocumentationOwnerPurposes[source]?.allowedNativePackageEntries.some(value=>JSON.stringify(value)===JSON.stringify(entry))??false"
+          },
+          {
+            "source": "scripts/docs-api-output-discovery.mjs",
+            "expression": "source===entry.source&&documentationOwnerNativeEntryMatches(source,entry)"
+          }
+        ]
+      }
     }
   ],
   "nativeLanguageSerializationContracts": [
