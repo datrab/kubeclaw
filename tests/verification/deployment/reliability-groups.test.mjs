@@ -5,7 +5,7 @@ import os from 'node:os';
 import path from 'node:path';
 import { spawnSync } from 'node:child_process';
 import yaml from 'js-yaml';
-import { selectTests, nativeTests, serviceTests } from '../../../scripts/reliability-tests.mjs';
+import { selectTests, nativeTests, serviceTests, executionBatches } from '../../../scripts/reliability-tests.mjs';
 
 test('CI groups cover every reliability test exactly once, including newly added core tests', () => {
   const files = fs.readdirSync('tests/verification/reliability').filter(file => /\.test\.(mts|mjs)$/.test(file));
@@ -104,4 +104,21 @@ test('workflow inventory preserves the original corpus workspace through diagnos
     assert.ok(workflow.commandAndActionRefs.includes('npm run test:corpus-pool --workspace @kubeclaw/prism'));
     assert.ok(!workflow.commandAndActionRefs.includes('npm run test:corpus-pool'), 'do not document a different root-workspace command');
   } finally { fs.rmSync(temporary, { recursive: true, force: true }); }
+});
+
+
+test('isolated legacy diagnostic preserves every original shard member exactly once', () => {
+  const files = fs.readdirSync('tests/verification/reliability').filter(file => /\.test\.(mts|mjs)$/.test(file));
+  const diagnostic = 'legacy-cli-diagnostic-reproducibility.test.mjs';
+  let isolated = 0;
+  for (const members of [...Array.from({ length: 4 }, (_, i) => selectTests(files, 'core', i + 1, 4)),
+    selectTests(files, 'native'), selectTests(files, 'services')]) {
+    const batches = executionBatches(members);
+    assert.deepEqual(batches.flat().sort(), [...members].sort());
+    for (const batch of batches) if (batch.includes(diagnostic)) {
+      assert.deepEqual(batch, [diagnostic]); isolated++;
+    }
+  }
+  assert.equal(isolated, 1);
+  assert.deepEqual(executionBatches([]), []);
 });
