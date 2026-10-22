@@ -1,3 +1,10 @@
+## Current continuation — active rollback wording; infrastructure frontier — 2026-10-22
+
+- `81b84820` was pushed and remote-SHA verified, then clean ordinary checks ran. Publication stopped only on the new passive phrase "was executed". This successor changes exactly that three-line paragraph to active wording; independent Source/clarity/Quality after-review confirms identical meaning and all other page bytes/links/commands. Original `docs-publication.mjs check` now exits0 (177pages/51plugins), not a completed Reader build.
+- Original localHelm run advances past the GitOps family, then stops at `scripts/infrastructure-chart.mjs:63`, conditional verify/stage stdout. No full generator/API PASS. During that run the sole worktree delta was the documented active-wording change; preserve the actual dirty `statusAfter`, not a clean-run claim. No executable or product-input mutation occurred.
+- Next: commit/push this narrow prose successor, freeze and run ordinary publication build plus its four actual artifact checks; review/preserve the12 affected existing PASS records only after current output checks. Independent retained Source reviewer is investigating the complete infrastructure chart/release/image-renderer family and receivers before any qualification renewal. Do not blindly repeat the three-minute failed localHelm path for this unrelated prose correction.
+- Last register counts56/89 and224/261 remain limited prior acceptances, not current whole-API/Reader approval. Keep Source/content/execution scopes distinct; preserve all original failures and product limits. Continue the finish-all task.
+
 ## Current continuation — finite GitOps snapshots and rollback limit — 2026-10-22
 
 - Baseline remote before this checkpoint: `557bab46`, branch `docs/pr13-recovery-20261019`, push target `origin/docs/documentation-overhaul`. Continue the finish-all task; no AP10 deletion or general runtime approval.

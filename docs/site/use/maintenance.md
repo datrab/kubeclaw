@@ -890,9 +890,9 @@ Pull requests write access. Cluster credentials do not supply that authority.
    workload ownership, active image and code identities, and application reads.
    A merged selection is desired state, not proof of completed recovery.
 
-No rollback workflow, PR merge, Argo sync or live recovery was executed for
-this procedure. A local plan with unchanged code-receipt bytes does not test
-the changed-code publication limitation.
+The local checks did not run a rollback workflow, merge a PR, sync Argo or
+perform live recovery. A local plan with unchanged code-receipt bytes does not
+test the changed-code publication limitation.
 
 ## Upgrade Order
 
