@@ -1,0 +1,11 @@
+{
+  "profile": "scripts/vendor-external-helm-authorities.mjs",
+  "cell": "purposeInputs[1].sha256",
+  "path": "docs/site/extend/documentation-maintenance.md",
+  "old": "c4371fb5186b88b6dc76f00024a1c2a993ebd53fa0404d0e28dcad0d5ace7dec",
+  "new": "a8727c33bb81242fb446e89a66101b9f5182f2c5a54ae26ff3cfc7499a120b14",
+  "moduleBeforeSha256": "7280c71a8c7d08188bec3783307d2f54307beb317c41231031f1c9abee6dbfa3",
+  "modulePredictedAfterSha256": "a4eb7261d97c53a196ae3aa86ce4b5a530b78e3f2397fda834cdf895a5a7fd43",
+  "literalOccurrences": 1,
+  "allOtherBytesPreservedByConstruction": true
+}

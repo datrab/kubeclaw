@@ -1,0 +1,18 @@
+{
+  "playwrightVersion": "1.62.1",
+  "browserVersion": "151.0.7922.34",
+  "selected": [
+    {
+      "name": "chromium-headless-shell",
+      "revision": "1234",
+      "installByDefault": true,
+      "browserVersion": "151.0.7922.34",
+      "title": "Chrome Headless Shell"
+    }
+  ],
+  "executable": "/home/node/.cache/ms-playwright/chromium_headless_shell-1234/chrome-headless-shell-linux64/chrome-headless-shell",
+  "executableSha256": "e11fc9ce65c96313476f7ee9844b6fb6a9220fb048693cfe9eee00acf4170a9f",
+  "pageTitle": "Owned browser preparation",
+  "externalEndpoints": 0,
+  "documentationArtifactTested": false
+}

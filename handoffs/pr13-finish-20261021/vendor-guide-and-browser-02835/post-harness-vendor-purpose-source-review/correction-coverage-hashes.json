@@ -1,0 +1,60 @@
+{
+  "head": "02835c7ddb5c64be113696a65c35a66179889fca",
+  "workingTree": true,
+  "role": "terminal bounded one-cell/new-test Source correction; no target execution/import/getter",
+  "proof": {
+    "moduleActualSha256": "a4eb7261d97c53a196ae3aa86ce4b5a530b78e3f2397fda834cdf895a5a7fd43",
+    "moduleMatchesPredictedSha256": true,
+    "oneLiteralOccurrence": true,
+    "independentCompleteReverseByteEquality": true,
+    "allProfileCellsOtherThanOneHashEqual": true,
+    "allPriorTestBytesPreserved": true,
+    "guideActualSha256MatchesInput": true,
+    "changedScopeTargetOccursExactlyOnce": true
+  },
+  "files": [
+    {
+      "path": "scripts/docs-documentation-owner-purpose-custody.mjs",
+      "sha256": "a4eb7261d97c53a196ae3aa86ce4b5a530b78e3f2397fda834cdf895a5a7fd43",
+      "bytes": 27375,
+      "lines": 516,
+      "coverage": "complete exact one-literal diff/reversal; complete selected profile and actual guards reused under unchanged outside bytes"
+    },
+    {
+      "path": "scripts/tests/docs-documentation-owner-purpose.test.mjs",
+      "sha256": "ba2c48dd0f9666984408bac477511288374840cbb318df7ac380d8cb0fa95786",
+      "bytes": 5618,
+      "lines": 35,
+      "coverage": "complete current35-line file and full originalfixture; original18-line bytes independently preserved"
+    },
+    {
+      "path": "docs/site/extend/documentation-maintenance.md",
+      "sha256": "a8727c33bb81242fb446e89a66101b9f5182f2c5a54ae26ff3cfc7499a120b14",
+      "bytes": 44700,
+      "lines": 540,
+      "coverage": "prior Source-purpose append/receiving semantics reused by exact unchanged completepagehash"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/post-harness-vendor-purpose-data/literal-proof.json",
+      "sha256": "e63ca614f07e5f9d60178675d85fecd74b1b0b3b2c8b806448ba3e80e1498be8",
+      "bytes": 425,
+      "read": "complete"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/post-harness-vendor-purpose-data/owning-tests.stdout.raw",
+      "sha256": "6810d941ba2cdd32c4e16e32cee434a6cbf7b39c946dfb48bb285474cc5b3934",
+      "bytes": 9985,
+      "read": "complete"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/post-harness-vendor-purpose-data/owning-tests.stderr.raw",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "read": "complete"
+    }
+  ],
+  "unreadAssignedScope": 0,
+  "diffSha256": "546072553fdf49fbdb258b3c01348ec84a8668edd38827ac465317d629287992"
+}

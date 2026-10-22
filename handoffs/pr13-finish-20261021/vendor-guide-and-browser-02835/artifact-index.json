@@ -1,0 +1,137 @@
+[
+  {
+    "path": "README.md",
+    "bytes": 1675,
+    "sha256": "641aab4bd3d6b02aac1b0b4d917def58e95f7a596501cad08b4a802d6e7737a5"
+  },
+  {
+    "path": "original-post-harness-localhelm/invocation.json",
+    "bytes": 715,
+    "sha256": "dd189cad5f8ec9975852e41283e93ed1a9db02c34ef8243b8bff9da72a30d8f5"
+  },
+  {
+    "path": "original-post-harness-localhelm/result.json",
+    "bytes": 787,
+    "sha256": "59010a3a6bf31f7745335229039a0274bb60c10f707b8a921990833f95a73a2b"
+  },
+  {
+    "path": "original-post-harness-localhelm/stderr.raw",
+    "bytes": 2258,
+    "sha256": "285c12419e3c08a7e644373c0198634ec4d314c93c4f03a768daeb229f22c836"
+  },
+  {
+    "path": "original-post-harness-localhelm/stdout.raw",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "original-post-harness-publication/invocation.json",
+    "bytes": 701,
+    "sha256": "c908a2d795147e0486dfacdb613734e8b1c887c958375aff87e758c4258717d4"
+  },
+  {
+    "path": "original-post-harness-publication/result.json",
+    "bytes": 773,
+    "sha256": "2a0d0e76794238c0f448e66d81f5bd38516c27b56a7ef3efafd0f239e01217ed"
+  },
+  {
+    "path": "original-post-harness-publication/stderr.raw",
+    "bytes": 1541,
+    "sha256": "ab56b8cc25ed5f58536a1adb2901e4c92d01b1d8107ac7c0019df0145a93ff60"
+  },
+  {
+    "path": "original-post-harness-publication/stdout.raw",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "playwright-1234-install/smoke-result.json",
+    "bytes": 617,
+    "sha256": "4c22e8dd6bc9f1fc95a1af02e0cebbf3969c0de03319099dc01f72c3c27aad69"
+  },
+  {
+    "path": "playwright-1234-install/smoke.mjs",
+    "bytes": 1440,
+    "sha256": "4b42abde86ead532bca056ada1a2514f17a0b7a338fc8ec036def4db88dae484"
+  },
+  {
+    "path": "playwright-1234-install/smoke.stderr.raw",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "playwright-1234-install/smoke.stdout.raw",
+    "bytes": 531,
+    "sha256": "b134a1a93ba4ffc314698e03ffe9e0af8ac180e61ff69ee3c753bf377c16d3dc"
+  },
+  {
+    "path": "playwright-1234-install/stderr.raw",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "playwright-1234-install/stdout.raw",
+    "bytes": 4536,
+    "sha256": "def9fb92a3ad1532c5717535d6f7b8c4f25aed0ea54e85e17679f6720b6437fb"
+  },
+  {
+    "path": "post-harness-vendor-purpose-autoreview/review.json",
+    "bytes": 473,
+    "sha256": "53c0c71d766332796ab31a09f43cb01581fd41089e95aa7b794b1ae271d2ae35"
+  },
+  {
+    "path": "post-harness-vendor-purpose-autoreview/review.txt",
+    "bytes": 441,
+    "sha256": "cd2e3e4b681cb1c4678b43886bc5eec233c72350fca08dfca71146d118c7623c"
+  },
+  {
+    "path": "post-harness-vendor-purpose-data/literal-proof.json",
+    "bytes": 425,
+    "sha256": "e63ca614f07e5f9d60178675d85fecd74b1b0b3b2c8b806448ba3e80e1498be8"
+  },
+  {
+    "path": "post-harness-vendor-purpose-data/owning-tests.stderr.raw",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "post-harness-vendor-purpose-data/owning-tests.stdout.raw",
+    "bytes": 9985,
+    "sha256": "6810d941ba2cdd32c4e16e32cee434a6cbf7b39c946dfb48bb285474cc5b3934"
+  },
+  {
+    "path": "post-harness-vendor-purpose-source-review/correction-coverage-hashes.json",
+    "bytes": 2558,
+    "sha256": "326cbee5196da980612b56155ddfaf7711790e73a8e64acfb5ec228c27f730e4"
+  },
+  {
+    "path": "post-harness-vendor-purpose-source-review/correction-report.md",
+    "bytes": 4384,
+    "sha256": "f26313b2d0d0df9da31397e7b843d5acd913f7846c806f161f63febe2f611913"
+  },
+  {
+    "path": "post-harness-vendor-purpose-source-review/coverage-hashes.json",
+    "bytes": 8072,
+    "sha256": "2bc3786c1255321cb26f7db5dffd052a368dfe753d4ab2262026534581cd9ae5"
+  },
+  {
+    "path": "post-harness-vendor-purpose-source-review/exact-append.txt",
+    "bytes": 1019,
+    "sha256": "0937e47b9d7c23c9a56a684c4db70e37816bbe814ea48847485638032263e3b6"
+  },
+  {
+    "path": "post-harness-vendor-purpose-source-review/proposed-cell.analysis-only.json",
+    "bytes": 581,
+    "sha256": "33f9e0daa41589f868b0672793ab57f8573551b7ceb8c12238872b74ac91cc61"
+  },
+  {
+    "path": "post-harness-vendor-purpose-source-review/report.md",
+    "bytes": 7880,
+    "sha256": "eccfd2db51b0e14ba9b141ea780619d2c542f8140b3a668589595eda5f668b4d"
+  },
+  {
+    "path": "post-harness-vendor-purpose-source-review/reviewed-correction.diff",
+    "bytes": 2699,
+    "sha256": "546072553fdf49fbdb258b3c01348ec84a8668edd38827ac465317d629287992"
+  }
+]

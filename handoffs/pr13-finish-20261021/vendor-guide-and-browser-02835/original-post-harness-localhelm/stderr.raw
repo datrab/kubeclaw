@@ -1,0 +1,34 @@
+file:///home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/generate-local-helm-authorities.mjs:27
+if (candidate.status !== 0) throw new Error(`candidate local Helm inventory failed\n${candidate.stdout}\n${candidate.stderr}`);
+                                  ^
+
+Error: candidate local Helm inventory failed
+
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: DOCUMENTATION_OWNER_PURPOSE_INPUT_DRIFT: scripts/vendor-external-helm-authorities.mjs; docs/site/extend/documentation-maintenance.md
+    at acquire (file:///home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/docs-documentation-owner-purpose-custody.mjs:361:74)
+    at assertDocumentationOwnerPurpose (file:///home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/docs-documentation-owner-purpose-custody.mjs:363:43)
+    at assertDocumentationToolQualifications (file:///home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/docs-api-output-discovery.mjs:692:83)
+    at documentationToolSources (file:///home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/docs-api-output-discovery.mjs:804:3)
+    at discoverScriptApiOutputs (file:///home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/docs-api-output-discovery.mjs:1503:37)
+    at discoverProductApiContexts (file:///home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/docs-api-product-scope.mjs:291:80)
+    at buildApiResourceInventory (file:///home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/docs-configuration-inventory.mjs:2784:25)
+    at buildYamlInventory (file:///home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/docs-configuration-inventory.mjs:2863:24)
+    at buildConfigurationInventories (file:///home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/docs-configuration-inventory.mjs:9292:16)
+    at file:///home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/docs-configuration-inventory.mjs:9307:37 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: '==',
+  diff: 'simple'
+}
+
+Node.js v24.21.0
+
+    at file:///home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/generate-local-helm-authorities.mjs:27:35
+
+Node.js v24.21.0

@@ -1,0 +1,3 @@
+autoreview clean: no accepted/actionable findings reported
+overall: patch is correct (0.97)
+The change updates only the reviewed guide digest and adds a meaningful test that first acquires the genuine profile, then verifies rejection after disclaimer mutation, guide removal, or same-byte symlink substitution. The existing owner, caller, ancestry, and input checks remain unchanged. No actionable defects were found in the supplied bundle.

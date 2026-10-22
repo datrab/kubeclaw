@@ -1,0 +1,178 @@
+{
+  "head": "02835c7ddb5c64be113696a65c35a66179889fca",
+  "role": "Source-purpose successor assessment only; no target execution/import/getter/repo edit",
+  "proposal": {
+    "profile": "scripts/vendor-external-helm-authorities.mjs",
+    "cell": "purposeInputs[1].sha256",
+    "path": "docs/site/extend/documentation-maintenance.md",
+    "old": "c4371fb5186b88b6dc76f00024a1c2a993ebd53fa0404d0e28dcad0d5ace7dec",
+    "new": "a8727c33bb81242fb446e89a66101b9f5182f2c5a54ae26ff3cfc7499a120b14",
+    "moduleBeforeSha256": "7280c71a8c7d08188bec3783307d2f54307beb317c41231031f1c9abee6dbfa3",
+    "modulePredictedAfterSha256": "a4eb7261d97c53a196ae3aa86ce4b5a530b78e3f2397fda834cdf895a5a7fd43",
+    "literalOccurrences": 1,
+    "allOtherBytesPreservedByConstruction": true
+  },
+  "pageByteProof": {
+    "gitBaseline": "7d2bb9d4",
+    "oldSha256": "c4371fb5186b88b6dc76f00024a1c2a993ebd53fa0404d0e28dcad0d5ace7dec",
+    "oldBytes": 43681,
+    "currentSha256": "a8727c33bb81242fb446e89a66101b9f5182f2c5a54ae26ff3cfc7499a120b14",
+    "currentBytes": 44700,
+    "oldCompleteBytesAreExactPrefix": true,
+    "exactAppendBytes": 1019,
+    "exactAppendLineCount": 17,
+    "currentEquals83dCompleteBytes": true
+  },
+  "otherInputs": [
+    {
+      "index": 0,
+      "path": "docs/generated/inventory/configuration-values.json",
+      "boundSha256": "86576d0f96d9787028c87e6d2b489f956b34d00284ef6ad34cdcbdc01fcf9467",
+      "currentSha256": "86576d0f96d9787028c87e6d2b489f956b34d00284ef6ad34cdcbdc01fcf9467",
+      "matchesCurrent": true,
+      "physicalCanonical": true,
+      "scope": "physical hash/identity observation only, no new semantic approval of complete inventory/package/lock contents"
+    },
+    {
+      "index": 1,
+      "path": "docs/site/extend/documentation-maintenance.md",
+      "boundSha256": "c4371fb5186b88b6dc76f00024a1c2a993ebd53fa0404d0e28dcad0d5ace7dec",
+      "currentSha256": "a8727c33bb81242fb446e89a66101b9f5182f2c5a54ae26ff3cfc7499a120b14",
+      "matchesCurrent": false,
+      "physicalCanonical": true,
+      "scope": "physical hash/identity observation only, no new semantic approval of complete inventory/package/lock contents"
+    },
+    {
+      "index": 2,
+      "path": "package.json",
+      "boundSha256": "4ab1e90c2259aeb96acfdc877e5a9eed330f605abff46d7eca85faded0f020c3",
+      "currentSha256": "4ab1e90c2259aeb96acfdc877e5a9eed330f605abff46d7eca85faded0f020c3",
+      "matchesCurrent": true,
+      "physicalCanonical": true,
+      "scope": "physical hash/identity observation only, no new semantic approval of complete inventory/package/lock contents"
+    },
+    {
+      "index": 3,
+      "path": "scripts/docs-external-helm-authority-lock.json",
+      "boundSha256": "257d829a2e4d79ed9bc886c33c8c5e8b8a64a9fc05a36e7f378173b54c76516a",
+      "currentSha256": "257d829a2e4d79ed9bc886c33c8c5e8b8a64a9fc05a36e7f378173b54c76516a",
+      "matchesCurrent": true,
+      "physicalCanonical": true,
+      "scope": "physical hash/identity observation only, no new semantic approval of complete inventory/package/lock contents"
+    },
+    {
+      "index": 4,
+      "path": "scripts/external-helm-archives.json",
+      "boundSha256": "4b79ed0dc21517f54ae1a167a79930524c01e85418bd75e8694478ce7f365070",
+      "currentSha256": "4b79ed0dc21517f54ae1a167a79930524c01e85418bd75e8694478ce7f365070",
+      "matchesCurrent": true,
+      "physicalCanonical": true,
+      "scope": "physical hash/identity observation only, no new semantic approval of complete inventory/package/lock contents"
+    },
+    {
+      "index": 5,
+      "path": "scripts/external-helm-archives.sha256",
+      "boundSha256": "55bf67770822d32ea8ab515be87dad57f7079d95dddb23a7aa5c2252965f75a3",
+      "currentSha256": "55bf67770822d32ea8ab515be87dad57f7079d95dddb23a7aa5c2252965f75a3",
+      "matchesCurrent": true,
+      "physicalCanonical": true,
+      "scope": "physical hash/identity observation only, no new semantic approval of complete inventory/package/lock contents"
+    },
+    {
+      "index": 6,
+      "path": "scripts/tests/vendor-external-helm-authorities.test.mjs",
+      "boundSha256": "9fbf8dabefbeba2ee504204e5d1a7b9451505ffe685bff7b486218043d24640c",
+      "currentSha256": "9fbf8dabefbeba2ee504204e5d1a7b9451505ffe685bff7b486218043d24640c",
+      "matchesCurrent": true,
+      "physicalCanonical": true,
+      "scope": "physical hash/identity observation only, no new semantic approval of complete inventory/package/lock contents"
+    },
+    {
+      "index": 7,
+      "path": "scripts/yaml-field-path.mjs",
+      "boundSha256": "646f14105e48d9401b8d8ac99a0c439f60c8b69e42d72c15c0b66e132a1c9a2d",
+      "currentSha256": "646f14105e48d9401b8d8ac99a0c439f60c8b69e42d72c15c0b66e132a1c9a2d",
+      "matchesCurrent": true,
+      "physicalCanonical": true,
+      "scope": "physical hash/identity observation only, no new semantic approval of complete inventory/package/lock contents"
+    }
+  ],
+  "reviewedSources": [
+    {
+      "path": "scripts/docs-documentation-owner-purpose-custody.mjs",
+      "sha256": "7280c71a8c7d08188bec3783307d2f54307beb317c41231031f1c9abee6dbfa3",
+      "bytes": 27375,
+      "lineCount": 516,
+      "semanticCoverage": "complete vendor profile304-354 and guard/ancestry/native-match357-383; sourceheader1-10"
+    },
+    {
+      "path": "scripts/vendor-external-helm-authorities.mjs",
+      "sha256": "077c8136790d759262609f716ab6c77b0049d19bb7e2208c27a7c3733d6a96f8",
+      "bytes": 15833,
+      "lineCount": 284,
+      "semanticCoverage": "complete284lines"
+    },
+    {
+      "path": "scripts/tests/vendor-external-helm-authorities.test.mjs",
+      "sha256": "9fbf8dabefbeba2ee504204e5d1a7b9451505ffe685bff7b486218043d24640c",
+      "bytes": 5127,
+      "lineCount": 91,
+      "semanticCoverage": "complete91lines"
+    },
+    {
+      "path": "scripts/tests/docs-documentation-owner-purpose.test.mjs",
+      "sha256": "ca9c17b70a3a46e82b9d11b6e3e2dd1fc201fa0434cb4e48f5ba71dfa33e1968",
+      "bytes": 4637,
+      "lineCount": 18,
+      "semanticCoverage": "complete file"
+    },
+    {
+      "path": "docs/site/extend/documentation-maintenance.md",
+      "sha256": "a8727c33bb81242fb446e89a66101b9f5182f2c5a54ae26ff3cfc7499a120b14",
+      "bytes": 44700,
+      "lineCount": 540,
+      "semanticCoverage": "exact old complete-byte preservation + complete newappend; current metadata1-8 and vendor receiving140-192, footer510-540; priorsupport17line semantics reused by exacthash"
+    },
+    {
+      "path": "scripts/docs-api-output-discovery.mjs",
+      "sha256": "6f86030aee31258b012f0f7cee7361769a311db00d43afb183458c7890175769",
+      "bytes": 415879,
+      "lineCount": 3311,
+      "semanticCoverage": "qualification guard/cache680-698, prior integration context retained"
+    },
+    {
+      "path": "scripts/docs-api-documentation-role-custody.mjs",
+      "sha256": "4dae45adcf42f80ab3854c8c86f2e617c80fe293bc8e3cd47dfb74df33f45332",
+      "bytes": 1231612,
+      "lineCount": 31197,
+      "semanticCoverage": "role guard/cache entry10858-10889; prior consumer context retained"
+    }
+  ],
+  "rawFailure": [
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/post-harness-localhelm/result.json",
+      "sha256": "59010a3a6bf31f7745335229039a0274bb60c10f707b8a921990833f95a73a2b",
+      "bytes": 787,
+      "read": "complete"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/post-harness-localhelm/invocation.json",
+      "sha256": "dd189cad5f8ec9975852e41283e93ed1a9db02c34ef8243b8bff9da72a30d8f5",
+      "bytes": 715,
+      "read": "complete"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/post-harness-localhelm/stdout.raw",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "read": "complete"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/post-harness-localhelm/stderr.raw",
+      "sha256": "285c12419e3c08a7e644373c0198634ec4d314c93c4f03a768daeb229f22c836",
+      "bytes": 2258,
+      "read": "complete"
+    }
+  ],
+  "unreadAssignedBoundedScope": 0
+}

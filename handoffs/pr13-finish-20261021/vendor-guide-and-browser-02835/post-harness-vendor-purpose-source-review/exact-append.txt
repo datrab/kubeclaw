@@ -1,0 +1,17 @@
+
+## Document A Newer Deployed Ops Revision
+
+A documentation branch can retain older runtime qualification while an Ops
+release has advanced on main. Label such page evidence with `Upstream source
+scope:` and state that it does not adopt the runtime into this branch. Record
+the exact upstream revision, selected pages and SHA-256 source-file digests in
+`scripts/ops-mcp-docs-upstream.json`. The specialist check admits only its pinned
+Ops revision and page roster, verifies immutable Git bytes and bounded line
+ranges, and rejects a missing or changed file digest. Ordinary branch-source
+pins still require equality with the working source. The focused source-pin
+tests cover both routes and their denials.
+
+Do not use this dated upstream route to mark Source/Reader/Quality gates or
+runtime-source adoption complete. After actual source adoption, reconcile the
+page and generated inventories through their normal owning checks. Historical
+live observations keep their date and scope; they are not fresh health checks.

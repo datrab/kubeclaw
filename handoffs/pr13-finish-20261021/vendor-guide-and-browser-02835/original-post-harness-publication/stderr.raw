@@ -1,0 +1,22 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+browserType.launch: Executable doesn't exist at /home/node/.cache/ms-playwright/chromium_headless_shell-1234/chrome-headless-shell-linux64/chrome-headless-shell
+╔════════════════════════════════════════════════════════════╗
+║ Looks like Playwright was just installed or updated.       ║
+║ Please run the following command to download new browsers: ║
+║                                                            ║
+║     npx playwright install                                 ║
+║                                                            ║
+║ <3 Playwright Team                                         ║
+╚════════════════════════════════════════════════════════════╝
+    at renderDocumentationDiagrams (/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/docs-reader/diagrams.mjs:100:30)
+    at async prepareDiagramPages (/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/docs-reader/diagrams.mjs:121:81)
+    at async build (/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/docs-publication.mjs:1103:20)
+    at async file:///home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/docs-publication.mjs:1138:31 {
+  log: [],
+  name: 'Error'
+}
+
+Node.js v24.21.0

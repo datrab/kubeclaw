@@ -1,3 +1,10 @@
+## Current continuation — vendor guide purpose and browser prerequisite repaired — 2026-10-22
+
+- Clean02835 originalbuildSTOPmissingheadless1234; originallocalHelmSTOPvendor-guidepurposehash afterharnesspasses. OfficialPlaywrightCLI1.62.1 installsheadless1234/151.0.7922.34; actualversion/smokelaunchmatches. Browserprep is NOT documentationartifactPASS.
+- Only1guidehashcell changed for oldguideexactprefix+reviewed17lineOpsappendix; otherowner/7inputs/profiles/guards exact.91/91nativeowning+CItestsPASS0skip, including3guide-targetmutationsafterpositives. IndependentSourcePASSandautoreviewclean. Evidence handoffs/pr13-finish-20261021/vendor-guide-and-browser-02835.
+- Apply compact AP09 contract§§1–4: oneindependenttopical review cancoverSource/reader-taskclarity/Quality; no3persons/rawarchives prerequisite; honestunsupportedLivefeaturesnotdocumentationblockers. Actualfresh-user gates remainseparate. Currentretainedcontentreviewer independently assessing OpsQuality+taskintelligibility; Sourcepassalreadybridged.
+- Nextcommit/push, cleanregularpublicationbuild+originallocalHelm; affectedrender/readerchecksafterrealnewartifact. Matrix95historicalobjectsunchanged; historical56/224notcurrentapproval. No blanketunknownwaiver, AP10deletion orliveclaim. Runtimeknip/compiledjourneyhostgaps remainunperformedproductvalidation, notautomaticdocblockers. Finish-alltaskongoing.
+
 ## Current continuation — diagram and exact root-harness successor ready — 2026-10-22
 
 - 52c5bc0f pushed/SHAverified; originalpublicationbuildSTOPunregisteredOpsdiagram aftercheckSite, rawreceipt preserved. Sourcepassed9directededges/fulladjacenttextalt, registry27→28(oneOpsnew,oneplatformhash,26exact). NativecollectorPASS177pages/28diagrams, NOT renderedSVG/HTMLacceptance.

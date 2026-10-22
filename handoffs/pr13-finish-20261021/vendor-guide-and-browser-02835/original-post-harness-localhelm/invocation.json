@@ -1,0 +1,21 @@
+{
+  "argv": [
+    "/usr/local/bin/node",
+    "--max-old-space-size=4096",
+    "scripts/generate-local-helm-authorities.mjs",
+    "--check"
+  ],
+  "revision": "02835c7ddb5c64be113696a65c35a66179889fca",
+  "environment": {
+    "PATH": "/usr/local/bin:/usr/bin:/bin",
+    "HOME": "/home/node",
+    "LANG": "C.UTF-8",
+    "LC_ALL": "C.UTF-8",
+    "TZ": "UTC",
+    "TMPDIR": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/post-harness-localhelm/tmp",
+    "LD_LIBRARY_PATH": "/home/node/.openclaw/workspace/tmp/pr13-reader-apt/root/usr/lib/x86_64-linux-gnu",
+    "FONTCONFIG_FILE": "/home/node/.openclaw/workspace/tmp/pr13-reader-apt/fonts.conf"
+  },
+  "started": 1792666272.819722,
+  "statusBefore": "CLEAN"
+}
