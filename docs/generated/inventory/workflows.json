@@ -6,6 +6,7 @@
     ".github/workflows/build-ops-mcp.yaml",
     ".github/workflows/dependency-updates.yaml",
     ".github/workflows/docs-checks.yaml",
+    ".github/workflows/native-agent-mcp.yaml",
     ".github/workflows/pipeline-reliability.yaml",
     ".github/workflows/promote-runtime.yaml",
     ".github/workflows/publish-image-receipts.yaml",
@@ -175,6 +176,33 @@
         "npm run plugin-system:inventory && npm run docs:inventory && npm run docs:generate",
         "uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
         "uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020"
+      ]
+    },
+    {
+      "path": ".github/workflows/native-agent-mcp.yaml",
+      "name": "Native agent MCP",
+      "triggers": [
+        "pull_request",
+        "push",
+        "workflow_dispatch"
+      ],
+      "pathFilters": [
+        "charts/kubeclaw/**",
+        "tools/ops-mcp/**",
+        "ops/pod/test/native-mcp.test.mjs",
+        "my-values/nova-values.yaml",
+        "my-values/buster-values.yaml",
+        "versions.json",
+        ".github/workflows/native-agent-mcp.yaml"
+      ],
+      "schedules": [],
+      "jobs": [
+        "native"
+      ],
+      "commandAndActionRefs": [
+        "uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803",
+        "uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444",
+        "uses: azure/setup-helm@1a275c3b69536ee54be43f2070a358922e12c8d4"
       ]
     },
     {

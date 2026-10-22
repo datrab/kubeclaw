@@ -10,6 +10,8 @@ metadata:
   labels:
     {{- include "kubeclaw.labels" . | nindent 4 }}
 data:
+  sync-ops-mcp-config.mjs: |
+{{ .Files.Get "files/sync-ops-mcp-config.mjs" | indent 4 }}
   reset-managed-plugin-projects.mjs: |
 {{ .Files.Get "files/reset-managed-plugin-projects.mjs" | indent 4 }}
   restore-managed-plugin-config.mjs: |
@@ -193,6 +195,26 @@ data:
           "enabled": true
         }
       },
+      {{- if .Values.opsMcp.enabled }}
+      "mcp": {
+        "servers": {
+          "ops": {
+            "enabled": true,
+            "transport": "stdio",
+            "command": "node",
+            "args": ["/opt/ops-mcp-client/stdio.mjs"],
+            "env": {
+              "OPS_MCP_URL": {{ .Values.opsMcp.url | quote }},
+              "OPS_MCP_TOKEN_FILE": "/var/run/ops-mcp-client/token/token",
+              "OPS_MCP_CA_FILE": "/var/run/ops-mcp-client/ca/ca.crt"
+            },
+            "connectionTimeoutMs": 15000,
+            "requestTimeoutMs": 135000,
+            "supportsParallelToolCalls": false
+          }
+        }
+      },
+      {{- end }}
       "commands": {
         "native": "auto",
         "nativeSkills": "auto",

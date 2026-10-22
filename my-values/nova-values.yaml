@@ -253,8 +253,9 @@ workspace:
   tools: |
     ## Cluster operations
     Use only the central Ops MCP. No direct Kubernetes credentials or kubectl.
-    List available tools: `node /opt/ops-mcp-client/client.mjs list`
-    Call a tool: `node /opt/ops-mcp-client/client.mjs call get_pod '{"namespace":"kubeclaw","pod":"<pod-name>"}'`
+    Use the native Ops MCP tools (for example `ops__get_pod`, `ops__get_pod_logs`, `ops__exec_pod`).
+    Their schemas and availability come from the central MCP using Nova's identity.
+    The CLI remains available for diagnostics: `node /opt/ops-mcp-client/client.mjs list`.
     Exec is a separate, audited MCP tool; follow its schema and target grants.
     Never retry an exec after timeout/disconnect without checking its effects.
 

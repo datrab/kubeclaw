@@ -1,0 +1,49 @@
+name: Native agent MCP
+on:
+  pull_request:
+    paths:
+      - charts/kubeclaw/**
+      - tools/ops-mcp/**
+      - ops/pod/test/native-mcp.test.mjs
+      - my-values/nova-values.yaml
+      - my-values/buster-values.yaml
+      - versions.json
+      - .github/workflows/native-agent-mcp.yaml
+  push:
+    branches: [main]
+    paths:
+      - charts/kubeclaw/**
+      - tools/ops-mcp/**
+      - ops/pod/test/native-mcp.test.mjs
+      - my-values/nova-values.yaml
+      - my-values/buster-values.yaml
+      - versions.json
+      - .github/workflows/native-agent-mcp.yaml
+  workflow_dispatch: null
+permissions:
+  contents: read
+jobs:
+  native:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
+        with:
+          node-version: 24
+      - uses: azure/setup-helm@1a275c3b69536ee54be43f2070a358922e12c8d4 # v4.3.1
+        with:
+          version: v3.22.0
+      - name: Install the pinned native client and test dependencies
+        run: |
+          version="$(node -p 'require("./versions.json").openclaw.version')"
+          npm install --prefix "$RUNNER_TEMP/native-openclaw" --ignore-scripts --no-audit --no-fund "openclaw@$version"
+          npm ci --prefix tools/ops-mcp --ignore-scripts --no-audit --no-fund
+          npm ci --prefix ops/pod --ignore-scripts --no-audit --no-fund
+      - name: Exercise native discovery against the actual TLS MCP and chart migrations
+        run: |
+          export OPS_MCP_OPENCLAW_BIN="$RUNNER_TEMP/native-openclaw/node_modules/.bin/openclaw"
+          node --test tools/ops-mcp/test/tls-client.test.mjs
+          node --test ops/pod/test/native-mcp.test.mjs

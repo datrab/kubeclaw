@@ -190,20 +190,40 @@ reconciles its named ClusterRoleBinding to empty subjects without relying on pru
 The dedicated reconciler grants only the MCP test exec access, normally within five seconds
 of namespace creation. Its mandatory admission guard rejects other namespaces,
 roles or subjects. No agent gets these RoleBindings. Buster retains only its
-existing broker lease exception. Buster and Nova use the shipped client:
-`node /opt/ops-mcp-client/client.mjs list`, or
-`node /opt/ops-mcp-client/client.mjs call get_pod '{"namespace":"test-build","pod":"runner"}'`.
+existing broker lease exception. Buster and Nova connect through OpenClaw's native
+`mcp.servers.ops` connector. Each advertised operation appears as a typed agent
+tool, such as `ops__get_pod`, `ops__get_pod_logs` and `ops__exec_pod`. Discovery
+uses that agent's own identity; the central server supplies descriptions and
+schemas and enforces every call. The existing `coding` tool profile includes
+configured MCP servers. Session or agent tool denials still apply.
 Prefix exec grants explicitly permit all Pods/regular containers in `test*`;
 exact grants elsewhere keep their label/container restrictions.
 
-Nova calls the shipped client without Kubernetes credentials:
+OpenClaw directly launches a small stdio-to-HTTPS transport adapter with Node;
+an agent does not need its shell tool to discover or invoke these operations.
+The adapter has no Kubernetes client or authorization policy. It reads the
+agent's mounted bearer and CA files on each request, verifies HTTPS and never
+retries a failed call. Tool errors retain MCP `isError` and content. Cancellation
+closes the local request; it does not prove remote process termination. Tokens
+are not embedded in config, command arguments or connector environment values.
+The MCP credential mounts remain exclusive to the gateway container, including
+for Buster; its worker retains only the existing lease-controller exception.
+
+The managed `ops` connector is reconciled before startup Doctor and during setup,
+including on persisted installations. Disabling `opsMcp.enabled` removes it on
+the next rollout. Other connectors and local tool policies are preserved. Argo
+deploys the chart changes through the selected immutable runtime bundle; no
+manual client installation or chat-message-based permission grant is needed.
+Already active sessions may need a new turn/session to discover the connector.
+
+The shipped CLI remains available for diagnostics without Kubernetes credentials:
 
 ```bash
 node /opt/ops-mcp-client/client.mjs list
 node /opt/ops-mcp-client/client.mjs call get_pod '{"namespace":"kubeclaw","pod":"<pod-name>"}'
 ```
 
-The Nova workspace TOOLS template documents this interface. Existing persisted
+The Nova workspace TOOLS template prefers the native tools. Existing persisted
 TOOLS.md files are retained when `workspace.override=false`; reconcile that one
 section on an existing workspace without overwriting its other notes.
 

@@ -25,6 +25,7 @@ spec:
         {{- end }}
       annotations:
         checksum/config: {{ include (print $.Template.BasePath "/configmap-gateway.yaml") . | sha256sum }}
+        checksum/ops-mcp-client: {{ include (print $.Template.BasePath "/ops-mcp-client.yaml") . | sha256sum }}
         checksum/swarm-config: {{ include (print $.Template.BasePath "/configmap-swarm-config.yaml") . | sha256sum }}
         {{- if and (eq .Values.agentRole "buster") .Values.busterRuntimeStartupFix }}
         checksum/buster-runtime-startup: {{ include (print $.Template.BasePath "/configmap-buster-startup.yaml") . | sha256sum }}
@@ -287,6 +288,7 @@ spec:
               NODE
               fi
               echo "==> Migrating OpenClaw persistent state before setup commands"
+              node /init-config/sync-ops-mcp-config.mjs /home/node/.openclaw/openclaw.json /init-config/openclaw.json
               exec node /app/openclaw.mjs doctor --fix --non-interactive
           env:
             - name: HOME
@@ -327,6 +329,9 @@ spec:
                 - ALL
           resources: {{- toYaml .Values.gateway.startupDoctor.resources | nindent 12 }}
           volumeMounts:
+            - name: init-config
+              mountPath: /init-config
+              readOnly: true
             - name: config
               mountPath: /home/node/.openclaw
             - name: workspace
@@ -616,6 +621,7 @@ spec:
               fi
 
               echo "==> 4a. OpenClaw Plugin Cache"
+              node /init-config/sync-ops-mcp-config.mjs /config/openclaw.json /init-config/openclaw.json
               if [ -d /opt/openclaw-plugin-home ]; then
                 IMAGE_PLUGIN_CACHE_VERSION=""
                 CONFIG_PLUGIN_CACHE_VERSION=""
