@@ -89,7 +89,7 @@ and operator-runtime CLI flags. Each domain names its inventory, generator,
 checks, reader task and discovery limit. Source-qualified IDs retain the entrypoint,
 source file, document, field or registration context. Each binding names its reader
 target and page owner. `pageSources` gives the inverse membership for those targets.
-The governance check compares full identities, facts and bindings, not just counts.
+The governance check compares full identities, facts and bindings, not counts alone.
 
 Run the domain's owning inventory checks before relying on that join: governance
 consumes their persisted output and does not independently rescan implementation
