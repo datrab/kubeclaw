@@ -1,0 +1,11 @@
+# Five-source correction checkpoint — not aggregate acceptance
+
+Three independently checked authored corrections: explicit quickstart include-dev/module-resolution prerequisites; actual publication HTML build rather than Markdown-only staging; complete demo-auth protocol/cookie/partial-login recovery explanation. New dependency/login/native commands were not executed. Quickstart metadata says so.
+
+Two ORIGINAL SDK CLI runs in the same frozen context produced identical outputs; all six outer processes exited zero. Independent review confirms JSON changes only sourceRevision and Markdown only2361immutable revision references. Existing119exports,28supporttypes,551schemafacts and consumer meanings are preserved. Both actual original output files installed. Original SDK CLI --check now exits zero and reports119exports; all five Source files unchanged by that check. Publication input checks passed177pages/51plugins. These are bounded successful checks, not whole generated-reference or runtime acceptance.
+
+Reader refresh and relevant previous-record impact reviews remain pending for this new Source batch. Do not newly accept A98-02/A98-13/A910-03/A910-04 before their current Reader and whole-scope closeout. Register remains47/89gates and223/261requirements; no counts changed here.
+
+Raw graph at554completed with5outer and104inner successful records; original module-input guard passed after current433initializer/1597consumed contexts were verified unchanged. Existing finite115operative harness closure guard is actually replayed by the original getter; a separately reviewed scanner-startup helper absent from that roster is not, by filename alone, a missing operative harness member. Role/consumer/current-output qualification remains separate. No all179Source waiver, blanket classification, native/product/pipeline/cluster/CI/release grant or receipt rewrite.
+
+Runtime stop unchanged: RELEASE_CONFIGURATION_CHANGED: charts/kubeclaw/files/config/knip.json. Real compiled eight-stage execution remains blocked locally by read-only cgroup2 and no connected execution nodes; external authorized-host question remains pending. All previous findings/first failures and historical proof limits remain retained.

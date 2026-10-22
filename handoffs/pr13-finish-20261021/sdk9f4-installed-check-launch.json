@@ -1,0 +1,24 @@
+{
+  "argv": [
+    "/usr/local/bin/node",
+    "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/docs-sdk-reference.mjs",
+    "--root",
+    "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery",
+    "--revision",
+    "7994a51e16bc752357c3a801190b12b7d6a191a4",
+    "--check"
+  ],
+  "cwd": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery",
+  "environment": {
+    "PATH": "/usr/local/bin:/usr/bin:/bin",
+    "HOME": "/home/node",
+    "LANG": "C.UTF-8",
+    "LC_ALL": "C.UTF-8",
+    "TZ": "UTC",
+    "TMPDIR": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/sdk-original-installed-check-9f4a3045/tmp"
+  },
+  "stdin": "DEVNULL",
+  "sourceState": "9f4a3045 plus exactly5 independently reviewed installedSourcefiles; no new SDK implementation/config/import context",
+  "purpose": "Original read-only SDK checkSdkReference branch, source/outputs only; not whole generator/graph/runtime/release approval",
+  "timeoutSeconds": 120
+}

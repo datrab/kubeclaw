@@ -5,7 +5,7 @@ Audience: operator
 Owner: platform operations
 Evidence: package.json; scripts/deploy.sh
 Applies to: current repository checkout
-Last verified: 2026-09-16, local command execution
+Last verified: 2026-10-22, source/procedure review; revised dependency commands not executed
 
 ## Objective
 
@@ -63,6 +63,7 @@ git status --short > "<dependency-evidence-dir>/worktree-before.txt"
 git rev-parse HEAD > "<dependency-evidence-dir>/source-commit.txt"
 node --version > "<dependency-evidence-dir>/node-version.txt"
 npm --version > "<dependency-evidence-dir>/npm-version.txt"
+npm config get omit > "<dependency-evidence-dir>/npm-omit.txt"
 sha256sum package-lock.json > "<dependency-evidence-dir>/package-lock.sha256"
 npm config get registry | node -e '
 let value=""; process.stdin.on("data", c => value += c).on("end", () => {
@@ -71,23 +72,48 @@ let value=""; process.stdin.on("data", c => value += c).on("end", () => {
   process.stdout.write(url.toString() + "\n");
 });' > "<dependency-evidence-dir>/registry.txt"
 set +e
-npm ci --ignore-scripts > "<dependency-evidence-dir>/npm-ci.stdout.txt" \
+npm ci --ignore-scripts --include=dev > "<dependency-evidence-dir>/npm-ci.stdout.txt" \
   2> "<dependency-evidence-dir>/npm-ci.stderr.txt"
 npm_ci_status=$?
 set -e
 printf '%s\n' "$npm_ci_status" > "<dependency-evidence-dir>/npm-ci.exit-status.txt"
 test "$npm_ci_status" -eq 0
+set +e
+node -e 'for (const name of ["typescript", "json-schema-to-typescript"]) console.log(require.resolve(name))' \
+  > "<dependency-evidence-dir>/required-modules.stdout.txt" \
+  2> "<dependency-evidence-dir>/required-modules.stderr.txt"
+module_status=$?
+set -e
+printf '%s\n' "$module_status" > "<dependency-evidence-dir>/required-modules.exit-status.txt"
+test "$module_status" -eq 0
 git status --short > "<dependency-evidence-dir>/worktree-after.txt"
 cmp "<dependency-evidence-dir>/worktree-before.txt" \
   "<dependency-evidence-dir>/worktree-after.txt"
 ```
 
 Expected observations: the sanitized registry URL names the approved endpoint,
-the lock digest is nonempty, the exit-status file contains `0`, npm output
-reports a completed lockfile installation, and the before/after worktree files
-match. Stop and retain the sanitized files on DNS, TLS, proxy, authentication,
-package-not-found, integrity, engine, disk, or permission failure. Do not change
-the registry, lockfile, or package versions merely to pass.
+the lock digest is nonempty, and both exit-status files contain `0`.
+Module resolution prints the installed paths for `typescript` and
+`json-schema-to-typescript`. The before/after worktree files match.
+These development packages are required by the root compiler and generator
+checks. `NODE_ENV=production` or an npm omit setting can otherwise exclude them
+while `npm ci` still exits zero. Explicit `--include=dev` overrides dev omission;
+see the [developer setup boundary](../extend/developer-handbook.md#prepare-a-clean-checkout).
+Do not treat a successful production-only install as complete preparation.
+
+Stop before generated checks if installation or module resolution fails.
+Retain the sanitized output and exit statuses. A missing required module is a
+dependency-setup failure, not schema drift or a product-runtime defect.
+Correct the named setup prerequisite and repeat this same locked include-dev
+installation in an owned checkout with a new evidence directory.
+On DNS, TLS, proxy, authentication, package-not-found, integrity, engine, disk,
+or permission failure, stop at the named owner. An incomplete offline cache
+needs approved registry access or a complete approved cache before retry.
+Do not change the registry, lockfile, or package versions merely to pass.
+
+Successful module resolution proves these entry points are available; it does
+not run their generators, validate generated output, build the native launcher,
+fetch browsers, provision services, or establish cluster readiness.
 
 If no later step needs the installed tree, have the checkout owner remove the
 entire disposable checkout. If later steps continue in it, retain
@@ -154,7 +180,8 @@ entry point.
 | Failure | Cause class | Next action |
 | --- | --- | --- |
 | Dirty worktree | Local or generated files differ | Review the changes; do not discard unknown work |
-| `npm ci` fails | Lockfile, registry, network, or runtime mismatch | Correct the named prerequisite |
+| `npm ci` fails | Lockfile, registry, network, cache, or runtime mismatch | Retain the first failure and correct the named prerequisite before the same locked retry |
+| Required module resolution fails after install | Missing compiler/generator development dependency; production-only installation can still exit zero | Stop before generated checks; repeat the canonical include-dev installation and resolution check with new evidence |
 | Generated file drift | Source inventory changed | Run the named generator and review its diff |
 | Plugin validation fails | Manifest, module, schema, export, trust, or grant error | Repair the exact reported boundary |
 | Pipeline entry point differs | The checkout and documentation do not describe the same command | Stop and review the selected source revision |

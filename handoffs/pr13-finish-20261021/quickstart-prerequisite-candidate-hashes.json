@@ -1,0 +1,26 @@
+{
+  "candidateRevision": "9f4a304524da258c5454a9361d83f5d69092ed07",
+  "target": "docs/site/use/quickstart.md",
+  "beforeSha256": "d7e4ef9065ba52573c324efec918459a7ef1f4e19683c2b21f5b94094a606626",
+  "afterSha256": "682a5f91bf9a2d84294cb07cb181a4b3d71cd143d6f26d4599d1ded81f32f550",
+  "sourceBindings": {
+    "docs/site/extend/developer-handbook.md": "6a03109c275f0d8c8814ee14c3b06e80db74a90f2a5c1750ae77f24cf5878f27",
+    "package.json": "4ab1e90c2259aeb96acfdc877e5a9eed330f605abff46d7eca85faded0f020c3",
+    "package-lock.json": "9a75a764e3a27a2163736ec097e99b305a05d9ec2748cb7e38a19b8f88d7fafe",
+    "scripts/docs-configuration-inventory.mjs": "7314148ac1c662049961cf274f1e5b1d4f7133769cd5f9c8889d49a329ddfa6b",
+    "scripts/docs-api-output-discovery.mjs": "acc5c54bc81293570e67346e6ea5b2062dd172556972517fd65909d3a70f0e9c"
+  },
+  "priorReviewImmutableSha256": {
+    "review.md": "2a75fa0289c65045073c61af5ae0a7182626dc1daa6d158d1ee7fe3e114cd9ec",
+    "review.json": "c1c8aeda1182391f73babb981767b13a4eacf75dce20a160d29fc03766100e21",
+    "prior-scope-comparison.json": "05a3bcf33edb3f823b9141eecbd9565d3e9a95ab4c9d38bbc26b1342f76a7b76"
+  },
+  "limits": [
+    "Author candidate, not independent acceptance",
+    "No install/module-resolution command, product, target/native import, generator or Reader executed",
+    "Nineteen unchanged accepted topic scopes retained only within original limits; no OPL001/005 promotion",
+    "Fresh rendered Reader and independent whole-gate delta review remain pending"
+  ],
+  "v1CandidateSha256": "f475be671dde24769ee18d7bbaf7561cda7e69971eb4faaecaa57de442beb060",
+  "deltaFromV1": "Only Last verified header; all revised procedure bytes and Source bindings exact v1."
+}

@@ -1,0 +1,16 @@
+{
+  "reviewer": "/root,nonauthorofcandidate",
+  "candidate": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/a98-quickstart-prerequisite-author-v2/docs/site/use/quickstart.md",
+  "candidateSha256": "682a5f91bf9a2d84294cb07cb181a4b3d71cd143d6f26d4599d1ded81f32f550",
+  "sourceAccuracy": "PASS_BOUNDED_CORRECTION",
+  "readerUsability": "PASS_SEMANTIC_PROCEDURE_ONLY_CURRENT_BUILT_READER_PENDING",
+  "quality": "PASS_BOUNDED_CORRECTION",
+  "reason": "Locked development install and required resolver checks match installednpm include/omit implementation and existing handbook procedure. Exact old code remains except bounded dependency preparation/recovery; header explicitly source-only newcommands notexecuted.",
+  "readScope": "Wholecandidatechange+surroundingcanonicalprocedure; actualcontrollingSourcebranches; priorwhole-topic independentreviewexactscopes retained",
+  "limits": [
+    "Noinstall/command/product/nativeexecution",
+    "No freshReader yet",
+    "NoA98/A910gateacceptanceorall51scope inferred",
+    "Originalfailedfindingsandoldcompletedscopes preserved"
+  ]
+}

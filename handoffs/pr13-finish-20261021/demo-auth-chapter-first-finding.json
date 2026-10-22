@@ -1,0 +1,9 @@
+{
+  "id": "F1",
+  "originalCandidateSha256": "a2a6ba0f72cf3a1aa2d30c709ce6c72c16b7ddebbeddfa7dc2941bfc808d4ab8",
+  "location": "Protocol text must ... contain no NUL/CR/LF",
+  "counterexample": "protocol.js22\u201335 only type/length-checks assertion.equals strings, permitting empty/NUL/CR/LF; text() is not called on equals.",
+  "execution": "Source branch reasoning only, no function execution.",
+  "correction": "Paths/keys/pointers text() restriction explicit; equality strings explicitly permit empty/control values; runtime UTF16 versus schema codepoints precise.",
+  "targetedRereview": "PASS"
+}

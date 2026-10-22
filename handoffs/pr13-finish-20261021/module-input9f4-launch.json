@@ -1,0 +1,18 @@
+{
+  "argv": [
+    "/usr/local/bin/node",
+    "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/check-module-input-original-9f4.mjs"
+  ],
+  "cwd": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery",
+  "environment": {
+    "PATH": "/usr/local/go/bin:/usr/local/bin:/usr/bin:/bin",
+    "HOME": "/home/node",
+    "LANG": "C.UTF-8",
+    "LC_ALL": "C.UTF-8",
+    "TZ": "UTC"
+  },
+  "stdin": "DEVNULL",
+  "scriptSha256": "f2035a69bd4c5fb380bd7eb4d8cf63e5cd64c9511d782a07387a472a8079a0a9",
+  "purpose": "Original finite module-input metadata guard only; no graph/capture/target/native/runtime grant",
+  "independentReview": "operator_acceptance complete wrapper/206-251/9975-10020 source review no material defect, current session receipt"
+}

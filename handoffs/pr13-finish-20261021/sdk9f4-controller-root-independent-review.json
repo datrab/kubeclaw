@@ -1,0 +1,50 @@
+{
+  "reviewer": "/root,nonauthorofcontroller",
+  "status": "ROOT_COMPLETE_BOUNDED_STAGE_PAIR_REVIEW",
+  "controllerSha256": "8729a16e7e168367b144790375eb17ffe064f9a8091fd4d117a25d801d59ed1c",
+  "revision": "9f4a304524da258c5454a9361d83f5d69092ed07",
+  "readInFull": [
+    "originalSDK283lines across explicitnontruncatedsegments",
+    "actualfull277linecontroller",
+    "wholeauthorreport+originalSDKplan",
+    "wholelocalanchorhelper functions",
+    "actualnativeGitconfigurationsections/fields,noincludes/fsmonitor/filters",
+    "operatorcompleteSDK/entities11eagerSourceindependentreview"
+  ],
+  "completeActualNamespaceChecks": [
+    {
+      "root": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/node_modules",
+      "files": 28133,
+      "directories": 3025,
+      "links": 100
+    },
+    {
+      "root": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/skills/common/plugin-runtime/sdk",
+      "files": 18,
+      "directories": 5,
+      "links": 0
+    },
+    {
+      "root": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/contracts",
+      "files": 251,
+      "directories": 45,
+      "links": 0
+    },
+    {
+      "root": "/opt/kubeclaw-tools/node_modules",
+      "files": 6253,
+      "directories": 886,
+      "links": 24
+    }
+  ],
+  "trackedCompilerDataBindingsChecked": 3355,
+  "selectedSemanticSources": 58,
+  "originalSelectedRevisionSourcesAllEqual": true,
+  "meaning": "Two original SDKCLI stages, staticTypeScriptnoEmitdataanalysis; noSDKruntimeimports/transform/plugins. Entitieseagerdecoder/typearraybootstrapseparatelyreviewed; originalTSstartup5.9.3reused onlyexactbytes. Overinclusivefulldata candidateNamespacesNOTactualProgramcensus.",
+  "guards": "Allfulltypedmembers/bytes/modes/devino/pointers; all60ancestorcandidates and nativeconfig contexts currentverified; exactcontroller/sourcepacket; rawOSstreams/fullterminal/120s64MiBpoll+preservepartialfailure; firstfailureStops; no Maininstall/checkmode.",
+  "limits": [
+    "Onlyliteral2stageruns6outerprocesses",
+    "No npm/native/product/SDKruntime grant",
+    "No newrole/API/graph/CI/overallgeneration/gate/releaseapproval"
+  ]
+}

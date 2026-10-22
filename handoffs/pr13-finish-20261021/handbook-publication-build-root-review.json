@@ -1,0 +1,16 @@
+{
+  "reviewer": "/root,nonauthorofcandidate",
+  "candidate": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/a910-current-gates-55496/candidate/docs/site/extend/developer-handbook.md",
+  "candidateSha256": "c897510c3e441dbe5e5d47a1beff9a9e1173d22f50da679938aa2df8f64039a1",
+  "sourceAccuracy": "PASS_BOUNDED_CORRECTION",
+  "readerUsability": "PASS_SEMANTIC_PROCEDURE_ONLY_CURRENT_BUILT_READER_PENDING",
+  "quality": "PASS_BOUNDED_CORRECTION",
+  "reason": "Originalpublisher1078\u20131127 really prepares previews/diagrams, callsbuildReader, appendsrecords, writesmanifest/report. ExactcurrentimmutableSourcepin and neighboringinput-selector wording correct; separate artifact/search/source/preview/diagram/browser checks remain mandatory, build notgeneralPASS.",
+  "readScope": "Wholecandidatechange+surroundingcanonicalprocedure; actualcontrollingSourcebranches; priorwhole-topic independentreviewexactscopes retained",
+  "limits": [
+    "Noinstall/command/product/nativeexecution",
+    "No freshReader yet",
+    "NoA98/A910gateacceptanceorall51scope inferred",
+    "Originalfailedfindingsandoldcompletedscopes preserved"
+  ]
+}

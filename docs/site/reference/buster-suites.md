@@ -664,6 +664,90 @@ These providers are installed but do not define another shipped suite:
 Their presence explains why the provider count is larger than the suite count.
 Provider, suite, and report-adapter identities are different namespaces.
 
+### Demo session protocol and partial-login recovery
+
+`kubeclaw.demo-auth-smoke@1` tests one declared JSON-session flow, not an
+arbitrary login form or browser cookie jar. Its [configuration schema](https://github.com/datrab/kubeclaw/blob/9f4a304524da258c5454a9361d83f5d69092ed07/skills/buster/plugins/demo-auth-smoke/schemas/config.schema.json)
+checks shape; the [protocol validator](https://github.com/datrab/kubeclaw/blob/9f4a304524da258c5454a9361d83f5d69092ed07/skills/buster/plugins/demo-auth-smoke/src/protocol.js#L10-L43)
+applies additional runtime restrictions:
+
+- `usernameKey`, `passwordKey` and `cookieName` must match
+  `[A-Za-z][A-Za-z0-9_-]{0,63}`. Username and password keys must differ; the
+  schema's 2,048-character string limit alone does not establish admission.
+- Login and protected paths must be canonical absolute paths on the exposure
+  origin, without a query, fragment, backslash or `//` authority form. Paths,
+  keys and pointers passed through `text()` must be nonempty, at most 2,048
+  JavaScript UTF-16 code units, and contain no NUL/CR/LF.
+- JSON pointers must start with `/`, use only valid `~0`/`~1` escapes and exclude
+  the literal segments `__proto__`, `constructor` and `prototype`. Each assertion
+  has exactly `pointer` and `equals`; its pointer must differ from
+  `usernamePointer`. Equality is strict against a string of at most 2,048
+  JavaScript UTF-16 code units, a finite number or a boolean. Unlike `text()`,
+  the equality-string check permits empty strings and NUL/CR/LF. A missing own property is an
+  assertion error, not an absent-value match.
+
+The [input validator](https://github.com/datrab/kubeclaw/blob/9f4a304524da258c5454a9361d83f5d69092ed07/skills/buster/plugins/demo-auth-smoke/src/protocol.js#L44-L79)
+requires exactly the three manifest-declared native value links, with the
+`deployment`, `credentials` and `exposure` schema IDs shown in the
+[package catalogue](../extend/plugin-catalogue/kubeclaw.demo-auth-smoke.md).
+It checks the declared lease/namespace, immutable image/manifest digest,
+credential-source Secret identity and digest, and pending exposure's owner,
+lease UID and positive generation. Deployment, exposure and handoff expiry must
+agree and be in the future. The exposure URL must be canonical HTTP(S), without
+URL credentials, query or fragment. These checks reconcile supplied native
+values; this provider does not fetch the cluster or Secret to establish their
+provenance. Its authentication output alone does not establish readiness or
+replace Nova's final native-link/source checks.
+
+The [provider](https://github.com/datrab/kubeclaw/blob/9f4a304524da258c5454a9361d83f5d69092ed07/skills/buster/plugins/demo-auth-smoke/src/provider.js#L28-L59)
+first requires an unauthenticated protected GET to return 401 or 403. It then
+POSTs the generated credentials as JSON, requires login status 200 or 204, and
+sends the accepted cookie on a protected GET. That response must be status 200
+with the exact content type `application/json`; its JSON must match the generated
+username and all independent business assertions. Network policy must grant the
+selected origin, POST, and the content-type/cookie headers. Each request has a
+65,536-byte response limit and uses the earlier of the invocation deadline and
+exposure expiry. Cancellation/deadline checks can reject a response after the
+request has already taken effect.
+
+Only the [strict session-cookie subset](https://github.com/datrab/kubeclaw/blob/9f4a304524da258c5454a9361d83f5d69092ed07/skills/buster/plugins/demo-auth-smoke/src/protocol.js#L81-L107)
+is supported. One `set-cookie` string must name exactly `cookieName`, have a
+nonempty supported cookie value, contain no comma/CR/LF and be at most 4,096
+JavaScript UTF-16 code units. These runtime string limits are distinct from
+JSON Schema string-length rules, which count Unicode code points. An explicit absolute `Path` must cover both configured routes at a
+path-segment boundary. `HttpOnly` is required; HTTPS requires `Secure`, while
+HTTP rejects it. `Secure` and `HttpOnly` cannot carry values. `SameSite`, when
+supplied, must be Strict, Lax or None; None additionally requires Secure.
+`Max-Age`, when supplied, must be a positive decimal of one to nine digits with
+no leading zero. Attribute names are case-insensitive. Duplicate or unsupported
+attributes, including Domain and Expires, are rejected rather than interpreted
+as a general browser cookie policy. For example, `demo_session=token; Path=/;
+HttpOnly; Secure` illustrates the accepted shape for HTTPS when the configured
+name is `demo_session`; it is not a credential or an executed login result.
+
+| Result or error | Observed boundary and safe next action |
+| --- | --- |
+| Passed provider result | All three checks passed. The returned `authentication` value binds native invocation/lease/image/credential/exposure identities, protocol digest, time and three status/body-digest pairs. It emits no cookie or response body. It is not a Ready transition. |
+| `DEMO_AUTH_PATH_INVALID`, `DEMO_AUTH_KEY_INVALID`, `DEMO_AUTH_POINTER_INVALID` or `DEMO_AUTH_ASSERTION_INVALID` | Protocol admission failed before requests. Correct the named configuration against the runtime rules; do not substitute a broader schema-only interpretation. |
+| `DEMO_AUTH_INPUT_*`, `DEMO_AUTH_SOURCE_MISMATCH`, `DEMO_AUTH_PROVENANCE_REQUIRED`, `DEMO_AUTH_CREDENTIAL_DIGEST_MISMATCH` or `DEMO_AUTH_EXPOSURE_*` | Linked values or their lineage/expiry are unacceptable. Stop and reconcile the original fixture/credential/exposure producers; do not copy identities from another attempt or bypass provenance with an HTTP-200 probe. |
+| `DEMO_AUTH_NEGATIVE_CONTROL_FAILED` | The unauthenticated endpoint did not deny access with 401/403. Diagnose the declared protected route/application policy before proceeding; no login has been sent by this flow. |
+| `DEMO_AUTH_LOGIN_FAILED` | Login did not return 200/204. Diagnose the application without assuming a failed status proves no remote session or other effect was created. Do not blindly repeat the POST. |
+| `DEMO_AUTH_SESSION_COOKIE_INVALID` or `DEMO_AUTH_SESSION_COOKIE_SCOPE_INVALID` | Login has already returned success, but its cookie failed admission. Stop; inspect the application's cookie contract without logging cookie values. A Domain attribute is one concrete rejected case. Fix the application/configuration and resolve the possible existing session before a new attempt. |
+| `DEMO_AUTH_PROTECTED_*`, `DEMO_AUTH_IDENTITY_MISMATCH`, `DEMO_AUTH_ASSERTION_MISSING` or `DEMO_AUTH_BUSINESS_ASSERTION_FAILED` | The authenticated request/body/assertion failed after login. Retain the original failure and investigate that application state; successful login is not a passed business test. |
+| `DEMO_AUTH_CANCELLED`, `DEMO_AUTH_DEADLINE_EXPIRED`, `DEMO_AUTH_HTTP_EVIDENCE_INVALID` or a failed network invocation | Determine the last attempted request from bounded owning evidence. A missing/late response does not prove the request had no effect. Stop on uncertain login outcome rather than inventing a successful receipt. |
+
+A successful login can leave an application session even when cookie parsing,
+authenticated-body checks, cancellation or a later deadline prevents a result.
+The provider has no logout or reconciliation operation and is explicitly
+[not retry-safe](https://github.com/datrab/kubeclaw/blob/9f4a304524da258c5454a9361d83f5d69092ed07/skills/buster/plugins/demo-auth-smoke/plugin.json#L44-L47).
+The application's owner must invalidate or expire that session through its own
+supported mechanism before deciding whether a new attempt is safe. Removing a
+plugin registration or cleaning Buster's artifacts is not session deletion.
+Do not claim remote cleanup, replay safety, deployed readiness or a successful
+live login from this source-backed description. The package's
+[README and bounded test claims](https://github.com/datrab/kubeclaw/blob/9f4a304524da258c5454a9361d83f5d69092ed07/skills/buster/plugins/demo-auth-smoke/README.md)
+remain distinct from a compiled native deployment or operator execution.
+
 ## Inputs, Outputs, and Composition
 
 | Typed value or artifact | Typical producer | Typical consumer |

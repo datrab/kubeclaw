@@ -1,0 +1,45 @@
+{
+  "verdict": "PASS_BOUNDED_ORIGINAL_MODULE_INPUT_GUARD_ONLY",
+  "reviewer": "operator_acceptance",
+  "readScope": [
+    "Complete check-module-input-original-9f4.mjs wrapper",
+    "scripts/docs-api-output-discovery.mjs documentationModuleInputAuthority206\u2013251",
+    "scripts/docs-api-documentation-role-custody.mjs rootSelectedCompilerTarget9975\u201310020",
+    "Root launch.json/terminal.json/stdout.bin/stderr.bin"
+  ],
+  "staticFinding": "No material wrapper/finite guard error found. Snapshot preflight and repeat check433 reviewed startup files and1597 consumed contexts; raw stored graph byte equality retained. Original guard verifies recipes, operations, source/caller inputs, finite module paths, resolution-only qualifications and compiler physical metadata. No graph refresh or compiler/target execution in the inspected function bodies.",
+  "rootExecution": {
+    "returncode": 0,
+    "signal": null,
+    "scriptSha256": "f2035a69bd4c5fb380bd7eb4d8cf63e5cd64c9511d782a07387a472a8079a0a9",
+    "stdoutSha256": "82543f67fe8eb3c766c2c046eefe7e01e29fcd404f3d2f5c66b0224eebf19d0c",
+    "stderrBytes": 0,
+    "result": {
+      "status": "ORIGINAL_MODULE_INPUT_GUARD_PASSED_ONLY",
+      "digest": "723e9503a38d50ce2a09bea7fb8a0c9bca73a0b3b89f093dcf1f8c411408ba62",
+      "before": {
+        "physicalFiles": 433,
+        "consumedContexts": 1597,
+        "graphSha256": "738246e26a81e280ad870e1af0b3dffee1f49689b9c130fa4592a6a0587b21ba"
+      },
+      "after": {
+        "physicalFiles": 433,
+        "consumedContexts": 1597,
+        "graphSha256": "738246e26a81e280ad870e1af0b3dffee1f49689b9c130fa4592a6a0587b21ba"
+      },
+      "graphSourceRevision": "55496fa427f536fb9ad6c1a833a4da38dce4839f",
+      "currentRevision": "9f4a304524da258c5454a9361d83f5d69092ed07",
+      "limits": [
+        "Original stored raw graph reused only after all1597actual consumed and433initializer contexts unchanged",
+        "No full qualification, native/product execution, generator or release grant"
+      ]
+    }
+  },
+  "independentChecks": "Raw stream lengths/hashes, exact executed wrapper hash, terminal0 and equal before/after metadata independently checked read-only.",
+  "limits": [
+    "Reviewer did not execute JavaScript/harness/guard",
+    "Root imported only original already-qualified startup module domain; no new module-input or consumer authority is granted by this receipt",
+    "No graph regeneration, native/product/target execution, generator, complete qualification, consumer approval, deployment or release grant",
+    "Reviewed manifest/context inputs remain frozen trusted evidence inputs; this receipt is not a general arbitrary graph validator"
+  ]
+}

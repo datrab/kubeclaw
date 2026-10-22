@@ -1,0 +1,14 @@
+{
+  "status": "SDK_STAGE_PAIR_COMPLETE_UNACCEPTED",
+  "revision": "9f4a304524da258c5454a9361d83f5d69092ed07",
+  "documentationRevision": "7994a51e16bc752357c3a801190b12b7d6a191a4",
+  "manifestSha256": "3edf5f8dafe8227664e6575769d277a22589d45c92404a7b7d62ec5eed0a10db",
+  "outputHashes": {
+    "sdk-reference.json": "c1061422373d61e143322c856fe63ad66bbc7bc9075776b4ff91fee75b933214",
+    "sdk-exports.md": "2734069b08aeb59b217151aab05774a780d85bc4dadb31ec3911dfa717a253d3"
+  },
+  "limits": [
+    "Two original fixed-context stage outputs only; no Main installation, check mode or target SDK runtime execution.",
+    "No complete actual Program input census, all-role/graph/API/CI/generator/gate/runtime acceptance."
+  ]
+}

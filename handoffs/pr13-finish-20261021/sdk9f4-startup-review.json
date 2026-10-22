@@ -1,0 +1,81 @@
+{
+  "packetManifestSha256": "95424b028eb4873ff4a74fbd5594f8d07219b57d81dd51094532d0f4dc7f1212",
+  "packetFiles": [
+    {
+      "path": "README.md",
+      "sha256": "374bafd39f5ba9c615c3318e6b33ed98b91e93bf2b0478d46ac432ffdd2954b4",
+      "bytes": 10620
+    },
+    {
+      "path": "ancestor-package-context.json",
+      "sha256": "64b52361951ef5d2bc493931140160b30375fbefe1ea2c85d678977c01893f16",
+      "bytes": 15366
+    },
+    {
+      "path": "author-plan.json",
+      "sha256": "9bd232e2ab50ea5ef0066aaff2333918cb375365211b647e86b5144fa54098f9",
+      "bytes": 1145
+    },
+    {
+      "path": "eager-source-bindings.json",
+      "sha256": "8580ee49fb9493b6cea14c9d86e66d3598fb0fe8d69d8e28455a87d34d5d80d8",
+      "bytes": 4210
+    },
+    {
+      "path": "installed-candidate-namespace.json",
+      "sha256": "922b73c0eb862ce4c21ffc1aeca751801d0ff820894de3379f5f57bb007ab6d0",
+      "bytes": 11135448
+    },
+    {
+      "path": "semantic58-existing-bindings.json",
+      "sha256": "9f3ede5a68427a4111a5493d9602fa818cc91a7f5f55caf799c5b014b433ab24",
+      "bytes": 10159
+    },
+    {
+      "path": "tracked-compiler-data-domain.json",
+      "sha256": "315802ed08098b24b1dcb92a28c940b7d53248859aee7ded634b1e925de34462",
+      "bytes": 831774
+    },
+    {
+      "path": "workspace-sdk-contract-candidate-namespaces.json",
+      "sha256": "ae0ef4ca604e29a39223b370901ca107659de3bba2fddaba241c5d6a7e532f80",
+      "bytes": 121404
+    }
+  ],
+  "verdict": "PASS_BOUNDED_STATIC_SOURCE_AND_PLAN_WITH_PENDING_LAUNCH_PREREQUISITES",
+  "reviewer": "operator_acceptance",
+  "sourceRevision": "9f4a304524da258c5454a9361d83f5d69092ed07",
+  "selectedDocumentationRevision": "7994a51e16bc752357c3a801190b12b7d6a191a4",
+  "reviewedScope": [
+    "Whole original scripts/docs-sdk-reference.mjs CLI/discovery/render/check/staging/dispatch",
+    "Actual SDK package.json/tsconfig.build.json and SDK/runtime contract imports",
+    "Whole scripts/lib/docs-markdown-anchors.mjs selected anchor/decode path",
+    "Exact entities ESM14-total eager roster:3local+11entities; all ordinary helper implementation bodies, generated literals bound as data",
+    "Current/7994 full-byte comparison for all58semantic bindings",
+    "Physical candidate-context plan:28133installedfiles3025dirs100links; SDK18/contracts251 physical namespace;3355tracked data;60ancestor candidates",
+    "Root prior installed TypeScript5.9.3 startup/foundation proof reused only for exact typescript.js/package bytes; no broader upstream compiler API semantic grant"
+  ],
+  "observations": [
+    "All eight frozen packet file hashes/lengths match exact manifestSHA95424b...",
+    "All58semantic source files match both current bytes and selected7994fullGitobject bytes; no mismatch.",
+    "All14eager implementation bindings plus Nodebinary, entities package, TypeScript package/entry SHA and mode match current physical files; static relative import roster has no missing local implementation member.",
+    "createProgram forces noEmit:true; owner invokes compiler diagnostics/typechecker/AST APIs only, not emit/transformers/plugin callbacks or SDK module imports. Runtime-looking declarations in contract closure remain compiler data.",
+    "Exact SDK tsconfig has no extends/types/typeRoots/plugin directive and includes src/**/*.ts. Actual NodeNext contract closure reaches Ajv/formats and observability canonical-json declarations.",
+    "entities selected work is literal trie/base64\u2192typed arrays/Maps, enums, decoder closure construction and string decode for anchors; no dynamic import/eval/network/subprocess/fs operation in that dependency.",
+    "Staging rejects inside physical Main/existing targets and uses fresh0700mkdir plus0600O_EXCL|O_NOFOLLOW two files. Render error can leave partial stage: retain as failure, never success.",
+    "Selected revision is link/output identity; original semantic bindings\u2014not a global graph\u2014provide exact source continuity. This does not prove all generated prose semantics merely from equality."
+  ],
+  "remainingPrelaunch": [
+    "Known external default ambient namespace /opt/kubeclaw-tools/node_modules must be completely bound and compared including full bytes, directory membership, symlink/canonical targets; current packet only binds its3@types names/pointer, not those files. Root already identified and is extending data-only snapshot.",
+    "Independently review Root separate capture wrapper before execution: explicit environment/cwd/Node, bound source pre/post, fresh owned stage/temp dirs, whole process/stream limits, raw stdout/stderr/terminal/timeout retention; first failure stops.",
+    "Fresh unchanged complete namespace/context snapshot after each run and original two-output byte comparison are actual future checks, not yet claimed."
+  ],
+  "additionalMaterialFindings": [],
+  "limits": [
+    "PREPARE/static review only; not execution admission or report of actual SDKCLI/compiler/generator success.",
+    "No JavaScript, TypeScript API, npm, target/product/native module or graph executed by reviewer.",
+    "Conservative namespaces/tracked suffix lists are not actual Program source census, declaration semantic review or executable authority.",
+    "No new module/consumer/role/global/gate/release permission; generated candidate/prose still requires independent actual diff review.",
+    "No general source-reading sandbox or all-upstream TypeScript API review is inferred."
+  ]
+}

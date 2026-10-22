@@ -1,0 +1,131 @@
+{
+  "status": "COMPLETE_BOUNDED_SOURCE_SEMANTIC_READER_QUALITY_PASS",
+  "reviewer": "/root/workflow_acceptance",
+  "author": "/root",
+  "revision": "9f4a304524da258c5454a9361d83f5d69092ed07",
+  "candidateSha256": "0004bbf00d69ab2bcb8dcb51aeb58e4f4b41d959e383f137001f1748ef54e4b3",
+  "sectionSha256": "732b0e07198e8231bd496cc9485f6d580a1b794c17821b1fcc617cd69568f733",
+  "priorCandidateSha256": "a2a6ba0f72cf3a1aa2d30c709ce6c72c16b7ddebbeddfa7dc2941bfc808d4ab8",
+  "entireExistingPageOutsideInsertionByteIdentical": true,
+  "newLinksUnchangedFromFirst": true,
+  "sourceFiles": [
+    {
+      "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+      "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b",
+      "wholeReadLines": 107,
+      "wholeBytesEqualPinned9f4": true
+    },
+    {
+      "path": "skills/buster/plugins/demo-auth-smoke/src/provider.js",
+      "sha256": "21e239a33d59c5849d8b9acef7ac0d6eba70b5652f885a430eefd82063f07c30",
+      "wholeReadLines": 59,
+      "wholeBytesEqualPinned9f4": true
+    },
+    {
+      "path": "skills/buster/plugins/demo-auth-smoke/plugin.json",
+      "sha256": "a7dc11d0cd73886181c787be579552ed8f26eba3a4b364e87361ca6eff0db194",
+      "wholeReadLines": 66,
+      "wholeBytesEqualPinned9f4": true
+    },
+    {
+      "path": "skills/buster/plugins/demo-auth-smoke/schemas/config.schema.json",
+      "sha256": "5e0d5ea09c2070375cc558bca0f21484646c98b0de18023438cc29b830ad642e",
+      "wholeReadLines": 84,
+      "wholeBytesEqualPinned9f4": true
+    },
+    {
+      "path": "skills/buster/plugins/demo-auth-smoke/README.md",
+      "sha256": "3230e842192813df317830d44228dae9836152ce7bddde9e65c2c4a7a9a37631",
+      "wholeReadLines": 34,
+      "wholeBytesEqualPinned9f4": true
+    }
+  ],
+  "immutableLinks": [
+    {
+      "path": "skills/buster/plugins/demo-auth-smoke/schemas/config.schema.json",
+      "revision": "9f4a304524da258c5454a9361d83f5d69092ed07",
+      "line": null,
+      "endLine": null,
+      "wholeCurrentBytesEqual": true
+    },
+    {
+      "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+      "revision": "9f4a304524da258c5454a9361d83f5d69092ed07",
+      "line": 10,
+      "endLine": 43,
+      "wholeCurrentBytesEqual": true
+    },
+    {
+      "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+      "revision": "9f4a304524da258c5454a9361d83f5d69092ed07",
+      "line": 44,
+      "endLine": 79,
+      "wholeCurrentBytesEqual": true
+    },
+    {
+      "path": "skills/buster/plugins/demo-auth-smoke/src/provider.js",
+      "revision": "9f4a304524da258c5454a9361d83f5d69092ed07",
+      "line": 28,
+      "endLine": 59,
+      "wholeCurrentBytesEqual": true
+    },
+    {
+      "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+      "revision": "9f4a304524da258c5454a9361d83f5d69092ed07",
+      "line": 81,
+      "endLine": 107,
+      "wholeCurrentBytesEqual": true
+    },
+    {
+      "path": "skills/buster/plugins/demo-auth-smoke/plugin.json",
+      "revision": "9f4a304524da258c5454a9361d83f5d69092ed07",
+      "line": 44,
+      "endLine": 47,
+      "wholeCurrentBytesEqual": true
+    },
+    {
+      "path": "skills/buster/plugins/demo-auth-smoke/README.md",
+      "revision": "9f4a304524da258c5454a9361d83f5d69092ed07",
+      "line": null,
+      "endLine": null,
+      "wholeCurrentBytesEqual": true
+    }
+  ],
+  "review": {
+    "sourceAccuracy": "PASS",
+    "readerUsability": "PASS",
+    "quality": "PASS"
+  },
+  "findingsResolved": [
+    {
+      "id": "F1",
+      "originalCandidateSha256": "a2a6ba0f72cf3a1aa2d30c709ce6c72c16b7ddebbeddfa7dc2941bfc808d4ab8",
+      "location": "Protocol text must ... contain no NUL/CR/LF",
+      "counterexample": "protocol.js22\u201335 only type/length-checks assertion.equals strings, permitting empty/NUL/CR/LF; text() is not called on equals.",
+      "execution": "Source branch reasoning only, no function execution.",
+      "correction": "Paths/keys/pointers text() restriction explicit; equality strings explicitly permit empty/control values; runtime UTF16 versus schema codepoints precise.",
+      "targetedRereview": "PASS"
+    }
+  ],
+  "openIssues": [],
+  "counterexamplesReviewed": [
+    "Schema-valid longer key rejects runtime",
+    "Wrong native lineage/expired exposure before request",
+    "Login success then Domain-cookie rejection leaves possible remote session",
+    "HTTP Secure / HTTPS missing Secure reject",
+    "SameSite=None without Secure rejects",
+    "Max-Age0/01 and duplicate attributes reject",
+    "Missing own property is not absent-value equality",
+    "Late/failed login response cannot prove no session/effect",
+    "No logout/registration removal/artifact cleanup deletes session",
+    "Assertion equality string may contain empty/NUL/CRLF despite text() restrictions on pointers"
+  ],
+  "limits": [
+    "Added chapter only; existing page scopes unchanged, not all51deepguides/global README parity/gate approval",
+    "No target/product/test/generator/native/login/service/cluster execution",
+    "No fresh built Reader/browser check"
+  ],
+  "initialInertCheckDiagnostic": "First comparison expected v1 hash on mutable candidate after Root had already installed off-tree correction; assertion stopped before report writes. Retained first-reviewed files then used for exact v1/v2 comparison; no Source or candidate changes.",
+  "targetExecutions": 0,
+  "mainWrites": false
+}

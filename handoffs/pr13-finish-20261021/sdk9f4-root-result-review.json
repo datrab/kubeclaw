@@ -1,0 +1,133 @@
+{
+  "status": "ROOT_VERIFIED_ACTUAL_ORIGINAL_STAGE_PAIR_UNACCEPTED",
+  "outerProcesses": [
+    {
+      "index": "process-00",
+      "argv": [
+        "/usr/bin/git",
+        "rev-parse",
+        "HEAD"
+      ],
+      "terminal": 0,
+      "stdout": {
+        "bytes": 41,
+        "sha256": "4c04e525613090c503b2af4a11244242be33bc945d354e518e71fc254cfc5d7e"
+      },
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "index": "process-01",
+      "argv": [
+        "/usr/bin/git",
+        "status",
+        "--porcelain=v1",
+        "--untracked-files=all"
+      ],
+      "terminal": 0,
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "index": "process-02",
+      "argv": [
+        "/usr/local/bin/node",
+        "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/docs-sdk-reference.mjs",
+        "--root",
+        "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery",
+        "--revision",
+        "7994a51e16bc752357c3a801190b12b7d6a191a4",
+        "--stage-output",
+        "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/sdk-original-cli-pair-9f4a3045/first-sdk"
+      ],
+      "terminal": 0,
+      "stdout": {
+        "bytes": 134,
+        "sha256": "323549a471520a1644703244b994fc2c1e5233bf92c0b9f414b2f366f45de3d9"
+      },
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "index": "process-03",
+      "argv": [
+        "/usr/local/bin/node",
+        "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/docs-sdk-reference.mjs",
+        "--root",
+        "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery",
+        "--revision",
+        "7994a51e16bc752357c3a801190b12b7d6a191a4",
+        "--stage-output",
+        "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/sdk-original-cli-pair-9f4a3045/repeat-sdk"
+      ],
+      "terminal": 0,
+      "stdout": {
+        "bytes": 135,
+        "sha256": "59b0ec3d5310409a37096bb7ba7522ce04109a01bd39065cb9c7bfc2691d7552"
+      },
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "index": "process-04",
+      "argv": [
+        "/usr/bin/git",
+        "rev-parse",
+        "HEAD"
+      ],
+      "terminal": 0,
+      "stdout": {
+        "bytes": 41,
+        "sha256": "4c04e525613090c503b2af4a11244242be33bc945d354e518e71fc254cfc5d7e"
+      },
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "index": "process-05",
+      "argv": [
+        "/usr/bin/git",
+        "status",
+        "--porcelain=v1",
+        "--untracked-files=all"
+      ],
+      "terminal": 0,
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    }
+  ],
+  "contextBeforeBetweenAfterExact": true,
+  "twoOriginalOutputFilesByteEqual": true,
+  "jsonDeltaOnlySourceRevision": true,
+  "markdownDeltaOnlyExactOldRevisionReplacement": true,
+  "oldRevision": "586f1f558a673c4df51c0afb9ea535c814b933b1",
+  "newRevision": "7994a51e16bc752357c3a801190b12b7d6a191a4",
+  "exports": 119,
+  "supportTypes": 28,
+  "schemaFacts": 551,
+  "limits": [
+    "No Maininstallation/ownercheck yet",
+    "No actual completeProgramcensus/globaldeterminism claim",
+    "No pipelineSDKruntime/native/deployment/release execution or gateacceptance"
+  ]
+}

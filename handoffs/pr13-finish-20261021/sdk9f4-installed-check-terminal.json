@@ -1,0 +1,15 @@
+{
+  "returncode": 0,
+  "signal": null,
+  "elapsedSeconds": 1.6668382929929066,
+  "streams": {
+    "stdout.bin": {
+      "bytes": 33,
+      "sha256": "18f8acfc6aeee66bd4085a305397e8fd34ae68b2d500f06897624f54116778aa"
+    },
+    "stderr.bin": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  }
+}

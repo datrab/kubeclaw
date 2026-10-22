@@ -1,0 +1,312 @@
+{
+  "verdict": "PASS_TWO_ORIGINAL_OUTPUTS_SOURCE_QUALITY_ONLY",
+  "reviewer": "operator_acceptance",
+  "sourceRevision": "9f4a304524da258c5454a9361d83f5d69092ed07",
+  "selectedDocumentationRevision": "7994a51e16bc752357c3a801190b12b7d6a191a4",
+  "manifestSha256": "3edf5f8dafe8227664e6575769d277a22589d45c92404a7b7d62ec5eed0a10db",
+  "controllerSha256": "8729a16e7e168367b144790375eb17ffe064f9a8091fd4d117a25d801d59ed1c",
+  "contextSha256": "16306895fb4f16c01387e33fbc77c84b9bea4387f0421fe9e3cd316455b690f0",
+  "namespaceCounts": [
+    {
+      "root": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/node_modules",
+      "files": 28133,
+      "directories": 3025,
+      "links": 100
+    },
+    {
+      "root": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/skills/common/plugin-runtime/sdk",
+      "files": 18,
+      "directories": 5,
+      "links": 0
+    },
+    {
+      "root": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/contracts",
+      "files": 251,
+      "directories": 45,
+      "links": 0
+    },
+    {
+      "root": "/opt/kubeclaw-tools/node_modules",
+      "files": 6253,
+      "directories": 886,
+      "links": 24
+    }
+  ],
+  "trackedCompilerDataFiles": 3355,
+  "ancestorCandidates": 60,
+  "processes": [
+    {
+      "index": 0,
+      "argv": [
+        "/usr/bin/git",
+        "rev-parse",
+        "HEAD"
+      ],
+      "environment": {
+        "PATH": "/usr/local/bin:/usr/bin:/bin",
+        "HOME": "/home/node",
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "TZ": "UTC",
+        "TMPDIR": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/sdk-original-cli-pair-9f4a3045/initial-tmp"
+      },
+      "terminal": {
+        "pid": 1063028,
+        "returncode": 0,
+        "signal": null,
+        "rejection": null,
+        "receiveError": null,
+        "endEpoch": 1792634521.7690535,
+        "elapsedSeconds": 0.05090578697854653,
+        "streams": {
+          "stdout.bin": {
+            "bytes": 41,
+            "sha256": "4c04e525613090c503b2af4a11244242be33bc945d354e518e71fc254cfc5d7e"
+          },
+          "stderr.bin": {
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          }
+        }
+      },
+      "launchSha256": "9cac43f401edebc9506321140eee03ae1e13e0a40d12c8d3649b7ab860927ccf"
+    },
+    {
+      "index": 1,
+      "argv": [
+        "/usr/bin/git",
+        "status",
+        "--porcelain=v1",
+        "--untracked-files=all"
+      ],
+      "environment": {
+        "PATH": "/usr/local/bin:/usr/bin:/bin",
+        "HOME": "/home/node",
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "TZ": "UTC",
+        "TMPDIR": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/sdk-original-cli-pair-9f4a3045/initial-tmp"
+      },
+      "terminal": {
+        "pid": 1063029,
+        "returncode": 0,
+        "signal": null,
+        "rejection": null,
+        "receiveError": null,
+        "endEpoch": 1792634521.8201756,
+        "elapsedSeconds": 0.05082245499943383,
+        "streams": {
+          "stdout.bin": {
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "stderr.bin": {
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          }
+        }
+      },
+      "launchSha256": "9853b98c5761f07a587b1630aaeae51c2ed3efe2a19f50afd04979413f55c5cd"
+    },
+    {
+      "index": 2,
+      "argv": [
+        "/usr/local/bin/node",
+        "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/docs-sdk-reference.mjs",
+        "--root",
+        "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery",
+        "--revision",
+        "7994a51e16bc752357c3a801190b12b7d6a191a4",
+        "--stage-output",
+        "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/sdk-original-cli-pair-9f4a3045/first-sdk"
+      ],
+      "environment": {
+        "PATH": "/usr/local/bin:/usr/bin:/bin",
+        "HOME": "/home/node",
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "TZ": "UTC",
+        "TMPDIR": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/sdk-original-cli-pair-9f4a3045/first-tmp"
+      },
+      "terminal": {
+        "pid": 1063044,
+        "returncode": 0,
+        "signal": null,
+        "rejection": null,
+        "receiveError": null,
+        "endEpoch": 1792634523.4749978,
+        "elapsedSeconds": 1.654517846996896,
+        "streams": {
+          "stdout.bin": {
+            "bytes": 134,
+            "sha256": "323549a471520a1644703244b994fc2c1e5233bf92c0b9f414b2f366f45de3d9"
+          },
+          "stderr.bin": {
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          }
+        }
+      },
+      "launchSha256": "22253c2375c86f6aee321208ad537fbeab45beda11cc99942cff6fda3e51a8cb"
+    },
+    {
+      "index": 3,
+      "argv": [
+        "/usr/local/bin/node",
+        "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/docs-sdk-reference.mjs",
+        "--root",
+        "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery",
+        "--revision",
+        "7994a51e16bc752357c3a801190b12b7d6a191a4",
+        "--stage-output",
+        "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/sdk-original-cli-pair-9f4a3045/repeat-sdk"
+      ],
+      "environment": {
+        "PATH": "/usr/local/bin:/usr/bin:/bin",
+        "HOME": "/home/node",
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "TZ": "UTC",
+        "TMPDIR": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/sdk-original-cli-pair-9f4a3045/repeat-tmp"
+      },
+      "terminal": {
+        "pid": 1063369,
+        "returncode": 0,
+        "signal": null,
+        "rejection": null,
+        "receiveError": null,
+        "endEpoch": 1792634531.075962,
+        "elapsedSeconds": 1.6544662849919405,
+        "streams": {
+          "stdout.bin": {
+            "bytes": 135,
+            "sha256": "59b0ec3d5310409a37096bb7ba7522ce04109a01bd39065cb9c7bfc2691d7552"
+          },
+          "stderr.bin": {
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          }
+        }
+      },
+      "launchSha256": "f05810012f49afd22250a806032d7b1b950ccf6c83a6e7d92ad873473959f4d2"
+    },
+    {
+      "index": 4,
+      "argv": [
+        "/usr/bin/git",
+        "rev-parse",
+        "HEAD"
+      ],
+      "environment": {
+        "PATH": "/usr/local/bin:/usr/bin:/bin",
+        "HOME": "/home/node",
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "TZ": "UTC",
+        "TMPDIR": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/sdk-original-cli-pair-9f4a3045/repeat-tmp"
+      },
+      "terminal": {
+        "pid": 1063440,
+        "returncode": 0,
+        "signal": null,
+        "rejection": null,
+        "receiveError": null,
+        "endEpoch": 1792634536.9899805,
+        "elapsedSeconds": 0.05075399298220873,
+        "streams": {
+          "stdout.bin": {
+            "bytes": 41,
+            "sha256": "4c04e525613090c503b2af4a11244242be33bc945d354e518e71fc254cfc5d7e"
+          },
+          "stderr.bin": {
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          }
+        }
+      },
+      "launchSha256": "9ae82ed0e68c23d6177f19ca57a79f3eefb5b1254bf11c641fd6e2a672878b40"
+    },
+    {
+      "index": 5,
+      "argv": [
+        "/usr/bin/git",
+        "status",
+        "--porcelain=v1",
+        "--untracked-files=all"
+      ],
+      "environment": {
+        "PATH": "/usr/local/bin:/usr/bin:/bin",
+        "HOME": "/home/node",
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "TZ": "UTC",
+        "TMPDIR": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/sdk-original-cli-pair-9f4a3045/repeat-tmp"
+      },
+      "terminal": {
+        "pid": 1063441,
+        "returncode": 0,
+        "signal": null,
+        "rejection": null,
+        "receiveError": null,
+        "endEpoch": 1792634537.0408332,
+        "elapsedSeconds": 0.050637989974347875,
+        "streams": {
+          "stdout.bin": {
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "stderr.bin": {
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          }
+        }
+      },
+      "launchSha256": "a4a2b1c659eb31c99150e0aa2968d3f610b985981166aabedee9f6be243d3531"
+    }
+  ],
+  "outputs": [
+    {
+      "name": "sdk-reference.json",
+      "intendedMainTarget": "docs/generated/inventory/sdk-reference.json",
+      "beforeSha256": "9d4f7a92f51d83303d39b3ec4a3ae0e56d5030f2c53f86cb7e9d676042bd264e",
+      "afterSha256": "c1061422373d61e143322c856fe63ad66bbc7bc9075776b4ff91fee75b933214",
+      "bytes": 1215332,
+      "repeatEqual": true,
+      "delta": "Only exact source revision replacement; whole remaining bytes equal",
+      "replacementCount": 1
+    },
+    {
+      "name": "sdk-exports.md",
+      "intendedMainTarget": "docs/site/reference/sdk-exports.md",
+      "beforeSha256": "b30dd5f462b7d98103a74cd827e549fb014fcf0ac2c0ac54965a56a7decd7916",
+      "afterSha256": "2734069b08aeb59b217151aab05774a780d85bc4dadb31ec3911dfa717a253d3",
+      "bytes": 799900,
+      "repeatEqual": true,
+      "delta": "Only exact source revision replacement; whole remaining bytes equal",
+      "replacementCount": 2361
+    }
+  ],
+  "inventoryCounts": {
+    "exports": 119,
+    "supportTypes": 28,
+    "schemaFacts": 551
+  },
+  "source": "PASS bounded owner output freshness/unchanged semantic preservation",
+  "semanticReader": "PASS unchanged generated119export/28support/schema/consumer explanations; actual current rendered Reader PENDING",
+  "quality": "PASS exact only-revision fullbyte diff; no invented execution/content result",
+  "freshOwnerCheck": "PENDING installation and original --check; not executed or fabricated here",
+  "openIssuesWithinReviewedOutputDelta": [],
+  "basis": [
+    "Reuse complete exact original SDK startup/owner Source review and Root independent full controller/nativeGit/fourtypednamespace review. Controller/ready manifest/context packet/review digests checked independently.",
+    "All six actual outer argv/env/rawstreams/terminal records checked independently; terminal0, no signal/rejection/receive error, empty stderr.",
+    "Full14MB context before/between/after byte equality independently confirmed and parsed exact expected four namespace manifests; no source list reconstructed or namespace recaptured.",
+    "Two original output pairs byte-identical; complete JSON differs only sourceRevision and all remaining rawbytes identical after exact revision substitution.",
+    "Complete Markdown differs only2361exact old\u2192newrevision substitutions; all remaining bytes,119exports,28supporttypes,551schemafacts and consumer explanations preserved."
+  ],
+  "limits": [
+    "Reviewer executed only inert Python read/hash/comparison, no JS/TSAPI/npm/SDK/product/native/graph/Git capture.",
+    "Observed fixed-context two-run byte equality is not global determinism, full Program census or semantic executable review of installed namespaces.",
+    "No Main output installation or owner --check/current rendered Reader yet.",
+    "Preserves existing defined whole119SDK source semantics only; no new A91004/fullglobalgeneration/gate/module/consumer/role/CI/deployment/release grant."
+  ]
+}

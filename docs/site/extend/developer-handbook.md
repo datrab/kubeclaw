@@ -2307,29 +2307,30 @@ blocked generation step, not permission to omit the source.
    npm run docs:publication:check
    ```
 
-4. Stage the approved Markdown and assets for inspection.
+4. Build the approved reader for inspection.
 
    ```sh
    set -eu
    npm run docs:publication:build
    ```
 
-   This replaces `.tmp/docs-publication` with staged Markdown, approved assets,
-   and `build-report.json`. It does not render HTML or run a site server. Inspect
-   the staged links/assets and report, then inspect the actual renderer's output
-   through [documentation governance](../reference/documentation-governance.md).
-   Staging does not prove rendered anchors, routes, accessibility, search, or
-   browser behavior. If no renderer output is available, retain that explicit
-   unverified result; do not call the Markdown tree a rendered site.
+   This replaces `.tmp/docs-publication` with source Markdown, approved assets,
+   rendered HTML, `reader-manifest.json` and `build-report.json`. The build
+   prepares Source previews and diagrams, renders the reader and appends its
+   page records; it does not run a site server. Inspect the output and report,
+   then use [documentation governance](../reference/documentation-governance.md)
+   for the separate artifact, search, Source, preview, diagram and browser checks.
+   Created HTML alone does not prove working routes, accessibility or browser
+   behavior. Retain each unexecuted or failed check explicitly.
 
 | Step/check | Required result and retained output | First diagnosis and stop/cleanup rule |
 | --- | --- | --- |
 | Metadata/source generators | Exit zero; intended generated page/map changes only. Keep the diff, generator, tool versions and selected revision. | Read the first source/revision/parser diagnostic. Stop before checks on a partial write; repair and rerun. Preserve authored content and unrelated output. |
 | Governance / generated reference checks | Both exit zero; no tracked write in check mode. | A stale-output error requires the owning generator. A missing owner/source route requires its metadata, not a manual map patch. Stop the chain. |
 | Reference / reader-boundary checks | Exit zero with no unresolved link, fragment or internal-reader-content error. | Open the named destination or prose location. Fix that exact defect before retry. They do not prove published HTML. |
-| Publication check | Exit zero for its helper tests and publication-input checks. Retain individual test failures/skips. | A nonzero exit or skipped required test stops staging. Check allowance, metadata and reported source boundary first. |
-| Publication build | Exit zero and a fresh Markdown/assets report in `.tmp/docs-publication`. | A nonzero exit is failed staging, even if old output exists. Retain the report/diff first; remove only this owned staging tree when no inspection uses it. |
-| Actual renderer inspection | Retain the real rendered page/route/anchor results separately. | Missing renderer or failed request means unverified/failed rendering. Never infer it from the staging report. |
+| Publication check | Exit zero for its helper tests and publication-input checks. Retain individual test failures/skips. | A nonzero exit or skipped required test stops the build. Check allowance, metadata and reported source boundary first. |
+| Publication build | Exit zero with fresh rendered HTML, selected Markdown/assets, reader manifest and build report in `.tmp/docs-publication`. | A nonzero exit is a failed build, even if partial or old output exists. Retain diagnostics/report/diff first; remove only this owned output tree when no inspection uses it. |
+| Actual reader inspection | Retain the separate artifact, search, Source, preview, diagram and browser results. | Missing output or a failed check/request remains unverified/failed. Never infer those results from the build report. |
 
 Update source callouts with a full committed SHA, a symbol, and a narrow valid
 line range. Check the cited file bytes against the current checkout. A pinned
@@ -2344,10 +2345,10 @@ link cleanup and the declared route redirect before deleting a public page.
 >
 > Claim: page metadata supplies ownership and checks while source-derived references remain separate from authored prose.
 > Implementation: [map inputs and check routing](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/scripts/docs-governance.mjs#L85-L105).
-> Contract or setting: [authored/generated page classification](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/scripts/docs-governance.mjs#L63-L80), [Markdown staging and approved asset copy](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/scripts/docs-publication.mjs#L993-L1028).
-> Validation: regenerate affected references and inspect staged Markdown/assets. Inspect actual rendered routes and anchors separately; staging does not provide them.
+> Contract or setting: [authored/generated page classification](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/scripts/docs-governance.mjs#L63-L80), [current publication build, rendering and page records](https://github.com/datrab/kubeclaw/blob/55496fa427f536fb9ad6c1a833a4da38dce4839f/scripts/docs-publication.mjs#L1078-L1127).
+> Validation: regenerate affected references, build the reader and inspect the actual output. Run the separate reader checks; a completed build does not establish their results.
 > Test evidence: no focused test is identified for this claim. Status: source-only; no execution result is asserted.
-> Revision: `671234b056bf5f5f503e51e8db30f843e781ba6e`.
+> Revision: `671234b056bf5f5f503e51e8db30f843e781ba6e` for the map; `55496fa427f536fb9ad6c1a833a4da38dce4839f` for the current publication build.
 > Limit: the map routes known dependencies; it does not prove a semantic explanation complete or an unknown source surface discovered.
 
 > **Source evidence — publication input selection**
@@ -2356,7 +2357,7 @@ link cleanup and the declared route redirect before deleting a public page.
 > Implementation: [publicationPages classification and regular-file guards](https://github.com/datrab/kubeclaw/blob/30824cc555fa2623142752646f26dcc43072b5f7/scripts/lib/docs-publication-assets.mjs#L25-L59).
 > Contract or setting: [separate asset allowance](https://github.com/datrab/kubeclaw/blob/30824cc555fa2623142752646f26dcc43072b5f7/scripts/lib/docs-publication-assets.mjs#L5-L23), [publicationAssets regular-file and allowance guards](https://github.com/datrab/kubeclaw/blob/30824cc555fa2623142752646f26dcc43072b5f7/scripts/lib/docs-publication-assets.mjs#L62-L79).
 > Test evidence: [selected/unexpected-page tests](https://github.com/datrab/kubeclaw/blob/30824cc555fa2623142752646f26dcc43072b5f7/scripts/tests/docs-publication-assets.test.mjs#L67-L85), [unexpected/symlink asset tests](https://github.com/datrab/kubeclaw/blob/30824cc555fa2623142752646f26dcc43072b5f7/scripts/tests/docs-publication-assets.test.mjs#L43-L65). Status: source-only; no execution or rendered result is asserted.
-> Revision: `30824cc555fa2623142752646f26dcc43072b5f7` for this input selector. The earlier staging implementation is separately pinned above.
+> Revision: `30824cc555fa2623142752646f26dcc43072b5f7` for this input selector. The complete publication build is separately pinned above.
 > Limit: selecting/copying reader inputs does not create HTML or prove rendered page/route/anchor behavior.
 
 ## Stop rules and unresolved proof

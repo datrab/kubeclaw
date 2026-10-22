@@ -1,0 +1,245 @@
+{
+  "status": "Sourcecheckpoint-only; originalSDKpair/guardactualresults separatelybounded",
+  "rawEvidenceFiles": [
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/sdk-original-cli-pair-9f4a3045/completion.json",
+      "bytes": 721,
+      "sha256": "39ed03dee5598e1a7d86cd6f7ac794e74eb70817cf5bd50eded7afd1f84ac2c3"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/sdk-original-cli-pair-9f4a3045/context-after.json",
+      "bytes": 14194767,
+      "sha256": "16306895fb4f16c01387e33fbc77c84b9bea4387f0421fe9e3cd316455b690f0"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/sdk-original-cli-pair-9f4a3045/context-before.json",
+      "bytes": 14194767,
+      "sha256": "16306895fb4f16c01387e33fbc77c84b9bea4387f0421fe9e3cd316455b690f0"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/sdk-original-cli-pair-9f4a3045/context-between.json",
+      "bytes": 14194767,
+      "sha256": "16306895fb4f16c01387e33fbc77c84b9bea4387f0421fe9e3cd316455b690f0"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/sdk-original-cli-pair-9f4a3045/first-sdk/sdk-exports.md",
+      "bytes": 799900,
+      "sha256": "2734069b08aeb59b217151aab05774a780d85bc4dadb31ec3911dfa717a253d3"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/sdk-original-cli-pair-9f4a3045/first-sdk/sdk-reference.json",
+      "bytes": 1215332,
+      "sha256": "c1061422373d61e143322c856fe63ad66bbc7bc9075776b4ff91fee75b933214"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/sdk-original-cli-pair-9f4a3045/independent-result-review.json",
+      "bytes": 11533,
+      "sha256": "8e4aaa7a9e6fcbf88afe3654c93a1ccecfd3c28f370a2c09da280f7308fd7b81"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/sdk-original-cli-pair-9f4a3045/independent-result-review.md",
+      "bytes": 2686,
+      "sha256": "365482476ac9a4cb113a2a5e0858bab854349adf2a69fb0411e83f10435fdbed"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/sdk-original-cli-pair-9f4a3045/process-00/launch.json",
+      "bytes": 533,
+      "sha256": "9cac43f401edebc9506321140eee03ae1e13e0a40d12c8d3649b7ab860927ccf"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/sdk-original-cli-pair-9f4a3045/process-00/stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/sdk-original-cli-pair-9f4a3045/process-00/stdout.bin",
+      "bytes": 41,
+      "sha256": "4c04e525613090c503b2af4a11244242be33bc945d354e518e71fc254cfc5d7e"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/sdk-original-cli-pair-9f4a3045/process-00/terminal.json",
+      "bytes": 454,
+      "sha256": "02b70a5dab04ada502f2560b4d39d29d2a9705c5e1ec85ca7db4f8df426c8c49"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/sdk-original-cli-pair-9f4a3045/process-01/launch.json",
+      "bytes": 569,
+      "sha256": "9853b98c5761f07a587b1630aaeae51c2ed3efe2a19f50afd04979413f55c5cd"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/sdk-original-cli-pair-9f4a3045/process-01/stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/sdk-original-cli-pair-9f4a3045/process-01/stdout.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/sdk-original-cli-pair-9f4a3045/process-01/terminal.json",
+      "bytes": 453,
+      "sha256": "d2a57dc31e46466947f641177775f6682f0bb5ab736c26efaf29a45e16b45656"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/sdk-original-cli-pair-9f4a3045/process-02/launch.json",
+      "bytes": 868,
+      "sha256": "22253c2375c86f6aee321208ad537fbeab45beda11cc99942cff6fda3e51a8cb"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/sdk-original-cli-pair-9f4a3045/process-02/stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/sdk-original-cli-pair-9f4a3045/process-02/stdout.bin",
+      "bytes": 134,
+      "sha256": "323549a471520a1644703244b994fc2c1e5233bf92c0b9f414b2f366f45de3d9"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/sdk-original-cli-pair-9f4a3045/process-02/terminal.json",
+      "bytes": 453,
+      "sha256": "736638a756cdb0012efc461c74b5462accc325a0c0ce064e695993e4f6f4de0e"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/sdk-original-cli-pair-9f4a3045/process-03/launch.json",
+      "bytes": 870,
+      "sha256": "f05810012f49afd22250a806032d7b1b950ccf6c83a6e7d92ad873473959f4d2"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/sdk-original-cli-pair-9f4a3045/process-03/stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/sdk-original-cli-pair-9f4a3045/process-03/stdout.bin",
+      "bytes": 135,
+      "sha256": "59b0ec3d5310409a37096bb7ba7522ce04109a01bd39065cb9c7bfc2691d7552"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/sdk-original-cli-pair-9f4a3045/process-03/terminal.json",
+      "bytes": 453,
+      "sha256": "8b9aa87824c2503b7f1ae08d8126f2fa5977b4c6e3183a20504e53d857eec7c8"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/sdk-original-cli-pair-9f4a3045/process-04/launch.json",
+      "bytes": 532,
+      "sha256": "9ae82ed0e68c23d6177f19ca57a79f3eefb5b1254bf11c641fd6e2a672878b40"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/sdk-original-cli-pair-9f4a3045/process-04/stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/sdk-original-cli-pair-9f4a3045/process-04/stdout.bin",
+      "bytes": 41,
+      "sha256": "4c04e525613090c503b2af4a11244242be33bc945d354e518e71fc254cfc5d7e"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/sdk-original-cli-pair-9f4a3045/process-04/terminal.json",
+      "bytes": 454,
+      "sha256": "ea1ae4ea96591e7fed9f0573807b2857861585a24624e1bb5b224a951bce01b5"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/sdk-original-cli-pair-9f4a3045/process-05/launch.json",
+      "bytes": 567,
+      "sha256": "a4a2b1c659eb31c99150e0aa2968d3f610b985981166aabedee9f6be243d3531"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/sdk-original-cli-pair-9f4a3045/process-05/stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/sdk-original-cli-pair-9f4a3045/process-05/stdout.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/sdk-original-cli-pair-9f4a3045/process-05/terminal.json",
+      "bytes": 454,
+      "sha256": "a4fbdd6717ef44ecfb26c218c5cf24d7c3dd0694aae76146c78d51eaf203c00f"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/sdk-original-cli-pair-9f4a3045/repeat-sdk/sdk-exports.md",
+      "bytes": 799900,
+      "sha256": "2734069b08aeb59b217151aab05774a780d85bc4dadb31ec3911dfa717a253d3"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/sdk-original-cli-pair-9f4a3045/repeat-sdk/sdk-reference.json",
+      "bytes": 1215332,
+      "sha256": "c1061422373d61e143322c856fe63ad66bbc7bc9075776b4ff91fee75b933214"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/sdk-original-cli-pair-9f4a3045/root-result-review.json",
+      "bytes": 3933,
+      "sha256": "cdf3f1c182c543882881456cff39fad436d3b846abe8440516aa3f5277517c29"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/sdk-original-installed-check-9f4a3045/launch.json",
+      "bytes": 953,
+      "sha256": "cd491c8fb75cf22e9389d11942c6929a6fd864691725ac85adeebd3a73887fda"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/sdk-original-installed-check-9f4a3045/source-after.json",
+      "bytes": 551,
+      "sha256": "b9796687ed3c12b61cfb9b656d29a73b62b07087ea133cdb5c5d2e154beacefe"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/sdk-original-installed-check-9f4a3045/source-before.json",
+      "bytes": 551,
+      "sha256": "b9796687ed3c12b61cfb9b656d29a73b62b07087ea133cdb5c5d2e154beacefe"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/sdk-original-installed-check-9f4a3045/stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/sdk-original-installed-check-9f4a3045/stdout.bin",
+      "bytes": 33,
+      "sha256": "18f8acfc6aeee66bd4085a305397e8fd34ae68b2d500f06897624f54116778aa"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/sdk-original-installed-check-9f4a3045/terminal.json",
+      "bytes": 356,
+      "sha256": "91582d6da1a102a78165dcd4f741658b7d00d5bdb6066a02d424044ddd9c9f26"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/module-input-original-9f4/independent-review.json",
+      "bytes": 2677,
+      "sha256": "2a717dd7b5803f3e4cc6534cfef377cbf1d3ee77aec8d0ae71c657cd0c70338f"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/module-input-original-9f4/independent-review.md",
+      "bytes": 1391,
+      "sha256": "66dda97bb2e192d748b7971407ab8015c7588bf2d65a5bafbf5b962553c24d19"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/module-input-original-9f4/launch.json",
+      "bytes": 746,
+      "sha256": "d10a6d139640a765b343a27ca6d56211195355681bfcd80c1cd673c9108a00c3"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/module-input-original-9f4/stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/module-input-original-9f4/stdout.bin",
+      "bytes": 721,
+      "sha256": "82543f67fe8eb3c766c2c046eefe7e01e29fcd404f3d2f5c66b0224eebf19d0c"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/module-input-original-9f4/terminal.json",
+      "bytes": 317,
+      "sha256": "4d4311f4534f6accbcbac643c9cf8546ebbd85f560918642f766764dfa3b8603"
+    }
+  ],
+  "limits": [
+    "No new gateaccepted here; freshReader/prior-scopereviews pending",
+    "No product/native/pipeline/cluster/runtime/releaseexecution",
+    "Originalgraph/moduleinput success is not allconsumer/role/generator qualification"
+  ]
+}
