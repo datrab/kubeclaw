@@ -1,0 +1,64 @@
+{
+  "sourceRevision": "c4ebd7e428209c1d2fcf3599dab424ce9e0df23f",
+  "recordedAt": "2026-10-22T19:33:35.449256+00:00",
+  "execution": "Actual original commands completed by Root, not inferred from source or reconstructed successes",
+  "checks": [
+    {
+      "command": "node --test scripts/tests/docs-source-surface-map.test.mjs scripts/tests/docs-route-continuity.test.mjs scripts/tests/docs-reader-page-records.test.mjs",
+      "exitCode": 0,
+      "observation": "41/41 passed, zero failed/skipped."
+    },
+    {
+      "command": "env LD_LIBRARY_PATH=<retained Debian library directory> FONTCONFIG_FILE=<local DejaVu fontconfig> node scripts/docs-publication.mjs build",
+      "exitCode": 0,
+      "observation": "Built177selected pages at exact c4ebd7e4;187HTML and241outputs verified below. Unmodified repository entrypoint."
+    },
+    {
+      "command": "node --max-old-space-size=4096 scripts/docs-reader/check-artifact.mjs",
+      "exitCode": 0,
+      "observation": "177selected pages,187HTML,40885localLinks,241verifiedOutputDigests."
+    },
+    {
+      "command": "node --max-old-space-size=4096 scripts/docs-reader/check-search.mjs",
+      "exitCode": 0,
+      "observation": "177canonical pages indexed,0internalArtifacts,12readerQuestionsPassed."
+    },
+    {
+      "command": "node --max-old-space-size=4096 scripts/docs-reader/check-source-links.mjs",
+      "exitCode": 0,
+      "observation": "187HTML,14947uniqueVerifiedLinks,4061uniqueSourceObjects; source-object/revision/line/fragment,not semantic/live proof."
+    },
+    {
+      "command": "node --max-old-space-size=4096 scripts/docs-reader/check-source-previews.mjs",
+      "exitCode": 0,
+      "observation": "177pages,435/435boxesWithPreviews,2000excerpts,1070uniqueSourceObjects; exact linked/rendered bytes,not semantic or runtime proof."
+    },
+    {
+      "command": "env LD_LIBRARY_PATH=<retained Debian library directory> FONTCONFIG_FILE=<local DejaVu fontconfig> node scripts/docs-reader/check-diagrams.mjs",
+      "exitCode": 0,
+      "observation": "177pages,28diagrams,28freshRenderHashesMatched,localOnly=true; no per-edge semantics or human screenreader acceptance."
+    }
+  ],
+  "outputHashes": {
+    ".tmp/docs-publication/build-report.json": "7c12333ef61f4f558430409b253ef5dfd41ee0f919e90215bec1fc3c63171b07",
+    ".tmp/docs-publication/reader-manifest.json": "bc725cfa8fbc0432a42bdef3cf5b424de08d597f2570bd50f649cbddd7d07e7e",
+    "docs/site/reference/generated-documentation-map.json": "6312081d81c5275456b107f011bc3d20696ea6b1b3d642b1d949dae7296d07dd"
+  },
+  "retainedFailures": [
+    "Original first publication check rejected banned word just in the new paragraph; exact independent correction committed c4ebd7e4.",
+    "Original first build failed Chromium missing libglib; system install-deps failed read-only apt path.",
+    "Libraries-only build failed SVG render tree without fonts; explicit local retained DejaVu fontconfig fixed actual SVG metrics and original Mermaid render.",
+    "First diagram-check omitted browser dependency environment; re-executed exact original checker in corrected same build environment and28fresh hashes matched."
+  ],
+  "autoreview": {
+    "command": "python3 autoreview --mode branch --base ffd91aa7 --codex-bin <actual running installed Codex binary> --no-web-search",
+    "exitCode": 0,
+    "acceptedActionableFindings": 0,
+    "limit": "Actual helper explicitly incomplete: bundle truncated and bwrap UID-map prevented tool reads. Not treated as independent fullcodevalidation; native separate reviewer read whole changed implementation/tests and supplied actual source/task/quality verdict."
+  },
+  "limits": [
+    "No new accepted gate/requirement,API admission,normal fullgeneratorPASS,live operation,cluster deployment,hosting,or full accessibility/persona claim.",
+    "Current artifact native checks qualify changed output/source bindings; historical full-topic semantic and whole-build determinism evidence remains historical,only unchanged scopes retained.",
+    "Source-purpose implementation is being prepared separately; original canonical UNKNOWN candidates remain unqualified."
+  ]
+}

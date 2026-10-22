@@ -1,0 +1,26 @@
+{
+  "revision": "c4ebd7e428209c1d2fcf3599dab424ce9e0df23f",
+  "previousPatchRevision": "ada828183437cf02b821d247815c802c6b3192cc",
+  "reviewer": "/root/review_cli_maintenance_closeout",
+  "changedPath": "docs/site/reference/documentation-governance.md",
+  "line": 92,
+  "oldText": "The governance check compares full identities, facts and bindings, not just counts.",
+  "newText": "The governance check compares full identities, facts and bindings, not counts alone.",
+  "currentSha256": "00137bc3ef8eb485965618d09f5dec7ec25d9a00d59a3afaf34c043400f78e6f",
+  "otherFiveReviewedFilesUnchanged": [
+    "scripts/docs-governance.mjs",
+    "scripts/lib/docs-source-surface-map.mjs",
+    "scripts/tests/docs-source-surface-map.test.mjs",
+    "docs/site/reference/generated-documentation-map.json",
+    "docs/generated/inventory/workflows.json"
+  ],
+  "historyCorrection": "Original independent quality PASS missed prohibited term just. Parent actual publication check failed on this term; retain that failure as real, do not relabel original prose compliant. This addendum approves only the exact correction; source/task meaning is unchanged.",
+  "review": {
+    "sourceAccuracy": "PASS",
+    "readerUsability": "PASS",
+    "quality": "PASS_EXACT_CORRECTED_LINE"
+  },
+  "materialFindings": [],
+  "acceptedRecordImpact": "Same16old accepted source/reader contracts remain preserved. No new source census,whole gate/177body or freshartifact approval.",
+  "publicationExecution": "Pending parent original native build/artifact/search/sourcechecks; no result invented here."
+}

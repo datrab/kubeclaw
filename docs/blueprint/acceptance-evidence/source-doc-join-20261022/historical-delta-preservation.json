@@ -1,0 +1,44 @@
+{
+  "reviewer": "/root/review_cli_maintenance_closeout",
+  "fromActualRecordRevision": "5b1b46a4f3fb6425c77499aa114e354d77cbdf6b",
+  "toActualCurrentRevision": "c4ebd7e428209c1d2fcf3599dab424ce9e0df23f",
+  "state": "PASS_EXACT_EXISTING_TWO_CONTRACTS_PRESERVATION",
+  "newWholeGateOrRequirementAcceptance": false,
+  "basis": "Actual complete three-file git delta5b1b\u2192ffd9 read,followed by exact current unchanged-byte comparison and relevant acquisition/role annotation callers. Not a claim source bytes unchanged.",
+  "changedSourcesSha256": {
+    "scripts/docs-api-output-discovery.mjs": "f529a54ac50bbacba98e4a6cb00329e296492148c006f2d0fe70ac203bad6eb5",
+    "scripts/tests/argocd-checked-artifacts.test.mjs": "9e8a462594c59e5c84e7d4d5d3ee7645a910d87af999c91f8fcb776f51274089",
+    "scripts/docs-api-documentation-role-custody.mjs": "c149c4cd0021eb30f4d29efdd0a8be88901def8bfa056a56af50fc77440312bf"
+  },
+  "decisions": [
+    {
+      "recordId": "AP09-documentation-agent-maintenance-20261021",
+      "verdict": "PASS",
+      "changedHistoricalRelevant": [
+        "scripts/docs-api-output-discovery.mjs",
+        "scripts/tests/argocd-checked-artifacts.test.mjs"
+      ],
+      "reason": "Exact additive Source-owned disabled-registration receipt binds immutable authority,canonical physical inputs,existing GitOps closure,caller/public contexts and five original descriptors. Acquisition occurs before caches and adds witness digest/dependencies to cache inputs. Its selected state preserves current runtimeAutoSync true rejecting registration before Git/render/kubectl; canonical UNKNOWN roles remain,context sets runtimeExecutionAuthorized/apiApplyAuthorized false,manual-enabled/external-response paths not qualified. Added tests retain original311lines and cover missing/copied witness,new slot/role,configuration/enabling,source bytes,boundaries,callers/aliases and authority tampering. This narrows concrete maintainer stop interpretation without weakening original guide rule to inspect owning closure,retain failures,rerun original generators and avoid undocumented source exclusions. Maintenance page itself is unchanged from actual reviewed5b1b; only already-reviewed governance prose changes. No full API/global generator qualification inferred."
+    },
+    {
+      "recordId": "AP09-complete-static-reader-search-20261021",
+      "verdict": "PASS",
+      "changedHistoricalRelevant": [
+        "scripts/docs-api-documentation-role-custody.mjs"
+      ],
+      "reason": "Actual5b1b\u2192ffd9 delta adds/replaces expressionSha256 literals and updates five factsDigest literals inside existing documentationExecutableRoleRecipes data. All code from first export function through EOF is exact unchanged. Role recipes are imported by API output discovery,not public reader renderer/search/source-preview or publication positive selector. Actual declared seven reader/publication consumers compare byte-unchanged from record.revision to currentHEAD. Thus retain original search/index/selection semantics and prior limitations; do not grant recipe/source/API qualification or claim all hashes are unchanged. Existing7d2 five-scope record/proof is historical corroboration only,not proof of current deltas. New governance prose changes current corpus and actual current artifact/search result remains parent follow-up."
+    }
+  ],
+  "reusedHistoricalProof": "handoffs/pr13-finish-20261021/five-reader-scope-preservation-7d2bb9d4/review.json and source-preservation-proof.json read; scopes/limits corroborated without treating them as current byte-equality.",
+  "checks": {
+    "custodyFunctionRegionUnchanged": true,
+    "sevenReaderPublicationConsumersChangedPaths": [],
+    "disabledRegistrationTests": "Added original test source reviewed,no new native test execution claimed.",
+    "currentNativeArtifact": "Parent real current build/artifact/search/source results remain required; not fabricated."
+  },
+  "limits": [
+    "Only existing MNT017 and PUB002 source/reader contracts preserved,not whole historical code/role/API/closure/native authority acceptance.",
+    "No new source generator/current graph/immutable profile/external response/manual deployment qualification follows.",
+    "No Source or matrix writes."
+  ]
+}

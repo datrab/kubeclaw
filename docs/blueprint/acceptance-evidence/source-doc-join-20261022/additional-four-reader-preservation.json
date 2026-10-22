@@ -1,0 +1,164 @@
+{
+  "reviewer": "/root/review_cli_maintenance_closeout",
+  "revision": "c4ebd7e428209c1d2fcf3599dab424ce9e0df23f",
+  "matrixBytesSha256": "8a993f8c74ea4e8b18a0e3bd0b7a94322eaf89d75df6948feb3d9f3f49eead6a",
+  "verdict": "PASS_FOUR_EXISTING_SCOPES_PRESERVED",
+  "findings": [],
+  "acceptedActionableFindings": [],
+  "recordUpdates": [
+    {
+      "recordId": "AP09-search-reader-gate-20261021",
+      "actualPreviousReviewedRevision": "5b1b46a4f3fb6425c77499aa114e354d77cbdf6b",
+      "originalRecordCanonicalSha256": "dd1e99f5c3d1cbbffaeade05c0d22e2bc03662e60b7744b26a37718c32268fb4",
+      "actualChangedRelevantPaths": [
+        "scripts/docs-api-documentation-role-custody.mjs"
+      ],
+      "verdict": "PASS_EXISTING_SCOPE_PRESERVATION",
+      "recordRevisionRefresh": "c4ebd7e428209c1d2fcf3599dab424ce9e0df23f",
+      "impactReview": {
+        "previousReviewedRevision": "5b1b46a4f3fb6425c77499aa114e354d77cbdf6b",
+        "revision": "c4ebd7e428209c1d2fcf3599dab424ce9e0df23f",
+        "reviewer": "/root/review_cli_maintenance_closeout independent native Codex",
+        "changedDependencies": [
+          "scripts/docs-api-documentation-role-custody.mjs"
+        ],
+        "verdict": "PASS",
+        "summary": "A91204 search ranking/finite synonyms,positive-page selection and actual search implementation unchanged. Custody recipe data is not browser search logic. Same12defined questions pass actual current native search check across177canonical pages; historical320/768/1440browser observations preserved as historical only. No semantic-search expansion.",
+        "historicalDeltaProof": {
+          "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/a91107-two-historical-delta-preservation.json",
+          "sha256": "992865ed083f872ce5576c6f4bcb1e8146611dd58a481cde0908b1ed0d005cf4",
+          "actualDelta": "5b1b→ffd9 changes expressionSha256 andfivefactsDigest literals in existingrecipe data; entire exportfunction region exact. No current source/role/API qualification granted."
+        },
+        "currentArtifactEvidence": {
+          "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/a91107-current-native-results.json",
+          "sha256": "f08a851ca91c17f458387bbe4adf65249cf5049081795fd7dd735d4296712c16",
+          "sourceRevision": "c4ebd7e428209c1d2fcf3599dab424ce9e0df23f",
+          "checks": "Reuse actual captured Rootbuild+fivechecks terminal0; independentlyverified outputhashes/currentrevision in a91107-current-artifact-adoption.json. Not relabelled oldchecks."
+        },
+        "limit": "Preserve original review,summary,checks,scope,IDs and limits; no new acceptance/count,wholecorpus semantic,freshpersona/humanaccessibility/globalAPI/runtime/CI/release or two-builddeterminism grant."
+      },
+      "preservedRequirementIds": [],
+      "preservedGateIds": [
+        "A912-04"
+      ]
+    },
+    {
+      "recordId": "AP09-rendered-source-bounds-gate-20261021",
+      "actualPreviousReviewedRevision": "5b1b46a4f3fb6425c77499aa114e354d77cbdf6b",
+      "originalRecordCanonicalSha256": "ba0a0894232ea358de5c64a791df74b512cb73a90a845bf92e07c8559360a1e3",
+      "actualChangedRelevantPaths": [
+        "scripts/docs-api-documentation-role-custody.mjs"
+      ],
+      "verdict": "PASS_EXISTING_SCOPE_PRESERVATION",
+      "recordRevisionRefresh": "c4ebd7e428209c1d2fcf3599dab424ce9e0df23f",
+      "impactReview": {
+        "previousReviewedRevision": "5b1b46a4f3fb6425c77499aa114e354d77cbdf6b",
+        "revision": "c4ebd7e428209c1d2fcf3599dab424ce9e0df23f",
+        "reviewer": "/root/review_cli_maintenance_closeout independent native Codex",
+        "changedDependencies": [
+          "scripts/docs-api-documentation-role-custody.mjs"
+        ],
+        "verdict": "PASS",
+        "summary": "A91209 Source link/object/range and artifact binding implementation unchanged. Actual current native artifact+Source checks establish241outputdigests,187HTML,40885localtargets and14947verifiedlinks/4061objects. Recipe literal update does not change link validation or grant global source/API authority. Original semantic/reachability limits remain.",
+        "historicalDeltaProof": {
+          "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/a91107-two-historical-delta-preservation.json",
+          "sha256": "992865ed083f872ce5576c6f4bcb1e8146611dd58a481cde0908b1ed0d005cf4",
+          "actualDelta": "5b1b→ffd9 changes expressionSha256 andfivefactsDigest literals in existingrecipe data; entire exportfunction region exact. No current source/role/API qualification granted."
+        },
+        "currentArtifactEvidence": {
+          "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/a91107-current-native-results.json",
+          "sha256": "f08a851ca91c17f458387bbe4adf65249cf5049081795fd7dd735d4296712c16",
+          "sourceRevision": "c4ebd7e428209c1d2fcf3599dab424ce9e0df23f",
+          "checks": "Reuse actual captured Rootbuild+fivechecks terminal0; independentlyverified outputhashes/currentrevision in a91107-current-artifact-adoption.json. Not relabelled oldchecks."
+        },
+        "limit": "Preserve original review,summary,checks,scope,IDs and limits; no new acceptance/count,wholecorpus semantic,freshpersona/humanaccessibility/globalAPI/runtime/CI/release or two-builddeterminism grant."
+      },
+      "preservedRequirementIds": [],
+      "preservedGateIds": [
+        "A912-09"
+      ]
+    },
+    {
+      "recordId": "AP09-complete-same-source-code-preview-20261021",
+      "actualPreviousReviewedRevision": "5b1b46a4f3fb6425c77499aa114e354d77cbdf6b",
+      "originalRecordCanonicalSha256": "271694fd1f3cb81d8fc5f00ee3d3d41355c7d78f189aaaaab1e516884cef2614",
+      "actualChangedRelevantPaths": [
+        "scripts/docs-api-documentation-role-custody.mjs"
+      ],
+      "verdict": "PASS_EXISTING_SCOPE_PRESERVATION",
+      "recordRevisionRefresh": "c4ebd7e428209c1d2fcf3599dab424ce9e0df23f",
+      "impactReview": {
+        "previousReviewedRevision": "5b1b46a4f3fb6425c77499aa114e354d77cbdf6b",
+        "revision": "c4ebd7e428209c1d2fcf3599dab424ce9e0df23f",
+        "reviewer": "/root/review_cli_maintenance_closeout independent native Codex",
+        "changedDependencies": [
+          "scripts/docs-api-documentation-role-custody.mjs"
+        ],
+        "verdict": "PASS",
+        "summary": "PUB004 source preview extraction,immutable link pairing,inert rendering and disclosure implementation unchanged. Actual current native preview check confirms435/435boxes,2000exactexcerpts/1070objects. Custody recipe literal changes are not preview renderer changes. No all-sixfield/bodysemantic/browser/screenreader upgrade; original exceptions and limits preserved.",
+        "historicalDeltaProof": {
+          "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/a91107-two-historical-delta-preservation.json",
+          "sha256": "992865ed083f872ce5576c6f4bcb1e8146611dd58a481cde0908b1ed0d005cf4",
+          "actualDelta": "5b1b→ffd9 changes expressionSha256 andfivefactsDigest literals in existingrecipe data; entire exportfunction region exact. No current source/role/API qualification granted."
+        },
+        "currentArtifactEvidence": {
+          "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/a91107-current-native-results.json",
+          "sha256": "f08a851ca91c17f458387bbe4adf65249cf5049081795fd7dd735d4296712c16",
+          "sourceRevision": "c4ebd7e428209c1d2fcf3599dab424ce9e0df23f",
+          "checks": "Reuse actual captured Rootbuild+fivechecks terminal0; independentlyverified outputhashes/currentrevision in a91107-current-artifact-adoption.json. Not relabelled oldchecks."
+        },
+        "limit": "Preserve original review,summary,checks,scope,IDs and limits; no new acceptance/count,wholecorpus semantic,freshpersona/humanaccessibility/globalAPI/runtime/CI/release or two-builddeterminism grant."
+      },
+      "preservedRequirementIds": [
+        "PUB-004"
+      ],
+      "preservedGateIds": []
+    },
+    {
+      "recordId": "AP09-complete-responsive-reader-layout-20261021",
+      "actualPreviousReviewedRevision": "5b1b46a4f3fb6425c77499aa114e354d77cbdf6b",
+      "originalRecordCanonicalSha256": "eafa0c3f880ba6f87ccff1ec8f2adab2c2463201c93c70f68ad02d5ca40bd28c",
+      "actualChangedRelevantPaths": [
+        "scripts/docs-api-documentation-role-custody.mjs"
+      ],
+      "verdict": "PASS_EXISTING_SCOPE_PRESERVATION",
+      "recordRevisionRefresh": "c4ebd7e428209c1d2fcf3599dab424ce9e0df23f",
+      "impactReview": {
+        "previousReviewedRevision": "5b1b46a4f3fb6425c77499aa114e354d77cbdf6b",
+        "revision": "c4ebd7e428209c1d2fcf3599dab424ce9e0df23f",
+        "reviewer": "/root/review_cli_maintenance_closeout independent native Codex",
+        "changedDependencies": [
+          "scripts/docs-api-documentation-role-custody.mjs"
+        ],
+        "verdict": "PASS",
+        "summary": "A91207 renderer/CSS/navigation/table/code/diagram scrolling/focus behavior unchanged. The sole declared Source drift is custody data,not layout code or stylesheet. Actual current build/asset binding and28freshSVGhash checks support current emitted inputs. Historical320/768/1440layout/browser proof remains historical and is not replaced by native byte checks. New17linegovernance prose is ordinary existing prose with no added wide visual component; Root separate actual320viewport observation can supplement it,not a fake completed browser run.",
+        "historicalDeltaProof": {
+          "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/a91107-two-historical-delta-preservation.json",
+          "sha256": "992865ed083f872ce5576c6f4bcb1e8146611dd58a481cde0908b1ed0d005cf4",
+          "actualDelta": "5b1b→ffd9 changes expressionSha256 andfivefactsDigest literals in existingrecipe data; entire exportfunction region exact. No current source/role/API qualification granted."
+        },
+        "currentArtifactEvidence": {
+          "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/a91107-current-native-results.json",
+          "sha256": "f08a851ca91c17f458387bbe4adf65249cf5049081795fd7dd735d4296712c16",
+          "sourceRevision": "c4ebd7e428209c1d2fcf3599dab424ce9e0df23f",
+          "checks": "Reuse actual captured Rootbuild+fivechecks terminal0; independentlyverified outputhashes/currentrevision in a91107-current-artifact-adoption.json. Not relabelled oldchecks."
+        },
+        "limit": "Preserve original review,summary,checks,scope,IDs and limits; no new acceptance/count,wholecorpus semantic,freshpersona/humanaccessibility/globalAPI/runtime/CI/release or two-builddeterminism grant."
+      },
+      "preservedRequirementIds": [],
+      "preservedGateIds": [
+        "A912-07"
+      ]
+    }
+  ],
+  "responsiveObservation": "Rootactual320newparagraph overflow observation separate;not executed by this reviewer or invented. Native source-preservation approval does not relabel freshglobalbrowserlayout proof.",
+  "stateCountsUnchanged": {
+    "requirements": 224,
+    "gates": 56
+  },
+  "limits": [
+    "No source/register writes.",
+    "Exactperrecordcurrentdiff only custodydata;newsource-mapbody addition reviewed separately.",
+    "Originalhistoricalclaims/limits retained;no new acceptancecount."
+  ]
+}

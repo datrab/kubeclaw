@@ -240,7 +240,7 @@
     },
     {
       "id": "AP09.1-ready-topics-20261020",
-      "revision": "340875215c422fb1cc0901e867420928eae3dfc0",
+      "revision": "c4ebd7e428209c1d2fcf3599dab424ce9e0df23f",
       "author": "Documentation implementation authors before review campaign",
       "reviewer": "/root/review_ready_foundations (01a157c4-a915-7bd0-9f54-0de78011b9b7)",
       "gateIds": [],
@@ -289,7 +289,9 @@
         "skills/nova/core/lifecycle/reducer.ts",
         "skills/nova/project/compiler.ts",
         "skills/prism/server/native-worker-execution.ts",
-        "skills/prism/server/native-worker-host.ts"
+        "skills/prism/server/native-worker-host.ts",
+        "scripts/lib/docs-source-surface-map.mjs",
+        "scripts/tests/docs-source-surface-map.test.mjs"
       ],
       "checks": [
         {
@@ -366,6 +368,11 @@
           "command": "Actual original node scripts/docs-publication.mjs build and four native docs-reader checks: artifact, search, source-links, source-previews (Reader34087521)",
           "exitCode": 0,
           "observation": "Entry/authority/status rules remain; Understand navigation now points to a substantive current upstream Ops contract with explicit checkout/release applicability. No exhaustive inventory or global-publication scope is added. Current build177pages,241outputdigests,40885localtargets; search177pages/12questions;435Sourceboxes/2000exactexcerpts. All authored pages/shared renderer outputs unchanged6250\u21923408; exact2scripts-tree pageRecordbindings checked. Refs/governance6250 and bounded prior browser observations reused, not relabelled fresh. Prior summary/limits/checks remain historical where superseded; no wider original-scope promotion."
+        },
+        {
+          "command": "Independent finite source-map delta review plus original current publication build and five native artifact checks",
+          "exitCode": 0,
+          "observation": "Exact16-record source/reader-contract preservation, including two independently reviewed historical deltas. Current c4ebd7e4:177canonical187HTML241output hashes;12search;14947source links/4061objects;435previewboxes/2000excerpts/1070objects;28freshdiagramhashes. Details current-native-results.json; no new accepted ID or global generator/runtime claim."
         }
       ],
       "review": {
@@ -589,6 +596,52 @@
           "summary": "Within this original declared scope, the exact recent changed paths are individually bound to the coherent semantic/consumer review above; unchanged named original product mechanisms and original limits remain supported. These are purpose/content preservation decisions, not hash-only source refresh or a new full transitive product audit. Actual7ef177canonical/187HTML/240outputs normal artifact and complete local/source/excerpt/diagram checks are terminal0; current two normal419file builds byte-equal; exact declared route/source metadata checked. All531page and1233box observations preserve noJS/native fields/links/containment; initial6titlemeasurement failures retained and exact6case retake passes. Whole search12 plus actualoffline2, real240GET preview and forensic242member/19Sourceasset ZIP/extracted checks preserve only original reader scope. Four selected320px visual views are explicitly limited, not full accessibility/freshpersona proof. Original technical meaning, negative-vs-execution distinction, historical/revision/live limits and reader-task decisions retained via named nonauthor topic/delta reviews. No removed condition or broader authority was hidden by field completion. Existing historical failure/unexecuted/native/global configuration stops stay unchanged.",
           "report": "handoffs/pr13-finish-20261021/reader7ef-prior88-preservation.json",
           "limit": "Only original named supported or NOT_READY scope preserved; original author/reviewer/checks/summary/limits/verdict/gate/requirement IDs remain immutable. No new count, global qualification or release grant."
+        },
+        {
+          "previousReviewedRevision": "340875215c422fb1cc0901e867420928eae3dfc0",
+          "revision": "c4ebd7e428209c1d2fcf3599dab424ce9e0df23f",
+          "reviewer": "/root/review_cli_maintenance_closeout (independent native Codex)",
+          "changedDependencies": [
+            "docs/site/reference/documentation-governance.md",
+            "docs/site/reference/generated-documentation-map.json",
+            "scripts/docs-governance.mjs"
+          ],
+          "verdict": "PASS",
+          "scope": "Exact additive governance/source-map source and reader-contract delta plus exact one-line language correction; preservation only,not whole topic reapproval.",
+          "summary": "Existing authority/entry/decision/status rules unchanged; additive prose correctly limits the new join, and all old map page metadata/ownership is exact.",
+          "checks": [
+            {
+              "command": "node --test scripts/tests/docs-source-surface-map.test.mjs",
+              "exitCode": 0,
+              "observation": "Actual independent11/11focused adapter/orphan tests pass; all reviewed five implementation/data hashes unchanged at current revision."
+            },
+            {
+              "command": "node scripts/docs-governance.mjs --check",
+              "exitCode": 0,
+              "observation": "Actual independent previous frozen byte-identical implementation/map run:177pages; not relabelled as a new current process."
+            },
+            {
+              "command": "node scripts/docs-inventory.mjs --check",
+              "exitCode": 0,
+              "observation": "Actual independent previous frozen byte-identical implementation/inventories run; exact workflow source refresh confirmed."
+            }
+          ],
+          "sourceContractReview": {
+            "sourceAccuracy": "PASS",
+            "readerUsability": "PASS",
+            "quality": "PASS"
+          },
+          "retainedFailure": "Original publication quality check failed on banned just; exact correction now independently approved. Not retroactive whole check success.",
+          "artifactDisposition": "CURRENT_NATIVE_BINDINGS_PASS: actual c4ebd7e4 build and artifact/search/source-link/source-preview/diagram checks passed; original semantic/determinism evidence retained only for unchanged scopes.",
+          "limit": "Preserve original ID assignments,review,summary,checks,limits and accepted states. No new counts,gates,raw-source/API/globalgenerator/CI/runtime/release approval.",
+          "approvedCurrentDeltaDependencies": [
+            "docs/site/reference/documentation-governance.md",
+            "docs/site/reference/generated-documentation-map.json",
+            "scripts/docs-governance.mjs"
+          ],
+          "historicalOtherChangesNotNewlyApproved": [],
+          "nativeResults": "docs/blueprint/acceptance-evidence/source-doc-join-20261022/current-native-results.json",
+          "independentReview": "docs/blueprint/acceptance-evidence/source-doc-join-20261022/independent-delta-review.json"
         }
       ],
       "revisionHistory": [
@@ -2292,7 +2345,7 @@
     },
     {
       "id": "Reviewed-corrections-20261020",
-      "revision": "340875215c422fb1cc0901e867420928eae3dfc0",
+      "revision": "c4ebd7e428209c1d2fcf3599dab424ce9e0df23f",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/review_worker_ready",
       "gateIds": [],
@@ -2338,7 +2391,9 @@
         "tests/verification/contracts/check-pipeline-test-suite-resolver.mts",
         "tests/verification/contracts/check-plugin-system-v2-capability-runtime.mjs",
         "tests/verification/contracts/check-plugin-system-v2-registry.mjs",
-        "versions.json"
+        "versions.json",
+        "scripts/lib/docs-source-surface-map.mjs",
+        "scripts/tests/docs-source-surface-map.test.mjs"
       ],
       "checks": [
         {
@@ -2430,6 +2485,11 @@
           "command": "Actual original node scripts/docs-publication.mjs build and four native docs-reader checks: artifact, search, source-links, source-previews (Reader34087521)",
           "exitCode": 0,
           "observation": "Only the mypy evidence sentence changes, from review bookkeeping to implementation description; parser claim and nonexecution limit remain. The generated metadata/source-checker aspects are separately code-owned. Current build177pages,241outputdigests,40885localtargets; search177pages/12questions;435Sourceboxes/2000exactexcerpts. All authored pages/shared renderer outputs unchanged6250\u21923408; exact2scripts-tree pageRecordbindings checked. Refs/governance6250 and bounded prior browser observations reused, not relabelled fresh. Prior summary/limits/checks remain historical where superseded; no wider original-scope promotion."
+        },
+        {
+          "command": "Independent finite source-map delta review plus original current publication build and five native artifact checks",
+          "exitCode": 0,
+          "observation": "Exact16-record source/reader-contract preservation, including two independently reviewed historical deltas. Current c4ebd7e4:177canonical187HTML241output hashes;12search;14947source links/4061objects;435previewboxes/2000excerpts/1070objects;28freshdiagramhashes. Details current-native-results.json; no new accepted ID or global generator/runtime claim."
         }
       ],
       "review": {
@@ -2828,6 +2888,52 @@
           "reportAvailability": "Later evidence adoption, not a Source file at reviewed487; not added to record.sources.",
           "limit": "Original named scope/limits preserved only; no new gate/requirement counts, consumer/graph/role/native/product/runtime/deployment/release approval. Knip/parser/output weaknesses and unexecuted product paths remain visible.",
           "wholeRenderedOutputChangedCanonicalPages": []
+        },
+        {
+          "previousReviewedRevision": "340875215c422fb1cc0901e867420928eae3dfc0",
+          "revision": "c4ebd7e428209c1d2fcf3599dab424ce9e0df23f",
+          "reviewer": "/root/review_cli_maintenance_closeout (independent native Codex)",
+          "changedDependencies": [
+            "docs/site/reference/documentation-governance.md",
+            "docs/site/reference/generated-documentation-map.json",
+            "scripts/docs-governance.mjs"
+          ],
+          "verdict": "PASS",
+          "scope": "Exact additive governance/source-map source and reader-contract delta plus exact one-line language correction; preservation only,not whole topic reapproval.",
+          "summary": "Prior seven correction bodies and their product facts unchanged; old metadata map data exact; additive join neither weakens freshness nor rewrites those findings.",
+          "checks": [
+            {
+              "command": "node --test scripts/tests/docs-source-surface-map.test.mjs",
+              "exitCode": 0,
+              "observation": "Actual independent11/11focused adapter/orphan tests pass; all reviewed five implementation/data hashes unchanged at current revision."
+            },
+            {
+              "command": "node scripts/docs-governance.mjs --check",
+              "exitCode": 0,
+              "observation": "Actual independent previous frozen byte-identical implementation/map run:177pages; not relabelled as a new current process."
+            },
+            {
+              "command": "node scripts/docs-inventory.mjs --check",
+              "exitCode": 0,
+              "observation": "Actual independent previous frozen byte-identical implementation/inventories run; exact workflow source refresh confirmed."
+            }
+          ],
+          "sourceContractReview": {
+            "sourceAccuracy": "PASS",
+            "readerUsability": "PASS",
+            "quality": "PASS"
+          },
+          "retainedFailure": "Original publication quality check failed on banned just; exact correction now independently approved. Not retroactive whole check success.",
+          "artifactDisposition": "CURRENT_NATIVE_BINDINGS_PASS: actual c4ebd7e4 build and artifact/search/source-link/source-preview/diagram checks passed; original semantic/determinism evidence retained only for unchanged scopes.",
+          "limit": "Preserve original ID assignments,review,summary,checks,limits and accepted states. No new counts,gates,raw-source/API/globalgenerator/CI/runtime/release approval.",
+          "approvedCurrentDeltaDependencies": [
+            "docs/site/reference/documentation-governance.md",
+            "docs/site/reference/generated-documentation-map.json",
+            "scripts/docs-governance.mjs"
+          ],
+          "historicalOtherChangesNotNewlyApproved": [],
+          "nativeResults": "docs/blueprint/acceptance-evidence/source-doc-join-20261022/current-native-results.json",
+          "independentReview": "docs/blueprint/acceptance-evidence/source-doc-join-20261022/independent-delta-review.json"
         }
       ],
       "previousReviewedRevision": "078105e40a50f23983e31c136f9bd81912ae6310",
@@ -3487,7 +3593,7 @@
     },
     {
       "id": "AP09-reader-developers-20261020",
-      "revision": "340875215c422fb1cc0901e867420928eae3dfc0",
+      "revision": "c4ebd7e428209c1d2fcf3599dab424ce9e0df23f",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/review_platform_ready",
       "gateIds": [
@@ -3586,7 +3692,9 @@
         "scripts/check-platform-services.mjs",
         "scripts/versions.mjs",
         "skills/prism/openclaw-plugin/index.test.mjs",
-        "skills/prism/tests/storage.test.mts"
+        "skills/prism/tests/storage.test.mts",
+        "scripts/lib/docs-source-surface-map.mjs",
+        "scripts/tests/docs-source-surface-map.test.mjs"
       ],
       "checks": [
         {
@@ -3658,6 +3766,11 @@
           "command": "Actual original node scripts/docs-publication.mjs build and four native docs-reader checks: artifact, search, source-links, source-previews (Reader34087521)",
           "exitCode": 0,
           "observation": "Host-and-engine retains existing developer/extension tasks and adds a properly bounded central Ops change route. Prior unsupported promotion/host/replacement/integration limits are not silently closed. Current build177pages,241outputdigests,40885localtargets; search177pages/12questions;435Sourceboxes/2000exactexcerpts. All authored pages/shared renderer outputs unchanged6250\u21923408; exact2scripts-tree pageRecordbindings checked. Refs/governance6250 and bounded prior browser observations reused, not relabelled fresh. Prior summary/limits/checks remain historical where superseded; no wider original-scope promotion."
+        },
+        {
+          "command": "Independent finite source-map delta review plus original current publication build and five native artifact checks",
+          "exitCode": 0,
+          "observation": "Exact16-record source/reader-contract preservation, including two independently reviewed historical deltas. Current c4ebd7e4:177canonical187HTML241output hashes;12search;14947source links/4061objects;435previewboxes/2000excerpts/1070objects;28freshdiagramhashes. Details current-native-results.json; no new accepted ID or global generator/runtime claim."
         }
       ],
       "review": {
@@ -3958,6 +4071,48 @@
           "reportAvailability": "Later evidence adoption, not a Source file at reviewed487; not added to record.sources.",
           "limit": "Original named scope/limits preserved only; no new gate/requirement counts, consumer/graph/role/native/product/runtime/deployment/release approval. Knip/parser/output weaknesses and unexecuted product paths remain visible.",
           "wholeRenderedOutputChangedCanonicalPages": []
+        },
+        {
+          "previousReviewedRevision": "340875215c422fb1cc0901e867420928eae3dfc0",
+          "revision": "c4ebd7e428209c1d2fcf3599dab424ce9e0df23f",
+          "reviewer": "/root/review_cli_maintenance_closeout (independent native Codex)",
+          "changedDependencies": [
+            "scripts/docs-governance.mjs"
+          ],
+          "verdict": "PASS",
+          "scope": "Exact additive governance/source-map source and reader-contract delta plus exact one-line language correction; preservation only,not whole topic reapproval.",
+          "summary": "Developer selection/preparation/change-task pages unchanged; governance preserves metadata validation, route continuity and all page/check assignments.",
+          "checks": [
+            {
+              "command": "node --test scripts/tests/docs-source-surface-map.test.mjs",
+              "exitCode": 0,
+              "observation": "Actual independent11/11focused adapter/orphan tests pass; all reviewed five implementation/data hashes unchanged at current revision."
+            },
+            {
+              "command": "node scripts/docs-governance.mjs --check",
+              "exitCode": 0,
+              "observation": "Actual independent previous frozen byte-identical implementation/map run:177pages; not relabelled as a new current process."
+            },
+            {
+              "command": "node scripts/docs-inventory.mjs --check",
+              "exitCode": 0,
+              "observation": "Actual independent previous frozen byte-identical implementation/inventories run; exact workflow source refresh confirmed."
+            }
+          ],
+          "sourceContractReview": {
+            "sourceAccuracy": "PASS",
+            "readerUsability": "PASS",
+            "quality": "PASS"
+          },
+          "retainedFailure": "Original publication quality check failed on banned just; exact correction now independently approved. Not retroactive whole check success.",
+          "artifactDisposition": "CURRENT_NATIVE_BINDINGS_PASS: actual c4ebd7e4 build and artifact/search/source-link/source-preview/diagram checks passed; original semantic/determinism evidence retained only for unchanged scopes.",
+          "limit": "Preserve original ID assignments,review,summary,checks,limits and accepted states. No new counts,gates,raw-source/API/globalgenerator/CI/runtime/release approval.",
+          "approvedCurrentDeltaDependencies": [
+            "scripts/docs-governance.mjs"
+          ],
+          "historicalOtherChangesNotNewlyApproved": [],
+          "nativeResults": "docs/blueprint/acceptance-evidence/source-doc-join-20261022/current-native-results.json",
+          "independentReview": "docs/blueprint/acceptance-evidence/source-doc-join-20261022/independent-delta-review.json"
         }
       ],
       "previousReviewedRevision": "2f8a116e00d6d38a5cc5076b10befcabe426f9f4",
@@ -4761,7 +4916,7 @@
     },
     {
       "id": "AP09-reviewed-maintenance-20261020",
-      "revision": "340875215c422fb1cc0901e867420928eae3dfc0",
+      "revision": "c4ebd7e428209c1d2fcf3599dab424ce9e0df23f",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/review_data_ready",
       "gateIds": [],
@@ -4796,7 +4951,9 @@
         "scripts/check-plugin-manifest-drift-mutations.mjs",
         "scripts/ap08-extension-inventory.mjs",
         "scripts/check-schema-drift-mutations.mjs",
-        "scripts/check-configuration-drift-mutations.mjs"
+        "scripts/check-configuration-drift-mutations.mjs",
+        "scripts/lib/docs-source-surface-map.mjs",
+        "scripts/tests/docs-source-surface-map.test.mjs"
       ],
       "checks": [
         {
@@ -4843,6 +5000,11 @@
           "command": "Actual original node scripts/docs-publication.mjs build and four native docs-reader checks: artifact, search, source-links, source-previews (Reader34087521)",
           "exitCode": 0,
           "observation": "Maintenance adds finite immutable-upstream source-pin guidance, not an acceptance shortcut. Original global discovery/error/event/store gaps remain outside this preserved narrow scope. Current build177pages,241outputdigests,40885localtargets; search177pages/12questions;435Sourceboxes/2000exactexcerpts. All authored pages/shared renderer outputs unchanged6250\u21923408; exact2scripts-tree pageRecordbindings checked. Refs/governance6250 and bounded prior browser observations reused, not relabelled fresh. Prior summary/limits/checks remain historical where superseded; no wider original-scope promotion."
+        },
+        {
+          "command": "Independent finite source-map delta review plus original current publication build and five native artifact checks",
+          "exitCode": 0,
+          "observation": "Exact16-record source/reader-contract preservation, including two independently reviewed historical deltas. Current c4ebd7e4:177canonical187HTML241output hashes;12search;14947source links/4061objects;435previewboxes/2000excerpts/1070objects;28freshdiagramhashes. Details current-native-results.json; no new accepted ID or global generator/runtime claim."
         }
       ],
       "review": {
@@ -5140,6 +5302,50 @@
           "reportAvailability": "Later evidence adoption, not a Source file at reviewed487; not added to record.sources.",
           "limit": "Original named scope/limits preserved only; no new gate/requirement counts, consumer/graph/role/native/product/runtime/deployment/release approval. Knip/parser/output weaknesses and unexecuted product paths remain visible.",
           "wholeRenderedOutputChangedCanonicalPages": []
+        },
+        {
+          "previousReviewedRevision": "340875215c422fb1cc0901e867420928eae3dfc0",
+          "revision": "c4ebd7e428209c1d2fcf3599dab424ce9e0df23f",
+          "reviewer": "/root/review_cli_maintenance_closeout (independent native Codex)",
+          "changedDependencies": [
+            "docs/site/reference/documentation-governance.md",
+            "scripts/docs-governance.mjs"
+          ],
+          "verdict": "PASS",
+          "scope": "Exact additive governance/source-map source and reader-contract delta plus exact one-line language correction; preservation only,not whole topic reapproval.",
+          "summary": "CI/check selection and drift-maintenance rules unchanged; bounded join guidance explicitly retains original owner checks and excludes unproven global completeness.",
+          "checks": [
+            {
+              "command": "node --test scripts/tests/docs-source-surface-map.test.mjs",
+              "exitCode": 0,
+              "observation": "Actual independent11/11focused adapter/orphan tests pass; all reviewed five implementation/data hashes unchanged at current revision."
+            },
+            {
+              "command": "node scripts/docs-governance.mjs --check",
+              "exitCode": 0,
+              "observation": "Actual independent previous frozen byte-identical implementation/map run:177pages; not relabelled as a new current process."
+            },
+            {
+              "command": "node scripts/docs-inventory.mjs --check",
+              "exitCode": 0,
+              "observation": "Actual independent previous frozen byte-identical implementation/inventories run; exact workflow source refresh confirmed."
+            }
+          ],
+          "sourceContractReview": {
+            "sourceAccuracy": "PASS",
+            "readerUsability": "PASS",
+            "quality": "PASS"
+          },
+          "retainedFailure": "Original publication quality check failed on banned just; exact correction now independently approved. Not retroactive whole check success.",
+          "artifactDisposition": "CURRENT_NATIVE_BINDINGS_PASS: actual c4ebd7e4 build and artifact/search/source-link/source-preview/diagram checks passed; original semantic/determinism evidence retained only for unchanged scopes.",
+          "limit": "Preserve original ID assignments,review,summary,checks,limits and accepted states. No new counts,gates,raw-source/API/globalgenerator/CI/runtime/release approval.",
+          "approvedCurrentDeltaDependencies": [
+            "docs/site/reference/documentation-governance.md",
+            "scripts/docs-governance.mjs"
+          ],
+          "historicalOtherChangesNotNewlyApproved": [],
+          "nativeResults": "docs/blueprint/acceptance-evidence/source-doc-join-20261022/current-native-results.json",
+          "independentReview": "docs/blueprint/acceptance-evidence/source-doc-join-20261022/independent-delta-review.json"
         }
       ],
       "previousReviewedRevision": "078105e40a50f23983e31c136f9bd81912ae6310",
@@ -6081,7 +6287,7 @@
     },
     {
       "id": "AP09-closeout-config-reference-20261020",
-      "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+      "revision": "c4ebd7e428209c1d2fcf3599dab424ce9e0df23f",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/close_config_reference",
       "gateIds": [],
@@ -6124,7 +6330,9 @@
         "skills/prism/control/agent-jobs.ts",
         "scripts/docs-governance.mjs",
         "scripts/check-runtime-role-manifests.mjs",
-        "scripts/docs-sdk-reference.mjs"
+        "scripts/docs-sdk-reference.mjs",
+        "scripts/lib/docs-source-surface-map.mjs",
+        "scripts/tests/docs-source-surface-map.test.mjs"
       ],
       "checks": [
         {
@@ -6181,6 +6389,11 @@
           "command": "Independent d0bb scoped preservation addendum plus actual publication Reader artifact/search/Source/previews/diagram and offline-browser checks",
           "exitCode": 0,
           "observation": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.md plus named source-only/new-topic reviews. 171canonical/181HTML/38517targets/213hashes;12search;14635SourceLinks3829objects;1741excerpts905objects;27freshSVG;52browser observations0findings0network. No global config/CI/runtime/release success."
+        },
+        {
+          "command": "Independent finite source-map delta review plus original current publication build and five native artifact checks",
+          "exitCode": 0,
+          "observation": "Exact16-record source/reader-contract preservation, including two independently reviewed historical deltas. Current c4ebd7e4:177canonical187HTML241output hashes;12search;14947source links/4061objects;435previewboxes/2000excerpts/1070objects;28freshdiagramhashes. Details current-native-results.json; no new accepted ID or global generator/runtime claim."
         }
       ],
       "review": {
@@ -6405,6 +6618,48 @@
           "reportAvailability": "Later evidence adoption, not a Source file at reviewed487; not added to record.sources.",
           "limit": "Original named scope/limits preserved only; no new gate/requirement counts, consumer/graph/role/native/product/runtime/deployment/release approval. Knip/parser/output weaknesses and unexecuted product paths remain visible.",
           "wholeRenderedOutputChangedCanonicalPages": []
+        },
+        {
+          "previousReviewedRevision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+          "revision": "c4ebd7e428209c1d2fcf3599dab424ce9e0df23f",
+          "reviewer": "/root/review_cli_maintenance_closeout (independent native Codex)",
+          "changedDependencies": [
+            "scripts/docs-governance.mjs"
+          ],
+          "verdict": "PASS",
+          "scope": "Exact additive governance/source-map source and reader-contract delta plus exact one-line language correction; preservation only,not whole topic reapproval.",
+          "summary": "Configuration reader pages and inventories unchanged; new adapter fingerprints existing data without altering types/default/receiver semantics or owner checks.",
+          "checks": [
+            {
+              "command": "node --test scripts/tests/docs-source-surface-map.test.mjs",
+              "exitCode": 0,
+              "observation": "Actual independent11/11focused adapter/orphan tests pass; all reviewed five implementation/data hashes unchanged at current revision."
+            },
+            {
+              "command": "node scripts/docs-governance.mjs --check",
+              "exitCode": 0,
+              "observation": "Actual independent previous frozen byte-identical implementation/map run:177pages; not relabelled as a new current process."
+            },
+            {
+              "command": "node scripts/docs-inventory.mjs --check",
+              "exitCode": 0,
+              "observation": "Actual independent previous frozen byte-identical implementation/inventories run; exact workflow source refresh confirmed."
+            }
+          ],
+          "sourceContractReview": {
+            "sourceAccuracy": "PASS",
+            "readerUsability": "PASS",
+            "quality": "PASS"
+          },
+          "retainedFailure": "Original publication quality check failed on banned just; exact correction now independently approved. Not retroactive whole check success.",
+          "artifactDisposition": "CURRENT_NATIVE_BINDINGS_PASS: actual c4ebd7e4 build and artifact/search/source-link/source-preview/diagram checks passed; original semantic/determinism evidence retained only for unchanged scopes.",
+          "limit": "Preserve original ID assignments,review,summary,checks,limits and accepted states. No new counts,gates,raw-source/API/globalgenerator/CI/runtime/release approval.",
+          "approvedCurrentDeltaDependencies": [
+            "scripts/docs-governance.mjs"
+          ],
+          "historicalOtherChangesNotNewlyApproved": [],
+          "nativeResults": "docs/blueprint/acceptance-evidence/source-doc-join-20261022/current-native-results.json",
+          "independentReview": "docs/blueprint/acceptance-evidence/source-doc-join-20261022/independent-delta-review.json"
         }
       ],
       "previousReviewedRevision": "2f8a116e00d6d38a5cc5076b10befcabe426f9f4",
@@ -6456,7 +6711,7 @@
     },
     {
       "id": "AP09-closeout-developer-maintenance-20261020",
-      "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+      "revision": "c4ebd7e428209c1d2fcf3599dab424ce9e0df23f",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/close_developer_maintenance",
       "gateIds": [],
@@ -6502,7 +6757,9 @@
         "scripts/tests/docs-route-continuity.test.mjs",
         "scripts/tests/docs-publication-links.test.mjs",
         "scripts/tests/docs-publication-assets.test.mjs",
-        "scripts/versions.mjs"
+        "scripts/versions.mjs",
+        "scripts/lib/docs-source-surface-map.mjs",
+        "scripts/tests/docs-source-surface-map.test.mjs"
       ],
       "checks": [
         {
@@ -6559,6 +6816,11 @@
           "command": "Independent d0bb scoped preservation addendum plus actual publication Reader artifact/search/Source/previews/diagram and offline-browser checks",
           "exitCode": 0,
           "observation": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.md plus named source-only/new-topic reviews. 171canonical/181HTML/38517targets/213hashes;12search;14635SourceLinks3829objects;1741excerpts905objects;27freshSVG;52browser observations0findings0network. No global config/CI/runtime/release success."
+        },
+        {
+          "command": "Independent finite source-map delta review plus original current publication build and five native artifact checks",
+          "exitCode": 0,
+          "observation": "Exact16-record source/reader-contract preservation, including two independently reviewed historical deltas. Current c4ebd7e4:177canonical187HTML241output hashes;12search;14947source links/4061objects;435previewboxes/2000excerpts/1070objects;28freshdiagramhashes. Details current-native-results.json; no new accepted ID or global generator/runtime claim."
         }
       ],
       "review": {
@@ -6863,6 +7125,50 @@
           "reportAvailability": "Later evidence adoption, not a Source file at reviewed487; not added to record.sources.",
           "limit": "Original named scope/limits preserved only; no new gate/requirement counts, consumer/graph/role/native/product/runtime/deployment/release approval. Knip/parser/output weaknesses and unexecuted product paths remain visible.",
           "wholeRenderedOutputChangedCanonicalPages": []
+        },
+        {
+          "previousReviewedRevision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+          "revision": "c4ebd7e428209c1d2fcf3599dab424ce9e0df23f",
+          "reviewer": "/root/review_cli_maintenance_closeout (independent native Codex)",
+          "changedDependencies": [
+            "docs/site/reference/documentation-governance.md",
+            "scripts/docs-governance.mjs"
+          ],
+          "verdict": "PASS",
+          "scope": "Exact additive governance/source-map source and reader-contract delta plus exact one-line language correction; preservation only,not whole topic reapproval.",
+          "summary": "Existing developer/maintenance/ownership and checked change paths unchanged; additive map is not a replacement semantic authority.",
+          "checks": [
+            {
+              "command": "node --test scripts/tests/docs-source-surface-map.test.mjs",
+              "exitCode": 0,
+              "observation": "Actual independent11/11focused adapter/orphan tests pass; all reviewed five implementation/data hashes unchanged at current revision."
+            },
+            {
+              "command": "node scripts/docs-governance.mjs --check",
+              "exitCode": 0,
+              "observation": "Actual independent previous frozen byte-identical implementation/map run:177pages; not relabelled as a new current process."
+            },
+            {
+              "command": "node scripts/docs-inventory.mjs --check",
+              "exitCode": 0,
+              "observation": "Actual independent previous frozen byte-identical implementation/inventories run; exact workflow source refresh confirmed."
+            }
+          ],
+          "sourceContractReview": {
+            "sourceAccuracy": "PASS",
+            "readerUsability": "PASS",
+            "quality": "PASS"
+          },
+          "retainedFailure": "Original publication quality check failed on banned just; exact correction now independently approved. Not retroactive whole check success.",
+          "artifactDisposition": "CURRENT_NATIVE_BINDINGS_PASS: actual c4ebd7e4 build and artifact/search/source-link/source-preview/diagram checks passed; original semantic/determinism evidence retained only for unchanged scopes.",
+          "limit": "Preserve original ID assignments,review,summary,checks,limits and accepted states. No new counts,gates,raw-source/API/globalgenerator/CI/runtime/release approval.",
+          "approvedCurrentDeltaDependencies": [
+            "docs/site/reference/documentation-governance.md",
+            "scripts/docs-governance.mjs"
+          ],
+          "historicalOtherChangesNotNewlyApproved": [],
+          "nativeResults": "docs/blueprint/acceptance-evidence/source-doc-join-20261022/current-native-results.json",
+          "independentReview": "docs/blueprint/acceptance-evidence/source-doc-join-20261022/independent-delta-review.json"
         }
       ],
       "previousReviewedRevision": "2f8a116e00d6d38a5cc5076b10befcabe426f9f4",
@@ -7173,7 +7479,7 @@
     },
     {
       "id": "AP09-buster-lease-reference-20261020",
-      "revision": "d0bb52c4d8bcf323c0ff32b95e8e3120ffa6eefb",
+      "revision": "c4ebd7e428209c1d2fcf3599dab424ce9e0df23f",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/review_first_project",
       "gateIds": [],
@@ -7204,7 +7510,9 @@
         "scripts/tests/buster-lease-receiver.test.mjs",
         "scripts/tests/docs-publication-assets.test.mjs",
         "scripts/tests/docs-publication-links.test.mjs",
-        "skills/buster/engine/test-gates/kubernetes-fixture-runtime.ts"
+        "skills/buster/engine/test-gates/kubernetes-fixture-runtime.ts",
+        "scripts/lib/docs-source-surface-map.mjs",
+        "scripts/tests/docs-source-surface-map.test.mjs"
       ],
       "checks": [
         {
@@ -7236,6 +7544,11 @@
           "command": "Independent d0bb scoped preservation addendum plus actual publication Reader artifact/search/Source/previews/diagram and offline-browser checks",
           "exitCode": 0,
           "observation": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.md plus named source-only/new-topic reviews. 171canonical/181HTML/38517targets/213hashes;12search;14635SourceLinks3829objects;1741excerpts905objects;27freshSVG;52browser observations0findings0network. No global config/CI/runtime/release success."
+        },
+        {
+          "command": "Independent finite source-map delta review plus original current publication build and five native artifact checks",
+          "exitCode": 0,
+          "observation": "Exact16-record source/reader-contract preservation, including two independently reviewed historical deltas. Current c4ebd7e4:177canonical187HTML241output hashes;12search;14947source links/4061objects;435previewboxes/2000excerpts/1070objects;28freshdiagramhashes. Details current-native-results.json; no new accepted ID or global generator/runtime claim."
         }
       ],
       "review": {
@@ -7272,6 +7585,48 @@
           "reviewer": "Scope-aware independent union: original topic reviewers; operator_acceptance checkpoint53; custody_review maintenance locator correction; /root independent authored package/telemetry/pin scopes",
           "verdict": "PASS",
           "summary": "Only changed dependencies preserved against the named independent topic reports and actual d0bb Reader. Original summary and limitations retained; no duplicate or aggregate/release approval."
+        },
+        {
+          "previousReviewedRevision": "d0bb52c4d8bcf323c0ff32b95e8e3120ffa6eefb",
+          "revision": "c4ebd7e428209c1d2fcf3599dab424ce9e0df23f",
+          "reviewer": "/root/review_cli_maintenance_closeout (independent native Codex)",
+          "changedDependencies": [
+            "scripts/docs-governance.mjs"
+          ],
+          "verdict": "PASS",
+          "scope": "Exact additive governance/source-map source and reader-contract delta plus exact one-line language correction; preservation only,not whole topic reapproval.",
+          "summary": "Buster lease reference/controller facts unchanged; old map row and metadata ownership/checks remain exact.",
+          "checks": [
+            {
+              "command": "node --test scripts/tests/docs-source-surface-map.test.mjs",
+              "exitCode": 0,
+              "observation": "Actual independent11/11focused adapter/orphan tests pass; all reviewed five implementation/data hashes unchanged at current revision."
+            },
+            {
+              "command": "node scripts/docs-governance.mjs --check",
+              "exitCode": 0,
+              "observation": "Actual independent previous frozen byte-identical implementation/map run:177pages; not relabelled as a new current process."
+            },
+            {
+              "command": "node scripts/docs-inventory.mjs --check",
+              "exitCode": 0,
+              "observation": "Actual independent previous frozen byte-identical implementation/inventories run; exact workflow source refresh confirmed."
+            }
+          ],
+          "sourceContractReview": {
+            "sourceAccuracy": "PASS",
+            "readerUsability": "PASS",
+            "quality": "PASS"
+          },
+          "retainedFailure": "Original publication quality check failed on banned just; exact correction now independently approved. Not retroactive whole check success.",
+          "artifactDisposition": "CURRENT_NATIVE_BINDINGS_PASS: actual c4ebd7e4 build and artifact/search/source-link/source-preview/diagram checks passed; original semantic/determinism evidence retained only for unchanged scopes.",
+          "limit": "Preserve original ID assignments,review,summary,checks,limits and accepted states. No new counts,gates,raw-source/API/globalgenerator/CI/runtime/release approval.",
+          "approvedCurrentDeltaDependencies": [
+            "scripts/docs-governance.mjs"
+          ],
+          "historicalOtherChangesNotNewlyApproved": [],
+          "nativeResults": "docs/blueprint/acceptance-evidence/source-doc-join-20261022/current-native-results.json",
+          "independentReview": "docs/blueprint/acceptance-evidence/source-doc-join-20261022/independent-delta-review.json"
         }
       ]
     },
@@ -9530,7 +9885,7 @@
     },
     {
       "id": "AP09-documentation-agent-maintenance-20261021",
-      "revision": "5b1b46a4f3fb6425c77499aa114e354d77cbdf6b",
+      "revision": "c4ebd7e428209c1d2fcf3599dab424ce9e0df23f",
       "author": "Nova /root authored content and correction coordinator",
       "reviewer": "Independent Codex autoreview 2026-10-21 maintenance-ready-review",
       "gateIds": [],
@@ -9687,7 +10042,9 @@
         "tools/ops-mcp/test/local.test.mjs",
         "tools/ops-mcp/test/policy_contract_test.py",
         "tsconfig.base.json",
-        "versions.json"
+        "versions.json",
+        "scripts/lib/docs-source-surface-map.mjs",
+        "scripts/tests/docs-source-surface-map.test.mjs"
       ],
       "checks": [
         {
@@ -9774,6 +10131,11 @@
           "command": "/usr/local/bin/node --max-old-space-size=4096 scripts/docs-publication.mjs build\n/usr/local/bin/node scripts/docs-reader/check-artifact.mjs /home/node/.openclaw/workspace/tmp/pr13-finish-20261021/reader-5b1b46a4\n/usr/local/bin/node scripts/docs-reader/check-search.mjs /home/node/.openclaw/workspace/tmp/pr13-finish-20261021/reader-5b1b46a4\n/usr/local/bin/node scripts/docs-reader/check-source-links.mjs /home/node/.openclaw/workspace/tmp/pr13-finish-20261021/reader-5b1b46a4\n/usr/local/bin/node scripts/docs-reader/check-source-previews.mjs /home/node/.openclaw/workspace/tmp/pr13-finish-20261021/reader-5b1b46a4",
           "exitCode": 0,
           "observation": "Five separate original native processes exited0: full177canonical-page build, artifact/local targets/digests, search, Source links and Source previews. One actual captured group reused here; no synthetic shell invocation or human review counted as execution."
+        },
+        {
+          "command": "Independent finite source-map delta review plus original current publication build and five native artifact checks",
+          "exitCode": 0,
+          "observation": "Exact16-record source/reader-contract preservation, including two independently reviewed historical deltas. Current c4ebd7e4:177canonical187HTML241output hashes;12search;14947source links/4061objects;435previewboxes/2000excerpts/1070objects;28freshdiagramhashes. Details current-native-results.json; no new accepted ID or global generator/runtime claim."
         }
       ],
       "review": {
@@ -10102,6 +10464,60 @@
           "reportAvailability": "Later evidence adoption, not a Source file at reviewed487; not added to record.sources.",
           "limit": "Original named scope/limits preserved only; no new gate/requirement counts, consumer/graph/role/native/product/runtime/deployment/release approval. Knip/parser/output weaknesses and unexecuted product paths remain visible.",
           "wholeRenderedOutputChangedCanonicalPages": []
+        },
+        {
+          "previousReviewedRevision": "5b1b46a4f3fb6425c77499aa114e354d77cbdf6b",
+          "revision": "c4ebd7e428209c1d2fcf3599dab424ce9e0df23f",
+          "reviewer": "/root/review_cli_maintenance_closeout (independent native Codex)",
+          "changedDependencies": [
+            "docs/site/reference/documentation-governance.md",
+            "scripts/docs-api-output-discovery.mjs",
+            "scripts/docs-governance.mjs",
+            "scripts/tests/argocd-checked-artifacts.test.mjs"
+          ],
+          "verdict": "PASS",
+          "scope": "Exact additive governance/source-map source and reader-contract delta plus exact one-line language correction; preservation only,not whole topic reapproval. Historical extra relevant paths require parent exact source-preservation evidence; no blanket extension from current additive review.",
+          "summary": "Original whole agent change procedure unchanged; added guidance says how to consume a limited join and explicitly preserves full discovery/review/reader/retirement obligations.",
+          "checks": [
+            {
+              "command": "node --test scripts/tests/docs-source-surface-map.test.mjs",
+              "exitCode": 0,
+              "observation": "Actual independent11/11focused adapter/orphan tests pass; all reviewed five implementation/data hashes unchanged at current revision."
+            },
+            {
+              "command": "node scripts/docs-governance.mjs --check",
+              "exitCode": 0,
+              "observation": "Actual independent previous frozen byte-identical implementation/map run:177pages; not relabelled as a new current process."
+            },
+            {
+              "command": "node scripts/docs-inventory.mjs --check",
+              "exitCode": 0,
+              "observation": "Actual independent previous frozen byte-identical implementation/inventories run; exact workflow source refresh confirmed."
+            }
+          ],
+          "sourceContractReview": {
+            "sourceAccuracy": "PASS",
+            "readerUsability": "PASS",
+            "quality": "PASS"
+          },
+          "retainedFailure": "Original publication quality check failed on banned just; exact correction now independently approved. Not retroactive whole check success.",
+          "artifactDisposition": "CURRENT_NATIVE_BINDINGS_PASS: actual c4ebd7e4 build and artifact/search/source-link/source-preview/diagram checks passed; original semantic/determinism evidence retained only for unchanged scopes.",
+          "limit": "Preserve original ID assignments,review,summary,checks,limits and accepted states. No new counts,gates,raw-source/API/globalgenerator/CI/runtime/release approval.",
+          "approvedCurrentDeltaDependencies": [
+            "docs/site/reference/documentation-governance.md",
+            "scripts/docs-governance.mjs"
+          ],
+          "historicalOtherChangesNotNewlyApproved": [
+            "scripts/docs-api-output-discovery.mjs",
+            "scripts/tests/argocd-checked-artifacts.test.mjs"
+          ],
+          "historicalExtraPreservation": {
+            "report": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/a91107-two-historical-delta-preservation.json",
+            "verdict": "PASS_EXISTING_SCOPE_ONLY",
+            "reason": "Exact additive Source-owned disabled-registration receipt binds immutable authority,canonical physical inputs,existing GitOps closure,caller/public contexts and five original descriptors. Acquisition occurs before caches and adds witness digest/dependencies to cache inputs. Its selected state preserves current runtimeAutoSync true rejecting registration before Git/render/kubectl; canonical UNKNOWN roles remain,context sets runtimeExecutionAuthorized/apiApplyAuthorized false,manual-enabled/external-response paths not qualified. Added tests retain original311lines and cover missing/copied witness,new slot/role,configuration/enabling,source bytes,boundaries,callers/aliases and authority tampering. This narrows concrete maintainer stop interpretation without weakening original guide rule to inspect owning closure,retain failures,rerun original generators and avoid undocumented source exclusions. Maintenance page itself is unchanged from actual reviewed5b1b; only already-reviewed governance prose changes. No full API/global generator qualification inferred."
+          },
+          "nativeResults": "docs/blueprint/acceptance-evidence/source-doc-join-20261022/current-native-results.json",
+          "independentReview": "docs/blueprint/acceptance-evidence/source-doc-join-20261022/independent-delta-review.json"
         }
       ],
       "previousReviewedRevision": "ac6de3002f7556d2975da44616c6ed220e35e189",
@@ -10534,7 +10950,7 @@
     },
     {
       "id": "AP09-complete-platform-change-content-20261021",
-      "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+      "revision": "c4ebd7e428209c1d2fcf3599dab424ce9e0df23f",
       "author": "Nova /root authored content and correction coordinator",
       "reviewer": "Independent Codex autoreview 2026-10-21 platform-final-review",
       "gateIds": [],
@@ -10665,7 +11081,9 @@
         "tools/ops-mcp/test/local.test.mjs",
         "tools/ops-mcp/test/policy_contract_test.py",
         "tsconfig.base.json",
-        "versions.json"
+        "versions.json",
+        "scripts/lib/docs-source-surface-map.mjs",
+        "scripts/tests/docs-source-surface-map.test.mjs"
       ],
       "checks": [
         {
@@ -10722,6 +11140,11 @@
           "command": "Current cfc97 Reader and extracted archive checks with independent22scope preservation",
           "exitCode": 0,
           "observation": "177canonical/187HTML/40815localtargets/219outputdigests;12search questions;14753SourceLinks/3910objects;1783previews/925objects;27freshSVG, exact27diagram records unchanged;28offline browser observations0findings0network. ZIP240members/19Source-compared copiedassets; actualfresh extracted artifact/searchPASS. Source/Reader checkpoint, not accessibility/globalgenerator/runtime/release approval."
+        },
+        {
+          "command": "Independent finite source-map delta review plus original current publication build and five native artifact checks",
+          "exitCode": 0,
+          "observation": "Exact16-record source/reader-contract preservation, including two independently reviewed historical deltas. Current c4ebd7e4:177canonical187HTML241output hashes;12search;14947source links/4061objects;435previewboxes/2000excerpts/1070objects;28freshdiagramhashes. Details current-native-results.json; no new accepted ID or global generator/runtime claim."
         }
       ],
       "review": {
@@ -10964,6 +11387,48 @@
           "reportAvailability": "Later evidence adoption, not a Source file at reviewed487; not added to record.sources.",
           "limit": "Original named scope/limits preserved only; no new gate/requirement counts, consumer/graph/role/native/product/runtime/deployment/release approval. Knip/parser/output weaknesses and unexecuted product paths remain visible.",
           "wholeRenderedOutputChangedCanonicalPages": []
+        },
+        {
+          "previousReviewedRevision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+          "revision": "c4ebd7e428209c1d2fcf3599dab424ce9e0df23f",
+          "reviewer": "/root/review_cli_maintenance_closeout (independent native Codex)",
+          "changedDependencies": [
+            "scripts/docs-governance.mjs"
+          ],
+          "verdict": "PASS",
+          "scope": "Exact additive governance/source-map source and reader-contract delta plus exact one-line language correction; preservation only,not whole topic reapproval.",
+          "summary": "Effect/capability/event/integration/GitOps procedures unchanged; existing platform bindings are consumed, not replaced or semantically promoted.",
+          "checks": [
+            {
+              "command": "node --test scripts/tests/docs-source-surface-map.test.mjs",
+              "exitCode": 0,
+              "observation": "Actual independent11/11focused adapter/orphan tests pass; all reviewed five implementation/data hashes unchanged at current revision."
+            },
+            {
+              "command": "node scripts/docs-governance.mjs --check",
+              "exitCode": 0,
+              "observation": "Actual independent previous frozen byte-identical implementation/map run:177pages; not relabelled as a new current process."
+            },
+            {
+              "command": "node scripts/docs-inventory.mjs --check",
+              "exitCode": 0,
+              "observation": "Actual independent previous frozen byte-identical implementation/inventories run; exact workflow source refresh confirmed."
+            }
+          ],
+          "sourceContractReview": {
+            "sourceAccuracy": "PASS",
+            "readerUsability": "PASS",
+            "quality": "PASS"
+          },
+          "retainedFailure": "Original publication quality check failed on banned just; exact correction now independently approved. Not retroactive whole check success.",
+          "artifactDisposition": "CURRENT_NATIVE_BINDINGS_PASS: actual c4ebd7e4 build and artifact/search/source-link/source-preview/diagram checks passed; original semantic/determinism evidence retained only for unchanged scopes.",
+          "limit": "Preserve original ID assignments,review,summary,checks,limits and accepted states. No new counts,gates,raw-source/API/globalgenerator/CI/runtime/release approval.",
+          "approvedCurrentDeltaDependencies": [
+            "scripts/docs-governance.mjs"
+          ],
+          "historicalOtherChangesNotNewlyApproved": [],
+          "nativeResults": "docs/blueprint/acceptance-evidence/source-doc-join-20261022/current-native-results.json",
+          "independentReview": "docs/blueprint/acceptance-evidence/source-doc-join-20261022/independent-delta-review.json"
         }
       ],
       "previousReviewedRevision": "2f8a116e00d6d38a5cc5076b10befcabe426f9f4",
@@ -12461,7 +12926,7 @@
     },
     {
       "id": "AP09-complete-publication-reference-navigation-20261021",
-      "revision": "340875215c422fb1cc0901e867420928eae3dfc0",
+      "revision": "c4ebd7e428209c1d2fcf3599dab424ce9e0df23f",
       "author": "Nova /root documentation author and correction coordinator",
       "reviewer": "Independent Codex autoreview whole finished-reader-topics and LiteLLM audits with correction-final follow-up",
       "gateIds": [],
@@ -12551,7 +13016,9 @@
         "tests/verification/deployment/prism-native-runtime.test.mjs",
         "tests/verification/reliability/external-effect-recovery.test.mts",
         "tests/verification/reliability/lifecycle.test.mts",
-        "tests/verification/reliability/worker-native-launcher.test.mts"
+        "tests/verification/reliability/worker-native-launcher.test.mts",
+        "scripts/lib/docs-source-surface-map.mjs",
+        "scripts/tests/docs-source-surface-map.test.mjs"
       ],
       "checks": [
         {
@@ -12623,6 +13090,11 @@
           "command": "Actual original node scripts/docs-publication.mjs build and four native docs-reader checks: artifact, search, source-links, source-previews (Reader34087521)",
           "exitCode": 0,
           "observation": "No declared public page changed. Existing authored navigation/content remains exact; generated documentation map and refs-checker effects require separate source/output checks. Current build177pages,241outputdigests,40885localtargets; search177pages/12questions;435Sourceboxes/2000exactexcerpts. All authored pages/shared renderer outputs unchanged6250\u21923408; exact2scripts-tree pageRecordbindings checked. Refs/governance6250 and bounded prior browser observations reused, not relabelled fresh. Prior summary/limits/checks remain historical where superseded; no wider original-scope promotion."
+        },
+        {
+          "command": "Independent finite source-map delta review plus original current publication build and five native artifact checks",
+          "exitCode": 0,
+          "observation": "Exact16-record source/reader-contract preservation, including two independently reviewed historical deltas. Current c4ebd7e4:177canonical187HTML241output hashes;12search;14947source links/4061objects;435previewboxes/2000excerpts/1070objects;28freshdiagramhashes. Details current-native-results.json; no new accepted ID or global generator/runtime claim."
         }
       ],
       "review": {
@@ -12923,6 +13395,48 @@
             "docs/site/use/workflows/redis-replay-recovery.md",
             "docs/site/use/workflows/wait-resume.md"
           ]
+        },
+        {
+          "previousReviewedRevision": "340875215c422fb1cc0901e867420928eae3dfc0",
+          "revision": "c4ebd7e428209c1d2fcf3599dab424ce9e0df23f",
+          "reviewer": "/root/review_cli_maintenance_closeout (independent native Codex)",
+          "changedDependencies": [
+            "scripts/docs-governance.mjs"
+          ],
+          "verdict": "PASS",
+          "scope": "Exact additive governance/source-map source and reader-contract delta plus exact one-line language correction; preservation only,not whole topic reapproval.",
+          "summary": "Existing links/routes/source citations unchanged; anchor validation and pinned route baseline remain intact. New JSON asset has new bytes, not old artifact hashes.",
+          "checks": [
+            {
+              "command": "node --test scripts/tests/docs-source-surface-map.test.mjs",
+              "exitCode": 0,
+              "observation": "Actual independent11/11focused adapter/orphan tests pass; all reviewed five implementation/data hashes unchanged at current revision."
+            },
+            {
+              "command": "node scripts/docs-governance.mjs --check",
+              "exitCode": 0,
+              "observation": "Actual independent previous frozen byte-identical implementation/map run:177pages; not relabelled as a new current process."
+            },
+            {
+              "command": "node scripts/docs-inventory.mjs --check",
+              "exitCode": 0,
+              "observation": "Actual independent previous frozen byte-identical implementation/inventories run; exact workflow source refresh confirmed."
+            }
+          ],
+          "sourceContractReview": {
+            "sourceAccuracy": "PASS",
+            "readerUsability": "PASS",
+            "quality": "PASS"
+          },
+          "retainedFailure": "Original publication quality check failed on banned just; exact correction now independently approved. Not retroactive whole check success.",
+          "artifactDisposition": "CURRENT_NATIVE_BINDINGS_PASS: actual c4ebd7e4 build and artifact/search/source-link/source-preview/diagram checks passed; original semantic/determinism evidence retained only for unchanged scopes.",
+          "limit": "Preserve original ID assignments,review,summary,checks,limits and accepted states. No new counts,gates,raw-source/API/globalgenerator/CI/runtime/release approval.",
+          "approvedCurrentDeltaDependencies": [
+            "scripts/docs-governance.mjs"
+          ],
+          "historicalOtherChangesNotNewlyApproved": [],
+          "nativeResults": "docs/blueprint/acceptance-evidence/source-doc-join-20261022/current-native-results.json",
+          "independentReview": "docs/blueprint/acceptance-evidence/source-doc-join-20261022/independent-delta-review.json"
         }
       ],
       "scopePreservation3408": {
@@ -12939,7 +13453,7 @@
     },
     {
       "id": "AP09-complete-developer-reader-contracts-20261021",
-      "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+      "revision": "c4ebd7e428209c1d2fcf3599dab424ce9e0df23f",
       "author": "Nova /root documentation author and correction coordinator",
       "reviewer": "Independent Codex autoreview whole finished-reader-topics and LiteLLM audits with correction-final follow-up",
       "gateIds": [],
@@ -13136,7 +13650,9 @@
         "tools/ops-mcp/test/local.test.mjs",
         "tools/ops-mcp/test/policy_contract_test.py",
         "tsconfig.base.json",
-        "versions.json"
+        "versions.json",
+        "scripts/lib/docs-source-surface-map.mjs",
+        "scripts/tests/docs-source-surface-map.test.mjs"
       ],
       "checks": [
         {
@@ -13193,6 +13709,11 @@
           "command": "Current cfc97 Reader and extracted archive checks with independent22scope preservation",
           "exitCode": 0,
           "observation": "177canonical/187HTML/40815localtargets/219outputdigests;12search questions;14753SourceLinks/3910objects;1783previews/925objects;27freshSVG, exact27diagram records unchanged;28offline browser observations0findings0network. ZIP240members/19Source-compared copiedassets; actualfresh extracted artifact/searchPASS. Source/Reader checkpoint, not accessibility/globalgenerator/runtime/release approval."
+        },
+        {
+          "command": "Independent finite source-map delta review plus original current publication build and five native artifact checks",
+          "exitCode": 0,
+          "observation": "Exact16-record source/reader-contract preservation, including two independently reviewed historical deltas. Current c4ebd7e4:177canonical187HTML241output hashes;12search;14947source links/4061objects;435previewboxes/2000excerpts/1070objects;28freshdiagramhashes. Details current-native-results.json; no new accepted ID or global generator/runtime claim."
         }
       ],
       "review": {
@@ -13454,12 +13975,54 @@
           "reportAvailability": "Later evidence adoption, not a Source file at reviewed487; not added to record.sources.",
           "limit": "Original named scope/limits preserved only; no new gate/requirement counts, consumer/graph/role/native/product/runtime/deployment/release approval. Knip/parser/output weaknesses and unexecuted product paths remain visible.",
           "wholeRenderedOutputChangedCanonicalPages": []
+        },
+        {
+          "previousReviewedRevision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+          "revision": "c4ebd7e428209c1d2fcf3599dab424ce9e0df23f",
+          "reviewer": "/root/review_cli_maintenance_closeout (independent native Codex)",
+          "changedDependencies": [
+            "scripts/docs-governance.mjs"
+          ],
+          "verdict": "PASS",
+          "scope": "Exact additive governance/source-map source and reader-contract delta plus exact one-line language correction; preservation only,not whole topic reapproval.",
+          "summary": "Authored developer journeys and their stated runtime limits unchanged; new shared governance dependency only adds inventory-to-reader relationships.",
+          "checks": [
+            {
+              "command": "node --test scripts/tests/docs-source-surface-map.test.mjs",
+              "exitCode": 0,
+              "observation": "Actual independent11/11focused adapter/orphan tests pass; all reviewed five implementation/data hashes unchanged at current revision."
+            },
+            {
+              "command": "node scripts/docs-governance.mjs --check",
+              "exitCode": 0,
+              "observation": "Actual independent previous frozen byte-identical implementation/map run:177pages; not relabelled as a new current process."
+            },
+            {
+              "command": "node scripts/docs-inventory.mjs --check",
+              "exitCode": 0,
+              "observation": "Actual independent previous frozen byte-identical implementation/inventories run; exact workflow source refresh confirmed."
+            }
+          ],
+          "sourceContractReview": {
+            "sourceAccuracy": "PASS",
+            "readerUsability": "PASS",
+            "quality": "PASS"
+          },
+          "retainedFailure": "Original publication quality check failed on banned just; exact correction now independently approved. Not retroactive whole check success.",
+          "artifactDisposition": "CURRENT_NATIVE_BINDINGS_PASS: actual c4ebd7e4 build and artifact/search/source-link/source-preview/diagram checks passed; original semantic/determinism evidence retained only for unchanged scopes.",
+          "limit": "Preserve original ID assignments,review,summary,checks,limits and accepted states. No new counts,gates,raw-source/API/globalgenerator/CI/runtime/release approval.",
+          "approvedCurrentDeltaDependencies": [
+            "scripts/docs-governance.mjs"
+          ],
+          "historicalOtherChangesNotNewlyApproved": [],
+          "nativeResults": "docs/blueprint/acceptance-evidence/source-doc-join-20261022/current-native-results.json",
+          "independentReview": "docs/blueprint/acceptance-evidence/source-doc-join-20261022/independent-delta-review.json"
         }
       ]
     },
     {
       "id": "AP09-complete-static-reader-search-20261021",
-      "revision": "5b1b46a4f3fb6425c77499aa114e354d77cbdf6b",
+      "revision": "c4ebd7e428209c1d2fcf3599dab424ce9e0df23f",
       "author": "Nova /root documentation author and implementation coordinator",
       "reviewer": "Independent Codex autoreview static-reader whole PUB-002 Source/reader-quality closeout",
       "verdict": "PASS",
@@ -13790,6 +14353,11 @@
           "command": "/usr/local/bin/node --max-old-space-size=4096 scripts/docs-publication.mjs build\n/usr/local/bin/node scripts/docs-reader/check-artifact.mjs /home/node/.openclaw/workspace/tmp/pr13-finish-20261021/reader-5b1b46a4\n/usr/local/bin/node scripts/docs-reader/check-search.mjs /home/node/.openclaw/workspace/tmp/pr13-finish-20261021/reader-5b1b46a4\n/usr/local/bin/node scripts/docs-reader/check-source-links.mjs /home/node/.openclaw/workspace/tmp/pr13-finish-20261021/reader-5b1b46a4\n/usr/local/bin/node scripts/docs-reader/check-source-previews.mjs /home/node/.openclaw/workspace/tmp/pr13-finish-20261021/reader-5b1b46a4",
           "exitCode": 0,
           "observation": "Five separate original native processes exited0: full177canonical-page build, artifact/local targets/digests, search, Source links and Source previews. One actual captured group reused here; no synthetic shell invocation or human review counted as execution."
+        },
+        {
+          "command": "Independent finite source-map delta review plus original current publication build and five native artifact checks",
+          "exitCode": 0,
+          "observation": "Exact16-record source/reader-contract preservation, including two independently reviewed historical deltas. Current c4ebd7e4:177canonical187HTML241output hashes;12search;14947source links/4061objects;435previewboxes/2000excerpts/1070objects;28freshdiagramhashes. Details current-native-results.json; no new accepted ID or global generator/runtime claim."
         }
       ],
       "limits": [
@@ -14511,6 +15079,56 @@
             "path": "handoffs/pr13-finish-20261021/five-reader-scope-preservation-7d2bb9d4/review.json",
             "sha256": "7c23a93e7259763e250b37a83a30c0653065a2a9a2623148a1a0264e89fe1d35"
           }
+        },
+        {
+          "previousReviewedRevision": "5b1b46a4f3fb6425c77499aa114e354d77cbdf6b",
+          "revision": "c4ebd7e428209c1d2fcf3599dab424ce9e0df23f",
+          "reviewer": "/root/review_cli_maintenance_closeout (independent native Codex)",
+          "changedDependencies": [
+            "docs/site/reference/documentation-governance.md",
+            "scripts/docs-api-documentation-role-custody.mjs"
+          ],
+          "verdict": "PASS",
+          "scope": "Exact additive governance/source-map source and reader-contract delta plus exact one-line language correction; preservation only,not whole topic reapproval. Historical extra relevant paths require parent exact source-preservation evidence; no blanket extension from current additive review.",
+          "summary": "Search implementation/selection/route semantics unchanged; truthful 17-line prose addition changes current search corpus and therefore requires fresh native build/check, not an old result relabelled current.",
+          "checks": [
+            {
+              "command": "node --test scripts/tests/docs-source-surface-map.test.mjs",
+              "exitCode": 0,
+              "observation": "Actual independent11/11focused adapter/orphan tests pass; all reviewed five implementation/data hashes unchanged at current revision."
+            },
+            {
+              "command": "node scripts/docs-governance.mjs --check",
+              "exitCode": 0,
+              "observation": "Actual independent previous frozen byte-identical implementation/map run:177pages; not relabelled as a new current process."
+            },
+            {
+              "command": "node scripts/docs-inventory.mjs --check",
+              "exitCode": 0,
+              "observation": "Actual independent previous frozen byte-identical implementation/inventories run; exact workflow source refresh confirmed."
+            }
+          ],
+          "sourceContractReview": {
+            "sourceAccuracy": "PASS",
+            "readerUsability": "PASS",
+            "quality": "PASS"
+          },
+          "retainedFailure": "Original publication quality check failed on banned just; exact correction now independently approved. Not retroactive whole check success.",
+          "artifactDisposition": "CURRENT_NATIVE_BINDINGS_PASS: actual c4ebd7e4 build and artifact/search/source-link/source-preview/diagram checks passed; original semantic/determinism evidence retained only for unchanged scopes.",
+          "limit": "Preserve original ID assignments,review,summary,checks,limits and accepted states. No new counts,gates,raw-source/API/globalgenerator/CI/runtime/release approval.",
+          "approvedCurrentDeltaDependencies": [
+            "docs/site/reference/documentation-governance.md"
+          ],
+          "historicalOtherChangesNotNewlyApproved": [
+            "scripts/docs-api-documentation-role-custody.mjs"
+          ],
+          "historicalExtraPreservation": {
+            "report": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/a91107-two-historical-delta-preservation.json",
+            "verdict": "PASS_EXISTING_SCOPE_ONLY",
+            "reason": "Actual5b1b\u2192ffd9 delta adds/replaces expressionSha256 literals and updates five factsDigest literals inside existing documentationExecutableRoleRecipes data. All code from first export function through EOF is exact unchanged. Role recipes are imported by API output discovery,not public reader renderer/search/source-preview or publication positive selector. Actual declared seven reader/publication consumers compare byte-unchanged from record.revision to currentHEAD. Thus retain original search/index/selection semantics and prior limitations; do not grant recipe/source/API qualification or claim all hashes are unchanged. Existing7d2 five-scope record/proof is historical corroboration only,not proof of current deltas. New governance prose changes current corpus and actual current artifact/search result remains parent follow-up."
+          },
+          "nativeResults": "docs/blueprint/acceptance-evidence/source-doc-join-20261022/current-native-results.json",
+          "independentReview": "docs/blueprint/acceptance-evidence/source-doc-join-20261022/independent-delta-review.json"
         }
       ],
       "scopePreservation3408": {
@@ -14557,7 +15175,7 @@
     },
     {
       "id": "AP09-search-reader-gate-20261021",
-      "revision": "5b1b46a4f3fb6425c77499aa114e354d77cbdf6b",
+      "revision": "c4ebd7e428209c1d2fcf3599dab424ce9e0df23f",
       "author": "Nova /root documentation author and implementation coordinator",
       "reviewer": "Independent Codex autoreview whole A912-04 code/evidence review plus narrow Source/Reader/Quality native-impact follow-up",
       "verdict": "PASS",
@@ -14680,6 +15298,11 @@
           "command": "/usr/local/bin/node --max-old-space-size=4096 scripts/docs-publication.mjs build\n/usr/local/bin/node scripts/docs-reader/check-artifact.mjs /home/node/.openclaw/workspace/tmp/pr13-finish-20261021/reader-5b1b46a4\n/usr/local/bin/node scripts/docs-reader/check-search.mjs /home/node/.openclaw/workspace/tmp/pr13-finish-20261021/reader-5b1b46a4\n/usr/local/bin/node scripts/docs-reader/check-source-links.mjs /home/node/.openclaw/workspace/tmp/pr13-finish-20261021/reader-5b1b46a4\n/usr/local/bin/node scripts/docs-reader/check-source-previews.mjs /home/node/.openclaw/workspace/tmp/pr13-finish-20261021/reader-5b1b46a4",
           "exitCode": 0,
           "observation": "Five separate original native processes exited0: full177canonical-page build, artifact/local targets/digests, search, Source links and Source previews. One actual captured group reused here; no synthetic shell invocation or human review counted as execution."
+        },
+        {
+          "command": "Independent existing reader-contract preservation plus actual current build/five native checks and changed-page browser viewport checks",
+          "exitCode": 0,
+          "observation": "Exact custody data-only delta independently traced; actual current bindings/search/Source/previews/28SVG checks pass. Governance page actual320/768/1440widths no document overflow, current paragraph present,0externalrequests. Historical full reader observations remain historical; no new gate or requirement accepted."
         }
       ],
       "limits": [
@@ -15039,6 +15662,29 @@
             "path": "handoffs/pr13-finish-20261021/five-reader-scope-preservation-7d2bb9d4/review.json",
             "sha256": "7c23a93e7259763e250b37a83a30c0653065a2a9a2623148a1a0264e89fe1d35"
           }
+        },
+        {
+          "previousReviewedRevision": "5b1b46a4f3fb6425c77499aa114e354d77cbdf6b",
+          "revision": "c4ebd7e428209c1d2fcf3599dab424ce9e0df23f",
+          "reviewer": "/root/review_cli_maintenance_closeout independent native Codex",
+          "changedDependencies": [
+            "scripts/docs-api-documentation-role-custody.mjs"
+          ],
+          "verdict": "PASS",
+          "summary": "A91204 search ranking/finite synonyms,positive-page selection and actual search implementation unchanged. Custody recipe data is not browser search logic. Same12defined questions pass actual current native search check across177canonical pages; historical320/768/1440browser observations preserved as historical only. No semantic-search expansion.",
+          "historicalDeltaProof": {
+            "path": "docs/blueprint/acceptance-evidence/source-doc-join-20261022/historical-delta-preservation.json",
+            "sha256": "992865ed083f872ce5576c6f4bcb1e8146611dd58a481cde0908b1ed0d005cf4",
+            "actualDelta": "5b1b\u2192ffd9 changes expressionSha256 andfivefactsDigest literals in existingrecipe data; entire exportfunction region exact. No current source/role/API qualification granted."
+          },
+          "currentArtifactEvidence": {
+            "path": "docs/blueprint/acceptance-evidence/source-doc-join-20261022/current-native-results.json",
+            "sha256": "f08a851ca91c17f458387bbe4adf65249cf5049081795fd7dd735d4296712c16",
+            "sourceRevision": "c4ebd7e428209c1d2fcf3599dab424ce9e0df23f",
+            "checks": "Reuse actual captured Rootbuild+fivechecks terminal0; independentlyverified outputhashes/currentrevision in a91107-current-artifact-adoption.json. Not relabelled oldchecks."
+          },
+          "limit": "Preserve original review,summary,checks,scope,IDs and limits; no new acceptance/count,wholecorpus semantic,freshpersona/humanaccessibility/globalAPI/runtime/CI/release or two-builddeterminism grant.",
+          "responsiveDeltaObservation": "docs/blueprint/acceptance-evidence/source-doc-join-20261022/current-governance-responsive-qa.json"
         }
       ],
       "scopePreservation3408": {
@@ -15084,7 +15730,7 @@
     },
     {
       "id": "AP09-rendered-source-bounds-gate-20261021",
-      "revision": "5b1b46a4f3fb6425c77499aa114e354d77cbdf6b",
+      "revision": "c4ebd7e428209c1d2fcf3599dab424ce9e0df23f",
       "author": "Nova /root documentation author and implementation coordinator",
       "reviewer": "Independent Codex autoreview whole A912-09 Source/Reader/Quality review and narrow changed-boundary impact review for 21 prior PASS records",
       "verdict": "PASS",
@@ -15216,6 +15862,11 @@
           "command": "/usr/local/bin/node --max-old-space-size=4096 scripts/docs-publication.mjs build\n/usr/local/bin/node scripts/docs-reader/check-artifact.mjs /home/node/.openclaw/workspace/tmp/pr13-finish-20261021/reader-5b1b46a4\n/usr/local/bin/node scripts/docs-reader/check-search.mjs /home/node/.openclaw/workspace/tmp/pr13-finish-20261021/reader-5b1b46a4\n/usr/local/bin/node scripts/docs-reader/check-source-links.mjs /home/node/.openclaw/workspace/tmp/pr13-finish-20261021/reader-5b1b46a4\n/usr/local/bin/node scripts/docs-reader/check-source-previews.mjs /home/node/.openclaw/workspace/tmp/pr13-finish-20261021/reader-5b1b46a4",
           "exitCode": 0,
           "observation": "Five separate original native processes exited0: full177canonical-page build, artifact/local targets/digests, search, Source links and Source previews. One actual captured group reused here; no synthetic shell invocation or human review counted as execution."
+        },
+        {
+          "command": "Independent existing reader-contract preservation plus actual current build/five native checks and changed-page browser viewport checks",
+          "exitCode": 0,
+          "observation": "Exact custody data-only delta independently traced; actual current bindings/search/Source/previews/28SVG checks pass. Governance page actual320/768/1440widths no document overflow, current paragraph present,0externalrequests. Historical full reader observations remain historical; no new gate or requirement accepted."
         }
       ],
       "limits": [
@@ -15574,6 +16225,29 @@
             "path": "handoffs/pr13-finish-20261021/five-reader-scope-preservation-7d2bb9d4/review.json",
             "sha256": "7c23a93e7259763e250b37a83a30c0653065a2a9a2623148a1a0264e89fe1d35"
           }
+        },
+        {
+          "previousReviewedRevision": "5b1b46a4f3fb6425c77499aa114e354d77cbdf6b",
+          "revision": "c4ebd7e428209c1d2fcf3599dab424ce9e0df23f",
+          "reviewer": "/root/review_cli_maintenance_closeout independent native Codex",
+          "changedDependencies": [
+            "scripts/docs-api-documentation-role-custody.mjs"
+          ],
+          "verdict": "PASS",
+          "summary": "A91209 Source link/object/range and artifact binding implementation unchanged. Actual current native artifact+Source checks establish241outputdigests,187HTML,40885localtargets and14947verifiedlinks/4061objects. Recipe literal update does not change link validation or grant global source/API authority. Original semantic/reachability limits remain.",
+          "historicalDeltaProof": {
+            "path": "docs/blueprint/acceptance-evidence/source-doc-join-20261022/historical-delta-preservation.json",
+            "sha256": "992865ed083f872ce5576c6f4bcb1e8146611dd58a481cde0908b1ed0d005cf4",
+            "actualDelta": "5b1b\u2192ffd9 changes expressionSha256 andfivefactsDigest literals in existingrecipe data; entire exportfunction region exact. No current source/role/API qualification granted."
+          },
+          "currentArtifactEvidence": {
+            "path": "docs/blueprint/acceptance-evidence/source-doc-join-20261022/current-native-results.json",
+            "sha256": "f08a851ca91c17f458387bbe4adf65249cf5049081795fd7dd735d4296712c16",
+            "sourceRevision": "c4ebd7e428209c1d2fcf3599dab424ce9e0df23f",
+            "checks": "Reuse actual captured Rootbuild+fivechecks terminal0; independentlyverified outputhashes/currentrevision in a91107-current-artifact-adoption.json. Not relabelled oldchecks."
+          },
+          "limit": "Preserve original review,summary,checks,scope,IDs and limits; no new acceptance/count,wholecorpus semantic,freshpersona/humanaccessibility/globalAPI/runtime/CI/release or two-builddeterminism grant.",
+          "responsiveDeltaObservation": "docs/blueprint/acceptance-evidence/source-doc-join-20261022/current-governance-responsive-qa.json"
         }
       ],
       "scopePreservation3408": {
@@ -15938,7 +16612,7 @@
     },
     {
       "id": "AP09-complete-same-source-code-preview-20261021",
-      "revision": "5b1b46a4f3fb6425c77499aa114e354d77cbdf6b",
+      "revision": "c4ebd7e428209c1d2fcf3599dab424ce9e0df23f",
       "author": "Nova /root documentation author and implementation coordinator",
       "reviewer": "Independent Codex autoreview whole PUB004 Source/Reader/Quality closeout plus narrow changed-boundary preservation for21priorPASSrecords",
       "verdict": "PASS",
@@ -16058,6 +16732,11 @@
           "command": "/usr/local/bin/node --max-old-space-size=4096 scripts/docs-publication.mjs build\n/usr/local/bin/node scripts/docs-reader/check-artifact.mjs /home/node/.openclaw/workspace/tmp/pr13-finish-20261021/reader-5b1b46a4\n/usr/local/bin/node scripts/docs-reader/check-search.mjs /home/node/.openclaw/workspace/tmp/pr13-finish-20261021/reader-5b1b46a4\n/usr/local/bin/node scripts/docs-reader/check-source-links.mjs /home/node/.openclaw/workspace/tmp/pr13-finish-20261021/reader-5b1b46a4\n/usr/local/bin/node scripts/docs-reader/check-source-previews.mjs /home/node/.openclaw/workspace/tmp/pr13-finish-20261021/reader-5b1b46a4",
           "exitCode": 0,
           "observation": "Five separate original native processes exited0: full177canonical-page build, artifact/local targets/digests, search, Source links and Source previews. One actual captured group reused here; no synthetic shell invocation or human review counted as execution."
+        },
+        {
+          "command": "Independent existing reader-contract preservation plus actual current build/five native checks and changed-page browser viewport checks",
+          "exitCode": 0,
+          "observation": "Exact custody data-only delta independently traced; actual current bindings/search/Source/previews/28SVG checks pass. Governance page actual320/768/1440widths no document overflow, current paragraph present,0externalrequests. Historical full reader observations remain historical; no new gate or requirement accepted."
         }
       ],
       "limits": [
@@ -16389,6 +17068,29 @@
             "path": "handoffs/pr13-finish-20261021/five-reader-scope-preservation-7d2bb9d4/review.json",
             "sha256": "7c23a93e7259763e250b37a83a30c0653065a2a9a2623148a1a0264e89fe1d35"
           }
+        },
+        {
+          "previousReviewedRevision": "5b1b46a4f3fb6425c77499aa114e354d77cbdf6b",
+          "revision": "c4ebd7e428209c1d2fcf3599dab424ce9e0df23f",
+          "reviewer": "/root/review_cli_maintenance_closeout independent native Codex",
+          "changedDependencies": [
+            "scripts/docs-api-documentation-role-custody.mjs"
+          ],
+          "verdict": "PASS",
+          "summary": "PUB004 source preview extraction,immutable link pairing,inert rendering and disclosure implementation unchanged. Actual current native preview check confirms435/435boxes,2000exactexcerpts/1070objects. Custody recipe literal changes are not preview renderer changes. No all-sixfield/bodysemantic/browser/screenreader upgrade; original exceptions and limits preserved.",
+          "historicalDeltaProof": {
+            "path": "docs/blueprint/acceptance-evidence/source-doc-join-20261022/historical-delta-preservation.json",
+            "sha256": "992865ed083f872ce5576c6f4bcb1e8146611dd58a481cde0908b1ed0d005cf4",
+            "actualDelta": "5b1b\u2192ffd9 changes expressionSha256 andfivefactsDigest literals in existingrecipe data; entire exportfunction region exact. No current source/role/API qualification granted."
+          },
+          "currentArtifactEvidence": {
+            "path": "docs/blueprint/acceptance-evidence/source-doc-join-20261022/current-native-results.json",
+            "sha256": "f08a851ca91c17f458387bbe4adf65249cf5049081795fd7dd735d4296712c16",
+            "sourceRevision": "c4ebd7e428209c1d2fcf3599dab424ce9e0df23f",
+            "checks": "Reuse actual captured Rootbuild+fivechecks terminal0; independentlyverified outputhashes/currentrevision in a91107-current-artifact-adoption.json. Not relabelled oldchecks."
+          },
+          "limit": "Preserve original review,summary,checks,scope,IDs and limits; no new acceptance/count,wholecorpus semantic,freshpersona/humanaccessibility/globalAPI/runtime/CI/release or two-builddeterminism grant.",
+          "responsiveDeltaObservation": "docs/blueprint/acceptance-evidence/source-doc-join-20261022/current-governance-responsive-qa.json"
         }
       ],
       "scopePreservation3408": {
@@ -16434,7 +17136,7 @@
     },
     {
       "id": "AP09-complete-responsive-reader-layout-20261021",
-      "revision": "5b1b46a4f3fb6425c77499aa114e354d77cbdf6b",
+      "revision": "c4ebd7e428209c1d2fcf3599dab424ce9e0df23f",
       "author": "Nova /root documentation author and implementation coordinator",
       "reviewer": "Independent Codex autoreview whole A91207 responsive-layout closeout and narrow24-record prior-boundary preservation",
       "verdict": "PASS",
@@ -16614,6 +17316,11 @@
           "command": "/usr/local/bin/node --max-old-space-size=4096 scripts/docs-publication.mjs build\n/usr/local/bin/node scripts/docs-reader/check-artifact.mjs /home/node/.openclaw/workspace/tmp/pr13-finish-20261021/reader-5b1b46a4\n/usr/local/bin/node scripts/docs-reader/check-search.mjs /home/node/.openclaw/workspace/tmp/pr13-finish-20261021/reader-5b1b46a4\n/usr/local/bin/node scripts/docs-reader/check-source-links.mjs /home/node/.openclaw/workspace/tmp/pr13-finish-20261021/reader-5b1b46a4\n/usr/local/bin/node scripts/docs-reader/check-source-previews.mjs /home/node/.openclaw/workspace/tmp/pr13-finish-20261021/reader-5b1b46a4",
           "exitCode": 0,
           "observation": "Five separate original native processes exited0: full177canonical-page build, artifact/local targets/digests, search, Source links and Source previews. One actual captured group reused here; no synthetic shell invocation or human review counted as execution."
+        },
+        {
+          "command": "Independent existing reader-contract preservation plus actual current build/five native checks and changed-page browser viewport checks",
+          "exitCode": 0,
+          "observation": "Exact custody data-only delta independently traced; actual current bindings/search/Source/previews/28SVG checks pass. Governance page actual320/768/1440widths no document overflow, current paragraph present,0externalrequests. Historical full reader observations remain historical; no new gate or requirement accepted."
         }
       ],
       "limits": [
@@ -16968,6 +17675,29 @@
             "path": "handoffs/pr13-finish-20261021/five-reader-scope-preservation-7d2bb9d4/review.json",
             "sha256": "7c23a93e7259763e250b37a83a30c0653065a2a9a2623148a1a0264e89fe1d35"
           }
+        },
+        {
+          "previousReviewedRevision": "5b1b46a4f3fb6425c77499aa114e354d77cbdf6b",
+          "revision": "c4ebd7e428209c1d2fcf3599dab424ce9e0df23f",
+          "reviewer": "/root/review_cli_maintenance_closeout independent native Codex",
+          "changedDependencies": [
+            "scripts/docs-api-documentation-role-custody.mjs"
+          ],
+          "verdict": "PASS",
+          "summary": "A91207 renderer/CSS/navigation/table/code/diagram scrolling/focus behavior unchanged. The sole declared Source drift is custody data,not layout code or stylesheet. Actual current build/asset binding and28freshSVGhash checks support current emitted inputs. Historical320/768/1440layout/browser proof remains historical and is not replaced by native byte checks. New17linegovernance prose is ordinary existing prose with no added wide visual component; Root separate actual320viewport observation can supplement it,not a fake completed browser run.",
+          "historicalDeltaProof": {
+            "path": "docs/blueprint/acceptance-evidence/source-doc-join-20261022/historical-delta-preservation.json",
+            "sha256": "992865ed083f872ce5576c6f4bcb1e8146611dd58a481cde0908b1ed0d005cf4",
+            "actualDelta": "5b1b\u2192ffd9 changes expressionSha256 andfivefactsDigest literals in existingrecipe data; entire exportfunction region exact. No current source/role/API qualification granted."
+          },
+          "currentArtifactEvidence": {
+            "path": "docs/blueprint/acceptance-evidence/source-doc-join-20261022/current-native-results.json",
+            "sha256": "f08a851ca91c17f458387bbe4adf65249cf5049081795fd7dd735d4296712c16",
+            "sourceRevision": "c4ebd7e428209c1d2fcf3599dab424ce9e0df23f",
+            "checks": "Reuse actual captured Rootbuild+fivechecks terminal0; independentlyverified outputhashes/currentrevision in a91107-current-artifact-adoption.json. Not relabelled oldchecks."
+          },
+          "limit": "Preserve original review,summary,checks,scope,IDs and limits; no new acceptance/count,wholecorpus semantic,freshpersona/humanaccessibility/globalAPI/runtime/CI/release or two-builddeterminism grant.",
+          "responsiveDeltaObservation": "docs/blueprint/acceptance-evidence/source-doc-join-20261022/current-governance-responsive-qa.json"
         }
       ],
       "scopePreservation3408": {
@@ -23348,7 +24078,7 @@
     },
     {
       "id": "A912-11-deterministic-page-records-20261022",
-      "revision": "340875215c422fb1cc0901e867420928eae3dfc0",
+      "revision": "c4ebd7e428209c1d2fcf3599dab424ce9e0df23f",
       "author": "/root/workflow_acceptance metadata author; /root installed integration and original production builds",
       "reviewer": "/root/custody_review; independent of metadata author",
       "gateIds": [
@@ -23377,7 +24107,9 @@
         "scripts/docs-reader/metadata.mjs",
         "scripts/docs-reader/package.json",
         "scripts/docs-reader/package-lock.json",
-        "docs/config/documentation-diagrams.json"
+        "docs/config/documentation-diagrams.json",
+        "scripts/lib/docs-source-surface-map.mjs",
+        "scripts/tests/docs-source-surface-map.test.mjs"
       ],
       "checks": [
         {
@@ -23409,6 +24141,11 @@
           "command": "Actual original node scripts/docs-publication.mjs build and four native docs-reader checks: artifact, search, source-links, source-previews (Reader34087521)",
           "exitCode": 0,
           "observation": "No declared public page changed. Historical two-build/419-output determinism observation remains its original exact-input scope; changed current inputs do not acquire a new two-build result from this content review. Current build177pages,241outputdigests,40885localtargets; search177pages/12questions;435Sourceboxes/2000exactexcerpts. All authored pages/shared renderer outputs unchanged6250\u21923408; exact2scripts-tree pageRecordbindings checked. Refs/governance6250 and bounded prior browser observations reused, not relabelled fresh. Prior summary/limits/checks remain historical where superseded; no wider original-scope promotion."
+        },
+        {
+          "command": "Independent finite source-map delta review plus original current publication build and five native artifact checks",
+          "exitCode": 0,
+          "observation": "Exact16-record source/reader-contract preservation, including two independently reviewed historical deltas. Current c4ebd7e4:177canonical187HTML241output hashes;12search;14947source links/4061objects;435previewboxes/2000excerpts/1070objects;28freshdiagramhashes. Details current-native-results.json; no new accepted ID or global generator/runtime claim."
         }
       ],
       "review": {
@@ -23551,6 +24288,48 @@
             "docs/site/use/workflows/redis-replay-recovery.md",
             "docs/site/use/workflows/wait-resume.md"
           ]
+        },
+        {
+          "previousReviewedRevision": "340875215c422fb1cc0901e867420928eae3dfc0",
+          "revision": "c4ebd7e428209c1d2fcf3599dab424ce9e0df23f",
+          "reviewer": "/root/review_cli_maintenance_closeout (independent native Codex)",
+          "changedDependencies": [
+            "docs/site/reference/generated-documentation-map.json"
+          ],
+          "verdict": "PASS",
+          "scope": "Exact additive governance/source-map source and reader-contract delta plus exact one-line language correction; preservation only,not whole topic reapproval.",
+          "summary": "Original page-record consumer unchanged and reads ownership.pages; all177 rows exact. It separately hashes full ownership JSON, so historical two-build artifact equality remains historical and new current output requires fresh normal build/check.",
+          "checks": [
+            {
+              "command": "node --test scripts/tests/docs-source-surface-map.test.mjs",
+              "exitCode": 0,
+              "observation": "Actual independent11/11focused adapter/orphan tests pass; all reviewed five implementation/data hashes unchanged at current revision."
+            },
+            {
+              "command": "node scripts/docs-governance.mjs --check",
+              "exitCode": 0,
+              "observation": "Actual independent previous frozen byte-identical implementation/map run:177pages; not relabelled as a new current process."
+            },
+            {
+              "command": "node scripts/docs-inventory.mjs --check",
+              "exitCode": 0,
+              "observation": "Actual independent previous frozen byte-identical implementation/inventories run; exact workflow source refresh confirmed."
+            }
+          ],
+          "sourceContractReview": {
+            "sourceAccuracy": "PASS",
+            "readerUsability": "PASS",
+            "quality": "PASS"
+          },
+          "retainedFailure": "Original publication quality check failed on banned just; exact correction now independently approved. Not retroactive whole check success.",
+          "artifactDisposition": "CURRENT_NATIVE_BINDINGS_PASS: actual c4ebd7e4 build and artifact/search/source-link/source-preview/diagram checks passed; original semantic/determinism evidence retained only for unchanged scopes.",
+          "limit": "Preserve original ID assignments,review,summary,checks,limits and accepted states. No new counts,gates,raw-source/API/globalgenerator/CI/runtime/release approval.",
+          "approvedCurrentDeltaDependencies": [
+            "docs/site/reference/generated-documentation-map.json"
+          ],
+          "historicalOtherChangesNotNewlyApproved": [],
+          "nativeResults": "docs/blueprint/acceptance-evidence/source-doc-join-20261022/current-native-results.json",
+          "independentReview": "docs/blueprint/acceptance-evidence/source-doc-join-20261022/independent-delta-review.json"
         }
       ],
       "scopePreservation3408": {
@@ -23567,7 +24346,7 @@
     },
     {
       "id": "AP09-publication-positive-scope-7ef16585",
-      "revision": "d23046f0a0f39c70f8177c607b722c191a8da7e1",
+      "revision": "c4ebd7e428209c1d2fcf3599dab424ce9e0df23f",
       "author": "existing publication/content maintainers; final authored Sourcefield additions separately reviewed by workflow_acceptance",
       "reviewer": "/root/operator_acceptance",
       "gateIds": [
@@ -23768,7 +24547,9 @@
         "docs/config/documentation-tree-classification.json",
         "docs/site/reference/generated-documentation-map.json",
         "docs/site/reference/documentation-site.md",
-        "docs/site/decisions/runtime-and-operations.md"
+        "docs/site/decisions/runtime-and-operations.md",
+        "scripts/lib/docs-source-surface-map.mjs",
+        "scripts/tests/docs-source-surface-map.test.mjs"
       ],
       "checks": [
         {
@@ -23810,6 +24591,11 @@
           "command": "/usr/local/bin/node --max-old-space-size=4096 scripts/docs-publication.mjs build\n/usr/local/bin/node scripts/docs-reader/check-artifact.mjs /home/node/.openclaw/workspace/tmp/pr13-finish-20261021/reader-d23046f0\n/usr/local/bin/node scripts/docs-reader/check-search.mjs /home/node/.openclaw/workspace/tmp/pr13-finish-20261021/reader-d23046f0\n/usr/local/bin/node scripts/docs-reader/check-source-links.mjs /home/node/.openclaw/workspace/tmp/pr13-finish-20261021/reader-d23046f0\n/usr/local/bin/node scripts/docs-reader/check-source-previews.mjs /home/node/.openclaw/workspace/tmp/pr13-finish-20261021/reader-d23046f0",
           "exitCode": 0,
           "observation": "Five separate original native processes each exited0: publication build177canonical/187HTML; artifact local targets/digests,177-page search,Source links and2000excerpts/1070objects. This is one captured group reused for this record; no synthetic shell invocation or human review counted as command success."
+        },
+        {
+          "command": "Independent finite source-map delta review plus original current publication build and five native artifact checks",
+          "exitCode": 0,
+          "observation": "Exact16-record source/reader-contract preservation, including two independently reviewed historical deltas. Current c4ebd7e4:177canonical187HTML241output hashes;12search;14947source links/4061objects;435previewboxes/2000excerpts/1070objects;28freshdiagramhashes. Details current-native-results.json; no new accepted ID or global generator/runtime claim."
         }
       ],
       "review": {
@@ -24194,6 +24980,50 @@
             "docs/site/use/workflows/redis-replay-recovery.md",
             "docs/site/use/workflows/wait-resume.md"
           ]
+        },
+        {
+          "previousReviewedRevision": "d23046f0a0f39c70f8177c607b722c191a8da7e1",
+          "revision": "c4ebd7e428209c1d2fcf3599dab424ce9e0df23f",
+          "reviewer": "/root/review_cli_maintenance_closeout (independent native Codex)",
+          "changedDependencies": [
+            "docs/site/reference/documentation-governance.md",
+            "docs/site/reference/generated-documentation-map.json"
+          ],
+          "verdict": "PASS",
+          "scope": "Exact additive governance/source-map source and reader-contract delta plus exact one-line language correction; preservation only,not whole topic reapproval.",
+          "summary": "Positive page/classification/asset selectors unchanged; map remains an already allowed JSON asset. No new page or publication scope; changed asset/body requires fresh committed artifact binding.",
+          "checks": [
+            {
+              "command": "node --test scripts/tests/docs-source-surface-map.test.mjs",
+              "exitCode": 0,
+              "observation": "Actual independent11/11focused adapter/orphan tests pass; all reviewed five implementation/data hashes unchanged at current revision."
+            },
+            {
+              "command": "node scripts/docs-governance.mjs --check",
+              "exitCode": 0,
+              "observation": "Actual independent previous frozen byte-identical implementation/map run:177pages; not relabelled as a new current process."
+            },
+            {
+              "command": "node scripts/docs-inventory.mjs --check",
+              "exitCode": 0,
+              "observation": "Actual independent previous frozen byte-identical implementation/inventories run; exact workflow source refresh confirmed."
+            }
+          ],
+          "sourceContractReview": {
+            "sourceAccuracy": "PASS",
+            "readerUsability": "PASS",
+            "quality": "PASS"
+          },
+          "retainedFailure": "Original publication quality check failed on banned just; exact correction now independently approved. Not retroactive whole check success.",
+          "artifactDisposition": "CURRENT_NATIVE_BINDINGS_PASS: actual c4ebd7e4 build and artifact/search/source-link/source-preview/diagram checks passed; original semantic/determinism evidence retained only for unchanged scopes.",
+          "limit": "Preserve original ID assignments,review,summary,checks,limits and accepted states. No new counts,gates,raw-source/API/globalgenerator/CI/runtime/release approval.",
+          "approvedCurrentDeltaDependencies": [
+            "docs/site/reference/documentation-governance.md",
+            "docs/site/reference/generated-documentation-map.json"
+          ],
+          "historicalOtherChangesNotNewlyApproved": [],
+          "nativeResults": "docs/blueprint/acceptance-evidence/source-doc-join-20261022/current-native-results.json",
+          "independentReview": "docs/blueprint/acceptance-evidence/source-doc-join-20261022/independent-delta-review.json"
         }
       ],
       "scopePreservation3408": {
@@ -24631,7 +25461,7 @@
     },
     {
       "id": "A98-02-13-whole-operator-procedure-contract-20261022",
-      "revision": "d23046f0a0f39c70f8177c607b722c191a8da7e1",
+      "revision": "c4ebd7e428209c1d2fcf3599dab424ce9e0df23f",
       "author": "Original canonical topic maintainers plus separately reviewed bounded corrections",
       "reviewer": "/root/operator_acceptance; own quickstart delta independently reviewed by /root",
       "gateIds": [
@@ -24916,7 +25746,9 @@
         "tests/verification/reliability/redis-transport.test.mts",
         "tests/verification/reliability/repair-budget-fixture.mjs",
         "tests/verification/reliability/worker-native-journal.test.mts",
-        "versions.json"
+        "versions.json",
+        "scripts/lib/docs-source-surface-map.mjs",
+        "scripts/tests/docs-source-surface-map.test.mjs"
       ],
       "checks": [
         {
@@ -24943,6 +25775,11 @@
           "command": "/usr/local/bin/node --max-old-space-size=4096 scripts/docs-publication.mjs build\n/usr/local/bin/node scripts/docs-reader/check-artifact.mjs /home/node/.openclaw/workspace/tmp/pr13-finish-20261021/reader-d23046f0\n/usr/local/bin/node scripts/docs-reader/check-search.mjs /home/node/.openclaw/workspace/tmp/pr13-finish-20261021/reader-d23046f0\n/usr/local/bin/node scripts/docs-reader/check-source-links.mjs /home/node/.openclaw/workspace/tmp/pr13-finish-20261021/reader-d23046f0\n/usr/local/bin/node scripts/docs-reader/check-source-previews.mjs /home/node/.openclaw/workspace/tmp/pr13-finish-20261021/reader-d23046f0",
           "exitCode": 0,
           "observation": "Five separate original native processes each exited0: publication build177canonical/187HTML; artifact local targets/digests,177-page search,Source links and2000excerpts/1070objects. This is one captured group reused for this record; no synthetic shell invocation or human review counted as command success."
+        },
+        {
+          "command": "Independent finite source-map delta review plus original current publication build and five native artifact checks",
+          "exitCode": 0,
+          "observation": "Exact16-record source/reader-contract preservation, including two independently reviewed historical deltas. Current c4ebd7e4:177canonical187HTML241output hashes;12search;14947source links/4061objects;435previewboxes/2000excerpts/1070objects;28freshdiagramhashes. Details current-native-results.json; no new accepted ID or global generator/runtime claim."
         }
       ],
       "review": {
@@ -25151,6 +25988,50 @@
           "reportAvailability": "Later evidence adoption, not a Source file at reviewed487; not added to record.sources.",
           "limit": "Original named scope/limits preserved only; no new gate/requirement counts, consumer/graph/role/native/product/runtime/deployment/release approval. Knip/parser/output weaknesses and unexecuted product paths remain visible.",
           "wholeRenderedOutputChangedCanonicalPages": []
+        },
+        {
+          "previousReviewedRevision": "d23046f0a0f39c70f8177c607b722c191a8da7e1",
+          "revision": "c4ebd7e428209c1d2fcf3599dab424ce9e0df23f",
+          "reviewer": "/root/review_cli_maintenance_closeout (independent native Codex)",
+          "changedDependencies": [
+            "docs/site/reference/generated-documentation-map.json",
+            "scripts/docs-governance.mjs"
+          ],
+          "verdict": "PASS",
+          "scope": "Exact additive governance/source-map source and reader-contract delta plus exact one-line language correction; preservation only,not whole topic reapproval.",
+          "summary": "Canonical operator procedures/authority/prerequisites/recovery unchanged; all177 page rows and operator check assignments exact; no new live/persona claim.",
+          "checks": [
+            {
+              "command": "node --test scripts/tests/docs-source-surface-map.test.mjs",
+              "exitCode": 0,
+              "observation": "Actual independent11/11focused adapter/orphan tests pass; all reviewed five implementation/data hashes unchanged at current revision."
+            },
+            {
+              "command": "node scripts/docs-governance.mjs --check",
+              "exitCode": 0,
+              "observation": "Actual independent previous frozen byte-identical implementation/map run:177pages; not relabelled as a new current process."
+            },
+            {
+              "command": "node scripts/docs-inventory.mjs --check",
+              "exitCode": 0,
+              "observation": "Actual independent previous frozen byte-identical implementation/inventories run; exact workflow source refresh confirmed."
+            }
+          ],
+          "sourceContractReview": {
+            "sourceAccuracy": "PASS",
+            "readerUsability": "PASS",
+            "quality": "PASS"
+          },
+          "retainedFailure": "Original publication quality check failed on banned just; exact correction now independently approved. Not retroactive whole check success.",
+          "artifactDisposition": "CURRENT_NATIVE_BINDINGS_PASS: actual c4ebd7e4 build and artifact/search/source-link/source-preview/diagram checks passed; original semantic/determinism evidence retained only for unchanged scopes.",
+          "limit": "Preserve original ID assignments,review,summary,checks,limits and accepted states. No new counts,gates,raw-source/API/globalgenerator/CI/runtime/release approval.",
+          "approvedCurrentDeltaDependencies": [
+            "docs/site/reference/generated-documentation-map.json",
+            "scripts/docs-governance.mjs"
+          ],
+          "historicalOtherChangesNotNewlyApproved": [],
+          "nativeResults": "docs/blueprint/acceptance-evidence/source-doc-join-20261022/current-native-results.json",
+          "independentReview": "docs/blueprint/acceptance-evidence/source-doc-join-20261022/independent-delta-review.json"
         }
       ],
       "scopePreservation3408": {
@@ -25182,7 +26063,7 @@
     },
     {
       "id": "A910-03-whole-command-prerequisite-contract-20261022",
-      "revision": "340875215c422fb1cc0901e867420928eae3dfc0",
+      "revision": "c4ebd7e428209c1d2fcf3599dab424ce9e0df23f",
       "author": "Original canonical topic maintainers plus separately reviewed bounded corrections",
       "reviewer": "/root/operator_acceptance; own quickstart delta independently reviewed by /root",
       "gateIds": [
@@ -25408,7 +26289,9 @@
         "tools/ops-mcp/test/local.test.mjs",
         "tools/ops-mcp/test/policy_contract_test.py",
         "tsconfig.base.json",
-        "versions.json"
+        "versions.json",
+        "scripts/lib/docs-source-surface-map.mjs",
+        "scripts/tests/docs-source-surface-map.test.mjs"
       ],
       "checks": [
         {
@@ -25430,6 +26313,11 @@
           "command": "Actual original node scripts/docs-publication.mjs build and four native docs-reader checks: artifact, search, source-links, source-previews (Reader34087521)",
           "exitCode": 0,
           "observation": "Host-and-engine adds current Ops-specific checks/native connector route but preserves existing build/test/version/change-to-check prerequisites and stops. Historical publication/SDK checks are not relabelled a new execution. Current build177pages,241outputdigests,40885localtargets; search177pages/12questions;435Sourceboxes/2000exactexcerpts. All authored pages/shared renderer outputs unchanged6250\u21923408; exact2scripts-tree pageRecordbindings checked. Refs/governance6250 and bounded prior browser observations reused, not relabelled fresh. Prior summary/limits/checks remain historical where superseded; no wider original-scope promotion."
+        },
+        {
+          "command": "Independent finite source-map delta review plus original current publication build and five native artifact checks",
+          "exitCode": 0,
+          "observation": "Exact16-record source/reader-contract preservation, including two independently reviewed historical deltas. Current c4ebd7e4:177canonical187HTML241output hashes;12search;14947source links/4061objects;435previewboxes/2000excerpts/1070objects;28freshdiagramhashes. Details current-native-results.json; no new accepted ID or global generator/runtime claim."
         }
       ],
       "review": {
@@ -25591,6 +26479,50 @@
           "reportAvailability": "Later evidence adoption, not a Source file at reviewed487; not added to record.sources.",
           "limit": "Original named scope/limits preserved only; no new gate/requirement counts, consumer/graph/role/native/product/runtime/deployment/release approval. Knip/parser/output weaknesses and unexecuted product paths remain visible.",
           "wholeRenderedOutputChangedCanonicalPages": []
+        },
+        {
+          "previousReviewedRevision": "340875215c422fb1cc0901e867420928eae3dfc0",
+          "revision": "c4ebd7e428209c1d2fcf3599dab424ce9e0df23f",
+          "reviewer": "/root/review_cli_maintenance_closeout (independent native Codex)",
+          "changedDependencies": [
+            "docs/site/reference/documentation-governance.md",
+            "scripts/docs-governance.mjs"
+          ],
+          "verdict": "PASS",
+          "scope": "Exact additive governance/source-map source and reader-contract delta plus exact one-line language correction; preservation only,not whole topic reapproval.",
+          "summary": "Original command-preparation/selected-tool/stop rules unchanged; added prose retains owning checks and does not authorize broad SDK/API/native execution.",
+          "checks": [
+            {
+              "command": "node --test scripts/tests/docs-source-surface-map.test.mjs",
+              "exitCode": 0,
+              "observation": "Actual independent11/11focused adapter/orphan tests pass; all reviewed five implementation/data hashes unchanged at current revision."
+            },
+            {
+              "command": "node scripts/docs-governance.mjs --check",
+              "exitCode": 0,
+              "observation": "Actual independent previous frozen byte-identical implementation/map run:177pages; not relabelled as a new current process."
+            },
+            {
+              "command": "node scripts/docs-inventory.mjs --check",
+              "exitCode": 0,
+              "observation": "Actual independent previous frozen byte-identical implementation/inventories run; exact workflow source refresh confirmed."
+            }
+          ],
+          "sourceContractReview": {
+            "sourceAccuracy": "PASS",
+            "readerUsability": "PASS",
+            "quality": "PASS"
+          },
+          "retainedFailure": "Original publication quality check failed on banned just; exact correction now independently approved. Not retroactive whole check success.",
+          "artifactDisposition": "CURRENT_NATIVE_BINDINGS_PASS: actual c4ebd7e4 build and artifact/search/source-link/source-preview/diagram checks passed; original semantic/determinism evidence retained only for unchanged scopes.",
+          "limit": "Preserve original ID assignments,review,summary,checks,limits and accepted states. No new counts,gates,raw-source/API/globalgenerator/CI/runtime/release approval.",
+          "approvedCurrentDeltaDependencies": [
+            "docs/site/reference/documentation-governance.md",
+            "scripts/docs-governance.mjs"
+          ],
+          "historicalOtherChangesNotNewlyApproved": [],
+          "nativeResults": "docs/blueprint/acceptance-evidence/source-doc-join-20261022/current-native-results.json",
+          "independentReview": "docs/blueprint/acceptance-evidence/source-doc-join-20261022/independent-delta-review.json"
         }
       ],
       "scopePreservation3408": {
@@ -43781,10 +44713,18 @@
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L401",
       "closureDecision": {
         "verdict": "NOT_READY",
-        "revision": "e161be417432d4ebdd22a3d84e09057df70abc0d",
-        "reason": "- MNT-004 \u2014 Generierte CLI-Flags \u2014 NOT_READY. Canonical: docs/site/extend/documentation-maintenance.md. NOT_READY: owned CLI definitions are generated (117 current inventory rows) with parser/value/default/owner semantics, not merely invocation strings. Full discovery across every entrypoint and current generator baseline was not independently verified.",
-        "campaign": "independent-ready-topics-20261020"
-      }
+        "revision": "c4ebd7e428209c1d2fcf3599dab424ce9e0df23f",
+        "reason": "Independent current CLI review preserves existing REF-002 and byteexact original renderCli parity; broader requirement still lacks complete command/subcommand/exitcode generator model and whole owning discovery/drift baseline. Unrelated stale workflow inventory fixed by original generator; all four inventory outputs now current. No new CLI gate approval.",
+        "campaign": "current-source-map-and-cli-recovery-20261022"
+      },
+      "closureDecisionHistory": [
+        {
+          "verdict": "NOT_READY",
+          "revision": "e161be417432d4ebdd22a3d84e09057df70abc0d",
+          "reason": "- MNT-004 \u2014 Generierte CLI-Flags \u2014 NOT_READY. Canonical: docs/site/extend/documentation-maintenance.md. NOT_READY: owned CLI definitions are generated (117 current inventory rows) with parser/value/default/owner semantics, not merely invocation strings. Full discovery across every entrypoint and current generator baseline was not independently verified.",
+          "campaign": "independent-ready-topics-20261020"
+        }
+      ]
     },
     {
       "id": "MNT-005",
@@ -48159,11 +49099,19 @@
       "readerFixtureIds": [],
       "executionScenarioIds": [],
       "closureDecision": {
-        "verdict": "FAIL",
-        "revision": "e161be417432d4ebdd22a3d84e09057df70abc0d",
-        "reason": "Generated platform page misclassified authored with missing owning generator/check;public-surface inverse map incomplete.",
-        "campaign": "independent-ready-topics-20261020"
-      }
+        "verdict": "NOT_READY",
+        "revision": "c4ebd7e428209c1d2fcf3599dab424ce9e0df23f",
+        "reason": "Seven bounded inventory domains now join6653source-qualified IDs to64reader targets;177oldpage records preserved, current governance/41tests/Reader checks pass. Whole source-map gate remains NOT_READY for explicitly unmapped public families and every exhaustive-page inverse obligation; historical generated-platform classification defect is corrected.",
+        "campaign": "current-source-map-and-cli-recovery-20261022"
+      },
+      "closureDecisionHistory": [
+        {
+          "verdict": "FAIL",
+          "revision": "e161be417432d4ebdd22a3d84e09057df70abc0d",
+          "reason": "Generated platform page misclassified authored with missing owning generator/check;public-surface inverse map incomplete.",
+          "campaign": "independent-ready-topics-20261020"
+        }
+      ]
     },
     {
       "id": "A911-08",
@@ -67005,5 +67953,14 @@
       "P17/runtime not admitted; no execution"
     ],
     "next": "Restore native spawn_agent to this scheduled GPT-6.1 Sol runtime. Recover later candidate-bound role evidence or request permitted independent fresh reviews over inventory source/helper/caller/input scope, then qualify complete source snapshot and commit source before generation. Do not repair hashes alone."
+  },
+  "sourceMapRecovery20261022": {
+    "sourceRevision": "c4ebd7e428209c1d2fcf3599dab424ce9e0df23f",
+    "independentReviewer": "/root/review_cli_maintenance_closeout",
+    "preservedCompletionRecords": 20,
+    "newAcceptedIds": [],
+    "currentNativeResults": "docs/blueprint/acceptance-evidence/source-doc-join-20261022/current-native-results.json",
+    "nextAction": "Complete reviewed finite top-level script output-purpose correction in isolated worktree, retaining raw UNKNOWN and unexecuted API/runtime boundaries.",
+    "additionalHistoricalReaderRecordReview": "docs/blueprint/acceptance-evidence/source-doc-join-20261022/additional-four-reader-preservation.json"
   }
 }

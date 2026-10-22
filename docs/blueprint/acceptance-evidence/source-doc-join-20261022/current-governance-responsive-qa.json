@@ -1,0 +1,25 @@
+{
+  "revision": "c4ebd7e428209c1d2fcf3599dab424ce9e0df23f",
+  "observations": [
+    {
+      "width": 320,
+      "viewport": 320,
+      "document": 320,
+      "mainContainsCurrentJoin": true
+    },
+    {
+      "width": 768,
+      "viewport": 768,
+      "document": 768,
+      "mainContainsCurrentJoin": true
+    },
+    {
+      "width": 1440,
+      "viewport": 1440,
+      "document": 1440,
+      "mainContainsCurrentJoin": true
+    }
+  ],
+  "deniedExternalRequests": [],
+  "limit": "Actual changed governance page only; not full177page accessibility or fresh persona acceptance."
+}
