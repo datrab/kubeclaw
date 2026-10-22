@@ -219,6 +219,10 @@ extraVolumes:
 busterNamespaceBroker:
   enabled: true
   controller:
+    opsMcpAccess:
+      enabled: true
+      namespace: kubeclaw-ops
+      releaseName: codex-ops
     allowedAccess:
       - subject: kubeclaw/agent-buster
         modes: [deployer, tester]

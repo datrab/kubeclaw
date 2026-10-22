@@ -2,7 +2,8 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
-import { parseAllDocuments } from 'yaml';
+import { readFileSync } from 'node:fs';
+import { parseAllDocuments, parse } from 'yaml';
 import { parsePolicy } from '../../../tools/ops-mcp/src/access-policy.mjs';
 
 const root = fileURLToPath(new URL('../../../', import.meta.url));
@@ -44,4 +45,14 @@ test('rendered MCP scope, dynamic backend, admission guard and network edge agre
   const edge = resources.find(x => x.kind === 'NetworkPolicy' && x.metadata.name.endsWith('-client-buster'));
   assert.deepEqual(edge.spec.podSelector.matchLabels, { 'app.kubernetes.io/instance': 'agent-buster' });
   assert.equal(edge.metadata.namespace, 'kubeclaw');
+});
+
+
+test('production Ops retains its platform read scopes and all clients receive test access', () => {
+  const values = parse(readFileSync(root + 'gitops/platform/values/codex-ops.yaml', 'utf8'));
+  const clients = parsePolicy(JSON.stringify({clients: values.mcp.clients.map(c => ({...c, tokenFile: '/token/'+c.id}))}), values.rbac.namespaces, ['test']);
+  assert.deepEqual(clients[0].namespaces, values.rbac.namespaces);
+  assert.ok(clients[0].tools.includes('list_argocd_applications'));
+  assert.deepEqual(clients.find(c => c.id === 'buster').namespaces, []);
+  assert.ok(clients.every(c => c.namespacePrefixes.includes('test')));
 });

@@ -172,7 +172,11 @@ seconds and maintains reader/exec RoleBindings for every matching namespace,
 including existing, newly created and recreated namespaces. No opt-in label or
 per-namespace Git change is needed. New namespace access may initially return
 403 until the next successful reconciliation; terminating namespaces are skipped.
-Only the MCP receives these RoleBindings. Kubernetes RBAC cannot restrict binding
+Only the MCP receives these RoleBindings. Buster's namespace-controller inventory
+recognizes these two exact role/name/subject combinations as reviewed platform
+access; it still reports changed names, roles, subjects or additional grantees.
+`busterNamespaceBroker.controller.opsMcpAccess` must agree with the Ops namespace
+and release name; it recognizes bindings without creating them. Kubernetes RBAC cannot restrict binding
 creation by prefix, so a mandatory, fail-closed ValidatingAdmissionPolicy also
 checks the reconciler identity, namespace prefix, exact binding/role names and
 single MCP subject. Argo installs that guard before the reconciler's RBAC.

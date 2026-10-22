@@ -41,6 +41,8 @@ type controller struct {
 	secretRoleName       string
 	deployerRoleName     string
 	testerRoleName       string
+	opsMCPNamespace      string
+	opsMCPRelease        string
 	allowedPrefixes      []string
 	defaultTTL           time.Duration
 	maxTTL               time.Duration
@@ -167,6 +169,15 @@ func newController() (*controller, error) {
 		secretRoleName:     env("BUSTER_SECRET_ROLE_NAME", "buster-controller-secrets"),
 		deployerRoleName:   env("BUSTER_DEPLOYER_ROLE_NAME", "buster-namespace-deployer"),
 		testerRoleName:     env("BUSTER_TESTER_ROLE_NAME", "buster-namespace-tester"),
+	}
+
+	ctrl.opsMCPNamespace = os.Getenv("BUSTER_OPS_MCP_NAMESPACE")
+	ctrl.opsMCPRelease = os.Getenv("BUSTER_OPS_MCP_RELEASE")
+	if ctrl.opsMCPNamespace != "" || ctrl.opsMCPRelease != "" {
+		if !regexp.MustCompile(`^[a-z0-9]([-a-z0-9]{0,61}[a-z0-9])?$`).MatchString(ctrl.opsMCPNamespace) ||
+			!regexp.MustCompile(`^[a-z0-9]([-a-z0-9]{0,61}[a-z0-9])?$`).MatchString(ctrl.opsMCPRelease) {
+			return nil, errors.New("invalid Ops MCP platform binding configuration")
+		}
 	}
 
 	access, err := parseAllowedAccess(env("BUSTER_ALLOWED_ACCESS_JSON", `[{"subject":"kubeclaw/agent-buster","modes":["tester"]}]`))

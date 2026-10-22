@@ -413,6 +413,12 @@ busterNamespaceBroker:
   defaultTtlSeconds: 7200
   maxTtlSeconds: 86400
   controller:
+    # Expected platform RBAC only: this controller never creates these bindings.
+    # Must agree with the standalone Ops chart namespace/release.
+    opsMcpAccess:
+      enabled: false
+      namespace: kubeclaw-ops
+      releaseName: codex-ops
     # Independent human-decision authority; empty configuration denies all.
     productDecisions:
       enabled: false

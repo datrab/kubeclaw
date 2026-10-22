@@ -39,6 +39,9 @@ test('Buster retains its explicit runtime token and broker but cannot delegate l
   assert.ok(pod.volumes.some(v => v.projected?.sources?.some(s => s.serviceAccountToken)));
   const controller = resources.find(x => x.kind === 'Deployment' && x.metadata.name.endsWith('namespace-controller'));
   assert.ok(controller);
+  const controllerEnv = controller.spec.template.spec.containers[0].env;
+  assert.equal(controllerEnv.find(e => e.name === 'BUSTER_OPS_MCP_NAMESPACE').value, 'kubeclaw-ops');
+  assert.equal(controllerEnv.find(e => e.name === 'BUSTER_OPS_MCP_RELEASE').value, 'codex-ops');
   const rendered = JSON.stringify(resources);
   assert.doesNotMatch(rendered, /"subject":"(?:kubeclaw\/)?agent-nova"/);
 });
