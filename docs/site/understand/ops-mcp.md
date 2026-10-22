@@ -29,10 +29,9 @@ controller creates namespaces and reconciles access; the worker then performs
 its authorized workload/test API operations itself, outside MCP client policy.
 
 This page describes the immutable main source contract at the revision above.
-PR #13 retains its separate runtime/source qualification and acceptance work.
-The upstream source scope is explicit so a reader does not mistake a newer main
-implementation for runtime source already adopted by the documentation branch.
-Historical review pages and their older read-only findings are not current deployment instructions.
+The runtime source in this checkout has not adopted that revision.
+Before using these instructions, verify that your deployed release uses the selected source and configuration.
+Older read-only instructions apply only to their stated revision.
 
 ## Complete Request And State Path
 
@@ -128,7 +127,7 @@ that interface; retain other notes when updating that section.
 >
 > **Test evidence:** Verification below lists source-test definitions and execution limits. Source links alone are not execution receipts.
 >
-> **Revision:** `34cf38ef53ee41381543785d0ffae90a37fac9ca`. Upstream main evidence; this documentation update does not adopt runtime source into PR #13.
+> **Revision:** `34cf38ef53ee41381543785d0ffae90a37fac9ca`. Upstream main source; these links do not establish runtime adoption in this checkout or the deployed release.
 >
 > **Limit:** Catalog visibility does not grant a namespace or exec target.
 
@@ -214,7 +213,7 @@ packaging goal; Kubernetes namespace renaming would require resource/data migrat
 >
 > **Test evidence:** Verification below lists source-test definitions and execution limits. Source links alone are not execution receipts.
 >
-> **Revision:** `34cf38ef53ee41381543785d0ffae90a37fac9ca`. Upstream main evidence; this documentation update does not adopt runtime source into PR #13.
+> **Revision:** `34cf38ef53ee41381543785d0ffae90a37fac9ca`. Upstream main source; these links do not establish runtime adoption in this checkout or the deployed release.
 >
 > **Limit:** An authorized exec can use authority available inside its target container.
 
@@ -258,7 +257,7 @@ stderr and incomplete/transport outcomes must be interpreted separately.
 >
 > **Test evidence:** Verification below lists source-test definitions and execution limits. Source links alone are not execution receipts.
 >
-> **Revision:** `34cf38ef53ee41381543785d0ffae90a37fac9ca`. Upstream main evidence; this documentation update does not adopt runtime source into PR #13.
+> **Revision:** `34cf38ef53ee41381543785d0ffae90a37fac9ca`. Upstream main source; these links do not establish runtime adoption in this checkout or the deployed release.
 >
 > **Limit:** Timeout, cancellation and disconnect do not prove remote process termination; never automatically retry exec.
 
@@ -354,7 +353,7 @@ observation, not proof of no network drops.
 >
 > **Test evidence:** Verification below lists source-test definitions and execution limits. Source links alone are not execution receipts.
 >
-> **Revision:** `34cf38ef53ee41381543785d0ffae90a37fac9ca`. Upstream main evidence; this documentation update does not adopt runtime source into PR #13.
+> **Revision:** `34cf38ef53ee41381543785d0ffae90a37fac9ca`. Upstream main source; these links do not establish runtime adoption in this checkout or the deployed release.
 >
 > **Limit:** These source contracts do not prove live CNI enforcement, Relay reachability or retained history.
 
@@ -427,6 +426,6 @@ native tool discovery/denial. Those outcomes remain unverified here. This
 documentation review ran no fresh cluster operation.
 
 Buster gateway behavior, Hubble Relay availability, mobile pairing, arbitrary-
-cluster portability, production acceptance and the broader PR #13 gates need
-their own scoped evidence. Source review neither adopts the runtime into this
-branch nor clears its existing release-verification stop.
+cluster portability and production acceptance need their own scoped evidence.
+Source inspection does not prove production readiness or clear the
+installation guide's release-verification stop.

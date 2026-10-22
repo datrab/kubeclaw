@@ -9760,7 +9760,7 @@ export const documentationExecutableRoleRecipes = {
       {
         "path": "docs/site/extend/documentation-maintenance.md",
         "canonical": "docs/site/extend/documentation-maintenance.md",
-        "sha256": "c4371fb5186b88b6dc76f00024a1c2a993ebd53fa0404d0e28dcad0d5ace7dec"
+        "sha256": "a8727c33bb81242fb446e89a66101b9f5182f2c5a54ae26ff3cfc7499a120b14"
       },
       {
         "path": "package.json",
