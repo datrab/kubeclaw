@@ -1607,6 +1607,98 @@ export function gitOpsOutputProfileRole(source, role, witness) {
     dependencies: [...new Set([...role.dependencies, ...witness.dependencies])]};
 }
 
+// Historical path/metadata observations are not global non-API stdout grants.
+// A TMPDIR containing document delimiters can itself contain an API document.
+// Only the two exact reviewed slots may traverse the private inventory path;
+// the public classifier stays UNKNOWN and the native six-profile API adapter
+// remains the sole infrastructure API producer.
+const reviewedInfrastructureProfile = Object.freeze({
+  authority: 'scripts/docs-api-infrastructure-output-profile-authority.json',
+  authoritySha256: '70708daefa080386068281c154cddb581ee9fc76cfe3b5fa817bfb2a417d6fbe',
+  sources: Object.freeze(['scripts/infrastructure-chart.mjs', 'scripts/infrastructure-release.mjs']),
+  activationSource: 'scripts/infrastructure-chart.mjs',
+  activationSha256: '6a136a40cced70d63de028e635bd5b9e4fb30f1a632cd725175385faf9c57e25',
+});
+const qualifiedInfrastructureProfiles = new WeakSet();
+export function checkedInfrastructureOutputProfiles(root, graph) {
+  const profile = reviewedInfrastructureProfile;
+  const authorityFile = path.join(root, profile.authority);
+  if (!fs.existsSync(authorityFile)) {
+    const source = path.join(root, profile.activationSource);
+    if (!fs.existsSync(source) || hash(fs.readFileSync(source)) !== profile.activationSha256) return null;
+  }
+  const fail = detail => assert.fail(`API_PRODUCT_INFRASTRUCTURE_OUTPUT_PROFILE_UNQUALIFIED: ${detail}`);
+  if (!path.isAbsolute(root) || fs.realpathSync(root) !== root) fail('canonical checkout root');
+  const read = file => {
+    if (typeof file !== 'string' || !file || file.includes('\\') || path.posix.isAbsolute(file)
+      || path.posix.normalize(file) !== file || file.split('/').some(part => part === '..' || part === '.')) fail('relative input path');
+    const absolute = path.join(root, file);
+    if (!fs.existsSync(absolute) || fs.realpathSync(absolute) !== absolute || !fs.lstatSync(absolute).isFile()) fail(`physical input ${file}`);
+    return fs.readFileSync(absolute);
+  };
+  const bytes = read(profile.authority);
+  if (hash(bytes) !== profile.authoritySha256) fail('immutable witness digest');
+  const authority = JSON.parse(bytes), buffers = new Map();
+  for (const fact of authority.inputs) {
+    const content = read(fact.path);
+    if (hash(content) !== fact.sha256 || content.length !== fact.bytes) fail(`changed input ${fact.path}`);
+    buffers.set(fact.path, content);
+  }
+  for (const [source, digest] of Object.entries(authority.sourcePins)) {
+    if (!buffers.has(source) || hash(buffers.get(source)) !== digest) fail(`producer source ${source}`);
+  }
+  for (const file of authority.absentPackageBoundaries) {
+    try { fs.lstatSync(path.join(root, file)); fail(`new package boundary ${file}`); }
+    catch (error) { if (error.code !== 'ENOENT') throw error; }
+  }
+  const operation = authority.callerOperation;
+  const tree = ts.createSourceFile(operation.source, read(operation.source).toString('utf8'), ts.ScriptTarget.Latest, true, ts.ScriptKind.JS);
+  const functions = tree.statements.filter(node => ts.isFunctionDeclaration(node) && node.name?.text === operation.function);
+  if (tree.parseDiagnostics.length || functions.length !== 1 || hash(functions[0].getText(tree)) !== operation.syntaxSha256) fail('original native adapter operation');
+  const targets = authority.publicEntries.map(entry => entry.canonicalSource);
+  if (!graph || JSON.stringify(graph.edges.filter(edge => targets.includes(edge.target))) !== JSON.stringify(authority.selectedIncomingEdges)
+    || JSON.stringify(graph.publicEntries.filter(entry => targets.includes(entry.canonicalSource))) !== JSON.stringify(authority.publicEntries)) fail('imported or aliased entry context');
+  // These three imports are outside the selected graph, but their complete
+  // owning test source is a physical input; none is a product CLI receipt.
+  for (const edge of authority.knownNonRuntimeTestImports) {
+    if (!buffers.get(edge.source)?.toString('utf8').includes(edge.operation)) fail('known owning test import');
+  }
+  const lock = JSON.parse(buffers.get('versions.json')).infrastructureCharts;
+  if (JSON.stringify(authority.profiles.map(item => item.id)) !== JSON.stringify(authority.profileOrder)
+    || authority.profiles.length !== 9 || authority.descriptors.length !== 2
+    || authority.canonicalRawRole !== 'unknown' || authority.runtimeExecutionAuthorized !== false
+    || authority.apiApplyAuthorized !== false) fail('finite member roster');
+  for (const observation of authority.profiles) {
+    const archive = authority.archives.find(item => item.sha256 === lock[observation.name]?.sha256);
+    if (!archive || hash(buffers.get(archive.path)) !== observation.archiveSha256
+      || observation.exitCode !== 0 || observation.stderr !== '' || hash(observation.stdout) !== observation.stdoutSha256) fail('original observation identity');
+    if (observation.mode === 'verify') {
+      const value = JSON.parse(observation.stdout);
+      if (JSON.stringify(value) !== JSON.stringify(observation.verifiedReceipt)
+        || value.sha256 !== observation.archiveSha256 || value.name !== lock[observation.name].name
+        || value.version !== lock[observation.name].version) fail('verification metadata');
+    } else if (!['stage', 'prepare-release'].includes(observation.mode)
+      || observation.stdout !== observation.historicalArchivePath + '\n') fail('historical complete filename');
+  }
+  const receipt = Object.freeze({witnessDigest: profile.authoritySha256,
+    descriptors: Object.freeze(authority.descriptors.map(Object.freeze)),
+    dependencies: Object.freeze([profile.authority, operation.source, ...buffers.keys()]),
+    executionAuthority: false});
+  qualifiedInfrastructureProfiles.add(receipt);
+  return receipt;
+}
+export function selectedInfrastructureOutputProfile(source, role, witness) {
+  if (!reviewedInfrastructureProfile.sources.includes(source)) return false;
+  assert(witness && qualifiedInfrastructureProfiles.has(witness), 'API_PRODUCT_INFRASTRUCTURE_OUTPUT_PROFILE_UNQUALIFIED: unacquired witness');
+  assert.equal(role.role, 'unknown', 'API_PRODUCT_INFRASTRUCTURE_OUTPUT_PROFILE_UNQUALIFIED: canonical raw role must remain unknown');
+  const descriptor = witness.descriptors.find(item => item.source === source && item.line === role.line && item.sink === role.sink);
+  assert(descriptor, 'API_PRODUCT_INFRASTRUCTURE_OUTPUT_PROFILE_UNQUALIFIED: unexpected sealed-source slot');
+  const nativeDescriptor = Object.fromEntries(['line', 'sink', 'expression', 'sinkContract'].map(key => [key, role[key] ?? null]));
+  assert.equal(hash(JSON.stringify(nativeDescriptor)), descriptor.classifierDescriptorSha256,
+    'API_PRODUCT_INFRASTRUCTURE_OUTPUT_PROFILE_UNQUALIFIED: native descriptor');
+  return true;
+}
+
 export function discoverScriptApiOutputs(root) {
   assertReviewedDiagnosticOutputSources(root);
   // Qualification includes graph metadata (for example directory symlinks)
@@ -1635,12 +1727,13 @@ export function discoverScriptApiOutputs(root) {
   const scalarOccurrences=new Map(scalarSources.filter(source=>executableSourceSet.has(source)).map(source=>
     [source,deploymentScalarOccurrenceCustody(root,source,fs.readFileSync(path.join(root,source)),documentationGraphCache.get(root))]));
   const gitOpsProfile=checkedGitOpsOutputProfiles(root,documentationGraphCache.get(root));
+  const infrastructureProfile=checkedInfrastructureOutputProfiles(root,documentationGraphCache.get(root));
   const sourceInputs=walkProductSources(root,producerRoots,()=>true);
   if(fs.existsSync(path.join(root,'package.json')))sourceInputs.push('package.json');
-  const inputKey=hash(JSON.stringify([documentationGraphCache.get(root).inputKey,gitOpsProfile?.witnessDigest??null,bundleCopy?.inputDigest??null,configOutput?.inputDigest??null,minimalPlugin?.inputDigest??null,[...scalarOccurrences].map(([source,receipt])=>[source,receipt.inputDigest]),sourceInputs.map(source=>[source,hash(fs.readFileSync(path.join(root,source)))])]));
+  const inputKey=hash(JSON.stringify([documentationGraphCache.get(root).inputKey,gitOpsProfile?.witnessDigest??null,infrastructureProfile?.witnessDigest??null,bundleCopy?.inputDigest??null,configOutput?.inputDigest??null,minimalPlugin?.inputDigest??null,[...scalarOccurrences].map(([source,receipt])=>[source,receipt.inputDigest]),sourceInputs.map(source=>[source,hash(fs.readFileSync(path.join(root,source)))])]));
   const cached=scriptOutputCache.get(root);
   if(cached?.inputKey===inputKey&&cached.dependencies.every(([source,digest])=>fs.existsSync(path.join(root,source))&&hash(fs.readFileSync(path.join(root,source)))===digest))return cached.result;
-  const classifiedDependencies=new Set();
+  const classifiedDependencies=new Set(infrastructureProfile?.dependencies??[]);
   const result=[];
   for(const source of walkProductSources(root,producerRoots,file=>!executableSourceSet.has(path.relative(root,fs.realpathSync(path.join(root,file))).replaceAll(path.sep,'/'))&&!/\.(?:[cm]?js|[cm]?ts|py|sh|go|ya?ml|json|md|txt|toml|lock|pem|crt)$/u.test(file))) {
     const bytes=fs.readFileSync(path.join(root,source),'utf8');
@@ -1708,9 +1801,15 @@ export function discoverScriptApiOutputs(root) {
     // A canonical traversal seed is not proof of a bare CLI invocation. The
     // separate receipts cover only the original captured configuration uses; public
     // canonical output classification remains unknown, and new uses stop.
-    for(const role of outputRoles)assert(scalarOccurrences.has(source)
-      ?selectedDeploymentScalarOccurrences(role,scalarOccurrences.get(source)):role.role!=='unknown',
-      `API_PRODUCT_SCRIPT_OUTPUT_ROLE_UNQUALIFIED: ${source}:${role.line}: ${role.expression}`);
+    for(const role of outputRoles) {
+      // Evaluate the sealed-source check before any ordinary role fallback:
+      // mutable contracts cannot relabel these two raw pathname slots.
+      const infrastructureSlot=selectedInfrastructureOutputProfile(source,role,infrastructureProfile);
+      assert(scalarOccurrences.has(source)
+        ?selectedDeploymentScalarOccurrences(role,scalarOccurrences.get(source))
+        :infrastructureSlot||role.role!=='unknown',
+        `API_PRODUCT_SCRIPT_OUTPUT_ROLE_UNQUALIFIED: ${source}:${role.line}: ${role.expression}`);
+    }
     if(witness){result.push(...witness.outputs);continue;}
     if(gitOpsProfile?.sources.includes(source)){result.push(...gitOpsProfile.outputs.filter(output=>output.context.path===source));continue;}
     if(!outputRoles.some(role=>role.role==='api')&&(!/apiVersion/u.test(bytes)||!/(?:kind\s*:|['"]kind['"]\s*:)/u.test(bytes)))continue;
@@ -2014,6 +2113,7 @@ export function discoverScriptOutputRoleClassifications(root) {
   const classify=createSerializedOutputRoleClassifier(root,sources);
   const observations=discoverDeploymentNodeOutputObservations(root);
   const gitOpsProfile=checkedGitOpsOutputProfiles(root,documentationGraphCache.get(root));
+  const infrastructureProfile=checkedInfrastructureOutputProfiles(root,documentationGraphCache.get(root));
   const scalarSources=['scripts/bundle-values-field.mjs','scripts/buster-resource-overlay.mjs'];
   const scalarOccurrences=new Map(scalarSources.filter(source=>sources.includes(source)).map(source=>
     [source,deploymentScalarOccurrenceCustody(root,source,fs.readFileSync(path.join(root,source)),documentationGraphCache.get(root))]));
@@ -2032,10 +2132,12 @@ export function discoverScriptOutputRoleClassifications(root) {
       observation.descriptor.sink===role.sink&&observation.descriptor.expression===role.expression);
     const qualifiedScalarUses=scalarOccurrences.has(source)?selectedDeploymentScalarOccurrences(role,scalarOccurrences.get(source)):null;
     if(scalarOccurrences.has(source))assert(qualifiedScalarUses,`DEPLOYMENT_SCALAR_OCCURRENCE_UNQUALIFIED: ${source}; canonical stdout must remain unknown`);
+    const qualifiedInfrastructureProfile=selectedInfrastructureOutputProfile(source,role,infrastructureProfile);
     const context={...role,path:source,sourceDigest:hash(fs.readFileSync(path.join(root,source))),
       dependencyDigests:Object.fromEntries(role.dependencies.map(file=>[file,hash(fs.readFileSync(path.join(root,file)))])),
       ...(selectedOccurrences.length?{selectedOccurrences}:{} ),
-      ...(qualifiedScalarUses?{qualifiedScalarUses,standaloneOutputRole:'unknown'}:{})};
+      ...(qualifiedScalarUses?{qualifiedScalarUses,standaloneOutputRole:'unknown'}:{}),
+      ...(qualifiedInfrastructureProfile?{historicalInfrastructureProfile:infrastructureProfile.witnessDigest,executionAuthority:false,standaloneOutputRole:'unknown'}:{})};
     // Alias/public-entry contexts have a different invocation identity. The
     // selected deployment evidence cannot travel across that boundary.
     return publicNodeSourceContexts(root,source,context).map(context=>{
@@ -3235,7 +3337,9 @@ export function discoverInfrastructureApiOutputs(root) {
   const source='scripts/infrastructure-release.mjs',caller='scripts/deploy.sh';
   if(!fs.existsSync(path.join(root,source)))return [];
   assertProducerAdapterAuthority(root,[caller,source,'scripts/infrastructure-chart.mjs','scripts/infrastructure-image-renderer.mjs'].filter(file=>fs.existsSync(path.join(root,file))));
-  const lock=JSON.parse(fs.readFileSync(path.join(root,'versions.json'),'utf8')).infrastructureCharts??{};
+  const versionsBytes=fs.readFileSync(path.join(root,'versions.json'));
+  const versionsDigest=hash(versionsBytes);
+  const lock=JSON.parse(versionsBytes.toString('utf8')).infrastructureCharts??{};
   const shell=installerShell(root,caller),recipes=[];
   for(const name of Object.keys(lock).sort()) {
     // Authenticate the actual command-substitution ancestry. The staged archive
@@ -3265,7 +3369,7 @@ export function discoverInfrastructureApiOutputs(root) {
   }
   const dependencyFiles=walkProductSources(root,['scripts','my-values/infra'],file=>/\.(?:mjs|ya?ml|json|sh)$/u.test(file));
   const dependencyDigest=hash(JSON.stringify(dependencyFiles.map(file=>[file,hash(fs.readFileSync(path.join(root,file)))])));
-  const cacheKey=hash(JSON.stringify([root,lock,dependencyDigest,recipes]));
+  const cacheKey=hash(JSON.stringify([root,versionsDigest,lock,dependencyDigest,recipes]));
   if(infrastructureOutputCache.has(cacheKey))return infrastructureOutputCache.get(cacheKey);
   const results=[],renderMarker='kubeclaw-offline-render-only-not-a-credential';
   for(const recipe of recipes)for(const upgrade of [false,true]) {
@@ -3280,7 +3384,7 @@ export function discoverInfrastructureApiOutputs(root) {
     // its post-renderer. Keep that complete-output check in the native adapter.
     const check=spawnSync(process.execPath,['--input-type=module','-e',`import {bindInfrastructureImages} from ${JSON.stringify(pathToFileURL(path.join(root,'scripts/infrastructure-image-renderer.mjs')).href)};let bytes='';for await(const chunk of process.stdin)bytes+=chunk;bindInfrastructureImages(${JSON.stringify(recipe.name)},JSON.parse(bytes));`],{cwd:root,input:JSON.stringify(values),encoding:'utf8',maxBuffer:64*1024*1024});
     assert.equal(check.status,0,`API_PRODUCT_INFRASTRUCTURE_IMAGE_BINDING_FAILED: ${recipe.name}: ${check.stderr}`);
-    values.forEach((value,index)=>results.push({value,context:{apiVersion:value.apiVersion,kind:value.kind,path:source,document:index,producer:'infrastructure-helm',profile:`${recipe.name}:${upgrade?'upgrade':'install'}`,sourceDigest:hash(fs.readFileSync(path.join(root,source))),inputs:[caller,...recipe.inputs,'versions.json'],inputDigest:hash(JSON.stringify([lock[recipe.name],recipe.effectiveArgv,[caller,...recipe.inputs].map(input=>[input,hash(fs.readFileSync(path.join(root,input)))])])),dependencyDigest,outputDigest:hash(JSON.stringify(value))}}));
+    values.forEach((value,index)=>results.push({value,context:{apiVersion:value.apiVersion,kind:value.kind,path:source,document:index,producer:'infrastructure-helm',profile:`${recipe.name}:${upgrade?'upgrade':'install'}`,sourceDigest:hash(fs.readFileSync(path.join(root,source))),inputs:[caller,...recipe.inputs,'versions.json'],inputDigest:hash(JSON.stringify([versionsDigest,lock[recipe.name],recipe.effectiveArgv,[caller,...recipe.inputs].map(input=>[input,hash(fs.readFileSync(path.join(root,input)))])])),dependencyDigest,outputDigest:hash(JSON.stringify(value))}}));
   }
   infrastructureOutputCache.clear();infrastructureOutputCache.set(cacheKey,results);return results;
 }

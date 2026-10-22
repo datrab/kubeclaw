@@ -176,3 +176,139 @@ test('finite original GitOps snapshots retain API roots and closed mixed members
   fs.unlinkSync(path.join(root, witnessPath));
   assert.throws(read, /physical input/u, 'deleting authority must not grant the real original producer');
 });
+
+// Raw filenames can carry YAML document delimiters. This witness is a private
+// finite inventory bridge, never a public non-API or execution grant.
+test('infrastructure historical profile stays private and rejects input, caller and slot drift', async t => {
+  const {checkedInfrastructureOutputProfiles: acquire, selectedInfrastructureOutputProfile: selected} = await import('../docs-api-output-discovery.mjs');
+  const {createSerializedOutputRoleClassifier} = await import('../docs-api-output-role-classification.mjs');
+  const witnessPath = 'scripts/docs-api-infrastructure-output-profile-authority.json';
+  const bytes = fs.readFileSync(path.join(repository, witnessPath));
+  const authority = JSON.parse(bytes);
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'infrastructure-output-profiles-'));
+  t.after(() => fs.rmSync(root, {recursive: true, force: true}));
+  const write = (file, content) => {
+    fs.mkdirSync(path.dirname(path.join(root, file)), {recursive: true});
+    fs.writeFileSync(path.join(root, file), content);
+  };
+  for (const fact of authority.inputs) write(fact.path, fs.readFileSync(path.join(repository, fact.path)));
+  write(authority.callerOperation.source, fs.readFileSync(path.join(repository, authority.callerOperation.source)));
+  write(witnessPath, bytes);
+  const graph = {edges: authority.selectedIncomingEdges, publicEntries: authority.publicEntries};
+  const read = () => acquire(root, graph);
+  const first = read();
+  assert.deepEqual(read(), first);
+  assert.equal(first.executionAuthority, false);
+  const sources = Object.keys(authority.sourcePins);
+  const classify = createSerializedOutputRoleClassifier(root, sources);
+  for (const source of sources) {
+    const roles = classify(source);
+    assert.equal(roles.length, 1);
+    const role = roles[0];
+    assert.equal(role.role, 'unknown');
+    assert.equal(selected(source, role, first), true);
+    assert.equal(role.role, 'unknown', 'private check must not modify canonical classification');
+    assert.equal(selected('tools/new-source.mjs', role, first), false);
+    assert.throws(() => selected(source, {...role, line: role.line + 1}, first), /unexpected sealed-source slot/u);
+    assert.throws(() => selected(source, role, null), /unacquired witness/u);
+    assert.throws(() => selected(source, {...role, role: 'non-api'}, first), /canonical raw role/u);
+    assert.throws(() => selected(source, {...role, expression: role.expression + ' '}, first), /native descriptor/u);
+    assert.throws(() => selected(source, role, {...first}), /unacquired witness/u);
+    const registryPath = 'scripts/docs-api-producer-adapter-authorities.json';
+    const registry = JSON.parse(fs.readFileSync(path.join(repository, registryPath)));
+    // The release classifier displays the resolved function declaration; the
+    // registry matches the original console argument, not that display text.
+    const rawExpression = source === 'scripts/infrastructure-release.mjs'
+      ? 'prepareInfrastructureRelease(...process.argv.slice(2))' : role.expression;
+    registry.nonApiOutputContracts.push({source, sink: role.sink, expression: rawExpression,
+      line: role.line, role: 'non-api', basis: 'synthetic-mutable-contract', operations: []});
+    write(registryPath, JSON.stringify(registry));
+    const [relabeled] = createSerializedOutputRoleClassifier(root, sources)(source);
+    assert.equal(relabeled.role, 'non-api', 'native mutable-contract escalation actually reached');
+    assert.throws(() => selected(source, relabeled, read()), /canonical raw role/u);
+    fs.unlinkSync(path.join(root, registryPath));
+    assert.equal(createSerializedOutputRoleClassifier(root, sources)(source)[0].role, 'unknown');
+
+  }
+  for (const fact of authority.inputs) {
+    const original = fs.readFileSync(path.join(root, fact.path));
+    write(fact.path, Buffer.concat([original, Buffer.from('\n')]));
+    assert.throws(read, /changed input/u, fact.path);
+    write(fact.path, original);
+  }
+  for (const file of authority.absentPackageBoundaries) {
+    write(file, '{}');
+    assert.throws(read, /new package boundary/u, file);
+    fs.unlinkSync(path.join(root, file));
+  }
+  for (const edges of [[...graph.edges, {source: 'tools/new.mjs', target: sources[0], kind: 'import'}], graph.edges.slice(1)]) {
+    assert.throws(() => acquire(root, {...graph, edges}), /entry context/u);
+  }
+  assert.throws(() => acquire(root, {...graph, publicEntries: [...graph.publicEntries,
+    {path: 'tools/alias.mjs', canonicalSource: sources[0]}]}), /entry context/u);
+  for (const mutate of [
+    a => {a.profiles.pop(); a.profileOrder.pop();},
+    a => {a.profiles.reverse();},
+    a => {a.profiles[0] = a.profiles[3];},
+    a => {a.descriptors[0].classifierDescriptorSha256 = a.descriptors[1].classifierDescriptorSha256;},
+    a => {a.canonicalRawRole = 'non-api';},
+  ]) {
+    const changed = JSON.parse(bytes); mutate(changed);
+    write(witnessPath, JSON.stringify(changed));
+    assert.throws(read, /immutable witness digest/u);
+  }
+  write(witnessPath, bytes);
+  const observer = fs.readFileSync(path.join(root, authority.callerOperation.source), 'utf8');
+  write(authority.callerOperation.source, observer.replace('const versionsDigest=hash(versionsBytes);', 'const versionsDigest="stale";'));
+  assert.throws(read, /native adapter operation/u);
+  write(authority.callerOperation.source, observer);
+  assert.deepEqual(read(), first);
+});
+
+test('native infrastructure cache binds image settings and complete versions bytes before warm reuse', async t => {
+  const {discoverInfrastructureApiOutputs} = await import('../docs-api-output-discovery.mjs');
+  const {spawnSync} = await import('node:child_process');
+  const {pathToFileURL} = await import('node:url');
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'infrastructure-native-cache-'));
+  const previousTmpdir = process.env.TMPDIR;
+  t.after(() => {
+    if (previousTmpdir === undefined) delete process.env.TMPDIR;
+    else process.env.TMPDIR = previousTmpdir;
+    fs.rmSync(root, {recursive: true, force: true});
+  });
+  for (const directory of ['scripts', 'my-values/infra']) {
+    fs.cpSync(path.join(repository, directory), path.join(root, directory), {recursive: true});
+  }
+  for (const file of ['package.json', 'package-lock.json', 'versions.json']) fs.copyFileSync(path.join(repository, file), path.join(root, file));
+  fs.symlinkSync(path.join(repository, 'node_modules'), path.join(root, 'node_modules'));
+  const temporary = path.join(root, 'tmp');
+  const cache = path.join(temporary, `kubeclaw-infrastructure-charts-${process.getuid()}`);
+  fs.mkdirSync(cache, {recursive: true, mode: 0o700});
+  process.env.TMPDIR = temporary;
+  const versionFile = path.join(root, 'versions.json'), original = fs.readFileSync(versionFile);
+  const versions = JSON.parse(original);
+  for (const lock of Object.values(versions.infrastructureCharts)) {
+    fs.copyFileSync(path.join(repository, 'scripts/vendor/external-helm-charts', `${lock.sha256}.tgz`),
+      path.join(cache, `${lock.name}-${lock.version}-${lock.sha256}.tgz`));
+  }
+  const first = discoverInfrastructureApiOutputs(root);
+  assert.equal(first.length, 66);
+  assert.equal(new Set(first.map(item => item.context.profile)).size, 6);
+  const changed = structuredClone(versions);
+  changed.infrastructure.redis = changed.infrastructure.redis.replace(/@sha256:[a-f0-9]{64}$/u, '@sha256:' + 'f'.repeat(64));
+  assert.notEqual(changed.infrastructure.redis, versions.infrastructure.redis);
+  fs.writeFileSync(versionFile, JSON.stringify(changed));
+  assert.throws(() => discoverInfrastructureApiOutputs(root), /INFRASTRUCTURE_DATABASE_IMAGE_OVERRIDE/u);
+  const uri = pathToFileURL(path.join(repository, 'scripts/docs-api-output-discovery.mjs')).href;
+  const cold = spawnSync(process.execPath, ['--input-type=module', '-e',
+    `import {discoverInfrastructureApiOutputs} from ${JSON.stringify(uri)}; discoverInfrastructureApiOutputs(${JSON.stringify(root)});`],
+  {encoding: 'utf8', env: process.env, maxBuffer: 32 * 1024 * 1024});
+  assert.notEqual(cold.status, 0);
+  assert.match(cold.stderr, /INFRASTRUCTURE_DATABASE_IMAGE_OVERRIDE/u);
+  fs.writeFileSync(versionFile, Buffer.concat([original, Buffer.from('\n')]));
+  const rawChanged = discoverInfrastructureApiOutputs(root);
+  assert.deepEqual(rawChanged.map(item => item.value), first.map(item => item.value));
+  assert(rawChanged.every((item, index) => item.context.inputDigest !== first[index].context.inputDigest));
+  fs.writeFileSync(versionFile, original);
+  assert.deepEqual(discoverInfrastructureApiOutputs(root), first);
+});

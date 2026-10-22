@@ -1,0 +1,726 @@
+{
+  "schemaVersion": "original-infrastructure-finite-historical-profiles.v1",
+  "observationRevision": "d23046f0a0f39c70f8177c607b722c191a8da7e1",
+  "profiles": [
+    {
+      "id": "tailscale-verify",
+      "name": "tailscale",
+      "mode": "verify",
+      "source": "scripts/infrastructure-chart.mjs",
+      "argv": [
+        "scripts/infrastructure-chart.mjs",
+        "tailscale",
+        "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/vendor/external-helm-charts/c2440014df04fdf1b67b53daa4290d7b878584cf4702f9b1b50f51ba64499a6a.tgz"
+      ],
+      "exitCode": 0,
+      "stdout": "{\"name\":\"tailscale-operator\",\"version\":\"1.102.3\",\"appVersion\":\"v1.102.3\",\"sha256\":\"c2440014df04fdf1b67b53daa4290d7b878584cf4702f9b1b50f51ba64499a6a\"}\n",
+      "stdoutSha256": "f1eefaad4425aa602533eed453ad569d89a4d742966c1210329448c905b6cee3",
+      "stderr": "",
+      "archiveSha256": "c2440014df04fdf1b67b53daa4290d7b878584cf4702f9b1b50f51ba64499a6a",
+      "verifiedReceipt": {
+        "name": "tailscale-operator",
+        "version": "1.102.3",
+        "appVersion": "v1.102.3",
+        "sha256": "c2440014df04fdf1b67b53daa4290d7b878584cf4702f9b1b50f51ba64499a6a"
+      }
+    },
+    {
+      "id": "tailscale-stage",
+      "name": "tailscale",
+      "mode": "stage",
+      "source": "scripts/infrastructure-chart.mjs",
+      "argv": [
+        "scripts/infrastructure-chart.mjs",
+        "tailscale"
+      ],
+      "exitCode": 0,
+      "stdout": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/d230-infrastructure-original/tmp/kubeclaw-infrastructure-charts-0/tailscale-operator-1.102.3-c2440014df04fdf1b67b53daa4290d7b878584cf4702f9b1b50f51ba64499a6a.tgz\n",
+      "stdoutSha256": "06aa5637c60d6b05b09fa9dd5a5b4ed6fa48606aa86c4059e12e310e8855234b",
+      "stderr": "",
+      "archiveSha256": "c2440014df04fdf1b67b53daa4290d7b878584cf4702f9b1b50f51ba64499a6a",
+      "historicalArchivePath": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/d230-infrastructure-original/tmp/kubeclaw-infrastructure-charts-0/tailscale-operator-1.102.3-c2440014df04fdf1b67b53daa4290d7b878584cf4702f9b1b50f51ba64499a6a.tgz"
+    },
+    {
+      "id": "tailscale-prepare-release",
+      "name": "tailscale",
+      "mode": "prepare-release",
+      "source": "scripts/infrastructure-release.mjs",
+      "argv": [
+        "scripts/infrastructure-release.mjs",
+        "tailscale",
+        "tailscale-operator",
+        "tailscale",
+        "my-values/infra/tailscale-operator-values.yaml"
+      ],
+      "exitCode": 0,
+      "stdout": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/d230-infrastructure-original/tmp/kubeclaw-infrastructure-charts-0/tailscale-operator-1.102.3-c2440014df04fdf1b67b53daa4290d7b878584cf4702f9b1b50f51ba64499a6a.tgz\n",
+      "stdoutSha256": "06aa5637c60d6b05b09fa9dd5a5b4ed6fa48606aa86c4059e12e310e8855234b",
+      "stderr": "",
+      "archiveSha256": "c2440014df04fdf1b67b53daa4290d7b878584cf4702f9b1b50f51ba64499a6a",
+      "historicalArchivePath": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/d230-infrastructure-original/tmp/kubeclaw-infrastructure-charts-0/tailscale-operator-1.102.3-c2440014df04fdf1b67b53daa4290d7b878584cf4702f9b1b50f51ba64499a6a.tgz"
+    },
+    {
+      "id": "redis-verify",
+      "name": "redis",
+      "mode": "verify",
+      "source": "scripts/infrastructure-chart.mjs",
+      "argv": [
+        "scripts/infrastructure-chart.mjs",
+        "redis",
+        "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/vendor/external-helm-charts/74bb9cfa3241fe401bd346c135427fe1e5a452483ffedf440038f0aae62ba386.tgz"
+      ],
+      "exitCode": 0,
+      "stdout": "{\"name\":\"redis\",\"version\":\"28.1.0\",\"appVersion\":\"8.10.1\",\"sha256\":\"74bb9cfa3241fe401bd346c135427fe1e5a452483ffedf440038f0aae62ba386\"}\n",
+      "stdoutSha256": "8b3cbcb7e628ee0b55a6545302eadb6cea34663df7bf6be9f97c2a8e5f4ac076",
+      "stderr": "",
+      "archiveSha256": "74bb9cfa3241fe401bd346c135427fe1e5a452483ffedf440038f0aae62ba386",
+      "verifiedReceipt": {
+        "name": "redis",
+        "version": "28.1.0",
+        "appVersion": "8.10.1",
+        "sha256": "74bb9cfa3241fe401bd346c135427fe1e5a452483ffedf440038f0aae62ba386"
+      }
+    },
+    {
+      "id": "redis-stage",
+      "name": "redis",
+      "mode": "stage",
+      "source": "scripts/infrastructure-chart.mjs",
+      "argv": [
+        "scripts/infrastructure-chart.mjs",
+        "redis"
+      ],
+      "exitCode": 0,
+      "stdout": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/d230-infrastructure-original/tmp/kubeclaw-infrastructure-charts-0/redis-28.1.0-74bb9cfa3241fe401bd346c135427fe1e5a452483ffedf440038f0aae62ba386.tgz\n",
+      "stdoutSha256": "e192a003844c284ef19a433617d0d3459564907731731d2389faf4c1da929d3e",
+      "stderr": "",
+      "archiveSha256": "74bb9cfa3241fe401bd346c135427fe1e5a452483ffedf440038f0aae62ba386",
+      "historicalArchivePath": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/d230-infrastructure-original/tmp/kubeclaw-infrastructure-charts-0/redis-28.1.0-74bb9cfa3241fe401bd346c135427fe1e5a452483ffedf440038f0aae62ba386.tgz"
+    },
+    {
+      "id": "redis-prepare-release",
+      "name": "redis",
+      "mode": "prepare-release",
+      "source": "scripts/infrastructure-release.mjs",
+      "argv": [
+        "scripts/infrastructure-release.mjs",
+        "redis",
+        "redis",
+        "kubeclaw",
+        "my-values/infra/redis-values.yaml"
+      ],
+      "exitCode": 0,
+      "stdout": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/d230-infrastructure-original/tmp/kubeclaw-infrastructure-charts-0/redis-28.1.0-74bb9cfa3241fe401bd346c135427fe1e5a452483ffedf440038f0aae62ba386.tgz\n",
+      "stdoutSha256": "e192a003844c284ef19a433617d0d3459564907731731d2389faf4c1da929d3e",
+      "stderr": "",
+      "archiveSha256": "74bb9cfa3241fe401bd346c135427fe1e5a452483ffedf440038f0aae62ba386",
+      "historicalArchivePath": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/d230-infrastructure-original/tmp/kubeclaw-infrastructure-charts-0/redis-28.1.0-74bb9cfa3241fe401bd346c135427fe1e5a452483ffedf440038f0aae62ba386.tgz"
+    },
+    {
+      "id": "postgresql-verify",
+      "name": "postgresql",
+      "mode": "verify",
+      "source": "scripts/infrastructure-chart.mjs",
+      "argv": [
+        "scripts/infrastructure-chart.mjs",
+        "postgresql",
+        "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/vendor/external-helm-charts/d85028c045d06707a852d58be85b025ce338d6dc92751a9db31d26c28155be5b.tgz"
+      ],
+      "exitCode": 0,
+      "stdout": "{\"name\":\"postgresql\",\"version\":\"18.11.1\",\"appVersion\":\"18.6.0\",\"sha256\":\"d85028c045d06707a852d58be85b025ce338d6dc92751a9db31d26c28155be5b\"}\n",
+      "stdoutSha256": "feb779dc7b5511b8c8e0def613ca8b9cc05fd239e6385152bbd87776c91e5c3b",
+      "stderr": "",
+      "archiveSha256": "d85028c045d06707a852d58be85b025ce338d6dc92751a9db31d26c28155be5b",
+      "verifiedReceipt": {
+        "name": "postgresql",
+        "version": "18.11.1",
+        "appVersion": "18.6.0",
+        "sha256": "d85028c045d06707a852d58be85b025ce338d6dc92751a9db31d26c28155be5b"
+      }
+    },
+    {
+      "id": "postgresql-stage",
+      "name": "postgresql",
+      "mode": "stage",
+      "source": "scripts/infrastructure-chart.mjs",
+      "argv": [
+        "scripts/infrastructure-chart.mjs",
+        "postgresql"
+      ],
+      "exitCode": 0,
+      "stdout": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/d230-infrastructure-original/tmp/kubeclaw-infrastructure-charts-0/postgresql-18.11.1-d85028c045d06707a852d58be85b025ce338d6dc92751a9db31d26c28155be5b.tgz\n",
+      "stdoutSha256": "edb508b5a803ad3482a682292aa96818c4525d3ddba47483025877b8559beb11",
+      "stderr": "",
+      "archiveSha256": "d85028c045d06707a852d58be85b025ce338d6dc92751a9db31d26c28155be5b",
+      "historicalArchivePath": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/d230-infrastructure-original/tmp/kubeclaw-infrastructure-charts-0/postgresql-18.11.1-d85028c045d06707a852d58be85b025ce338d6dc92751a9db31d26c28155be5b.tgz"
+    },
+    {
+      "id": "postgresql-prepare-release",
+      "name": "postgresql",
+      "mode": "prepare-release",
+      "source": "scripts/infrastructure-release.mjs",
+      "argv": [
+        "scripts/infrastructure-release.mjs",
+        "postgresql",
+        "postgresql",
+        "kubeclaw",
+        "my-values/infra/postgresql-values.yaml"
+      ],
+      "exitCode": 0,
+      "stdout": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/d230-infrastructure-original/tmp/kubeclaw-infrastructure-charts-0/postgresql-18.11.1-d85028c045d06707a852d58be85b025ce338d6dc92751a9db31d26c28155be5b.tgz\n",
+      "stdoutSha256": "edb508b5a803ad3482a682292aa96818c4525d3ddba47483025877b8559beb11",
+      "stderr": "",
+      "archiveSha256": "d85028c045d06707a852d58be85b025ce338d6dc92751a9db31d26c28155be5b",
+      "historicalArchivePath": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/d230-infrastructure-original/tmp/kubeclaw-infrastructure-charts-0/postgresql-18.11.1-d85028c045d06707a852d58be85b025ce338d6dc92751a9db31d26c28155be5b.tgz"
+    }
+  ],
+  "profileOrder": [
+    "tailscale-verify",
+    "tailscale-stage",
+    "tailscale-prepare-release",
+    "redis-verify",
+    "redis-stage",
+    "redis-prepare-release",
+    "postgresql-verify",
+    "postgresql-stage",
+    "postgresql-prepare-release"
+  ],
+  "canonicalRawRole": "unknown",
+  "runtimeExecutionAuthorized": false,
+  "apiApplyAuthorized": false,
+  "sourcePins": {
+    "scripts/infrastructure-chart.mjs": "6a136a40cced70d63de028e635bd5b9e4fb30f1a632cd725175385faf9c57e25",
+    "scripts/infrastructure-release.mjs": "a03aa7721f871473effbb0f79de84bc7ebcb2877c68fa023675ea335e27936f8"
+  },
+  "inputs": [
+    {
+      "path": "my-values/infra/postgresql-values.yaml",
+      "sha256": "b7c1445d47350c6fcae2fc7de901e930dec1f8309331bf0db69c70c1f3404994",
+      "bytes": 502
+    },
+    {
+      "path": "my-values/infra/redis-values.yaml",
+      "sha256": "929dec7ffac0922517188e0fb318b746e276292acad2723c59da802e5962c9b2",
+      "bytes": 843
+    },
+    {
+      "path": "my-values/infra/tailscale-operator-values.yaml",
+      "sha256": "8c8f44a3f243b519973ea250d283da3c6a08b31a9224ee3b34012b4e28f36110",
+      "bytes": 931
+    },
+    {
+      "path": "node_modules/.package-lock.json",
+      "sha256": "5de787895573574c33b442fa83a469c616269de39ed7941662031b5b6d638474",
+      "bytes": 230613
+    },
+    {
+      "path": "node_modules/js-yaml/dist/js-yaml.mjs",
+      "sha256": "33e98d04719e7a7fc8e0433803ad4b26a6f72d4545d279a5b053d45bd7871c7a",
+      "bytes": 103891
+    },
+    {
+      "path": "node_modules/js-yaml/package.json",
+      "sha256": "82b932c87c5da7901c6a8f984698c57912570146fffd3156dcdc96a6c210d847",
+      "bytes": 2281
+    },
+    {
+      "path": "package-lock.json",
+      "sha256": "9a75a764e3a27a2163736ec097e99b305a05d9ec2748cb7e38a19b8f88d7fafe",
+      "bytes": 278187
+    },
+    {
+      "path": "package.json",
+      "sha256": "4ab1e90c2259aeb96acfdc877e5a9eed330f605abff46d7eca85faded0f020c3",
+      "bytes": 53756
+    },
+    {
+      "path": "scripts/deploy.sh",
+      "sha256": "97c1e39bf9cec6c1d5d8e11198af90ed04efd15a6077f2bbac1129c2ea0741e2",
+      "bytes": 147376
+    },
+    {
+      "path": "scripts/docs-external-helm-authority-lock.json",
+      "sha256": "257d829a2e4d79ed9bc886c33c8c5e8b8a64a9fc05a36e7f378173b54c76516a",
+      "bytes": 4358
+    },
+    {
+      "path": "scripts/infrastructure-chart-lock.mjs",
+      "sha256": "8884d8e41166f9739ea8f5986cbd8a4c8ae66e8756f0fa3ccb8712e9124601e5",
+      "bytes": 1271
+    },
+    {
+      "path": "scripts/infrastructure-chart.mjs",
+      "sha256": "6a136a40cced70d63de028e635bd5b9e4fb30f1a632cd725175385faf9c57e25",
+      "bytes": 3579
+    },
+    {
+      "path": "scripts/infrastructure-image-renderer.mjs",
+      "sha256": "9b53451d99784c0feaa3cfde28dea32e268b3eae85bfc6092bb1598301da46f3",
+      "bytes": 2813
+    },
+    {
+      "path": "scripts/infrastructure-oci-chart.mjs",
+      "sha256": "6dd86a2ebbb67d0e181adb4f6180164e3129d53dfb5a5b3d9f9f2431524a35db",
+      "bytes": 2842
+    },
+    {
+      "path": "scripts/infrastructure-release.mjs",
+      "sha256": "a03aa7721f871473effbb0f79de84bc7ebcb2877c68fa023675ea335e27936f8",
+      "bytes": 2675
+    },
+    {
+      "path": "scripts/postgresql-recovery-preflight.mjs",
+      "sha256": "fef2fed9b07fb7731c58d69c744a418130882cc5507d16616a3b516ff9485fd4",
+      "bytes": 1612
+    },
+    {
+      "path": "scripts/render-postgresql-recovery.mjs",
+      "sha256": "3e0d30b0c0888c4039f176ddb80d19e00b7b7064ead979d5bb9122d4df19e14f",
+      "bytes": 10576
+    },
+    {
+      "path": "scripts/render-stateful-network-policies.mjs",
+      "sha256": "4b2777294145a1605113238cc6319558abad3a6bd0409dc974e7684e495d0e25",
+      "bytes": 3506
+    },
+    {
+      "path": "scripts/stateful-database-service.mjs",
+      "sha256": "fd96f1a30f997d4a6a71a23b81cad2dc4ccca69b223e4945e22c9261819bbfa8",
+      "bytes": 2764
+    },
+    {
+      "path": "scripts/stateful-release-preflight.mjs",
+      "sha256": "f2af6984293fcbea5d92d1c708bc612b68b3ce47e9f217e8da365145512760da",
+      "bytes": 6142
+    },
+    {
+      "path": "scripts/tests/api-reference.test.mjs",
+      "sha256": "683a5290709af2a4d7faf7cdf2bad97ac760fab70ddc5aa59ff2a03bd5f0833a",
+      "bytes": 187435
+    },
+    {
+      "path": "scripts/vendor/external-helm-charts/74bb9cfa3241fe401bd346c135427fe1e5a452483ffedf440038f0aae62ba386.tgz",
+      "sha256": "74bb9cfa3241fe401bd346c135427fe1e5a452483ffedf440038f0aae62ba386",
+      "bytes": 106156
+    },
+    {
+      "path": "scripts/vendor/external-helm-charts/c2440014df04fdf1b67b53daa4290d7b878584cf4702f9b1b50f51ba64499a6a.tgz",
+      "sha256": "c2440014df04fdf1b67b53daa4290d7b878584cf4702f9b1b50f51ba64499a6a",
+      "bytes": 52585
+    },
+    {
+      "path": "scripts/vendor/external-helm-charts/d85028c045d06707a852d58be85b025ce338d6dc92751a9db31d26c28155be5b.tgz",
+      "sha256": "d85028c045d06707a852d58be85b025ce338d6dc92751a9db31d26c28155be5b",
+      "bytes": 91047
+    },
+    {
+      "path": "tests/verification/contracts/infrastructure-chart-lock.test.mjs",
+      "sha256": "fb1f921c78b2cb47a80228035b327f813360362d62b487d30a18a436fd986d02",
+      "bytes": 3920
+    },
+    {
+      "path": "tests/verification/reliability/stateful-release-pins.test.mjs",
+      "sha256": "cf71db7ddeb66a15670db9bb7fcc0175bc10c8080085307dca0bb3cfde089604",
+      "bytes": 5211
+    },
+    {
+      "path": "versions.json",
+      "sha256": "04281d9b2addd93073bd548293ea9ba6e1d88c2a18fff0f34cbdbc14ca7fe2c1",
+      "bytes": 7603
+    }
+  ],
+  "absentPackageBoundaries": [
+    "my-values/infra/node_modules/js-yaml",
+    "my-values/infra/package.json",
+    "my-values/node_modules/js-yaml",
+    "my-values/package.json",
+    "node_modules/js-yaml/dist/node_modules/js-yaml",
+    "node_modules/js-yaml/dist/package.json",
+    "node_modules/js-yaml/node_modules/js-yaml",
+    "node_modules/node_modules/js-yaml",
+    "node_modules/package.json",
+    "scripts/node_modules/js-yaml",
+    "scripts/package.json",
+    "scripts/tests/node_modules/js-yaml",
+    "scripts/tests/package.json",
+    "scripts/vendor/external-helm-charts/node_modules/js-yaml",
+    "scripts/vendor/external-helm-charts/package.json",
+    "scripts/vendor/node_modules/js-yaml",
+    "scripts/vendor/package.json",
+    "tests/node_modules/js-yaml",
+    "tests/package.json",
+    "tests/verification/contracts/node_modules/js-yaml",
+    "tests/verification/contracts/package.json",
+    "tests/verification/node_modules/js-yaml",
+    "tests/verification/package.json",
+    "tests/verification/reliability/node_modules/js-yaml",
+    "tests/verification/reliability/package.json"
+  ],
+  "callerOperation": {
+    "source": "scripts/docs-api-output-discovery.mjs",
+    "function": "discoverInfrastructureApiOutputs",
+    "syntaxSha256": "5f1ea49ce9a173e8a05b0eb5602dd558f8c0b49d307e3c44938418d5fdb60e05",
+    "purpose": "Both original inline import shims and exact real six-profile API adapter, with full-version cache and input binding. Whole observer Source remains separately bound by mandatory existing owner/caller/graph custody."
+  },
+  "selectedIncomingEdges": [
+    {
+      "source": "scripts/infrastructure-release.mjs",
+      "target": "scripts/infrastructure-chart.mjs",
+      "kind": "import",
+      "operation": "import { stageInfrastructureChart } from './infrastructure-chart.mjs';"
+    },
+    {
+      "source": "scripts/infrastructure-release.mjs",
+      "target": "scripts/infrastructure-image-renderer.mjs",
+      "kind": "import",
+      "operation": "import { bindInfrastructureImages } from './infrastructure-image-renderer.mjs';"
+    },
+    {
+      "source": "scripts/render-postgresql-recovery.mjs",
+      "target": "scripts/infrastructure-chart.mjs",
+      "kind": "import",
+      "operation": "import { infrastructureChart } from './infrastructure-chart.mjs';"
+    },
+    {
+      "source": "scripts/stateful-database-service.mjs",
+      "target": "scripts/infrastructure-chart.mjs",
+      "kind": "import",
+      "operation": "import { stageInfrastructureChart } from './infrastructure-chart.mjs';"
+    },
+    {
+      "source": "scripts/stateful-database-service.mjs",
+      "target": "scripts/infrastructure-release.mjs",
+      "kind": "import",
+      "operation": "import { renderInfrastructureChart } from './infrastructure-release.mjs';"
+    },
+    {
+      "source": "scripts/stateful-release-preflight.mjs",
+      "target": "scripts/infrastructure-chart.mjs",
+      "kind": "import",
+      "operation": "import { verifyInfrastructureChart } from './infrastructure-chart.mjs';"
+    },
+    {
+      "source": "scripts/stateful-release-preflight.mjs",
+      "target": "scripts/infrastructure-image-renderer.mjs",
+      "kind": "import",
+      "operation": "import { bindInfrastructureImages } from './infrastructure-image-renderer.mjs';"
+    },
+    {
+      "source": "scripts/stateful-release-preflight.mjs",
+      "target": "scripts/infrastructure-release.mjs",
+      "kind": "import",
+      "operation": "import { renderInfrastructureChart } from './infrastructure-release.mjs';"
+    },
+    {
+      "source": "tests/verification/reliability/stateful-release-pins.test.mjs",
+      "target": "scripts/infrastructure-release.mjs",
+      "kind": "import",
+      "operation": "import { prepareInfrastructureRelease, renderInfrastructureChart } from '../../../scripts/infrastructure-release.mjs';"
+    },
+    {
+      "source": "tests/verification/reliability/stateful-release-pins.test.mjs",
+      "target": "scripts/infrastructure-chart.mjs",
+      "kind": "import",
+      "operation": "import { infrastructureChart, verifyInfrastructureChart } from '../../../scripts/infrastructure-chart.mjs';"
+    },
+    {
+      "source": "tests/verification/reliability/stateful-release-pins.test.mjs",
+      "target": "scripts/infrastructure-image-renderer.mjs",
+      "kind": "import",
+      "operation": "import { bindInfrastructureImages } from '../../../scripts/infrastructure-image-renderer.mjs';"
+    }
+  ],
+  "knownNonRuntimeTestImports": [
+    {
+      "source": "tests/verification/contracts/infrastructure-chart-lock.test.mjs",
+      "target": "scripts/infrastructure-chart.mjs",
+      "kind": "import",
+      "operation": "import { infrastructureChart, verifyInfrastructureChart } from '../../../scripts/infrastructure-chart.mjs';",
+      "nativeSelectedGraphMember": false,
+      "classification": "known non-product owning test import, not CLI/runtime execution receipt"
+    },
+    {
+      "source": "tests/verification/contracts/infrastructure-chart-lock.test.mjs",
+      "target": "scripts/infrastructure-release.mjs",
+      "kind": "import",
+      "operation": "import { prepareInfrastructureRelease } from '../../../scripts/infrastructure-release.mjs';",
+      "nativeSelectedGraphMember": false,
+      "classification": "known non-product owning test import, not CLI/runtime execution receipt"
+    },
+    {
+      "source": "tests/verification/contracts/infrastructure-chart-lock.test.mjs",
+      "target": "scripts/infrastructure-image-renderer.mjs",
+      "kind": "import",
+      "operation": "import { bindInfrastructureImages } from '../../../scripts/infrastructure-image-renderer.mjs';",
+      "nativeSelectedGraphMember": false,
+      "classification": "known non-product owning test import, not CLI/runtime execution receipt"
+    }
+  ],
+  "publicEntries": [
+    {
+      "path": "scripts/infrastructure-chart.mjs",
+      "canonicalSource": "scripts/infrastructure-chart.mjs"
+    },
+    {
+      "path": "scripts/infrastructure-image-renderer.mjs",
+      "canonicalSource": "scripts/infrastructure-image-renderer.mjs"
+    },
+    {
+      "path": "scripts/infrastructure-release.mjs",
+      "canonicalSource": "scripts/infrastructure-release.mjs"
+    }
+  ],
+  "releaseCliCaptures": [
+    {
+      "profile": "tailscale",
+      "producerCliLine": 1007,
+      "capture": "tailscale_chart=\"$(node \"$REPO_DIR/scripts/infrastructure-release.mjs\" tailscale \"$TAILSCALE_OPERATOR_RELEASE\" \"$TAILSCALE_OPERATOR_NAMESPACE\" \"$TAILSCALE_VALUES_FILE\")\"",
+      "source": "scripts/deploy.sh",
+      "typedConsumers": [
+        {
+          "lines": [
+            1022,
+            1027
+          ],
+          "kind": "Helm chart positional argv",
+          "argument": "\"$tailscale_chart\""
+        }
+      ]
+    },
+    {
+      "profile": "redis",
+      "producerCliLine": 1080,
+      "capture": "redis_chart=\"$(node \"$REPO_DIR/scripts/infrastructure-release.mjs\" redis \"$REDIS_RELEASE\" \"$NAMESPACE\" \"$REDIS_VALUES_FILE\")\"",
+      "source": "scripts/deploy.sh",
+      "typedConsumers": [
+        {
+          "line": 1081,
+          "kind": "stateful-release-preflight archive positional argv",
+          "argument": "\"$redis_chart\""
+        },
+        {
+          "lines": [
+            1121,
+            1126
+          ],
+          "kind": "Helm chart positional argv",
+          "argument": "\"$redis_chart\""
+        }
+      ]
+    },
+    {
+      "profile": "postgresql",
+      "producerCliLine": 1083,
+      "capture": "postgresql_chart=\"$(node \"$REPO_DIR/scripts/infrastructure-release.mjs\" postgresql \"$POSTGRESQL_RELEASE\" \"$NAMESPACE\" \"$POSTGRESQL_VALUES_FILE\")\"",
+      "source": "scripts/deploy.sh",
+      "typedConsumers": [
+        {
+          "line": 1084,
+          "kind": "stateful-release-preflight archive positional argv",
+          "argument": "\"$postgresql_chart\""
+        },
+        {
+          "lines": [
+            1130,
+            1135
+          ],
+          "kind": "Helm chart positional argv",
+          "argument": "\"$postgresql_chart\""
+        }
+      ]
+    }
+  ],
+  "remainingTypedFunctionReceivers": [
+    "infrastructure-chart verify: lstat/read/hash and tar exact-member argv; stage: verify and returned complete filename",
+    "infrastructure-release prepare -> renderInfrastructureChart -> one native execFileSync Helm archive argv, install+upgrade; image-renderer post-renderer path fixed",
+    "stateful-release-preflight: imported verify + original render of quoted CLI archive path; own get/exec/live compatibility effects not part of qualification",
+    "stateful-database-service: imported stage path -> original render argv; service/port result used by recovery/network-policy API constructors, not a pathname stdout grant",
+    "render-postgresql-recovery: imported infrastructureChart lock.appVersion for backup expected-version settings; no chart CLI execution",
+    "two owning test modules: exported prepare/verify/render/binder and file-corruption checks; selected test contexts, not product CLI or runtime receipts"
+  ],
+  "chartProductBareCliOccurrences": [],
+  "descriptors": [
+    {
+      "source": "scripts/infrastructure-chart.mjs",
+      "line": 63,
+      "sink": "console.log",
+      "classifierDescriptorSha256": "7bad7f6ba34e09580ad0d1c870c44c04874ff909dcf399536ac99d7f4e67a26b"
+    },
+    {
+      "source": "scripts/infrastructure-release.mjs",
+      "line": 44,
+      "sink": "console.log",
+      "classifierDescriptorSha256": "7cc12f1e25b964f14090be86c2756d8f1340ad8b94fb47999dc8db30240ec15e"
+    }
+  ],
+  "archives": [
+    {
+      "path": "scripts/vendor/external-helm-charts/c2440014df04fdf1b67b53daa4290d7b878584cf4702f9b1b50f51ba64499a6a.tgz",
+      "sha256": "c2440014df04fdf1b67b53daa4290d7b878584cf4702f9b1b50f51ba64499a6a",
+      "selectedMembers": [
+        {
+          "name": "tailscale-operator/Chart.yaml",
+          "sha256": "13b2eff84cfd0e0b60d28ad16bfa34e7c5d193772489dae064a4f3aad6438cb8",
+          "bytes": 383,
+          "semanticRead": "complete metadata read"
+        },
+        {
+          "name": "tailscale-operator/values.yaml",
+          "sha256": "ed07b83d82d4279bfe28cc58f1cede829c965109dea7fab988199197e8bcd2a8",
+          "bytes": 6215,
+          "semanticRead": "identity/hash only; upstream defaults not wholly re-audited"
+        }
+      ]
+    },
+    {
+      "path": "scripts/vendor/external-helm-charts/74bb9cfa3241fe401bd346c135427fe1e5a452483ffedf440038f0aae62ba386.tgz",
+      "sha256": "74bb9cfa3241fe401bd346c135427fe1e5a452483ffedf440038f0aae62ba386",
+      "selectedMembers": [
+        {
+          "name": "redis/Chart.yaml",
+          "sha256": "77c55065b6db39ca7f0c4fdc610b021dace5fa00087c7ed1479b17b75003c0dc",
+          "bytes": 1312,
+          "semanticRead": "complete metadata read"
+        },
+        {
+          "name": "redis/charts/common/Chart.yaml",
+          "sha256": "1f120f44f79ec13383ccc89d678873d0b1a72475640a239f7e0e6a3da4333fa2",
+          "bytes": 603,
+          "semanticRead": "complete metadata read"
+        },
+        {
+          "name": "redis/values.yaml",
+          "sha256": "67ad5984dd9918470203f1522e7d7791a5f529985a60586834276ae730659e73",
+          "bytes": 109395,
+          "semanticRead": "identity/hash only; upstream defaults not wholly re-audited"
+        }
+      ]
+    },
+    {
+      "path": "scripts/vendor/external-helm-charts/d85028c045d06707a852d58be85b025ce338d6dc92751a9db31d26c28155be5b.tgz",
+      "sha256": "d85028c045d06707a852d58be85b025ce338d6dc92751a9db31d26c28155be5b",
+      "selectedMembers": [
+        {
+          "name": "postgresql/Chart.yaml",
+          "sha256": "25f6938865106fccf3fff61aa4420626c0e636f0e16c53c0ad964cd9f04ab368",
+          "bytes": 1195,
+          "semanticRead": "complete metadata read"
+        },
+        {
+          "name": "postgresql/charts/common/Chart.yaml",
+          "sha256": "1f120f44f79ec13383ccc89d678873d0b1a72475640a239f7e0e6a3da4333fa2",
+          "bytes": 603,
+          "semanticRead": "complete metadata read"
+        },
+        {
+          "name": "postgresql/values.yaml",
+          "sha256": "07fd0518d28a6a057538be08e14b4190fa4fa231064aebaec96f4fe4f594dd30",
+          "bytes": 97149,
+          "semanticRead": "identity/hash only; upstream defaults not wholly re-audited"
+        }
+      ]
+    }
+  ],
+  "historicalEnvironment": {
+    "PATH": "/usr/local/bin:/usr/bin:/bin",
+    "HOME": "/home/node",
+    "LANG": "C.UTF-8",
+    "LC_ALL": "C.UTF-8",
+    "TZ": "UTC",
+    "TMPDIR": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/d230-infrastructure-original/tmp",
+    "LD_LIBRARY_PATH": "/home/node/.openclaw/workspace/tmp/pr13-reader-apt/root/usr/lib/x86_64-linux-gnu",
+    "FONTCONFIG_FILE": "/home/node/.openclaw/workspace/tmp/pr13-reader-apt/fonts.conf",
+    "KUBECLAW_DOCS_GO_BINARY": "/usr/local/go/bin/go",
+    "GOENV": "off",
+    "GOTOOLCHAIN": "local",
+    "GOROOT": "/usr/local/go",
+    "GO111MODULE": "off",
+    "GOWORK": "off",
+    "GOPROXY": "off",
+    "GOSUMDB": "off",
+    "CGO_ENABLED": "0",
+    "GOOS": "linux",
+    "GOARCH": "amd64",
+    "GOAMD64": "v1",
+    "GOMAXPROCS": "2",
+    "GOPATH": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/d230-clean-publication/gopath",
+    "GOMODCACHE": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/d230-clean-publication/go-mod-cache",
+    "GOCACHE": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/d230-clean-publication/go-build-cache",
+    "GOTMPDIR": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/d230-clean-publication/go-tmp",
+    "TEST_TELEMETRY_DIR": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/d230-clean-publication/go-telemetry",
+    "PYTHONNOUSERSITE": "1",
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "SETUPTOOLS_USE_DISTUTILS": "stdlib",
+    "npm_config_cache": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/d230-clean-publication/npm-cache",
+    "npm_config_update_notifier": "false",
+    "npm_config_logs_max": "0"
+  },
+  "historicalCache": [
+    {
+      "name": "tailscale",
+      "vendorArchive": "scripts/vendor/external-helm-charts/c2440014df04fdf1b67b53daa4290d7b878584cf4702f9b1b50f51ba64499a6a.tgz",
+      "sha256": "c2440014df04fdf1b67b53daa4290d7b878584cf4702f9b1b50f51ba64499a6a",
+      "ownedCacheFile": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/d230-infrastructure-original/tmp/kubeclaw-infrastructure-charts-0/tailscale-operator-1.102.3-c2440014df04fdf1b67b53daa4290d7b878584cf4702f9b1b50f51ba64499a6a.tgz",
+      "cacheMode": "0o700",
+      "cacheUid": 0
+    },
+    {
+      "name": "redis",
+      "vendorArchive": "scripts/vendor/external-helm-charts/74bb9cfa3241fe401bd346c135427fe1e5a452483ffedf440038f0aae62ba386.tgz",
+      "sha256": "74bb9cfa3241fe401bd346c135427fe1e5a452483ffedf440038f0aae62ba386",
+      "ownedCacheFile": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/d230-infrastructure-original/tmp/kubeclaw-infrastructure-charts-0/redis-28.1.0-74bb9cfa3241fe401bd346c135427fe1e5a452483ffedf440038f0aae62ba386.tgz",
+      "cacheMode": "0o700",
+      "cacheUid": 0
+    },
+    {
+      "name": "postgresql",
+      "vendorArchive": "scripts/vendor/external-helm-charts/d85028c045d06707a852d58be85b025ce338d6dc92751a9db31d26c28155be5b.tgz",
+      "sha256": "d85028c045d06707a852d58be85b025ce338d6dc92751a9db31d26c28155be5b",
+      "ownedCacheFile": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/d230-infrastructure-original/tmp/kubeclaw-infrastructure-charts-0/postgresql-18.11.1-d85028c045d06707a852d58be85b025ce338d6dc92751a9db31d26c28155be5b.tgz",
+      "cacheMode": "0o700",
+      "cacheUid": 0
+    }
+  ],
+  "historicalNativeTools": [
+    {
+      "path": "/usr/local/bin/node",
+      "sha256": "7fde7b8afa198da66257f42ee2001d874c7355631e6d1579a5fb5ef1f246df4c",
+      "argv": [
+        "/usr/local/bin/node",
+        "--version"
+      ],
+      "exitCode": 0,
+      "stdout": "v24.21.0\n",
+      "stderr": ""
+    },
+    {
+      "path": "/usr/local/bin/helm",
+      "sha256": "84d06a0f5ba17fd9c4d9912613453cdaa95a4f59c8baf20c195b74310b009ea6",
+      "argv": [
+        "/usr/local/bin/helm",
+        "version",
+        "--short"
+      ],
+      "exitCode": 0,
+      "stdout": "v3.18.4+gd80839c\n",
+      "stderr": ""
+    },
+    {
+      "path": "/usr/bin/tar",
+      "sha256": "4e11647a9c86fb8857768bd622c43ed0662d7019f60f5bdd12fb15ac5f087070",
+      "argv": [
+        "/usr/bin/tar",
+        "--version"
+      ],
+      "exitCode": 0,
+      "stdout": "tar (GNU tar) 1.34\nCopyright (C) 2021 Free Software Foundation, Inc.\nLicense GPLv3+: GNU GPL version 3 or later <https://gnu.org/licenses/gpl.html>.\nThis is free software: you are free to change and redistribute it.\nThere is NO WARRANTY, to the extent permitted by law.\n\nWritten by John Gilmore and Jay Fenlason.\n",
+      "stderr": ""
+    }
+  ],
+  "limits": [
+    "Immutable nine selected historical local output profiles only, not all possible argv/modes/environment or a renewed current original-command-success claim.",
+    "Public canonical raw stage/release stdout stays UNKNOWN: actual newline-TMPDIR probe emits an API document while one complete native Helm archive argv remains valid.",
+    "No global non-API/API-adapted grant, chart CLI product caller invented, execution permission, native/schema/live/health/release/packet-level network approval.",
+    "Actual existing six-profile infrastructure API renderer/binder remains separate; this witness contains metadata/path output snapshots, not substitute API constructors."
+  ]
+}
