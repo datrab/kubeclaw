@@ -312,3 +312,104 @@ test('native infrastructure cache binds image settings and complete versions byt
   fs.writeFileSync(versionFile, original);
   assert.deepEqual(discoverInfrastructureApiOutputs(root), first);
 });
+
+// An unchanged selected config disables this entry before its first Git/render/
+// kubectl call. This profile grants no manual-path or external-response role.
+test('selected disabled registration preserves all five roles and rejects enabling or mutable role escalation', async t => {
+  const {checkedDisabledRegistrationOutput: acquire, selectedDisabledRegistrationOutput: selected} = await import('../docs-api-output-discovery.mjs');
+  const {createSerializedOutputRoleClassifier} = await import('../docs-api-output-role-classification.mjs');
+  const witnessPath = 'scripts/docs-api-disabled-registration-authority.json';
+  const bytes = fs.readFileSync(path.join(repository, witnessPath)), authority = JSON.parse(bytes);
+  const physicalPath = authority.physicalClosureWitness, physicalBytes = fs.readFileSync(path.join(repository, physicalPath));
+  const physical = JSON.parse(physicalBytes), source = authority.source;
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'disabled-registration-'));
+  t.after(() => fs.rmSync(root, {recursive: true, force: true}));
+  const write = (file, content) => {
+    fs.mkdirSync(path.dirname(path.join(root, file)), {recursive: true});
+    fs.writeFileSync(path.join(root, file), content);
+  };
+  for (const fact of physical.inputs) write(fact.path, fs.readFileSync(path.join(repository, fact.path)));
+  write(witnessPath, bytes); write(physicalPath, physicalBytes);
+  // Static output analysis follows a broader data-import graph than eager
+  // registration startup. Stage its actual complete dependency paths and
+  // existing workspace links, not a reduced substitute graph or package.
+  const originalRoles = createSerializedOutputRoleClassifier(repository, [source])(source);
+  for (const file of new Set(originalRoles.flatMap(role => role.dependencies))) {
+    write(file, fs.readFileSync(path.join(repository, file)));
+  }
+  const workspaceAliases = 'node_modules/@kubeclaw';
+  fs.mkdirSync(path.join(root, workspaceAliases), {recursive: true});
+  for (const name of fs.readdirSync(path.join(repository, workspaceAliases))) {
+    const alias = path.join(workspaceAliases, name), installed = path.join(repository, alias);
+    if (!fs.lstatSync(installed).isSymbolicLink()) continue;
+    const target = fs.readlinkSync(installed);
+    if (!fs.existsSync(path.resolve(path.dirname(path.join(root, alias)), target, 'package.json'))) continue;
+    fs.symlinkSync(target, path.join(root, alias));
+  }
+  const graph = {edges: physical.incomingEdges, publicEntries: [...physical.publicEntries, ...authority.publicEntries]};
+  const read = () => acquire(root, graph, checkedGitOpsOutputProfiles(root, graph));
+  const first = read();
+  assert.deepEqual(read(), first);
+  assert.equal(first.selectedDisabledConfiguration, true);
+  assert.equal(first.runtimeExecutionAuthorized, false);
+  assert.equal(first.apiApplyAuthorized, false);
+  const classify = () => createSerializedOutputRoleClassifier(root, Object.keys(physical.sourcePins).concat(source))(source);
+  const roles = classify();
+  assert.deepEqual(roles.map(role => [role.line, role.role]), [[29, 'unknown'], [46, 'unknown'], [47, 'unknown'], [48, 'non-api'], [53, 'unknown']]);
+  for (const role of roles) {
+    assert.equal(selected(source, role, first), true);
+    assert.throws(() => selected(source, role, null), /unacquired witness/u);
+    assert.throws(() => selected(source, role, {...first}), /unacquired witness/u);
+    assert.throws(() => selected(source, {...role, role: role.role === 'unknown' ? 'non-api' : 'unknown'}, first), /native descriptor or canonical role/u);
+    assert.throws(() => selected(source, {...role, line: 999}, first), /new or missing slot/u);
+  }
+  assert.equal(selected('scripts/unrelated.mjs', roles[0], first), false);
+  const registryPath = 'scripts/docs-api-producer-adapter-authorities.json';
+  const originalRegistry = fs.existsSync(path.join(root, registryPath)) ? fs.readFileSync(path.join(root, registryPath)) : null;
+  for (const role of roles.filter(role => role.role === 'unknown')) {
+    const registry = JSON.parse(fs.readFileSync(path.join(repository, registryPath)));
+    const expression = role.line === 46 ? "kubectl(['apply', '--dry-run=server', '-f', '-'], input)"
+      : role.line === 47 ? "kubectl(['apply', '-f', '-'], input)" : role.expression;
+    registry.nonApiOutputContracts.push({source, sink: role.sink, expression,
+      line: role.line, role: role.sink === 'kubectl-request' ? 'api-adapted' : 'non-api',
+      basis: 'synthetic-mutable-contract', operations: []});
+    write(registryPath, JSON.stringify(registry));
+    const changed = classify().find(item => item.line === role.line && item.sink === role.sink);
+    // Untrusted publication roots can stop the mutable contract earlier. Do
+    // not fabricate escalation when the native classifier preserves UNKNOWN.
+    if (changed.role === role.role) assert.equal(selected(source, changed, read()), true);
+    else assert.throws(() => selected(source, changed, read()), /native descriptor or canonical role/u);
+    if (originalRegistry) write(registryPath, originalRegistry);
+    else fs.unlinkSync(path.join(root, registryPath));
+  }
+  assert.deepEqual(classify(), roles);
+  const config = fs.readFileSync(path.join(root, authority.configuration));
+  for (const value of [false, null, 'true']) {
+    const changed = JSON.parse(config); changed.runtimeAutoSync = value;
+    write(authority.configuration, JSON.stringify(changed));
+    assert.throws(read, /changed input|selected Source|must remain disabled/u);
+  }
+  write(authority.configuration, Buffer.concat([config, Buffer.from('\n')]));
+  assert.throws(read, /changed input/u);
+  write(authority.configuration, config);
+  const original = fs.readFileSync(path.join(root, source));
+  write(source, Buffer.concat([Buffer.from("process.stdout.write('apiVersion: v1\\nkind: Secret\\n');\n"), original]));
+  assert.throws(read, /changed input/u); write(source, original);
+  for (const file of physical.absentPackageBoundaries) {
+    write(file, '{}'); assert.throws(read, /new package boundary/u); fs.unlinkSync(path.join(root, file));
+  }
+  for (const edges of [[...graph.edges, {source: 'scripts/new.mjs', target: source, kind: 'import'}]]) {
+    assert.throws(() => acquire(root, {...graph, edges}, checkedGitOpsOutputProfiles(root, graph)), /caller or alias/u);
+  }
+  assert.throws(() => acquire(root, {...graph, publicEntries: [...graph.publicEntries,
+    {path: 'scripts/alias.mjs', canonicalSource: source}]}, checkedGitOpsOutputProfiles(root, graph)), /caller or alias/u);
+  assert.throws(() => acquire(root, graph, {...checkedGitOpsOutputProfiles(root, graph)}), /unacquired physical closure/u);
+  for (const mutate of [a => {a.descriptors.pop();}, a => {a.descriptors.reverse();},
+    a => {a.descriptors[0] = a.descriptors[1];}, a => {a.requiredRuntimeAutoSync = false;}]) {
+    const changed = JSON.parse(bytes); mutate(changed); write(witnessPath, JSON.stringify(changed));
+    assert.throws(read, /immutable disabled profile/u);
+  }
+  write(witnessPath, bytes);
+  fs.unlinkSync(path.join(root, witnessPath)); assert.throws(read, /physical input/u); write(witnessPath, bytes);
+  assert.deepEqual(read(), first);
+});

@@ -1699,6 +1699,60 @@ export function selectedInfrastructureOutputProfile(source, role, witness) {
   return true;
 }
 
+// Selected current configuration disables registration before Git/render/API
+// calls. This private noninvocation receipt does not classify arbitrary kubectl
+// responses, exercise the supported manual path or invent registration objects.
+const reviewedDisabledRegistration = Object.freeze({
+  source: 'scripts/install/register-runtime-argo.mjs',
+  authority: 'scripts/docs-api-disabled-registration-authority.json',
+  authoritySha256: '9a019e1bcee769d6cc0b0dcf617f913889e1a3ac6a754d63ee29ed9d61850c5e',
+});
+const qualifiedDisabledRegistration = new WeakSet();
+export function checkedDisabledRegistrationOutput(root, graph, physicalClosure) {
+  const profile = reviewedDisabledRegistration;
+  if (!fs.existsSync(path.join(root, profile.authority)) && !fs.existsSync(path.join(root, profile.source))) return null;
+  const fail = detail => assert.fail(`API_PRODUCT_DISABLED_REGISTRATION_UNQUALIFIED: ${detail}`);
+  const read = file => {
+    const absolute = path.join(root, file);
+    if (!fs.existsSync(absolute) || fs.realpathSync(absolute) !== absolute || !fs.lstatSync(absolute).isFile()) fail(`physical input ${file}`);
+    return fs.readFileSync(absolute);
+  };
+  if (!path.isAbsolute(root) || fs.realpathSync(root) !== root) fail('canonical checkout root');
+  const bytes = read(profile.authority);
+  if (hash(bytes) !== profile.authoritySha256) fail('immutable disabled profile');
+  const authority = JSON.parse(bytes);
+  if (!physicalClosure || !qualifiedGitOpsProfiles.has(physicalClosure)
+    || physicalClosure.witnessDigest !== authority.physicalClosureWitnessSha256
+    || authority.physicalClosureWitness !== reviewedGitOpsProfile.authority) fail('unacquired physical closure');
+  for (const [file, digest] of [[profile.source, authority.sourceSha256], [authority.configuration, authority.configurationSha256]]) {
+    if (!physicalClosure.dependencies.includes(file) || hash(read(file)) !== digest) fail(`selected Source/configuration ${file}`);
+  }
+  if (JSON.parse(read(authority.configuration)).runtimeAutoSync !== true) fail('current registration must remain disabled');
+  if (!graph || JSON.stringify(graph.edges.filter(edge => edge.target === profile.source)) !== JSON.stringify(authority.incomingEdges)
+    || JSON.stringify(graph.publicEntries.filter(entry => entry.canonicalSource === profile.source)) !== JSON.stringify(authority.publicEntries)) fail('caller or alias context');
+  if (authority.source !== profile.source || authority.descriptors.length !== 5
+    || authority.requiredRuntimeAutoSync !== true || authority.canonicalRolesUnchanged !== true
+    || authority.runtimeExecutionAuthorized !== false || authority.apiApplyAuthorized !== false
+    || authority.registrationApiObjects.length !== 0 || authority.observation.exitCode !== 1
+    || authority.observation.stdout !== '' || authority.observation.stderr !== 'INITIAL_REGISTRATION_REQUIRES_MANUAL_CHILD_SYNC\n') fail('disabled profile roster');
+  const result = Object.freeze({witnessDigest: profile.authoritySha256,
+    descriptors: Object.freeze(authority.descriptors.map(Object.freeze)),
+    dependencies: Object.freeze([profile.authority, ...physicalClosure.dependencies]),
+    selectedDisabledConfiguration: true, runtimeExecutionAuthorized: false, apiApplyAuthorized: false});
+  qualifiedDisabledRegistration.add(result);
+  return result;
+}
+export function selectedDisabledRegistrationOutput(source, role, witness) {
+  if (source !== reviewedDisabledRegistration.source) return false;
+  assert(witness && qualifiedDisabledRegistration.has(witness), 'API_PRODUCT_DISABLED_REGISTRATION_UNQUALIFIED: unacquired witness');
+  const descriptor = witness.descriptors.find(item => item.line === role.line && item.sink === role.sink);
+  assert(descriptor, 'API_PRODUCT_DISABLED_REGISTRATION_UNQUALIFIED: new or missing slot');
+  const nativeDescriptor = Object.fromEntries(['line', 'sink', 'expression', 'sinkContract', 'role'].map(key => [key, role[key] ?? null]));
+  assert.equal(hash(JSON.stringify(nativeDescriptor)), descriptor.nativeDescriptorSha256,
+    'API_PRODUCT_DISABLED_REGISTRATION_UNQUALIFIED: native descriptor or canonical role');
+  return true;
+}
+
 export function discoverScriptApiOutputs(root) {
   assertReviewedDiagnosticOutputSources(root);
   // Qualification includes graph metadata (for example directory symlinks)
@@ -1728,12 +1782,13 @@ export function discoverScriptApiOutputs(root) {
     [source,deploymentScalarOccurrenceCustody(root,source,fs.readFileSync(path.join(root,source)),documentationGraphCache.get(root))]));
   const gitOpsProfile=checkedGitOpsOutputProfiles(root,documentationGraphCache.get(root));
   const infrastructureProfile=checkedInfrastructureOutputProfiles(root,documentationGraphCache.get(root));
+  const disabledRegistration=checkedDisabledRegistrationOutput(root,documentationGraphCache.get(root),gitOpsProfile);
   const sourceInputs=walkProductSources(root,producerRoots,()=>true);
   if(fs.existsSync(path.join(root,'package.json')))sourceInputs.push('package.json');
-  const inputKey=hash(JSON.stringify([documentationGraphCache.get(root).inputKey,gitOpsProfile?.witnessDigest??null,infrastructureProfile?.witnessDigest??null,bundleCopy?.inputDigest??null,configOutput?.inputDigest??null,minimalPlugin?.inputDigest??null,[...scalarOccurrences].map(([source,receipt])=>[source,receipt.inputDigest]),sourceInputs.map(source=>[source,hash(fs.readFileSync(path.join(root,source)))])]));
+  const inputKey=hash(JSON.stringify([documentationGraphCache.get(root).inputKey,gitOpsProfile?.witnessDigest??null,infrastructureProfile?.witnessDigest??null,disabledRegistration?.witnessDigest??null,bundleCopy?.inputDigest??null,configOutput?.inputDigest??null,minimalPlugin?.inputDigest??null,[...scalarOccurrences].map(([source,receipt])=>[source,receipt.inputDigest]),sourceInputs.map(source=>[source,hash(fs.readFileSync(path.join(root,source)))])]));
   const cached=scriptOutputCache.get(root);
   if(cached?.inputKey===inputKey&&cached.dependencies.every(([source,digest])=>fs.existsSync(path.join(root,source))&&hash(fs.readFileSync(path.join(root,source)))===digest))return cached.result;
-  const classifiedDependencies=new Set(infrastructureProfile?.dependencies??[]);
+  const classifiedDependencies=new Set([...(infrastructureProfile?.dependencies??[]),...(disabledRegistration?.dependencies??[])]);
   const result=[];
   for(const source of walkProductSources(root,producerRoots,file=>!executableSourceSet.has(path.relative(root,fs.realpathSync(path.join(root,file))).replaceAll(path.sep,'/'))&&!/\.(?:[cm]?js|[cm]?ts|py|sh|go|ya?ml|json|md|txt|toml|lock|pem|crt)$/u.test(file))) {
     const bytes=fs.readFileSync(path.join(root,source),'utf8');
@@ -1805,9 +1860,10 @@ export function discoverScriptApiOutputs(root) {
       // Evaluate the sealed-source check before any ordinary role fallback:
       // mutable contracts cannot relabel these two raw pathname slots.
       const infrastructureSlot=selectedInfrastructureOutputProfile(source,role,infrastructureProfile);
+      const disabledRegistrationSlot=selectedDisabledRegistrationOutput(source,role,disabledRegistration);
       assert(scalarOccurrences.has(source)
         ?selectedDeploymentScalarOccurrences(role,scalarOccurrences.get(source))
-        :infrastructureSlot||role.role!=='unknown',
+        :infrastructureSlot||disabledRegistrationSlot||role.role!=='unknown',
         `API_PRODUCT_SCRIPT_OUTPUT_ROLE_UNQUALIFIED: ${source}:${role.line}: ${role.expression}`);
     }
     if(witness){result.push(...witness.outputs);continue;}
@@ -2114,6 +2170,7 @@ export function discoverScriptOutputRoleClassifications(root) {
   const observations=discoverDeploymentNodeOutputObservations(root);
   const gitOpsProfile=checkedGitOpsOutputProfiles(root,documentationGraphCache.get(root));
   const infrastructureProfile=checkedInfrastructureOutputProfiles(root,documentationGraphCache.get(root));
+  const disabledRegistration=checkedDisabledRegistrationOutput(root,documentationGraphCache.get(root),gitOpsProfile);
   const scalarSources=['scripts/bundle-values-field.mjs','scripts/buster-resource-overlay.mjs'];
   const scalarOccurrences=new Map(scalarSources.filter(source=>sources.includes(source)).map(source=>
     [source,deploymentScalarOccurrenceCustody(root,source,fs.readFileSync(path.join(root,source)),documentationGraphCache.get(root))]));
@@ -2133,11 +2190,13 @@ export function discoverScriptOutputRoleClassifications(root) {
     const qualifiedScalarUses=scalarOccurrences.has(source)?selectedDeploymentScalarOccurrences(role,scalarOccurrences.get(source)):null;
     if(scalarOccurrences.has(source))assert(qualifiedScalarUses,`DEPLOYMENT_SCALAR_OCCURRENCE_UNQUALIFIED: ${source}; canonical stdout must remain unknown`);
     const qualifiedInfrastructureProfile=selectedInfrastructureOutputProfile(source,role,infrastructureProfile);
+    const qualifiedDisabledRegistrationProfile=selectedDisabledRegistrationOutput(source,role,disabledRegistration);
     const context={...role,path:source,sourceDigest:hash(fs.readFileSync(path.join(root,source))),
       dependencyDigests:Object.fromEntries(role.dependencies.map(file=>[file,hash(fs.readFileSync(path.join(root,file)))])),
       ...(selectedOccurrences.length?{selectedOccurrences}:{} ),
       ...(qualifiedScalarUses?{qualifiedScalarUses,standaloneOutputRole:'unknown'}:{}),
-      ...(qualifiedInfrastructureProfile?{historicalInfrastructureProfile:infrastructureProfile.witnessDigest,executionAuthority:false,standaloneOutputRole:'unknown'}:{})};
+      ...(qualifiedInfrastructureProfile?{historicalInfrastructureProfile:infrastructureProfile.witnessDigest,executionAuthority:false,standaloneOutputRole:'unknown'}:{}),
+      ...(qualifiedDisabledRegistrationProfile?{selectedDisabledRegistration:disabledRegistration.witnessDigest,registrationDisabledByCurrentConfiguration:true,runtimeExecutionAuthorized:false,apiApplyAuthorized:false}:{})};
     // Alias/public-entry contexts have a different invocation identity. The
     // selected deployment evidence cannot travel across that boundary.
     return publicNodeSourceContexts(root,source,context).map(context=>{

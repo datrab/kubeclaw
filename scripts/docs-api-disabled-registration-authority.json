@@ -1,0 +1,74 @@
+{
+  "schemaVersion": "source-owned-current-disabled-registration.v1",
+  "source": "scripts/install/register-runtime-argo.mjs",
+  "sourceSha256": "aef8a00017be23e6e6e7153b9391fde1942f666545bc918f310e8171769a1df7",
+  "configuration": "gitops/production/config.json",
+  "configurationSha256": "aa3d20f6787b1ea18f828a42a1d5235544444aad0e660576db0e76bb9a35529c",
+  "requiredRuntimeAutoSync": true,
+  "physicalClosureWitness": "scripts/docs-api-gitops-output-profile-authority.json",
+  "physicalClosureWitnessSha256": "1f5316ad9c99959473cb938a79c44b8bee01f8a5399a95d2df36fcd9a17d17ca",
+  "incomingEdges": [],
+  "publicEntries": [
+    {
+      "path": "scripts/install/register-runtime-argo.mjs",
+      "canonicalSource": "scripts/install/register-runtime-argo.mjs"
+    }
+  ],
+  "descriptors": [
+    {
+      "line": 29,
+      "sink": "kubectl-request",
+      "role": "unknown",
+      "nativeDescriptorSha256": "834e3f41c859a62f10477533b3fbdca5a7ff7b8f7624a66f9aa86ba64394fdb4"
+    },
+    {
+      "line": 46,
+      "sink": "process.stdout.write",
+      "role": "unknown",
+      "nativeDescriptorSha256": "5df9d8f6e59576ebaacc2697c5382b3b3f402a59ffd460d7963c76c3ecdeb3c0"
+    },
+    {
+      "line": 47,
+      "sink": "process.stdout.write",
+      "role": "unknown",
+      "nativeDescriptorSha256": "beb1aa323f4b67cb3863c86a91004479fcd4af93825a4e8b4b3114a30426c81b"
+    },
+    {
+      "line": 48,
+      "sink": "console.log",
+      "role": "non-api",
+      "nativeDescriptorSha256": "c13cef1a4fd418787fd254526a7e6e960d0865d59cf37923d559c74dd85c4a50"
+    },
+    {
+      "line": 53,
+      "sink": "console.error",
+      "role": "unknown",
+      "nativeDescriptorSha256": "a7e16f7e749b3ba837a1d8b68383c2c6c85cb65bb961c4358cf3f820a9e7a634"
+    }
+  ],
+  "observation": {
+    "revision": "5b1b46a4f3fb6425c77499aa114e354d77cbdf6b",
+    "argv": [
+      "/usr/local/bin/node",
+      "scripts/install/register-runtime-argo.mjs",
+      "check"
+    ],
+    "KUBE_CONTEXT": "documentation-current-disabled-profile",
+    "exitCode": 1,
+    "stdout": "",
+    "stderr": "INITIAL_REGISTRATION_REQUIRES_MANUAL_CHILD_SYNC\n",
+    "expectedRejectionOnly": true,
+    "sourceDominatedNoGitRenderKubectlCall": true,
+    "notAnOSTrace": true
+  },
+  "canonicalRolesUnchanged": true,
+  "runtimeExecutionAuthorized": false,
+  "apiApplyAuthorized": false,
+  "registrationApiObjects": [],
+  "limits": [
+    "Only exact current selected disabled configuration: runtimeAutoSync true rejects registration before Git/render/kubectl; not supported-manual-family completion.",
+    "Original historical expected local check failure only, not new current CLI success, no apply/registration/API dryrun/schema/health/live/network denial proof.",
+    "External response and diagnostics remain UNKNOWN; no whole-source/global nonAPI or API-adapted grant.",
+    "False/manual or any changed config/Source/descriptor/caller/alias/loader requires independent renewed original constructor/request qualification; no invented registration objects."
+  ]
+}
