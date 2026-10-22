@@ -6,7 +6,7 @@ import { fileURLToPath } from 'node:url';
 import { canonicalJson, portableJson, PORTABLE_JSON_ENCODING, sha256Text } from '@kubeclaw/plugin-sdk';
 import { coverageReviewPrefixes, coverageReviewRequirements, gateCoverageDigest } from '@kubeclaw/pipeline-test-gate-contract';
 import * as core from '../../../skills/nova/core/src/index.ts';
-import { demoImportVectors } from '../../../skills/nova/plugins/remote-test-gate/tests/demo-import-fixture.ts';
+import { demoImportVectors } from '../integration/nova-remote-test-gate-demo-import-fixture.ts';
 
 const repository = fileURLToPath(new URL('../../../', import.meta.url));
 const [root, phase] = process.argv.slice(2);
