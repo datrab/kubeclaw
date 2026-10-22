@@ -2,6 +2,7 @@
 
 import fs from 'node:fs';
 import { createHash } from 'node:crypto';
+import { buildSourceSurfaceMap, assertSourceSurfaceMap } from './lib/docs-source-surface-map.mjs';
 import { assertRouteContinuity } from './lib/docs-route-continuity.mjs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -142,6 +143,7 @@ if (createHash('sha256').update(baselineBytes).digest('hex') !== 'c9fd21962ade06
 }
 assertRouteContinuity(JSON.parse(baselineBytes), pages, routeRegistry);
 
+const sourceSurfaceMap = buildSourceSurfaceMap(root, pages);
 const output = `${JSON.stringify({
   schemaVersion: 'kubeclaw-documentation-map.v1',
   authority: 'Page metadata supplies ownership and source dependencies. This file is generated and must not be edited by hand.',
@@ -149,9 +151,11 @@ const output = `${JSON.stringify({
   routeRegistry: relative(routeRegistryPath),
   pageCount: pages.length,
   pages,
+  sourceSurfaceMap,
 }, null, 2)}\n`;
 
 if (check) {
+  if (fs.existsSync(target)) assertSourceSurfaceMap(JSON.parse(fs.readFileSync(target, 'utf8')).sourceSurfaceMap, sourceSurfaceMap);
   if (!fs.existsSync(target) || fs.readFileSync(target, 'utf8') !== output) {
     console.error(`${relative(target)} is stale. Run npm run docs:governance:generate.`);
     process.exit(1);

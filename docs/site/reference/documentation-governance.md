@@ -82,6 +82,23 @@ metadata; it does not prove complete source discovery or successful checks.
 A missing or stale page entry must be corrected through its metadata and the
 map generator before the change is called covered.
 
+The same map contains a `sourceSurfaceMap` join for SDK exports, members and
+variants; the nine mapped platform groups; CI workflows and jobs; plugin packages
+and registrations; recursive configuration values and registered schema fields;
+and operator-runtime CLI flags. Each domain names its inventory, generator,
+checks, reader task and discovery limit. Source-qualified IDs retain the entrypoint,
+source file, document, field or registration context. Each binding names its reader
+target and page owner. `pageSources` gives the inverse membership for those targets.
+The governance check compares full identities, facts and bindings, not just counts.
+
+Run the domain's owning inventory checks before relying on that join: governance
+consumes their persisted output and does not independently rescan implementation
+source. Regenerate the inventory and map after reviewing an addition, change or
+removal. The map's `unmappedScope` names remaining gaps, including environment,
+secret and derived-value occurrence ownership and public families without an
+adapter. A mapped family is not proof that every field explanation is complete,
+or that every exhaustive page or public API in the repository is already joined.
+
 The plugin catalogue has two input authorities. Source manifests and schemas
 own mechanical package facts. Maintainers own the purpose, use, exclusions, and
 limits in the catalogue guidance input. The generator reads that guidance; do

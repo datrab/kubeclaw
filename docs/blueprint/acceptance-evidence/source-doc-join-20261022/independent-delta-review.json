@@ -1,0 +1,418 @@
+{
+  "reviewer": "/root/review_cli_maintenance_closeout",
+  "author": "/root/source_doc_map_fix; one-line workflow inventory refresh by /root",
+  "baseRevision": "ffd91aa78fc0d92b6dc88067c9436f65be63b133",
+  "reviewedState": "Frozen uncommitted patch identified by exact SHA256; not a fabricated commit revision.",
+  "reviewedFilesSha256": {
+    "scripts/docs-governance.mjs": "b432aa310245de62fcfbc072fc889ff46ed109df3c5f46c93748104c671a2a9c",
+    "scripts/lib/docs-source-surface-map.mjs": "97321fca9c710eba0d89876aac990eec5d2243319967ef32a9c81bb81d8c0677",
+    "scripts/tests/docs-source-surface-map.test.mjs": "432c7301be7da9e2b884dc910573453df3896d74f8649eb7212666e8812b048f",
+    "docs/site/reference/generated-documentation-map.json": "6312081d81c5275456b107f011bc3d20696ea6b1b3d642b1d949dae7296d07dd",
+    "docs/site/reference/documentation-governance.md": "683359a368e2d7273efb2bf90aab5446f3d356e452e9e7b08983041e8a3ab68f",
+    "docs/generated/inventory/workflows.json": "486e2b21243bb3b36a192245678efff86baef09e88062c3fa1f538ae6125977f"
+  },
+  "boundedDeltaVerdict": "PASS",
+  "review": {
+    "sourceAccuracy": "PASS",
+    "readerUsability": "PASS",
+    "quality": "PASS"
+  },
+  "materialFindings": [],
+  "gateDisposition": {
+    "A911-07": "NOT_READY:explicit unmapped public families and inverse coverage only for64actual targets,not every exhaustive page",
+    "MNT-004": "NOT_READY from separate review; this additive join does not close it"
+  },
+  "checks": [
+    {
+      "command": "node --test scripts/tests/docs-source-surface-map.test.mjs",
+      "exitCode": 0,
+      "observation": "Independent actual original run:11/11 pass,0failed/skipped; seven inventory adapter add/change/remove controls and orphan/binding/member/inverse tests,16.55s. Not raw-source parser mutation proof."
+    },
+    {
+      "command": "node scripts/docs-governance.mjs --check",
+      "exitCode": 0,
+      "observation": "Independent actual original run;177pages mapped."
+    },
+    {
+      "command": "node scripts/docs-inventory.mjs --check",
+      "exitCode": 0,
+      "observation": "Independent actual original run;all four outputs current including refreshed one-line internal workflow command."
+    },
+    {
+      "command": "Exact original HEAD map/proposed JSON and workflow source comparison",
+      "exitCode": 0,
+      "observation": "All177 old page rows and all old top-level keys exact;only additive sourceSurfaceMap. Product workflows byte-equivalent as parsed JSON. New internal docs command exact matches docs-checks.yaml:38."
+    }
+  ],
+  "boundedCoverage": {
+    "domains": 7,
+    "sourceQualifiedIds": 6653,
+    "inverseReaderPages": 64,
+    "oldPagesPreserved": 177
+  },
+  "acceptedRecordImpacts": [
+    {
+      "id": "AP09.1-ready-topics-20261020",
+      "previousReviewedRevision": "340875215c422fb1cc0901e867420928eae3dfc0",
+      "changedDeclaredPaths": [
+        "docs/site/reference/documentation-governance.md",
+        "docs/site/reference/generated-documentation-map.json",
+        "scripts/docs-governance.mjs"
+      ],
+      "verdict": "PASS_SCOPED_SOURCE_READER_CONTRACT_PRESERVATION",
+      "reason": "Existing authority/entry/decision/status rules unchanged; additive prose correctly limits the new join, and all old map page metadata/ownership is exact.",
+      "requirementIdsPreserved": [
+        "GOV-001",
+        "GOV-003",
+        "GOV-004",
+        "GOV-008",
+        "ENT-001",
+        "ENT-002",
+        "ENT-003",
+        "ENT-004",
+        "DEC-001",
+        "STA-001",
+        "STA-002"
+      ],
+      "gateIdsPreserved": [],
+      "limits": "Preserve original scope, reviews, checks and limits verbatim. No automatic revision repin, fresh whole-topic reapproval, gate/count increase or current artifact-hash approval."
+    },
+    {
+      "id": "Reviewed-corrections-20261020",
+      "previousReviewedRevision": "340875215c422fb1cc0901e867420928eae3dfc0",
+      "changedDeclaredPaths": [
+        "docs/site/reference/documentation-governance.md",
+        "docs/site/reference/generated-documentation-map.json",
+        "scripts/docs-governance.mjs"
+      ],
+      "verdict": "PASS_SCOPED_SOURCE_READER_CONTRACT_PRESERVATION",
+      "reason": "Prior seven correction bodies and their product facts unchanged; old metadata map data exact; additive join neither weakens freshness nor rewrites those findings.",
+      "requirementIdsPreserved": [
+        "SPC-001",
+        "CFG-006",
+        "FLW-011",
+        "EXT-005",
+        "EXT-006",
+        "CFG-016",
+        "GOV-006"
+      ],
+      "gateIdsPreserved": [],
+      "limits": "Preserve original scope, reviews, checks and limits verbatim. No automatic revision repin, fresh whole-topic reapproval, gate/count increase or current artifact-hash approval."
+    },
+    {
+      "id": "AP09-reader-developers-20261020",
+      "previousReviewedRevision": "340875215c422fb1cc0901e867420928eae3dfc0",
+      "changedDeclaredPaths": [
+        "scripts/docs-governance.mjs"
+      ],
+      "verdict": "PASS_SCOPED_SOURCE_READER_CONTRACT_PRESERVATION",
+      "reason": "Developer selection/preparation/change-task pages unchanged; governance preserves metadata validation, route continuity and all page/check assignments.",
+      "requirementIdsPreserved": [
+        "DEV-001",
+        "DEV-003",
+        "DEV-004",
+        "DEV-006",
+        "DEV-009",
+        "EXT-001",
+        "EXT-002",
+        "EXT-003",
+        "EXT-004",
+        "EXT-009",
+        "CDV-001",
+        "CDV-002",
+        "CDV-004",
+        "CDV-011"
+      ],
+      "gateIdsPreserved": [
+        "A910-02"
+      ],
+      "limits": "Preserve original scope, reviews, checks and limits verbatim. No automatic revision repin, fresh whole-topic reapproval, gate/count increase or current artifact-hash approval."
+    },
+    {
+      "id": "AP09-reviewed-maintenance-20261020",
+      "previousReviewedRevision": "340875215c422fb1cc0901e867420928eae3dfc0",
+      "changedDeclaredPaths": [
+        "docs/site/reference/documentation-governance.md",
+        "scripts/docs-governance.mjs"
+      ],
+      "verdict": "PASS_SCOPED_SOURCE_READER_CONTRACT_PRESERVATION",
+      "reason": "CI/check selection and drift-maintenance rules unchanged; bounded join guidance explicitly retains original owner checks and excludes unproven global completeness.",
+      "requirementIdsPreserved": [
+        "MNT-013",
+        "MNT-016"
+      ],
+      "gateIdsPreserved": [],
+      "limits": "Preserve original scope, reviews, checks and limits verbatim. No automatic revision repin, fresh whole-topic reapproval, gate/count increase or current artifact-hash approval."
+    },
+    {
+      "id": "AP09-closeout-config-reference-20261020",
+      "previousReviewedRevision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+      "changedDeclaredPaths": [
+        "scripts/docs-governance.mjs"
+      ],
+      "verdict": "PASS_SCOPED_SOURCE_READER_CONTRACT_PRESERVATION",
+      "reason": "Configuration reader pages and inventories unchanged; new adapter fingerprints existing data without altering types/default/receiver semantics or owner checks.",
+      "requirementIdsPreserved": [
+        "CFG-004",
+        "CFG-005",
+        "CFG-008",
+        "CFG-018",
+        "REF-015"
+      ],
+      "gateIdsPreserved": [],
+      "limits": "Preserve original scope, reviews, checks and limits verbatim. No automatic revision repin, fresh whole-topic reapproval, gate/count increase or current artifact-hash approval."
+    },
+    {
+      "id": "AP09-closeout-developer-maintenance-20261020",
+      "previousReviewedRevision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+      "changedDeclaredPaths": [
+        "docs/site/reference/documentation-governance.md",
+        "scripts/docs-governance.mjs"
+      ],
+      "verdict": "PASS_SCOPED_SOURCE_READER_CONTRACT_PRESERVATION",
+      "reason": "Existing developer/maintenance/ownership and checked change paths unchanged; additive map is not a replacement semantic authority.",
+      "requirementIdsPreserved": [
+        "DEV-005",
+        "DEV-008",
+        "EXT-007",
+        "EXT-008",
+        "CDV-005",
+        "OPL-003",
+        "OPL-004",
+        "PLG-004",
+        "PLG-012",
+        "GOV-005",
+        "GOV-007"
+      ],
+      "gateIdsPreserved": [],
+      "limits": "Preserve original scope, reviews, checks and limits verbatim. No automatic revision repin, fresh whole-topic reapproval, gate/count increase or current artifact-hash approval."
+    },
+    {
+      "id": "AP09-buster-lease-reference-20261020",
+      "previousReviewedRevision": "d0bb52c4d8bcf323c0ff32b95e8e3120ffa6eefb",
+      "changedDeclaredPaths": [
+        "scripts/docs-governance.mjs"
+      ],
+      "verdict": "PASS_SCOPED_SOURCE_READER_CONTRACT_PRESERVATION",
+      "reason": "Buster lease reference/controller facts unchanged; old map row and metadata ownership/checks remain exact.",
+      "requirementIdsPreserved": [
+        "SPC-008"
+      ],
+      "gateIdsPreserved": [],
+      "limits": "Preserve original scope, reviews, checks and limits verbatim. No automatic revision repin, fresh whole-topic reapproval, gate/count increase or current artifact-hash approval."
+    },
+    {
+      "id": "AP09-documentation-agent-maintenance-20261021",
+      "previousReviewedRevision": "5b1b46a4f3fb6425c77499aa114e354d77cbdf6b",
+      "changedDeclaredPaths": [
+        "docs/site/reference/documentation-governance.md",
+        "scripts/docs-governance.mjs"
+      ],
+      "verdict": "PASS_SCOPED_SOURCE_READER_CONTRACT_PRESERVATION",
+      "reason": "Original whole agent change procedure unchanged; added guidance says how to consume a limited join and explicitly preserves full discovery/review/reader/retirement obligations.",
+      "requirementIdsPreserved": [
+        "MNT-017"
+      ],
+      "gateIdsPreserved": [],
+      "limits": "Preserve original scope, reviews, checks and limits verbatim. No automatic revision repin, fresh whole-topic reapproval, gate/count increase or current artifact-hash approval."
+    },
+    {
+      "id": "AP09-complete-platform-change-content-20261021",
+      "previousReviewedRevision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+      "changedDeclaredPaths": [
+        "scripts/docs-governance.mjs"
+      ],
+      "verdict": "PASS_SCOPED_SOURCE_READER_CONTRACT_PRESERVATION",
+      "reason": "Effect/capability/event/integration/GitOps procedures unchanged; existing platform bindings are consumed, not replaced or semantically promoted.",
+      "requirementIdsPreserved": [
+        "CDV-003",
+        "CDV-007",
+        "CDV-010",
+        "CDV-012"
+      ],
+      "gateIdsPreserved": [],
+      "limits": "Preserve original scope, reviews, checks and limits verbatim. No automatic revision repin, fresh whole-topic reapproval, gate/count increase or current artifact-hash approval."
+    },
+    {
+      "id": "AP09-complete-publication-reference-navigation-20261021",
+      "previousReviewedRevision": "340875215c422fb1cc0901e867420928eae3dfc0",
+      "changedDeclaredPaths": [
+        "scripts/docs-governance.mjs"
+      ],
+      "verdict": "PASS_SCOPED_SOURCE_READER_CONTRACT_PRESERVATION",
+      "reason": "Existing links/routes/source citations unchanged; anchor validation and pinned route baseline remain intact. New JSON asset has new bytes, not old artifact hashes.",
+      "requirementIdsPreserved": [
+        "PUB-003",
+        "PUB-009"
+      ],
+      "gateIdsPreserved": [],
+      "limits": "Preserve original scope, reviews, checks and limits verbatim. No automatic revision repin, fresh whole-topic reapproval, gate/count increase or current artifact-hash approval."
+    },
+    {
+      "id": "AP09-complete-developer-reader-contracts-20261021",
+      "previousReviewedRevision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+      "changedDeclaredPaths": [
+        "scripts/docs-governance.mjs"
+      ],
+      "verdict": "PASS_SCOPED_SOURCE_READER_CONTRACT_PRESERVATION",
+      "reason": "Authored developer journeys and their stated runtime limits unchanged; new shared governance dependency only adds inventory-to-reader relationships.",
+      "requirementIdsPreserved": [
+        "QUA-008",
+        "QUA-009"
+      ],
+      "gateIdsPreserved": [],
+      "limits": "Preserve original scope, reviews, checks and limits verbatim. No automatic revision repin, fresh whole-topic reapproval, gate/count increase or current artifact-hash approval."
+    },
+    {
+      "id": "AP09-complete-static-reader-search-20261021",
+      "previousReviewedRevision": "5b1b46a4f3fb6425c77499aa114e354d77cbdf6b",
+      "changedDeclaredPaths": [
+        "docs/site/reference/documentation-governance.md"
+      ],
+      "verdict": "PASS_SCOPED_SOURCE_READER_CONTRACT_PRESERVATION",
+      "reason": "Search implementation/selection/route semantics unchanged; truthful 17-line prose addition changes current search corpus and therefore requires fresh native build/check, not an old result relabelled current.",
+      "requirementIdsPreserved": [
+        "PUB-002"
+      ],
+      "gateIdsPreserved": [],
+      "limits": "Preserve original scope, reviews, checks and limits verbatim. No automatic revision repin, fresh whole-topic reapproval, gate/count increase or current artifact-hash approval."
+    },
+    {
+      "id": "A912-11-deterministic-page-records-20261022",
+      "previousReviewedRevision": "340875215c422fb1cc0901e867420928eae3dfc0",
+      "changedDeclaredPaths": [
+        "docs/site/reference/generated-documentation-map.json"
+      ],
+      "verdict": "PASS_SCOPED_SOURCE_READER_CONTRACT_PRESERVATION",
+      "reason": "Original page-record consumer unchanged and reads ownership.pages; all177 rows exact. It separately hashes full ownership JSON, so historical two-build artifact equality remains historical and new current output requires fresh normal build/check.",
+      "requirementIdsPreserved": [],
+      "gateIdsPreserved": [
+        "A912-11"
+      ],
+      "limits": "Preserve original scope, reviews, checks and limits verbatim. No automatic revision repin, fresh whole-topic reapproval, gate/count increase or current artifact-hash approval."
+    },
+    {
+      "id": "AP09-publication-positive-scope-7ef16585",
+      "previousReviewedRevision": "d23046f0a0f39c70f8177c607b722c191a8da7e1",
+      "changedDeclaredPaths": [
+        "docs/site/reference/documentation-governance.md",
+        "docs/site/reference/generated-documentation-map.json"
+      ],
+      "verdict": "PASS_SCOPED_SOURCE_READER_CONTRACT_PRESERVATION",
+      "reason": "Positive page/classification/asset selectors unchanged; map remains an already allowed JSON asset. No new page or publication scope; changed asset/body requires fresh committed artifact binding.",
+      "requirementIdsPreserved": [],
+      "gateIdsPreserved": [
+        "A912-01"
+      ],
+      "limits": "Preserve original scope, reviews, checks and limits verbatim. No automatic revision repin, fresh whole-topic reapproval, gate/count increase or current artifact-hash approval."
+    },
+    {
+      "id": "A98-02-13-whole-operator-procedure-contract-20261022",
+      "previousReviewedRevision": "d23046f0a0f39c70f8177c607b722c191a8da7e1",
+      "changedDeclaredPaths": [
+        "docs/site/reference/generated-documentation-map.json",
+        "scripts/docs-governance.mjs"
+      ],
+      "verdict": "PASS_SCOPED_SOURCE_READER_CONTRACT_PRESERVATION",
+      "reason": "Canonical operator procedures/authority/prerequisites/recovery unchanged; all177 page rows and operator check assignments exact; no new live/persona claim.",
+      "requirementIdsPreserved": [],
+      "gateIdsPreserved": [
+        "A98-02",
+        "A98-13"
+      ],
+      "limits": "Preserve original scope, reviews, checks and limits verbatim. No automatic revision repin, fresh whole-topic reapproval, gate/count increase or current artifact-hash approval."
+    },
+    {
+      "id": "A910-03-whole-command-prerequisite-contract-20261022",
+      "previousReviewedRevision": "340875215c422fb1cc0901e867420928eae3dfc0",
+      "changedDeclaredPaths": [
+        "docs/site/reference/documentation-governance.md",
+        "scripts/docs-governance.mjs"
+      ],
+      "verdict": "PASS_SCOPED_SOURCE_READER_CONTRACT_PRESERVATION",
+      "reason": "Original command-preparation/selected-tool/stop rules unchanged; added prose retains owning checks and does not authorize broad SDK/API/native execution.",
+      "requirementIdsPreserved": [],
+      "gateIdsPreserved": [
+        "A910-03"
+      ],
+      "limits": "Preserve original scope, reviews, checks and limits verbatim. No automatic revision repin, fresh whole-topic reapproval, gate/count increase or current artifact-hash approval."
+    }
+  ],
+  "unaffectedPreviouslyCandidate": "A912-05-whole-source-excerpt-callouts-20261022:maintenance page and shared source-excerpt consumer unchanged; prior17-list becomes16 for actual frozen delta.",
+  "requiredCurrentArtifactFollowup": "At actual committed revision, produce fresh normal publication output and native artifact/search/source-link/source-preview checks. Map is an allowlisted copied asset and full owner JSON authority hash changes. Historical original deterministic two-build results remain historical,not current hashes. No broad browser/whole177body/persona/source-census reapproval inferred.",
+  "limits": [
+    "Persisted inventory adapter only; underlying source freshness and semantic completeness remain owning checks responsibility.",
+    "Existing metadata/route/positive-page/publication/Reader-source contracts preserved,not broadly reaccepted.",
+    "No SDK compiler/full config discovery/platform raw mutation/global source/API/runtime/CI/deployment/hosting/release claim.",
+    "This reviewer wrote only scratch reports and ran focused original checks; no source/matrix edits or commits."
+  ],
+  "structuredCodeRegressionReview": {
+    "reviewer": "Independent native Codex /root/review_cli_maintenance_closeout; not the author",
+    "findings": [],
+    "acceptedActionableFindings": [],
+    "checkedPathsAndRanges": [
+      {
+        "path": "scripts/docs-governance.mjs",
+        "ranges": [
+          "1-168"
+        ],
+        "scope": "Whole original metadata/check/route/output path plus additive import/build/assert branches"
+      },
+      {
+        "path": "scripts/lib/docs-source-surface-map.mjs",
+        "ranges": [
+          "1-152"
+        ],
+        "scope": "Whole new adapter; uniqueness,source-qualified IDs,all seven inventory projections,source/target/owner binding,Markdown anchors,facts hash,deterministic sorting,inverse membership and exact assertion"
+      },
+      {
+        "path": "scripts/tests/docs-source-surface-map.test.mjs",
+        "ranges": [
+          "1-108"
+        ],
+        "scope": "Whole focused tests; full map baseline,seven add/change/remove adapter paths,existing-target tamper,SDK member/inverse omission,orphan page/anchor,duplicate identity"
+      },
+      {
+        "path": "scripts/docs-reader/page-records.mjs",
+        "ranges": [
+          "1-170"
+        ],
+        "scope": "Whole unchanged consumer: ownership.pages selects finite page/dependency records; full owner JSON committed-source authority hash changes"
+      },
+      {
+        "path": "scripts/lib/docs-publication-assets.mjs",
+        "ranges": [
+          "1-104"
+        ],
+        "scope": "Whole unchanged positive page/asset selector and copy/manifest,existing map JSON allowance"
+      },
+      {
+        "path": "scripts/docs-publication.mjs",
+        "ranges": [
+          "1-38",
+          "1080-1132"
+        ],
+        "scope": "Existing consumer imports and build:copy allowed JSON,map-sensitive reader page records,no selector broadening"
+      },
+      {
+        "path": "docs/site/reference/documentation-governance.md",
+        "ranges": [
+          "73-104"
+        ],
+        "scope": "Seventeen-line additive reader-facing instructions with unchanged neighboring authority rules"
+      },
+      {
+        "path": "docs/generated/inventory/workflows.json",
+        "ranges": [
+          "178-182"
+        ],
+        "scope": "Exact one-line command replacement vs .github/workflows/docs-checks.yaml:38; original checker0"
+      }
+    ],
+    "regressionAssessment": "No material actionable code regression found in the bounded additive change. Source freshness remains external to this adapter by explicit contract; missing families remain NOT_READY rather than falsely admitted. Current output binding must be rebuilt at committed revision.",
+    "bundledHelperAvailability": {
+      "state": "UNAVAILABLE",
+      "basis": "Parent reports immediate helper launch failure: codex executable absent; no product execution,installation or model switch. This independent native review is actual but is not a clean bundled-helper run."
+    }
+  }
+}
