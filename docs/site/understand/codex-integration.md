@@ -5,7 +5,7 @@ Audience: Codex operator, plugin maintainer, platform operator, security special
 Owner: Codex integration maintainers
 Evidence: plugins/kubeclaw-ops; .agents/plugins/marketplace.json; charts/ops-pod; tools/ops-mcp
 Evidence revision: `569f7b4933d4859cc67c80ddf40d5154ffd95ce5`
-Upstream source scope: Ops changes on main at `34cf38ef53ee41381543785d0ffae90a37fac9ca`; runtime source adoption into this documentation branch remains separate
+Upstream source scope: Ops changes on main at `34cf38ef53ee41381543785d0ffae90a37fac9ca`; runtime adoption in this checkout and the deployed release must be verified separately
 Applies to: `kubeclaw-ops@0.2.0` and the current local marketplace entry
 Last verified: manifest, skill, chart, service, and test inspection on 2026-09-21
 
@@ -121,7 +121,7 @@ operation go through the central service.
 >
 > **Test evidence:** See the source-test definitions and execution limits in [Ops MCP verification](ops-mcp.md#verification).
 >
-> **Revision:** `34cf38ef53ee41381543785d0ffae90a37fac9ca`; upstream main, separate from documentation-branch source adoption.
+> **Revision:** `34cf38ef53ee41381543785d0ffae90a37fac9ca`; upstream main; these links do not establish runtime adoption in this checkout or the deployed release.
 >
 > **Limit:** Native Nova/Buster discovery, mobile pairing and effective deployed grants are not proved by these source bindings.
 

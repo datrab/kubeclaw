@@ -142,6 +142,6 @@ The pinned 2026-10-22 upstream main profile declares the central MCP at
 `https://codex-ops-mcp.kubeclaw-ops.svc:8080/mcp` from its own Deployment and
 ServiceAccount. Codex, Nova and Buster authenticate with separate bearers;
 NetworkPolicy permits configured client selectors. The older generated
-endpoint inventory reflects this documentation branch's source baseline,
+endpoint inventory reflects this checkout's source baseline,
 not a verified updated deployment. Use the [current MCP topology and contract](../understand/ops-mcp.md#complete-request-and-state-path)
 for this route until runtime-source adoption regenerates those facts.

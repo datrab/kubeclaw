@@ -5,7 +5,7 @@ Audience: architecture reader, platform operator, maintainer, security reviewer
 Owner: platform architecture and operations
 Evidence: scripts/deploy.sh; scripts/platform-services.mjs; charts/ops-pod; gitops/platform; my-values/infra
 Evidence revision: `13bff0a18a64e74f2cbbaa1978e746fcdeff0c10`
-Upstream source scope: Ops changes on main at `34cf38ef53ee41381543785d0ffae90a37fac9ca`; runtime source adoption into this documentation branch remains separate
+Upstream source scope: Ops changes on main at `34cf38ef53ee41381543785d0ffae90a37fac9ca`; runtime adoption in this checkout and the deployed release must be verified separately
 Applies to: current Kubernetes platform and its supported deployment paths
 Last verified: 2026-09-21; diagram mirror/storage ownership boundaries rechecked against the same pinned source on 2026-10-21; no live platform result
 
@@ -1023,7 +1023,7 @@ cluster can also make the Ops Pod, MCP, storage and network unreachable.
 >
 > **Test evidence:** See the source-test definitions and execution limits in [Ops MCP verification](ops-mcp.md#verification).
 >
-> **Revision:** `34cf38ef53ee41381543785d0ffae90a37fac9ca`; upstream main, separate from documentation-branch source adoption.
+> **Revision:** `34cf38ef53ee41381543785d0ffae90a37fac9ca`; upstream main; these links do not establish runtime adoption in this checkout or the deployed release.
 >
 > **Limit:** Source layout does not prove arbitrary-cluster recovery or every live authorization boundary.
 

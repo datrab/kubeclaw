@@ -441,7 +441,7 @@ what each adapter does after selection.
 > **Claim:** A successful mypy process may return no findings; an unexplained nonzero exit may not.
 > **Implementation:** [NDJSON parsing and the conditional empty-result failure](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/lint/src/engine/tool-registry-dependency-tools.ts#L27-L61).
 > **Contract/setting:** The adapter requests `--output json --no-color-output`; each nonempty stdout line must parse as JSON before normalization.
-> **Test evidence:** No dedicated mypy empty-success/nonzero parser assertion was identified in the reviewed owning tests. This clarification follows Source inspection, not a mypy execution.
+> **Test evidence:** No dedicated mypy empty-success/nonzero parser assertion was identified in the reviewed owning tests. This clarification describes the adapter implementation, not a mypy execution.
 > **Revision:** `569f7b4933d4859cc67c80ddf40d5154ffd95ce5`; the complete linked source object matches the reviewed repository bytes.
 > **Limit:** This documents the current adapter branch, not success of the dormant Python tools in the shipped workspace policy.
 

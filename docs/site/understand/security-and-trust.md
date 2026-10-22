@@ -5,7 +5,7 @@ Audience: operator, security reviewer, architecture reader, maintainer
 Owner: platform security and runtime maintainers
 Evidence: my-values/infra/spire-values.yaml; charts/kubeclaw/templates/configmap-worker-trust.yaml; charts/prism/templates/networkpolicy.yaml; skills/nova/core/execution/authorization.ts; my-values/setup-secrets.sh; skills/nova/core/test-gates/source-snapshot.ts
 Evidence revision: `13bff0a18a64e74f2cbbaa1978e746fcdeff0c10`
-Upstream source scope: Ops changes on main at `34cf38ef53ee41381543785d0ffae90a37fac9ca`; runtime source adoption into this documentation branch remains separate
+Upstream source scope: Ops changes on main at `34cf38ef53ee41381543785d0ffae90a37fac9ca`; runtime adoption in this checkout and the deployed release must be verified separately
 Applies to: the current supported release and its documented lab deployment
 Last verified: 2026-09-20; diagram boundary correction source-checked on 2026-10-21; no live result
 
@@ -435,7 +435,7 @@ The dated upstream central Ops contract has a separate source-evidence record.
 >
 > **Revision:** `34cf38ef53ee41381543785d0ffae90a37fac9ca`; upstream main, without runtime source adoption into this branch.
 >
-> **Limit:** Source inspection does not establish every live client or network boundary.
+> **Limit:** The implementation alone does not establish every live client or network boundary.
 
 The shared-Secret setup path uses this precedence. Other Secrets have their own
 setup paths; do not assume that they use the same order.
@@ -609,7 +609,7 @@ The dated upstream central Ops contract has a separate source-evidence record.
 >
 > **Revision:** `34cf38ef53ee41381543785d0ffae90a37fac9ca`; upstream main, without runtime source adoption into this branch.
 >
-> **Limit:** Source inspection does not establish every live client or network boundary.
+> **Limit:** The implementation alone does not establish every live client or network boundary.
 
 Important negative checks are:
 
@@ -837,7 +837,7 @@ an uncertain exec effect.
 >
 > **Test evidence:** See the source-test definitions and execution limits in [Ops MCP verification](ops-mcp.md#verification).
 >
-> **Revision:** `34cf38ef53ee41381543785d0ffae90a37fac9ca`; upstream main, separate from documentation-branch source adoption.
+> **Revision:** `34cf38ef53ee41381543785d0ffae90a37fac9ca`; upstream main; these links do not establish runtime adoption in this checkout or the deployed release.
 >
 > **Limit:** Source bindings do not prove live RBAC enforcement or independent host recovery.
 

@@ -1,0 +1,202 @@
+[
+  {
+    "source": "scripts/docs-api-output-discovery.mjs",
+    "factCount": 226,
+    "positions": [
+      {
+        "index": 56,
+        "before": {
+          "source": "scripts/docs-api-output-discovery.mjs",
+          "kind": "FirstStatement",
+          "symbol": "reviewedDocumentationModuleInputRecipes",
+          "sha256": "c112ef875ff3b27182eee17fa4d1aa176f2ebf3977a1828b7120762aa342d8f9"
+        },
+        "after": {
+          "source": "scripts/docs-api-output-discovery.mjs",
+          "kind": "FirstStatement",
+          "symbol": "reviewedDocumentationModuleInputRecipes",
+          "sha256": "dae446e83e9f37166ee4677907dc152a78b56e3aa5b47e1f9115ad2fee2dc05e"
+        }
+      },
+      {
+        "index": 195,
+        "before": {
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "kind": "FirstStatement",
+          "symbol": "reviewedDocumentationOwnerPurposes",
+          "sha256": "283009e4473ee801ff2efaa2ad2f9118adcf0ba84befd5da5f884dd87ec1f8b6"
+        },
+        "after": {
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "kind": "FirstStatement",
+          "symbol": "reviewedDocumentationOwnerPurposes",
+          "sha256": "9a2b9423963f4891a79753532c0899479ad2c19e913e50341ebeb283cf0229e3"
+        }
+      }
+    ],
+    "expectedOldFactsDigest": "8753783ffa2c62d84de0942ba3038f4c8dba5a628d3cd848f7796eafadded094",
+    "currentNativeFactsDigest": "a446392551269f28cd780a8733d38254dad545f66175006ad88a471da1efa21c",
+    "sourceOldReconstructionMatches": true,
+    "oldReconstructionIsNotNativeExecution": true
+  },
+  {
+    "source": "scripts/docs-api-product-scope.mjs",
+    "factCount": 1419,
+    "positions": [
+      {
+        "index": 56,
+        "before": {
+          "source": "scripts/docs-api-output-discovery.mjs",
+          "kind": "FirstStatement",
+          "symbol": "reviewedDocumentationModuleInputRecipes",
+          "sha256": "c112ef875ff3b27182eee17fa4d1aa176f2ebf3977a1828b7120762aa342d8f9"
+        },
+        "after": {
+          "source": "scripts/docs-api-output-discovery.mjs",
+          "kind": "FirstStatement",
+          "symbol": "reviewedDocumentationModuleInputRecipes",
+          "sha256": "dae446e83e9f37166ee4677907dc152a78b56e3aa5b47e1f9115ad2fee2dc05e"
+        }
+      },
+      {
+        "index": 359,
+        "before": {
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "kind": "FirstStatement",
+          "symbol": "reviewedDocumentationOwnerPurposes",
+          "sha256": "283009e4473ee801ff2efaa2ad2f9118adcf0ba84befd5da5f884dd87ec1f8b6"
+        },
+        "after": {
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "kind": "FirstStatement",
+          "symbol": "reviewedDocumentationOwnerPurposes",
+          "sha256": "9a2b9423963f4891a79753532c0899479ad2c19e913e50341ebeb283cf0229e3"
+        }
+      }
+    ],
+    "expectedOldFactsDigest": "b38075a5f4872eae165bf6aa58aa3ae67320cd14ae3dc1957bf251fce7dc0e54",
+    "currentNativeFactsDigest": "3b7cab29cb2517dfb462746fe2fc14c34b400770027568e86d72df3740f8ed24",
+    "sourceOldReconstructionMatches": true,
+    "oldReconstructionIsNotNativeExecution": true
+  },
+  {
+    "source": "scripts/docs-api-reference.mjs",
+    "factCount": 1441,
+    "positions": [
+      {
+        "index": 56,
+        "before": {
+          "source": "scripts/docs-api-output-discovery.mjs",
+          "kind": "FirstStatement",
+          "symbol": "reviewedDocumentationModuleInputRecipes",
+          "sha256": "c112ef875ff3b27182eee17fa4d1aa176f2ebf3977a1828b7120762aa342d8f9"
+        },
+        "after": {
+          "source": "scripts/docs-api-output-discovery.mjs",
+          "kind": "FirstStatement",
+          "symbol": "reviewedDocumentationModuleInputRecipes",
+          "sha256": "dae446e83e9f37166ee4677907dc152a78b56e3aa5b47e1f9115ad2fee2dc05e"
+        }
+      },
+      {
+        "index": 381,
+        "before": {
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "kind": "FirstStatement",
+          "symbol": "reviewedDocumentationOwnerPurposes",
+          "sha256": "283009e4473ee801ff2efaa2ad2f9118adcf0ba84befd5da5f884dd87ec1f8b6"
+        },
+        "after": {
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "kind": "FirstStatement",
+          "symbol": "reviewedDocumentationOwnerPurposes",
+          "sha256": "9a2b9423963f4891a79753532c0899479ad2c19e913e50341ebeb283cf0229e3"
+        }
+      }
+    ],
+    "expectedOldFactsDigest": "d7e09193be7cd0007b214a612236ef70868c33e4d3574c01c013b6754628aaea",
+    "currentNativeFactsDigest": "8010a88d7139e4d31ba0f70a5d06f82f714acd4a74998e3ba50d2125cbffd856",
+    "sourceOldReconstructionMatches": true,
+    "oldReconstructionIsNotNativeExecution": true
+  },
+  {
+    "source": "scripts/docs-configuration-inventory.mjs",
+    "factCount": 2211,
+    "positions": [
+      {
+        "index": 56,
+        "before": {
+          "source": "scripts/docs-api-output-discovery.mjs",
+          "kind": "FirstStatement",
+          "symbol": "reviewedDocumentationModuleInputRecipes",
+          "sha256": "c112ef875ff3b27182eee17fa4d1aa176f2ebf3977a1828b7120762aa342d8f9"
+        },
+        "after": {
+          "source": "scripts/docs-api-output-discovery.mjs",
+          "kind": "FirstStatement",
+          "symbol": "reviewedDocumentationModuleInputRecipes",
+          "sha256": "dae446e83e9f37166ee4677907dc152a78b56e3aa5b47e1f9115ad2fee2dc05e"
+        }
+      },
+      {
+        "index": 668,
+        "before": {
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "kind": "FirstStatement",
+          "symbol": "reviewedDocumentationOwnerPurposes",
+          "sha256": "283009e4473ee801ff2efaa2ad2f9118adcf0ba84befd5da5f884dd87ec1f8b6"
+        },
+        "after": {
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "kind": "FirstStatement",
+          "symbol": "reviewedDocumentationOwnerPurposes",
+          "sha256": "9a2b9423963f4891a79753532c0899479ad2c19e913e50341ebeb283cf0229e3"
+        }
+      }
+    ],
+    "expectedOldFactsDigest": "17766c6c8d49b1ad9e6766542f7f46eacf43d4628e0a553f623e64932fd572e6",
+    "currentNativeFactsDigest": "cc44315d05744d17b57d3f52b6704629b3d72e325bf7c96cb6e5a28c80841c62",
+    "sourceOldReconstructionMatches": true,
+    "oldReconstructionIsNotNativeExecution": true
+  },
+  {
+    "source": "scripts/docs-generate.mjs",
+    "factCount": 1537,
+    "positions": [
+      {
+        "index": 56,
+        "before": {
+          "source": "scripts/docs-api-output-discovery.mjs",
+          "kind": "FirstStatement",
+          "symbol": "reviewedDocumentationModuleInputRecipes",
+          "sha256": "c112ef875ff3b27182eee17fa4d1aa176f2ebf3977a1828b7120762aa342d8f9"
+        },
+        "after": {
+          "source": "scripts/docs-api-output-discovery.mjs",
+          "kind": "FirstStatement",
+          "symbol": "reviewedDocumentationModuleInputRecipes",
+          "sha256": "dae446e83e9f37166ee4677907dc152a78b56e3aa5b47e1f9115ad2fee2dc05e"
+        }
+      },
+      {
+        "index": 379,
+        "before": {
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "kind": "FirstStatement",
+          "symbol": "reviewedDocumentationOwnerPurposes",
+          "sha256": "283009e4473ee801ff2efaa2ad2f9118adcf0ba84befd5da5f884dd87ec1f8b6"
+        },
+        "after": {
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "kind": "FirstStatement",
+          "symbol": "reviewedDocumentationOwnerPurposes",
+          "sha256": "9a2b9423963f4891a79753532c0899479ad2c19e913e50341ebeb283cf0229e3"
+        }
+      }
+    ],
+    "expectedOldFactsDigest": "d3f721773cebd6fe22ae37b5a8e8e9ef8814d36aa6ef82ef3af29cc0ecbeda29",
+    "currentNativeFactsDigest": "e9e17585ba99381f0266fafdbd28957f02509d76f7020c22496883720a221e5b",
+    "sourceOldReconstructionMatches": true,
+    "oldReconstructionIsNotNativeExecution": true
+  }
+]

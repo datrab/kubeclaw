@@ -3217,11 +3217,11 @@
       "page": "docs/site/understand/ops-mcp.md",
       "route": "/understand/ops-mcp/",
       "contentKind": "authored",
-      "status": "implemented in pinned upstream main source; deployment execution unverified here; documentation-branch source adoption remains separate",
+      "status": "implemented in pinned upstream main source; deployment execution and adoption in this checkout remain unverified",
       "audience": "operator, agent integrator, Ops MCP maintainer, security specialist",
       "owner": "Ops MCP maintainers",
       "appliesTo": "central Ops MCP 0.2.0 and native Nova/Buster clients",
-      "lastVerified": "2026-10-22 source inspection; no retained local-test or live-deployment execution receipts established here",
+      "lastVerified": "2026-10-22 against pinned source; no retained local-test or live-deployment execution receipts established here",
       "sourceDependencies": [
         "tools/ops-mcp/src",
         "tools/ops-mcp/test",

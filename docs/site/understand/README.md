@@ -5,7 +5,7 @@ Audience: new reader, operator, maintainer, security reviewer, plugin author
 Owner: platform architecture
 Evidence: packaging/runtime/roles; skills/nova/core; skills/worker/core
 Evidence revision: `85e73b1885f04a9494f388cf6622ad0bde2db447`
-Upstream source scope: Ops changes on main at `34cf38ef53ee41381543785d0ffae90a37fac9ca`; runtime source adoption into this documentation branch remains separate
+Upstream source scope: Ops changes on main at `34cf38ef53ee41381543785d0ffae90a37fac9ca`; runtime adoption in this checkout and the deployed release must be verified separately
 Applies to: current source and declared runtime roles
 Last verified: source and contract inspection on 2026-09-19
 

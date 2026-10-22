@@ -1,0 +1,205 @@
+{
+  "head": "f782dd2c60ca2e4347df366dc7f48795e3ac702c",
+  "workingTree": true,
+  "role": "finite selected-facts Source correction; reviewer no target/getter/import/test execution or repo edits",
+  "proof": {
+    "factCounts": [
+      75,
+      75
+    ],
+    "changedOrderedPositions": [
+      28
+    ],
+    "currentExactlyEqualsPredictedOneTupleSubstitution": true,
+    "baselineDigest": "f1da20531881c7859c2dcb7f350512a4c5b0eb9528e3c3c08cdc671d1b6a6ec6",
+    "currentDigest": "24aa5fac12863891b601642b8bd3bbd2124cafaf878c21381fd6202f0e405e79",
+    "baselineRecordExactlyEqualsHistoricalSelectedRecord": true,
+    "historicalSourceFileHashMatchesCaptureSummary": true,
+    "baselineSourceShaMatchesExactGit7d": true,
+    "currentSourceShaMatchesActual": true,
+    "all18SelectorBindingsUnchanged": true,
+    "authorityInputsEmptyAndUnchanged": true,
+    "noRoleSourceShaField": true,
+    "noRolePurposeInputField": true,
+    "onlyRoleDigestCellChanged": true,
+    "oneOldLiteral": true,
+    "oneNewLiteral": true,
+    "completeByteReversal": true,
+    "captureSourceSnapshotMatchesActualCurrentExceptReviewedRoleDataPatch": true,
+    "captureRoleSourceSnapshotMatchesExactPrePatchHEAD": true
+  },
+  "sources": [
+    {
+      "path": "scripts/docs-api-documentation-role-custody.mjs",
+      "sha256": "67534940e1409bb285a04fdc43322a278f18baae6030e6b5df82a5f1b09ff828",
+      "bytes": 1231612,
+      "lines": 31197,
+      "coverage": "bounded/reused as explicitly described, not whole-registry acceptance"
+    },
+    {
+      "path": "scripts/docs-api-output-role-classification.mjs",
+      "sha256": "400affe1cb7a07c69e397e0509bb994f7f44376687038f802830b63daf452b12",
+      "bytes": 141940,
+      "lines": 920,
+      "coverage": "bounded/reused as explicitly described, not whole-registry acceptance"
+    },
+    {
+      "path": "scripts/docs-check-refs.mjs",
+      "sha256": "d04c5245b1555b275f27b40ad7461071d476615f177557ee07ca5b5b812ee604",
+      "bytes": 14639,
+      "lines": 375,
+      "coverage": "bounded/reused as explicitly described, not whole-registry acceptance"
+    },
+    {
+      "path": "scripts/lib/docs-markdown-anchors.mjs",
+      "sha256": "b0358c0f628781c5056376f673ca23465b7b8cc54a722c1e0892f0268c42c652",
+      "bytes": 17308,
+      "lines": 430,
+      "coverage": "bounded/reused as explicitly described, not whole-registry acceptance"
+    },
+    {
+      "path": "scripts/lib/docs-upstream-reference.mjs",
+      "sha256": "1741bd5738fda0c2ed3954ad074a91ca0045479beb6484b61eb446eaf74296c2",
+      "bytes": 4228,
+      "lines": 68,
+      "coverage": "bounded/reused as explicitly described, not whole-registry acceptance"
+    },
+    {
+      "path": "scripts/tests/docs-check-refs.test.mjs",
+      "sha256": "e31e6ed1a4966e43e78068dec2d6ad00493cc8a94936a8c0449019a83e5667e8",
+      "bytes": 10925,
+      "lines": 244,
+      "coverage": "bounded/reused as explicitly described, not whole-registry acceptance"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/f782-refs-role-native/autoreview.json",
+      "sha256": "628fba5814db42c77d955b34f7b8ed1d01929b640680546ba100468b66aa217b",
+      "bytes": 507,
+      "read": "complete selected captures/producer/summary/logs; historical baseline is reused DATA, not newly executed old getter"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/f782-refs-role-native/role-positive.mjs",
+      "sha256": "025d4bc29fbb53a843577dcb84d6624e90d46fd8fea39f9d62ae9d7d21395c4a",
+      "bytes": 831,
+      "read": "complete selected captures/producer/summary/logs; historical baseline is reused DATA, not newly executed old getter"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/f782-refs-role-native/current.json",
+      "sha256": "079c8ac96e5ce70cd39a445f90487b592eef9c2a63b8457581579f2ccc120384",
+      "bytes": 18314,
+      "read": "complete selected captures/producer/summary/logs; historical baseline is reused DATA, not newly executed old getter"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/f782-refs-role-native/role-positive.stdout.raw",
+      "sha256": "3956c5dd9fb253bd8fa2b89044cb9e77d0d76673afb094e8d642cde9197801d4",
+      "bytes": 168,
+      "read": "complete selected captures/producer/summary/logs; historical baseline is reused DATA, not newly executed old getter"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/f782-refs-role-native/capture.mjs",
+      "sha256": "82e9c04dbe713c72ef9cf0f31051c2e56df298131720c1f66f8ffe839f620ece",
+      "bytes": 3099,
+      "read": "complete selected captures/producer/summary/logs; historical baseline is reused DATA, not newly executed old getter"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/f782-refs-role-native/stdout.raw",
+      "sha256": "bb4bdce708c028903d3e5603040d11d5f1223249af4d6e4dacf209c529da39da",
+      "bytes": 1370,
+      "read": "complete selected captures/producer/summary/logs; historical baseline is reused DATA, not newly executed old getter"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/f782-refs-role-native/stderr.raw",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "read": "complete selected captures/producer/summary/logs; historical baseline is reused DATA, not newly executed old getter"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/f782-refs-role-native/summary.json",
+      "sha256": "26e98ba9f51e0b6ed2114e80684b95ae231ed1148110c03682c8987b08ac7c34",
+      "bytes": 1564,
+      "read": "complete selected captures/producer/summary/logs; historical baseline is reused DATA, not newly executed old getter"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/f782-refs-role-native/baseline.json",
+      "sha256": "17b652b784b6efd8a7a154fd3077f5b4c2b880121c99facb2a8fc72ee36633e5",
+      "bytes": 23424,
+      "read": "complete selected captures/producer/summary/logs; historical baseline is reused DATA, not newly executed old getter"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/f782-refs-role-native/role-positive.stderr.raw",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "read": "complete selected captures/producer/summary/logs; historical baseline is reused DATA, not newly executed old getter"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/f782-refs-role-native/autoreview.md",
+      "sha256": "8f6634db446b799d6b370762f461baa856d790db8a446a84ef62ef3356ffd125",
+      "bytes": 475,
+      "read": "complete selected captures/producer/summary/logs; historical baseline is reused DATA, not newly executed old getter"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/f782-clean-localhelm/result.json",
+      "sha256": "2c45a8cc88bea74e2d496a73860b34fca686b174291ea752fe6cbb02a833d036",
+      "bytes": 786,
+      "read": "complete selected captures/producer/summary/logs; historical baseline is reused DATA, not newly executed old getter"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/f782-clean-localhelm/invocation.json",
+      "sha256": "f410b38c9ccbb8499d57ea55d8cbe9116700efcf83e475f3df6cf6876003e1b4",
+      "bytes": 714,
+      "read": "complete selected captures/producer/summary/logs; historical baseline is reused DATA, not newly executed old getter"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/f782-clean-localhelm/stdout.raw",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "read": "complete selected captures/producer/summary/logs; historical baseline is reused DATA, not newly executed old getter"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/f782-clean-localhelm/stderr.raw",
+      "sha256": "69f2dc4a6c087321a51c02b7fa23283800c67b5f8caf3e6160c4f9cb3fd98751",
+      "bytes": 1962,
+      "read": "complete selected captures/producer/summary/logs; historical baseline is reused DATA, not newly executed old getter"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/f782-refs-role-native/role-positive.mjs",
+      "sha256": "025d4bc29fbb53a843577dcb84d6624e90d46fd8fea39f9d62ae9d7d21395c4a",
+      "bytes": 831,
+      "read": "complete original role first/warm metadata-only producer/log; reviewer did not execute"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/f782-refs-role-native/role-positive.stdout.raw",
+      "sha256": "3956c5dd9fb253bd8fa2b89044cb9e77d0d76673afb094e8d642cde9197801d4",
+      "bytes": 168,
+      "read": "complete original role first/warm metadata-only producer/log; reviewer did not execute"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/f782-refs-role-native/role-positive.stderr.raw",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "read": "complete original role first/warm metadata-only producer/log; reviewer did not execute"
+    }
+  ],
+  "semanticCoverage": {
+    "role": "complete refs record1324-1387; guard/cache9930-9942,10858-10895 retained prior full unchanged-byte review",
+    "producer": "complete deriveNativeOperationFacts250-324 and resolveNativeModule228-248; selector producer10745-10763 retained prior review",
+    "refs": "exact pre-e63 Git7d complete Source byte boundary versus current full priorSource-reviewed375lines; only complete266-292function differs",
+    "helpers": "unchanged full-byte hashes against Git7d; native full facts compared, no new whole-helpersemantic verdict",
+    "facts": "all75ordered complete old/current tuples and all selected baseline metadata read; full original historical dataset source-key census only, no otherownersemantic coverage",
+    "focusedControls": "api-output-custody reached-initialization test173-178 and selected adjacent dependency controls read; no whole file verdict"
+  },
+  "unreadAssignedScope": 0,
+  "historicalWholeDatasetIdentity": {
+    "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/facts-search-original-b7a0bdd0/node/actual-role-facts-first.json",
+    "sha256": "e97d370494cadbb50a1f8ad095e4c0deb41582d0a874e569e41a1af6ad529106",
+    "coverage": "selected refs record full exact equality; other records key/fact-source census only"
+  },
+  "nativeRolePositive": {
+    "submittedFirstAndWarmPass": true,
+    "zeroReportedChildAttempts": true,
+    "refsCliExecuted": false,
+    "scope": "actual original role receiver, not CLI/generator execution"
+  }
+}

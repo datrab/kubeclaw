@@ -1,13 +1,13 @@
 # Ops MCP: Central Cluster Reads And Authorized Exec
 
-Status: implemented in pinned upstream main source; deployment execution unverified here; documentation-branch source adoption remains separate
+Status: implemented in pinned upstream main source; deployment execution and adoption in this checkout remain unverified
 Audience: operator, agent integrator, Ops MCP maintainer, security specialist
 Owner: Ops MCP maintainers
 Evidence: tools/ops-mcp/src; tools/ops-mcp/test; charts/ops-pod; charts/kubeclaw; gitops/platform
 Evidence revision: `34cf38ef53ee41381543785d0ffae90a37fac9ca`
-Upstream source scope: Ops MCP source on main at `34cf38ef53ee41381543785d0ffae90a37fac9ca`; no runtime source adoption into this documentation branch
+Upstream source scope: Ops MCP source on main at `34cf38ef53ee41381543785d0ffae90a37fac9ca`; no runtime source adoption in this checkout
 Applies to: central Ops MCP 0.2.0 and native Nova/Buster clients
-Last verified: 2026-10-22 source inspection; no retained local-test or live-deployment execution receipts established here
+Last verified: 2026-10-22 against pinned source; no retained local-test or live-deployment execution receipts established here
 
 ## Purpose And Safety Boundary
 
@@ -422,10 +422,9 @@ Earlier deployment notes linked runtime build
 [promotion 39748892361](https://github.com/datrab/kubeclaw/actions/runs/39748892361).
 Those references alone are not retained execution receipts for the claimed
 local test counts, deployed image identity, Argo health, Pod readiness or
-native tool discovery/denial. Those outcomes remain unverified here. This
-documentation review ran no fresh cluster operation.
+native tool discovery/denial. Those outcomes remain unverified here. No fresh cluster operation established these outcomes here.
 
 Buster gateway behavior, Hubble Relay availability, mobile pairing, arbitrary-
 cluster portability and production acceptance need their own scoped evidence.
-Source inspection does not prove production readiness or clear the
+The implementation alone does not prove production readiness or clear the
 installation guide's release-verification stop.

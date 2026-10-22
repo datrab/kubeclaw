@@ -5,7 +5,7 @@ Audience: platform operator, runtime maintainer, integration developer, security
 Owner: runtime and platform maintainers
 Evidence: contracts/pipeline-test-gate/v1; contracts/pipeline-worker-core/v1; skills/nova/core; skills/worker/core; skills/common/plugins/redis-transport; charts/kubeclaw; charts/prism; tests/verification/reliability
 Evidence revision: `13bff0a18a64e74f2cbbaa1978e746fcdeff0c10`
-Upstream source scope: Ops changes on main at `34cf38ef53ee41381543785d0ffae90a37fac9ca`; runtime source adoption into this documentation branch remains separate
+Upstream source scope: Ops changes on main at `34cf38ef53ee41381543785d0ffae90a37fac9ca`; runtime adoption in this checkout and the deployed release must be verified separately
 Applies to: current Nova, Buster, Prism, Worker Core, specialist, Redis, registry, Git, BuildKit, Tailscale, and SPIFFE paths
 Last verified: original path inspection on 2026-09-21; native restart, Core isolation, observer delivery and private-route source details extended on 2026-10-21; no live or native exercise asserted
 Scoped source correction: 2026-10-21 against `0e35889a3c4e65d5c47ba88e924611aace67eb1d`; selected role routing and mention policy reconciled; no observed model or Discord traffic.
@@ -1300,7 +1300,7 @@ The dated upstream central Ops contract has a separate source-evidence record.
 >
 > **Revision:** `34cf38ef53ee41381543785d0ffae90a37fac9ca`; upstream main, without runtime source adoption into this branch.
 >
-> **Limit:** Source inspection does not establish every live client or network boundary.
+> **Limit:** The implementation alone does not establish every live client or network boundary.
 
 ## Complete Showcase Success Trace
 

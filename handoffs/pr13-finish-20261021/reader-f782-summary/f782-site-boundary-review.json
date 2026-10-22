@@ -1,0 +1,407 @@
+{
+  "role": "bounded Source accuracy / source-informed topical readerUsability / Quality successor",
+  "baseline": "f782dd2c60ca2e4347df366dc7f48795e3ac702c",
+  "verdict": {
+    "sourceAccuracy": "PASS",
+    "readerUsability": "PASS",
+    "quality": "PASS"
+  },
+  "files": [
+    {
+      "path": "docs/site/understand/ops-mcp.md",
+      "baselineSha256": "5a55381c9a0aeb31d48128a8974ac5f32f3daa118ed5bf5018b8acc84cdd1f50",
+      "currentSha256": "eeddbd6387e0538eb3991157832144b40c6b59fc2a9366d31abfd4350cb5263b",
+      "baselineEqualsRetainedReviewedHash": true,
+      "readRanges": [
+        [
+          1,
+          35
+        ],
+        [
+          412,
+          430
+        ]
+      ],
+      "deltaUnits": [
+        {
+          "kind": "replace",
+          "baselineLines": [
+            3,
+            3
+          ],
+          "currentLines": [
+            3,
+            3
+          ]
+        },
+        {
+          "kind": "replace",
+          "baselineLines": [
+            8,
+            8
+          ],
+          "currentLines": [
+            8,
+            8
+          ]
+        },
+        {
+          "kind": "replace",
+          "baselineLines": [
+            10,
+            10
+          ],
+          "currentLines": [
+            10,
+            10
+          ]
+        },
+        {
+          "kind": "replace",
+          "baselineLines": [
+            425,
+            426
+          ],
+          "currentLines": [
+            425,
+            425
+          ]
+        },
+        {
+          "kind": "replace",
+          "baselineLines": [
+            430,
+            430
+          ],
+          "currentLines": [
+            429,
+            429
+          ]
+        }
+      ],
+      "orderedLinkDestinationRangeVectorUnchanged": true,
+      "mermaidBytesUnchanged": true,
+      "textAlternativeBytesUnchanged": true,
+      "scope": "exact editorial responsibility; selected source box only for lint-policy"
+    },
+    {
+      "path": "docs/site/understand/communication.md",
+      "baselineSha256": "b2f603cea91375758d6e687b7c4c7886cd49354c4e14fc8c5cd63652c00cbcf5",
+      "currentSha256": "30c823d0ec36b3c6fdb0e34de8a34c4698c04ca2ebdbc7161ad16715eb7dc146",
+      "baselineEqualsRetainedReviewedHash": true,
+      "readRanges": [
+        [
+          1,
+          12
+        ],
+        [
+          1288,
+          1305
+        ]
+      ],
+      "deltaUnits": [
+        {
+          "kind": "replace",
+          "baselineLines": [
+            8,
+            8
+          ],
+          "currentLines": [
+            8,
+            8
+          ]
+        },
+        {
+          "kind": "replace",
+          "baselineLines": [
+            1303,
+            1303
+          ],
+          "currentLines": [
+            1303,
+            1303
+          ]
+        }
+      ],
+      "orderedLinkDestinationRangeVectorUnchanged": true,
+      "mermaidBytesUnchanged": true,
+      "textAlternativeBytesUnchanged": true,
+      "scope": "exact editorial responsibility; selected source box only for lint-policy"
+    },
+    {
+      "path": "docs/site/understand/security-and-trust.md",
+      "baselineSha256": "70b6be688d25911d1b7a6b0d75b0487c443946590037348fb18b56e8181c905a",
+      "currentSha256": "073df780a24f1f00c5e3aaa554fc63098fadba1108e5eb818e7cb99f47b0f825",
+      "baselineEqualsRetainedReviewedHash": true,
+      "readRanges": [
+        [
+          1,
+          12
+        ],
+        [
+          419,
+          440
+        ],
+        [
+          597,
+          614
+        ],
+        [
+          828,
+          842
+        ]
+      ],
+      "deltaUnits": [
+        {
+          "kind": "replace",
+          "baselineLines": [
+            8,
+            8
+          ],
+          "currentLines": [
+            8,
+            8
+          ]
+        },
+        {
+          "kind": "replace",
+          "baselineLines": [
+            438,
+            438
+          ],
+          "currentLines": [
+            438,
+            438
+          ]
+        },
+        {
+          "kind": "replace",
+          "baselineLines": [
+            612,
+            612
+          ],
+          "currentLines": [
+            612,
+            612
+          ]
+        },
+        {
+          "kind": "replace",
+          "baselineLines": [
+            840,
+            840
+          ],
+          "currentLines": [
+            840,
+            840
+          ]
+        }
+      ],
+      "orderedLinkDestinationRangeVectorUnchanged": true,
+      "mermaidBytesUnchanged": true,
+      "textAlternativeBytesUnchanged": true,
+      "scope": "exact editorial responsibility; selected source box only for lint-policy"
+    },
+    {
+      "path": "docs/site/reference/lint-policy.md",
+      "baselineSha256": "4ce8a955311335a85b3ca7f83403d4e6678114f49daf59bd4120274cfd4a4fba",
+      "currentSha256": "3a6bb079cc0bb418812f30757cfe3668d7e1a751962312a0512dceee64595ef4",
+      "baselineEqualsRetainedReviewedHash": null,
+      "readRanges": [
+        [
+          416,
+          454
+        ]
+      ],
+      "deltaUnits": [
+        {
+          "kind": "replace",
+          "baselineLines": [
+            444,
+            444
+          ],
+          "currentLines": [
+            444,
+            444
+          ]
+        }
+      ],
+      "orderedLinkDestinationRangeVectorUnchanged": true,
+      "mermaidBytesUnchanged": true,
+      "textAlternativeBytesUnchanged": true,
+      "scope": "exact editorial responsibility; selected source box only for lint-policy"
+    },
+    {
+      "path": "docs/site/understand/codex-integration.md",
+      "baselineSha256": "66c2873de311b5570a18541155ea71a69708f94144a77824381bc7f9c085a6e7",
+      "currentSha256": "6a18b53b9b19d453b953d02020e134f64f3a7408ad05e55d29d5b205f4be37f4",
+      "baselineEqualsRetainedReviewedHash": true,
+      "readRanges": [
+        [
+          1,
+          12
+        ],
+        [
+          111,
+          128
+        ]
+      ],
+      "deltaUnits": [
+        {
+          "kind": "replace",
+          "baselineLines": [
+            8,
+            8
+          ],
+          "currentLines": [
+            8,
+            8
+          ]
+        },
+        {
+          "kind": "replace",
+          "baselineLines": [
+            124,
+            124
+          ],
+          "currentLines": [
+            124,
+            124
+          ]
+        }
+      ],
+      "orderedLinkDestinationRangeVectorUnchanged": true,
+      "mermaidBytesUnchanged": true,
+      "textAlternativeBytesUnchanged": true,
+      "scope": "exact editorial responsibility; selected source box only for lint-policy"
+    },
+    {
+      "path": "docs/site/understand/platform-and-operations.md",
+      "baselineSha256": "d8770138576c3616fe304435853e803fe1191262dcfcac127066e27e11727be7",
+      "currentSha256": "e8b85782b9b8ec62331ff1d1c3deb8c7dbc3a3b8f584093d96c994f738fe55f5",
+      "baselineEqualsRetainedReviewedHash": true,
+      "readRanges": [
+        [
+          1,
+          12
+        ],
+        [
+          1012,
+          1028
+        ]
+      ],
+      "deltaUnits": [
+        {
+          "kind": "replace",
+          "baselineLines": [
+            8,
+            8
+          ],
+          "currentLines": [
+            8,
+            8
+          ]
+        },
+        {
+          "kind": "replace",
+          "baselineLines": [
+            1026,
+            1026
+          ],
+          "currentLines": [
+            1026,
+            1026
+          ]
+        }
+      ],
+      "orderedLinkDestinationRangeVectorUnchanged": true,
+      "mermaidBytesUnchanged": true,
+      "textAlternativeBytesUnchanged": true,
+      "scope": "exact editorial responsibility; selected source box only for lint-policy"
+    },
+    {
+      "path": "docs/site/understand/README.md",
+      "baselineSha256": "e4b40b345d0c56a8957c71b52349b028f0636790d5782040a723f88bb15f81cf",
+      "currentSha256": "e85dbee9eabba65faa19629f1d7ff98de5b8cb9b1466c15e77cfa1cbbc7a86e9",
+      "baselineEqualsRetainedReviewedHash": true,
+      "readRanges": [
+        [
+          1,
+          14
+        ]
+      ],
+      "deltaUnits": [
+        {
+          "kind": "replace",
+          "baselineLines": [
+            8,
+            8
+          ],
+          "currentLines": [
+            8,
+            8
+          ]
+        }
+      ],
+      "orderedLinkDestinationRangeVectorUnchanged": true,
+      "mermaidBytesUnchanged": true,
+      "textAlternativeBytesUnchanged": true,
+      "scope": "exact editorial responsibility; selected source box only for lint-policy"
+    },
+    {
+      "path": "docs/site/reference/service-routing.md",
+      "baselineSha256": "c611c8cd242edffa4dd6b574bb0e45b43be99a33460e401f5a5bc0d1c0e57c0a",
+      "currentSha256": "a33c6860f8216111b54ceb79b8ddb95c2d29968b8d2ef36ee37c1a0a2e93d503",
+      "baselineEqualsRetainedReviewedHash": true,
+      "readRanges": [
+        [
+          136,
+          147
+        ]
+      ],
+      "deltaUnits": [
+        {
+          "kind": "replace",
+          "baselineLines": [
+            145,
+            145
+          ],
+          "currentLines": [
+            145,
+            145
+          ]
+        }
+      ],
+      "orderedLinkDestinationRangeVectorUnchanged": true,
+      "mermaidBytesUnchanged": true,
+      "textAlternativeBytesUnchanged": true,
+      "scope": "exact editorial responsibility; selected source box only for lint-policy"
+    }
+  ],
+  "additionalImmutableSourceRead": {
+    "revision": "569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+    "path": "skills/nova/plugins/lint/src/engine/tool-registry-dependency-tools.ts",
+    "sha256": "4c1e54233cc2af3e0e110937433c6258923f6d15d7a991317d7a07add38ba577",
+    "readRanges": [
+      [
+        1,
+        26
+      ],
+      [
+        27,
+        61
+      ]
+    ],
+    "scope": "mypy argument selection, actual safeExec caller, parsing, empty-success/nonzero failure and result branch only"
+  },
+  "unreadAssignedChangedScope": [],
+  "remainingMaterialFindings": [],
+  "retainedScope": "Seven pre-reviewed page baselines exactly equal retained Source/Quality hashes. Reuse applies only unchanged responsibilities; lint-policy adds only selected box/source responsibility, not whole-page/owning-test audit.",
+  "exclusions": [
+    "Separate factsDigest/module implementation",
+    "Generated Helm values and generator/regeneration",
+    "Whole lint policy or unrelated source/tests",
+    "Fresh practical Reader, rendering, build, live execution and acceptance rebinding"
+  ],
+  "performed": "Inert Git/file reads, own hashing and exact-vector comparisons; no repository content edits, project code/tests/build execution or live contacts."
+}
