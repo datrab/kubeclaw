@@ -1,6 +1,7 @@
 import test, { type TestContext } from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs/promises';
+import { appendFileSync, writeFileSync } from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { setTimeout as delay } from 'node:timers/promises';
@@ -35,18 +36,34 @@ test('real completion hooks and durable log finish successfully inside the reser
 
 for (const wrapper of ['direct', 'runtime']) test(`${wrapper}: final claim fence rejects completion after a native blocking hook`, async t => {
   const root = await directory(t), attempt = envelope(500, 50), operation = fileOperation(root);
+  // This case isolates the claim fence, not libuv filesystem scheduling after
+  // expiry. Keep real maintenance effects off the threadpool so contention
+  // cannot substitute a termination timeout or unresolved measurement fault.
+  operation.terminate = async () => { writeFileSync(path.join(root, 'terminated'), 'settled'); };
+  operation.measure = async ({ signal }) => {
+    signal.throwIfAborted(); appendFileSync(path.join(root, 'phases'), 'measure\n');
+    return { cpuTimeMs: 1, maximumMemoryBytes: 1, maximumProcesses: 1 };
+  };
+  let finalized = false;
   operation.finalizeResult = async ({ specialistResult }) => {
     // Real native wait blocks timer callbacks. No simulated clock or result is used.
-    Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, 550); return specialistResult;
+    Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, 550); finalized = true; return specialistResult;
   };
   const execute = (signal?: AbortSignal) => new WorkerAttemptExecutor({ envelope: attempt, operation, ...(signal ? { signal } : {}),
     storeFullLog: (_id, content, { signal }) => writeEvidence(root, 'log', content, signal) }).execute();
-  if (wrapper === 'direct') assert.equal((await execute()).error?.code, 'WORKER_CLAIM_EXPIRED');
+  if (wrapper === 'direct') {
+    const result = await execute();
+    assert.equal(result.error?.code, 'WORKER_CLAIM_EXPIRED', JSON.stringify(result.error));
+    assert.equal(result.state, 'interrupted');
+  }
   else {
     const runtime = new LocalWorkerRuntime({ drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536, workerId: 'worker:file', workerType: 'file', coreVersion: '1.0.0',
       protocolVersions: ['worker-protocol.v1'], profiles: [attempt.profile], capacity: 1 }); runtime.markReady();
     await assert.rejects(runtime.runAttempt(attempt, execute), /WORKER_LOCAL_CLAIM_EXPIRED/);
   }
+  assert.equal(finalized, true, 'the native blocking finalization hook was actually reached');
+  assert.equal(await fs.readFile(path.join(root, 'operation'), 'utf8'), 'completed');
+  assert.equal(await fs.readFile(path.join(root, 'terminated'), 'utf8'), 'settled');
 });
 
 test('timed out log hook receives cancellation and settles before result, without a later write', async t => {
