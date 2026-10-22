@@ -1,0 +1,29 @@
+{
+  "status": "FROZEN_SCRATCH_REVIEW_NO_CURRENT_REBINDING",
+  "files": [
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/preservation-11294-to-0ded/review.md",
+      "sha256": "5207f6b7450d8e55dabfbe2df9d3f691ed4f5465e9fcce917d90320545c1244a"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/preservation-11294-to-0ded/review.json",
+      "sha256": "55a0ddacd10418d3e14428b8da0d2ab82bb288cc30888445858055067fc6ffa6"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/preservation-11294-to-0ded/original-matrix.json",
+      "sha256": "ae4555caf8981269a47d1e1022303476e1e923bafdbc6461d7a3db721de547ee"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/preservation-11294-to-0ded/original-record-hashes.json",
+      "sha256": "abebd8aaf42b3c63884cd10b501bdd33af02d8c45b48bcfc08dd82e9814d658a"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/preservation-11294-to-0ded/reviewed-scope-byte-comparison.json",
+      "sha256": "68434204ec601553b8c3f9d1a42850aa9dfc873388b0a08439b412d494b37e27"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/preservation-11294-to-0ded/intersection-preliminary.json",
+      "sha256": "ac504337aa45a1ac18a985c4f879560515eedd3d11ed5caf1fa268a9da4a4a91"
+    }
+  ]
+}

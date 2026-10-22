@@ -1,0 +1,79 @@
+{
+  "id": "A912-11-INDEPENDENT-0ded6b68",
+  "revision": "0ded6b68eb6170c4ea5e76251ad5e13adf2f664b",
+  "reviewer": "/root/custody_review; independent of metadata author",
+  "gate": {
+    "id": "A912-11",
+    "passCondition": "Publication-Build ist deterministisch und legt Route, Canonical URL, Redirect, Source-Abh\u00e4ngigkeit und Content-Hash maschinenlesbar offen.",
+    "automaticFailure": "Zwei saubere Builds unterscheiden sich ohne erkl\u00e4rte Toolchainursache.",
+    "state": "not-accepted",
+    "evidence": [],
+    "reviews": [],
+    "readerFixtureIds": [],
+    "executionScenarioIds": []
+  },
+  "verdict": "PASS",
+  "review": {
+    "sourceAccuracy": "PASS",
+    "readerUsability": "PASS",
+    "quality": "PASS"
+  },
+  "automaticFailureObserved": false,
+  "openIssues": [],
+  "checks": [
+    {
+      "command": "node scripts/docs-publication.mjs build (two separate original normal production invocations)",
+      "exitCode": 0,
+      "observation": "Root observed both terminal0; each original build removes outputRoot before rendering. Exact same committed Source/tools,419 output files byte-identical including Markdown,HTML,assets,reader/build/redirect/source-preview/diagram metadata. No output-normalization or selective exclusions."
+    },
+    {
+      "command": "Independent inert physical output-tree/Git object/pageRecords inspection",
+      "exitCode": 0,
+      "observation": "Both physical419-file rosters independently rehashed and equal retained result;177positive page/route/canonical/source records;919declared dependencies including156Git-tree records;757unique actual Git objects byte/hash verified;all page HTML/fallback/shared content hashes match."
+    },
+    {
+      "command": "node --test five original owning Reader/publication suites (Root installed normal APIs)",
+      "exitCode": 0,
+      "observation": "62/62,0skip; actual whole177-page metadata case; exact Source/index flags/staged drift/output-renewal/normal-record-omission and explicit legacy-fixture negatives supported by original independent v1/v2 review."
+    },
+    {
+      "command": "Original built artifact/search/Source-links/previews/diagrams checkers",
+      "exitCode": 0,
+      "observation": "177canonical/187HTML/240outputdigests/40832localtargets;12search tasks;14840Source locators/3961objects;411boxes/1888fresh excerpts/983objects;27fresh SVG hashes."
+    },
+    {
+      "command": "Actual offline/no-JS/browser/redirect/loopback/ZIP/extracted artifact checks (Root)",
+      "exitCode": 0,
+      "observation": "31page/search+495box observations,0findings/0network;10redirectbrowser cases;240GETexactbytes,home308query,HEAD/404/405;ZIP242members/19Git-comparedassets and fresh-extracted normal artifact/search PASS."
+    }
+  ],
+  "passConditionMapping": {
+    "determinism": "Two actual original normal clean-output builds at same frozen Source/tools;all419physical outputs equal,independently rehashed.",
+    "Route": "All177positive canonical pages have exact sourcePath/HTML route;setequalspositive manifest.",
+    "CanonicalURL": "Each177canonicalUrl equals declared artifact-local route;no invented hosting origin.",
+    "Redirect": "Machine-readable redirect plan and page bindings include exact real home entrypoint;maintained registryhaszero registrations;nonemptyredirect semantics exercised by original owning/actualrequest fixtures,not invented historicaltransfers.",
+    "SourceDependency": "All919exact owner-map declarations retained;fileshashcommittedblobbytes,156trees hashGit-treeobjectbytes;externalreferences explicitlyunacquired when present (zero in actual177records). Scope explicitlynotcompleteimplementation/installed/citation/buildclosure.",
+    "ContentHash": "Perpage Source/HTML count+SHA256,declaredfile/tree identity+SHA256,redirectfallback/sharedoutput SHA256 and normal outputmanifest;independent757Git-object checks."
+  },
+  "contractBasis": [
+    "docs/blueprint/AP09-acceptance-contract.md sections1\u20133 and10 A912-11",
+    "docs/blueprint/documentation-completion-matrix.json exactA912-11 passCondition/automaticFailure",
+    "docs/blueprint/07-documentation-quality-standard.md Source precision and honest execution limits"
+  ],
+  "semanticBasis": [
+    "handoffs/pr13-finish-20261021/page-records-independent-review.md",
+    "handoffs/pr13-finish-20261021/page-records-v2-independent-review.md",
+    "handoffs/pr13-finish-20261021/page-records-parent-integration.md",
+    "handoffs/pr13-finish-20261021/page-records-v2-independent-hashes.json"
+  ],
+  "proof": "inert-output-inspection.json",
+  "globalQualificationDisposition": "PENDING_SEPARATE_GUARD; not a prerequisite invented for this bounded gate. Existing API/source-purpose/ancestor/facts/graph/native/owner qualification stops remain enforced; no waiver or successful current acquisition inferred.",
+  "limits": [
+    "Only wholeA912-11,notwholeAP09.12/AP09/AP10/AP11/CI/runtime/release/hosting.",
+    "Two actual observed builds at same exact Source/toolchain,not mathematical determinism for everyfutureinput/platform/tool.",
+    "CanonicalURLs artifactlocal;zero real registered transfers;no deployment/historicalmigration proof.",
+    "Source dependencies are actualdeclared owner-map bindings,not complete transitive implementation/installed/externalinput closure.",
+    "Metadata/Reader execution is not product API/apply/moduleauthority;four native receipts UNEXECUTED.",
+    "Root owns matrix/record integration;this review writes only scratch."
+  ]
+}

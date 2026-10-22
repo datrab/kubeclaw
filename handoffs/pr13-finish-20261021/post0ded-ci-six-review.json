@@ -1,0 +1,284 @@
+{
+  "verdict": "SIX_PRIOR_BOUNDED_SCOPES_PRESERVED",
+  "baselineRevision": "0ded6b68eb6170c4ea5e76251ad5e13adf2f664b",
+  "successorRevision": null,
+  "successorBinding": "Exact precommit working-tree file hashes below;commitID pending Root",
+  "reviewer": "/root/custody_review; nonauthor of external-CI guard",
+  "sourceDeltaFiles": [
+    {
+      "path": "scripts/docs-api-documentation-role-custody.mjs",
+      "sha256": "f1b4ed0a0c449d1ddb50605efac68c504e4945b7055ad621053bd0593498cfc6",
+      "bytes": 1203447
+    },
+    {
+      "path": "scripts/docs-api-output-discovery.mjs",
+      "sha256": "acc5c54bc81293570e67346e6ea5b2062dd172556972517fd65909d3a70f0e9c",
+      "bytes": 415879
+    },
+    {
+      "path": "scripts/docs-documentation-owner-purpose-custody.mjs",
+      "sha256": "1bac65a386940d2049f170ceea25e199603159831460a4fa56ca3270ba49a8a4",
+      "bytes": 25773
+    },
+    {
+      "path": "scripts/tests/docs-reader-artifact-ci-purpose.test.mjs",
+      "sha256": "38e8943c7a8feddb442532e63a731276c24bdb1fd7a7f5028dd8521e939735ad",
+      "bytes": 7498
+    }
+  ],
+  "records": [
+    {
+      "id": "AP09-documentation-agent-maintenance-20261021",
+      "pages": [],
+      "sources": [
+        "scripts/docs-api-output-discovery.mjs"
+      ],
+      "originalRecordSha256": "3b7b56619e403cc00e37eedbf371502fe0d342a000dc003e9d93e1c2212636f9",
+      "reason": "Original MNT017 or bounded Reader claim preserved: exact new external-CI analysis reachability is separate from runtime/native/package authority; fresh physical proof precedes graph/direct-role caches, ordinary full graph/entry/alias/public/module/operation/unresolved guards remain. Seven exact binding values correspond only to independently reviewed0ded caller/consumer deltas, not selector/fact/role acceptance.",
+      "sourceAccuracy": "PASS_PRESERVATION_ONLY",
+      "readerUsability": "PASS_PRESERVATION_ONLY",
+      "quality": "PASS_PRESERVATION_ONLY",
+      "limits": "Reader output evidence stays bound to0ded;no fictional newHEAD build. Current original graph/facts/newroleDATA/native/owner qualification remains pending."
+    },
+    {
+      "id": "AP09-complete-static-reader-search-20261021",
+      "pages": [],
+      "sources": [
+        "scripts/docs-api-documentation-role-custody.mjs"
+      ],
+      "originalRecordSha256": "3caf0a4ebac6c144c623bcd06ef2feca77777065cf24ad492801e6d635726b51",
+      "reason": "Original MNT017 or bounded Reader claim preserved: exact new external-CI analysis reachability is separate from runtime/native/package authority; fresh physical proof precedes graph/direct-role caches, ordinary full graph/entry/alias/public/module/operation/unresolved guards remain. Seven exact binding values correspond only to independently reviewed0ded caller/consumer deltas, not selector/fact/role acceptance.",
+      "sourceAccuracy": "PASS_PRESERVATION_ONLY",
+      "readerUsability": "PASS_PRESERVATION_ONLY",
+      "quality": "PASS_PRESERVATION_ONLY",
+      "limits": "Reader output evidence stays bound to0ded;no fictional newHEAD build. Current original graph/facts/newroleDATA/native/owner qualification remains pending."
+    },
+    {
+      "id": "AP09-search-reader-gate-20261021",
+      "pages": [],
+      "sources": [
+        "scripts/docs-api-documentation-role-custody.mjs"
+      ],
+      "originalRecordSha256": "feb5251e2df28f19aef23075f850d45870163b096829faec2137fe9d95e84f07",
+      "reason": "Original MNT017 or bounded Reader claim preserved: exact new external-CI analysis reachability is separate from runtime/native/package authority; fresh physical proof precedes graph/direct-role caches, ordinary full graph/entry/alias/public/module/operation/unresolved guards remain. Seven exact binding values correspond only to independently reviewed0ded caller/consumer deltas, not selector/fact/role acceptance.",
+      "sourceAccuracy": "PASS_PRESERVATION_ONLY",
+      "readerUsability": "PASS_PRESERVATION_ONLY",
+      "quality": "PASS_PRESERVATION_ONLY",
+      "limits": "Reader output evidence stays bound to0ded;no fictional newHEAD build. Current original graph/facts/newroleDATA/native/owner qualification remains pending."
+    },
+    {
+      "id": "AP09-rendered-source-bounds-gate-20261021",
+      "pages": [],
+      "sources": [
+        "scripts/docs-api-documentation-role-custody.mjs"
+      ],
+      "originalRecordSha256": "e235ada5fcbe7f67a51b311cb2630063aee41972a2f0a9baac8c5266570898fc",
+      "reason": "Original MNT017 or bounded Reader claim preserved: exact new external-CI analysis reachability is separate from runtime/native/package authority; fresh physical proof precedes graph/direct-role caches, ordinary full graph/entry/alias/public/module/operation/unresolved guards remain. Seven exact binding values correspond only to independently reviewed0ded caller/consumer deltas, not selector/fact/role acceptance.",
+      "sourceAccuracy": "PASS_PRESERVATION_ONLY",
+      "readerUsability": "PASS_PRESERVATION_ONLY",
+      "quality": "PASS_PRESERVATION_ONLY",
+      "limits": "Reader output evidence stays bound to0ded;no fictional newHEAD build. Current original graph/facts/newroleDATA/native/owner qualification remains pending."
+    },
+    {
+      "id": "AP09-complete-same-source-code-preview-20261021",
+      "pages": [],
+      "sources": [
+        "scripts/docs-api-documentation-role-custody.mjs"
+      ],
+      "originalRecordSha256": "e5c9d8c58f753be8e0d6d43fe252a4cef64400b42daf6161327a58caf167e2dc",
+      "reason": "Original MNT017 or bounded Reader claim preserved: exact new external-CI analysis reachability is separate from runtime/native/package authority; fresh physical proof precedes graph/direct-role caches, ordinary full graph/entry/alias/public/module/operation/unresolved guards remain. Seven exact binding values correspond only to independently reviewed0ded caller/consumer deltas, not selector/fact/role acceptance.",
+      "sourceAccuracy": "PASS_PRESERVATION_ONLY",
+      "readerUsability": "PASS_PRESERVATION_ONLY",
+      "quality": "PASS_PRESERVATION_ONLY",
+      "limits": "Reader output evidence stays bound to0ded;no fictional newHEAD build. Current original graph/facts/newroleDATA/native/owner qualification remains pending."
+    },
+    {
+      "id": "AP09-complete-responsive-reader-layout-20261021",
+      "pages": [],
+      "sources": [
+        "scripts/docs-api-documentation-role-custody.mjs"
+      ],
+      "originalRecordSha256": "26ce737c2848604f5e2f3e27af0c502f48cf8b65219a14b0f1f87d2677c7b4d8",
+      "reason": "Original MNT017 or bounded Reader claim preserved: exact new external-CI analysis reachability is separate from runtime/native/package authority; fresh physical proof precedes graph/direct-role caches, ordinary full graph/entry/alias/public/module/operation/unresolved guards remain. Seven exact binding values correspond only to independently reviewed0ded caller/consumer deltas, not selector/fact/role acceptance.",
+      "sourceAccuracy": "PASS_PRESERVATION_ONLY",
+      "readerUsability": "PASS_PRESERVATION_ONLY",
+      "quality": "PASS_PRESERVATION_ONLY",
+      "limits": "Reader output evidence stays bound to0ded;no fictional newHEAD build. Current original graph/facts/newroleDATA/native/owner qualification remains pending."
+    }
+  ],
+  "exactOldTableChanges": [
+    {
+      "file": "scripts/docs-api-documentation-role-custody.mjs",
+      "table": "documentationExecutableRoleRecipes",
+      "changes": [
+        {
+          "pointer": "/scripts/check-capability-drift-mutations.mjs/purposeInputs/7/sha256",
+          "prior": "3b22ff66706c132c96a3b3ba39c7c2d043d314336d46660d94e7481c0f0ef360",
+          "observed": "29d0305b4b4ad0de7fcea5810372e700b4b2a4d810e8cce22fbdd2bfd964cda8"
+        },
+        {
+          "pointer": "/scripts/check-capability-swarm-boundary.mjs/authorityInputs/0/sha256",
+          "prior": "3b22ff66706c132c96a3b3ba39c7c2d043d314336d46660d94e7481c0f0ef360",
+          "observed": "29d0305b4b4ad0de7fcea5810372e700b4b2a4d810e8cce22fbdd2bfd964cda8"
+        },
+        {
+          "pointer": "/scripts/check-capability-swarm-boundary.mjs/purposeInputs/3/sha256",
+          "prior": "3b22ff66706c132c96a3b3ba39c7c2d043d314336d46660d94e7481c0f0ef360",
+          "observed": "29d0305b4b4ad0de7fcea5810372e700b4b2a4d810e8cce22fbdd2bfd964cda8"
+        },
+        {
+          "pointer": "/scripts/docs-reader/serve.mjs/purposeInputs/0/sha256",
+          "prior": "f44033eb4877618d34c65fb292a33f88f8dddb3dbe7c471439328f81f57ac2c5",
+          "observed": "96e54e68a99450a6b4cdd1568cd4309cf290ee54f8b368efa76b032f2c7b48b4"
+        },
+        {
+          "pointer": "/scripts/docs-reader/serve.mjs/purposeInputs/1/sha256",
+          "prior": "dec1ca9dcfb5ca80adeb661ff57350029df06d3690794d3194cff8d406c4c646",
+          "observed": "4d08e2533bda82a536a9c61ab27a3fca94939a484a5a2154e012ff9507f26155"
+        },
+        {
+          "pointer": "/scripts/docs-reader/serve.mjs/purposeInputs/3/sha256",
+          "prior": "4f418aa28e32443300e50431ba9a80552a5bbcb96d2a58821316e6b1821300d8",
+          "observed": "c0c4b55949be05d571aa4ea5b353c5ab479caeafd3ebbcdeb70ebec0ca10a1e0"
+        }
+      ]
+    },
+    {
+      "file": "scripts/docs-documentation-owner-purpose-custody.mjs",
+      "table": "reviewedDocumentationOwnerPurposes",
+      "changes": [
+        {
+          "pointer": "/scripts/plugin-system-inventory.mjs/purposeInputs/0/sha256",
+          "prior": "f44033eb4877618d34c65fb292a33f88f8dddb3dbe7c471439328f81f57ac2c5",
+          "observed": "96e54e68a99450a6b4cdd1568cd4309cf290ee54f8b368efa76b032f2c7b48b4"
+        }
+      ]
+    }
+  ],
+  "externalCiProfileInputs": [
+    {
+      "path": "scripts/docs-reader/check-artifact.mjs",
+      "sha256": "7f4e8cb928a5fba48bbd590e5349ce6247264f9cae1935a1e3679ae54c1a2a67"
+    },
+    {
+      "path": "scripts/docs-reader/page-records.mjs",
+      "sha256": "6268501ef047b13e0794950a85d57e2c7aaf54e85a16d77ca8c1263237691a2f"
+    },
+    {
+      "path": "scripts/docs-publication.mjs",
+      "sha256": "29d0305b4b4ad0de7fcea5810372e700b4b2a4d810e8cce22fbdd2bfd964cda8"
+    },
+    {
+      "path": "scripts/docs-reader/renderer.mjs",
+      "sha256": "a0bf02d079637cf862fe0a40bbc34e4bfbd982c58126e347d8aea079047abd87"
+    },
+    {
+      "path": "scripts/docs-reader/redirects.mjs",
+      "sha256": "0b186c9da87055e1a13afb0aace0b72e04099c3ed49879a422ca3acbbe778caf"
+    },
+    {
+      "path": ".github/workflows/docs-checks.yaml",
+      "sha256": "96e54e68a99450a6b4cdd1568cd4309cf290ee54f8b368efa76b032f2c7b48b4"
+    },
+    {
+      "path": "scripts/tests/docs-reader-page-records.test.mjs",
+      "sha256": "0333fffb872837af59396ff47dafb1401a87b00627d96de524e9322e12f15d83"
+    },
+    {
+      "path": "scripts/tests/docs-reader.test.mjs",
+      "sha256": "abd6a6431110a7b8a1486bbbce4648a118d31fe6f517813c4d9d6ed2e6177e28"
+    },
+    {
+      "path": "scripts/tests/docs-reader-redirects.test.mjs",
+      "sha256": "4d08e2533bda82a536a9c61ab27a3fca94939a484a5a2154e012ff9507f26155"
+    },
+    {
+      "path": "docs/site/reference/documentation-site.md",
+      "sha256": "c0c4b55949be05d571aa4ea5b353c5ab479caeafd3ebbcdeb70ebec0ca10a1e0"
+    },
+    {
+      "path": "package.json",
+      "sha256": "4ab1e90c2259aeb96acfdc877e5a9eed330f605abff46d7eca85faded0f020c3"
+    },
+    {
+      "path": "scripts/lib/docs-publication-assets.mjs",
+      "sha256": "239950ea0ebc87501d03aa178d07b99922cb4ec7dabdded3fbf8f8ab5c5de6f0"
+    },
+    {
+      "path": "scripts/lib/docs-route-continuity.mjs",
+      "sha256": "95ebc24186da8c7b446a5bd3edb36f8514b79cb4104dc0394f0b381ddb5dd449"
+    },
+    {
+      "path": "scripts/docs-reader/metadata.mjs",
+      "sha256": "51e0b027356401a68c52a3b8b1fe4d6c6ed35070dfcb300067dd1b9af8da0abc"
+    }
+  ],
+  "publicationTenTargetsByteEqual0ded": [
+    {
+      "path": "scripts/docs-publication.mjs",
+      "sha256": "29d0305b4b4ad0de7fcea5810372e700b4b2a4d810e8cce22fbdd2bfd964cda8",
+      "equal0ded": true
+    },
+    {
+      "path": "scripts/docs-reader/check-artifact.mjs",
+      "sha256": "7f4e8cb928a5fba48bbd590e5349ce6247264f9cae1935a1e3679ae54c1a2a67",
+      "equal0ded": true
+    },
+    {
+      "path": "docs/site/reference/documentation-site.md",
+      "sha256": "c0c4b55949be05d571aa4ea5b353c5ab479caeafd3ebbcdeb70ebec0ca10a1e0",
+      "equal0ded": true
+    },
+    {
+      "path": "scripts/docs-reader/redirects.mjs",
+      "sha256": "0b186c9da87055e1a13afb0aace0b72e04099c3ed49879a422ca3acbbe778caf",
+      "equal0ded": true
+    },
+    {
+      "path": "scripts/docs-reader/renderer.mjs",
+      "sha256": "a0bf02d079637cf862fe0a40bbc34e4bfbd982c58126e347d8aea079047abd87",
+      "equal0ded": true
+    },
+    {
+      "path": ".github/workflows/docs-checks.yaml",
+      "sha256": "96e54e68a99450a6b4cdd1568cd4309cf290ee54f8b368efa76b032f2c7b48b4",
+      "equal0ded": true
+    },
+    {
+      "path": "scripts/tests/docs-reader.test.mjs",
+      "sha256": "abd6a6431110a7b8a1486bbbce4648a118d31fe6f517813c4d9d6ed2e6177e28",
+      "equal0ded": true
+    },
+    {
+      "path": "scripts/tests/docs-reader-redirects.test.mjs",
+      "sha256": "4d08e2533bda82a536a9c61ab27a3fca94939a484a5a2154e012ff9507f26155",
+      "equal0ded": true
+    },
+    {
+      "path": "scripts/docs-reader/page-records.mjs",
+      "sha256": "6268501ef047b13e0794950a85d57e2c7aaf54e85a16d77ca8c1263237691a2f",
+      "equal0ded": true
+    },
+    {
+      "path": "scripts/tests/docs-reader-page-records.test.mjs",
+      "sha256": "0333fffb872837af59396ff47dafb1401a87b00627d96de524e9322e12f15d83",
+      "equal0ded": true
+    }
+  ],
+  "generatedOwnerMapByteEqual0ded": true,
+  "reviewBasis": [
+    "handoffs/pr13-finish-20261021/reader-ci-purpose-parent-review.md complete Root nonauthor review plus actual74controls",
+    "handoffs/pr13-finish-20261021/reader-ci-purpose-exact-binding-review.json exact6role+1profile value changes independently reconstructed here",
+    "../a91211-0ded-independent/final-57-preservation.json original full57scope preservation and0ded actualReader",
+    "Full3modifiedSourcepatch and full74line new Source-only owningtest read by this reviewer"
+  ],
+  "currentOriginalGraphExecuted": false,
+  "newRoleDataInstalled": false,
+  "nativeReceipts": "FOUR_UNEXECUTED",
+  "limits": [
+    "No newgate/requirement/count/matrix/mainwrite.",
+    "NewSource-only fixture suite proves finite guards,not actualoriginalgraph cold/warm or newexecutionpermission.",
+    "Current graph/facts/module/owner/generator acquisition still required separately;no guardwaiver.",
+    "Tenpublicationtargets/pagesandowner-mapunchanged;no post0dedSourceboundReaderbuildclaimed."
+  ]
+}

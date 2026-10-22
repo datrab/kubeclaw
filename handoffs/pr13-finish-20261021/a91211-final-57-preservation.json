@@ -1,0 +1,1217 @@
+{
+  "status": "FINAL_57_PRIOR_SCOPE_PRESERVATION_SUPPORTED_AT_0ded",
+  "revision": "0ded6b68eb6170c4ea5e76251ad5e13adf2f664b",
+  "reviewer": "/root/custody_review",
+  "matrixSha256": "ae4555caf8981269a47d1e1022303476e1e923bafdbc6461d7a3db721de547ee",
+  "matrixUnmodified": true,
+  "recordAccounting": {
+    "original": 87,
+    "exactAffected": 57,
+    "noExactIntersection": 30
+  },
+  "newAcceptanceCount": "NONE",
+  "records": [
+    {
+      "id": "A911-03-REF-007-20261020",
+      "originalRecordSha256": "efc36ffbb69f5e83dcaca56cecc63e227a9e2b0770d9ebbd1ed05d3aae63ee78",
+      "intersection": {
+        "pages": [],
+        "sources": [
+          "scripts/docs-publication.mjs"
+        ]
+      },
+      "verdict": "PRESERVE_ORIGINAL_NAMED_SCOPE_AT_0ded; NO_NEW_ACCEPTANCE",
+      "sourceAccuracy": "PASS_PRESERVATION_ONLY",
+      "readerUsability": "PASS_PRESERVATION_ONLY",
+      "quality": "PASS_PRESERVATION_ONLY",
+      "reason": "Publisher now appends finite reader metadata after normal rendering; capability generators, canonical namespace facts, grants/RBAC versus interface metadata and safe denial remain unchanged. No capability translation or runtime grant is introduced.",
+      "requiresFutureCurrentFactsBeforeThisBoundedRevisionRebind": false,
+      "globalQualification": "Not included in this original scope;do not infer any current facts/guard/graph/native success.",
+      "originalFields": "author/reviewer/summary/checks/limits/review/states retained unchanged;datedchecksnotrewritten",
+      "freshProofAttribution": "Root actual0ded Readerproof plus independent inert output/Git inspection;prior named full semantic reviews reused only for unchanged mechanisms."
+    },
+    {
+      "id": "AP09.1-ready-topics-20261020",
+      "originalRecordSha256": "3bed8fdbd6ace32f8209f3e45e472bb71618b815c227c92c45bb5a3d114c60c7",
+      "intersection": {
+        "pages": [],
+        "sources": [
+          "docs/site/reference/generated-documentation-map.json",
+          "scripts/docs-publication.mjs"
+        ]
+      },
+      "verdict": "PRESERVE_ORIGINAL_NAMED_SCOPE_AT_0ded; NO_NEW_ACCEPTANCE",
+      "sourceAccuracy": "PASS_PRESERVATION_ONLY",
+      "readerUsability": "PASS_PRESERVATION_ONLY",
+      "quality": "PASS_PRESERVATION_ONLY",
+      "reason": "Owner-map delta affects only documentation-site declarations/dated verification metadata, not page membership, ownership, stable decisions, product request or authority. Publisher metadata append does not change entry selection.",
+      "requiresFutureCurrentFactsBeforeThisBoundedRevisionRebind": false,
+      "globalQualification": "Not included in this original scope;do not infer any current facts/guard/graph/native success.",
+      "originalFields": "author/reviewer/summary/checks/limits/review/states retained unchanged;datedchecksnotrewritten",
+      "freshProofAttribution": "Root actual0ded Readerproof plus independent inert output/Git inspection;prior named full semantic reviews reused only for unchanged mechanisms."
+    },
+    {
+      "id": "AP09.2-ready-topics-20261020",
+      "originalRecordSha256": "a05a57389f7c03a950cc1a3b5e194ba872b97bcc7633b0e6e0ce56c10a173dc5",
+      "intersection": {
+        "pages": [
+          "docs/site/understand/nova-core.md",
+          "docs/site/understand/plugin-runtime.md"
+        ],
+        "sources": []
+      },
+      "verdict": "PRESERVE_ORIGINAL_NAMED_SCOPE_AT_0ded; NO_NEW_ACCEPTANCE",
+      "sourceAccuracy": "PASS_PRESERVATION_ONLY",
+      "readerUsability": "PASS_PRESERVATION_ONLY",
+      "quality": "PASS_PRESERVATION_ONLY",
+      "reason": "Nova/Core and Plugin added evidence fields summarize the existing admission/graph/state/recovery/effect/package boundaries. Corrected durable-effect summary avoids false chronology; exact configuration equality remains separate from permitted package upgrades. No runtime contract changes.",
+      "requiresFutureCurrentFactsBeforeThisBoundedRevisionRebind": false,
+      "globalQualification": "Not included in this original scope;do not infer any current facts/guard/graph/native success.",
+      "originalFields": "author/reviewer/summary/checks/limits/review/states retained unchanged;datedchecksnotrewritten",
+      "freshProofAttribution": "Root actual0ded Readerproof plus independent inert output/Git inspection;prior named full semantic reviews reused only for unchanged mechanisms."
+    },
+    {
+      "id": "AP09.4-ready-prism-topics-20261020",
+      "originalRecordSha256": "84e4a022037949274f49ae76e1699326dd39a5cd485a5023bb1305dfac24f211",
+      "intersection": {
+        "pages": [
+          "docs/site/understand/prism-data.md"
+        ],
+        "sources": []
+      },
+      "verdict": "PRESERVE_ORIGINAL_NAMED_SCOPE_AT_0ded; NO_NEW_ACCEPTANCE",
+      "sourceAccuracy": "PASS_PRESERVATION_ONLY",
+      "readerUsability": "PASS_PRESERVATION_ONLY",
+      "quality": "PASS_PRESERVATION_ONLY",
+      "reason": "Prism data callouts preserve revision/CAS, approval-versus-publication, subject snapshots, corpus and retention boundaries. Existing complete corpus/generation block is unchanged; no model result becomes committed design authority.",
+      "requiresFutureCurrentFactsBeforeThisBoundedRevisionRebind": false,
+      "globalQualification": "Not included in this original scope;do not infer any current facts/guard/graph/native success.",
+      "originalFields": "author/reviewer/summary/checks/limits/review/states retained unchanged;datedchecksnotrewritten",
+      "freshProofAttribution": "Root actual0ded Readerproof plus independent inert output/Git inspection;prior named full semantic reviews reused only for unchanged mechanisms."
+    },
+    {
+      "id": "AP09.7-ready-platform-topics-20261020",
+      "originalRecordSha256": "270b0a3d574b5e9f8f84d7c6e57f3e49df62a9bbbcddf51bebb28c9b762bec95",
+      "intersection": {
+        "pages": [
+          "docs/site/understand/platform-and-operations.md"
+        ],
+        "sources": []
+      },
+      "verdict": "PRESERVE_ORIGINAL_NAMED_SCOPE_AT_0ded; NO_NEW_ACCEPTANCE",
+      "sourceAccuracy": "PASS_PRESERVATION_ONLY",
+      "readerUsability": "PASS_PRESERVATION_ONLY",
+      "quality": "PASS_PRESERVATION_ONLY",
+      "reason": "Platform evidence fields preserve enabled/conditional/optional dependency ownership and security distinctions. Corrected Ops field identifies the same ServiceAccount token and effective exec grants, without asserting deployed RBAC or isolation.",
+      "requiresFutureCurrentFactsBeforeThisBoundedRevisionRebind": false,
+      "globalQualification": "Not included in this original scope;do not infer any current facts/guard/graph/native success.",
+      "originalFields": "author/reviewer/summary/checks/limits/review/states retained unchanged;datedchecksnotrewritten",
+      "freshProofAttribution": "Root actual0ded Readerproof plus independent inert output/Git inspection;prior named full semantic reviews reused only for unchanged mechanisms."
+    },
+    {
+      "id": "AP09.7-ready-data-topics-20261020",
+      "originalRecordSha256": "7bca9d7e72e59803bb764b075d24d2bad2dc3786463fa0ebfed69246015ca269",
+      "intersection": {
+        "pages": [
+          "docs/site/understand/communication.md",
+          "docs/site/understand/data-and-state.md",
+          "docs/site/understand/telemetry.md"
+        ],
+        "sources": []
+      },
+      "verdict": "PRESERVE_ORIGINAL_NAMED_SCOPE_AT_0ded; NO_NEW_ACCEPTANCE",
+      "sourceAccuracy": "PASS_PRESERVATION_ONLY",
+      "readerUsability": "PASS_PRESERVATION_ONLY",
+      "quality": "PASS_PRESERVATION_ONLY",
+      "reason": "Communication/data/telemetry evidence additions preserve dispatch/result/Worker control identities, store authority, stream trim/dedup and observer delivery limits. No XADD/HTTP ACK becomes consumption, accepted result or replay authority.",
+      "requiresFutureCurrentFactsBeforeThisBoundedRevisionRebind": false,
+      "globalQualification": "Not included in this original scope;do not infer any current facts/guard/graph/native success.",
+      "originalFields": "author/reviewer/summary/checks/limits/review/states retained unchanged;datedchecksnotrewritten",
+      "freshProofAttribution": "Root actual0ded Readerproof plus independent inert output/Git inspection;prior named full semantic reviews reused only for unchanged mechanisms."
+    },
+    {
+      "id": "Reviewed-corrections-20261020",
+      "originalRecordSha256": "a9c9304121c052c8734fc118268a403d3370ab50cd9a7b7ac24d6a623404614b",
+      "intersection": {
+        "pages": [],
+        "sources": [
+          "docs/site/reference/generated-documentation-map.json"
+        ]
+      },
+      "verdict": "PRESERVE_ORIGINAL_NAMED_SCOPE_AT_0ded; NO_NEW_ACCEPTANCE",
+      "sourceAccuracy": "PASS_PRESERVATION_ONLY",
+      "readerUsability": "PASS_PRESERVATION_ONLY",
+      "quality": "PASS_PRESERVATION_ONLY",
+      "reason": "Owner-map changes only documentation-site evidence/verification projection; the seven original retry/error/lint corrections and actual implementations are unchanged. Historical generated freshness evidence is not relabeled current.",
+      "requiresFutureCurrentFactsBeforeThisBoundedRevisionRebind": false,
+      "globalQualification": "Not included in this original scope;do not infer any current facts/guard/graph/native success.",
+      "originalFields": "author/reviewer/summary/checks/limits/review/states retained unchanged;datedchecksnotrewritten",
+      "freshProofAttribution": "Root actual0ded Readerproof plus independent inert output/Git inspection;prior named full semantic reviews reused only for unchanged mechanisms."
+    },
+    {
+      "id": "AP09-reader-operators-20261020",
+      "originalRecordSha256": "cbef9128f260c5fdaf3a315756ad1e154b33ffd319df4a9d046566eef6d23f4e",
+      "intersection": {
+        "pages": [],
+        "sources": [
+          "scripts/docs-publication.mjs"
+        ]
+      },
+      "verdict": "PRESERVE_ORIGINAL_NAMED_SCOPE_AT_0ded; NO_NEW_ACCEPTANCE",
+      "sourceAccuracy": "PASS_PRESERVATION_ONLY",
+      "readerUsability": "PASS_PRESERVATION_ONLY",
+      "quality": "PASS_PRESERVATION_ONLY",
+      "reason": "Only publisher shared dependency intersects. New metadata checking neither changes operator tasks nor widens their named requirements/gates; all live/deployment and broader-gate exclusions remain.",
+      "requiresFutureCurrentFactsBeforeThisBoundedRevisionRebind": false,
+      "globalQualification": "Not included in this original scope;do not infer any current facts/guard/graph/native success.",
+      "originalFields": "author/reviewer/summary/checks/limits/review/states retained unchanged;datedchecksnotrewritten",
+      "freshProofAttribution": "Root actual0ded Readerproof plus independent inert output/Git inspection;prior named full semantic reviews reused only for unchanged mechanisms."
+    },
+    {
+      "id": "AP09-reader-developers-20261020",
+      "originalRecordSha256": "faf57c3bf0fc0888dc6a8dab38d79b0d34345ebfb2a09cd50ff86d9f4b924308",
+      "intersection": {
+        "pages": [],
+        "sources": [
+          ".github/workflows/docs-checks.yaml",
+          "scripts/docs-publication.mjs"
+        ]
+      },
+      "verdict": "PRESERVE_ORIGINAL_NAMED_SCOPE_AT_0ded; NO_NEW_ACCEPTANCE",
+      "sourceAccuracy": "PASS_PRESERVATION_ONLY",
+      "readerUsability": "PASS_PRESERVATION_ONLY",
+      "quality": "PASS_PRESERVATION_ONLY",
+      "reason": "Publisher/CI changes add page-record verification and one owning suite; developer/extension teaching paths, contracts, local-vs-hosted limits and exact named gate scope remain intact.",
+      "requiresFutureCurrentFactsBeforeThisBoundedRevisionRebind": false,
+      "globalQualification": "Not included in this original scope;do not infer any current facts/guard/graph/native success.",
+      "originalFields": "author/reviewer/summary/checks/limits/review/states retained unchanged;datedchecksnotrewritten",
+      "freshProofAttribution": "Root actual0ded Readerproof plus independent inert output/Git inspection;prior named full semantic reviews reused only for unchanged mechanisms."
+    },
+    {
+      "id": "AP09-reviewed-configuration-20261020",
+      "originalRecordSha256": "fa60bf131174ad08c178370efff4dc8c5007cd207b1c950f701b32bc789d0bca",
+      "intersection": {
+        "pages": [],
+        "sources": [
+          "scripts/docs-publication.mjs"
+        ]
+      },
+      "verdict": "PRESERVE_ORIGINAL_NAMED_SCOPE_AT_0ded; NO_NEW_ACCEPTANCE",
+      "sourceAccuracy": "PASS_PRESERVATION_ONLY",
+      "readerUsability": "PASS_PRESERVATION_ONLY",
+      "quality": "PASS_PRESERVATION_ONLY",
+      "reason": "Publisher append does not change configuration ownership, precedence, resolution, schemas or claimed narrow CFG coverage. New metadata authority is about reader files, not configuration runtime validity.",
+      "requiresFutureCurrentFactsBeforeThisBoundedRevisionRebind": false,
+      "globalQualification": "Not included in this original scope;do not infer any current facts/guard/graph/native success.",
+      "originalFields": "author/reviewer/summary/checks/limits/review/states retained unchanged;datedchecksnotrewritten",
+      "freshProofAttribution": "Root actual0ded Readerproof plus independent inert output/Git inspection;prior named full semantic reviews reused only for unchanged mechanisms."
+    },
+    {
+      "id": "AP09-reviewed-reference-20261020",
+      "originalRecordSha256": "44df4a235f724409810fc3f48ea8409cf5349d65fb51a6a37ed96601cbdbfdca",
+      "intersection": {
+        "pages": [],
+        "sources": [
+          "scripts/docs-publication.mjs"
+        ]
+      },
+      "verdict": "PRESERVE_ORIGINAL_NAMED_SCOPE_AT_0ded; NO_NEW_ACCEPTANCE",
+      "sourceAccuracy": "PASS_PRESERVATION_ONLY",
+      "readerUsability": "PASS_PRESERVATION_ONLY",
+      "quality": "PASS_PRESERVATION_ONLY",
+      "reason": "Publisher append leaves existing generated reference content/selectors and source/version distinctions intact. Narrow REF scopes do not expand to metadata or global current qualification.",
+      "requiresFutureCurrentFactsBeforeThisBoundedRevisionRebind": false,
+      "globalQualification": "Not included in this original scope;do not infer any current facts/guard/graph/native success.",
+      "originalFields": "author/reviewer/summary/checks/limits/review/states retained unchanged;datedchecksnotrewritten",
+      "freshProofAttribution": "Root actual0ded Readerproof plus independent inert output/Git inspection;prior named full semantic reviews reused only for unchanged mechanisms."
+    },
+    {
+      "id": "AP09-reviewed-maintenance-20261020",
+      "originalRecordSha256": "ff778ed2b9386e3b711d87f94d02dbf9467ed5bd8198d4e5e24b5e05686d3873",
+      "intersection": {
+        "pages": [],
+        "sources": [
+          "scripts/docs-publication.mjs"
+        ]
+      },
+      "verdict": "PRESERVE_ORIGINAL_NAMED_SCOPE_AT_0ded; NO_NEW_ACCEPTANCE",
+      "sourceAccuracy": "PASS_PRESERVATION_ONLY",
+      "readerUsability": "PASS_PRESERVATION_ONLY",
+      "quality": "PASS_PRESERVATION_ONLY",
+      "reason": "Publisher append leaves maintenance authorship/quality obligations and narrow MNT scopes unchanged. Original executed checks remain historical, not new generator execution.",
+      "requiresFutureCurrentFactsBeforeThisBoundedRevisionRebind": false,
+      "globalQualification": "Not included in this original scope;do not infer any current facts/guard/graph/native success.",
+      "originalFields": "author/reviewer/summary/checks/limits/review/states retained unchanged;datedchecksnotrewritten",
+      "freshProofAttribution": "Root actual0ded Readerproof plus independent inert output/Git inspection;prior named full semantic reviews reused only for unchanged mechanisms."
+    },
+    {
+      "id": "AP09-reviewed-publication-navigation-20261020",
+      "originalRecordSha256": "7c85b906c2f4ac8d1e5f1d9bdb1d69009bcce3e2bd7fd2a6c76a105c59de08c1",
+      "intersection": {
+        "pages": [
+          "docs/site/reference/documentation-site.md"
+        ],
+        "sources": [
+          "scripts/docs-publication.mjs"
+        ]
+      },
+      "verdict": "PRESERVE_ORIGINAL_NAMED_SCOPE_AT_0ded; NO_NEW_ACCEPTANCE",
+      "sourceAccuracy": "PASS_PRESERVATION_ONLY",
+      "readerUsability": "PASS_PRESERVATION_ONLY",
+      "quality": "PASS_PRESERVATION_ONLY",
+      "reason": "New documentation-site subsection stays within the same canonical page/section hierarchy. Positive pages, task links and route ownership are unchanged; metadata binding is not a new navigation gate. Historical reachability result needs separate fresh mechanical binding.",
+      "requiresFutureCurrentFactsBeforeThisBoundedRevisionRebind": false,
+      "globalQualification": "Not included in this original scope;do not infer any current facts/guard/graph/native success.",
+      "originalFields": "author/reviewer/summary/checks/limits/review/states retained unchanged;datedchecksnotrewritten",
+      "freshProofAttribution": "Root actual0ded Readerproof plus independent inert output/Git inspection;prior named full semantic reviews reused only for unchanged mechanisms."
+    },
+    {
+      "id": "AP09-closeout-runtime-20261020",
+      "originalRecordSha256": "a635b182cd8fdb318f1ac0ba43c226d0cd2c32f7586873356563b16412eddabe",
+      "intersection": {
+        "pages": [
+          "docs/site/understand/data-and-state.md"
+        ],
+        "sources": []
+      },
+      "verdict": "PRESERVE_ORIGINAL_NAMED_SCOPE_AT_0ded; NO_NEW_ACCEPTANCE",
+      "sourceAccuracy": "PASS_PRESERVATION_ONLY",
+      "readerUsability": "PASS_PRESERVATION_ONLY",
+      "quality": "PASS_PRESERVATION_ONLY",
+      "reason": "Data evidence fields retain Core/Worker state ownership, attestation versus receipt, spool/trust and store-local versus whole-backup guarantees. Added assertions do not establish execution or off-host restore.",
+      "requiresFutureCurrentFactsBeforeThisBoundedRevisionRebind": false,
+      "globalQualification": "Not included in this original scope;do not infer any current facts/guard/graph/native success.",
+      "originalFields": "author/reviewer/summary/checks/limits/review/states retained unchanged;datedchecksnotrewritten",
+      "freshProofAttribution": "Root actual0ded Readerproof plus independent inert output/Git inspection;prior named full semantic reviews reused only for unchanged mechanisms."
+    },
+    {
+      "id": "AP09-closeout-config-reference-20261020",
+      "originalRecordSha256": "138c393b1cbd923e932cbf30eb054a04b9b2354e08dd99cbc29dc1ad0de91c80",
+      "intersection": {
+        "pages": [],
+        "sources": [
+          "scripts/docs-publication.mjs"
+        ]
+      },
+      "verdict": "PRESERVE_ORIGINAL_NAMED_SCOPE_AT_0ded; NO_NEW_ACCEPTANCE",
+      "sourceAccuracy": "PASS_PRESERVATION_ONLY",
+      "readerUsability": "PASS_PRESERVATION_ONLY",
+      "quality": "PASS_PRESERVATION_ONLY",
+      "reason": "Publisher append changes no configuration/reference source facts, ownership or errors. Exact original CFG/REF correction claims and narrower accepted scopes remain.",
+      "requiresFutureCurrentFactsBeforeThisBoundedRevisionRebind": false,
+      "globalQualification": "Not included in this original scope;do not infer any current facts/guard/graph/native success.",
+      "originalFields": "author/reviewer/summary/checks/limits/review/states retained unchanged;datedchecksnotrewritten",
+      "freshProofAttribution": "Root actual0ded Readerproof plus independent inert output/Git inspection;prior named full semantic reviews reused only for unchanged mechanisms."
+    },
+    {
+      "id": "AP09-closeout-developer-maintenance-20261020",
+      "originalRecordSha256": "2b8575eacd3fa2f4f53879357c61fcacbfaffc725ae0c39109cb86b94ffedd8e",
+      "intersection": {
+        "pages": [],
+        "sources": [
+          "scripts/docs-publication.mjs"
+        ]
+      },
+      "verdict": "PRESERVE_ORIGINAL_NAMED_SCOPE_AT_0ded; NO_NEW_ACCEPTANCE",
+      "sourceAccuracy": "PASS_PRESERVATION_ONLY",
+      "readerUsability": "PASS_PRESERVATION_ONLY",
+      "quality": "PASS_PRESERVATION_ONLY",
+      "reason": "Only publisher intersects; metadata append does not alter supported author/local lifecycle, removal, generation ownership or documentation status procedures. No general install/remove or runtime readiness is invented.",
+      "requiresFutureCurrentFactsBeforeThisBoundedRevisionRebind": false,
+      "globalQualification": "Not included in this original scope;do not infer any current facts/guard/graph/native success.",
+      "originalFields": "author/reviewer/summary/checks/limits/review/states retained unchanged;datedchecksnotrewritten",
+      "freshProofAttribution": "Root actual0ded Readerproof plus independent inert output/Git inspection;prior named full semantic reviews reused only for unchanged mechanisms."
+    },
+    {
+      "id": "AP09-compiler-import-provider-diagnosis-20261021",
+      "originalRecordSha256": "0f4ec4ddbb638c0217b69ad27724b85be5300812fb32b33892f54d496eabca34",
+      "intersection": {
+        "pages": [
+          "docs/site/understand/nova-core.md",
+          "docs/site/understand/plugin-runtime.md"
+        ],
+        "sources": []
+      },
+      "verdict": "PRESERVE_ORIGINAL_NAMED_SCOPE_AT_0ded; NO_NEW_ACCEPTANCE",
+      "sourceAccuracy": "PASS_PRESERVATION_ONLY",
+      "readerUsability": "PASS_PRESERVATION_ONLY",
+      "quality": "PASS_PRESERVATION_ONLY",
+      "reason": "Added Nova/Plugin fields retain compiler defaults/snapshot admission, capability provider selection, import audit versus isolation and symptom-first stop decisions. No source implementation or diagnostic contract changes.",
+      "requiresFutureCurrentFactsBeforeThisBoundedRevisionRebind": false,
+      "globalQualification": "Not included in this original scope;do not infer any current facts/guard/graph/native success.",
+      "originalFields": "author/reviewer/summary/checks/limits/review/states retained unchanged;datedchecksnotrewritten",
+      "freshProofAttribution": "Root actual0ded Readerproof plus independent inert output/Git inspection;prior named full semantic reviews reused only for unchanged mechanisms."
+    },
+    {
+      "id": "AP09-confidential-adapter-lifecycle-20261021",
+      "originalRecordSha256": "92bb3da3b641be96870681a86bd861372c4eb9e973b60ef2550402707f94e56b",
+      "intersection": {
+        "pages": [
+          "docs/site/understand/plugin-runtime.md"
+        ],
+        "sources": []
+      },
+      "verdict": "PRESERVE_ORIGINAL_NAMED_SCOPE_AT_0ded; NO_NEW_ACCEPTANCE",
+      "sourceAccuracy": "PASS_PRESERVATION_ONLY",
+      "readerUsability": "PASS_PRESERVATION_ONLY",
+      "quality": "PASS_PRESERVATION_ONLY",
+      "reason": "Plugin callouts retain confidential dependency recording, exact grant/resource matching, cooperative cleanup and separate shutdown timeout. No stronger process isolation or partial activation success is claimed.",
+      "requiresFutureCurrentFactsBeforeThisBoundedRevisionRebind": false,
+      "globalQualification": "Not included in this original scope;do not infer any current facts/guard/graph/native success.",
+      "originalFields": "author/reviewer/summary/checks/limits/review/states retained unchanged;datedchecksnotrewritten",
+      "freshProofAttribution": "Root actual0ded Readerproof plus independent inert output/Git inspection;prior named full semantic reviews reused only for unchanged mechanisms."
+    },
+    {
+      "id": "AP09-selected-model-gateway-20261021",
+      "originalRecordSha256": "ca4e4b9296128d7d79077e58c3fcb64740f7df94f453789891691aec45997f18",
+      "intersection": {
+        "pages": [
+          "docs/site/understand/platform-and-operations.md"
+        ],
+        "sources": []
+      },
+      "verdict": "PRESERVE_ORIGINAL_NAMED_SCOPE_AT_0ded; NO_NEW_ACCEPTANCE",
+      "sourceAccuracy": "PASS_PRESERVATION_ONLY",
+      "readerUsability": "PASS_PRESERVATION_ONLY",
+      "quality": "PASS_PRESERVATION_ONLY",
+      "reason": "Platform callouts preserve configured model/provider routing versus observed readiness, credential authorities and optional monitoring/embedding limits. No remote provider result follows from configuration.",
+      "requiresFutureCurrentFactsBeforeThisBoundedRevisionRebind": false,
+      "globalQualification": "Not included in this original scope;do not infer any current facts/guard/graph/native success.",
+      "originalFields": "author/reviewer/summary/checks/limits/review/states retained unchanged;datedchecksnotrewritten",
+      "freshProofAttribution": "Root actual0ded Readerproof plus independent inert output/Git inspection;prior named full semantic reviews reused only for unchanged mechanisms."
+    },
+    {
+      "id": "AP09-communication-complete-contracts-20261021",
+      "originalRecordSha256": "3e8e8a0f7c729300ac22359c51f9a99fe60b575105c8f0d73e4a48e44a6860df",
+      "intersection": {
+        "pages": [
+          "docs/site/understand/communication.md"
+        ],
+        "sources": []
+      },
+      "verdict": "PRESERVE_ORIGINAL_NAMED_SCOPE_AT_0ded; NO_NEW_ACCEPTANCE",
+      "sourceAccuracy": "PASS_PRESERVATION_ONLY",
+      "readerUsability": "PASS_PRESERVATION_ONLY",
+      "quality": "PASS_PRESERVATION_ONLY",
+      "reason": "Communication fields preserve bridge/Control/native Worker ownership, restart/result identity, Forge/Echo importer authority and deadline/retry/order/pressure distinctions; existing failed Core-backed publisher admission remains disclosed.",
+      "requiresFutureCurrentFactsBeforeThisBoundedRevisionRebind": false,
+      "globalQualification": "Not included in this original scope;do not infer any current facts/guard/graph/native success.",
+      "originalFields": "author/reviewer/summary/checks/limits/review/states retained unchanged;datedchecksnotrewritten",
+      "freshProofAttribution": "Root actual0ded Readerproof plus independent inert output/Git inspection;prior named full semantic reviews reused only for unchanged mechanisms."
+    },
+    {
+      "id": "AP09-private-routes-complete-20261021",
+      "originalRecordSha256": "0c20bb56004943b0151bad5dd1fce240f1abe6946dcabac82b6fd7ccbb1cbdc1",
+      "intersection": {
+        "pages": [
+          "docs/site/understand/communication.md"
+        ],
+        "sources": []
+      },
+      "verdict": "PRESERVE_ORIGINAL_NAMED_SCOPE_AT_0ded; NO_NEW_ACCEPTANCE",
+      "sourceAccuracy": "PASS_PRESERVATION_ONLY",
+      "readerUsability": "PASS_PRESERVATION_ONLY",
+      "quality": "PASS_PRESERVATION_ONLY",
+      "reason": "Communication additions do not change TLS/auth/ACL peers, broker generation/CAS or private-route exposure. Optional outbound Ops transport remains distinct from inbound publication and deployed enforcement.",
+      "requiresFutureCurrentFactsBeforeThisBoundedRevisionRebind": false,
+      "globalQualification": "Not included in this original scope;do not infer any current facts/guard/graph/native success.",
+      "originalFields": "author/reviewer/summary/checks/limits/review/states retained unchanged;datedchecksnotrewritten",
+      "freshProofAttribution": "Root actual0ded Readerproof plus independent inert output/Git inspection;prior named full semantic reviews reused only for unchanged mechanisms."
+    },
+    {
+      "id": "AP09-complete-state-content-20261021",
+      "originalRecordSha256": "012fbc01b38cc0236b467624faf9ecfd0d97f3d20ad83294e17a7f62d0f2e60c",
+      "intersection": {
+        "pages": [
+          "docs/site/understand/data-and-state.md",
+          "docs/site/understand/prism-data.md"
+        ],
+        "sources": []
+      },
+      "verdict": "PRESERVE_ORIGINAL_NAMED_SCOPE_AT_0ded; NO_NEW_ACCEPTANCE",
+      "sourceAccuracy": "PASS_PRESERVATION_ONLY",
+      "readerUsability": "PASS_PRESERVATION_ONLY",
+      "quality": "PASS_PRESERVATION_ONLY",
+      "reason": "Data/Prism additions preserve exact state/store owners, signing versus encryption, matched backup groups and explicit unsupported restore/deletion stops. No fixture/test definition becomes full backup execution.",
+      "requiresFutureCurrentFactsBeforeThisBoundedRevisionRebind": false,
+      "globalQualification": "Not included in this original scope;do not infer any current facts/guard/graph/native success.",
+      "originalFields": "author/reviewer/summary/checks/limits/review/states retained unchanged;datedchecksnotrewritten",
+      "freshProofAttribution": "Root actual0ded Readerproof plus independent inert output/Git inspection;prior named full semantic reviews reused only for unchanged mechanisms."
+    },
+    {
+      "id": "AP09-decision-record-content-20261021",
+      "originalRecordSha256": "cb7993b062acce5f18dd3a1168d35dae7e70fb5cb5824231273ab86852ecc3f0",
+      "intersection": {
+        "pages": [],
+        "sources": [
+          "scripts/docs-publication.mjs"
+        ]
+      },
+      "verdict": "PRESERVE_ORIGINAL_NAMED_SCOPE_AT_0ded; NO_NEW_ACCEPTANCE",
+      "sourceAccuracy": "PASS_PRESERVATION_ONLY",
+      "readerUsability": "PASS_PRESERVATION_ONLY",
+      "quality": "PASS_PRESERVATION_ONLY",
+      "reason": "Only publisher intersects; metadata append changes no rationale, alternatives, consequences, supersession or unknown approval status.",
+      "requiresFutureCurrentFactsBeforeThisBoundedRevisionRebind": false,
+      "globalQualification": "Not included in this original scope;do not infer any current facts/guard/graph/native success.",
+      "originalFields": "author/reviewer/summary/checks/limits/review/states retained unchanged;datedchecksnotrewritten",
+      "freshProofAttribution": "Root actual0ded Readerproof plus independent inert output/Git inspection;prior named full semantic reviews reused only for unchanged mechanisms."
+    },
+    {
+      "id": "AP09-documentation-agent-maintenance-20261021",
+      "originalRecordSha256": "3b7b56619e403cc00e37eedbf371502fe0d342a000dc003e9d93e1c2212636f9",
+      "intersection": {
+        "pages": [
+          "docs/site/reference/documentation-site.md"
+        ],
+        "sources": [
+          ".github/workflows/docs-checks.yaml",
+          "scripts/docs-api-output-discovery.mjs",
+          "scripts/docs-publication.mjs",
+          "scripts/docs-reader/check-artifact.mjs",
+          "scripts/docs-reader/renderer.mjs",
+          "scripts/tests/docs-reader.test.mjs"
+        ]
+      },
+      "verdict": "PRESERVE_ORIGINAL_NAMED_SCOPE_AT_0ded; NO_NEW_ACCEPTANCE",
+      "sourceAccuracy": "PASS_PRESERVATION_ONLY",
+      "readerUsability": "PASS_PRESERVATION_ONLY",
+      "quality": "PASS_PRESERVATION_ONLY",
+      "reason": "Finite new guard hooks strengthen fresh purpose/source/ancestor checks before caches while preserving original generation/impact/review/retirement procedures. New reader metadata is an additional normal checked artifact. Nonauthor parent review supplies the four-owner author-scope basis; current CI pins, ancestor route and facts are explicitly not renewed.",
+      "requiresFutureCurrentFactsBeforeThisBoundedRevisionRebind": false,
+      "globalQualification": "Not included in this original scope;do not infer any current facts/guard/graph/native success.",
+      "originalFields": "author/reviewer/summary/checks/limits/review/states retained unchanged;datedchecksnotrewritten",
+      "freshProofAttribution": "Root actual0ded Readerproof plus independent inert output/Git inspection;prior named full semantic reviews reused only for unchanged mechanisms."
+    },
+    {
+      "id": "AP09-complete-platform-change-content-20261021",
+      "originalRecordSha256": "0f8dad446e429d2fc0995fee7e93a9b15012087fb8d26969563f78bf6c86ac74",
+      "intersection": {
+        "pages": [],
+        "sources": [
+          ".github/workflows/docs-checks.yaml",
+          "scripts/docs-publication.mjs"
+        ]
+      },
+      "verdict": "PRESERVE_ORIGINAL_NAMED_SCOPE_AT_0ded; NO_NEW_ACCEPTANCE",
+      "sourceAccuracy": "PASS_PRESERVATION_ONLY",
+      "readerUsability": "PASS_PRESERVATION_ONLY",
+      "quality": "PASS_PRESERVATION_ONLY",
+      "reason": "Publisher/CI metadata verification adds no product effect-format, capability/event, integration or GitOps change authority. Existing source/recovery/ownership/security tasks remain; CI insertion does not imply all current jobs ran.",
+      "requiresFutureCurrentFactsBeforeThisBoundedRevisionRebind": false,
+      "globalQualification": "Not included in this original scope;do not infer any current facts/guard/graph/native success.",
+      "originalFields": "author/reviewer/summary/checks/limits/review/states retained unchanged;datedchecksnotrewritten",
+      "freshProofAttribution": "Root actual0ded Readerproof plus independent inert output/Git inspection;prior named full semantic reviews reused only for unchanged mechanisms."
+    },
+    {
+      "id": "AP09-registry-data-path-20261021",
+      "originalRecordSha256": "02b5d3544c5c021a2d9069a27828a229e0267b61b9c09afbc579d57a4804ec42",
+      "intersection": {
+        "pages": [
+          "docs/site/understand/communication.md",
+          "docs/site/understand/platform-and-operations.md"
+        ],
+        "sources": []
+      },
+      "verdict": "PRESERVE_ORIGINAL_NAMED_SCOPE_AT_0ded; NO_NEW_ACCEPTANCE",
+      "sourceAccuracy": "PASS_PRESERVATION_ONLY",
+      "readerUsability": "PASS_PRESERVATION_ONLY",
+      "quality": "PASS_PRESERVATION_ONLY",
+      "reason": "Communication/platform fields preserve Git/OCI/BuildKit/registry/mirror owner, credential/digest and retained-versus-ephemeral failure distinctions. No configuration receipt becomes operational registry success.",
+      "requiresFutureCurrentFactsBeforeThisBoundedRevisionRebind": false,
+      "globalQualification": "Not included in this original scope;do not infer any current facts/guard/graph/native success.",
+      "originalFields": "author/reviewer/summary/checks/limits/review/states retained unchanged;datedchecksnotrewritten",
+      "freshProofAttribution": "Root actual0ded Readerproof plus independent inert output/Git inspection;prior named full semantic reviews reused only for unchanged mechanisms."
+    },
+    {
+      "id": "AP09-complete-plugin-maintenance-mechanisms-20261021",
+      "originalRecordSha256": "d5231b92dd8e17fa16d2c1346d646d8ddb848cada13ee280f9e43d93025c0d87",
+      "intersection": {
+        "pages": [],
+        "sources": [
+          "scripts/docs-publication.mjs"
+        ]
+      },
+      "verdict": "PRESERVE_ORIGINAL_NAMED_SCOPE_AT_0ded; NO_NEW_ACCEPTANCE",
+      "sourceAccuracy": "PASS_PRESERVATION_ONLY",
+      "readerUsability": "PASS_PRESERVATION_ONLY",
+      "quality": "PASS_PRESERVATION_ONLY",
+      "reason": "Only publisher intersects. Actual plugin inventory/discovery and registration comparison sources are unchanged; appended reader mapping does not change the 51-manifest/registration facts or editorial-versus-mechanical distinction. Newly guarded inventory CI input still needs exact renewal.",
+      "requiresFutureCurrentFactsBeforeThisBoundedRevisionRebind": false,
+      "globalQualification": "Not included in this original scope;do not infer any current facts/guard/graph/native success.",
+      "originalFields": "author/reviewer/summary/checks/limits/review/states retained unchanged;datedchecksnotrewritten",
+      "freshProofAttribution": "Root actual0ded Readerproof plus independent inert output/Git inspection;prior named full semantic reviews reused only for unchanged mechanisms."
+    },
+    {
+      "id": "AP09-litellm-complete-data-contract-20261021",
+      "originalRecordSha256": "fe190d3e6ded6e2566f11e52f450b44296a1aa35c9b17313c01b4f42e24029b6",
+      "intersection": {
+        "pages": [
+          "docs/site/understand/data-and-state.md"
+        ],
+        "sources": []
+      },
+      "verdict": "PRESERVE_ORIGINAL_NAMED_SCOPE_AT_0ded; NO_NEW_ACCEPTANCE",
+      "sourceAccuracy": "PASS_PRESERVATION_ONLY",
+      "readerUsability": "PASS_PRESERVATION_ONLY",
+      "quality": "PASS_PRESERVATION_ONLY",
+      "reason": "Data callout gains only same-section pinned implementation links/fields; preserves official Git contract and registry metadata proof, credential/encryption/startup and capacity/restore limits. Rejected image-layer/source equality remains rejected.",
+      "requiresFutureCurrentFactsBeforeThisBoundedRevisionRebind": false,
+      "globalQualification": "Not included in this original scope;do not infer any current facts/guard/graph/native success.",
+      "originalFields": "author/reviewer/summary/checks/limits/review/states retained unchanged;datedchecksnotrewritten",
+      "freshProofAttribution": "Root actual0ded Readerproof plus independent inert output/Git inspection;prior named full semantic reviews reused only for unchanged mechanisms."
+    },
+    {
+      "id": "AP09-complete-publication-reference-navigation-20261021",
+      "originalRecordSha256": "d465b5e5580bdcbaed1bd86162148dee32ada764428f08a272328e422a20024d",
+      "intersection": {
+        "pages": [
+          "docs/site/reference/documentation-site.md"
+        ],
+        "sources": [
+          ".github/workflows/docs-checks.yaml",
+          "docs/site/reference/configuration-change-impact.md",
+          "scripts/docs-publication.mjs"
+        ]
+      },
+      "verdict": "PRESERVE_ORIGINAL_NAMED_SCOPE_AT_0ded; NO_NEW_ACCEPTANCE",
+      "sourceAccuracy": "PASS_PRESERVATION_ONLY",
+      "readerUsability": "PASS_PRESERVATION_ONLY",
+      "quality": "PASS_PRESERVATION_ONLY",
+      "reason": "Added same-mechanism Kubernetes links are pinned to original source and do not change update/reload claims. Documentation-site metadata describes finite source/output bindings and incomplete closure explicitly. Canonical routes/legacy navigation and current hosting limits remain.",
+      "requiresFutureCurrentFactsBeforeThisBoundedRevisionRebind": false,
+      "globalQualification": "Not included in this original scope;do not infer any current facts/guard/graph/native success.",
+      "originalFields": "author/reviewer/summary/checks/limits/review/states retained unchanged;datedchecksnotrewritten",
+      "freshProofAttribution": "Root actual0ded Readerproof plus independent inert output/Git inspection;prior named full semantic reviews reused only for unchanged mechanisms."
+    },
+    {
+      "id": "AP09-complete-developer-reader-contracts-20261021",
+      "originalRecordSha256": "d6c9e3ab6056a091282e1f5d8148909c7b0d7169ff0763c3063a9ba44b667023",
+      "intersection": {
+        "pages": [],
+        "sources": [
+          ".github/workflows/docs-checks.yaml",
+          "docs/site/reference/configuration-change-impact.md",
+          "scripts/docs-publication.mjs"
+        ]
+      },
+      "verdict": "PRESERVE_ORIGINAL_NAMED_SCOPE_AT_0ded; NO_NEW_ACCEPTANCE",
+      "sourceAccuracy": "PASS_PRESERVATION_ONLY",
+      "readerUsability": "PASS_PRESERVATION_ONLY",
+      "quality": "PASS_PRESERVATION_ONLY",
+      "reason": "Shared documentation-site/configuration-link/CI/publisher changes leave actual developer teaching paths and lifecycle tasks intact; no deployment or whole generator success is inferred from added metadata checks.",
+      "requiresFutureCurrentFactsBeforeThisBoundedRevisionRebind": false,
+      "globalQualification": "Not included in this original scope;do not infer any current facts/guard/graph/native success.",
+      "originalFields": "author/reviewer/summary/checks/limits/review/states retained unchanged;datedchecksnotrewritten",
+      "freshProofAttribution": "Root actual0ded Readerproof plus independent inert output/Git inspection;prior named full semantic reviews reused only for unchanged mechanisms."
+    },
+    {
+      "id": "AP09-complete-static-reader-search-20261021",
+      "originalRecordSha256": "3caf0a4ebac6c144c623bcd06ef2feca77777065cf24ad492801e6d635726b51",
+      "intersection": {
+        "pages": [
+          "docs/site/reference/configuration-change-impact.md",
+          "docs/site/reference/documentation-site.md",
+          "docs/site/understand/communication.md",
+          "docs/site/understand/data-and-state.md",
+          "docs/site/understand/nova-core.md",
+          "docs/site/understand/platform-and-operations.md",
+          "docs/site/understand/plugin-runtime.md",
+          "docs/site/understand/prism-data.md",
+          "docs/site/understand/prism-runtime.md",
+          "docs/site/understand/telemetry.md"
+        ],
+        "sources": [
+          "scripts/docs-api-documentation-role-custody.mjs",
+          "scripts/docs-publication.mjs",
+          "scripts/docs-reader/check-artifact.mjs",
+          "scripts/docs-reader/renderer.mjs",
+          "scripts/tests/docs-reader.test.mjs"
+        ]
+      },
+      "verdict": "PRESERVE_ORIGINAL_NAMED_SCOPE_AT_0ded; NO_NEW_ACCEPTANCE",
+      "sourceAccuracy": "PASS_PRESERVATION_ONLY",
+      "readerUsability": "PASS_PRESERVATION_ONLY",
+      "quality": "PASS_PRESERVATION_ONLY",
+      "reason": "Renderer refactors the same layout/shared CSS/JS into normal exports; search algorithm, index text extraction, positive allowlists and no-script fallback remain unchanged. New metadata verifies outputs without promoting dependency declarations to full closure. Added fields enlarge searchable text only; fresh search/browser checks remain pending.",
+      "requiresFutureCurrentFactsBeforeThisBoundedRevisionRebind": false,
+      "globalQualification": "Not included in this original scope;do not infer any current facts/guard/graph/native success.",
+      "originalFields": "author/reviewer/summary/checks/limits/review/states retained unchanged;datedchecksnotrewritten",
+      "freshProofAttribution": "Root actual0ded Readerproof plus independent inert output/Git inspection;prior named full semantic reviews reused only for unchanged mechanisms."
+    },
+    {
+      "id": "AP09-search-reader-gate-20261021",
+      "originalRecordSha256": "feb5251e2df28f19aef23075f850d45870163b096829faec2137fe9d95e84f07",
+      "intersection": {
+        "pages": [
+          "docs/site/reference/documentation-site.md"
+        ],
+        "sources": [
+          ".github/workflows/docs-checks.yaml",
+          "scripts/docs-api-documentation-role-custody.mjs",
+          "scripts/docs-reader/renderer.mjs",
+          "scripts/tests/docs-reader.test.mjs"
+        ]
+      },
+      "verdict": "PRESERVE_ORIGINAL_NAMED_SCOPE_AT_0ded; NO_NEW_ACCEPTANCE",
+      "sourceAccuracy": "PASS_PRESERVATION_ONLY",
+      "readerUsability": "PASS_PRESERVATION_ONLY",
+      "quality": "PASS_PRESERVATION_ONLY",
+      "reason": "Finite synonyms, scoring, canonical index membership and actual browser interaction code remain unchanged. New section adds searchable content, so the original twelve-question browser evidence stays historical until a fresh run; Source-owned guard additions are not search acceptance.",
+      "requiresFutureCurrentFactsBeforeThisBoundedRevisionRebind": false,
+      "globalQualification": "Not included in this original scope;do not infer any current facts/guard/graph/native success.",
+      "originalFields": "author/reviewer/summary/checks/limits/review/states retained unchanged;datedchecksnotrewritten",
+      "freshProofAttribution": "Root actual0ded Readerproof plus independent inert output/Git inspection;prior named full semantic reviews reused only for unchanged mechanisms."
+    },
+    {
+      "id": "AP09-rendered-source-bounds-gate-20261021",
+      "originalRecordSha256": "e235ada5fcbe7f67a51b311cb2630063aee41972a2f0a9baac8c5266570898fc",
+      "intersection": {
+        "pages": [
+          "docs/site/reference/documentation-site.md"
+        ],
+        "sources": [
+          ".github/workflows/docs-checks.yaml",
+          "scripts/docs-api-documentation-role-custody.mjs",
+          "scripts/docs-publication.mjs",
+          "scripts/docs-reader/check-artifact.mjs",
+          "scripts/docs-reader/renderer.mjs",
+          "scripts/tests/docs-reader.test.mjs"
+        ]
+      },
+      "verdict": "PRESERVE_ORIGINAL_NAMED_SCOPE_AT_0ded; NO_NEW_ACCEPTANCE",
+      "sourceAccuracy": "PASS_PRESERVATION_ONLY",
+      "readerUsability": "PASS_PRESERVATION_ONLY",
+      "quality": "PASS_PRESERVATION_ONLY",
+      "reason": "Original Source locator/type/byte/range checks remain unchanged; added pinned links reuse original source mechanisms. Artifact checker retains all digest/link/fragment/physical guards and adds normal page bindings. No renewed locator/excerpt/network result is inferred.",
+      "requiresFutureCurrentFactsBeforeThisBoundedRevisionRebind": false,
+      "globalQualification": "Not included in this original scope;do not infer any current facts/guard/graph/native success.",
+      "originalFields": "author/reviewer/summary/checks/limits/review/states retained unchanged;datedchecksnotrewritten",
+      "freshProofAttribution": "Root actual0ded Readerproof plus independent inert output/Git inspection;prior named full semantic reviews reused only for unchanged mechanisms."
+    },
+    {
+      "id": "AP09-complete-static-offline-fallback-20261021",
+      "originalRecordSha256": "c5d4e21f14b3c6815ba610dbe6309a6309e33362543502337e7ca1546963be3e",
+      "intersection": {
+        "pages": [
+          "docs/site/reference/documentation-site.md"
+        ],
+        "sources": [
+          "scripts/docs-publication.mjs",
+          "scripts/docs-reader/renderer.mjs"
+        ]
+      },
+      "verdict": "PRESERVE_ORIGINAL_NAMED_SCOPE_AT_0ded; NO_NEW_ACCEPTANCE",
+      "sourceAccuracy": "PASS_PRESERVATION_ONLY",
+      "readerUsability": "PASS_PRESERVATION_ONLY",
+      "quality": "PASS_PRESERVATION_ONLY",
+      "reason": "Renderer shared asset text and no-script redirect/manual-fragment limits remain unchanged; metadata is not required by reader browser runtime. New subsection/callouts remain ordinary static text; fresh no-JS/offline observations are separate.",
+      "requiresFutureCurrentFactsBeforeThisBoundedRevisionRebind": false,
+      "globalQualification": "Not included in this original scope;do not infer any current facts/guard/graph/native success.",
+      "originalFields": "author/reviewer/summary/checks/limits/review/states retained unchanged;datedchecksnotrewritten",
+      "freshProofAttribution": "Root actual0ded Readerproof plus independent inert output/Git inspection;prior named full semantic reviews reused only for unchanged mechanisms."
+    },
+    {
+      "id": "AP09-complete-same-source-code-preview-20261021",
+      "originalRecordSha256": "e5c9d8c58f753be8e0d6d43fe252a4cef64400b42daf6161327a58caf167e2dc",
+      "intersection": {
+        "pages": [
+          "docs/site/reference/documentation-site.md"
+        ],
+        "sources": [
+          ".github/workflows/docs-checks.yaml",
+          "scripts/docs-api-documentation-role-custody.mjs",
+          "scripts/docs-publication.mjs",
+          "scripts/docs-reader/check-artifact.mjs",
+          "scripts/docs-reader/renderer.mjs"
+        ]
+      },
+      "verdict": "PRESERVE_ORIGINAL_NAMED_SCOPE_AT_0ded; NO_NEW_ACCEPTANCE",
+      "sourceAccuracy": "PASS_PRESERVATION_ONLY",
+      "readerUsability": "PASS_PRESERVATION_ONLY",
+      "quality": "PASS_PRESERVATION_ONLY",
+      "reason": "Preview implementation and original Source links are retained; added in-box source links/evidence fields follow the same inert pinned preview mechanism. Four inherited split-quote separators are repaired, not new execution. Increased excerpts require fresh actual preview validation.",
+      "requiresFutureCurrentFactsBeforeThisBoundedRevisionRebind": false,
+      "globalQualification": "Not included in this original scope;do not infer any current facts/guard/graph/native success.",
+      "originalFields": "author/reviewer/summary/checks/limits/review/states retained unchanged;datedchecksnotrewritten",
+      "freshProofAttribution": "Root actual0ded Readerproof plus independent inert output/Git inspection;prior named full semantic reviews reused only for unchanged mechanisms."
+    },
+    {
+      "id": "AP09-complete-responsive-reader-layout-20261021",
+      "originalRecordSha256": "26ce737c2848604f5e2f3e27af0c502f48cf8b65219a14b0f1f87d2677c7b4d8",
+      "intersection": {
+        "pages": [
+          "docs/site/reference/documentation-site.md",
+          "docs/site/understand/prism-runtime.md"
+        ],
+        "sources": [
+          ".github/workflows/docs-checks.yaml",
+          "scripts/docs-api-documentation-role-custody.mjs",
+          "scripts/docs-publication.mjs",
+          "scripts/docs-reader/renderer.mjs",
+          "scripts/tests/docs-reader.test.mjs"
+        ]
+      },
+      "verdict": "PRESERVE_ORIGINAL_NAMED_SCOPE_AT_0ded; NO_NEW_ACCEPTANCE",
+      "sourceAccuracy": "PASS_PRESERVATION_ONLY",
+      "readerUsability": "PASS_PRESERVATION_ONLY",
+      "quality": "PASS_PRESERVATION_ONLY",
+      "reason": "No CSS, diagram registration or responsive/focus/scroll behavior changes. Shared asset export reuses identical strings; fields/links enlarge text in existing components. Source supports preservation, but new callout text still needs actual fresh viewport/browser checks.",
+      "requiresFutureCurrentFactsBeforeThisBoundedRevisionRebind": false,
+      "globalQualification": "Not included in this original scope;do not infer any current facts/guard/graph/native success.",
+      "originalFields": "author/reviewer/summary/checks/limits/review/states retained unchanged;datedchecksnotrewritten",
+      "freshProofAttribution": "Root actual0ded Readerproof plus independent inert output/Git inspection;prior named full semantic reviews reused only for unchanged mechanisms."
+    },
+    {
+      "id": "AP09-complete-source-backed-diagrams-20261021",
+      "originalRecordSha256": "7f530c133bff304753ce8fc7929ab45eb9e03c991ce95fe6c7b40966e4486da1",
+      "intersection": {
+        "pages": [
+          "docs/site/reference/documentation-site.md",
+          "docs/site/understand/communication.md",
+          "docs/site/understand/nova-core.md",
+          "docs/site/understand/platform-and-operations.md",
+          "docs/site/understand/plugin-runtime.md",
+          "docs/site/understand/prism-data.md",
+          "docs/site/understand/prism-runtime.md",
+          "docs/site/understand/telemetry.md"
+        ],
+        "sources": [
+          "scripts/docs-publication.mjs",
+          "scripts/docs-reader/renderer.mjs"
+        ]
+      },
+      "verdict": "PRESERVE_ORIGINAL_NAMED_SCOPE_AT_0ded; NO_NEW_ACCEPTANCE",
+      "sourceAccuracy": "PASS_PRESERVATION_ONLY",
+      "readerUsability": "PASS_PRESERVATION_ONLY",
+      "quality": "PASS_PRESERVATION_ONLY",
+      "reason": "Diagram implementation, registry, questions, owners and alternatives are unchanged. Added Source fields preserve existing authorities, including design versus generation/native execution and public-web blocked admission. New renderer layout export does not change diagram composition.",
+      "requiresFutureCurrentFactsBeforeThisBoundedRevisionRebind": false,
+      "globalQualification": "Not included in this original scope;do not infer any current facts/guard/graph/native success.",
+      "originalFields": "author/reviewer/summary/checks/limits/review/states retained unchanged;datedchecksnotrewritten",
+      "freshProofAttribution": "Root actual0ded Readerproof plus independent inert output/Git inspection;prior named full semantic reviews reused only for unchanged mechanisms."
+    },
+    {
+      "id": "AP09-whole-platform-discovery-and-drift-20261021",
+      "originalRecordSha256": "836aee88ed297ffce1896e78148e48e568e3c74c5defaf61390ccd249b6a4044",
+      "intersection": {
+        "pages": [
+          "docs/site/understand/platform-and-operations.md"
+        ],
+        "sources": []
+      },
+      "verdict": "PRESERVE_ORIGINAL_NAMED_SCOPE_AT_0ded; NO_NEW_ACCEPTANCE",
+      "sourceAccuracy": "PASS_PRESERVATION_ONLY",
+      "readerUsability": "PASS_PRESERVATION_ONLY",
+      "quality": "PASS_PRESERVATION_ONLY",
+      "reason": "Platform fields preserve existing required/conditional/optional owner distinctions and failed/not-executed scope; they do not alter discovery selectors, deployed objects or surface inventory. Correct shared credential field removes a candidate-only contradiction.",
+      "requiresFutureCurrentFactsBeforeThisBoundedRevisionRebind": false,
+      "globalQualification": "Not included in this original scope;do not infer any current facts/guard/graph/native success.",
+      "originalFields": "author/reviewer/summary/checks/limits/review/states retained unchanged;datedchecksnotrewritten",
+      "freshProofAttribution": "Root actual0ded Readerproof plus independent inert output/Git inspection;prior named full semantic reviews reused only for unchanged mechanisms."
+    },
+    {
+      "id": "AP09-whole-store-contract-20261021",
+      "originalRecordSha256": "0ce88d2eae005309542fdb3166479caf0821d6448593d6cc78eb56497c189cfc",
+      "intersection": {
+        "pages": [
+          "docs/site/understand/data-and-state.md"
+        ],
+        "sources": []
+      },
+      "verdict": "PRESERVE_ORIGINAL_NAMED_SCOPE_AT_0ded; NO_NEW_ACCEPTANCE",
+      "sourceAccuracy": "PASS_PRESERVATION_ONLY",
+      "readerUsability": "PASS_PRESERVATION_ONLY",
+      "quality": "PASS_PRESERVATION_ONLY",
+      "reason": "Data fields preserve each original writer/reader/fence/integrity/retention/backup group and unsupported restore stop. No code or actual store changed, and test text is not fresh execution.",
+      "requiresFutureCurrentFactsBeforeThisBoundedRevisionRebind": false,
+      "globalQualification": "Not included in this original scope;do not infer any current facts/guard/graph/native success.",
+      "originalFields": "author/reviewer/summary/checks/limits/review/states retained unchanged;datedchecksnotrewritten",
+      "freshProofAttribution": "Root actual0ded Readerproof plus independent inert output/Git inspection;prior named full semantic reviews reused only for unchanged mechanisms."
+    },
+    {
+      "id": "AP09-whole-trust-and-spiffe-contract-20261021",
+      "originalRecordSha256": "b59328972391ba4a9dc97756b1435d6bb155a24da6f4ccea509ef8ee87eb7a8b",
+      "intersection": {
+        "pages": [
+          "docs/site/understand/communication.md"
+        ],
+        "sources": []
+      },
+      "verdict": "PRESERVE_ORIGINAL_NAMED_SCOPE_AT_0ded; NO_NEW_ACCEPTANCE",
+      "sourceAccuracy": "PASS_PRESERVATION_ONLY",
+      "readerUsability": "PASS_PRESERVATION_ONLY",
+      "quality": "PASS_PRESERVATION_ONLY",
+      "reason": "Communication fields retain proxy identity versus Core grants/fences and loopback/deployed-enforcement limits. No trust/RBAC source changed; Ops same-token correction occurs in a related page and does not create a separate credential.",
+      "requiresFutureCurrentFactsBeforeThisBoundedRevisionRebind": false,
+      "globalQualification": "Not included in this original scope;do not infer any current facts/guard/graph/native success.",
+      "originalFields": "author/reviewer/summary/checks/limits/review/states retained unchanged;datedchecksnotrewritten",
+      "freshProofAttribution": "Root actual0ded Readerproof plus independent inert output/Git inspection;prior named full semantic reviews reused only for unchanged mechanisms."
+    },
+    {
+      "id": "AP09-whole-dependency-decision-traces-20261021",
+      "originalRecordSha256": "a84e41a243088b8b06f613f4c81784e7634543b4cab5cd841962d8043cede80a",
+      "intersection": {
+        "pages": [
+          "docs/site/understand/communication.md"
+        ],
+        "sources": []
+      },
+      "verdict": "PRESERVE_ORIGINAL_NAMED_SCOPE_AT_0ded; NO_NEW_ACCEPTANCE",
+      "sourceAccuracy": "PASS_PRESERVATION_ONLY",
+      "readerUsability": "PASS_PRESERVATION_ONLY",
+      "quality": "PASS_PRESERVATION_ONLY",
+      "reason": "Communication callouts leave ordered target traces, durable owner/identity and classified failure/uncertain-outcome stops intact. Declared showcase remains target-only rather than observed full success.",
+      "requiresFutureCurrentFactsBeforeThisBoundedRevisionRebind": false,
+      "globalQualification": "Not included in this original scope;do not infer any current facts/guard/graph/native success.",
+      "originalFields": "author/reviewer/summary/checks/limits/review/states retained unchanged;datedchecksnotrewritten",
+      "freshProofAttribution": "Root actual0ded Readerproof plus independent inert output/Git inspection;prior named full semantic reviews reused only for unchanged mechanisms."
+    },
+    {
+      "id": "AP09-whole-upgrade-and-retirement-20261021",
+      "originalRecordSha256": "5432fd0f52e8d5d1a325fc41a8fe6d0f2c3267b148a2423839a12977279f847c",
+      "intersection": {
+        "pages": [
+          "docs/site/reference/configuration-change-impact.md"
+        ],
+        "sources": []
+      },
+      "verdict": "PRESERVE_ORIGINAL_NAMED_SCOPE_AT_0ded; NO_NEW_ACCEPTANCE",
+      "sourceAccuracy": "PASS_PRESERVATION_ONLY",
+      "readerUsability": "PASS_PRESERVATION_ONLY",
+      "quality": "PASS_PRESERVATION_ONLY",
+      "reason": "ConfigMap box adds exact pinned mechanisms only, preserving cache/watch/volume/subPath/environment update boundaries. No automatic reload, supported old/new upgrade pair, reversible new-format write or broad destructive teardown authority follows.",
+      "requiresFutureCurrentFactsBeforeThisBoundedRevisionRebind": false,
+      "globalQualification": "Not included in this original scope;do not infer any current facts/guard/graph/native success.",
+      "originalFields": "author/reviewer/summary/checks/limits/review/states retained unchanged;datedchecksnotrewritten",
+      "freshProofAttribution": "Root actual0ded Readerproof plus independent inert output/Git inspection;prior named full semantic reviews reused only for unchanged mechanisms."
+    },
+    {
+      "id": "AP09-complete-event-producer-consumer-catalogue-20261021",
+      "originalRecordSha256": "37ee330ac8884a6a6491c996556dbe6f0d374a3cffaff006f7891ed202ddda42",
+      "intersection": {
+        "pages": [
+          "docs/site/understand/telemetry.md"
+        ],
+        "sources": []
+      },
+      "verdict": "PRESERVE_ORIGINAL_NAMED_SCOPE_AT_0ded; NO_NEW_ACCEPTANCE",
+      "sourceAccuracy": "PASS_PRESERVATION_ONLY",
+      "readerUsability": "PASS_PRESERVATION_ONLY",
+      "quality": "PASS_PRESERVATION_ONLY",
+      "reason": "Telemetry fields preserve five registrations versus actual activation, lifecycle/domain/raw-host version separation and unknown retained consumers. Counts remain original catalogue evidence, not fresh execution.",
+      "requiresFutureCurrentFactsBeforeThisBoundedRevisionRebind": false,
+      "globalQualification": "Not included in this original scope;do not infer any current facts/guard/graph/native success.",
+      "originalFields": "author/reviewer/summary/checks/limits/review/states retained unchanged;datedchecksnotrewritten",
+      "freshProofAttribution": "Root actual0ded Readerproof plus independent inert output/Git inspection;prior named full semantic reviews reused only for unchanged mechanisms."
+    },
+    {
+      "id": "A99-02-whole-content-20261021",
+      "originalRecordSha256": "dfb7bebf76514fea310b989a49b3bc7b56f54c650e20dfee75d6258f7b49066e",
+      "intersection": {
+        "pages": [
+          "docs/site/understand/nova-core.md"
+        ],
+        "sources": []
+      },
+      "verdict": "PRESERVE_ORIGINAL_NAMED_SCOPE_AT_0ded; NO_NEW_ACCEPTANCE",
+      "sourceAccuracy": "PASS_PRESERVATION_ONLY",
+      "readerUsability": "PASS_PRESERVATION_ONLY",
+      "quality": "PASS_PRESERVATION_ONLY",
+      "reason": "Nova evidence fields preserve compile ordering/defaults/registry/role/matrix/gates and immutable identity. Corrected effect summary is nonchronological and does not change compiler semantics.",
+      "requiresFutureCurrentFactsBeforeThisBoundedRevisionRebind": false,
+      "globalQualification": "Not included in this original scope;do not infer any current facts/guard/graph/native success.",
+      "originalFields": "author/reviewer/summary/checks/limits/review/states retained unchanged;datedchecksnotrewritten",
+      "freshProofAttribution": "Root actual0ded Readerproof plus independent inert output/Git inspection;prior named full semantic reviews reused only for unchanged mechanisms."
+    },
+    {
+      "id": "A99-04-whole-content-20261021",
+      "originalRecordSha256": "c60216b2f92906a351ee5467037383664e9bdba0f17012aa7fb6c0293103511e",
+      "intersection": {
+        "pages": [
+          "docs/site/understand/nova-core.md"
+        ],
+        "sources": []
+      },
+      "verdict": "PRESERVE_ORIGINAL_NAMED_SCOPE_AT_0ded; NO_NEW_ACCEPTANCE",
+      "sourceAccuracy": "PASS_PRESERVATION_ONLY",
+      "readerUsability": "PASS_PRESERVATION_ONLY",
+      "quality": "PASS_PRESERVATION_ONLY",
+      "reason": "Nova evidence fields preserve bounded retry/repair/wait/cancel/restart/recovery and unresolved-effect safe stops. No cancellation rollback, automatic reconciliation/import or cross-host lease is introduced.",
+      "requiresFutureCurrentFactsBeforeThisBoundedRevisionRebind": false,
+      "globalQualification": "Not included in this original scope;do not infer any current facts/guard/graph/native success.",
+      "originalFields": "author/reviewer/summary/checks/limits/review/states retained unchanged;datedchecksnotrewritten",
+      "freshProofAttribution": "Root actual0ded Readerproof plus independent inert output/Git inspection;prior named full semantic reviews reused only for unchanged mechanisms."
+    },
+    {
+      "id": "AP09-whole-current-communication-union-20261021-d477",
+      "originalRecordSha256": "ea669e8be1626f1abc4ac0348f0a177171759dcec74be2cc1a689db173445a7c",
+      "intersection": {
+        "pages": [
+          "docs/site/understand/communication.md",
+          "docs/site/understand/platform-and-operations.md"
+        ],
+        "sources": []
+      },
+      "verdict": "PRESERVE_ORIGINAL_NAMED_SCOPE_AT_0ded; NO_NEW_ACCEPTANCE",
+      "sourceAccuracy": "PASS_PRESERVATION_ONLY",
+      "readerUsability": "PASS_PRESERVATION_ONLY",
+      "quality": "PASS_PRESERVATION_ONLY",
+      "reason": "Communication/platform fields preserve all original owner-group protocol/auth/deadline/order/durable-pressure distinctions. Generic runtime and signed HTTP publisher uncertainties still resolve at original identity/receiver; no OpenClaw cancel or Redis replay substitute.",
+      "requiresFutureCurrentFactsBeforeThisBoundedRevisionRebind": false,
+      "globalQualification": "Not included in this original scope;do not infer any current facts/guard/graph/native success.",
+      "originalFields": "author/reviewer/summary/checks/limits/review/states retained unchanged;datedchecksnotrewritten",
+      "freshProofAttribution": "Root actual0ded Readerproof plus independent inert output/Git inspection;prior named full semantic reviews reused only for unchanged mechanisms."
+    },
+    {
+      "id": "AP09-whole-current-telemetry-union-20261021-d477",
+      "originalRecordSha256": "66fe73ba589b74788b53f7909aca36889fc44b9db98365422fcd7f840496e4cc",
+      "intersection": {
+        "pages": [
+          "docs/site/understand/communication.md",
+          "docs/site/understand/data-and-state.md",
+          "docs/site/understand/telemetry.md"
+        ],
+        "sources": []
+      },
+      "verdict": "PRESERVE_ORIGINAL_NAMED_SCOPE_AT_0ded; NO_NEW_ACCEPTANCE",
+      "sourceAccuracy": "PASS_PRESERVATION_ONLY",
+      "readerUsability": "PASS_PRESERVATION_ONLY",
+      "quality": "PASS_PRESERVATION_ONLY",
+      "reason": "Communication/data/telemetry fields preserve active envelopes, lifecycle constructors, raw host versus reduced projection, observer/redaction/recovery and retention limits. Explicit test-definition disclaimers avoid new emission/delivery claims.",
+      "requiresFutureCurrentFactsBeforeThisBoundedRevisionRebind": false,
+      "globalQualification": "Not included in this original scope;do not infer any current facts/guard/graph/native success.",
+      "originalFields": "author/reviewer/summary/checks/limits/review/states retained unchanged;datedchecksnotrewritten",
+      "freshProofAttribution": "Root actual0ded Readerproof plus independent inert output/Git inspection;prior named full semantic reviews reused only for unchanged mechanisms."
+    },
+    {
+      "id": "AP09-whole-independent-platform-decision-review-20261021-d477",
+      "originalRecordSha256": "54738667d1cb89076418224bc6e86e6f46bb2b691b03929845b5d91b56254c62",
+      "intersection": {
+        "pages": [
+          "docs/site/understand/communication.md",
+          "docs/site/understand/data-and-state.md",
+          "docs/site/understand/platform-and-operations.md",
+          "docs/site/understand/telemetry.md"
+        ],
+        "sources": []
+      },
+      "verdict": "PRESERVE_ORIGINAL_NAMED_SCOPE_AT_0ded; NO_NEW_ACCEPTANCE",
+      "sourceAccuracy": "PASS_PRESERVATION_ONLY",
+      "readerUsability": "PASS_PRESERVATION_ONLY",
+      "quality": "PASS_PRESERVATION_ONLY",
+      "reason": "Four-page fields preserve dependency classification, safe repair and original uncertain-outcome authority. Shared Ops credential correction agrees with existing workload/RBAC, not a new effective-isolation guarantee.",
+      "requiresFutureCurrentFactsBeforeThisBoundedRevisionRebind": false,
+      "globalQualification": "Not included in this original scope;do not infer any current facts/guard/graph/native success.",
+      "originalFields": "author/reviewer/summary/checks/limits/review/states retained unchanged;datedchecksnotrewritten",
+      "freshProofAttribution": "Root actual0ded Readerproof plus independent inert output/Git inspection;prior named full semantic reviews reused only for unchanged mechanisms."
+    },
+    {
+      "id": "AP09-reference-network-paths-80178-20261021",
+      "originalRecordSha256": "76b4d8e99cb4d3cfb952ede770af15dafd0005eda3ba8e32980ce1ff9d737a1c",
+      "intersection": {
+        "pages": [
+          "docs/site/understand/communication.md",
+          "docs/site/understand/platform-and-operations.md"
+        ],
+        "sources": []
+      },
+      "verdict": "PRESERVE_ORIGINAL_NAMED_SCOPE_AT_0ded; NO_NEW_ACCEPTANCE",
+      "sourceAccuracy": "PASS_PRESERVATION_ONLY",
+      "readerUsability": "PASS_PRESERVATION_ONLY",
+      "quality": "PASS_PRESERVATION_ONLY",
+      "reason": "Communication/platform fields preserve endpoint methods/identity/transport/time/pressure and original-owner recovery; generated network facts and product Sources remain unchanged. No live traffic, remote receiver or broad network test is implied.",
+      "requiresFutureCurrentFactsBeforeThisBoundedRevisionRebind": false,
+      "globalQualification": "Not included in this original scope;do not infer any current facts/guard/graph/native success.",
+      "originalFields": "author/reviewer/summary/checks/limits/review/states retained unchanged;datedchecksnotrewritten",
+      "freshProofAttribution": "Root actual0ded Readerproof plus independent inert output/Git inspection;prior named full semantic reviews reused only for unchanged mechanisms."
+    },
+    {
+      "id": "AP09-reference-event-payloads-80178-20261021",
+      "originalRecordSha256": "f0986a7dc4511cbdcfb0abfd01091889671f5029d39a68b0897727eaac0db241",
+      "intersection": {
+        "pages": [
+          "docs/site/understand/prism-runtime.md",
+          "docs/site/understand/telemetry.md"
+        ],
+        "sources": []
+      },
+      "verdict": "PRESERVE_ORIGINAL_NAMED_SCOPE_AT_0ded; NO_NEW_ACCEPTANCE",
+      "sourceAccuracy": "PASS_PRESERVATION_ONLY",
+      "readerUsability": "PASS_PRESERVATION_ONLY",
+      "quality": "PASS_PRESERVATION_ONLY",
+      "reason": "Telemetry/Prism runtime fields preserve lifecycle/domain/host payload versions, producer/consumer authority and Worker result/progress separation. Bridge forwarding is correctly separate from OpenClaw tool registration; no full catalogue execution is invented.",
+      "requiresFutureCurrentFactsBeforeThisBoundedRevisionRebind": false,
+      "globalQualification": "Not included in this original scope;do not infer any current facts/guard/graph/native success.",
+      "originalFields": "author/reviewer/summary/checks/limits/review/states retained unchanged;datedchecksnotrewritten",
+      "freshProofAttribution": "Root actual0ded Readerproof plus independent inert output/Git inspection;prior named full semantic reviews reused only for unchanged mechanisms."
+    },
+    {
+      "id": "AP09-reference-stores-retention-80178-20261021",
+      "originalRecordSha256": "ab6de58d3aa1454afe9a7d7f03809e63d5af0ea1cf395731f143cd25c29837bd",
+      "intersection": {
+        "pages": [
+          "docs/site/understand/data-and-state.md"
+        ],
+        "sources": []
+      },
+      "verdict": "PRESERVE_ORIGINAL_NAMED_SCOPE_AT_0ded; NO_NEW_ACCEPTANCE",
+      "sourceAccuracy": "PASS_PRESERVATION_ONLY",
+      "readerUsability": "PASS_PRESERVATION_ONLY",
+      "quality": "PASS_PRESERVATION_ONLY",
+      "reason": "Data fields preserve store identities, writer/reader/fence/retention/capacity and explicit absent restore proofs. Test descriptions support bounded assertions only and do not expand 22 contract families to full-platform recoverability.",
+      "requiresFutureCurrentFactsBeforeThisBoundedRevisionRebind": false,
+      "globalQualification": "Not included in this original scope;do not infer any current facts/guard/graph/native success.",
+      "originalFields": "author/reviewer/summary/checks/limits/review/states retained unchanged;datedchecksnotrewritten",
+      "freshProofAttribution": "Root actual0ded Readerproof plus independent inert output/Git inspection;prior named full semantic reviews reused only for unchanged mechanisms."
+    },
+    {
+      "id": "FLW010-uncertain-effect-supported-boundary-20261021",
+      "originalRecordSha256": "1337b6df1f424df3f47b998c9b3b39e183eaceb08ff2d133b72f1740c573e8f4",
+      "intersection": {
+        "pages": [
+          "docs/site/understand/nova-core.md"
+        ],
+        "sources": []
+      },
+      "verdict": "PRESERVE_ORIGINAL_NAMED_SCOPE_AT_0ded; NO_NEW_ACCEPTANCE",
+      "sourceAccuracy": "PASS_PRESERVATION_ONLY",
+      "readerUsability": "PASS_PRESERVATION_ONLY",
+      "quality": "PASS_PRESERVATION_ONLY",
+      "reason": "Nova fields preserve stopped-writer/raw-state retention, original key/resource/receipt, owner query and no generic clearing/import CLI. New summaries do not infer nonexecution from unknown outcome or authorize repetition.",
+      "requiresFutureCurrentFactsBeforeThisBoundedRevisionRebind": false,
+      "globalQualification": "Not included in this original scope;do not infer any current facts/guard/graph/native success.",
+      "originalFields": "author/reviewer/summary/checks/limits/review/states retained unchanged;datedchecksnotrewritten",
+      "freshProofAttribution": "Root actual0ded Readerproof plus independent inert output/Git inspection;prior named full semantic reviews reused only for unchanged mechanisms."
+    },
+    {
+      "id": "FLW014-plugin-operator-supported-lifecycle-20261021",
+      "originalRecordSha256": "431fd2fa03e09f5c2247d350429ffcbe55faf1af948b5fb50f0d3e72bfca4ac6",
+      "intersection": {
+        "pages": [
+          "docs/site/understand/plugin-runtime.md"
+        ],
+        "sources": []
+      },
+      "verdict": "PRESERVE_ORIGINAL_NAMED_SCOPE_AT_0ded; NO_NEW_ACCEPTANCE",
+      "sourceAccuracy": "PASS_PRESERVATION_ONLY",
+      "readerUsability": "PASS_PRESERVATION_ONLY",
+      "quality": "PASS_PRESERVATION_ONLY",
+      "reason": "Plugin fields preserve exact roots/trust/package/config/grant, exclusive replacement/drain and original state/removal boundaries. Configuration equality is explicit even if package upgrades are authorized; no general lifecycle CLI/live activation is invented.",
+      "requiresFutureCurrentFactsBeforeThisBoundedRevisionRebind": false,
+      "globalQualification": "Not included in this original scope;do not infer any current facts/guard/graph/native success.",
+      "originalFields": "author/reviewer/summary/checks/limits/review/states retained unchanged;datedchecksnotrewritten",
+      "freshProofAttribution": "Root actual0ded Readerproof plus independent inert output/Git inspection;prior named full semantic reviews reused only for unchanged mechanisms."
+    },
+    {
+      "id": "A99-09-whole-workflow-security-content-20261021",
+      "originalRecordSha256": "dc772fc1de35b8e4839a946aedf619180b0744eaefaf82669153d8b8c95ccf41",
+      "intersection": {
+        "pages": [
+          "docs/site/understand/plugin-runtime.md"
+        ],
+        "sources": []
+      },
+      "verdict": "PRESERVE_ORIGINAL_NAMED_SCOPE_AT_0ded; NO_NEW_ACCEPTANCE",
+      "sourceAccuracy": "PASS_PRESERVATION_ONLY",
+      "readerUsability": "PASS_PRESERVATION_ONLY",
+      "quality": "PASS_PRESERVATION_ONLY",
+      "reason": "Plugin fields retain request-versus-grant, Core-only capability prohibition, credential/environment authority and redaction/isolation limits. Test language still disclaims combined/deployed-kernel proof; provider ACK is not accepted result.",
+      "requiresFutureCurrentFactsBeforeThisBoundedRevisionRebind": false,
+      "globalQualification": "Not included in this original scope;do not infer any current facts/guard/graph/native success.",
+      "originalFields": "author/reviewer/summary/checks/limits/review/states retained unchanged;datedchecksnotrewritten",
+      "freshProofAttribution": "Root actual0ded Readerproof plus independent inert output/Git inspection;prior named full semantic reviews reused only for unchanged mechanisms."
+    },
+    {
+      "id": "A99-10-whole-workflow-compatibility-content-20261021",
+      "originalRecordSha256": "dd64ab438c9dceebd9c8b3a9ebfb7942374021d2d937a5ef6f1bba40756fb897",
+      "intersection": {
+        "pages": [
+          "docs/site/understand/plugin-runtime.md"
+        ],
+        "sources": []
+      },
+      "verdict": "PRESERVE_ORIGINAL_NAMED_SCOPE_AT_0ded; NO_NEW_ACCEPTANCE",
+      "sourceAccuracy": "PASS_PRESERVATION_ONLY",
+      "readerUsability": "PASS_PRESERVATION_ONLY",
+      "quality": "PASS_PRESERVATION_ONLY",
+      "reason": "Plugin fields preserve exact snapshot/configuration equality and package-only upgrade chains. Negative old/new combinations and first incompatible write/rollback stop remain; no supported deployment pair is added.",
+      "requiresFutureCurrentFactsBeforeThisBoundedRevisionRebind": false,
+      "globalQualification": "Not included in this original scope;do not infer any current facts/guard/graph/native success.",
+      "originalFields": "author/reviewer/summary/checks/limits/review/states retained unchanged;datedchecksnotrewritten",
+      "freshProofAttribution": "Root actual0ded Readerproof plus independent inert output/Git inspection;prior named full semantic reviews reused only for unchanged mechanisms."
+    },
+    {
+      "id": "A99-08-complete-supported-failure-journey-union-20261021",
+      "originalRecordSha256": "d93dc162b26441b99a658677094f19aadd0e62f7be2d00524c3d8e94f63eb388",
+      "intersection": {
+        "pages": [
+          "docs/site/understand/nova-core.md",
+          "docs/site/understand/plugin-runtime.md"
+        ],
+        "sources": []
+      },
+      "verdict": "PRESERVE_ORIGINAL_NAMED_SCOPE_AT_0ded; NO_NEW_ACCEPTANCE",
+      "sourceAccuracy": "PASS_PRESERVATION_ONLY",
+      "readerUsability": "PASS_PRESERVATION_ONLY",
+      "quality": "PASS_PRESERVATION_ONLY",
+      "reason": "Nova/Plugin evidence fields leave the six routed failure procedures and native/live unavailable controls intact. Safe stop, original identity, owner, follow-up and cleanup remain; added source summaries are not fresh task execution.",
+      "requiresFutureCurrentFactsBeforeThisBoundedRevisionRebind": false,
+      "globalQualification": "Not included in this original scope;do not infer any current facts/guard/graph/native success.",
+      "originalFields": "author/reviewer/summary/checks/limits/review/states retained unchanged;datedchecksnotrewritten",
+      "freshProofAttribution": "Root actual0ded Readerproof plus independent inert output/Git inspection;prior named full semantic reviews reused only for unchanged mechanisms."
+    },
+    {
+      "id": "A912-03-supported-redirect-paths-20261021",
+      "originalRecordSha256": "6be46735333e86a3b7226b56faea4666df9812cc4675637285b0df1e78d7f1bc",
+      "intersection": {
+        "pages": [
+          "docs/site/reference/documentation-site.md"
+        ],
+        "sources": [
+          ".github/workflows/docs-checks.yaml",
+          "scripts/docs-publication.mjs",
+          "scripts/docs-reader/check-artifact.mjs",
+          "scripts/docs-reader/redirects.mjs",
+          "scripts/docs-reader/renderer.mjs",
+          "scripts/tests/docs-reader-redirects.test.mjs",
+          "scripts/tests/docs-reader.test.mjs"
+        ]
+      },
+      "verdict": "PRESERVE_ORIGINAL_NAMED_SCOPE_AT_0ded; NO_NEW_ACCEPTANCE",
+      "sourceAccuracy": "PASS_PRESERVATION_ONLY",
+      "readerUsability": "PASS_PRESERVATION_ONLY",
+      "quality": "PASS_PRESERVATION_ONLY",
+      "reason": "Read-only redirect verification is distinct from unchanged collision-rejecting emission; original known routes, exact fallback bytes, fragment/manual no-JS and copied-asset behavior remain. Four old fixture calls explicitly request legacy mode; production CI does not, and normal checking requires records. Current route/facts qualification and fresh browser evidence remain separate.",
+      "requiresFutureCurrentFactsBeforeThisBoundedRevisionRebind": false,
+      "globalQualification": "Not included in this original scope;do not infer any current facts/guard/graph/native success.",
+      "originalFields": "author/reviewer/summary/checks/limits/review/states retained unchanged;datedchecksnotrewritten",
+      "freshProofAttribution": "Root actual0ded Readerproof plus independent inert output/Git inspection;prior named full semantic reviews reused only for unchanged mechanisms."
+    }
+  ],
+  "recordsRequiringFutureCurrentFactsForTheirOriginalBoundedScope": [],
+  "qualificationReason": "Read all57originalsummary/limits and affectedguard/sourcechecks. Even MNT017 expressly excludes globaldiscovery/generator/drift;publicReaderrecords expressly retain globalAPIqualification stops. Historical qualifiedroles/guardruns are not relabeled current. Changedfiniteguardsemantics have complete nonauthorreviews+installed70/56controls;fresh0ded publicationReaderproof supplies relevantchangedoutputs. Therefore current facts are necessary for the separate globalowner/qualificationdecision,not a new prerequisite for these prior boundedscopes.",
+  "actualReaderScope": [
+    {
+      "command": "Original built artifact/search/Source-links/previews/diagrams checkers",
+      "exitCode": 0,
+      "observation": "177canonical/187HTML/240outputdigests/40832localtargets;12search tasks;14840Source locators/3961objects;411boxes/1888fresh excerpts/983objects;27fresh SVG hashes."
+    },
+    {
+      "command": "Actual offline/no-JS/browser/redirect/loopback/ZIP/extracted artifact checks (Root)",
+      "exitCode": 0,
+      "observation": "31page/search+495box observations,0findings/0network;10redirectbrowser cases;240GETexactbytes,home308query,HEAD/404/405;ZIP242members/19Git-comparedassets and fresh-extracted normal artifact/search PASS."
+    }
+  ],
+  "priorReview": "../preservation-11294-to-0ded/review.json",
+  "qualificationsStillRequired": [
+    "Actual current global API/source-purpose/facts/graph/native/owner/generator qualification and exact new CIroute.",
+    "Any future Source revision after0ded needs its own targeted delta review;this doesnot bind rootfutureguardedits."
+  ],
+  "limits": [
+    "Original scopedlimits/statuses/authors/reviewers/checks preserved.",
+    "No countincrement,globalSourcegate,newrequirements/gates/runtime/releaseapproval.",
+    "FreshReaderproof limitedtoobservedoutputs/tasks;historicalall-pageaccessibility/personasnotrerun.",
+    "Four native receiptsremainUNEXECUTED."
+  ]
+}

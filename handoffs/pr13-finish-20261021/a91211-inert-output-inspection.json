@@ -1,0 +1,79 @@
+{
+  "review": "INDEPENDENT_INERT_OUTPUT_AND_GIT_INSPECTION_ONLY",
+  "revision": "0ded6b68eb6170c4ea5e76251ad5e13adf2f664b",
+  "wholePhysicalTreesEqual": true,
+  "wholeTreeFiles": 419,
+  "retainedDeterminismFileRosterExact": true,
+  "machineRecords": 177,
+  "positiveRouteCanonicalSourceSetExact": true,
+  "declaredSourceDependencyRecords": 919,
+  "unacquiredExternalReferences": 0,
+  "repositoryTreeDependencyRecords": 156,
+  "uniqueGitObjectsIndependentlyByteChecked": 757,
+  "redirectBindingsIncludingHome": 1,
+  "registeredRedirects": 0,
+  "normalManifestSha256": "5e08cc39541f766c74ee0a715b654d21fce4d35326c32ed6090f3f2b98e14944",
+  "inputEvidence": [
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/reader-first-artifact-0ded6b68.json",
+      "sha256": "8f670e6d61f2fd55de4e57bea47ff72b664ff2370c4ad4a5efb6da19f902ca6b"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/reader-search-0ded6b68.json",
+      "sha256": "f65734344ddbf315e22ea92246192f9ca609b27c2a1260abf38c119fbf91880d"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/reader-source-links-0ded6b68.json",
+      "sha256": "c90c118f38865179258cd8dab4fd950ca9ff9a9c6859a92106b8dd0ee8c29d06"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/reader-source-previews-0ded6b68.json",
+      "sha256": "50943cd2626a1ed21b868860bf9c84dd0b2a4b8322f8ad249684afe6b4018988"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/reader-diagrams-0ded6b68.json",
+      "sha256": "66f027803943f3133bb64af12d04b7db5814a63ed85f8fd846ce48daa890b976"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/reader-preview-0ded6b68.json",
+      "sha256": "5b187a0a8d2c4185c09cab9d11eb8c8a8a13da80accff47654ed7311b1d2db8e"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/reader-archive-0ded6b68.json",
+      "sha256": "d49c254c1d48145d6fd65f696b3fa2e2a10bb9aee10fd2783feb6d1d38489168"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/reader-extracted-artifact-0ded6b68.json",
+      "sha256": "8f670e6d61f2fd55de4e57bea47ff72b664ff2370c4ad4a5efb6da19f902ca6b"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/reader-extracted-search-0ded6b68.json",
+      "sha256": "f65734344ddbf315e22ea92246192f9ca609b27c2a1260abf38c119fbf91880d"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/browser-recovery-0ded6b68.json",
+      "sha256": "325ce7609184b4f3bea263334d27f7b290db60762e8467e7a406a4fd7e4c7cc8"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/reader-redirect-browser-0ded6b68.txt",
+      "sha256": "bd3a6c3248d57760d00dfff2e54ce520988b64b74fe2b48a198076dd4c32e1c8"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/reader-build-first-0ded6b68.txt",
+      "sha256": "1e60f4bdbbcb04d2db9ba4e5de4f15995c9ee5427583af75bddc5a82be0409d3"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/reader-build-second-0ded6b68.txt",
+      "sha256": "1e60f4bdbbcb04d2db9ba4e5de4f15995c9ee5427583af75bddc5a82be0409d3"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/production-determinism-0ded6b68.json",
+      "sha256": "d9afdacb8e54bf31b93d88364e7ceae5d4a6507feeafa59af534af54df4dc1cd"
+    }
+  ],
+  "limits": [
+    "No original producer/checker rerun; actual process terminals supplied by Root and corroborated by original logs/unchanged outputs.",
+    "Only declared source dependencies are bound; no whole implementation/installed/semantic/external reference closure.",
+    "No global source-purpose/facts/graph/native/API guard acceptance."
+  ]
+}
