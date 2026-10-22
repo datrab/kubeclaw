@@ -1,3 +1,4 @@
+import { readBusterOriginalExecution } from './original-execution.ts';
 import crypto from 'node:crypto';
 import { freeze } from './runner-values.ts';
 import { assertBusterInput } from './preparation-input.ts';
@@ -51,8 +52,21 @@ export async function executeBusterPreparedJob(options: BusterRemotePlanServiceO
   prepared = freeze(structuredClone(prepared));
   const { job } = prepared;
   try {
+    const retained = (await options.store.get(job.jobId)).payload;
+    if (retained.schemaVersion === 'buster-plan-job-record.v3') {
+      const original = readBusterOriginalExecution(retained.originalExecution);
+      const { workerCore: _currentWorkerCore, ...base } = options;
+      options = { ...base, executionPolicy: original.executionPolicy,
+        workerLocalRuntime: original.workerLocalRuntime,
+        ...(original.workerCore === null ? {} : {workerCore: original.workerCore}) };
+    } else if (options.originalExecution !== undefined) {
+      throw new Error('BUSTER_ORIGINAL_EXECUTION_UNAVAILABLE');
+    }
     assertBusterInput(prepared.input, job);
-    const extracted = freeze(structuredClone(await options.preparation.extract(prepared)));
+    // Durable status/capture metadata is not part of the retained root wire identity.
+    const staged: BusterStagedAdmission = prepared.input.schemaVersion === 'buster-staged-input.v1'
+      ? {job, input: prepared.input} : {job, input: prepared.input};
+    const extracted = freeze(structuredClone(await options.preparation.extract(staged)));
     assertPreparedSource(extracted.source, job);
     if (preparationDigest(extracted.job) !== prepared.input.headerDigest) {
       throw new Error('BUSTER_PREPARATION_HEADER_CHANGED');

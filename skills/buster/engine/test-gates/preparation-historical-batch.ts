@@ -41,6 +41,7 @@ function assertImportedPayload(payload: unknown, sequence: number, descriptor: H
     if (payload.historical.importId !== importId || payload.historical.sequence !== sequence
       || payload.historical.originalStoreDigest !== descriptor.originalStoreDigest) throw new Error('BUSTER_HISTORICAL_RECORD_INVALID');
   } else {
+    if ((payload as {schemaVersion?: unknown}).schemaVersion !== 'buster-plan-job-record.v2') throw new Error('BUSTER_HISTORICAL_RECORD_INVALID');
     assertPreparedPlanJobRecord(payload);
     if (payload.input.schemaVersion !== 'buster-historical-input.v1' || payload.input.importId !== importId
       || payload.input.sequence !== sequence || payload.source !== null) throw new Error('BUSTER_HISTORICAL_RECORD_INVALID');

@@ -5,6 +5,7 @@
     "buster-preparation-ledger.test.mts",
     "buster-result-origin.test.mts",
     "buster-prepared-store-cancellation.test.mts",
-    "buster-extraction-concurrency.test.mts"
+    "buster-extraction-concurrency.test.mts",
+    "buster-original-execution.test.mts"
   ]
 }

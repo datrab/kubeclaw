@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import { captureBusterOriginalExecution } from './test-gates/original-execution.ts';
 import path from 'node:path';
 import { Socket } from 'node:net';
 import { NativeWorkerControlChannel } from '@kubeclaw/worker-core';
@@ -41,7 +42,7 @@ try {
   lifetime.assertCurrent(); boot.startup.assertCurrent();
   const client = new BusterPreparationClient(channel, settings.preparation, preparationSourceRoot, messages);
   const runtime = loadProductionBusterRemotePlanRuntime(runtimeConfig, client, settings,
-    projectBusterWorkerCore(boot.capture).localRuntime, process.env, selectedWorkerCorePolicy(boot.capture));
+    projectBusterWorkerCore(boot.capture).localRuntime, process.env, selectedWorkerCorePolicy(boot.capture), captureBusterOriginalExecution(boot.capture));
   try {
     const address = await runtime.start();
     process.stdout.write(`${JSON.stringify({ schemaVersion: 'buster-remote-runtime-ready.v1',
