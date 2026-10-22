@@ -1,0 +1,237 @@
+{
+  "status": "EXACT_FIVE_AFFECTED_ORIGINAL_SCOPES_PROPOSAL",
+  "baseMatrixSha256": "76691475e1665a31c13979f3f717c6a9f325c7ead14b6f45a178cd52a7531645",
+  "records": [
+    {
+      "id": "AP09-complete-static-reader-search-20261021",
+      "oldRevision": "72d079eb51f5398e42f525a85fd02ab18c041916",
+      "newRevision": "7d2bb9d4356a96af96614e963f706dd311c2e399",
+      "requirementIds": [
+        "PUB-002"
+      ],
+      "gateIds": [],
+      "summary": "Whole PUB-002: existing positive page/asset allowlists plus actual artifact-local full-text search across all167 canonical reader pages, headings and code/technical identifiers. Browser find/empty/no-JS behavior observed; code and output reviewed.",
+      "limits": [
+        "Only whole PUB-002. Ranked/synonym reader search questions in A912-04 remain unaccepted; substring full-text search is stated honestly.",
+        "No other publication gate or whole documentation package acceptance.",
+        "Local HTML/search output is not external hosting, actual cluster/runtime behavior, rendered Mermaid, source-preview or human screenreader acceptance.",
+        "Global API source/caller discovery still blocked at bundle copier; site boundary still has three unchanged Helm generated-prose diagnostics."
+      ],
+      "pagesCount": 167,
+      "sourcesCount": 35,
+      "allOwnPagesAndOtherSourcesByteUnchanged": true,
+      "changedDependencies": [
+        "scripts/docs-api-documentation-role-custody.mjs"
+      ],
+      "exactFiveFactsOnlySourceReversal": true,
+      "changedRecipeSources": [
+        "scripts/docs-api-output-discovery.mjs",
+        "scripts/docs-api-product-scope.mjs",
+        "scripts/docs-api-reference.mjs",
+        "scripts/docs-configuration-inventory.mjs",
+        "scripts/docs-generate.mjs"
+      ],
+      "oldRecordCanonicalSha256": "4c981703636b39897ec1217b0ef1596b268f339917d65a58748e9a1e27bc334b",
+      "originalPublicFirstRepeatGuardResult": "handoffs/pr13-finish-20261021/public-role-closeout-7d2bb9d4/result.json",
+      "proposedDisposition": "PRESERVE_ONLY_ORIGINAL_SCOPE; no Reader rerun/recount/global acceptance"
+    },
+    {
+      "id": "AP09-search-reader-gate-20261021",
+      "oldRevision": "72d079eb51f5398e42f525a85fd02ab18c041916",
+      "newRevision": "7d2bb9d4356a96af96614e963f706dd311c2e399",
+      "requirementIds": [],
+      "gateIds": [
+        "A912-04"
+      ],
+      "summary": "Whole A912-04: canonical search index includes all167pages, headings and technical IDs, finite reader synonyms and weighted upper results. Twelve defined reader questions find expected route among top3 in actual browser at320/768/1440; exact positive-manifest equality excludes internal artifacts.",
+      "limits": [
+        "Whole A912-04 only; finite declared reader synonyms, not universal semantic or natural-language search.",
+        "No other publication gate, all-page/human-screenreader, rendered-Mermaid/source-preview/externalhosting acceptance.",
+        "Global API bundle input/caller closure and three unchanged generated Helm-language diagnostics remain open."
+      ],
+      "pagesCount": 1,
+      "sourcesCount": 18,
+      "allOwnPagesAndOtherSourcesByteUnchanged": true,
+      "changedDependencies": [
+        "scripts/docs-api-documentation-role-custody.mjs"
+      ],
+      "exactFiveFactsOnlySourceReversal": true,
+      "changedRecipeSources": [
+        "scripts/docs-api-output-discovery.mjs",
+        "scripts/docs-api-product-scope.mjs",
+        "scripts/docs-api-reference.mjs",
+        "scripts/docs-configuration-inventory.mjs",
+        "scripts/docs-generate.mjs"
+      ],
+      "oldRecordCanonicalSha256": "96b5ac5ba71d0ad351e09b1650b49a8a2a86921677ed7b871b2cc1bd7831d702",
+      "originalPublicFirstRepeatGuardResult": "handoffs/pr13-finish-20261021/public-role-closeout-7d2bb9d4/result.json",
+      "proposedDisposition": "PRESERVE_ONLY_ORIGINAL_SCOPE; no Reader rerun/recount/global acceptance"
+    },
+    {
+      "id": "AP09-rendered-source-bounds-gate-20261021",
+      "oldRevision": "72d079eb51f5398e42f525a85fd02ab18c041916",
+      "newRevision": "7d2bb9d4356a96af96614e963f706dd311c2e399",
+      "requirementIds": [],
+      "gateIds": [
+        "A912-09"
+      ],
+      "summary": "Whole A912-09: repository references and actual hash-verified built HTML links, anchors, assets and routes checked, plus full Source commit/type/actual-byte/line-or-Markdown-anchor validation.167 canonical pages,176HTML,179digests,36698localtargets,14401Source locators/3723objects including118primary upstream files across11repositories.",
+      "limits": [
+        "Exact source location/object/type/byte/range checks, not semantic correctness of every claim, signatures, live runtime or hosting.",
+        "Local Source objects were observed in actual Git; GitHub reachability follows pushed ancestors, not a substituted upstream HTTP proof.",
+        "Native documentation purposes preserve source/caller identity and do not waive the global API bundle-copier boundary.",
+        "Whole A912-09 only; remaining publication/accessibility/diagram/preview/full-workflow gates not automatically accepted.",
+        "Three unchanged stale generated Helm phrases and global API bundle input/caller gap remain open."
+      ],
+      "pagesCount": 5,
+      "sourcesCount": 28,
+      "allOwnPagesAndOtherSourcesByteUnchanged": true,
+      "changedDependencies": [
+        "scripts/docs-api-documentation-role-custody.mjs"
+      ],
+      "exactFiveFactsOnlySourceReversal": true,
+      "changedRecipeSources": [
+        "scripts/docs-api-output-discovery.mjs",
+        "scripts/docs-api-product-scope.mjs",
+        "scripts/docs-api-reference.mjs",
+        "scripts/docs-configuration-inventory.mjs",
+        "scripts/docs-generate.mjs"
+      ],
+      "oldRecordCanonicalSha256": "7d9f01fb146e376c8597c35a8af0c6159e87c6626cec1489c5504408faadbaf0",
+      "originalPublicFirstRepeatGuardResult": "handoffs/pr13-finish-20261021/public-role-closeout-7d2bb9d4/result.json",
+      "proposedDisposition": "PRESERVE_ONLY_ORIGINAL_SCOPE; no Reader rerun/recount/global acceptance"
+    },
+    {
+      "id": "AP09-complete-same-source-code-preview-20261021",
+      "oldRevision": "72d079eb51f5398e42f525a85fd02ab18c041916",
+      "newRevision": "7d2bb9d4356a96af96614e963f706dd311c2e399",
+      "requirementIds": [
+        "PUB-004"
+      ],
+      "gateIds": [],
+      "summary": "Whole PUB004: general same-source component automatically pairs immutable source links with exact same-revision inert code inside original evidence boxes.1660excerpts/390boxes/874objects across53pages;fresh-source and actualbrowser/text/native-disclosure proof.",
+      "limits": [
+        "WholePUB004 only; A91205 all-six-field canonical format not established for every older evidence box and remains unaccepted.",
+        "Preserves originalclaims/contracts/tests/limits; missing author evidence not fabricated and source snippets do not prove live or semantic correctness.",
+        "ThreeSource boxes containingonlydirectory/named-anchor references remain ordinarylinks, not fake code previews.",
+        "No diagram/layoutgate, humanScreenReader, freshuser, hosting, globalAPI or productruntime approval.",
+        "GlobalAPIbundlecopier74 andthreeunchangedstaleHelmphrases stayopen."
+      ],
+      "pagesCount": 1,
+      "sourcesCount": 25,
+      "allOwnPagesAndOtherSourcesByteUnchanged": true,
+      "changedDependencies": [
+        "scripts/docs-api-documentation-role-custody.mjs"
+      ],
+      "exactFiveFactsOnlySourceReversal": true,
+      "changedRecipeSources": [
+        "scripts/docs-api-output-discovery.mjs",
+        "scripts/docs-api-product-scope.mjs",
+        "scripts/docs-api-reference.mjs",
+        "scripts/docs-configuration-inventory.mjs",
+        "scripts/docs-generate.mjs"
+      ],
+      "oldRecordCanonicalSha256": "719f7c91f4d71e8bc138d8d224c910f9f634e0337815b6b1bb513d1540896607",
+      "originalPublicFirstRepeatGuardResult": "handoffs/pr13-finish-20261021/public-role-closeout-7d2bb9d4/result.json",
+      "proposedDisposition": "PRESERVE_ONLY_ORIGINAL_SCOPE; no Reader rerun/recount/global acceptance"
+    },
+    {
+      "id": "AP09-complete-responsive-reader-layout-20261021",
+      "oldRevision": "72d079eb51f5398e42f525a85fd02ab18c041916",
+      "newRevision": "7d2bb9d4356a96af96614e963f706dd311c2e399",
+      "requirementIds": [],
+      "gateIds": [
+        "A912-07"
+      ],
+      "summary": "Whole A91207 responsive reader layout at320/768/1440: navigation,tables,code,27 registered static diagrams,callouts,search remain available without page overflow; focusable internally scrolling regions preserve full content and textual alternatives.",
+      "limits": [
+        "Whole responsive-layout gate only; PUB005/A91206 semantic diagram completeness NOT_READY:16/27 scoped supported,6system and5service proofs incomplete;capacity failures preserved.",
+        "Human screenreader/fresh-role user/hosting/live workflows/global API not accepted by automated browser or byte checks.",
+        "Native table/code/diagram internal horizontal scroll is intentional and focus/keyboard tested; no horizontal PAGE navigation.",
+        "Global bundle-copier and three stale generated Helm phrases remain open."
+      ],
+      "pagesCount": 3,
+      "sourcesCount": 78,
+      "allOwnPagesAndOtherSourcesByteUnchanged": true,
+      "changedDependencies": [
+        "scripts/docs-api-documentation-role-custody.mjs"
+      ],
+      "exactFiveFactsOnlySourceReversal": true,
+      "changedRecipeSources": [
+        "scripts/docs-api-output-discovery.mjs",
+        "scripts/docs-api-product-scope.mjs",
+        "scripts/docs-api-reference.mjs",
+        "scripts/docs-configuration-inventory.mjs",
+        "scripts/docs-generate.mjs"
+      ],
+      "oldRecordCanonicalSha256": "5b595d2247042d31648fd61f5e4384f4e298ccecf0c6266df01e2f298fadb6d3",
+      "originalPublicFirstRepeatGuardResult": "handoffs/pr13-finish-20261021/public-role-closeout-7d2bb9d4/result.json",
+      "proposedDisposition": "PRESERVE_ONLY_ORIGINAL_SCOPE; no Reader rerun/recount/global acceptance"
+    }
+  ],
+  "unaffectedOriginalWholeObjects": 90,
+  "totalOriginalRecords": 95,
+  "originalPublicResult": {
+    "status": "ROOT_VERIFIED_COMPLETE_ORIGINAL_PUBLIC_ROUTE_DATA_NOT_API_ACCEPTANCE",
+    "revision": "7d2bb9d4356a96af96614e963f706dd311c2e399",
+    "rawRun": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/public-role-scalar-original-7d2bb9d4",
+    "nativeChildCount": 715,
+    "childKinds": {
+      "npm-config": 480,
+      "posix-glob": 232,
+      "python-ast-stdin": 1,
+      "go-ast-custody": 2
+    },
+    "allChildTerminalsZero": true,
+    "roleRecords": 1272,
+    "roleClassifications": {
+      "non-api": 885,
+      "api-adapted": 6,
+      "api-capable-utility": 6,
+      "unknown": 370,
+      "api": 5
+    },
+    "firstRepeatPrettyBytesEqual": true,
+    "allDeclaredPhysicalContextEqual": true,
+    "rawFiles": {
+      "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/public-role-scalar-original-7d2bb9d4/completion.json": {
+        "sha256": "e0faccda6dd81181e648b3f88859f6d746c6915c0030f6c2a91a3c41ac65e930",
+        "bytes": 494
+      },
+      "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/public-role-scalar-original-7d2bb9d4/node/completion.json": {
+        "sha256": "5172a8608abea7695f55407f23fecd5cd45ef2e72782de59732d89f9d3642450",
+        "bytes": 384
+      },
+      "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/public-role-scalar-original-7d2bb9d4/node/public-route-closeout.json": {
+        "sha256": "53ecce8cc64a45231093671b26346cfdede56cbe2e9255d830641654cb9eaf96",
+        "bytes": 321
+      },
+      "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/public-role-scalar-original-7d2bb9d4/context-before.json": {
+        "sha256": "fe8f010e67fbf9b10ae1411c580f914bdfdafc6b32fa5dfe367a51f71a23f1c8",
+        "bytes": 12381536
+      },
+      "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/public-role-scalar-original-7d2bb9d4/context-after.json": {
+        "sha256": "fe8f010e67fbf9b10ae1411c580f914bdfdafc6b32fa5dfe367a51f71a23f1c8",
+        "bytes": 12381536
+      },
+      "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/public-role-scalar-original-7d2bb9d4/node/actual-public-role-classifications-first.json": {
+        "sha256": "d7fe919b069ec4c816d62c6b16bfe152ab973249a7daed3a72262bbd1565e385",
+        "bytes": 254745263
+      },
+      "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/public-role-scalar-original-7d2bb9d4/node/actual-public-role-classifications-repeat.json": {
+        "sha256": "d7fe919b069ec4c816d62c6b16bfe152ab973249a7daed3a72262bbd1565e385",
+        "bytes": 254745263
+      }
+    },
+    "scope": "Original whole exported first/repeat consumer, all current documentation-role guards and selected3nativeAST adapters; actual two scalar constants/five derived facts confirmed by original route",
+    "limits": [
+      "370 unknown output roles retained, not falsely non-api/API-complete",
+      "No API/global generator/CI/runtime/whole gate acceptance",
+      "Earlier128/424/592/635stop packets retained separately"
+    ]
+  },
+  "unchangedCompleteMetadataCount": 107,
+  "codeOutsideFiveFactsLiteralsUnchanged": true,
+  "noNewVerdictOrIds": true,
+  "candidateAvailableOfftree": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/five-reader-scope-preservation-7d2bb9d4/candidate-matrix.json"
+}

@@ -1,0 +1,6 @@
+{
+  "findings": [],
+  "overall_correctness": "patch is correct",
+  "overall_explanation": "The supplied diff and scoped proof support retaining exactly the five existing completion scopes at 7d2bb9d4 without repeating unchanged browser work. Changes are limited to revision updates and appended impact records; original evidence, limits, verdicts and IDs remain intact. The five custody digest corrections are confirmed through the original public route, while Reader inputs remain unchanged. No actionable defect is evident within this bounded preservation scope. This assessment does not establish new Reader, API, generator, runtime, accessibility or overall acceptance.",
+  "overall_confidence": 0.94
+}

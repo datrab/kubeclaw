@@ -13014,7 +13014,7 @@
     },
     {
       "id": "AP09-complete-static-reader-search-20261021",
-      "revision": "72d079eb51f5398e42f525a85fd02ab18c041916",
+      "revision": "7d2bb9d4356a96af96614e963f706dd311c2e399",
       "author": "Nova /root documentation author and implementation coordinator",
       "reviewer": "Independent Codex autoreview static-reader whole PUB-002 Source/reader-quality closeout",
       "verdict": "PASS",
@@ -14034,12 +14034,29 @@
           },
           "originalRecordCanonicalSha256": "908d1986750f034578bd0274b419e3ef9eb8de7c273e86299b0ba79dfa678ff1",
           "limit": "Only this original record scope preserved; original author/checks/review/summary/limits/verdict/pages/sources/IDs remain exact. Five producer-custody comparisons now match actual original arrays; no whole consumer/graph/native/API/generator/runtime/release acceptance."
+        },
+        {
+          "previousReviewedRevision": "72d079eb51f5398e42f525a85fd02ab18c041916",
+          "revision": "7d2bb9d4356a96af96614e963f706dd311c2e399",
+          "changedDependencies": [
+            "scripts/docs-api-documentation-role-custody.mjs"
+          ],
+          "reviewer": "Independent Codex scoped-preservation review; /root adopts exact bounded successor",
+          "verdict": "PASS",
+          "summary": "Only five factsDigest literal values differ in this dependency; complete Source reversal exact and original full public first/repeat confirms current values. All original record pages and other explicit Source dependencies byte-unchanged. Reader487 search/rendering/preview/layout evidence retained in its original scope, no rerun or new count.",
+          "originalRecordCanonicalSha256": "4c981703636b39897ec1217b0ef1596b268f339917d65a58748e9a1e27bc334b",
+          "report": "handoffs/pr13-finish-20261021/five-reader-scope-preservation-7d2bb9d4/review.json",
+          "limit": "Original author/reviewer/checks/review/summary/limits/verdict/pages/sources/IDs unchanged; no API/generator/runtime/fresh-persona/accessibility/overall acceptance.",
+          "independentReview": {
+            "path": "handoffs/pr13-finish-20261021/five-reader-scope-preservation-7d2bb9d4/review.json",
+            "sha256": "7c23a93e7259763e250b37a83a30c0653065a2a9a2623148a1a0264e89fe1d35"
+          }
         }
       ]
     },
     {
       "id": "AP09-search-reader-gate-20261021",
-      "revision": "72d079eb51f5398e42f525a85fd02ab18c041916",
+      "revision": "7d2bb9d4356a96af96614e963f706dd311c2e399",
       "author": "Nova /root documentation author and implementation coordinator",
       "reviewer": "Independent Codex autoreview whole A912-04 code/evidence review plus narrow Source/Reader/Quality native-impact follow-up",
       "verdict": "PASS",
@@ -14489,12 +14506,29 @@
           },
           "originalRecordCanonicalSha256": "5972536eb520e56796c00264e5e85cdea9d10a8d6ba9963ade3a7667aacacdbe",
           "limit": "Only this original record scope preserved; original author/checks/review/summary/limits/verdict/pages/sources/IDs remain exact. Five producer-custody comparisons now match actual original arrays; no whole consumer/graph/native/API/generator/runtime/release acceptance."
+        },
+        {
+          "previousReviewedRevision": "72d079eb51f5398e42f525a85fd02ab18c041916",
+          "revision": "7d2bb9d4356a96af96614e963f706dd311c2e399",
+          "changedDependencies": [
+            "scripts/docs-api-documentation-role-custody.mjs"
+          ],
+          "reviewer": "Independent Codex scoped-preservation review; /root adopts exact bounded successor",
+          "verdict": "PASS",
+          "summary": "Only five factsDigest literal values differ in this dependency; complete Source reversal exact and original full public first/repeat confirms current values. All original record pages and other explicit Source dependencies byte-unchanged. Reader487 search/rendering/preview/layout evidence retained in its original scope, no rerun or new count.",
+          "originalRecordCanonicalSha256": "96b5ac5ba71d0ad351e09b1650b49a8a2a86921677ed7b871b2cc1bd7831d702",
+          "report": "handoffs/pr13-finish-20261021/five-reader-scope-preservation-7d2bb9d4/review.json",
+          "limit": "Original author/reviewer/checks/review/summary/limits/verdict/pages/sources/IDs unchanged; no API/generator/runtime/fresh-persona/accessibility/overall acceptance.",
+          "independentReview": {
+            "path": "handoffs/pr13-finish-20261021/five-reader-scope-preservation-7d2bb9d4/review.json",
+            "sha256": "7c23a93e7259763e250b37a83a30c0653065a2a9a2623148a1a0264e89fe1d35"
+          }
         }
       ]
     },
     {
       "id": "AP09-rendered-source-bounds-gate-20261021",
-      "revision": "72d079eb51f5398e42f525a85fd02ab18c041916",
+      "revision": "7d2bb9d4356a96af96614e963f706dd311c2e399",
       "author": "Nova /root documentation author and implementation coordinator",
       "reviewer": "Independent Codex autoreview whole A912-09 Source/Reader/Quality review and narrow changed-boundary impact review for 21 prior PASS records",
       "verdict": "PASS",
@@ -14952,6 +14986,23 @@
           },
           "originalRecordCanonicalSha256": "187acf694123c82ada2c9b16b1692b3ce94df1ac7850951a3b8d1b0ec2ffc419",
           "limit": "Only this original record scope preserved; original author/checks/review/summary/limits/verdict/pages/sources/IDs remain exact. Five producer-custody comparisons now match actual original arrays; no whole consumer/graph/native/API/generator/runtime/release acceptance."
+        },
+        {
+          "previousReviewedRevision": "72d079eb51f5398e42f525a85fd02ab18c041916",
+          "revision": "7d2bb9d4356a96af96614e963f706dd311c2e399",
+          "changedDependencies": [
+            "scripts/docs-api-documentation-role-custody.mjs"
+          ],
+          "reviewer": "Independent Codex scoped-preservation review; /root adopts exact bounded successor",
+          "verdict": "PASS",
+          "summary": "Only five factsDigest literal values differ in this dependency; complete Source reversal exact and original full public first/repeat confirms current values. All original record pages and other explicit Source dependencies byte-unchanged. Reader487 search/rendering/preview/layout evidence retained in its original scope, no rerun or new count.",
+          "originalRecordCanonicalSha256": "7d9f01fb146e376c8597c35a8af0c6159e87c6626cec1489c5504408faadbaf0",
+          "report": "handoffs/pr13-finish-20261021/five-reader-scope-preservation-7d2bb9d4/review.json",
+          "limit": "Original author/reviewer/checks/review/summary/limits/verdict/pages/sources/IDs unchanged; no API/generator/runtime/fresh-persona/accessibility/overall acceptance.",
+          "independentReview": {
+            "path": "handoffs/pr13-finish-20261021/five-reader-scope-preservation-7d2bb9d4/review.json",
+            "sha256": "7c23a93e7259763e250b37a83a30c0653065a2a9a2623148a1a0264e89fe1d35"
+          }
         }
       ]
     },
@@ -15276,7 +15327,7 @@
     },
     {
       "id": "AP09-complete-same-source-code-preview-20261021",
-      "revision": "72d079eb51f5398e42f525a85fd02ab18c041916",
+      "revision": "7d2bb9d4356a96af96614e963f706dd311c2e399",
       "author": "Nova /root documentation author and implementation coordinator",
       "reviewer": "Independent Codex autoreview whole PUB004 Source/Reader/Quality closeout plus narrow changed-boundary preservation for21priorPASSrecords",
       "verdict": "PASS",
@@ -15695,12 +15746,29 @@
           },
           "originalRecordCanonicalSha256": "ada67d19d35c38055f48cf40be4cdd34a7d5c7430fe94cace8336b5becd51791",
           "limit": "Only this original record scope preserved; original author/checks/review/summary/limits/verdict/pages/sources/IDs remain exact. Five producer-custody comparisons now match actual original arrays; no whole consumer/graph/native/API/generator/runtime/release acceptance."
+        },
+        {
+          "previousReviewedRevision": "72d079eb51f5398e42f525a85fd02ab18c041916",
+          "revision": "7d2bb9d4356a96af96614e963f706dd311c2e399",
+          "changedDependencies": [
+            "scripts/docs-api-documentation-role-custody.mjs"
+          ],
+          "reviewer": "Independent Codex scoped-preservation review; /root adopts exact bounded successor",
+          "verdict": "PASS",
+          "summary": "Only five factsDigest literal values differ in this dependency; complete Source reversal exact and original full public first/repeat confirms current values. All original record pages and other explicit Source dependencies byte-unchanged. Reader487 search/rendering/preview/layout evidence retained in its original scope, no rerun or new count.",
+          "originalRecordCanonicalSha256": "719f7c91f4d71e8bc138d8d224c910f9f634e0337815b6b1bb513d1540896607",
+          "report": "handoffs/pr13-finish-20261021/five-reader-scope-preservation-7d2bb9d4/review.json",
+          "limit": "Original author/reviewer/checks/review/summary/limits/verdict/pages/sources/IDs unchanged; no API/generator/runtime/fresh-persona/accessibility/overall acceptance.",
+          "independentReview": {
+            "path": "handoffs/pr13-finish-20261021/five-reader-scope-preservation-7d2bb9d4/review.json",
+            "sha256": "7c23a93e7259763e250b37a83a30c0653065a2a9a2623148a1a0264e89fe1d35"
+          }
         }
       ]
     },
     {
       "id": "AP09-complete-responsive-reader-layout-20261021",
-      "revision": "72d079eb51f5398e42f525a85fd02ab18c041916",
+      "revision": "7d2bb9d4356a96af96614e963f706dd311c2e399",
       "author": "Nova /root documentation author and implementation coordinator",
       "reviewer": "Independent Codex autoreview whole A91207 responsive-layout closeout and narrow24-record prior-boundary preservation",
       "verdict": "PASS",
@@ -16202,6 +16270,23 @@
           },
           "originalRecordCanonicalSha256": "348f09a6c176f1b92cc7e79cb13dc194e502c36fa9997df350f2ddfb01c32e4e",
           "limit": "Only this original record scope preserved; original author/checks/review/summary/limits/verdict/pages/sources/IDs remain exact. Five producer-custody comparisons now match actual original arrays; no whole consumer/graph/native/API/generator/runtime/release acceptance."
+        },
+        {
+          "previousReviewedRevision": "72d079eb51f5398e42f525a85fd02ab18c041916",
+          "revision": "7d2bb9d4356a96af96614e963f706dd311c2e399",
+          "changedDependencies": [
+            "scripts/docs-api-documentation-role-custody.mjs"
+          ],
+          "reviewer": "Independent Codex scoped-preservation review; /root adopts exact bounded successor",
+          "verdict": "PASS",
+          "summary": "Only five factsDigest literal values differ in this dependency; complete Source reversal exact and original full public first/repeat confirms current values. All original record pages and other explicit Source dependencies byte-unchanged. Reader487 search/rendering/preview/layout evidence retained in its original scope, no rerun or new count.",
+          "originalRecordCanonicalSha256": "5b595d2247042d31648fd61f5e4384f4e298ccecf0c6266df01e2f298fadb6d3",
+          "report": "handoffs/pr13-finish-20261021/five-reader-scope-preservation-7d2bb9d4/review.json",
+          "limit": "Original author/reviewer/checks/review/summary/limits/verdict/pages/sources/IDs unchanged; no API/generator/runtime/fresh-persona/accessibility/overall acceptance.",
+          "independentReview": {
+            "path": "handoffs/pr13-finish-20261021/five-reader-scope-preservation-7d2bb9d4/review.json",
+            "sha256": "7c23a93e7259763e250b37a83a30c0653065a2a9a2623148a1a0264e89fe1d35"
+          }
         }
       ]
     },

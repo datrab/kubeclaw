@@ -11461,9 +11461,9 @@
       }
     },
     "scripts/render-native-worker-node.mjs": {
-      "sha256": "8f19768e2555221631a57c876e8a27400048486cce84c39c2fd06f1b99376a0e",
+      "sha256": "fe49ebbe3640b340c7b51a6284515f18101f3160c4817fa8f92876ef66f9dcc9",
       "operation": "Host configuration bundle and Helm values fragment; no Kubernetes API resource in its output file set.",
-      "operationDigest": "8f19768e2555221631a57c876e8a27400048486cce84c39c2fd06f1b99376a0e",
+      "operationDigest": "fe49ebbe3640b340c7b51a6284515f18101f3160c4817fa8f92876ef66f9dcc9",
       "invocations": [
         "if (process.argv.length !== 4) throw new Error('Usage: render-native-worker-node.mjs POLICY_YAML NEW_OUTPUT_DIRECTORY');"
       ],
@@ -11514,9 +11514,9 @@
       }
     },
     "scripts/activate-native-worker-ax41.sh": {
-      "sha256": "10e71854efb95c16e5353f9e2f2617e9349323a715b69c76c73ac53693b22f15",
+      "sha256": "61d6a0ee66a726237b81a14b1b29b3bf074af15040f65ac0eeb5b9b4cc94f7cd",
       "operation": "Caller of the native host configuration bundle writer.",
-      "operationDigest": "10e71854efb95c16e5353f9e2f2617e9349323a715b69c76c73ac53693b22f15",
+      "operationDigest": "61d6a0ee66a726237b81a14b1b29b3bf074af15040f65ac0eeb5b9b4cc94f7cd",
       "invocations": [
         "node scripts/render-native-worker-node.mjs my-values/infra/native-worker-pools-ax41.yaml \"$backup/generated\""
       ],
@@ -12169,9 +12169,9 @@
       }
     },
     "scripts/repair-native-worker-pools-lifetime.sh": {
-      "sha256": "8e74b296c0d0108f620df0109f449ad4e9c4c2f9846369de122976c433cc3595",
+      "sha256": "c01a7b8f1e16e3bcf649a78ca5dd561404edb43632173a63c5d76013cb24c423",
       "operation": "Caller of the native host configuration bundle writer.",
-      "operationDigest": "8e74b296c0d0108f620df0109f449ad4e9c4c2f9846369de122976c433cc3595",
+      "operationDigest": "c01a7b8f1e16e3bcf649a78ca5dd561404edb43632173a63c5d76013cb24c423",
       "invocations": [
         "/usr/local/bin/node \"$repository/scripts/render-native-worker-node.mjs\"    \"$repository/my-values/infra/native-worker-pools-ax41.yaml\" \"$backup/generated\""
       ],
@@ -12786,9 +12786,9 @@
       }
     },
     "scripts/check-local-helm-boolean-semantics.mjs": {
-      "sha256": "e2f83ac3010e582d84b38f5c5a8979c38415b9ab0831c56f49d4294ce061de02",
+      "sha256": "b0ceb6234ca867c4b113b9c554498929495756c104da04d08b922dfd3608c4ea",
       "operation": "Read-only semantic verification using local charts and explicitly guarded synthetic API-shaped fixtures.",
-      "operationDigest": "e2f83ac3010e582d84b38f5c5a8979c38415b9ab0831c56f49d4294ce061de02",
+      "operationDigest": "b0ceb6234ca867c4b113b9c554498929495756c104da04d08b922dfd3608c4ea",
       "invocations": [
         "['charts/kubeclaw/values.yaml', '$.archviewer.enabled', 'receiver-specific-without-schema'],",
         "['charts/prism/values.yaml', '$.control.productDecisions.enabled', 'chart-schema-boolean'],",
@@ -13003,7 +13003,7 @@
           },
           {
             "kind": "ForOfStatement",
-            "syntax": "for (const [fieldPath, expectedLines] of [\n  ['$.codeBundle.enabled', [878, 937]],\n  ['$.discord.enabled', [201, 277]],\n  ['$.probes.dependencies.gateway.enabled', [712, 897, 904, 912]],\n  ['$.probes.dependencies.redis.enabled', [712, 905, 913]],\n  ['$.probes.dependencies.redisStream.enabled', [712, 906]],\n  ['$.probes.dependencies.litellm.enabled', [712, 907]],\n  ['$.probes.dependencies.registries.enabled', [712, 908]],\n  ['$.swarmConfig.overrideOnRestart', [635, 643, 650]],\n  ['$.workspace.overrideOnRestart', [421, 423]],\n]) {\n  const matching = booleanAuthorities.filter((field) => field.fieldPath === fieldPath);\n  assert(matching.length > 0, `${fieldPath}: runtime-proof family is missing`);\n  for (const field of matching) {\n    assert.deepEqual(field.runtimeConsumerProof.map((proof) => proof.line), expectedLines,\n      `${field.sourcePath}#${fieldPath}: runtime-proof lines changed or are incomplete`);\n    assert(field.runtimeConsumerProof.every((proof) => /^[a-f0-9]{64}$/u.test(proof.sourceLineSha256 ?? '')),\n      `${field.sourcePath}#${fieldPath}: runtime proof is not pinned to source content`);\n  }\n}"
+            "syntax": "for (const [fieldPath, expectedLines] of [\n  ['$.codeBundle.enabled', [950, 1009]],\n  ['$.discord.enabled', [221, 297]],\n  ['$.probes.dependencies.gateway.enabled', [784, 969, 976, 984]],\n  ['$.probes.dependencies.redis.enabled', [784, 977, 985]],\n  ['$.probes.dependencies.redisStream.enabled', [784, 978]],\n  ['$.probes.dependencies.litellm.enabled', [784, 979]],\n  ['$.probes.dependencies.registries.enabled', [784, 980]],\n  ['$.swarmConfig.overrideOnRestart', [707, 715, 722]],\n  ['$.workspace.overrideOnRestart', [458, 460]],\n]) {\n  const matching = booleanAuthorities.filter((field) => field.fieldPath === fieldPath);\n  assert(matching.length > 0, `${fieldPath}: runtime-proof family is missing`);\n  for (const field of matching) {\n    assert.deepEqual(field.runtimeConsumerProof.map((proof) => proof.line), expectedLines,\n      `${field.sourcePath}#${fieldPath}: runtime-proof lines changed or are incomplete`);\n    assert(field.runtimeConsumerProof.every((proof) => /^[a-f0-9]{64}$/u.test(proof.sourceLineSha256 ?? '')),\n      `${field.sourcePath}#${fieldPath}: runtime proof is not pinned to source content`);\n  }\n}"
           },
           {
             "kind": "FirstStatement",

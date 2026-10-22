@@ -1,0 +1,6 @@
+{
+  "findings": [],
+  "overall_correctness": "patch is correct",
+  "overall_explanation": "The supplied diff updates exactly eight source identity literals and one recipe string, consistently with the four reported source changes. The nine replacement vectors match the supplied proof records; invocation, recipe, digest, and source-hash guards remain intact, with no blanket authority added. No actionable defect is evident. The embedded dataset was truncated and the complete file could not be read because filesystem inspection failed, limiting independent verification. This review does not establish execution or whole API/generator acceptance; the owner must rerun those checks.",
+  "overall_confidence": 0.85
+}

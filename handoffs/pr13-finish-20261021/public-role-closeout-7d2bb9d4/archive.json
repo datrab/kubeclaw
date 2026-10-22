@@ -1,0 +1,7 @@
+{
+  "archive": "public-role-scalar-7d2bb9d4-raw.tar.xz",
+  "archiveBytes": 10786636,
+  "archiveSha256": "a1ac4541f39c899631094579b091c2957f785b3ed4bb70db67a094e62ed69cef",
+  "verifiedDecodedAllMembers": true,
+  "excluded": "Only mutable tool caches/tmp; all actual receiver/outer process/child/first-repeat/context DATA retained"
+}

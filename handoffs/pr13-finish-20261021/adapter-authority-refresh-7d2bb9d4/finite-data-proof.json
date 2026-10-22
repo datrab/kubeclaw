@@ -1,0 +1,148 @@
+{
+  "status": "FINITE_SOURCE_CORRESPONDENT_DATA_CANDIDATE",
+  "beforeSha256": "b4a6052b6e9307b654d5fb2c2899f618ae6e6b747e9491207edf606b7cb6a660",
+  "afterSha256": "36219fb70b175f6226693508497fd4bd959775380ed7219ec9f17d8894f7b3ca",
+  "records": [
+    {
+      "source": "scripts/render-native-worker-node.mjs",
+      "oldCommit": "bd8a7488ea4453b18df14b223466771161a0b75d",
+      "oldSha256": "8f19768e2555221631a57c876e8a27400048486cce84c39c2fd06f1b99376a0e",
+      "currentSha256": "fe49ebbe3640b340c7b51a6284515f18101f3160c4817fa8f92876ef66f9dcc9",
+      "oldLines": 74,
+      "currentLines": 75,
+      "patchLines": 7,
+      "packet": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/adapter-source-drift-7d2bb9d4/render-native-worker-node.mjs",
+      "operationRecipeUnchanged": true,
+      "changedStatementIndices": [],
+      "invocationsUnchanged": true,
+      "classification": "COMMENT_ONLY",
+      "verifiedFieldProofs": []
+    },
+    {
+      "source": "scripts/activate-native-worker-ax41.sh",
+      "oldCommit": "60ce2714a207f80c6ee1cf8b76492241e6852fcc",
+      "oldSha256": "10e71854efb95c16e5353f9e2f2617e9349323a715b69c76c73ac53693b22f15",
+      "currentSha256": "61d6a0ee66a726237b81a14b1b29b3bf074af15040f65ac0eeb5b9b4cc94f7cd",
+      "oldLines": 101,
+      "currentLines": 102,
+      "patchLines": 8,
+      "packet": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/adapter-source-drift-7d2bb9d4/activate-native-worker-ax41.sh",
+      "operationRecipeUnchanged": true,
+      "changedStatementIndices": [],
+      "invocationsUnchanged": true,
+      "classification": "COMMENT_ONLY",
+      "verifiedFieldProofs": []
+    },
+    {
+      "source": "scripts/repair-native-worker-pools-lifetime.sh",
+      "oldCommit": "bd8a7488ea4453b18df14b223466771161a0b75d",
+      "oldSha256": "8e74b296c0d0108f620df0109f449ad4e9c4c2f9846369de122976c433cc3595",
+      "currentSha256": "c01a7b8f1e16e3bcf649a78ca5dd561404edb43632173a63c5d76013cb24c423",
+      "oldLines": 49,
+      "currentLines": 50,
+      "patchLines": 8,
+      "packet": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/adapter-source-drift-7d2bb9d4/repair-native-worker-pools-lifetime.sh",
+      "operationRecipeUnchanged": true,
+      "changedStatementIndices": [],
+      "invocationsUnchanged": true,
+      "classification": "COMMENT_ONLY",
+      "verifiedFieldProofs": []
+    },
+    {
+      "source": "scripts/check-local-helm-boolean-semantics.mjs",
+      "oldCommit": "00187895a555752abc5d0db1ae3329d808bb24f6",
+      "oldSha256": "e2f83ac3010e582d84b38f5c5a8979c38415b9ab0831c56f49d4294ce061de02",
+      "currentSha256": "b0ceb6234ca867c4b113b9c554498929495756c104da04d08b922dfd3608c4ea",
+      "oldLines": 325,
+      "currentLines": 325,
+      "patchLines": 27,
+      "packet": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/adapter-source-drift-7d2bb9d4/check-local-helm-boolean-semantics.mjs",
+      "operationRecipeUnchanged": false,
+      "changedStatementIndices": [
+        46
+      ],
+      "invocationsUnchanged": true,
+      "classification": "NINE_EXISTING_EXPECTED_LINE_VECTORS_ONLY",
+      "verifiedFieldProofs": [
+        {
+          "field": "$.codeBundle.enabled",
+          "lines": [
+            950,
+            1009
+          ],
+          "matchingAuthorities": 4
+        },
+        {
+          "field": "$.discord.enabled",
+          "lines": [
+            221,
+            297
+          ],
+          "matchingAuthorities": 6
+        },
+        {
+          "field": "$.probes.dependencies.gateway.enabled",
+          "lines": [
+            784,
+            969,
+            976,
+            984
+          ],
+          "matchingAuthorities": 1
+        },
+        {
+          "field": "$.probes.dependencies.redis.enabled",
+          "lines": [
+            784,
+            977,
+            985
+          ],
+          "matchingAuthorities": 2
+        },
+        {
+          "field": "$.probes.dependencies.redisStream.enabled",
+          "lines": [
+            784,
+            978
+          ],
+          "matchingAuthorities": 1
+        },
+        {
+          "field": "$.probes.dependencies.litellm.enabled",
+          "lines": [
+            784,
+            979
+          ],
+          "matchingAuthorities": 1
+        },
+        {
+          "field": "$.probes.dependencies.registries.enabled",
+          "lines": [
+            784,
+            980
+          ],
+          "matchingAuthorities": 2
+        },
+        {
+          "field": "$.swarmConfig.overrideOnRestart",
+          "lines": [
+            707,
+            715,
+            722
+          ],
+          "matchingAuthorities": 1
+        },
+        {
+          "field": "$.workspace.overrideOnRestart",
+          "lines": [
+            458,
+            460
+          ],
+          "matchingAuthorities": 2
+        }
+      ]
+    }
+  ],
+  "allOtherRegistryDataUnchanged": true,
+  "limits": "No product/native-worker/Helm-test execution; no role/selector/boundary/guard waiver"
+}

@@ -1,0 +1,6 @@
+{
+  "observedToolResult": "d721af",
+  "exitCode": 0,
+  "stdout": "{\"guard\":\"original assertProducerAdapterAuthority\",\"records\":24,\"status\":\"PASS_METADATA_ONLY\",\"targetProgramsExecuted\":false}\n",
+  "limits": "Original Source/recipe/invocation/hash authority check only. Does not run the24Source programs or establish API/generator/runtime approval."
+}
