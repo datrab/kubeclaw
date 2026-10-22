@@ -422,7 +422,11 @@ The dated upstream central Ops contract has a separate source-evidence record.
 >
 > **Claim:** The separate MCP owns cluster authority and authenticates each client independently.
 >
-> **Implementation:** [Named provisioning objects](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/charts/ops-pod/templates/provision.yaml#L1-L50) [Scoped hook RBAC and Job](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/charts/ops-pod/templates/provision.yaml#L51-L103) [Actual provisioner invocation](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/charts/ops-pod/templates/_provision.tpl#L1-L30) [Existing-token retention and generation](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/tools/ops-mcp/src/provision.mjs#L100-L115)
+> **Implementation:**
+> [Named provisioning objects](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/charts/ops-pod/templates/provision.yaml#L1-L50).
+> [Scoped hook RBAC and Job](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/charts/ops-pod/templates/provision.yaml#L51-L103).
+> [Actual provisioner invocation](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/charts/ops-pod/templates/_provision.tpl#L1-L30).
+> [Existing-token retention and generation](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/tools/ops-mcp/src/provision.mjs#L100-L115).
 > [Codex mounts only its own MCP bearer and optional external credentials](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/charts/ops-pod/templates/workload.yaml#L48-L82)
 >
 > **Contract or setting:** MCP policy and RBAC bound each caller; Codex, Nova and the Buster gateway receive no direct Kubernetes credential. Buster workers retain separate direct lease-scoped Kubernetes authority; see [the worker exception](ops-mcp.md#complete-request-and-state-path).
@@ -573,7 +577,7 @@ boundary does not silently expand another.
 > ingestion callers to exact ports](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/charts/prism/templates/networkpolicy.yaml#L24-L59).
 > [Worker ingress selects Control alone](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/charts/prism/templates/networkpolicy.yaml#L73-L81), and
 > [Worker application authorization accepts only the configured Control SVID](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/prism/server/worker-service.ts#L56-L58).
-> [The older branch policy included Nova and Buster lease-client API egress; current main removes Nova's direct authority as described in the Ops grant matrix](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/my-values/infra/network-policies.yaml#L366-L380).
+> [Historical branch Nova/Buster lease-client API egress](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/my-values/infra/network-policies.yaml#L366-L380).
 > [The Studio ingress allow selects only the Tailscale proxy that owns the Prism
 > parent resource](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/charts/prism/templates/networkpolicy.yaml#L126-L136).
 >
@@ -825,7 +829,9 @@ an uncertain exec effect.
 >
 > **Claim:** MCP RBAC and per-client policy compose the gateway read/exec boundary; the Buster worker retains a separate direct lease/workload credential.
 >
-> **Implementation:** [Separate MCP identity](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/charts/ops-pod/templates/mcp.yaml#L37-L91) [Client and target authorization](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/tools/ops-mcp/src/access-policy.mjs#L50-L107)
+> **Implementation:**
+> [Separate MCP identity](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/charts/ops-pod/templates/mcp.yaml#L37-L91).
+> [Client and target authorization](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/tools/ops-mcp/src/access-policy.mjs#L50-L107).
 >
 > **Contract or setting:** Per-client MCP grants remain bounded by the MCP ServiceAccount RBAC.
 >
@@ -878,7 +884,7 @@ Those changes hide the failed boundary and create a second incident.
 - A trusted in-process plugin shares more authority than an isolated external plugin.
 - Image digests and source signatures prove identity, not vulnerability status or business approval.
 - Prism transport identity must not be described as general signed artifact provenance.
-- The central MCP remains a privileged component for its configured read/exec targets; MCP client credentials do not grant direct Kubernetes access, while Buster worker credentials retain separate lease-scoped workload/test authority.
+- The central MCP remains privileged for its configured read/exec targets. MCP client credentials do not grant direct Kubernetes access. Buster workers retain separate lease-scoped workload/test authority.
 
 These limits are not reasons to remove the existing controls.
 They define where operators need additional production controls or live proof.

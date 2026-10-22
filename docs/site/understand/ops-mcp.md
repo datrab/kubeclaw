@@ -113,11 +113,15 @@ that interface; retain other notes when updating that section.
 >
 > **Claim:** Nova and Buster obtain typed native tools while credentials and authorization remain centralized.
 >
-> **Implementation:** [Native connector configuration](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/charts/kubeclaw/templates/configmap-gateway.yaml#L202-L223) [Stdio adapter](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/charts/kubeclaw/files/ops-mcp/stdio.mjs#L1-L53) [Verified HTTPS client](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/charts/kubeclaw/files/ops-mcp/client.mjs#L1-L29) [Managed configuration migration](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/charts/kubeclaw/files/sync-ops-mcp-config.mjs#L1-L21)
+> **Implementation:**
+> [Native connector configuration](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/charts/kubeclaw/templates/configmap-gateway.yaml#L202-L223).
+> [Stdio adapter](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/charts/kubeclaw/files/ops-mcp/stdio.mjs#L1-L53).
+> [Verified HTTPS client](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/charts/kubeclaw/files/ops-mcp/client.mjs#L1-L29).
+> [Managed configuration migration](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/charts/kubeclaw/files/sync-ops-mcp-config.mjs#L1-L21).
 >
 > **Contract or setting:** opsMcp.enabled selects the connector; credentials are mounted files.
 >
-> **Test evidence:** Source-test definitions and execution limits are recorded under Verification below; source links alone are not execution receipts.
+> **Test evidence:** Verification below lists source-test definitions and execution limits. Source links alone are not execution receipts.
 >
 > **Revision:** `34cf38ef53ee41381543785d0ffae90a37fac9ca`. Upstream main evidence; this documentation update does not adopt runtime source into PR #13.
 >
@@ -193,11 +197,17 @@ packaging goal; Kubernetes namespace renaming would require resource/data migrat
 >
 > **Claim:** Agents have separate MCP identities; the MCP owns Kubernetes reads and independently bounded exec.
 >
-> **Implementation:** [Per-request identity and authorization](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/tools/ops-mcp/src/access-policy.mjs#L50-L107) [Client tool filtering and auditing](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/tools/ops-mcp/src/server.mjs#L210-L231) [Codex grants](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/gitops/platform/values/codex-ops.yaml#L20-L68) [Nova grants](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/gitops/platform/values/codex-ops.yaml#L69-L97) [Buster grants](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/gitops/platform/values/codex-ops.yaml#L98-L118) [Separate MCP identity and mounts](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/charts/ops-pod/templates/mcp.yaml#L37-L91)
+> **Implementation:**
+> [Per-request identity and authorization](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/tools/ops-mcp/src/access-policy.mjs#L50-L107).
+> [Client tool filtering and auditing](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/tools/ops-mcp/src/server.mjs#L210-L231).
+> [Codex grants](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/gitops/platform/values/codex-ops.yaml#L20-L68).
+> [Nova grants](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/gitops/platform/values/codex-ops.yaml#L69-L97).
+> [Buster grants](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/gitops/platform/values/codex-ops.yaml#L98-L118).
+> [Separate MCP identity and mounts](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/charts/ops-pod/templates/mcp.yaml#L37-L91).
 >
 > **Contract or setting:** Client policy must remain within MCP RBAC; global reads need both flags.
 >
-> **Test evidence:** Source-test definitions and execution limits are recorded under Verification below; source links alone are not execution receipts.
+> **Test evidence:** Verification below lists source-test definitions and execution limits. Source links alone are not execution receipts.
 >
 > **Revision:** `34cf38ef53ee41381543785d0ffae90a37fac9ca`. Upstream main evidence; this documentation update does not adopt runtime source into PR #13.
 >
@@ -233,11 +243,15 @@ stderr and incomplete/transport outcomes must be interpreted separately.
 >
 > **Claim:** Metrics are observations; exec is a separate, destructive and non-idempotent operation.
 >
-> **Implementation:** [Metrics and exec registrations](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/tools/ops-mcp/src/server.mjs#L521-L560) [Exec transport and output handling](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/tools/ops-mcp/src/exec.mjs#L1-L55) [Policy target checks](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/tools/ops-mcp/src/access-policy.mjs#L85-L105) [Native discovery and refusal tests](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/tools/ops-mcp/test/tls-client.test.mjs#L52-L102)
+> **Implementation:**
+> [Metrics and exec registrations](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/tools/ops-mcp/src/server.mjs#L521-L560).
+> [Exec transport and output handling](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/tools/ops-mcp/src/exec.mjs#L1-L55).
+> [Policy target checks](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/tools/ops-mcp/src/access-policy.mjs#L85-L105).
+> [Native discovery and refusal tests](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/tools/ops-mcp/test/tls-client.test.mjs#L52-L102).
 >
 > **Contract or setting:** Exec uses the lower of requested and policy limits.
 >
-> **Test evidence:** Source-test definitions and execution limits are recorded under Verification below; source links alone are not execution receipts.
+> **Test evidence:** Verification below lists source-test definitions and execution limits. Source links alone are not execution receipts.
 >
 > **Revision:** `34cf38ef53ee41381543785d0ffae90a37fac9ca`. Upstream main evidence; this documentation update does not adopt runtime source into PR #13.
 >
@@ -322,11 +336,18 @@ observation, not proof of no network drops.
 >
 > **Claim:** Per-request read limits do not bound full scans or prove complete Hubble history.
 >
-> **Implementation:** [HTTPS read transport](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/tools/ops-mcp/src/kubernetes.mjs#L1-L58) [Pagination and default aggregate limit](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/tools/ops-mcp/src/kubernetes.mjs#L65-L99) [Full-scan callers](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/tools/ops-mcp/src/server.mjs#L327-L358) [Event continuation](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/tools/ops-mcp/src/server.mjs#L114-L138) [Hubble process bounds](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/tools/ops-mcp/src/hubble.mjs#L25-L75) [Hubble partial-result semantics](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/tools/ops-mcp/src/hubble.mjs#L95-L118) [MCP network policy](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/charts/ops-pod/templates/network.yaml#L37-L71)
+> **Implementation:**
+> [HTTPS read transport](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/tools/ops-mcp/src/kubernetes.mjs#L1-L58).
+> [Pagination and default aggregate limit](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/tools/ops-mcp/src/kubernetes.mjs#L65-L99).
+> [Full-scan callers](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/tools/ops-mcp/src/server.mjs#L327-L358).
+> [Event continuation](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/tools/ops-mcp/src/server.mjs#L114-L138).
+> [Hubble process bounds](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/tools/ops-mcp/src/hubble.mjs#L25-L75).
+> [Hubble partial-result semantics](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/tools/ops-mcp/src/hubble.mjs#L95-L118).
+> [MCP network policy](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/charts/ops-pod/templates/network.yaml#L37-L71).
 >
 > **Contract or setting:** Prefer one-page or single-object tools when a full scan is unnecessary.
 >
-> **Test evidence:** Source-test definitions and execution limits are recorded under Verification below; source links alone are not execution receipts.
+> **Test evidence:** Verification below lists source-test definitions and execution limits. Source links alone are not execution receipts.
 >
 > **Revision:** `34cf38ef53ee41381543785d0ffae90a37fac9ca`. Upstream main evidence; this documentation update does not adopt runtime source into PR #13.
 >
@@ -397,8 +418,8 @@ Earlier deployment notes linked runtime build
 [promotion 39748892361](https://github.com/datrab/kubeclaw/actions/runs/39748892361).
 Those references alone are not retained execution receipts for the claimed
 local test counts, deployed image identity, Argo health, Pod readiness or
-native tool discovery/denial. Those outcomes remain unverified here. No
-fresh cluster operation was performed for this documentation review.
+native tool discovery/denial. Those outcomes remain unverified here. This
+documentation review ran no fresh cluster operation.
 
 Buster gateway behavior, Hubble Relay availability, mobile pairing, arbitrary-
 cluster portability, production acceptance and the broader PR #13 gates need

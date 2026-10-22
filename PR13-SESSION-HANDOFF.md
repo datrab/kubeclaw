@@ -1,3 +1,9 @@
+## Current continuation — publication prose corrected, exact harness STOP remains — 2026-10-22
+
+- e63f0be1 pushed/SHAverified/clean. ActualnormalpublicationbuildSTOP before render on controlledlanguage; normalgenerate-local-helm--checkSTOPon docs-check-refs.test.mjs root-node-harness declarations. Originalinvocations/exits/raw evidence retained, no new artifact/current generatorPASS.
+- Fourpage editorial fix (sameorderedlinks/ranges) independently Source no-semantic-driftPASS. ActualordinarypublicationcheckPASS177pages/51plugins. Next commit/freeze this prose, normalbuild then affectedcleanReader/render/Quality. Separate retained Source reviewer investigating exact harness entry/closure successor; no broad receipt refresh.
+- Historical95completionobjectsunchanged, currentimpact49declaredrecordsdiffer at e63; no automaticrecount. Historical56/224notcurrentapproval. Evidence handoffs/pr13-finish-20261021/publication-prose-e63. Runtimeknipand compiledjourneycgroup/hostblock unchanged. Continue finish-all task.
+
 ## Current continuation — central Ops upstream integrated and corrected — 2026-10-22
 
 - Remote7d advanced concurrently to83d while local16011 held reviewed adapter correction/raw original route archive. Ordinary conflict-free merge108fd pushed and SHAverified; no overwrite/force/adoption of main runtime. NewOps evidence34cf fetched as immutableGitdata.

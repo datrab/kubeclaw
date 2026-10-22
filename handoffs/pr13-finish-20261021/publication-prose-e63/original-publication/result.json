@@ -1,0 +1,24 @@
+{
+  "argv": [
+    "/usr/local/bin/node",
+    "--max-old-space-size=4096",
+    "scripts/docs-publication.mjs",
+    "build"
+  ],
+  "revision": "e63f0be104584a698294fe8ea1af5f8a6b4df4a6",
+  "environment": {
+    "PATH": "/usr/local/bin:/usr/bin:/bin",
+    "HOME": "/home/node",
+    "LANG": "C.UTF-8",
+    "LC_ALL": "C.UTF-8",
+    "TZ": "UTC",
+    "TMPDIR": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/e63-publication/tmp",
+    "LD_LIBRARY_PATH": "/home/node/.openclaw/workspace/tmp/pr13-reader-apt/root/usr/lib/x86_64-linux-gnu",
+    "FONTCONFIG_FILE": "/home/node/.openclaw/workspace/tmp/pr13-reader-apt/fonts.conf"
+  },
+  "started": 1792665272.2505457,
+  "statusBefore": "CLEAN",
+  "finished": 1792665292.9625616,
+  "exitCode": 1,
+  "statusAfter": ""
+}

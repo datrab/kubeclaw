@@ -1,0 +1,168 @@
+file:///home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/generate-local-helm-authorities.mjs:27
+if (candidate.status !== 0) throw new Error(`candidate local Helm inventory failed\n${candidate.stdout}\n${candidate.stderr}`);
+                                  ^
+
+Error: candidate local Helm inventory failed
+
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: DOCUMENTATION_TOOL_NODE_ENTRY_CUSTODY_UNQUALIFIED: scripts/tests/docs-check-refs.test.mjs; fixture/init/child/assertion declarations changed
++ actual - expected
+... Skipped lines
+
+  [
+    {
+      kind: 'ImportDeclaration',
+      syntaxSha256: '3bd42e15e5427f946b98b898212af900ed0a4068cff03a37aa2ce1d3a081f2ec'
+    },
+...
+    },
++   {
++     kind: 'ExpressionStatement',
++     syntaxSha256: '3535e7e10a3e1d18145825c778dbd3fa3e0d6a7411248089e50ca966b2d3f519'
++   }
+  ]
+
+    at qualifiedRootNodeHarnessSources (file:///home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/docs-api-documentation-role-custody.mjs:30994:170)
+    at syntheticNodeTestSources (file:///home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/docs-api-output-discovery.mjs:311:23)
+    at documentationModuleGraph (file:///home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/docs-api-output-discovery.mjs:339:24)
+    at assertDocumentationToolQualifications (file:///home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/docs-api-output-discovery.mjs:688:15)
+    at documentationToolSources (file:///home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/docs-api-output-discovery.mjs:804:3)
+    at discoverScriptApiOutputs (file:///home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/docs-api-output-discovery.mjs:1503:37)
+    at discoverProductApiContexts (file:///home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/docs-api-product-scope.mjs:291:80)
+    at buildApiResourceInventory (file:///home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/docs-configuration-inventory.mjs:2784:25)
+    at buildYamlInventory (file:///home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/docs-configuration-inventory.mjs:2863:24)
+    at buildConfigurationInventories (file:///home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/docs-configuration-inventory.mjs:9292:16) {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: [
+    {
+      kind: 'ImportDeclaration',
+      syntaxSha256: '3bd42e15e5427f946b98b898212af900ed0a4068cff03a37aa2ce1d3a081f2ec'
+    },
+    {
+      kind: 'ImportDeclaration',
+      syntaxSha256: 'ad73ca8dd2be89150d9ce0f13eae68ebf5fc6eae24f81e521b6223459d4a6005'
+    },
+    {
+      kind: 'ImportDeclaration',
+      syntaxSha256: '99a8a8a7117b1395e3a209cdc8ba5a70424687458932bc4dc8a7b6e59ff53868'
+    },
+    {
+      kind: 'ImportDeclaration',
+      syntaxSha256: '8f15d80e7efb2a5d032af6aeba410bc9b4bd498ba70c7278654526b1e2259752'
+    },
+    {
+      kind: 'ImportDeclaration',
+      syntaxSha256: '113f0af17fdf683cf360ab9d03b7eff1b572d3475e83119031d47ee4331621aa'
+    },
+    {
+      kind: 'ImportDeclaration',
+      syntaxSha256: '839cf2655267094fdbf41ad83d7b89fa202606d6b1235454745934a1c6f2529f'
+    },
+    {
+      kind: 'ImportDeclaration',
+      syntaxSha256: '9e5c5f24875a2c9d303704ece0b5dbf1ad327c006908160e414a26f199507b73'
+    },
+    {
+      kind: 'FirstStatement',
+      syntaxSha256: '30906b0c310d837fd9065322aaabd37ea7ae203214e5a620f2b620fb64352c27'
+    },
+    {
+      kind: 'FunctionDeclaration',
+      syntaxSha256: '15655da5748d943e3780f0f5dfd72ccdf674a0c93a6da0ef47916722b727a7cf'
+    },
+    {
+      kind: 'FunctionDeclaration',
+      syntaxSha256: '90e6f764db2782fada8f0e92cedbc59427913062465a81b55f6909a0f741c5d3'
+    },
+    {
+      kind: 'ExpressionStatement',
+      syntaxSha256: 'f5f5cbf21cb70de2149b091d8ab0daa2d2d272a63b6c52cdd2fc05393b6978c7'
+    },
+    {
+      kind: 'ExpressionStatement',
+      syntaxSha256: '306797bef0ee4284643f474d71cd5bfbdce47232f5c1621b1d0f3563d7ec705b'
+    },
+    {
+      kind: 'ExpressionStatement',
+      syntaxSha256: 'bd4aa59595f98eb936aefdae0ab98c7a31921f4e33d8f19831266b3878f19ed4'
+    },
+    {
+      kind: 'ExpressionStatement',
+      syntaxSha256: 'fca89d5f4203b438402665d6e99cbf68cee7d788041c1157bc5d0203db21c73d'
+    },
+    {
+      kind: 'ExpressionStatement',
+      syntaxSha256: '3535e7e10a3e1d18145825c778dbd3fa3e0d6a7411248089e50ca966b2d3f519'
+    }
+  ],
+  expected: [
+    {
+      kind: 'ImportDeclaration',
+      syntaxSha256: '3bd42e15e5427f946b98b898212af900ed0a4068cff03a37aa2ce1d3a081f2ec'
+    },
+    {
+      kind: 'ImportDeclaration',
+      syntaxSha256: 'ad73ca8dd2be89150d9ce0f13eae68ebf5fc6eae24f81e521b6223459d4a6005'
+    },
+    {
+      kind: 'ImportDeclaration',
+      syntaxSha256: '99a8a8a7117b1395e3a209cdc8ba5a70424687458932bc4dc8a7b6e59ff53868'
+    },
+    {
+      kind: 'ImportDeclaration',
+      syntaxSha256: '8f15d80e7efb2a5d032af6aeba410bc9b4bd498ba70c7278654526b1e2259752'
+    },
+    {
+      kind: 'ImportDeclaration',
+      syntaxSha256: '113f0af17fdf683cf360ab9d03b7eff1b572d3475e83119031d47ee4331621aa'
+    },
+    {
+      kind: 'ImportDeclaration',
+      syntaxSha256: '839cf2655267094fdbf41ad83d7b89fa202606d6b1235454745934a1c6f2529f'
+    },
+    {
+      kind: 'ImportDeclaration',
+      syntaxSha256: '9e5c5f24875a2c9d303704ece0b5dbf1ad327c006908160e414a26f199507b73'
+    },
+    {
+      kind: 'FirstStatement',
+      syntaxSha256: '30906b0c310d837fd9065322aaabd37ea7ae203214e5a620f2b620fb64352c27'
+    },
+    {
+      kind: 'FunctionDeclaration',
+      syntaxSha256: '15655da5748d943e3780f0f5dfd72ccdf674a0c93a6da0ef47916722b727a7cf'
+    },
+    {
+      kind: 'FunctionDeclaration',
+      syntaxSha256: '90e6f764db2782fada8f0e92cedbc59427913062465a81b55f6909a0f741c5d3'
+    },
+    {
+      kind: 'ExpressionStatement',
+      syntaxSha256: 'f5f5cbf21cb70de2149b091d8ab0daa2d2d272a63b6c52cdd2fc05393b6978c7'
+    },
+    {
+      kind: 'ExpressionStatement',
+      syntaxSha256: '306797bef0ee4284643f474d71cd5bfbdce47232f5c1621b1d0f3563d7ec705b'
+    },
+    {
+      kind: 'ExpressionStatement',
+      syntaxSha256: 'bd4aa59595f98eb936aefdae0ab98c7a31921f4e33d8f19831266b3878f19ed4'
+    },
+    {
+      kind: 'ExpressionStatement',
+      syntaxSha256: 'fca89d5f4203b438402665d6e99cbf68cee7d788041c1157bc5d0203db21c73d'
+    }
+  ],
+  operator: 'deepStrictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.21.0
+
+    at file:///home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/generate-local-helm-authorities.mjs:27:35
+
+Node.js v24.21.0

@@ -1,0 +1,237 @@
+{
+  "role": "bounded Source editorial no-semantic-drift review",
+  "verdict": "PASS",
+  "head": "e63f0be104584a698294fe8ea1af5f8a6b4df4a6",
+  "sourceManifestUnchangedFromWholeSourcePass": true,
+  "priorWholeSourceReport": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/merge83d-ops-content-source-review-correction2/report.md",
+  "refsBridgeReport": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/merge83d-refs-source-review-correction2/report.md",
+  "scope": "all exact changed spans in four core pages; communication unchanged",
+  "unreadChangedUnits": [],
+  "remainingMaterialFindings": [],
+  "pages": [
+    {
+      "path": "docs/site/understand/ops-mcp.md",
+      "beforeSha256": "92c3cd77464150bc9cad05e13dd231397eb49c44e176fd030474b3ffea01fb07",
+      "currentSha256": "d7cb5f39021ecbe21085398d3fc7093f0f204363681348d0d5ef3a0da477622a",
+      "priorWholeSourcePassSha256": "92c3cd77464150bc9cad05e13dd231397eb49c44e176fd030474b3ffea01fb07",
+      "beforeEqualsE63": true,
+      "orderedLinkDestinationVectorIdentical": true,
+      "linkCount": 27,
+      "changedUnits": [
+        {
+          "operation": "replace",
+          "before": [
+            116,
+            116
+          ],
+          "current": [
+            116,
+            120
+          ]
+        },
+        {
+          "operation": "replace",
+          "before": [
+            120,
+            120
+          ],
+          "current": [
+            124,
+            124
+          ]
+        },
+        {
+          "operation": "replace",
+          "before": [
+            196,
+            196
+          ],
+          "current": [
+            200,
+            206
+          ]
+        },
+        {
+          "operation": "replace",
+          "before": [
+            200,
+            200
+          ],
+          "current": [
+            210,
+            210
+          ]
+        },
+        {
+          "operation": "replace",
+          "before": [
+            236,
+            236
+          ],
+          "current": [
+            246,
+            250
+          ]
+        },
+        {
+          "operation": "replace",
+          "before": [
+            240,
+            240
+          ],
+          "current": [
+            254,
+            254
+          ]
+        },
+        {
+          "operation": "replace",
+          "before": [
+            325,
+            325
+          ],
+          "current": [
+            339,
+            346
+          ]
+        },
+        {
+          "operation": "replace",
+          "before": [
+            329,
+            329
+          ],
+          "current": [
+            350,
+            350
+          ]
+        },
+        {
+          "operation": "replace",
+          "before": [
+            400,
+            401
+          ],
+          "current": [
+            421,
+            422
+          ]
+        }
+      ],
+      "bridge": "direct byte identity to whole Source PASS"
+    },
+    {
+      "path": "docs/site/understand/codex-integration.md",
+      "beforeSha256": "267c981983e7f6b7cea7a135431dcbc69de6fb7811e717da12e0318257e689c6",
+      "currentSha256": "66c2873de311b5570a18541155ea71a69708f94144a77824381bc7f9c085a6e7",
+      "priorWholeSourcePassSha256": "e203e086d9a7db32d01c2ba020497174fe7c6326dab3ae4a368da91f4d75ffed",
+      "beforeEqualsE63": true,
+      "orderedLinkDestinationVectorIdentical": true,
+      "linkCount": 12,
+      "changedUnits": [
+        {
+          "operation": "replace",
+          "before": [
+            114,
+            114
+          ],
+          "current": [
+            114,
+            118
+          ]
+        }
+      ],
+      "bridge": "refs correction2 report: Codex identical-file pin correction / platform existing-chart revision enumeration only"
+    },
+    {
+      "path": "docs/site/understand/platform-and-operations.md",
+      "beforeSha256": "b1338e21da5705ee86bc0a5aa2606bbbfd29a78f57aa60be9e1751b5b1282cc7",
+      "currentSha256": "d8770138576c3616fe304435853e803fe1191262dcfcac127066e27e11727be7",
+      "priorWholeSourcePassSha256": "da5983bb8aff1d5ab793bfda6ca594efa76054101b39dcfb1059925e83cc8160",
+      "beforeEqualsE63": true,
+      "orderedLinkDestinationVectorIdentical": true,
+      "linkCount": 107,
+      "changedUnits": [
+        {
+          "operation": "replace",
+          "before": [
+            1016,
+            1016
+          ],
+          "current": [
+            1016,
+            1020
+          ]
+        }
+      ],
+      "bridge": "refs correction2 report: Codex identical-file pin correction / platform existing-chart revision enumeration only"
+    },
+    {
+      "path": "docs/site/understand/security-and-trust.md",
+      "beforeSha256": "1655c9c04116c2f250f7918a4aa462626bde33289ec38a72b5616ec54a9c4650",
+      "currentSha256": "70b6be688d25911d1b7a6b0d75b0487c443946590037348fb18b56e8181c905a",
+      "priorWholeSourcePassSha256": "1655c9c04116c2f250f7918a4aa462626bde33289ec38a72b5616ec54a9c4650",
+      "beforeEqualsE63": true,
+      "orderedLinkDestinationVectorIdentical": true,
+      "linkCount": 82,
+      "changedUnits": [
+        {
+          "operation": "replace",
+          "before": [
+            425,
+            425
+          ],
+          "current": [
+            425,
+            429
+          ]
+        },
+        {
+          "operation": "replace",
+          "before": [
+            576,
+            576
+          ],
+          "current": [
+            580,
+            580
+          ]
+        },
+        {
+          "operation": "replace",
+          "before": [
+            828,
+            828
+          ],
+          "current": [
+            832,
+            834
+          ]
+        },
+        {
+          "operation": "replace",
+          "before": [
+            881,
+            881
+          ],
+          "current": [
+            887,
+            887
+          ]
+        }
+      ],
+      "bridge": "direct byte identity to whole Source PASS"
+    },
+    {
+      "path": "docs/site/understand/communication.md",
+      "beforeSha256": "b2f603cea91375758d6e687b7c4c7886cd49354c4e14fc8c5cd63652c00cbcf5",
+      "currentSha256": "b2f603cea91375758d6e687b7c4c7886cd49354c4e14fc8c5cd63652c00cbcf5",
+      "priorWholeSourcePassSha256": "b2f603cea91375758d6e687b7c4c7886cd49354c4e14fc8c5cd63652c00cbcf5",
+      "beforeEqualsE63": true,
+      "orderedLinkDestinationVectorIdentical": true,
+      "linkCount": 218,
+      "changedUnits": [],
+      "bridge": "direct byte identity to whole Source PASS"
+    }
+  ]
+}

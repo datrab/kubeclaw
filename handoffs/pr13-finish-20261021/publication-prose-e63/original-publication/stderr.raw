@@ -1,0 +1,14 @@
+documentation publication failed:
+- docs/site/understand/codex-integration.md has a 26-word sentence; limit is 25: > **Implementation:** [Codex StatefulSet and mounts](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381
+- docs/site/understand/ops-mcp.md contains avoidable passive voice: are recorded
+- docs/site/understand/ops-mcp.md contains avoidable passive voice: are recorded
+- docs/site/understand/ops-mcp.md contains avoidable passive voice: are recorded
+- docs/site/understand/ops-mcp.md contains avoidable passive voice: are recorded
+- docs/site/understand/ops-mcp.md contains avoidable passive voice: was performed
+- docs/site/understand/ops-mcp.md has a 39-word sentence; limit is 25: > **Implementation:** [Per-request identity and authorization](https://github.com/datrab/kubeclaw/blob/34cf38e
+- docs/site/understand/ops-mcp.md has a 30-word sentence; limit is 25: > **Implementation:** [Metrics and exec registrations](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee413
+- docs/site/understand/ops-mcp.md has a 43-word sentence; limit is 25: > **Implementation:** [HTTPS read transport](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0
+- docs/site/understand/platform-and-operations.md has a 29-word sentence; limit is 25: > **Implementation:** [Codex workload without API mounts](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee
+- docs/site/understand/security-and-trust.md has a 28-word sentence; limit is 25: > **Implementation:** [Named provisioning objects](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee4138154
+- docs/site/understand/security-and-trust.md has a 28-word sentence; limit is 25: > [The older branch policy included Nova and Buster lease-client API egress; current main removes Nova's direc
+- docs/site/understand/security-and-trust.md has a 30-word sentence; limit is 25: - The central MCP remains a privileged component for its configured read/exec targets; MCP client credentials 
