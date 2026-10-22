@@ -7,6 +7,7 @@ Correct immutable input or configuration before retry.
 
 | Code | Cause | Effect | Correction | Retry | Evidence |
 | --- | --- | --- | --- | --- | --- |
+| `SIZE_BUDGET_V2_PROCESSING_REQUIRED` | The v2 selected processing policy has missing or extra keys, null format or largest-file count, an invalid matching-rule shape, or an out-of-range file-count or growth-percent bound. | Measurement does not start. | Supply the complete selected processing policy and explicit per-rule requireMatch booleans; preserve the original captured policy when replaying. | Retry after correcting the selected policy. | Attempt error. |
 | `SIZE_BUDGET_CONFIG_INVALID` | Configuration has an invalid object, format, or largest-file count. | Measurement does not start. | Use the documented schema. | Retry after correction. | Attempt result. |
 | `SIZE_BUDGET_LIMIT_INVALID` | A byte or percentage limit is invalid. | Measurement does not start. | Use a finite nonnegative value in range. | Retry after correction. | Attempt result. |
 | `SIZE_BUDGET_MATCHING_FILES_INVALID` | The matching-file list is not an array or exceeds 32 rules. | Measurement does not start. | Use a bounded rule array. | Retry after correction. | Attempt result. |

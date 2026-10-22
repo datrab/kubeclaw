@@ -4,7 +4,10 @@
   "type": "module",
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
-    "test": "node tests/values.test.ts"
+    "test": "node tests/values.test.ts",
+    "generate:artifact-validator": "node scripts/generate-artifact-validator.mjs",
+    "pretest": "node scripts/generate-artifact-validator.mjs",
+    "prebuild": "node scripts/generate-artifact-validator.mjs"
   },
   "exports": {
     ".": "./src/index.ts",

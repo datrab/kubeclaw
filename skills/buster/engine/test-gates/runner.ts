@@ -62,10 +62,12 @@ export class TestPlanRunner {
     this.#customDurableAttemptStore = options.durableAttemptStore !== undefined;
     this.#durableAttemptStore =
       options.durableAttemptStore ??
-      new FileDurableAttemptStore(path.join(observabilityRoot, "attempts"), executionPolicy.stores.attempts);
+      new FileDurableAttemptStore(path.join(observabilityRoot, "attempts"), executionPolicy.stores.attempts,
+        'schemaVersion' in executionPolicy ? executionPolicy.stores.attempts.lockWaitSeconds : undefined);
     this.#observabilityAdmissionStore =
       options.observabilityAdmissionStore ??
-      new FileObservabilityAdmissionStore(path.join(observabilityRoot, "admission"), executionPolicy.stores.admission);
+      new FileObservabilityAdmissionStore(path.join(observabilityRoot, "admission"), executionPolicy.stores.admission,
+        'schemaVersion' in executionPolicy ? executionPolicy.stores.admission.lockWaitSeconds : undefined);
     this.#now = options.now ?? (() => new Date());
     this.#id = options.id ?? (() => crypto.randomUUID());
     this.#authorityId = `test-runner:${options.plan.planDigest}`;

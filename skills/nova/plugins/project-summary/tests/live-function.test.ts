@@ -1,45 +1,4 @@
-import { TEST_CORE_POLICY as ARTIFACT_TEST_CORE_POLICY } from '../../../../../tests/fixtures/core-runtime-policy.mjs';
-const TEST_ARTIFACT_STORE_POLICY = ARTIFACT_TEST_CORE_POLICY.artifactStore;
-import { TEST_CORE_POLICY } from '../../../../../tests/fixtures/core-runtime-policy.mjs';
-import { gateCoverageDigest } from '@kubeclaw/pipeline-test-gate-contract';
-import assert from 'node:assert/strict';
-import fs from 'node:fs';import os from 'node:os';import path from 'node:path';import {pathToFileURL} from 'node:url';
-const repository=path.resolve('../../../..');const temporary=fs.mkdtempSync(path.join(os.tmpdir(),'kubeclaw-project-summary-'));
-const core=await import(pathToFileURL(path.join(repository,'skills/nova/core/src/index.ts')).href);
-const {buildSummary}=await import(pathToFileURL(path.join(repository,'skills/nova/plugins/project-summary/src/summary.ts')).href);
-const roots=['common','nova','buster'].map((role)=>path.join(repository,`skills/${role}/plugins`));
-function coverage(kind: 'module' | 'cumulative') {
-  const value = { schemaVersion: 'gate-coverage.v1' as const, projectId: 'api', kind, baseRevision: 'a'.repeat(40),
-    modules: [{ moduleId: 'api', ownedPaths: ['api'], requirements: [{ id: 'works', statement: 'API works.' }] }], integrationRequirements: [],
-    requiredChecks: [{ checkId: 'works', requirementRefs: [{ moduleId: 'api', requirementId: 'works' }], nodeIds: ['unit'] }] };
-  return { ...value, policyDigest: gateCoverageDigest(value) };
-}
-try{
-  let legacyReads=0;
-  const base={projectId:'api',modules:[{moduleId:'api',sourceStageId:'forge',testStageId:'test',expectedCoverage:coverage('module')}],
-    final:{sourceStageId:'forge',testStageId:'test',lintStageId:'lint',expectedCoverage:coverage('cumulative')}};
-  const noReadContext={contract:{lease:{attempt:{runId:'run:review-artifact-mode'}}},async invoke(){legacyReads+=1;throw new Error('unexpected read');}} as any;
-  await assert.rejects(buildSummary({...base,final:{...base.final,reviewStageId:'review',reviewArtifactEncoding:'kubeclaw-json.utf16.v1'}} as any,
-    noReadContext),/DELIVERY_REVIEW_ARTIFACT_MODE_INVALID/);
-  await assert.rejects(buildSummary({...base,final:{...base.final,reviewArtifactEncoding:'kubeclaw-json.utf16.v1'}} as any,
-    noReadContext,'delivery-manifest.utf16-v1'),/DELIVERY_REVIEW_ARTIFACT_MODE_INVALID/);
-  await assert.rejects(buildSummary({...base,final:{...base.final,reviewStageId:'review',reviewSemanticEncoding:'review-semantics.utf16-v1'}} as any,
-    noReadContext,'delivery-manifest.utf16-v1'),/DELIVERY_REVIEW_ARTIFACT_MODE_INVALID/);
-  assert.equal(legacyReads,0,'delivery review mode conditionals must reject before reads');
-  const snapshot=core.buildRegistry(core.discoverPackages({installationRoots:roots,trustPolicy:{trustedBuiltinRoots:roots,allowedSourceDigests:new Map(),verifiedAttestations:new Map(),verifierId:'test:project-summary'},now:()=>new Date('2026-07-26T00:00:00Z')}));
-  const enabled=new Set(['kubeclaw.project-summary:summary']);
-  const granted=core.resolveCapabilityGrants(snapshot,{enabledRegistrations:enabled,providers:new Map([['artifacts.read','kubeclaw.artifact-store:artifact-store'],['artifacts.write','kubeclaw.artifact-store:artifact-store']]),
-    grants:new Map([['kubeclaw.project-summary:summary',new Map([['artifacts.read',{allowedNamespaces:['kubeclaw.implementation-agent','kubeclaw.lint','kubeclaw.review','kubeclaw.buster-quality-gate']}],['artifacts.write',{allowedNamespaces:['kubeclaw.project-summary']}]])]])});
-  const activated=await core.activateRegistry(granted.snapshot,new Set(granted.grants.keys()));
-  const adapters=new core.AdapterRuntime({granted,activated,configs:new Map([['kubeclaw.artifact-store:artifact-store',{ ...TEST_ARTIFACT_STORE_POLICY,artifactRoot:path.join(temporary,'artifacts')}]]),
-    effects:new core.EffectCoordinator(new core.FileEffectJournal(path.join(temporary,'effects.jsonl'), TEST_CORE_POLICY),undefined,undefined,new core.MemoryResourceLockManager(), 300_000, TEST_CORE_POLICY.resourceAcquisition),shutdownTimeoutMs:1000,async emitDomainEvent(){}});
-  await adapters.start();
-  try{
-    const runner=new core.PipelineRunner({stageMemoryBytes: TEST_CORE_POLICY.stageMemoryBytes,definition:{schemaVersion:'pipeline-definition.v2',id:'pipeline:summary',maxConcurrency:1,stages:[{
-      id:'summary',type:'kubeclaw.report.project-summary',dependsOn:[],config:{},input:{projectId:'api',modules:[{moduleId:'api',sourceStageId:'forge',testStageId:'test',expectedCoverage:coverage('module')}],final:{sourceStageId:'forge',testStageId:'test',lintStageId:'lint',reviewStageId:'review',expectedCoverage:coverage('cumulative')}},
-      execution:{maxAttempts:1,maxRemediationCycles:0,timeoutMs:5000}}]},registry:granted,activated,adapters,journal:new core.FileJournal(path.join(temporary,'events.jsonl'), TEST_CORE_POLICY.journalAppendLockTimeoutMs)});
-    assert.equal((await runner.run('run:summary')).status,'blocked');
-    assert.equal(fs.existsSync(path.join(temporary,'artifacts','records','store.json')),false);
-  }finally{await adapters.shutdown();}
-}finally{fs.rmSync(temporary,{recursive:true,force:true});}
-console.log(JSON.stringify({ok:true,plugin:'kubeclaw.project-summary',suite:'live-function'}));
+// Repository-owned cross-role test; preserve original working directory and assertions.
+import { execFileSync } from 'node:child_process';
+import { fileURLToPath } from 'node:url';
+execFileSync(process.execPath, [fileURLToPath(new URL('../../../../../tests/verification/integration/nova-project-summary-live-function.test.ts', import.meta.url)), ...process.argv.slice(2)], { stdio: 'inherit', env: process.env });

@@ -1,6 +1,6 @@
 import {verifiedArtifactJsonText} from '@kubeclaw/plugin-sdk';
 import { canonicalJson, sha256Text, type ArtifactRef, type PluginInvocationContext, type AdapterActivationContext } from '@kubeclaw/plugin-sdk';
-import { validateContractValue } from '@kubeclaw/plugin-foundation/registry/schema';
+import { parseArtifactRef } from '@kubeclaw/plugin-sdk';
 export const NAMESPACE='kubeclaw.demo-handoff';
 export type Value=Readonly<Record<string,unknown>>;
 export type Reader=Pick<AdapterActivationContext,'invoke'>;
@@ -15,7 +15,7 @@ export function text(value:unknown,maximum=2048):string {
 export function exact(value:Value,keys:readonly string[]):void {
   if(Object.keys(value).some(key=>!keys.includes(key))||keys.some(key=>value[key]===undefined))throw new Error('DEMO_HANDOFF_FIELDS_INVALID');
 }
-export function ref(value:unknown):ArtifactRef {validateContractValue('artifactRef',value);return value as ArtifactRef;}
+export function ref(value:unknown):ArtifactRef {return parseArtifactRef(value);}
 export function select(context:PluginInvocationContext,stageId:string,namespace:string):ArtifactRef {
   const candidates=context.contract.artifacts.filter(item=>item.producer.runId===context.contract.lease.attempt.runId&&item.producer.stageId===stageId&&item.namespace===namespace);
   const latest=Math.max(...candidates.map(item=>item.producer.attemptNumber));

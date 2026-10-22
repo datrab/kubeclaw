@@ -1,5 +1,5 @@
 import {canonicalJson,sha256Text,type ArtifactRef} from '@kubeclaw/plugin-sdk';
-import {discordWebhookPayload} from '@kubeclaw/plugin-operator-messaging/src/discord-payload.ts';
+import {discordWebhookPayload} from '@kubeclaw/plugin-sdk';
 import {NAMESPACE,object,exact,text,target,ref,read,evidence,deliveryIdentity,retention,type Reader,type Value} from './protocol.ts';
 export interface BindingConfig {readonly candidateStageId:string;readonly deliveryStageId:string;readonly readyStageId:string;readonly manifestStageId:string;readonly operatorTarget:string;}
 export async function bind(context:Reader,reference:ArtifactRef,runId:string,config:BindingConfig) {

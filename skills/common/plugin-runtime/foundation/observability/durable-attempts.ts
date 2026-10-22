@@ -78,8 +78,8 @@ export interface RequiredProducerClosure {
 }
 export class FileDurableAttemptStore {
   readonly #state: AttemptState;
-  constructor(root: string, limits: DurableAttemptStoreLimits) {
-    this.#state = new AttemptState(root, limits);
+  constructor(root: string, limits: DurableAttemptStoreLimits, lockWaitSeconds = 5) {
+    this.#state = new AttemptState(root, limits, lockWaitSeconds);
   }
   storageDirectory(): string {
     return this.#state.root;

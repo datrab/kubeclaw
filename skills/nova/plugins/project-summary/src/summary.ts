@@ -1,11 +1,11 @@
 import {verifiedArtifactJsonText, portableJson, PORTABLE_JSON_ENCODING} from '@kubeclaw/plugin-sdk';
 import { summaryReviewSemanticEncoding, summaryReviewBundleDigest,
   type SummaryReviewSemanticEncoding } from './review-semantics.ts';
-import { assertCoverageDecision, coveragePassed, coverageReviewPrefixes, coverageReviewRequirements, validatePipelineTestGateContract, type GateCoverageV1 } from '@kubeclaw/pipeline-test-gate-contract';
+import { assertCoverageDecision, coveragePassed, coverageReviewPrefixes, coverageReviewRequirements, validatePipelineTestGateContract, type GateCoverageV1 } from '@kubeclaw/pipeline-test-gate-contract/gate-decision';
 import { parseGateDecision } from '@kubeclaw/pipeline-test-gate-contract/gate-decision';
 import { canonicalJson, sha256Text, resolveSourceRevision, type ArtifactRef, type PluginInvocationContext } from '@kubeclaw/plugin-sdk';
 import { createDeliveryManifestV3, DELIVERY_MANIFEST_ENCODING,
-  type DeliveryManifestEncoding } from '@kubeclaw/delivery-manifest-contract';
+  type DeliveryManifestEncoding } from '@kubeclaw/plugin-sdk';
 
 export interface GateBinding {
   readonly reviewSemanticEncoding?: SummaryReviewSemanticEncoding;

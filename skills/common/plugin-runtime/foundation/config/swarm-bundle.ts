@@ -118,7 +118,7 @@ export function preflightPipelineV10Owners(document: unknown, supplied: unknown)
     ownerProfileCounts: Object.freeze(counts), activationAllowed: false as const });
 }
 const settingsDefinitionNames = ['buster-preparation', 'buster-admission', 'buster-dependency-readiness',
-  'buster-runtime-security', 'buster-cluster-invokers', 'buster-execution', 'buster-execution-observation', 'buster-provider-runtime', 'buster-execution-reports', 'buster-execution-processInput'] as const;
+  'buster-runtime-security', 'buster-cluster-invokers', 'buster-execution', 'buster-execution-v2', 'buster-execution-observation', 'buster-provider-runtime', 'buster-execution-reports', 'buster-execution-processInput'] as const;
 const settingsValidators = new Map(settingsDefinitionNames.map(name => [name, ajv.compile({
   $defs: componentSchema.$defs, $ref: name === 'buster-runtime-security'
     ? '#/$defs/buster-cluster-invokers/properties/runtimeSecurity' : `#/$defs/${name}`,

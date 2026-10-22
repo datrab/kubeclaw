@@ -73,7 +73,7 @@ unit conversions and protocol constants should remain code, not operator config.
 ### Review prompt reservation
 
 `plugins/kubeclaw.review/profiles/standard.config.json` uses the closed
-`review-owned-decision-profiles.v3` owner. Its required
+`review-owned-decision-profiles.v4` owner. Its required
 `promptTokenBoundaryReserve` is a nonnegative integer token margin (0–1000000),
 explicitly 64 in the standard profile. The same captured selection drives
 repository-review job fitting, initial/expansion/verification accounting, retries
@@ -81,3 +81,13 @@ and dispatch admission. It is not a task override or a second model/tokenizer
 author. Resolved profiles include the margin in their v2 digest. Historical
 v1/v2 owners and v1 resolved profiles retain their original 64-token codec;
 recovery uses the original owner and runtime target without reading current files.
+
+### Review cache read concurrency
+
+The same selected Review owner requires `cacheReadConcurrency` (integer 1–1024),
+explicitly 16 in the standard profile. Initial review, context expansion and
+verification cache reads use that original captured value. It is independent of
+LLM dispatch concurrency and of the canonical cache-record encoding profile.
+Retained v1/v2/v3 owners keep their original fixed 16-read behavior; they reject
+the new field. Recovery never fills a missing field from the current author.
+The canonical cache key/record codec is unchanged by this operational setting.

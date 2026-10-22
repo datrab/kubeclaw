@@ -3,7 +3,7 @@ import { canonicalJson, sha256Text, type ArtifactRef, type PluginInvocationConte
 
 import { reusableReviewResult, selectedReviewIncomplete } from './review-completion.ts';
 import { ReviewPhaseAdmission } from './review-phase-admission.ts';
-import { getReviewPolicyProfile } from './review-policy-profiles.ts';
+import { getReviewPolicyProfile, selectedReviewCacheReadConcurrency } from './review-policy-profiles.ts';
 import { resolveReviewPolicy } from './review-policy-resolver.ts';
 import { freezeReviewRevision } from './review-repository.ts';
 import { parseReviewSnapshotInventory } from './review-snapshot-inventory.ts';
@@ -67,6 +67,7 @@ interface AuditCacheSummary {
   readonly verification: AuditCacheRunSummary;
 }
 interface AuditRuntime {
+  readonly cacheReadConcurrency: number;
   readonly cache: RepositoryAuditArtifactCache;
   readonly agent: string;
   readonly context: PluginInvocationContext;
@@ -356,7 +357,7 @@ async function verifiedReduction(
     beforeDispatch: (payload: Readonly<Record<string, unknown>>) => dispatchBudget.reserve(payload, phase),
     beforeRetry: () => admission.retry(),
   }; };
-  const runtime = { cache, agent: config.agent, context, execution: execution('initial'), expectedRuntime };
+  const runtime = { cache, cacheReadConcurrency: selectedReviewCacheReadConcurrency(context.contract.config), agent: config.agent, context, execution: execution('initial'), expectedRuntime };
   const reviewRun = await cachedReviewJobs(compilation.jobs, reviewIdentity, runtime);
   const firstResults = compilation.jobs.map(({ id }) => reviewRun.values.get(id) as ScalableReviewJobResult);
   const completeSources = new Map<string, ScalableReviewSource>(compilation.jobs.filter(({ kind }) => kind === 'component')
@@ -595,7 +596,7 @@ async function cachedReviewJobs(
   }, (unit, value) => {
     const job = jobs.find(({ id }) => id === unit.id);
     return job !== undefined && reusableReviewResult(job, value, allowContextRequest);
-  }, runtime.cache.profile);
+  }, runtime.cache.profile, runtime.cacheReadConcurrency);
   run.values.forEach((value) => assertReviewRuntimeIdentity(value.runtime, runtime.expectedRuntime));
   return run;
 }
@@ -615,7 +616,7 @@ async function cachedVerificationJobs(
   }, (unit, value) => {
     const job = jobs.find(({ id }) => id === unit.id);
     return job !== undefined && reduceScalableReview([job], [value]).incompleteJobs.length === 0;
-  }, runtime.cache.profile);
+  }, runtime.cache.profile, runtime.cacheReadConcurrency);
   run.values.forEach((value) => assertReviewRuntimeIdentity(value.runtime, runtime.expectedRuntime));
   return run;
 }

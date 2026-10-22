@@ -1,5 +1,4 @@
-import Ajv2020 from 'ajv/dist/2020.js';
-import {repositoryGradeSchema} from './review-owned-policy-schema.ts';
+import validateGrades from './repository-grade-validator.generated.mjs';
 /* eslint-disable max-lines -- Review grades, validation, and resolution stay together as one profile authority. */
 import {resolveRepositoryReviewProfile as resolveLegacyProfile, parseRepositoryReviewInput as parseLegacyInput} from './legacy-repository-review-profile.ts';
 import { canonicalJson, sha256Text } from '@kubeclaw/plugin-sdk';
@@ -336,16 +335,15 @@ export function validateOwnedRepositoryGrades(value:unknown):Readonly<Record<Rep
  return value as ReturnType<typeof validateOwnedRepositoryGrades>;
 }
 
-const AjvConstructor=Ajv2020 as unknown as new(options:object)=>{compile(schema:object):(value:unknown)=>boolean};
-const validateGrades=new AjvConstructor({strict:true}).compile({type:'object',additionalProperties:false,required:['fast','standard','deep'],properties:{fast:repositoryGradeSchema,standard:repositoryGradeSchema,deep:repositoryGradeSchema}});
 
 export function selectedRepositoryGrades(config:Readonly<Record<string,unknown>>):{readonly grades:unknown;readonly target:RepositoryRuntimeTarget;readonly promptTokenBoundaryReserve?:number|undefined}|undefined {
  const owned=config.ownedPolicyProfiles as Record<string,unknown>|undefined;
- if(!['review-owned-decision-profiles.v2','review-owned-decision-profiles.v3'].includes(String(owned?.schemaVersion))) {
+ if(!['review-owned-decision-profiles.v2','review-owned-decision-profiles.v3','review-owned-decision-profiles.v4'].includes(String(owned?.schemaVersion))) {
   if(Object.hasOwn(config,'repositoryRuntimeTarget'))throw new Error('REPOSITORY_RUNTIME_TARGET_UNEXPECTED');
   return undefined;
  }
- const v3=owned!.schemaVersion==='review-owned-decision-profiles.v3';
+ const v3=['review-owned-decision-profiles.v3','review-owned-decision-profiles.v4'].includes(String(owned!.schemaVersion));
+ if(owned!.schemaVersion==='review-owned-decision-profiles.v4' && (!Number.isSafeInteger(owned!.cacheReadConcurrency) || Number(owned!.cacheReadConcurrency)<1 || Number(owned!.cacheReadConcurrency)>1024))throw new Error('REVIEW_CACHE_CONCURRENCY_INVALID');
  if(v3 && (!Object.hasOwn(owned!,'promptTokenBoundaryReserve') || !Number.isSafeInteger(owned!.promptTokenBoundaryReserve) || Number(owned!.promptTokenBoundaryReserve)<0 || Number(owned!.promptTokenBoundaryReserve)>1_000_000))throw new Error('REVIEW_PROMPT_RESERVE_INVALID');
  const selected={grades:owned!.repositoryGrades,target:config.repositoryRuntimeTarget as RepositoryRuntimeTarget,
   ...(v3?{promptTokenBoundaryReserve:Number(owned!.promptTokenBoundaryReserve)}:{})};

@@ -263,7 +263,7 @@ assert.equal(unresolved.outcome, 'blocked');
 assert.match(unresolved.reason.message, /coverage is incomplete/u);
 
 const owned = JSON.parse(fs.readFileSync(new URL('../../../../../config/plugins/kubeclaw.review/profiles/standard.config.json',import.meta.url),'utf8')).profiles.standard.settings;
-delete owned.repositoryGrades;delete owned.promptTokenBoundaryReserve;owned.schemaVersion='review-owned-decision-profiles.v1';
+delete owned.cacheReadConcurrency;delete owned.repositoryGrades;delete owned.promptTokenBoundaryReserve;owned.schemaVersion='review-owned-decision-profiles.v1';
 const ownedContext={...context,contract:{...context.contract,config:{...context.contract.config,ownedPolicyProfiles:owned}}};
 assert.equal((await executeRepositoryAudit({},ownedContext)).outcome,'passed');
 const changed=structuredClone(owned);changed.profiles.audit={...structuredClone(changed.profiles.gate),profile:'audit'};

@@ -10,6 +10,7 @@ import {compileScalableReview} from '../../../skills/nova/plugins/review/src/sca
 import {parseReviewSnapshotInventory} from '../../../skills/nova/plugins/review/src/review-snapshot-inventory.ts';
 import {getReviewPolicyProfile} from '../../../skills/nova/plugins/review/src/review-policy-profiles.ts';
 const settings=JSON.parse(fs.readFileSync('config/plugins/kubeclaw.review/profiles/standard.config.json','utf8')).profiles.standard.settings;
+delete settings.cacheReadConcurrency;settings.schemaVersion='review-owned-decision-profiles.v3';
 const target={tokenizerEncoding:'o200k_base',maxInputTokens:120000,maxOutputTokens:6000,maxContextTokens:128000,maxPromptBytes:900000};
 const capture=value=>captureReviewPolicy({schemaVersion:'review-policy-capture.v1',source:{file:'/original/review.json',profile:'standard'},settings:value});
 const resolved=value=>parseRepositoryReviewInput({grade:'fast'},selectedRepositoryGrades({ownedPolicyProfiles:capture(value).settings,repositoryRuntimeTarget:target}));

@@ -15,7 +15,10 @@
   },
   "scripts": {
     "typecheck": "tsc --noEmit -p tsconfig.json",
-    "test": "node ../../../tests/verification/integration/pipeline-gate-remediation.test.mts && node --test ../../../tests/verification/integration/pipeline-gate-coverage.test.mts"
+    "test": "node ../../../tests/verification/integration/pipeline-gate-remediation.test.mts && node --test ../../../tests/verification/integration/pipeline-gate-coverage.test.mts",
+    "generate:validators": "node scripts/generate-validators.mjs",
+    "pretest": "node scripts/generate-validators.mjs",
+    "pretypecheck": "node scripts/generate-validators.mjs"
   },
   "dependencies": {
     "@kubeclaw/pipeline-observability-contract": "*",

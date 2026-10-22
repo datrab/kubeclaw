@@ -58,7 +58,7 @@ export interface BusterProcessInputSettings {
   readonly acknowledgementPollMs: number;
 }
 
-export interface BusterExecutionSettings {
+export interface BusterLegacyExecutionSettings {
   readonly processInput: BusterProcessInputSettings;
   readonly provider: BusterProviderExecutionSettings;
   readonly reports: BusterReportExecutionSettings;
@@ -66,8 +66,18 @@ export interface BusterExecutionSettings {
   readonly stores: Readonly<{ attempts: BusterAttemptStoreSettings; admission: BusterAdmissionStoreSettings }>;
 }
 
+export interface BusterExecutionSettingsV2 extends BusterLegacyExecutionSettings {
+  readonly schemaVersion: 'buster-execution.v2';
+  readonly stores: Readonly<{
+    attempts: BusterAttemptStoreSettings & { readonly lockWaitSeconds: number };
+    admission: BusterAdmissionStoreSettings & { readonly lockWaitSeconds: number };
+  }>;
+}
+export type BusterExecutionSettings = BusterLegacyExecutionSettings | BusterExecutionSettingsV2;
+
 export function validateBusterExecutionSettings(value: unknown): BusterExecutionSettings {
-  validateComponentSettings('buster-execution', value, 'SWARM_CONFIG_BUSTER_EXECUTION_INVALID');
+  const versioned = !!value && typeof value === 'object' && Object.hasOwn(value, 'schemaVersion');
+  validateComponentSettings(versioned ? 'buster-execution-v2' : 'buster-execution', value, 'SWARM_CONFIG_BUSTER_EXECUTION_INVALID');
   const policy = value as BusterExecutionSettings;
   const processInput = validateBusterProcessInputSettings(policy.processInput);
   validateProviderTiming(policy.provider);
@@ -78,10 +88,10 @@ export function validateBusterExecutionSettings(value: unknown): BusterExecution
   if (policy.stores.attempts.maximumEvidenceObjectBytes > policy.stores.attempts.maximumEvidenceBytes) {
     throw new Error('SWARM_CONFIG_BUSTER_EXECUTION_EVIDENCE_POOL_INVALID');
   }
-  return Object.freeze({ processInput, provider: Object.freeze({ ...policy.provider }), reports: Object.freeze({ ...policy.reports }),
+  return Object.freeze({ ...(versioned ? { schemaVersion: 'buster-execution.v2' as const } : {}), processInput, provider: Object.freeze({ ...policy.provider }), reports: Object.freeze({ ...policy.reports }),
     observation: Object.freeze({ ...policy.observation }), stores: Object.freeze({
       attempts: Object.freeze({ ...policy.stores.attempts }), admission: Object.freeze({ ...policy.stores.admission }),
-    }) });
+    }) }) as BusterExecutionSettings;
 }
 
 export function validateBusterObservationSettings(value: unknown): BusterObservationSettings {

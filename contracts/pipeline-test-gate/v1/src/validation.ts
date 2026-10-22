@@ -1,10 +1,7 @@
 import { providerPolicyErrors, providerPolicyEvidenceErrors, providerPolicyModeErrors } from './provider-policy.ts';
 import { gateCoverageResultErrors, type GateCoverageResultV1 } from './coverage-result.ts';
 import { gateCoverageErrors, resolvedCoverageErrors, type GateCoverageV1 } from './coverage.ts';
-import crypto from 'node:crypto';
-import fs from 'node:fs';
-import Ajv2020 from 'ajv/dist/2020.js';
-import addFormats from 'ajv-formats';
+import { schemaValidators, validateE2e as validateE2eResultSchema, e2eSchemaDigest, type Validator } from './validators.generated.mjs';
 import type {
   ContractValidationResult,
   ProviderConfiguration,
@@ -30,30 +27,10 @@ import {
   stableTestIdentity,
 } from './remote.ts';
 
-type Validator = ((value: unknown) => boolean) & { errors?: unknown[] | null };
-interface AjvInstance {
-  addSchema(schema: object): void;
-  compile(schema: object): Validator;
-}
-
-const schemaUrl = new URL('../schemas/pipeline-test-gate.v1.schema.json', import.meta.url);
-const schema = JSON.parse(fs.readFileSync(schemaUrl, 'utf8')) as { $id: string };
-const e2eResultSchemaUrl = new URL('../schemas/e2e-result.v1.schema.json', import.meta.url);
-const e2eResultSchemaText = fs.readFileSync(e2eResultSchemaUrl, 'utf8');
-const e2eResultSchema = JSON.parse(e2eResultSchemaText) as { $id: string };
-const AjvConstructor = Ajv2020 as unknown as new (options: { allErrors: boolean; strict: boolean }) => AjvInstance;
-const installFormats = addFormats as unknown as (instance: AjvInstance) => AjvInstance;
-const ajv = new AjvConstructor({ allErrors: true, strict: true });
-installFormats(ajv);
-ajv.addSchema(schema);
-ajv.addSchema(e2eResultSchema);
-const validators = new Map<string, Validator>();
-const validateE2eResultSchema = ajv.compile({ $ref: e2eResultSchema.$id });
-
 export const E2E_RESULT_SCHEMA_ID = 'kubeclaw.e2e-result.v1';
 
 export function e2eResultSchemaDigest(): string {
-  return `sha256:${crypto.createHash('sha256').update(e2eResultSchemaText).digest('hex')}`;
+  return e2eSchemaDigest;
 }
 
 export function validateE2eProviderDetails(value: unknown): void {
@@ -84,10 +61,8 @@ export class PipelineTestGateContractError extends Error {
 }
 
 function validator(definition: PipelineTestGateDefinition): Validator {
-  const existing = validators.get(definition);
-  if (existing) return existing;
-  const compiled = ajv.compile({ $ref: `${schema.$id}#/$defs/${definition}` }) as Validator;
-  validators.set(definition, compiled);
+  const compiled = schemaValidators[definition];
+  if (!compiled) throw new Error(`Unknown pipeline test-gate definition: ${definition}`);
   return compiled;
 }
 

@@ -96,8 +96,8 @@ try {
     fs.writeFileSync(path.join(directory, 'package.json'), JSON.stringify({ name: 'scanner-proof', version: '1.0.0', private: true }));
   }
   // Real npm lockfiles; no scanner output or advisory database is fabricated.
-  execFileSync('npm', ['install', '--package-lock-only', '--ignore-scripts', '--no-audit', '--no-fund'], { cwd: healthy, timeout: 60000, stdio: 'pipe' });
-  execFileSync('npm', ['install', '--package-lock-only', '--ignore-scripts', '--no-audit', '--no-fund', '--save-exact', 'lodash@4.17.20'], { cwd: vulnerable, timeout: 60000, stdio: 'pipe' });
+  execFileSync('npm', ['install', '--cache', path.join(fixtures, 'npm-cache'), '--package-lock-only', '--ignore-scripts', '--no-audit', '--no-fund'], { cwd: healthy, timeout: 60000, stdio: 'pipe' });
+  execFileSync('npm', ['install', '--cache', path.join(fixtures, 'npm-cache'), '--package-lock-only', '--ignore-scripts', '--no-audit', '--no-fund', '--save-exact', 'lodash@4.17.20'], { cwd: vulnerable, timeout: 60000, stdio: 'pipe' });
   const cleanDependency = await dependencyProvider().execute(invocation('dependency-clean', { projectDirectory: path.relative(root, healthy), policy: strict }), context);
   assert.equal(cleanDependency.outcome, 'passed');
   assert.equal(cleanDependency.providerDetails.values.databaseEvidence.schemaVersion, 'trivy-database-evidence.v1');

@@ -35,7 +35,7 @@ export interface ReviewCacheRun<T> {
 }
 
 export class ReviewContentCacheIntegrityError extends Error {}
-const CACHE_READ_CONCURRENCY = 16;
+const LEGACY_CACHE_READ_CONCURRENCY = 16;
 
 export function reviewCacheKey(
   unitDigest: `sha256:${string}`, identity: ReviewCacheIdentity,
@@ -117,7 +117,7 @@ export function parseReviewCacheRecord(
 }
 
 async function readCacheEntries(
-  ordered: readonly ReviewCacheUnit[], cacheKeys: ReadonlyMap<string, `sha256:${string}`>, store: ReviewCacheStore,
+  ordered: readonly ReviewCacheUnit[], cacheKeys: ReadonlyMap<string, `sha256:${string}`>, store: ReviewCacheStore, concurrency: number,
 ): Promise<readonly unknown[]> {
   const output: unknown[] = new Array(ordered.length);
   const failures: ({ readonly error: unknown } | undefined)[] = new Array(ordered.length);
@@ -131,7 +131,7 @@ async function readCacheEntries(
       catch (error) { failures[index] = { error }; halted = true; }
     }
   };
-  await Promise.all(Array.from({ length: Math.min(CACHE_READ_CONCURRENCY, ordered.length) }, worker));
+  await Promise.all(Array.from({ length: Math.min(concurrency, ordered.length) }, worker));
   const failure = failures.find((value) => value !== undefined);
   if (failure !== undefined) throw failure.error;
   return Object.freeze(output);
@@ -144,7 +144,11 @@ export async function runWithReviewCache<T>(
     => Promise<ReadonlyMap<string, T>>,
   reusable: (unit: ReviewCacheUnit, value: T) => boolean = () => true,
   profile?: ReviewCacheProfile,
+  readConcurrency = LEGACY_CACHE_READ_CONCURRENCY,
 ): Promise<ReviewCacheRun<T>> {
+  if (!Number.isSafeInteger(readConcurrency) || readConcurrency < 1 || readConcurrency > 1024) {
+    throw new ReviewContentCacheIntegrityError('review cache read concurrency is invalid');
+  }
   const selectedProfile = profile === undefined ? undefined : parseReviewCacheProfile(profile);
   const ordered = [...units].sort((left, right) => compareCodeUnits(left.id, right.id));
   if (new Set(ordered.map(({ id }) => id)).size !== ordered.length) {
@@ -152,7 +156,7 @@ export async function runWithReviewCache<T>(
   }
   const values = new Map<string, T>(), misses: ReviewCacheUnit[] = [];
   const cacheKeys = new Map(ordered.map((unit) => [unit.id, reviewCacheKey(unit.digest, identity)]));
-  const cachedEntries = await readCacheEntries(ordered, cacheKeys, store); let hits = 0;
+  const cachedEntries = await readCacheEntries(ordered, cacheKeys, store, readConcurrency); let hits = 0;
   for (const [index, unit] of ordered.entries()) {
     const cached = cachedEntries[index];
     if (cached === undefined) { misses.push(unit); continue; }

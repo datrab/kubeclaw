@@ -18,7 +18,7 @@ test('every selected grade preserves original values; runtime-owned tokenizer/ou
   assert.equal(stage.repositoryRuntimeTarget.tokenizerEncoding,actual.tokenizerEncoding);
   assert.equal(stage.repositoryRuntimeTarget.maxOutputTokens,actual.maxOutputTokens);
   for(const grade of ['fast','standard','deep']) {
-   const original=structuredClone(stage);original.ownedPolicyProfiles.schemaVersion='review-owned-decision-profiles.v2';delete original.ownedPolicyProfiles.promptTokenBoundaryReserve;
+   const original=structuredClone(stage);original.ownedPolicyProfiles.schemaVersion='review-owned-decision-profiles.v2';delete original.ownedPolicyProfiles.cacheReadConcurrency;delete original.ownedPolicyProfiles.promptTokenBoundaryReserve;
    assert.deepEqual(parseRepositoryReviewInput({grade},selectedRepositoryGrades(original)),legacy({grade}));
    const current=parseRepositoryReviewInput({grade},selectedRepositoryGrades(stage));
    assert.equal(current.schemaVersion,'repository-review-profile.v2');assert.equal(current.promptTokenBoundaryReserve,64);

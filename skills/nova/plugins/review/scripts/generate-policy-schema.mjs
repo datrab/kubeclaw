@@ -1,3 +1,8 @@
+import Ajv2020 from 'ajv/dist/2020.js';
+import standaloneCode from 'ajv/dist/standalone/index.js';
+import { build } from 'esbuild';
+import { fileURLToPath } from 'node:url';
+import { repositoryGradeSchema } from '../src/review-owned-policy-schema.ts';
 import {ownedPolicyProfilesSchema} from '../src/review-owned-policy-schema.ts';
 import fs from 'node:fs';
 
@@ -53,7 +58,22 @@ const repositoryAuditConfigSource = `${JSON.stringify({
   allOf: [{not: {type:'object',properties:{ownedPolicyProfiles:{},policy:{}},required:['ownedPolicyProfiles','policy']}}],
 }, null, 2)}\n`;
 
+// Compile the same canonical schema at build time; stages load only static code.
+const gradeAjv = new Ajv2020({ strict: true, code: { source: true, esm: true } });
+const gradeValidator = gradeAjv.compile({ type: 'object', additionalProperties: false,
+  required: ['fast', 'standard', 'deep'],
+  properties: { fast: repositoryGradeSchema, standard: repositoryGradeSchema, deep: repositoryGradeSchema } });
+const gradeBuild = await build({ absWorkingDir: fileURLToPath(new URL('../', import.meta.url)), stdin: { contents: standaloneCode(gradeAjv, gradeValidator),
+  resolveDir: fileURLToPath(new URL('../', import.meta.url)), loader: 'js' },
+  bundle: true, platform: 'neutral', format: 'esm', write: false, legalComments: 'inline' });
+const gradeSource = gradeBuild.outputFiles[0].text.replace(/^\s*(?:ucs2length|equal)\.code = [^\n]+;$/gmu, '');
+if (/\b(?:eval|Function|require)\s*\(/u.test(gradeSource)) throw new Error('Grade validator must be static and CSP-safe');
+const gradeTarget = new URL('../src/repository-grade-validator.generated.mjs', import.meta.url);
+const gradeTypesTarget = new URL('../src/repository-grade-validator.generated.d.mts', import.meta.url);
+
 const generatedFiles = [
+  [gradeTarget, '// Generated from repositoryGradeSchema; do not edit.\n' + gradeSource],
+  [gradeTypesTarget, 'declare const validateGrades: (value: unknown) => boolean;\nexport default validateGrades;\n'],
   [policyTarget, policySource],
   [configTarget, configSource],
   [repositoryAuditConfigTarget, repositoryAuditConfigSource],

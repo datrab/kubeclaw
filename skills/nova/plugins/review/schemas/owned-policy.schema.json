@@ -1425,6 +1425,693 @@
           "maximum": 1000000
         }
       }
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schemaVersion",
+        "profiles",
+        "repositoryGrades",
+        "promptTokenBoundaryReserve",
+        "cacheReadConcurrency"
+      ],
+      "properties": {
+        "schemaVersion": {
+          "const": "review-owned-decision-profiles.v4"
+        },
+        "profiles": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "gate",
+            "lean",
+            "audit"
+          ],
+          "properties": {
+            "gate": {
+              "allOf": [
+                {
+                  "$ref": "#/$defs/policy"
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "profile": {
+                      "const": "gate"
+                    }
+                  }
+                }
+              ]
+            },
+            "lean": {
+              "allOf": [
+                {
+                  "$ref": "#/$defs/policy"
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "profile": {
+                      "const": "lean"
+                    }
+                  }
+                }
+              ]
+            },
+            "audit": {
+              "allOf": [
+                {
+                  "$ref": "#/$defs/policy"
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "profile": {
+                      "const": "audit"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "repositoryGrades": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "fast",
+            "standard",
+            "deep"
+          ],
+          "properties": {
+            "fast": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "componentBudget",
+                "boundaryBudget",
+                "maxPrimaryJobs",
+                "maxContextExpansionJobs",
+                "maxVerificationJobs",
+                "maxInputTokensPerJob",
+                "maxContextTokensPerJob",
+                "maxPromptBytesPerJob",
+                "maxInitialInputTokens",
+                "maxContextExpansionInputTokens",
+                "maxVerificationInputTokens",
+                "maxTotalInputTokens",
+                "maxEstimatedCostUsd",
+                "maxWallTimeSeconds",
+                "estimatedSecondsPerJob",
+                "inputUsdPerMillionTokens",
+                "outputUsdPerMillionTokens",
+                "concurrency",
+                "maxRetries",
+                "maxRetryAttemptsPerPhase",
+                "enabledLenses"
+              ],
+              "properties": {
+                "componentBudget": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "maxFiles",
+                    "maxBytes",
+                    "maxTokens"
+                  ],
+                  "properties": {
+                    "maxFiles": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 10000
+                    },
+                    "maxBytes": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 100000000
+                    },
+                    "maxTokens": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 100000000
+                    }
+                  }
+                },
+                "boundaryBudget": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "maxFiles",
+                    "maxBytes",
+                    "maxTokens",
+                    "maxRelations",
+                    "maxSlices"
+                  ],
+                  "properties": {
+                    "maxFiles": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 10000
+                    },
+                    "maxBytes": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 100000000
+                    },
+                    "maxTokens": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 100000000
+                    },
+                    "maxRelations": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 100000
+                    },
+                    "maxSlices": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 10000
+                    }
+                  }
+                },
+                "maxPrimaryJobs": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 10000
+                },
+                "maxContextExpansionJobs": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 10000
+                },
+                "maxVerificationJobs": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 10000
+                },
+                "maxInputTokensPerJob": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 100000000
+                },
+                "maxContextTokensPerJob": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 100000000
+                },
+                "maxPromptBytesPerJob": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 100000000
+                },
+                "maxInitialInputTokens": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 1000000000
+                },
+                "maxContextExpansionInputTokens": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 1000000000
+                },
+                "maxVerificationInputTokens": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 1000000000
+                },
+                "maxTotalInputTokens": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 1000000000
+                },
+                "maxEstimatedCostUsd": {
+                  "type": "number",
+                  "exclusiveMinimum": 0,
+                  "maximum": 1000000
+                },
+                "maxWallTimeSeconds": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 604800
+                },
+                "estimatedSecondsPerJob": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 86400
+                },
+                "inputUsdPerMillionTokens": {
+                  "type": "number",
+                  "exclusiveMinimum": 0,
+                  "maximum": 10000
+                },
+                "outputUsdPerMillionTokens": {
+                  "type": "number",
+                  "exclusiveMinimum": 0,
+                  "maximum": 10000
+                },
+                "concurrency": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 32
+                },
+                "maxRetries": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 10
+                },
+                "maxRetryAttemptsPerPhase": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 10000
+                },
+                "enabledLenses": {
+                  "type": "array",
+                  "uniqueItems": true,
+                  "items": {
+                    "enum": [
+                      "architecture",
+                      "contracts",
+                      "security",
+                      "lifecycle",
+                      "resilience",
+                      "deployment",
+                      "simplification"
+                    ]
+                  }
+                }
+              }
+            },
+            "standard": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "componentBudget",
+                "boundaryBudget",
+                "maxPrimaryJobs",
+                "maxContextExpansionJobs",
+                "maxVerificationJobs",
+                "maxInputTokensPerJob",
+                "maxContextTokensPerJob",
+                "maxPromptBytesPerJob",
+                "maxInitialInputTokens",
+                "maxContextExpansionInputTokens",
+                "maxVerificationInputTokens",
+                "maxTotalInputTokens",
+                "maxEstimatedCostUsd",
+                "maxWallTimeSeconds",
+                "estimatedSecondsPerJob",
+                "inputUsdPerMillionTokens",
+                "outputUsdPerMillionTokens",
+                "concurrency",
+                "maxRetries",
+                "maxRetryAttemptsPerPhase",
+                "enabledLenses"
+              ],
+              "properties": {
+                "componentBudget": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "maxFiles",
+                    "maxBytes",
+                    "maxTokens"
+                  ],
+                  "properties": {
+                    "maxFiles": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 10000
+                    },
+                    "maxBytes": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 100000000
+                    },
+                    "maxTokens": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 100000000
+                    }
+                  }
+                },
+                "boundaryBudget": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "maxFiles",
+                    "maxBytes",
+                    "maxTokens",
+                    "maxRelations",
+                    "maxSlices"
+                  ],
+                  "properties": {
+                    "maxFiles": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 10000
+                    },
+                    "maxBytes": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 100000000
+                    },
+                    "maxTokens": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 100000000
+                    },
+                    "maxRelations": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 100000
+                    },
+                    "maxSlices": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 10000
+                    }
+                  }
+                },
+                "maxPrimaryJobs": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 10000
+                },
+                "maxContextExpansionJobs": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 10000
+                },
+                "maxVerificationJobs": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 10000
+                },
+                "maxInputTokensPerJob": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 100000000
+                },
+                "maxContextTokensPerJob": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 100000000
+                },
+                "maxPromptBytesPerJob": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 100000000
+                },
+                "maxInitialInputTokens": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 1000000000
+                },
+                "maxContextExpansionInputTokens": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 1000000000
+                },
+                "maxVerificationInputTokens": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 1000000000
+                },
+                "maxTotalInputTokens": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 1000000000
+                },
+                "maxEstimatedCostUsd": {
+                  "type": "number",
+                  "exclusiveMinimum": 0,
+                  "maximum": 1000000
+                },
+                "maxWallTimeSeconds": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 604800
+                },
+                "estimatedSecondsPerJob": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 86400
+                },
+                "inputUsdPerMillionTokens": {
+                  "type": "number",
+                  "exclusiveMinimum": 0,
+                  "maximum": 10000
+                },
+                "outputUsdPerMillionTokens": {
+                  "type": "number",
+                  "exclusiveMinimum": 0,
+                  "maximum": 10000
+                },
+                "concurrency": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 32
+                },
+                "maxRetries": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 10
+                },
+                "maxRetryAttemptsPerPhase": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 10000
+                },
+                "enabledLenses": {
+                  "type": "array",
+                  "uniqueItems": true,
+                  "items": {
+                    "enum": [
+                      "architecture",
+                      "contracts",
+                      "security",
+                      "lifecycle",
+                      "resilience",
+                      "deployment",
+                      "simplification"
+                    ]
+                  }
+                }
+              }
+            },
+            "deep": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "componentBudget",
+                "boundaryBudget",
+                "maxPrimaryJobs",
+                "maxContextExpansionJobs",
+                "maxVerificationJobs",
+                "maxInputTokensPerJob",
+                "maxContextTokensPerJob",
+                "maxPromptBytesPerJob",
+                "maxInitialInputTokens",
+                "maxContextExpansionInputTokens",
+                "maxVerificationInputTokens",
+                "maxTotalInputTokens",
+                "maxEstimatedCostUsd",
+                "maxWallTimeSeconds",
+                "estimatedSecondsPerJob",
+                "inputUsdPerMillionTokens",
+                "outputUsdPerMillionTokens",
+                "concurrency",
+                "maxRetries",
+                "maxRetryAttemptsPerPhase",
+                "enabledLenses"
+              ],
+              "properties": {
+                "componentBudget": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "maxFiles",
+                    "maxBytes",
+                    "maxTokens"
+                  ],
+                  "properties": {
+                    "maxFiles": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 10000
+                    },
+                    "maxBytes": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 100000000
+                    },
+                    "maxTokens": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 100000000
+                    }
+                  }
+                },
+                "boundaryBudget": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "maxFiles",
+                    "maxBytes",
+                    "maxTokens",
+                    "maxRelations",
+                    "maxSlices"
+                  ],
+                  "properties": {
+                    "maxFiles": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 10000
+                    },
+                    "maxBytes": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 100000000
+                    },
+                    "maxTokens": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 100000000
+                    },
+                    "maxRelations": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 100000
+                    },
+                    "maxSlices": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 10000
+                    }
+                  }
+                },
+                "maxPrimaryJobs": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 10000
+                },
+                "maxContextExpansionJobs": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 10000
+                },
+                "maxVerificationJobs": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 10000
+                },
+                "maxInputTokensPerJob": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 100000000
+                },
+                "maxContextTokensPerJob": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 100000000
+                },
+                "maxPromptBytesPerJob": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 100000000
+                },
+                "maxInitialInputTokens": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 1000000000
+                },
+                "maxContextExpansionInputTokens": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 1000000000
+                },
+                "maxVerificationInputTokens": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 1000000000
+                },
+                "maxTotalInputTokens": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 1000000000
+                },
+                "maxEstimatedCostUsd": {
+                  "type": "number",
+                  "exclusiveMinimum": 0,
+                  "maximum": 1000000
+                },
+                "maxWallTimeSeconds": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 604800
+                },
+                "estimatedSecondsPerJob": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 86400
+                },
+                "inputUsdPerMillionTokens": {
+                  "type": "number",
+                  "exclusiveMinimum": 0,
+                  "maximum": 10000
+                },
+                "outputUsdPerMillionTokens": {
+                  "type": "number",
+                  "exclusiveMinimum": 0,
+                  "maximum": 10000
+                },
+                "concurrency": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 32
+                },
+                "maxRetries": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 10
+                },
+                "maxRetryAttemptsPerPhase": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 10000
+                },
+                "enabledLenses": {
+                  "type": "array",
+                  "uniqueItems": true,
+                  "items": {
+                    "enum": [
+                      "architecture",
+                      "contracts",
+                      "security",
+                      "lifecycle",
+                      "resilience",
+                      "deployment",
+                      "simplification"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "promptTokenBoundaryReserve": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1000000
+        },
+        "cacheReadConcurrency": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1024
+        }
+      }
     }
   ],
   "$defs": {

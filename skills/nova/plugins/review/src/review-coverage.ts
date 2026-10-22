@@ -1,6 +1,6 @@
 import { canonicalJson, sha256Text } from '@kubeclaw/plugin-sdk';
 import { coverageReviewPrefixes, coverageReviewRequirements, validatePipelineTestGateContract,
-  type GateCoverageV1 } from '@kubeclaw/pipeline-test-gate-contract';
+  type GateCoverageV1 } from '@kubeclaw/pipeline-test-gate-contract/gate-decision';
 import type { ReviewStageInput } from './review-stage-input.ts';
 import { reviewEvidenceJson } from './review-evidence-encoding.ts';
 

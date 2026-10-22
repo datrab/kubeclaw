@@ -1,6 +1,6 @@
-import { assertCoveragePlan, assertCoverageExecution, type ResolvedTestPlanV1 } from '@kubeclaw/pipeline-test-gate-contract';
+import type { ResolvedTestPlanV1 } from '@kubeclaw/pipeline-test-gate-contract/gate-decision';
 import { resolveSourceRevision } from '@kubeclaw/plugin-sdk';
-import { parseGateDecision, gateDecisionEvidence, gateDecisionStageResult } from '@kubeclaw/pipeline-test-gate-contract/gate-decision';
+import { assertCoveragePlan, assertCoverageExecution, parseGateDecision, gateDecisionEvidence, gateDecisionStageResult } from '@kubeclaw/pipeline-test-gate-contract/gate-decision';
 import type { ArtifactRef, PluginInvocationContext, StageResult } from '@kubeclaw/plugin-sdk';
 import { buildRequest, parseVerdict, type GateInput } from './protocol.ts';
 

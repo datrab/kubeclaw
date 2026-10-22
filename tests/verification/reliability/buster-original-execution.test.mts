@@ -40,8 +40,13 @@ import { executeBusterPreparedJob } from '../../../skills/buster/engine/test-gat
 import type { BusterRemotePlanServiceOptions } from '../../../skills/buster/engine/test-gates/remote-plan-service.ts';
 
 // Explicit source-only fixtures: digest-shaped labels do not assert native boot authority.
+// Explicit historical v1 decoder fixture: legacy policy did not contain execution/store wait keys.
+const legacyPolicy = structuredClone(runnerExecutionPolicy) as any;
+delete legacyPolicy.schemaVersion;
+delete legacyPolicy.stores.attempts.lockWaitSeconds;
+delete legacyPolicy.stores.admission.lockWaitSeconds;
 const original = () => readBusterOriginalExecution({schemaVersion: 'buster-original-execution.v1',
-  generationDigest: digest, selectionDigest: archiveDigest, executionPolicy: runnerExecutionPolicy,
+  generationDigest: digest, selectionDigest: archiveDigest, executionPolicy: legacyPolicy,
   workerLocalRuntime: {drainTimeoutMs: 300000, cancellationTimeoutMs: 30000, replayLimit: 65536}, workerCore: null});
 function storeAt(root: string) { return new PreparedBusterPlanJobStore(path.join(root, 'state'), {
   recordLimits: { maximumRecords: 10, maximumBytes: 1048576, maximumRecordBytes: 131072 },
@@ -98,4 +103,26 @@ test('boot creation rejects shape-forged receipts; selected reader rejects missi
  for(const bad of [null,{}, {...a,extra:true},{...a,workerCore:undefined},{...a,generationDigest:'latest'},
   {...a,executionPolicy:{}},{...a,workerLocalRuntime:{}},{...a,workerLocalRuntime:{...a.workerLocalRuntime,extra:true}}]) assert.throws(()=>readBusterOriginalExecution(bad));
  assert.ok(Object.isFrozen(a));assert.ok(Object.isFrozen(a.executionPolicy.provider));
+});
+
+
+test('versioned execution waits retain A through durable replay and never enter legacy v1', async () => {
+ const root=await fs.mkdtemp(path.join(os.tmpdir(),'buster-original-lock-'));
+ try {
+  const selected=(wait:number)=>readBusterOriginalExecution({...original(),schemaVersion:'buster-original-execution.v2',
+   executionPolicy:{...runnerExecutionPolicy,schemaVersion:'buster-execution.v2',stores:{
+    attempts:{...runnerExecutionPolicy.stores.attempts,lockWaitSeconds:wait},
+    admission:{...runnerExecutionPolicy.stores.admission,lockWaitSeconds:wait}}}});
+  const a=selected(5),b=selected(1),store=storeAt(root),staged={job,input} as BusterStagedAdmission;
+  await store.accept(staged,job.submittedAt,a);await store.accept(staged,job.submittedAt,b);
+  const retained=(await storeAt(root).get(job.jobId)).payload;
+  assert.deepEqual('originalExecution' in retained && retained.originalExecution,a);
+  assert.throws(()=>readBusterOriginalExecution({...a,schemaVersion:'buster-original-execution.v1'}),/VERSION_MISMATCH/);
+  assert.throws(()=>readBusterOriginalExecution({...original(),schemaVersion:'buster-original-execution.v2'}),/VERSION_MISMATCH/);
+  for(const wait of [0,6,1.5,NaN])assert.throws(()=>selected(wait));
+  for(const kind of ['attempts','admission'] as const){
+   const missing=structuredClone(a) as any;delete missing.executionPolicy.stores[kind].lockWaitSeconds;
+   assert.throws(()=>readBusterOriginalExecution(missing));
+  }
+ }finally{await fs.rm(root,{recursive:true,force:true});}
 });

@@ -447,8 +447,12 @@ export class FileProducerOutbox {
 export class FileObservabilityAdmissionStore {
   readonly #file: string;
   readonly #limits: AdmissionStoreLimits;
+  readonly #lockWaitSeconds: number;
   #queue: Promise<unknown> = Promise.resolve();
-  constructor(directory: string, limits: AdmissionStoreLimits) {
+  constructor(directory: string, limits: AdmissionStoreLimits, lockWaitSeconds = 5) {
+    if (!Number.isSafeInteger(lockWaitSeconds) || lockWaitSeconds < 1 || lockWaitSeconds > 5)
+      throw new Error("OBSERVABILITY_STORE_LOCK_WAIT_INVALID");
+    this.#lockWaitSeconds = lockWaitSeconds;
     if (
       Object.values(limits).some((value) => !validLimit(value)) ||
       limits.maximumBytes <= ADMISSION_METADATA_RESERVE
@@ -461,7 +465,7 @@ export class FileObservabilityAdmissionStore {
     return path.dirname(this.#file);
   }
   #serial<T>(operation: () => Promise<T>): Promise<T> {
-    const locked = () => withDurableStoreLock(this.#file, operation);
+    const locked = () => withDurableStoreLock(this.#file, operation, this.#lockWaitSeconds);
     const result = this.#queue.then(locked, locked);
     this.#queue = result.then(
       () => undefined,

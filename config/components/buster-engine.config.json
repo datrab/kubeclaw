@@ -1,5 +1,5 @@
 {
-  "schemaVersion": "pipeline-component.v2",
+  "schemaVersion": "pipeline-component.v3",
   "owner": "buster-engine",
   "profiles": {
     "standard": {
@@ -90,21 +90,24 @@
               "maximumResults": 10000,
               "maximumClosures": 10000,
               "maximumMetadataBytes": 268435456,
-              "maximumPendingEvidenceAgeMs": 3600000
+              "maximumPendingEvidenceAgeMs": 3600000,
+              "lockWaitSeconds": 5
             },
             "admission": {
               "maximumIngressBytes": 16777216,
               "maximumRecords": 10000,
               "maximumBytes": 268435456,
               "maximumQuarantineRecords": 1000,
-              "maximumQuarantineBytes": 67108864
+              "maximumQuarantineBytes": 67108864,
+              "lockWaitSeconds": 5
             }
           },
           "processInput": {
             "cleanupTimeoutMs": 1500,
             "terminationGraceMs": 250,
             "acknowledgementPollMs": 10
-          }
+          },
+          "schemaVersion": "buster-execution.v2"
         },
         "clusterInvokers": {
           "shared": {
@@ -262,21 +265,24 @@
               "maximumResults": 10000,
               "maximumClosures": 10000,
               "maximumMetadataBytes": 268435456,
-              "maximumPendingEvidenceAgeMs": 3600000
+              "maximumPendingEvidenceAgeMs": 3600000,
+              "lockWaitSeconds": 5
             },
             "admission": {
               "maximumIngressBytes": 16777216,
               "maximumRecords": 10000,
               "maximumBytes": 268435456,
               "maximumQuarantineRecords": 1000,
-              "maximumQuarantineBytes": 67108864
+              "maximumQuarantineBytes": 67108864,
+              "lockWaitSeconds": 5
             }
           },
           "processInput": {
             "cleanupTimeoutMs": 1500,
             "terminationGraceMs": 250,
             "acknowledgementPollMs": 10
-          }
+          },
+          "schemaVersion": "buster-execution.v2"
         },
         "clusterInvokers": {
           "shared": {

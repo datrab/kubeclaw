@@ -1,5 +1,5 @@
 import {portableJson,type ArtifactRef,type PluginInvocationContext,type StageResult} from '@kubeclaw/plugin-sdk';
-import {DELIVERY_MANIFEST_ENCODING,type DeliveryManifestEncoding} from '@kubeclaw/delivery-manifest-contract';
+import {DELIVERY_MANIFEST_ENCODING,type DeliveryManifestEncoding} from '@kubeclaw/plugin-sdk';
 import {buildSummary,type SummaryInput} from './summary.ts';
 export async function execute(input:SummaryInput,context:PluginInvocationContext):Promise<StageResult>{
   portableJson(context.contract.config);

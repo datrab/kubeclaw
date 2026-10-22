@@ -1,5 +1,5 @@
 import { validatePrism } from '@kubeclaw/prism-contracts-v1';
-import { BASELINE_V1, BASELINE_V2, BASELINE_CHECKSUM_ENCODING, baselineChecksumDigest, assertBaselineChecksumDocument } from '@kubeclaw/prism-contracts-v1/baseline-archive';
+import { BASELINE_V1, BASELINE_V2, BASELINE_CHECKSUM_ENCODING, baselineChecksumDigest, assertBaselineChecksumDocument } from '@kubeclaw/prism-contracts-v1';
 import { sha256Bytes, sha256Text } from '@kubeclaw/plugin-sdk';
 
 const digest = (bytes: string | Buffer) => typeof bytes === 'string' ? sha256Text(bytes) : sha256Bytes(bytes);
