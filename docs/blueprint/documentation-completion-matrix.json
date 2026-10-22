@@ -8211,7 +8211,7 @@
     },
     {
       "id": "AP09-install-maintenance-project-entry-20261021",
-      "revision": "340875215c422fb1cc0901e867420928eae3dfc0",
+      "revision": "d23046f0a0f39c70f8177c607b722c191a8da7e1",
       "author": "Documentation authors and /root entry correction coordinator",
       "reviewer": "Independent Codex autoreview 2026-10-21 (operator, entry closeout and publication impact invocations)",
       "gateIds": [],
@@ -8297,6 +8297,11 @@
           "command": "Actual original node scripts/docs-publication.mjs build and four native docs-reader checks: artifact, search, source-links, source-previews (Reader34087521)",
           "exitCode": 0,
           "observation": "Entry/install/maintain/operate Ops additions preserve existing safe preflight, retirement and first-project boundaries. Independent access and existing release stops remain; no live install/upgrade/provider path is newly certified. Current build177pages,241outputdigests,40885localtargets; search177pages/12questions;435Sourceboxes/2000exactexcerpts. All authored pages/shared renderer outputs unchanged6250\u21923408; exact2scripts-tree pageRecordbindings checked. Refs/governance6250 and bounded prior browser observations reused, not relabelled fresh. Prior summary/limits/checks remain historical where superseded; no wider original-scope promotion."
+        },
+        {
+          "command": "/usr/local/bin/node --max-old-space-size=4096 scripts/docs-publication.mjs build\n/usr/local/bin/node scripts/docs-reader/check-artifact.mjs /home/node/.openclaw/workspace/tmp/pr13-finish-20261021/reader-d23046f0\n/usr/local/bin/node scripts/docs-reader/check-search.mjs /home/node/.openclaw/workspace/tmp/pr13-finish-20261021/reader-d23046f0\n/usr/local/bin/node scripts/docs-reader/check-source-links.mjs /home/node/.openclaw/workspace/tmp/pr13-finish-20261021/reader-d23046f0\n/usr/local/bin/node scripts/docs-reader/check-source-previews.mjs /home/node/.openclaw/workspace/tmp/pr13-finish-20261021/reader-d23046f0",
+          "exitCode": 0,
+          "observation": "Five separate original native processes each exited0: publication build177canonical/187HTML; artifact local targets/digests,177-page search,Source links and2000excerpts/1070objects. This is one captured group reused for this record; no synthetic shell invocation or human review counted as command success."
         }
       ],
       "review": {
@@ -8401,6 +8406,21 @@
         "historicalChecksRemainAtOriginalRevisions": true,
         "practicalReaderProvenance": "Any original practical/semantic Reader observation remains dated and scoped. This source-informed content review is not a fresh eligible practical participant or new run.",
         "limits": "Only affected declared content/source bindings preserved. Old Ops loopback/shared-token/read-only/direct-token units are superseded where applicable by current source-only central Ops contract; no original live result transfers. No new global API/config generator, runtime, full accessibility, practical Reader execution or two-build determinism claim."
+      },
+      "scopePreservationD230": {
+        "priorRevision": "340875215c422fb1cc0901e867420928eae3dfc0",
+        "originalReviewerPreserved": "Independent Codex autoreview 2026-10-21 (operator, entry closeout and publication impact invocations)",
+        "integrationRole": "Targeted preservation only; no new requirement or gate and no replacement of original practical evidence.",
+        "changedDeclaredInputs": [
+          "docs/site/use/maintenance.md"
+        ],
+        "unchangedDeclaredInputs": 16,
+        "sourceAfterReview": "ops_upstream_content_source_review: manifest-readiness-source and gitops-shared-context-source; bounded original producer/guard/ordered DATA relevance, not whole unrelated API semantics.",
+        "contentAfterReview": "ops_upstream_content_source_review: rollback subsection and exact active-wording addendum Source/reader-task clarity/Quality PASS; all other authored pages byte-identical.",
+        "currentOutput": "One real d230 native build and four separately executed artifact checks; exact shared observations reused across the affected records, not twelve executions.",
+        "browserAfterReview": "Only maintenance page at320/768/1440,27table-width cases and3firstdisclosures,0findings/network. Other unchanged historical successful scopes retained; no new screenreader/fresh-persona/live claim.",
+        "priorSummaryStatus": "Original summary and all old limits/checks/review/persona provenance retained as historical scope; current177-page observations stated here, not retroactively attributed to old runs.",
+        "globalGeneratorLimit": "Original normal81b localHelm still FAILS at infrastructure-chart.mjs63. This preservation grants no global configuration/API generator or live-release acceptance."
       }
     },
     {
@@ -9510,7 +9530,7 @@
     },
     {
       "id": "AP09-documentation-agent-maintenance-20261021",
-      "revision": "340875215c422fb1cc0901e867420928eae3dfc0",
+      "revision": "d23046f0a0f39c70f8177c607b722c191a8da7e1",
       "author": "Nova /root authored content and correction coordinator",
       "reviewer": "Independent Codex autoreview 2026-10-21 maintenance-ready-review",
       "gateIds": [],
@@ -9744,6 +9764,11 @@
           "command": "Actual original node scripts/docs-publication.mjs build and four native docs-reader checks: artifact, search, source-links, source-previews (Reader34087521)",
           "exitCode": 0,
           "observation": "Generic maintainer guide gains a finite pinned-upstream route with equality/digest rules and no runtime-adoption shortcut; the original discovery/review/retirement workflow and excluded global obligations remain intact. Current build177pages,241outputdigests,40885localtargets; search177pages/12questions;435Sourceboxes/2000exactexcerpts. All authored pages/shared renderer outputs unchanged6250\u21923408; exact2scripts-tree pageRecordbindings checked. Refs/governance6250 and bounded prior browser observations reused, not relabelled fresh. Prior summary/limits/checks remain historical where superseded; no wider original-scope promotion."
+        },
+        {
+          "command": "/usr/local/bin/node --max-old-space-size=4096 scripts/docs-publication.mjs build\n/usr/local/bin/node scripts/docs-reader/check-artifact.mjs /home/node/.openclaw/workspace/tmp/pr13-finish-20261021/reader-d23046f0\n/usr/local/bin/node scripts/docs-reader/check-search.mjs /home/node/.openclaw/workspace/tmp/pr13-finish-20261021/reader-d23046f0\n/usr/local/bin/node scripts/docs-reader/check-source-links.mjs /home/node/.openclaw/workspace/tmp/pr13-finish-20261021/reader-d23046f0\n/usr/local/bin/node scripts/docs-reader/check-source-previews.mjs /home/node/.openclaw/workspace/tmp/pr13-finish-20261021/reader-d23046f0",
+          "exitCode": 0,
+          "observation": "Five separate original native processes each exited0: publication build177canonical/187HTML; artifact local targets/digests,177-page search,Source links and2000excerpts/1070objects. This is one captured group reused for this record; no synthetic shell invocation or human review counted as command success."
         }
       ],
       "review": {
@@ -10163,6 +10188,22 @@
         "historicalChecksRemainAtOriginalRevisions": true,
         "practicalReaderProvenance": "Any original practical/semantic Reader observation remains dated and scoped. This source-informed content review is not a fresh eligible practical participant or new run.",
         "limits": "Only affected declared content/source bindings preserved. Old Ops loopback/shared-token/read-only/direct-token units are superseded where applicable by current source-only central Ops contract; no original live result transfers. No new global API/config generator, runtime, full accessibility, practical Reader execution or two-build determinism claim."
+      },
+      "scopePreservationD230": {
+        "priorRevision": "340875215c422fb1cc0901e867420928eae3dfc0",
+        "originalReviewerPreserved": "Independent Codex autoreview 2026-10-21 maintenance-ready-review",
+        "integrationRole": "Targeted preservation only; no new requirement or gate and no replacement of original practical evidence.",
+        "changedDeclaredInputs": [
+          "scripts/docs-api-output-discovery.mjs",
+          "scripts/tests/argocd-checked-artifacts.test.mjs"
+        ],
+        "unchangedDeclaredInputs": 146,
+        "sourceAfterReview": "ops_upstream_content_source_review: manifest-readiness-source and gitops-shared-context-source; bounded original producer/guard/ordered DATA relevance, not whole unrelated API semantics.",
+        "contentAfterReview": "ops_upstream_content_source_review: rollback subsection and exact active-wording addendum Source/reader-task clarity/Quality PASS; all other authored pages byte-identical.",
+        "currentOutput": "One real d230 native build and four separately executed artifact checks; exact shared observations reused across the affected records, not twelve executions.",
+        "browserAfterReview": "Only maintenance page at320/768/1440,27table-width cases and3firstdisclosures,0findings/network. Other unchanged historical successful scopes retained; no new screenreader/fresh-persona/live claim.",
+        "priorSummaryStatus": "Original summary and all old limits/checks/review/persona provenance retained as historical scope; current177-page observations stated here, not retroactively attributed to old runs.",
+        "globalGeneratorLimit": "Original normal81b localHelm still FAILS at infrastructure-chart.mjs63. This preservation grants no global configuration/API generator or live-release acceptance."
       }
     },
     {
@@ -13398,7 +13439,7 @@
     },
     {
       "id": "AP09-complete-static-reader-search-20261021",
-      "revision": "340875215c422fb1cc0901e867420928eae3dfc0",
+      "revision": "d23046f0a0f39c70f8177c607b722c191a8da7e1",
       "author": "Nova /root documentation author and implementation coordinator",
       "reviewer": "Independent Codex autoreview static-reader whole PUB-002 Source/reader-quality closeout",
       "verdict": "PASS",
@@ -13719,6 +13760,11 @@
           "command": "Actual original node scripts/docs-publication.mjs build and four native docs-reader checks: artifact, search, source-links, source-previews (Reader34087521)",
           "exitCode": 0,
           "observation": "All changed topic text remains reader-meaningful; old 167-page search/browser evidence remains an historical exact-artifact observation. Fresh final output/index/browser checks are required before claiming a current-candidate output result; no corpus count is transferred. Current build177pages,241outputdigests,40885localtargets; search177pages/12questions;435Sourceboxes/2000exactexcerpts. All authored pages/shared renderer outputs unchanged6250\u21923408; exact2scripts-tree pageRecordbindings checked. Refs/governance6250 and bounded prior browser observations reused, not relabelled fresh. Prior summary/limits/checks remain historical where superseded; no wider original-scope promotion."
+        },
+        {
+          "command": "/usr/local/bin/node --max-old-space-size=4096 scripts/docs-publication.mjs build\n/usr/local/bin/node scripts/docs-reader/check-artifact.mjs /home/node/.openclaw/workspace/tmp/pr13-finish-20261021/reader-d23046f0\n/usr/local/bin/node scripts/docs-reader/check-search.mjs /home/node/.openclaw/workspace/tmp/pr13-finish-20261021/reader-d23046f0\n/usr/local/bin/node scripts/docs-reader/check-source-links.mjs /home/node/.openclaw/workspace/tmp/pr13-finish-20261021/reader-d23046f0\n/usr/local/bin/node scripts/docs-reader/check-source-previews.mjs /home/node/.openclaw/workspace/tmp/pr13-finish-20261021/reader-d23046f0",
+          "exitCode": 0,
+          "observation": "Five separate original native processes each exited0: publication build177canonical/187HTML; artifact local targets/digests,177-page search,Source links and2000excerpts/1070objects. This is one captured group reused for this record; no synthetic shell invocation or human review counted as command success."
         }
       ],
       "limits": [
@@ -14452,11 +14498,27 @@
         "historicalChecksRemainAtOriginalRevisions": true,
         "practicalReaderProvenance": "Any original practical/semantic Reader observation remains dated and scoped. This source-informed content review is not a fresh eligible practical participant or new run.",
         "limits": "Only affected declared content/source bindings preserved. Old Ops loopback/shared-token/read-only/direct-token units are superseded where applicable by current source-only central Ops contract; no original live result transfers. No new global API/config generator, runtime, full accessibility, practical Reader execution or two-build determinism claim."
+      },
+      "scopePreservationD230": {
+        "priorRevision": "340875215c422fb1cc0901e867420928eae3dfc0",
+        "originalReviewerPreserved": "Independent Codex autoreview static-reader whole PUB-002 Source/reader-quality closeout",
+        "integrationRole": "Targeted preservation only; no new requirement or gate and no replacement of original practical evidence.",
+        "changedDeclaredInputs": [
+          "docs/site/use/maintenance.md",
+          "scripts/docs-api-documentation-role-custody.mjs"
+        ],
+        "unchangedDeclaredInputs": 200,
+        "sourceAfterReview": "ops_upstream_content_source_review: manifest-readiness-source and gitops-shared-context-source; bounded original producer/guard/ordered DATA relevance, not whole unrelated API semantics.",
+        "contentAfterReview": "ops_upstream_content_source_review: rollback subsection and exact active-wording addendum Source/reader-task clarity/Quality PASS; all other authored pages byte-identical.",
+        "currentOutput": "One real d230 native build and four separately executed artifact checks; exact shared observations reused across the affected records, not twelve executions.",
+        "browserAfterReview": "Only maintenance page at320/768/1440,27table-width cases and3firstdisclosures,0findings/network. Other unchanged historical successful scopes retained; no new screenreader/fresh-persona/live claim.",
+        "priorSummaryStatus": "Original summary and all old limits/checks/review/persona provenance retained as historical scope; current177-page observations stated here, not retroactively attributed to old runs.",
+        "globalGeneratorLimit": "Original normal81b localHelm still FAILS at infrastructure-chart.mjs63. This preservation grants no global configuration/API generator or live-release acceptance."
       }
     },
     {
       "id": "AP09-search-reader-gate-20261021",
-      "revision": "340875215c422fb1cc0901e867420928eae3dfc0",
+      "revision": "d23046f0a0f39c70f8177c607b722c191a8da7e1",
       "author": "Nova /root documentation author and implementation coordinator",
       "reviewer": "Independent Codex autoreview whole A912-04 code/evidence review plus narrow Source/Reader/Quality native-impact follow-up",
       "verdict": "PASS",
@@ -14569,6 +14631,11 @@
           "command": "Actual original node scripts/docs-publication.mjs build and four native docs-reader checks: artifact, search, source-links, source-previews (Reader34087521)",
           "exitCode": 0,
           "observation": "No declared public page changed. Twelve old search-question/browser results remain historical. Current search/output behavior is conditional on current native output checks, not established by text preservation or this review. Current build177pages,241outputdigests,40885localtargets; search177pages/12questions;435Sourceboxes/2000exactexcerpts. All authored pages/shared renderer outputs unchanged6250\u21923408; exact2scripts-tree pageRecordbindings checked. Refs/governance6250 and bounded prior browser observations reused, not relabelled fresh. Prior summary/limits/checks remain historical where superseded; no wider original-scope promotion."
+        },
+        {
+          "command": "/usr/local/bin/node --max-old-space-size=4096 scripts/docs-publication.mjs build\n/usr/local/bin/node scripts/docs-reader/check-artifact.mjs /home/node/.openclaw/workspace/tmp/pr13-finish-20261021/reader-d23046f0\n/usr/local/bin/node scripts/docs-reader/check-search.mjs /home/node/.openclaw/workspace/tmp/pr13-finish-20261021/reader-d23046f0\n/usr/local/bin/node scripts/docs-reader/check-source-links.mjs /home/node/.openclaw/workspace/tmp/pr13-finish-20261021/reader-d23046f0\n/usr/local/bin/node scripts/docs-reader/check-source-previews.mjs /home/node/.openclaw/workspace/tmp/pr13-finish-20261021/reader-d23046f0",
+          "exitCode": 0,
+          "observation": "Five separate original native processes each exited0: publication build177canonical/187HTML; artifact local targets/digests,177-page search,Source links and2000excerpts/1070objects. This is one captured group reused for this record; no synthetic shell invocation or human review counted as command success."
         }
       ],
       "limits": [
@@ -14940,11 +15007,26 @@
         "historicalChecksRemainAtOriginalRevisions": true,
         "practicalReaderProvenance": "Any original practical/semantic Reader observation remains dated and scoped. This source-informed content review is not a fresh eligible practical participant or new run.",
         "limits": "Only affected declared content/source bindings preserved. Old Ops loopback/shared-token/read-only/direct-token units are superseded where applicable by current source-only central Ops contract; no original live result transfers. No new global API/config generator, runtime, full accessibility, practical Reader execution or two-build determinism claim."
+      },
+      "scopePreservationD230": {
+        "priorRevision": "340875215c422fb1cc0901e867420928eae3dfc0",
+        "originalReviewerPreserved": "Independent Codex autoreview whole A912-04 code/evidence review plus narrow Source/Reader/Quality native-impact follow-up",
+        "integrationRole": "Targeted preservation only; no new requirement or gate and no replacement of original practical evidence.",
+        "changedDeclaredInputs": [
+          "scripts/docs-api-documentation-role-custody.mjs"
+        ],
+        "unchangedDeclaredInputs": 18,
+        "sourceAfterReview": "ops_upstream_content_source_review: manifest-readiness-source and gitops-shared-context-source; bounded original producer/guard/ordered DATA relevance, not whole unrelated API semantics.",
+        "contentAfterReview": "ops_upstream_content_source_review: rollback subsection and exact active-wording addendum Source/reader-task clarity/Quality PASS; all other authored pages byte-identical.",
+        "currentOutput": "One real d230 native build and four separately executed artifact checks; exact shared observations reused across the affected records, not twelve executions.",
+        "browserAfterReview": "Only maintenance page at320/768/1440,27table-width cases and3firstdisclosures,0findings/network. Other unchanged historical successful scopes retained; no new screenreader/fresh-persona/live claim.",
+        "priorSummaryStatus": "Original summary and all old limits/checks/review/persona provenance retained as historical scope; current177-page observations stated here, not retroactively attributed to old runs.",
+        "globalGeneratorLimit": "Original normal81b localHelm still FAILS at infrastructure-chart.mjs63. This preservation grants no global configuration/API generator or live-release acceptance."
       }
     },
     {
       "id": "AP09-rendered-source-bounds-gate-20261021",
-      "revision": "340875215c422fb1cc0901e867420928eae3dfc0",
+      "revision": "d23046f0a0f39c70f8177c607b722c191a8da7e1",
       "author": "Nova /root documentation author and implementation coordinator",
       "reviewer": "Independent Codex autoreview whole A912-09 Source/Reader/Quality review and narrow changed-boundary impact review for 21 prior PASS records",
       "verdict": "PASS",
@@ -15066,6 +15148,11 @@
           "command": "Actual original node scripts/docs-publication.mjs build and four native docs-reader checks: artifact, search, source-links, source-previews (Reader34087521)",
           "exitCode": 0,
           "observation": "Install adds correctly scoped immutable upstream links. Old locator/object/HTML observations cannot qualify new current output; current source-bound preview/link/anchor checks must cover changed links at final bytes. Current build177pages,241outputdigests,40885localtargets; search177pages/12questions;435Sourceboxes/2000exactexcerpts. All authored pages/shared renderer outputs unchanged6250\u21923408; exact2scripts-tree pageRecordbindings checked. Refs/governance6250 and bounded prior browser observations reused, not relabelled fresh. Prior summary/limits/checks remain historical where superseded; no wider original-scope promotion."
+        },
+        {
+          "command": "/usr/local/bin/node --max-old-space-size=4096 scripts/docs-publication.mjs build\n/usr/local/bin/node scripts/docs-reader/check-artifact.mjs /home/node/.openclaw/workspace/tmp/pr13-finish-20261021/reader-d23046f0\n/usr/local/bin/node scripts/docs-reader/check-search.mjs /home/node/.openclaw/workspace/tmp/pr13-finish-20261021/reader-d23046f0\n/usr/local/bin/node scripts/docs-reader/check-source-links.mjs /home/node/.openclaw/workspace/tmp/pr13-finish-20261021/reader-d23046f0\n/usr/local/bin/node scripts/docs-reader/check-source-previews.mjs /home/node/.openclaw/workspace/tmp/pr13-finish-20261021/reader-d23046f0",
+          "exitCode": 0,
+          "observation": "Five separate original native processes each exited0: publication build177canonical/187HTML; artifact local targets/digests,177-page search,Source links and2000excerpts/1070objects. This is one captured group reused for this record; no synthetic shell invocation or human review counted as command success."
         }
       ],
       "limits": [
@@ -15436,6 +15523,21 @@
         "historicalChecksRemainAtOriginalRevisions": true,
         "practicalReaderProvenance": "Any original practical/semantic Reader observation remains dated and scoped. This source-informed content review is not a fresh eligible practical participant or new run.",
         "limits": "Only affected declared content/source bindings preserved. Old Ops loopback/shared-token/read-only/direct-token units are superseded where applicable by current source-only central Ops contract; no original live result transfers. No new global API/config generator, runtime, full accessibility, practical Reader execution or two-build determinism claim."
+      },
+      "scopePreservationD230": {
+        "priorRevision": "340875215c422fb1cc0901e867420928eae3dfc0",
+        "originalReviewerPreserved": "Independent Codex autoreview whole A912-09 Source/Reader/Quality review and narrow changed-boundary impact review for 21 prior PASS records",
+        "integrationRole": "Targeted preservation only; no new requirement or gate and no replacement of original practical evidence.",
+        "changedDeclaredInputs": [
+          "scripts/docs-api-documentation-role-custody.mjs"
+        ],
+        "unchangedDeclaredInputs": 32,
+        "sourceAfterReview": "ops_upstream_content_source_review: manifest-readiness-source and gitops-shared-context-source; bounded original producer/guard/ordered DATA relevance, not whole unrelated API semantics.",
+        "contentAfterReview": "ops_upstream_content_source_review: rollback subsection and exact active-wording addendum Source/reader-task clarity/Quality PASS; all other authored pages byte-identical.",
+        "currentOutput": "One real d230 native build and four separately executed artifact checks; exact shared observations reused across the affected records, not twelve executions.",
+        "browserAfterReview": "Only maintenance page at320/768/1440,27table-width cases and3firstdisclosures,0findings/network. Other unchanged historical successful scopes retained; no new screenreader/fresh-persona/live claim.",
+        "priorSummaryStatus": "Original summary and all old limits/checks/review/persona provenance retained as historical scope; current177-page observations stated here, not retroactively attributed to old runs.",
+        "globalGeneratorLimit": "Original normal81b localHelm still FAILS at infrastructure-chart.mjs63. This preservation grants no global configuration/API generator or live-release acceptance."
       }
     },
     {
@@ -15759,7 +15861,7 @@
     },
     {
       "id": "AP09-complete-same-source-code-preview-20261021",
-      "revision": "340875215c422fb1cc0901e867420928eae3dfc0",
+      "revision": "d23046f0a0f39c70f8177c607b722c191a8da7e1",
       "author": "Nova /root documentation author and implementation coordinator",
       "reviewer": "Independent Codex autoreview whole PUB004 Source/Reader/Quality closeout plus narrow changed-boundary preservation for21priorPASSrecords",
       "verdict": "PASS",
@@ -15869,6 +15971,11 @@
           "command": "Actual original node scripts/docs-publication.mjs build and four native docs-reader checks: artifact, search, source-links, source-previews (Reader34087521)",
           "exitCode": 0,
           "observation": "No declared public page changed. Existing component explanation stays exact, but changed evidence boxes elsewhere require current same-source excerpt/output checks; no old excerpt/object count is relabelled current. Current build177pages,241outputdigests,40885localtargets; search177pages/12questions;435Sourceboxes/2000exactexcerpts. All authored pages/shared renderer outputs unchanged6250\u21923408; exact2scripts-tree pageRecordbindings checked. Refs/governance6250 and bounded prior browser observations reused, not relabelled fresh. Prior summary/limits/checks remain historical where superseded; no wider original-scope promotion."
+        },
+        {
+          "command": "/usr/local/bin/node --max-old-space-size=4096 scripts/docs-publication.mjs build\n/usr/local/bin/node scripts/docs-reader/check-artifact.mjs /home/node/.openclaw/workspace/tmp/pr13-finish-20261021/reader-d23046f0\n/usr/local/bin/node scripts/docs-reader/check-search.mjs /home/node/.openclaw/workspace/tmp/pr13-finish-20261021/reader-d23046f0\n/usr/local/bin/node scripts/docs-reader/check-source-links.mjs /home/node/.openclaw/workspace/tmp/pr13-finish-20261021/reader-d23046f0\n/usr/local/bin/node scripts/docs-reader/check-source-previews.mjs /home/node/.openclaw/workspace/tmp/pr13-finish-20261021/reader-d23046f0",
+          "exitCode": 0,
+          "observation": "Five separate original native processes each exited0: publication build177canonical/187HTML; artifact local targets/digests,177-page search,Source links and2000excerpts/1070objects. This is one captured group reused for this record; no synthetic shell invocation or human review counted as command success."
         }
       ],
       "limits": [
@@ -16212,11 +16319,26 @@
         "historicalChecksRemainAtOriginalRevisions": true,
         "practicalReaderProvenance": "Any original practical/semantic Reader observation remains dated and scoped. This source-informed content review is not a fresh eligible practical participant or new run.",
         "limits": "Only affected declared content/source bindings preserved. Old Ops loopback/shared-token/read-only/direct-token units are superseded where applicable by current source-only central Ops contract; no original live result transfers. No new global API/config generator, runtime, full accessibility, practical Reader execution or two-build determinism claim."
+      },
+      "scopePreservationD230": {
+        "priorRevision": "340875215c422fb1cc0901e867420928eae3dfc0",
+        "originalReviewerPreserved": "Independent Codex autoreview whole PUB004 Source/Reader/Quality closeout plus narrow changed-boundary preservation for21priorPASSrecords",
+        "integrationRole": "Targeted preservation only; no new requirement or gate and no replacement of original practical evidence.",
+        "changedDeclaredInputs": [
+          "scripts/docs-api-documentation-role-custody.mjs"
+        ],
+        "unchangedDeclaredInputs": 25,
+        "sourceAfterReview": "ops_upstream_content_source_review: manifest-readiness-source and gitops-shared-context-source; bounded original producer/guard/ordered DATA relevance, not whole unrelated API semantics.",
+        "contentAfterReview": "ops_upstream_content_source_review: rollback subsection and exact active-wording addendum Source/reader-task clarity/Quality PASS; all other authored pages byte-identical.",
+        "currentOutput": "One real d230 native build and four separately executed artifact checks; exact shared observations reused across the affected records, not twelve executions.",
+        "browserAfterReview": "Only maintenance page at320/768/1440,27table-width cases and3firstdisclosures,0findings/network. Other unchanged historical successful scopes retained; no new screenreader/fresh-persona/live claim.",
+        "priorSummaryStatus": "Original summary and all old limits/checks/review/persona provenance retained as historical scope; current177-page observations stated here, not retroactively attributed to old runs.",
+        "globalGeneratorLimit": "Original normal81b localHelm still FAILS at infrastructure-chart.mjs63. This preservation grants no global configuration/API generator or live-release acceptance."
       }
     },
     {
       "id": "AP09-complete-responsive-reader-layout-20261021",
-      "revision": "340875215c422fb1cc0901e867420928eae3dfc0",
+      "revision": "d23046f0a0f39c70f8177c607b722c191a8da7e1",
       "author": "Nova /root documentation author and implementation coordinator",
       "reviewer": "Independent Codex autoreview whole A91207 responsive-layout closeout and narrow24-record prior-boundary preservation",
       "verdict": "PASS",
@@ -16386,6 +16508,11 @@
           "command": "Actual original node scripts/docs-publication.mjs build and four native docs-reader checks: artifact, search, source-links, source-previews (Reader34087521)",
           "exitCode": 0,
           "observation": "No declared public page changed. Historical 320/768/1440 observations retain their limits; changed topic diagram/callout output cannot borrow old layout observations as fresh checks. Current build177pages,241outputdigests,40885localtargets; search177pages/12questions;435Sourceboxes/2000exactexcerpts. All authored pages/shared renderer outputs unchanged6250\u21923408; exact2scripts-tree pageRecordbindings checked. Refs/governance6250 and bounded prior browser observations reused, not relabelled fresh. Prior summary/limits/checks remain historical where superseded; no wider original-scope promotion."
+        },
+        {
+          "command": "/usr/local/bin/node --max-old-space-size=4096 scripts/docs-publication.mjs build\n/usr/local/bin/node scripts/docs-reader/check-artifact.mjs /home/node/.openclaw/workspace/tmp/pr13-finish-20261021/reader-d23046f0\n/usr/local/bin/node scripts/docs-reader/check-search.mjs /home/node/.openclaw/workspace/tmp/pr13-finish-20261021/reader-d23046f0\n/usr/local/bin/node scripts/docs-reader/check-source-links.mjs /home/node/.openclaw/workspace/tmp/pr13-finish-20261021/reader-d23046f0\n/usr/local/bin/node scripts/docs-reader/check-source-previews.mjs /home/node/.openclaw/workspace/tmp/pr13-finish-20261021/reader-d23046f0",
+          "exitCode": 0,
+          "observation": "Five separate original native processes each exited0: publication build177canonical/187HTML; artifact local targets/digests,177-page search,Source links and2000excerpts/1070objects. This is one captured group reused for this record; no synthetic shell invocation or human review counted as command success."
         }
       ],
       "limits": [
@@ -16752,6 +16879,21 @@
         "historicalChecksRemainAtOriginalRevisions": true,
         "practicalReaderProvenance": "Any original practical/semantic Reader observation remains dated and scoped. This source-informed content review is not a fresh eligible practical participant or new run.",
         "limits": "Only affected declared content/source bindings preserved. Old Ops loopback/shared-token/read-only/direct-token units are superseded where applicable by current source-only central Ops contract; no original live result transfers. No new global API/config generator, runtime, full accessibility, practical Reader execution or two-build determinism claim."
+      },
+      "scopePreservationD230": {
+        "priorRevision": "340875215c422fb1cc0901e867420928eae3dfc0",
+        "originalReviewerPreserved": "Independent Codex autoreview whole A91207 responsive-layout closeout and narrow24-record prior-boundary preservation",
+        "integrationRole": "Targeted preservation only; no new requirement or gate and no replacement of original practical evidence.",
+        "changedDeclaredInputs": [
+          "scripts/docs-api-documentation-role-custody.mjs"
+        ],
+        "unchangedDeclaredInputs": 80,
+        "sourceAfterReview": "ops_upstream_content_source_review: manifest-readiness-source and gitops-shared-context-source; bounded original producer/guard/ordered DATA relevance, not whole unrelated API semantics.",
+        "contentAfterReview": "ops_upstream_content_source_review: rollback subsection and exact active-wording addendum Source/reader-task clarity/Quality PASS; all other authored pages byte-identical.",
+        "currentOutput": "One real d230 native build and four separately executed artifact checks; exact shared observations reused across the affected records, not twelve executions.",
+        "browserAfterReview": "Only maintenance page at320/768/1440,27table-width cases and3firstdisclosures,0findings/network. Other unchanged historical successful scopes retained; no new screenreader/fresh-persona/live claim.",
+        "priorSummaryStatus": "Original summary and all old limits/checks/review/persona provenance retained as historical scope; current177-page observations stated here, not retroactively attributed to old runs.",
+        "globalGeneratorLimit": "Original normal81b localHelm still FAILS at infrastructure-chart.mjs63. This preservation grants no global configuration/API generator or live-release acceptance."
       }
     },
     {
@@ -17816,7 +17958,7 @@
     },
     {
       "id": "AP09-whole-upgrade-and-retirement-20261021",
-      "revision": "340875215c422fb1cc0901e867420928eae3dfc0",
+      "revision": "d23046f0a0f39c70f8177c607b722c191a8da7e1",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/operator_acceptance",
       "gateIds": [
@@ -17857,6 +17999,11 @@
           "command": "Actual original node scripts/docs-publication.mjs build and four native docs-reader checks: artifact, search, source-links, source-previews (Reader34087521)",
           "exitCode": 0,
           "observation": "Maintenance changes only revision footers plus the explicit central Ops rotation/recovery update; supported-pair emptiness, incompatible-write boundary, destructive-owner exclusion and retention remain. No new upgrade or cleanup proof is granted. Current build177pages,241outputdigests,40885localtargets; search177pages/12questions;435Sourceboxes/2000exactexcerpts. All authored pages/shared renderer outputs unchanged6250\u21923408; exact2scripts-tree pageRecordbindings checked. Refs/governance6250 and bounded prior browser observations reused, not relabelled fresh. Prior summary/limits/checks remain historical where superseded; no wider original-scope promotion."
+        },
+        {
+          "command": "/usr/local/bin/node --max-old-space-size=4096 scripts/docs-publication.mjs build\n/usr/local/bin/node scripts/docs-reader/check-artifact.mjs /home/node/.openclaw/workspace/tmp/pr13-finish-20261021/reader-d23046f0\n/usr/local/bin/node scripts/docs-reader/check-search.mjs /home/node/.openclaw/workspace/tmp/pr13-finish-20261021/reader-d23046f0\n/usr/local/bin/node scripts/docs-reader/check-source-links.mjs /home/node/.openclaw/workspace/tmp/pr13-finish-20261021/reader-d23046f0\n/usr/local/bin/node scripts/docs-reader/check-source-previews.mjs /home/node/.openclaw/workspace/tmp/pr13-finish-20261021/reader-d23046f0",
+          "exitCode": 0,
+          "observation": "Five separate original native processes each exited0: publication build177canonical/187HTML; artifact local targets/digests,177-page search,Source links and2000excerpts/1070objects. This is one captured group reused for this record; no synthetic shell invocation or human review counted as command success."
         }
       ],
       "review": {
@@ -17898,6 +18045,21 @@
         "historicalChecksRemainAtOriginalRevisions": true,
         "practicalReaderProvenance": "Any original practical/semantic Reader observation remains dated and scoped. This source-informed content review is not a fresh eligible practical participant or new run.",
         "limits": "Only affected declared content/source bindings preserved. Old Ops loopback/shared-token/read-only/direct-token units are superseded where applicable by current source-only central Ops contract; no original live result transfers. No new global API/config generator, runtime, full accessibility, practical Reader execution or two-build determinism claim."
+      },
+      "scopePreservationD230": {
+        "priorRevision": "340875215c422fb1cc0901e867420928eae3dfc0",
+        "originalReviewerPreserved": "/root/operator_acceptance",
+        "integrationRole": "Targeted preservation only; no new requirement or gate and no replacement of original practical evidence.",
+        "changedDeclaredInputs": [
+          "docs/site/use/maintenance.md"
+        ],
+        "unchangedDeclaredInputs": 8,
+        "sourceAfterReview": "ops_upstream_content_source_review: manifest-readiness-source and gitops-shared-context-source; bounded original producer/guard/ordered DATA relevance, not whole unrelated API semantics.",
+        "contentAfterReview": "ops_upstream_content_source_review: rollback subsection and exact active-wording addendum Source/reader-task clarity/Quality PASS; all other authored pages byte-identical.",
+        "currentOutput": "One real d230 native build and four separately executed artifact checks; exact shared observations reused across the affected records, not twelve executions.",
+        "browserAfterReview": "Only maintenance page at320/768/1440,27table-width cases and3firstdisclosures,0findings/network. Other unchanged historical successful scopes retained; no new screenreader/fresh-persona/live claim.",
+        "priorSummaryStatus": "Original summary and all old limits/checks/review/persona provenance retained as historical scope; current177-page observations stated here, not retroactively attributed to old runs.",
+        "globalGeneratorLimit": "Original normal81b localHelm still FAILS at infrastructure-chart.mjs63. This preservation grants no global configuration/API generator or live-release acceptance."
       }
     },
     {
@@ -21507,7 +21669,7 @@
       }
     },
     {
-      "revision": "340875215c422fb1cc0901e867420928eae3dfc0",
+      "revision": "d23046f0a0f39c70f8177c607b722c191a8da7e1",
       "author": "existing documentation authors",
       "reviewer": "/root/workflow_acceptance",
       "review": {
@@ -21556,6 +21718,11 @@
           "command": "Actual original node scripts/docs-publication.mjs build and four native docs-reader checks: artifact, search, source-links, source-previews (Reader34087521)",
           "exitCode": 0,
           "observation": "Maintenance footer declarations and Ops rotation notes leave author/read/recover/reject compatibility, immutable identities and empty live-upgrade pair table unchanged. Dated tests stay historical, not refreshed. Current build177pages,241outputdigests,40885localtargets; search177pages/12questions;435Sourceboxes/2000exactexcerpts. All authored pages/shared renderer outputs unchanged6250\u21923408; exact2scripts-tree pageRecordbindings checked. Refs/governance6250 and bounded prior browser observations reused, not relabelled fresh. Prior summary/limits/checks remain historical where superseded; no wider original-scope promotion."
+        },
+        {
+          "command": "/usr/local/bin/node --max-old-space-size=4096 scripts/docs-publication.mjs build\n/usr/local/bin/node scripts/docs-reader/check-artifact.mjs /home/node/.openclaw/workspace/tmp/pr13-finish-20261021/reader-d23046f0\n/usr/local/bin/node scripts/docs-reader/check-search.mjs /home/node/.openclaw/workspace/tmp/pr13-finish-20261021/reader-d23046f0\n/usr/local/bin/node scripts/docs-reader/check-source-links.mjs /home/node/.openclaw/workspace/tmp/pr13-finish-20261021/reader-d23046f0\n/usr/local/bin/node scripts/docs-reader/check-source-previews.mjs /home/node/.openclaw/workspace/tmp/pr13-finish-20261021/reader-d23046f0",
+          "exitCode": 0,
+          "observation": "Five separate original native processes each exited0: publication build177canonical/187HTML; artifact local targets/digests,177-page search,Source links and2000excerpts/1070objects. This is one captured group reused for this record; no synthetic shell invocation or human review counted as command success."
         }
       ],
       "summary": "Whole gate compatibility explains exact author/read/recover-only/reject contracts for project/platform/definition/progress/publication,snapshotsv1\u2013v4 and graphv2/v3,Worker v1/currentBuster versus Prism v2/v3,profile/schema matching and package/runtime snapshot pins. Negative mixed/new/old combinations reject rather than reinterpret;new work gets new identities,old bytes remain for pinned recovery. Upgrade compatibility table is truthfully empty and first incompatible write forbids image-only rollback.",
@@ -21586,6 +21753,21 @@
         "historicalChecksRemainAtOriginalRevisions": true,
         "practicalReaderProvenance": "Any original practical/semantic Reader observation remains dated and scoped. This source-informed content review is not a fresh eligible practical participant or new run.",
         "limits": "Only affected declared content/source bindings preserved. Old Ops loopback/shared-token/read-only/direct-token units are superseded where applicable by current source-only central Ops contract; no original live result transfers. No new global API/config generator, runtime, full accessibility, practical Reader execution or two-build determinism claim."
+      },
+      "scopePreservationD230": {
+        "priorRevision": "340875215c422fb1cc0901e867420928eae3dfc0",
+        "originalReviewerPreserved": "/root/workflow_acceptance",
+        "integrationRole": "Targeted preservation only; no new requirement or gate and no replacement of original practical evidence.",
+        "changedDeclaredInputs": [
+          "docs/site/use/maintenance.md"
+        ],
+        "unchangedDeclaredInputs": 14,
+        "sourceAfterReview": "ops_upstream_content_source_review: manifest-readiness-source and gitops-shared-context-source; bounded original producer/guard/ordered DATA relevance, not whole unrelated API semantics.",
+        "contentAfterReview": "ops_upstream_content_source_review: rollback subsection and exact active-wording addendum Source/reader-task clarity/Quality PASS; all other authored pages byte-identical.",
+        "currentOutput": "One real d230 native build and four separately executed artifact checks; exact shared observations reused across the affected records, not twelve executions.",
+        "browserAfterReview": "Only maintenance page at320/768/1440,27table-width cases and3firstdisclosures,0findings/network. Other unchanged historical successful scopes retained; no new screenreader/fresh-persona/live claim.",
+        "priorSummaryStatus": "Original summary and all old limits/checks/review/persona provenance retained as historical scope; current177-page observations stated here, not retroactively attributed to old runs.",
+        "globalGeneratorLimit": "Original normal81b localHelm still FAILS at infrastructure-chart.mjs63. This preservation grants no global configuration/API generator or live-release acceptance."
       }
     },
     {
@@ -23270,7 +23452,7 @@
     },
     {
       "id": "AP09-publication-positive-scope-7ef16585",
-      "revision": "340875215c422fb1cc0901e867420928eae3dfc0",
+      "revision": "d23046f0a0f39c70f8177c607b722c191a8da7e1",
       "author": "existing publication/content maintainers; final authored Sourcefield additions separately reviewed by workflow_acceptance",
       "reviewer": "/root/operator_acceptance",
       "gateIds": [
@@ -23508,6 +23690,11 @@
           "command": "Actual original node scripts/docs-publication.mjs build and four native docs-reader checks: artifact, search, source-links, source-previews (Reader34087521)",
           "exitCode": 0,
           "observation": "Changed public units now use reader-facing applicability and implementation-only limits rather than internal PR/review bookkeeping. Generic documentation-maintenance checks remain a legitimate maintainer task. Current positive route/output/no-leak checks remain required; old 177/419 artifact observation is not renamed current. Current build177pages,241outputdigests,40885localtargets; search177pages/12questions;435Sourceboxes/2000exactexcerpts. All authored pages/shared renderer outputs unchanged6250\u21923408; exact2scripts-tree pageRecordbindings checked. Refs/governance6250 and bounded prior browser observations reused, not relabelled fresh. Prior summary/limits/checks remain historical where superseded; no wider original-scope promotion."
+        },
+        {
+          "command": "/usr/local/bin/node --max-old-space-size=4096 scripts/docs-publication.mjs build\n/usr/local/bin/node scripts/docs-reader/check-artifact.mjs /home/node/.openclaw/workspace/tmp/pr13-finish-20261021/reader-d23046f0\n/usr/local/bin/node scripts/docs-reader/check-search.mjs /home/node/.openclaw/workspace/tmp/pr13-finish-20261021/reader-d23046f0\n/usr/local/bin/node scripts/docs-reader/check-source-links.mjs /home/node/.openclaw/workspace/tmp/pr13-finish-20261021/reader-d23046f0\n/usr/local/bin/node scripts/docs-reader/check-source-previews.mjs /home/node/.openclaw/workspace/tmp/pr13-finish-20261021/reader-d23046f0",
+          "exitCode": 0,
+          "observation": "Five separate original native processes each exited0: publication build177canonical/187HTML; artifact local targets/digests,177-page search,Source links and2000excerpts/1070objects. This is one captured group reused for this record; no synthetic shell invocation or human review counted as command success."
         }
       ],
       "review": {
@@ -23904,11 +24091,26 @@
         "historicalChecksRemainAtOriginalRevisions": true,
         "practicalReaderProvenance": "Any original practical/semantic Reader observation remains dated and scoped. This source-informed content review is not a fresh eligible practical participant or new run.",
         "limits": "Only affected declared content/source bindings preserved. Old Ops loopback/shared-token/read-only/direct-token units are superseded where applicable by current source-only central Ops contract; no original live result transfers. No new global API/config generator, runtime, full accessibility, practical Reader execution or two-build determinism claim."
+      },
+      "scopePreservationD230": {
+        "priorRevision": "340875215c422fb1cc0901e867420928eae3dfc0",
+        "originalReviewerPreserved": "/root/operator_acceptance",
+        "integrationRole": "Targeted preservation only; no new requirement or gate and no replacement of original practical evidence.",
+        "changedDeclaredInputs": [
+          "docs/site/use/maintenance.md"
+        ],
+        "unchangedDeclaredInputs": 189,
+        "sourceAfterReview": "ops_upstream_content_source_review: manifest-readiness-source and gitops-shared-context-source; bounded original producer/guard/ordered DATA relevance, not whole unrelated API semantics.",
+        "contentAfterReview": "ops_upstream_content_source_review: rollback subsection and exact active-wording addendum Source/reader-task clarity/Quality PASS; all other authored pages byte-identical.",
+        "currentOutput": "One real d230 native build and four separately executed artifact checks; exact shared observations reused across the affected records, not twelve executions.",
+        "browserAfterReview": "Only maintenance page at320/768/1440,27table-width cases and3firstdisclosures,0findings/network. Other unchanged historical successful scopes retained; no new screenreader/fresh-persona/live claim.",
+        "priorSummaryStatus": "Original summary and all old limits/checks/review/persona provenance retained as historical scope; current177-page observations stated here, not retroactively attributed to old runs.",
+        "globalGeneratorLimit": "Original normal81b localHelm still FAILS at infrastructure-chart.mjs63. This preservation grants no global configuration/API generator or live-release acceptance."
       }
     },
     {
       "id": "A912-05-whole-source-excerpt-callouts-20261022",
-      "revision": "340875215c422fb1cc0901e867420928eae3dfc0",
+      "revision": "d23046f0a0f39c70f8177c607b722c191a8da7e1",
       "author": "Existing publication/canonical topic maintainers; field-correction authors in named independent reviews",
       "reviewer": "/root/operator_acceptance",
       "gateIds": [
@@ -24019,6 +24221,11 @@
           "command": "Actual original node scripts/docs-publication.mjs build and four native docs-reader checks: artifact, search, source-links, source-previews (Reader34087521)",
           "exitCode": 0,
           "observation": "Changed boxes retain six meaningful fields and explicit source/runtime/test limits. New Ops source objects, same-source declaration/identity repins and Echo split ranges require current native built excerpts/source-preview checks; old411/1888/983 observations remain historical. Current build177pages,241outputdigests,40885localtargets; search177pages/12questions;435Sourceboxes/2000exactexcerpts. All authored pages/shared renderer outputs unchanged6250\u21923408; exact2scripts-tree pageRecordbindings checked. Refs/governance6250 and bounded prior browser observations reused, not relabelled fresh. Prior summary/limits/checks remain historical where superseded; no wider original-scope promotion."
+        },
+        {
+          "command": "/usr/local/bin/node --max-old-space-size=4096 scripts/docs-publication.mjs build\n/usr/local/bin/node scripts/docs-reader/check-artifact.mjs /home/node/.openclaw/workspace/tmp/pr13-finish-20261021/reader-d23046f0\n/usr/local/bin/node scripts/docs-reader/check-search.mjs /home/node/.openclaw/workspace/tmp/pr13-finish-20261021/reader-d23046f0\n/usr/local/bin/node scripts/docs-reader/check-source-links.mjs /home/node/.openclaw/workspace/tmp/pr13-finish-20261021/reader-d23046f0\n/usr/local/bin/node scripts/docs-reader/check-source-previews.mjs /home/node/.openclaw/workspace/tmp/pr13-finish-20261021/reader-d23046f0",
+          "exitCode": 0,
+          "observation": "Five separate original native processes each exited0: publication build177canonical/187HTML; artifact local targets/digests,177-page search,Source links and2000excerpts/1070objects. This is one captured group reused for this record; no synthetic shell invocation or human review counted as command success."
         }
       ],
       "review": {
@@ -24290,11 +24497,26 @@
         "historicalChecksRemainAtOriginalRevisions": true,
         "practicalReaderProvenance": "Any original practical/semantic Reader observation remains dated and scoped. This source-informed content review is not a fresh eligible practical participant or new run.",
         "limits": "Only affected declared content/source bindings preserved. Old Ops loopback/shared-token/read-only/direct-token units are superseded where applicable by current source-only central Ops contract; no original live result transfers. No new global API/config generator, runtime, full accessibility, practical Reader execution or two-build determinism claim."
+      },
+      "scopePreservationD230": {
+        "priorRevision": "340875215c422fb1cc0901e867420928eae3dfc0",
+        "originalReviewerPreserved": "/root/operator_acceptance",
+        "integrationRole": "Targeted preservation only; no new requirement or gate and no replacement of original practical evidence.",
+        "changedDeclaredInputs": [
+          "docs/site/use/maintenance.md"
+        ],
+        "unchangedDeclaredInputs": 69,
+        "sourceAfterReview": "ops_upstream_content_source_review: manifest-readiness-source and gitops-shared-context-source; bounded original producer/guard/ordered DATA relevance, not whole unrelated API semantics.",
+        "contentAfterReview": "ops_upstream_content_source_review: rollback subsection and exact active-wording addendum Source/reader-task clarity/Quality PASS; all other authored pages byte-identical.",
+        "currentOutput": "One real d230 native build and four separately executed artifact checks; exact shared observations reused across the affected records, not twelve executions.",
+        "browserAfterReview": "Only maintenance page at320/768/1440,27table-width cases and3firstdisclosures,0findings/network. Other unchanged historical successful scopes retained; no new screenreader/fresh-persona/live claim.",
+        "priorSummaryStatus": "Original summary and all old limits/checks/review/persona provenance retained as historical scope; current177-page observations stated here, not retroactively attributed to old runs.",
+        "globalGeneratorLimit": "Original normal81b localHelm still FAILS at infrastructure-chart.mjs63. This preservation grants no global configuration/API generator or live-release acceptance."
       }
     },
     {
       "id": "A98-02-13-whole-operator-procedure-contract-20261022",
-      "revision": "340875215c422fb1cc0901e867420928eae3dfc0",
+      "revision": "d23046f0a0f39c70f8177c607b722c191a8da7e1",
       "author": "Original canonical topic maintainers plus separately reviewed bounded corrections",
       "reviewer": "/root/operator_acceptance; own quickstart delta independently reviewed by /root",
       "gateIds": [
@@ -24601,6 +24823,11 @@
           "command": "Actual original node scripts/docs-publication.mjs build and four native docs-reader checks: artifact, search, source-links, source-previews (Reader34087521)",
           "exitCode": 0,
           "observation": "Install/maintenance/operate preserve complete authority/prerequisite/stop/recovery responsibilities while adding bounded optional Ops access/rotation. Root independent quickstart correction proof and original Reader limits remain untouched; no new fresh-persona run is claimed. Current build177pages,241outputdigests,40885localtargets; search177pages/12questions;435Sourceboxes/2000exactexcerpts. All authored pages/shared renderer outputs unchanged6250\u21923408; exact2scripts-tree pageRecordbindings checked. Refs/governance6250 and bounded prior browser observations reused, not relabelled fresh. Prior summary/limits/checks remain historical where superseded; no wider original-scope promotion."
+        },
+        {
+          "command": "/usr/local/bin/node --max-old-space-size=4096 scripts/docs-publication.mjs build\n/usr/local/bin/node scripts/docs-reader/check-artifact.mjs /home/node/.openclaw/workspace/tmp/pr13-finish-20261021/reader-d23046f0\n/usr/local/bin/node scripts/docs-reader/check-search.mjs /home/node/.openclaw/workspace/tmp/pr13-finish-20261021/reader-d23046f0\n/usr/local/bin/node scripts/docs-reader/check-source-links.mjs /home/node/.openclaw/workspace/tmp/pr13-finish-20261021/reader-d23046f0\n/usr/local/bin/node scripts/docs-reader/check-source-previews.mjs /home/node/.openclaw/workspace/tmp/pr13-finish-20261021/reader-d23046f0",
+          "exitCode": 0,
+          "observation": "Five separate original native processes each exited0: publication build177canonical/187HTML; artifact local targets/digests,177-page search,Source links and2000excerpts/1070objects. This is one captured group reused for this record; no synthetic shell invocation or human review counted as command success."
         }
       ],
       "review": {
@@ -24821,6 +25048,21 @@
         "historicalChecksRemainAtOriginalRevisions": true,
         "practicalReaderProvenance": "Any original practical/semantic Reader observation remains dated and scoped. This source-informed content review is not a fresh eligible practical participant or new run.",
         "limits": "Only affected declared content/source bindings preserved. Old Ops loopback/shared-token/read-only/direct-token units are superseded where applicable by current source-only central Ops contract; no original live result transfers. No new global API/config generator, runtime, full accessibility, practical Reader execution or two-build determinism claim."
+      },
+      "scopePreservationD230": {
+        "priorRevision": "340875215c422fb1cc0901e867420928eae3dfc0",
+        "originalReviewerPreserved": "/root/operator_acceptance; own quickstart delta independently reviewed by /root",
+        "integrationRole": "Targeted preservation only; no new requirement or gate and no replacement of original practical evidence.",
+        "changedDeclaredInputs": [
+          "docs/site/use/maintenance.md"
+        ],
+        "unchangedDeclaredInputs": 274,
+        "sourceAfterReview": "ops_upstream_content_source_review: manifest-readiness-source and gitops-shared-context-source; bounded original producer/guard/ordered DATA relevance, not whole unrelated API semantics.",
+        "contentAfterReview": "ops_upstream_content_source_review: rollback subsection and exact active-wording addendum Source/reader-task clarity/Quality PASS; all other authored pages byte-identical.",
+        "currentOutput": "One real d230 native build and four separately executed artifact checks; exact shared observations reused across the affected records, not twelve executions.",
+        "browserAfterReview": "Only maintenance page at320/768/1440,27table-width cases and3firstdisclosures,0findings/network. Other unchanged historical successful scopes retained; no new screenreader/fresh-persona/live claim.",
+        "priorSummaryStatus": "Original summary and all old limits/checks/review/persona provenance retained as historical scope; current177-page observations stated here, not retroactively attributed to old runs.",
+        "globalGeneratorLimit": "Original normal81b localHelm still FAILS at infrastructure-chart.mjs63. This preservation grants no global configuration/API generator or live-release acceptance."
       }
     },
     {
