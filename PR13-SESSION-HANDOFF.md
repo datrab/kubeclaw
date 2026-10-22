@@ -1,3 +1,10 @@
+## Exact scalar boundary successor after CI search correction — 2026-10-22
+
+- Original public0b6dd2f3 passed documentation graph/roles and3nativeASTreceipts,635children0; then genuine DEPLOYMENT_SCALAR_OCCURRENCE_UNQUALIFIED caller-census failure. First public return still missing. Failure retained, not called globalPASS.
+- Original unchanged public graph/caller acquisition104children0,first/repeat/context equal. All1244selectedGraph and1001caller paths unchanged; topology unchanged. Exactly one helper SHA differs in each census: already reviewed CI-search purpose helper. No new deployment caller, descriptor, receiver or execution authority.
+- Exactly two scalar boundary constants updated to actual original DATA. Five dependent expected factsDigest values derived from prior original ordered facts by replacing only the two corresponding scalar AST statement hashes; explicitly derived expectations, NOT a new observed getter result. Original public route must confirm them. Seven-literal reversal exact; all remaining code/selectors/profiles/anchors/guards unchanged.22/22owning+routing controlsPASS0skip; independent bundle/data autoreview clean, filesystem inspection unavailable.
+- No new gates/requirements or globalAPI/generator/runtime approval. Evidence handoffs/pr13-finish-20261021/search-ci-scalar-binding-20261022. Next frozen original public first/repeat; then original config/localHelm generators if it succeeds. Continue finish-all task; settled Reader remains unaffected.
+
 ## Search CI successor facts bindings — 2026-10-22
 
 - Original public b7a0bdd0 run passed graph/caller qualification then failed at docs-api-reference.mjs selected-helper facts after592successful children. First public result not returned; failure retained separately.

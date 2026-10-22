@@ -1,0 +1,9 @@
+{
+  "error": {
+    "name": "AssertionError",
+    "message": "DEPLOYMENT_SCALAR_OCCURRENCE_UNQUALIFIED: scripts/bundle-values-field.mjs; changed/new executable caller census",
+    "code": "ERR_ASSERTION",
+    "stack": "AssertionError [ERR_ASSERTION]: DEPLOYMENT_SCALAR_OCCURRENCE_UNQUALIFIED: scripts/bundle-values-field.mjs; changed/new executable caller census\n    at fail (file:///home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/docs-deployment-scalar-occurrence-custody.mjs:69:33)\n    at deploymentScalarOccurrenceCustody (file:///home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/docs-deployment-scalar-occurrence-custody.mjs:75:52)\n    at file:///home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/docs-api-output-discovery.mjs:1904:13\n    at Array.map (<anonymous>)\n    at Module.discoverScriptOutputRoleClassifications (file:///home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/docs-api-output-discovery.mjs:1903:90)\n    at file:///home/node/.openclaw/workspace/tmp/pr13-finish-20261021/public-role-search-facts-root-ready-20261022/capture.mjs:111:24"
+  },
+  "completion": false
+}

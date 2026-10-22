@@ -1,0 +1,11 @@
+{
+  "status": "DATA_CAPTURE_COMPLETE_UNACCEPTED",
+  "mode": "graph",
+  "revision": "0b6dd2f3157e89f1bbb09d53a692c385b21ba9f5",
+  "manifestSha256": "e431b2a7c1521a7a008f39038c4f8a255f70170681cd4e660ec76eed6acff84c",
+  "nodeCompletionSha256": "d4eb9dab6eb068ccb90f32047d5eed79b4cbef5e5414e4b3f63cc434c7224d54",
+  "limits": [
+    "No role/receipt automatically accepted or installed",
+    "No native/product/test/cluster execution acceptance"
+  ]
+}

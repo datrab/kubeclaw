@@ -1,0 +1,41 @@
+{
+  "selectedGraph": {
+    "count": 1244,
+    "oldDigest": "be1db087409cd9eee2c1047003fc582ddd0c5ccf2dbdf4e5abb8007ffb7167af",
+    "newDigest": "3494a4db294def88ae9d6939dc89751c41487b6218e1995892bfcb250936b14d",
+    "changes": [
+      {
+        "old": {
+          "path": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "sha256": "2e86ef3fdc6090dec79d8ac5137c852a42c593861abcaadf603be1e521aa60b1"
+        },
+        "new": {
+          "path": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "sha256": "7280c71a8c7d08188bec3783307d2f54307beb317c41231031f1c9abee6dbfa3"
+        }
+      }
+    ]
+  },
+  "callerCensus": {
+    "count": 1001,
+    "oldDigest": "22d04bdc6919a3e89e9a201c16453e4b9d9f549a7a50059266e27f56e365ce82",
+    "newDigest": "2314be3fbe9de42060f1ea49f94c3dc6c99203f51f8440fa9f794537bb8d24ff",
+    "changes": [
+      {
+        "old": {
+          "path": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "sha256": "2e86ef3fdc6090dec79d8ac5137c852a42c593861abcaadf603be1e521aa60b1"
+        },
+        "new": {
+          "path": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "sha256": "7280c71a8c7d08188bec3783307d2f54307beb317c41231031f1c9abee6dbfa3"
+        }
+      }
+    ]
+  },
+  "status": "ROOT_ORIGINAL_GRAPH_CALLER_FIRST_REPEAT_EXACT_SINGLE_REVIEWED_HELPER_DELTA",
+  "graphTopologyUnchanged": true,
+  "guardCodeUnchanged": true,
+  "semanticSourceReview": "b7a0bdd0; exact read-only existing CI search reachability fix; not deployment execution",
+  "limits": "No runtime/API/apply permission; two original scalar digest constants proposed only; first public failure retained"
+}

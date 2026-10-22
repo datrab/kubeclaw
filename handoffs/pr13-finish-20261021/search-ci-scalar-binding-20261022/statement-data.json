@@ -1,0 +1,30 @@
+{
+  "old": [
+    {
+      "source": "scripts/docs-deployment-scalar-occurrence-custody.mjs",
+      "kind": "FirstStatement",
+      "symbol": "reviewedSelectedGraphSha256",
+      "sha256": "fa44c8abd8a6a28079b96e268cac2b1d403aff59a3b77d116e034ede31297a16"
+    },
+    {
+      "source": "scripts/docs-deployment-scalar-occurrence-custody.mjs",
+      "kind": "FirstStatement",
+      "symbol": "reviewedCallerCensusSha256",
+      "sha256": "d05e9b8306380a095cb3ffb5631be6fd41a1f8d16b05924c75dfce113c29fac5"
+    }
+  ],
+  "new": [
+    {
+      "source": "scripts/docs-deployment-scalar-occurrence-custody.mjs",
+      "kind": "FirstStatement",
+      "symbol": "reviewedSelectedGraphSha256",
+      "sha256": "5a95a27b00a0f2733db8f29375ccd4260052010d0a500f890eed67cbdcd5fb44"
+    },
+    {
+      "source": "scripts/docs-deployment-scalar-occurrence-custody.mjs",
+      "kind": "FirstStatement",
+      "symbol": "reviewedCallerCensusSha256",
+      "sha256": "bb9deeeadede069c5137e1a4bc2ea0d0b697cdf18d42b694ab7475a8d0433779"
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+✔ canonical stdout remains UNKNOWN while only six genuine consumer occurrences are qualified (563.843613ms)
+✔ warm occurrence custody rejects changed source (465.553789ms)
+✔ warm occurrence custody rejects changed caller or pipe receiver (515.367503ms)
+✔ warm occurrence custody rejects changed new computed caller (520.470083ms)
+✔ warm occurrence custody rejects changed new public package entry (572.923875ms)
+✔ warm occurrence custody rejects changed new filesystem alias (520.414382ms)
+✔ warm occurrence custody rejects changed new package boundary (547.768162ms)
+✔ warm occurrence custody rejects changed new shadowing dependency (583.512546ms)
+✔ new imported or aliased entry does not borrow original captured-use receipts (331.644583ms)
+✔ warm occurrence custody binds selected excluded test bytes and newly selected docs membership (616.5002ms)
+✔ actual direct CLI can emit an API-shaped string: it receives no global non-API role (92.805234ms)
+✔ actual original capture and append preserve an API-shaped scalar as one configuration value (81.404962ms)
+✔ resource assignment return and stdout stay unknown outside their single --set-json capture (523.438749ms)
+✔ actual resource CLI emits only the selected resource assignment and rejects document-shaped quantities (331.245013ms)
+✔ genuine exact read-only fixture-policy comparator is documentation purpose, not execution evidence (76.540538ms)
+✔ mutable source/operation digest refresh cannot authorize new API emission (34.594915ms)
+✔ changed primary purpose-input bytes invalidate warm role and qualification caches (25.208425ms)
+✔ deleting a new-kind qualification cannot silently preserve the excluded role (20.043113ms)
+✔ a new public invocation cannot borrow the documentation entry qualification (19.757956ms)
+✔ a new selected importer is rejected even if its source name looks like documentation (36.080823ms)
+✔ an unreviewed alias/public target cannot enter through a warm qualification (21.787227ms)
+✔ a neighboring API producer remains an API producer, never a docs-prefix exception (49.756223ms)
+ℹ tests 22
+ℹ suites 0
+ℹ pass 22
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 23188.689602

@@ -1,0 +1,16 @@
+[
+  {
+    "source": "scripts/docs-deployment-scalar-occurrence-custody.mjs",
+    "changedLiterals": 2,
+    "beforeSha256": "700523b17cbee68f423414380fbe3626c7d83a1f86b060677953b04119756817",
+    "afterSha256": "a637deccb960a278c7ccfe23442bc7ed815da13c17cc1e44752949b9cfe53e4f",
+    "allOtherBytesExact": true
+  },
+  {
+    "source": "scripts/docs-api-documentation-role-custody.mjs",
+    "changedLiterals": 5,
+    "beforeSha256": "22dc5fbe76c65c9d3e7adea323fda8cb5bbe08e82da9d52f8507aa81eb32df60",
+    "afterSha256": "a7abb978c137a13b6f0fe3c3ccaab0fabaab674a82bd309ad7f83d627ea877ea",
+    "allOtherBytesExact": true
+  }
+]
