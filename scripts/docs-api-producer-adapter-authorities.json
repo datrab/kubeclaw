@@ -97203,7 +97203,7 @@
       {
         "source": "scripts/check-platform-specialist-guides.mjs",
         "semanticClass": "finite-repository-modules",
-        "sourceSha256": "6d6017b40338a36f01570f097f0266d3422a5ff36f71c3cc447c320f349934d3",
+        "sourceSha256": "6216adf652a7b3a31c01315ab9ad1bb51811485a1a5bd69e2223d45b9a21fbb3",
         "operations": [
           {
             "expression": "import(path.join(root, 'charts/kubeclaw/files/config', file))",
