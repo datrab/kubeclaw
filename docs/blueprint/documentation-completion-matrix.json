@@ -9885,7 +9885,7 @@
     },
     {
       "id": "AP09-documentation-agent-maintenance-20261021",
-      "revision": "0e8d5f9f8ffb9be4f5b2ca43481e4408f4b9bcb3",
+      "revision": "68d31a42188dc8aa1dce7a972ce9488d124d6826",
       "author": "Nova /root authored content and correction coordinator",
       "reviewer": "Independent Codex autoreview 2026-10-21 maintenance-ready-review",
       "gateIds": [],
@@ -10144,6 +10144,11 @@
           "command": "node --test scripts/tests/docs-api-top-level-script-purpose.test.mjs scripts/tests/deployment-config-output-custody.test.mjs",
           "exitCode": 0,
           "observation": "13/13 tests passed in main checkout; independent six-record delta review preserves exact previous claims and limits. Owning maintenance check remains FAILED at separate scalar caller census, not included as a passing check."
+        },
+        {
+          "command": "node --test scripts/tests/docs-api-top-level-script-purpose.test.mjs scripts/tests/deployment-config-output-custody.test.mjs",
+          "exitCode": 0,
+          "observation": "14/14 actual main tests passed. Original owning failure at later probe output is retained separately, not included as a passing check."
         }
       ],
       "review": {
@@ -10534,6 +10539,14 @@
           "report": "docs/blueprint/acceptance-evidence/top-script-purpose-20261022/top-script-purpose-custody-renewal-independent-review.json",
           "reason": "Original MNT017 discovery/impact/owned-generation/check/reader/retirement procedure is unchanged. Five documentation consumers now bind the exact independently reviewed private six-purpose helper/discovery closure; governance binds previously independently reviewed inventory-to-reader join and14anchorhelper functions. Actual native child/source authority vectors unchanged; no code execution/runtime/API claim or normalgeneratorPASS. Fresh closure facts correctly require owningrerun instead of suppressing errors.",
           "limit": "Preserve original record attribution,checks,summary,limits,IDs/states. No blindrevision refresh; current qualifying commit/actual owningreceiver and outputbinding results separate."
+        },
+        {
+          "revision": "68d31a42188dc8aa1dce7a972ce9488d124d6826",
+          "reviewer": "/root/review_recovered_eleven_purposes",
+          "verdict": "PASS_BOUNDED_EXISTING_SCOPE_PRESERVATION",
+          "report": "docs/blueprint/acceptance-evidence/eleven-purpose-20261022/recovered-eleven-purpose-independent-review.json",
+          "reason": "Independent four-file delta review preserves unchanged reader pages and prior exact Source/quality/reader claims and limits. Eleven specific purposes remain private, canonical UNKNOWN retained. Original scalar and consumer guards passed in main owning receiver; next probe API output remains blocked, not generator success.",
+          "historicalPracticalEvidenceNotReexecuted": true
         }
       ],
       "previousReviewedRevision": "ac6de3002f7556d2975da44616c6ed220e35e189",
@@ -14038,7 +14051,7 @@
     },
     {
       "id": "AP09-complete-static-reader-search-20261021",
-      "revision": "0e8d5f9f8ffb9be4f5b2ca43481e4408f4b9bcb3",
+      "revision": "68d31a42188dc8aa1dce7a972ce9488d124d6826",
       "author": "Nova /root documentation author and implementation coordinator",
       "reviewer": "Independent Codex autoreview static-reader whole PUB-002 Source/reader-quality closeout",
       "verdict": "PASS",
@@ -14379,6 +14392,11 @@
           "command": "node --test scripts/tests/docs-api-top-level-script-purpose.test.mjs scripts/tests/deployment-config-output-custody.test.mjs",
           "exitCode": 0,
           "observation": "13/13 tests passed in main checkout; independent six-record delta review preserves exact previous claims and limits. Owning maintenance check remains FAILED at separate scalar caller census, not included as a passing check."
+        },
+        {
+          "command": "node --test scripts/tests/docs-api-top-level-script-purpose.test.mjs scripts/tests/deployment-config-output-custody.test.mjs",
+          "exitCode": 0,
+          "observation": "14/14 actual main tests passed. Original owning failure at later probe output is retained separately, not included as a passing check."
         }
       ],
       "limits": [
@@ -15158,6 +15176,14 @@
           "report": "docs/blueprint/acceptance-evidence/top-script-purpose-20261022/top-script-purpose-custody-renewal-independent-review.json",
           "reason": "Existing PUB002 substring/full-text implementation,positive selection,index/body renderer and original limits unchanged. Changed custody recipe literals only renew documentationconsumer closure; no browsersearch or publishedbody change.",
           "limit": "Preserve original record attribution,checks,summary,limits,IDs/states. No blindrevision refresh; current qualifying commit/actual owningreceiver and outputbinding results separate."
+        },
+        {
+          "revision": "68d31a42188dc8aa1dce7a972ce9488d124d6826",
+          "reviewer": "/root/review_recovered_eleven_purposes",
+          "verdict": "PASS_BOUNDED_EXISTING_SCOPE_PRESERVATION",
+          "report": "docs/blueprint/acceptance-evidence/eleven-purpose-20261022/recovered-eleven-purpose-independent-review.json",
+          "reason": "Independent four-file delta review preserves unchanged reader pages and prior exact Source/quality/reader claims and limits. Eleven specific purposes remain private, canonical UNKNOWN retained. Original scalar and consumer guards passed in main owning receiver; next probe API output remains blocked, not generator success.",
+          "historicalPracticalEvidenceNotReexecuted": true
         }
       ],
       "scopePreservation3408": {
@@ -15204,7 +15230,7 @@
     },
     {
       "id": "AP09-search-reader-gate-20261021",
-      "revision": "0e8d5f9f8ffb9be4f5b2ca43481e4408f4b9bcb3",
+      "revision": "68d31a42188dc8aa1dce7a972ce9488d124d6826",
       "author": "Nova /root documentation author and implementation coordinator",
       "reviewer": "Independent Codex autoreview whole A912-04 code/evidence review plus narrow Source/Reader/Quality native-impact follow-up",
       "verdict": "PASS",
@@ -15337,6 +15363,11 @@
           "command": "node --test scripts/tests/docs-api-top-level-script-purpose.test.mjs scripts/tests/deployment-config-output-custody.test.mjs",
           "exitCode": 0,
           "observation": "13/13 tests passed in main checkout; independent six-record delta review preserves exact previous claims and limits. Owning maintenance check remains FAILED at separate scalar caller census, not included as a passing check."
+        },
+        {
+          "command": "node --test scripts/tests/docs-api-top-level-script-purpose.test.mjs scripts/tests/deployment-config-output-custody.test.mjs",
+          "exitCode": 0,
+          "observation": "14/14 actual main tests passed. Original owning failure at later probe output is retained separately, not included as a passing check."
         }
       ],
       "limits": [
@@ -15727,6 +15758,14 @@
           "report": "docs/blueprint/acceptance-evidence/top-script-purpose-20261022/top-script-purpose-custody-renewal-independent-review.json",
           "reason": "Existing A91204 finite synonyms/ranking/index selection and readerquestion contract unchanged; no semantic search broadening or new browserquestion results implied by native Sourcecustody renewal.",
           "limit": "Preserve original record attribution,checks,summary,limits,IDs/states. No blindrevision refresh; current qualifying commit/actual owningreceiver and outputbinding results separate."
+        },
+        {
+          "revision": "68d31a42188dc8aa1dce7a972ce9488d124d6826",
+          "reviewer": "/root/review_recovered_eleven_purposes",
+          "verdict": "PASS_BOUNDED_EXISTING_SCOPE_PRESERVATION",
+          "report": "docs/blueprint/acceptance-evidence/eleven-purpose-20261022/recovered-eleven-purpose-independent-review.json",
+          "reason": "Independent four-file delta review preserves unchanged reader pages and prior exact Source/quality/reader claims and limits. Eleven specific purposes remain private, canonical UNKNOWN retained. Original scalar and consumer guards passed in main owning receiver; next probe API output remains blocked, not generator success.",
+          "historicalPracticalEvidenceNotReexecuted": true
         }
       ],
       "scopePreservation3408": {
@@ -15772,7 +15811,7 @@
     },
     {
       "id": "AP09-rendered-source-bounds-gate-20261021",
-      "revision": "0e8d5f9f8ffb9be4f5b2ca43481e4408f4b9bcb3",
+      "revision": "68d31a42188dc8aa1dce7a972ce9488d124d6826",
       "author": "Nova /root documentation author and implementation coordinator",
       "reviewer": "Independent Codex autoreview whole A912-09 Source/Reader/Quality review and narrow changed-boundary impact review for 21 prior PASS records",
       "verdict": "PASS",
@@ -15914,6 +15953,11 @@
           "command": "node --test scripts/tests/docs-api-top-level-script-purpose.test.mjs scripts/tests/deployment-config-output-custody.test.mjs",
           "exitCode": 0,
           "observation": "13/13 tests passed in main checkout; independent six-record delta review preserves exact previous claims and limits. Owning maintenance check remains FAILED at separate scalar caller census, not included as a passing check."
+        },
+        {
+          "command": "node --test scripts/tests/docs-api-top-level-script-purpose.test.mjs scripts/tests/deployment-config-output-custody.test.mjs",
+          "exitCode": 0,
+          "observation": "14/14 actual main tests passed. Original owning failure at later probe output is retained separately, not included as a passing check."
         }
       ],
       "limits": [
@@ -16303,6 +16347,14 @@
           "report": "docs/blueprint/acceptance-evidence/top-script-purpose-20261022/top-script-purpose-custody-renewal-independent-review.json",
           "reason": "Existing A91209 Source-link/object/revision/range and artifactbinding consumers unchanged; no linkvalidation waiver or authority widening. New runtime/helper hashes require fresh currentbinding later,not fake unchangedoutputhashes.",
           "limit": "Preserve original record attribution,checks,summary,limits,IDs/states. No blindrevision refresh; current qualifying commit/actual owningreceiver and outputbinding results separate."
+        },
+        {
+          "revision": "68d31a42188dc8aa1dce7a972ce9488d124d6826",
+          "reviewer": "/root/review_recovered_eleven_purposes",
+          "verdict": "PASS_BOUNDED_EXISTING_SCOPE_PRESERVATION",
+          "report": "docs/blueprint/acceptance-evidence/eleven-purpose-20261022/recovered-eleven-purpose-independent-review.json",
+          "reason": "Independent four-file delta review preserves unchanged reader pages and prior exact Source/quality/reader claims and limits. Eleven specific purposes remain private, canonical UNKNOWN retained. Original scalar and consumer guards passed in main owning receiver; next probe API output remains blocked, not generator success.",
+          "historicalPracticalEvidenceNotReexecuted": true
         }
       ],
       "scopePreservation3408": {
@@ -16667,7 +16719,7 @@
     },
     {
       "id": "AP09-complete-same-source-code-preview-20261021",
-      "revision": "0e8d5f9f8ffb9be4f5b2ca43481e4408f4b9bcb3",
+      "revision": "68d31a42188dc8aa1dce7a972ce9488d124d6826",
       "author": "Nova /root documentation author and implementation coordinator",
       "reviewer": "Independent Codex autoreview whole PUB004 Source/Reader/Quality closeout plus narrow changed-boundary preservation for21priorPASSrecords",
       "verdict": "PASS",
@@ -16797,6 +16849,11 @@
           "command": "node --test scripts/tests/docs-api-top-level-script-purpose.test.mjs scripts/tests/deployment-config-output-custody.test.mjs",
           "exitCode": 0,
           "observation": "13/13 tests passed in main checkout; independent six-record delta review preserves exact previous claims and limits. Owning maintenance check remains FAILED at separate scalar caller census, not included as a passing check."
+        },
+        {
+          "command": "node --test scripts/tests/docs-api-top-level-script-purpose.test.mjs scripts/tests/deployment-config-output-custody.test.mjs",
+          "exitCode": 0,
+          "observation": "14/14 actual main tests passed. Original owning failure at later probe output is retained separately, not included as a passing check."
         }
       ],
       "limits": [
@@ -17159,6 +17216,14 @@
           "report": "docs/blueprint/acceptance-evidence/top-script-purpose-20261022/top-script-purpose-custody-renewal-independent-review.json",
           "reason": "Existing PUB004 same-revision immutable-link/inertpreview pairing and disclosure consumers unchanged. Custody metadata adds no renderer behavior and does not invent bodysemantic/accessibility/screenreader proof.",
           "limit": "Preserve original record attribution,checks,summary,limits,IDs/states. No blindrevision refresh; current qualifying commit/actual owningreceiver and outputbinding results separate."
+        },
+        {
+          "revision": "68d31a42188dc8aa1dce7a972ce9488d124d6826",
+          "reviewer": "/root/review_recovered_eleven_purposes",
+          "verdict": "PASS_BOUNDED_EXISTING_SCOPE_PRESERVATION",
+          "report": "docs/blueprint/acceptance-evidence/eleven-purpose-20261022/recovered-eleven-purpose-independent-review.json",
+          "reason": "Independent four-file delta review preserves unchanged reader pages and prior exact Source/quality/reader claims and limits. Eleven specific purposes remain private, canonical UNKNOWN retained. Original scalar and consumer guards passed in main owning receiver; next probe API output remains blocked, not generator success.",
+          "historicalPracticalEvidenceNotReexecuted": true
         }
       ],
       "scopePreservation3408": {
@@ -17204,7 +17269,7 @@
     },
     {
       "id": "AP09-complete-responsive-reader-layout-20261021",
-      "revision": "0e8d5f9f8ffb9be4f5b2ca43481e4408f4b9bcb3",
+      "revision": "68d31a42188dc8aa1dce7a972ce9488d124d6826",
       "author": "Nova /root documentation author and implementation coordinator",
       "reviewer": "Independent Codex autoreview whole A91207 responsive-layout closeout and narrow24-record prior-boundary preservation",
       "verdict": "PASS",
@@ -17394,6 +17459,11 @@
           "command": "node --test scripts/tests/docs-api-top-level-script-purpose.test.mjs scripts/tests/deployment-config-output-custody.test.mjs",
           "exitCode": 0,
           "observation": "13/13 tests passed in main checkout; independent six-record delta review preserves exact previous claims and limits. Owning maintenance check remains FAILED at separate scalar caller census, not included as a passing check."
+        },
+        {
+          "command": "node --test scripts/tests/docs-api-top-level-script-purpose.test.mjs scripts/tests/deployment-config-output-custody.test.mjs",
+          "exitCode": 0,
+          "observation": "14/14 actual main tests passed. Original owning failure at later probe output is retained separately, not included as a passing check."
         }
       ],
       "limits": [
@@ -17779,6 +17849,14 @@
           "report": "docs/blueprint/acceptance-evidence/top-script-purpose-20261022/top-script-purpose-custody-renewal-independent-review.json",
           "reason": "Existing A91207 CSS/layout/scroll/focus/navigation and diagram/code/table rendering unchanged. No new paragraph/component or visualbody edit in this renewal; historical observed320/768/1440scope preserved,not relabelled fresh.",
           "limit": "Preserve original record attribution,checks,summary,limits,IDs/states. No blindrevision refresh; current qualifying commit/actual owningreceiver and outputbinding results separate."
+        },
+        {
+          "revision": "68d31a42188dc8aa1dce7a972ce9488d124d6826",
+          "reviewer": "/root/review_recovered_eleven_purposes",
+          "verdict": "PASS_BOUNDED_EXISTING_SCOPE_PRESERVATION",
+          "report": "docs/blueprint/acceptance-evidence/eleven-purpose-20261022/recovered-eleven-purpose-independent-review.json",
+          "reason": "Independent four-file delta review preserves unchanged reader pages and prior exact Source/quality/reader claims and limits. Eleven specific purposes remain private, canonical UNKNOWN retained. Original scalar and consumer guards passed in main owning receiver; next probe API output remains blocked, not generator success.",
+          "historicalPracticalEvidenceNotReexecuted": true
         }
       ],
       "scopePreservation3408": {
