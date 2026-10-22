@@ -3,7 +3,7 @@
   "profiles": {
     "standard": {
       "settings": {
-        "schemaVersion": "review-owned-decision-profiles.v4",
+        "schemaVersion": "review-owned-decision-profiles.v5",
         "profiles": {
           "gate": {
             "schemaVersion": "review-policy.v2",
@@ -384,7 +384,11 @@
           }
         },
         "promptTokenBoundaryReserve": 64,
-        "cacheReadConcurrency": 16
+        "cacheReadConcurrency": 16,
+        "revalidation": {
+          "maximumBaselineBytes": 134217728,
+          "maximumBaselineRelations": 100000
+        }
       }
     }
   }

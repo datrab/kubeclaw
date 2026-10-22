@@ -16,7 +16,7 @@ const owner=JSON.parse(fs.readFileSync('config/plugins/kubeclaw.review/profiles/
 function fixture(t){
  const root=fs.mkdtempSync(path.join(os.tmpdir(),'review-owned-'));t.after(()=>fs.rmSync(root,{recursive:true,force:true}));
  fs.mkdirSync(path.join(root,'owners'));const author=path.join(root,'owners','review.json'),core=path.join(root,'core.json');
- const publish=n=>{const value=structuredClone(owner);delete value.profiles.standard.settings.cacheReadConcurrency;delete value.profiles.standard.settings.repositoryGrades;delete value.profiles.standard.settings.promptTokenBoundaryReserve;value.profiles.standard.settings.schemaVersion='review-owned-decision-profiles.v1';value.profiles.standard.settings.profiles.gate.limits.maxInstancesPerCluster=n;fs.writeFileSync(author,JSON.stringify(value));};publish(1);
+ const publish=n=>{const value=structuredClone(owner);delete value.profiles.standard.settings.revalidation;delete value.profiles.standard.settings.cacheReadConcurrency;delete value.profiles.standard.settings.repositoryGrades;delete value.profiles.standard.settings.promptTokenBoundaryReserve;value.profiles.standard.settings.schemaVersion='review-owned-decision-profiles.v1';value.profiles.standard.settings.profiles.gate.limits.maxInstancesPerCluster=n;fs.writeFileSync(author,JSON.stringify(value));};publish(1);
  const policy={...TEST_CORE_POLICY,reviewPolicySelection:{schemaVersion:'review-policy-selection.v1',file:'owners/review.json',profile:'standard'}};
  fs.writeFileSync(core,JSON.stringify({schemaVersion:'nova-core-runtime-policy.v1',profiles:{standard:{settings:policy}}}));
  return {root,author,core,policy,publish,load:()=>loadCoreRuntimePolicy({file:core,profile:'standard'})};

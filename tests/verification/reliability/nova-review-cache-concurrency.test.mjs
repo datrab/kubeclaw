@@ -16,7 +16,7 @@ test('v4 operational author is required and invalid values cannot become fallbac
   assert.throws(()=>capture(value),/CAPTURE_INVALID/);assert.throws(()=>selected(value),/OWNED_POLICY_INVALID/);
  }
  for(const version of ['v1','v2','v3']){
-  const old={...settings,schemaVersion:'review-owned-decision-profiles.'+version};delete old.cacheReadConcurrency;
+  const old={...settings,schemaVersion:'review-owned-decision-profiles.'+version};delete old.revalidation;delete old.cacheReadConcurrency;
   if(version!=='v3')delete old.promptTokenBoundaryReserve;if(version==='v1')delete old.repositoryGrades;
   assert.deepEqual(capture(old).settings,old);assert.equal(selected(capture(old).settings),16);
   assert.throws(()=>capture({...old,cacheReadConcurrency:16}),/CAPTURE_INVALID/);

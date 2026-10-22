@@ -15,8 +15,7 @@ import { blockedReviewStage } from './review-stage-result.ts';
 import type { ScalableReviewJob, ScalableReviewSource } from './scalable-review-types.ts';
 
 const REPORT_NAMESPACE = 'kubeclaw.review';
-const MAX_BASELINE_BYTES = 128 * 1024 * 1024;
-const MAX_BASELINE_RELATIONS = 100_000;
+import { selectedReviewRevalidationLimits, type ReviewRevalidationLimits } from './review-policy-profiles.ts';
 type JsonObject = Readonly<Record<string, unknown>>;
 export class RepositoryRevalidationIntegrityError extends Error {}
 function integrity<T>(check: () => T): T {
@@ -50,7 +49,7 @@ function digest(value: unknown, label: string): `sha256:${string}` {
   if (!/^sha256:[0-9a-f]{64}$/u.test(parsed)) throw new RepositoryRevalidationIntegrityError(`${label} is invalid`);
   return parsed as `sha256:${string}`;
 }
-function baselineReference(value: unknown): BaselineReference {
+function baselineReference(value: unknown, limits: ReviewRevalidationLimits): BaselineReference {
   const source = record(value, 'baselineReport');
   const fields = ['artifactId', 'digest', 'sizeBytes', 'namespace', 'mediaType'];
   if (Object.keys(source).some((field) => !fields.includes(field))
@@ -60,7 +59,7 @@ function baselineReference(value: unknown): BaselineReference {
   const artifactId = text(source.artifactId, 'baselineReport.artifactId', 512);
   if (!artifactId.startsWith('repository-review:')) throw new RepositoryRevalidationIntegrityError('baselineReport.artifactId is invalid');
   if (!Number.isSafeInteger(source.sizeBytes) || Number(source.sizeBytes) < 1
-    || Number(source.sizeBytes) > MAX_BASELINE_BYTES) throw new RepositoryRevalidationIntegrityError('baselineReport.sizeBytes is invalid');
+    || Number(source.sizeBytes) > limits.maximumBaselineBytes) throw new RepositoryRevalidationIntegrityError('baselineReport.sizeBytes is invalid');
   return Object.freeze({ artifactId, digest: digest(source.digest, 'baselineReport.digest'),
     sizeBytes: Number(source.sizeBytes) });
 }
@@ -69,11 +68,11 @@ function input(value: unknown, context:PluginInvocationContext): { readonly base
   const source = record(value, 'repository revalidation input');
   const allowed = ['baselineReport', 'grade', 'scope', 'overrides'];
   if (Object.keys(source).some((field) => !allowed.includes(field))) throw new RepositoryRevalidationIntegrityError('repository revalidation input has unknown fields');
-  return Object.freeze({ baseline: baselineReference(source.baselineReport),
+  return Object.freeze({ baseline: baselineReference(source.baselineReport, selectedReviewRevalidationLimits(context.contract.config)),
     profile: parseRepositoryReviewInput({ grade: source.grade, scope: source.scope,
       ...(Object.hasOwn(source,'overrides')?{overrides:source.overrides}:{}), mode: 'execute' }, selectedRepositoryGrades(context.contract.config)) });
 }
-function baselineFindings(value: unknown): { readonly head: string; readonly findings: readonly BaselineFinding[];
+function baselineFindings(value: unknown, limits: ReviewRevalidationLimits): { readonly head: string; readonly findings: readonly BaselineFinding[];
   readonly relatedPaths: ReadonlyMap<string, readonly string[]> } {
   const report = record(value, 'baseline repository report');
   if (report.schemaVersion !== 'repository-review-report.v1') throw new RepositoryRevalidationIntegrityError('baseline repository report version is invalid');
@@ -96,9 +95,9 @@ function baselineFindings(value: unknown): { readonly head: string; readonly fin
   });
   const map = record(report.map, 'baseline repository report map');
   const relationsText = typeof map.relationsJsonl === 'string' ? map.relationsJsonl : '';
-  if (Buffer.byteLength(relationsText, 'utf8') > MAX_BASELINE_BYTES) throw new RepositoryRevalidationIntegrityError('baseline relation map is too large');
+  if (Buffer.byteLength(relationsText, 'utf8') > limits.maximumBaselineBytes) throw new RepositoryRevalidationIntegrityError('baseline relation map is too large');
   const relationLines = relationsText.split('\n').filter(Boolean);
-  if (relationLines.length > MAX_BASELINE_RELATIONS) throw new RepositoryRevalidationIntegrityError('baseline relation count is too large');
+  if (relationLines.length > limits.maximumBaselineRelations) throw new RepositoryRevalidationIntegrityError('baseline relation count is too large');
   const relationIndex = new Map<string, Set<string>>();
   relationLines.forEach((line, index) => {
     const relation = record(JSON.parse(line), `baseline relation ${index}`);
@@ -124,7 +123,7 @@ async function readBaseline(reference: BaselineReference, context: PluginInvocat
     || sha256Text(serialized) !== reference.digest || Buffer.byteLength(serialized) !== reference.sizeBytes) {
     throw new RepositoryRevalidationIntegrityError('baseline repository report proof is invalid');
   }
-  return integrity(() => baselineFindings(response.value));
+  return integrity(() => baselineFindings(response.value, selectedReviewRevalidationLimits(context.contract.config)));
 }
 
 function runtimeIdentity(context: PluginInvocationContext): { readonly target: string; readonly identity: ReviewRuntimeIdentity } {

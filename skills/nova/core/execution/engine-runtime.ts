@@ -58,7 +58,7 @@ export function inspectRuntimeConfiguration(platform: PlatformConfig, definition
   const originalAdapters = retainedStoreBindings === undefined ? originalHttp : restoreStoreRuntimeBindings(originalHttp, retainedStoreBindings);
   const adapterConfigurations = selectedAdapterConfigurations(originalAdapters, corePolicy, retainedTimingSelections, retainedHttpSelections, retainedPublisherSelections, retainedOperatorSelections, retainedReviewBinding);
   if(retainedReviewBinding!==undefined) {
-    if(!['review-owned-decision-profiles.v2','review-owned-decision-profiles.v3','review-owned-decision-profiles.v4'].includes(String(corePolicy.reviewPolicyCapture?.settings.schemaVersion)) || platform.providers['runtime.dispatch']!==retainedReviewBinding.provider || !platform.activeAdapters.includes(retainedReviewBinding.provider))throw new Error('RECOVERY_REVIEW_TARGET_PROVIDER_MISMATCH');
+    if(!['review-owned-decision-profiles.v2','review-owned-decision-profiles.v3','review-owned-decision-profiles.v4','review-owned-decision-profiles.v5'].includes(String(corePolicy.reviewPolicyCapture?.settings.schemaVersion)) || platform.providers['runtime.dispatch']!==retainedReviewBinding.provider || !platform.activeAdapters.includes(retainedReviewBinding.provider))throw new Error('RECOVERY_REVIEW_TARGET_PROVIDER_MISMATCH');
 
   }
   const observerConfigurations = selectedObserverConfigurations(platform.observers, corePolicy);
@@ -155,7 +155,7 @@ export function selectedAdapterConfigurations(adapters: PlatformConfig['adapters
   const selected: Record<string, Readonly<Record<string, unknown>>> = structuredClone(adapters);
   const openClawId = 'kubeclaw.runtime-dispatch:openclaw';
   if(retainedReviewBinding!==undefined) {
-    if(retainedReviewBinding.provider!==openClawId || !['review-owned-decision-profiles.v2','review-owned-decision-profiles.v3','review-owned-decision-profiles.v4'].includes(String(policy.reviewPolicyCapture?.settings.schemaVersion)))throw new Error('RECOVERY_REVIEW_TARGET_BINDING_INVALID');
+    if(retainedReviewBinding.provider!==openClawId || !['review-owned-decision-profiles.v2','review-owned-decision-profiles.v3','review-owned-decision-profiles.v4','review-owned-decision-profiles.v5'].includes(String(policy.reviewPolicyCapture?.settings.schemaVersion)))throw new Error('RECOVERY_REVIEW_TARGET_BINDING_INVALID');
     selected[openClawId]={targets:structuredClone(retainedReviewBinding.configuration.targets)};
   }
   if (retainedTimingSelections !== undefined && Object.hasOwn(selected,openClawId)) {

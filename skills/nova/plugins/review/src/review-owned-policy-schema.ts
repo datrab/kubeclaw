@@ -16,5 +16,6 @@ export function ownedPolicyProfilesSchema(policyRef:string) {
  const v2={...v1,required:[...v1.required,'repositoryGrades'],properties:{...v1.properties,schemaVersion:{const:'review-owned-decision-profiles.v2'},repositoryGrades:{type:'object',additionalProperties:false,required:['fast','standard','deep'],properties:{fast:repositoryGradeSchema,standard:repositoryGradeSchema,deep:repositoryGradeSchema}}}};
  const v3={...v2,required:[...v2.required,'promptTokenBoundaryReserve'],properties:{...v2.properties,schemaVersion:{const:'review-owned-decision-profiles.v3'},promptTokenBoundaryReserve:integer(0,1000000)}};
  const v4={...v3,required:[...v3.required,'cacheReadConcurrency'],properties:{...v3.properties,schemaVersion:{const:'review-owned-decision-profiles.v4'},cacheReadConcurrency:integer(1,1024)}};
- return {oneOf:[v1,v2,v3,v4]};
+ const v5={...v4,required:[...v4.required,'revalidation'],properties:{...v4.properties,schemaVersion:{const:'review-owned-decision-profiles.v5'},revalidation:{type:'object',additionalProperties:false,required:['maximumBaselineBytes','maximumBaselineRelations'],properties:{maximumBaselineBytes:integer(1,134217728),maximumBaselineRelations:integer(1,100000)}}}};
+ return {oneOf:[v1,v2,v3,v4,v5]};
 }
