@@ -48,20 +48,33 @@ jobs:
         if: ${{ !cancelled() && steps.dependencies.outcome == 'success' }}
         run: sudo apt-get update && sudo apt-get install -y shellcheck shfmt
       - name: Check affected stage and adapter contracts
+        id: affected_contracts
         if: ${{ !cancelled() && steps.dependencies.outcome == 'success' }}
+        shell: bash
         run: |
-          npm test --workspace @kubeclaw/plugin-prism-design
-          npm test --workspace @kubeclaw/plugin-notification-observer
-          npm test --workspace @kubeclaw/plugin-human-approval
-          npm test --workspace @kubeclaw/plugin-project-summary
-          npm test --workspace @kubeclaw/plugin-lint
-          npm test --workspace @kubeclaw/plugin-implementation-agent
-          npm test --workspace @kubeclaw/plugin-buster-quality-gate
-          npm test --workspace @kubeclaw/plugin-runtime-dispatch
-          npm test --workspace @kubeclaw/plugin-operator-messaging
-          npm test --prefix skills/buster/plugins/http
-          npm test --prefix skills/nova/plugins/delivery-lint
-          npm test --workspace @kubeclaw/plugin-review
+          mkdir -p tmp
+          {
+            npm test --workspace @kubeclaw/plugin-prism-design
+            npm test --workspace @kubeclaw/plugin-notification-observer
+            npm test --workspace @kubeclaw/plugin-human-approval
+            npm test --workspace @kubeclaw/plugin-project-summary
+            npm test --workspace @kubeclaw/plugin-lint
+            npm test --workspace @kubeclaw/plugin-implementation-agent
+            npm test --workspace @kubeclaw/plugin-buster-quality-gate
+            npm test --workspace @kubeclaw/plugin-runtime-dispatch
+            npm test --workspace @kubeclaw/plugin-operator-messaging
+            npm test --prefix skills/buster/plugins/http
+            npm test --prefix skills/nova/plugins/delivery-lint
+            npm test --workspace @kubeclaw/plugin-review
+          } 2>&1 | tee tmp/core-affected-contracts.log
+      - name: Retain original affected-contract failure output
+        if: ${{ failure() && steps.affected_contracts.outcome == 'failure' }}
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: core-affected-contracts-failure-${{ github.sha }}
+          path: tmp/core-affected-contracts.log
+          if-no-files-found: error
+          retention-days: 3
       - uses: azure/setup-helm@1a275c3b69536ee54be43f2070a358922e12c8d4 # v4
         if: ${{ !cancelled() && steps.dependencies.outcome == 'success' }}
         with:
