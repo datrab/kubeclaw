@@ -1,0 +1,39 @@
+✔ mixed reviewed immutable revisions verify their own source, not one page header (65.506674ms)
+✔ a valid old pin cannot hide any current source-byte change (44.335399ms)
+✔ explicit upstream evidence binds page, revision, file digest and range without adopting runtime source (69.791032ms)
+✖ dated Ops reader evidence verifies its actual page roster, immutable source bytes and excerpts (55.139231ms)
+✔ unreviewed and unavailable revisions remain different fail-closed cases (45.523879ms)
+✔ range and bounded-excerpt requirements survive mixed revision support (46.531634ms)
+✔ same graph reacquires the passive upstream authority before reuse (63.243046ms)
+✔ mutable manifest digest refresh cannot replace independent recipe authority (16.162888ms)
+✔ caller and helper edits remain denied under the exact finite successor (33.854294ms)
+✔ new modules and changed import receipts cannot expand the sealed four-module domain (33.515975ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 9
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 535.922935
+
+✖ failing tests:
+
+test at scripts/tests/docs-source-evidence-pin.test.mjs:54:1
+✖ dated Ops reader evidence verifies its actual page roster, immutable source bytes and excerpts (55.139231ms)
+  AssertionError [ERR_ASSERTION]: docs/site/understand/ops-mcp.md has an invalid line range for gitops/platform/values/codex-ops.yaml
+      at verifySourceEvidencePin (file:///home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/docs-source-evidence-pin.mjs:43:3)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/tests/docs-source-evidence-pin.test.mjs:65:7)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }

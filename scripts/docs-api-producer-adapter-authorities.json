@@ -97203,7 +97203,7 @@
       {
         "source": "scripts/check-platform-specialist-guides.mjs",
         "semanticClass": "finite-repository-modules",
-        "sourceSha256": "21128593eeb12542fd6d3e8631459d31bbf8eab6fb0b78dd38cf1c60b0a3c368",
+        "sourceSha256": "6d6017b40338a36f01570f097f0266d3422a5ff36f71c3cc447c320f349934d3",
         "operations": [
           {
             "expression": "import(path.join(root, 'charts/kubeclaw/files/config', file))",
@@ -97226,7 +97226,11 @@
           },
           {
             "path": "scripts/docs-source-evidence-pin.mjs",
-            "sha256": "7949bcbfd4df89e9bb43e1e887608910e4755782a3a1b12d7de2a911d559a724"
+            "sha256": "e3a40956e8960b504e157cfcd7ca8f20a9a2bea38155c91f48f774a7fc69ba75"
+          },
+          {
+            "path": "scripts/ops-mcp-docs-upstream.json",
+            "sha256": "598430eeb8501cf6de6f15ebfdc4b82268db9fb87d067e5976983c0e93aba077"
           }
         ]
       },

@@ -1,0 +1,84 @@
+diff --git a/scripts/docs-check-refs.mjs b/scripts/docs-check-refs.mjs
+index 09d631d1..38a8ff80 100644
+--- a/scripts/docs-check-refs.mjs
++++ b/scripts/docs-check-refs.mjs
+@@ -270,19 +270,23 @@ function checkSourceCalloutRevisions(filePath, text) {
+     const startLine = index + 1;
+     const block = [];
+     while (index < lines.length && (lines[index].startsWith('>') || !lines[index].trim())) {
++      if (block.length && lines[index].startsWith('> **Source evidence')) break;
+       block.push(lines[index]);
+       index += 1;
+     }
+     index -= 1;
+     const value = block.join('\n');
+-    const declared = value.match(new RegExp(`\\*\\*Revision:\\*\\* \`${gitObjectCapture}\``, 'u'))?.[1];
+-    if (!declared) continue;
++    const declaration = value.match(/^> \*\*Revision:\*\* (.+)$/mu)?.[1];
++    if (!declaration) continue;
++    const declared = [...declaration.matchAll(new RegExp('`' + gitObjectCapture + '`', 'gu'))]
++      .map(match => match[1]);
++    if (!declared.length) continue;
+     const linked = [...value.matchAll(new RegExp(
+       `https:\\/\\/github\\.com\\/datrab\\/kubeclaw\\/blob\\/${gitObjectCapture}\\/`, 'gu',
+     ))].map((match) => match[1]);
+-    const other = [...new Set(linked.filter((revision) => revision !== declared))];
++    const other = [...new Set(linked.filter((revision) => !declared.includes(revision)))];
+     if (other.length) {
+-      errors.push(`${rel(filePath)}:${startLine} source callout declares ${declared} but links ${other.join(', ')}`);
++      errors.push(`${rel(filePath)}:${startLine} source callout declares ${declared.join(', ')} but links ${other.join(', ')}`);
+     }
+   }
+ }
+diff --git a/scripts/tests/docs-check-refs.test.mjs b/scripts/tests/docs-check-refs.test.mjs
+index bf8cd2f0..d2a19f64 100644
+--- a/scripts/tests/docs-check-refs.test.mjs
++++ b/scripts/tests/docs-check-refs.test.mjs
+@@ -198,3 +198,47 @@ test('docs-check-refs starts and validates in a SHA-256 Git repository', (contex
+   assert.match(execFileSync('git', ['rev-parse', 'HEAD'], { cwd: root, encoding: 'utf8' }), /^[0-9a-f]{64}\n$/u);
+   assert.match(run(root), /docs reference check passed/u);
+ });
++
++test('mixed source callouts admit only explicitly declared immutable revisions', () => {
++  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'kubeclaw-mixed-callout-'));
++  try {
++    for (const file of ['scripts/docs-check-refs.mjs', 'scripts/lib/docs-markdown-anchors.mjs']) {
++      write(root, file, fs.readFileSync(path.join(sourceRoot, file), 'utf8'));
++    }
++    write(root, 'package.json', '{}\n');
++    write(root, 'skills/one.ts', 'export const one = 1;\n');
++    write(root, 'skills/two.ts', 'export const two = 2;\n');
++    fs.symlinkSync(path.join(sourceRoot, 'node_modules'), path.join(root, 'node_modules'), 'dir');
++    const git = (...args) => execFileSync('git', args, { cwd: root, encoding: 'utf8' }).trim();
++    git('init', '-q');
++    git('config', 'user.name', 'Docs Test');
++    git('config', 'user.email', 'docs-test@example.invalid');
++    git('add', '.'); git('commit', '-qm', 'first');
++    const first = git('rev-parse', 'HEAD');
++    write(root, 'sentinel.txt', 'second commit\n');
++    git('add', '.'); git('commit', '-qm', 'second');
++    const second = git('rev-parse', 'HEAD');
++    const page = (declaration, extra = '') => [
++      '# Evidence', '', '> **Source evidence — mixed immutable scope**', '>',
++      `> [One](https://github.com/datrab/kubeclaw/blob/${first}/skills/one.ts#L1-L1).`,
++      `> [Two](https://github.com/datrab/kubeclaw/blob/${second}/skills/two.ts#L1-L1).`,
++      `> **Revision:** ${declaration}. Source bindings, not execution receipts.`,
++      `> ${extra}`, '',
++    ].join('\n');
++    write(root, 'docs/site/index.md', page('`' + first + '`; `' + second + '`'));
++    assert.match(run(root), /docs reference check passed/u);
++    write(root, 'docs/site/index.md', page('`' + first + '`', 'Other prose mentions `' + second + '`.'));
++    assert.throws(() => run(root), error => String(error.stderr).includes(`but links ${second}`));
++    write(root, 'docs/site/index.md', page('`' + first + '`; ' + second));
++    assert.throws(() => run(root), error => String(error.stderr).includes(`but links ${second}`));
++    const callout = (linked, declared) => [
++      '> **Source evidence — independent adjacent scope**', '>',
++      `> [Source](https://github.com/datrab/kubeclaw/blob/${linked}/skills/one.ts#L1-L1).`,
++      '> **Revision:** `' + declared + '`.', '',
++    ].join('\n');
++    write(root, 'docs/site/index.md', callout(first, first) + '\n' + callout(second, second));
++    assert.match(run(root), /docs reference check passed/u);
++    write(root, 'docs/site/index.md', callout(second, first) + '\n' + callout(second, second));
++    assert.throws(() => run(root), error => String(error.stderr).includes(`but links ${second}`));
++  } finally { fs.rmSync(root, { recursive: true, force: true }); }
++});

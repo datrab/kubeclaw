@@ -1,0 +1,347 @@
+diff --git a/docs/site/understand/codex-integration.md b/docs/site/understand/codex-integration.md
+index a4470044..60058867 100644
+--- a/docs/site/understand/codex-integration.md
++++ b/docs/site/understand/codex-integration.md
+@@ -116,9 +116,9 @@ operation go through the central service.
+ > **Contract or setting:** Per-client MCP grants remain bounded by the MCP ServiceAccount RBAC.
+ >
+-> **Test evidence:** See the scoped 2026-10-22 results and remaining limits in [Ops MCP verification](ops-mcp.md#verification).
++> **Test evidence:** See the source-test definitions and execution limits in [Ops MCP verification](ops-mcp.md#verification).
+ >
+ > **Revision:** `34cf38ef53ee41381543785d0ffae90a37fac9ca`; upstream main, separate from documentation-branch source adoption.
+ >
+-> **Limit:** Native Nova discovery was observed; mobile pairing and a separate Buster gateway probe remain outside that proof.
++> **Limit:** Native Nova/Buster discovery, mobile pairing and effective deployed grants are not proved by these source bindings.
+ 
+ 
+diff --git a/docs/site/understand/communication.md b/docs/site/understand/communication.md
+index fc9c0674..987dd5c3 100644
+--- a/docs/site/understand/communication.md
++++ b/docs/site/understand/communication.md
+@@ -154,5 +154,5 @@ individual route's schema or admission rules.
+ | Buster → BuildKit → OCI registry | Build an image, push immutable manifest/layers, verify digest, then let consumers pull it. | BuildKit client protocol to rootless BuildKit; OCI Distribution API to local registry; upstream pulls may use Docker Hub mirror. | Registry client configuration controls endpoints and credentials. Current lab local registry is anonymous HTTP; it is not production-grade HTTPS. | Build and push deadlines are provider settings. Manifest digest binds later verification and pull order. | BuildKit cache and registry blobs persist independently. Content digests deduplicate layers and bind the selected manifest. | Build context, output, cache, disk, concurrent build, and registry limits. | Build, push, digest check, or pull failure fails the node. Retry only after checking whether the digest exists. A mirror miss is not local-registry success. |
+ | Workload → SPIRE / Envoy → protected service | Obtain SVID, establish mTLS, and forward verified SPIFFE identity to loopback application HTTP. | SPIFFE Workload API over CSI socket; Envoy mTLS listener and local plaintext application listener. | SPIRE issues workload identity. Envoy validates peer trust domain and SAN. Application accepts forwarded identity only from loopback proxy and an exact peer allowlist. | SVID rotation is handled by workload API/Envoy. Application request deadlines still apply. | No message persistence or deduplication at mTLS. Domain stores retain accepted operations. | Envoy connection/request limits plus application limits. | Missing SVID, invalid SAN, unlisted peer, non-loopback forwarded header, or proxy failure denies the request. Restore identity/proxy; never fall back silently to anonymous remote HTTP. |
+-| Codex/Nova/Buster → central Ops MCP → Kubernetes API | Typed read tools and separately authorized `exec_pod`. | Internal HTTPS at `codex-ops-mcp.kubeclaw-ops.svc:8080/mcp`; Nova/Buster use native OpenClaw with a local stdio-to-HTTPS adapter. | Distinct per-client bearer, CA verification, tool/namespace checks; exec checks live labels/container. Only MCP has Kubernetes credentials; Buster lease token is separate. | Reads: 10 s/8 MiB per API request. Exec: requested timeout up to 120 s, reduced by policy (selected grants 30 s), up to 64 KiB combined output, four active connections. | No durable MCP job/result store. Tokens and policy reload per call. | Full namespace/event scans retain their aggregate-pressure limits; native adapter bounds its response to 2 MiB. | Read retries are new observations. Never automatically replay exec after timeout, disconnect or cancellation; reconcile remote effects first. |
++| Codex/Nova/Buster → central Ops MCP → Kubernetes API | Typed read tools and separately authorized `exec_pod`. | Internal HTTPS at `codex-ops-mcp.kubeclaw-ops.svc:8080/mcp`; Nova/Buster use native OpenClaw with a local stdio-to-HTTPS adapter. | Distinct per-client bearer, CA verification, tool/namespace checks; exec checks live labels/container. MCP holds gateway operations credentials; Buster workers separately hold direct lease-scoped workload/test Kubernetes authority. | Reads: 10 s/8 MiB per API request. Exec: requested timeout up to 120 s, reduced by policy (selected grants 30 s), up to 64 KiB combined output, four active connections. | No durable MCP job/result store. Tokens and policy reload per call. | Full namespace/event scans retain their aggregate-pressure limits; native adapter bounds its response to 2 MiB. | Read retries are new observations. Never automatically replay exec after timeout, disconnect or cancellation; reconcile remote effects first. |
+ | Ops MCP → Hubble Relay | Read bounded Cilium flow evidence. | Fixed `hubble observe` process to `hubble-relay.cilium.svc.cluster.local:4245`. | Ops Pod process and cluster network boundary; result filtering rechecks exact namespace and Pod identity. | Two concurrent queries; 12 s; maximum 15-minute window; 2 MiB raw and 192 KiB returned; 1–50 flows. | No lossless cursor. Warnings and partial reasons are part of the result. | Query semaphore, byte ceilings, and Hubble peer capacity. | Partial, lost-event, timeout, parse, relay, or process failure cannot prove absence of traffic or drops. Narrow the window and retain partial reasons. |
+ | Prometheus / Alloy → monitoring stores → Grafana | Project metrics and logs for diagnosis. | Prometheus scrapes; Alloy reads CRI logs and posts to Loki `/loki/api/v1/push`; Grafana queries configured data sources. | Target-specific scrape identity; checked-in Loki uses network controls, not application auth; Grafana reads an existing admin Secret. | Profile-specific scrape and batch settings; Prometheus retains 15 days and Loki 720 hours. | Prometheus, Loki, and Alloy positions hold derived observations only. | Collector queues, storage, retention, and backend availability. | Monitoring failure reduces visibility. Recover backend before collectors and correlate gaps with canonical journals; do not synthesize lifecycle events. |
+@@ -1286,5 +1286,5 @@ journal, database row, receipt, or digest proves the system transition.
+ 
+ 
+-The current central Ops deployment has a separate upstream evidence record.
++The dated upstream central Ops contract has a separate source-evidence record.
+ 
+ > **Source evidence — current central Ops boundary**
+@@ -1295,7 +1295,7 @@ The current central Ops deployment has a separate upstream evidence record.
+ > [Codex has its own mounts without an API credential](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/charts/ops-pod/templates/workload.yaml#L48-L82)
+ >
+-> **Contract or setting:** MCP policy and RBAC bound each caller; agent Pods receive no direct Kubernetes credential.
++> **Contract or setting:** MCP policy and RBAC bound each caller; Codex, Nova and the Buster gateway receive no direct Kubernetes credential. Buster workers retain separate direct lease-scoped Kubernetes authority; see [the worker exception](ops-mcp.md#complete-request-and-state-path).
+ >
+-> **Test evidence:** See the scoped observations in [Ops MCP verification](ops-mcp.md#verification).
++> **Test evidence:** See the source-test definitions and execution limits in [Ops MCP verification](ops-mcp.md#verification).
+ >
+ > **Revision:** `34cf38ef53ee41381543785d0ffae90a37fac9ca`; upstream main, without runtime source adoption into this branch.
+diff --git a/docs/site/understand/ops-mcp.md b/docs/site/understand/ops-mcp.md
+index ba67d583..cb85611d 100644
+--- a/docs/site/understand/ops-mcp.md
++++ b/docs/site/understand/ops-mcp.md
+@@ -1,12 +1,12 @@
+ # Ops MCP: Central Cluster Reads And Authorized Exec
+ 
+-Status: implemented on main and deployed; documentation-branch source adoption remains separate
++Status: implemented in pinned upstream main source; deployment execution unverified here; documentation-branch source adoption remains separate
+ Audience: operator, agent integrator, Ops MCP maintainer, security specialist
+ Owner: Ops MCP maintainers
+ Evidence: tools/ops-mcp/src; tools/ops-mcp/test; charts/ops-pod; charts/kubeclaw; gitops/platform
+ Evidence revision: `34cf38ef53ee41381543785d0ffae90a37fac9ca`
+-Upstream source scope: deployed Ops MCP changes on main; see the immutable source links below
++Upstream source scope: Ops MCP source on main at `34cf38ef53ee41381543785d0ffae90a37fac9ca`; no runtime source adoption into this documentation branch
+ Applies to: central Ops MCP 0.2.0 and native Nova/Buster clients
+-Last verified: 2026-10-22 source inspection and scoped deployment observations; verification limits are recorded below
++Last verified: 2026-10-22 source inspection; no retained local-test or live-deployment execution receipts established here
+ 
+ ## Purpose And Safety Boundary
+@@ -23,8 +23,11 @@ The Codex StatefulSet and MCP Deployment have different ServiceAccounts and
+ failure domains. Codex and Nova receive no Kubernetes token or kubeconfig.
+ Buster's gateway also uses only MCP for reads and exec. Its worker retains the
+-existing exception: a narrowly scoped lease token for the namespace controller.
+-The controller owns namespace management; Buster does not create namespaces itself.
++existing exception: a direct Kubernetes token for lease operations and selected
++Deployment/Service reads. A granted deployer/tester lease can additionally bind
++namespace-scoped workload or test permissions to that worker identity. The
++controller creates namespaces and reconciles access; the worker then performs
++its authorized workload/test API operations itself, outside MCP client policy.
+ 
+-This page updates the deployed main contract from merged PRs #26, #27 and #28.
++This page describes the immutable main source contract at the revision above.
+ PR #13 retains its separate runtime/source qualification and acceptance work.
+ The upstream source scope is explicit so a reader does not mistake a newer main
+@@ -58,8 +61,21 @@ flowchart LR
+   AdapterB -->|HTTPS and Buster bearer| MCP
+   MCP -->|MCP ServiceAccount| API[Kubernetes API]
+-  Worker[Buster worker] -->|Lease request only| Controller[Namespace controller]
+-  Controller --> API
++  Worker[Buster worker] -->|Lease CR and lease-bound workload or test operations| API
++  API -->|Lease resource watch| Controller[Namespace controller]
++  Controller -->|Namespace and RBAC reconciliation| API
+ ```
+ 
++The gateway-to-MCP edges use each gateway's bearer; they do not describe the
++worker's Kubernetes credential. The worker submits lease resources to the API,
++the controller watches/reconciles them and binds the selected namespace role,
++and the worker uses that granted role for workload/test operations. Lease
++completion is not proof that every later workload operation succeeded.
++
++[Worker credential selection](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/my-values/buster-values.yaml#L193-L213),
++[base lease and read grants](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/charts/kubeclaw/templates/rbac.yaml#L1-L29),
++[selected deployer/tester roles](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/charts/kubeclaw/templates/buster-namespace-controller.yaml#L23-L56) and
++[actual lease-to-workload invocation](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/skills/buster/engine/test-gates/kubernetes-fixture-runtime.ts#L692-L715)
++establish this source boundary, not live effective RBAC.
++
+ ## Native Agent Connection
+ 
+@@ -102,5 +118,5 @@ that interface; retain other notes when updating that section.
+ > **Contract or setting:** opsMcp.enabled selects the connector; credentials are mounted files.
+ >
+-> **Test evidence:** The scoped local and live results are recorded under Verification below; source links alone are not execution receipts.
++> **Test evidence:** Source-test definitions and execution limits are recorded under Verification below; source links alone are not execution receipts.
+ >
+ > **Revision:** `34cf38ef53ee41381543785d0ffae90a37fac9ca`. Upstream main evidence; this documentation update does not adopt runtime source into PR #13.
+@@ -110,5 +126,5 @@ that interface; retain other notes when updating that section.
+ ## HTTP Contract And Authentication
+ 
+-The deployed service listens on `0.0.0.0:8080` behind the internal Service
++The selected upstream service declares a listener on `0.0.0.0:8080` behind the internal Service
+ `https://codex-ops-mcp.kubeclaw-ops.svc:8080/mcp`. It has its own TLS Secret,
+ private CA, readiness and liveness probes. There is no public Ingress or tunnel
+@@ -151,5 +167,5 @@ runtime bundles used for Nova and Buster.
+ | Codex Ops | All existing and future namespaces; platform and Argo tools also available. | All `test*` Pods/regular containers; in `kubeclaw`, only Buster's `buster-v2-runtime` and Nova's `kubeclaw` or `archviewer` containers selected by Pod labels. |
+ | Nova | `kubeclaw` plus all existing and future `test*` namespaces. | All `test*` Pods/regular containers; in `kubeclaw`, only Buster's labeled `buster-v2-runtime`. |
+-| Buster | Only existing and future `test*` namespaces. | Only `test*` Pods/regular containers. Its lease-controller token remains a separate worker exception. |
++| Buster | Only existing and future `test*` namespaces. | Only `test*` Pods/regular containers. Its direct worker token and lease-bound workload/test authority remain a separate exception. |
+ 
+ `test`, `testing`, `test-build` and mixed-case caller input match; `contest`
+@@ -158,5 +174,6 @@ roles exclude Secrets and mutations. The MCP alone receives the read and exec
+ bindings. Its effective credential boundary is wider than any one client's
+ tool list, so both RBAC and per-request policy matter. `pods/exec` `create`
+-is an MCP permission, never an agent permission.
++in this MCP path is an MCP permission, not a gateway client grant. The separate
++Buster worker lease path has its own effective Kubernetes role.
+ 
+ A separate trusted namespace-access reconciler lists namespaces every five
+@@ -177,9 +194,9 @@ packaging goal; Kubernetes namespace renaming would require resource/data migrat
+ > **Claim:** Agents have separate MCP identities; the MCP owns Kubernetes reads and independently bounded exec.
+ >
+-> **Implementation:** [Per-request identity and authorization](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/tools/ops-mcp/src/access-policy.mjs#L50-L107) [Client tool filtering and auditing](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/tools/ops-mcp/src/server.mjs#L210-L231) [Selected client grants](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/gitops/platform/values/codex-ops.yaml#L72-L118) [Separate MCP identity and mounts](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/charts/ops-pod/templates/mcp.yaml#L37-L91)
++> **Implementation:** [Per-request identity and authorization](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/tools/ops-mcp/src/access-policy.mjs#L50-L107) [Client tool filtering and auditing](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/tools/ops-mcp/src/server.mjs#L210-L231) [Codex grants](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/gitops/platform/values/codex-ops.yaml#L20-L68) [Nova grants](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/gitops/platform/values/codex-ops.yaml#L69-L97) [Buster grants](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/gitops/platform/values/codex-ops.yaml#L98-L118) [Separate MCP identity and mounts](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/charts/ops-pod/templates/mcp.yaml#L37-L91)
+ >
+ > **Contract or setting:** Client policy must remain within MCP RBAC; global reads need both flags.
+ >
+-> **Test evidence:** The scoped local and live results are recorded under Verification below; source links alone are not execution receipts.
++> **Test evidence:** Source-test definitions and execution limits are recorded under Verification below; source links alone are not execution receipts.
+ >
+ > **Revision:** `34cf38ef53ee41381543785d0ffae90a37fac9ca`. Upstream main evidence; this documentation update does not adopt runtime source into PR #13.
+@@ -221,5 +238,5 @@ stderr and incomplete/transport outcomes must be interpreted separately.
+ > **Contract or setting:** Exec uses the lower of requested and policy limits.
+ >
+-> **Test evidence:** The scoped local and live results are recorded under Verification below; source links alone are not execution receipts.
++> **Test evidence:** Source-test definitions and execution limits are recorded under Verification below; source links alone are not execution receipts.
+ >
+ > **Revision:** `34cf38ef53ee41381543785d0ffae90a37fac9ca`. Upstream main evidence; this documentation update does not adopt runtime source into PR #13.
+@@ -298,6 +315,6 @@ bound is not a total HTTP or MCP response-size guarantee.
+ The chart now declares a separate MCP network policy, including a selected
+ Relay path. Effective network enforcement, Relay availability and retained
+-flow history still require their own live proof. The 2026-10-22 observations
+-did not establish a working Hubble Relay. A DNS or Relay error is an unavailable
++flow history still require their own live proof. No working Hubble Relay is
++established by this source review. A DNS or Relay error is an unavailable
+ observation, not proof of no network drops.
+ 
+@@ -306,9 +323,9 @@ observation, not proof of no network drops.
+ > **Claim:** Per-request read limits do not bound full scans or prove complete Hubble history.
+ >
+-> **Implementation:** [HTTPS read transport and page handling](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/tools/ops-mcp/src/kubernetes.mjs#L1-L58) [Hubble process bounds](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/tools/ops-mcp/src/hubble.mjs#L25-L75) [Hubble partial-result semantics](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/tools/ops-mcp/src/hubble.mjs#L95-L118) [MCP network policy](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/charts/ops-pod/templates/network.yaml#L37-L71)
++> **Implementation:** [HTTPS read transport](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/tools/ops-mcp/src/kubernetes.mjs#L1-L58) [Pagination and default aggregate limit](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/tools/ops-mcp/src/kubernetes.mjs#L65-L99) [Full-scan callers](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/tools/ops-mcp/src/server.mjs#L327-L358) [Event continuation](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/tools/ops-mcp/src/server.mjs#L114-L138) [Hubble process bounds](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/tools/ops-mcp/src/hubble.mjs#L25-L75) [Hubble partial-result semantics](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/tools/ops-mcp/src/hubble.mjs#L95-L118) [MCP network policy](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/charts/ops-pod/templates/network.yaml#L37-L71)
+ >
+ > **Contract or setting:** Prefer one-page or single-object tools when a full scan is unnecessary.
+ >
+-> **Test evidence:** The scoped local and live results are recorded under Verification below; source links alone are not execution receipts.
++> **Test evidence:** Source-test definitions and execution limits are recorded under Verification below; source links alone are not execution receipts.
+ >
+ > **Revision:** `34cf38ef53ee41381543785d0ffae90a37fac9ca`. Upstream main evidence; this documentation update does not adopt runtime source into PR #13.
+@@ -370,21 +387,20 @@ The diagnostic Codex skill remains guidance, separate from service authority.
+ ## Verification
+ 
+-The 2026-10-22 change was merged as PR #28 after 26 active CI checks passed.
+-Local verification included 31 MCP tests (including a pinned OpenClaw native
+-client over real TLS and a dropped-exec no-replay case), 19 Ops/chart tests and
+-six supervisor tests. The native-client workflow also passed on main.
+-
+-Runtime build [39747800068](https://github.com/datrab/kubeclaw/actions/runs/39747800068)
+-and production promotion [39748892361](https://github.com/datrab/kubeclaw/actions/runs/39748892361)
+-selected `runtime-39747800068-1`. At deployment commit
+-`799707ddd202a331b7e8f718e4ff5c0e9b259f90`, the root, Buster, Nova and Prism Argo
+-applications were observed Synced/Healthy, with replacement Pods ready and no
+-restarts. Nova's installed native OpenClaw client discovered all six tools
+-with no diagnostics; a request outside its namespace scope was denied.
+-
+-This is a scoped historical observation, not a fresh health check at reading
+-time. Buster's connector was covered by rendered configuration/migration tests
+-and its ready deployment; no separate live native probe in its gateway was
+-performed. Hubble Relay availability, mobile pairing, arbitrary-cluster
+-portability, future production-cluster acceptance, and the broader PR #13
+-acceptance gates are not established by this update.
++The pinned upstream contains MCP/TLS/exec and chart test definitions. The TLS
++test starts a local adapter/backend and defines dropped-response no-replay
++coverage; its actual native OpenClaw probe runs only when
++`OPS_MCP_OPENCLAW_BIN` is supplied. Inspecting these definitions does not prove
++that the optional probe or any local suite ran on this candidate.
++
++Earlier deployment notes linked runtime build
++[39747800068](https://github.com/datrab/kubeclaw/actions/runs/39747800068) and
++[promotion 39748892361](https://github.com/datrab/kubeclaw/actions/runs/39748892361).
++Those references alone are not retained execution receipts for the claimed
++local test counts, deployed image identity, Argo health, Pod readiness or
++native tool discovery/denial. Those outcomes remain unverified here. No
++fresh cluster operation was performed for this documentation review.
++
++Buster gateway behavior, Hubble Relay availability, mobile pairing, arbitrary-
++cluster portability, production acceptance and the broader PR #13 gates need
++their own scoped evidence. Source review neither adopts the runtime into this
++branch nor clears its existing release-verification stop.
+diff --git a/docs/site/understand/platform-and-operations.md b/docs/site/understand/platform-and-operations.md
+index 7cbae993..25d66786 100644
+--- a/docs/site/understand/platform-and-operations.md
++++ b/docs/site/understand/platform-and-operations.md
+@@ -1017,5 +1017,5 @@ cluster can also make the Ops Pod, MCP, storage and network unreachable.
+ > **Contract or setting:** Per-client MCP grants remain bounded by the MCP ServiceAccount RBAC.
+ >
+-> **Test evidence:** See the scoped 2026-10-22 results and remaining limits in [Ops MCP verification](ops-mcp.md#verification).
++> **Test evidence:** See the source-test definitions and execution limits in [Ops MCP verification](ops-mcp.md#verification).
+ >
+ > **Revision:** `34cf38ef53ee41381543785d0ffae90a37fac9ca`; upstream main, separate from documentation-branch source adoption.
+diff --git a/docs/site/understand/security-and-trust.md b/docs/site/understand/security-and-trust.md
+index 6f78ce22..9897f7a2 100644
+--- a/docs/site/understand/security-and-trust.md
++++ b/docs/site/understand/security-and-trust.md
+@@ -225,9 +225,11 @@ The current session format does not include an automatic multi-key overlap mecha
+ >
+ 
+-The KubeClaw chart disables automatic ServiceAccount token mounting by default.
+-The selected Nova values enable token mounting, the namespace lease client, and verification reads.
+-Nova can request namespace leases and read the configured verification resources.
+-These permissions do not grant the namespace controller's workload-management authority.
+-SPIRE uses the namespace and ServiceAccount name to derive the workload identity.
++The following workload-identity evidence describes the older documentation-
++branch baseline, not the central upstream deployment. In that baseline the
++selected Nova values enabled token mounting, lease operations and verification
++reads. Do not apply that historical configuration to current upstream Nova:
++the central model retires its direct API authority. Buster workers retain the
++separate direct lease/workload exception described in [Ops MCP](ops-mcp.md#complete-request-and-state-path).
++SPIRE still uses namespace and ServiceAccount identity independently of these grants.
+ 
+ > **Source evidence — workload identity**
+@@ -242,10 +244,10 @@ SPIRE uses the namespace and ServiceAccount name to derive the workload identity
+ > [The KubeClaw ServiceAccount disables automatic token mounting by default](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/charts/kubeclaw/templates/serviceaccount.yaml#L1-L10).
+ >
+-> [The selected Nova values enable token mounting and verification reads](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/my-values/nova-values.yaml#L80-L89).
++> [Historical branch Nova values enabled token mounting and verification reads](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/my-values/nova-values.yaml#L80-L89).
+ > [The lease-client Role permits lease operations and Deployment and Service reads](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/charts/kubeclaw/templates/rbac.yaml#L16-L29).
+ > [Verification adds Pod reads and access to the named Tailscale IngressClass](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/charts/kubeclaw/templates/rbac.yaml#L57-L65).
+ > [A separate Role permits GET for only the configured OAuth Secret in the configured operator namespace](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/charts/kubeclaw/templates/rbac.yaml#L80-L96).
+ >
+-> **Contract or setting:** Selected token mounting enables only the configured lease/verification/OAuth-read grants, not controller workload management.
++> **Contract or setting:** Historical branch Nova token mounting enabled the cited lease/verification/OAuth-read grants. Current upstream Nova instead uses MCP; Buster worker lease-bound roles are a separate authority.
+ >
+ > **Test evidence:** No live SVID issuance or effective Kubernetes denial result is established by these declarations.
+@@ -256,5 +258,5 @@ SPIRE uses the namespace and ServiceAccount name to derive the workload identity
+ >
+ 
+-Treat code that can read the mounted token as holding these Kubernetes rights.
++In any selected baseline, code that can read a mounted token holds its effective Kubernetes rights.
+ A plugin capability grant limits its configured adapter; it does not remove rights from the ServiceAccount token.
+ 
+@@ -415,5 +417,5 @@ and stops if that source is absent.
+ 
+ 
+-The current central Ops deployment has a separate upstream evidence record.
++The dated upstream central Ops contract has a separate source-evidence record.
+ 
+ > **Source evidence — current central Ops boundary**
+@@ -421,10 +423,10 @@ The current central Ops deployment has a separate upstream evidence record.
+ > **Claim:** The separate MCP owns cluster authority and authenticates each client independently.
+ >
+-> **Implementation:** [Argo provisions distinct client credentials and trust through a scoped hook](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/charts/ops-pod/templates/provision.yaml#L1-L50)
++> **Implementation:** [Named provisioning objects](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/charts/ops-pod/templates/provision.yaml#L1-L50) [Scoped hook RBAC and Job](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/charts/ops-pod/templates/provision.yaml#L51-L103) [Actual provisioner invocation](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/charts/ops-pod/templates/_provision.tpl#L1-L30) [Existing-token retention and generation](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/tools/ops-mcp/src/provision.mjs#L100-L115)
+ > [Codex mounts only its own MCP bearer and optional external credentials](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/charts/ops-pod/templates/workload.yaml#L48-L82)
+ >
+-> **Contract or setting:** MCP policy and RBAC bound each caller; agent Pods receive no direct Kubernetes credential.
++> **Contract or setting:** MCP policy and RBAC bound each caller; Codex, Nova and the Buster gateway receive no direct Kubernetes credential. Buster workers retain separate direct lease-scoped Kubernetes authority; see [the worker exception](ops-mcp.md#complete-request-and-state-path).
+ >
+-> **Test evidence:** See the scoped observations in [Ops MCP verification](ops-mcp.md#verification).
++> **Test evidence:** See the source-test definitions and execution limits in [Ops MCP verification](ops-mcp.md#verification).
+ >
+ > **Revision:** `34cf38ef53ee41381543785d0ffae90a37fac9ca`; upstream main, without runtime source adoption into this branch.
+@@ -550,6 +552,6 @@ transport identity, and operation authority.
+ | Buster/agents → local registry or mirror | Explicit registry ports; local registry 5000/5001 and mirror 5000 | Production registry can use HTTPS credentials/CA; checked lab local registry is anonymous HTTP | Build/runtime capability constrains registry prefix and immutable result | Credential on HTTP is rejected by config generator; undeclared registry prefix or changed digest fails |
+ | Namespace controller → Kubernetes API | Controller policy permits API egress | Projected ServiceAccount token | Controller ClusterRole/RoleBindings and admission policy limit lease-owned namespaces/resources | An identity without the controller grants, existing unowned namespace, or reserved-label mutation fails |
+-| Nova/Buster lease client → Kubernetes API | Selected lease-client policy permits API egress on 443/6443 | Mounted ServiceAccount token when enabled | Namespaced lease operations and Deployment/Service reads; optional verification grants Pod reads, the named IngressClass read, and one named OAuth Secret GET | Direct namespace creation, ungranted workload mutation, or an unrelated Secret read fails |
+-| Agent → central MCP → Kubernetes API | Internal HTTPS Service with allowed client Pod selectors and distinct bearers | Only MCP has the projected Kubernetes credential; agents have no direct API mount. Buster retains its worker lease-controller exception | MCP RBAC caps authority; per-request client policy narrows tools, namespace and exec targets | Unauthorized tool, namespace, label or container is denied; global read does not grant global exec |
++| Historical branch Nova/Buster lease client → Kubernetes API (not current upstream Nova) | Selected lease-client policy permits API egress on 443/6443 | Mounted ServiceAccount token when enabled | Namespaced lease operations and Deployment/Service reads; optional verification grants Pod reads, the named IngressClass read, and one named OAuth Secret GET | Direct namespace creation, ungranted workload mutation, or an unrelated Secret read fails |
++| Agent → central MCP → Kubernetes API | Internal HTTPS Service with allowed client Pod selectors and distinct bearers | MCP holds the gateway operations credential; Codex/Nova/Buster gateways have no direct API mount. Buster workers separately hold direct lease-bound Kubernetes authority | MCP RBAC caps authority; per-request client policy narrows tools, namespace and exec targets | Unauthorized tool, namespace, label or container is denied; global read does not grant global exec |
+ 
+ Network reachability does not override a missing lease capability. Kubernetes
+@@ -589,5 +591,5 @@ boundary does not silently expand another.
+ 
+ 
+-The current central Ops deployment has a separate upstream evidence record.
++The dated upstream central Ops contract has a separate source-evidence record.
+ 
+ > **Source evidence — current central Ops boundary**
+@@ -598,7 +600,7 @@ The current central Ops deployment has a separate upstream evidence record.
+ > [Each client is authorized separately on every operation](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/tools/ops-mcp/src/access-policy.mjs#L85-L107)
+ >
+-> **Contract or setting:** MCP policy and RBAC bound each caller; agent Pods receive no direct Kubernetes credential.
++> **Contract or setting:** MCP policy and RBAC bound each caller; Codex, Nova and the Buster gateway receive no direct Kubernetes credential. Buster workers retain separate direct lease-scoped Kubernetes authority; see [the worker exception](ops-mcp.md#complete-request-and-state-path).
+ >
+-> **Test evidence:** See the scoped observations in [Ops MCP verification](ops-mcp.md#verification).
++> **Test evidence:** See the source-test definitions and execution limits in [Ops MCP verification](ops-mcp.md#verification).
+ >
+ > **Revision:** `34cf38ef53ee41381543785d0ffae90a37fac9ca`; upstream main, without runtime source adoption into this branch.
+@@ -797,6 +799,6 @@ rule. Do not infer that a present control was the only alternative considered.
+ | Layer | Normal authority | Important exception or limit |
+ | --- | --- | --- |
+-| Kubernetes ServiceAccount | Automatic token mounting is disabled by chart default | The namespace controller requires a token. Selected Nova values also enable a token for lease and verification operations. |
+-| Kubernetes RBAC | Explicit verbs/resource scopes for each workload | MCP owns observer/exec bindings. Agent Pods have no direct cluster grants; Buster keeps only its existing namespace-controller lease exception. |
++| Kubernetes ServiceAccount | Automatic token mounting is disabled by chart default | The namespace controller and Buster worker need their own bounded tokens. Historical branch Nova values enabled lease/verification access; current upstream Nova has no direct API credential. |
++| Kubernetes RBAC | Explicit verbs/resource scopes for each workload | MCP owns the gateway operations observer/exec bindings. Codex/Nova/Buster gateways have no direct cluster grants; Buster workers retain direct lease and granted workload/test authority. |
+ | SPIFFE peer policy | Exact ServiceAccount identities for one protected route | A valid SVID still needs application authorization. |
+ | Network policy | Named pod, namespace, port, and external paths | Enforcement depends on the live CNI. |
+@@ -813,5 +815,6 @@ where exact targets are used. All three clients have the selected `test*`
+ read/exec path; only Buster is limited exclusively to that prefix.
+ 
+-The MCP alone holds these Kubernetes rights. The namespace-access reconciler
++The MCP holds these gateway operations rights. Buster workers have the separate
++direct lease-scoped Kubernetes authority above. The namespace-access reconciler
+ and credential provisioner have their own bounded platform identities. Agent
+ Pods cannot use their RBAC. Review exec as authority inside the selected target,
+@@ -821,5 +824,5 @@ an uncertain exec effect.
+ > **Source evidence — Ops authority**
+ >
+-> **Claim:** MCP RBAC and per-client policy compose the read/exec boundary; agents have no direct API credential.
++> **Claim:** MCP RBAC and per-client policy compose the gateway read/exec boundary; the Buster worker retains a separate direct lease/workload credential.
+ >
+ > **Implementation:** [Separate MCP identity](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/charts/ops-pod/templates/mcp.yaml#L37-L91) [Client and target authorization](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/tools/ops-mcp/src/access-policy.mjs#L50-L107)
+@@ -827,9 +830,9 @@ an uncertain exec effect.
+ > **Contract or setting:** Per-client MCP grants remain bounded by the MCP ServiceAccount RBAC.
+ >
+-> **Test evidence:** See the scoped 2026-10-22 results and remaining limits in [Ops MCP verification](ops-mcp.md#verification).
++> **Test evidence:** See the source-test definitions and execution limits in [Ops MCP verification](ops-mcp.md#verification).
+ >
+ > **Revision:** `34cf38ef53ee41381543785d0ffae90a37fac9ca`; upstream main, separate from documentation-branch source adoption.
+ >
+-> **Limit:** Scoped local/live evidence does not prove every deployed RBAC combination or independent host recovery.
++> **Limit:** Source bindings do not prove live RBAC enforcement or independent host recovery.
+ 
+ 

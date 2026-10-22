@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "purpose": "Explicit upstream-main Ops evidence; no runtime source adoption into PR #13.",
+  "revision": "34cf38ef53ee41381543785d0ffae90a37fac9ca",
+  "pages": [
+    "docs/site/understand/ops-mcp.md",
+    "docs/site/understand/codex-integration.md",
+    "docs/site/understand/platform-and-operations.md",
+    "docs/site/understand/security-and-trust.md",
+    "docs/site/understand/communication.md"
+  ],
+  "sources": {
+    "charts/kubeclaw/templates/configmap-gateway.yaml": "37f2a0ad3038097d484da8a968f44a2a583049aa64772df435bde7094e89c46f",
+    "charts/kubeclaw/files/ops-mcp/stdio.mjs": "d124f5579ee8b01ca71a59a9278aaa63de4128cd482781a1bcc8597eebac023e",
+    "charts/kubeclaw/files/ops-mcp/client.mjs": "342ded4ec5e851ff03f2419dc35ae901e7da5a327027e86a78dd8a30245134f1",
+    "charts/kubeclaw/files/sync-ops-mcp-config.mjs": "f705ee0bac2b3d93f6f5b55c3012ff8743a68cc1a43cce4c883f17a85deae56a",
+    "tools/ops-mcp/src/access-policy.mjs": "7f7e88ad89677b743b395560aa00cff98f79b04fa0108f1a7fdea4e86995fac4",
+    "tools/ops-mcp/src/server.mjs": "fc14524cd7062c8d2d9b54ac754c89365474ea77ced15fe1a5c0840099113865",
+    "gitops/platform/values/codex-ops.yaml": "a7e0300d1e2a44cac1e11be150fdeb73c112db52ba3b7ea4123109d3c99e86b1",
+    "charts/ops-pod/templates/mcp.yaml": "0ed072729d8f043a8b391408b3d768c82183e87f831de18bd6049b9449f09aaf",
+    "charts/ops-pod/templates/workload.yaml": "5bdbf7f69eab00c4cefacb42a63ef51b8737dbda2ee1af30733e2cf06c5cb8ca",
+    "charts/ops-pod/templates/rbac.yaml": "40b00c443641a15aa443253c6326082e324841cd1b1e279f8873c000fc4d30a5",
+    "charts/ops-pod/templates/network.yaml": "a34b418df10ca111b248912ba3d5402ffa266fbf9a6e48b0b8aec74daa319d45",
+    "tools/ops-mcp/src/exec.mjs": "e3e422e800d87c594ba076ea8588fceaf93d86db72617c561d3dd595e80d7342",
+    "tools/ops-mcp/test/tls-client.test.mjs": "43465a37e7cbc108fdd8c77352144542c0690d74cea7fa93f3174c2e7dc55065",
+    "tools/ops-mcp/src/kubernetes.mjs": "9ece63d71c7cb12d282cc125a3a795be5e4ffd4bc21ee51a0a31e5cfc8392f9c",
+    "tools/ops-mcp/src/hubble.mjs": "d4e60f2801e3c66ded259f420c1a9faca0071fa084dc198a35433f8c9cb4f599",
+    "charts/ops-pod/templates/provision.yaml": "3a003c343bdab95dcc2d8faeef7ad6f999f2267a8aa26556ae74164977c4b02e",
+    "my-values/buster-values.yaml": "6d707676d7ae3bd6529ce88e5a7d5caf5f2b93781cde49793f4c9a3cd778e539",
+    "charts/kubeclaw/templates/rbac.yaml": "953c67cadb2fd1dea1b15e3eb60c2388f5a6b31c69995e73b129c52e3b24e5b5",
+    "charts/kubeclaw/templates/buster-namespace-controller.yaml": "4c1b77043bd278cd9440a9a2d2c948c44adb2a78416dce0b0c244c39174652b0",
+    "skills/buster/engine/test-gates/kubernetes-fixture-runtime.ts": "b9f8bee4d6ed977daf39be3dd91ba8e8323e5b625ff630b53ed1aa923a989833",
+    "charts/ops-pod/templates/_provision.tpl": "34edd2deda92cc74da086dd3450a0062f9c75cf4277370f8f1651ee8c2a1059d",
+    "tools/ops-mcp/src/provision.mjs": "b6bcc183103b4081bc0d66a4efd3548934c6705e1b54d717f31e37864bc3e8b2"
+  }
+}

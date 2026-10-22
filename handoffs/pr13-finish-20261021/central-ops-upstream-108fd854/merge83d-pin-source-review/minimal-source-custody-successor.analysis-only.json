@@ -1,0 +1,34 @@
+{
+  "source": "scripts/check-platform-specialist-guides.mjs",
+  "semanticClass": "finite-repository-modules",
+  "sourceSha256": "6d6017b40338a36f01570f097f0266d3422a5ff36f71c3cc447c320f349934d3",
+  "operations": [
+    {
+      "expression": "import(path.join(root, 'charts/kubeclaw/files/config', file))",
+      "operationSha256": "7ee198b79c5c7c3c21e63ff57fd03b7ad27cd8f233b8b7e49d58a73d18686f85"
+    }
+  ],
+  "inputConstraints": {
+    "root": "repository from import.meta.dirname",
+    "modulePaths": [
+      "charts/kubeclaw/files/config/eslint.config.mjs",
+      "charts/kubeclaw/files/config/eslint-type-evidence-config.mjs",
+      "charts/kubeclaw/files/config/eslint-type-evidence-tests-config.mjs",
+      "charts/kubeclaw/files/config/eslint-type-evidence-generated-config.mjs"
+    ]
+  },
+  "authorityInputs": [
+    {
+      "path": "scripts/docs-lint-policy-reference.mjs",
+      "sha256": "e7c01dff95b2c87df7d1cef6378c330d7f82a67687d4e02783c8d74c09ede191"
+    },
+    {
+      "path": "scripts/docs-source-evidence-pin.mjs",
+      "sha256": "e3a40956e8960b504e157cfcd7ca8f20a9a2bea38155c91f48f774a7fc69ba75"
+    },
+    {
+      "path": "scripts/ops-mcp-docs-upstream.json",
+      "sha256": "4452cbb749a7faa95bb7199095629b724db09b0c23f53becab71314f30252510"
+    }
+  ]
+}

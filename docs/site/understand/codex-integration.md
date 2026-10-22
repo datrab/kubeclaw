@@ -59,7 +59,7 @@ claim; removing the plugin does not remove any of these stores.
 >
 > **Contract or setting:** The manifest Read capability describes the plugin interface; the separately configured Ops MCP credential and deployment define usable process authority.
 >
-> **Test evidence:** No executed Codex-host installation or troubleshooting session accompanies these manifest/skill links. The [Ops service method fixture](https://github.com/datrab/kubeclaw/blob/54a535b6046bc54e9aeeebee9c4cd24388477115/tools/ops-mcp/test/local.test.mjs#L43-L50) checks the separate MCP interface, not plugin activation.
+> **Test evidence:** No executed Codex-host installation or troubleshooting session accompanies these manifest/skill links. The [Ops service method fixture](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/tools/ops-mcp/test/local.test.mjs#L43-L50) checks the separate MCP interface, not plugin activation.
 >
 > **Revision:** `569f7b4933d4859cc67c80ddf40d5154ffd95ce5`. These are the source bindings for the explanation above, not execution receipts.
 >
@@ -93,8 +93,8 @@ with its own bearer. Nova and Buster use distinct credentials against the same
 service. There is no MCP sidecar in the Codex Pod.
 
 Codex and Nova have no Kubernetes token or kubeconfig. Only MCP mounts the
-observer/exec credential. Buster's worker retains its separate namespace-
-controller lease exception. `rbac.execNamespaces` bounds MCP authority; it
+observer/exec credential. Buster's worker retains a separate direct Kubernetes token for lease
+operations and granted namespace-scoped workload/test operations. `rbac.execNamespaces` bounds MCP authority; it
 never enables a Codex API credential. Global Ops reads do not grant global exec.
 
 The Codex troubleshooting plugin remains guidance. Its Read capability does
@@ -115,11 +115,11 @@ operation go through the central service.
 >
 > **Contract or setting:** Per-client MCP grants remain bounded by the MCP ServiceAccount RBAC.
 >
-> **Test evidence:** See the scoped 2026-10-22 results and remaining limits in [Ops MCP verification](ops-mcp.md#verification).
+> **Test evidence:** See the source-test definitions and execution limits in [Ops MCP verification](ops-mcp.md#verification).
 >
 > **Revision:** `34cf38ef53ee41381543785d0ffae90a37fac9ca`; upstream main, separate from documentation-branch source adoption.
 >
-> **Limit:** Native Nova discovery was observed; mobile pairing and a separate Buster gateway probe remain outside that proof.
+> **Limit:** Native Nova/Buster discovery, mobile pairing and effective deployed grants are not proved by these source bindings.
 
 
 ## Workspace And Network Boundaries

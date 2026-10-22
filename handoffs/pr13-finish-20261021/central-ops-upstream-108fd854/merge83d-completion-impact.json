@@ -1,0 +1,426 @@
+[
+  {
+    "id": "A911-03-REF-007-20261020",
+    "verdict": "PASS",
+    "pages": [
+      "docs/site/understand/codex-integration.md",
+      "docs/site/understand/security-and-trust.md"
+    ],
+    "sources": []
+  },
+  {
+    "id": "AP09.1-ready-topics-20261020",
+    "verdict": "PASS",
+    "pages": [
+      "docs/site/understand/README.md"
+    ],
+    "sources": [
+      "docs/site/reference/generated-documentation-map.json",
+      "docs/site/understand/README.md"
+    ]
+  },
+  {
+    "id": "AP09.7-ready-platform-topics-20261020",
+    "verdict": "PASS",
+    "pages": [
+      "docs/site/understand/codex-integration.md",
+      "docs/site/understand/platform-and-operations.md",
+      "docs/site/understand/security-and-trust.md"
+    ],
+    "sources": [
+      "scripts/check-platform-specialist-guides.mjs"
+    ]
+  },
+  {
+    "id": "AP09.7-ready-data-topics-20261020",
+    "verdict": "PASS",
+    "pages": [
+      "docs/site/understand/communication.md"
+    ],
+    "sources": [
+      "scripts/check-platform-specialist-guides.mjs"
+    ]
+  },
+  {
+    "id": "Reviewed-corrections-20261020",
+    "verdict": "PASS",
+    "pages": [],
+    "sources": [
+      "docs/site/reference/generated-documentation-map.json"
+    ]
+  },
+  {
+    "id": "AP09-reader-operators-20261020",
+    "verdict": "PASS",
+    "pages": [
+      "docs/site/use/install.md",
+      "docs/site/use/operate.md"
+    ],
+    "sources": []
+  },
+  {
+    "id": "AP09-reader-workflows-20261020",
+    "verdict": "PASS",
+    "pages": [
+      "docs/site/use/operate.md"
+    ],
+    "sources": []
+  },
+  {
+    "id": "AP09-reader-developers-20261020",
+    "verdict": "PASS",
+    "pages": [
+      "docs/site/extend/host-and-engine.md"
+    ],
+    "sources": []
+  },
+  {
+    "id": "AP09-reviewed-maintenance-20261020",
+    "verdict": "PASS",
+    "pages": [
+      "docs/site/extend/documentation-maintenance.md"
+    ],
+    "sources": []
+  },
+  {
+    "id": "AP09-reviewed-publication-navigation-20261020",
+    "verdict": "PASS",
+    "pages": [
+      "docs/site/understand/README.md"
+    ],
+    "sources": []
+  },
+  {
+    "id": "AP09-compiler-import-provider-diagnosis-20261021",
+    "verdict": "PASS",
+    "pages": [
+      "docs/site/use/install.md",
+      "docs/site/use/operate.md"
+    ],
+    "sources": []
+  },
+  {
+    "id": "AP09-selected-model-gateway-20261021",
+    "verdict": "PASS",
+    "pages": [
+      "docs/site/understand/platform-and-operations.md"
+    ],
+    "sources": []
+  },
+  {
+    "id": "AP09-install-maintenance-project-entry-20261021",
+    "verdict": "PASS",
+    "pages": [
+      "docs/site/understand/README.md",
+      "docs/site/use/install.md",
+      "docs/site/use/maintenance.md",
+      "docs/site/use/operate.md"
+    ],
+    "sources": []
+  },
+  {
+    "id": "AP09-ops-mcp-complete-contract-20261021",
+    "verdict": "PASS",
+    "pages": [
+      "docs/site/understand/ops-mcp.md"
+    ],
+    "sources": []
+  },
+  {
+    "id": "AP09-communication-complete-contracts-20261021",
+    "verdict": "PASS",
+    "pages": [
+      "docs/site/understand/communication.md"
+    ],
+    "sources": []
+  },
+  {
+    "id": "AP09-private-routes-complete-20261021",
+    "verdict": "PASS",
+    "pages": [
+      "docs/site/understand/communication.md"
+    ],
+    "sources": []
+  },
+  {
+    "id": "AP09-documentation-agent-maintenance-20261021",
+    "verdict": "PASS",
+    "pages": [
+      "docs/site/extend/documentation-maintenance.md"
+    ],
+    "sources": []
+  },
+  {
+    "id": "AP09-specialists-whole-gate-20261021",
+    "verdict": "PASS",
+    "pages": [
+      "docs/site/understand/codex-integration.md",
+      "docs/site/understand/ops-mcp.md"
+    ],
+    "sources": []
+  },
+  {
+    "id": "AP09-registry-data-path-20261021",
+    "verdict": "PASS",
+    "pages": [
+      "docs/site/understand/communication.md",
+      "docs/site/understand/platform-and-operations.md"
+    ],
+    "sources": []
+  },
+  {
+    "id": "AP09-complete-static-reader-search-20261021",
+    "verdict": "PASS",
+    "pages": [
+      "docs/site/extend/documentation-maintenance.md",
+      "docs/site/extend/host-and-engine.md",
+      "docs/site/reference/service-routing.md",
+      "docs/site/understand/README.md",
+      "docs/site/understand/codex-integration.md",
+      "docs/site/understand/communication.md",
+      "docs/site/understand/ops-mcp.md",
+      "docs/site/understand/platform-and-operations.md",
+      "docs/site/understand/security-and-trust.md",
+      "docs/site/use/install.md",
+      "docs/site/use/maintenance.md",
+      "docs/site/use/operate.md"
+    ],
+    "sources": []
+  },
+  {
+    "id": "AP09-rendered-source-bounds-gate-20261021",
+    "verdict": "PASS",
+    "pages": [
+      "docs/site/use/install.md"
+    ],
+    "sources": []
+  },
+  {
+    "id": "AP09-complete-source-backed-diagrams-20261021",
+    "verdict": "PASS",
+    "pages": [
+      "docs/site/understand/communication.md",
+      "docs/site/understand/platform-and-operations.md",
+      "docs/site/understand/security-and-trust.md"
+    ],
+    "sources": []
+  },
+  {
+    "id": "AP09-whole-platform-discovery-and-drift-20261021",
+    "verdict": "PASS",
+    "pages": [
+      "docs/site/understand/platform-and-operations.md"
+    ],
+    "sources": []
+  },
+  {
+    "id": "AP09-whole-trust-and-spiffe-contract-20261021",
+    "verdict": "PASS",
+    "pages": [
+      "docs/site/understand/communication.md",
+      "docs/site/understand/security-and-trust.md"
+    ],
+    "sources": []
+  },
+  {
+    "id": "AP09-whole-dependency-decision-traces-20261021",
+    "verdict": "PASS",
+    "pages": [
+      "docs/site/understand/communication.md"
+    ],
+    "sources": []
+  },
+  {
+    "id": "AP09-whole-install-and-readiness-20261021",
+    "verdict": "PASS",
+    "pages": [
+      "docs/site/use/install.md",
+      "docs/site/use/operate.md"
+    ],
+    "sources": []
+  },
+  {
+    "id": "AP09-whole-upgrade-and-retirement-20261021",
+    "verdict": "PASS",
+    "pages": [
+      "docs/site/use/maintenance.md"
+    ],
+    "sources": []
+  },
+  {
+    "id": "AP09-whole-studio-demo-journey-20261021",
+    "verdict": "PASS",
+    "pages": [
+      "docs/site/use/operate.md"
+    ],
+    "sources": []
+  },
+  {
+    "id": "A99-04-whole-content-20261021",
+    "verdict": "PASS",
+    "pages": [
+      "docs/site/use/operate.md"
+    ],
+    "sources": []
+  },
+  {
+    "id": "AP09-whole-current-communication-union-20261021-d477",
+    "verdict": "PASS",
+    "pages": [
+      "docs/site/understand/communication.md",
+      "docs/site/understand/platform-and-operations.md",
+      "docs/site/understand/security-and-trust.md"
+    ],
+    "sources": []
+  },
+  {
+    "id": "AP09-whole-current-telemetry-union-20261021-d477",
+    "verdict": "PASS",
+    "pages": [
+      "docs/site/understand/communication.md"
+    ],
+    "sources": []
+  },
+  {
+    "id": "AP09-whole-independent-platform-decision-review-20261021-d477",
+    "verdict": "PASS",
+    "pages": [
+      "docs/site/understand/communication.md",
+      "docs/site/understand/platform-and-operations.md",
+      "docs/site/understand/security-and-trust.md",
+      "docs/site/use/install.md"
+    ],
+    "sources": [
+      "scripts/check-platform-specialist-guides.mjs"
+    ]
+  },
+  {
+    "id": "AP09-reference-network-paths-80178-20261021",
+    "verdict": "PASS",
+    "pages": [
+      "docs/site/understand/communication.md",
+      "docs/site/understand/platform-and-operations.md",
+      "docs/site/understand/security-and-trust.md"
+    ],
+    "sources": []
+  },
+  {
+    "id": "FLW010-uncertain-effect-supported-boundary-20261021",
+    "verdict": "PASS",
+    "pages": [
+      "docs/site/use/operate.md"
+    ],
+    "sources": []
+  },
+  {
+    "id": "A99-09-whole-workflow-security-content-20261021",
+    "verdict": "PASS",
+    "pages": [
+      "docs/site/understand/security-and-trust.md"
+    ],
+    "sources": []
+  },
+  {
+    "id": "A99-10-whole-workflow-compatibility-content-20261021",
+    "verdict": "PASS",
+    "pages": [
+      "docs/site/use/maintenance.md"
+    ],
+    "sources": []
+  },
+  {
+    "id": "A99-08-complete-supported-failure-journey-union-20261021",
+    "verdict": "PASS",
+    "pages": [
+      "docs/site/use/install.md",
+      "docs/site/use/operate.md"
+    ],
+    "sources": []
+  },
+  {
+    "id": "A912-11-deterministic-page-records-20261022",
+    "verdict": "PASS",
+    "pages": [],
+    "sources": [
+      "docs/site/reference/generated-documentation-map.json"
+    ]
+  },
+  {
+    "id": "AP09-publication-positive-scope-7ef16585",
+    "verdict": "PASS",
+    "pages": [
+      "docs/site/extend/documentation-maintenance.md",
+      "docs/site/extend/host-and-engine.md",
+      "docs/site/reference/service-routing.md",
+      "docs/site/understand/README.md",
+      "docs/site/understand/codex-integration.md",
+      "docs/site/understand/communication.md",
+      "docs/site/understand/ops-mcp.md",
+      "docs/site/understand/platform-and-operations.md",
+      "docs/site/understand/security-and-trust.md",
+      "docs/site/use/install.md",
+      "docs/site/use/maintenance.md",
+      "docs/site/use/operate.md"
+    ],
+    "sources": [
+      "docs/site/reference/generated-documentation-map.json"
+    ]
+  },
+  {
+    "id": "A912-05-whole-source-excerpt-callouts-20261022",
+    "verdict": "PASS",
+    "pages": [
+      "docs/site/extend/documentation-maintenance.md",
+      "docs/site/understand/README.md",
+      "docs/site/understand/codex-integration.md",
+      "docs/site/understand/communication.md",
+      "docs/site/understand/ops-mcp.md",
+      "docs/site/understand/platform-and-operations.md",
+      "docs/site/understand/security-and-trust.md",
+      "docs/site/use/install.md",
+      "docs/site/use/maintenance.md",
+      "docs/site/use/operate.md"
+    ],
+    "sources": []
+  },
+  {
+    "id": "A98-02-13-whole-operator-procedure-contract-20261022",
+    "verdict": "PASS",
+    "pages": [
+      "docs/site/use/install.md",
+      "docs/site/use/maintenance.md",
+      "docs/site/use/operate.md"
+    ],
+    "sources": [
+      "docs/site/reference/generated-documentation-map.json"
+    ]
+  },
+  {
+    "id": "A910-03-whole-command-prerequisite-contract-20261022",
+    "verdict": "PASS",
+    "pages": [
+      "docs/site/extend/host-and-engine.md"
+    ],
+    "sources": []
+  },
+  {
+    "id": "A910-06-whole-justified-classification-20261022",
+    "verdict": "PASS",
+    "pages": [],
+    "sources": [
+      "docs/site/understand/communication.md",
+      "docs/site/understand/ops-mcp.md",
+      "docs/site/understand/security-and-trust.md"
+    ]
+  },
+  {
+    "id": "A910-07-08-09-12-OPL001-whole-487f4e00-20261022",
+    "verdict": "PASS",
+    "pages": [
+      "docs/site/understand/communication.md",
+      "docs/site/understand/ops-mcp.md",
+      "docs/site/understand/security-and-trust.md"
+    ],
+    "sources": []
+  }
+]

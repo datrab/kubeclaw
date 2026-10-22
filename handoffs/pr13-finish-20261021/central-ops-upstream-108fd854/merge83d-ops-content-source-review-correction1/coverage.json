@@ -1,0 +1,1490 @@
+{
+  "role": "Source-only correction review",
+  "baseline": "108fd854525688584b8b3e5595c6ee77461a46a0",
+  "upstream": "34cf38ef53ee41381543785d0ffae90a37fac9ca",
+  "previousReport": "../merge83d-ops-content-source-review/report.md",
+  "all22HashesMatch": true,
+  "original16ExactIdentityReuse": true,
+  "new6FullReadsComplete": true,
+  "wholeCurrent5PageCoverage": "Prior whole-page read plus exact byte-equal span mapping and all correction diff/current changed-context reads",
+  "unreadAssigned": [],
+  "sources": [
+    {
+      "path": "charts/kubeclaw/templates/configmap-gateway.yaml",
+      "revision": "34cf38ef53ee41381543785d0ffae90a37fac9ca",
+      "sha256": "37f2a0ad3038097d484da8a968f44a2a583049aa64772df435bde7094e89c46f",
+      "gitBlob": "1603224094ea23ad8526008b79ae23852162e9aa",
+      "lineCount": 370,
+      "fullReadRanges": [
+        [
+          1,
+          370
+        ]
+      ],
+      "mode": "exact-byte whole-file review reused from original report"
+    },
+    {
+      "path": "charts/kubeclaw/files/ops-mcp/stdio.mjs",
+      "revision": "34cf38ef53ee41381543785d0ffae90a37fac9ca",
+      "sha256": "d124f5579ee8b01ca71a59a9278aaa63de4128cd482781a1bcc8597eebac023e",
+      "gitBlob": "3a1f652001360d134e7880cdf8977536c83e1231",
+      "lineCount": 53,
+      "fullReadRanges": [
+        [
+          1,
+          53
+        ]
+      ],
+      "mode": "exact-byte whole-file review reused from original report"
+    },
+    {
+      "path": "charts/kubeclaw/files/ops-mcp/client.mjs",
+      "revision": "34cf38ef53ee41381543785d0ffae90a37fac9ca",
+      "sha256": "342ded4ec5e851ff03f2419dc35ae901e7da5a327027e86a78dd8a30245134f1",
+      "gitBlob": "d913effd1cc4054de9e1dd000414c0335cee1887",
+      "lineCount": 41,
+      "fullReadRanges": [
+        [
+          1,
+          41
+        ]
+      ],
+      "mode": "exact-byte whole-file review reused from original report"
+    },
+    {
+      "path": "charts/kubeclaw/files/sync-ops-mcp-config.mjs",
+      "revision": "34cf38ef53ee41381543785d0ffae90a37fac9ca",
+      "sha256": "f705ee0bac2b3d93f6f5b55c3012ff8743a68cc1a43cce4c883f17a85deae56a",
+      "gitBlob": "13d0d41c18e62758e5a05c2c7b88f0ffb97d871a",
+      "lineCount": 21,
+      "fullReadRanges": [
+        [
+          1,
+          21
+        ]
+      ],
+      "mode": "exact-byte whole-file review reused from original report"
+    },
+    {
+      "path": "tools/ops-mcp/src/access-policy.mjs",
+      "revision": "34cf38ef53ee41381543785d0ffae90a37fac9ca",
+      "sha256": "7f7e88ad89677b743b395560aa00cff98f79b04fa0108f1a7fdea4e86995fac4",
+      "gitBlob": "24053913d2451128048e70b1a897ed8be3c921f3",
+      "lineCount": 107,
+      "fullReadRanges": [
+        [
+          1,
+          107
+        ]
+      ],
+      "mode": "exact-byte whole-file review reused from original report"
+    },
+    {
+      "path": "tools/ops-mcp/src/server.mjs",
+      "revision": "34cf38ef53ee41381543785d0ffae90a37fac9ca",
+      "sha256": "fc14524cd7062c8d2d9b54ac754c89365474ea77ced15fe1a5c0840099113865",
+      "gitBlob": "20fb7a3d7c9278e6a2d6d7d1785da6cbc9cee012",
+      "lineCount": 647,
+      "fullReadRanges": [
+        [
+          1,
+          647
+        ]
+      ],
+      "mode": "exact-byte whole-file review reused from original report"
+    },
+    {
+      "path": "gitops/platform/values/codex-ops.yaml",
+      "revision": "34cf38ef53ee41381543785d0ffae90a37fac9ca",
+      "sha256": "a7e0300d1e2a44cac1e11be150fdeb73c112db52ba3b7ea4123109d3c99e86b1",
+      "gitBlob": "a5ba5a19c45328eac88b74074845d33f81a99012",
+      "lineCount": 118,
+      "fullReadRanges": [
+        [
+          1,
+          118
+        ]
+      ],
+      "mode": "exact-byte whole-file review reused from original report"
+    },
+    {
+      "path": "charts/ops-pod/templates/mcp.yaml",
+      "revision": "34cf38ef53ee41381543785d0ffae90a37fac9ca",
+      "sha256": "0ed072729d8f043a8b391408b3d768c82183e87f831de18bd6049b9449f09aaf",
+      "gitBlob": "affe4c22c29fda47ab385a6d7a0344a8dea75a4e",
+      "lineCount": 110,
+      "fullReadRanges": [
+        [
+          1,
+          110
+        ]
+      ],
+      "mode": "exact-byte whole-file review reused from original report"
+    },
+    {
+      "path": "charts/ops-pod/templates/workload.yaml",
+      "revision": "34cf38ef53ee41381543785d0ffae90a37fac9ca",
+      "sha256": "5bdbf7f69eab00c4cefacb42a63ef51b8737dbda2ee1af30733e2cf06c5cb8ca",
+      "gitBlob": "cbefa3e15befed579dfba2e38847db07a51c42d3",
+      "lineCount": 125,
+      "fullReadRanges": [
+        [
+          1,
+          125
+        ]
+      ],
+      "mode": "exact-byte whole-file review reused from original report"
+    },
+    {
+      "path": "charts/ops-pod/templates/rbac.yaml",
+      "revision": "34cf38ef53ee41381543785d0ffae90a37fac9ca",
+      "sha256": "40b00c443641a15aa443253c6326082e324841cd1b1e279f8873c000fc4d30a5",
+      "gitBlob": "8e5832c95f2fb078bb09cf581a9da9f725adf577",
+      "lineCount": 117,
+      "fullReadRanges": [
+        [
+          1,
+          117
+        ]
+      ],
+      "mode": "exact-byte whole-file review reused from original report"
+    },
+    {
+      "path": "charts/ops-pod/templates/network.yaml",
+      "revision": "34cf38ef53ee41381543785d0ffae90a37fac9ca",
+      "sha256": "a34b418df10ca111b248912ba3d5402ffa266fbf9a6e48b0b8aec74daa319d45",
+      "gitBlob": "f8e0826b131bfa61aa532360ba87cce39b945037",
+      "lineCount": 160,
+      "fullReadRanges": [
+        [
+          1,
+          160
+        ]
+      ],
+      "mode": "exact-byte whole-file review reused from original report"
+    },
+    {
+      "path": "tools/ops-mcp/src/exec.mjs",
+      "revision": "34cf38ef53ee41381543785d0ffae90a37fac9ca",
+      "sha256": "e3e422e800d87c594ba076ea8588fceaf93d86db72617c561d3dd595e80d7342",
+      "gitBlob": "17cdc0ce96c1d466e58be2fc22a61782cce2769c",
+      "lineCount": 61,
+      "fullReadRanges": [
+        [
+          1,
+          61
+        ]
+      ],
+      "mode": "exact-byte whole-file review reused from original report"
+    },
+    {
+      "path": "tools/ops-mcp/test/tls-client.test.mjs",
+      "revision": "34cf38ef53ee41381543785d0ffae90a37fac9ca",
+      "sha256": "43465a37e7cbc108fdd8c77352144542c0690d74cea7fa93f3174c2e7dc55065",
+      "gitBlob": "5c04c97f1726e18026d09cce225d43f310de88c3",
+      "lineCount": 140,
+      "fullReadRanges": [
+        [
+          1,
+          140
+        ]
+      ],
+      "mode": "exact-byte whole-file review reused from original report"
+    },
+    {
+      "path": "tools/ops-mcp/src/kubernetes.mjs",
+      "revision": "34cf38ef53ee41381543785d0ffae90a37fac9ca",
+      "sha256": "9ece63d71c7cb12d282cc125a3a795be5e4ffd4bc21ee51a0a31e5cfc8392f9c",
+      "gitBlob": "2daa2a7362eb36749143f486a97f75330fc379d7",
+      "lineCount": 99,
+      "fullReadRanges": [
+        [
+          1,
+          99
+        ]
+      ],
+      "mode": "exact-byte whole-file review reused from original report"
+    },
+    {
+      "path": "tools/ops-mcp/src/hubble.mjs",
+      "revision": "34cf38ef53ee41381543785d0ffae90a37fac9ca",
+      "sha256": "d4e60f2801e3c66ded259f420c1a9faca0071fa084dc198a35433f8c9cb4f599",
+      "gitBlob": "9c5e41caf82f8ba70584be048db078937b02a79e",
+      "lineCount": 118,
+      "fullReadRanges": [
+        [
+          1,
+          118
+        ]
+      ],
+      "mode": "exact-byte whole-file review reused from original report"
+    },
+    {
+      "path": "charts/ops-pod/templates/provision.yaml",
+      "revision": "34cf38ef53ee41381543785d0ffae90a37fac9ca",
+      "sha256": "3a003c343bdab95dcc2d8faeef7ad6f999f2267a8aa26556ae74164977c4b02e",
+      "gitBlob": "7294b036ffe82b554ea2377aae3c49162893f5e7",
+      "lineCount": 120,
+      "fullReadRanges": [
+        [
+          1,
+          120
+        ]
+      ],
+      "mode": "exact-byte whole-file review reused from original report"
+    },
+    {
+      "path": "my-values/buster-values.yaml",
+      "revision": "34cf38ef53ee41381543785d0ffae90a37fac9ca",
+      "sha256": "6d707676d7ae3bd6529ce88e5a7d5caf5f2b93781cde49793f4c9a3cd778e539",
+      "gitBlob": "19dd7314d97440e4024977c4536a1b30de25bd82",
+      "lineCount": 269,
+      "fullReadRanges": [
+        [
+          1,
+          269
+        ]
+      ],
+      "mode": "full addition read in correction review"
+    },
+    {
+      "path": "charts/kubeclaw/templates/rbac.yaml",
+      "revision": "34cf38ef53ee41381543785d0ffae90a37fac9ca",
+      "sha256": "953c67cadb2fd1dea1b15e3eb60c2388f5a6b31c69995e73b129c52e3b24e5b5",
+      "gitBlob": "59b604802ec6e581eb09f4d94e9eefe935c87f99",
+      "lineCount": 90,
+      "fullReadRanges": [
+        [
+          1,
+          90
+        ]
+      ],
+      "mode": "full addition read in correction review"
+    },
+    {
+      "path": "charts/kubeclaw/templates/buster-namespace-controller.yaml",
+      "revision": "34cf38ef53ee41381543785d0ffae90a37fac9ca",
+      "sha256": "4c1b77043bd278cd9440a9a2d2c948c44adb2a78416dce0b0c244c39174652b0",
+      "gitBlob": "74f623d52590e189e5cb4a4f79a4361992cd0303",
+      "lineCount": 273,
+      "fullReadRanges": [
+        [
+          1,
+          273
+        ]
+      ],
+      "mode": "full addition read in correction review"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-runtime.ts",
+      "revision": "34cf38ef53ee41381543785d0ffae90a37fac9ca",
+      "sha256": "b9f8bee4d6ed977daf39be3dd91ba8e8323e5b625ff630b53ed1aa923a989833",
+      "gitBlob": "840e81a1aa6f536b32c0b3d4da5b8c0c64ddeace",
+      "lineCount": 758,
+      "fullReadRanges": [
+        [
+          1,
+          758
+        ]
+      ],
+      "mode": "full addition read in correction review"
+    },
+    {
+      "path": "charts/ops-pod/templates/_provision.tpl",
+      "revision": "34cf38ef53ee41381543785d0ffae90a37fac9ca",
+      "sha256": "34edd2deda92cc74da086dd3450a0062f9c75cf4277370f8f1651ee8c2a1059d",
+      "gitBlob": "4cc564079bb33ac7ea8a57d633f90c9670a3b0d6",
+      "lineCount": 44,
+      "fullReadRanges": [
+        [
+          1,
+          44
+        ]
+      ],
+      "mode": "full addition read in correction review"
+    },
+    {
+      "path": "tools/ops-mcp/src/provision.mjs",
+      "revision": "34cf38ef53ee41381543785d0ffae90a37fac9ca",
+      "sha256": "b6bcc183103b4081bc0d66a4efd3548934c6705e1b54d717f31e37864bc3e8b2",
+      "gitBlob": "7fffd664dc998c937075f598dd5bd0ee81e0600c",
+      "lineCount": 150,
+      "fullReadRanges": [
+        [
+          1,
+          150
+        ]
+      ],
+      "mode": "full addition read in correction review"
+    }
+  ],
+  "pages": [
+    {
+      "path": "docs/site/understand/ops-mcp.md",
+      "sha256": "a9f1ae15665350c84672b2842a411b7858e82f2731a9013171b979b7416364a3",
+      "lineCount": 406,
+      "baselineSha256": "cc4c5f619ea632b1e28b93db6cf5b072195638112f5b5f2362039862aac514c2",
+      "coverage": [
+        {
+          "mode": "prior whole-page read, byte-identical mapped lines",
+          "current": [
+            1,
+            2
+          ],
+          "baseline": [
+            1,
+            2
+          ],
+          "operation": "equal"
+        },
+        {
+          "mode": "current correction diff read",
+          "current": [
+            3,
+            3
+          ],
+          "baseline": [
+            3,
+            3
+          ],
+          "operation": "replace"
+        },
+        {
+          "mode": "prior whole-page read, byte-identical mapped lines",
+          "current": [
+            4,
+            7
+          ],
+          "baseline": [
+            4,
+            7
+          ],
+          "operation": "equal"
+        },
+        {
+          "mode": "current correction diff read",
+          "current": [
+            8,
+            8
+          ],
+          "baseline": [
+            8,
+            8
+          ],
+          "operation": "replace"
+        },
+        {
+          "mode": "prior whole-page read, byte-identical mapped lines",
+          "current": [
+            9,
+            9
+          ],
+          "baseline": [
+            9,
+            9
+          ],
+          "operation": "equal"
+        },
+        {
+          "mode": "current correction diff read",
+          "current": [
+            10,
+            10
+          ],
+          "baseline": [
+            10,
+            10
+          ],
+          "operation": "replace"
+        },
+        {
+          "mode": "prior whole-page read, byte-identical mapped lines",
+          "current": [
+            11,
+            24
+          ],
+          "baseline": [
+            11,
+            24
+          ],
+          "operation": "equal"
+        },
+        {
+          "mode": "current correction diff read",
+          "current": [
+            25,
+            29
+          ],
+          "baseline": [
+            25,
+            26
+          ],
+          "operation": "replace"
+        },
+        {
+          "mode": "prior whole-page read, byte-identical mapped lines",
+          "current": [
+            30,
+            30
+          ],
+          "baseline": [
+            27,
+            27
+          ],
+          "operation": "equal"
+        },
+        {
+          "mode": "current correction diff read",
+          "current": [
+            31,
+            31
+          ],
+          "baseline": [
+            28,
+            28
+          ],
+          "operation": "replace"
+        },
+        {
+          "mode": "prior whole-page read, byte-identical mapped lines",
+          "current": [
+            32,
+            62
+          ],
+          "baseline": [
+            29,
+            59
+          ],
+          "operation": "equal"
+        },
+        {
+          "mode": "current correction diff read",
+          "current": [
+            63,
+            65
+          ],
+          "baseline": [
+            60,
+            61
+          ],
+          "operation": "replace"
+        },
+        {
+          "mode": "prior whole-page read, byte-identical mapped lines",
+          "current": [
+            66,
+            66
+          ],
+          "baseline": [
+            62,
+            62
+          ],
+          "operation": "equal"
+        },
+        {
+          "mode": "current correction diff read",
+          "current": [
+            67,
+            78
+          ],
+          "baseline": [
+            63,
+            62
+          ],
+          "operation": "insert"
+        },
+        {
+          "mode": "prior whole-page read, byte-identical mapped lines",
+          "current": [
+            79,
+            119
+          ],
+          "baseline": [
+            63,
+            103
+          ],
+          "operation": "equal"
+        },
+        {
+          "mode": "current correction diff read",
+          "current": [
+            120,
+            120
+          ],
+          "baseline": [
+            104,
+            104
+          ],
+          "operation": "replace"
+        },
+        {
+          "mode": "prior whole-page read, byte-identical mapped lines",
+          "current": [
+            121,
+            127
+          ],
+          "baseline": [
+            105,
+            111
+          ],
+          "operation": "equal"
+        },
+        {
+          "mode": "current correction diff read",
+          "current": [
+            128,
+            128
+          ],
+          "baseline": [
+            112,
+            112
+          ],
+          "operation": "replace"
+        },
+        {
+          "mode": "prior whole-page read, byte-identical mapped lines",
+          "current": [
+            129,
+            168
+          ],
+          "baseline": [
+            113,
+            152
+          ],
+          "operation": "equal"
+        },
+        {
+          "mode": "current correction diff read",
+          "current": [
+            169,
+            169
+          ],
+          "baseline": [
+            153,
+            153
+          ],
+          "operation": "replace"
+        },
+        {
+          "mode": "prior whole-page read, byte-identical mapped lines",
+          "current": [
+            170,
+            175
+          ],
+          "baseline": [
+            154,
+            159
+          ],
+          "operation": "equal"
+        },
+        {
+          "mode": "current correction diff read",
+          "current": [
+            176,
+            177
+          ],
+          "baseline": [
+            160,
+            160
+          ],
+          "operation": "replace"
+        },
+        {
+          "mode": "prior whole-page read, byte-identical mapped lines",
+          "current": [
+            178,
+            195
+          ],
+          "baseline": [
+            161,
+            178
+          ],
+          "operation": "equal"
+        },
+        {
+          "mode": "current correction diff read",
+          "current": [
+            196,
+            196
+          ],
+          "baseline": [
+            179,
+            179
+          ],
+          "operation": "replace"
+        },
+        {
+          "mode": "prior whole-page read, byte-identical mapped lines",
+          "current": [
+            197,
+            199
+          ],
+          "baseline": [
+            180,
+            182
+          ],
+          "operation": "equal"
+        },
+        {
+          "mode": "current correction diff read",
+          "current": [
+            200,
+            200
+          ],
+          "baseline": [
+            183,
+            183
+          ],
+          "operation": "replace"
+        },
+        {
+          "mode": "prior whole-page read, byte-identical mapped lines",
+          "current": [
+            201,
+            239
+          ],
+          "baseline": [
+            184,
+            222
+          ],
+          "operation": "equal"
+        },
+        {
+          "mode": "current correction diff read",
+          "current": [
+            240,
+            240
+          ],
+          "baseline": [
+            223,
+            223
+          ],
+          "operation": "replace"
+        },
+        {
+          "mode": "prior whole-page read, byte-identical mapped lines",
+          "current": [
+            241,
+            316
+          ],
+          "baseline": [
+            224,
+            299
+          ],
+          "operation": "equal"
+        },
+        {
+          "mode": "current correction diff read",
+          "current": [
+            317,
+            318
+          ],
+          "baseline": [
+            300,
+            301
+          ],
+          "operation": "replace"
+        },
+        {
+          "mode": "prior whole-page read, byte-identical mapped lines",
+          "current": [
+            319,
+            324
+          ],
+          "baseline": [
+            302,
+            307
+          ],
+          "operation": "equal"
+        },
+        {
+          "mode": "current correction diff read",
+          "current": [
+            325,
+            325
+          ],
+          "baseline": [
+            308,
+            308
+          ],
+          "operation": "replace"
+        },
+        {
+          "mode": "prior whole-page read, byte-identical mapped lines",
+          "current": [
+            326,
+            328
+          ],
+          "baseline": [
+            309,
+            311
+          ],
+          "operation": "equal"
+        },
+        {
+          "mode": "current correction diff read",
+          "current": [
+            329,
+            329
+          ],
+          "baseline": [
+            312,
+            312
+          ],
+          "operation": "replace"
+        },
+        {
+          "mode": "prior whole-page read, byte-identical mapped lines",
+          "current": [
+            330,
+            388
+          ],
+          "baseline": [
+            313,
+            371
+          ],
+          "operation": "equal"
+        },
+        {
+          "mode": "current correction diff read",
+          "current": [
+            389,
+            393
+          ],
+          "baseline": [
+            372,
+            375
+          ],
+          "operation": "replace"
+        },
+        {
+          "mode": "prior whole-page read, byte-identical mapped lines",
+          "current": [
+            394,
+            394
+          ],
+          "baseline": [
+            376,
+            376
+          ],
+          "operation": "equal"
+        },
+        {
+          "mode": "current correction diff read",
+          "current": [
+            395,
+            401
+          ],
+          "baseline": [
+            377,
+            383
+          ],
+          "operation": "replace"
+        },
+        {
+          "mode": "prior whole-page read, byte-identical mapped lines",
+          "current": [
+            402,
+            402
+          ],
+          "baseline": [
+            384,
+            384
+          ],
+          "operation": "equal"
+        },
+        {
+          "mode": "current correction diff read",
+          "current": [
+            403,
+            406
+          ],
+          "baseline": [
+            385,
+            390
+          ],
+          "operation": "replace"
+        }
+      ]
+    },
+    {
+      "path": "docs/site/understand/codex-integration.md",
+      "sha256": "2240d12726f625099c2a20ca37c27387bfbfa2b204e07a74162acc615aa84626",
+      "lineCount": 201,
+      "baselineSha256": "30f14683d35da9ac0a4b44bdb45c41dc404ba4d80b350b624abf02d56c41f466",
+      "coverage": [
+        {
+          "mode": "prior whole-page read, byte-identical mapped lines",
+          "current": [
+            1,
+            117
+          ],
+          "baseline": [
+            1,
+            117
+          ],
+          "operation": "equal"
+        },
+        {
+          "mode": "current correction diff read",
+          "current": [
+            118,
+            118
+          ],
+          "baseline": [
+            118,
+            118
+          ],
+          "operation": "replace"
+        },
+        {
+          "mode": "prior whole-page read, byte-identical mapped lines",
+          "current": [
+            119,
+            121
+          ],
+          "baseline": [
+            119,
+            121
+          ],
+          "operation": "equal"
+        },
+        {
+          "mode": "current correction diff read",
+          "current": [
+            122,
+            122
+          ],
+          "baseline": [
+            122,
+            122
+          ],
+          "operation": "replace"
+        },
+        {
+          "mode": "prior whole-page read, byte-identical mapped lines",
+          "current": [
+            123,
+            201
+          ],
+          "baseline": [
+            123,
+            201
+          ],
+          "operation": "equal"
+        }
+      ]
+    },
+    {
+      "path": "docs/site/understand/platform-and-operations.md",
+      "sha256": "fa78094f720c10206ce1353ecf96f1b4f5f7e8f605bee1bea0ec8df97602434f",
+      "lineCount": 1093,
+      "baselineSha256": "d69991abba21937de118b6a7a8e19d0d58e96e7fb3a7102a5d22da29ccdd3eb7",
+      "coverage": [
+        {
+          "mode": "prior whole-page read, byte-identical mapped lines",
+          "current": [
+            1,
+            1018
+          ],
+          "baseline": [
+            1,
+            1018
+          ],
+          "operation": "equal"
+        },
+        {
+          "mode": "current correction diff read",
+          "current": [
+            1019,
+            1019
+          ],
+          "baseline": [
+            1019,
+            1019
+          ],
+          "operation": "replace"
+        },
+        {
+          "mode": "prior whole-page read, byte-identical mapped lines",
+          "current": [
+            1020,
+            1093
+          ],
+          "baseline": [
+            1020,
+            1093
+          ],
+          "operation": "equal"
+        }
+      ]
+    },
+    {
+      "path": "docs/site/understand/security-and-trust.md",
+      "sha256": "81857599371f80b79e9dedf1e3190c0884bce04718eb2624332186b909f9454d",
+      "lineCount": 895,
+      "baselineSha256": "b917a62ecd64d1538cd7220638f2eac9060422d1a77e7f53fb509fa5c89f9048",
+      "coverage": [
+        {
+          "mode": "prior whole-page read, byte-identical mapped lines",
+          "current": [
+            1,
+            226
+          ],
+          "baseline": [
+            1,
+            226
+          ],
+          "operation": "equal"
+        },
+        {
+          "mode": "current correction diff read",
+          "current": [
+            227,
+            233
+          ],
+          "baseline": [
+            227,
+            231
+          ],
+          "operation": "replace"
+        },
+        {
+          "mode": "prior whole-page read, byte-identical mapped lines",
+          "current": [
+            234,
+            245
+          ],
+          "baseline": [
+            232,
+            243
+          ],
+          "operation": "equal"
+        },
+        {
+          "mode": "current correction diff read",
+          "current": [
+            246,
+            246
+          ],
+          "baseline": [
+            244,
+            244
+          ],
+          "operation": "replace"
+        },
+        {
+          "mode": "prior whole-page read, byte-identical mapped lines",
+          "current": [
+            247,
+            250
+          ],
+          "baseline": [
+            245,
+            248
+          ],
+          "operation": "equal"
+        },
+        {
+          "mode": "current correction diff read",
+          "current": [
+            251,
+            251
+          ],
+          "baseline": [
+            249,
+            249
+          ],
+          "operation": "replace"
+        },
+        {
+          "mode": "prior whole-page read, byte-identical mapped lines",
+          "current": [
+            252,
+            259
+          ],
+          "baseline": [
+            250,
+            257
+          ],
+          "operation": "equal"
+        },
+        {
+          "mode": "current correction diff read",
+          "current": [
+            260,
+            260
+          ],
+          "baseline": [
+            258,
+            258
+          ],
+          "operation": "replace"
+        },
+        {
+          "mode": "prior whole-page read, byte-identical mapped lines",
+          "current": [
+            261,
+            418
+          ],
+          "baseline": [
+            259,
+            416
+          ],
+          "operation": "equal"
+        },
+        {
+          "mode": "current correction diff read",
+          "current": [
+            419,
+            419
+          ],
+          "baseline": [
+            417,
+            417
+          ],
+          "operation": "replace"
+        },
+        {
+          "mode": "prior whole-page read, byte-identical mapped lines",
+          "current": [
+            420,
+            424
+          ],
+          "baseline": [
+            418,
+            422
+          ],
+          "operation": "equal"
+        },
+        {
+          "mode": "current correction diff read",
+          "current": [
+            425,
+            425
+          ],
+          "baseline": [
+            423,
+            423
+          ],
+          "operation": "replace"
+        },
+        {
+          "mode": "prior whole-page read, byte-identical mapped lines",
+          "current": [
+            426,
+            427
+          ],
+          "baseline": [
+            424,
+            425
+          ],
+          "operation": "equal"
+        },
+        {
+          "mode": "current correction diff read",
+          "current": [
+            428,
+            428
+          ],
+          "baseline": [
+            426,
+            426
+          ],
+          "operation": "replace"
+        },
+        {
+          "mode": "prior whole-page read, byte-identical mapped lines",
+          "current": [
+            429,
+            429
+          ],
+          "baseline": [
+            427,
+            427
+          ],
+          "operation": "equal"
+        },
+        {
+          "mode": "current correction diff read",
+          "current": [
+            430,
+            430
+          ],
+          "baseline": [
+            428,
+            428
+          ],
+          "operation": "replace"
+        },
+        {
+          "mode": "prior whole-page read, byte-identical mapped lines",
+          "current": [
+            431,
+            553
+          ],
+          "baseline": [
+            429,
+            551
+          ],
+          "operation": "equal"
+        },
+        {
+          "mode": "current correction diff read",
+          "current": [
+            554,
+            555
+          ],
+          "baseline": [
+            552,
+            553
+          ],
+          "operation": "replace"
+        },
+        {
+          "mode": "prior whole-page read, byte-identical mapped lines",
+          "current": [
+            556,
+            592
+          ],
+          "baseline": [
+            554,
+            590
+          ],
+          "operation": "equal"
+        },
+        {
+          "mode": "current correction diff read",
+          "current": [
+            593,
+            593
+          ],
+          "baseline": [
+            591,
+            591
+          ],
+          "operation": "replace"
+        },
+        {
+          "mode": "prior whole-page read, byte-identical mapped lines",
+          "current": [
+            594,
+            601
+          ],
+          "baseline": [
+            592,
+            599
+          ],
+          "operation": "equal"
+        },
+        {
+          "mode": "current correction diff read",
+          "current": [
+            602,
+            602
+          ],
+          "baseline": [
+            600,
+            600
+          ],
+          "operation": "replace"
+        },
+        {
+          "mode": "prior whole-page read, byte-identical mapped lines",
+          "current": [
+            603,
+            603
+          ],
+          "baseline": [
+            601,
+            601
+          ],
+          "operation": "equal"
+        },
+        {
+          "mode": "current correction diff read",
+          "current": [
+            604,
+            604
+          ],
+          "baseline": [
+            602,
+            602
+          ],
+          "operation": "replace"
+        },
+        {
+          "mode": "prior whole-page read, byte-identical mapped lines",
+          "current": [
+            605,
+            800
+          ],
+          "baseline": [
+            603,
+            798
+          ],
+          "operation": "equal"
+        },
+        {
+          "mode": "current correction diff read",
+          "current": [
+            801,
+            802
+          ],
+          "baseline": [
+            799,
+            800
+          ],
+          "operation": "replace"
+        },
+        {
+          "mode": "prior whole-page read, byte-identical mapped lines",
+          "current": [
+            803,
+            816
+          ],
+          "baseline": [
+            801,
+            814
+          ],
+          "operation": "equal"
+        },
+        {
+          "mode": "current correction diff read",
+          "current": [
+            817,
+            818
+          ],
+          "baseline": [
+            815,
+            815
+          ],
+          "operation": "replace"
+        },
+        {
+          "mode": "prior whole-page read, byte-identical mapped lines",
+          "current": [
+            819,
+            825
+          ],
+          "baseline": [
+            816,
+            822
+          ],
+          "operation": "equal"
+        },
+        {
+          "mode": "current correction diff read",
+          "current": [
+            826,
+            826
+          ],
+          "baseline": [
+            823,
+            823
+          ],
+          "operation": "replace"
+        },
+        {
+          "mode": "prior whole-page read, byte-identical mapped lines",
+          "current": [
+            827,
+            831
+          ],
+          "baseline": [
+            824,
+            828
+          ],
+          "operation": "equal"
+        },
+        {
+          "mode": "current correction diff read",
+          "current": [
+            832,
+            832
+          ],
+          "baseline": [
+            829,
+            829
+          ],
+          "operation": "replace"
+        },
+        {
+          "mode": "prior whole-page read, byte-identical mapped lines",
+          "current": [
+            833,
+            835
+          ],
+          "baseline": [
+            830,
+            832
+          ],
+          "operation": "equal"
+        },
+        {
+          "mode": "current correction diff read",
+          "current": [
+            836,
+            836
+          ],
+          "baseline": [
+            833,
+            833
+          ],
+          "operation": "replace"
+        },
+        {
+          "mode": "prior whole-page read, byte-identical mapped lines",
+          "current": [
+            837,
+            895
+          ],
+          "baseline": [
+            834,
+            892
+          ],
+          "operation": "equal"
+        }
+      ]
+    },
+    {
+      "path": "docs/site/understand/communication.md",
+      "sha256": "b2f603cea91375758d6e687b7c4c7886cd49354c4e14fc8c5cd63652c00cbcf5",
+      "lineCount": 1482,
+      "baselineSha256": "d843276b7eeb63cfab95ea980155610ad614d19c5080c6ae6b4c83dbcc452c20",
+      "coverage": [
+        {
+          "mode": "prior whole-page read, byte-identical mapped lines",
+          "current": [
+            1,
+            155
+          ],
+          "baseline": [
+            1,
+            155
+          ],
+          "operation": "equal"
+        },
+        {
+          "mode": "current correction diff read",
+          "current": [
+            156,
+            156
+          ],
+          "baseline": [
+            156,
+            156
+          ],
+          "operation": "replace"
+        },
+        {
+          "mode": "prior whole-page read, byte-identical mapped lines",
+          "current": [
+            157,
+            1287
+          ],
+          "baseline": [
+            157,
+            1287
+          ],
+          "operation": "equal"
+        },
+        {
+          "mode": "current correction diff read",
+          "current": [
+            1288,
+            1288
+          ],
+          "baseline": [
+            1288,
+            1288
+          ],
+          "operation": "replace"
+        },
+        {
+          "mode": "prior whole-page read, byte-identical mapped lines",
+          "current": [
+            1289,
+            1296
+          ],
+          "baseline": [
+            1289,
+            1296
+          ],
+          "operation": "equal"
+        },
+        {
+          "mode": "current correction diff read",
+          "current": [
+            1297,
+            1297
+          ],
+          "baseline": [
+            1297,
+            1297
+          ],
+          "operation": "replace"
+        },
+        {
+          "mode": "prior whole-page read, byte-identical mapped lines",
+          "current": [
+            1298,
+            1298
+          ],
+          "baseline": [
+            1298,
+            1298
+          ],
+          "operation": "equal"
+        },
+        {
+          "mode": "current correction diff read",
+          "current": [
+            1299,
+            1299
+          ],
+          "baseline": [
+            1299,
+            1299
+          ],
+          "operation": "replace"
+        },
+        {
+          "mode": "prior whole-page read, byte-identical mapped lines",
+          "current": [
+            1300,
+            1482
+          ],
+          "baseline": [
+            1300,
+            1482
+          ],
+          "operation": "equal"
+        }
+      ]
+    }
+  ],
+  "extraCurrentReads": {
+    "cmd/buster-namespace-controller/main.go": [
+      [
+        113,
+        133
+      ],
+      [
+        208,
+        250
+      ],
+      [
+        269,
+        310
+      ]
+    ]
+  },
+  "extraCurrentReadHashes": {
+    "cmd/buster-namespace-controller/main.go": {
+      "revision": "34cf38ef53ee41381543785d0ffae90a37fac9ca",
+      "sha256": "b1780a101cf81bd468af4434fb287b1e4540bc37cbb0e58b77932a8ec9410eca",
+      "gitBlob": "eee770b64f34351d668e3d020fdd1ed4c7412923"
+    }
+  }
+}

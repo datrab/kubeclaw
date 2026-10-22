@@ -1,0 +1,617 @@
+{
+  "role": "Source-only terminal correction review",
+  "wholeCurrent5PageSourceVerdict": "PASS within assigned Ops source-content partition",
+  "previousCompleteCoverage": "../merge83d-ops-content-source-review-correction1/coverage.json",
+  "originalCompleteCoverage": "../merge83d-ops-content-source-review/coverage.json",
+  "baselineHead": "108fd854525688584b8b3e5595c6ee77461a46a0",
+  "upstream": "34cf38ef53ee41381543785d0ffae90a37fac9ca",
+  "manifestSha256": "598430eeb8501cf6de6f15ebfdc4b82268db9fb87d067e5976983c0e93aba077",
+  "all22SourceHashesMatch": true,
+  "manifestUnchangedSinceCorrection1": true,
+  "unreadAssigned": [],
+  "remainingMaterialFindings": [],
+  "sources": [
+    {
+      "path": "charts/kubeclaw/templates/configmap-gateway.yaml",
+      "revision": "34cf38ef53ee41381543785d0ffae90a37fac9ca",
+      "sha256": "37f2a0ad3038097d484da8a968f44a2a583049aa64772df435bde7094e89c46f",
+      "gitBlob": "1603224094ea23ad8526008b79ae23852162e9aa",
+      "lineCount": 370,
+      "fullReadRanges": [
+        [
+          1,
+          370
+        ]
+      ],
+      "mode": "exact-identity complete prior review retained"
+    },
+    {
+      "path": "charts/kubeclaw/files/ops-mcp/stdio.mjs",
+      "revision": "34cf38ef53ee41381543785d0ffae90a37fac9ca",
+      "sha256": "d124f5579ee8b01ca71a59a9278aaa63de4128cd482781a1bcc8597eebac023e",
+      "gitBlob": "3a1f652001360d134e7880cdf8977536c83e1231",
+      "lineCount": 53,
+      "fullReadRanges": [
+        [
+          1,
+          53
+        ]
+      ],
+      "mode": "exact-identity complete prior review retained"
+    },
+    {
+      "path": "charts/kubeclaw/files/ops-mcp/client.mjs",
+      "revision": "34cf38ef53ee41381543785d0ffae90a37fac9ca",
+      "sha256": "342ded4ec5e851ff03f2419dc35ae901e7da5a327027e86a78dd8a30245134f1",
+      "gitBlob": "d913effd1cc4054de9e1dd000414c0335cee1887",
+      "lineCount": 41,
+      "fullReadRanges": [
+        [
+          1,
+          41
+        ]
+      ],
+      "mode": "exact-identity complete prior review retained"
+    },
+    {
+      "path": "charts/kubeclaw/files/sync-ops-mcp-config.mjs",
+      "revision": "34cf38ef53ee41381543785d0ffae90a37fac9ca",
+      "sha256": "f705ee0bac2b3d93f6f5b55c3012ff8743a68cc1a43cce4c883f17a85deae56a",
+      "gitBlob": "13d0d41c18e62758e5a05c2c7b88f0ffb97d871a",
+      "lineCount": 21,
+      "fullReadRanges": [
+        [
+          1,
+          21
+        ]
+      ],
+      "mode": "exact-identity complete prior review retained"
+    },
+    {
+      "path": "tools/ops-mcp/src/access-policy.mjs",
+      "revision": "34cf38ef53ee41381543785d0ffae90a37fac9ca",
+      "sha256": "7f7e88ad89677b743b395560aa00cff98f79b04fa0108f1a7fdea4e86995fac4",
+      "gitBlob": "24053913d2451128048e70b1a897ed8be3c921f3",
+      "lineCount": 107,
+      "fullReadRanges": [
+        [
+          1,
+          107
+        ]
+      ],
+      "mode": "exact-identity complete prior review retained"
+    },
+    {
+      "path": "tools/ops-mcp/src/server.mjs",
+      "revision": "34cf38ef53ee41381543785d0ffae90a37fac9ca",
+      "sha256": "fc14524cd7062c8d2d9b54ac754c89365474ea77ced15fe1a5c0840099113865",
+      "gitBlob": "20fb7a3d7c9278e6a2d6d7d1785da6cbc9cee012",
+      "lineCount": 647,
+      "fullReadRanges": [
+        [
+          1,
+          647
+        ]
+      ],
+      "mode": "exact-identity complete prior review retained"
+    },
+    {
+      "path": "gitops/platform/values/codex-ops.yaml",
+      "revision": "34cf38ef53ee41381543785d0ffae90a37fac9ca",
+      "sha256": "a7e0300d1e2a44cac1e11be150fdeb73c112db52ba3b7ea4123109d3c99e86b1",
+      "gitBlob": "a5ba5a19c45328eac88b74074845d33f81a99012",
+      "lineCount": 118,
+      "fullReadRanges": [
+        [
+          1,
+          118
+        ]
+      ],
+      "mode": "exact-identity complete prior review retained"
+    },
+    {
+      "path": "charts/ops-pod/templates/mcp.yaml",
+      "revision": "34cf38ef53ee41381543785d0ffae90a37fac9ca",
+      "sha256": "0ed072729d8f043a8b391408b3d768c82183e87f831de18bd6049b9449f09aaf",
+      "gitBlob": "affe4c22c29fda47ab385a6d7a0344a8dea75a4e",
+      "lineCount": 110,
+      "fullReadRanges": [
+        [
+          1,
+          110
+        ]
+      ],
+      "mode": "exact-identity complete prior review retained"
+    },
+    {
+      "path": "charts/ops-pod/templates/workload.yaml",
+      "revision": "34cf38ef53ee41381543785d0ffae90a37fac9ca",
+      "sha256": "5bdbf7f69eab00c4cefacb42a63ef51b8737dbda2ee1af30733e2cf06c5cb8ca",
+      "gitBlob": "cbefa3e15befed579dfba2e38847db07a51c42d3",
+      "lineCount": 125,
+      "fullReadRanges": [
+        [
+          1,
+          125
+        ]
+      ],
+      "mode": "exact-identity complete prior review retained"
+    },
+    {
+      "path": "charts/ops-pod/templates/rbac.yaml",
+      "revision": "34cf38ef53ee41381543785d0ffae90a37fac9ca",
+      "sha256": "40b00c443641a15aa443253c6326082e324841cd1b1e279f8873c000fc4d30a5",
+      "gitBlob": "8e5832c95f2fb078bb09cf581a9da9f725adf577",
+      "lineCount": 117,
+      "fullReadRanges": [
+        [
+          1,
+          117
+        ]
+      ],
+      "mode": "exact-identity complete prior review retained"
+    },
+    {
+      "path": "charts/ops-pod/templates/network.yaml",
+      "revision": "34cf38ef53ee41381543785d0ffae90a37fac9ca",
+      "sha256": "a34b418df10ca111b248912ba3d5402ffa266fbf9a6e48b0b8aec74daa319d45",
+      "gitBlob": "f8e0826b131bfa61aa532360ba87cce39b945037",
+      "lineCount": 160,
+      "fullReadRanges": [
+        [
+          1,
+          160
+        ]
+      ],
+      "mode": "exact-identity complete prior review retained"
+    },
+    {
+      "path": "tools/ops-mcp/src/exec.mjs",
+      "revision": "34cf38ef53ee41381543785d0ffae90a37fac9ca",
+      "sha256": "e3e422e800d87c594ba076ea8588fceaf93d86db72617c561d3dd595e80d7342",
+      "gitBlob": "17cdc0ce96c1d466e58be2fc22a61782cce2769c",
+      "lineCount": 61,
+      "fullReadRanges": [
+        [
+          1,
+          61
+        ]
+      ],
+      "mode": "exact-identity complete prior review retained"
+    },
+    {
+      "path": "tools/ops-mcp/test/tls-client.test.mjs",
+      "revision": "34cf38ef53ee41381543785d0ffae90a37fac9ca",
+      "sha256": "43465a37e7cbc108fdd8c77352144542c0690d74cea7fa93f3174c2e7dc55065",
+      "gitBlob": "5c04c97f1726e18026d09cce225d43f310de88c3",
+      "lineCount": 140,
+      "fullReadRanges": [
+        [
+          1,
+          140
+        ]
+      ],
+      "mode": "exact-identity complete prior review retained"
+    },
+    {
+      "path": "tools/ops-mcp/src/kubernetes.mjs",
+      "revision": "34cf38ef53ee41381543785d0ffae90a37fac9ca",
+      "sha256": "9ece63d71c7cb12d282cc125a3a795be5e4ffd4bc21ee51a0a31e5cfc8392f9c",
+      "gitBlob": "2daa2a7362eb36749143f486a97f75330fc379d7",
+      "lineCount": 99,
+      "fullReadRanges": [
+        [
+          1,
+          99
+        ]
+      ],
+      "mode": "exact-identity complete prior review retained"
+    },
+    {
+      "path": "tools/ops-mcp/src/hubble.mjs",
+      "revision": "34cf38ef53ee41381543785d0ffae90a37fac9ca",
+      "sha256": "d4e60f2801e3c66ded259f420c1a9faca0071fa084dc198a35433f8c9cb4f599",
+      "gitBlob": "9c5e41caf82f8ba70584be048db078937b02a79e",
+      "lineCount": 118,
+      "fullReadRanges": [
+        [
+          1,
+          118
+        ]
+      ],
+      "mode": "exact-identity complete prior review retained"
+    },
+    {
+      "path": "charts/ops-pod/templates/provision.yaml",
+      "revision": "34cf38ef53ee41381543785d0ffae90a37fac9ca",
+      "sha256": "3a003c343bdab95dcc2d8faeef7ad6f999f2267a8aa26556ae74164977c4b02e",
+      "gitBlob": "7294b036ffe82b554ea2377aae3c49162893f5e7",
+      "lineCount": 120,
+      "fullReadRanges": [
+        [
+          1,
+          120
+        ]
+      ],
+      "mode": "exact-identity complete prior review retained"
+    },
+    {
+      "path": "my-values/buster-values.yaml",
+      "revision": "34cf38ef53ee41381543785d0ffae90a37fac9ca",
+      "sha256": "6d707676d7ae3bd6529ce88e5a7d5caf5f2b93781cde49793f4c9a3cd778e539",
+      "gitBlob": "19dd7314d97440e4024977c4536a1b30de25bd82",
+      "lineCount": 269,
+      "fullReadRanges": [
+        [
+          1,
+          269
+        ]
+      ],
+      "mode": "exact-identity complete prior review retained"
+    },
+    {
+      "path": "charts/kubeclaw/templates/rbac.yaml",
+      "revision": "34cf38ef53ee41381543785d0ffae90a37fac9ca",
+      "sha256": "953c67cadb2fd1dea1b15e3eb60c2388f5a6b31c69995e73b129c52e3b24e5b5",
+      "gitBlob": "59b604802ec6e581eb09f4d94e9eefe935c87f99",
+      "lineCount": 90,
+      "fullReadRanges": [
+        [
+          1,
+          90
+        ]
+      ],
+      "mode": "exact-identity complete prior review retained"
+    },
+    {
+      "path": "charts/kubeclaw/templates/buster-namespace-controller.yaml",
+      "revision": "34cf38ef53ee41381543785d0ffae90a37fac9ca",
+      "sha256": "4c1b77043bd278cd9440a9a2d2c948c44adb2a78416dce0b0c244c39174652b0",
+      "gitBlob": "74f623d52590e189e5cb4a4f79a4361992cd0303",
+      "lineCount": 273,
+      "fullReadRanges": [
+        [
+          1,
+          273
+        ]
+      ],
+      "mode": "exact-identity complete prior review retained"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-runtime.ts",
+      "revision": "34cf38ef53ee41381543785d0ffae90a37fac9ca",
+      "sha256": "b9f8bee4d6ed977daf39be3dd91ba8e8323e5b625ff630b53ed1aa923a989833",
+      "gitBlob": "840e81a1aa6f536b32c0b3d4da5b8c0c64ddeace",
+      "lineCount": 758,
+      "fullReadRanges": [
+        [
+          1,
+          758
+        ]
+      ],
+      "mode": "exact-identity complete prior review retained"
+    },
+    {
+      "path": "charts/ops-pod/templates/_provision.tpl",
+      "revision": "34cf38ef53ee41381543785d0ffae90a37fac9ca",
+      "sha256": "34edd2deda92cc74da086dd3450a0062f9c75cf4277370f8f1651ee8c2a1059d",
+      "gitBlob": "4cc564079bb33ac7ea8a57d633f90c9670a3b0d6",
+      "lineCount": 44,
+      "fullReadRanges": [
+        [
+          1,
+          44
+        ]
+      ],
+      "mode": "exact-identity complete prior review retained"
+    },
+    {
+      "path": "tools/ops-mcp/src/provision.mjs",
+      "revision": "34cf38ef53ee41381543785d0ffae90a37fac9ca",
+      "sha256": "b6bcc183103b4081bc0d66a4efd3548934c6705e1b54d717f31e37864bc3e8b2",
+      "gitBlob": "7fffd664dc998c937075f598dd5bd0ee81e0600c",
+      "lineCount": 150,
+      "fullReadRanges": [
+        [
+          1,
+          150
+        ]
+      ],
+      "mode": "exact-identity complete prior review retained"
+    }
+  ],
+  "pages": [
+    {
+      "path": "docs/site/understand/ops-mcp.md",
+      "sha256": "92c3cd77464150bc9cad05e13dd231397eb49c44e176fd030474b3ffea01fb07",
+      "lineCount": 406,
+      "priorSha256": "a9f1ae15665350c84672b2842a411b7858e82f2731a9013171b979b7416364a3",
+      "coverage": [
+        {
+          "mode": "exact unchanged span from correction1 whole-page coverage",
+          "current": [
+            1,
+            63
+          ],
+          "prior": [
+            1,
+            63
+          ],
+          "operation": "equal"
+        },
+        {
+          "mode": "changed span read in correction2",
+          "current": [
+            64,
+            64
+          ],
+          "prior": [
+            64,
+            64
+          ],
+          "operation": "replace"
+        },
+        {
+          "mode": "exact unchanged span from correction1 whole-page coverage",
+          "current": [
+            65,
+            69
+          ],
+          "prior": [
+            65,
+            69
+          ],
+          "operation": "equal"
+        },
+        {
+          "mode": "changed span read in correction2",
+          "current": [
+            70,
+            70
+          ],
+          "prior": [
+            70,
+            70
+          ],
+          "operation": "replace"
+        },
+        {
+          "mode": "exact unchanged span from correction1 whole-page coverage",
+          "current": [
+            71,
+            406
+          ],
+          "prior": [
+            71,
+            406
+          ],
+          "operation": "equal"
+        }
+      ]
+    },
+    {
+      "path": "docs/site/understand/codex-integration.md",
+      "sha256": "e203e086d9a7db32d01c2ba020497174fe7c6326dab3ae4a368da91f4d75ffed",
+      "lineCount": 201,
+      "priorSha256": "2240d12726f625099c2a20ca37c27387bfbfa2b204e07a74162acc615aa84626",
+      "coverage": [
+        {
+          "mode": "exact unchanged span from correction1 whole-page coverage",
+          "current": [
+            1,
+            95
+          ],
+          "prior": [
+            1,
+            95
+          ],
+          "operation": "equal"
+        },
+        {
+          "mode": "changed span read in correction2",
+          "current": [
+            96,
+            97
+          ],
+          "prior": [
+            96,
+            97
+          ],
+          "operation": "replace"
+        },
+        {
+          "mode": "exact unchanged span from correction1 whole-page coverage",
+          "current": [
+            98,
+            201
+          ],
+          "prior": [
+            98,
+            201
+          ],
+          "operation": "equal"
+        }
+      ]
+    },
+    {
+      "path": "docs/site/understand/platform-and-operations.md",
+      "sha256": "da5983bb8aff1d5ab793bfda6ca594efa76054101b39dcfb1059925e83cc8160",
+      "lineCount": 1094,
+      "priorSha256": "fa78094f720c10206ce1353ecf96f1b4f5f7e8f605bee1bea0ec8df97602434f",
+      "coverage": [
+        {
+          "mode": "exact unchanged span from correction1 whole-page coverage",
+          "current": [
+            1,
+            979
+          ],
+          "prior": [
+            1,
+            979
+          ],
+          "operation": "equal"
+        },
+        {
+          "mode": "changed span read in correction2",
+          "current": [
+            980,
+            981
+          ],
+          "prior": [
+            980,
+            981
+          ],
+          "operation": "replace"
+        },
+        {
+          "mode": "exact unchanged span from correction1 whole-page coverage",
+          "current": [
+            982,
+            995
+          ],
+          "prior": [
+            982,
+            995
+          ],
+          "operation": "equal"
+        },
+        {
+          "mode": "changed span read in correction2",
+          "current": [
+            996,
+            998
+          ],
+          "prior": [
+            996,
+            997
+          ],
+          "operation": "replace"
+        },
+        {
+          "mode": "exact unchanged span from correction1 whole-page coverage",
+          "current": [
+            999,
+            1013
+          ],
+          "prior": [
+            998,
+            1012
+          ],
+          "operation": "equal"
+        },
+        {
+          "mode": "changed span read in correction2",
+          "current": [
+            1014,
+            1014
+          ],
+          "prior": [
+            1013,
+            1013
+          ],
+          "operation": "replace"
+        },
+        {
+          "mode": "exact unchanged span from correction1 whole-page coverage",
+          "current": [
+            1015,
+            1023
+          ],
+          "prior": [
+            1014,
+            1022
+          ],
+          "operation": "equal"
+        },
+        {
+          "mode": "changed span read in correction2",
+          "current": [
+            1024,
+            1024
+          ],
+          "prior": [
+            1023,
+            1023
+          ],
+          "operation": "replace"
+        },
+        {
+          "mode": "exact unchanged span from correction1 whole-page coverage",
+          "current": [
+            1025,
+            1094
+          ],
+          "prior": [
+            1024,
+            1093
+          ],
+          "operation": "equal"
+        }
+      ]
+    },
+    {
+      "path": "docs/site/understand/security-and-trust.md",
+      "sha256": "1655c9c04116c2f250f7918a4aa462626bde33289ec38a72b5616ec54a9c4650",
+      "lineCount": 895,
+      "priorSha256": "81857599371f80b79e9dedf1e3190c0884bce04718eb2624332186b909f9454d",
+      "coverage": [
+        {
+          "mode": "exact unchanged span from correction1 whole-page coverage",
+          "current": [
+            1,
+            880
+          ],
+          "prior": [
+            1,
+            880
+          ],
+          "operation": "equal"
+        },
+        {
+          "mode": "changed span read in correction2",
+          "current": [
+            881,
+            881
+          ],
+          "prior": [
+            881,
+            881
+          ],
+          "operation": "replace"
+        },
+        {
+          "mode": "exact unchanged span from correction1 whole-page coverage",
+          "current": [
+            882,
+            895
+          ],
+          "prior": [
+            882,
+            895
+          ],
+          "operation": "equal"
+        }
+      ]
+    },
+    {
+      "path": "docs/site/understand/communication.md",
+      "sha256": "b2f603cea91375758d6e687b7c4c7886cd49354c4e14fc8c5cd63652c00cbcf5",
+      "lineCount": 1482,
+      "priorSha256": "b2f603cea91375758d6e687b7c4c7886cd49354c4e14fc8c5cd63652c00cbcf5",
+      "coverage": [
+        {
+          "mode": "exact unchanged span from correction1 whole-page coverage",
+          "current": [
+            1,
+            1482
+          ],
+          "prior": [
+            1,
+            1482
+          ],
+          "operation": "equal"
+        }
+      ]
+    }
+  ]
+}

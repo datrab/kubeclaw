@@ -1,0 +1,13 @@
+✔ resolves full, collapsed, shortcut, and image reference links only from real definitions (6.340991ms)
+✔ parses balanced inline destinations without accepting a decoy prefix (0.344319ms)
+✔ docs-check-refs validates reference destinations and their fragments (187.346953ms)
+✔ docs-check-refs starts and validates in a SHA-256 Git repository (97.160135ms)
+✔ mixed source callouts admit only explicitly declared immutable revisions (282.072477ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 639.655488

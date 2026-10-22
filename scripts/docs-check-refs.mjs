@@ -270,19 +270,23 @@ function checkSourceCalloutRevisions(filePath, text) {
     const startLine = index + 1;
     const block = [];
     while (index < lines.length && (lines[index].startsWith('>') || !lines[index].trim())) {
+      if (block.length && lines[index].startsWith('> **Source evidence')) break;
       block.push(lines[index]);
       index += 1;
     }
     index -= 1;
     const value = block.join('\n');
-    const declared = value.match(new RegExp(`\\*\\*Revision:\\*\\* \`${gitObjectCapture}\``, 'u'))?.[1];
-    if (!declared) continue;
+    const declaration = value.match(/^> \*\*Revision:\*\* (.+)$/mu)?.[1];
+    if (!declaration) continue;
+    const declared = [...declaration.matchAll(new RegExp('`' + gitObjectCapture + '`', 'gu'))]
+      .map(match => match[1]);
+    if (!declared.length) continue;
     const linked = [...value.matchAll(new RegExp(
       `https:\\/\\/github\\.com\\/datrab\\/kubeclaw\\/blob\\/${gitObjectCapture}\\/`, 'gu',
     ))].map((match) => match[1]);
-    const other = [...new Set(linked.filter((revision) => revision !== declared))];
+    const other = [...new Set(linked.filter((revision) => !declared.includes(revision)))];
     if (other.length) {
-      errors.push(`${rel(filePath)}:${startLine} source callout declares ${declared} but links ${other.join(', ')}`);
+      errors.push(`${rel(filePath)}:${startLine} source callout declares ${declared.join(', ')} but links ${other.join(', ')}`);
     }
   }
 }

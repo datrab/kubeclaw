@@ -1,0 +1,85 @@
+--- correction1/ops-mcp.md
++++ correction2/ops-mcp.md
+@@ -61,13 +61,13 @@
+   AdapterB -->|HTTPS and Buster bearer| MCP
+   MCP -->|MCP ServiceAccount| API[Kubernetes API]
+   Worker[Buster worker] -->|Lease CR and lease-bound workload or test operations| API
+-  API -->|Lease resource watch| Controller[Namespace controller]
++  API -->|Lease resource list polling| Controller[Namespace controller]
+   Controller -->|Namespace and RBAC reconciliation| API
+ ```
+ 
+ The gateway-to-MCP edges use each gateway's bearer; they do not describe the
+ worker's Kubernetes credential. The worker submits lease resources to the API,
+-the controller watches/reconciles them and binds the selected namespace role,
++the controller polls/reconciles them and binds the selected namespace role,
+ and the worker uses that granted role for workload/test operations. Lease
+ completion is not proof that every later workload operation succeeded.
+ 
+--- correction1/codex-integration.md
++++ correction2/codex-integration.md
+@@ -93,8 +93,8 @@
+ service. There is no MCP sidecar in the Codex Pod.
+ 
+ Codex and Nova have no Kubernetes token or kubeconfig. Only MCP mounts the
+-observer/exec credential. Buster's worker retains its separate namespace-
+-controller lease exception. `rbac.execNamespaces` bounds MCP authority; it
++observer/exec credential. Buster's worker retains a separate direct Kubernetes token for lease
++operations and granted namespace-scoped workload/test operations. `rbac.execNamespaces` bounds MCP authority; it
+ never enables a Codex API credential. Global Ops reads do not grant global exec.
+ 
+ The Codex troubleshooting plugin remains guidance. Its Read capability does
+--- correction1/platform-and-operations.md
++++ correction2/platform-and-operations.md
+@@ -977,8 +977,8 @@
+ The operations installation now separates the persistent Codex StatefulSet
+ from the central Ops MCP Deployment. They have different ServiceAccounts.
+ Codex and Nova have no Kubernetes token, kubeconfig or cluster RBAC grant.
+-Buster uses MCP for reads/exec and retains only its existing worker lease-token
+-exception for the namespace controller. Installation and recovery administration
++Buster gateways use MCP for reads/exec. Buster workers separately retain direct
++Kubernetes tokens for lease operations and granted workload/test operations. Installation and recovery administration
+ use an independently controlled operator identity.
+ 
+ The MCP owns the projected Kubernetes credential and the observer/exec bindings.
+@@ -993,8 +993,9 @@
+ binding writes; it does not grant access to agent ServiceAccounts.
+ 
+ Nova and Buster use native OpenClaw MCP tools. A local stdio-to-HTTPS adapter
+-reads their separate bearer and CA mounts; agents do not invoke their shell
+-tool or receive a Kubernetes credential. The CLI remains diagnostic only.
++reads their separate bearer and CA mounts; gateways do not invoke their shell
++tool or receive a Kubernetes credential through this connector. The Buster
++worker retains its independent lease-scoped workload/test credential. The CLI remains diagnostic only.
+ See [Ops MCP](ops-mcp.md) for the complete request path, grant matrix, tool
+ contracts, rotation, rollout and uncertainty rules.
+ 
+@@ -1010,7 +1011,7 @@
+ 
+ > **Source evidence — effective operations authority**
+ >
+-> **Claim:** Only the MCP owns Kubernetes read/exec authority; each agent has a separate, narrower MCP identity.
++> **Claim:** The MCP owns gateway operations read/exec authority; each gateway has a narrower MCP identity. Buster workers retain separate direct lease-scoped workload/test authority.
+ >
+ > **Implementation:** [Codex workload without API mounts](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/charts/ops-pod/templates/workload.yaml#L28-L82) [MCP identity and credential mounts](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/charts/ops-pod/templates/mcp.yaml#L37-L91) [Read and exec RBAC](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/charts/ops-pod/templates/rbac.yaml#L57-L117) [Per-client authorization](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/tools/ops-mcp/src/access-policy.mjs#L50-L107)
+ >
+@@ -1020,7 +1021,7 @@
+ >
+ > **Revision:** `34cf38ef53ee41381543785d0ffae90a37fac9ca`; upstream main, separate from documentation-branch source adoption.
+ >
+-> **Limit:** Source layout and scoped rollout observations do not prove arbitrary-cluster recovery or every live authorization boundary.
++> **Limit:** Source layout does not prove arbitrary-cluster recovery or every live authorization boundary.
+ 
+ 
+ ## Dependency and Recovery Order
+--- correction1/security-and-trust.md
++++ correction2/security-and-trust.md
+@@ -878,7 +878,7 @@
+ - A trusted in-process plugin shares more authority than an isolated external plugin.
+ - Image digests and source signatures prove identity, not vulnerability status or business approval.
+ - Prism transport identity must not be described as general signed artifact provenance.
+-- The central MCP remains a privileged component for its configured read/exec targets; agent credentials do not grant direct Kubernetes access.
++- The central MCP remains a privileged component for its configured read/exec targets; MCP client credentials do not grant direct Kubernetes access, while Buster worker credentials retain separate lease-scoped workload/test authority.
+ 
+ These limits are not reasons to remove the existing controls.
+ They define where operators need additional production controls or live proof.

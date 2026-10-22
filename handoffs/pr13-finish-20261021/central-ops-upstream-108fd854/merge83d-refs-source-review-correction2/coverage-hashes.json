@@ -1,0 +1,147 @@
+{
+  "head": "108fd854525688584b8b3e5595c6ee77461a46a0",
+  "workingTree": true,
+  "scope": "exact refs function/caller/test successor plus10complete original blocks and7bounded doc corrections",
+  "unreadAssignedScope": 0,
+  "files": [
+    {
+      "path": "scripts/docs-check-refs.mjs",
+      "sha256": "d04c5245b1555b275f27b40ad7461071d476615f177557ee07ca5b5b812ee604",
+      "lines": 375,
+      "coverage": "bounded function/caller context exact diff"
+    },
+    {
+      "path": "scripts/tests/docs-check-refs.test.mjs",
+      "sha256": "e31e6ed1a4966e43e78068dec2d6ad00493cc8a94936a8c0449019a83e5667e8",
+      "lines": 244,
+      "coverage": "complete test245lines"
+    },
+    {
+      "path": "docs/site/understand/archviewer.md",
+      "sha256": "b8ae528510990c0835285b961415c0f4bade6a46fa7ea3bf0e7342f76e72ee0b",
+      "lines": 207,
+      "coverage": "complete original affected callout and exact declaration/identical-source-link delta, not wholepage"
+    },
+    {
+      "path": "docs/site/understand/platform-and-operations.md",
+      "sha256": "b1338e21da5705ee86bc0a5aa2606bbbfd29a78f57aa60be9e1751b5b1282cc7",
+      "lines": 1094,
+      "coverage": "complete original affected callout and exact declaration/identical-source-link delta, not wholepage"
+    },
+    {
+      "path": "docs/site/understand/telemetry.md",
+      "sha256": "b41017c1ce45b3d39894aba8efe9efd93f3b1ff3bc19164dddd7090f4e1cbc41",
+      "lines": 2165,
+      "coverage": "complete original affected callout and exact declaration/identical-source-link delta, not wholepage"
+    },
+    {
+      "path": "docs/site/use/maintenance.md",
+      "sha256": "ff5961fb15d7419e2c1824c470e1a7b0f332deb2650d5eefa2bb34609b77c3eb",
+      "lines": 1700,
+      "coverage": "complete original affected callout and exact declaration/identical-source-link delta, not wholepage"
+    },
+    {
+      "path": "docs/site/understand/codex-integration.md",
+      "sha256": "267c981983e7f6b7cea7a135431dcbc69de6fb7811e717da12e0318257e689c6",
+      "lines": 201,
+      "coverage": "complete original affected callout and exact declaration/identical-source-link delta, not wholepage"
+    }
+  ],
+  "inputInventorySha256": "f5e6bef02a856ce99e0c59c19a85147c97f5496888c36eb5839035dd064b734b",
+  "inputCorrectionsSha256": "b31e971200e043912abac13db5921b1dd680458c66e6999fbe02befb08234965",
+  "blockProof": [
+    {
+      "page": "docs/site/understand/archviewer.md",
+      "inventoryFirst": 148,
+      "exactExpectedBlockPresentInCurrent": true,
+      "onlyDocumentedCorrections": 1
+    },
+    {
+      "page": "docs/site/understand/codex-integration.md",
+      "inventoryFirst": 48,
+      "exactExpectedBlockPresentInCurrent": true,
+      "onlyDocumentedCorrections": 1
+    },
+    {
+      "page": "docs/site/understand/communication.md",
+      "inventoryFirst": 167,
+      "exactExpectedBlockPresentInCurrent": true,
+      "onlyDocumentedCorrections": 0
+    },
+    {
+      "page": "docs/site/understand/openclaw.md",
+      "inventoryFirst": 140,
+      "exactExpectedBlockPresentInCurrent": true,
+      "onlyDocumentedCorrections": 0
+    },
+    {
+      "page": "docs/site/understand/platform-and-operations.md",
+      "inventoryFirst": 778,
+      "exactExpectedBlockPresentInCurrent": true,
+      "onlyDocumentedCorrections": 1
+    },
+    {
+      "page": "docs/site/understand/security-and-trust.md",
+      "inventoryFirst": 370,
+      "exactExpectedBlockPresentInCurrent": true,
+      "onlyDocumentedCorrections": 0
+    },
+    {
+      "page": "docs/site/understand/telemetry.md",
+      "inventoryFirst": 1042,
+      "exactExpectedBlockPresentInCurrent": true,
+      "onlyDocumentedCorrections": 1
+    },
+    {
+      "page": "docs/site/understand/telemetry.md",
+      "inventoryFirst": 1296,
+      "exactExpectedBlockPresentInCurrent": true,
+      "onlyDocumentedCorrections": 1
+    },
+    {
+      "page": "docs/site/use/maintenance.md",
+      "inventoryFirst": 504,
+      "exactExpectedBlockPresentInCurrent": true,
+      "onlyDocumentedCorrections": 1
+    },
+    {
+      "page": "docs/site/use/maintenance.md",
+      "inventoryFirst": 1614,
+      "exactExpectedBlockPresentInCurrent": true,
+      "onlyDocumentedCorrections": 1
+    }
+  ],
+  "priorByteBridges": [
+    {
+      "page": "docs/site/understand/archviewer.md",
+      "reversedCorrectionsSha256": "0989df382292736a2a91cab2894334ff5c055549fea636f5fbe2f2ea6cd3c22a",
+      "priorAuthority": "HEAD byte baseline only; no whole-page verdict reused",
+      "equalsPriorBaselineBytes": true
+    },
+    {
+      "page": "docs/site/understand/platform-and-operations.md",
+      "reversedCorrectionsSha256": "da5983bb8aff1d5ab793bfda6ca594efa76054101b39dcfb1059925e83cc8160",
+      "priorAuthority": "content reviewer correction2 frozen page",
+      "equalsPriorBaselineBytes": true
+    },
+    {
+      "page": "docs/site/understand/telemetry.md",
+      "reversedCorrectionsSha256": "0c5173ccac50a1d2ca017fa714d281ee8a38ecb76e41f24dfe2be8c654ee8461",
+      "priorAuthority": "HEAD byte baseline only; no whole-page verdict reused",
+      "equalsPriorBaselineBytes": true
+    },
+    {
+      "page": "docs/site/use/maintenance.md",
+      "reversedCorrectionsSha256": "b975d5a4acc68fe8064db2dea40992249c4df676e989c9bc70579992cfaf3e99",
+      "priorAuthority": "prior support correction exact-file identity",
+      "equalsPriorBaselineBytes": true
+    },
+    {
+      "page": "docs/site/understand/codex-integration.md",
+      "reversedCorrectionsSha256": "e203e086d9a7db32d01c2ba020497174fe7c6326dab3ae4a368da91f4d75ffed",
+      "priorAuthority": "content reviewer correction2 frozen page",
+      "equalsPriorBaselineBytes": true
+    }
+  ],
+  "parserDiffSha256": "a1391e78c58a2cf7ab1f90b584f9152c4e871c4261cc662acb38b0c15b1e7ee7"
+}

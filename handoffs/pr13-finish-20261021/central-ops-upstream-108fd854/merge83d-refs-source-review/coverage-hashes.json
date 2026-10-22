@@ -1,0 +1,37 @@
+{
+  "head": "108fd854525688584b8b3e5595c6ee77461a46a0",
+  "workingTree": true,
+  "role": "Source-only correction; no target execution/import",
+  "files": [
+    {
+      "path": "scripts/docs-check-refs.mjs",
+      "sha256": "109e99f3d2f09276dc78862a30ca3270b5a4641f0204ff49cf098401aa131197",
+      "lines": 374,
+      "semanticCoverage": [
+        [
+          1,
+          113
+        ],
+        [
+          215,
+          374
+        ]
+      ]
+    },
+    {
+      "path": "scripts/tests/docs-check-refs.test.mjs",
+      "sha256": "ac129a2d306008b1051e20cd1c3d671ad3521c7dfa037c6d8d33dccf1c0106c5",
+      "lines": 235,
+      "semanticCoverage": "complete current file"
+    },
+    {
+      "path": "scripts/lib/docs-upstream-reference.mjs",
+      "sha256": "1741bd5738fda0c2ed3954ad074a91ca0045479beb6484b61eb446eaf74296c2",
+      "lines": 68,
+      "semanticCoverage": "complete current file"
+    }
+  ],
+  "unreadAssignedScope": 0,
+  "excluded": "No whole docs-check-refs implementation, Markdown library, general resolver, runtime or gate verdict",
+  "diffSha256": "ed4335dfd948226c3b7450e8975d62abbdfaac92d559581fa3d1b0d87ca5cfc1"
+}

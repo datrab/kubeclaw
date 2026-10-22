@@ -1,0 +1,269 @@
+{
+  "head": "108fd854525688584b8b3e5595c6ee77461a46a0",
+  "workingTree": true,
+  "proof": {
+    "registryExactReverseEqualsHEAD": true,
+    "discoveryExactReverseEqualsHEAD": true,
+    "oldRecipeHash": "ba5bed8dfebe54e98f4efd968ff36660e521bce322dec18af14524c63261f1d2",
+    "newRecipeHash": "ee1bf8c7d67eb61470ffbc723ae3c179efa3c9f38adf5b757469730635ddf814",
+    "actualRecipeEqualsDeltaNew": true
+  },
+  "files": [
+    {
+      "path": "scripts/docs-api-producer-adapter-authorities.json",
+      "sha256": "17d251b4529547fe7a2517f8386ecf9588722101821f883493c25c439cd5b874",
+      "bytes": 5059169,
+      "lineCount": 102078,
+      "coverage": "exact bounded patch/record for registry/discovery; prior full helper/checker review unchanged"
+    },
+    {
+      "path": "scripts/docs-api-output-discovery.mjs",
+      "sha256": "6f86030aee31258b012f0f7cee7361769a311db00d43afb183458c7890175769",
+      "bytes": 415879,
+      "lineCount": 3311,
+      "coverage": "exact bounded patch/record for registry/discovery; prior full helper/checker review unchanged"
+    },
+    {
+      "path": "scripts/tests/docs-upstream-module-input-custody.test.mjs",
+      "sha256": "7be6aa490cd2c98a113423e5836e1db71ba0699c09284d7b6f52d9c01b84fbfa",
+      "bytes": 3691,
+      "lineCount": 75,
+      "coverage": "full complete file"
+    },
+    {
+      "path": "scripts/ops-mcp-docs-upstream.json",
+      "sha256": "598430eeb8501cf6de6f15ebfdc4b82268db9fb87d067e5976983c0e93aba077",
+      "bytes": 2951,
+      "lineCount": 36,
+      "coverage": "full complete file"
+    },
+    {
+      "path": "scripts/check-platform-specialist-guides.mjs",
+      "sha256": "6d6017b40338a36f01570f097f0266d3422a5ff36f71c3cc447c320f349934d3",
+      "bytes": 24256,
+      "lineCount": 465,
+      "coverage": "exact bounded patch/record for registry/discovery; prior full helper/checker review unchanged"
+    },
+    {
+      "path": "scripts/docs-source-evidence-pin.mjs",
+      "sha256": "e3a40956e8960b504e157cfcd7ca8f20a9a2bea38155c91f48f774a7fc69ba75",
+      "bytes": 2603,
+      "lineCount": 48,
+      "coverage": "exact bounded patch/record for registry/discovery; prior full helper/checker review unchanged"
+    },
+    {
+      "path": "scripts/tests/api-output-publication.test.mjs",
+      "sha256": "92c1ac535fdd185ef2f4dd8daac06fa3b5a17eb8d0c5b8e67fa8ab77c8977d2c",
+      "bytes": 90039,
+      "lineCount": 934,
+      "coverage": "complete exact one-line diff; dependent fixture/import setup1-43; complete owning test329-358; adjacent359-363 read; no other44 test-body review"
+    }
+  ],
+  "delta": {
+    "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/merge83d-custody-successor/delta.json",
+    "sha256": "f221fe5384cbb6bd76444fe4a7e7d9a1b3470e4605575d67d721aeb892257cea",
+    "read": "complete"
+  },
+  "manifestBlobs": [
+    {
+      "path": "charts/kubeclaw/templates/configmap-gateway.yaml",
+      "revision": "34cf38ef53ee41381543785d0ffae90a37fac9ca",
+      "sha256": "37f2a0ad3038097d484da8a968f44a2a583049aa64772df435bde7094e89c46f",
+      "manifestSha256": "37f2a0ad3038097d484da8a968f44a2a583049aa64772df435bde7094e89c46f",
+      "match": true,
+      "treeEntry": "100644 blob 1603224094ea23ad8526008b79ae23852162e9aa\tcharts/kubeclaw/templates/configmap-gateway.yaml",
+      "coverage": "raw bytes/hash custody only, no semantic product/page review"
+    },
+    {
+      "path": "charts/kubeclaw/files/ops-mcp/stdio.mjs",
+      "revision": "34cf38ef53ee41381543785d0ffae90a37fac9ca",
+      "sha256": "d124f5579ee8b01ca71a59a9278aaa63de4128cd482781a1bcc8597eebac023e",
+      "manifestSha256": "d124f5579ee8b01ca71a59a9278aaa63de4128cd482781a1bcc8597eebac023e",
+      "match": true,
+      "treeEntry": "100644 blob 3a1f652001360d134e7880cdf8977536c83e1231\tcharts/kubeclaw/files/ops-mcp/stdio.mjs",
+      "coverage": "raw bytes/hash custody only, no semantic product/page review"
+    },
+    {
+      "path": "charts/kubeclaw/files/ops-mcp/client.mjs",
+      "revision": "34cf38ef53ee41381543785d0ffae90a37fac9ca",
+      "sha256": "342ded4ec5e851ff03f2419dc35ae901e7da5a327027e86a78dd8a30245134f1",
+      "manifestSha256": "342ded4ec5e851ff03f2419dc35ae901e7da5a327027e86a78dd8a30245134f1",
+      "match": true,
+      "treeEntry": "100644 blob d913effd1cc4054de9e1dd000414c0335cee1887\tcharts/kubeclaw/files/ops-mcp/client.mjs",
+      "coverage": "raw bytes/hash custody only, no semantic product/page review"
+    },
+    {
+      "path": "charts/kubeclaw/files/sync-ops-mcp-config.mjs",
+      "revision": "34cf38ef53ee41381543785d0ffae90a37fac9ca",
+      "sha256": "f705ee0bac2b3d93f6f5b55c3012ff8743a68cc1a43cce4c883f17a85deae56a",
+      "manifestSha256": "f705ee0bac2b3d93f6f5b55c3012ff8743a68cc1a43cce4c883f17a85deae56a",
+      "match": true,
+      "treeEntry": "100644 blob 13d0d41c18e62758e5a05c2c7b88f0ffb97d871a\tcharts/kubeclaw/files/sync-ops-mcp-config.mjs",
+      "coverage": "raw bytes/hash custody only, no semantic product/page review"
+    },
+    {
+      "path": "tools/ops-mcp/src/access-policy.mjs",
+      "revision": "34cf38ef53ee41381543785d0ffae90a37fac9ca",
+      "sha256": "7f7e88ad89677b743b395560aa00cff98f79b04fa0108f1a7fdea4e86995fac4",
+      "manifestSha256": "7f7e88ad89677b743b395560aa00cff98f79b04fa0108f1a7fdea4e86995fac4",
+      "match": true,
+      "treeEntry": "100644 blob 24053913d2451128048e70b1a897ed8be3c921f3\ttools/ops-mcp/src/access-policy.mjs",
+      "coverage": "raw bytes/hash custody only, no semantic product/page review"
+    },
+    {
+      "path": "tools/ops-mcp/src/server.mjs",
+      "revision": "34cf38ef53ee41381543785d0ffae90a37fac9ca",
+      "sha256": "fc14524cd7062c8d2d9b54ac754c89365474ea77ced15fe1a5c0840099113865",
+      "manifestSha256": "fc14524cd7062c8d2d9b54ac754c89365474ea77ced15fe1a5c0840099113865",
+      "match": true,
+      "treeEntry": "100644 blob 20fb7a3d7c9278e6a2d6d7d1785da6cbc9cee012\ttools/ops-mcp/src/server.mjs",
+      "coverage": "raw bytes/hash custody only, no semantic product/page review"
+    },
+    {
+      "path": "gitops/platform/values/codex-ops.yaml",
+      "revision": "34cf38ef53ee41381543785d0ffae90a37fac9ca",
+      "sha256": "a7e0300d1e2a44cac1e11be150fdeb73c112db52ba3b7ea4123109d3c99e86b1",
+      "manifestSha256": "a7e0300d1e2a44cac1e11be150fdeb73c112db52ba3b7ea4123109d3c99e86b1",
+      "match": true,
+      "treeEntry": "100644 blob a5ba5a19c45328eac88b74074845d33f81a99012\tgitops/platform/values/codex-ops.yaml",
+      "coverage": "raw bytes/hash custody only, no semantic product/page review"
+    },
+    {
+      "path": "charts/ops-pod/templates/mcp.yaml",
+      "revision": "34cf38ef53ee41381543785d0ffae90a37fac9ca",
+      "sha256": "0ed072729d8f043a8b391408b3d768c82183e87f831de18bd6049b9449f09aaf",
+      "manifestSha256": "0ed072729d8f043a8b391408b3d768c82183e87f831de18bd6049b9449f09aaf",
+      "match": true,
+      "treeEntry": "100644 blob affe4c22c29fda47ab385a6d7a0344a8dea75a4e\tcharts/ops-pod/templates/mcp.yaml",
+      "coverage": "raw bytes/hash custody only, no semantic product/page review"
+    },
+    {
+      "path": "charts/ops-pod/templates/workload.yaml",
+      "revision": "34cf38ef53ee41381543785d0ffae90a37fac9ca",
+      "sha256": "5bdbf7f69eab00c4cefacb42a63ef51b8737dbda2ee1af30733e2cf06c5cb8ca",
+      "manifestSha256": "5bdbf7f69eab00c4cefacb42a63ef51b8737dbda2ee1af30733e2cf06c5cb8ca",
+      "match": true,
+      "treeEntry": "100644 blob cbefa3e15befed579dfba2e38847db07a51c42d3\tcharts/ops-pod/templates/workload.yaml",
+      "coverage": "raw bytes/hash custody only, no semantic product/page review"
+    },
+    {
+      "path": "charts/ops-pod/templates/rbac.yaml",
+      "revision": "34cf38ef53ee41381543785d0ffae90a37fac9ca",
+      "sha256": "40b00c443641a15aa443253c6326082e324841cd1b1e279f8873c000fc4d30a5",
+      "manifestSha256": "40b00c443641a15aa443253c6326082e324841cd1b1e279f8873c000fc4d30a5",
+      "match": true,
+      "treeEntry": "100644 blob 8e5832c95f2fb078bb09cf581a9da9f725adf577\tcharts/ops-pod/templates/rbac.yaml",
+      "coverage": "raw bytes/hash custody only, no semantic product/page review"
+    },
+    {
+      "path": "charts/ops-pod/templates/network.yaml",
+      "revision": "34cf38ef53ee41381543785d0ffae90a37fac9ca",
+      "sha256": "a34b418df10ca111b248912ba3d5402ffa266fbf9a6e48b0b8aec74daa319d45",
+      "manifestSha256": "a34b418df10ca111b248912ba3d5402ffa266fbf9a6e48b0b8aec74daa319d45",
+      "match": true,
+      "treeEntry": "100644 blob f8e0826b131bfa61aa532360ba87cce39b945037\tcharts/ops-pod/templates/network.yaml",
+      "coverage": "raw bytes/hash custody only, no semantic product/page review"
+    },
+    {
+      "path": "tools/ops-mcp/src/exec.mjs",
+      "revision": "34cf38ef53ee41381543785d0ffae90a37fac9ca",
+      "sha256": "e3e422e800d87c594ba076ea8588fceaf93d86db72617c561d3dd595e80d7342",
+      "manifestSha256": "e3e422e800d87c594ba076ea8588fceaf93d86db72617c561d3dd595e80d7342",
+      "match": true,
+      "treeEntry": "100644 blob 17cdc0ce96c1d466e58be2fc22a61782cce2769c\ttools/ops-mcp/src/exec.mjs",
+      "coverage": "raw bytes/hash custody only, no semantic product/page review"
+    },
+    {
+      "path": "tools/ops-mcp/test/tls-client.test.mjs",
+      "revision": "34cf38ef53ee41381543785d0ffae90a37fac9ca",
+      "sha256": "43465a37e7cbc108fdd8c77352144542c0690d74cea7fa93f3174c2e7dc55065",
+      "manifestSha256": "43465a37e7cbc108fdd8c77352144542c0690d74cea7fa93f3174c2e7dc55065",
+      "match": true,
+      "treeEntry": "100644 blob 5c04c97f1726e18026d09cce225d43f310de88c3\ttools/ops-mcp/test/tls-client.test.mjs",
+      "coverage": "raw bytes/hash custody only, no semantic product/page review"
+    },
+    {
+      "path": "tools/ops-mcp/src/kubernetes.mjs",
+      "revision": "34cf38ef53ee41381543785d0ffae90a37fac9ca",
+      "sha256": "9ece63d71c7cb12d282cc125a3a795be5e4ffd4bc21ee51a0a31e5cfc8392f9c",
+      "manifestSha256": "9ece63d71c7cb12d282cc125a3a795be5e4ffd4bc21ee51a0a31e5cfc8392f9c",
+      "match": true,
+      "treeEntry": "100644 blob 2daa2a7362eb36749143f486a97f75330fc379d7\ttools/ops-mcp/src/kubernetes.mjs",
+      "coverage": "raw bytes/hash custody only, no semantic product/page review"
+    },
+    {
+      "path": "tools/ops-mcp/src/hubble.mjs",
+      "revision": "34cf38ef53ee41381543785d0ffae90a37fac9ca",
+      "sha256": "d4e60f2801e3c66ded259f420c1a9faca0071fa084dc198a35433f8c9cb4f599",
+      "manifestSha256": "d4e60f2801e3c66ded259f420c1a9faca0071fa084dc198a35433f8c9cb4f599",
+      "match": true,
+      "treeEntry": "100644 blob 9c5e41caf82f8ba70584be048db078937b02a79e\ttools/ops-mcp/src/hubble.mjs",
+      "coverage": "raw bytes/hash custody only, no semantic product/page review"
+    },
+    {
+      "path": "charts/ops-pod/templates/provision.yaml",
+      "revision": "34cf38ef53ee41381543785d0ffae90a37fac9ca",
+      "sha256": "3a003c343bdab95dcc2d8faeef7ad6f999f2267a8aa26556ae74164977c4b02e",
+      "manifestSha256": "3a003c343bdab95dcc2d8faeef7ad6f999f2267a8aa26556ae74164977c4b02e",
+      "match": true,
+      "treeEntry": "100644 blob 7294b036ffe82b554ea2377aae3c49162893f5e7\tcharts/ops-pod/templates/provision.yaml",
+      "coverage": "raw bytes/hash custody only, no semantic product/page review"
+    },
+    {
+      "path": "my-values/buster-values.yaml",
+      "revision": "34cf38ef53ee41381543785d0ffae90a37fac9ca",
+      "sha256": "6d707676d7ae3bd6529ce88e5a7d5caf5f2b93781cde49793f4c9a3cd778e539",
+      "manifestSha256": "6d707676d7ae3bd6529ce88e5a7d5caf5f2b93781cde49793f4c9a3cd778e539",
+      "match": true,
+      "treeEntry": "100644 blob 19dd7314d97440e4024977c4536a1b30de25bd82\tmy-values/buster-values.yaml",
+      "coverage": "raw bytes/hash custody only, no semantic product/page review"
+    },
+    {
+      "path": "charts/kubeclaw/templates/rbac.yaml",
+      "revision": "34cf38ef53ee41381543785d0ffae90a37fac9ca",
+      "sha256": "953c67cadb2fd1dea1b15e3eb60c2388f5a6b31c69995e73b129c52e3b24e5b5",
+      "manifestSha256": "953c67cadb2fd1dea1b15e3eb60c2388f5a6b31c69995e73b129c52e3b24e5b5",
+      "match": true,
+      "treeEntry": "100644 blob 59b604802ec6e581eb09f4d94e9eefe935c87f99\tcharts/kubeclaw/templates/rbac.yaml",
+      "coverage": "raw bytes/hash custody only, no semantic product/page review"
+    },
+    {
+      "path": "charts/kubeclaw/templates/buster-namespace-controller.yaml",
+      "revision": "34cf38ef53ee41381543785d0ffae90a37fac9ca",
+      "sha256": "4c1b77043bd278cd9440a9a2d2c948c44adb2a78416dce0b0c244c39174652b0",
+      "manifestSha256": "4c1b77043bd278cd9440a9a2d2c948c44adb2a78416dce0b0c244c39174652b0",
+      "match": true,
+      "treeEntry": "100644 blob 74f623d52590e189e5cb4a4f79a4361992cd0303\tcharts/kubeclaw/templates/buster-namespace-controller.yaml",
+      "coverage": "raw bytes/hash custody only, no semantic product/page review"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-runtime.ts",
+      "revision": "34cf38ef53ee41381543785d0ffae90a37fac9ca",
+      "sha256": "b9f8bee4d6ed977daf39be3dd91ba8e8323e5b625ff630b53ed1aa923a989833",
+      "manifestSha256": "b9f8bee4d6ed977daf39be3dd91ba8e8323e5b625ff630b53ed1aa923a989833",
+      "match": true,
+      "treeEntry": "100644 blob 840e81a1aa6f536b32c0b3d4da5b8c0c64ddeace\tskills/buster/engine/test-gates/kubernetes-fixture-runtime.ts",
+      "coverage": "raw bytes/hash custody only, no semantic product/page review"
+    },
+    {
+      "path": "charts/ops-pod/templates/_provision.tpl",
+      "revision": "34cf38ef53ee41381543785d0ffae90a37fac9ca",
+      "sha256": "34edd2deda92cc74da086dd3450a0062f9c75cf4277370f8f1651ee8c2a1059d",
+      "manifestSha256": "34edd2deda92cc74da086dd3450a0062f9c75cf4277370f8f1651ee8c2a1059d",
+      "match": true,
+      "treeEntry": "100644 blob 4cc564079bb33ac7ea8a57d633f90c9670a3b0d6\tcharts/ops-pod/templates/_provision.tpl",
+      "coverage": "raw bytes/hash custody only, no semantic product/page review"
+    },
+    {
+      "path": "tools/ops-mcp/src/provision.mjs",
+      "revision": "34cf38ef53ee41381543785d0ffae90a37fac9ca",
+      "sha256": "b6bcc183103b4081bc0d66a4efd3548934c6705e1b54d717f31e37864bc3e8b2",
+      "manifestSha256": "b6bcc183103b4081bc0d66a4efd3548934c6705e1b54d717f31e37864bc3e8b2",
+      "match": true,
+      "treeEntry": "100644 blob 7fffd664dc998c937075f598dd5bd0ee81e0600c\ttools/ops-mcp/src/provision.mjs",
+      "coverage": "raw bytes/hash custody only, no semantic product/page review"
+    }
+  ],
+  "unreadAssignedCorrectionScope": 0,
+  "publicationFixturePatchSha256": "7bbd9693fd0b86848560447b4dc0ec84230355959683285f49cce8dfb85d427e"
+}

@@ -1,13 +1,13 @@
 # Ops MCP: Central Cluster Reads And Authorized Exec
 
-Status: implemented on main and deployed; documentation-branch source adoption remains separate
+Status: implemented in pinned upstream main source; deployment execution unverified here; documentation-branch source adoption remains separate
 Audience: operator, agent integrator, Ops MCP maintainer, security specialist
 Owner: Ops MCP maintainers
 Evidence: tools/ops-mcp/src; tools/ops-mcp/test; charts/ops-pod; charts/kubeclaw; gitops/platform
 Evidence revision: `34cf38ef53ee41381543785d0ffae90a37fac9ca`
-Upstream source scope: deployed Ops MCP changes on main; see the immutable source links below
+Upstream source scope: Ops MCP source on main at `34cf38ef53ee41381543785d0ffae90a37fac9ca`; no runtime source adoption into this documentation branch
 Applies to: central Ops MCP 0.2.0 and native Nova/Buster clients
-Last verified: 2026-10-22 source inspection and scoped deployment observations; verification limits are recorded below
+Last verified: 2026-10-22 source inspection; no retained local-test or live-deployment execution receipts established here
 
 ## Purpose And Safety Boundary
 
@@ -22,10 +22,13 @@ target container. Review it as execution authority.
 The Codex StatefulSet and MCP Deployment have different ServiceAccounts and
 failure domains. Codex and Nova receive no Kubernetes token or kubeconfig.
 Buster's gateway also uses only MCP for reads and exec. Its worker retains the
-existing exception: a narrowly scoped lease token for the namespace controller.
-The controller owns namespace management; Buster does not create namespaces itself.
+existing exception: a direct Kubernetes token for lease operations and selected
+Deployment/Service reads. A granted deployer/tester lease can additionally bind
+namespace-scoped workload or test permissions to that worker identity. The
+controller creates namespaces and reconciles access; the worker then performs
+its authorized workload/test API operations itself, outside MCP client policy.
 
-This page updates the deployed main contract from merged PRs #26, #27 and #28.
+This page describes the immutable main source contract at the revision above.
 PR #13 retains its separate runtime/source qualification and acceptance work.
 The upstream source scope is explicit so a reader does not mistake a newer main
 implementation for runtime source already adopted by the documentation branch.
@@ -57,9 +60,22 @@ flowchart LR
   AdapterN -->|HTTPS and Nova bearer| MCP
   AdapterB -->|HTTPS and Buster bearer| MCP
   MCP -->|MCP ServiceAccount| API[Kubernetes API]
-  Worker[Buster worker] -->|Lease request only| Controller[Namespace controller]
-  Controller --> API
+  Worker[Buster worker] -->|Lease CR and lease-bound workload or test operations| API
+  API -->|Lease resource list polling| Controller[Namespace controller]
+  Controller -->|Namespace and RBAC reconciliation| API
 ```
+
+The gateway-to-MCP edges use each gateway's bearer; they do not describe the
+worker's Kubernetes credential. The worker submits lease resources to the API,
+the controller polls/reconciles them and binds the selected namespace role,
+and the worker uses that granted role for workload/test operations. Lease
+completion is not proof that every later workload operation succeeded.
+
+[Worker credential selection](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/my-values/buster-values.yaml#L193-L213),
+[base lease and read grants](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/charts/kubeclaw/templates/rbac.yaml#L1-L29),
+[selected deployer/tester roles](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/charts/kubeclaw/templates/buster-namespace-controller.yaml#L23-L56) and
+[actual lease-to-workload invocation](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/skills/buster/engine/test-gates/kubernetes-fixture-runtime.ts#L692-L715)
+establish this source boundary, not live effective RBAC.
 
 ## Native Agent Connection
 
@@ -101,7 +117,7 @@ that interface; retain other notes when updating that section.
 >
 > **Contract or setting:** opsMcp.enabled selects the connector; credentials are mounted files.
 >
-> **Test evidence:** The scoped local and live results are recorded under Verification below; source links alone are not execution receipts.
+> **Test evidence:** Source-test definitions and execution limits are recorded under Verification below; source links alone are not execution receipts.
 >
 > **Revision:** `34cf38ef53ee41381543785d0ffae90a37fac9ca`. Upstream main evidence; this documentation update does not adopt runtime source into PR #13.
 >
@@ -109,7 +125,7 @@ that interface; retain other notes when updating that section.
 
 ## HTTP Contract And Authentication
 
-The deployed service listens on `0.0.0.0:8080` behind the internal Service
+The selected upstream service declares a listener on `0.0.0.0:8080` behind the internal Service
 `https://codex-ops-mcp.kubeclaw-ops.svc:8080/mcp`. It has its own TLS Secret,
 private CA, readiness and liveness probes. There is no public Ingress or tunnel
 required for Nova/Buster access. NetworkPolicy restricts client Pod selectors;
@@ -150,14 +166,15 @@ runtime bundles used for Nova and Buster.
 | --- | --- | --- |
 | Codex Ops | All existing and future namespaces; platform and Argo tools also available. | All `test*` Pods/regular containers; in `kubeclaw`, only Buster's `buster-v2-runtime` and Nova's `kubeclaw` or `archviewer` containers selected by Pod labels. |
 | Nova | `kubeclaw` plus all existing and future `test*` namespaces. | All `test*` Pods/regular containers; in `kubeclaw`, only Buster's labeled `buster-v2-runtime`. |
-| Buster | Only existing and future `test*` namespaces. | Only `test*` Pods/regular containers. Its lease-controller token remains a separate worker exception. |
+| Buster | Only existing and future `test*` namespaces. | Only `test*` Pods/regular containers. Its direct worker token and lease-bound workload/test authority remain a separate exception. |
 
 `test`, `testing`, `test-build` and mixed-case caller input match; `contest`
 and `prod-test` do not. Global read does not grant global exec. Namespace read
 roles exclude Secrets and mutations. The MCP alone receives the read and exec
 bindings. Its effective credential boundary is wider than any one client's
 tool list, so both RBAC and per-request policy matter. `pods/exec` `create`
-is an MCP permission, never an agent permission.
+in this MCP path is an MCP permission, not a gateway client grant. The separate
+Buster worker lease path has its own effective Kubernetes role.
 
 A separate trusted namespace-access reconciler lists namespaces every five
 seconds and maintains two named MCP RoleBindings for matching namespaces.
@@ -176,11 +193,11 @@ packaging goal; Kubernetes namespace renaming would require resource/data migrat
 >
 > **Claim:** Agents have separate MCP identities; the MCP owns Kubernetes reads and independently bounded exec.
 >
-> **Implementation:** [Per-request identity and authorization](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/tools/ops-mcp/src/access-policy.mjs#L50-L107) [Client tool filtering and auditing](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/tools/ops-mcp/src/server.mjs#L210-L231) [Selected client grants](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/gitops/platform/values/codex-ops.yaml#L72-L118) [Separate MCP identity and mounts](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/charts/ops-pod/templates/mcp.yaml#L37-L91)
+> **Implementation:** [Per-request identity and authorization](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/tools/ops-mcp/src/access-policy.mjs#L50-L107) [Client tool filtering and auditing](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/tools/ops-mcp/src/server.mjs#L210-L231) [Codex grants](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/gitops/platform/values/codex-ops.yaml#L20-L68) [Nova grants](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/gitops/platform/values/codex-ops.yaml#L69-L97) [Buster grants](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/gitops/platform/values/codex-ops.yaml#L98-L118) [Separate MCP identity and mounts](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/charts/ops-pod/templates/mcp.yaml#L37-L91)
 >
 > **Contract or setting:** Client policy must remain within MCP RBAC; global reads need both flags.
 >
-> **Test evidence:** The scoped local and live results are recorded under Verification below; source links alone are not execution receipts.
+> **Test evidence:** Source-test definitions and execution limits are recorded under Verification below; source links alone are not execution receipts.
 >
 > **Revision:** `34cf38ef53ee41381543785d0ffae90a37fac9ca`. Upstream main evidence; this documentation update does not adopt runtime source into PR #13.
 >
@@ -220,7 +237,7 @@ stderr and incomplete/transport outcomes must be interpreted separately.
 >
 > **Contract or setting:** Exec uses the lower of requested and policy limits.
 >
-> **Test evidence:** The scoped local and live results are recorded under Verification below; source links alone are not execution receipts.
+> **Test evidence:** Source-test definitions and execution limits are recorded under Verification below; source links alone are not execution receipts.
 >
 > **Revision:** `34cf38ef53ee41381543785d0ffae90a37fac9ca`. Upstream main evidence; this documentation update does not adopt runtime source into PR #13.
 >
@@ -297,19 +314,19 @@ bound is not a total HTTP or MCP response-size guarantee.
 
 The chart now declares a separate MCP network policy, including a selected
 Relay path. Effective network enforcement, Relay availability and retained
-flow history still require their own live proof. The 2026-10-22 observations
-did not establish a working Hubble Relay. A DNS or Relay error is an unavailable
+flow history still require their own live proof. No working Hubble Relay is
+established by this source review. A DNS or Relay error is an unavailable
 observation, not proof of no network drops.
 
 > **Source evidence — read pressure and network observations**
 >
 > **Claim:** Per-request read limits do not bound full scans or prove complete Hubble history.
 >
-> **Implementation:** [HTTPS read transport and page handling](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/tools/ops-mcp/src/kubernetes.mjs#L1-L58) [Hubble process bounds](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/tools/ops-mcp/src/hubble.mjs#L25-L75) [Hubble partial-result semantics](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/tools/ops-mcp/src/hubble.mjs#L95-L118) [MCP network policy](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/charts/ops-pod/templates/network.yaml#L37-L71)
+> **Implementation:** [HTTPS read transport](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/tools/ops-mcp/src/kubernetes.mjs#L1-L58) [Pagination and default aggregate limit](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/tools/ops-mcp/src/kubernetes.mjs#L65-L99) [Full-scan callers](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/tools/ops-mcp/src/server.mjs#L327-L358) [Event continuation](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/tools/ops-mcp/src/server.mjs#L114-L138) [Hubble process bounds](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/tools/ops-mcp/src/hubble.mjs#L25-L75) [Hubble partial-result semantics](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/tools/ops-mcp/src/hubble.mjs#L95-L118) [MCP network policy](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/charts/ops-pod/templates/network.yaml#L37-L71)
 >
 > **Contract or setting:** Prefer one-page or single-object tools when a full scan is unnecessary.
 >
-> **Test evidence:** The scoped local and live results are recorded under Verification below; source links alone are not execution receipts.
+> **Test evidence:** Source-test definitions and execution limits are recorded under Verification below; source links alone are not execution receipts.
 >
 > **Revision:** `34cf38ef53ee41381543785d0ffae90a37fac9ca`. Upstream main evidence; this documentation update does not adopt runtime source into PR #13.
 >
@@ -369,22 +386,21 @@ The diagnostic Codex skill remains guidance, separate from service authority.
 
 ## Verification
 
-The 2026-10-22 change was merged as PR #28 after 26 active CI checks passed.
-Local verification included 31 MCP tests (including a pinned OpenClaw native
-client over real TLS and a dropped-exec no-replay case), 19 Ops/chart tests and
-six supervisor tests. The native-client workflow also passed on main.
+The pinned upstream contains MCP/TLS/exec and chart test definitions. The TLS
+test starts a local adapter/backend and defines dropped-response no-replay
+coverage; its actual native OpenClaw probe runs only when
+`OPS_MCP_OPENCLAW_BIN` is supplied. Inspecting these definitions does not prove
+that the optional probe or any local suite ran on this candidate.
 
-Runtime build [39747800068](https://github.com/datrab/kubeclaw/actions/runs/39747800068)
-and production promotion [39748892361](https://github.com/datrab/kubeclaw/actions/runs/39748892361)
-selected `runtime-39747800068-1`. At deployment commit
-`799707ddd202a331b7e8f718e4ff5c0e9b259f90`, the root, Buster, Nova and Prism Argo
-applications were observed Synced/Healthy, with replacement Pods ready and no
-restarts. Nova's installed native OpenClaw client discovered all six tools
-with no diagnostics; a request outside its namespace scope was denied.
+Earlier deployment notes linked runtime build
+[39747800068](https://github.com/datrab/kubeclaw/actions/runs/39747800068) and
+[promotion 39748892361](https://github.com/datrab/kubeclaw/actions/runs/39748892361).
+Those references alone are not retained execution receipts for the claimed
+local test counts, deployed image identity, Argo health, Pod readiness or
+native tool discovery/denial. Those outcomes remain unverified here. No
+fresh cluster operation was performed for this documentation review.
 
-This is a scoped historical observation, not a fresh health check at reading
-time. Buster's connector was covered by rendered configuration/migration tests
-and its ready deployment; no separate live native probe in its gateway was
-performed. Hubble Relay availability, mobile pairing, arbitrary-cluster
-portability, future production-cluster acceptance, and the broader PR #13
-acceptance gates are not established by this update.
+Buster gateway behavior, Hubble Relay availability, mobile pairing, arbitrary-
+cluster portability, production acceptance and the broader PR #13 gates need
+their own scoped evidence. Source review neither adopts the runtime into this
+branch nor clears its existing release-verification stop.

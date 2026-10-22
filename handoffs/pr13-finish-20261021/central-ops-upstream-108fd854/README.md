@@ -1,0 +1,13 @@
+# Bounded central Ops upstream correction
+
+Base: merged108fd854525688584b8b3e5595c6ee77461a46a0, pushed and remote-confirmed. Upstream source snapshot34cf38ef53ee41381543785d0ffae90a37fac9ca is documentation evidence only; runtime was not adopted.
+
+Independent complete Source responsibility: five core pages and16full upstream blobs, continued through6full source additions and repeated summary/diagram corrections;22/22 hashes match. Seven supporting-page changed responsibilities independently reviewed. Final refs delta independently bridges later footer/link-only changes to those exact reviewed page bytes. Original findings and intermediate non-PASS reports retained.
+
+Corrections: remove unsupported CI/local/live success assertions; reconcile historical Nova-token configuration versus upstream retirement; expose Buster worker direct lease-scoped workload/test authority; use polling rather than a claimed controller watch; supply actual client grant/pagination/provisioning excerpt ranges. No new global or runtime acceptance.
+
+Finite module-input custody: only checker/helper hashes, passive22-source manifest input and independent exact recipe anchor changed. Four selected dynamic module paths/import receipt remain exact. Native10owning testsPASS; two earlier authored excerpt-range failures preserved. Existing publication native45test run yielded44PASS/1FAIL at incomplete fixture; only authentic authority-input staging changed, no assertions weakened; exact targeted fixture1/1PASS reaches all3boundaries.
+
+Refs parser: multiple explicitly backticked Revision-line IDs; separate adjacent Source-callout boundaries; no later declaration laundering. Native5owning testsPASS. First whole refs attempt failed24cases; intermediate report had10groups including3false adjacent merges; final six declaration enumerations plus one identical-file already-admitted repin correct remaining actual omissions. Actual whole refs checkPASS:6273local links,3385anchors,8402repo refs,32373pinnedsource links. Governance actualPASS177pages. Autoreview originalcode bundle clean; changed refs responsibility re-reviewed clean after boundary correction.
+
+Acceptance contract intentionally still FAILS at first changed historical record. Existing95completion objects and prior56/89gates224/261counts are historical; no automatic rebinding/recount. Forty-four direct remote-delta intersections were mapped before later footer corrections; current impact set must be recomputed for final adjudication. Reader487 remains historical, not a current review of new content. Fresh affected Reader/rendering/Quality and owning generator checks remain required. Runtime knip release stop and lack of authorized writable-cgroup journey host remain; neither stops other local work.

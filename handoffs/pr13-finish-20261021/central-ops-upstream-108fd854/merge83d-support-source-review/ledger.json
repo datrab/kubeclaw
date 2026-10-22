@@ -1,0 +1,58 @@
+[
+  {
+    "path": "docs/site/extend/documentation-maintenance.md",
+    "sha256": "a8727c33bb81242fb446e89a66101b9f5182f2c5a54ae26ff3cfc7499a120b14",
+    "bytes": 44700,
+    "baselineSha256": "c4371fb5186b88b6dc76f00024a1c2a993ebd53fa0404d0e28dcad0d5ace7dec",
+    "scope": "Exact complete external diff plus changed receiving section and metadata; historical unchanged whole-page responsibility NOT freshly re-reviewed"
+  },
+  {
+    "path": "docs/site/extend/host-and-engine.md",
+    "sha256": "3174dbe79b94d53c88e96a47a768ec59cfd4b681fb19c2554823ce2100e41a32",
+    "bytes": 27915,
+    "baselineSha256": "77649597017ebc98dd53f56d22b1725b3dc5e5416cdf14bab7f7c09c0800ea7b",
+    "scope": "Exact complete external diff plus changed receiving section and metadata; historical unchanged whole-page responsibility NOT freshly re-reviewed"
+  },
+  {
+    "path": "docs/site/reference/service-routing.md",
+    "sha256": "9487574b01f1693a915ce80f437394b90802a1b26ac6ad1794ba5fa0b6cfe9f1",
+    "bytes": 21480,
+    "baselineSha256": "3cf144a2d33a11150fe2e133c2b89b172010e4826882bb60d9ecea2711ecd339",
+    "scope": "Exact complete external diff plus changed receiving section and metadata; historical unchanged whole-page responsibility NOT freshly re-reviewed"
+  },
+  {
+    "path": "docs/site/understand/README.md",
+    "sha256": "e4b40b345d0c56a8957c71b52349b028f0636790d5782040a723f88bb15f81cf",
+    "bytes": 15648,
+    "baselineSha256": "801d7095645abc6548c78ecda6dfbfa0764181275895b99c625f2f0d1b478593",
+    "scope": "Exact complete external diff plus changed receiving section and metadata; historical unchanged whole-page responsibility NOT freshly re-reviewed"
+  },
+  {
+    "path": "docs/site/use/install.md",
+    "sha256": "78eca56bbaa1a7c6367dbdf0110bf7f5cabcbffa00af8297bc0ce1cb85c1980e",
+    "bytes": 90043,
+    "baselineSha256": "74afdd9ffd18bd7ceb507fd68d50eea068c040519433ab33543838649633c598",
+    "scope": "Exact complete external diff plus changed receiving section and metadata; historical unchanged whole-page responsibility NOT freshly re-reviewed"
+  },
+  {
+    "path": "docs/site/use/maintenance.md",
+    "sha256": "909d1edc16a886acb641531816ae631cea16702870baaa8d457f83d13015e8c2",
+    "bytes": 105442,
+    "baselineSha256": "d3650ac88018d32ca2c8a6137c5760e47777c82839c60ad34308dd03bf98f3dd",
+    "scope": "Exact complete external diff plus changed receiving section and metadata; historical unchanged whole-page responsibility NOT freshly re-reviewed"
+  },
+  {
+    "path": "docs/site/use/operate.md",
+    "sha256": "4bbce928c3210fb7ad4ad4e37430e3aae80ad4aa893ce240a5fe843b315269a8",
+    "bytes": 50790,
+    "baselineSha256": "aa713a0462cf8b4781831c2021f3f96fa4e4a263806c27350247d7aa5366f745",
+    "scope": "Exact complete external diff plus changed receiving section and metadata; historical unchanged whole-page responsibility NOT freshly re-reviewed"
+  },
+  {
+    "path": "docs/site/reference/generated-documentation-map.json",
+    "sha256": "36e7af30d06f1bf7a0fbcab69e3027d6e2789469a5d4c3b462fb18aa8a614d03",
+    "bytes": 186428,
+    "baselineSha256": "2cd609bfb3c54b0cb66848d9ce9bf476fe4d3158ae3b939b539cfe652a6df726",
+    "scope": "Exact complete external diff plus changed receiving section and metadata; historical unchanged whole-page responsibility NOT freshly re-reviewed"
+  }
+]

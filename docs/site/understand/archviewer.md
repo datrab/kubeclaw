@@ -161,7 +161,7 @@ release receipt before deployment.
 >
 > **Test evidence:** No maintained end-to-end producer test is identified because this inspected wiring supplies no publisher contract. The [native viewer test](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/tests/verification/reliability/archviewer-native.test.mjs#L10-L26) creates its own presentation file; it is not a producer test or recorded run here.
 >
-> **Revision:** `0e35889a3c4e65d5c47ba88e924611aace67eb1d`. These are the source bindings for the explanation above, not execution receipts.
+> **Revision:** `0e35889a3c4e65d5c47ba88e924611aace67eb1d`; `569f7b4933d4859cc67c80ddf40d5154ffd95ce5`. These are the source bindings for the explanation above, not execution receipts.
 >
 > **Limit:** A file served from the fixture or mounted tree does not establish authenticated production publication, revision selection, retention or cleanup.
 

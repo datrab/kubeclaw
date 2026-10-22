@@ -1,0 +1,216 @@
+diff --git a/docs/site/extend/documentation-maintenance.md b/docs/site/extend/documentation-maintenance.md
+index ae1474ef..213481ac 100644
+--- a/docs/site/extend/documentation-maintenance.md
++++ b/docs/site/extend/documentation-maintenance.md
+@@ -521,3 +521,20 @@ Finish by reconciling source, authored explanation, generated facts, incoming
+ navigation, revision links, and the actual check/reader outcomes. Keep unresolved
+ families and live limitations visible. Publication is ready only for the scope
+ actually demonstrated; a complete-looking table is not proof of completeness.
++
++## Document A Newer Deployed Ops Revision
++
++A documentation branch can retain older runtime qualification while an Ops
++release has advanced on main. Label such page evidence with `Upstream source
++scope:` and state that it does not adopt the runtime into this branch. Record
++the exact upstream revision, selected pages and SHA-256 source-file digests in
++`scripts/ops-mcp-docs-upstream.json`. The specialist check admits only its pinned
++Ops revision and page roster, verifies immutable Git bytes and bounded line
++ranges, and rejects a missing or changed file digest. Ordinary branch-source
++pins still require equality with the working source. The focused source-pin
++tests cover both routes and their denials.
++
++Do not use this dated upstream route to mark Source/Reader/Quality gates or
++runtime-source adoption complete. After actual source adoption, reconcile the
++page and generated inventories through their normal owning checks. Historical
++live observations keep their date and scope; they are not fresh health checks.
+diff --git a/docs/site/extend/host-and-engine.md b/docs/site/extend/host-and-engine.md
+index 23c2a497..88885c82 100644
+--- a/docs/site/extend/host-and-engine.md
++++ b/docs/site/extend/host-and-engine.md
+@@ -5,6 +5,7 @@ Audience: host-extension author, Worker engine maintainer, runtime packager
+ Owner: plugin-foundation
+ Evidence: skills/common/plugins/openclaw-agent-observer/openclaw.plugin.json; skills/prism/openclaw-plugin/openclaw.plugin.json; plugins/kubeclaw-ops/.codex-plugin/plugin.json; charts/ops-pod; skills/worker/core/worker/attempt-executor.ts; contracts/pipeline-worker-core/v1/src/types.ts; packaging/runtime/roles
+ Evidence revision: `569f7b4933d4859cc67c80ddf40d5154ffd95ce5`
++Upstream source scope: central Ops contract at `34cf38ef53ee41381543785d0ffae90a37fac9ca`; no runtime source adoption or live verification is established by this update
+ Applies to: OpenClaw extensions, Codex plugins and skills, Worker Core engines, runtime roles
+ Last verified: source, package, role, and focused host checks on 2026-09-17
+ 
+@@ -154,17 +155,16 @@ tool provider, or the Kubernetes ServiceAccount.
+ The package contains no pipeline manifest and no OpenClaw manifest. It also contains
+ no MCP server declaration. The required read-only Ops tools must already be
+ available through the Codex environment. The skill cannot create that connection.
+-In the deployed Ops Pod, Codex and MCP share a ServiceAccount. The chart enables
+-namespace-scoped Pod execution for Codex by default. Treat the chart RBAC and
+-credential mounts as the effective authority, even though the plugin interface and
+-the MCP tool surface are read-only. Set `rbac.execNamespaces` to `[]` to remove the
+-Codex token, kubeconfig, and exec binding.
++The pinned upstream main configuration separates Codex and MCP into different
++Pods and ServiceAccounts. Agents use distinct MCP bearers; only MCP holds the
++Kubernetes observer/exec credential. Buster workers retain direct lease-scoped workload/test authority
++as a separate exception. `rbac.execNamespaces` bounds MCP authority and never gives Codex a
++token or kubeconfig. The MCP exposes separately authorized exec as well as
++read tools. See [the current deployment and native agent connection](../understand/ops-mcp.md).
+ 
+ > **Codex manifest:** [The Ops manifest declares the skill directory, read capability, interface text, and example prompts](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/plugins/kubeclaw-ops/.codex-plugin/plugin.json#L1-L26).
+ >
+-> **Deployment authority:** [The chart mounts Kubernetes credentials into Codex when an exec namespace is configured](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/ops-pod/templates/workload.yaml#L51-L76).
+->
+-> [The default value selects `kubeclaw`](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/ops-pod/values.yaml#L21-L28).
++> **Deployment authority:** The [central MCP grant matrix](../understand/ops-mcp.md#authorization-and-data-exposure) describes the 2026-10-22 main contract. The manifest above remains the read-oriented diagnostic plugin boundary.
+ 
+ Use this authoring path:
+ 
+diff --git a/docs/site/reference/service-routing.md b/docs/site/reference/service-routing.md
+index 2f571db5..5adfb810 100644
+--- a/docs/site/reference/service-routing.md
++++ b/docs/site/reference/service-routing.md
+@@ -4,6 +4,7 @@ Status: source-backed procedure; live routing unverified
+ Audience: operator, platform maintainer
+ Owner: platform networking
+ Evidence: charts/kubeclaw/templates/service.yaml; charts/prism/templates/services.yaml; charts/ops-pod/templates/workload.yaml; scripts/docs-kubernetes-core-receiver-contracts.mjs
++Upstream source scope: central Ops contract at `34cf38ef53ee41381543785d0ffae90a37fac9ca`; no runtime source adoption or live verification is established by this update
+ Applies to: supported local Service producers and the explicitly selected upstream source baselines
+ Last verified: 2026-10-10; source and local renders checked, cluster behavior unverified
+ 
+@@ -38,7 +39,7 @@ Use the deployment's release namespace and selected procedure. Raw manifests and
+ | `charts/prism/templates/postgresql.yaml`, PostgreSQL enabled | Release namespace; `app=prism-postgresql` | 5432; omitted targetPort defaults to numeric 5432. |
+ | `demo-ready-service.yaml`, broker enabled, Buster role and controller readiness enabled | Release namespace; release labels plus `component=buster-namespace-controller` | ClusterIP 8443 → `demo-ready`; its NetworkPolicy names allowed producer namespaces/Pods. |
+ | `archviewer.yaml`, archviewer enabled and Nova role | Release namespace; agent release selector | ClusterIP 3456 → `archviewer`; separate Tailscale ingress and Cilium policy. Requires the configured private ingress owner and sidecar listener. Other roles fail rendering. |
+-| `charts/ops-pod/templates/workload.yaml` | Release namespace; exact release-name label | Headless `clusterIP: None`, health 8080 → 8080; StatefulSet serviceName links stable network identity. The ops-mcp loopback listener is not exposed by this declaration. |
++| `charts/ops-pod/templates/workload.yaml` | Release namespace; exact release-name label | At the cited branch baseline: headless `clusterIP: None`, health 8080 → 8080, StatefulSet serviceName identity; no MCP exposure. The separate dated upstream update is below. |
+ 
+ Product evidence uses revision `57ba25bbf55f53a55efc65ede06b0e0d90eb0a70`. Sources: [main Service template](https://github.com/datrab/kubeclaw/blob/57ba25bbf55f53a55efc65ede06b0e0d90eb0a70/charts/kubeclaw/templates/service.yaml#L1-L36). [dedicated extra NodePort template](https://github.com/datrab/kubeclaw/blob/57ba25bbf55f53a55efc65ede06b0e0d90eb0a70/charts/kubeclaw/templates/service-extra-nodeports.yaml#L1-L22). [Prism Services](https://github.com/datrab/kubeclaw/blob/57ba25bbf55f53a55efc65ede06b0e0d90eb0a70/charts/prism/templates/services.yaml#L1-L39). [Ops headless identity](https://github.com/datrab/kubeclaw/blob/57ba25bbf55f53a55efc65ede06b0e0d90eb0a70/charts/ops-pod/templates/workload.yaml#L8-L24). The exact selected raw/value paths are listed in the generated Helm reference.
+ 
+@@ -134,3 +135,13 @@ Inspect NetworkPolicy/Cilium policy separately from endpoint/routing checks. Ins
+ These reads create no cluster resources and need no cluster cleanup. Save sanitized observations with timestamps/version/context/UID/resourceVersion as private evidence; protect internal addresses and policy information under operator rules. Concurrent reconciliation can change any read: capture another object/Slice snapshot if identities or versions differ. This procedure has no rollback because it makes no mutation. Recovery or a configuration rollback is a separate owner-authorized change. First read current object/ownership. Correct the identified input or dependency and preserve immutable allocated fields where required. After an interrupted write, read before retrying. After uncertain LB cleanup, preserve provider resources and finalizers until the owner establishes their state; do not remove finalizers to force progress. Reverting values cannot guarantee rollback of provider work, allocator choices or application effects.
+ 
+ Execution status: the commands above are documented read-only checks, not executed live checks. Offline renders and pinned source reads do not establish admission, controller convergence, security, DNS, connectivity or provider cleanup success.
++
++## Central Ops Service Update
++
++The pinned 2026-10-22 upstream main profile declares the central MCP at
++`https://codex-ops-mcp.kubeclaw-ops.svc:8080/mcp` from its own Deployment and
++ServiceAccount. Codex, Nova and Buster authenticate with separate bearers;
++NetworkPolicy permits configured client selectors. The older generated
++endpoint inventory reflects this documentation branch's source baseline,
++not a verified updated deployment. Use the [current MCP topology and contract](../understand/ops-mcp.md#complete-request-and-state-path)
++for this route until runtime-source adoption regenerates those facts.
+diff --git a/docs/site/understand/README.md b/docs/site/understand/README.md
+index b51e78f2..d3e6ac93 100644
+--- a/docs/site/understand/README.md
++++ b/docs/site/understand/README.md
+@@ -5,6 +5,7 @@ Audience: new reader, operator, maintainer, security reviewer, plugin author
+ Owner: platform architecture
+ Evidence: packaging/runtime/roles; skills/nova/core; skills/worker/core
+ Evidence revision: `85e73b1885f04a9494f388cf6622ad0bde2db447`
++Upstream source scope: Ops changes on main at `34cf38ef53ee41381543785d0ffae90a37fac9ca`; runtime source adoption into this documentation branch remains separate
+ Applies to: current source and declared runtime roles
+ Last verified: source and contract inspection on 2026-09-19
+ 
+@@ -50,7 +51,7 @@ The [glossary](../reference/glossary.md) defines all KubeClaw terms used in this
+ | How does Forge change and merge one bounded workspace? | [Forge](forge.md) |
+ | How does Echo turn evidence into a review decision? | [Echo](echo.md) |
+ | How do OpenClaw host plugins and agent dispatch differ? | [OpenClaw integration](openclaw.md) |
+-| How does the Codex Ops plugin reach bounded cluster evidence? | [Codex integration](codex-integration.md) and [Ops MCP](ops-mcp.md) |
++| How do Codex, Nova and Buster reach central cluster reads and authorized exec? | [Codex integration](codex-integration.md) and [Ops MCP](ops-mcp.md) |
+ | How are static architecture presentations published privately? | [Archviewer](archviewer.md) |
+ | What are the schema, identity, timeout, retry, and failure rules for each connection? | [Communication](communication.md) |
+ | Which store owns each record, and how do backup and restore work? | [Data and state](data-and-state.md) |
+diff --git a/docs/site/use/install.md b/docs/site/use/install.md
+index 28223b66..7f607954 100644
+--- a/docs/site/use/install.md
++++ b/docs/site/use/install.md
+@@ -4,6 +4,7 @@ Status: source-backed deployment path; stored runtime selection fails current co
+ Audience: Kubernetes platform operator, security operator
+ Owner: platform operations
+ Evidence: scripts/deploy.sh; docs/generated/inventory/deploy-script.json
++Upstream source scope: central Ops contract at `34cf38ef53ee41381543785d0ffae90a37fac9ca`; no runtime source adoption or live verification is established by this update
+ Applies to: current selected runtime release
+ Last verified: 2026-10-12; local extracted-command and release-boundary checks only; no live cluster result is available
+ 
+@@ -606,6 +607,15 @@ Do not count Tailscale inside the target cluster as the only second route.
+ A CNI or cluster failure can remove that route.
+ 
+ The optional Ops Pod supports routine operations after cluster readiness.
++The dated upstream configuration has a Codex StatefulSet and a separate
++central MCP Pod. This is not the branch's already-qualified selected runtime
++and does not clear the installation stop or any earlier gate.
++Argo provisions MCP credentials and trust before workloads. Use a full Ops sync
++so provisioning hooks run. Nova and Buster receive their native MCP connector
++through the selected runtime bundle; no manual client installation is needed.
++See [native agent connection and central grants](../understand/ops-mcp.md#native-agent-connection).
++Direct Kubernetes commands in this installation guide belong to the independent
++administrator, not to the agent Pods.
+ The [platform boundary](../understand/platform-and-operations.md#ops-pod-tool-policy-is-not-kubernetes-authority) explains the optional Ops Pod. Treat its installation and credentials as a separate administrative surface.
+ 
+ [Automated host bootstrap and restore](../status/open-issues.md#automated-host-bootstrap-and-restore-prerequisites-are-incomplete) tracks the missing prerequisites.
+diff --git a/docs/site/use/maintenance.md b/docs/site/use/maintenance.md
+index 18fb5b85..c9b642fd 100644
+--- a/docs/site/use/maintenance.md
++++ b/docs/site/use/maintenance.md
+@@ -4,6 +4,7 @@ Status: source-backed maintenance boundaries; no general runtime upgrade pair or
+ Audience: release maintainer, platform operator, security operator
+ Owner: release engineering and platform operations
+ Evidence: versions.json; releases/ops-images.json; scripts/deploy.sh
++Upstream source scope: central Ops contract at `34cf38ef53ee41381543785d0ffae90a37fac9ca`; no runtime source adoption or live verification is established by this update
+ Applies to: current release-selection and deployment contracts
+ Last verified: 2026-10-11 prior local checks; local selection rejection and synthetic bundle-manifest reader checks on 2026-10-21; no live upgrade, rotation, retirement, or bundle observation
+ 
+@@ -1676,3 +1677,24 @@ backup media.
+ - Rollback decision and result.
+ - Final data export and retirement inventory.
+ - Revocation and cleanup verification.
++
++## Central Ops MCP Maintenance Update
++
++For the 2026-10-22 central service, follow the [MCP provisioning and rotation contract](../understand/ops-mcp.md#provisioning-rotation-and-gitops).
++Ops chart/image selection and Nova/Buster runtime-bundle selection are separate.
++The `codex-ops` child Application keeps manual sync to protect the active
++workspace; a runtime rollout does not imply that the Ops application was synced.
++Use a full Ops sync for provisioning hooks, then verify the separate MCP Pod.
++
++Maintain distinct client tokens and the retained private CA. Daily leaf renewal
++is separate from bearer revocation and coordinated CA replacement. The native
++adapter rereads token/CA files per call; the MCP rereads policy/token files.
++Refresh Codex processes or shells that inherited an old bearer environment.
++Do not record token values in a change record.
++
++After runtime promotion, verify each application and Pod, then native tool
++discovery and a denied out-of-scope call. A healthy Pod alone is insufficient.
++Inspect startup Doctor diagnostics, progress and restart counts before
++classifying a slow startup as a connector failure. No measured database-size
++or rollout-time observation is established here; do not infer a timeout or
++skip integrity checks.
+diff --git a/docs/site/use/operate.md b/docs/site/use/operate.md
+index c5764f35..c0781fd2 100644
+--- a/docs/site/use/operate.md
++++ b/docs/site/use/operate.md
+@@ -4,6 +4,7 @@ Status: source-backed command paths with explicit unauthenticated issuer and mis
+ Audience: product operator, pipeline operator, Prism operator
+ Owner: Nova Core and platform operations
+ Evidence: skills/nova/project/cli.ts; skills/nova/core/cli.ts; skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json; skills/nova/core/execution/engine-snapshots.ts; skills/nova/core/execution/engine-run.ts
++Upstream source scope: central Ops contract at `34cf38ef53ee41381543785d0ffae90a37fac9ca`; no runtime source adoption or live verification is established by this update
+ Applies to: pipeline-platform.v2 and current Prism deployment
+ Last verified: 2026-09-21 schema validation; canonical journal preservation, resume, recovery, and retention boundaries rechecked on 2026-10-12 at `2025f36306636b2e0c2c426447bf137d0574e11f`; no live cluster result
+ 
+@@ -872,3 +873,20 @@ authorize their removal.
+ 
+ Use [Observe and Diagnose](diagnose.md) for failed or slow work.
+ Use [Back Up and Recover](recovery.md) for data or access loss.
++
++## Cluster Diagnostics Through Native Ops MCP
++
++Nova and Buster expose central MCP functions as native agent tools after the
++selected chart is deployed. Ask for a namespace overview, Pod state, recent
++logs or metrics in an authorized namespace; the agent chooses the typed tool.
++No shell command or manual plugin installation is required. `exec_pod` is a
++separate effectful request. Reconcile effects after a lost response; do not
++automatically repeat it.
++
++Buster reads and executes only in existing/future `test*` namespaces. Nova has
++`test*` plus its existing explicit scope. Ops reads every namespace, with
++separate restricted exec grants. See the [grant matrix](../understand/ops-mcp.md#authorization-and-data-exposure)
++and [connection diagnosis](../understand/ops-mcp.md#failure-and-recovery).
++The raw Kubernetes commands elsewhere in this guide require an independently
++authorized administrator; agent gateways use MCP and receive no kubeconfig. Buster workers retain their
++separate direct lease-scoped workload/test Kubernetes authority.

@@ -4,6 +4,7 @@ Status: source-backed procedure; live routing unverified
 Audience: operator, platform maintainer
 Owner: platform networking
 Evidence: charts/kubeclaw/templates/service.yaml; charts/prism/templates/services.yaml; charts/ops-pod/templates/workload.yaml; scripts/docs-kubernetes-core-receiver-contracts.mjs
+Upstream source scope: central Ops contract at `34cf38ef53ee41381543785d0ffae90a37fac9ca`; no runtime source adoption or live verification is established by this update
 Applies to: supported local Service producers and the explicitly selected upstream source baselines
 Last verified: 2026-10-10; source and local renders checked, cluster behavior unverified
 
@@ -38,7 +39,7 @@ Use the deployment's release namespace and selected procedure. Raw manifests and
 | `charts/prism/templates/postgresql.yaml`, PostgreSQL enabled | Release namespace; `app=prism-postgresql` | 5432; omitted targetPort defaults to numeric 5432. |
 | `demo-ready-service.yaml`, broker enabled, Buster role and controller readiness enabled | Release namespace; release labels plus `component=buster-namespace-controller` | ClusterIP 8443 → `demo-ready`; its NetworkPolicy names allowed producer namespaces/Pods. |
 | `archviewer.yaml`, archviewer enabled and Nova role | Release namespace; agent release selector | ClusterIP 3456 → `archviewer`; separate Tailscale ingress and Cilium policy. Requires the configured private ingress owner and sidecar listener. Other roles fail rendering. |
-| `charts/ops-pod/templates/workload.yaml` | Release namespace; exact release-name label | Headless Service for the Codex StatefulSet identity. The central MCP now has a separate internal HTTPS Service and Deployment; see the current Ops contract below. |
+| `charts/ops-pod/templates/workload.yaml` | Release namespace; exact release-name label | At the cited branch baseline: headless `clusterIP: None`, health 8080 → 8080, StatefulSet serviceName identity; no MCP exposure. The separate dated upstream update is below. |
 
 Product evidence uses revision `57ba25bbf55f53a55efc65ede06b0e0d90eb0a70`. Sources: [main Service template](https://github.com/datrab/kubeclaw/blob/57ba25bbf55f53a55efc65ede06b0e0d90eb0a70/charts/kubeclaw/templates/service.yaml#L1-L36). [dedicated extra NodePort template](https://github.com/datrab/kubeclaw/blob/57ba25bbf55f53a55efc65ede06b0e0d90eb0a70/charts/kubeclaw/templates/service-extra-nodeports.yaml#L1-L22). [Prism Services](https://github.com/datrab/kubeclaw/blob/57ba25bbf55f53a55efc65ede06b0e0d90eb0a70/charts/prism/templates/services.yaml#L1-L39). [Ops headless identity](https://github.com/datrab/kubeclaw/blob/57ba25bbf55f53a55efc65ede06b0e0d90eb0a70/charts/ops-pod/templates/workload.yaml#L8-L24). The exact selected raw/value paths are listed in the generated Helm reference.
 
@@ -137,10 +138,10 @@ Execution status: the commands above are documented read-only checks, not execut
 
 ## Central Ops Service Update
 
-The 2026-10-22 deployed main profile exposes the central MCP at
+The pinned 2026-10-22 upstream main profile declares the central MCP at
 `https://codex-ops-mcp.kubeclaw-ops.svc:8080/mcp` from its own Deployment and
 ServiceAccount. Codex, Nova and Buster authenticate with separate bearers;
 NetworkPolicy permits configured client selectors. The older generated
 endpoint inventory reflects this documentation branch's source baseline,
-not the updated deployment. Use the [current MCP topology and contract](../understand/ops-mcp.md#complete-request-and-state-path)
+not a verified updated deployment. Use the [current MCP topology and contract](../understand/ops-mcp.md#complete-request-and-state-path)
 for this route until runtime-source adoption regenerates those facts.

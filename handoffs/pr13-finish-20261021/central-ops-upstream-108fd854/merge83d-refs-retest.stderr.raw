@@ -1,0 +1,13 @@
+docs reference check failed:
+- docs/site/understand/archviewer.md:148 source callout declares 0e35889a3c4e65d5c47ba88e924611aace67eb1d but links 569f7b4933d4859cc67c80ddf40d5154ffd95ce5
+- docs/site/understand/codex-integration.md:48 source callout declares 569f7b4933d4859cc67c80ddf40d5154ffd95ce5 but links 54a535b6046bc54e9aeeebee9c4cd24388477115
+- docs/site/understand/communication.md:167 source callout declares 13bff0a18a64e74f2cbbaa1978e746fcdeff0c10 but links 0e35889a3c4e65d5c47ba88e924611aace67eb1d
+- docs/site/understand/openclaw.md:140 source callout declares 569f7b4933d4859cc67c80ddf40d5154ffd95ce5 but links 0e35889a3c4e65d5c47ba88e924611aace67eb1d
+- docs/site/understand/platform-and-operations.md:778 source callout declares 59cb44796b0f1f0daa0e37af8b1495abb45d9bc1, 7994a51e16bc752357c3a801190b12b7d6a191a4 but links 0e35889a3c4e65d5c47ba88e924611aace67eb1d
+- docs/site/understand/security-and-trust.md:370 source callout declares 13bff0a18a64e74f2cbbaa1978e746fcdeff0c10 but links 0e35889a3c4e65d5c47ba88e924611aace67eb1d
+- docs/site/understand/telemetry.md:1042 source callout declares f99aecbb00cb399b46dfbbeb3ddb375fba6218e7 but links 569f7b4933d4859cc67c80ddf40d5154ffd95ce5
+- docs/site/understand/telemetry.md:1296 source callout declares 0e35889a3c4e65d5c47ba88e924611aace67eb1d but links 569f7b4933d4859cc67c80ddf40d5154ffd95ce5
+- docs/site/use/maintenance.md:504 source callout declares 51975b92ed5154b76c65793e55933b4d8659d05d, 66452049f3d692768c39c797b21b793dce80314e but links 0403b262df2dba24747a19d1f8f42ef3334ef779
+- docs/site/use/maintenance.md:1614 source callout declares 430633accc4a374a740b5f12f384eeeb9dce228d but links 2a8558d795054d25aa4b72dbdc296c9321ba38f6
+
+Intentional exclusions: docs/archive/**, docs/_legacy-source/**, fenced code blocks, external URLs, globs, placeholders, and generated example data are not treated as source-path claims.

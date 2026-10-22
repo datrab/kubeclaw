@@ -1,0 +1,162 @@
+{
+  "head": "108fd854525688584b8b3e5595c6ee77461a46a0",
+  "workingTree": true,
+  "baseline": "7d2bb9d4",
+  "scope": "Complete exact seven support-page diffs + changed receiving sections and metadata, not fresh whole-page verdicts",
+  "files": [
+    {
+      "path": "docs/site/extend/documentation-maintenance.md",
+      "sha256": "a8727c33bb81242fb446e89a66101b9f5182f2c5a54ae26ff3cfc7499a120b14",
+      "bytes": 44700,
+      "lines": 540,
+      "currentRangesRead": [
+        [
+          1,
+          18
+        ],
+        [
+          490,
+          540
+        ]
+      ],
+      "diff": "complete7d2bb9d4..workingtree"
+    },
+    {
+      "path": "docs/site/extend/host-and-engine.md",
+      "sha256": "8f6286a23d3f06734b3ecfd2b8458136171ef4a2cdb35086b6777642cdfa1519",
+      "bytes": 28127,
+      "lines": 435,
+      "currentRangesRead": [
+        [
+          1,
+          20
+        ],
+        [
+          127,
+          190
+        ]
+      ],
+      "diff": "complete7d2bb9d4..workingtree"
+    },
+    {
+      "path": "docs/site/reference/service-routing.md",
+      "sha256": "c611c8cd242edffa4dd6b574bb0e45b43be99a33460e401f5a5bc0d1c0e57c0a",
+      "bytes": 21677,
+      "lines": 147,
+      "currentRangesRead": [
+        [
+          1,
+          62
+        ],
+        [
+          108,
+          147
+        ]
+      ],
+      "diff": "complete7d2bb9d4..workingtree"
+    },
+    {
+      "path": "docs/site/understand/README.md",
+      "sha256": "e4b40b345d0c56a8957c71b52349b028f0636790d5782040a723f88bb15f81cf",
+      "bytes": 15648,
+      "lines": 244,
+      "currentRangesRead": [
+        [
+          1,
+          70
+        ]
+      ],
+      "diff": "complete7d2bb9d4..workingtree"
+    },
+    {
+      "path": "docs/site/use/install.md",
+      "sha256": "0274984265a85091605c7ec8f8b7e7a8f270eb364a79048c1c1c2c2aa7d9e99e",
+      "bytes": 90346,
+      "lines": 1516,
+      "currentRangesRead": [
+        [
+          1,
+          20
+        ],
+        [
+          580,
+          643
+        ]
+      ],
+      "diff": "complete7d2bb9d4..workingtree"
+    },
+    {
+      "path": "docs/site/use/maintenance.md",
+      "sha256": "b975d5a4acc68fe8064db2dea40992249c4df676e989c9bc70579992cfaf3e99",
+      "bytes": 105537,
+      "lines": 1700,
+      "currentRangesRead": [
+        [
+          1,
+          20
+        ],
+        [
+          1645,
+          1700
+        ]
+      ],
+      "diff": "complete7d2bb9d4..workingtree"
+    },
+    {
+      "path": "docs/site/use/operate.md",
+      "sha256": "bb2973932c6750da060670b27a10a136b38c59d0aa2c96dc337c8d3d8a783c79",
+      "bytes": 51060,
+      "lines": 892,
+      "currentRangesRead": [
+        [
+          1,
+          20
+        ],
+        [
+          838,
+          892
+        ]
+      ],
+      "diff": "complete7d2bb9d4..workingtree"
+    }
+  ],
+  "unreadAssignedScope": 0,
+  "diffSha256": "e1906d71a4fb2f227d6eefb9b882eda896f01ae29a65138b99af4fed2157b144",
+  "coreInterface": {
+    "report": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/merge83d-ops-content-source-review-correction2/report.md",
+    "sha256": "71036489a32617f510a6a7ccac73c3f1f98997766bd559f87757395558cdbc78",
+    "coverage": "report complete; frozen/current equality only, no duplicate page semantics",
+    "pages": [
+      {
+        "path": "docs/site/understand/codex-integration.md",
+        "sha256": "e203e086d9a7db32d01c2ba020497174fe7c6326dab3ae4a368da91f4d75ffed",
+        "equalsReviewedFrozen": true
+      },
+      {
+        "path": "docs/site/understand/communication.md",
+        "sha256": "b2f603cea91375758d6e687b7c4c7886cd49354c4e14fc8c5cd63652c00cbcf5",
+        "equalsReviewedFrozen": true
+      },
+      {
+        "path": "docs/site/understand/ops-mcp.md",
+        "sha256": "92c3cd77464150bc9cad05e13dd231397eb49c44e176fd030474b3ffea01fb07",
+        "equalsReviewedFrozen": true
+      },
+      {
+        "path": "docs/site/understand/platform-and-operations.md",
+        "sha256": "da5983bb8aff1d5ab793bfda6ca594efa76054101b39dcfb1059925e83cc8160",
+        "equalsReviewedFrozen": true
+      },
+      {
+        "path": "docs/site/understand/security-and-trust.md",
+        "sha256": "1655c9c04116c2f250f7918a4aa462626bde33289ec38a72b5616ec54a9c4650",
+        "equalsReviewedFrozen": true
+      }
+    ]
+  },
+  "parentReport": {
+    "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/merge83d-support-source-review/report.md",
+    "sha256": "e77b1e4da900275f7ca911f1714c15e37e9cc40fb46e62059f267e950b2ed9ee",
+    "read": "complete"
+  }
+}

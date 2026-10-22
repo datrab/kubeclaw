@@ -1,0 +1,27 @@
+docs reference check failed:
+- docs/site/understand/archviewer.md:28 source callout declares 569f7b4933d4859cc67c80ddf40d5154ffd95ce5 but links f99aecbb00cb399b46dfbbeb3ddb375fba6218e7
+- docs/site/understand/archviewer.md:87 source callout declares 569f7b4933d4859cc67c80ddf40d5154ffd95ce5 but links f99aecbb00cb399b46dfbbeb3ddb375fba6218e7, 0e35889a3c4e65d5c47ba88e924611aace67eb1d
+- docs/site/understand/archviewer.md:148 source callout declares 0e35889a3c4e65d5c47ba88e924611aace67eb1d but links 569f7b4933d4859cc67c80ddf40d5154ffd95ce5
+- docs/site/understand/codex-integration.md:48 source callout declares 569f7b4933d4859cc67c80ddf40d5154ffd95ce5 but links 54a535b6046bc54e9aeeebee9c4cd24388477115
+- docs/site/understand/communication.md:167 source callout declares 13bff0a18a64e74f2cbbaa1978e746fcdeff0c10 but links 0e35889a3c4e65d5c47ba88e924611aace67eb1d
+- docs/site/understand/communication.md:310 source callout declares 13bff0a18a64e74f2cbbaa1978e746fcdeff0c10 but links 0e35889a3c4e65d5c47ba88e924611aace67eb1d
+- docs/site/understand/communication.md:1173 source callout declares 0e35889a3c4e65d5c47ba88e924611aace67eb1d but links 13bff0a18a64e74f2cbbaa1978e746fcdeff0c10
+- docs/site/understand/communication.md:1414 source callout declares 0e35889a3c4e65d5c47ba88e924611aace67eb1d but links 13bff0a18a64e74f2cbbaa1978e746fcdeff0c10
+- docs/site/understand/data-and-state.md:291 source callout declares 13bff0a18a64e74f2cbbaa1978e746fcdeff0c10 but links 0e35889a3c4e65d5c47ba88e924611aace67eb1d
+- docs/site/understand/openclaw.md:140 source callout declares 569f7b4933d4859cc67c80ddf40d5154ffd95ce5 but links 0e35889a3c4e65d5c47ba88e924611aace67eb1d
+- docs/site/understand/openclaw.md:222 source callout declares 569f7b4933d4859cc67c80ddf40d5154ffd95ce5 but links 0e35889a3c4e65d5c47ba88e924611aace67eb1d
+- docs/site/understand/platform-and-operations.md:405 source callout declares 0e35889a3c4e65d5c47ba88e924611aace67eb1d but links 13bff0a18a64e74f2cbbaa1978e746fcdeff0c10
+- docs/site/understand/platform-and-operations.md:475 source callout declares 0e35889a3c4e65d5c47ba88e924611aace67eb1d but links 13bff0a18a64e74f2cbbaa1978e746fcdeff0c10
+- docs/site/understand/platform-and-operations.md:540 source callout declares d7f822c3cddd97e637aeca47f1cd49e87164ff87 but links 13bff0a18a64e74f2cbbaa1978e746fcdeff0c10, 0e35889a3c4e65d5c47ba88e924611aace67eb1d
+- docs/site/understand/platform-and-operations.md:803 source callout declares 13bff0a18a64e74f2cbbaa1978e746fcdeff0c10 but links 0e35889a3c4e65d5c47ba88e924611aace67eb1d
+- docs/site/understand/platform-and-operations.md:901 source callout declares 0e35889a3c4e65d5c47ba88e924611aace67eb1d but links 13bff0a18a64e74f2cbbaa1978e746fcdeff0c10
+- docs/site/understand/security-and-trust.md:233 source callout declares 13bff0a18a64e74f2cbbaa1978e746fcdeff0c10 but links 0e35889a3c4e65d5c47ba88e924611aace67eb1d
+- docs/site/understand/security-and-trust.md:289 source callout declares 13bff0a18a64e74f2cbbaa1978e746fcdeff0c10 but links 0e35889a3c4e65d5c47ba88e924611aace67eb1d
+- docs/site/understand/security-and-trust.md:368 source callout declares 13bff0a18a64e74f2cbbaa1978e746fcdeff0c10 but links 0e35889a3c4e65d5c47ba88e924611aace67eb1d
+- docs/site/understand/security-and-trust.md:485 source callout declares 13bff0a18a64e74f2cbbaa1978e746fcdeff0c10 but links 0e35889a3c4e65d5c47ba88e924611aace67eb1d
+- docs/site/understand/security-and-trust.md:560 source callout declares 13bff0a18a64e74f2cbbaa1978e746fcdeff0c10 but links 0e35889a3c4e65d5c47ba88e924611aace67eb1d
+- docs/site/understand/security-and-trust.md:617 source callout declares 0e35889a3c4e65d5c47ba88e924611aace67eb1d but links 13bff0a18a64e74f2cbbaa1978e746fcdeff0c10
+- docs/site/understand/telemetry.md:1042 source callout declares f99aecbb00cb399b46dfbbeb3ddb375fba6218e7 but links 569f7b4933d4859cc67c80ddf40d5154ffd95ce5
+- docs/site/understand/telemetry.md:1296 source callout declares 0e35889a3c4e65d5c47ba88e924611aace67eb1d but links 569f7b4933d4859cc67c80ddf40d5154ffd95ce5
+
+Intentional exclusions: docs/archive/**, docs/_legacy-source/**, fenced code blocks, external URLs, globs, placeholders, and generated example data are not treated as source-path claims.

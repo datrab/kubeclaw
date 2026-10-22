@@ -5,6 +5,7 @@ Audience: host-extension author, Worker engine maintainer, runtime packager
 Owner: plugin-foundation
 Evidence: skills/common/plugins/openclaw-agent-observer/openclaw.plugin.json; skills/prism/openclaw-plugin/openclaw.plugin.json; plugins/kubeclaw-ops/.codex-plugin/plugin.json; charts/ops-pod; skills/worker/core/worker/attempt-executor.ts; contracts/pipeline-worker-core/v1/src/types.ts; packaging/runtime/roles
 Evidence revision: `569f7b4933d4859cc67c80ddf40d5154ffd95ce5`
+Upstream source scope: central Ops contract at `34cf38ef53ee41381543785d0ffae90a37fac9ca`; no runtime source adoption or live verification is established by this update
 Applies to: OpenClaw extensions, Codex plugins and skills, Worker Core engines, runtime roles
 Last verified: source, package, role, and focused host checks on 2026-09-17
 
@@ -154,10 +155,10 @@ tool provider, or the Kubernetes ServiceAccount.
 The package contains no pipeline manifest and no OpenClaw manifest. It also contains
 no MCP server declaration. The required read-only Ops tools must already be
 available through the Codex environment. The skill cannot create that connection.
-The deployed main installation now separates Codex and MCP into different
+The pinned upstream main configuration separates Codex and MCP into different
 Pods and ServiceAccounts. Agents use distinct MCP bearers; only MCP holds the
-Kubernetes observer/exec credential. Buster retains its existing worker lease
-exception. `rbac.execNamespaces` bounds MCP authority and never gives Codex a
+Kubernetes observer/exec credential. Buster workers retain direct lease-scoped workload/test authority
+as a separate exception. `rbac.execNamespaces` bounds MCP authority and never gives Codex a
 token or kubeconfig. The MCP exposes separately authorized exec as well as
 read tools. See [the current deployment and native agent connection](../understand/ops-mcp.md).
 

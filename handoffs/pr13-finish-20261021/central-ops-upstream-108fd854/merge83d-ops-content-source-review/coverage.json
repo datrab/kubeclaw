@@ -1,0 +1,1142 @@
+{
+  "role": "independent Source-only content review",
+  "candidate": "108fd854525688584b8b3e5595c6ee77461a46a0",
+  "baseline": "7d2bb9d4",
+  "external": "83d1d7e8",
+  "upstream": "34cf38ef53ee41381543785d0ffae90a37fac9ca",
+  "assignedPagesComplete": 5,
+  "assignedUpstreamFilesComplete": 16,
+  "assignedHashMatches": 16,
+  "unreadAssigned": [],
+  "files": [
+    {
+      "kind": "assigned upstream full file",
+      "revision": "34cf38ef53ee41381543785d0ffae90a37fac9ca",
+      "path": "charts/kubeclaw/templates/configmap-gateway.yaml",
+      "sha256": "37f2a0ad3038097d484da8a968f44a2a583049aa64772df435bde7094e89c46f",
+      "gitBlob": "1603224094ea23ad8526008b79ae23852162e9aa",
+      "lineCount": 370,
+      "readRanges": [
+        [
+          1,
+          370
+        ]
+      ]
+    },
+    {
+      "kind": "assigned upstream full file",
+      "revision": "34cf38ef53ee41381543785d0ffae90a37fac9ca",
+      "path": "charts/kubeclaw/files/ops-mcp/stdio.mjs",
+      "sha256": "d124f5579ee8b01ca71a59a9278aaa63de4128cd482781a1bcc8597eebac023e",
+      "gitBlob": "3a1f652001360d134e7880cdf8977536c83e1231",
+      "lineCount": 53,
+      "readRanges": [
+        [
+          1,
+          53
+        ]
+      ]
+    },
+    {
+      "kind": "assigned upstream full file",
+      "revision": "34cf38ef53ee41381543785d0ffae90a37fac9ca",
+      "path": "charts/kubeclaw/files/ops-mcp/client.mjs",
+      "sha256": "342ded4ec5e851ff03f2419dc35ae901e7da5a327027e86a78dd8a30245134f1",
+      "gitBlob": "d913effd1cc4054de9e1dd000414c0335cee1887",
+      "lineCount": 41,
+      "readRanges": [
+        [
+          1,
+          41
+        ]
+      ]
+    },
+    {
+      "kind": "assigned upstream full file",
+      "revision": "34cf38ef53ee41381543785d0ffae90a37fac9ca",
+      "path": "charts/kubeclaw/files/sync-ops-mcp-config.mjs",
+      "sha256": "f705ee0bac2b3d93f6f5b55c3012ff8743a68cc1a43cce4c883f17a85deae56a",
+      "gitBlob": "13d0d41c18e62758e5a05c2c7b88f0ffb97d871a",
+      "lineCount": 21,
+      "readRanges": [
+        [
+          1,
+          21
+        ]
+      ]
+    },
+    {
+      "kind": "assigned upstream full file",
+      "revision": "34cf38ef53ee41381543785d0ffae90a37fac9ca",
+      "path": "tools/ops-mcp/src/access-policy.mjs",
+      "sha256": "7f7e88ad89677b743b395560aa00cff98f79b04fa0108f1a7fdea4e86995fac4",
+      "gitBlob": "24053913d2451128048e70b1a897ed8be3c921f3",
+      "lineCount": 107,
+      "readRanges": [
+        [
+          1,
+          107
+        ]
+      ]
+    },
+    {
+      "kind": "assigned upstream full file",
+      "revision": "34cf38ef53ee41381543785d0ffae90a37fac9ca",
+      "path": "tools/ops-mcp/src/server.mjs",
+      "sha256": "fc14524cd7062c8d2d9b54ac754c89365474ea77ced15fe1a5c0840099113865",
+      "gitBlob": "20fb7a3d7c9278e6a2d6d7d1785da6cbc9cee012",
+      "lineCount": 647,
+      "readRanges": [
+        [
+          1,
+          647
+        ]
+      ]
+    },
+    {
+      "kind": "assigned upstream full file",
+      "revision": "34cf38ef53ee41381543785d0ffae90a37fac9ca",
+      "path": "gitops/platform/values/codex-ops.yaml",
+      "sha256": "a7e0300d1e2a44cac1e11be150fdeb73c112db52ba3b7ea4123109d3c99e86b1",
+      "gitBlob": "a5ba5a19c45328eac88b74074845d33f81a99012",
+      "lineCount": 118,
+      "readRanges": [
+        [
+          1,
+          118
+        ]
+      ]
+    },
+    {
+      "kind": "assigned upstream full file",
+      "revision": "34cf38ef53ee41381543785d0ffae90a37fac9ca",
+      "path": "charts/ops-pod/templates/mcp.yaml",
+      "sha256": "0ed072729d8f043a8b391408b3d768c82183e87f831de18bd6049b9449f09aaf",
+      "gitBlob": "affe4c22c29fda47ab385a6d7a0344a8dea75a4e",
+      "lineCount": 110,
+      "readRanges": [
+        [
+          1,
+          110
+        ]
+      ]
+    },
+    {
+      "kind": "assigned upstream full file",
+      "revision": "34cf38ef53ee41381543785d0ffae90a37fac9ca",
+      "path": "charts/ops-pod/templates/workload.yaml",
+      "sha256": "5bdbf7f69eab00c4cefacb42a63ef51b8737dbda2ee1af30733e2cf06c5cb8ca",
+      "gitBlob": "cbefa3e15befed579dfba2e38847db07a51c42d3",
+      "lineCount": 125,
+      "readRanges": [
+        [
+          1,
+          125
+        ]
+      ]
+    },
+    {
+      "kind": "assigned upstream full file",
+      "revision": "34cf38ef53ee41381543785d0ffae90a37fac9ca",
+      "path": "charts/ops-pod/templates/rbac.yaml",
+      "sha256": "40b00c443641a15aa443253c6326082e324841cd1b1e279f8873c000fc4d30a5",
+      "gitBlob": "8e5832c95f2fb078bb09cf581a9da9f725adf577",
+      "lineCount": 117,
+      "readRanges": [
+        [
+          1,
+          117
+        ]
+      ]
+    },
+    {
+      "kind": "assigned upstream full file",
+      "revision": "34cf38ef53ee41381543785d0ffae90a37fac9ca",
+      "path": "charts/ops-pod/templates/network.yaml",
+      "sha256": "a34b418df10ca111b248912ba3d5402ffa266fbf9a6e48b0b8aec74daa319d45",
+      "gitBlob": "f8e0826b131bfa61aa532360ba87cce39b945037",
+      "lineCount": 160,
+      "readRanges": [
+        [
+          1,
+          160
+        ]
+      ]
+    },
+    {
+      "kind": "assigned upstream full file",
+      "revision": "34cf38ef53ee41381543785d0ffae90a37fac9ca",
+      "path": "tools/ops-mcp/src/exec.mjs",
+      "sha256": "e3e422e800d87c594ba076ea8588fceaf93d86db72617c561d3dd595e80d7342",
+      "gitBlob": "17cdc0ce96c1d466e58be2fc22a61782cce2769c",
+      "lineCount": 61,
+      "readRanges": [
+        [
+          1,
+          61
+        ]
+      ]
+    },
+    {
+      "kind": "assigned upstream full file",
+      "revision": "34cf38ef53ee41381543785d0ffae90a37fac9ca",
+      "path": "tools/ops-mcp/test/tls-client.test.mjs",
+      "sha256": "43465a37e7cbc108fdd8c77352144542c0690d74cea7fa93f3174c2e7dc55065",
+      "gitBlob": "5c04c97f1726e18026d09cce225d43f310de88c3",
+      "lineCount": 140,
+      "readRanges": [
+        [
+          1,
+          140
+        ]
+      ]
+    },
+    {
+      "kind": "assigned upstream full file",
+      "revision": "34cf38ef53ee41381543785d0ffae90a37fac9ca",
+      "path": "tools/ops-mcp/src/kubernetes.mjs",
+      "sha256": "9ece63d71c7cb12d282cc125a3a795be5e4ffd4bc21ee51a0a31e5cfc8392f9c",
+      "gitBlob": "2daa2a7362eb36749143f486a97f75330fc379d7",
+      "lineCount": 99,
+      "readRanges": [
+        [
+          1,
+          99
+        ]
+      ]
+    },
+    {
+      "kind": "assigned upstream full file",
+      "revision": "34cf38ef53ee41381543785d0ffae90a37fac9ca",
+      "path": "tools/ops-mcp/src/hubble.mjs",
+      "sha256": "d4e60f2801e3c66ded259f420c1a9faca0071fa084dc198a35433f8c9cb4f599",
+      "gitBlob": "9c5e41caf82f8ba70584be048db078937b02a79e",
+      "lineCount": 118,
+      "readRanges": [
+        [
+          1,
+          118
+        ]
+      ]
+    },
+    {
+      "kind": "assigned upstream full file",
+      "revision": "34cf38ef53ee41381543785d0ffae90a37fac9ca",
+      "path": "charts/ops-pod/templates/provision.yaml",
+      "sha256": "3a003c343bdab95dcc2d8faeef7ad6f999f2267a8aa26556ae74164977c4b02e",
+      "gitBlob": "7294b036ffe82b554ea2377aae3c49162893f5e7",
+      "lineCount": 120,
+      "readRanges": [
+        [
+          1,
+          120
+        ]
+      ]
+    },
+    {
+      "kind": "assigned candidate full page",
+      "revision": "108fd854525688584b8b3e5595c6ee77461a46a0",
+      "path": "docs/site/understand/ops-mcp.md",
+      "sha256": "cc4c5f619ea632b1e28b93db6cf5b072195638112f5b5f2362039862aac514c2",
+      "gitBlob": "ba67d5839c67f7377b70e5a3d64c905abf673c50",
+      "lineCount": 390,
+      "readRanges": [
+        [
+          1,
+          210
+        ],
+        [
+          211,
+          390
+        ]
+      ]
+    },
+    {
+      "kind": "assigned candidate full page",
+      "revision": "108fd854525688584b8b3e5595c6ee77461a46a0",
+      "path": "docs/site/understand/codex-integration.md",
+      "sha256": "30f14683d35da9ac0a4b44bdb45c41dc404ba4d80b350b624abf02d56c41f466",
+      "gitBlob": "a447004499e6773a3b36b39a93043098e8d31be8",
+      "lineCount": 201,
+      "readRanges": [
+        [
+          1,
+          201
+        ]
+      ]
+    },
+    {
+      "kind": "assigned candidate full page",
+      "revision": "108fd854525688584b8b3e5595c6ee77461a46a0",
+      "path": "docs/site/understand/platform-and-operations.md",
+      "sha256": "d69991abba21937de118b6a7a8e19d0d58e96e7fb3a7102a5d22da29ccdd3eb7",
+      "gitBlob": "7cbae9939a29f2cf86e2d12918d50caf39df8763",
+      "lineCount": 1093,
+      "readRanges": [
+        [
+          1,
+          280
+        ],
+        [
+          281,
+          560
+        ],
+        [
+          561,
+          840
+        ],
+        [
+          841,
+          1069
+        ],
+        [
+          1070,
+          1093
+        ]
+      ]
+    },
+    {
+      "kind": "assigned candidate full page",
+      "revision": "108fd854525688584b8b3e5595c6ee77461a46a0",
+      "path": "docs/site/understand/security-and-trust.md",
+      "sha256": "b917a62ecd64d1538cd7220638f2eac9060422d1a77e7f53fb509fa5c89f9048",
+      "gitBlob": "6f78ce22cc78e3bc772dbd2e92c08eda084b4b0e",
+      "lineCount": 892,
+      "readRanges": [
+        [
+          1,
+          230
+        ],
+        [
+          227,
+          420
+        ],
+        [
+          421,
+          650
+        ],
+        [
+          651,
+          892
+        ]
+      ]
+    },
+    {
+      "kind": "assigned candidate full page",
+      "revision": "108fd854525688584b8b3e5595c6ee77461a46a0",
+      "path": "docs/site/understand/communication.md",
+      "sha256": "d843276b7eeb63cfab95ea980155610ad614d19c5080c6ae6b4c83dbcc452c20",
+      "gitBlob": "fc9c0674ad43193326bb5f61223a91ee01301acb",
+      "lineCount": 1482,
+      "readRanges": [
+        [
+          1,
+          145
+        ],
+        [
+          146,
+          310
+        ],
+        [
+          311,
+          540
+        ],
+        [
+          541,
+          770
+        ],
+        [
+          771,
+          1000
+        ],
+        [
+          1001,
+          1240
+        ],
+        [
+          1241,
+          1482
+        ]
+      ]
+    },
+    {
+      "kind": "supplemental source",
+      "revision": "34cf38ef53ee41381543785d0ffae90a37fac9ca",
+      "path": "tools/ops-mcp/src/namespace-access.mjs",
+      "sha256": "cabed16f8db89f3046048670c6d11b151ace6cd7e5c4a8325a7f749cec19be84",
+      "gitBlob": "f0f196be0afb56d153030d9a571c08cffbf69f2c",
+      "lineCount": 102,
+      "readRanges": [
+        [
+          1,
+          102
+        ]
+      ]
+    },
+    {
+      "kind": "supplemental source",
+      "revision": "34cf38ef53ee41381543785d0ffae90a37fac9ca",
+      "path": "tools/ops-mcp/src/provision.mjs",
+      "sha256": "b6bcc183103b4081bc0d66a4efd3548934c6705e1b54d717f31e37864bc3e8b2",
+      "gitBlob": "7fffd664dc998c937075f598dd5bd0ee81e0600c",
+      "lineCount": 150,
+      "readRanges": [
+        [
+          1,
+          150
+        ]
+      ]
+    },
+    {
+      "kind": "supplemental source",
+      "revision": "34cf38ef53ee41381543785d0ffae90a37fac9ca",
+      "path": "tools/ops-mcp/src/tls.mjs",
+      "sha256": "58b12cf21bfc9e6e51546b7ed18150bfe829bd06817caadd2eff81c30365ef69",
+      "gitBlob": "d5088c501faffd8026c0ee6e632ce483ac2f3238",
+      "lineCount": 32,
+      "readRanges": [
+        [
+          1,
+          32
+        ]
+      ]
+    },
+    {
+      "kind": "supplemental source",
+      "revision": "34cf38ef53ee41381543785d0ffae90a37fac9ca",
+      "path": "tools/ops-mcp/src/config.mjs",
+      "sha256": "2c6a5c3b4a2d66c171dc651b55f909a5525f5062361f63d7dc84834b155c26e2",
+      "gitBlob": "93c4b41aa055e9cd8c986bdd83ecaea7232ef87e",
+      "lineCount": 27,
+      "readRanges": [
+        [
+          1,
+          27
+        ]
+      ]
+    },
+    {
+      "kind": "supplemental source",
+      "revision": "34cf38ef53ee41381543785d0ffae90a37fac9ca",
+      "path": "tools/ops-mcp/src/authentication.mjs",
+      "sha256": "d816c6dd9354166a009ffdfc5db423f030345b94a16c4009e2aec639d57d0049",
+      "gitBlob": "84bf0eb74932e85f788f41b08111349a5a5ec6d0",
+      "lineCount": 38,
+      "readRanges": [
+        [
+          1,
+          38
+        ]
+      ]
+    },
+    {
+      "kind": "supplemental source",
+      "revision": "34cf38ef53ee41381543785d0ffae90a37fac9ca",
+      "path": "tools/ops-mcp/src/diagnostics.mjs",
+      "sha256": "5755bd2d6c6da697c102e4e585989ea1e696934d27f518c0a3147e7ca488f60f",
+      "gitBlob": "653e2780a92e895c9d8eda90658d9f484d5d7a55",
+      "lineCount": 29,
+      "readRanges": [
+        [
+          1,
+          29
+        ]
+      ]
+    },
+    {
+      "kind": "supplemental source",
+      "revision": "34cf38ef53ee41381543785d0ffae90a37fac9ca",
+      "path": "charts/ops-pod/templates/namespace-access.yaml",
+      "sha256": "b333f3f4e2630b968c451b8bd348ad23784e048ebf7e2d048828323d3dcf85b4",
+      "gitBlob": "8d1c783834c3362240326cdf40336a86109e393a",
+      "lineCount": 148,
+      "readRanges": [
+        [
+          1,
+          148
+        ]
+      ]
+    },
+    {
+      "kind": "supplemental source",
+      "revision": "34cf38ef53ee41381543785d0ffae90a37fac9ca",
+      "path": "charts/ops-pod/values.yaml",
+      "sha256": "2c70197c72944b013c00d0b5ac616a867e9de0e4ee155e8d4aea8cfb08f8c8fb",
+      "gitBlob": "80011bdba90449be34189d17a78c079e1dad0167",
+      "lineCount": 116,
+      "readRanges": [
+        [
+          1,
+          116
+        ]
+      ]
+    },
+    {
+      "kind": "supplemental source",
+      "revision": "34cf38ef53ee41381543785d0ffae90a37fac9ca",
+      "path": "charts/ops-pod/templates/_provision.tpl",
+      "sha256": "34edd2deda92cc74da086dd3450a0062f9c75cf4277370f8f1651ee8c2a1059d",
+      "gitBlob": "4cc564079bb33ac7ea8a57d633f90c9670a3b0d6",
+      "lineCount": 44,
+      "readRanges": [
+        [
+          1,
+          44
+        ]
+      ]
+    },
+    {
+      "kind": "supplemental source",
+      "revision": "34cf38ef53ee41381543785d0ffae90a37fac9ca",
+      "path": "charts/kubeclaw/templates/rbac.yaml",
+      "sha256": "953c67cadb2fd1dea1b15e3eb60c2388f5a6b31c69995e73b129c52e3b24e5b5",
+      "gitBlob": "59b604802ec6e581eb09f4d94e9eefe935c87f99",
+      "lineCount": 90,
+      "readRanges": [
+        [
+          1,
+          90
+        ]
+      ]
+    },
+    {
+      "kind": "supplemental source",
+      "revision": "34cf38ef53ee41381543785d0ffae90a37fac9ca",
+      "path": "charts/kubeclaw/templates/serviceaccount.yaml",
+      "sha256": "dc142c42b6044f9f902ad1abe45c831aacef401641fb36669b4d8d184db54ee1",
+      "gitBlob": "ee0fadbf305de6172e75d389e4ad2dbd6a0522c1",
+      "lineCount": 10,
+      "readRanges": [
+        [
+          1,
+          10
+        ]
+      ]
+    },
+    {
+      "kind": "supplemental source",
+      "revision": "34cf38ef53ee41381543785d0ffae90a37fac9ca",
+      "path": "charts/kubeclaw/templates/ops-mcp-client.yaml",
+      "sha256": "fd60cd1fdcd5133e1bf1275ccedb16aa8a73f1af6a69271d228f74c263e1ada8",
+      "gitBlob": "2f3ee0800ef0e3980f2f18f89811d4ae612ea37d",
+      "lineCount": 11,
+      "readRanges": [
+        [
+          1,
+          11
+        ]
+      ]
+    },
+    {
+      "kind": "supplemental source",
+      "revision": "34cf38ef53ee41381543785d0ffae90a37fac9ca",
+      "path": "scripts/ops-mcp-gitops.mjs",
+      "sha256": "a9d9aab546cccbc59bf6b80f01180fe2a947d949b02fae730011742866f8ce61",
+      "gitBlob": "057e63624c309b82750e6900404ece9195f24237",
+      "lineCount": 17,
+      "readRanges": [
+        [
+          1,
+          17
+        ]
+      ]
+    },
+    {
+      "kind": "supplemental source",
+      "revision": "34cf38ef53ee41381543785d0ffae90a37fac9ca",
+      "path": "ops/pod/config.toml",
+      "sha256": "4ba23ac8725247680f5cdcb283eef3e6eb338694f4bcac58d2eff92af6ee567f",
+      "gitBlob": "7be40750dfd23b80ed710a3f4cc8dee121afce96",
+      "lineCount": 10,
+      "readRanges": [
+        [
+          1,
+          10
+        ]
+      ]
+    },
+    {
+      "kind": "supplemental source",
+      "revision": "34cf38ef53ee41381543785d0ffae90a37fac9ca",
+      "path": "ops/pod/shell.sh",
+      "sha256": "86287d857c5d6de6688e674e434cc1d9d5846996300f27e5c8eeb826cb0e6cb3",
+      "gitBlob": "f4fb4d3561735ed49844af9c5a4e34a6ed64cff8",
+      "lineCount": 21,
+      "readRanges": [
+        [
+          1,
+          21
+        ]
+      ]
+    },
+    {
+      "kind": "supplemental source",
+      "revision": "34cf38ef53ee41381543785d0ffae90a37fac9ca",
+      "path": "releases/ops-images.json",
+      "sha256": "96449aa108ecef76801c1a51e58e4d75f2cadac5ad94289f33cc5733dbb966f9",
+      "gitBlob": "d51bd2529a104cc8eb533600da96d9829cc217cf",
+      "lineCount": 10,
+      "readRanges": [
+        [
+          1,
+          10
+        ]
+      ]
+    },
+    {
+      "kind": "supplemental source",
+      "revision": "34cf38ef53ee41381543785d0ffae90a37fac9ca",
+      "path": "gitops/platform/bootstrap/codex-ops.yaml",
+      "sha256": "39a9e6cd0dae21d200b09859f5b182212a19d0b8a72e61c8bf4ac30a61c6e4df",
+      "gitBlob": "376451ca0b5dea1353db65a2ca93fe9aaffdf24a",
+      "lineCount": 198,
+      "readRanges": [
+        [
+          1,
+          198
+        ]
+      ]
+    },
+    {
+      "kind": "supplemental source",
+      "revision": "34cf38ef53ee41381543785d0ffae90a37fac9ca",
+      "path": "tools/ops-mcp/package.json",
+      "sha256": "8dc8bf41d14726a734f6fbb9e258eb62f17859cd6aa1e0ee214b429c4430dfca",
+      "gitBlob": "bc7cd12d82fb1f958dd32466c3024ccad129736e",
+      "lineCount": 23,
+      "readRanges": [
+        [
+          1,
+          23
+        ]
+      ]
+    },
+    {
+      "kind": "supplemental source",
+      "revision": "34cf38ef53ee41381543785d0ffae90a37fac9ca",
+      "path": "ops/pod/test/native-mcp.test.mjs",
+      "sha256": "38cf265b0fa383eb987ebc481207d619333acb1a5a28aef009dc03c57029cb16",
+      "gitBlob": "07c86eb579ad134f2347d7a5b392942387d4be37",
+      "lineCount": 68,
+      "readRanges": [
+        [
+          1,
+          68
+        ]
+      ]
+    },
+    {
+      "kind": "supplemental source",
+      "revision": "34cf38ef53ee41381543785d0ffae90a37fac9ca",
+      "path": "ops/pod/test/agent-authority.test.mjs",
+      "sha256": "38a8b74bd25501b3e123015a2ff90ac9af5397ed0d3f311506216f55c14f28a4",
+      "gitBlob": "5e1d91e3b46a1a38e5a82554e90f1a0733178404",
+      "lineCount": 47,
+      "readRanges": [
+        [
+          1,
+          47
+        ]
+      ]
+    },
+    {
+      "kind": "supplemental source",
+      "revision": "34cf38ef53ee41381543785d0ffae90a37fac9ca",
+      "path": "ops/pod/test/namespace-access.test.mjs",
+      "sha256": "8508ba38e077f057df5ec556ab03753ecc515a21f816143ce46b34176799c047",
+      "gitBlob": "e5b77dfcee27d048e82d01f17c3b919af391e93d",
+      "lineCount": 71,
+      "readRanges": [
+        [
+          1,
+          71
+        ]
+      ]
+    },
+    {
+      "kind": "supplemental source",
+      "revision": "34cf38ef53ee41381543785d0ffae90a37fac9ca",
+      "path": "ops/pod/test/deployment.test.mjs",
+      "sha256": "9e1fa2464f03ed6441cf619b8cfe1ad1fdf37832b8e8b9bc9ee580217556ebf3",
+      "gitBlob": "40e54d436d74d2e5655a1a503ceaa73b939e9061",
+      "lineCount": 148,
+      "readRanges": [
+        [
+          1,
+          148
+        ]
+      ]
+    },
+    {
+      "kind": "supplemental source",
+      "revision": "34cf38ef53ee41381543785d0ffae90a37fac9ca",
+      "path": "ops/pod/test/provision.test.mjs",
+      "sha256": "15d956e3d2820201b414b7ee5712dd1f5dccd1656a9ea44834508531269625f7",
+      "gitBlob": "c0ce29fb41d8d1956a5b1ac36902c92be8ce8c7f",
+      "lineCount": 64,
+      "readRanges": [
+        [
+          1,
+          64
+        ]
+      ]
+    },
+    {
+      "kind": "supplemental source",
+      "revision": "34cf38ef53ee41381543785d0ffae90a37fac9ca",
+      "path": "tools/ops-mcp/test/access-policy.test.mjs",
+      "sha256": "d98e3f56b8ab703c6dc368a2b5acb872a4dbe632d794ef997941de1902822bc1",
+      "gitBlob": "1230619e72b3a1f1d5d5bc7f7c7c14fc825509fc",
+      "lineCount": 76,
+      "readRanges": [
+        [
+          1,
+          76
+        ]
+      ]
+    },
+    {
+      "kind": "supplemental source",
+      "revision": "34cf38ef53ee41381543785d0ffae90a37fac9ca",
+      "path": "tools/ops-mcp/test/exec.test.mjs",
+      "sha256": "221fbdb17f8375f6f281e0e61791f4a85cf4b310dc2d8e8a634ed2af98767609",
+      "gitBlob": "50de7528d207f2d605f053e0051559f7e577aca5",
+      "lineCount": 52,
+      "readRanges": [
+        [
+          1,
+          52
+        ]
+      ]
+    },
+    {
+      "kind": "supplemental source",
+      "revision": "34cf38ef53ee41381543785d0ffae90a37fac9ca",
+      "path": "tools/ops-mcp/test/namespace-prefix.test.mjs",
+      "sha256": "d7d49a1a93bb00013ffdf82b90d5b45a0a91db3835bc2549ef83bf628cb59586",
+      "gitBlob": "1f76bc9897a6ec6e4c662983c05b4b7c1af76bd8",
+      "lineCount": 93,
+      "readRanges": [
+        [
+          1,
+          93
+        ]
+      ]
+    },
+    {
+      "kind": "supplemental source",
+      "revision": "34cf38ef53ee41381543785d0ffae90a37fac9ca",
+      "path": "tools/ops-mcp/test/central-exec.test.mjs",
+      "sha256": "bafdebb62cad7de71fe6372848823e19790bfdb7c07303de9bf9ab63a5661c17",
+      "gitBlob": "2ed71d8a239ec9844f11748c74e73e2fcc5fc860",
+      "lineCount": 80,
+      "readRanges": [
+        [
+          1,
+          80
+        ]
+      ]
+    },
+    {
+      "kind": "supplemental source",
+      "revision": "34cf38ef53ee41381543785d0ffae90a37fac9ca",
+      "path": "tools/ops-mcp/test/central-http.test.mjs",
+      "sha256": "ce7a03121e5a654a66e588d9dc098c0464aa2a68093cd15438ab7de702493b17",
+      "gitBlob": "32dc7ebbc0f4eb7cf4c233bd42869ff8e0b3031a",
+      "lineCount": 78,
+      "readRanges": [
+        [
+          1,
+          78
+        ]
+      ]
+    },
+    {
+      "kind": "supplemental source",
+      "revision": "34cf38ef53ee41381543785d0ffae90a37fac9ca",
+      "path": "tools/ops-mcp/test/kubernetes.test.mjs",
+      "sha256": "a020f9510869f110a49740681350db88ab1d289d5ed280db8bc8ed6302251da3",
+      "gitBlob": "12c383b934f4c2f7d9ffbd4e851befc1aeb6020a",
+      "lineCount": 92,
+      "readRanges": [
+        [
+          1,
+          92
+        ]
+      ]
+    },
+    {
+      "kind": "supplemental source",
+      "revision": "34cf38ef53ee41381543785d0ffae90a37fac9ca",
+      "path": "tools/ops-mcp/test/hubble.test.mjs",
+      "sha256": "881a3a38a30c0cdab1a4b1e723fc01fca87ddb5a072bedaf606f489fb62f322e",
+      "gitBlob": "6e2ba45db63e70598f1b075d4a80d84e87f1f13e",
+      "lineCount": 57,
+      "readRanges": [
+        [
+          1,
+          57
+        ]
+      ]
+    },
+    {
+      "kind": "supplemental source",
+      "revision": "34cf38ef53ee41381543785d0ffae90a37fac9ca",
+      "path": "tools/ops-mcp/test/tls-reload.test.mjs",
+      "sha256": "bc716f168470caaff76993d1adae97049f29d82c4bb75adb6b0d2f6a9d088ce2",
+      "gitBlob": "3985bba6d3e94ce0c9f9ca219ab0cc2295e948d1",
+      "lineCount": 35,
+      "readRanges": [
+        [
+          1,
+          35
+        ]
+      ]
+    },
+    {
+      "kind": "supplemental source",
+      "revision": "34cf38ef53ee41381543785d0ffae90a37fac9ca",
+      "path": "tools/ops-mcp/test/provision.test.mjs",
+      "sha256": "077a1d566a0c8a05c949c5847e4dda001fe7024d1634e6cdb890bf36669e26bb",
+      "gitBlob": "f6b3b9d30872127f8feb3623869c112f25131cd4",
+      "lineCount": 72,
+      "readRanges": [
+        [
+          1,
+          72
+        ]
+      ]
+    },
+    {
+      "kind": "supplemental source",
+      "revision": "34cf38ef53ee41381543785d0ffae90a37fac9ca",
+      "path": "tools/ops-mcp/test/diagnostics.test.mjs",
+      "sha256": "46d93e1950b0f57d074175e0fc5d7c27b1b4c0ddd2475bfb5d5b3d0b3877374d",
+      "gitBlob": "4d0adc63d29dbae6169506fa6fb15b20b4328c3c",
+      "lineCount": 23,
+      "readRanges": [
+        [
+          1,
+          23
+        ]
+      ]
+    },
+    {
+      "kind": "supplemental source",
+      "revision": "34cf38ef53ee41381543785d0ffae90a37fac9ca",
+      "path": "tools/ops-mcp/test/local.test.mjs",
+      "sha256": "88d0fbd1c6b51ec219be156fa91369e5c3837134a4c9b35dd0f6e10a7a798ad7",
+      "gitBlob": "5667cec9505fa0f92c413d488a71521ac2ddb68b",
+      "lineCount": 51,
+      "readRanges": [
+        [
+          1,
+          51
+        ]
+      ]
+    },
+    {
+      "kind": "supplemental source",
+      "revision": "34cf38ef53ee41381543785d0ffae90a37fac9ca",
+      "path": "cmd/buster-namespace-controller/ops-mcp-rbac_test.go",
+      "sha256": "ae19df81d8320973192807a731808327e273b4174615e63bfcc36184a3311fc9",
+      "gitBlob": "04d3771d821f08f63e70e2ba941ea3406daee485",
+      "lineCount": 57,
+      "readRanges": [
+        [
+          1,
+          57
+        ]
+      ]
+    },
+    {
+      "kind": "supplemental source",
+      "revision": "34cf38ef53ee41381543785d0ffae90a37fac9ca",
+      "path": "charts/kubeclaw/templates/deployment.yaml",
+      "sha256": "d0c0e9570dde059bf66e32d259be806c2f5a4a64789fde671b9cf04ec93f12c2",
+      "gitBlob": "15f9d1796d626b20de30d5cff93c44b7e47a134f",
+      "lineCount": 1763,
+      "readRanges": [
+        [
+          20,
+          55
+        ],
+        [
+          268,
+          306
+        ],
+        [
+          608,
+          636
+        ],
+        [
+          1336,
+          1354
+        ],
+        [
+          1494,
+          1550
+        ],
+        [
+          1645,
+          1680
+        ]
+      ]
+    },
+    {
+      "kind": "supplemental source",
+      "revision": "34cf38ef53ee41381543785d0ffae90a37fac9ca",
+      "path": "my-values/nova-values.yaml",
+      "sha256": "bc728637315deeeb84fa3e176cccb4c260f4edf97958355664646f9c66810a45",
+      "gitBlob": "2afa61ac5accaae9a608f7e1062e3cf65948e1d1",
+      "lineCount": 296,
+      "readRanges": [
+        [
+          65,
+          100
+        ],
+        [
+          225,
+          250
+        ]
+      ]
+    },
+    {
+      "kind": "supplemental source",
+      "revision": "34cf38ef53ee41381543785d0ffae90a37fac9ca",
+      "path": "my-values/buster-values.yaml",
+      "sha256": "6d707676d7ae3bd6529ce88e5a7d5caf5f2b93781cde49793f4c9a3cd778e539",
+      "gitBlob": "19dd7314d97440e4024977c4536a1b30de25bd82",
+      "lineCount": 269,
+      "readRanges": [
+        [
+          60,
+          105
+        ],
+        [
+          105,
+          215
+        ],
+        [
+          262,
+          269
+        ],
+        [
+          216,
+          261
+        ]
+      ]
+    },
+    {
+      "kind": "supplemental source",
+      "revision": "34cf38ef53ee41381543785d0ffae90a37fac9ca",
+      "path": "charts/kubeclaw/templates/buster-namespace-controller.yaml",
+      "sha256": "4c1b77043bd278cd9440a9a2d2c948c44adb2a78416dce0b0c244c39174652b0",
+      "gitBlob": "74f623d52590e189e5cb4a4f79a4361992cd0303",
+      "lineCount": 273,
+      "readRanges": [
+        [
+          1,
+          60
+        ],
+        [
+          90,
+          185
+        ],
+        [
+          188,
+          225
+        ]
+      ]
+    },
+    {
+      "kind": "supplemental source",
+      "revision": "34cf38ef53ee41381543785d0ffae90a37fac9ca",
+      "path": "charts/kubeclaw/values.yaml",
+      "sha256": "dff22dd95068f2abc409d0a2cce1e22bac183d8b5f72af5e293f2183f5e15d3e",
+      "gitBlob": "9060e96f9f527380bf282129485a54cbbc6148c2",
+      "lineCount": 565,
+      "readRanges": [
+        [
+          429,
+          450
+        ]
+      ]
+    },
+    {
+      "kind": "supplemental source",
+      "revision": "34cf38ef53ee41381543785d0ffae90a37fac9ca",
+      "path": "cmd/buster-namespace-controller/main.go",
+      "sha256": "b1780a101cf81bd468af4434fb287b1e4540bc37cbb0e58b77932a8ec9410eca",
+      "gitBlob": "eee770b64f34351d668e3d020fdd1ed4c7412923",
+      "lineCount": 2110,
+      "readRanges": [
+        [
+          965,
+          1085
+        ]
+      ]
+    },
+    {
+      "kind": "supplemental source",
+      "revision": "34cf38ef53ee41381543785d0ffae90a37fac9ca",
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-runtime.ts",
+      "sha256": "b9f8bee4d6ed977daf39be3dd91ba8e8323e5b625ff630b53ed1aa923a989833",
+      "gitBlob": "840e81a1aa6f536b32c0b3d4da5b8c0c64ddeace",
+      "lineCount": 758,
+      "readRanges": [
+        [
+          444,
+          500
+        ],
+        [
+          509,
+          524
+        ],
+        [
+          688,
+          719
+        ]
+      ]
+    },
+    {
+      "kind": "supplemental source",
+      "revision": "34cf38ef53ee41381543785d0ffae90a37fac9ca",
+      "path": "skills/buster/engine/test-gates/remote-plan-service.ts",
+      "sha256": "3be9e75c8619da96c22bfaabd7fbab548bc07085787d092a83ba1f20130434f9",
+      "gitBlob": "ebb367b26aaa640f465a26eb4bed52c61fdb7068",
+      "lineCount": 815,
+      "readRanges": [
+        [
+          682,
+          739
+        ]
+      ]
+    },
+    {
+      "kind": "supplemental source",
+      "revision": "34cf38ef53ee41381543785d0ffae90a37fac9ca",
+      "path": "skills/buster/engine/test-gates/production.ts",
+      "sha256": "79c47d55e525f5ebb5e7e05a9c52e18514f9e464401c51e7def38dcec7f646a3",
+      "gitBlob": "69759d4bd459d9c2aac4973fd5cd16a3d44eeb23",
+      "lineCount": 422,
+      "readRanges": [
+        [
+          257,
+          284
+        ]
+      ]
+    },
+    {
+      "kind": "supplemental source",
+      "revision": "34cf38ef53ee41381543785d0ffae90a37fac9ca",
+      "path": "docker/buster-runtime-entrypoint.sh",
+      "sha256": "16a17c38fb41644c01c314544955c54da1f1e97f40aaa5b5463f11d7c53aa125",
+      "gitBlob": "fb60bf63375d0e98ae1d7b4f92077345d2b30d07",
+      "lineCount": 347,
+      "readRanges": [
+        [
+          30,
+          82
+        ],
+        [
+          121,
+          158
+        ],
+        [
+          194,
+          202
+        ],
+        [
+          224,
+          245
+        ],
+        [
+          315,
+          345
+        ]
+      ]
+    },
+    {
+      "kind": "supplemental source",
+      "revision": "34cf38ef53ee41381543785d0ffae90a37fac9ca",
+      "path": "ops/pod/supervisor.py",
+      "sha256": "3c42d6a907531cfe889a119179db4f89b25b5fbf816714be1ff544751a0a969e",
+      "gitBlob": "aad504dc12edbb77a52fd6c9fe612680ef5e089a",
+      "lineCount": 125,
+      "readRanges": [
+        [
+          58,
+          95
+        ]
+      ]
+    },
+    {
+      "kind": "supplemental source",
+      "revision": "34cf38ef53ee41381543785d0ffae90a37fac9ca",
+      "path": "scripts/argocd-self-management.mjs",
+      "sha256": "c37b41b21d0aa261904a4d7059661b0607f283aa6dc0a87968e4a916fbc87f6a",
+      "gitBlob": "eb5e1ef27dde7a7e21201def6612ece6045d0819",
+      "lineCount": 228,
+      "readRanges": [
+        [
+          1,
+          30
+        ],
+        [
+          77,
+          94
+        ]
+      ]
+    },
+    {
+      "kind": "historical plugin authority full file",
+      "revision": "569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "path": "plugins/kubeclaw-ops/.codex-plugin/plugin.json",
+      "sha256": "906bd92fc84b1ea15e3e76c8b39d8262d0cbaa5458c9923478233660521ff1e5",
+      "gitBlob": "d08049eb5331119e8cd06cbe62aec6274d36faa0",
+      "lineCount": 26,
+      "readRanges": [
+        [
+          1,
+          26
+        ]
+      ]
+    },
+    {
+      "kind": "historical plugin authority full file",
+      "revision": "569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "path": ".agents/plugins/marketplace.json",
+      "sha256": "4a843c8641e0e4bb4454a3aab8038942bd2e9f3922f8a20e782e4700ae6150b0",
+      "gitBlob": "6a24b51a9f5b2ba65702951c8e237eb9cabc05a3",
+      "lineCount": 20,
+      "readRanges": [
+        [
+          1,
+          20
+        ]
+      ]
+    },
+    {
+      "kind": "historical plugin authority full file",
+      "revision": "569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "path": "plugins/kubeclaw-ops/skills/troubleshoot/SKILL.md",
+      "sha256": "52a7329b7176b69c98ca46069d1147e0dc242a6f812ac4efdceba0c86a8cc530",
+      "gitBlob": "ab18c485e70346b3ee5806e15a9f15d3b8ea111f",
+      "lineCount": 35,
+      "readRanges": [
+        [
+          1,
+          35
+        ]
+      ]
+    }
+  ],
+  "notes": [
+    "Ranges describe actual semantic reads; additional rg discovery excerpts were not treated as whole-file reads.",
+    "Combined initial diff truncation was replaced with complete unified=1 diff reads (ops lines 1-740 across four ranges; other four pages complete).",
+    "Platform output clipped at 1078 was reread 1070-1093.",
+    "No execution/live acceptance implied.",
+    "Zero git diff between receipt commit 9968c3fdb277a2f12277dd5736e76f6e00bd47f3 and upstream for charts/ops-pod and tools/ops-mcp/src."
+  ]
+}

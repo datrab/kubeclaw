@@ -4,6 +4,7 @@ Status: source-backed deployment path; stored runtime selection fails current co
 Audience: Kubernetes platform operator, security operator
 Owner: platform operations
 Evidence: scripts/deploy.sh; docs/generated/inventory/deploy-script.json
+Upstream source scope: central Ops contract at `34cf38ef53ee41381543785d0ffae90a37fac9ca`; no runtime source adoption or live verification is established by this update
 Applies to: current selected runtime release
 Last verified: 2026-10-12; local extracted-command and release-boundary checks only; no live cluster result is available
 
@@ -606,7 +607,9 @@ Do not count Tailscale inside the target cluster as the only second route.
 A CNI or cluster failure can remove that route.
 
 The optional Ops Pod supports routine operations after cluster readiness.
-The selected release has a Codex StatefulSet and a separate central MCP Pod.
+The dated upstream configuration has a Codex StatefulSet and a separate
+central MCP Pod. This is not the branch's already-qualified selected runtime
+and does not clear the installation stop or any earlier gate.
 Argo provisions MCP credentials and trust before workloads. Use a full Ops sync
 so provisioning hooks run. Nova and Buster receive their native MCP connector
 through the selected runtime bundle; no manual client installation is needed.

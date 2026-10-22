@@ -1,0 +1,160 @@
+diff --git a/scripts/check-platform-specialist-guides.mjs b/scripts/check-platform-specialist-guides.mjs
+index bfc7227c..4f211222 100644
+--- a/scripts/check-platform-specialist-guides.mjs
++++ b/scripts/check-platform-specialist-guides.mjs
+@@ -184,6 +184,12 @@ const reviewedPageSourceRevisions = {
+ const reviewedOperatorInvocationBlocks = new Set(["1eb6d0e7a4f36d116677d9928611f6ba56496251c38c4bd1a0e84ac6c3ae4c79", "2136684a1dc8309e94ee786a8f76cfb2d524c00792e7cbeb3bd1b45a06d3067c", "1bdae1bd4ca174516fc703ebd059c6e82731e881f63123a5c2113151e2e4c488"]);
+ 
+ let sourceLinkCount = 0;
++const upstreamOps = JSON.parse(fs.readFileSync(path.join(root, 'scripts/ops-mcp-docs-upstream.json'), 'utf8'));
++assert.equal(upstreamOps.revision, '34cf38ef53ee41381543785d0ffae90a37fac9ca');
++for (const page of upstreamOps.pages) {
++  assert(reviewedPageSourceRevisions[page], `unknown upstream Ops page ${page}`);
++  reviewedPageSourceRevisions[page].push(upstreamOps.revision);
++}
+ const checkedSources = new Set();
+ for (const [file, minimumLinks, markers] of specifications) {
+   const absolute = path.join(root, file);
+@@ -222,6 +228,12 @@ for (const [file, minimumLinks, markers] of specifications) {
+       allowedRevisions: reviewedPageSourceRevisions[file],
+       requireRange: file.startsWith('docs/site/understand/') || file.endsWith('platform-surfaces-generated.md'),
+       maximumSpan: file.startsWith('docs/site/understand/') || file.endsWith('platform-surfaces-generated.md') ? 60 : Infinity,
++      ...(linkRevision === upstreamOps.revision ? {
++        upstreamSnapshot: (() => {
++          assert(source.includes('Upstream source scope:'), `${file} must distinguish upstream evidence from branch adoption`);
++          return upstreamOps;
++        })(),
++      } : {}),
+     });
+     checkedSources.add(`${linkRevision}:${repositoryPath}`);
+   }
+diff --git a/scripts/docs-source-evidence-pin.mjs b/scripts/docs-source-evidence-pin.mjs
+index 1c68e213..60f167c3 100644
+--- a/scripts/docs-source-evidence-pin.mjs
++++ b/scripts/docs-source-evidence-pin.mjs
+@@ -2,12 +2,13 @@ import assert from 'node:assert/strict';
+ import fs from 'node:fs';
+ import path from 'node:path';
+ import { execFileSync } from 'node:child_process';
++import { createHash } from 'node:crypto';
+ 
+ // Revision admission is supplied by a caller-owned, explicitly reviewed page
+ // roster. Mixed immutable evidence is allowed; arbitrary revisions are not.
+ export function verifySourceEvidencePin(root, {
+   page, revision, source, first, last = first, allowedRevisions,
+-  requireRange = false, maximumSpan = Infinity,
++  requireRange = false, maximumSpan = Infinity, upstreamSnapshot,
+ }) {
+   assert(/^[0-9a-f]{40}$/u.test(revision) && allowedRevisions.includes(revision),
+     `${page} uses an unreviewed source revision for ${source}`);
+@@ -21,11 +22,21 @@ export function verifySourceEvidencePin(root, {
+   } catch {
+     assert.fail(`${page} cites unavailable revision/source: ${revision}:${source}`);
+   }
+-  const currentPath = path.join(root, source);
+-  assert(fs.existsSync(currentPath) && fs.lstatSync(currentPath).isFile(),
+-    `linked source is absent or not a regular file: ${source}`);
+-  assert.equal(fs.readFileSync(currentPath, 'utf8'), pinned,
+-    `${source} changed after ${revision}; inspect and repin the affected evidence`);
++  if (upstreamSnapshot) {
++    // A dated upstream deployment can be documented without adopting its
++    // runtime into a different branch. Require exact page/revision/file custody;
++    // ordinary current-source evidence retains its byte-equality guard below.
++    assert(upstreamSnapshot.schemaVersion === 1 && upstreamSnapshot.revision === revision
++      && upstreamSnapshot.pages?.includes(page), `${page} has no admitted upstream scope`);
++    assert.equal(upstreamSnapshot.sources?.[source], createHash('sha256').update(pinned).digest('hex'),
++      `${page} upstream source digest missing or changed: ${source}`);
++  } else {
++    const currentPath = path.join(root, source);
++    assert(fs.existsSync(currentPath) && fs.lstatSync(currentPath).isFile(),
++      `linked source is absent or not a regular file: ${source}`);
++    assert.equal(fs.readFileSync(currentPath, 'utf8'), pinned,
++      `${source} changed after ${revision}; inspect and repin the affected evidence`);
++  }
+   assert(!requireRange || first !== undefined, `${page} has a source link without an explicit line range`);
+   if (first === undefined) return;
+   const start = Number(first), end = Number(last);
+diff --git a/scripts/ops-mcp-docs-upstream.json b/scripts/ops-mcp-docs-upstream.json
+new file mode 100644
+index 00000000..c81ec387
+--- /dev/null
++++ b/scripts/ops-mcp-docs-upstream.json
+@@ -0,0 +1,30 @@
++{
++  "schemaVersion": 1,
++  "purpose": "Explicit upstream-main Ops evidence; no runtime source adoption into PR #13.",
++  "revision": "34cf38ef53ee41381543785d0ffae90a37fac9ca",
++  "pages": [
++    "docs/site/understand/ops-mcp.md",
++    "docs/site/understand/codex-integration.md",
++    "docs/site/understand/platform-and-operations.md",
++    "docs/site/understand/security-and-trust.md",
++    "docs/site/understand/communication.md"
++  ],
++  "sources": {
++    "charts/kubeclaw/templates/configmap-gateway.yaml": "37f2a0ad3038097d484da8a968f44a2a583049aa64772df435bde7094e89c46f",
++    "charts/kubeclaw/files/ops-mcp/stdio.mjs": "d124f5579ee8b01ca71a59a9278aaa63de4128cd482781a1bcc8597eebac023e",
++    "charts/kubeclaw/files/ops-mcp/client.mjs": "342ded4ec5e851ff03f2419dc35ae901e7da5a327027e86a78dd8a30245134f1",
++    "charts/kubeclaw/files/sync-ops-mcp-config.mjs": "f705ee0bac2b3d93f6f5b55c3012ff8743a68cc1a43cce4c883f17a85deae56a",
++    "tools/ops-mcp/src/access-policy.mjs": "7f7e88ad89677b743b395560aa00cff98f79b04fa0108f1a7fdea4e86995fac4",
++    "tools/ops-mcp/src/server.mjs": "fc14524cd7062c8d2d9b54ac754c89365474ea77ced15fe1a5c0840099113865",
++    "gitops/platform/values/codex-ops.yaml": "a7e0300d1e2a44cac1e11be150fdeb73c112db52ba3b7ea4123109d3c99e86b1",
++    "charts/ops-pod/templates/mcp.yaml": "0ed072729d8f043a8b391408b3d768c82183e87f831de18bd6049b9449f09aaf",
++    "charts/ops-pod/templates/workload.yaml": "5bdbf7f69eab00c4cefacb42a63ef51b8737dbda2ee1af30733e2cf06c5cb8ca",
++    "charts/ops-pod/templates/rbac.yaml": "40b00c443641a15aa443253c6326082e324841cd1b1e279f8873c000fc4d30a5",
++    "charts/ops-pod/templates/network.yaml": "a34b418df10ca111b248912ba3d5402ffa266fbf9a6e48b0b8aec74daa319d45",
++    "tools/ops-mcp/src/exec.mjs": "e3e422e800d87c594ba076ea8588fceaf93d86db72617c561d3dd595e80d7342",
++    "tools/ops-mcp/test/tls-client.test.mjs": "43465a37e7cbc108fdd8c77352144542c0690d74cea7fa93f3174c2e7dc55065",
++    "tools/ops-mcp/src/kubernetes.mjs": "9ece63d71c7cb12d282cc125a3a795be5e4ffd4bc21ee51a0a31e5cfc8392f9c",
++    "tools/ops-mcp/src/hubble.mjs": "d4e60f2801e3c66ded259f420c1a9faca0071fa084dc198a35433f8c9cb4f599",
++    "charts/ops-pod/templates/provision.yaml": "3a003c343bdab95dcc2d8faeef7ad6f999f2267a8aa26556ae74164977c4b02e"
++  }
++}
+diff --git a/scripts/tests/docs-source-evidence-pin.test.mjs b/scripts/tests/docs-source-evidence-pin.test.mjs
+index 1c86b861..4814e2a9 100644
+--- a/scripts/tests/docs-source-evidence-pin.test.mjs
++++ b/scripts/tests/docs-source-evidence-pin.test.mjs
+@@ -4,6 +4,7 @@ import os from 'node:os';
+ import path from 'node:path';
+ import { execFileSync } from 'node:child_process';
+ import test from 'node:test';
++import { createHash } from 'node:crypto';
+ import { verifySourceEvidencePin } from '../docs-source-evidence-pin.mjs';
+ 
+ function fixture(run) {
+@@ -38,6 +39,35 @@ test('a valid old pin cannot hide any current source-byte change', () => fixture
+   assert.throws(() => verify({ first: 1, last: 1 }), /changed after/);
+ }));
+ 
++test('explicit upstream evidence binds page, revision, file digest and range without adopting runtime source', () => fixture(({ root, original, current, verify }) => {
++  const upstreamSnapshot = { schemaVersion: 1, revision: original, pages: ['topic.md'],
++    sources: { 'unchanged.ts': createHash('sha256').update('one\ntwo\nthree\n').digest('hex') } };
++  fs.appendFileSync(path.join(root, 'unchanged.ts'), 'different branch source\n');
++  verify({ upstreamSnapshot });
++  assert.throws(() => verify({}), /changed after/);
++  assert.throws(() => verify({ upstreamSnapshot, page: 'other.md' }), /no admitted upstream scope/);
++  assert.throws(() => verify({ upstreamSnapshot, revision: current }), /no admitted upstream scope/);
++  assert.throws(() => verify({ upstreamSnapshot: { ...upstreamSnapshot, sources: {} } }), /digest missing or changed/);
++  assert.throws(() => verify({ upstreamSnapshot, last: 99 }), /invalid line range/);
++}));
++
++test('dated Ops reader evidence verifies its actual page roster, immutable source bytes and excerpts', () => {
++  const root = path.resolve(import.meta.dirname, '../..');
++  const upstreamSnapshot = JSON.parse(fs.readFileSync(path.join(root, 'scripts/ops-mcp-docs-upstream.json'), 'utf8'));
++  assert.equal(upstreamSnapshot.revision, '34cf38ef53ee41381543785d0ffae90a37fac9ca');
++  for (const page of upstreamSnapshot.pages) {
++    const text = fs.readFileSync(path.join(root, page), 'utf8');
++    assert(text.includes('Upstream source scope:'), `${page} omits its upstream boundary`);
++    const links = [...text.matchAll(/https:\/\/github\.com\/datrab\/kubeclaw\/blob\/([a-f0-9]{40})\/([^#)]+)#L(\d+)-L(\d+)/gu)]
++      .filter(match => match[1] === upstreamSnapshot.revision);
++    assert(links.length > 0, `${page} lacks its upstream evidence`);
++    for (const [, revision, source, first, last] of links) {
++      verifySourceEvidencePin(root, { page, revision, source, first, last,
++        allowedRevisions: [upstreamSnapshot.revision], requireRange: true, maximumSpan: 60, upstreamSnapshot });
++    }
++  }
++});
++
+ test('unreviewed and unavailable revisions remain different fail-closed cases', () => fixture(({ current, verify }) => {
+   assert.throws(() => verify({ revision: current, allowedRevisions: [] }), /unreviewed source revision/);
+   const unavailable = 'f'.repeat(40);

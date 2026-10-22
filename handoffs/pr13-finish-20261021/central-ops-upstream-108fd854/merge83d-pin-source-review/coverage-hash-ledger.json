@@ -1,0 +1,258 @@
+{
+  "candidate": "108fd854525688584b8b3e5595c6ee77461a46a0",
+  "role": "SOURCE-only; inert read/hash/Git observations; no execution/import",
+  "assignedCurrent": [
+    {
+      "path": "scripts/docs-source-evidence-pin.mjs",
+      "sha256": "e3a40956e8960b504e157cfcd7ca8f20a9a2bea38155c91f48f774a7fc69ba75",
+      "bytes": 2603,
+      "readLines": [
+        1,
+        48
+      ],
+      "7d2bb9d4": {
+        "sha256": "7949bcbfd4df89e9bb43e1e887608910e4755782a3a1b12d7de2a911d559a724",
+        "bytes": 1900
+      },
+      "83d1d7e8": {
+        "sha256": "e3a40956e8960b504e157cfcd7ca8f20a9a2bea38155c91f48f774a7fc69ba75",
+        "bytes": 2603
+      }
+    },
+    {
+      "path": "scripts/check-platform-specialist-guides.mjs",
+      "sha256": "6d6017b40338a36f01570f097f0266d3422a5ff36f71c3cc447c320f349934d3",
+      "bytes": 24256,
+      "readLines": [
+        1,
+        465
+      ],
+      "7d2bb9d4": {
+        "sha256": "21128593eeb12542fd6d3e8631459d31bbf8eab6fb0b78dd38cf1c60b0a3c368",
+        "bytes": 23602
+      },
+      "83d1d7e8": {
+        "sha256": "6d6017b40338a36f01570f097f0266d3422a5ff36f71c3cc447c320f349934d3",
+        "bytes": 24256
+      }
+    },
+    {
+      "path": "scripts/ops-mcp-docs-upstream.json",
+      "sha256": "4452cbb749a7faa95bb7199095629b724db09b0c23f53becab71314f30252510",
+      "bytes": 2243,
+      "readLines": [
+        1,
+        30
+      ],
+      "7d2bb9d4": "absent",
+      "83d1d7e8": {
+        "sha256": "4452cbb749a7faa95bb7199095629b724db09b0c23f53becab71314f30252510",
+        "bytes": 2243
+      }
+    },
+    {
+      "path": "scripts/tests/docs-source-evidence-pin.test.mjs",
+      "sha256": "da6e5ed7dbca46c38110368ce28377419fb300286409a95116a2713ccad2603e",
+      "bytes": 4835,
+      "readLines": [
+        1,
+        82
+      ],
+      "7d2bb9d4": {
+        "sha256": "3dd6acf8e767829c6814cd417e7ac70b4a6f82f06266d7e180434ff1f4c83cf4",
+        "bytes": 2752
+      },
+      "83d1d7e8": {
+        "sha256": "da6e5ed7dbca46c38110368ce28377419fb300286409a95116a2713ccad2603e",
+        "bytes": 4835
+      }
+    }
+  ],
+  "originalBoundary": "Full original semantics reconstructed by complete current reads and complete exact diff 7d2bb9d4..83d1d7e8. New JSON absent originally.",
+  "unreadAssigned": 0,
+  "excluded": [
+    "semantic content of five Ops/Codex pages",
+    "semantic/runtime approval of upstream blobs",
+    "Reader",
+    "Quality",
+    "gates",
+    "API/generator/runtime acceptance"
+  ],
+  "diffSha256": "21746e7b8fb53497508486e023f77ad9b35aefdbbb7fa1feb0ccd64d57ce2f39",
+  "upstreamBlobCustody": [
+    {
+      "path": "charts/kubeclaw/templates/configmap-gateway.yaml",
+      "revision": "34cf38ef53ee41381543785d0ffae90a37fac9ca",
+      "sha256": "37f2a0ad3038097d484da8a968f44a2a583049aa64772df435bde7094e89c46f",
+      "manifestSha256": "37f2a0ad3038097d484da8a968f44a2a583049aa64772df435bde7094e89c46f",
+      "match": true,
+      "bytes": 10407,
+      "treeEntry": "100644 blob 1603224094ea23ad8526008b79ae23852162e9aa\tcharts/kubeclaw/templates/configmap-gateway.yaml",
+      "scope": "raw custody read/hash only, not semantic review"
+    },
+    {
+      "path": "charts/kubeclaw/files/ops-mcp/stdio.mjs",
+      "revision": "34cf38ef53ee41381543785d0ffae90a37fac9ca",
+      "sha256": "d124f5579ee8b01ca71a59a9278aaa63de4128cd482781a1bcc8597eebac023e",
+      "manifestSha256": "d124f5579ee8b01ca71a59a9278aaa63de4128cd482781a1bcc8597eebac023e",
+      "match": true,
+      "bytes": 2382,
+      "treeEntry": "100644 blob 3a1f652001360d134e7880cdf8977536c83e1231\tcharts/kubeclaw/files/ops-mcp/stdio.mjs",
+      "scope": "raw custody read/hash only, not semantic review"
+    },
+    {
+      "path": "charts/kubeclaw/files/ops-mcp/client.mjs",
+      "revision": "34cf38ef53ee41381543785d0ffae90a37fac9ca",
+      "sha256": "342ded4ec5e851ff03f2419dc35ae901e7da5a327027e86a78dd8a30245134f1",
+      "manifestSha256": "342ded4ec5e851ff03f2419dc35ae901e7da5a327027e86a78dd8a30245134f1",
+      "match": true,
+      "bytes": 2785,
+      "treeEntry": "100644 blob d913effd1cc4054de9e1dd000414c0335cee1887\tcharts/kubeclaw/files/ops-mcp/client.mjs",
+      "scope": "raw custody read/hash only, not semantic review"
+    },
+    {
+      "path": "charts/kubeclaw/files/sync-ops-mcp-config.mjs",
+      "revision": "34cf38ef53ee41381543785d0ffae90a37fac9ca",
+      "sha256": "f705ee0bac2b3d93f6f5b55c3012ff8743a68cc1a43cce4c883f17a85deae56a",
+      "manifestSha256": "f705ee0bac2b3d93f6f5b55c3012ff8743a68cc1a43cce4c883f17a85deae56a",
+      "match": true,
+      "bytes": 910,
+      "treeEntry": "100644 blob 13d0d41c18e62758e5a05c2c7b88f0ffb97d871a\tcharts/kubeclaw/files/sync-ops-mcp-config.mjs",
+      "scope": "raw custody read/hash only, not semantic review"
+    },
+    {
+      "path": "tools/ops-mcp/src/access-policy.mjs",
+      "revision": "34cf38ef53ee41381543785d0ffae90a37fac9ca",
+      "sha256": "7f7e88ad89677b743b395560aa00cff98f79b04fa0108f1a7fdea4e86995fac4",
+      "manifestSha256": "7f7e88ad89677b743b395560aa00cff98f79b04fa0108f1a7fdea4e86995fac4",
+      "match": true,
+      "bytes": 6951,
+      "treeEntry": "100644 blob 24053913d2451128048e70b1a897ed8be3c921f3\ttools/ops-mcp/src/access-policy.mjs",
+      "scope": "raw custody read/hash only, not semantic review"
+    },
+    {
+      "path": "tools/ops-mcp/src/server.mjs",
+      "revision": "34cf38ef53ee41381543785d0ffae90a37fac9ca",
+      "sha256": "fc14524cd7062c8d2d9b54ac754c89365474ea77ced15fe1a5c0840099113865",
+      "manifestSha256": "fc14524cd7062c8d2d9b54ac754c89365474ea77ced15fe1a5c0840099113865",
+      "match": true,
+      "bytes": 26098,
+      "treeEntry": "100644 blob 20fb7a3d7c9278e6a2d6d7d1785da6cbc9cee012\ttools/ops-mcp/src/server.mjs",
+      "scope": "raw custody read/hash only, not semantic review"
+    },
+    {
+      "path": "gitops/platform/values/codex-ops.yaml",
+      "revision": "34cf38ef53ee41381543785d0ffae90a37fac9ca",
+      "sha256": "a7e0300d1e2a44cac1e11be150fdeb73c112db52ba3b7ea4123109d3c99e86b1",
+      "manifestSha256": "a7e0300d1e2a44cac1e11be150fdeb73c112db52ba3b7ea4123109d3c99e86b1",
+      "match": true,
+      "bytes": 2975,
+      "treeEntry": "100644 blob a5ba5a19c45328eac88b74074845d33f81a99012\tgitops/platform/values/codex-ops.yaml",
+      "scope": "raw custody read/hash only, not semantic review"
+    },
+    {
+      "path": "charts/ops-pod/templates/mcp.yaml",
+      "revision": "34cf38ef53ee41381543785d0ffae90a37fac9ca",
+      "sha256": "0ed072729d8f043a8b391408b3d768c82183e87f831de18bd6049b9449f09aaf",
+      "manifestSha256": "0ed072729d8f043a8b391408b3d768c82183e87f831de18bd6049b9449f09aaf",
+      "match": true,
+      "bytes": 5132,
+      "treeEntry": "100644 blob affe4c22c29fda47ab385a6d7a0344a8dea75a4e\tcharts/ops-pod/templates/mcp.yaml",
+      "scope": "raw custody read/hash only, not semantic review"
+    },
+    {
+      "path": "charts/ops-pod/templates/workload.yaml",
+      "revision": "34cf38ef53ee41381543785d0ffae90a37fac9ca",
+      "sha256": "5bdbf7f69eab00c4cefacb42a63ef51b8737dbda2ee1af30733e2cf06c5cb8ca",
+      "manifestSha256": "5bdbf7f69eab00c4cefacb42a63ef51b8737dbda2ee1af30733e2cf06c5cb8ca",
+      "match": true,
+      "bytes": 5084,
+      "treeEntry": "100644 blob cbefa3e15befed579dfba2e38847db07a51c42d3\tcharts/ops-pod/templates/workload.yaml",
+      "scope": "raw custody read/hash only, not semantic review"
+    },
+    {
+      "path": "charts/ops-pod/templates/rbac.yaml",
+      "revision": "34cf38ef53ee41381543785d0ffae90a37fac9ca",
+      "sha256": "40b00c443641a15aa443253c6326082e324841cd1b1e279f8873c000fc4d30a5",
+      "manifestSha256": "40b00c443641a15aa443253c6326082e324841cd1b1e279f8873c000fc4d30a5",
+      "match": true,
+      "bytes": 3780,
+      "treeEntry": "100644 blob 8e5832c95f2fb078bb09cf581a9da9f725adf577\tcharts/ops-pod/templates/rbac.yaml",
+      "scope": "raw custody read/hash only, not semantic review"
+    },
+    {
+      "path": "charts/ops-pod/templates/network.yaml",
+      "revision": "34cf38ef53ee41381543785d0ffae90a37fac9ca",
+      "sha256": "a34b418df10ca111b248912ba3d5402ffa266fbf9a6e48b0b8aec74daa319d45",
+      "manifestSha256": "a34b418df10ca111b248912ba3d5402ffa266fbf9a6e48b0b8aec74daa319d45",
+      "match": true,
+      "bytes": 5671,
+      "treeEntry": "100644 blob f8e0826b131bfa61aa532360ba87cce39b945037\tcharts/ops-pod/templates/network.yaml",
+      "scope": "raw custody read/hash only, not semantic review"
+    },
+    {
+      "path": "tools/ops-mcp/src/exec.mjs",
+      "revision": "34cf38ef53ee41381543785d0ffae90a37fac9ca",
+      "sha256": "e3e422e800d87c594ba076ea8588fceaf93d86db72617c561d3dd595e80d7342",
+      "manifestSha256": "e3e422e800d87c594ba076ea8588fceaf93d86db72617c561d3dd595e80d7342",
+      "match": true,
+      "bytes": 4094,
+      "treeEntry": "100644 blob 17cdc0ce96c1d466e58be2fc22a61782cce2769c\ttools/ops-mcp/src/exec.mjs",
+      "scope": "raw custody read/hash only, not semantic review"
+    },
+    {
+      "path": "tools/ops-mcp/test/tls-client.test.mjs",
+      "revision": "34cf38ef53ee41381543785d0ffae90a37fac9ca",
+      "sha256": "43465a37e7cbc108fdd8c77352144542c0690d74cea7fa93f3174c2e7dc55065",
+      "manifestSha256": "43465a37e7cbc108fdd8c77352144542c0690d74cea7fa93f3174c2e7dc55065",
+      "match": true,
+      "bytes": 9727,
+      "treeEntry": "100644 blob 5c04c97f1726e18026d09cce225d43f310de88c3\ttools/ops-mcp/test/tls-client.test.mjs",
+      "scope": "raw custody read/hash only, not semantic review"
+    },
+    {
+      "path": "tools/ops-mcp/src/kubernetes.mjs",
+      "revision": "34cf38ef53ee41381543785d0ffae90a37fac9ca",
+      "sha256": "9ece63d71c7cb12d282cc125a3a795be5e4ffd4bc21ee51a0a31e5cfc8392f9c",
+      "manifestSha256": "9ece63d71c7cb12d282cc125a3a795be5e4ffd4bc21ee51a0a31e5cfc8392f9c",
+      "match": true,
+      "bytes": 4546,
+      "treeEntry": "100644 blob 2daa2a7362eb36749143f486a97f75330fc379d7\ttools/ops-mcp/src/kubernetes.mjs",
+      "scope": "raw custody read/hash only, not semantic review"
+    },
+    {
+      "path": "tools/ops-mcp/src/hubble.mjs",
+      "revision": "34cf38ef53ee41381543785d0ffae90a37fac9ca",
+      "sha256": "d4e60f2801e3c66ded259f420c1a9faca0071fa084dc198a35433f8c9cb4f599",
+      "manifestSha256": "d4e60f2801e3c66ded259f420c1a9faca0071fa084dc198a35433f8c9cb4f599",
+      "match": true,
+      "bytes": 6461,
+      "treeEntry": "100644 blob 9c5e41caf82f8ba70584be048db078937b02a79e\ttools/ops-mcp/src/hubble.mjs",
+      "scope": "raw custody read/hash only, not semantic review"
+    },
+    {
+      "path": "charts/ops-pod/templates/provision.yaml",
+      "revision": "34cf38ef53ee41381543785d0ffae90a37fac9ca",
+      "sha256": "3a003c343bdab95dcc2d8faeef7ad6f999f2267a8aa26556ae74164977c4b02e",
+      "manifestSha256": "3a003c343bdab95dcc2d8faeef7ad6f999f2267a8aa26556ae74164977c4b02e",
+      "match": true,
+      "bytes": 3736,
+      "treeEntry": "100644 blob 7294b036ffe82b554ea2377aae3c49162893f5e7\tcharts/ops-pod/templates/provision.yaml",
+      "scope": "raw custody read/hash only, not semantic review"
+    }
+  ],
+  "supplementalConsumerReads": {
+    "scripts/docs-api-output-discovery.mjs": [
+      "130-190",
+      "206-247",
+      "362-412",
+      "680-752"
+    ],
+    "scripts/docs-api-producer-adapter-authorities.json": [
+      "nonApiOutputContracts[37] complete record",
+      "documentationToolBoundary.unresolvedModuleInputAuthorities[3] complete record",
+      "qualifications/purposeRoutes: selected unresolvedModuleOperations only (not full registry review)"
+    ],
+    "handoffs/pr13-finish-20261021/platform-four-eslint-module-recipe-candidate.json": "1-31 complete"
+  }
+}

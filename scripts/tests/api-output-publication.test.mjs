@@ -334,6 +334,7 @@ test('caller authority changes reject independently of incomplete mutable consum
   fixture(({write,read,discover,updateRegistry})=> {
     for(const recipe of recipes) {
       write(recipe.source,fs.readFileSync(new URL('../../'+recipe.source,import.meta.url),'utf8'));
+      for(const input of recipe.authorityInputs)write(input.path,fs.readFileSync(new URL('../../'+input.path,import.meta.url),'utf8'));
       for(const target of recipe.inputConstraints.modulePaths)write(target,'export {};');
     }
     const pkg=JSON.parse(read('package.json'));sources.forEach((source,index)=>{pkg.scripts[`docs:bounded:${index}`]=`node ${source}`;});write('package.json',JSON.stringify(pkg));

@@ -4,6 +4,7 @@ Status: source-backed command paths with explicit unauthenticated issuer and mis
 Audience: product operator, pipeline operator, Prism operator
 Owner: Nova Core and platform operations
 Evidence: skills/nova/project/cli.ts; skills/nova/core/cli.ts; skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json; skills/nova/core/execution/engine-snapshots.ts; skills/nova/core/execution/engine-run.ts
+Upstream source scope: central Ops contract at `34cf38ef53ee41381543785d0ffae90a37fac9ca`; no runtime source adoption or live verification is established by this update
 Applies to: pipeline-platform.v2 and current Prism deployment
 Last verified: 2026-09-21 schema validation; canonical journal preservation, resume, recovery, and retention boundaries rechecked on 2026-10-12 at `2025f36306636b2e0c2c426447bf137d0574e11f`; no live cluster result
 
@@ -887,4 +888,5 @@ Buster reads and executes only in existing/future `test*` namespaces. Nova has
 separate restricted exec grants. See the [grant matrix](../understand/ops-mcp.md#authorization-and-data-exposure)
 and [connection diagnosis](../understand/ops-mcp.md#failure-and-recovery).
 The raw Kubernetes commands elsewhere in this guide require an independently
-authorized administrator; agents use MCP and receive no kubeconfig.
+authorized administrator; agent gateways use MCP and receive no kubeconfig. Buster workers retain their
+separate direct lease-scoped workload/test Kubernetes authority.

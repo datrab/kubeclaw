@@ -4,6 +4,7 @@ Status: source-backed maintenance boundaries; no general runtime upgrade pair or
 Audience: release maintainer, platform operator, security operator
 Owner: release engineering and platform operations
 Evidence: versions.json; releases/ops-images.json; scripts/deploy.sh
+Upstream source scope: central Ops contract at `34cf38ef53ee41381543785d0ffae90a37fac9ca`; no runtime source adoption or live verification is established by this update
 Applies to: current release-selection and deployment contracts
 Last verified: 2026-10-11 prior local checks; local selection rejection and synthetic bundle-manifest reader checks on 2026-10-21; no live upgrade, rotation, retirement, or bundle observation
 
@@ -514,7 +515,7 @@ retirement, backend erasure, or restore result is established by this guide.
 >
 > **Test evidence:** Local command syntax, synthetic exact selection, sanitized capture, read-only observation, discovery-denial and binding-refusal checks do not execute retirement against Kubernetes.
 >
-> **Revision:** Product sources checked at `51975b92ed5154b76c65793e55933b4d8659d05d`; selected upstream expectations at `66452049f3d692768c39c797b21b793dce80314e`.
+> **Revision:** Product sources checked at `51975b92ed5154b76c65793e55933b4d8659d05d`; KubeClaw receiving descriptions at `0403b262df2dba24747a19d1f8f42ef3334ef779`; selected upstream expectations at `66452049f3d692768c39c797b21b793dce80314e`.
 >
 > **Limit:** No live authorization, admission, controller, driver, data-disposal, or recovery result is established. External exclusion and owner-supplied backend observations remain mandatory prerequisites.
 
@@ -1624,7 +1625,7 @@ That command destroys the namespace and included state.
 >
 > **Test evidence:** Local synthetic execution of the exact teardown helpers issues backup-PVC deletion and no deletion of these five recovery objects. No repository test executes destructive PVC deletion against a live namespace. The documented command paths are protected by a regression check.
 >
-> **Revision:** Checked at `430633accc4a374a740b5f12f384eeeb9dce228d`; the older deploy links contain the same complete file.
+> **Revision:** Checked at `430633accc4a374a740b5f12f384eeeb9dce228d`; `2a8558d795054d25aa4b72dbdc296c9321ba38f6`; the older deploy links contain the same complete file.
 >
 > **Limit:** The available static evidence does not prove successful cleanup, backup integrity, external-resource removal, or data-destruction approval in a live environment.
 
@@ -1693,7 +1694,7 @@ Do not record token values in a change record.
 
 After runtime promotion, verify each application and Pod, then native tool
 discovery and a denied out-of-scope call. A healthy Pod alone is insufficient.
-A large persistent OpenClaw SQLite database can lengthen startup Doctor; the
-observed Nova rollout checked a 9.5-GiB database. Inspect progress and restart
-counts before classifying a slow startup as a connector failure. This fact is
-a bounded observation, not a prescribed timeout or a reason to skip integrity checks.
+Inspect startup Doctor diagnostics, progress and restart counts before
+classifying a slow startup as a connector failure. No measured database-size
+or rollout-time observation is established here; do not infer a timeout or
+skip integrity checks.

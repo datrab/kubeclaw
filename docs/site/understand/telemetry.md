@@ -1053,7 +1053,7 @@ This contract covers signal-driven resolution, not administrative reopening.
 >
 > **Test evidence:** [Controlled signal replay check](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/tests/verification/contracts/check-plugin-system-v2-resume.mjs#L69-L88) contains resume and duplicate/stale rejection assertions; a fresh execution result is not established here.
 >
-> **Revision:** `f99aecbb00cb399b46dfbbeb3ddb375fba6218e7`. Source bindings, not execution receipts.
+> **Revision:** `f99aecbb00cb399b46dfbbeb3ddb375fba6218e7`; `569f7b4933d4859cc67c80ddf40d5154ffd95ce5`. Source bindings, not execution receipts.
 >
 > **Limit:** The two journal writes are not one cross-journal transaction; resolution alone does not prove another attempt succeeded.
 
@@ -1311,7 +1311,7 @@ and artifact tests are not deployed-host or end-to-end delivery evidence.
 >
 > **Test evidence:** [Projection redaction unit](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/common/plugins/agent-observability/tests/observers.unit.test.mjs#L5-L19) contains payload redaction and omission of deliveryAttempt assertions; a fresh execution result is not established here.
 >
-> **Revision:** `0e35889a3c4e65d5c47ba88e924611aace67eb1d`. Source bindings, not execution receipts.
+> **Revision:** `0e35889a3c4e65d5c47ba88e924611aace67eb1d`; `569f7b4933d4859cc67c80ddf40d5154ffd95ce5`. Source bindings, not execution receipts.
 >
 > **Limit:** The unit uses a supplied delivery; it does not prove v1 Redis consumption, a live host or an end-to-end deployed sink.
 

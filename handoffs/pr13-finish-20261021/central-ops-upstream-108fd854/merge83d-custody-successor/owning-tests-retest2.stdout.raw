@@ -1,0 +1,18 @@
+✔ mixed reviewed immutable revisions verify their own source, not one page header (48.30156ms)
+✔ a valid old pin cannot hide any current source-byte change (42.778131ms)
+✔ explicit upstream evidence binds page, revision, file digest and range without adopting runtime source (60.263443ms)
+✔ dated Ops reader evidence verifies its actual page roster, immutable source bytes and excerpts (204.265071ms)
+✔ unreviewed and unavailable revisions remain different fail-closed cases (41.53158ms)
+✔ range and bounded-excerpt requirements survive mixed revision support (51.789709ms)
+✔ same graph reacquires the passive upstream authority before reuse (60.701374ms)
+✔ mutable manifest digest refresh cannot replace independent recipe authority (16.106777ms)
+✔ caller and helper edits remain denied under the exact finite successor (37.287142ms)
+✔ new modules and changed import receipts cannot expand the sealed four-module domain (33.833975ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 10
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 545.372799

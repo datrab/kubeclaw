@@ -198,3 +198,47 @@ test('docs-check-refs starts and validates in a SHA-256 Git repository', (contex
   assert.match(execFileSync('git', ['rev-parse', 'HEAD'], { cwd: root, encoding: 'utf8' }), /^[0-9a-f]{64}\n$/u);
   assert.match(run(root), /docs reference check passed/u);
 });
+
+test('mixed source callouts admit only explicitly declared immutable revisions', () => {
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'kubeclaw-mixed-callout-'));
+  try {
+    for (const file of ['scripts/docs-check-refs.mjs', 'scripts/lib/docs-markdown-anchors.mjs']) {
+      write(root, file, fs.readFileSync(path.join(sourceRoot, file), 'utf8'));
+    }
+    write(root, 'package.json', '{}\n');
+    write(root, 'skills/one.ts', 'export const one = 1;\n');
+    write(root, 'skills/two.ts', 'export const two = 2;\n');
+    fs.symlinkSync(path.join(sourceRoot, 'node_modules'), path.join(root, 'node_modules'), 'dir');
+    const git = (...args) => execFileSync('git', args, { cwd: root, encoding: 'utf8' }).trim();
+    git('init', '-q');
+    git('config', 'user.name', 'Docs Test');
+    git('config', 'user.email', 'docs-test@example.invalid');
+    git('add', '.'); git('commit', '-qm', 'first');
+    const first = git('rev-parse', 'HEAD');
+    write(root, 'sentinel.txt', 'second commit\n');
+    git('add', '.'); git('commit', '-qm', 'second');
+    const second = git('rev-parse', 'HEAD');
+    const page = (declaration, extra = '') => [
+      '# Evidence', '', '> **Source evidence — mixed immutable scope**', '>',
+      `> [One](https://github.com/datrab/kubeclaw/blob/${first}/skills/one.ts#L1-L1).`,
+      `> [Two](https://github.com/datrab/kubeclaw/blob/${second}/skills/two.ts#L1-L1).`,
+      `> **Revision:** ${declaration}. Source bindings, not execution receipts.`,
+      `> ${extra}`, '',
+    ].join('\n');
+    write(root, 'docs/site/index.md', page('`' + first + '`; `' + second + '`'));
+    assert.match(run(root), /docs reference check passed/u);
+    write(root, 'docs/site/index.md', page('`' + first + '`', 'Other prose mentions `' + second + '`.'));
+    assert.throws(() => run(root), error => String(error.stderr).includes(`but links ${second}`));
+    write(root, 'docs/site/index.md', page('`' + first + '`; ' + second));
+    assert.throws(() => run(root), error => String(error.stderr).includes(`but links ${second}`));
+    const callout = (linked, declared) => [
+      '> **Source evidence — independent adjacent scope**', '>',
+      `> [Source](https://github.com/datrab/kubeclaw/blob/${linked}/skills/one.ts#L1-L1).`,
+      '> **Revision:** `' + declared + '`.', '',
+    ].join('\n');
+    write(root, 'docs/site/index.md', callout(first, first) + '\n' + callout(second, second));
+    assert.match(run(root), /docs reference check passed/u);
+    write(root, 'docs/site/index.md', callout(second, first) + '\n' + callout(second, second));
+    assert.throws(() => run(root), error => String(error.stderr).includes(`but links ${second}`));
+  } finally { fs.rmSync(root, { recursive: true, force: true }); }
+});

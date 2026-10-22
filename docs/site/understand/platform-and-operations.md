@@ -781,7 +781,7 @@ result or a Prism operation row.
 > **Implementation:** The request, error, vector, memory-manager and retry links above identify the exact implementation boundaries.
 > **Contract or setting:** The [chart selection](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/charts/kubeclaw/templates/configmap-gateway.yaml#L65-L79) supplies `openai-compatible`, the remote key and `gemini-embedding-001`.
 > **Test evidence:** Implementation evidence only. No upstream client suite or deployed embedding request is claimed to have run here.
-> **Revision:** OpenClaw `59cb44796b0f1f0daa0e37af8b1495abb45d9bc1`; KubeClaw `7994a51e16bc752357c3a801190b12b7d6a191a4`.
+> **Revision:** OpenClaw `59cb44796b0f1f0daa0e37af8b1495abb45d9bc1`; KubeClaw `7994a51e16bc752357c3a801190b12b7d6a191a4`; KubeClaw chart `0e35889a3c4e65d5c47ba88e924611aace67eb1d`.
 > **Limit:** No image/source attestation, live route, provider quota or end-to-end owner deadline is established by these links.
 
 **Operator stop and recovery rule:** Do not accept an operation that requires
@@ -977,8 +977,8 @@ dashboard.
 The operations installation now separates the persistent Codex StatefulSet
 from the central Ops MCP Deployment. They have different ServiceAccounts.
 Codex and Nova have no Kubernetes token, kubeconfig or cluster RBAC grant.
-Buster uses MCP for reads/exec and retains only its existing worker lease-token
-exception for the namespace controller. Installation and recovery administration
+Buster gateways use MCP for reads/exec. Buster workers separately retain direct
+Kubernetes tokens for lease operations and granted workload/test operations. Installation and recovery administration
 use an independently controlled operator identity.
 
 The MCP owns the projected Kubernetes credential and the observer/exec bindings.
@@ -993,8 +993,9 @@ A separate trusted reconciler maintains MCP access in existing and future
 binding writes; it does not grant access to agent ServiceAccounts.
 
 Nova and Buster use native OpenClaw MCP tools. A local stdio-to-HTTPS adapter
-reads their separate bearer and CA mounts; agents do not invoke their shell
-tool or receive a Kubernetes credential. The CLI remains diagnostic only.
+reads their separate bearer and CA mounts; gateways do not invoke their shell
+tool or receive a Kubernetes credential through this connector. The Buster
+worker retains its independent lease-scoped workload/test credential. The CLI remains diagnostic only.
 See [Ops MCP](ops-mcp.md) for the complete request path, grant matrix, tool
 contracts, rotation, rollout and uncertainty rules.
 
@@ -1010,17 +1011,17 @@ cluster can also make the Ops Pod, MCP, storage and network unreachable.
 
 > **Source evidence — effective operations authority**
 >
-> **Claim:** Only the MCP owns Kubernetes read/exec authority; each agent has a separate, narrower MCP identity.
+> **Claim:** The MCP owns gateway operations read/exec authority; each gateway has a narrower MCP identity. Buster workers retain separate direct lease-scoped workload/test authority.
 >
 > **Implementation:** [Codex workload without API mounts](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/charts/ops-pod/templates/workload.yaml#L28-L82) [MCP identity and credential mounts](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/charts/ops-pod/templates/mcp.yaml#L37-L91) [Read and exec RBAC](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/charts/ops-pod/templates/rbac.yaml#L57-L117) [Per-client authorization](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/tools/ops-mcp/src/access-policy.mjs#L50-L107)
 >
 > **Contract or setting:** Per-client MCP grants remain bounded by the MCP ServiceAccount RBAC.
 >
-> **Test evidence:** See the scoped 2026-10-22 results and remaining limits in [Ops MCP verification](ops-mcp.md#verification).
+> **Test evidence:** See the source-test definitions and execution limits in [Ops MCP verification](ops-mcp.md#verification).
 >
 > **Revision:** `34cf38ef53ee41381543785d0ffae90a37fac9ca`; upstream main, separate from documentation-branch source adoption.
 >
-> **Limit:** Source layout and scoped rollout observations do not prove arbitrary-cluster recovery or every live authorization boundary.
+> **Limit:** Source layout does not prove arbitrary-cluster recovery or every live authorization boundary.
 
 
 ## Dependency and Recovery Order
