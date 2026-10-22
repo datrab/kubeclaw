@@ -1449,6 +1449,18 @@ not a new event.
 >
 > **Limit:** Stable keys do not guarantee indefinite deduplication, stream retention or a complete external consumer history.
 
+### Telemetry observer output record
+
+The telemetry observer sends `telemetry-envelope.v2`, not the raw canonical
+`lifecycle-event.v2` or the separate agent-observability projection. Its outer
+fields are `schemaVersion`, `deliveryId`, `observer` (the delivery's registration
+provenance) and `event`. The nested event keeps `eventId`, `sequence`, `type`,
+`occurredAt` and `causationId`, with SDK-redacted `identity` and `payload`.
+It does not copy the delivery's `attemptNumber` or `deliveredAt`, the event's
+own `schemaVersion`, or a plugin-domain event's `producer`. Use the canonical
+journal and observer history for those authorities; the sink projection does
+not replace them. `observe` awaits `telemetry.emit` and propagates sink errors.
+
 ## Redaction and Sensitive Data
 
 Redaction happens at projection boundaries. It does not make the canonical
@@ -1461,6 +1473,23 @@ accessor-free JSON snapshot and applies a second field-name redaction. It covers
 authorization, cookies, passwords, secrets, tokens, API keys, credentials,
 private keys, access keys, connection strings, and selected direct personal-data
 names. The audit reader recursively redacts a smaller credential-name pattern.
+
+The file sink validates the **whole input before redaction**, including values
+under protected field names. The root must be a non-null plain or
+null-prototype object. Nested values may be null, booleans, finite numbers,
+well-formed Unicode strings, plain/null-prototype objects or ordinary dense
+arrays. Proxies, cycles, custom prototypes, accessors, symbol or non-enumerable
+object properties, sparse/extra-key arrays and non-JSON values are rejected,
+not silently evaluated, coerced or omitted. Array `length` is the ordinary
+array metadata, not an extra payload property.
+
+The snapshot starts at depth zero, allows depth at most 64, and counts at most
+100,000 value visits. Reusing a noncyclic object is valid, but each occurrence
+is copied and counts again toward the traversal and serialized-byte budgets.
+The pre-redaction JSON snapshot must fit `maxRecordBytes`; redacting a large
+secret does not make oversized input admissible. The durable store separately
+checks the serialized redacted payload against the same per-record allowance.
+A snapshot or size failure does not produce a successful append receipt.
 
 These rules are defense in depth, not data classification. A secret stored
 under an innocent key such as `value` can pass a name-based rule. A plugin must
@@ -1477,7 +1506,7 @@ remove or summarize sensitive values at the producer boundary.
 
 > **Source evidence — projection safety**
 >
-> **Claim:** Telemetry and audit projections redact named structured fields but cannot classify arbitrary secret content.
+> **Claim:** The telemetry observer emits the explicit v2 projection described above; the file sink admits bounded JSON before field-name redaction. Neither telemetry nor audit projection classifies arbitrary secret content.
 >
 > **Implementation:** Telemetry observer, safe file projection and audit functions below define their different redaction scopes.
 >
@@ -1491,7 +1520,7 @@ remove or summarize sensitive values at the producer boundary.
 >
 > **Contract or setting:** Bounded JSON traversal and field-name patterns apply only at the specified projection boundary.
 >
-> **Test evidence:** [Telemetry projection unit](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/common/plugins/telemetry-observer/tests/live-function.test.ts#L33-L46) contains redacted payload and telemetry invocation shape assertions; a fresh execution result is not established here.
+> **Test evidence:** [Telemetry projection unit](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/common/plugins/telemetry-observer/tests/live-function.test.ts#L33-L46) contains redacted payload and telemetry invocation shape assertions. [File-store unit](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/common/plugins/telemetry-store/tests/live-function.test.ts#L31-L55) contains append/dedup/conflict, redaction, size and cancellation assertions; it is not exhaustive proof of every rejected JSON shape. These tests were Source-read, not freshly executed for this correction.
 >
 > **Revision:** `569f7b4933d4859cc67c80ddf40d5154ffd95ce5`. Source bindings, not execution receipts.
 >
@@ -1588,6 +1617,20 @@ uses approximate `MAXLEN`, so Redis can temporarily retain more than the target.
 The dedup key expires after `dedupTtlMs`. These two settings are independent:
 stream retention does not prove dedup retention, and dedup retention does not
 prove the stream entry still exists.
+
+A legacy namespace upgrade is a separate operation from Redis restoration.
+Older underscore-sanitized target names are noninvertible: distinct names such
+as `pipeline.completed` and `pipeline_completed` could collapse. Coordinate the
+actual writers and external consumers: pause legacy writers, reconcile their
+pending deliveries, preserve and inspect retained legacy records, then switch
+the owned consumers to the exact v2 stream identities. This adapter does not
+rename, copy, republish, trim or delete old streams, migrate consumers, or change
+the configured `MAXLEN`/dedup TTL policy. It supplies no consumer implementation
+or automatic migration command. The separate OpenClaw host-observer Redis path
+is not changed by this Nova plugin namespace. See the
+[upgrade boundary in recovery](../use/workflows/redis-replay-recovery.md#legacy-namespace-cutover).
+
+> [The Redis package documents the coordinated upgrade and absence of automatic legacy-stream migration](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/common/plugins/redis-transport/README.md#L8-L24).
 
 A connection failure, timeout, malformed reply, full Redis instance, or missing
 secret fails the adapter call. Observer policy then decides whether the host

@@ -7420,7 +7420,7 @@ export const documentationExecutableRoleRecipes = {
       {
         "path": "docs/generated/inventory/sdk-reference.json",
         "canonical": "docs/generated/inventory/sdk-reference.json",
-        "sha256": "9d4f7a92f51d83303d39b3ec4a3ae0e56d5030f2c53f86cb7e9d676042bd264e"
+        "sha256": "c1061422373d61e143322c856fe63ad66bbc7bc9075776b4ff91fee75b933214"
       },
       {
         "path": "scripts/docs-product-pipeline-reference.mjs",
@@ -7505,7 +7505,7 @@ export const documentationExecutableRoleRecipes = {
       {
         "path": "scripts/generate-buster-error-reference.mjs",
         "canonical": "scripts/generate-buster-error-reference.mjs",
-        "sha256": "5b7f48767226cbc0a1bbcf310b879052b4aa55919bb60d52985b01f8f7b2424e"
+        "sha256": "11cf5c42d7b13565534eab04be11b9ed2f16bf8ee5ad6ba025850363f8ddd6d8"
       },
       {
         "path": "skills/buster/engine/test-gates/production.ts",
@@ -7553,14 +7553,14 @@ export const documentationExecutableRoleRecipes = {
       {
         "path": "scripts/generate-buster-error-reference.mjs",
         "canonical": "scripts/generate-buster-error-reference.mjs",
-        "sha256": "5b7f48767226cbc0a1bbcf310b879052b4aa55919bb60d52985b01f8f7b2424e"
+        "sha256": "11cf5c42d7b13565534eab04be11b9ed2f16bf8ee5ad6ba025850363f8ddd6d8"
       }
     ],
     "purposeInputs": [
       {
         "path": "scripts/generate-buster-error-reference.mjs",
         "canonical": "scripts/generate-buster-error-reference.mjs",
-        "sha256": "5b7f48767226cbc0a1bbcf310b879052b4aa55919bb60d52985b01f8f7b2424e"
+        "sha256": "11cf5c42d7b13565534eab04be11b9ed2f16bf8ee5ad6ba025850363f8ddd6d8"
       }
     ]
   },

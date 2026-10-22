@@ -1,0 +1,92 @@
+{
+  "status": "FOUR_FINITE_SOURCE_DATA_CELLS_INDEPENDENTLY_REVIEWED_AND_OWNING_CONTROLS_PASS",
+  "source": "scripts/docs-api-documentation-role-custody.mjs",
+  "sha256": "6bc09e510942108efb904fc22649c25d7d2787e756977d5e314fa02fd9bf8c94",
+  "archive": {
+    "path": "finite-purpose-source-and-controls.tar.gz",
+    "bytes": 507177,
+    "sha256": "cd018ce3d438135fa5dfcef1bbbc1e07c16de612aa7ea0646211f31af0f6167b"
+  },
+  "members": [
+    {
+      "path": "eleven-guide-scalar-checks/purpose-controls/invocation.json",
+      "bytes": 713,
+      "sha256": "d303c83191d7feffb039bd6ecf5027ecfa6417270c7b5818ce2ff6adbf7d452c"
+    },
+    {
+      "path": "eleven-guide-scalar-checks/purpose-controls/result.json",
+      "bytes": 1035,
+      "sha256": "6bd260484079a054e34989d4878e6e9a32e365e1c341c30cd65d199d086a70c0"
+    },
+    {
+      "path": "eleven-guide-scalar-checks/purpose-controls/stderr.raw",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "eleven-guide-scalar-checks/purpose-controls/stdout.raw",
+      "bytes": 909,
+      "sha256": "e24d699616a79263a1000b8f959ecd5ba8dc01e00c76a15d8b58cd18513fca02"
+    },
+    {
+      "path": "eleven-guide-scalar-checks/run-purpose-controls.py",
+      "bytes": 1474,
+      "sha256": "ab10e70694cc00b40782a05fbdd3d1b240cbd3bbc49032cdecf104727c065ede"
+    },
+    {
+      "path": "four-purpose-cells-root-independent/adoption.json",
+      "bytes": 198,
+      "sha256": "290b3eff07c2de1d84ff452081a160787df7be9ac08b5c3d9c28da4ab5d1a2b3"
+    },
+    {
+      "path": "four-purpose-cells-root-independent/review.json",
+      "bytes": 2839,
+      "sha256": "4bcbbe7fde3dd93ebde57bb8cc35e7358e711ab3a575e2d3faa0a4c9ffa149f3"
+    },
+    {
+      "path": "three-purpose-plus-child-authority-author/author-report.md",
+      "bytes": 9785,
+      "sha256": "3c324a967d95f92318a91e634a4ea534548ae2949741dff1413ef247dd984e3a"
+    },
+    {
+      "path": "three-purpose-plus-child-authority-author/baseline/docs-api-documentation-role-custody.mjs",
+      "bytes": 1231221,
+      "sha256": "312926d4089e3d2b3c9d30b9b846bd27a4825e9d9511105aa9761c3f717a87de"
+    },
+    {
+      "path": "three-purpose-plus-child-authority-author/candidate.patch",
+      "bytes": 1663,
+      "sha256": "5c829c5b2575bdc95172323222509518d895728eb5b0b9ed0fd8e69d3d5463f1"
+    },
+    {
+      "path": "three-purpose-plus-child-authority-author/four-cell-invariants.json",
+      "bytes": 1800,
+      "sha256": "52fcdbf6867bc1bdfd710c44042d21f7ff49386174a7557e9e7e9823a89dc2df"
+    },
+    {
+      "path": "three-purpose-plus-child-authority-author/packet-hashes.json",
+      "bytes": 1083,
+      "sha256": "e3422ef6aae0f518bd793a4d9bb1e388ebfdedfc26aa5a978dd7015cfa18bb6c"
+    },
+    {
+      "path": "three-purpose-plus-child-authority-author/prepare-proposal.py",
+      "bytes": 2837,
+      "sha256": "4a3ad32077c9b60de87e063ae4b0ff71cbb120f5c7f09391232acf279077e010"
+    },
+    {
+      "path": "three-purpose-plus-child-authority-author/scripts/docs-api-documentation-role-custody.mjs",
+      "bytes": 1231221,
+      "sha256": "6bc09e510942108efb904fc22649c25d7d2787e756977d5e314fa02fd9bf8c94"
+    },
+    {
+      "path": "three-purpose-plus-child-authority-author/source-and-original-proof-mapping.json",
+      "bytes": 28939,
+      "sha256": "55c1f1ffd32003ee5c6285e59b288d203f0b09a67c12220c9652b853f431661c"
+    }
+  ],
+  "limits": [
+    "Exactly3purposeInput+1literalchildAuthority sha256 values; allother107recipes/facts/selectors/native/code unchanged.",
+    "Full actual original107facts and normal consumer remain pending. Eight owning purpose-routing controls passed; not whole consumer/generator/role/native approval.",
+    "Root reviewed and reversed all four values, complete current consumers and unchanged SDK/errors owner evidence/actual original results. No actual wrapper/mutation/newnative execution inferred."
+  ]
+}

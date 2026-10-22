@@ -202,9 +202,20 @@ run with the generated manifest and the canonical input list.
 
 ## Discovery, Targets, And Scopes
 
-Discovery scans only to `discovery_max_depth`, skips hidden directories and
-`node_modules`, applies global exclusions, and matches language evidence. It can
-detect several languages. Discovery does not grant filesystem access.
+For language-evidence patterns containing `*`, discovery scans to
+`discovery_max_depth`, skips hidden directories and `node_modules`, and applies
+global exclusions before matching candidate files. A pattern without `*` instead
+uses a direct existence check relative to the project root; the scan depth and
+candidate exclusions do not filter that literal check. Discovery can detect
+several languages and does not grant filesystem access.
+
+> **Source evidence — literal and glob discovery**
+> **Claim:** Literal language evidence and glob evidence use different selection paths.
+> **Implementation:** [The detector separates direct existence from filtered candidates](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/lint/src/engine/discovery.ts#L138-L159).
+> **Contract/setting:** [Project evidence admits nonempty repository-relative patterns for enabled languages](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/lint/src/engine/policy.ts#L86-L96).
+> **Test evidence:** `discovery.test.mjs` contains configured-marker and glob assertions; no dedicated literal-excluded/deeper-than-cap case was identified. Assertions were read, not executed for this clarification.
+> **Revision:** `569f7b4933d4859cc67c80ddf40d5154ffd95ce5`; the complete linked source objects match the reviewed repository bytes.
+> **Limit:** Detecting a literal marker does not bypass the separate repository, target or native-input authority checks.
 
 Policy-selected files combine `targets`, `include`, tool `exclude`, and
 `global_exclusions`. Type-evidence classification intentionally uses only Git,
@@ -408,7 +419,7 @@ what each adapter does after selection.
 | `knip` | Runs the declared workspace model and requests six active issue categories. It converts each issue to a `knip:<category>` finding. |
 | `dependency-cruiser` | Builds the configured module graph without following dependencies. It reports forbidden layer edges and strongly connected cycles. |
 | `jscpd` | Runs production and test calibrations into temporary reports. It joins both duplicate lists and removes the temporary directories. |
-| `mypy` | Runs JSON output on the selected Python scope. It preserves the error code and treats output without valid findings as a parse failure. |
+| `mypy` | Runs JSON output on the selected Python scope. It preserves the error code. Invalid JSON lines fail parsing; empty output is clean at exit zero, while a nonzero exit without findings is a parse failure. |
 | `go-imports` | Uses `go list -json` for each affected module. It rejects external imports outside the module's approved prefixes. |
 | `staticcheck` | Reads a JSON stream for configured Go packages. It preserves Staticcheck codes, locations, severity, and messages. |
 | `govulncheck` | Reads pinned JSON-stream output and reports reachable OSV findings. Any nonzero exit is operational failure in this mode. |
@@ -426,9 +437,19 @@ what each adapter does after selection.
 | `yamllint` | Runs strict parsable output on selected YAML outside Helm templates. It normalizes diagnostics to `yamllint`. |
 | `openapi-contract` | Inspects matching OpenAPI filenames internally. It checks syntax, version, paths, local references, operations, IDs, and responses. |
 
-The engine runs selected tools sequentially in registry order. A failed tool
-does not masquerade as a clean result. The engine continues to assemble tool
-results unless cancellation rejects the invocation.
+> **Source evidence — mypy empty output**
+> **Claim:** A successful mypy process may return no findings; an unexplained nonzero exit may not.
+> **Implementation:** [NDJSON parsing and the conditional empty-result failure](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/lint/src/engine/tool-registry-dependency-tools.ts#L27-L61).
+> **Contract/setting:** The adapter requests `--output json --no-color-output`; each nonempty stdout line must parse as JSON before normalization.
+> **Test evidence:** No dedicated mypy empty-success/nonzero parser assertion was identified in the reviewed owning tests. This clarification follows Source inspection, not a mypy execution.
+> **Revision:** `569f7b4933d4859cc67c80ddf40d5154ffd95ce5`; the complete linked source object matches the reviewed repository bytes.
+> **Limit:** This documents the current adapter branch, not success of the dormant Python tools in the shipped workspace policy.
+
+The engine runs selected tools sequentially in registry order. An adapter-detected
+failure becomes a tool error. The engine continues to assemble tool results
+unless cancellation rejects the invocation. Ruff and the shared ESLint runner
+have a [current output-validation limit](../extend/lint.md#current-ruff-and-eslint-output-validation-limit);
+a structurally valid report alone does not prove those native outputs were complete.
 
 This sequential order applies inside one report only. The adapter has no mutex
 that serializes separate invocations. Concurrent reports in one Nova process

@@ -1,0 +1,34 @@
+{
+  "files": [
+    {
+      "path": "README.md",
+      "bytes": 1184,
+      "sha256": "7eaacf6d0b684267675b8d51ffc298d372f029a625db7a6055260297b8d0c286"
+    },
+    {
+      "path": "evidence-index.json",
+      "bytes": 3904,
+      "sha256": "1b682aa53b822a4408d6920da41d859d7f61127757f8d0a476908ad7c8c88b19"
+    },
+    {
+      "path": "finite-purpose-source-and-controls.tar.gz",
+      "bytes": 507177,
+      "sha256": "cd018ce3d438135fa5dfcef1bbbc1e07c16de612aa7ea0646211f31af0f6167b"
+    },
+    {
+      "path": "independent-delivery-review/packet-hashes.json",
+      "bytes": 171,
+      "sha256": "c36d519e820b41a317c5bc399dc254c86c7d2e7b73cdf91592e7945227dc9f86"
+    },
+    {
+      "path": "independent-delivery-review/review.json",
+      "bytes": 2421,
+      "sha256": "f900413991085e630e4eb809c44dedf8688f69e387b958e0946aea2de9828eb9"
+    },
+    {
+      "path": "independent-delivery-review/review.md",
+      "bytes": 1170,
+      "sha256": "253d5926a963e4f85e7094d98034d73905bcaa0efb8750b14392d474487f00b5"
+    }
+  ]
+}

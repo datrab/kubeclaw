@@ -1,0 +1,44 @@
+{
+  "files": [
+    {
+      "path": "README.md",
+      "bytes": 2018,
+      "sha256": "a1cb7596f961ff083d61632129c33caabf105c338287dbf0f9a28386c49d0a36"
+    },
+    {
+      "path": "evidence-index.json",
+      "bytes": 45414,
+      "sha256": "5e6514bcdea1d1b70a04a350a3cf6490181763bbe8bfa1e449158f4b0c68845e"
+    },
+    {
+      "path": "independent-delivery-review/packet-hashes.json",
+      "bytes": 364,
+      "sha256": "4f5fc2a472040eec5c447bce82bdb69b5228ed5d01e23806780e7a12dd71f088"
+    },
+    {
+      "path": "independent-delivery-review/passive-checks.json",
+      "bytes": 3045,
+      "sha256": "e18bd3623d551f3f2bcb46517f82ab200c359860122a7aae81fd5279db68bacb"
+    },
+    {
+      "path": "independent-delivery-review/review.json",
+      "bytes": 7203,
+      "sha256": "7484f340379efaeda15e4727b26d18f19eba38916a0c72b966174be04ca4303d"
+    },
+    {
+      "path": "independent-delivery-review/review.md",
+      "bytes": 2127,
+      "sha256": "f1f557fd2a6efb687a52e2dba36e4d60da00d70bad5ebe9157fab87e24695376"
+    },
+    {
+      "path": "independent-delivery-review/verify-delivery-passive.py",
+      "bytes": 4676,
+      "sha256": "219173f4714c0ac5268654194c050a9d35f6e51fa43fda32563cc1f7f9f02f97"
+    },
+    {
+      "path": "source-reviews-and-original-checks.tar.gz",
+      "bytes": 1084066,
+      "sha256": "d66f3239e8fe9f276f80ad117900003c40c144feb952c80fb4b73fc2f949b9ec"
+    }
+  ]
+}

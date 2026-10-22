@@ -208,12 +208,20 @@ DaemonSet, ReplicaSet, Job, and CronJob workload shapes.
 
 | Rule ID | Trigger | Important boundary | Corrective action |
 | --- | --- | --- | --- |
-| `required-runtime-env` | A normal or init container lacks `REDIS_HOST`. | A resolvable `envFrom` ConfigMap or Secret key counts. An optional or missing source does not prove the value. | Add the variable directly or through a resolvable nonoptional source. |
+| `required-runtime-env` | A normal or init container lacks `REDIS_HOST`. | A declared `env` name or a resolved `envFrom` ConfigMap/Secret key counts, including a resolved optional source and its prefix. A missing source contributes no names. | Declare the variable directly or supply its key through a resolvable source in the workload namespace. |
 | `valid-secret-refs` | A nonoptional container `env` secret key or `envFrom` secret source cannot resolve in the namespace. | Optional references are allowed. Volumes, projected volumes, and image-pull references are outside this rule. | Create the named Secret and key, or correct the reference. |
 | `private-registry-auth` | An image below `registry.example.invalid` lacks a pod or service-account pull secret. | Public images do not need this rule's credential. | Add an image pull secret to the pod or selected service account. |
 | `readiness-probe` | A normal container lacks a readiness probe. | Init containers do not receive this check. | Add a probe that proves the container can receive traffic. |
 | `liveness-probe` | A normal container lacks a liveness probe. | Init containers do not receive this check. | Add a probe that detects a process which cannot recover by itself. |
 | `resource-limits` | A normal or init container lacks CPU or memory limits. | The shipped rule requires both resources. | Set explicit CPU and memory limits for every applicable container. |
+
+> **Source evidence — required environment names**
+> **Claim:** A resolved optional `envFrom` source contributes names; optionality does not exclude its keys from `required-env`.
+> **Implementation:** [Environment-name collection and evaluation](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/lint/src/engine/kubernetes-policy-tools.ts#L35-L60).
+> **Contract/setting:** [The shipped rule requires REDIS_HOST](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/kubeclaw/files/config/kubernetes-policy-pack-default.json#L6-L13); [missing nonoptional Secret references use a separate rule](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/lint/src/engine/kubernetes-policy-tools.ts#L63-L82).
+> **Test evidence:** The manifest-lint implementation fixture covers optional missing references and ordinary resolved sources, but no dedicated resolved-optional required-name assertion was identified. Test assertions were read, not executed for this clarification.
+> **Revision:** `569f7b4933d4859cc67c80ddf40d5154ffd95ce5`; the complete linked source objects match the reviewed repository bytes.
+> **Limit:** This checks declared or statically resolved names, not a live environment value or cluster Secret availability.
 
 The pack describes values. Engine code owns rule meaning. This separation lets
 an operator select approved values without allowing a policy file to execute code.

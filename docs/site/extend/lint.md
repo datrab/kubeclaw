@@ -3,7 +3,7 @@
 Status: implemented
 Audience: lint rule author, policy maintainer, Nova maintainer
 Owner: lint
-Evidence: skills/nova/plugins/lint/plugin.json; skills/nova/plugins/lint/src; skills/nova/plugins/lint/tests; charts/kubeclaw/files/config; skills/nova/plugins/delivery-lint
+Evidence: skills/nova/plugins/lint/plugin.json; skills/nova/plugins/lint/src; skills/nova/plugins/lint/tests; charts/kubeclaw/files/config; skills/nova/plugins/delivery-lint; skills/common/plugin-runtime/sdk/src/values.ts
 Evidence revision: `569f7b4933d4859cc67c80ddf40d5154ffd95ce5`
 Applies to: `kubeclaw.lint` and the shipped lint policy; separate `kubeclaw.lint.delivery` package section
 Last verified: source and focused package checks on 2026-09-20; added package sections source/test checked 2026-10-21 only; original other-scope verification date unchanged; no new live dependency claim
@@ -701,7 +701,8 @@ Recomputation prevents an analyser from deciding acceptance by reporting false t
 ## Failure And Cleanup Rules
 
 - Missing optional tools are `not_applicable`; missing required tools are errors.
-- Timeout, failed start, malformed output, and exceptions are not clean results.
+- Timeout, failed start and caught tool exceptions are not clean results.
+- Invalid JSON syntax fails parsing; wrong-shape JSON has the Ruff/ESLint limit below.
 - Cancellation rejects the invocation and cannot become a normal report.
 - Adapter shutdown aborts active invocations and waits for settlement.
 - TERM then KILL covers the Linux process group; completion requires descendant exit.
@@ -710,6 +711,54 @@ Recomputation prevents an analyser from deciding acceptance by reporting false t
 
 This process control is not a general sandbox. Source, configuration, and
 installed binaries remain in the operator trust boundary.
+
+### Current Ruff And ESLint Output-Validation Limit
+
+The Lint owner still needs to close a product parser boundary. Ruff and the
+shared runner for `eslint` and all three type-evidence tools convert a parsed
+nonarray top-level JSON value to an empty list. The ESLint normalizer also treats
+a nonarray `messages` member as empty. These adapters do not separately reject
+an ordinary nonzero process exit when the normalized findings are empty. Invalid
+JSON syntax, timeout, failed start, output overflow and cancellation follow their
+separate failure paths; this limit does not make those failures clean.
+
+The Source counterexample is conditional, not a native observation: with admitted
+inputs and a completed native process, stdout `{}` can normalize to zero
+findings; a valid empty array with an unexplained ordinary nonzero exit can do so
+too. The report then records an `ok` tool result without the raw exit status.
+Report validation cannot recover that discarded distinction. If every other
+selected tool contributes no failures or blocking findings, and authority,
+baseline, cancellation and artifact storage checks all succeed, the stage can
+return `passed`. This explanation includes no native Ruff or ESLint execution of these
+counterexamples; it does not assert that the pinned binaries emit
+such output during a normal run.
+
+Do not accept an unexpected empty result solely because its report passes the
+schema. Retain the existing report and engine stderr logs, then inspect the
+selected source revision, executable/version authority, native configuration and
+input scope against the [policy and runtime references](../reference/lint-policy.md#tool-execution-contracts).
+Successful Ruff/ESLint reports do not retain complete native stdout, stderr and
+exit status. Logs may therefore be insufficient to
+resolve an unexpected result. Stop acceptance when that evidence is unavailable
+or inconsistent; ask the Lint owner for a controlled diagnosis rather than
+claiming that the report proves the missing native output.
+
+The Lint owner can close this boundary only with a product change that validates
+the expected output shapes and each supported exit/result combination before
+success normalization, plus owning tests for clean output, real findings,
+wrong-shape JSON and unexplained nonzero empty output through report and stage
+classification. Retain timeout, overflow, cancellation and cleanup coverage.
+Until that change has independent Source review and actual relevant checks,
+keep this limitation explicit; the extension requirement to reject incomplete
+output is not proof that every shipped parser already does so.
+
+> **Source evidence — native output versus final stage result**
+> **Claim:** Ruff/shared ESLint can discard a wrong JSON shape or unexplained ordinary nonzero exit before the stage classifies the report.
+> **Implementation:** [Ruff normalization](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/lint/src/engine/tool-registry-language-tools.ts#L76-L93), [shared ESLint parsing](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/lint/src/engine/tool-registry-language-tools.ts#L199-L226) and [message normalization](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/lint/src/engine/tool-registry-language-tools.ts#L180-L197) use [the nonarray-to-empty helper](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/common/plugin-runtime/sdk/src/values.ts#L27-L29). [Report reduction](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/lint/src/engine/report.ts#L114-L164) and [summary accumulation](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/lint/src/engine/tool-summary.ts#L15-L26) preserve no raw native exit. [the stage reduces the validated report](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/lint/src/stage.ts#L25-L54).
+> **Contract/setting:** [The common execution guard](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/lint/src/engine/execution.ts#L80-L88) rejects timeout/start failure, not every nonzero exit. [The stage validates and stores the normalized report before classification](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/lint/src/stage.ts#L87-L106). No policy flag closes this parser boundary.
+> **Test evidence:** [The remediation assertion distinguishes process outcomes](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/lint/tests/remediation.test.mjs#L76-L93); hostile report assertions validate normalized report identities/counts, not raw Ruff/ESLint output. These assertions were read, not run here; no end-to-end counterexample execution is claimed.
+> **Revision:** `569f7b4933d4859cc67c80ddf40d5154ffd95ce5`; the complete linked source objects match the reviewed repository bytes.
+> **Limit:** This is a conditional Source trace and an unresolved Lint-owned product boundary, not a native failure observation, runtime approval or general sandbox guarantee.
 
 ## Activate And Observe The Change
 

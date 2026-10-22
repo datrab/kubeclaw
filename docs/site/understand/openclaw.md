@@ -88,8 +88,68 @@ agent request.
 `kubeclaw.openclaw-agent-events` is a KubeClaw adapter, not an OpenClaw host
 package. It provides `agent.events.subscribe`. Its allowlist can contain the 12
 supported hooks from `agent_end` through `session_end`. The default queue holds
-256 events or 1 MiB and drains for at most 5 seconds. A full queue is an
-explicit pressure boundary, not durable storage.
+256 events or 1 MiB, including an active emit. Status and shutdown wait for up
+to 5 seconds by default; this wait deadline does not cancel an active emit.
+A full queue is an explicit pressure boundary, not durable storage.
+
+#### Inspect source pressure and drain progress
+
+Use the granted adapter's `agent.events.subscribe` capability with operation
+`status`. This is a source-adapter operation, not a Redis consumer query or an
+Observer Runtime checkpoint repair. The ordinary request payload `{}` waits
+for admitted events to drain. Payload `{"waitForDrain": false}` returns the
+current snapshot without waiting; only the literal boolean `false` selects
+that branch. An already-aborted invocation still fails with `ADAPTER_CANCELLED`.
+
+| Status fields | Meaning in this activation |
+| --- | --- |
+| `activeSubscriptions`, `shuttingDown` | Current retained hook subscriptions and whether shutdown or failed startup has stopped admission |
+| `emitted`, `failures`, `rejected` | Successful emit calls, failed emit calls, and count/byte-capacity rejections; these are not external sink acknowledgements |
+| `queued`, `queuedBytes` | Admitted entries still retained, including the active emit; bytes count serialized `{hook, normalized}` entries, not raw hook payloads |
+| `lastError` | Latest capacity or emit failure; a later success does not clear this field |
+| `maxQueueEvents`, `maxQueueBytes`, `drainTimeoutMs` | Effective configured admission and wait limits |
+
+The hook callback throws `AGENT_EVENT_INGRESS_CAPACITY` when the next normalized
+entry would exceed either queue bound and increments `rejected`. Hook
+registration does not promise that OpenClaw acknowledges or replays rejected
+input. If `context.emit` rejects, the queue increments `failures`, records
+`AGENT_EVENT_EMIT_FAILED:<cause>` in `lastError`, removes that entry and continues.
+The source queue does not retry it. Do not confuse this with downstream
+Observer Runtime retries after a canonical event has already been committed.
+
+Shutdown marks the adapter as stopping, releases subscriptions, then waits for
+the admitted queue. A subscription-release error can interrupt that sequence;
+do not infer complete cleanup from a shutdown request alone. Drain cancellation
+or `AGENT_EVENT_DRAIN_TIMEOUT:pending=<count>` ends the wait, not the activation
+API's non-abortable emit. It neither erases admitted entries nor proves that an
+emit failed. A later drain with a fresh signal can observe completion. A process
+restart loses volatile entries that had not reached the actual Core journal
+commit; counters and an empty queue do not establish durable end-to-end delivery.
+
+For a positive and negative **Source-level example**, the maintained ingress
+fixture admits three entries while emit is blocked, then rejects 97 further
+hook calls under its three-entry test limit. Immediate status reports the
+three retained entries. Cancelling status or shutdown does not remove them;
+after releasing the blocked emitter, a later drain observes three emits and
+zero queued entries. Separate cases assert a byte-capacity rejection, a drain
+timeout with the entry still retained, and an emit failure visible in status.
+These are descriptions of test assertions, not a fresh test or Gateway result.
+For an actual integration, inspect the original journal and the selected sink's
+receipts separately before claiming delivery or retry safety.
+
+> **Source evidence — hook ingress status and drain**
+>
+> **Claim:** Source admission is bounded and volatile; status exposes pressure and failures, while cancelling a drain does not cancel an admitted emit.
+>
+> **Implementation:** [Adapter lifecycle/status](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/common/plugins/openclaw-agent-events/src/adapter.ts#L67-L119), [Queue limits/admission](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/common/plugins/openclaw-agent-events/src/ingress-queue.ts#L1-L35), and [Emit/status/drain outcomes](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/common/plugins/openclaw-agent-events/src/ingress-queue.ts#L38-L76) define these separate outcomes.
+>
+> **Contract or setting:** [The closed source configuration schema](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/common/plugins/openclaw-agent-events/schemas/config.schema.json#L1-L49) declares the hook allowlist and queue/wait defaults and maxima. The status payload above selects waiting, not a new capacity or replay policy.
+>
+> **Test evidence:** [Original-journal pressure/status/drain assertions](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/tests/verification/reliability/agent-source-ingress.test.ts#L23-L48); [Byte/deadline and emit-error assertions](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/tests/verification/reliability/agent-source-ingress.test.ts#L51-L75). Source-read only, not executed for this correction.
+>
+> **Revision:** `569f7b4933d4859cc67c80ddf40d5154ffd95ce5`; whole linked objects equal current Source. This ingress explanation was Source-checked on 2026-10-22; other page review scopes are not relabelled.
+>
+> **Limit:** These local fixture assertions do not prove live OpenClaw admission, end-to-end no-duplicates, Redis delivery or replay of volatile/rejected events.
 
 > **Source evidence — package declarations**
 >

@@ -3,10 +3,10 @@
 Status: implemented with stated retention and disaster-recovery limits
 Audience: platform operator, runtime developer, data owner, incident responder
 Owner: state-owning component maintainers
-Evidence: skills/nova/core; skills/worker/core; skills/buster/engine; skills/prism; charts/prism; gitops/platform; scripts/postgresql-recovery.sh; scripts/redis-prepare-migration.sh
+Evidence: skills/nova/core; skills/worker/core; skills/buster/engine; skills/prism; charts/prism; gitops/platform; scripts/postgresql-recovery.sh; scripts/redis-prepare-migration.sh; skills/common/plugins/state-store; skills/common/plugins/wait-store
 Evidence revision: `13bff0a18a64e74f2cbbaa1978e746fcdeff0c10`
 Applies to: current file stores, Prism PostgreSQL, LiteLLM PostgreSQL, Redis, and content-addressed artifacts
-Last verified: code, schema, chart, values, recovery-script, and focused-test inspection on 2026-09-20
+Last verified: code, schema, chart, values, recovery-script, and focused-test inspection on 2026-09-20 State/Wait operation sections source-reviewed 2026-10-22; original other-scope dates and execution limits unchanged.
 
 ## Purpose
 
@@ -494,6 +494,91 @@ unbound message.
 > when receiver receipt lookup is absent](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/common/plugins/operator-messaging/src/delivery-records.ts#L31-L57).
 > [A terminal receipt uses a digest-guarded transition and resolves a concurrent
 > accepted result](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/common/plugins/operator-messaging/src/delivery-records.ts#L60-L88).
+
+### State and Wait adapter operations
+
+Select the installed adapter and its configured `root` before interpreting a
+read. A namespace or wait resource does not select an arbitrary filesystem
+path. The following are adapter capability requests, not additional CLI commands.
+Platform grants and Core effect/fence rules still apply.
+
+| Capability and operation | Input and selection | Response |
+| --- | --- | --- |
+| `state.read` / `read` | `resource.canonicalId` selects the logical namespace under this State adapter root; the adapter reads stream `state/<namespace>`. It does not select only the calling run's records. | `{ entries: [...] }`, in store order. Each `plugin-state-record.v2` has `sequence`, `idempotencyKey`, `appendedAt` (the store commit time), and `value`. |
+| `state.append` / `append` | The same namespace plus an object payload, not an array, and the Core-issued idempotency key. | `{ appended, entry }`; a matching prior key/value returns `appended: false` and the original entry. Different canonical JSON content under that key fails with `STATE_IDEMPOTENCY_CONFLICT`. |
+| `signal.wait` / `read` | This Wait adapter reads its configured root's single `waits/all` stream. It validates every returned stored wait before returning; it does not use the invocation resource or payload to filter by run, stage, issuer, wait ID, or expiry. | `{ waits: [...] }`, containing full `wait-request.v2` values, not the surrounding store records. |
+| `signal.wait` / `create` | Payload has `kind`, `signalType`, `authorizedIssuer`, `expiresAt`, and optional `request`; callers do not supply `schemaVersion` or `waitId`. | `{ created, wait }`. The adapter derives `wait:<SHA-256 of idempotencyKey>`. Equal replay returns `created: false` and the original wait; changed content fails with `WAIT_IDEMPOTENCY_CONFLICT`. |
+
+A State namespace consists of lowercase alphanumeric-led segments separated by
+`/`; later characters in a segment may also be `.`, `_`, or `-`. Empty segments,
+leading `/`, and a `..` segment fail. This is a logical stream name, not path
+traversal permission. State entries preserve namespace-local sequence and
+original commit identity; reading before appending does not provide a
+cross-attempt compare-and-swap. Use the existing
+[state concurrency rule](../extend/effectful-plugin.md), not a last-read value,
+to govern competing mutations.
+
+A new Wait payload uses kind `signal` or `orchestrator`, a namespaced signal type
+such as `approval.decided`, and an issuer object with exactly `type` and `id`.
+Issuer type is `orchestrator`, `operator`, or `adapter`. `expiresAt` is an admitted
+RFC3339 date-time or explicit `null`; optional `request` is a finite JSON object.
+Unknown fields or malformed waits fail before creation. Read validates the
+stored schema, identity, issuer and expiry syntax too: one malformed record
+blocks the read rather than disappearing from its result.
+
+Both adapters require a nonempty `root`. Their closed config schemas supply
+`maxEntryBytes` (default 1 MiB), `maximumRecords` (100,000), and
+`maximumStoreBytes` (256 MiB); limits must be positive safe integers. Entry limits
+apply to the durable payload encoding, not only a user-visible string. Store
+capacity/integrity errors remain failures; State and Wait translate the shared
+record-size rejection to `STATE_ENTRY_SIZE_EXCEEDED` and
+`WAIT_ENTRY_SIZE_EXCEEDED`. Unsupported capability/operation pairs fail.
+Non-confidential invocations check their fence; both honor cancellation, and
+Wait checks authorization again after reading before returning or appending.
+Use the error identity before choosing a repair:
+
+| Rejection | What to correct or preserve |
+| --- | --- |
+| `STATE_NAMESPACE_INVALID` / `STATE_VALUE_INVALID` | Correct the logical namespace or object payload before a new admitted invocation; do not reinterpret the namespace as a path. |
+| `STATE_OPERATION_UNSUPPORTED` / `WAIT_OPERATION_UNSUPPORTED` | Select only the capability/operation pairs above, not a fabricated update or delete. |
+| `WAIT_REQUEST_INVALID` / `WAIT_EXPIRY_INVALID` | Correct the closed create payload or timestamp syntax; a syntactically valid expiry still does not make an expired Core wait resumable. |
+| `WAIT_RECORD_INVALID` | Preserve the store. A replayed wait wrapper or typed value is invalid; removing the offending record is not authorized recovery. Generic store-integrity failure can occur before this typed check. |
+| State/Wait idempotency conflict | Compare original key and canonical content; preserve the original record instead of overwriting it or inventing a new key to hide a changed decision. |
+| Entry-size, store-capacity, cancellation or fence rejection | Keep the failed attempt and check the owning limit/authority. Increasing a byte allowance does not repair corruption, a stale fence or an unresolved effect. |
+
+Neither adapter exposes update, delete, expiry pruning, signal submission, or
+resume. Keep roots and keys stable on retry; do not repair a conflict by editing
+records or switching to an empty root. Follow
+[wait observation and recovery](../use/workflows/wait-resume.md#observe-the-durable-authority)
+for Core's separate active-wait, expiry, issuer, and one-time resume authority.
+
+> **Source evidence — State operation and result contract**
+>
+> **Claim:** State read selects a logical stream; append preserves immutable key/value replay and returns the committed entry.
+>
+> **Implementation:** [Namespace, entry projection, read and append](https://github.com/datrab/kubeclaw/blob/38d5c8f22d9cc3a923a7fdd421a1c02e4d176fdb/skills/common/plugins/state-store/src/adapter.ts#L19-L42) [Invocation checks, duplicates and size-error mapping](https://github.com/datrab/kubeclaw/blob/38d5c8f22d9cc3a923a7fdd421a1c02e4d176fdb/skills/common/plugins/state-store/src/adapter.ts#L44-L85)
+>
+> **Contract or setting:** [State root and quotas](https://github.com/datrab/kubeclaw/blob/38d5c8f22d9cc3a923a7fdd421a1c02e4d176fdb/skills/common/plugins/state-store/schemas/config.schema.json#L1-L1)
+>
+> **Test evidence:** [State package assertions](https://github.com/datrab/kubeclaw/blob/38d5c8f22d9cc3a923a7fdd421a1c02e4d176fdb/skills/common/plugins/state-store/tests/live-function.test.ts#L34-L72) The assertions cover append/read order and equal replay. They reject changed content, invalid namespaces and oversized entries. Read as Source, not executed for this addition.
+>
+> **Revision:** `38d5c8f22d9cc3a923a7fdd421a1c02e4d176fdb`; the linked whole Source objects match this checkout.
+>
+> **Limit:** Store append serialization is not a compare-and-swap across separate read/append calls or lifecycle authority for a run.
+
+> **Source evidence — Wait operation and selection contract**
+>
+> **Claim:** Wait read returns the selected adapter root's validated waits, while create supplies a deterministic identity and rejects conflicting replay.
+>
+> **Implementation:** [Wait read, replay and create](https://github.com/datrab/kubeclaw/blob/38d5c8f22d9cc3a923a7fdd421a1c02e4d176fdb/skills/common/plugins/wait-store/src/adapter.ts#L188-L241)
+>
+> **Contract or setting:** [Closed Wait payload and issuer validation](https://github.com/datrab/kubeclaw/blob/38d5c8f22d9cc3a923a7fdd421a1c02e4d176fdb/skills/common/plugins/wait-store/src/adapter.ts#L95-L147) [Wait root and quotas](https://github.com/datrab/kubeclaw/blob/38d5c8f22d9cc3a923a7fdd421a1c02e4d176fdb/skills/common/plugins/wait-store/schemas/config.schema.json#L1-L1)
+>
+> **Test evidence:** [Read and duplicate assertions](https://github.com/datrab/kubeclaw/blob/38d5c8f22d9cc3a923a7fdd421a1c02e4d176fdb/skills/common/plugins/wait-store/tests/live-function.test.ts#L43-L65) [Post-read and malformed-store assertions](https://github.com/datrab/kubeclaw/blob/38d5c8f22d9cc3a923a7fdd421a1c02e4d176fdb/skills/common/plugins/wait-store/tests/live-function.test.ts#L95-L129) The assertions cover duplicate/conflicting creates and inspection. They cover malformed stored waits. They also check the post-read fence and cancellation. No test ran for this addition.
+>
+> **Revision:** `38d5c8f22d9cc3a923a7fdd421a1c02e4d176fdb`; the linked whole Source objects match this checkout.
+>
+> **Limit:** A returned wait is durable intent, not proof that Core still considers it active or that the caller may resume it.
 
 ## Worker State
 

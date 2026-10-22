@@ -1,0 +1,90 @@
+{
+  "status": "PASS_DELIVERY_AND_ACTUAL_ORIGINAL_CHECK_RESULTS_ONLY_NOT_CONTENT_REACCEPTANCE_READER_GATE",
+  "archiveSha256": "d66f3239e8fe9f276f80ad117900003c40c144feb952c80fb4b73fc2f949b9ec",
+  "archiveBytes": 1084066,
+  "regularSafeUniqueMembers": 223,
+  "allIndexHashesLengthsMemberNamesAndOriginalScratchBytesExact": true,
+  "all11CurrentPageHashesExact": true,
+  "finalActualChecks": [
+    {
+      "name": "publication-after-repin",
+      "argv": [
+        "/usr/local/bin/node",
+        "scripts/docs-publication.mjs",
+        "check"
+      ],
+      "exitCode": 0,
+      "stdout": "documentation publication passed (177 pages, 51 plugins)",
+      "streams": {
+        "stdout.raw": {
+          "bytes": 57,
+          "sha256": "d1a6330f5b0ebf7627c416d2c328957f0396f9698ce140cd5f55782af7b40d76"
+        },
+        "stderr.raw": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      }
+    },
+    {
+      "name": "core-guides-after-repin",
+      "argv": [
+        "/usr/local/bin/node",
+        "scripts/check-core-architecture-guides.mjs"
+      ],
+      "exitCode": 0,
+      "stdout": "{\"ok\":true,\"pages\":3,\"requirements\":52,\"pinnedSourceLinks\":259,\"currentEvidenceFiles\":133,\"capabilities\":28,\"novaErrorCodesCoveredByFamily\":446,\"workerErrorCodesNamed\":223,\"pluginRuntimeDiagnosticsNamed\":89}",
+      "streams": {
+        "stdout.raw": {
+          "bytes": 208,
+          "sha256": "e10fa26f5e8fac01c5be9e970486f039612b1439d1a57eabf1f72d3fa070aec6"
+        },
+        "stderr.raw": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      }
+    },
+    {
+      "name": "buster-guides-after-repin",
+      "argv": [
+        "/usr/local/bin/node",
+        "scripts/check-buster-guides.mjs"
+      ],
+      "exitCode": 0,
+      "stdout": "Buster guides verified: 9 pages, 12 suites, 19 providers, 1714 pinned links, 217 revision-bound source files, 6 requirements.",
+      "streams": {
+        "stdout.raw": {
+          "bytes": 126,
+          "sha256": "6648dd56db61926a1d62faa4c7c5c97b02fe8e69e386e6d9292b394cd91eb643"
+        },
+        "stderr.raw": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      }
+    }
+  ],
+  "retainedOriginalFailures": [
+    {
+      "name": "publication",
+      "exitCode": 1,
+      "stderrSha256": "5a21af2e6f9ae0c9807a8f4e9513ace3e091a37aba60e707283155c011a126d0",
+      "stderrBytes": 3187
+    },
+    {
+      "name": "buster-guides",
+      "exitCode": 1,
+      "stderrSha256": "1389a57e6b21afe2de498b66f0b59c8ed73237774d05261c184b14e0ee590909",
+      "stderrBytes": 724
+    },
+    {
+      "name": "buster-guides-after-style",
+      "exitCode": 1,
+      "stderrSha256": "bce1a77301f5ac82e2a86aad728d0eec36fea07ac5d8af38dcb0e38d1aa36e78",
+      "stderrBytes": 769
+    }
+  ],
+  "rootIndependentStyleAndRepinAttributionPresent": true,
+  "noExecutionOrMainWriteByReviewer": true
+}

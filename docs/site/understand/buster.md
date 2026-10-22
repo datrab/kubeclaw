@@ -3,10 +3,10 @@
 Status: implemented with stated environment limits
 Audience: technical reader, operator, test author, Buster maintainer
 Owner: buster
-Evidence: skills/nova/core/test-gates; skills/buster/engine/test-gates; contracts/pipeline-test-gate/v1
+Evidence: skills/nova/core/test-gates; skills/buster/engine/test-gates; contracts/pipeline-test-gate/v1; skills/nova/plugins/buster-quality-gate
 Evidence revision: `3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f`
 Applies to: the current Nova-to-Buster remote test-gate path
-Last verified: source and contract inspection on 2026-09-19
+Last verified: source and contract inspection on 2026-09-19. Optional-evaluator section source-reviewed 2026-10-22; original other-scope dates and execution limits unchanged.
 
 ## Product Boundary
 
@@ -312,6 +312,96 @@ does not use the Buster status alone as the pipeline verdict.
 > [The importer validates terminal status, result identity, total evidence size, and every evidence digest](https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/nova/core/test-gates/remote-result-import.ts#L156-L207).
 >
 > [The import store writes pending intent before blobs and completes with a guarded transition](https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/nova/core/test-gates/remote-result-import.ts#L82-L154).
+
+### Optional evaluator after the native decision
+
+The Nova stage `kubeclaw.test.quality-evaluation` adds an optional evaluator
+judgment to the native result; it does not replace Buster execution. Follow the
+[existing native production procedure](../use/workflows/buster-suite.md#5-submit-and-observe-in-production)
+for compilation, submission, verified import and audit. The existing
+`testAgentEnabled` setting controls only the branch below, not a new submission
+path or permission to accept caller-supplied test evidence.
+
+The closed stage input contains `gateId`, `task`, `providerPlan`, and optional
+`expectedCoverage`. Caller-supplied `suiteEvidence`, `runId`, or `attempt` is not
+an alternative input contract. The stage resolves the admitted source revision,
+checks coverage expectations when present, invokes `test.plan.execute`, parses
+the returned digest-bound native decision and checks its run against Core's
+leased run. An enabled evaluator needs a nonblank configured `agent`; that
+configuration check happens before the native invocation. An invalid native
+plan, import or coverage decision does not become evaluator evidence.
+
+The stage writes the native decision through `artifacts.write` in namespace
+`kubeclaw.buster-quality-gate`, object
+`buster-quality:<gateId>:decision:<attemptNumber>`, before choosing a judgment
+branch. This ordering preserves native facts independently of evaluator output.
+
+| Native decision / evaluator branch | Result and retained artifacts |
+| --- | --- |
+| Native state is not `passed` | Return the native stage result with the native decision artifact; never dispatch the optional evaluator. Native `failed` reduces to `request_fix` / `test_gate.failed`; `cancelled` stays cancelled, and `execution_error` or `review_required` is blocked with its native reason. |
+| Native passed; evaluator disabled | Write a second assessment object `buster-quality:<gateId>:<attemptNumber>` containing `testAgent.enabled: false`, `nativeOutcome`, `sourceRevision`, and `decisionDigest`; return the native passed result plus both artifacts. |
+| Native passed; evaluator enabled | Dispatch the configured agent with protocol `kubeclaw.buster-quality-gate.v2`, task, runtime-supplied identity and suite evidence derived from the parsed native decision. A valid assessment writes the second object with `testAgent.enabled: true`, bound `verdict`, `sourceRevision`, `decisionDigest`, and `suiteEvidence`. |
+
+The request describes a **four-field agent-owned output**, not a copy of the
+request envelope:
+
+| Agent-owned field | Illustrative passed assessment |
+| --- | --- |
+| `outcome` | `passed` |
+| `summary` | The verified native evidence meets the requested judgment. |
+| `failureClass` | `none` |
+| `findings` | Empty list. |
+
+The evaluator must return `outcome` as `passed`, `request_fix`, or `blocked`;
+`failureClass` is `none`, `test_failure`, `contract`, `configuration`,
+`infrastructure`, `rate_limit`, or `timeout`. Do not add `protocol`, `agent`,
+`identity`, `task`, evidence, or contract fields. Core's lease supplies run and
+attempt; the stage's input supplies gate ID. The parser attaches those values
+to the verdict itself, so an agent cannot select another run/gate/attempt by
+copying identity fields into its output.
+
+Beyond the request's declared shape, the parser requires a nonblank summary of
+at most 8,192 JavaScript string code units, at most 128 findings, and nonblank
+finding strings of at most 4,096 code units each. These are not UTF-8 byte limits.
+A passed verdict must have `failureClass: none`, no findings, and no failing
+suite evidence. A nonpassing verdict needs a non-`none` class and at least one
+finding. The parser retains the supplied summary/findings; it does not replace
+them with a generic issue list. These consistency rules cannot authorize a pass
+for a failed native decision: that branch never dispatches the agent.
+
+For a valid passed verdict, the stage preserves the native passed result. For a
+valid nonpassing verdict, it keeps the requested `request_fix` or `blocked`
+outcome and emits `buster_quality.<failureClass>`, the summary, findings and
+native decision digest. It does not choose `request_fix` solely because the
+class is `test_failure`, or automatically turn every infrastructure class into
+`blocked`; the explicit admissible outcome and class are separate fields.
+
+Only an exception from `parseVerdict(response.result, judgedInput)` becomes a
+blocked `buster_quality.invalid_verdict` result. That result returns the native
+decision artifact, not a successfully stored evaluator assessment. A dispatch
+failure, source/coverage/native-decision error, or either artifact-write failure
+lies outside that catch and propagates to Core's existing effect/error/recovery
+policy. Do not relabel those failures as malformed model output, assume an
+already-written native artifact disappeared, or resubmit native tests merely
+because an evaluator response was lost. Preserve the run, native decision,
+assessment if present, effect receipts and exact input/package identities;
+follow [the existing recovery boundary](#8-failure-cancellation-restart-and-recovery)
+before any permitted continuation. Disabling an evaluator neither repairs native
+evidence nor proves that a failed external dispatch had no effect.
+
+> **Source evidence — native-first optional evaluator contract**
+>
+> **Claim:** The optional evaluator judges already-verified native evidence, with runtime-owned identity and a separate assessment artifact; it cannot overrule a nonpassing native decision.
+>
+> **Implementation:** [Native decision, artifact order and optional branches](https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/nova/plugins/buster-quality-gate/src/stage.ts#L13-L70) [Request/output contract, limits, consistency and identity](https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/nova/plugins/buster-quality-gate/src/protocol.ts#L18-L45)
+>
+> **Contract or setting:** [Closed stage input and native provider-plan requirement](https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/nova/plugins/buster-quality-gate/schemas/input.schema.json#L1-L43) [Native decision stage reduction](https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/contracts/pipeline-test-gate/v1/src/gate-decision.ts#L39-L56)
+>
+> **Test evidence:** [Protocol vectors](https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/nova/plugins/buster-quality-gate/tests/protocol.test.ts#L1-L28) [Native input authority assertions](https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/nova/plugins/buster-quality-gate/tests/suite-first.test.ts#L1-L21) The assertions reject caller-owned evidence and contradictory or identity-bearing verdicts. They attach runtime input identity to a valid verdict. They were inspected, not executed for this addition; the package live-function test is a negative caller-evidence test, not proof of the complete optional dispatch path.
+>
+> **Revision:** `3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f`; all linked whole Source objects equal this checkout at that immutable revision.
+>
+> **Limit:** Source and protocol assertions do not prove live agent, native Buster, artifact-store or resumed pipeline success. Only parser exceptions enter `invalid_verdict`; external-effect uncertainty still belongs to Core recovery.
 
 ## 8. Failure, Cancellation, Restart, and Recovery
 

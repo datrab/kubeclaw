@@ -5,7 +5,7 @@ Audience: pipeline authors and operators
 Owner: product integration maintainers; platform operations owns execution access
 Evidence: skills/nova/plugins/human-approval; skills/nova/core/execution; skills/common/plugins/wait-store; skills/common/plugins/operator-messaging
 Applies to: `pipeline-definition.v2`, `pipeline-platform.v2`, `resume-signal.v2`
-Last verified: 2026-10-11; bounded source and contract evidence only; no successful full local lifecycle or deployment evidence
+Last verified: 2026-10-11; bounded source and contract evidence only; no successful full local lifecycle or deployment evidence Operator transport/recovery sections source-reviewed 2026-10-22; original local lifecycle/deployment execution remains unproved.
 Source revision: `ffb0b7a6393f7db44eb948f3ff8346b4b4b50f1a`; wait/journal corrections checked at `929aadbad08b41e7a8504950f05dc0f526b706d6`
 
 This guide supplies a complete disposable approval input set. Nova executes
@@ -569,6 +569,173 @@ NODE
 > **Revision:** `ffb0b7a6393f7db44eb948f3ff8346b4b4b50f1a`.
 >
 > **Limit:** Neither this source nor a local fixture proves the mandatory deployed run. Do not truncate or rewrite an operator run's journals to reproduce test-only crash prefixes.
+
+## Operator Delivery and Receipt Recovery
+
+This section describes the installed `kubeclaw.operator-messaging:operator`
+adapter beyond the disposable JSON receiver above. That receiver has no receipt
+lookup endpoint; these contracts do not upgrade it or prove a deployed receiver.
+For State/Wait API selection and responses, use
+[State and Wait adapter operations](../../understand/data-and-state.md#state-and-wait-adapter-operations).
+
+### Choose the transport before sending
+
+`operator.request` supports `publish` to an allowed `operator.target` whose
+canonical ID exactly names a configured target. It does not accept a caller's
+arbitrary URL, method or headers. The target selects `format: json` (default) or
+`discord_webhook`, one endpoint mode, and a payload byte limit (64 KiB default,
+1 MiB maximum). The input is a closed, recursively bounded JSON envelope with
+required `type`; only the admitted message/identity/presentation fields belong
+in it. A schema field is not permission to send arbitrary JSON.
+
+| Transport | Actual request body and success receipt | Boundary |
+| --- | --- | --- |
+| `json` | The validated envelope, serialized with `JSON.stringify`. A successful 2xx response yields `{ accepted: true, target, status }` with optional `messageId` from response body `messageId` or `id`. | A 2xx is transport acceptance, not human approval, remote business success, or proof of durable receiver deduplication. |
+| `discord_webhook` | A projected embed with `allowed_mentions.parse: []`; title/description/footer and field count have fixed display bounds. The endpoint gets exactly one `wait=true` parameter. | Success also requires the response body's actual `id` to be a positive decimal-string uint64, without leading zero. A generic `messageId` or empty 204 does not substitute. The returned `discord-delivery-receipt.v1` binds target, status, message ID, delivery ID and SHA-256 of the exact serialized projected body. |
+
+Literal `endpoint` mode requires `tokenSecret`. The adapter resolves that secret
+through `secrets.read` and signs the exact POST body with
+`HMAC-SHA256(secret, deliveryId + "." + body)`. The fixed headers are
+`content-type: application/json`, `idempotency-key: deliveryId`, and
+`x-kubeclaw-signature: v1=<hex>`; it does not add Bearer authorization.
+
+Alternatively, `endpointOrigin` plus `endpointSecret` selects a secret-held full
+URL. Both fields must be present, without literal `endpoint`; the resolved URL
+must match that configured origin and contain no URL userinfo or fragment.
+The adapter sends this URL through confidential `network.http`, so a secret
+webhook path **does cross the network boundary**. Do not apply a blanket
+"no resolved secret ever enters a network request" rule to this mode. The
+resolved secret also supplies the HMAC key; the ordinary effect journal is not
+an approved place for it. Neither mode admits an arbitrary origin. Grant the
+adapter's `secrets.read` names and `network.http` origin, methods, headers,
+request/response bounds and timeout separately. JSON receiver recovery also
+needs GET and `x-kubeclaw-signature`; configuring a receipt URL alone is not a
+network grant.
+
+> **Source evidence — operator transport and confidentiality**
+>
+> **Claim:** The adapter selects a bounded JSON or Discord body and keeps literal-token and confidential endpoint-URL modes distinct.
+>
+> **Implementation:** [POST construction and secret-endpoint branch](https://github.com/datrab/kubeclaw/blob/38d5c8f22d9cc3a923a7fdd421a1c02e4d176fdb/skills/common/plugins/operator-messaging/src/adapter.ts#L15-L70) [Discord presentation](https://github.com/datrab/kubeclaw/blob/38d5c8f22d9cc3a923a7fdd421a1c02e4d176fdb/skills/common/plugins/operator-messaging/src/discord-payload.ts#L1-L22) [Discord endpoint and receipt validation](https://github.com/datrab/kubeclaw/blob/38d5c8f22d9cc3a923a7fdd421a1c02e4d176fdb/skills/common/plugins/operator-messaging/src/discord-receipt.ts#L16-L47)
+>
+> **Contract or setting:** [Endpoint modes/origin/format](https://github.com/datrab/kubeclaw/blob/38d5c8f22d9cc3a923a7fdd421a1c02e4d176fdb/skills/common/plugins/operator-messaging/src/config.ts#L48-L80) [Target payload/URL bounds](https://github.com/datrab/kubeclaw/blob/38d5c8f22d9cc3a923a7fdd421a1c02e4d176fdb/skills/common/plugins/operator-messaging/src/config.ts#L30-L47) [Payload runtime checks](https://github.com/datrab/kubeclaw/blob/38d5c8f22d9cc3a923a7fdd421a1c02e4d176fdb/skills/common/plugins/operator-messaging/src/payload.ts#L98-L119)
+>
+> **Test evidence:** [Wire/HMAC/presentation and confidential endpoint assertions](https://github.com/datrab/kubeclaw/blob/38d5c8f22d9cc3a923a7fdd421a1c02e4d176fdb/skills/common/plugins/operator-messaging/tests/live-function.test.ts#L212-L270) [Journal exclusion assertions](https://github.com/datrab/kubeclaw/blob/38d5c8f22d9cc3a923a7fdd421a1c02e4d176fdb/skills/common/plugins/operator-messaging/tests/live-function.test.ts#L276-L297) Assertions cover exact HMAC/wire body. They cover Discord presentation, confidential endpoints and journal exclusion. They were inspected, not newly executed receiver or Discord service tests.
+>
+> **Revision:** `38d5c8f22d9cc3a923a7fdd421a1c02e4d176fdb`; the linked whole Source objects match this checkout.
+>
+> **Limit:** Transport receipt acceptance cannot supply Core signal authority or human/product acceptance. Secret-held endpoints still require authorized real network transmission.
+
+### Preserve request, reservation and uncertainty
+
+The stable external identity is `request.deliveryId`, falling back to the
+idempotency key for legacy callers. The adapter first appends the request under
+`notifications/<target>`, checks for an existing terminal receipt, and reserves
+an attempt-specific terminal slot before resolving the secret or invoking the
+receiver. New explicit delivery IDs produce owner-bound
+`notification-delivery-request.v2` records with run, original stage and exact
+transport-body string; legacy keys use v1 records. Do not rewrite one format
+into the other to manufacture ownership.
+
+The adapter transitions the reservation by expected payload digest into a
+receipt or failure. It marks `sent=true` immediately **before** invoking the
+POST, so a failure marked `possible` is conservative: it does not prove a
+remote effect happened, and a local error/HTTP 5xx does not prove one did not.
+An existing completed receipt can reconcile a concurrent failure. A local
+reservation alone is not external exactly-once delivery; the compatible receiver
+must deduplicate concurrent POSTs as well as retries.
+
+For JSON only, optional `receiptEndpoint` must share the delivery endpoint's
+origin. Before POST, the adapter makes a **fresh confidential GET**, not a cached
+effect replay. Its query fields are `deliveryId` and `payloadDigest`, where the
+digest is lowercase SHA-256 hex of the exact POST JSON bytes, without a
+`sha256:` prefix. Its signature is
+`HMAC-SHA256(secret, deliveryId + "." + payloadDigest)` in the same `v1=` header.
+The receiver must respond HTTP 200 with a decoded JSON object:
+
+```json
+{
+  "protocol": "kubeclaw.operator-delivery.v1",
+  "deliveryId": "<exact requested deliveryId>",
+  "payloadDigest": "<exact requested lowercase SHA-256 hex>",
+  "status": "accepted",
+  "messageId": "<nonempty receiver ID, at most 512 characters>"
+}
+```
+
+Matching `accepted` completes the local receipt without another POST (its
+recovered transport status is 200). Matching `absent` omits the need for
+`messageId` and permits POST **only under the real receiver contract**. The
+receiver must verify the corresponding signature and atomically retain delivery
+ID, exact payload digest and accepted
+result before ACK; return the same result without repeating an equal delivery;
+reject changed content; retain deduplication until coordinated delivery
+retirement; and make concurrent GET/POST observe that atomic state. A configured
+URL or an arbitrary HTTP 200 does not implement any of those guarantees.
+
+Without a compatible JSON receipt protocol, a retained reservation or
+possible-send failure rejects another attempt with
+`OPERATOR_DELIVERY_UNRESOLVED:receiver_receipt_required`. A missing, invalid or
+unavailable receipt response does not authorize another POST. The adapter can record a failure known
+before the send call as `not_sent`; the existing attempt's
+terminal failure still fails, rather than silently retrying itself. Preserve
+Core effect state, request body, delivery identity, attempt and adapter store.
+Do not create a new run/key, erase the reservation, enlarge store limits, or
+retarget the endpoint to escape uncertainty. Use the owning receiver's actual
+reconciliation and the canonical recovery procedure; this guide adds no generic
+receipt-import or endpoint-migration command. Discord mode does not consume the
+JSON `receiptEndpoint` protocol to resend a lost response.
+
+> **Source evidence — receiver reconciliation and conservative failure**
+>
+> **Claim:** A JSON receiver must supply matching durable delivery authority before the adapter can reconcile an uncertain send safely.
+>
+> **Implementation:** [Request, reservation and terminal transitions](https://github.com/datrab/kubeclaw/blob/38d5c8f22d9cc3a923a7fdd421a1c02e4d176fdb/skills/common/plugins/operator-messaging/src/delivery-records.ts#L31-L88) [Fresh receiver GET and exact response fields](https://github.com/datrab/kubeclaw/blob/38d5c8f22d9cc3a923a7fdd421a1c02e4d176fdb/skills/common/plugins/operator-messaging/src/receiver.ts#L1-L20)
+>
+> **Contract or setting:** [Receiver atomicity and retention contract](https://github.com/datrab/kubeclaw/blob/38d5c8f22d9cc3a923a7fdd421a1c02e4d176fdb/skills/common/plugins/operator-messaging/README.md#L57-L88) [Same-origin receipt configuration](https://github.com/datrab/kubeclaw/blob/38d5c8f22d9cc3a923a7fdd421a1c02e4d176fdb/skills/common/plugins/operator-messaging/src/config.ts#L48-L54)
+>
+> **Test evidence:** [Receiver scenario/protocol](https://github.com/datrab/kubeclaw/blob/38d5c8f22d9cc3a923a7fdd421a1c02e4d176fdb/tests/verification/reliability/operator-delivery.test.mts#L15-L45) [Reconstruction/delivery assertions](https://github.com/datrab/kubeclaw/blob/38d5c8f22d9cc3a923a7fdd421a1c02e4d176fdb/tests/verification/reliability/operator-delivery.test.mts#L83-L121) The scenarios assert lost-ACK recovery and bounded permanent failure. They reject an absent/invalid protocol and retain stable delivery identity across reconstructed attempts. Read as Source, not executed for this addition.
+>
+> **Revision:** `38d5c8f22d9cc3a923a7fdd421a1c02e4d176fdb`; the linked whole Source objects match this checkout.
+>
+> **Limit:** The repository's test receiver is not evidence that an external endpoint implements atomic durable deduplication or that an uncertain delivery may be replayed.
+
+### Look up a bound Discord receipt without publishing
+
+`operator.receipt` / `lookup` is a separate, allowed-target capability on
+`operator.target`. It reads the local delivery store; it does **not** query
+Discord, resolve secrets, reserve a delivery, or send POST. Its payload has only
+`deliveryId`, `stageId` (the original publishing stage), and `payload` (the
+original message envelope). The adapter validates/projects that envelope again.
+The caller's run must match the v2 request owner; the supplied original stage,
+target, delivery ID and exact projected body must match too. Exactly one terminal
+receipt must have that run/original stage, and the bound Discord receipt must
+still match its delivery identity/body digest and valid message ID. A later
+stage in the same run may request the lookup under its grant; the supplied
+publishing stage is not replaced by the later stage's own identity.
+
+Wrong operation/query/target, missing or multiple terminals, changed transport
+body, foreign run/stage, legacy v1 requests without explicit owner, or an
+unbound Discord acknowledgement fail. A generic JSON receipt does not become a
+Discord handoff receipt. Preserve the original store and inspect the matching
+request/terminal proof; lookup failure is not permission to send again. The
+existing guarded JSON projection path is not an arbitrary ownership upgrade or
+a replacement for this Discord lookup. Use the existing retention procedure
+rather than editing/compacting raw records by hand.
+
+> **Source evidence — lookup-only Discord receipt ownership**
+>
+> **Claim:** Local receipt lookup proves the stored delivery's exact run/stage/body binding without producing another delivery.
+>
+> **Implementation:** [Lookup dispatch and query validation](https://github.com/datrab/kubeclaw/blob/38d5c8f22d9cc3a923a7fdd421a1c02e4d176fdb/skills/common/plugins/operator-messaging/src/adapter.ts#L105-L117) [Owner-bound request and exact terminal selection](https://github.com/datrab/kubeclaw/blob/38d5c8f22d9cc3a923a7fdd421a1c02e4d176fdb/skills/common/plugins/operator-messaging/src/delivery-records.ts#L90-L113)
+>
+> **Contract or setting:** [Declared request and receipt capabilities](https://github.com/datrab/kubeclaw/blob/38d5c8f22d9cc3a923a7fdd421a1c02e4d176fdb/skills/common/plugins/operator-messaging/plugin.json#L1-L23) [Bound Discord receipt fields](https://github.com/datrab/kubeclaw/blob/38d5c8f22d9cc3a923a7fdd421a1c02e4d176fdb/skills/common/plugins/operator-messaging/src/discord-receipt.ts#L31-L47)
+>
+> **Test evidence:** [Reconstructed receipt assertions](https://github.com/datrab/kubeclaw/blob/38d5c8f22d9cc3a923a7fdd421a1c02e4d176fdb/tests/verification/reliability/discord-delivery-receipt.test.mts#L65-L112) [Explicit invalid receipt vectors](https://github.com/datrab/kubeclaw/blob/38d5c8f22d9cc3a923a7fdd421a1c02e4d176fdb/tests/verification/reliability/discord-delivery-receipt.test.mts#L120-L132) The assertions check reconstructed lookup success. They reject foreign run/stage or changed-body bindings. They also reject invalid or legacy acknowledgements. No test or live handoff ran for this addition.
+>
+> **Revision:** `38d5c8f22d9cc3a923a7fdd421a1c02e4d176fdb`; the linked whole Source objects match this checkout.
+>
+> **Limit:** A lookup cannot recover a missing remote response by inference, approve a wait, or grant a new sender identity.
 
 ## Failure and Interruption
 

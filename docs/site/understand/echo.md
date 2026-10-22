@@ -195,6 +195,40 @@ input to produce `passed`, `request_fix`, `blocked`, or
 `orchestrator_required`. If human or orchestrator action is required, the stage
 can emit an attempt-bound `kubeclaw.review.resolve` wait request.
 
+### Bounded Simplification Evidence
+
+The optional fact producer recognizes a narrow lexical pattern in JS/TS files:
+a named function, optionally exported or async, that returns a simple or dotted
+callee's result, optionally awaited, with the same ordered parameter identifiers.
+It masks comments, strings, templates and regular-expression contents first.
+Source offsets distinguish same-name wrappers. This is not a general parser or a
+proof that removing the wrapper preserves a policy or compatibility boundary.
+Default/rest-argument wrappers are not certified as pure forwarding; JSX/TSX is
+omitted rather than interpreted as ordinary JavaScript text.
+
+Read omission diagnostics as incomplete evidence, not evidence of no candidates.
+`omittedSourceCount` records the omitted JSX/TSX context documents and
+`omittedFactCount` records producer truncation. Mining exposes these as
+`unsupported_source` and `candidate_limit`; it also reports malformed, wrong-
+revision, or out-of-scope evidence. Candidates must match the frozen revision,
+reviewed paths, enabled rule and minimum confidence. Even an admitted candidate
+is advisory syntax evidence, not whole-program semantic equivalence or permission
+to refactor automatically.
+
+> **Source evidence — bounded simplification facts**
+>
+> **Claim:** Forwarding candidates have explicit lexical, scope and omission limits; they do not certify a safe automatic replacement.
+>
+> **Implementation:** [Forwarding recognition and omission accounting](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/review/src/simplification-fact-producer.ts#L15-L61) and [evidence, revision, scope and omission diagnostics](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/review/src/simplification-miner.ts#L87-L116).
+>
+> **Contract or setting:** [Fact identity, omission fields and diagnostic vocabulary](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/review/src/simplification-contract.ts#L12-L74). Resolved simplification policy selects enabled rules and confidence; an existing documented boundary can justify keeping a wrapper.
+>
+> **Test evidence:** [Positive bounded forwarding-producer assertion](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/review/tests/simplification-fact-producer.unit.test.mjs#L1-L13) was read as Source, not run for this correction. It is not exhaustive proof of unsupported syntax or semantic equivalence.
+>
+> **Revision:** `569f7b4933d4859cc67c80ddf40d5154ffd95ce5`; each linked whole file matches current Source.
+>
+> **Limit:** Source-only explanation; no model run, complete language coverage, automatic repair or live result is asserted.
+
 ## Findings, Reports, And Repair
 
 The report keeps accepted items by stable digest key. Each item records its
@@ -262,6 +296,285 @@ deadline.
 > **Revision:** `569f7b4933d4859cc67c80ddf40d5154ffd95ce5`. These are the source bindings for the explanation above, not execution receipts.
 >
 > **Limit:** That fixture uses controlled capability responses and does not prove terminal OpenClaw cleanup or exercise every retry-stop branch.
+
+### Follow-up Selection And Coverage
+
+During repository-audit execution, inspect the separate
+`repository-review-follow-up-status.v1` checkpoint artifacts before interpreting
+a final report. The `context-expansion` artifact records its requested, selected,
+deferred and `reservedInputTokens` counts. The later `verification` artifact
+retains those context counts and adds the same accounting for verification.
+Requested jobs are the assembled follow-up candidates; selected jobs fit the
+remaining phase/total capacity. Deferred jobs were not selected. Reserved input
+tokens are budget reservations, not measured provider usage or completed work.
+
+Each status is stored as a digest-bound `kubeclaw.review` checkpoint artifact
+before that phase dispatches. The final report carries `followUp`,
+`dispatchAccounting`, `usage` and `completeness`, plus references to those status
+artifacts in the stage result. A status checkpoint alone does not prove that its
+selected jobs completed. Selected review or verification failures block final
+report production; deliberate deferral is accounted for separately.
+
+Read `repository-review-completeness.v1` literally: `policy-complete` can mean
+that selected work finished while requested context or verification was deferred.
+Inspect `allRequestedContextReviewed`, `allRequestedWorkCompleted` and each
+phase's `policyDeferred` before claiming full requested coverage. Reduction's
+`incompleteJobs` identifies incomplete review work; `unverifiedProposals`
+identifies valid proposals left without verification. Neither a plan nor a
+successful stage outcome proves that every requested proposal was verified.
+
+> **Source evidence — follow-up checkpoints and coverage**
+>
+> **Claim:** Follow-up status separates selection/reservation from execution and verification coverage; deliberate deferral is not silently counted as completion.
+>
+> **Implementation:** [Phase checkpoints and completion guards](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/review/src/repository-audit-stage.ts#L388-L461), [digest-bound checkpoint storage](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/review/src/repository-audit-stage.ts#L668-L686) and [Report, artifact references and coverage facts](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/review/src/repository-audit-stage.ts#L709-L759).
+>
+> **Contract or setting:** [Completeness states and separate deferred counts](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/review/src/repository-audit-results.ts#L64-L90). The admitted profile and remaining budgets bound selection, not an external promise of complete review.
+>
+> **Test evidence:** [Policy-complete, verification-deferred and incomplete-execution assertions](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/review/tests/repository-audit-stage.unit.test.mjs#L142-L164) were read as Source, not executed for this documentation correction.
+>
+> **Revision:** `569f7b4933d4859cc67c80ddf40d5154ffd95ce5`; each linked whole file matches current Source.
+>
+> **Limit:** No model execution, complete requested coverage, terminal external cleanup or successful deployment is asserted.
+
+## Supervised Repository-review Operator Path
+
+Use the root package's `review:supervise`, `review:status`,
+`review:status:format` and optional `runtime:preflight` commands for long reviews.
+They are operator tools around the existing pipeline, not new review stages or
+approval authority. These procedures are Source-reviewed, not newly executed.
+
+### Prepare one owned run and its control files
+
+Start from the supported [locked dependency installation](../use/quickstart.md#locked-dependency-installation).
+Use the repository's supported Node runtime with direct TypeScript support,
+installed npm dependencies and the root package scripts. Supervision additionally
+needs Linux `/proc` and `/usr/bin/flock`. Resource samples use cgroup-v2 files;
+unavailable readings are observation errors, not zero resource use. Put `npm`
+on the supervisor's `PATH`; its child runs from `--workdir`. The child inherits
+the operator environment, including runtime, credential and service selections;
+the supervisor does not sanitize or provision it.
+
+Supply a valid explicit platform and pipeline graph. The platform must expose
+its `storageRoot` and artifact-store adapter's `artifactRoot` to the status
+reader, as well as the actual installed providers, grants and review target
+needed by the pipeline. A readable status snapshot does not validate the whole
+platform or authorize dispatch. Prepare the frozen repository subject, review
+profile, permitted artifact namespaces and configured model/controller identity
+before starting. Keep these inputs and the same run ID through recovery.
+
+Choose absolute, operator-owned paths for the platform, graph and control
+files. The run ID permits 1–256 characters, starting with a letter or digit;
+the remainder can contain letters, digits, `.`, `_`, `:`, or `-`. The run-root
+reader uses the same ID's SHA-256-based `runs/v2-<digest>` location. The run-root reader accepts a legacy
+colon-to-underscore location only with matching journal identity;
+do not rename or guess a run directory.
+
+The following placeholders must be replaced with real paths and an admitted
+run ID. Create the control directory before opening its append-only pipeline log:
+
+```sh
+cd /absolute/path/to/kubeclaw
+CONTROL=/absolute/path/to/review-control
+PLATFORM=/absolute/path/to/platform.json
+GRAPH=/absolute/path/to/repository-review-pipeline.json
+RUN_ID=repository-review-001
+mkdir -p "$CONTROL"
+npm run review:supervise -- \
+  --workdir "$PWD" --platform "$PLATFORM" --graph "$GRAPH" \
+  --run-id "$RUN_ID" --heartbeat "$CONTROL/heartbeat.json" \
+  --resource-log "$CONTROL/resources.jsonl" \
+  --diagnostic-dir "$CONTROL/diagnostics" --log "$CONTROL/pipeline.log" \
+  --lease "$CONTROL/supervisor.lease" --initial-mode auto --max-recoveries 5
+```
+
+All eight path/run options shown before `--lease` are required. The lease
+otherwise defaults to `<heartbeat>.lease`; `--max-recoveries` accepts 0–100,
+default 5. `auto` starts when no run journal exists and otherwise recovers;
+explicit `start` and `recover` are also supported. This tool accepts an explicit
+graph, not a project-compilation or human-signal command. Use the separate
+[wait/resume workflow](../use/workflows/wait-resume.md) for authorized signals.
+
+Before launching, the supervisor acquires its lease and reads current status.
+An already terminal run returns that status without another child. A confirmed
+live heartbeat PID is adopted only when its procfs command contains `pipeline`
+and the run ID; unreadable or mismatched live ownership stops admission. This
+is a process-ownership check, not proof of the repository/model semantics.
+
+The lease uses a stable `<lease>.lock` inode with an exclusive flock transaction
+and a one-second lock-acquisition timeout. A live supervisor owner refuses a
+contender. Malformed lease JSON or a semantically invalid lease is an error.
+Malformed heartbeat JSON also errors, but its reader does not validate a closed
+heartbeat schema; none of these errors permits replacing a live owner. A dead lease owner
+can be replaced under that lock. A late release cannot remove a successor's
+lease because release checks its instance ID. Never unlink the permanent lock
+inode to bypass contention.
+
+### Observe, stop and recover without inventing completion
+
+Each new attempt launches detached `npm run pipeline` with the supplied
+platform/graph and either `--run-id` or `--recover` for the **same** ID. Its
+stdout/stderr append to the log. Initial and 15-second serialized heartbeat
+work appends resource samples then atomically replaces the heartbeat. Samples
+contain cgroup CPU/memory/OOM counters, pipeline RSS/liveness and a two-second
+Gateway `/healthz` probe. The default probe is `http://127.0.0.1:18789`;
+`--gateway-url` changes this observation, not the pipeline's transport target.
+
+After actual child exit and queued heartbeat I/O settle, the supervisor writes
+a final stopped heartbeat and `diagnostics/attempt-<n>-exit.json` containing the
+exit code/signal, stop state, sample and any launch/process/heartbeat error.
+Heartbeat or diagnostic failures are visible errors, not successful monitoring.
+The diagnostic's child exit is not itself the canonical run outcome.
+
+| Observation or stop | Meaning and safe next action |
+| --- | --- |
+| Status is `succeeded` | Supervisor prints the status and exits 0. Inspect final report, completeness and subject bindings before claiming review coverage. |
+| Status is `failed`, `blocked` or `cancelled` | Prints terminal status and exits 1; it does not automatically reopen that terminal run. Follow its owning error/wait/reconciliation procedure. |
+| Child exited but status remains `running` | After a five-second delay it can invoke `--recover` for the same ID, within the declared maximum. Exhaustion exits 75, not success. Preserve log/diagnostic and inspect before another authorized recovery. |
+| SIGINT/SIGTERM during a child owned by this supervisor | Requests process-group SIGTERM with child fallback, then waits for actual exit and heartbeat I/O; returns 130. There is no kill-after-grace escalation here. An unresponsive child can keep the supervisor waiting. |
+| Stop while observing an adopted live pipeline | Stops supervision; it does not signal that adopted pipeline. Confirm its actual state separately before replacing or recovering it. |
+| Lease, status/artifact read, procfs ownership, heartbeat or diagnostic error | Stop; retain the original error and inputs. Correct access/data/path dependencies without deleting locks or rewriting retained evidence to force admission. |
+
+Use read-only observations independently of a supervisor:
+
+```sh
+npm run review:status -- --platform "$PLATFORM" --run-id "$RUN_ID" \
+  --heartbeat "$CONTROL/heartbeat.json" --resource-log "$CONTROL/resources.jsonl" \
+  --stale-after-seconds 120
+npm run review:status:format -- --workdir "$PWD" \
+  --platform "$PLATFORM" --run-id "$RUN_ID" \
+  --heartbeat "$CONTROL/heartbeat.json" --resource-log "$CONTROL/resources.jsonl" \
+  --controller-session-key agent:main:nova-review-controller \
+  --configured-concurrency 10
+```
+
+The status command reads the compact artifact index and referenced prepared,
+cache and report blobs. Its event tail is bounded to 1 MiB; resource history is
+bounded to 8 MiB. It is not full journal replay or an audit/proof-repair command.
+Inspect `status`, stage states, last durable event, `liveness`, heartbeat age,
+`health`, active runtime locks, requested dispatches, recent lock expiry/failure,
+and primary/expansion/verification checkpoint counts. Heartbeat freshness
+(default 120 seconds) and a live-process flag distinguish active from stale;
+terminal events override liveness. Tail-derived counts or missing old events
+cannot certify full run history. `planReport` is not executed review;
+`finalReport` presence does not replace its coverage/completeness checks.
+
+The formatter also invokes the installed `openclaw` CLI against Gateway's
+`subagents` list for the specified controller session. Configure that CLI's
+actual Gateway connection/authentication and select the controller used by the
+review target. `--openclaw-bin` selects another executable; the tool does not
+create credentials. Its displayed configured concurrency (default 10) is a
+label, not a control change. Active tasks/locks are observations, not completed
+batches. Actual reviewer token usage remains explicitly unavailable; estimated
+input tokens and budget reservations are not billed usage.
+
+Current CPU is calculated from adjacent cgroup samples; peak CPU/RAM reflects
+the retained resource tail, while cgroup lifetime peak RAM is a distinct field.
+Stale current CPU/RAM/Gateway readings remain stale or unavailable, not current
+healthy capacity. A healthy probe is connectivity, not model admission. Formatter
+cadence/next-check text does not install a scheduler. Optional `--reopen-status`
+only reads another controller's JSON; it does not authorize or perform reopen.
+
+### Optional live capacity preflight
+
+`runtime:preflight` is **effectful**: it requests real OpenClaw model children.
+It needs an authenticated, authorized installed `openclaw` CLI/Gateway, a valid
+agent/model/thinking selection and sufficient controller capacity. It can incur
+model work and retain child sessions. Use it only when this live check is
+intended; it is not free static parsing or a prerequisite for reading status.
+
+```sh
+npm run runtime:preflight -- --concurrency 2 --model '<admitted-model>' \
+  --thinking high --session-key agent:main:nova-review-controller \
+  --collector-mode true --spawn-interval-ms 1500 --timeout-ms 180000
+```
+
+Standalone defaults are concurrency 1 (maximum 100), timeout 120000 ms
+(maximum 3600000), agent `main`, thinking `high`, collector false and interval
+1500 ms (range 0–60000). A model is required. Requests use subagent/run,
+`cleanup: keep` and no thread; collector mode additionally selects collect and
+waits through `agents_wait`. Otherwise it polls `subagents` lists. Interval 0
+submits concurrently; a positive interval spaces spawn requests. The prompt
+asks children to return `PREFLIGHT_OK`, but the script counts successful terminal
+status rather than validating the returned text.
+
+Passed JSON `openclaw-concurrency-preflight.v1` records requested/accepted/
+completed counts and selected identity. It exits without error only after admission and successful terminal observation
+of every requested child. Admission
+rejection, failed child, transport error or completion deadline rejects the
+check. The error path attempts cancellation of accepted tasks, resolving missing
+task IDs from a list and using settled cancellation requests. Cancellation is
+not terminal cleanup proof; list/transport failure can also obstruct cleanup.
+Retain available session/run/task identities and reconcile actual remaining
+children through the owning OpenClaw procedure before another preflight.
+
+The supervisor can opt into preflight with **both** `--preflight-concurrency`
+and `--preflight-model`; only its start path runs it. Its defaults differ:
+timeout 180000 ms, thinking high, collector false, interval 1500 ms and the same
+dedicated controller key. It calls this preflight synchronously before the
+pipeline child, with a 240-second wrapper timeout. Timeout or supervisor
+SIGINT/SIGTERM handling is not a cancellation protocol
+for these model sessions. Omit both flags to avoid that extra live operation.
+Passing capacity now is not a guarantee of later review/model quality or cleanup.
+
+### Retain evidence and change the mechanism coherently
+
+After a run, keep the append-only pipeline/resource logs, final heartbeat,
+attempt diagnostics, platform/graph identity, run journal and referenced
+artifact blobs while recovery or review consumers need them. Normal release
+removes only this supervisor's lease, not the stable lock inode or run data.
+A crash can leave lease, heartbeat temporary files or partial logs; neither a
+stale timestamp nor a dead supervisor proves the pipeline or model tasks ended.
+Do not delete shared artifact/journal storage to clear monitoring errors.
+Apply the [shared plugin lifecycle](../use/plugins.md) and
+[OpenClaw reconciliation](openclaw.md) before disposal or redispatch.
+
+Changes to supervision/status/preflight must coordinate CLI flags, pipeline
+receiver, run-root identity, FileMutex/lease, heartbeat/resource schema, status
+reader and formatter, Gateway tool protocol and owning tests. Do not add a
+retry or cleanup promise only to the monitor's prose.
+
+> **Source evidence — supervisor ownership and recovery**
+>
+> **Claim:** The supervisor launches or adopts one run, retains attempt observations and only recovers nonterminal work under an exclusive lease.
+>
+> **Implementation:** [Launch, signal and serialized final observation](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/scripts/supervise-repository-review.mjs#L97-L149), [same-run bounded recovery](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/scripts/supervise-repository-review.mjs#L188-L215) and [lease/adoption/initial status](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/scripts/supervise-repository-review.mjs#L216-L256).
+>
+> **Contract or setting:** [Lease ownership and stable lock](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/scripts/lib/repository-review-supervisor-state.mjs#L23-L63); [original kernel-lock receiver](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/core/state/file-mutex.ts#L1-L24). Required paths, initial mode and maximum recoveries select this wrapper; Core retains run-state authority.
+>
+> **Test evidence:** [Actual lease ownership and stale-release assertions](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/scripts/tests/repository-review-supervisor-state.test.mjs#L12-L58); [terminal/error status assertions](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/scripts/tests/repository-review-supervisor-status.test.mjs#L9-L46); [stop-during-recovery assertions](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/scripts/tests/integration/repository-review-supervisor-stop.test.mjs#L38-L75). Assertions were read as Source, not run for this addition. They do not prove a deployed model review.
+>
+> **Revision:** `569f7b4933d4859cc67c80ddf40d5154ffd95ce5`; every linked whole file matches current Source.
+>
+> **Limit:** No new supervisor, native fixture, model, Gateway or production execution is asserted; stopping this monitor is not proof all external work ended.
+
+> **Source evidence — status and resources are observations**
+>
+> **Claim:** Status and formatter expose bounded checkpoint/liveness/resource observations without granting lifecycle, full-history or token-usage authority.
+>
+> **Implementation:** [Artifact/checkpoint and bounded-tail status](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/scripts/repository-review-status.mjs#L86-L145), [freshness, locks and returned counters](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/scripts/repository-review-status.mjs#L146-L184) and [formatter freshness and unavailable usage](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/scripts/format-repository-review-status.mjs#L53-L105).
+>
+> **Contract or setting:** [Resource sampling and heartbeat commit order](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/scripts/lib/repository-review-supervisor-heartbeat.mjs#L38-L71); [bounded run-root identity](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/scripts/lib/repository-review-run-root.mjs#L53-L65). Status uses the platform's storage/artifact roots; formatter queries its selected OpenClaw controller, not a new approval issuer.
+>
+> **Test evidence:** [Unreadable status/artifact and terminal-status assertions](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/scripts/tests/repository-review-supervisor-status.test.mjs#L9-L46). These assertions were read, not run; no new full-history, formatter/model or resource-capacity execution proof is claimed.
+>
+> **Revision:** `569f7b4933d4859cc67c80ddf40d5154ffd95ce5`; every linked whole file matches current Source.
+>
+> **Limit:** Bounded tails and current Gateway observations cannot certify full run history, requested coverage or actual provider usage.
+
+> **Source evidence — capacity preflight starts real children**
+>
+> **Claim:** Optional preflight checks actual child admission/completion and attempts cancellation after failure; it is not static configuration validation.
+>
+> **Implementation:** [Actual model spawn and admission checks](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/scripts/openclaw-concurrency-preflight.mjs#L110-L149) and [terminal observation and failed-check cancellation](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/scripts/openclaw-concurrency-preflight.mjs#L150-L192).
+>
+> **Contract or setting:** [Cancellation receiver and standalone settings](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/scripts/openclaw-concurrency-preflight.mjs#L95-L122); [supervisor opt-in and distinct defaults](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/scripts/supervise-repository-review.mjs#L79-L96). Model/controller identity, concurrency, collector selection, spacing and timeouts govern this separate live operation.
+>
+> **Test evidence:** The linked original implementation was read, not executed. No capacity-preflight test run or terminal cancellation receipt is claimed for this documentation addition.
+>
+> **Revision:** `569f7b4933d4859cc67c80ddf40d5154ffd95ce5`; every linked whole file matches current Source.
+>
+> **Limit:** Capacity now does not prove review accuracy, future admission, billed usage or terminal cleanup; retained child sessions require owner reconciliation.
 
 ## Extension And Verification
 

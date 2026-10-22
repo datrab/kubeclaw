@@ -56,6 +56,27 @@ A deployment-specific consumer's `XACK` is not Core delivery completion. If no
 consumer exists, record “no configured consumer”, not an invented consumer
 baseline or a zero backlog claim.
 
+## Legacy namespace cutover
+
+Do not treat an upgrade from legacy underscore-sanitized stream names as a
+normal v2 reconnect. The old mapping is not reversible: dots and underscores
+could collapse into the same target name. Upgrade actual writers and consumers
+together. Pause legacy writers, reconcile pending deliveries under their
+original event/receipt identities and inspect retained legacy records before
+switching consumers to the exact v2 names. If the external consumer inventory
+or pending-delivery reconciliation is unavailable, retain that migration stop;
+a healthy new stream does not establish completion.
+
+The package does not rename, copy, republish, trim or delete old streams, migrate
+external consumers, or change the configured `MAXLEN` and dedup TTL policy.
+There is no supplied automatic migration command or consumer-group lookup.
+The separate OpenClaw host-observer Redis transport is unaffected by this Nova
+plugin cutover. Preserve old records under their owners rather than inventing
+new canonical events or manually filling the new stream.
+
+[The package's explicit upgrade boundary](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/common/plugins/redis-transport/README.md#L16-L24)
+is Source guidance, not evidence that a deployed migration has run.
+
 ## Judge restoration and backlog separately
 
 After the approved fault, restore the exact recorded Redis configuration,

@@ -1,0 +1,40 @@
+{
+  "status": "PASS_DELIVERY_AND_ACTUAL_EIGHT_CONTROLS_RESULT_ONLY",
+  "reviewer": "/root/operator_acceptance",
+  "archiveSha256": "cd018ce3d438135fa5dfcef1bbbc1e07c16de612aa7ea0646211f31af0f6167b",
+  "archiveBytes": 507177,
+  "regularSafeUniqueMembers": 15,
+  "allIndexMembersHashesLengthsOriginalBytesExact": true,
+  "mainSourceSha256": "6bc09e510942108efb904fc22649c25d7d2787e756977d5e314fa02fd9bf8c94",
+  "currentSourceMatchesArchivedAdoptedSource": true,
+  "actualCheck": {
+    "argv": [
+      "/usr/local/bin/node",
+      "--test",
+      "scripts/tests/docs-documentation-purpose-routing.test.mjs"
+    ],
+    "exitCode": 0,
+    "tests": 8,
+    "pass": 8,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "streams": {
+      "stdout.raw": {
+        "bytes": 909,
+        "sha256": "e24d699616a79263a1000b8f959ecd5ba8dc01e00c76a15d8b58cd18513fca02"
+      },
+      "stderr.raw": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    "stdout": "\u2714 genuine exact read-only fixture-policy comparator is documentation purpose, not execution evidence (160.016866ms)\n\u2714 mutable source/operation digest refresh cannot authorize new API emission (39.424728ms)\n\u2714 changed primary purpose-input bytes invalidate warm role and qualification caches (65.2994ms)\n\u2714 deleting a new-kind qualification cannot silently preserve the excluded role (16.759741ms)\n\u2714 a new public invocation cannot borrow the documentation entry qualification (21.716632ms)\n\u2714 a new selected importer is rejected even if its source name looks like documentation (20.905401ms)\n\u2714 an unreviewed alias/public target cannot enter through a warm qualification (21.481016ms)\n\u2714 a neighboring API producer remains an API producer, never a docs-prefix exception (53.393157ms)\n\u2139 tests 8\n\u2139 suites 0\n\u2139 pass 8\n\u2139 fail 0\n\u2139 cancelled 0\n\u2139 skipped 0\n\u2139 todo 0\n\u2139 duration_ms 756.921305\n"
+  },
+  "openIssues": [],
+  "limits": [
+    "No source semantic re-review or selfacceptance, original Root nonauthor review/adoption preserved only exactbytes.",
+    "No target/control/consumer/producer/native/graph/import execution or Main changes by reviewer.",
+    "Eight fixture routing controls are not whole107facts, ordinary/nativeconsumer, generator, gate, Reader, CI/global/runtime/release qualification."
+  ]
+}

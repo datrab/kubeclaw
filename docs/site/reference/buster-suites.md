@@ -264,8 +264,13 @@ platform string and is the only permitted matrix field.
 The provider is retry-safe, needs `container.build`, and returns required
 `image` data. It passes only after Buster reads the pushed registry manifest
 and matches its digest to BuildKit output. Tool absence, denied registry,
-digest mismatch, unsafe path, or build failure is an error; a successful
-process without digest proof is not a pass. Evidence is the bounded log.
+digest mismatch or unsafe path is an execution error. A completed build-phase
+command with a nonzero integer exit, no kill and no signal returns a failed
+provider result with no image output. Launch/resource/deadline/cancellation or
+verification failures remain execution errors; a successful process without
+digest proof is not a pass. Retain the failed attempt's log separately from
+an errored execution. Use the [build-image recovery procedure](../use/workflows/build-image.md#5-bound-failure-and-retry-authority)
+for uncertain push effects. Evidence is the bounded log.
 
 > [Container suite](https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/contracts/pipeline-test-gate/v1/suites/container-build.v1.json) ·
 > [complete build schema](https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/buster/plugins/container-build/schemas/config.schema.json) ·
@@ -318,10 +323,29 @@ is bounded at 300 seconds.
 
 Only `path` can form a matrix. The retry-safe provider needs `network.http` and
 emits log evidence. A reachable response that violates an assertion fails.
-Origin denial, timeout, size limit, cancellation, or transport failure errors.
+Exactly `HTTP_REQUEST_FAILED` and `HTTP_REQUEST_TIMEOUT` translate to failed
+provider findings, using `http.connection` and `http.timeout` respectively.
+Origin denial, size/integrity errors, cancellation and other capability errors
+are rethrown as execution errors. A timeout with another error code does not
+receive this translation. Diagnose the retained provider outcome and finding,
+not a generic assumption that every network failure is an execution error.
 
 > [HTTP suite](https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/contracts/pipeline-test-gate/v1/suites/http.v1.json) ·
 > [complete HTTP schema](https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/buster/plugins/http/schemas/config.schema.json)
+
+> **Source evidence — failed results versus execution errors**
+>
+> **Claim:** HTTP and build adapters translate only their named failure branches. Other execution errors remain errors.
+>
+> **Implementation:** [HTTP translation](https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/buster/plugins/http/src/provider.js#L145-L175); [build result/output](https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/buster/plugins/container-build/src/provider.js#L116-L145).
+>
+> **Contract or setting:** [completed-build error split](https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/buster/engine/test-gates/container-build-runtime.ts#L260-L275). Image readiness still requires registry digest verification.
+>
+> **Test evidence:** [registry/launch/deadline assertions](https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/buster/plugins/container-build/tests/deadline.test.mts#L32-L58) are Source-only here. They were not run and do not prove a successful BuildKit build.
+>
+> **Revision:** `3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f`; each linked whole file matches current Source.
+>
+> **Limit:** No live HTTP request, image push, cleanup or retry result is asserted.
 
 ## 5. Tailscale Exposure Suite
 
@@ -381,8 +405,13 @@ WebSocket step. A step can also set `headers`, `body`, `messages`, `timeoutMs`,
 `expect.status`, `expect.contentType`, `expect.bodyContains`, and `expect.json`
 check HTTP responses. `expect.minimumMessages` and `expect.messageContains`
 check WebSocket messages. `extract` maps up to 32 variable names to selectors.
-A capability error stops more main requests, attempts cleanup, and remains an
-error. The provider is not retry-safe.
+A capability error stops further main requests. If the cancellation signal
+has not been aborted, the provider attempts the declared cleanup steps, then rethrows
+the original capability error. Cancellation takes precedence: it stops new
+cleanup requests as well as new main requests. An already sent mutation may
+remain in the target service. Preserve its request/response evidence and ask the
+target owner to reconcile that state before another mutation; neither a cleanup
+selection nor cancellation proves rollback. The provider is not retry-safe.
 
 For exact nested limits, use the [generated provider configuration
 reference](buster-provider-configuration.md#kubeclawapi-flow-document1). It
@@ -408,9 +437,49 @@ request body. `expectedStatuses[]` accepts 1–16 unique HTTP status codes.
 `cleanup` defaults to `false`; set it only for an operation that reverses prior
 test state.
 
-The provider supports a bounded OpenAPI 3.0/3.1 subset and local references.
-Unsupported assertions fail closed. The provider is not retry-safe because
-selected operations can mutate state.
+The provider supports a bounded OpenAPI 3.0/3.1 schema subset, not every JSON
+Schema dialect. For each schema reached by runtime validation, it supports:
+
+- Type and nullable checks, constants and enumerations; `allOf`, `anyOf`,
+  `oneOf`, and `not` composition.
+- String lengths and bounded patterns. `uuid` and `date-time` are the only
+  admitted formats; date-time checking uses JavaScript's `Date.parse`, not a
+  promise of complete RFC validation.
+- Numeric minimum/maximum and exclusive bounds. OpenAPI 3.0 uses Boolean
+  exclusive flags with its bounds; 3.1 uses numeric exclusive bounds.
+- Array size, uniqueness, and `items`; object size, required properties,
+  property schemas, and `additionalProperties`. Boolean child schemas apply:
+  `items: false` rejects an actual array element, not an empty array.
+- Local `#/...` references with cycle and depth checks. A `$ref` cannot have
+  assertion siblings; annotations and `x-` extensions do not add validation.
+
+The support check recursively inspects child schemas, including absent
+properties and empty-array items. An unsupported keyword/format or malformed
+child cannot disappear because this payload did not visit it. This is not a
+preflight of every unselected operation or unused schema in the entire file.
+Response-schema rejection can happen after an HTTP request has already reached
+the service; it does not undo that request.
+
+As with API flow, an ordinary capability error stops further non-cleanup
+operations and attempts selected cleanup operations before rethrowing the
+original error. Cancellation prohibits new cleanup requests. Reconcile possible
+retained service state with its owner rather than treating either outcome as
+successful cleanup or safe automatic retry. Selected operations can mutate
+state, so the provider is not retry-safe.
+
+> **Source evidence — API cleanup and runtime schema boundaries**
+>
+> **Claim:** Cancellation prevents new cleanup requests; OpenAPI checks only its explicit supported runtime schema subset, without rollback authority.
+>
+> **Implementation:** [API flow execution/cancellation](https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/buster/plugins/api-flow/src/provider.js#L125-L150), [OpenAPI execution/cancellation](https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/buster/plugins/openapi/src/provider.js#L200-L262) and [runtime schema validation](https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/buster/plugins/openapi/src/provider.js#L65-L123).
+>
+> **Contract or setting:** [Supported schema shapes, children, formats and reference siblings](https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/buster/plugins/openapi/src/schema-support.js#L1-L73). Cleanup must be explicitly declared; network grants remain separate from these schema rules.
+>
+> **Test evidence:** [API flow capability-error/cancellation assertions](https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/buster/plugins/api-flow/tests/remediation.test.ts#L48-L59) and [OpenAPI Boolean-child, unsupported-child and cancellation assertions](https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/buster/plugins/openapi/tests/remediation.test.ts#L39-L81) were read as Source. These tests were not executed for this documentation correction.
+>
+> **Revision:** `3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f`; The author compared each linked whole file with current Source before writing this explanation.
+>
+> **Limit:** No live request, successful cleanup, whole-spec preflight or remote-state reconciliation is asserted by this Source review.
 
 Both complex providers need `network.http` and emit log plus test-report
 evidence. Assertion mismatches fail; invalid project documents, unsupported
@@ -457,6 +526,42 @@ result errors. Browser availability and all three supported engines need live pr
 > [complete Axe schema](https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/buster/plugins/axe/schemas/config.schema.json) ·
 > [Axe authority and evidence](https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/buster/plugins/axe/plugin.json)
 
+### Browser-profile companion file
+
+Axe's optional `profileFile` and Visual's required `profileFile` consume the
+`kubeclaw.browser-profiles.v1` document, not provider configuration itself.
+Start with the [complete profile example](https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/contracts/pipeline-test-gate/v1/examples/browser-profiles.json).
+Its top-level fields are `schemaVersion` and `profiles`. The contract requires
+1–32 named profiles; names match `[A-Za-z0-9][A-Za-z0-9._-]{0,63}`.
+Each profile is a complete object, with no other fields:
+
+| Field | Companion-file contract |
+| --- | --- |
+| `browser` | Required: `chromium`, `firefox` or `webkit`. |
+| `viewport` | Required object containing only integer `width` 240–3840 and `height` 240–2160. |
+| `colorScheme` | Optional: `light`, `dark` or `no-preference`. |
+| `reducedMotion` | Optional: `reduce` or `no-preference`. |
+| `locale`, `timezoneId` | Optional nonempty strings, at most 128 characters each. |
+| `hasTouch`, `isMobile` | Optional Boolean values. |
+| `deviceScaleFactor` | Optional number from 0.5 through 4. |
+
+Axe starts with Chromium `desktop` (1440×900) and `mobile` (390×844), then
+replaces matching names with complete custom profiles. Both built-ins select
+light/no-preference motion, en-US/UTC and scale 1; mobile enables touch/mobile.
+Its default selection remains `desktop` and `mobile`; a custom name needs an
+explicit `profiles` selection. Axe limits the JSON file to 262,144 bytes and
+checks profile/viewport field names before invocation. The broker validates selected browser and optional context values again. That runtime accepts
+positive viewport dimensions up to the same maxima, while the companion
+contract requires the 240 minimum. Do not assume this loader runs the whole
+companion JSON Schema on every unselected value.
+
+Visual supplies no built-in profiles: every selected manifest profile must be
+present in its file. It requires 1–32 entries, validates browser/viewport values,
+and passes optional context fields to its broker for validation. Its profile
+and baseline JSON files each have a 1-MiB ceiling. File paths must resolve to
+regular files inside the selected repository; a schema-valid profile does not
+install an engine or grant network access.
+
 ## 8. Performance Suite
 
 **Purpose:** Measure performance, SEO, and best-practice facts with Lighthouse.
@@ -494,6 +599,33 @@ or Lighthouse, timeout, or malformed report errors.
 > [Performance suite and modes](https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/contracts/pipeline-test-gate/v1/suites/perf.v1.json) ·
 > [complete Lighthouse schema](https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/buster/plugins/lighthouse/schemas/config.schema.json)
 
+### Lighthouse settings companion file
+
+`settingsFile` is a repository-contained JSON file, at most 262,144 bytes,
+with exactly `schemaVersion: "kubeclaw.lighthouse-settings.v1"`, `profiles`
+and `budgets`. The [complete settings example](https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/contracts/pipeline-test-gate/v1/examples/lighthouse-settings.json)
+contains both shipped profile names and a release budget. Profile/budget names
+use the same 1–64-character name grammar as browser profiles.
+
+`profiles` contains 1–32 complete objects. Each requires `formFactor`
+(`mobile` or `desktop`), `screen`, and `throttling`; unknown fields reject.
+`screen` requires exactly integer `width` 240–3840, integer `height` 240–2160,
+`deviceScaleFactor` 0.5–4, and Boolean `mobile`. `throttling` requires exactly
+`rttMs` 0–5000, positive `throughputKbps` at most 1,000,000, and
+`cpuSlowdownMultiplier` 1–32. These numeric ranges allow fractions except
+for dimensions. The executing broker additionally requires throughput at least
+1 Kbit/s; a schema/provider-admitted value between zero and one still fails
+there. The broker selects simulated throttling and enables screen emulation.
+
+`budgets` may be empty or contain up to 32 named, nonempty objects. Each accepts
+only `minimumScore` 0–100, `maximumLcpMs` 0–120000, `maximumCls` 0–10 and
+`maximumTbtMs` 0–120000. Any subset is allowed, but not an empty budget.
+Only configured thresholds produce performance checks; absence is not an
+implicit zero threshold. The loader validates every profile and budget, then
+requires the named `profile` and optional named `budget` to exist. A present
+budget does not replace the separately documented representative-run selection
+or the requirement to select a useful blocking budget.
+
 ## 9. Visual Suite
 
 **Purpose:** Compare current browser images with reviewed Git baselines.
@@ -527,6 +659,61 @@ PNG errors. Exact browser identity is a prerequisite, not incidental metadata.
 
 > [Visual suite](https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/contracts/pipeline-test-gate/v1/suites/visual.v1.json) ·
 > [complete visual schema](https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/buster/plugins/visual/schemas/config.schema.json)
+
+### Visual baseline companion file and identity
+
+`manifestFile` uses `kubeclaw.visual-baselines.v2`, with 1–128 `entries` and
+optional `baselineBundleDigest`; other fields reject. Each entry requires:
+
+| Field | Required identity or input |
+| --- | --- |
+| `id` | Unique 1–128-character `[A-Za-z0-9][A-Za-z0-9._-]{0,127}` name selected by `targets`. |
+| `route` | At most 1024 characters, begins `/` but not `//`, without query, fragment, CR or LF. |
+| `profile` | Existing named profile in the companion file above. |
+| `baselineFile` | Repository-contained PNG path; the schema requires a relative `.png` path without `..` segments. |
+| `sha256` | Exact `sha256:` plus 64 lowercase hexadecimal digits for the PNG bytes. |
+| `browser`, `viewport` | Exact selected browser family and profile width/height. |
+| `browserVersion` | Actual approved capture's exact version string, 1–256 characters, trimmed and without control characters. |
+| `pageConditions` | Exact context identity described below, with no other fields. |
+
+`pageConditions` requires `colorScheme`, `reducedMotion`, `locale`, `timezoneId`,
+`deviceScaleFactor`, `hasTouch`, `isMobile`, and `fullPage: true`.
+The first four equal the selected profile values, or `null` when omitted.
+Scale defaults to 1; touch/mobile default to `false`. Non-null colors/motion use
+the profile enumerations; non-null locale/timezone are nonempty strings up to
+128 characters. Dimensions and scale retain the profile contract's bounds.
+Omitted profile settings are identity-null here, not an inferred browser
+engine's default. Capture responses must match these conditions, target/route,
+profile, masks and browser identity before pixel comparison.
+
+The provider validates all entries, even unselected ones, against their profile
+and regular PNG. Each PNG must be nonempty, at most the smaller of 64 MiB and
+`invocation.limits.artifactBytes`, with a PNG/IHDR header. Width/height cannot
+exceed 16384, and decoded RGBA size cannot exceed the invocation memory limit.
+The file digest must match `sha256`; a supplied bundle digest must equal SHA-256
+of the sorted entry digest strings joined with newline, without a trailing
+newline. Baseline browser version must equal the actual capture version exactly.
+
+The [complete manifest example](https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/contracts/pipeline-test-gate/v1/examples/visual-baselines.json)
+shows the shape, not verified PNG bytes or an approved capture: replace its
+illustrative digests and version from real retained capture evidence. Keep the
+[existing v1-to-v2 recapture/approval boundary](contracts.md#select-the-actual-versioned-reader).
+Do not relabel old baselines, auto-approve a replacement or infer installed
+browser availability from any of these files.
+
+> **Source evidence — browser companion files and observed identity**
+>
+> **Claim:** Companion files define profile, budget and baseline identity separately from provider configuration.
+>
+> **Implementation:** [Axe loader](https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/buster/plugins/axe/src/provider.js#L35-L55); [Lighthouse loader](https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/buster/plugins/lighthouse/src/provider.js#L29-L69); [Visual manifest identity](https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/buster/plugins/visual/src/provider.js#L65-L111).
+>
+> **Contract or setting:** [browser profiles](https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/contracts/pipeline-test-gate/v1/schemas/browser-profiles.v1.schema.json#L1-L18), [Lighthouse settings](https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/contracts/pipeline-test-gate/v1/schemas/lighthouse-settings.v1.schema.json#L1-L22), [Visual v2 schema](https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/contracts/pipeline-test-gate/v1/schemas/visual-baselines.v2.schema.json#L1-L23). Receiving validators: [Axe context](https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/buster/engine/test-gates/browser-axe-runtime.ts#L67-L100), [Visual context](https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/buster/engine/test-gates/browser-visual-runtime.ts#L64-L99), [Lighthouse profile](https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/buster/engine/test-gates/browser-lighthouse-runtime.ts#L50-L76).
+>
+> **Test evidence:** [browser-version and legacy-manifest assertions](https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/buster/plugins/visual/tests/browser-identity.test.mjs#L16-L53) were read, not run. They do not prove engine availability or every companion-field check.
+>
+> **Revision:** `3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f`; each linked whole file matches current Source.
+>
+> **Limit:** No live capture, new baseline approval, browser installation or deployed scan is asserted.
 
 ## 10. End-to-End Suite
 
@@ -641,6 +828,83 @@ baseline for a growth rule, decompression limit, or unsupported format errors.
 > [complete size schema](https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/buster/plugins/size-budget/schemas/config.schema.json) ·
 > [ports and evidence](https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/buster/plugins/size-budget/plugin.json)
 
+### Baseline artifact, admission and growth
+
+The emitted artifact has media type
+`application/vnd.kubeclaw.size-budget-baseline+json`, marker
+`schemaVersion: "size-budget-baseline.v1"`, and these fields:
+
+| Field | Measurement retained |
+| --- | --- |
+| `sourceDigest`, `sourceMediaType` | The measured input artifact's digest and media type. |
+| `format` | Resolved `file`, `tar` or `tar-gzip`. |
+| `totalBytes` | Sum of measured file payload bytes, without archive padding. |
+| `storedBytes` | Original input artifact size. |
+| `compressedBytes` | Original size for tar-gzip; otherwise `null`. |
+| `fileCount` | Number of measured files, not directory entries. |
+
+A prior baseline must use that media type and pass file/size/digest admission,
+including the fixed 1-MiB baseline ceiling. Its JSON must have the exact marker,
+a nonnegative safe-integer `totalBytes`, and a string `sourceDigest`.
+Those are the baseline-specific semantic checks: the loader does not validate
+every emitted field or require the old digest to equal the new input's digest.
+Different approved source artifacts are the point of a growth comparison.
+
+Growth bytes are current total minus prior total; percentage uses that delta
+divided by the prior total. Zero to zero is 0%; zero to a positive total is
+unbounded and fails a configured percentage rule. A missing baseline errors
+when configuration selects either growth rule. After valid measurements, even failed
+budget checks emit a new baseline artifact. That is measurement evidence, not
+permission to select it as the approved baseline or weaken a budget. Retain the
+original failed result and let the release owner approve any baseline change.
+
+> **Source evidence — size baseline admission and growth**
+>
+> **Claim:** A measured baseline remains evidence after budget failure; selecting a new approved baseline is a separate decision.
+>
+> **Implementation:** [admission/growth/output](https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/buster/plugins/size-budget/src/provider.js#L247-L294) and [checks and failed-result emission](https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/buster/plugins/size-budget/src/provider.js#L301-L355).
+>
+> **Contract or setting:** [baseline artifact port](https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/buster/plugins/size-budget/plugin.json#L28-L48). Prior digest identity does not require matching the current artifact.
+>
+> **Test evidence:** [measurement/output and equal-baseline growth assertions](https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/buster/plugins/size-budget/tests/live-function.test.ts#L49-L78) were read, not run. Zero-baseline behavior here comes from the implementation, not a new test result.
+>
+> **Revision:** `3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f`; each linked whole file matches current Source.
+>
+> **Limit:** No artifact release, baseline reapproval, archive execution or retention migration is asserted.
+
+## Source-fixed parser admission ceilings
+
+These bounds are implementation contracts, not provider/operator settings.
+They are separate from configured test budgets and invocation resource limits.
+
+| Input | Source-fixed admission boundary | Safe next action |
+| --- | --- | --- |
+| LCOV | At most 64 MiB and 2,000,000 `DA:` records per input; duplicate records still count toward the record ceiling. | Supply a conforming report; do not raise `minimumLinePercent` or assume combined evaluation removes the per-input ceiling. |
+| JUnit | At most 256 XML stack frames and 64 nested suites. Tag-end scanning has a 65,536-UTF-16-unit window, despite the constant name `MAXIMUM_TAG_BYTES`. | Supply shallower XML or shorter tags. Retained case/finding limits do not raise these parser ceilings. |
+| OpenAPI | Object-schema support/response validation and local-reference traversal use depth guards at 64. | Simplify schema/reference depth; this is not a configurable JSON-Schema dialect expansion. |
+| Size | Build input at most 512 MiB; tar-stream expansion and measured totals at most 2 GiB; at most 100,000 regular archive files. Baseline JSON is at most 1 MiB. | Supply a conforming smaller artifact; neither size budgets nor worker concurrency/capacity raise these ceilings. |
+
+If the supported contract genuinely needs larger bounds, stop for an explicit
+implementation/schema/security review and owning checks. Do not retry the same
+rejected input by tuning an unrelated runtime budget. Keep the first diagnostic
+and distinguish it from genuinely configurable limits such as a request timeout.
+The [generated error reference](buster-error-codes.md) remains separately owned;
+its regeneration is not a manual edit to this table.
+
+> **Source evidence — fixed parser ceilings versus configured budgets**
+>
+> **Claim:** Source-fixed admission ceilings require conforming inputs or a reviewed implementation change, not runtime tuning.
+>
+> **Implementation:** [LCOV constants and record counter](https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/buster/plugins/coverage-budget/src/provider.js#L5-L38); [JUnit depth/tag constants](https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/buster/plugins/junit-report-adapter/src/adapter.js#L3-L8) and [tag scan](https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/buster/plugins/junit-report-adapter/src/adapter.js#L104-L114).
+>
+> **Contract or setting:** [OpenAPI support guard](https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/buster/plugins/openapi/src/schema-support.js#L44-L73) and [Size constants](https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/buster/plugins/size-budget/src/provider.js#L7-L10) define separate parser boundaries.
+>
+> **Test evidence:** This catalogue has no combined ceiling-test execution receipt. This catalogue reports the linked Source constants and rejection branches, not an observed larger-input run.
+>
+> **Revision:** `3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f`; each linked whole file matches current Source.
+>
+> **Limit:** Configured budgets cannot authorize inputs outside these fixed contracts. No new parser or resource exception is introduced.
+
 ## Additional Installed Providers
 
 These providers are installed but do not define another shipped suite:
@@ -658,8 +922,10 @@ These providers are installed but do not define another shipped suite:
   `usernamePointer` identify the exact flow; `assertions[]` contains 1–16
   objects with a JSON `pointer` and scalar `equals` value.
 - The JUnit report adapter parses bounded XML into common case and finding data.
-  It rejects DTDs, entities, malformed XML, invalid durations, and excessive
-  depth or size. It never changes the original report or the gate decision.
+  It rejects DTD/custom declarations, malformed XML, invalid durations, and
+  excessive depth or size. Built-in/numeric references are not categorically
+  forbidden; see [JUnit input forms and normalization](#junit-input-forms-and-normalization).
+  It never changes the original report or the gate decision.
 
 Their presence explains why the provider count is larger than the suite count.
 Provider, suite, and report-adapter identities are different namespaces.
@@ -667,8 +933,8 @@ Provider, suite, and report-adapter identities are different namespaces.
 ### Demo session protocol and partial-login recovery
 
 `kubeclaw.demo-auth-smoke@1` tests one declared JSON-session flow, not an
-arbitrary login form or browser cookie jar. Its [configuration schema](https://github.com/datrab/kubeclaw/blob/9f4a304524da258c5454a9361d83f5d69092ed07/skills/buster/plugins/demo-auth-smoke/schemas/config.schema.json)
-checks shape; the [protocol validator](https://github.com/datrab/kubeclaw/blob/9f4a304524da258c5454a9361d83f5d69092ed07/skills/buster/plugins/demo-auth-smoke/src/protocol.js#L10-L43)
+arbitrary login form or browser cookie jar. Its [configuration schema](https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/buster/plugins/demo-auth-smoke/schemas/config.schema.json)
+checks shape; the [protocol validator](https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/buster/plugins/demo-auth-smoke/src/protocol.js#L10-L43)
 applies additional runtime restrictions:
 
 - `usernameKey`, `passwordKey` and `cookieName` must match
@@ -686,7 +952,7 @@ applies additional runtime restrictions:
   the equality-string check permits empty strings and NUL/CR/LF. A missing own property is an
   assertion error, not an absent-value match.
 
-The [input validator](https://github.com/datrab/kubeclaw/blob/9f4a304524da258c5454a9361d83f5d69092ed07/skills/buster/plugins/demo-auth-smoke/src/protocol.js#L44-L79)
+The [input validator](https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/buster/plugins/demo-auth-smoke/src/protocol.js#L44-L79)
 requires exactly the three manifest-declared native value links, with the
 `deployment`, `credentials` and `exposure` schema IDs shown in the
 [package catalogue](../extend/plugin-catalogue/kubeclaw.demo-auth-smoke.md).
@@ -699,7 +965,7 @@ values; this provider does not fetch the cluster or Secret to establish their
 provenance. Its authentication output alone does not establish readiness or
 replace Nova's final native-link/source checks.
 
-The [provider](https://github.com/datrab/kubeclaw/blob/9f4a304524da258c5454a9361d83f5d69092ed07/skills/buster/plugins/demo-auth-smoke/src/provider.js#L28-L59)
+The [provider](https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/buster/plugins/demo-auth-smoke/src/provider.js#L28-L59)
 first requires an unauthenticated protected GET to return 401 or 403. It then
 POSTs the generated credentials as JSON, requires login status 200 or 204, and
 sends the accepted cookie on a protected GET. That response must be status 200
@@ -710,7 +976,7 @@ selected origin, POST, and the content-type/cookie headers. Each request has a
 exposure expiry. Cancellation/deadline checks can reject a response after the
 request has already taken effect.
 
-Only the [strict session-cookie subset](https://github.com/datrab/kubeclaw/blob/9f4a304524da258c5454a9361d83f5d69092ed07/skills/buster/plugins/demo-auth-smoke/src/protocol.js#L81-L107)
+Only the [strict session-cookie subset](https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/buster/plugins/demo-auth-smoke/src/protocol.js#L81-L107)
 is supported. One `set-cookie` string must name exactly `cookieName`, have a
 nonempty supported cookie value, contain no comma/CR/LF and be at most 4,096
 JavaScript UTF-16 code units. These runtime string limits are distinct from
@@ -739,13 +1005,13 @@ name is `demo_session`; it is not a credential or an executed login result.
 A successful login can leave an application session even when cookie parsing,
 authenticated-body checks, cancellation or a later deadline prevents a result.
 The provider has no logout or reconciliation operation and is explicitly
-[not retry-safe](https://github.com/datrab/kubeclaw/blob/9f4a304524da258c5454a9361d83f5d69092ed07/skills/buster/plugins/demo-auth-smoke/plugin.json#L44-L47).
+[not retry-safe](https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/buster/plugins/demo-auth-smoke/plugin.json#L44-L47).
 The application's owner must invalidate or expire that session through its own
 supported mechanism before deciding whether a new attempt is safe. Removing a
 plugin registration or cleaning Buster's artifacts is not session deletion.
 Do not claim remote cleanup, replay safety, deployed readiness or a successful
 live login from this source-backed description. The package's
-[README and bounded test claims](https://github.com/datrab/kubeclaw/blob/9f4a304524da258c5454a9361d83f5d69092ed07/skills/buster/plugins/demo-auth-smoke/README.md)
+[README and bounded test claims](https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/buster/plugins/demo-auth-smoke/README.md)
 remain distinct from a compiled native deployment or operator execution.
 
 ## Inputs, Outputs, and Composition
@@ -778,6 +1044,46 @@ The current report adapter supports JUnit XML. Normalization can cap retained
 case details, but the original report remains stored and the adapter still
 validates the complete document. A provider result with a missing required
 report is an error, even when its process returned zero.
+
+### JUnit input forms and normalization
+
+The adapter accepts a `testsuite` root or a `testsuites` container, including
+nested suites. Direct `testsuites/testcase` children are supported for Node's
+reporter shape. Their stable suite path uses the container's `name`, defaulting
+to `testsuites`; nested cases use their enclosing suite names. Missing suite
+names receive ordinal fallbacks. Case IDs include suite path, class/name and
+case ordinal, so repeated names do not collapse into one result.
+
+Each case begins passed. `failure` records a failed case; `error` takes precedence
+over failure; `skipped` applies while the case remains passed. Observed cases,
+not declared suite count attributes, determine totals. Durations are finite,
+nonnegative decimal seconds, converted to milliseconds, with a 30-day per-case
+ceiling. The adapter emits normalized data; it does not reread source files,
+change the report artifact or decide the pipeline gate.
+
+During entity decoding, the adapter accepts the named references `amp`, `lt`,
+`gt`, `quot`, `apos` and valid decimal/hexadecimal numeric references. Invalid XML
+characters and unknown/malformed references reject when decoded. DTD/custom
+entity declarations are forbidden; escaped text or CDATA containing declaration
+characters is text, not a declaration. XML syntax continues to be parsed after
+retained-detail caps. Issue text capture is bounded at 8192 UTF-16 units and
+normalized displayed text at 4096 units; omitted text is not evidence of a full
+retained diagnostic. Use the [SDK report contract](sdk.md#test-providers-and-report-adapters)
+for complete/truncated counts and omitted-detail relationships.
+
+> **Source evidence — JUnit forms, entities and normalized results**
+>
+> **Claim:** JUnit supports nested suites and direct-container cases; permitted character references are distinct from forbidden declarations.
+>
+> **Implementation:** [entity decoder](https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/buster/plugins/junit-report-adapter/src/adapter.js#L28-L63) and [root/suite/case admission](https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/buster/plugins/junit-report-adapter/src/adapter.js#L214-L257).
+>
+> **Contract or setting:** [XML completion and retained-result rules](https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/buster/plugins/junit-report-adapter/src/adapter.js#L316-L365). Buster retains the original report separately from normalized detail caps.
+>
+> **Test evidence:** [nested/direct-container/entity/truncation assertions](https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/buster/plugins/junit-report-adapter/tests/adapter.test.mjs#L12-L55) were read, not run. They are not a live adapter-sandbox or full-report acceptance result.
+>
+> **Revision:** `3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f`; each linked whole file matches current Source.
+>
+> **Limit:** This path grants no arbitrary file reads, report mutation, new parser dialect or pipeline decision authority.
 
 ## Report Adapter Registration
 
