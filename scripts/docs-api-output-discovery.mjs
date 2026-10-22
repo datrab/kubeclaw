@@ -1,4 +1,4 @@
-import {assertDocumentationOwnerPurpose,assertDocumentationOwnerAncestry,documentationOwnerNativeEntryMatches,reviewedDocumentationOwnerPurposes} from './docs-documentation-owner-purpose-custody.mjs';
+import {assertDocumentationOwnerPurpose,assertDocumentationOwnerAncestry,documentationOwnerNativeEntryMatches,reviewedDocumentationOwnerPurposes,assertReaderArtifactExternalCiPurpose,addReaderArtifactExternalCiSeed} from './docs-documentation-owner-purpose-custody.mjs';
 import {minimalPluginFixtureOutputCustody, minimalPluginFixtureOutputRole} from './docs-minimal-plugin-fixture-output-custody.mjs';
 import {deploymentScalarOccurrenceCustody, selectedDeploymentScalarOccurrences} from './docs-deployment-scalar-occurrence-custody.mjs';
 import {deploymentConfigOutputCustody, deploymentConfigOutputRole} from './docs-deployment-config-output-custody.mjs';
@@ -334,6 +334,7 @@ function nodeProductExecutableSources(root,packageBytes) {
 }
 
 function documentationModuleGraph(root,packageBytes,boundary={}) {
+  assertReaderArtifactExternalCiPurpose(root); // fresh exact external caller proof before graph-cache lookup
   const observerState=observerMaterializedSourceState(root);
   const syntheticTests=syntheticNodeTestSources(root,packageBytes),rootSources=[...new Set(nodeProductExecutableSources(root,packageBytes).map(source=>canonicalObserverDocumentationSource(root,source)))],files=[],sourceClasses=new Map(),rootAliases=[],rootPaths=new Set(rootSources);
   function admit(source,kind) {
@@ -690,7 +691,9 @@ function assertDocumentationToolQualifications(root,boundary,packageBytes) {
   // Reacquire them even when the graph/registry qualification is warm.
   for(const record of records)if(record.kind!=='static-receiver-descriptions/v1'){assertDocumentationOwnerPurpose(root,record.source);assertDocumentationExecutableRole(root,record.source);}
   const qualificationKey=hash(JSON.stringify([graph.inputKey,inputAuthorityKey,boundary]));if(documentationQualificationCache.get(root)===qualificationKey)return;
-  const docsReachable=new Set(entries.map(entry=>entry.source));let changed=true;
+  const docsReachable=new Set(entries.map(entry=>entry.source));
+  addReaderArtifactExternalCiSeed(assertReaderArtifactExternalCiPurpose(root),graph,docsReachable);
+  let changed=true;
   while(changed){changed=false;for(const edge of graph.edges)if(docsReachable.has(edge.source)&&!docsReachable.has(edge.target)){docsReachable.add(edge.target);changed=true;}}
   for(const record of records) {
     const source=record.source,file=path.join(root,source);

@@ -1,0 +1,25 @@
+{
+  "baselineRevision": "0ded6b68eb6170c4ea5e76251ad5e13adf2f664b",
+  "targets": [
+    {
+      "path": "scripts/docs-documentation-owner-purpose-custody.mjs",
+      "sha256": "0a8907337d78a63dbe4ee1eee6ccbf06560f2637084f9e6ff53afa40af77e3c5",
+      "baselineSha256": "58814cd8ca9bfe7f40795006e896f98040b35a93b068718b44e9c428c50f4096",
+      "bytes": 25773
+    },
+    {
+      "path": "scripts/docs-api-output-discovery.mjs",
+      "sha256": "acc5c54bc81293570e67346e6ea5b2062dd172556972517fd65909d3a70f0e9c",
+      "baselineSha256": "edbd418f020c88513ef9903057877c14287450fe724d322786ecdc4393ee4f50",
+      "bytes": 415879
+    },
+    {
+      "path": "scripts/tests/docs-reader-artifact-ci-purpose.test.mjs",
+      "sha256": "38e8943c7a8feddb442532e63a731276c24bdb1fd7a7f5028dd8521e939735ad",
+      "baselineSha256": null,
+      "bytes": 7498
+    }
+  ],
+  "shipOnlyTheseThree": true,
+  "noCapturedData": true
+}

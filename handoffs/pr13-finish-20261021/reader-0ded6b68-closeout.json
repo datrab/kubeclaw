@@ -1,0 +1,164 @@
+{
+  "revision": "0ded6b68eb6170c4ea5e76251ad5e13adf2f664b",
+  "reviewer": "root independent integration / actual native checks",
+  "productionBuilds": 2,
+  "wholeOutputFilesByteEqual": 419,
+  "allFiveNormalReaderChecksExitCode": 0,
+  "browser": {
+    "pagesAndSearchObservations": 31,
+    "boxObservations": 495,
+    "boxes": 165,
+    "widths": [
+      320,
+      768,
+      1440
+    ],
+    "findings": 0,
+    "networkRequests": 0,
+    "noJavaScriptNativeDisclosures": true,
+    "offlineJavaScriptSearch": true
+  },
+  "actualMaintainedRedirectBrowserExitCode": 0,
+  "archive": {
+    "revision": "0ded6b68eb6170c4ea5e76251ad5e13adf2f664b",
+    "archive": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/kubeclaw-reader-offline-0ded6b68.zip",
+    "sha256": "c5691ef73d9d7191d532f10e5fcfa07c2dc6bfadc9a2b4d4398bf0f79a17791e",
+    "bytes": 7856004,
+    "members": 242,
+    "copiedAssetsSourceCompared": 19,
+    "extracted": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/offline-reader-0ded6b68",
+    "limit": "Checkpoint reader, not aggregate documentation or release acceptance."
+  },
+  "discordMessageId": "1562617185715879977",
+  "rawEvidence": {
+    "production-determinism-0ded6b68.json": {
+      "sha256": "d9afdacb8e54bf31b93d88364e7ceae5d4a6507feeafa59af534af54df4dc1cd",
+      "bytes": 65893,
+      "observations": {
+        "revision": "0ded6b68eb6170c4ea5e76251ad5e13adf2f664b",
+        "normalBuildInvocations": 2,
+        "sameSourceCleanBeforeAndAfter": true,
+        "wholeOutputTreesCompared": true,
+        "fileCount": 419,
+        "readerPages": 177,
+        "manifestOutputs": 240,
+        "pageRecords": 177,
+        "limit": "Two actual original production builds at exact frozen Source and same installed tools. No generator/runtime/hosting acceptance."
+      }
+    },
+    "reader-first-artifact-0ded6b68.json": {
+      "sha256": "8f670e6d61f2fd55de4e57bea47ff72b664ff2370c4ad4a5efb6da19f902ca6b",
+      "bytes": 85,
+      "observations": {
+        "selectedPages": 177,
+        "htmlPages": 187,
+        "localLinks": 40832,
+        "verifiedOutputDigests": 240
+      }
+    },
+    "reader-search-0ded6b68.json": {
+      "sha256": "f65734344ddbf315e22ea92246192f9ca609b27c2a1260abf38c119fbf91880d",
+      "bytes": 3062,
+      "observations": {
+        "indexedCanonicalPages": 177,
+        "internalArtifacts": 0,
+        "readerQuestionsPassed": 12
+      }
+    },
+    "reader-source-links-0ded6b68.json": {
+      "sha256": "c90c118f38865179258cd8dab4fd950ca9ff9a9c6859a92106b8dd0ee8c29d06",
+      "bytes": 1438392,
+      "observations": {
+        "htmlPages": 187,
+        "uniqueVerifiedLinks": 14840,
+        "uniqueSourceObjects": 3961,
+        "limit": "Primary source object/revision/line or Markdown-fragment verification only; not semantic or live-runtime acceptance."
+      }
+    },
+    "reader-source-previews-0ded6b68.json": {
+      "sha256": "50943cd2626a1ed21b868860bf9c84dd0b2a4b8322f8ad249684afe6b4018988",
+      "bytes": 239,
+      "observations": {
+        "pages": 177,
+        "sourceBoxes": 411,
+        "boxesWithPreviews": 411,
+        "excerpts": 1888,
+        "uniqueSourceObjects": 983,
+        "limit": "Exact linked source and rendered excerpt verification; no semantic claim or test/runtime result inferred."
+      }
+    },
+    "reader-diagrams-0ded6b68.json": {
+      "sha256": "66f027803943f3133bb64af12d04b7db5814a63ed85f8fd846ce48daa890b976",
+      "bytes": 262,
+      "observations": {
+        "pages": 177,
+        "diagrams": 27,
+        "freshRenderHashesMatched": 27,
+        "localOnly": true,
+        "limit": "Source/owner/question/visible alternative routing, static SVG and deterministic render checks only; not per-edge semantic or human screenreader acceptance."
+      }
+    },
+    "browser-recovery-0ded6b68.json": {
+      "sha256": "325ce7609184b4f3bea263334d27f7b290db60762e8467e7a406a4fd7e4c7cc8",
+      "bytes": 120375,
+      "observations": {
+        "findings": 0,
+        "network": 0,
+        "limits": "10 changed pages at3widths; all165 source boxes on eight field-completed runtime/data pages plus the four configuration impact boxes checked at each width with native noJS disclosure and ordinary pinned links offline/noJS and actual offline JS search; no complete accessibility, semantic51package, deployed or release acceptance."
+      }
+    },
+    "reader-preview-0ded6b68.json": {
+      "sha256": "5b187a0a8d2c4185c09cab9d11eb8c8a8a13da80accff47654ed7311b1d2db8e",
+      "bytes": 361,
+      "observations": {
+        "revision": "0ded6b68eb6170c4ea5e76251ad5e13adf2f664b",
+        "outputsGET200ExactBytes": 240,
+        "selectedCopiedAssets": 19,
+        "home308QueryPreserved": true,
+        "headSelectedAsset200Empty": true,
+        "unselected404": true,
+        "post405": true,
+        "limit": "Actual loopback Reader preview only; empty maintained redirect registry; no deployment or release approval."
+      }
+    },
+    "reader-extracted-artifact-0ded6b68.json": {
+      "sha256": "8f670e6d61f2fd55de4e57bea47ff72b664ff2370c4ad4a5efb6da19f902ca6b",
+      "bytes": 85,
+      "observations": {
+        "selectedPages": 177,
+        "htmlPages": 187,
+        "localLinks": 40832,
+        "verifiedOutputDigests": 240
+      }
+    },
+    "reader-extracted-search-0ded6b68.json": {
+      "sha256": "f65734344ddbf315e22ea92246192f9ca609b27c2a1260abf38c119fbf91880d",
+      "bytes": 3062,
+      "observations": {
+        "indexedCanonicalPages": 177,
+        "internalArtifacts": 0,
+        "readerQuestionsPassed": 12
+      }
+    },
+    "reader-archive-0ded6b68.json": {
+      "sha256": "d49c254c1d48145d6fd65f696b3fa2e2a10bb9aee10fd2783feb6d1d38489168",
+      "bytes": 506,
+      "observations": {
+        "revision": "0ded6b68eb6170c4ea5e76251ad5e13adf2f664b",
+        "archive": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/kubeclaw-reader-offline-0ded6b68.zip",
+        "sha256": "c5691ef73d9d7191d532f10e5fcfa07c2dc6bfadc9a2b4d4398bf0f79a17791e",
+        "bytes": 7856004,
+        "members": 242,
+        "copiedAssetsSourceCompared": 19,
+        "extracted": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/offline-reader-0ded6b68",
+        "limit": "Checkpoint reader, not aggregate documentation or release acceptance."
+      }
+    }
+  },
+  "limits": [
+    "Actual two clean normal builds at same frozen Source/tools; no fixture-only determinism claim.",
+    "All 411 previews bind exact linked revisions/ranges, not full semantic acceptance of every Source claim.",
+    "Browser scope is 10 changed pages,165 boxes at3 widths plus search; not screenreader/global accessibility or deployed behavior.",
+    "Runtime release stop and current generator/qualification/Helm blockers remain. No aggregate documentation or release approval."
+  ]
+}

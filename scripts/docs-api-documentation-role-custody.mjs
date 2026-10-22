@@ -6050,7 +6050,7 @@ export const documentationExecutableRoleRecipes = {
       {
         "path": "scripts/docs-publication.mjs",
         "canonical": "scripts/docs-publication.mjs",
-        "sha256": "3b22ff66706c132c96a3b3ba39c7c2d043d314336d46660d94e7481c0f0ef360"
+        "sha256": "29d0305b4b4ad0de7fcea5810372e700b4b2a4d810e8cce22fbdd2bfd964cda8"
       },
       {
         "path": "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
@@ -6391,7 +6391,7 @@ export const documentationExecutableRoleRecipes = {
       {
         "path": "scripts/docs-publication.mjs",
         "canonical": "scripts/docs-publication.mjs",
-        "sha256": "3b22ff66706c132c96a3b3ba39c7c2d043d314336d46660d94e7481c0f0ef360"
+        "sha256": "29d0305b4b4ad0de7fcea5810372e700b4b2a4d810e8cce22fbdd2bfd964cda8"
       }
     ],
     "purposeInputs": [
@@ -6413,7 +6413,7 @@ export const documentationExecutableRoleRecipes = {
       {
         "path": "scripts/docs-publication.mjs",
         "canonical": "scripts/docs-publication.mjs",
-        "sha256": "3b22ff66706c132c96a3b3ba39c7c2d043d314336d46660d94e7481c0f0ef360"
+        "sha256": "29d0305b4b4ad0de7fcea5810372e700b4b2a4d810e8cce22fbdd2bfd964cda8"
       },
       {
         "path": "skills/common/plugin-runtime/foundation/config/platform.schema.json",
@@ -9257,12 +9257,12 @@ export const documentationExecutableRoleRecipes = {
       {
         "path": ".github/workflows/docs-checks.yaml",
         "canonical": ".github/workflows/docs-checks.yaml",
-        "sha256": "f44033eb4877618d34c65fb292a33f88f8dddb3dbe7c471439328f81f57ac2c5"
+        "sha256": "96e54e68a99450a6b4cdd1568cd4309cf290ee54f8b368efa76b032f2c7b48b4"
       },
       {
         "path": "scripts/tests/docs-reader-redirects.test.mjs",
         "canonical": "scripts/tests/docs-reader-redirects.test.mjs",
-        "sha256": "dec1ca9dcfb5ca80adeb661ff57350029df06d3690794d3194cff8d406c4c646"
+        "sha256": "4d08e2533bda82a536a9c61ab27a3fca94939a484a5a2154e012ff9507f26155"
       },
       {
         "path": "scripts/tests/docs-reader-redirects.browser.mjs",
@@ -9272,7 +9272,7 @@ export const documentationExecutableRoleRecipes = {
       {
         "path": "docs/site/reference/documentation-site.md",
         "canonical": "docs/site/reference/documentation-site.md",
-        "sha256": "4f418aa28e32443300e50431ba9a80552a5bbcb96d2a58821316e6b1821300d8"
+        "sha256": "c0c4b55949be05d571aa4ea5b353c5ab479caeafd3ebbcdeb70ebec0ca10a1e0"
       }
     ]
   }

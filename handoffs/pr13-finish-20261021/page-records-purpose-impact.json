@@ -1,0 +1,227 @@
+{
+  "scope": "Static ten-target A91211 integration impact; no capture/role acceptance",
+  "targets": [
+    {
+      "path": "scripts/docs-publication.mjs",
+      "kind": "changed",
+      "sha256": "29d0305b4b4ad0de7fcea5810372e700b4b2a4d810e8cce22fbdd2bfd964cda8",
+      "bytes": 80767,
+      "lines": 1140,
+      "baselineSha256": "3b22ff66706c132c96a3b3ba39c7c2d043d314336d46660d94e7481c0f0ef360",
+      "v1Sha256": "29d0305b4b4ad0de7fcea5810372e700b4b2a4d810e8cce22fbdd2bfd964cda8",
+      "changedFromV1": false
+    },
+    {
+      "path": "scripts/docs-reader/check-artifact.mjs",
+      "kind": "changed",
+      "sha256": "7f4e8cb928a5fba48bbd590e5349ce6247264f9cae1935a1e3679ae54c1a2a67",
+      "bytes": 3677,
+      "lines": 65,
+      "baselineSha256": "bb5a1e754b4c34254f2bdd75765e196b9c5c49aa0122b22baa6bc63491480838",
+      "v1Sha256": "f26de3e24a319b1048c5d3061f0c8d0fe1784588bc0fe0b488736bd191b355e1",
+      "changedFromV1": true
+    },
+    {
+      "path": "docs/site/reference/documentation-site.md",
+      "kind": "changed",
+      "sha256": "c0c4b55949be05d571aa4ea5b353c5ab479caeafd3ebbcdeb70ebec0ca10a1e0",
+      "bytes": 29517,
+      "lines": 433,
+      "baselineSha256": "4f418aa28e32443300e50431ba9a80552a5bbcb96d2a58821316e6b1821300d8",
+      "v1Sha256": "12429787eaedc3830fb5e1fdefc9361397509c43b71390025802b9ebca84cad0",
+      "changedFromV1": true
+    },
+    {
+      "path": "scripts/docs-reader/redirects.mjs",
+      "kind": "changed",
+      "sha256": "0b186c9da87055e1a13afb0aace0b72e04099c3ed49879a422ca3acbbe778caf",
+      "bytes": 9719,
+      "lines": 88,
+      "baselineSha256": "bdeb3d97575e9e8116fc5d07eb2fd359aeac3a5ae824d0521e688ff187e43a60",
+      "v1Sha256": "0b186c9da87055e1a13afb0aace0b72e04099c3ed49879a422ca3acbbe778caf",
+      "changedFromV1": false
+    },
+    {
+      "path": "scripts/docs-reader/renderer.mjs",
+      "kind": "changed",
+      "sha256": "a0bf02d079637cf862fe0a40bbc34e4bfbd982c58126e347d8aea079047abd87",
+      "bytes": 21223,
+      "lines": 205,
+      "baselineSha256": "9e87c023a29932f35c9c0ca5169c7c4cc39953a849e31b206e6f431bf91acf2b",
+      "v1Sha256": "a0bf02d079637cf862fe0a40bbc34e4bfbd982c58126e347d8aea079047abd87",
+      "changedFromV1": false
+    },
+    {
+      "path": ".github/workflows/docs-checks.yaml",
+      "kind": "changed",
+      "sha256": "96e54e68a99450a6b4cdd1568cd4309cf290ee54f8b368efa76b032f2c7b48b4",
+      "bytes": 8731,
+      "lines": 172,
+      "baselineSha256": "f44033eb4877618d34c65fb292a33f88f8dddb3dbe7c471439328f81f57ac2c5",
+      "v1Sha256": "96e54e68a99450a6b4cdd1568cd4309cf290ee54f8b368efa76b032f2c7b48b4",
+      "changedFromV1": false
+    },
+    {
+      "path": "scripts/tests/docs-reader.test.mjs",
+      "kind": "changed",
+      "sha256": "abd6a6431110a7b8a1486bbbce4648a118d31fe6f517813c4d9d6ed2e6177e28",
+      "bytes": 11985,
+      "lines": 155,
+      "baselineSha256": "8bce959de317c8cc39f4848b0405357e457b8073cfab761b44426ecf3ffe4716",
+      "v1Sha256": "8bce959de317c8cc39f4848b0405357e457b8073cfab761b44426ecf3ffe4716",
+      "changedFromV1": true
+    },
+    {
+      "path": "scripts/tests/docs-reader-redirects.test.mjs",
+      "kind": "changed",
+      "sha256": "4d08e2533bda82a536a9c61ab27a3fca94939a484a5a2154e012ff9507f26155",
+      "bytes": 10601,
+      "lines": 54,
+      "baselineSha256": "dec1ca9dcfb5ca80adeb661ff57350029df06d3690794d3194cff8d406c4c646",
+      "v1Sha256": "dec1ca9dcfb5ca80adeb661ff57350029df06d3690794d3194cff8d406c4c646",
+      "changedFromV1": true
+    },
+    {
+      "path": "scripts/docs-reader/page-records.mjs",
+      "kind": "new",
+      "sha256": "6268501ef047b13e0794950a85d57e2c7aaf54e85a16d77ca8c1263237691a2f",
+      "bytes": 11080,
+      "lines": 170,
+      "baselineSha256": null,
+      "v1Sha256": "15d857520e008305e9b649eb10ff02c0ad4ff9637aeee62cd4c55d7afdf3b96c",
+      "changedFromV1": true
+    },
+    {
+      "path": "scripts/tests/docs-reader-page-records.test.mjs",
+      "kind": "new",
+      "sha256": "0333fffb872837af59396ff47dafb1401a87b00627d96de524e9322e12f15d83",
+      "bytes": 15845,
+      "lines": 113,
+      "baselineSha256": null,
+      "v1Sha256": "fce2bc91f1c1760cd98818e7f790e0e0f39a92ba177abacdf9b12ac5f5a67db1",
+      "changedFromV1": true
+    }
+  ],
+  "existingContractIntersections": [
+    {
+      "table": "executableRoles",
+      "source": "scripts/docs-publication.mjs",
+      "kind": null,
+      "role": "documentation-consumer",
+      "matches": []
+    },
+    {
+      "table": "executableRoles",
+      "source": "scripts/docs-reader/renderer.mjs",
+      "kind": null,
+      "role": "documentation-consumer",
+      "matches": []
+    },
+    {
+      "table": "executableRoles",
+      "source": "scripts/docs-reader/check-artifact.mjs",
+      "kind": null,
+      "role": "documentation-consumer",
+      "matches": []
+    },
+    {
+      "table": "executableRoles",
+      "source": "scripts/check-capability-drift-mutations.mjs",
+      "kind": "reviewed-documentation-consumer/v1",
+      "role": "documentation-consumer",
+      "matches": [
+        {
+          "field": "purposeInputs",
+          "path": "scripts/docs-publication.mjs",
+          "canonical": "scripts/docs-publication.mjs",
+          "sha256": "3b22ff66706c132c96a3b3ba39c7c2d043d314336d46660d94e7481c0f0ef360"
+        }
+      ]
+    },
+    {
+      "table": "executableRoles",
+      "source": "scripts/check-capability-swarm-boundary.mjs",
+      "kind": "reviewed-documentation-consumer/v1",
+      "role": "documentation-consumer",
+      "matches": [
+        {
+          "field": "purposeInputs",
+          "path": "scripts/docs-publication.mjs",
+          "canonical": "scripts/docs-publication.mjs",
+          "sha256": "3b22ff66706c132c96a3b3ba39c7c2d043d314336d46660d94e7481c0f0ef360"
+        },
+        {
+          "field": "authorityInputs",
+          "path": "scripts/docs-publication.mjs",
+          "canonical": "scripts/docs-publication.mjs",
+          "sha256": "3b22ff66706c132c96a3b3ba39c7c2d043d314336d46660d94e7481c0f0ef360"
+        }
+      ]
+    },
+    {
+      "table": "executableRoles",
+      "source": "scripts/docs-reader/redirects.mjs",
+      "kind": "reviewed-documentation-consumer/v1",
+      "role": "documentation-consumer",
+      "matches": []
+    },
+    {
+      "table": "executableRoles",
+      "source": "scripts/docs-reader/serve.mjs",
+      "kind": "manual-reader-preview-with-external-ci-fixtures/v1",
+      "role": "documentation-consumer",
+      "matches": [
+        {
+          "field": "purposeInputs",
+          "path": ".github/workflows/docs-checks.yaml",
+          "canonical": ".github/workflows/docs-checks.yaml",
+          "sha256": "f44033eb4877618d34c65fb292a33f88f8dddb3dbe7c471439328f81f57ac2c5"
+        },
+        {
+          "field": "purposeInputs",
+          "path": "scripts/tests/docs-reader-redirects.test.mjs",
+          "canonical": "scripts/tests/docs-reader-redirects.test.mjs",
+          "sha256": "dec1ca9dcfb5ca80adeb661ff57350029df06d3690794d3194cff8d406c4c646"
+        },
+        {
+          "field": "purposeInputs",
+          "path": "docs/site/reference/documentation-site.md",
+          "canonical": "docs/site/reference/documentation-site.md",
+          "sha256": "4f418aa28e32443300e50431ba9a80552a5bbcb96d2a58821316e6b1821300d8"
+        }
+      ]
+    },
+    {
+      "table": "ownerPurposes",
+      "source": "scripts/plugin-system-inventory.mjs",
+      "kind": "canonical-plugin-documentation-inventory/v1",
+      "role": null,
+      "matches": [
+        {
+          "field": "purposeInputs",
+          "path": ".github/workflows/docs-checks.yaml",
+          "canonical": ".github/workflows/docs-checks.yaml",
+          "sha256": "f44033eb4877618d34c65fb292a33f88f8dddb3dbe7c471439328f81f57ac2c5"
+        }
+      ]
+    }
+  ],
+  "newRoleDraft": {
+    "source": "scripts/docs-reader/page-records.mjs",
+    "role": "documentation-consumer",
+    "consumer": "Finite positive reader Source/page/artifact bindings; no product API submission, scanned module execution or deployment authority.",
+    "selectors": null,
+    "factsDigest": null,
+    "authorityInputs": null,
+    "status": "PROVISIONAL_NOT_INSTALLED_REQUIRES_ORIGINAL_DATA"
+  },
+  "recommendedOwnerRefresh": [
+    "npm run docs:governance:generate",
+    "npm run docs:governance:check"
+  ],
+  "limits": [
+    "Current registry is historical/pending, not complete current graph truth.",
+    "No classifier imports/currentDATA/capture/generator/main writes.",
+    "No root package/native entry invented; direct CI is distinct external caller provenance."
+  ]
+}

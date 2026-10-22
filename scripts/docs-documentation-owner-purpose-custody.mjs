@@ -2,7 +2,8 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
 import {createHash} from 'node:crypto';
-// Four exact Source-purpose routes only. No output/runtime/module receipt.
+// Four exact owner-purpose routes below; one distinct external-CI seed follows.
+// No output/runtime/module receipt.
 // Existing operation, graph, dynamic-loader, alias and public-target guards
 // remain mandatory; this cannot accept qualification DATA by itself.
 const freeze=value=>{if(value&&typeof value==='object'){for(const child of Object.values(value))freeze(child);Object.freeze(value);}return value;};
@@ -276,7 +277,7 @@ export const reviewedDocumentationOwnerPurposes=freeze({
       {
         "path": ".github/workflows/docs-checks.yaml",
         "canonical": ".github/workflows/docs-checks.yaml",
-        "sha256": "f44033eb4877618d34c65fb292a33f88f8dddb3dbe7c471439328f81f57ac2c5"
+        "sha256": "96e54e68a99450a6b4cdd1568cd4309cf290ee54f8b368efa76b032f2c7b48b4"
       },
       {
         "path": "package.json",
@@ -354,6 +355,7 @@ export const reviewedDocumentationOwnerPurposes=freeze({
 });
 const sha=bytes=>createHash('sha256').update(bytes).digest('hex');
 export function assertDocumentationOwnerPurpose(root,source){
+ if(readerArtifactCiRoleSources.has(source))assertReaderArtifactExternalCiPurpose(root); // before direct role-cache entry too
  const profile=reviewedDocumentationOwnerPurposes[source];if(!profile)return null;
  root=path.resolve(root);
  const acquire=(selected,expected)=>{const file=path.join(root,selected);assert(fs.existsSync(file)&&fs.realpathSync(file)===file&&fs.statSync(file).isFile()&&sha(fs.readFileSync(file))===expected,`DOCUMENTATION_OWNER_PURPOSE_INPUT_DRIFT: ${source}; ${selected}`);};
@@ -372,4 +374,121 @@ export function assertDocumentationOwnerAncestry(root,source,ancestors,docsReach
 }
 export function documentationOwnerNativeEntryMatches(source,entry){
  return reviewedDocumentationOwnerPurposes[source]?.allowedNativePackageEntries.some(value=>JSON.stringify(value)===JSON.stringify(entry))??false;
+}
+
+// One exact external caller seed, separate from root-package/native entries.
+// Full physical caller/consumer proof is acquired before graph and role caches.
+const readerArtifactCiPurpose=freeze({
+  "kind": "exact-external-ci-reader-artifact-verifier/v1",
+  "source": "scripts/docs-reader/check-artifact.mjs",
+  "meaning": "Analysis-only purpose reachability from the actual external CI/documented normal checker caller. No package/native entry, role receipt, API or execution authority.",
+  "inputs": [
+    {
+      "path": "scripts/docs-reader/check-artifact.mjs",
+      "canonical": "scripts/docs-reader/check-artifact.mjs",
+      "sha256": "7f4e8cb928a5fba48bbd590e5349ce6247264f9cae1935a1e3679ae54c1a2a67"
+    },
+    {
+      "path": "scripts/docs-reader/page-records.mjs",
+      "canonical": "scripts/docs-reader/page-records.mjs",
+      "sha256": "6268501ef047b13e0794950a85d57e2c7aaf54e85a16d77ca8c1263237691a2f"
+    },
+    {
+      "path": "scripts/docs-publication.mjs",
+      "canonical": "scripts/docs-publication.mjs",
+      "sha256": "29d0305b4b4ad0de7fcea5810372e700b4b2a4d810e8cce22fbdd2bfd964cda8"
+    },
+    {
+      "path": "scripts/docs-reader/renderer.mjs",
+      "canonical": "scripts/docs-reader/renderer.mjs",
+      "sha256": "a0bf02d079637cf862fe0a40bbc34e4bfbd982c58126e347d8aea079047abd87"
+    },
+    {
+      "path": "scripts/docs-reader/redirects.mjs",
+      "canonical": "scripts/docs-reader/redirects.mjs",
+      "sha256": "0b186c9da87055e1a13afb0aace0b72e04099c3ed49879a422ca3acbbe778caf"
+    },
+    {
+      "path": ".github/workflows/docs-checks.yaml",
+      "canonical": ".github/workflows/docs-checks.yaml",
+      "sha256": "96e54e68a99450a6b4cdd1568cd4309cf290ee54f8b368efa76b032f2c7b48b4"
+    },
+    {
+      "path": "scripts/tests/docs-reader-page-records.test.mjs",
+      "canonical": "scripts/tests/docs-reader-page-records.test.mjs",
+      "sha256": "0333fffb872837af59396ff47dafb1401a87b00627d96de524e9322e12f15d83"
+    },
+    {
+      "path": "scripts/tests/docs-reader.test.mjs",
+      "canonical": "scripts/tests/docs-reader.test.mjs",
+      "sha256": "abd6a6431110a7b8a1486bbbce4648a118d31fe6f517813c4d9d6ed2e6177e28"
+    },
+    {
+      "path": "scripts/tests/docs-reader-redirects.test.mjs",
+      "canonical": "scripts/tests/docs-reader-redirects.test.mjs",
+      "sha256": "4d08e2533bda82a536a9c61ab27a3fca94939a484a5a2154e012ff9507f26155"
+    },
+    {
+      "path": "docs/site/reference/documentation-site.md",
+      "canonical": "docs/site/reference/documentation-site.md",
+      "sha256": "c0c4b55949be05d571aa4ea5b353c5ab479caeafd3ebbcdeb70ebec0ca10a1e0"
+    },
+    {
+      "path": "package.json",
+      "canonical": "package.json",
+      "sha256": "4ab1e90c2259aeb96acfdc877e5a9eed330f605abff46d7eca85faded0f020c3"
+    },
+    {
+      "path": "scripts/lib/docs-publication-assets.mjs",
+      "canonical": "scripts/lib/docs-publication-assets.mjs",
+      "sha256": "239950ea0ebc87501d03aa178d07b99922cb4ec7dabdded3fbf8f8ab5c5de6f0"
+    },
+    {
+      "path": "scripts/lib/docs-route-continuity.mjs",
+      "canonical": "scripts/lib/docs-route-continuity.mjs",
+      "sha256": "95ebc24186da8c7b446a5bd3edb36f8514b79cb4104dc0394f0b381ddb5dd449"
+    },
+    {
+      "path": "scripts/docs-reader/metadata.mjs",
+      "canonical": "scripts/docs-reader/metadata.mjs",
+      "sha256": "51e0b027356401a68c52a3b8b1fe4d6c6ed35070dfcb300067dd1b9af8da0abc"
+    }
+  ],
+  "ciRunLine": "run: npm run docs:publication:check && node --test scripts/tests/docs-reader.test.mjs scripts/tests/docs-reader-page-records.test.mjs scripts/tests/docs-reader-redirects.test.mjs scripts/tests/docs-reader-source-links.test.mjs scripts/tests/docs-reader-source-previews.test.mjs scripts/tests/docs-reader-diagrams.test.mjs && node scripts/tests/docs-reader-redirects.browser.mjs && npm run docs:publication:build && node --max-old-space-size=4096 scripts/docs-reader/check-artifact.mjs && node scripts/docs-reader/check-search.mjs && node --max-old-space-size=4096 scripts/docs-reader/check-source-links.mjs && node --max-old-space-size=4096 scripts/docs-reader/check-source-previews.mjs && node --max-old-space-size=4096 scripts/docs-reader/check-diagrams.mjs",
+  "manualCommand": "node scripts/docs-reader/check-artifact.mjs /path/to/reader-artifact /path/to/source-checkout"
+});
+const readerArtifactCiProofs=new WeakMap();
+const readerArtifactCiRoleSources=new Set(['scripts/docs-reader/check-artifact.mjs','scripts/docs-reader/page-records.mjs','scripts/docs-publication.mjs','scripts/docs-reader/renderer.mjs','scripts/docs-reader/redirects.mjs']);
+export function assertReaderArtifactExternalCiPurpose(root){
+ root=path.resolve(root);
+ const profile=readerArtifactCiPurpose,source=path.join(root,profile.source),ci=path.join(root,'.github/workflows/docs-checks.yaml');
+ // Absent from unrelated synthetic roots means no seed, not an exemption.
+ // An actual declared CI invocation must not hide a missing verifier source.
+ if(!fs.existsSync(source)&&!(fs.existsSync(ci)&&fs.readFileSync(ci,'utf8').includes(profile.source)))return null;
+ assert.equal(fs.realpathSync(root),root,'DOCUMENTATION_READER_CI_PURPOSE_DRIFT: nonphysical root');
+ for(const input of profile.inputs){
+  const file=path.join(root,input.path);
+  assert(fs.existsSync(file)&&fs.realpathSync(file)===file&&fs.statSync(file).isFile()&&sha(fs.readFileSync(file))===input.sha256,
+   `DOCUMENTATION_READER_CI_PURPOSE_DRIFT: ${input.path}`);
+ }
+ const runLines=fs.readFileSync(ci,'utf8').split('\n').filter(line=>/^\s*run:/u.test(line)&&line.includes(profile.source)).map(line=>line.trim());
+ assert.deepEqual(runLines,[profile.ciRunLine],'DOCUMENTATION_READER_CI_PURPOSE_DRIFT: exact normal CI argv');
+ assert(fs.readFileSync(path.join(root,'docs/site/reference/documentation-site.md'),'utf8').includes(profile.manualCommand),
+  'DOCUMENTATION_READER_CI_PURPOSE_DRIFT: documented normal checker argv');
+ const definition=JSON.parse(fs.readFileSync(path.join(root,'package.json'),'utf8'));
+ assert(!Object.values(definition.scripts??{}).some(command=>typeof command==='string'&&command.includes(profile.source)),
+  'DOCUMENTATION_READER_CI_PURPOSE_DRIFT: verifier is not a root package entry');
+ const proof=Object.freeze({kind:profile.kind,source:profile.source,authority:'external-ci-analysis-only'});
+ readerArtifactCiProofs.set(proof,root);return proof;
+}
+export function addReaderArtifactExternalCiSeed(proof,graph,docsReachable){
+ if(proof===null)return false;
+ assert(readerArtifactCiProofs.has(proof),'DOCUMENTATION_READER_CI_PURPOSE_UNQUALIFIED: unacquired proof');
+ const root=readerArtifactCiProofs.get(proof);
+ assertReaderArtifactExternalCiPurpose(root); // stale acquired handles cannot bypass input revalidation
+ assert(Array.isArray(graph?.executableSources)&&Array.isArray(graph.edges)&&docsReachable instanceof Set,'DOCUMENTATION_READER_CI_PURPOSE_UNQUALIFIED: selected graph context');
+ if(!graph.executableSources.includes(readerArtifactCiPurpose.source))return false;
+ assert(!graph.edges.some(edge=>edge.target===readerArtifactCiPurpose.source),
+  'DOCUMENTATION_READER_CI_PURPOSE_UNQUALIFIED: new selected verifier importer');
+ docsReachable.add(readerArtifactCiPurpose.source);return true;
 }
