@@ -38,7 +38,7 @@ Use the deployment's release namespace and selected procedure. Raw manifests and
 | `charts/prism/templates/postgresql.yaml`, PostgreSQL enabled | Release namespace; `app=prism-postgresql` | 5432; omitted targetPort defaults to numeric 5432. |
 | `demo-ready-service.yaml`, broker enabled, Buster role and controller readiness enabled | Release namespace; release labels plus `component=buster-namespace-controller` | ClusterIP 8443 → `demo-ready`; its NetworkPolicy names allowed producer namespaces/Pods. |
 | `archviewer.yaml`, archviewer enabled and Nova role | Release namespace; agent release selector | ClusterIP 3456 → `archviewer`; separate Tailscale ingress and Cilium policy. Requires the configured private ingress owner and sidecar listener. Other roles fail rendering. |
-| `charts/ops-pod/templates/workload.yaml` | Release namespace; exact release-name label | Headless `clusterIP: None`, health 8080 → 8080; StatefulSet serviceName links stable network identity. The ops-mcp loopback listener is not exposed by this declaration. |
+| `charts/ops-pod/templates/workload.yaml` | Release namespace; exact release-name label | Headless Service for the Codex StatefulSet identity. The central MCP now has a separate internal HTTPS Service and Deployment; see the current Ops contract below. |
 
 Product evidence uses revision `57ba25bbf55f53a55efc65ede06b0e0d90eb0a70`. Sources: [main Service template](https://github.com/datrab/kubeclaw/blob/57ba25bbf55f53a55efc65ede06b0e0d90eb0a70/charts/kubeclaw/templates/service.yaml#L1-L36). [dedicated extra NodePort template](https://github.com/datrab/kubeclaw/blob/57ba25bbf55f53a55efc65ede06b0e0d90eb0a70/charts/kubeclaw/templates/service-extra-nodeports.yaml#L1-L22). [Prism Services](https://github.com/datrab/kubeclaw/blob/57ba25bbf55f53a55efc65ede06b0e0d90eb0a70/charts/prism/templates/services.yaml#L1-L39). [Ops headless identity](https://github.com/datrab/kubeclaw/blob/57ba25bbf55f53a55efc65ede06b0e0d90eb0a70/charts/ops-pod/templates/workload.yaml#L8-L24). The exact selected raw/value paths are listed in the generated Helm reference.
 
@@ -134,3 +134,13 @@ Inspect NetworkPolicy/Cilium policy separately from endpoint/routing checks. Ins
 These reads create no cluster resources and need no cluster cleanup. Save sanitized observations with timestamps/version/context/UID/resourceVersion as private evidence; protect internal addresses and policy information under operator rules. Concurrent reconciliation can change any read: capture another object/Slice snapshot if identities or versions differ. This procedure has no rollback because it makes no mutation. Recovery or a configuration rollback is a separate owner-authorized change. First read current object/ownership. Correct the identified input or dependency and preserve immutable allocated fields where required. After an interrupted write, read before retrying. After uncertain LB cleanup, preserve provider resources and finalizers until the owner establishes their state; do not remove finalizers to force progress. Reverting values cannot guarantee rollback of provider work, allocator choices or application effects.
 
 Execution status: the commands above are documented read-only checks, not executed live checks. Offline renders and pinned source reads do not establish admission, controller convergence, security, DNS, connectivity or provider cleanup success.
+
+## Central Ops Service Update
+
+The 2026-10-22 deployed main profile exposes the central MCP at
+`https://codex-ops-mcp.kubeclaw-ops.svc:8080/mcp` from its own Deployment and
+ServiceAccount. Codex, Nova and Buster authenticate with separate bearers;
+NetworkPolicy permits configured client selectors. The older generated
+endpoint inventory reflects this documentation branch's source baseline,
+not the updated deployment. Use the [current MCP topology and contract](../understand/ops-mcp.md#complete-request-and-state-path)
+for this route until runtime-source adoption regenerates those facts.

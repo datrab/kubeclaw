@@ -184,6 +184,12 @@ const reviewedPageSourceRevisions = {
 const reviewedOperatorInvocationBlocks = new Set(["1eb6d0e7a4f36d116677d9928611f6ba56496251c38c4bd1a0e84ac6c3ae4c79", "2136684a1dc8309e94ee786a8f76cfb2d524c00792e7cbeb3bd1b45a06d3067c", "1bdae1bd4ca174516fc703ebd059c6e82731e881f63123a5c2113151e2e4c488"]);
 
 let sourceLinkCount = 0;
+const upstreamOps = JSON.parse(fs.readFileSync(path.join(root, 'scripts/ops-mcp-docs-upstream.json'), 'utf8'));
+assert.equal(upstreamOps.revision, '34cf38ef53ee41381543785d0ffae90a37fac9ca');
+for (const page of upstreamOps.pages) {
+  assert(reviewedPageSourceRevisions[page], `unknown upstream Ops page ${page}`);
+  reviewedPageSourceRevisions[page].push(upstreamOps.revision);
+}
 const checkedSources = new Set();
 for (const [file, minimumLinks, markers] of specifications) {
   const absolute = path.join(root, file);
@@ -222,6 +228,12 @@ for (const [file, minimumLinks, markers] of specifications) {
       allowedRevisions: reviewedPageSourceRevisions[file],
       requireRange: file.startsWith('docs/site/understand/') || file.endsWith('platform-surfaces-generated.md'),
       maximumSpan: file.startsWith('docs/site/understand/') || file.endsWith('platform-surfaces-generated.md') ? 60 : Infinity,
+      ...(linkRevision === upstreamOps.revision ? {
+        upstreamSnapshot: (() => {
+          assert(source.includes('Upstream source scope:'), `${file} must distinguish upstream evidence from branch adoption`);
+          return upstreamOps;
+        })(),
+      } : {}),
     });
     checkedSources.add(`${linkRevision}:${repositoryPath}`);
   }

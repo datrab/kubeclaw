@@ -1,176 +1,230 @@
-# Ops MCP: Read-Only Cluster Evidence Interface
+# Ops MCP: Central Cluster Reads And Authorized Exec
 
-Status: implemented; optional to pipeline execution
-Audience: operator, Codex integrator, Ops MCP maintainer, security specialist
+Status: implemented on main and deployed; documentation-branch source adoption remains separate
+Audience: operator, agent integrator, Ops MCP maintainer, security specialist
 Owner: Ops MCP maintainers
-Evidence: tools/ops-mcp/src; tools/ops-mcp/test; charts/ops-pod; scripts/deploy-ops-pod.sh; my-values/infra/cilium-cluster-policies.yaml
-Evidence revision: `569f7b4933d4859cc67c80ddf40d5154ffd95ce5`
-Applies to: `kubeclaw-ops` MCP service version 0.2.0
-Last verified: current service, schema, chart and policy inspection on 2026-10-21; 15 local service tests passed, no live cluster or Relay verification
+Evidence: tools/ops-mcp/src; tools/ops-mcp/test; charts/ops-pod; charts/kubeclaw; gitops/platform
+Evidence revision: `34cf38ef53ee41381543785d0ffae90a37fac9ca`
+Upstream source scope: deployed Ops MCP changes on main; see the immutable source links below
+Applies to: central Ops MCP 0.2.0 and native Nova/Buster clients
+Last verified: 2026-10-22 source inspection and scoped deployment observations; verification limits are recorded below
 
 ## Purpose And Safety Boundary
 
-Ops MCP collects operational evidence through a read-only MCP interface. It can
-read Argo CD applications, Kubernetes workload state, events, pod logs, and
-Hubble flows. No registered tool deploys, restarts, deletes, patches, changes a
-Secret, or executes a command in a pod. Each registration has read-only,
-non-destructive, idempotent, and closed-world annotations: `readOnlyHint=true`,
-`destructiveHint=false`, `idempotentHint=true`, and `openWorldHint=false`.
-These annotations describe the interface. The service code enforces the method
-boundary. Kubernetes RBAC defines the wider authority of the process credential.
+Codex Ops, Nova, and Buster reach Kubernetes through a central Ops MCP service
+in its own Pod. Read tools return cluster evidence. The separate `exec_pod`
+tool can change an authorized workload. It is marked destructive and
+non-idempotent; the read tools retain read-only annotations. The service has
+no Argo sync, deployment, restart, patch, Secret-read, or arbitrary-URL tool.
+An exec grant can nevertheless expose credentials and authority inside its
+target container. Review it as execution authority.
 
-Ops MCP is an optional analysis surface. Nova, Buster, and Prism do not depend
-on it for pipeline lifecycle authority.
+The Codex StatefulSet and MCP Deployment have different ServiceAccounts and
+failure domains. Codex and Nova receive no Kubernetes token or kubeconfig.
+Buster's gateway also uses only MCP for reads and exec. Its worker retains the
+existing exception: a narrowly scoped lease token for the namespace controller.
+The controller owns namespace management; Buster does not create namespaces itself.
 
-The source proves this read-only method boundary but does not record the
-historical reason for choosing a separate service. The current design assessment is an
-inference: a narrow service keeps cluster access out of the plugin package and
-gives clients a small, validated evidence API. This does not make the shared Pod
-ServiceAccount read-only. In the default Ops Pod profile, that identity also has
-`pods/exec` authority for the configured execution namespace. The cost is
-another service, authentication boundary, and availability boundary. Reconsider
-the service split only if a replacement preserves per-request authentication
-and namespace checks, adds aggregate bounds for full scans, and uses a
-Kubernetes identity whose authority matches its deployment model.
+This page updates the deployed main contract from merged PRs #26, #27 and #28.
+PR #13 retains its separate runtime/source qualification and acceptance work.
+The upstream source scope is explicit so a reader does not mistake a newer main
+implementation for runtime source already adopted by the documentation branch.
+Historical review pages and their older read-only findings are not current deployment instructions.
 
 ## Complete Request And State Path
 
-1. An MCP client sends a JSON request to `/mcp` with a bearer header and,
-   for a browser, an `Origin` header.
-2. The HTTP router checks the bearer source and exact origin allowlist before
-   the MCP handler parses a tool call.
-3. Zod validates the selected tool input. Namespace values come from the
-   configured enum; a caller cannot supply an arbitrary namespace.
-4. The tool performs HTTPS GET requests with the projected Kubernetes identity,
-   or starts the fixed Hubble binary with exact filters and a bounded process.
-5. The tool reduces the response to JSON text. It returns continuation,
-   truncation, scan, window, and partial-result metadata where applicable.
-6. The HTTP response is the only service result. Ops MCP has no durable session,
-   request, cursor, cache, or result store. Kubernetes, Argo CD, and Hubble are
-   the source authorities. The client owns any continuation token it retains.
+1. OpenClaw discovers the configured `ops` MCP server. Codex uses its configured
+   remote MCP connection; Nova and Buster use the native OpenClaw connector below.
+2. A client sends JSON-RPC over HTTPS with its own bearer credential.
+3. The service rereads policy and token files, authenticates the caller, and
+   exposes only that caller's allowed tools. It checks tool and namespace scope
+   again on every call. Client-supplied Pod labels cannot grant authority.
+4. Reads use the MCP's projected Kubernetes credential. Exec first reads the
+   target Pod and checks live labels and the requested regular container, then
+   opens Kubernetes remotecommand over a TLS-verified WebSocket.
+5. The result preserves errors, output bounds, continuation and partial metadata.
+   Audit events identify the client, tool, target, timing and command digest.
+   They exclude raw credentials, command arguments and output.
+6. Kubernetes, Argo and Hubble remain observation authorities. The MCP has no
+   durable request, result or job store. A lost exec connection can leave a
+   remote process running; reconcile its effects before any retry.
 
-Concurrent reads do not update shared product state. Hubble alone has a
-process-local limit of two concurrent queries. A pod restart clears this
-counter and any in-flight HTTP requests; it does not change cluster state.
+```mermaid
+flowchart LR
+  Codex[Codex Ops: own bearer] -->|HTTPS| MCP[Separate Ops MCP Pod]
+  Nova[Nova: native MCP tools] --> AdapterN[Local transport adapter]
+  Buster[Buster: native MCP tools] --> AdapterB[Local transport adapter]
+  AdapterN -->|HTTPS and Nova bearer| MCP
+  AdapterB -->|HTTPS and Buster bearer| MCP
+  MCP -->|MCP ServiceAccount| API[Kubernetes API]
+  Worker[Buster worker] -->|Lease request only| Controller[Namespace controller]
+  Controller --> API
+```
+
+## Native Agent Connection
+
+No manual client installation or chat-message permission grant is needed for
+the selected Nova and Buster releases. Their chart declares `mcp.servers.ops`.
+OpenClaw starts Node directly with `/opt/ops-mcp-client/stdio.mjs`; the agent
+does not invoke its shell tool to discover or call MCP functions. This local
+adapter forwards to the central HTTPS service. It is not a Kubernetes client
+and does not make authorization decisions.
+
+The adapter reads the agent's bearer and CA files on every request. Only the
+gateway container receives those mounts; Buster's worker and submitted test
+workloads do not receive MCP credentials. Config stores the endpoint and file
+paths, not bearer values. HTTPS certificate and hostname checks remain enabled.
+The adapter preserves MCP tool errors and never automatically replays a failed
+call. Cancellation closes the local request without proving remote termination.
+
+The central server supplies tool names, descriptions and argument schemas.
+OpenClaw's coding profile includes configured MCP servers; session and local
+tool denials still apply. Names can carry runtime prefixes, for example
+`ops__get_pod` in the OpenClaw catalog. Start with a normal task such as
+“Show the failing Pods and recent logs in test-build.” The agent selects a
+native tool. After configuration replacement, use a new turn or session if an
+existing catalog has not refreshed.
+
+The chart reconciles only its managed connector before startup Doctor and
+again during setup, including persisted installations. Other connectors and
+local tool policies remain intact. Disabling `opsMcp.enabled` removes the
+managed connector on rollout. A checksum rolls Pods when adapter code changes.
+The old `node /opt/ops-mcp-client/client.mjs list` and `call` interface remains
+available for diagnostics. Existing custom workspace notes may still mention
+that interface; retain other notes when updating that section.
+
+> **Source evidence — native transport and persisted configuration**
+>
+> **Claim:** Nova and Buster obtain typed native tools while credentials and authorization remain centralized.
+>
+> **Implementation:** [Native connector configuration](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/charts/kubeclaw/templates/configmap-gateway.yaml#L202-L223) [Stdio adapter](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/charts/kubeclaw/files/ops-mcp/stdio.mjs#L1-L53) [Verified HTTPS client](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/charts/kubeclaw/files/ops-mcp/client.mjs#L1-L29) [Managed configuration migration](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/charts/kubeclaw/files/sync-ops-mcp-config.mjs#L1-L21)
+>
+> **Contract or setting:** opsMcp.enabled selects the connector; credentials are mounted files.
+>
+> **Test evidence:** The scoped local and live results are recorded under Verification below; source links alone are not execution receipts.
+>
+> **Revision:** `34cf38ef53ee41381543785d0ffae90a37fac9ca`. Upstream main evidence; this documentation update does not adopt runtime source into PR #13.
+>
+> **Limit:** Catalog visibility does not grant a namespace or exec target.
 
 ## HTTP Contract And Authentication
 
-The service listens on `HOST:PORT`; defaults are `0.0.0.0:8080`. The deployed
-Ops Pod sets `HOST=127.0.0.1` and `OPS_LOCAL_ONLY=1`. Local-only mode rejects any
-other host value.
+The deployed service listens on `0.0.0.0:8080` behind the internal Service
+`https://codex-ops-mcp.kubeclaw-ops.svc:8080/mcp`. It has its own TLS Secret,
+private CA, readiness and liveness probes. There is no public Ingress or tunnel
+required for Nova/Buster access. NetworkPolicy restricts client Pod selectors;
+bearer authentication remains required even for an allowed network peer.
 
-| Endpoint | Authentication | Result |
-| --- | --- | --- |
-| `/healthz` | None | 200 when the bearer source can be read and validated; otherwise 503. The current router does not restrict the HTTP method. |
-| MCP requests at `/mcp` | `Authorization: Bearer …` | JSON-response MCP transport. |
-| Any other path | Not applicable | 404 JSON response. |
+`/healthz` reports credential/policy readiness, not a successful Kubernetes
+read, an exec, a Hubble query or a mobile pairing. `/mcp` accepts authenticated
+MCP requests. An optional exact `MCP_ALLOWED_ORIGINS` list restricts supplied
+browser origins. Requests without Origin remain supported.
 
-A token must contain 32 to 512 URL-safe characters. Configure exactly one of
-`OPS_MCP_BEARER_TOKEN_FILE` or `OPS_MCP_BEARER_TOKEN`. File mode reopens the
-path for every request, which supports Kubernetes Secret rotation. Comparison
-uses SHA-256 digests and constant-time equality. An unreadable or invalid
-rotated token fails closed.
-
-`MCP_ALLOWED_ORIGINS` is an optional exact allowlist. If it is empty, all
-origins pass. Requests without an `Origin` header pass because non-browser MCP
-clients do not always send one. A supplied, unlisted origin gets 403.
-
-The MCP handler uses JSON response mode. The service does not add a durable
-application session store, server-side result cursor, or streaming result log.
-Each HTTP request repeats bearer and origin checks. Argo and platform list tools
-return Kubernetes continuation tokens to the caller. Log reads use time and
-tail bounds. Hubble returns continuation advice, not a lossless token. A client
-must keep these values if it wants to continue an investigation.
-
-> **Source evidence — fail-closed HTTP boundary**
->
-> **Claim:** Every Ops MCP request checks its bearer source and supplied origin before tool handling.
->
-> **Implementation:** Configuration, credential comparison and HTTP router below define this fail-closed boundary.
->
-> [Configuration validates port, local binding, namespaces, token sources, and origin allowlist](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/tools/ops-mcp/src/config.mjs#L1-L23).
->
-> [Authentication validates and rereads the bearer credential for every request](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/tools/ops-mcp/src/authentication.mjs#L1-L38).
->
-> [The router constructs the MCP handler and applies bearer and origin checks](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/tools/ops-mcp/src/server.mjs#L491-L543).
->
-> [It maps handler failures, starts the listener, and closes on termination](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/tools/ops-mcp/src/server.mjs#L545-L564).
->
-> **Contract or setting:** The linked configuration requires exactly one bearer source and an optional exact origin allowlist; absent Origin remains allowed.
->
-> **Test evidence:** [Bearer rotation and namespace checks](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/tools/ops-mcp/test/authentication.test.mjs#L52-L80) contains real loopback HTTP credential rotation, namespace rejection and missing-token health assertions. These assertions are not a recorded execution result for this callout.
->
-> **Revision:** `569f7b4933d4859cc67c80ddf40d5154ffd95ce5`. These are the source bindings for the explanation above, not execution receipts.
->
-> **Limit:** These controlled service assertions do not prove deployed Secret rotation, external client identity or Kubernetes RBAC.
+`OPS_MCP_POLICY_FILE` selects per-client authentication and authorization.
+Each client has a distinct 32–512-character URL-safe token. Policy and tokens
+are reopened for each request; missing, invalid or reused credentials fail
+closed. Comparison uses SHA-256 and constant-time equality. Do not combine
+policy mode with the legacy shared-bearer variables. Standalone legacy observer
+mode is a different configuration and does not grant exec.
 
 ## Configuration And Precedence
 
-Process environment is the service authority. In the Ops Pod, Helm values
-render those environment variables, so rendered chart values win before the
-process starts. There is no request-level configuration override.
+Helm/Git values render process configuration; there is no caller override of
+authority. `gitops/platform/values/codex-ops.yaml` describes the selected client
+policy. Argo deploys the selected Ops chart/image receipt independently of the
+runtime bundles used for Nova and Buster.
 
-| Environment | Default and rule |
+| Configuration | Meaning |
 | --- | --- |
-| `PORT`, `HOST` | `8080`, `0.0.0.0`; port must be 0–65535. The Ops Pod sets `127.0.0.1`. |
-| `OPS_LOCAL_ONLY` | Disabled unless exactly `1`. When enabled, `HOST` must be `127.0.0.1`; it also registers the two platform tools. |
-| `OPS_DEFAULT_NAMESPACE` | `kubeclaw`. |
-| `OPS_ALLOWED_NAMESPACES` | Defaults to the default namespace. It is a comma-separated set of valid names and must include `OPS_DEFAULT_NAMESPACE`. |
-| `ARGOCD_NAMESPACE` | `argocd`; independent of the namespaced tool enum. |
-| `OPS_MCP_BEARER_TOKEN_FILE`, `OPS_MCP_BEARER_TOKEN` | Exactly one must provide a valid token. File and inline sources together fail startup; neither source also fails startup. File mode wins only by being the sole configured source. |
-| `MCP_ALLOWED_ORIGINS` | Empty exact allowlist by default, which permits all origins. An absent `Origin` also passes. |
-| `KUBERNETES_API_URL` | `https://kubernetes.default.svc`; must be an HTTPS origin with no credentials, path, query, or fragment. |
-| `KUBERNETES_TOKEN_FILE`, `KUBERNETES_CA_FILE` | Projected ServiceAccount `token` and `ca.crt` paths. |
-| `HUBBLE_BIN`, `HUBBLE_SERVER` | `/usr/local/bin/hubble` and `hubble-relay.cilium.svc.cluster.local:4245`. |
+| `mcp.clients` | Client id, its own token Secret and Pod/network selector, exact tool list, read scopes and explicit exec grants. |
+| `rbac.readAllNamespaces` | Enables the MCP-wide read binding; a client also needs `readAllNamespaces: true` to use it. |
+| `rbac.namespaces`, `rbac.execNamespaces`, `rbac.namespacePrefixes` | Upper bounds on scoped MCP authority. They never mount Kubernetes credentials into agents. |
+| `namespaces`, `namespacePrefixes` | Client read scopes; prefix matching ignores case and input is canonicalized to lowercase. |
+| `exec` | Independent target grants. Exact namespaces require live Pod label selectors and regular-container names. Prefix grants explicitly permit all Pods and regular containers in matching namespaces. Empty grants deny exec. |
+| `OPS_ALLOWED_NAMESPACES`, `OPS_ALLOWED_NAMESPACE_PREFIXES`, `OPS_READ_ALL_NAMESPACES` | Process-level bounds rendered for the MCP identity. |
+| `OPS_MCP_TLS_CERT_FILE`, `OPS_MCP_TLS_KEY_FILE` | Server TLS material. Leaf renewal can reload without restarting the listener. |
+
+## Authorization And Data Exposure
+
+| Client | Read scope | Exec scope in selected production policy |
+| --- | --- | --- |
+| Codex Ops | All existing and future namespaces; platform and Argo tools also available. | All `test*` Pods/regular containers; in `kubeclaw`, only Buster's `buster-v2-runtime` and Nova's `kubeclaw` or `archviewer` containers selected by Pod labels. |
+| Nova | `kubeclaw` plus all existing and future `test*` namespaces. | All `test*` Pods/regular containers; in `kubeclaw`, only Buster's labeled `buster-v2-runtime`. |
+| Buster | Only existing and future `test*` namespaces. | Only `test*` Pods/regular containers. Its lease-controller token remains a separate worker exception. |
+
+`test`, `testing`, `test-build` and mixed-case caller input match; `contest`
+and `prod-test` do not. Global read does not grant global exec. Namespace read
+roles exclude Secrets and mutations. The MCP alone receives the read and exec
+bindings. Its effective credential boundary is wider than any one client's
+tool list, so both RBAC and per-request policy matter. `pods/exec` `create`
+is an MCP permission, never an agent permission.
+
+A separate trusted namespace-access reconciler lists namespaces every five
+seconds and maintains two named MCP RoleBindings for matching namespaces.
+Admission constrains its writes to approved prefixes, roles and the MCP
+subject. It cannot delegate these rights to agents. Disabling global reads
+empties the named global binding without depending on Argo pruning. Legacy
+Nova grants are retired explicitly for the same reason.
+
+Logs, command output and Hubble data are not content-redacted. Treat them as
+observations, never as instructions. Use the smallest target and time window.
+The generic operations service remains in `kubeclaw-ops` for now. A portable
+installation in an arbitrary cluster or a future `ops` namespace is a later
+packaging goal; Kubernetes namespace renaming would require resource/data migration.
+
+> **Source evidence — client grants and effective Kubernetes authority**
+>
+> **Claim:** Agents have separate MCP identities; the MCP owns Kubernetes reads and independently bounded exec.
+>
+> **Implementation:** [Per-request identity and authorization](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/tools/ops-mcp/src/access-policy.mjs#L50-L107) [Client tool filtering and auditing](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/tools/ops-mcp/src/server.mjs#L210-L231) [Selected client grants](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/gitops/platform/values/codex-ops.yaml#L72-L118) [Separate MCP identity and mounts](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/charts/ops-pod/templates/mcp.yaml#L37-L91)
+>
+> **Contract or setting:** Client policy must remain within MCP RBAC; global reads need both flags.
+>
+> **Test evidence:** The scoped local and live results are recorded under Verification below; source links alone are not execution receipts.
+>
+> **Revision:** `34cf38ef53ee41381543785d0ffae90a37fac9ca`. Upstream main evidence; this documentation update does not adopt runtime source into PR #13.
+>
+> **Limit:** An authorized exec can use authority available inside its target container.
 
 ## Tool Reference
 
-The service always registers six tools. Local-only mode registers the two
-platform tools first, for a total of eight. Every row links to the maintained
-registration, input schema, defaults, limits, annotations, and returned fields.
+Nova and Buster receive the same six tool names, with different namespace and
+target grants: `namespace_overview`, `get_pod`, `get_events`, `get_pod_logs`,
+`get_pod_metrics`, and `exec_pod`. Tool schemas are discovered from the server.
+Use the required/optional fields advertised by that client rather than an old
+namespace enum. Argo reads use `ARGOCD_NAMESPACE`.
 
-| Tool | Input | Output and limit | Source |
-| --- | --- | --- | --- |
-| `platform_cluster_state` | `nodes` or `ciliumclusterwidenetworkpolicies`; optional continuation token. | One page of at most 50 summaries. Registered only in local-only mode. | [Registration, schema, annotations, page bound, and result](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/tools/ops-mcp/src/server.mjs#L204-L218). |
-| `platform_network_state` | Allowed namespace; daemonsets, NetworkPolicies, or CiliumNetworkPolicies; optional continuation token. | One page of at most 50 objects. Registered only in local-only mode. | [Registration, schema, annotations, page bound, and result](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/tools/ops-mcp/src/server.mjs#L219-L235). |
-| `list_argocd_applications` | Limit 1–200, default 50; optional continuation token. | Sync, health, revision, destination, operation state, partial flag, and next token. | [Registration, schema, defaults, annotations, and list bound](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/tools/ops-mcp/src/server.mjs#L238-L258); [mapped fields and result](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/tools/ops-mcp/src/server.mjs#L259-L279). |
-| `namespace_overview` | Allowed namespace. | Deployments, StatefulSets, pods, jobs, Services, and Ingresses. All six lists follow every continuation page. There is no page, duration, item-count, or encoded-output ceiling for the complete operation. | [Registration, schema, and annotations](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/tools/ops-mcp/src/server.mjs#L282-L301); [six list scans and result](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/tools/ops-mcp/src/server.mjs#L300-L348). |
-| `get_pod` | Allowed namespace and non-empty pod name. | Pod and container state, conditions, and init-container state. | [Registration, schema, annotations, request, and result](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/tools/ops-mcp/src/server.mjs#L351-L376). |
-| `get_events` | Allowed namespace, optional object name, limit 1–100, default 40. | The newest matching events after every continuation page is scanned. Each request asks for 500 items. The retained result count is bounded, but total pages, total duration, and encoded result bytes are not. | [All-page scan and bounded retained count](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/tools/ops-mcp/src/server.mjs#L107-L132); [registration, schema, defaults, annotations, and result](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/tools/ops-mcp/src/server.mjs#L379-L405). |
-| `get_pod_logs` | Namespace, pod, optional container, 1–500 tail lines, absolute `sinceTime`, and `previous`. | At most 64 KiB of log text plus observation metadata. Default is 200 recent lines when no time is given. | [Registration, schema, defaults, annotations, byte request, and result](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/tools/ops-mcp/src/server.mjs#L408-L460). |
-| `get_hubble_flows` | Namespace, exact pod, verdict, absolute time window, node, and limit 1–50, default 20. | Normalized flows, warnings, partial reasons, returned window, and continuation advice. | [Registration, schema, defaults, annotations, and result call](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/tools/ops-mcp/src/server.mjs#L464-L489); [process and output limits](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/tools/ops-mcp/src/hubble.mjs#L25-L75); [partial markers and returned fields](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/tools/ops-mcp/src/hubble.mjs#L95-L118). |
+| Tool | Inputs and result limits |
+| --- | --- |
+| `platform_cluster_state` | `resource` is `nodes`, `namespaces`, or `ciliumclusterwidenetworkpolicies`; optional `continueToken` up to 16,384 characters. One page of at most 50 summaries. Namespace discovery additionally requires the global-read client grant. |
+| `platform_network_state` | Namespace and `resource`: `daemonsets`, `networkpolicies`, or `ciliumnetworkpolicies`; optional continuation token. One page of at most 50 summaries. |
+| `list_argocd_applications` | Limit 1–200, default 50; optional continuation token. Returns health, sync, revision and operation state. |
+| `namespace_overview` | Namespace; six full list scans. There is no page, duration, item-count, or encoded-output ceiling for the complete operation. |
+| `get_pod` | Namespace and non-empty Pod name. Returns container state, resource requests/limits, conditions and init-container status. |
+| `get_events` | Namespace, optional non-empty `objectName`, integer limit 1–100, default 40. Retained count is bounded, but total pages, total duration, and encoded result bytes are not bounded. |
+| `get_pod_logs` | Namespace, Pod, optional container, 1–500 tail lines, ISO `sinceTime` with offset, `previous` default false. At most 64 KiB log text plus metadata; default recent tail is 200 lines. Time without tail does not add a 200-line tail. |
+| `get_pod_metrics` | Namespace and Pod name (1–253 characters). Metrics-server CPU/RAM usage, timestamp and sampling window. Missing metrics is an error, not zero usage. |
+| `get_hubble_flows` | Namespace, exact Pod, verdict, absolute time window, node, limit 1–50 (default 20). Normalized flows and partial/continuation metadata; transport limits below. |
+| `exec_pod` | Namespace, Pod, regular container and `command` argv. No stdin or TTY. Timeout 1–120 seconds (default 30); output 1–65,536 bytes (default 65,536). Policy can reduce both. At most four active exec connections. |
 
-All namespace inputs use an enum built from `OPS_ALLOWED_NAMESPACES`. The list
-must contain `OPS_DEFAULT_NAMESPACE`; names must be valid Kubernetes namespace
-names. Omit `namespace` to use `OPS_DEFAULT_NAMESPACE`. Argo applications always
-use `ARGOCD_NAMESPACE` and accept no namespace argument.
+Exec argv has 1–64 strings, at most 4,096 characters per argument and 16,384
+UTF-8 bytes in total; argv[0] must be non-empty and NUL is rejected. Pod and
+container names have validated Kubernetes-style patterns. Exit status, stdout,
+stderr and incomplete/transport outcomes must be interpreted separately.
 
-### Exact call arguments
-
-Use the names below in the MCP call's `arguments` object. Required means that
-omission fails validation; optional fields have no fallback unless stated.
-Integer limits reject fractions. A continuation token is opaque: pass back the
-returned token unchanged with the same resource selection, not as a page number.
-
-| Tool | Required arguments | Optional arguments, defaults, and validation |
-| --- | --- | --- |
-| `platform_cluster_state` | `resource`: `nodes` or `ciliumclusterwidenetworkpolicies` | `continueToken`: string, at most 16,384 characters. No caller-selected page size. |
-| `platform_network_state` | `resource`: `daemonsets`, `networkpolicies`, or `ciliumnetworkpolicies` | `namespace`: allowed enum, default namespace; `continueToken`: string, at most 16,384 characters. No caller-selected page size. |
-| `list_argocd_applications` | None | `limit`: integer 1–200, default 50; `continueToken`: string, at most 16,384 characters. |
-| `namespace_overview` | None | `namespace`: allowed enum, default namespace. No result-limit or continuation argument. |
-| `get_pod` | `pod`: non-empty string | `namespace`: allowed enum, default namespace. The tool schema declares no maximum pod-name length or additional name pattern. |
-| `get_events` | None | `namespace`: allowed enum, default namespace; `objectName`: non-empty string with no schema maximum; `limit`: integer 1–100, default 40. Omit `objectName` to scan all namespace events. |
-| `get_pod_logs` | `pod`: non-empty string | `namespace`: allowed enum, default namespace; `container`: non-empty string; `tailLines`: integer 1–500; `sinceTime`: ISO datetime with timezone offset; `previous`: Boolean, default `false`. Pod and container strings have no schema maximum. Omit both time and tail to use 200 lines; with time alone, no tail-line count is added. Both may be supplied. |
-| `get_hubble_flows` | None | `namespace`: allowed enum, default namespace; `pod`, `node`: optional exact names, at most 253 characters, matching `^[a-z0-9]([a-z0-9.-]*[a-z0-9])?$`; `verdict`: optional enum listed below; `startTime`, `endTime`: ISO datetimes with timezone offset; `limit`: integer 1–50, default 20. |
-
-The Hubble `verdict` enum is `FORWARDED`, `DROPPED`, `AUDIT`, `REDIRECTED`,
-`ERROR`, `TRACED`, or `TRANSLATED`. Omission adds no verdict filter. Omitted
-`pod` and `node` add no corresponding filter. Omitted `endTime` means now;
-omitted `startTime` means five minutes before the selected end. Both supplied
-or resolved times must satisfy `startTime < endTime` and span at most 15 minutes.
-Validation and query-window errors are failures, not empty observations.
-
-The registration links above are the source authority for every argument row.
+> **Source evidence — exec and metrics contracts**
+>
+> **Claim:** Metrics are observations; exec is a separate, destructive and non-idempotent operation.
+>
+> **Implementation:** [Metrics and exec registrations](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/tools/ops-mcp/src/server.mjs#L521-L560) [Exec transport and output handling](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/tools/ops-mcp/src/exec.mjs#L1-L55) [Policy target checks](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/tools/ops-mcp/src/access-policy.mjs#L85-L105) [Native discovery and refusal tests](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/tools/ops-mcp/test/tls-client.test.mjs#L52-L102)
+>
+> **Contract or setting:** Exec uses the lower of requested and policy limits.
+>
+> **Test evidence:** The scoped local and live results are recorded under Verification below; source links alone are not execution receipts.
+>
+> **Revision:** `34cf38ef53ee41381543785d0ffae90a37fac9ca`. Upstream main evidence; this documentation update does not adopt runtime source into PR #13.
+>
+> **Limit:** Timeout, cancellation and disconnect do not prove remote process termination; never automatically retry exec.
 
 ## Kubernetes Transport
 
@@ -193,6 +247,7 @@ scans. `get_events` deliberately requests one page at a time but follows the
 continuation token until it is empty. It retains only the newest requested
 event count, but it can still scan an unbounded number of pages.
 
+
 ## List Pressure, Failure, And Safe Stop
 
 Use `namespace_overview` only for namespaces whose six resource lists are known
@@ -212,8 +267,10 @@ successfully scanned lists as a partial result.
 Do not start another full scan to recover from pressure. Stop issuing calls and
 let the current request finish or fail. A client disconnect is not a documented
 cancellation mechanism for the six Kubernetes requests. If the process must be
-stopped to protect the pod, terminate the Ops MCP container; this is safe for
-cluster state because the tools do not write, but it interrupts all clients.
+stopped to protect the Pod, use independently authorized recovery to stop
+the MCP container. The read scan itself does not write cluster state, but
+stopping the service interrupts all clients, including concurrent exec.
+Reconcile any uncertain exec effects separately before a retry.
 Keep the failed request time and do not describe an absent response as an empty
 namespace.
 
@@ -224,23 +281,6 @@ tokens, an aggregate deadline, and an encoded-output ceiling. It must also mark
 partial scans explicitly. This costs more client calls and can give a view from
 slightly different times, but it makes load and incompleteness visible.
 
-> **Source evidence — per-request bounds do not bound a complete scan**
->
-> **Claim:** Per-request Kubernetes limits do not impose an aggregate bound on the complete namespace or event scan.
->
-> **Implementation:** The list helper and event loop below follow continuation beyond a single bounded response.
->
-> [`createKubeList` defaults to unlimited pages and applies a deadline only when `maxPages` is finite](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/tools/ops-mcp/src/kubernetes.mjs#L64-L97).
->
-> [The event loop follows each continuation token and retains only the requested number of newest events](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/tools/ops-mcp/src/server.mjs#L107-L132).
->
-> **Contract or setting:** createKubeList defaults to unlimited pages unless its caller supplies maxPages; get_events bounds retained count, not scanned pages.
->
-> **Test evidence:** [List paging and pressure assertions](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/tools/ops-mcp/test/kubernetes.test.mjs#L54-L73) contains oversize page reduction, retained continuation and no authorization-error retry cases. These assertions are not a recorded execution result for this callout.
->
-> **Revision:** `569f7b4933d4859cc67c80ddf40d5154ffd95ce5`. These are the source bindings for the explanation above, not execution receipts.
->
-> **Limit:** The local TLS fixture is not Kubernetes; these assertions do not establish a finite total duration or safe size for a real full scan.
 
 ## Hubble Transport And Evidence Limits
 
@@ -254,187 +294,97 @@ Warnings, partial reasons, window and continuation metadata are additional;
 the whole result is then pretty-printed into an MCP text item. The 192 KiB
 bound is not a total HTTP or MCP response-size guarantee.
 
-The default Ops Pod does not provision a matching Hubble network path. With
-its network policy enabled, the chart allows DNS, API-server traffic and public
-HTTPS, but no Relay TCP/4245 egress. The separate `hubble-relay-consumers`
-policy selects a client in namespace `kubeclaw` with label
-`app.kubernetes.io/name=ops-mcp`; the deploy helper instead defaults to
-`kubeclaw-ops`, and the chart labels the pod with its release name. It does not
-reconcile those two policies. Before relying on flows, have the network owner
-authorize narrowly scoped egress to the actual Relay and ingress for the
-actual client namespace and labels. Inspect the effective policies and test
-that selected path; do not disable the policy or assume that setting
-`HUBBLE_SERVER` supplies network permission. Until then, treat Hubble as an
-unavailable dependency, not as evidence of healthy traffic.
 
-Source: [Ops Pod egress rules](https://github.com/datrab/kubeclaw/blob/54a535b6046bc54e9aeeebee9c4cd24388477115/charts/ops-pod/templates/network.yaml#L1-L52),
-[Relay consumer identity](https://github.com/datrab/kubeclaw/blob/54a535b6046bc54e9aeeebee9c4cd24388477115/my-values/infra/cilium-cluster-policies.yaml#L90-L111),
-[deployment namespace and release selection](https://github.com/datrab/kubeclaw/blob/54a535b6046bc54e9aeeebee9c4cd24388477115/scripts/deploy-ops-pod.sh#L1-L15).
+The chart now declares a separate MCP network policy, including a selected
+Relay path. Effective network enforcement, Relay availability and retained
+flow history still require their own live proof. The 2026-10-22 observations
+did not establish a working Hubble Relay. A DNS or Relay error is an unavailable
+observation, not proof of no network drops.
 
-The service rechecks exact namespace and pod identity after Hubble returns data.
-It records invalid JSON, lost events, node status, stderr, process failure,
-byte limits, and possible peer saturation as partial reasons. It has no
-lossless cursor. An empty or partial result does not prove that no drop occurred.
+> **Source evidence — read pressure and network observations**
+>
+> **Claim:** Per-request read limits do not bound full scans or prove complete Hubble history.
+>
+> **Implementation:** [HTTPS read transport and page handling](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/tools/ops-mcp/src/kubernetes.mjs#L1-L58) [Hubble process bounds](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/tools/ops-mcp/src/hubble.mjs#L25-L75) [Hubble partial-result semantics](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/tools/ops-mcp/src/hubble.mjs#L95-L118) [MCP network policy](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/charts/ops-pod/templates/network.yaml#L37-L71)
+>
+> **Contract or setting:** Prefer one-page or single-object tools when a full scan is unnecessary.
+>
+> **Test evidence:** The scoped local and live results are recorded under Verification below; source links alone are not execution receipts.
+>
+> **Revision:** `34cf38ef53ee41381543785d0ffae90a37fac9ca`. Upstream main evidence; this documentation update does not adopt runtime source into PR #13.
+>
+> **Limit:** These source contracts do not prove live CNI enforcement, Relay reachability or retained history.
 
-> **Source evidence — bounded downstream calls**
->
-> **Claim:** Downstream Kubernetes requests and Hubble processes have distinct bounds and explicit incomplete-observation outcomes.
->
-> **Implementation:** The Kubernetes helper and Hubble process/result functions below define those limits.
->
-> [Kubernetes transport fixes HTTPS, CA, token rotation, 10-second timeout, and an 8 MiB ceiling](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/tools/ops-mcp/src/kubernetes.mjs#L1-L60).
->
-> [List transport retries only oversized pages and retains a continuation token](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/tools/ops-mcp/src/kubernetes.mjs#L64-L98).
->
-> [Hubble fixes concurrency, query window, binary, relay, and timeout defaults](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/tools/ops-mcp/src/hubble.mjs#L1-L50).
->
-> [It bounds bytes and applies exact post-query filtering](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/tools/ops-mcp/src/hubble.mjs#L51-L100).
->
-> [The result records process failures, partial reasons, continuation advice, and retention limits](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/tools/ops-mcp/src/hubble.mjs#L101-L118).
->
-> **Contract or setting:** The linked implementations fix request timeout/bytes and Hubble concurrency, window, raw bytes and retained flow bounds.
->
-> **Test evidence:** [Kubernetes TLS/response checks](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/tools/ops-mcp/test/kubernetes.test.mjs#L44-L60) contains token rotation, redirect refusal, timeout and byte rejection assertions. These assertions are not a recorded execution result for this callout. [Hubble process fixtures](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/tools/ops-mcp/test/hubble.test.mjs#L34-L57) cover nonzero exit, shared raw-byte ceiling and timeout with an owned test CLI; they are not real Relay results.
->
-> **Revision:** `569f7b4933d4859cc67c80ddf40d5154ffd95ce5`. These are the source bindings for the explanation above, not execution receipts.
->
-> **Limit:** Per-request limits do not bound whole-tool scans; partial or empty Hubble output is not proof that no drop occurred.
+## Provisioning, Rotation And GitOps
 
-## Authorization And Data Exposure
+Argo declares empty named credential/trust objects in an earlier sync wave.
+A narrow provisioning hook fills the CA, TLS and distinct client tokens before
+workloads start; a daily job renews the server leaf. Existing CA and tokens are
+retained. Provisioning has narrowly scoped Secret get/patch authority, separate
+from the MCP observer/exec identity. Credential values do not belong in Git.
+Use a full Ops application sync so hooks run; selective Pod-only sync is not a
+credential provisioning procedure.
 
-The MCP methods use Kubernetes HTTPS GET requests only. The chart gives their
-ServiceAccount `get` and `list` for selected workload, network, Argo, and event
-resources. It does not grant direct Secret reads. Cluster-wide reads are limited
-to nodes and Cilium cluster-wide policies. RoleBindings constrain namespaced
-reads to configured namespaces.
+The central policy/token files and client adapter reopen credentials per call.
+The listener can reload a renewed leaf. CA replacement still needs coordinated
+trust distribution and separate positive/negative checks. Codex's environment-
+based bearer consumers need process/shell refresh when that token is rotated.
+Do not equate leaf renewal with end-to-end credential revocation acceptance.
 
-This method boundary is narrower than the effective credential boundary in the
-default Ops Pod. The Codex and MCP containers mount the same projected token
-when `rbac.execNamespaces` is non-empty. The default list contains `kubeclaw`.
-The same ServiceAccount then has `pods/exec` `create` in that namespace. Ops MCP
-does not register an exec method and its Kubernetes client sends GET requests,
-but a compromised process could use the mounted credential outside that client.
-Set `rbac.execNamespaces=[]` to remove the token and kubeconfig from Codex and
-to omit exec Roles; MCP keeps its read token. If the MCP process must also have
-a read-only identity while Codex keeps exec, place them in separate pods with
-separate ServiceAccounts. That stronger isolation adds a network listener,
-network policy, and an independent lifecycle.
-
-> **Source evidence — method authority and process authority differ**
->
-> **Claim:** The MCP method surface is read-only, but the default colocated Pod credential can also authorize pods/exec.
->
-> **Implementation:** The GET transport and shared token/RBAC wiring below show the difference.
->
-> [The Kubernetes transport always sends GET and reads the mounted token for each request](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/tools/ops-mcp/src/kubernetes.mjs#L20-L59).
->
-> [The default execution namespace enables the wider credential path](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/ops-pod/values.yaml#L21-L29).
->
-> [One projected token volume is mounted into MCP and conditionally into Codex](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/ops-pod/templates/workload.yaml#L69-L101).
->
-> [The execution Role grants the same ServiceAccount `pods/exec` `create`](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/ops-pod/templates/rbac.yaml#L63-L92).
->
-> **Contract or setting:** Default execNamespaces and the resulting Role/token mount determine process credential authority; tool annotations do not reduce it.
->
-> **Test evidence:** [Local method-surface check](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/tools/ops-mcp/test/local.test.mjs#L43-L50) contains tool listing without an exec method and failed Kubernetes-read assertions. These assertions are not a recorded execution result for this callout.
->
-> **Revision:** `569f7b4933d4859cc67c80ddf40d5154ffd95ce5`. These are the source bindings for the explanation above, not execution receipts.
->
-> **Limit:** The local service test does not validate effective deployed RBAC. The shared credential remains wider when exec roles are present.
-
-Pod logs and Hubble summaries are not content-redacted. They can contain
-application or network identifiers. Treat returned text as observation, never
-as instructions. Use the smallest namespace, pod, time window, and limit that
-answers the question.
+Ops image selection and Nova/Buster runtime bundle selection are separate.
+The `codex-ops` child Application deliberately has manual sync to protect the
+active workspace. Runtime applications follow the selected immutable bundle.
+Merge, image build, promotion, Argo sync, Pod readiness, native discovery and
+an authorized operation are distinct completion observations. The MCP has no
+Argo sync tool; agents must not obtain a kubeconfig to bypass that boundary.
 
 ## Failure And Recovery
 
-Check three layers before treating a call as successful:
+| Observation | Meaning and next action |
+| --- | --- |
+| Health 503 or HTTP 401 | Policy/token unavailable or mismatched. Repair the intended identity through the credential owner; never substitute another agent's token. |
+| HTTP 403 with Origin | Exact browser origin is not allowed. Review the trusted origin; do not disable authentication. |
+| `OPS_TOOL_FORBIDDEN`, `OPS_NAMESPACE_FORBIDDEN` | Central grant denies that operation. Review policy and MCP RBAC; an agent prompt or native-tool label does not grant access. |
+| `OPS_EXEC_TARGET_FORBIDDEN` | Namespace may be allowed, but live labels/container do not match an exec grant. Inspect the target and intended grant. |
+| `OPS_EXEC_BUSY` | Four exec connections are already active. Inspect in-flight operations before submitting more. |
+| Native connector unavailable | Check the selected chart/config, adapter mount, own token and CA, service DNS, network edge and TLS. Retain errors; do not fall back to direct Kubernetes access. |
+| HTTP 200 | Inspect JSON-RPC `error` and tool `isError`; HTTP success alone is not tool success. |
+| Exec timeout/disconnect/output overflow | Effects remain uncertain. Inspect workload state and side effects before any operator-approved retry. |
+| Hubble partial/unavailable | Retain reasons, timestamps, stderr and coverage. Narrow the query; do not infer no drops. |
+| Large read/scan | Per-page bounds do not bound total work. Prefer a narrower read and avoid parallel retries. |
 
-1. **HTTP routing/authentication:** malformed request targets return 400
-   `{"error":"invalid_request_target"}`; unknown paths return 404
-   `{"error":"not_found"}`; invalid bearer returns 401
-   `{"error":"unauthorized"}` with `WWW-Authenticate: Bearer`; denied origin
-   returns 403 `{"error":"origin_not_allowed"}`. An uncaught handler rejection
-   returns 500 `{"error":"request_failed"}` if headers have not been sent;
-   otherwise the connection is destroyed. `/healthz` returns 200 or 503 with
-   `ok` set to `true` or `false` and `service` set to `kubeclaw-ops-mcp`, not a tool result.
-2. **MCP response:** HTTP 200 alone does not establish tool success. Inspect
-   the JSON-RPC `error` and the tool result's `isError` before parsing its text
-   as evidence. Invalid tool arguments can produce a JSON-RPC error; a failed
-   Kubernetes read can return HTTP 200 with `result.isError=true`. A successful
-   tool returns JSON encoded inside `result.content` text, not a raw Kubernetes
-   response. Preserve error text without treating it as a partial success.
-3. **Observation completeness:** a Hubble CLI nonzero exit resolves a result
-   with `status=partial`, `cliExitCode`, and `cli_failed` among its reasons;
-   process-start failures, invalid windows, or exhausted two-query concurrency
-   instead fail the tool. Even `status=ok` retains
-   `historicalCompleteness=unknown`. Inspect log observation and truncation
-   metadata separately; neither an HTTP success nor an empty list proves
-   complete retained history.
-
-Source: [HTTP error bodies and dispatch](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/tools/ops-mcp/src/server.mjs#L508-L560),
-[local MCP failure-envelope test](https://github.com/datrab/kubeclaw/blob/54a535b6046bc54e9aeeebee9c4cd24388477115/tools/ops-mcp/test/local.test.mjs#L32-L50),
-and the Hubble result links above. Exact SDK validation-error text is not a
-stable diagnostic identifier.
-
-| Symptom | Meaning | Recovery |
-| --- | --- | --- |
-| `/healthz` is 503 | Token source is absent or invalid. | Repair the bearer Secret or configured token. |
-| 401 from `/mcp` | Bearer header does not match the current token. | Refresh the client credential. |
-| 403 from `/mcp` | Browser origin is not allowed. | Add the exact trusted origin or use a non-browser client. |
-| Kubernetes API error | Resource, namespace, RBAC, network, or API health failed. | Inspect the bounded status/path error and correct the specific boundary. |
-| Response too large | One Kubernetes page could not stay below 8 MiB, even after the list page size decreased. | Use a narrower tool or event object filter. Do not increase the transport ceiling first. |
-| Namespace overview does not finish | One or more of the six full list scans remain active, or a page failed. | Do not start a second overview. Use a single-object or one-page tool. Stop the MCP container only if continued pressure threatens the pod. |
-| Event request does not finish | The tool is following a large continuation chain. The result limit does not limit the scan. | Do not retry in parallel. Use `objectName`, or stop the MCP container if continued pressure threatens the pod. |
-| Hubble `partial` | One or more explicit completeness limits applied. | Split the time window or narrow namespace, pod, node, or verdict. |
-| Hubble CLI fails | Relay, binary, policy, DNS, or process problem. | Check returned reasons and stderr; do not report the network as healthy. |
-
-Because all supported tools are reads, a transport failure has no Ops MCP write
-effect to reconcile. A retry is still not an identical observation: Kubernetes
-and Hubble state can change between calls, and an omitted Hubble event can age
-out. Keep the original timestamp and response. Retry only with the same or a
-narrower bound, and report that the samples came from different times.
+Kubernetes and Hubble samples can change between read retries. Exec is not an
+observation-only retry. Keep independent host/control-plane recovery outside
+the cluster and Ops Pod. MCP failure does not stop a running agent from doing
+unrelated work, but it removes that agent's cluster diagnostics and exec path.
 
 ## Supported Change Boundary
 
-Ops MCP has no runtime tool plug-in interface. A supported new tool is a service
-release. Add its `registerTool` entry with a strict Zod input, read-only and
-idempotent annotations, per-request and aggregate limits, reduced output,
-explicit partial semantics, and focused tests. Do not repeat the unlimited
-full-scan behavior of `namespace_overview` or `get_events`. If it reads a new
-Kubernetes resource, add only the required `get` or `list` RBAC and
-namespace/network scope. Then
-update the Codex skill tool list, this reference, the tool-drift check, and the
-deployment image. If a tool would write, exec, follow an unbounded stream, read
-Secrets, or accept an arbitrary URL or command, it is outside this service's
-supported boundary; use a separately authorized component.
+A new tool is a reviewed service release with an explicit schema, effect
+annotations, client allowlist, namespace/target authorization, audit behavior,
+request and aggregate limits, error semantics, focused tests, matching RBAC,
+network scope, image receipt and client discovery proof. Do not copy read-only
+annotations onto exec or introduce automatic replay of an uncertain effect.
+The diagnostic Codex skill remains guidance, separate from service authority.
 
-Changing an existing input or output is also a contract change because Codex
-instructions and clients depend on the names, defaults, limits, continuation,
-and partial markers. Add a new optional field only with validation, a defined
-default, backward-compatible output, tests, and documentation. Rename or remove
-a field only in a versioned tool or service protocol.
+## Verification
 
-> **Source evidence — tools are compiled service registrations**
->
-> **Claim:** Ops tools are compiled service registrations; a new tool requires matching service, client and RBAC changes.
->
-> **Implementation:** buildServer registrations and the RoleBinding template below are the owning implementation points.
->
-> [Each tool declares its schema and read-only behavior directly in `buildServer`](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/tools/ops-mcp/src/server.mjs#L189-L235).
->
-> [The deployment grants namespaced reads through explicit RoleBindings rather than tool annotations](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/ops-pod/templates/rbac.yaml#L34-L72).
->
-> **Contract or setting:** Each registration supplies its schema and annotations; actual namespace authority comes from the rendered RoleBindings.
->
-> **Test evidence:** [Registered-method fixture](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/tools/ops-mcp/test/local.test.mjs#L43-L50) contains platform tool presence and absence of restart/execute/shell names in the listed interface. These assertions are not a recorded execution result for this callout.
->
-> **Revision:** `569f7b4933d4859cc67c80ddf40d5154ffd95ce5`. These are the source bindings for the explanation above, not execution receipts.
->
-> **Limit:** This selected interface test is not a complete drift proof for a future tool or deployed authorization policy.
+The 2026-10-22 change was merged as PR #28 after 26 active CI checks passed.
+Local verification included 31 MCP tests (including a pinned OpenClaw native
+client over real TLS and a dropped-exec no-replay case), 19 Ops/chart tests and
+six supervisor tests. The native-client workflow also passed on main.
 
-Run the Ops MCP local, HTTP, authentication, Kubernetes, Hubble, diagnostics,
-bootstrap, and policy-contract tests after a change. These checks simulate and
-validate boundaries. A live claim needs a real API server and, for flow data, a
-real Hubble Relay with retained observations.
+Runtime build [39747800068](https://github.com/datrab/kubeclaw/actions/runs/39747800068)
+and production promotion [39748892361](https://github.com/datrab/kubeclaw/actions/runs/39748892361)
+selected `runtime-39747800068-1`. At deployment commit
+`799707ddd202a331b7e8f718e4ff5c0e9b259f90`, the root, Buster, Nova and Prism Argo
+applications were observed Synced/Healthy, with replacement Pods ready and no
+restarts. Nova's installed native OpenClaw client discovered all six tools
+with no diagnostics; a request outside its namespace scope was denied.
+
+This is a scoped historical observation, not a fresh health check at reading
+time. Buster's connector was covered by rendered configuration/migration tests
+and its ready deployment; no separate live native probe in its gateway was
+performed. Hubble Relay availability, mobile pairing, arbitrary-cluster
+portability, future production-cluster acceptance, and the broader PR #13
+acceptance gates are not established by this update.

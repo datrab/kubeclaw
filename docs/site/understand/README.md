@@ -5,6 +5,7 @@ Audience: new reader, operator, maintainer, security reviewer, plugin author
 Owner: platform architecture
 Evidence: packaging/runtime/roles; skills/nova/core; skills/worker/core
 Evidence revision: `85e73b1885f04a9494f388cf6622ad0bde2db447`
+Upstream source scope: Ops changes on main at `34cf38ef53ee41381543785d0ffae90a37fac9ca`; runtime source adoption into this documentation branch remains separate
 Applies to: current source and declared runtime roles
 Last verified: source and contract inspection on 2026-09-19
 
@@ -50,7 +51,7 @@ The [glossary](../reference/glossary.md) defines all KubeClaw terms used in this
 | How does Forge change and merge one bounded workspace? | [Forge](forge.md) |
 | How does Echo turn evidence into a review decision? | [Echo](echo.md) |
 | How do OpenClaw host plugins and agent dispatch differ? | [OpenClaw integration](openclaw.md) |
-| How does the Codex Ops plugin reach bounded cluster evidence? | [Codex integration](codex-integration.md) and [Ops MCP](ops-mcp.md) |
+| How do Codex, Nova and Buster reach central cluster reads and authorized exec? | [Codex integration](codex-integration.md) and [Ops MCP](ops-mcp.md) |
 | How are static architecture presentations published privately? | [Archviewer](archviewer.md) |
 | What are the schema, identity, timeout, retry, and failure rules for each connection? | [Communication](communication.md) |
 | Which store owns each record, and how do backup and restore work? | [Data and state](data-and-state.md) |

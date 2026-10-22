@@ -459,7 +459,8 @@
         "skills/nova/plugins/lint/src",
         "skills/nova/plugins/lint/tests",
         "charts/kubeclaw/files/config",
-        "skills/nova/plugins/delivery-lint"
+        "skills/nova/plugins/delivery-lint",
+        "skills/common/plugin-runtime/sdk/src/values.ts"
       ],
       "checks": [
         "npm run docs:governance:check",
@@ -2608,7 +2609,7 @@
       "audience": "plugin author, runtime maintainer",
       "owner": "documentation automation",
       "appliesTo": "current private workspace SDK entrypoints and plugin-system v2 schema",
-      "lastVerified": "generated from source revision 586f1f558a673c4df51c0afb9ea535c814b933b1",
+      "lastVerified": "generated from source revision 7994a51e16bc752357c3a801190b12b7d6a191a4",
       "sourceDependencies": [
         "scripts/docs-sdk-reference.mjs",
         "contracts/pipeline-test-gate/v1/schemas/e2e-result.v1.schema.json",
@@ -2999,11 +3000,12 @@
       "audience": "technical reader, operator, test author, Buster maintainer",
       "owner": "buster",
       "appliesTo": "the current Nova-to-Buster remote test-gate path",
-      "lastVerified": "source and contract inspection on 2026-09-19",
+      "lastVerified": "source and contract inspection on 2026-09-19. Optional-evaluator section source-reviewed 2026-10-22; original other-scope dates and execution limits unchanged.",
       "sourceDependencies": [
         "skills/nova/core/test-gates",
         "skills/buster/engine/test-gates",
-        "contracts/pipeline-test-gate/v1"
+        "contracts/pipeline-test-gate/v1",
+        "skills/nova/plugins/buster-quality-gate"
       ],
       "checks": [
         "npm run docs:buster-guides:check",
@@ -3086,7 +3088,7 @@
       "audience": "platform operator, runtime developer, data owner, incident responder",
       "owner": "state-owning component maintainers",
       "appliesTo": "current file stores, Prism PostgreSQL, LiteLLM PostgreSQL, Redis, and content-addressed artifacts",
-      "lastVerified": "code, schema, chart, values, recovery-script, and focused-test inspection on 2026-09-20",
+      "lastVerified": "code, schema, chart, values, recovery-script, and focused-test inspection on 2026-09-20 State/Wait operation sections source-reviewed 2026-10-22; original other-scope dates and execution limits unchanged.",
       "sourceDependencies": [
         "skills/nova/core",
         "skills/worker/core",
@@ -3095,7 +3097,9 @@
         "charts/prism",
         "gitops/platform",
         "scripts/postgresql-recovery.sh",
-        "scripts/redis-prepare-migration.sh"
+        "scripts/redis-prepare-migration.sh",
+        "skills/common/plugins/state-store",
+        "skills/common/plugins/wait-store"
       ],
       "checks": [
         "npm run docs:governance:check",
@@ -3213,17 +3217,17 @@
       "page": "docs/site/understand/ops-mcp.md",
       "route": "/understand/ops-mcp/",
       "contentKind": "authored",
-      "status": "implemented; optional to pipeline execution",
-      "audience": "operator, Codex integrator, Ops MCP maintainer, security specialist",
+      "status": "implemented on main and deployed; documentation-branch source adoption remains separate",
+      "audience": "operator, agent integrator, Ops MCP maintainer, security specialist",
       "owner": "Ops MCP maintainers",
-      "appliesTo": "`kubeclaw-ops` MCP service version 0.2.0",
-      "lastVerified": "current service, schema, chart and policy inspection on 2026-10-21; 15 local service tests passed, no live cluster or Relay verification",
+      "appliesTo": "central Ops MCP 0.2.0 and native Nova/Buster clients",
+      "lastVerified": "2026-10-22 source inspection and scoped deployment observations; verification limits are recorded below",
       "sourceDependencies": [
         "tools/ops-mcp/src",
         "tools/ops-mcp/test",
         "charts/ops-pod",
-        "scripts/deploy-ops-pod.sh",
-        "my-values/infra/cilium-cluster-policies.yaml"
+        "charts/kubeclaw",
+        "gitops/platform"
       ],
       "checks": [
         "npm run docs:governance:check",
@@ -3728,7 +3732,7 @@
       "audience": "operator",
       "owner": "platform operations",
       "appliesTo": "current repository checkout",
-      "lastVerified": "2026-09-16, local command execution",
+      "lastVerified": "2026-10-22, source/procedure review; revised dependency commands not executed",
       "sourceDependencies": [
         "package.json",
         "scripts/deploy.sh"
@@ -4000,7 +4004,7 @@
       "audience": "pipeline authors and operators",
       "owner": "product integration maintainers; platform operations owns execution access",
       "appliesTo": "`pipeline-definition.v2`, `pipeline-platform.v2`, `resume-signal.v2`",
-      "lastVerified": "2026-10-11; bounded source and contract evidence only; no successful full local lifecycle or deployment evidence",
+      "lastVerified": "2026-10-11; bounded source and contract evidence only; no successful full local lifecycle or deployment evidence Operator transport/recovery sections source-reviewed 2026-10-22; original local lifecycle/deployment execution remains unproved.",
       "sourceDependencies": [
         "skills/nova/plugins/human-approval",
         "skills/nova/core/execution",

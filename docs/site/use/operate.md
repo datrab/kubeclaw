@@ -872,3 +872,19 @@ authorize their removal.
 
 Use [Observe and Diagnose](diagnose.md) for failed or slow work.
 Use [Back Up and Recover](recovery.md) for data or access loss.
+
+## Cluster Diagnostics Through Native Ops MCP
+
+Nova and Buster expose central MCP functions as native agent tools after the
+selected chart is deployed. Ask for a namespace overview, Pod state, recent
+logs or metrics in an authorized namespace; the agent chooses the typed tool.
+No shell command or manual plugin installation is required. `exec_pod` is a
+separate effectful request. Reconcile effects after a lost response; do not
+automatically repeat it.
+
+Buster reads and executes only in existing/future `test*` namespaces. Nova has
+`test*` plus its existing explicit scope. Ops reads every namespace, with
+separate restricted exec grants. See the [grant matrix](../understand/ops-mcp.md#authorization-and-data-exposure)
+and [connection diagnosis](../understand/ops-mcp.md#failure-and-recovery).
+The raw Kubernetes commands elsewhere in this guide require an independently
+authorized administrator; agents use MCP and receive no kubeconfig.

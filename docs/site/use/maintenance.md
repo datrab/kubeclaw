@@ -1676,3 +1676,24 @@ backup media.
 - Rollback decision and result.
 - Final data export and retirement inventory.
 - Revocation and cleanup verification.
+
+## Central Ops MCP Maintenance Update
+
+For the 2026-10-22 central service, follow the [MCP provisioning and rotation contract](../understand/ops-mcp.md#provisioning-rotation-and-gitops).
+Ops chart/image selection and Nova/Buster runtime-bundle selection are separate.
+The `codex-ops` child Application keeps manual sync to protect the active
+workspace; a runtime rollout does not imply that the Ops application was synced.
+Use a full Ops sync for provisioning hooks, then verify the separate MCP Pod.
+
+Maintain distinct client tokens and the retained private CA. Daily leaf renewal
+is separate from bearer revocation and coordinated CA replacement. The native
+adapter rereads token/CA files per call; the MCP rereads policy/token files.
+Refresh Codex processes or shells that inherited an old bearer environment.
+Do not record token values in a change record.
+
+After runtime promotion, verify each application and Pod, then native tool
+discovery and a denied out-of-scope call. A healthy Pod alone is insufficient.
+A large persistent OpenClaw SQLite database can lengthen startup Doctor; the
+observed Nova rollout checked a 9.5-GiB database. Inspect progress and restart
+counts before classifying a slow startup as a connector failure. This fact is
+a bounded observation, not a prescribed timeout or a reason to skip integrity checks.

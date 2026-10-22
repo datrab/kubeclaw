@@ -5,6 +5,7 @@ Audience: architecture reader, platform operator, maintainer, security reviewer
 Owner: platform architecture and operations
 Evidence: scripts/deploy.sh; scripts/platform-services.mjs; charts/ops-pod; gitops/platform; my-values/infra
 Evidence revision: `13bff0a18a64e74f2cbbaa1978e746fcdeff0c10`
+Upstream source scope: Ops changes on main at `34cf38ef53ee41381543785d0ffae90a37fac9ca`; runtime source adoption into this documentation branch remains separate
 Applies to: current Kubernetes platform and its supported deployment paths
 Last verified: 2026-09-21; diagram mirror/storage ownership boundaries rechecked against the same pinned source on 2026-10-21; no live platform result
 
@@ -45,7 +46,7 @@ that refuses readiness without it.
 | Cilium | Enforces the checked-in security policies and supplies Hubble flow evidence. | Required by the current supported secured profile. The optional Archviewer resource enabled in Nova values also renders a Cilium-specific policy. Repository evidence proves manifests and checks, not live enforcement. | Core does not call a Cilium API. Another CNI can carry the pipeline if it supplies the required network behavior and Archviewer is disabled or gets an equivalent policy. | Network enforcement only. |
 | Argo CD | Reconciles declared Git state. | Optional deployment owner. | Not required. | Kubernetes desired state only. |
 | Prometheus, Grafana, Loki, and Alloy | Collect and present observations. | Optional. | Not required. | No pipeline authority. |
-| Ops Pod | Gives a separate analysis and administration workspace. | Optional. | Not required. | Kubernetes rights assigned to its ServiceAccount. |
+| Ops Pod | Gives a separate analysis and administration workspace. | Optional. | Not required. | Agents use MCP; the dedicated MCP ServiceAccount holds Kubernetes rights. |
 
 **Decision:** Classify a service by the behavior that consumes it, not by where
 it is installed.
@@ -81,7 +82,8 @@ flowchart TB
     Lite[LiteLLM] --> Vertex[Vertex embedding provider]
     Runtime --> OpenAI[Managed OpenAI reasoning route]
     Discord[Discord bot and webhook APIs] --> Runtime
-    Ops[Ops Pod] -->|read and optional bounded exec| K3s
+    Ops[Ops clients] -->|own bearer and HTTPS| MCP[Separate Ops MCP Pod]
+    MCP -->|central reads and authorized exec| K3s
     Monitor[Monitoring stack] -. observes .-> Runtime
 ```
 
@@ -118,7 +120,8 @@ Each row names a directed connection. Labels preserve the diagram’s conditions
 | LiteLLM | Directed connection | Vertex embedding provider |
 | Nova, Buster, and Prism | Directed connection | Managed OpenAI reasoning route |
 | Discord bot and webhook APIs | Directed connection | Nova, Buster, and Prism |
-| Ops Pod | Directed connection — read and optional bounded exec | K3s control plane and nodes |
+| Ops clients | HTTPS with per-client bearer | Separate Ops MCP Pod |
+| Ops MCP | Projected Kubernetes identity; centrally authorized reads and exec | K3s control plane and nodes |
 | Monitoring stack | Dotted relationship — observes | Nova, Buster, and Prism |
 
 The solid mirror connection represents Buster's selected readiness probe, not
@@ -971,54 +974,54 @@ dashboard.
 
 ## Ops Pod: Tool Policy Is Not Kubernetes Authority
 
-The Ops Pod is an optional security, analysis, and administration workspace. Its
-MCP service exposes read-oriented investigation tools. That tool list is not the
-permission boundary for the complete Pod.
+The operations installation now separates the persistent Codex StatefulSet
+from the central Ops MCP Deployment. They have different ServiceAccounts.
+Codex and Nova have no Kubernetes token, kubeconfig or cluster RBAC grant.
+Buster uses MCP for reads/exec and retains only its existing worker lease-token
+exception for the namespace controller. Installation and recovery administration
+use an independently controlled operator identity.
 
-Both containers use the same ServiceAccount. The MCP container mounts the
-rotating token from the `kube-api` projected volume. By default, `rbac.execNamespaces` contains
-`kubeclaw`. The chart then mounts that same token volume and a generated kubeconfig into the
-Codex container. The namespace Role grants `get` and `list` on `pods`, and `get` and `create` on `pods/exec`.
-Code in the Codex container can therefore start a command in a
-selected Pod and receive the target container's output.
+The MCP owns the projected Kubernetes credential and the observer/exec bindings.
+Its per-client policy authenticates every call, filters tool discovery, and
+checks namespace and live exec targets. Global observation is enabled for Ops,
+including current and future namespaces. Nova reads `kubeclaw` and `test*`;
+Buster reads only `test*`. All three have explicit `test*` exec grants. Exact
+exec grants outside that prefix remain Pod-label/container restricted.
 
-Set `rbac.execNamespaces` to an empty list when Codex must not receive this path.
-That removes the exec Role and RoleBinding, and the Codex token and kubeconfig mounts.
-The MCP container retains its token mount and the separately configured read grants.
+A separate trusted reconciler maintains MCP access in existing and future
+`test*` namespaces. The prefix match ignores case. Admission restricts its
+binding writes; it does not grant access to agent ServiceAccounts.
 
-**Decision:** Document effective Kubernetes RBAC, not the most restrictive user
-interface in the Pod.
+Nova and Buster use native OpenClaw MCP tools. A local stdio-to-HTTPS adapter
+reads their separate bearer and CA mounts; agents do not invoke their shell
+tool or receive a Kubernetes credential. The CLI remains diagnostic only.
+See [Ops MCP](ops-mcp.md) for the complete request path, grant matrix, tool
+contracts, rotation, rollout and uncertainty rules.
 
-**Reason:** A prompt, plugin label, or MCP method list cannot reduce rights that
-the ServiceAccount and mounted credentials already grant.
+**Decision:** Put Kubernetes authority behind centrally configured tools and
+separate client identity from the service's wider effective RBAC.
 
-**Recovery rule:** Keep a host or control-plane route outside the Ops Pod. The
-Pod cannot repair the cluster that must schedule it.
+**Reason:** A prompt or read-only label cannot constrain a mounted Kubernetes
+credential. The MCP holds that credential and authorizes each caller's operation.
+Exec can change its target and is audited separately from reads.
+
+**Recovery rule:** Keep an independent host/control-plane route. A failed
+cluster can also make the Ops Pod, MCP, storage and network unreachable.
 
 > **Source evidence — effective operations authority**
 >
-> **Claim:** The optional Ops Pod can hold wider Kubernetes authority than its read-oriented MCP method list.
+> **Claim:** Only the MCP owns Kubernetes read/exec authority; each agent has a separate, narrower MCP identity.
 >
-> **Implementation:** Role/token mount and RBAC templates below show the shared credential and conditional exec path.
+> **Implementation:** [Codex workload without API mounts](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/charts/ops-pod/templates/workload.yaml#L28-L82) [MCP identity and credential mounts](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/charts/ops-pod/templates/mcp.yaml#L37-L91) [Read and exec RBAC](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/charts/ops-pod/templates/rbac.yaml#L57-L117) [Per-client authorization](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/tools/ops-mcp/src/access-policy.mjs#L50-L107)
 >
+> **Contract or setting:** Per-client MCP grants remain bounded by the MCP ServiceAccount RBAC.
 >
-> [Chart defaults enable namespace-scoped Codex execution in `kubeclaw`](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/charts/ops-pod/values.yaml#L21-L28).
+> **Test evidence:** See the scoped 2026-10-22 results and remaining limits in [Ops MCP verification](ops-mcp.md#verification).
 >
-> [RBAC declares the read surface](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/charts/ops-pod/templates/rbac.yaml#L1-L50) and [separates namespace-scoped Pod execution](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/charts/ops-pod/templates/rbac.yaml#L51-L92).
+> **Revision:** `34cf38ef53ee41381543785d0ffae90a37fac9ca`; upstream main, separate from documentation-branch source adoption.
 >
-> [Codex conditionally mounts the kube-api volume](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/charts/ops-pod/templates/workload.yaml#L74-L77),
-> [MCP mounts the same volume](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/charts/ops-pod/templates/workload.yaml#L99-L101), and
-> [that volume projects one rotating ServiceAccount token](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/charts/ops-pod/templates/workload.yaml#L147-L151).
-> [The exec Role separates Pod reads from the get/create exec verbs](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/charts/ops-pod/templates/rbac.yaml#L74-L81).
->
-> **Contract or setting:** Nonempty execNamespaces enables Codex token/kubeconfig and namespace-scoped exec; MCP mounts the same kube-api ServiceAccount token, including those effective exec grants.
->
-> **Test evidence:** No deployed effective-RBAC or process-isolation result is established by these templates.
->
-> **Revision:** `13bff0a18a64e74f2cbbaa1978e746fcdeff0c10`. Source bindings, not execution receipts.
->
-> **Limit:** Tool labels do not remove credential authority; the Ops Pod is not an independent host recovery route.
->
+> **Limit:** Source layout and scoped rollout observations do not prove arbitrary-cluster recovery or every live authorization boundary.
+
 
 ## Dependency and Recovery Order
 

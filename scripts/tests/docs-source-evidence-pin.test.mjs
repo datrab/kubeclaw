@@ -4,6 +4,7 @@ import os from 'node:os';
 import path from 'node:path';
 import { execFileSync } from 'node:child_process';
 import test from 'node:test';
+import { createHash } from 'node:crypto';
 import { verifySourceEvidencePin } from '../docs-source-evidence-pin.mjs';
 
 function fixture(run) {
@@ -37,6 +38,35 @@ test('a valid old pin cannot hide any current source-byte change', () => fixture
   fs.appendFileSync(path.join(root, 'unchanged.ts'), 'changed outside cited excerpt\n');
   assert.throws(() => verify({ first: 1, last: 1 }), /changed after/);
 }));
+
+test('explicit upstream evidence binds page, revision, file digest and range without adopting runtime source', () => fixture(({ root, original, current, verify }) => {
+  const upstreamSnapshot = { schemaVersion: 1, revision: original, pages: ['topic.md'],
+    sources: { 'unchanged.ts': createHash('sha256').update('one\ntwo\nthree\n').digest('hex') } };
+  fs.appendFileSync(path.join(root, 'unchanged.ts'), 'different branch source\n');
+  verify({ upstreamSnapshot });
+  assert.throws(() => verify({}), /changed after/);
+  assert.throws(() => verify({ upstreamSnapshot, page: 'other.md' }), /no admitted upstream scope/);
+  assert.throws(() => verify({ upstreamSnapshot, revision: current }), /no admitted upstream scope/);
+  assert.throws(() => verify({ upstreamSnapshot: { ...upstreamSnapshot, sources: {} } }), /digest missing or changed/);
+  assert.throws(() => verify({ upstreamSnapshot, last: 99 }), /invalid line range/);
+}));
+
+test('dated Ops reader evidence verifies its actual page roster, immutable source bytes and excerpts', () => {
+  const root = path.resolve(import.meta.dirname, '../..');
+  const upstreamSnapshot = JSON.parse(fs.readFileSync(path.join(root, 'scripts/ops-mcp-docs-upstream.json'), 'utf8'));
+  assert.equal(upstreamSnapshot.revision, '34cf38ef53ee41381543785d0ffae90a37fac9ca');
+  for (const page of upstreamSnapshot.pages) {
+    const text = fs.readFileSync(path.join(root, page), 'utf8');
+    assert(text.includes('Upstream source scope:'), `${page} omits its upstream boundary`);
+    const links = [...text.matchAll(/https:\/\/github\.com\/datrab\/kubeclaw\/blob\/([a-f0-9]{40})\/([^#)]+)#L(\d+)-L(\d+)/gu)]
+      .filter(match => match[1] === upstreamSnapshot.revision);
+    assert(links.length > 0, `${page} lacks its upstream evidence`);
+    for (const [, revision, source, first, last] of links) {
+      verifySourceEvidencePin(root, { page, revision, source, first, last,
+        allowedRevisions: [upstreamSnapshot.revision], requireRange: true, maximumSpan: 60, upstreamSnapshot });
+    }
+  }
+});
 
 test('unreviewed and unavailable revisions remain different fail-closed cases', () => fixture(({ current, verify }) => {
   assert.throws(() => verify({ revision: current, allowedRevisions: [] }), /unreviewed source revision/);
