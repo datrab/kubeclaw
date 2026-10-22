@@ -688,14 +688,11 @@ A timed-out command can have reached Redis; retries do not prove exactly-once de
 Downstream readers must retain their own interpretation and duplicate-handling rules.
 This ingress does not replay or authorize Nova lifecycle decisions.
 
-> **Source boundary:** [Host observer](https://github.com/datrab/kubeclaw/blob/f50e90cd19501dcbf422423310a8f1fe7f3ca9c8/skills/common/plugins/openclaw-agent-observer/src/index.ts),
+> **Source boundary — host observer ingress**
 >
 > **Claim:** The OpenClaw host observer writes bounded volatile queues and Redis projections, not Nova lifecycle authority.
 >
-> **Implementation:** Host hooks, Redis writer and ingress constants identify this separate producer path.
->
-> [queue, retry, and dead-letter writer](https://github.com/datrab/kubeclaw/blob/f50e90cd19501dcbf422423310a8f1fe7f3ca9c8/skills/common/plugins/openclaw-agent-observer/src/redis-writer.ts),
-> and [ingress constants](https://github.com/datrab/kubeclaw/blob/f50e90cd19501dcbf422423310a8f1fe7f3ca9c8/contracts/agent-observability/v1/src/constants.ts).
+> **Implementation:** The [host observer](https://github.com/datrab/kubeclaw/blob/f50e90cd19501dcbf422423310a8f1fe7f3ca9c8/skills/common/plugins/openclaw-agent-observer/src/index.ts), [queue, retry, and dead-letter writer](https://github.com/datrab/kubeclaw/blob/f50e90cd19501dcbf422423310a8f1fe7f3ca9c8/skills/common/plugins/openclaw-agent-observer/src/redis-writer.ts), and [ingress constants](https://github.com/datrab/kubeclaw/blob/f50e90cd19501dcbf422423310a8f1fe7f3ca9c8/contracts/agent-observability/v1/src/constants.ts) define this separate producer path.
 >
 > **Contract or setting:** Queue/event bounds, control retries, dead-letter attempts and approximate stream trimming constrain delivery.
 >

@@ -1,0 +1,93 @@
+[
+  {
+    "fullFact": {
+      "kind": "ImportDeclaration",
+      "sha256": "0dea52aa29095a9c3bd61034e6c0adbd7b466cf4553a9131f6d925682de010a6",
+      "source": "scripts/docs-api-output-discovery.mjs",
+      "symbol": "<operation>"
+    },
+    "exactCurrentSourceMatch": {
+      "startLine": 1,
+      "endLine": 1,
+      "exactText": "import {assertDocumentationOwnerPurpose,assertDocumentationOwnerAncestry,documentationOwnerNativeEntryMatches,reviewedDocumentationOwnerPurposes,assertReaderArtifactExternalCiPurpose,addReaderArtifactExternalCiSeed} from './docs-documentation-owner-purpose-custody.mjs';"
+    }
+  },
+  {
+    "fullFact": {
+      "kind": "ImportDeclaration",
+      "sha256": "0b07dc03d725e02245d90b3425f5311cd256908cba411094902ec1ac2cfbd4e8",
+      "source": "scripts/docs-reader/page-records.mjs",
+      "symbol": "<operation>"
+    },
+    "exactCurrentSourceMatch": {
+      "startLine": 6,
+      "endLine": 6,
+      "exactText": "import {verifyReaderRedirects, legacyReaderRoute, redirectClient} from './redirects.mjs';"
+    }
+  },
+  {
+    "fullFact": {
+      "kind": "ImportDeclaration",
+      "sha256": "47ed0e498c09185e284708989e0d09705078965512c0f821afa0ea1f1b1cacda",
+      "source": "scripts/docs-publication.mjs",
+      "symbol": "<operation>"
+    },
+    "exactCurrentSourceMatch": {
+      "startLine": 20,
+      "endLine": 20,
+      "exactText": "import { appendReaderPageRecords } from './docs-reader/page-records.mjs';"
+    }
+  },
+  {
+    "fullFact": {
+      "kind": "ImportDeclaration",
+      "sha256": "6024e24824120854da6890bc40ddd188e2720829de1a3ce1591a4d2f16be869b",
+      "source": "scripts/docs-reader/page-records.mjs",
+      "symbol": "<operation>"
+    },
+    "exactCurrentSourceMatch": {
+      "startLine": 7,
+      "endLine": 7,
+      "exactText": "import {readerSharedAssets, readerOutputLayout} from './renderer.mjs';"
+    }
+  },
+  {
+    "fullFact": {
+      "kind": "IfStatement",
+      "sha256": "5b563952315716dbe5c2b0b7cb8f85f1ce0b4975c4c7df83fb30f5432a40910c",
+      "source": "scripts/docs-reader/check-artifact.mjs",
+      "symbol": "<operation>"
+    },
+    "exactCurrentSourceMatch": {
+      "startLine": 60,
+      "endLine": 64,
+      "exactText": "if (legacyRendererFixture && manifest.pageRecords === undefined) {\n  assert(!fs.existsSync(path.join(root, 'build-report.json')), 'Legacy renderer fixture mode cannot omit production pageRecords');\n} else {\n  verifyReaderPageRecords({ outputRoot: root, repositoryRoot: path.resolve(args[1] ?? fileURLToPath(new URL('../../', import.meta.url))), manifest });\n}"
+    }
+  },
+  {
+    "fullFact": {
+      "kind": "ImportDeclaration",
+      "sha256": "3dc1ff3d3ec94c1b0799d5c99298e41f4fc507f35f290ddbf7f4d5ef318f39e3",
+      "source": "scripts/docs-reader/check-artifact.mjs",
+      "symbol": "<operation>"
+    },
+    "exactCurrentSourceMatch": {
+      "startLine": 7,
+      "endLine": 7,
+      "exactText": "import { verifyReaderPageRecords } from './page-records.mjs';"
+    }
+  },
+  {
+    "fullFact": {
+      "kind": "ImportDeclaration",
+      "sha256": "c911664f1383262f472f293bf37442ecc966e75f7783f63641e87892a5d649c8",
+      "source": "scripts/docs-reader/check-artifact.mjs",
+      "symbol": "<operation>"
+    },
+    "exactCurrentSourceMatch": {
+      "startLine": 6,
+      "endLine": 6,
+      "exactText": "import { fileURLToPath } from 'node:url';"
+    }
+  }
+]

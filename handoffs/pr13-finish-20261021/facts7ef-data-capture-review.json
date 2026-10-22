@@ -1,0 +1,232 @@
+{
+  "revision": "7ef16585ba04eba3628cead304be85307436f091",
+  "status": "ACTUAL_DATA_REVIEWED_PROPOSAL_NOT_ACCEPTED",
+  "statuses": {
+    "CANDIDATE_DATA_NOT_ACCEPTED": 103,
+    "NATIVE_RECEIPT_PRESERVED_NOT_EXECUTED": 4
+  },
+  "outerTerminals": [
+    {
+      "index": 0,
+      "launch": {
+        "argv": [
+          "/usr/bin/git",
+          "rev-parse",
+          "HEAD"
+        ],
+        "cwd": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery",
+        "environment": {
+          "PATH": "/usr/local/go/bin:/usr/local/bin:/usr/bin:/bin",
+          "HOME": "/home/node",
+          "LANG": "C.UTF-8",
+          "LC_ALL": "C.UTF-8",
+          "TZ": "UTC",
+          "KUBECLAW_DOCS_GO_BINARY": "/usr/local/go/bin/go",
+          "TMPDIR": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/facts-original-7ef16585/tmp"
+        },
+        "stdinHex": "",
+        "startEpoch": 1792629811.3960357
+      },
+      "terminal": {
+        "returncode": 0,
+        "signal": null,
+        "endEpoch": 1792629811.4467673,
+        "rejection": null,
+        "streams": {
+          "stdout.bin": {
+            "bytes": 41,
+            "sha256": "01c6119847802a5b04731a81eb916a2e3a69c38bb4105be62addac0b704fa4b3"
+          },
+          "stderr.bin": {
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          }
+        }
+      }
+    },
+    {
+      "index": 1,
+      "launch": {
+        "argv": [
+          "/usr/bin/git",
+          "status",
+          "--porcelain=v1",
+          "--untracked-files=all"
+        ],
+        "cwd": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery",
+        "environment": {
+          "PATH": "/usr/local/go/bin:/usr/local/bin:/usr/bin:/bin",
+          "HOME": "/home/node",
+          "LANG": "C.UTF-8",
+          "LC_ALL": "C.UTF-8",
+          "TZ": "UTC",
+          "KUBECLAW_DOCS_GO_BINARY": "/usr/local/go/bin/go",
+          "TMPDIR": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/facts-original-7ef16585/tmp"
+        },
+        "stdinHex": "",
+        "startEpoch": 1792629811.4470217
+      },
+      "terminal": {
+        "returncode": 0,
+        "signal": null,
+        "endEpoch": 1792629811.497709,
+        "rejection": null,
+        "streams": {
+          "stdout.bin": {
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "stderr.bin": {
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          }
+        }
+      }
+    },
+    {
+      "index": 2,
+      "launch": {
+        "argv": [
+          "/usr/local/bin/node",
+          "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/facts-successor-proposal-v2-five-seeds-ci-context/capture.mjs",
+          "--root",
+          "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery",
+          "--revision",
+          "7ef16585ba04eba3628cead304be85307436f091",
+          "--manifest",
+          "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/facts-successor-proposal-v2-five-seeds-ci-context/manifest.reviewed-ready-7ef16585.json",
+          "--manifest-sha256",
+          "963e4468a45b50cf3a5211eb80d7d9e12eb2ec001f6323e955931ac20ffeb9f0",
+          "--output",
+          "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/facts-original-7ef16585/node",
+          "--mode",
+          "facts"
+        ],
+        "cwd": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery",
+        "environment": {
+          "PATH": "/usr/local/go/bin:/usr/local/bin:/usr/bin:/bin",
+          "HOME": "/home/node",
+          "LANG": "C.UTF-8",
+          "LC_ALL": "C.UTF-8",
+          "TZ": "UTC",
+          "KUBECLAW_DOCS_GO_BINARY": "/usr/local/go/bin/go",
+          "TMPDIR": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/facts-original-7ef16585/tmp"
+        },
+        "stdinHex": "",
+        "startEpoch": 1792629811.498111
+      },
+      "terminal": {
+        "returncode": 0,
+        "signal": null,
+        "endEpoch": 1792629886.6052516,
+        "rejection": null,
+        "streams": {
+          "stdout.bin": {
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "stderr.bin": {
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          }
+        }
+      }
+    },
+    {
+      "index": 3,
+      "launch": {
+        "argv": [
+          "/usr/bin/git",
+          "rev-parse",
+          "HEAD"
+        ],
+        "cwd": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery",
+        "environment": {
+          "PATH": "/usr/local/go/bin:/usr/local/bin:/usr/bin:/bin",
+          "HOME": "/home/node",
+          "LANG": "C.UTF-8",
+          "LC_ALL": "C.UTF-8",
+          "TZ": "UTC",
+          "KUBECLAW_DOCS_GO_BINARY": "/usr/local/go/bin/go",
+          "TMPDIR": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/facts-original-7ef16585/tmp"
+        },
+        "stdinHex": "",
+        "startEpoch": 1792629886.8747437
+      },
+      "terminal": {
+        "returncode": 0,
+        "signal": null,
+        "endEpoch": 1792629886.925316,
+        "rejection": null,
+        "streams": {
+          "stdout.bin": {
+            "bytes": 41,
+            "sha256": "01c6119847802a5b04731a81eb916a2e3a69c38bb4105be62addac0b704fa4b3"
+          },
+          "stderr.bin": {
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          }
+        }
+      }
+    },
+    {
+      "index": 4,
+      "launch": {
+        "argv": [
+          "/usr/bin/git",
+          "status",
+          "--porcelain=v1",
+          "--untracked-files=all"
+        ],
+        "cwd": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery",
+        "environment": {
+          "PATH": "/usr/local/go/bin:/usr/local/bin:/usr/bin:/bin",
+          "HOME": "/home/node",
+          "LANG": "C.UTF-8",
+          "LC_ALL": "C.UTF-8",
+          "TZ": "UTC",
+          "KUBECLAW_DOCS_GO_BINARY": "/usr/local/go/bin/go",
+          "TMPDIR": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/facts-original-7ef16585/tmp"
+        },
+        "stdinHex": "",
+        "startEpoch": 1792629886.9256725
+      },
+      "terminal": {
+        "returncode": 0,
+        "signal": null,
+        "endEpoch": 1792629886.976209,
+        "rejection": null,
+        "streams": {
+          "stdout.bin": {
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "stderr.bin": {
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          }
+        }
+      }
+    }
+  ],
+  "coldRepeatEqual": true,
+  "contextsEqual": true,
+  "nativeChildCount": 0,
+  "oldClosure115Unchanged": true,
+  "currentGraphClosureEstablished": false,
+  "existingChangedSources": 10,
+  "newRecipesProposed": 5,
+  "oldRecipesPreservedExceptListedCells": true,
+  "roleCountBefore": 102,
+  "roleCountCandidate": 107,
+  "candidateSha256": "312926d4089e3d2b3c9d30b9b846bd27a4825e9d9511105aa9761c3f717a87de",
+  "baselineSourceSha256": "3d43e2a535ba2ad08d26c473876848734f1d2f17ff798b3cf96ebc2846ac3a66",
+  "errorArtifacts": [],
+  "limits": [
+    "No capture rerun or target import",
+    "Four native receipts UNEXECUTED",
+    "New purpose guard absent old115 closure; current graph/closure qualification pending",
+    "Controller and four-owner profile author is proposal author; Root/nonauthor Source reviews supply semantic acceptance; this proposal is not selfacceptance"
+  ]
+}

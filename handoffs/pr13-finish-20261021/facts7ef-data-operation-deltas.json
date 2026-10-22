@@ -1,0 +1,2157 @@
+[
+  {
+    "source": "scripts/docs-api-output-discovery.mjs",
+    "baselineObservedMatchesInstalledPrior": true,
+    "definingOperationDeltas": [
+      {
+        "identity": {
+          "kind": "FirstStatement",
+          "source": "scripts/docs-api-output-role-classification.mjs",
+          "symbol": "reviewedApiUtilityDeclarations"
+        },
+        "before": null,
+        "after": {
+          "source": "scripts/docs-api-output-role-classification.mjs",
+          "kind": "FirstStatement",
+          "symbol": "reviewedApiUtilityDeclarations",
+          "sha256": "81f2a6c7d93b5a0383f4e2fc0c7b0724a23d702f5a7a5d2794cc53dac93fbfeb"
+        }
+      },
+      {
+        "identity": {
+          "kind": "FirstStatement",
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "symbol": "freeze"
+        },
+        "before": null,
+        "after": {
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "kind": "FirstStatement",
+          "symbol": "freeze",
+          "sha256": "27b2ce52c91b8aa9dc37498eacaf10982ca07ca741153e882dbe516e1a3c1c94"
+        }
+      },
+      {
+        "identity": {
+          "kind": "FirstStatement",
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "symbol": "readerArtifactCiProofs"
+        },
+        "before": null,
+        "after": {
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "kind": "FirstStatement",
+          "symbol": "readerArtifactCiProofs",
+          "sha256": "767afcaab51284f9ce981aa865c5411b4e8dbb3bf4bac9f5bc1e924ed55011f2"
+        }
+      },
+      {
+        "identity": {
+          "kind": "FirstStatement",
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "symbol": "readerArtifactCiPurpose"
+        },
+        "before": null,
+        "after": {
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "kind": "FirstStatement",
+          "symbol": "readerArtifactCiPurpose",
+          "sha256": "a43d48793b2695b0c96cb19ec2a32a686df7307c0eef8e528ff9b2e9d776f3c3"
+        }
+      },
+      {
+        "identity": {
+          "kind": "FirstStatement",
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "symbol": "readerArtifactCiRoleSources"
+        },
+        "before": null,
+        "after": {
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "kind": "FirstStatement",
+          "symbol": "readerArtifactCiRoleSources",
+          "sha256": "a12bde1592918da42128bf498dea09165ec82abaeff0b920a3fbcba791618942"
+        }
+      },
+      {
+        "identity": {
+          "kind": "FirstStatement",
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "symbol": "reviewedDocumentationOwnerPurposes"
+        },
+        "before": null,
+        "after": {
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "kind": "FirstStatement",
+          "symbol": "reviewedDocumentationOwnerPurposes",
+          "sha256": "283009e4473ee801ff2efaa2ad2f9118adcf0ba84befd5da5f884dd87ec1f8b6"
+        }
+      },
+      {
+        "identity": {
+          "kind": "FirstStatement",
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "symbol": "sha"
+        },
+        "before": null,
+        "after": {
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "kind": "FirstStatement",
+          "symbol": "sha",
+          "sha256": "aebce3454045cb891a80c362896aa24d53257c8df68a07feb27132c52172320d"
+        }
+      },
+      {
+        "identity": {
+          "kind": "FunctionDeclaration",
+          "source": "scripts/docs-api-output-discovery.mjs",
+          "symbol": "assertDocumentationToolQualifications"
+        },
+        "before": {
+          "source": "scripts/docs-api-output-discovery.mjs",
+          "kind": "FunctionDeclaration",
+          "symbol": "assertDocumentationToolQualifications",
+          "sha256": "7d54e4cfaf5e7d56ab53e7b1ed156bfb03bada24a33b9a1596b59cc96043cbc9"
+        },
+        "after": {
+          "source": "scripts/docs-api-output-discovery.mjs",
+          "kind": "FunctionDeclaration",
+          "symbol": "assertDocumentationToolQualifications",
+          "sha256": "8a83d14cb90d8aa40604700f7bfe2238d67515939e172287a94706d31d68d4e7"
+        }
+      },
+      {
+        "identity": {
+          "kind": "FunctionDeclaration",
+          "source": "scripts/docs-api-output-discovery.mjs",
+          "symbol": "documentationModuleGraph"
+        },
+        "before": {
+          "source": "scripts/docs-api-output-discovery.mjs",
+          "kind": "FunctionDeclaration",
+          "symbol": "documentationModuleGraph",
+          "sha256": "61fb25ded832071018e032e4a467f9fc83e3439e7f01c79ae83c0d874d126747"
+        },
+        "after": {
+          "source": "scripts/docs-api-output-discovery.mjs",
+          "kind": "FunctionDeclaration",
+          "symbol": "documentationModuleGraph",
+          "sha256": "76cf87231363f7d8b4d73323bbca65dc51182ba8d0de789c52206592fbd45564"
+        }
+      },
+      {
+        "identity": {
+          "kind": "FunctionDeclaration",
+          "source": "scripts/docs-api-output-role-classification.mjs",
+          "symbol": "createSerializedOutputRoleClassifier"
+        },
+        "before": {
+          "source": "scripts/docs-api-output-role-classification.mjs",
+          "kind": "FunctionDeclaration",
+          "symbol": "createSerializedOutputRoleClassifier",
+          "sha256": "ce8669097d547202eaf9edeb81e9a266275307f4e098215a5c6dfa68333bc832"
+        },
+        "after": {
+          "source": "scripts/docs-api-output-role-classification.mjs",
+          "kind": "FunctionDeclaration",
+          "symbol": "createSerializedOutputRoleClassifier",
+          "sha256": "a95b76a9c1ca824f62143e9e283b5d78560a00b9971796bab8ca31cecc0c437b"
+        }
+      },
+      {
+        "identity": {
+          "kind": "FunctionDeclaration",
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "symbol": "addReaderArtifactExternalCiSeed"
+        },
+        "before": null,
+        "after": {
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "kind": "FunctionDeclaration",
+          "symbol": "addReaderArtifactExternalCiSeed",
+          "sha256": "40296f405317443f5ddaa981abffa1cdb87ac1f760bc390b951feb83f1296412"
+        }
+      },
+      {
+        "identity": {
+          "kind": "FunctionDeclaration",
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "symbol": "assertDocumentationOwnerAncestry"
+        },
+        "before": null,
+        "after": {
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "kind": "FunctionDeclaration",
+          "symbol": "assertDocumentationOwnerAncestry",
+          "sha256": "3cc730f0460602237bb0e406b0e74f3a0023a78709da9e81f3d5a38300762fec"
+        }
+      },
+      {
+        "identity": {
+          "kind": "FunctionDeclaration",
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "symbol": "assertDocumentationOwnerPurpose"
+        },
+        "before": null,
+        "after": {
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "kind": "FunctionDeclaration",
+          "symbol": "assertDocumentationOwnerPurpose",
+          "sha256": "a9ce52880b647a09660c9e3dfbaca76c0a3544139ae63e3a643c6c0c330412a7"
+        }
+      },
+      {
+        "identity": {
+          "kind": "FunctionDeclaration",
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "symbol": "assertReaderArtifactExternalCiPurpose"
+        },
+        "before": null,
+        "after": {
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "kind": "FunctionDeclaration",
+          "symbol": "assertReaderArtifactExternalCiPurpose",
+          "sha256": "adec9db4236d9927d55eaa67557a62434a95d7d3b3462f3e1747db44231e6127"
+        }
+      },
+      {
+        "identity": {
+          "kind": "FunctionDeclaration",
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "symbol": "documentationOwnerNativeEntryMatches"
+        },
+        "before": null,
+        "after": {
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "kind": "FunctionDeclaration",
+          "symbol": "documentationOwnerNativeEntryMatches",
+          "sha256": "768c00977d2d0f24d2c584fb07967320c2f2a7138a3662c7ca5277a39e02f807"
+        }
+      }
+    ]
+  },
+  {
+    "source": "scripts/docs-api-output-role-classification.mjs",
+    "baselineObservedMatchesInstalledPrior": true,
+    "definingOperationDeltas": [
+      {
+        "identity": {
+          "kind": "FirstStatement",
+          "source": "scripts/docs-api-output-role-classification.mjs",
+          "symbol": "reviewedApiUtilityDeclarations"
+        },
+        "before": null,
+        "after": {
+          "source": "scripts/docs-api-output-role-classification.mjs",
+          "kind": "FirstStatement",
+          "symbol": "reviewedApiUtilityDeclarations",
+          "sha256": "81f2a6c7d93b5a0383f4e2fc0c7b0724a23d702f5a7a5d2794cc53dac93fbfeb"
+        }
+      },
+      {
+        "identity": {
+          "kind": "FunctionDeclaration",
+          "source": "scripts/docs-api-output-role-classification.mjs",
+          "symbol": "createSerializedOutputRoleClassifier"
+        },
+        "before": {
+          "source": "scripts/docs-api-output-role-classification.mjs",
+          "kind": "FunctionDeclaration",
+          "symbol": "createSerializedOutputRoleClassifier",
+          "sha256": "ce8669097d547202eaf9edeb81e9a266275307f4e098215a5c6dfa68333bc832"
+        },
+        "after": {
+          "source": "scripts/docs-api-output-role-classification.mjs",
+          "kind": "FunctionDeclaration",
+          "symbol": "createSerializedOutputRoleClassifier",
+          "sha256": "a95b76a9c1ca824f62143e9e283b5d78560a00b9971796bab8ca31cecc0c437b"
+        }
+      },
+      {
+        "identity": {
+          "kind": "FunctionDeclaration",
+          "source": "scripts/docs-api-output-role-classification.mjs",
+          "symbol": "module"
+        },
+        "before": {
+          "source": "scripts/docs-api-output-role-classification.mjs",
+          "kind": "FunctionDeclaration",
+          "symbol": "module",
+          "sha256": "66207dde69842fdb5c14855269831f2d9242a20ad874d84a124ef15ef00ed75d"
+        },
+        "after": {
+          "source": "scripts/docs-api-output-role-classification.mjs",
+          "kind": "FunctionDeclaration",
+          "symbol": "module",
+          "sha256": "6684b30e7ffba611d6ddfdae3bfd1057e2ba141baca0a437917d00c294ea83a9"
+        }
+      },
+      {
+        "identity": {
+          "kind": "FunctionDeclaration",
+          "source": "scripts/docs-api-output-role-classification.mjs",
+          "symbol": "operationMatches"
+        },
+        "before": null,
+        "after": {
+          "source": "scripts/docs-api-output-role-classification.mjs",
+          "kind": "FunctionDeclaration",
+          "symbol": "operationMatches",
+          "sha256": "f88304f338ebb9bb0d6c4bc248f461f1e323c3378b443d8b1ba49cda354610f1"
+        }
+      },
+      {
+        "identity": {
+          "kind": "FunctionDeclaration",
+          "source": "scripts/docs-api-output-role-classification.mjs",
+          "symbol": "qualifiedFileRole"
+        },
+        "before": {
+          "source": "scripts/docs-api-output-role-classification.mjs",
+          "kind": "FunctionDeclaration",
+          "symbol": "qualifiedFileRole",
+          "sha256": "2a046cdd79bb9705ff1c69dee93e9be11abf0c89200e07091d5c2a2f05067e49"
+        },
+        "after": {
+          "source": "scripts/docs-api-output-role-classification.mjs",
+          "kind": "FunctionDeclaration",
+          "symbol": "qualifiedFileRole",
+          "sha256": "853b35b08a7c851cdb8fb1635b3df8303cdbcd4fe3213b1935fcf4ba4016b416"
+        }
+      },
+      {
+        "identity": {
+          "kind": "FunctionDeclaration",
+          "source": "scripts/docs-api-output-role-classification.mjs",
+          "symbol": "sourceSnapshot"
+        },
+        "before": null,
+        "after": {
+          "source": "scripts/docs-api-output-role-classification.mjs",
+          "kind": "FunctionDeclaration",
+          "symbol": "sourceSnapshot",
+          "sha256": "0b2c7c3873426d7649fcc51708f462239765b67270311317bbbb0b8c6348fbe9"
+        }
+      },
+      {
+        "identity": {
+          "kind": "FunctionDeclaration",
+          "source": "scripts/docs-api-output-role-classification.mjs",
+          "symbol": "utilitySourceProfile"
+        },
+        "before": null,
+        "after": {
+          "source": "scripts/docs-api-output-role-classification.mjs",
+          "kind": "FunctionDeclaration",
+          "symbol": "utilitySourceProfile",
+          "sha256": "59b7e8372a0132704028abb33b4329a5ca7bed94848a6d6f69232874661517c5"
+        }
+      },
+      {
+        "identity": {
+          "kind": "FunctionDeclaration",
+          "source": "scripts/docs-api-output-role-classification.mjs",
+          "symbol": "visit"
+        },
+        "before": null,
+        "after": {
+          "source": "scripts/docs-api-output-role-classification.mjs",
+          "kind": "FunctionDeclaration",
+          "symbol": "visit",
+          "sha256": "4677f39afb42e1b8882ed24935e88f1cc437c8027cfb1e351477f120b54d9183"
+        }
+      }
+    ]
+  },
+  {
+    "source": "scripts/docs-api-product-scope.mjs",
+    "baselineObservedMatchesInstalledPrior": true,
+    "definingOperationDeltas": [
+      {
+        "identity": {
+          "kind": "FirstStatement",
+          "source": "scripts/docs-api-output-role-classification.mjs",
+          "symbol": "reviewedApiUtilityDeclarations"
+        },
+        "before": null,
+        "after": {
+          "source": "scripts/docs-api-output-role-classification.mjs",
+          "kind": "FirstStatement",
+          "symbol": "reviewedApiUtilityDeclarations",
+          "sha256": "81f2a6c7d93b5a0383f4e2fc0c7b0724a23d702f5a7a5d2794cc53dac93fbfeb"
+        }
+      },
+      {
+        "identity": {
+          "kind": "FirstStatement",
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "symbol": "freeze"
+        },
+        "before": null,
+        "after": {
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "kind": "FirstStatement",
+          "symbol": "freeze",
+          "sha256": "27b2ce52c91b8aa9dc37498eacaf10982ca07ca741153e882dbe516e1a3c1c94"
+        }
+      },
+      {
+        "identity": {
+          "kind": "FirstStatement",
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "symbol": "readerArtifactCiProofs"
+        },
+        "before": null,
+        "after": {
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "kind": "FirstStatement",
+          "symbol": "readerArtifactCiProofs",
+          "sha256": "767afcaab51284f9ce981aa865c5411b4e8dbb3bf4bac9f5bc1e924ed55011f2"
+        }
+      },
+      {
+        "identity": {
+          "kind": "FirstStatement",
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "symbol": "readerArtifactCiPurpose"
+        },
+        "before": null,
+        "after": {
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "kind": "FirstStatement",
+          "symbol": "readerArtifactCiPurpose",
+          "sha256": "a43d48793b2695b0c96cb19ec2a32a686df7307c0eef8e528ff9b2e9d776f3c3"
+        }
+      },
+      {
+        "identity": {
+          "kind": "FirstStatement",
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "symbol": "readerArtifactCiRoleSources"
+        },
+        "before": null,
+        "after": {
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "kind": "FirstStatement",
+          "symbol": "readerArtifactCiRoleSources",
+          "sha256": "a12bde1592918da42128bf498dea09165ec82abaeff0b920a3fbcba791618942"
+        }
+      },
+      {
+        "identity": {
+          "kind": "FirstStatement",
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "symbol": "reviewedDocumentationOwnerPurposes"
+        },
+        "before": null,
+        "after": {
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "kind": "FirstStatement",
+          "symbol": "reviewedDocumentationOwnerPurposes",
+          "sha256": "283009e4473ee801ff2efaa2ad2f9118adcf0ba84befd5da5f884dd87ec1f8b6"
+        }
+      },
+      {
+        "identity": {
+          "kind": "FirstStatement",
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "symbol": "sha"
+        },
+        "before": null,
+        "after": {
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "kind": "FirstStatement",
+          "symbol": "sha",
+          "sha256": "aebce3454045cb891a80c362896aa24d53257c8df68a07feb27132c52172320d"
+        }
+      },
+      {
+        "identity": {
+          "kind": "FunctionDeclaration",
+          "source": "scripts/docs-api-output-discovery.mjs",
+          "symbol": "assertDocumentationToolQualifications"
+        },
+        "before": {
+          "source": "scripts/docs-api-output-discovery.mjs",
+          "kind": "FunctionDeclaration",
+          "symbol": "assertDocumentationToolQualifications",
+          "sha256": "7d54e4cfaf5e7d56ab53e7b1ed156bfb03bada24a33b9a1596b59cc96043cbc9"
+        },
+        "after": {
+          "source": "scripts/docs-api-output-discovery.mjs",
+          "kind": "FunctionDeclaration",
+          "symbol": "assertDocumentationToolQualifications",
+          "sha256": "8a83d14cb90d8aa40604700f7bfe2238d67515939e172287a94706d31d68d4e7"
+        }
+      },
+      {
+        "identity": {
+          "kind": "FunctionDeclaration",
+          "source": "scripts/docs-api-output-discovery.mjs",
+          "symbol": "documentationModuleGraph"
+        },
+        "before": {
+          "source": "scripts/docs-api-output-discovery.mjs",
+          "kind": "FunctionDeclaration",
+          "symbol": "documentationModuleGraph",
+          "sha256": "61fb25ded832071018e032e4a467f9fc83e3439e7f01c79ae83c0d874d126747"
+        },
+        "after": {
+          "source": "scripts/docs-api-output-discovery.mjs",
+          "kind": "FunctionDeclaration",
+          "symbol": "documentationModuleGraph",
+          "sha256": "76cf87231363f7d8b4d73323bbca65dc51182ba8d0de789c52206592fbd45564"
+        }
+      },
+      {
+        "identity": {
+          "kind": "FunctionDeclaration",
+          "source": "scripts/docs-api-output-role-classification.mjs",
+          "symbol": "createSerializedOutputRoleClassifier"
+        },
+        "before": {
+          "source": "scripts/docs-api-output-role-classification.mjs",
+          "kind": "FunctionDeclaration",
+          "symbol": "createSerializedOutputRoleClassifier",
+          "sha256": "ce8669097d547202eaf9edeb81e9a266275307f4e098215a5c6dfa68333bc832"
+        },
+        "after": {
+          "source": "scripts/docs-api-output-role-classification.mjs",
+          "kind": "FunctionDeclaration",
+          "symbol": "createSerializedOutputRoleClassifier",
+          "sha256": "a95b76a9c1ca824f62143e9e283b5d78560a00b9971796bab8ca31cecc0c437b"
+        }
+      },
+      {
+        "identity": {
+          "kind": "FunctionDeclaration",
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "symbol": "addReaderArtifactExternalCiSeed"
+        },
+        "before": null,
+        "after": {
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "kind": "FunctionDeclaration",
+          "symbol": "addReaderArtifactExternalCiSeed",
+          "sha256": "40296f405317443f5ddaa981abffa1cdb87ac1f760bc390b951feb83f1296412"
+        }
+      },
+      {
+        "identity": {
+          "kind": "FunctionDeclaration",
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "symbol": "assertDocumentationOwnerAncestry"
+        },
+        "before": null,
+        "after": {
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "kind": "FunctionDeclaration",
+          "symbol": "assertDocumentationOwnerAncestry",
+          "sha256": "3cc730f0460602237bb0e406b0e74f3a0023a78709da9e81f3d5a38300762fec"
+        }
+      },
+      {
+        "identity": {
+          "kind": "FunctionDeclaration",
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "symbol": "assertDocumentationOwnerPurpose"
+        },
+        "before": null,
+        "after": {
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "kind": "FunctionDeclaration",
+          "symbol": "assertDocumentationOwnerPurpose",
+          "sha256": "a9ce52880b647a09660c9e3dfbaca76c0a3544139ae63e3a643c6c0c330412a7"
+        }
+      },
+      {
+        "identity": {
+          "kind": "FunctionDeclaration",
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "symbol": "assertReaderArtifactExternalCiPurpose"
+        },
+        "before": null,
+        "after": {
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "kind": "FunctionDeclaration",
+          "symbol": "assertReaderArtifactExternalCiPurpose",
+          "sha256": "adec9db4236d9927d55eaa67557a62434a95d7d3b3462f3e1747db44231e6127"
+        }
+      },
+      {
+        "identity": {
+          "kind": "FunctionDeclaration",
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "symbol": "documentationOwnerNativeEntryMatches"
+        },
+        "before": null,
+        "after": {
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "kind": "FunctionDeclaration",
+          "symbol": "documentationOwnerNativeEntryMatches",
+          "sha256": "768c00977d2d0f24d2c584fb07967320c2f2a7138a3662c7ca5277a39e02f807"
+        }
+      }
+    ]
+  },
+  {
+    "source": "scripts/docs-api-reference.mjs",
+    "baselineObservedMatchesInstalledPrior": true,
+    "definingOperationDeltas": [
+      {
+        "identity": {
+          "kind": "FirstStatement",
+          "source": "scripts/docs-api-output-role-classification.mjs",
+          "symbol": "reviewedApiUtilityDeclarations"
+        },
+        "before": null,
+        "after": {
+          "source": "scripts/docs-api-output-role-classification.mjs",
+          "kind": "FirstStatement",
+          "symbol": "reviewedApiUtilityDeclarations",
+          "sha256": "81f2a6c7d93b5a0383f4e2fc0c7b0724a23d702f5a7a5d2794cc53dac93fbfeb"
+        }
+      },
+      {
+        "identity": {
+          "kind": "FirstStatement",
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "symbol": "freeze"
+        },
+        "before": null,
+        "after": {
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "kind": "FirstStatement",
+          "symbol": "freeze",
+          "sha256": "27b2ce52c91b8aa9dc37498eacaf10982ca07ca741153e882dbe516e1a3c1c94"
+        }
+      },
+      {
+        "identity": {
+          "kind": "FirstStatement",
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "symbol": "readerArtifactCiProofs"
+        },
+        "before": null,
+        "after": {
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "kind": "FirstStatement",
+          "symbol": "readerArtifactCiProofs",
+          "sha256": "767afcaab51284f9ce981aa865c5411b4e8dbb3bf4bac9f5bc1e924ed55011f2"
+        }
+      },
+      {
+        "identity": {
+          "kind": "FirstStatement",
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "symbol": "readerArtifactCiPurpose"
+        },
+        "before": null,
+        "after": {
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "kind": "FirstStatement",
+          "symbol": "readerArtifactCiPurpose",
+          "sha256": "a43d48793b2695b0c96cb19ec2a32a686df7307c0eef8e528ff9b2e9d776f3c3"
+        }
+      },
+      {
+        "identity": {
+          "kind": "FirstStatement",
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "symbol": "readerArtifactCiRoleSources"
+        },
+        "before": null,
+        "after": {
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "kind": "FirstStatement",
+          "symbol": "readerArtifactCiRoleSources",
+          "sha256": "a12bde1592918da42128bf498dea09165ec82abaeff0b920a3fbcba791618942"
+        }
+      },
+      {
+        "identity": {
+          "kind": "FirstStatement",
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "symbol": "reviewedDocumentationOwnerPurposes"
+        },
+        "before": null,
+        "after": {
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "kind": "FirstStatement",
+          "symbol": "reviewedDocumentationOwnerPurposes",
+          "sha256": "283009e4473ee801ff2efaa2ad2f9118adcf0ba84befd5da5f884dd87ec1f8b6"
+        }
+      },
+      {
+        "identity": {
+          "kind": "FirstStatement",
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "symbol": "sha"
+        },
+        "before": null,
+        "after": {
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "kind": "FirstStatement",
+          "symbol": "sha",
+          "sha256": "aebce3454045cb891a80c362896aa24d53257c8df68a07feb27132c52172320d"
+        }
+      },
+      {
+        "identity": {
+          "kind": "FunctionDeclaration",
+          "source": "scripts/docs-api-output-discovery.mjs",
+          "symbol": "assertDocumentationToolQualifications"
+        },
+        "before": {
+          "source": "scripts/docs-api-output-discovery.mjs",
+          "kind": "FunctionDeclaration",
+          "symbol": "assertDocumentationToolQualifications",
+          "sha256": "7d54e4cfaf5e7d56ab53e7b1ed156bfb03bada24a33b9a1596b59cc96043cbc9"
+        },
+        "after": {
+          "source": "scripts/docs-api-output-discovery.mjs",
+          "kind": "FunctionDeclaration",
+          "symbol": "assertDocumentationToolQualifications",
+          "sha256": "8a83d14cb90d8aa40604700f7bfe2238d67515939e172287a94706d31d68d4e7"
+        }
+      },
+      {
+        "identity": {
+          "kind": "FunctionDeclaration",
+          "source": "scripts/docs-api-output-discovery.mjs",
+          "symbol": "documentationModuleGraph"
+        },
+        "before": {
+          "source": "scripts/docs-api-output-discovery.mjs",
+          "kind": "FunctionDeclaration",
+          "symbol": "documentationModuleGraph",
+          "sha256": "61fb25ded832071018e032e4a467f9fc83e3439e7f01c79ae83c0d874d126747"
+        },
+        "after": {
+          "source": "scripts/docs-api-output-discovery.mjs",
+          "kind": "FunctionDeclaration",
+          "symbol": "documentationModuleGraph",
+          "sha256": "76cf87231363f7d8b4d73323bbca65dc51182ba8d0de789c52206592fbd45564"
+        }
+      },
+      {
+        "identity": {
+          "kind": "FunctionDeclaration",
+          "source": "scripts/docs-api-output-role-classification.mjs",
+          "symbol": "createSerializedOutputRoleClassifier"
+        },
+        "before": {
+          "source": "scripts/docs-api-output-role-classification.mjs",
+          "kind": "FunctionDeclaration",
+          "symbol": "createSerializedOutputRoleClassifier",
+          "sha256": "ce8669097d547202eaf9edeb81e9a266275307f4e098215a5c6dfa68333bc832"
+        },
+        "after": {
+          "source": "scripts/docs-api-output-role-classification.mjs",
+          "kind": "FunctionDeclaration",
+          "symbol": "createSerializedOutputRoleClassifier",
+          "sha256": "a95b76a9c1ca824f62143e9e283b5d78560a00b9971796bab8ca31cecc0c437b"
+        }
+      },
+      {
+        "identity": {
+          "kind": "FunctionDeclaration",
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "symbol": "addReaderArtifactExternalCiSeed"
+        },
+        "before": null,
+        "after": {
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "kind": "FunctionDeclaration",
+          "symbol": "addReaderArtifactExternalCiSeed",
+          "sha256": "40296f405317443f5ddaa981abffa1cdb87ac1f760bc390b951feb83f1296412"
+        }
+      },
+      {
+        "identity": {
+          "kind": "FunctionDeclaration",
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "symbol": "assertDocumentationOwnerAncestry"
+        },
+        "before": null,
+        "after": {
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "kind": "FunctionDeclaration",
+          "symbol": "assertDocumentationOwnerAncestry",
+          "sha256": "3cc730f0460602237bb0e406b0e74f3a0023a78709da9e81f3d5a38300762fec"
+        }
+      },
+      {
+        "identity": {
+          "kind": "FunctionDeclaration",
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "symbol": "assertDocumentationOwnerPurpose"
+        },
+        "before": null,
+        "after": {
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "kind": "FunctionDeclaration",
+          "symbol": "assertDocumentationOwnerPurpose",
+          "sha256": "a9ce52880b647a09660c9e3dfbaca76c0a3544139ae63e3a643c6c0c330412a7"
+        }
+      },
+      {
+        "identity": {
+          "kind": "FunctionDeclaration",
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "symbol": "assertReaderArtifactExternalCiPurpose"
+        },
+        "before": null,
+        "after": {
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "kind": "FunctionDeclaration",
+          "symbol": "assertReaderArtifactExternalCiPurpose",
+          "sha256": "adec9db4236d9927d55eaa67557a62434a95d7d3b3462f3e1747db44231e6127"
+        }
+      },
+      {
+        "identity": {
+          "kind": "FunctionDeclaration",
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "symbol": "documentationOwnerNativeEntryMatches"
+        },
+        "before": null,
+        "after": {
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "kind": "FunctionDeclaration",
+          "symbol": "documentationOwnerNativeEntryMatches",
+          "sha256": "768c00977d2d0f24d2c584fb07967320c2f2a7138a3662c7ca5277a39e02f807"
+        }
+      }
+    ]
+  },
+  {
+    "source": "scripts/docs-configuration-inventory.mjs",
+    "baselineObservedMatchesInstalledPrior": true,
+    "definingOperationDeltas": [
+      {
+        "identity": {
+          "kind": "FirstStatement",
+          "source": "scripts/docs-api-output-role-classification.mjs",
+          "symbol": "reviewedApiUtilityDeclarations"
+        },
+        "before": null,
+        "after": {
+          "source": "scripts/docs-api-output-role-classification.mjs",
+          "kind": "FirstStatement",
+          "symbol": "reviewedApiUtilityDeclarations",
+          "sha256": "81f2a6c7d93b5a0383f4e2fc0c7b0724a23d702f5a7a5d2794cc53dac93fbfeb"
+        }
+      },
+      {
+        "identity": {
+          "kind": "FirstStatement",
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "symbol": "freeze"
+        },
+        "before": null,
+        "after": {
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "kind": "FirstStatement",
+          "symbol": "freeze",
+          "sha256": "27b2ce52c91b8aa9dc37498eacaf10982ca07ca741153e882dbe516e1a3c1c94"
+        }
+      },
+      {
+        "identity": {
+          "kind": "FirstStatement",
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "symbol": "readerArtifactCiProofs"
+        },
+        "before": null,
+        "after": {
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "kind": "FirstStatement",
+          "symbol": "readerArtifactCiProofs",
+          "sha256": "767afcaab51284f9ce981aa865c5411b4e8dbb3bf4bac9f5bc1e924ed55011f2"
+        }
+      },
+      {
+        "identity": {
+          "kind": "FirstStatement",
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "symbol": "readerArtifactCiPurpose"
+        },
+        "before": null,
+        "after": {
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "kind": "FirstStatement",
+          "symbol": "readerArtifactCiPurpose",
+          "sha256": "a43d48793b2695b0c96cb19ec2a32a686df7307c0eef8e528ff9b2e9d776f3c3"
+        }
+      },
+      {
+        "identity": {
+          "kind": "FirstStatement",
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "symbol": "readerArtifactCiRoleSources"
+        },
+        "before": null,
+        "after": {
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "kind": "FirstStatement",
+          "symbol": "readerArtifactCiRoleSources",
+          "sha256": "a12bde1592918da42128bf498dea09165ec82abaeff0b920a3fbcba791618942"
+        }
+      },
+      {
+        "identity": {
+          "kind": "FirstStatement",
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "symbol": "reviewedDocumentationOwnerPurposes"
+        },
+        "before": null,
+        "after": {
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "kind": "FirstStatement",
+          "symbol": "reviewedDocumentationOwnerPurposes",
+          "sha256": "283009e4473ee801ff2efaa2ad2f9118adcf0ba84befd5da5f884dd87ec1f8b6"
+        }
+      },
+      {
+        "identity": {
+          "kind": "FirstStatement",
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "symbol": "sha"
+        },
+        "before": null,
+        "after": {
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "kind": "FirstStatement",
+          "symbol": "sha",
+          "sha256": "aebce3454045cb891a80c362896aa24d53257c8df68a07feb27132c52172320d"
+        }
+      },
+      {
+        "identity": {
+          "kind": "FunctionDeclaration",
+          "source": "scripts/docs-api-output-discovery.mjs",
+          "symbol": "assertDocumentationToolQualifications"
+        },
+        "before": {
+          "source": "scripts/docs-api-output-discovery.mjs",
+          "kind": "FunctionDeclaration",
+          "symbol": "assertDocumentationToolQualifications",
+          "sha256": "7d54e4cfaf5e7d56ab53e7b1ed156bfb03bada24a33b9a1596b59cc96043cbc9"
+        },
+        "after": {
+          "source": "scripts/docs-api-output-discovery.mjs",
+          "kind": "FunctionDeclaration",
+          "symbol": "assertDocumentationToolQualifications",
+          "sha256": "8a83d14cb90d8aa40604700f7bfe2238d67515939e172287a94706d31d68d4e7"
+        }
+      },
+      {
+        "identity": {
+          "kind": "FunctionDeclaration",
+          "source": "scripts/docs-api-output-discovery.mjs",
+          "symbol": "documentationModuleGraph"
+        },
+        "before": {
+          "source": "scripts/docs-api-output-discovery.mjs",
+          "kind": "FunctionDeclaration",
+          "symbol": "documentationModuleGraph",
+          "sha256": "61fb25ded832071018e032e4a467f9fc83e3439e7f01c79ae83c0d874d126747"
+        },
+        "after": {
+          "source": "scripts/docs-api-output-discovery.mjs",
+          "kind": "FunctionDeclaration",
+          "symbol": "documentationModuleGraph",
+          "sha256": "76cf87231363f7d8b4d73323bbca65dc51182ba8d0de789c52206592fbd45564"
+        }
+      },
+      {
+        "identity": {
+          "kind": "FunctionDeclaration",
+          "source": "scripts/docs-api-output-role-classification.mjs",
+          "symbol": "createSerializedOutputRoleClassifier"
+        },
+        "before": {
+          "source": "scripts/docs-api-output-role-classification.mjs",
+          "kind": "FunctionDeclaration",
+          "symbol": "createSerializedOutputRoleClassifier",
+          "sha256": "ce8669097d547202eaf9edeb81e9a266275307f4e098215a5c6dfa68333bc832"
+        },
+        "after": {
+          "source": "scripts/docs-api-output-role-classification.mjs",
+          "kind": "FunctionDeclaration",
+          "symbol": "createSerializedOutputRoleClassifier",
+          "sha256": "a95b76a9c1ca824f62143e9e283b5d78560a00b9971796bab8ca31cecc0c437b"
+        }
+      },
+      {
+        "identity": {
+          "kind": "FunctionDeclaration",
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "symbol": "addReaderArtifactExternalCiSeed"
+        },
+        "before": null,
+        "after": {
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "kind": "FunctionDeclaration",
+          "symbol": "addReaderArtifactExternalCiSeed",
+          "sha256": "40296f405317443f5ddaa981abffa1cdb87ac1f760bc390b951feb83f1296412"
+        }
+      },
+      {
+        "identity": {
+          "kind": "FunctionDeclaration",
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "symbol": "assertDocumentationOwnerAncestry"
+        },
+        "before": null,
+        "after": {
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "kind": "FunctionDeclaration",
+          "symbol": "assertDocumentationOwnerAncestry",
+          "sha256": "3cc730f0460602237bb0e406b0e74f3a0023a78709da9e81f3d5a38300762fec"
+        }
+      },
+      {
+        "identity": {
+          "kind": "FunctionDeclaration",
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "symbol": "assertDocumentationOwnerPurpose"
+        },
+        "before": null,
+        "after": {
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "kind": "FunctionDeclaration",
+          "symbol": "assertDocumentationOwnerPurpose",
+          "sha256": "a9ce52880b647a09660c9e3dfbaca76c0a3544139ae63e3a643c6c0c330412a7"
+        }
+      },
+      {
+        "identity": {
+          "kind": "FunctionDeclaration",
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "symbol": "assertReaderArtifactExternalCiPurpose"
+        },
+        "before": null,
+        "after": {
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "kind": "FunctionDeclaration",
+          "symbol": "assertReaderArtifactExternalCiPurpose",
+          "sha256": "adec9db4236d9927d55eaa67557a62434a95d7d3b3462f3e1747db44231e6127"
+        }
+      },
+      {
+        "identity": {
+          "kind": "FunctionDeclaration",
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "symbol": "documentationOwnerNativeEntryMatches"
+        },
+        "before": null,
+        "after": {
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "kind": "FunctionDeclaration",
+          "symbol": "documentationOwnerNativeEntryMatches",
+          "sha256": "768c00977d2d0f24d2c584fb07967320c2f2a7138a3662c7ca5277a39e02f807"
+        }
+      }
+    ]
+  },
+  {
+    "source": "scripts/docs-generate.mjs",
+    "baselineObservedMatchesInstalledPrior": true,
+    "definingOperationDeltas": [
+      {
+        "identity": {
+          "kind": "FirstStatement",
+          "source": "scripts/docs-api-output-role-classification.mjs",
+          "symbol": "reviewedApiUtilityDeclarations"
+        },
+        "before": null,
+        "after": {
+          "source": "scripts/docs-api-output-role-classification.mjs",
+          "kind": "FirstStatement",
+          "symbol": "reviewedApiUtilityDeclarations",
+          "sha256": "81f2a6c7d93b5a0383f4e2fc0c7b0724a23d702f5a7a5d2794cc53dac93fbfeb"
+        }
+      },
+      {
+        "identity": {
+          "kind": "FirstStatement",
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "symbol": "freeze"
+        },
+        "before": null,
+        "after": {
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "kind": "FirstStatement",
+          "symbol": "freeze",
+          "sha256": "27b2ce52c91b8aa9dc37498eacaf10982ca07ca741153e882dbe516e1a3c1c94"
+        }
+      },
+      {
+        "identity": {
+          "kind": "FirstStatement",
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "symbol": "readerArtifactCiProofs"
+        },
+        "before": null,
+        "after": {
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "kind": "FirstStatement",
+          "symbol": "readerArtifactCiProofs",
+          "sha256": "767afcaab51284f9ce981aa865c5411b4e8dbb3bf4bac9f5bc1e924ed55011f2"
+        }
+      },
+      {
+        "identity": {
+          "kind": "FirstStatement",
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "symbol": "readerArtifactCiPurpose"
+        },
+        "before": null,
+        "after": {
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "kind": "FirstStatement",
+          "symbol": "readerArtifactCiPurpose",
+          "sha256": "a43d48793b2695b0c96cb19ec2a32a686df7307c0eef8e528ff9b2e9d776f3c3"
+        }
+      },
+      {
+        "identity": {
+          "kind": "FirstStatement",
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "symbol": "readerArtifactCiRoleSources"
+        },
+        "before": null,
+        "after": {
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "kind": "FirstStatement",
+          "symbol": "readerArtifactCiRoleSources",
+          "sha256": "a12bde1592918da42128bf498dea09165ec82abaeff0b920a3fbcba791618942"
+        }
+      },
+      {
+        "identity": {
+          "kind": "FirstStatement",
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "symbol": "reviewedDocumentationOwnerPurposes"
+        },
+        "before": null,
+        "after": {
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "kind": "FirstStatement",
+          "symbol": "reviewedDocumentationOwnerPurposes",
+          "sha256": "283009e4473ee801ff2efaa2ad2f9118adcf0ba84befd5da5f884dd87ec1f8b6"
+        }
+      },
+      {
+        "identity": {
+          "kind": "FirstStatement",
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "symbol": "sha"
+        },
+        "before": null,
+        "after": {
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "kind": "FirstStatement",
+          "symbol": "sha",
+          "sha256": "aebce3454045cb891a80c362896aa24d53257c8df68a07feb27132c52172320d"
+        }
+      },
+      {
+        "identity": {
+          "kind": "FunctionDeclaration",
+          "source": "scripts/docs-api-output-discovery.mjs",
+          "symbol": "assertDocumentationToolQualifications"
+        },
+        "before": {
+          "source": "scripts/docs-api-output-discovery.mjs",
+          "kind": "FunctionDeclaration",
+          "symbol": "assertDocumentationToolQualifications",
+          "sha256": "7d54e4cfaf5e7d56ab53e7b1ed156bfb03bada24a33b9a1596b59cc96043cbc9"
+        },
+        "after": {
+          "source": "scripts/docs-api-output-discovery.mjs",
+          "kind": "FunctionDeclaration",
+          "symbol": "assertDocumentationToolQualifications",
+          "sha256": "8a83d14cb90d8aa40604700f7bfe2238d67515939e172287a94706d31d68d4e7"
+        }
+      },
+      {
+        "identity": {
+          "kind": "FunctionDeclaration",
+          "source": "scripts/docs-api-output-discovery.mjs",
+          "symbol": "documentationModuleGraph"
+        },
+        "before": {
+          "source": "scripts/docs-api-output-discovery.mjs",
+          "kind": "FunctionDeclaration",
+          "symbol": "documentationModuleGraph",
+          "sha256": "61fb25ded832071018e032e4a467f9fc83e3439e7f01c79ae83c0d874d126747"
+        },
+        "after": {
+          "source": "scripts/docs-api-output-discovery.mjs",
+          "kind": "FunctionDeclaration",
+          "symbol": "documentationModuleGraph",
+          "sha256": "76cf87231363f7d8b4d73323bbca65dc51182ba8d0de789c52206592fbd45564"
+        }
+      },
+      {
+        "identity": {
+          "kind": "FunctionDeclaration",
+          "source": "scripts/docs-api-output-role-classification.mjs",
+          "symbol": "createSerializedOutputRoleClassifier"
+        },
+        "before": {
+          "source": "scripts/docs-api-output-role-classification.mjs",
+          "kind": "FunctionDeclaration",
+          "symbol": "createSerializedOutputRoleClassifier",
+          "sha256": "ce8669097d547202eaf9edeb81e9a266275307f4e098215a5c6dfa68333bc832"
+        },
+        "after": {
+          "source": "scripts/docs-api-output-role-classification.mjs",
+          "kind": "FunctionDeclaration",
+          "symbol": "createSerializedOutputRoleClassifier",
+          "sha256": "a95b76a9c1ca824f62143e9e283b5d78560a00b9971796bab8ca31cecc0c437b"
+        }
+      },
+      {
+        "identity": {
+          "kind": "FunctionDeclaration",
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "symbol": "addReaderArtifactExternalCiSeed"
+        },
+        "before": null,
+        "after": {
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "kind": "FunctionDeclaration",
+          "symbol": "addReaderArtifactExternalCiSeed",
+          "sha256": "40296f405317443f5ddaa981abffa1cdb87ac1f760bc390b951feb83f1296412"
+        }
+      },
+      {
+        "identity": {
+          "kind": "FunctionDeclaration",
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "symbol": "assertDocumentationOwnerAncestry"
+        },
+        "before": null,
+        "after": {
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "kind": "FunctionDeclaration",
+          "symbol": "assertDocumentationOwnerAncestry",
+          "sha256": "3cc730f0460602237bb0e406b0e74f3a0023a78709da9e81f3d5a38300762fec"
+        }
+      },
+      {
+        "identity": {
+          "kind": "FunctionDeclaration",
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "symbol": "assertDocumentationOwnerPurpose"
+        },
+        "before": null,
+        "after": {
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "kind": "FunctionDeclaration",
+          "symbol": "assertDocumentationOwnerPurpose",
+          "sha256": "a9ce52880b647a09660c9e3dfbaca76c0a3544139ae63e3a643c6c0c330412a7"
+        }
+      },
+      {
+        "identity": {
+          "kind": "FunctionDeclaration",
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "symbol": "assertReaderArtifactExternalCiPurpose"
+        },
+        "before": null,
+        "after": {
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "kind": "FunctionDeclaration",
+          "symbol": "assertReaderArtifactExternalCiPurpose",
+          "sha256": "adec9db4236d9927d55eaa67557a62434a95d7d3b3462f3e1747db44231e6127"
+        }
+      },
+      {
+        "identity": {
+          "kind": "FunctionDeclaration",
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "symbol": "documentationOwnerNativeEntryMatches"
+        },
+        "before": null,
+        "after": {
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "kind": "FunctionDeclaration",
+          "symbol": "documentationOwnerNativeEntryMatches",
+          "sha256": "768c00977d2d0f24d2c584fb07967320c2f2a7138a3662c7ca5277a39e02f807"
+        }
+      }
+    ]
+  },
+  {
+    "source": "scripts/docs-publication.mjs",
+    "baselineObservedMatchesInstalledPrior": true,
+    "definingOperationDeltas": [
+      {
+        "identity": {
+          "kind": "FirstStatement",
+          "source": "scripts/docs-reader/page-records.mjs",
+          "symbol": "inputPaths"
+        },
+        "before": null,
+        "after": {
+          "source": "scripts/docs-reader/page-records.mjs",
+          "kind": "FirstStatement",
+          "symbol": "inputPaths",
+          "sha256": "edf837edd4c5d8c9cc5edbe690550f96b5ed444b9618779d6419d07609eae2d5"
+        }
+      },
+      {
+        "identity": {
+          "kind": "FirstStatement",
+          "source": "scripts/docs-reader/page-records.mjs",
+          "symbol": "sha256"
+        },
+        "before": null,
+        "after": {
+          "source": "scripts/docs-reader/page-records.mjs",
+          "kind": "FirstStatement",
+          "symbol": "sha256",
+          "sha256": "cea7730c06488fc85f6ce3ddafbe4b20074b3ebae05293811a495352a1c5f884"
+        }
+      },
+      {
+        "identity": {
+          "kind": "FunctionDeclaration",
+          "source": "scripts/docs-publication.mjs",
+          "symbol": "build"
+        },
+        "before": {
+          "source": "scripts/docs-publication.mjs",
+          "kind": "FunctionDeclaration",
+          "symbol": "build",
+          "sha256": "4c2e013bcd569057b27541b4a8bc532774f2c0e768e9334713eab93cda8c2d96"
+        },
+        "after": {
+          "source": "scripts/docs-publication.mjs",
+          "kind": "FunctionDeclaration",
+          "symbol": "build",
+          "sha256": "ac972ce7c6b1e813069533047bcf122afcf1a3574599b7a05bd70e24b6cd265e"
+        }
+      },
+      {
+        "identity": {
+          "kind": "FunctionDeclaration",
+          "source": "scripts/docs-publication.mjs",
+          "symbol": "capabilityPage"
+        },
+        "before": {
+          "source": "scripts/docs-publication.mjs",
+          "kind": "FunctionDeclaration",
+          "symbol": "capabilityPage",
+          "sha256": "6be20d130b21601cfd49cb863656c15ad88ed49aff0f8ba467141feb083e7726"
+        },
+        "after": {
+          "source": "scripts/docs-publication.mjs",
+          "kind": "FunctionDeclaration",
+          "symbol": "capabilityPage",
+          "sha256": "954b25f72f28edf3675c76fed1b66ecf9ab539ac94fea65615a85634a2ba4412"
+        }
+      },
+      {
+        "identity": {
+          "kind": "FunctionDeclaration",
+          "source": "scripts/docs-reader/page-records.mjs",
+          "symbol": "appendReaderPageRecords"
+        },
+        "before": null,
+        "after": {
+          "source": "scripts/docs-reader/page-records.mjs",
+          "kind": "FunctionDeclaration",
+          "symbol": "appendReaderPageRecords",
+          "sha256": "b78b2a3146617c2ad59696acb4545982495d5d2156c55d3792f81dec0c3ca454"
+        }
+      },
+      {
+        "identity": {
+          "kind": "FunctionDeclaration",
+          "source": "scripts/docs-reader/page-records.mjs",
+          "symbol": "compileReaderPageRecords"
+        },
+        "before": null,
+        "after": {
+          "source": "scripts/docs-reader/page-records.mjs",
+          "kind": "FunctionDeclaration",
+          "symbol": "compileReaderPageRecords",
+          "sha256": "26e209edc130108dd7b873d93afe1fe8bc3db3fc2af73e0d3fbbe1af41c0c4fa"
+        }
+      },
+      {
+        "identity": {
+          "kind": "FunctionDeclaration",
+          "source": "scripts/docs-reader/page-records.mjs",
+          "symbol": "outputReader"
+        },
+        "before": null,
+        "after": {
+          "source": "scripts/docs-reader/page-records.mjs",
+          "kind": "FunctionDeclaration",
+          "symbol": "outputReader",
+          "sha256": "d0510b61523dbe997e4b468f6d6a312c4d87c618e8f8ef82948c6f6d6a6f2cb6"
+        }
+      },
+      {
+        "identity": {
+          "kind": "FunctionDeclaration",
+          "source": "scripts/docs-reader/page-records.mjs",
+          "symbol": "physical"
+        },
+        "before": null,
+        "after": {
+          "source": "scripts/docs-reader/page-records.mjs",
+          "kind": "FunctionDeclaration",
+          "symbol": "physical",
+          "sha256": "2eee3a4a51cdde775250ec8c29d5af11b867105a5d15738e48fe4e191bc93b9d"
+        }
+      },
+      {
+        "identity": {
+          "kind": "FunctionDeclaration",
+          "source": "scripts/docs-reader/page-records.mjs",
+          "symbol": "relative"
+        },
+        "before": null,
+        "after": {
+          "source": "scripts/docs-reader/page-records.mjs",
+          "kind": "FunctionDeclaration",
+          "symbol": "relative",
+          "sha256": "f97c7fc105a16575c7d216d1b99dd572b90f9d71d14931d7d46858c470ebb29f"
+        }
+      },
+      {
+        "identity": {
+          "kind": "FunctionDeclaration",
+          "source": "scripts/docs-reader/page-records.mjs",
+          "symbol": "sourceReader"
+        },
+        "before": null,
+        "after": {
+          "source": "scripts/docs-reader/page-records.mjs",
+          "kind": "FunctionDeclaration",
+          "symbol": "sourceReader",
+          "sha256": "4e4c836ade36b5dda5f08c08d804f143d93a9b52b4a5f956d5b253367b10fdbf"
+        }
+      },
+      {
+        "identity": {
+          "kind": "FunctionDeclaration",
+          "source": "scripts/docs-reader/redirects.mjs",
+          "symbol": "compileReaderRedirects"
+        },
+        "before": {
+          "source": "scripts/docs-reader/redirects.mjs",
+          "kind": "FunctionDeclaration",
+          "symbol": "compileReaderRedirects",
+          "sha256": "c936dcf2e216ec3e088f1fc7cfc57b3fca2a4817a44ad6b51c5085751b7af3bb"
+        },
+        "after": {
+          "source": "scripts/docs-reader/redirects.mjs",
+          "kind": "FunctionDeclaration",
+          "symbol": "compileReaderRedirects",
+          "sha256": "61fb30c758d3c443fe639efb199175569bb5fdda1fe121fae353d83e2856cef2"
+        }
+      },
+      {
+        "identity": {
+          "kind": "FunctionDeclaration",
+          "source": "scripts/docs-reader/redirects.mjs",
+          "symbol": "readerRedirectPlan"
+        },
+        "before": null,
+        "after": {
+          "source": "scripts/docs-reader/redirects.mjs",
+          "kind": "FunctionDeclaration",
+          "symbol": "readerRedirectPlan",
+          "sha256": "b83a3a7bd67d5c95452f0ba2c5f8118ee1c763fe05ca3b0302f966c3a326ae37"
+        }
+      },
+      {
+        "identity": {
+          "kind": "FunctionDeclaration",
+          "source": "scripts/docs-reader/redirects.mjs",
+          "symbol": "verifyReaderRedirects"
+        },
+        "before": null,
+        "after": {
+          "source": "scripts/docs-reader/redirects.mjs",
+          "kind": "FunctionDeclaration",
+          "symbol": "verifyReaderRedirects",
+          "sha256": "e8c9f337d47ba759c2286653596ffab9bb69a9d7aa96a630cf6aa05cb26991db"
+        }
+      },
+      {
+        "identity": {
+          "kind": "FunctionDeclaration",
+          "source": "scripts/docs-reader/renderer.mjs",
+          "symbol": "buildReader"
+        },
+        "before": {
+          "source": "scripts/docs-reader/renderer.mjs",
+          "kind": "FunctionDeclaration",
+          "symbol": "buildReader",
+          "sha256": "48d01154406f2b259b0072ed279ebece364400db84f1ed1ba9f36f8848c1b536"
+        },
+        "after": {
+          "source": "scripts/docs-reader/renderer.mjs",
+          "kind": "FunctionDeclaration",
+          "symbol": "buildReader",
+          "sha256": "7afcd2efa806b063ea448ac279454346be03d84af2cb396c82b0a9a517581234"
+        }
+      },
+      {
+        "identity": {
+          "kind": "FunctionDeclaration",
+          "source": "scripts/docs-reader/renderer.mjs",
+          "symbol": "readerOutputLayout"
+        },
+        "before": null,
+        "after": {
+          "source": "scripts/docs-reader/renderer.mjs",
+          "kind": "FunctionDeclaration",
+          "symbol": "readerOutputLayout",
+          "sha256": "df8fc76f4c2d77bd46f51cfcc5b7e59a3c65ddc7a594a60899dfdfc7ea484c94"
+        }
+      },
+      {
+        "identity": {
+          "kind": "FunctionDeclaration",
+          "source": "scripts/docs-reader/renderer.mjs",
+          "symbol": "readerSharedAssets"
+        },
+        "before": null,
+        "after": {
+          "source": "scripts/docs-reader/renderer.mjs",
+          "kind": "FunctionDeclaration",
+          "symbol": "readerSharedAssets",
+          "sha256": "b6e9e39ed6c10b7591e20d6ffe3bf9cb5ea98a5cff865f1f1a3e42206d42c431"
+        }
+      },
+      {
+        "identity": {
+          "kind": "ImportDeclaration",
+          "source": "scripts/docs-reader/page-records.mjs",
+          "symbol": "<operation>"
+        },
+        "before": null,
+        "after": {
+          "source": "scripts/docs-reader/page-records.mjs",
+          "kind": "ImportDeclaration",
+          "symbol": "<operation>",
+          "sha256": "632e7e3c7b3810a01e923cc1b80439a82b2e130d0868fb2a32174a210cb024b9"
+        }
+      }
+    ]
+  },
+  {
+    "source": "scripts/docs-reader/renderer.mjs",
+    "baselineObservedMatchesInstalledPrior": true,
+    "definingOperationDeltas": [
+      {
+        "identity": {
+          "kind": "FunctionDeclaration",
+          "source": "scripts/docs-reader/redirects.mjs",
+          "symbol": "compileReaderRedirects"
+        },
+        "before": {
+          "source": "scripts/docs-reader/redirects.mjs",
+          "kind": "FunctionDeclaration",
+          "symbol": "compileReaderRedirects",
+          "sha256": "c936dcf2e216ec3e088f1fc7cfc57b3fca2a4817a44ad6b51c5085751b7af3bb"
+        },
+        "after": {
+          "source": "scripts/docs-reader/redirects.mjs",
+          "kind": "FunctionDeclaration",
+          "symbol": "compileReaderRedirects",
+          "sha256": "61fb30c758d3c443fe639efb199175569bb5fdda1fe121fae353d83e2856cef2"
+        }
+      },
+      {
+        "identity": {
+          "kind": "FunctionDeclaration",
+          "source": "scripts/docs-reader/redirects.mjs",
+          "symbol": "readerRedirectPlan"
+        },
+        "before": null,
+        "after": {
+          "source": "scripts/docs-reader/redirects.mjs",
+          "kind": "FunctionDeclaration",
+          "symbol": "readerRedirectPlan",
+          "sha256": "b83a3a7bd67d5c95452f0ba2c5f8118ee1c763fe05ca3b0302f966c3a326ae37"
+        }
+      },
+      {
+        "identity": {
+          "kind": "FunctionDeclaration",
+          "source": "scripts/docs-reader/renderer.mjs",
+          "symbol": "buildReader"
+        },
+        "before": {
+          "source": "scripts/docs-reader/renderer.mjs",
+          "kind": "FunctionDeclaration",
+          "symbol": "buildReader",
+          "sha256": "48d01154406f2b259b0072ed279ebece364400db84f1ed1ba9f36f8848c1b536"
+        },
+        "after": {
+          "source": "scripts/docs-reader/renderer.mjs",
+          "kind": "FunctionDeclaration",
+          "symbol": "buildReader",
+          "sha256": "7afcd2efa806b063ea448ac279454346be03d84af2cb396c82b0a9a517581234"
+        }
+      },
+      {
+        "identity": {
+          "kind": "FunctionDeclaration",
+          "source": "scripts/docs-reader/renderer.mjs",
+          "symbol": "readerOutputLayout"
+        },
+        "before": null,
+        "after": {
+          "source": "scripts/docs-reader/renderer.mjs",
+          "kind": "FunctionDeclaration",
+          "symbol": "readerOutputLayout",
+          "sha256": "df8fc76f4c2d77bd46f51cfcc5b7e59a3c65ddc7a594a60899dfdfc7ea484c94"
+        }
+      },
+      {
+        "identity": {
+          "kind": "FunctionDeclaration",
+          "source": "scripts/docs-reader/renderer.mjs",
+          "symbol": "readerSharedAssets"
+        },
+        "before": null,
+        "after": {
+          "source": "scripts/docs-reader/renderer.mjs",
+          "kind": "FunctionDeclaration",
+          "symbol": "readerSharedAssets",
+          "sha256": "b6e9e39ed6c10b7591e20d6ffe3bf9cb5ea98a5cff865f1f1a3e42206d42c431"
+        }
+      }
+    ]
+  },
+  {
+    "source": "scripts/docs-reader/check-artifact.mjs",
+    "baselineObservedMatchesInstalledPrior": true,
+    "definingOperationDeltas": [
+      {
+        "identity": {
+          "kind": "ExpressionStatement",
+          "source": "scripts/docs-reader/check-artifact.mjs",
+          "symbol": "<operation>"
+        },
+        "before": {
+          "source": "scripts/docs-reader/check-artifact.mjs",
+          "kind": "ExpressionStatement",
+          "symbol": "<operation>",
+          "sha256": "28756ea8dc7d55cf1a7110a2619111cccc27f2569289201c44875f86528953f8"
+        },
+        "after": {
+          "source": "scripts/docs-reader/check-artifact.mjs",
+          "kind": "ExpressionStatement",
+          "symbol": "<operation>",
+          "sha256": "573e2d588ec6d311004a0628c3eeca3bbe6668cd9438c6c88f06e4a6bd42a79e"
+        }
+      },
+      {
+        "identity": {
+          "kind": "FirstStatement",
+          "source": "scripts/docs-reader/check-artifact.mjs",
+          "symbol": "args"
+        },
+        "before": null,
+        "after": {
+          "source": "scripts/docs-reader/check-artifact.mjs",
+          "kind": "FirstStatement",
+          "symbol": "args",
+          "sha256": "977792ccb25be4975f1dda3cf4205ec580dabd23ce4c6c23533fe6ccc3af7504"
+        }
+      },
+      {
+        "identity": {
+          "kind": "FirstStatement",
+          "source": "scripts/docs-reader/check-artifact.mjs",
+          "symbol": "legacyRendererFixture"
+        },
+        "before": null,
+        "after": {
+          "source": "scripts/docs-reader/check-artifact.mjs",
+          "kind": "FirstStatement",
+          "symbol": "legacyRendererFixture",
+          "sha256": "52e3ba937b3ed835998cd3be3d374190765a471683dc7e07143013725ea8de9e"
+        }
+      },
+      {
+        "identity": {
+          "kind": "FirstStatement",
+          "source": "scripts/docs-reader/check-artifact.mjs",
+          "symbol": "root"
+        },
+        "before": {
+          "source": "scripts/docs-reader/check-artifact.mjs",
+          "kind": "FirstStatement",
+          "symbol": "root",
+          "sha256": "eceaad90a811785a7462f2b2685427a618fef283e17bf7b0cf7447026c981f75"
+        },
+        "after": {
+          "source": "scripts/docs-reader/check-artifact.mjs",
+          "kind": "FirstStatement",
+          "symbol": "root",
+          "sha256": "f37c6d40b60958b3446565e4ee3c88a83b05542fae5ff58abfefbb7eeaa2eb9a"
+        }
+      },
+      {
+        "identity": {
+          "kind": "FirstStatement",
+          "source": "scripts/docs-reader/page-records.mjs",
+          "symbol": "inputPaths"
+        },
+        "before": null,
+        "after": {
+          "source": "scripts/docs-reader/page-records.mjs",
+          "kind": "FirstStatement",
+          "symbol": "inputPaths",
+          "sha256": "edf837edd4c5d8c9cc5edbe690550f96b5ed444b9618779d6419d07609eae2d5"
+        }
+      },
+      {
+        "identity": {
+          "kind": "FirstStatement",
+          "source": "scripts/docs-reader/page-records.mjs",
+          "symbol": "sha256"
+        },
+        "before": null,
+        "after": {
+          "source": "scripts/docs-reader/page-records.mjs",
+          "kind": "FirstStatement",
+          "symbol": "sha256",
+          "sha256": "cea7730c06488fc85f6ce3ddafbe4b20074b3ebae05293811a495352a1c5f884"
+        }
+      },
+      {
+        "identity": {
+          "kind": "FirstStatement",
+          "source": "scripts/docs-reader/redirects.mjs",
+          "symbol": "escape"
+        },
+        "before": null,
+        "after": {
+          "source": "scripts/docs-reader/redirects.mjs",
+          "kind": "FirstStatement",
+          "symbol": "escape",
+          "sha256": "d684e6fc82a1ba5ef01bd4ce4b8ca38dee39c2257b02ececd77aea2587f18c8f"
+        }
+      },
+      {
+        "identity": {
+          "kind": "FirstStatement",
+          "source": "scripts/docs-reader/redirects.mjs",
+          "symbol": "legacyReaderRoute"
+        },
+        "before": null,
+        "after": {
+          "source": "scripts/docs-reader/redirects.mjs",
+          "kind": "FirstStatement",
+          "symbol": "legacyReaderRoute",
+          "sha256": "b9502732a223ff4f94a9b72d1c872a29a61aabc8b714031c3d59c9145409e2d9"
+        }
+      },
+      {
+        "identity": {
+          "kind": "FirstStatement",
+          "source": "scripts/docs-reader/redirects.mjs",
+          "symbol": "redirectClient"
+        },
+        "before": null,
+        "after": {
+          "source": "scripts/docs-reader/redirects.mjs",
+          "kind": "FirstStatement",
+          "symbol": "redirectClient",
+          "sha256": "54caae4911b7302d936da5044933df20c456b824186378b25b405255aa72642d"
+        }
+      },
+      {
+        "identity": {
+          "kind": "FirstStatement",
+          "source": "scripts/docs-reader/renderer.mjs",
+          "symbol": "readerCss"
+        },
+        "before": null,
+        "after": {
+          "source": "scripts/docs-reader/renderer.mjs",
+          "kind": "FirstStatement",
+          "symbol": "readerCss",
+          "sha256": "6749b3ac003cdbc1aff8903de9dac06197900f37742b4f140913a0a36f81bf0b"
+        }
+      },
+      {
+        "identity": {
+          "kind": "FirstStatement",
+          "source": "scripts/docs-reader/renderer.mjs",
+          "symbol": "readerScript"
+        },
+        "before": null,
+        "after": {
+          "source": "scripts/docs-reader/renderer.mjs",
+          "kind": "FirstStatement",
+          "symbol": "readerScript",
+          "sha256": "e7e6c24bf4f607cc41f5a8772ac5b78b6923c70bfc703c7b830ecc7024f5612e"
+        }
+      },
+      {
+        "identity": {
+          "kind": "FirstStatement",
+          "source": "scripts/lib/docs-publication-assets.mjs",
+          "symbol": "files"
+        },
+        "before": null,
+        "after": {
+          "source": "scripts/lib/docs-publication-assets.mjs",
+          "kind": "FirstStatement",
+          "symbol": "files",
+          "sha256": "39f4b8a1c4f4a34b503257af91c226e8320a52b345450202e97fa07641954b46"
+        }
+      },
+      {
+        "identity": {
+          "kind": "FunctionDeclaration",
+          "source": "scripts/docs-reader/page-records.mjs",
+          "symbol": "compileReaderPageRecords"
+        },
+        "before": null,
+        "after": {
+          "source": "scripts/docs-reader/page-records.mjs",
+          "kind": "FunctionDeclaration",
+          "symbol": "compileReaderPageRecords",
+          "sha256": "26e209edc130108dd7b873d93afe1fe8bc3db3fc2af73e0d3fbbe1af41c0c4fa"
+        }
+      },
+      {
+        "identity": {
+          "kind": "FunctionDeclaration",
+          "source": "scripts/docs-reader/page-records.mjs",
+          "symbol": "outputReader"
+        },
+        "before": null,
+        "after": {
+          "source": "scripts/docs-reader/page-records.mjs",
+          "kind": "FunctionDeclaration",
+          "symbol": "outputReader",
+          "sha256": "d0510b61523dbe997e4b468f6d6a312c4d87c618e8f8ef82948c6f6d6a6f2cb6"
+        }
+      },
+      {
+        "identity": {
+          "kind": "FunctionDeclaration",
+          "source": "scripts/docs-reader/page-records.mjs",
+          "symbol": "physical"
+        },
+        "before": null,
+        "after": {
+          "source": "scripts/docs-reader/page-records.mjs",
+          "kind": "FunctionDeclaration",
+          "symbol": "physical",
+          "sha256": "2eee3a4a51cdde775250ec8c29d5af11b867105a5d15738e48fe4e191bc93b9d"
+        }
+      },
+      {
+        "identity": {
+          "kind": "FunctionDeclaration",
+          "source": "scripts/docs-reader/page-records.mjs",
+          "symbol": "relative"
+        },
+        "before": null,
+        "after": {
+          "source": "scripts/docs-reader/page-records.mjs",
+          "kind": "FunctionDeclaration",
+          "symbol": "relative",
+          "sha256": "f97c7fc105a16575c7d216d1b99dd572b90f9d71d14931d7d46858c470ebb29f"
+        }
+      },
+      {
+        "identity": {
+          "kind": "FunctionDeclaration",
+          "source": "scripts/docs-reader/page-records.mjs",
+          "symbol": "sourceReader"
+        },
+        "before": null,
+        "after": {
+          "source": "scripts/docs-reader/page-records.mjs",
+          "kind": "FunctionDeclaration",
+          "symbol": "sourceReader",
+          "sha256": "4e4c836ade36b5dda5f08c08d804f143d93a9b52b4a5f956d5b253367b10fdbf"
+        }
+      },
+      {
+        "identity": {
+          "kind": "FunctionDeclaration",
+          "source": "scripts/docs-reader/page-records.mjs",
+          "symbol": "verifyReaderPageRecords"
+        },
+        "before": null,
+        "after": {
+          "source": "scripts/docs-reader/page-records.mjs",
+          "kind": "FunctionDeclaration",
+          "symbol": "verifyReaderPageRecords",
+          "sha256": "9f5c9d997f62dbe936ebfccfabf1c520f2900a86a7bdbe7e249e2a3dc472e931"
+        }
+      },
+      {
+        "identity": {
+          "kind": "FunctionDeclaration",
+          "source": "scripts/docs-reader/redirects.mjs",
+          "symbol": "ids"
+        },
+        "before": null,
+        "after": {
+          "source": "scripts/docs-reader/redirects.mjs",
+          "kind": "FunctionDeclaration",
+          "symbol": "ids",
+          "sha256": "e04001dcd6d092e38dc3b7506e690e891fc4dbdf528903ebb9e1abf40dd70b83"
+        }
+      },
+      {
+        "identity": {
+          "kind": "FunctionDeclaration",
+          "source": "scripts/docs-reader/redirects.mjs",
+          "symbol": "localRoute"
+        },
+        "before": null,
+        "after": {
+          "source": "scripts/docs-reader/redirects.mjs",
+          "kind": "FunctionDeclaration",
+          "symbol": "localRoute",
+          "sha256": "d6554c775f71e6f61a9230f825e3ea153427a82026cbe022c79f0d7b59c84105"
+        }
+      },
+      {
+        "identity": {
+          "kind": "FunctionDeclaration",
+          "source": "scripts/docs-reader/redirects.mjs",
+          "symbol": "outputFor"
+        },
+        "before": null,
+        "after": {
+          "source": "scripts/docs-reader/redirects.mjs",
+          "kind": "FunctionDeclaration",
+          "symbol": "outputFor",
+          "sha256": "b717267f313a704a274f241da2d3b99e37e7ff5ccf4ffc0fcb19f1ff8f9d7cc7"
+        }
+      },
+      {
+        "identity": {
+          "kind": "FunctionDeclaration",
+          "source": "scripts/docs-reader/redirects.mjs",
+          "symbol": "readerRedirectPage"
+        },
+        "before": null,
+        "after": {
+          "source": "scripts/docs-reader/redirects.mjs",
+          "kind": "FunctionDeclaration",
+          "symbol": "readerRedirectPage",
+          "sha256": "396cffcd6da5ea95d5c9ca62b7daf06185a26e4a2e41e3540adb5f91720beebc"
+        }
+      },
+      {
+        "identity": {
+          "kind": "FunctionDeclaration",
+          "source": "scripts/docs-reader/redirects.mjs",
+          "symbol": "readerRedirectPlan"
+        },
+        "before": null,
+        "after": {
+          "source": "scripts/docs-reader/redirects.mjs",
+          "kind": "FunctionDeclaration",
+          "symbol": "readerRedirectPlan",
+          "sha256": "b83a3a7bd67d5c95452f0ba2c5f8118ee1c763fe05ca3b0302f966c3a326ae37"
+        }
+      },
+      {
+        "identity": {
+          "kind": "FunctionDeclaration",
+          "source": "scripts/docs-reader/redirects.mjs",
+          "symbol": "verifyReaderRedirects"
+        },
+        "before": null,
+        "after": {
+          "source": "scripts/docs-reader/redirects.mjs",
+          "kind": "FunctionDeclaration",
+          "symbol": "verifyReaderRedirects",
+          "sha256": "e8c9f337d47ba759c2286653596ffab9bb69a9d7aa96a630cf6aa05cb26991db"
+        }
+      },
+      {
+        "identity": {
+          "kind": "FunctionDeclaration",
+          "source": "scripts/docs-reader/renderer.mjs",
+          "symbol": "readerOutputLayout"
+        },
+        "before": null,
+        "after": {
+          "source": "scripts/docs-reader/renderer.mjs",
+          "kind": "FunctionDeclaration",
+          "symbol": "readerOutputLayout",
+          "sha256": "df8fc76f4c2d77bd46f51cfcc5b7e59a3c65ddc7a594a60899dfdfc7ea484c94"
+        }
+      },
+      {
+        "identity": {
+          "kind": "FunctionDeclaration",
+          "source": "scripts/docs-reader/renderer.mjs",
+          "symbol": "readerSharedAssets"
+        },
+        "before": null,
+        "after": {
+          "source": "scripts/docs-reader/renderer.mjs",
+          "kind": "FunctionDeclaration",
+          "symbol": "readerSharedAssets",
+          "sha256": "b6e9e39ed6c10b7591e20d6ffe3bf9cb5ea98a5cff865f1f1a3e42206d42c431"
+        }
+      },
+      {
+        "identity": {
+          "kind": "FunctionDeclaration",
+          "source": "scripts/docs-reader/renderer.mjs",
+          "symbol": "searchReaderPages"
+        },
+        "before": null,
+        "after": {
+          "source": "scripts/docs-reader/renderer.mjs",
+          "kind": "FunctionDeclaration",
+          "symbol": "searchReaderPages",
+          "sha256": "e4211203018f0f300d9a24ac9ba61658dcf61ff3837b71b04b2a9c3168886caa"
+        }
+      },
+      {
+        "identity": {
+          "kind": "FunctionDeclaration",
+          "source": "scripts/lib/docs-publication-assets.mjs",
+          "symbol": "publicationAssets"
+        },
+        "before": null,
+        "after": {
+          "source": "scripts/lib/docs-publication-assets.mjs",
+          "kind": "FunctionDeclaration",
+          "symbol": "publicationAssets",
+          "sha256": "949d411f82d86d4626bcfc8f0ccc4f16b58c23449a453707791e871d2bb7cde1"
+        }
+      },
+      {
+        "identity": {
+          "kind": "FunctionDeclaration",
+          "source": "scripts/lib/docs-route-continuity.mjs",
+          "symbol": "assertRouteContinuity"
+        },
+        "before": null,
+        "after": {
+          "source": "scripts/lib/docs-route-continuity.mjs",
+          "kind": "FunctionDeclaration",
+          "symbol": "assertRouteContinuity",
+          "sha256": "8afe9744d16e37eb28dfd82e6608d407dd6822165baaaaac12129d7812a50d01"
+        }
+      },
+      {
+        "identity": {
+          "kind": "IfStatement",
+          "source": "scripts/docs-reader/check-artifact.mjs",
+          "symbol": "<operation>"
+        },
+        "before": null,
+        "after": {
+          "source": "scripts/docs-reader/check-artifact.mjs",
+          "kind": "IfStatement",
+          "symbol": "<operation>",
+          "sha256": "e3fe55fa3c7d07c2508ed9dde89582a9a5d85401c262e28cbaf36ce9e048f770"
+        }
+      },
+      {
+        "identity": {
+          "kind": "ImportDeclaration",
+          "source": "scripts/docs-reader/page-records.mjs",
+          "symbol": "<operation>"
+        },
+        "before": null,
+        "after": {
+          "source": "scripts/docs-reader/page-records.mjs",
+          "kind": "ImportDeclaration",
+          "symbol": "<operation>",
+          "sha256": "632e7e3c7b3810a01e923cc1b80439a82b2e130d0868fb2a32174a210cb024b9"
+        }
+      },
+      {
+        "identity": {
+          "kind": "ImportDeclaration",
+          "source": "scripts/docs-reader/redirects.mjs",
+          "symbol": "<operation>"
+        },
+        "before": null,
+        "after": {
+          "source": "scripts/docs-reader/redirects.mjs",
+          "kind": "ImportDeclaration",
+          "symbol": "<operation>",
+          "sha256": "336b18dd5dc9cb9c5d587503227270022936b0a9c40437d4b1413b6096e17ad1"
+        }
+      }
+    ]
+  },
+  {
+    "source": "scripts/docs-reader/redirects.mjs",
+    "baselineObservedMatchesInstalledPrior": true,
+    "definingOperationDeltas": [
+      {
+        "identity": {
+          "kind": "FunctionDeclaration",
+          "source": "scripts/docs-reader/redirects.mjs",
+          "symbol": "compileReaderRedirects"
+        },
+        "before": {
+          "source": "scripts/docs-reader/redirects.mjs",
+          "kind": "FunctionDeclaration",
+          "symbol": "compileReaderRedirects",
+          "sha256": "c936dcf2e216ec3e088f1fc7cfc57b3fca2a4817a44ad6b51c5085751b7af3bb"
+        },
+        "after": {
+          "source": "scripts/docs-reader/redirects.mjs",
+          "kind": "FunctionDeclaration",
+          "symbol": "compileReaderRedirects",
+          "sha256": "61fb30c758d3c443fe639efb199175569bb5fdda1fe121fae353d83e2856cef2"
+        }
+      },
+      {
+        "identity": {
+          "kind": "FunctionDeclaration",
+          "source": "scripts/docs-reader/redirects.mjs",
+          "symbol": "readerRedirectPlan"
+        },
+        "before": null,
+        "after": {
+          "source": "scripts/docs-reader/redirects.mjs",
+          "kind": "FunctionDeclaration",
+          "symbol": "readerRedirectPlan",
+          "sha256": "b83a3a7bd67d5c95452f0ba2c5f8118ee1c763fe05ca3b0302f966c3a326ae37"
+        }
+      },
+      {
+        "identity": {
+          "kind": "FunctionDeclaration",
+          "source": "scripts/docs-reader/redirects.mjs",
+          "symbol": "verifyReaderRedirects"
+        },
+        "before": null,
+        "after": {
+          "source": "scripts/docs-reader/redirects.mjs",
+          "kind": "FunctionDeclaration",
+          "symbol": "verifyReaderRedirects",
+          "sha256": "e8c9f337d47ba759c2286653596ffab9bb69a9d7aa96a630cf6aa05cb26991db"
+        }
+      }
+    ]
+  }
+]

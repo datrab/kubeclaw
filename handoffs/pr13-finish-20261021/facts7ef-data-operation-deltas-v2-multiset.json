@@ -1,0 +1,3165 @@
+[
+  {
+    "source": "scripts/docs-api-output-discovery.mjs",
+    "priorDigestMatchesActualBaseline": true,
+    "oldFactCount": 212,
+    "newFactCount": 225,
+    "removedOccurrences": 3,
+    "addedOccurrences": 16,
+    "oldRepeatedIdentityExtraOccurrences": 17,
+    "newRepeatedIdentityExtraOccurrences": 18,
+    "fullMultisetDelta": [
+      {
+        "fullFact": {
+          "kind": "FirstStatement",
+          "sha256": "27b2ce52c91b8aa9dc37498eacaf10982ca07ca741153e882dbe516e1a3c1c94",
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "symbol": "freeze"
+        },
+        "beforeMultiplicity": 0,
+        "afterMultiplicity": 1,
+        "removedMultiplicity": 0,
+        "addedMultiplicity": 1,
+        "beforePositionsZeroBased": [],
+        "afterPositionsZeroBased": [
+          190
+        ],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "FirstStatement",
+          "sha256": "283009e4473ee801ff2efaa2ad2f9118adcf0ba84befd5da5f884dd87ec1f8b6",
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "symbol": "reviewedDocumentationOwnerPurposes"
+        },
+        "beforeMultiplicity": 0,
+        "afterMultiplicity": 1,
+        "removedMultiplicity": 0,
+        "addedMultiplicity": 1,
+        "beforePositionsZeroBased": [],
+        "afterPositionsZeroBased": [
+          194
+        ],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "FirstStatement",
+          "sha256": "767afcaab51284f9ce981aa865c5411b4e8dbb3bf4bac9f5bc1e924ed55011f2",
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "symbol": "readerArtifactCiProofs"
+        },
+        "beforeMultiplicity": 0,
+        "afterMultiplicity": 1,
+        "removedMultiplicity": 0,
+        "addedMultiplicity": 1,
+        "beforePositionsZeroBased": [],
+        "afterPositionsZeroBased": [
+          191
+        ],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "FirstStatement",
+          "sha256": "81f2a6c7d93b5a0383f4e2fc0c7b0724a23d702f5a7a5d2794cc53dac93fbfeb",
+          "source": "scripts/docs-api-output-role-classification.mjs",
+          "symbol": "reviewedApiUtilityDeclarations"
+        },
+        "beforeMultiplicity": 0,
+        "afterMultiplicity": 1,
+        "removedMultiplicity": 0,
+        "addedMultiplicity": 1,
+        "beforePositionsZeroBased": [],
+        "afterPositionsZeroBased": [
+          162
+        ],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "FirstStatement",
+          "sha256": "a12bde1592918da42128bf498dea09165ec82abaeff0b920a3fbcba791618942",
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "symbol": "readerArtifactCiRoleSources"
+        },
+        "beforeMultiplicity": 0,
+        "afterMultiplicity": 1,
+        "removedMultiplicity": 0,
+        "addedMultiplicity": 1,
+        "beforePositionsZeroBased": [],
+        "afterPositionsZeroBased": [
+          193
+        ],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "FirstStatement",
+          "sha256": "a43d48793b2695b0c96cb19ec2a32a686df7307c0eef8e528ff9b2e9d776f3c3",
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "symbol": "readerArtifactCiPurpose"
+        },
+        "beforeMultiplicity": 0,
+        "afterMultiplicity": 1,
+        "removedMultiplicity": 0,
+        "addedMultiplicity": 1,
+        "beforePositionsZeroBased": [],
+        "afterPositionsZeroBased": [
+          192
+        ],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "FirstStatement",
+          "sha256": "aebce3454045cb891a80c362896aa24d53257c8df68a07feb27132c52172320d",
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "symbol": "sha"
+        },
+        "beforeMultiplicity": 0,
+        "afterMultiplicity": 1,
+        "removedMultiplicity": 0,
+        "addedMultiplicity": 1,
+        "beforePositionsZeroBased": [],
+        "afterPositionsZeroBased": [
+          195
+        ],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "FunctionDeclaration",
+          "sha256": "3cc730f0460602237bb0e406b0e74f3a0023a78709da9e81f3d5a38300762fec",
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "symbol": "assertDocumentationOwnerAncestry"
+        },
+        "beforeMultiplicity": 0,
+        "afterMultiplicity": 1,
+        "removedMultiplicity": 0,
+        "addedMultiplicity": 1,
+        "beforePositionsZeroBased": [],
+        "afterPositionsZeroBased": [
+          197
+        ],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "FunctionDeclaration",
+          "sha256": "40296f405317443f5ddaa981abffa1cdb87ac1f760bc390b951feb83f1296412",
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "symbol": "addReaderArtifactExternalCiSeed"
+        },
+        "beforeMultiplicity": 0,
+        "afterMultiplicity": 1,
+        "removedMultiplicity": 0,
+        "addedMultiplicity": 1,
+        "beforePositionsZeroBased": [],
+        "afterPositionsZeroBased": [
+          196
+        ],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "FunctionDeclaration",
+          "sha256": "61fb25ded832071018e032e4a467f9fc83e3439e7f01c79ae83c0d874d126747",
+          "source": "scripts/docs-api-output-discovery.mjs",
+          "symbol": "documentationModuleGraph"
+        },
+        "beforeMultiplicity": 1,
+        "afterMultiplicity": 0,
+        "removedMultiplicity": 1,
+        "addedMultiplicity": 0,
+        "beforePositionsZeroBased": [
+          100
+        ],
+        "afterPositionsZeroBased": [],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "FunctionDeclaration",
+          "sha256": "768c00977d2d0f24d2c584fb07967320c2f2a7138a3662c7ca5277a39e02f807",
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "symbol": "documentationOwnerNativeEntryMatches"
+        },
+        "beforeMultiplicity": 0,
+        "afterMultiplicity": 1,
+        "removedMultiplicity": 0,
+        "addedMultiplicity": 1,
+        "beforePositionsZeroBased": [],
+        "afterPositionsZeroBased": [
+          200
+        ],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "FunctionDeclaration",
+          "sha256": "76cf87231363f7d8b4d73323bbca65dc51182ba8d0de789c52206592fbd45564",
+          "source": "scripts/docs-api-output-discovery.mjs",
+          "symbol": "documentationModuleGraph"
+        },
+        "beforeMultiplicity": 0,
+        "afterMultiplicity": 1,
+        "removedMultiplicity": 0,
+        "addedMultiplicity": 1,
+        "beforePositionsZeroBased": [],
+        "afterPositionsZeroBased": [
+          100
+        ],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "FunctionDeclaration",
+          "sha256": "7d54e4cfaf5e7d56ab53e7b1ed156bfb03bada24a33b9a1596b59cc96043cbc9",
+          "source": "scripts/docs-api-output-discovery.mjs",
+          "symbol": "assertDocumentationToolQualifications"
+        },
+        "beforeMultiplicity": 1,
+        "afterMultiplicity": 0,
+        "removedMultiplicity": 1,
+        "addedMultiplicity": 0,
+        "beforePositionsZeroBased": [
+          74
+        ],
+        "afterPositionsZeroBased": [],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "FunctionDeclaration",
+          "sha256": "8a83d14cb90d8aa40604700f7bfe2238d67515939e172287a94706d31d68d4e7",
+          "source": "scripts/docs-api-output-discovery.mjs",
+          "symbol": "assertDocumentationToolQualifications"
+        },
+        "beforeMultiplicity": 0,
+        "afterMultiplicity": 1,
+        "removedMultiplicity": 0,
+        "addedMultiplicity": 1,
+        "beforePositionsZeroBased": [],
+        "afterPositionsZeroBased": [
+          74
+        ],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "FunctionDeclaration",
+          "sha256": "a95b76a9c1ca824f62143e9e283b5d78560a00b9971796bab8ca31cecc0c437b",
+          "source": "scripts/docs-api-output-role-classification.mjs",
+          "symbol": "createSerializedOutputRoleClassifier"
+        },
+        "beforeMultiplicity": 0,
+        "afterMultiplicity": 1,
+        "removedMultiplicity": 0,
+        "addedMultiplicity": 1,
+        "beforePositionsZeroBased": [],
+        "afterPositionsZeroBased": [
+          165
+        ],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "FunctionDeclaration",
+          "sha256": "a9ce52880b647a09660c9e3dfbaca76c0a3544139ae63e3a643c6c0c330412a7",
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "symbol": "assertDocumentationOwnerPurpose"
+        },
+        "beforeMultiplicity": 0,
+        "afterMultiplicity": 1,
+        "removedMultiplicity": 0,
+        "addedMultiplicity": 1,
+        "beforePositionsZeroBased": [],
+        "afterPositionsZeroBased": [
+          198
+        ],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "FunctionDeclaration",
+          "sha256": "adec9db4236d9927d55eaa67557a62434a95d7d3b3462f3e1747db44231e6127",
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "symbol": "assertReaderArtifactExternalCiPurpose"
+        },
+        "beforeMultiplicity": 0,
+        "afterMultiplicity": 1,
+        "removedMultiplicity": 0,
+        "addedMultiplicity": 1,
+        "beforePositionsZeroBased": [],
+        "afterPositionsZeroBased": [
+          199
+        ],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "FunctionDeclaration",
+          "sha256": "ce8669097d547202eaf9edeb81e9a266275307f4e098215a5c6dfa68333bc832",
+          "source": "scripts/docs-api-output-role-classification.mjs",
+          "symbol": "createSerializedOutputRoleClassifier"
+        },
+        "beforeMultiplicity": 1,
+        "afterMultiplicity": 0,
+        "removedMultiplicity": 1,
+        "addedMultiplicity": 0,
+        "beforePositionsZeroBased": [
+          163
+        ],
+        "afterPositionsZeroBased": [],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "ImportDeclaration",
+          "sha256": "0dea52aa29095a9c3bd61034e6c0adbd7b466cf4553a9131f6d925682de010a6",
+          "source": "scripts/docs-api-output-discovery.mjs",
+          "symbol": "<operation>"
+        },
+        "beforeMultiplicity": 0,
+        "afterMultiplicity": 1,
+        "removedMultiplicity": 0,
+        "addedMultiplicity": 1,
+        "beforePositionsZeroBased": [],
+        "afterPositionsZeroBased": [
+          142
+        ],
+        "fullFactRepresentedInV1LastWriteDelta": false
+      }
+    ]
+  },
+  {
+    "source": "scripts/docs-api-output-role-classification.mjs",
+    "priorDigestMatchesActualBaseline": true,
+    "oldFactCount": 31,
+    "newFactCount": 36,
+    "removedOccurrences": 3,
+    "addedOccurrences": 8,
+    "oldRepeatedIdentityExtraOccurrences": 5,
+    "newRepeatedIdentityExtraOccurrences": 5,
+    "fullMultisetDelta": [
+      {
+        "fullFact": {
+          "kind": "FirstStatement",
+          "sha256": "81f2a6c7d93b5a0383f4e2fc0c7b0724a23d702f5a7a5d2794cc53dac93fbfeb",
+          "source": "scripts/docs-api-output-role-classification.mjs",
+          "symbol": "reviewedApiUtilityDeclarations"
+        },
+        "beforeMultiplicity": 0,
+        "afterMultiplicity": 1,
+        "removedMultiplicity": 0,
+        "addedMultiplicity": 1,
+        "beforePositionsZeroBased": [],
+        "afterPositionsZeroBased": [
+          13
+        ],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "FunctionDeclaration",
+          "sha256": "0b2c7c3873426d7649fcc51708f462239765b67270311317bbbb0b8c6348fbe9",
+          "source": "scripts/docs-api-output-role-classification.mjs",
+          "symbol": "sourceSnapshot"
+        },
+        "beforeMultiplicity": 0,
+        "afterMultiplicity": 1,
+        "removedMultiplicity": 0,
+        "addedMultiplicity": 1,
+        "beforePositionsZeroBased": [],
+        "afterPositionsZeroBased": [
+          27
+        ],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "FunctionDeclaration",
+          "sha256": "2a046cdd79bb9705ff1c69dee93e9be11abf0c89200e07091d5c2a2f05067e49",
+          "source": "scripts/docs-api-output-role-classification.mjs",
+          "symbol": "qualifiedFileRole"
+        },
+        "beforeMultiplicity": 1,
+        "afterMultiplicity": 0,
+        "removedMultiplicity": 1,
+        "addedMultiplicity": 0,
+        "beforePositionsZeroBased": [
+          22
+        ],
+        "afterPositionsZeroBased": [],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "FunctionDeclaration",
+          "sha256": "4677f39afb42e1b8882ed24935e88f1cc437c8027cfb1e351477f120b54d9183",
+          "source": "scripts/docs-api-output-role-classification.mjs",
+          "symbol": "visit"
+        },
+        "beforeMultiplicity": 0,
+        "afterMultiplicity": 1,
+        "removedMultiplicity": 0,
+        "addedMultiplicity": 1,
+        "beforePositionsZeroBased": [],
+        "afterPositionsZeroBased": [
+          29
+        ],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "FunctionDeclaration",
+          "sha256": "59b7e8372a0132704028abb33b4329a5ca7bed94848a6d6f69232874661517c5",
+          "source": "scripts/docs-api-output-role-classification.mjs",
+          "symbol": "utilitySourceProfile"
+        },
+        "beforeMultiplicity": 0,
+        "afterMultiplicity": 1,
+        "removedMultiplicity": 0,
+        "addedMultiplicity": 1,
+        "beforePositionsZeroBased": [],
+        "afterPositionsZeroBased": [
+          28
+        ],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "FunctionDeclaration",
+          "sha256": "66207dde69842fdb5c14855269831f2d9242a20ad874d84a124ef15ef00ed75d",
+          "source": "scripts/docs-api-output-role-classification.mjs",
+          "symbol": "module"
+        },
+        "beforeMultiplicity": 1,
+        "afterMultiplicity": 0,
+        "removedMultiplicity": 1,
+        "addedMultiplicity": 0,
+        "beforePositionsZeroBased": [
+          20
+        ],
+        "afterPositionsZeroBased": [],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "FunctionDeclaration",
+          "sha256": "6684b30e7ffba611d6ddfdae3bfd1057e2ba141baca0a437917d00c294ea83a9",
+          "source": "scripts/docs-api-output-role-classification.mjs",
+          "symbol": "module"
+        },
+        "beforeMultiplicity": 0,
+        "afterMultiplicity": 1,
+        "removedMultiplicity": 0,
+        "addedMultiplicity": 1,
+        "beforePositionsZeroBased": [],
+        "afterPositionsZeroBased": [
+          21
+        ],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "FunctionDeclaration",
+          "sha256": "853b35b08a7c851cdb8fb1635b3df8303cdbcd4fe3213b1935fcf4ba4016b416",
+          "source": "scripts/docs-api-output-role-classification.mjs",
+          "symbol": "qualifiedFileRole"
+        },
+        "beforeMultiplicity": 0,
+        "afterMultiplicity": 1,
+        "removedMultiplicity": 0,
+        "addedMultiplicity": 1,
+        "beforePositionsZeroBased": [],
+        "afterPositionsZeroBased": [
+          24
+        ],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "FunctionDeclaration",
+          "sha256": "a95b76a9c1ca824f62143e9e283b5d78560a00b9971796bab8ca31cecc0c437b",
+          "source": "scripts/docs-api-output-role-classification.mjs",
+          "symbol": "createSerializedOutputRoleClassifier"
+        },
+        "beforeMultiplicity": 0,
+        "afterMultiplicity": 1,
+        "removedMultiplicity": 0,
+        "addedMultiplicity": 1,
+        "beforePositionsZeroBased": [],
+        "afterPositionsZeroBased": [
+          17
+        ],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "FunctionDeclaration",
+          "sha256": "ce8669097d547202eaf9edeb81e9a266275307f4e098215a5c6dfa68333bc832",
+          "source": "scripts/docs-api-output-role-classification.mjs",
+          "symbol": "createSerializedOutputRoleClassifier"
+        },
+        "beforeMultiplicity": 1,
+        "afterMultiplicity": 0,
+        "removedMultiplicity": 1,
+        "addedMultiplicity": 0,
+        "beforePositionsZeroBased": [
+          16
+        ],
+        "afterPositionsZeroBased": [],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "FunctionDeclaration",
+          "sha256": "f88304f338ebb9bb0d6c4bc248f461f1e323c3378b443d8b1ba49cda354610f1",
+          "source": "scripts/docs-api-output-role-classification.mjs",
+          "symbol": "operationMatches"
+        },
+        "beforeMultiplicity": 0,
+        "afterMultiplicity": 1,
+        "removedMultiplicity": 0,
+        "addedMultiplicity": 1,
+        "beforePositionsZeroBased": [],
+        "afterPositionsZeroBased": [
+          23
+        ],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      }
+    ]
+  },
+  {
+    "source": "scripts/docs-api-product-scope.mjs",
+    "priorDigestMatchesActualBaseline": true,
+    "oldFactCount": 1405,
+    "newFactCount": 1418,
+    "removedOccurrences": 3,
+    "addedOccurrences": 16,
+    "oldRepeatedIdentityExtraOccurrences": 553,
+    "newRepeatedIdentityExtraOccurrences": 554,
+    "fullMultisetDelta": [
+      {
+        "fullFact": {
+          "kind": "FirstStatement",
+          "sha256": "27b2ce52c91b8aa9dc37498eacaf10982ca07ca741153e882dbe516e1a3c1c94",
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "symbol": "freeze"
+        },
+        "beforeMultiplicity": 0,
+        "afterMultiplicity": 1,
+        "removedMultiplicity": 0,
+        "addedMultiplicity": 1,
+        "beforePositionsZeroBased": [],
+        "afterPositionsZeroBased": [
+          354
+        ],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "FirstStatement",
+          "sha256": "283009e4473ee801ff2efaa2ad2f9118adcf0ba84befd5da5f884dd87ec1f8b6",
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "symbol": "reviewedDocumentationOwnerPurposes"
+        },
+        "beforeMultiplicity": 0,
+        "afterMultiplicity": 1,
+        "removedMultiplicity": 0,
+        "addedMultiplicity": 1,
+        "beforePositionsZeroBased": [],
+        "afterPositionsZeroBased": [
+          358
+        ],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "FirstStatement",
+          "sha256": "767afcaab51284f9ce981aa865c5411b4e8dbb3bf4bac9f5bc1e924ed55011f2",
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "symbol": "readerArtifactCiProofs"
+        },
+        "beforeMultiplicity": 0,
+        "afterMultiplicity": 1,
+        "removedMultiplicity": 0,
+        "addedMultiplicity": 1,
+        "beforePositionsZeroBased": [],
+        "afterPositionsZeroBased": [
+          355
+        ],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "FirstStatement",
+          "sha256": "81f2a6c7d93b5a0383f4e2fc0c7b0724a23d702f5a7a5d2794cc53dac93fbfeb",
+          "source": "scripts/docs-api-output-role-classification.mjs",
+          "symbol": "reviewedApiUtilityDeclarations"
+        },
+        "beforeMultiplicity": 0,
+        "afterMultiplicity": 1,
+        "removedMultiplicity": 0,
+        "addedMultiplicity": 1,
+        "beforePositionsZeroBased": [],
+        "afterPositionsZeroBased": [
+          145
+        ],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "FirstStatement",
+          "sha256": "a12bde1592918da42128bf498dea09165ec82abaeff0b920a3fbcba791618942",
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "symbol": "readerArtifactCiRoleSources"
+        },
+        "beforeMultiplicity": 0,
+        "afterMultiplicity": 1,
+        "removedMultiplicity": 0,
+        "addedMultiplicity": 1,
+        "beforePositionsZeroBased": [],
+        "afterPositionsZeroBased": [
+          357
+        ],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "FirstStatement",
+          "sha256": "a43d48793b2695b0c96cb19ec2a32a686df7307c0eef8e528ff9b2e9d776f3c3",
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "symbol": "readerArtifactCiPurpose"
+        },
+        "beforeMultiplicity": 0,
+        "afterMultiplicity": 1,
+        "removedMultiplicity": 0,
+        "addedMultiplicity": 1,
+        "beforePositionsZeroBased": [],
+        "afterPositionsZeroBased": [
+          356
+        ],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "FirstStatement",
+          "sha256": "aebce3454045cb891a80c362896aa24d53257c8df68a07feb27132c52172320d",
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "symbol": "sha"
+        },
+        "beforeMultiplicity": 0,
+        "afterMultiplicity": 1,
+        "removedMultiplicity": 0,
+        "addedMultiplicity": 1,
+        "beforePositionsZeroBased": [],
+        "afterPositionsZeroBased": [
+          359
+        ],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "FunctionDeclaration",
+          "sha256": "3cc730f0460602237bb0e406b0e74f3a0023a78709da9e81f3d5a38300762fec",
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "symbol": "assertDocumentationOwnerAncestry"
+        },
+        "beforeMultiplicity": 0,
+        "afterMultiplicity": 1,
+        "removedMultiplicity": 0,
+        "addedMultiplicity": 1,
+        "beforePositionsZeroBased": [],
+        "afterPositionsZeroBased": [
+          361
+        ],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "FunctionDeclaration",
+          "sha256": "40296f405317443f5ddaa981abffa1cdb87ac1f760bc390b951feb83f1296412",
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "symbol": "addReaderArtifactExternalCiSeed"
+        },
+        "beforeMultiplicity": 0,
+        "afterMultiplicity": 1,
+        "removedMultiplicity": 0,
+        "addedMultiplicity": 1,
+        "beforePositionsZeroBased": [],
+        "afterPositionsZeroBased": [
+          360
+        ],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "FunctionDeclaration",
+          "sha256": "61fb25ded832071018e032e4a467f9fc83e3439e7f01c79ae83c0d874d126747",
+          "source": "scripts/docs-api-output-discovery.mjs",
+          "symbol": "documentationModuleGraph"
+        },
+        "beforeMultiplicity": 1,
+        "afterMultiplicity": 0,
+        "removedMultiplicity": 1,
+        "addedMultiplicity": 0,
+        "beforePositionsZeroBased": [
+          94
+        ],
+        "afterPositionsZeroBased": [],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "FunctionDeclaration",
+          "sha256": "768c00977d2d0f24d2c584fb07967320c2f2a7138a3662c7ca5277a39e02f807",
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "symbol": "documentationOwnerNativeEntryMatches"
+        },
+        "beforeMultiplicity": 0,
+        "afterMultiplicity": 1,
+        "removedMultiplicity": 0,
+        "addedMultiplicity": 1,
+        "beforePositionsZeroBased": [],
+        "afterPositionsZeroBased": [
+          364
+        ],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "FunctionDeclaration",
+          "sha256": "76cf87231363f7d8b4d73323bbca65dc51182ba8d0de789c52206592fbd45564",
+          "source": "scripts/docs-api-output-discovery.mjs",
+          "symbol": "documentationModuleGraph"
+        },
+        "beforeMultiplicity": 0,
+        "afterMultiplicity": 1,
+        "removedMultiplicity": 0,
+        "addedMultiplicity": 1,
+        "beforePositionsZeroBased": [],
+        "afterPositionsZeroBased": [
+          94
+        ],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "FunctionDeclaration",
+          "sha256": "7d54e4cfaf5e7d56ab53e7b1ed156bfb03bada24a33b9a1596b59cc96043cbc9",
+          "source": "scripts/docs-api-output-discovery.mjs",
+          "symbol": "assertDocumentationToolQualifications"
+        },
+        "beforeMultiplicity": 1,
+        "afterMultiplicity": 0,
+        "removedMultiplicity": 1,
+        "addedMultiplicity": 0,
+        "beforePositionsZeroBased": [
+          74
+        ],
+        "afterPositionsZeroBased": [],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "FunctionDeclaration",
+          "sha256": "8a83d14cb90d8aa40604700f7bfe2238d67515939e172287a94706d31d68d4e7",
+          "source": "scripts/docs-api-output-discovery.mjs",
+          "symbol": "assertDocumentationToolQualifications"
+        },
+        "beforeMultiplicity": 0,
+        "afterMultiplicity": 1,
+        "removedMultiplicity": 0,
+        "addedMultiplicity": 1,
+        "beforePositionsZeroBased": [],
+        "afterPositionsZeroBased": [
+          74
+        ],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "FunctionDeclaration",
+          "sha256": "a95b76a9c1ca824f62143e9e283b5d78560a00b9971796bab8ca31cecc0c437b",
+          "source": "scripts/docs-api-output-role-classification.mjs",
+          "symbol": "createSerializedOutputRoleClassifier"
+        },
+        "beforeMultiplicity": 0,
+        "afterMultiplicity": 1,
+        "removedMultiplicity": 0,
+        "addedMultiplicity": 1,
+        "beforePositionsZeroBased": [],
+        "afterPositionsZeroBased": [
+          148
+        ],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "FunctionDeclaration",
+          "sha256": "a9ce52880b647a09660c9e3dfbaca76c0a3544139ae63e3a643c6c0c330412a7",
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "symbol": "assertDocumentationOwnerPurpose"
+        },
+        "beforeMultiplicity": 0,
+        "afterMultiplicity": 1,
+        "removedMultiplicity": 0,
+        "addedMultiplicity": 1,
+        "beforePositionsZeroBased": [],
+        "afterPositionsZeroBased": [
+          362
+        ],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "FunctionDeclaration",
+          "sha256": "adec9db4236d9927d55eaa67557a62434a95d7d3b3462f3e1747db44231e6127",
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "symbol": "assertReaderArtifactExternalCiPurpose"
+        },
+        "beforeMultiplicity": 0,
+        "afterMultiplicity": 1,
+        "removedMultiplicity": 0,
+        "addedMultiplicity": 1,
+        "beforePositionsZeroBased": [],
+        "afterPositionsZeroBased": [
+          363
+        ],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "FunctionDeclaration",
+          "sha256": "ce8669097d547202eaf9edeb81e9a266275307f4e098215a5c6dfa68333bc832",
+          "source": "scripts/docs-api-output-role-classification.mjs",
+          "symbol": "createSerializedOutputRoleClassifier"
+        },
+        "beforeMultiplicity": 1,
+        "afterMultiplicity": 0,
+        "removedMultiplicity": 1,
+        "addedMultiplicity": 0,
+        "beforePositionsZeroBased": [
+          146
+        ],
+        "afterPositionsZeroBased": [],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "ImportDeclaration",
+          "sha256": "0dea52aa29095a9c3bd61034e6c0adbd7b466cf4553a9131f6d925682de010a6",
+          "source": "scripts/docs-api-output-discovery.mjs",
+          "symbol": "<operation>"
+        },
+        "beforeMultiplicity": 0,
+        "afterMultiplicity": 1,
+        "removedMultiplicity": 0,
+        "addedMultiplicity": 1,
+        "beforePositionsZeroBased": [],
+        "afterPositionsZeroBased": [
+          135
+        ],
+        "fullFactRepresentedInV1LastWriteDelta": false
+      }
+    ]
+  },
+  {
+    "source": "scripts/docs-api-reference.mjs",
+    "priorDigestMatchesActualBaseline": true,
+    "oldFactCount": 1427,
+    "newFactCount": 1440,
+    "removedOccurrences": 3,
+    "addedOccurrences": 16,
+    "oldRepeatedIdentityExtraOccurrences": 555,
+    "newRepeatedIdentityExtraOccurrences": 556,
+    "fullMultisetDelta": [
+      {
+        "fullFact": {
+          "kind": "FirstStatement",
+          "sha256": "27b2ce52c91b8aa9dc37498eacaf10982ca07ca741153e882dbe516e1a3c1c94",
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "symbol": "freeze"
+        },
+        "beforeMultiplicity": 0,
+        "afterMultiplicity": 1,
+        "removedMultiplicity": 0,
+        "addedMultiplicity": 1,
+        "beforePositionsZeroBased": [],
+        "afterPositionsZeroBased": [
+          376
+        ],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "FirstStatement",
+          "sha256": "283009e4473ee801ff2efaa2ad2f9118adcf0ba84befd5da5f884dd87ec1f8b6",
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "symbol": "reviewedDocumentationOwnerPurposes"
+        },
+        "beforeMultiplicity": 0,
+        "afterMultiplicity": 1,
+        "removedMultiplicity": 0,
+        "addedMultiplicity": 1,
+        "beforePositionsZeroBased": [],
+        "afterPositionsZeroBased": [
+          380
+        ],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "FirstStatement",
+          "sha256": "767afcaab51284f9ce981aa865c5411b4e8dbb3bf4bac9f5bc1e924ed55011f2",
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "symbol": "readerArtifactCiProofs"
+        },
+        "beforeMultiplicity": 0,
+        "afterMultiplicity": 1,
+        "removedMultiplicity": 0,
+        "addedMultiplicity": 1,
+        "beforePositionsZeroBased": [],
+        "afterPositionsZeroBased": [
+          377
+        ],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "FirstStatement",
+          "sha256": "81f2a6c7d93b5a0383f4e2fc0c7b0724a23d702f5a7a5d2794cc53dac93fbfeb",
+          "source": "scripts/docs-api-output-role-classification.mjs",
+          "symbol": "reviewedApiUtilityDeclarations"
+        },
+        "beforeMultiplicity": 0,
+        "afterMultiplicity": 1,
+        "removedMultiplicity": 0,
+        "addedMultiplicity": 1,
+        "beforePositionsZeroBased": [],
+        "afterPositionsZeroBased": [
+          146
+        ],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "FirstStatement",
+          "sha256": "a12bde1592918da42128bf498dea09165ec82abaeff0b920a3fbcba791618942",
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "symbol": "readerArtifactCiRoleSources"
+        },
+        "beforeMultiplicity": 0,
+        "afterMultiplicity": 1,
+        "removedMultiplicity": 0,
+        "addedMultiplicity": 1,
+        "beforePositionsZeroBased": [],
+        "afterPositionsZeroBased": [
+          379
+        ],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "FirstStatement",
+          "sha256": "a43d48793b2695b0c96cb19ec2a32a686df7307c0eef8e528ff9b2e9d776f3c3",
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "symbol": "readerArtifactCiPurpose"
+        },
+        "beforeMultiplicity": 0,
+        "afterMultiplicity": 1,
+        "removedMultiplicity": 0,
+        "addedMultiplicity": 1,
+        "beforePositionsZeroBased": [],
+        "afterPositionsZeroBased": [
+          378
+        ],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "FirstStatement",
+          "sha256": "aebce3454045cb891a80c362896aa24d53257c8df68a07feb27132c52172320d",
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "symbol": "sha"
+        },
+        "beforeMultiplicity": 0,
+        "afterMultiplicity": 1,
+        "removedMultiplicity": 0,
+        "addedMultiplicity": 1,
+        "beforePositionsZeroBased": [],
+        "afterPositionsZeroBased": [
+          381
+        ],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "FunctionDeclaration",
+          "sha256": "3cc730f0460602237bb0e406b0e74f3a0023a78709da9e81f3d5a38300762fec",
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "symbol": "assertDocumentationOwnerAncestry"
+        },
+        "beforeMultiplicity": 0,
+        "afterMultiplicity": 1,
+        "removedMultiplicity": 0,
+        "addedMultiplicity": 1,
+        "beforePositionsZeroBased": [],
+        "afterPositionsZeroBased": [
+          383
+        ],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "FunctionDeclaration",
+          "sha256": "40296f405317443f5ddaa981abffa1cdb87ac1f760bc390b951feb83f1296412",
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "symbol": "addReaderArtifactExternalCiSeed"
+        },
+        "beforeMultiplicity": 0,
+        "afterMultiplicity": 1,
+        "removedMultiplicity": 0,
+        "addedMultiplicity": 1,
+        "beforePositionsZeroBased": [],
+        "afterPositionsZeroBased": [
+          382
+        ],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "FunctionDeclaration",
+          "sha256": "61fb25ded832071018e032e4a467f9fc83e3439e7f01c79ae83c0d874d126747",
+          "source": "scripts/docs-api-output-discovery.mjs",
+          "symbol": "documentationModuleGraph"
+        },
+        "beforeMultiplicity": 1,
+        "afterMultiplicity": 0,
+        "removedMultiplicity": 1,
+        "addedMultiplicity": 0,
+        "beforePositionsZeroBased": [
+          95
+        ],
+        "afterPositionsZeroBased": [],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "FunctionDeclaration",
+          "sha256": "768c00977d2d0f24d2c584fb07967320c2f2a7138a3662c7ca5277a39e02f807",
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "symbol": "documentationOwnerNativeEntryMatches"
+        },
+        "beforeMultiplicity": 0,
+        "afterMultiplicity": 1,
+        "removedMultiplicity": 0,
+        "addedMultiplicity": 1,
+        "beforePositionsZeroBased": [],
+        "afterPositionsZeroBased": [
+          386
+        ],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "FunctionDeclaration",
+          "sha256": "76cf87231363f7d8b4d73323bbca65dc51182ba8d0de789c52206592fbd45564",
+          "source": "scripts/docs-api-output-discovery.mjs",
+          "symbol": "documentationModuleGraph"
+        },
+        "beforeMultiplicity": 0,
+        "afterMultiplicity": 1,
+        "removedMultiplicity": 0,
+        "addedMultiplicity": 1,
+        "beforePositionsZeroBased": [],
+        "afterPositionsZeroBased": [
+          95
+        ],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "FunctionDeclaration",
+          "sha256": "7d54e4cfaf5e7d56ab53e7b1ed156bfb03bada24a33b9a1596b59cc96043cbc9",
+          "source": "scripts/docs-api-output-discovery.mjs",
+          "symbol": "assertDocumentationToolQualifications"
+        },
+        "beforeMultiplicity": 1,
+        "afterMultiplicity": 0,
+        "removedMultiplicity": 1,
+        "addedMultiplicity": 0,
+        "beforePositionsZeroBased": [
+          74
+        ],
+        "afterPositionsZeroBased": [],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "FunctionDeclaration",
+          "sha256": "8a83d14cb90d8aa40604700f7bfe2238d67515939e172287a94706d31d68d4e7",
+          "source": "scripts/docs-api-output-discovery.mjs",
+          "symbol": "assertDocumentationToolQualifications"
+        },
+        "beforeMultiplicity": 0,
+        "afterMultiplicity": 1,
+        "removedMultiplicity": 0,
+        "addedMultiplicity": 1,
+        "beforePositionsZeroBased": [],
+        "afterPositionsZeroBased": [
+          74
+        ],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "FunctionDeclaration",
+          "sha256": "a95b76a9c1ca824f62143e9e283b5d78560a00b9971796bab8ca31cecc0c437b",
+          "source": "scripts/docs-api-output-role-classification.mjs",
+          "symbol": "createSerializedOutputRoleClassifier"
+        },
+        "beforeMultiplicity": 0,
+        "afterMultiplicity": 1,
+        "removedMultiplicity": 0,
+        "addedMultiplicity": 1,
+        "beforePositionsZeroBased": [],
+        "afterPositionsZeroBased": [
+          149
+        ],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "FunctionDeclaration",
+          "sha256": "a9ce52880b647a09660c9e3dfbaca76c0a3544139ae63e3a643c6c0c330412a7",
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "symbol": "assertDocumentationOwnerPurpose"
+        },
+        "beforeMultiplicity": 0,
+        "afterMultiplicity": 1,
+        "removedMultiplicity": 0,
+        "addedMultiplicity": 1,
+        "beforePositionsZeroBased": [],
+        "afterPositionsZeroBased": [
+          384
+        ],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "FunctionDeclaration",
+          "sha256": "adec9db4236d9927d55eaa67557a62434a95d7d3b3462f3e1747db44231e6127",
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "symbol": "assertReaderArtifactExternalCiPurpose"
+        },
+        "beforeMultiplicity": 0,
+        "afterMultiplicity": 1,
+        "removedMultiplicity": 0,
+        "addedMultiplicity": 1,
+        "beforePositionsZeroBased": [],
+        "afterPositionsZeroBased": [
+          385
+        ],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "FunctionDeclaration",
+          "sha256": "ce8669097d547202eaf9edeb81e9a266275307f4e098215a5c6dfa68333bc832",
+          "source": "scripts/docs-api-output-role-classification.mjs",
+          "symbol": "createSerializedOutputRoleClassifier"
+        },
+        "beforeMultiplicity": 1,
+        "afterMultiplicity": 0,
+        "removedMultiplicity": 1,
+        "addedMultiplicity": 0,
+        "beforePositionsZeroBased": [
+          147
+        ],
+        "afterPositionsZeroBased": [],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "ImportDeclaration",
+          "sha256": "0dea52aa29095a9c3bd61034e6c0adbd7b466cf4553a9131f6d925682de010a6",
+          "source": "scripts/docs-api-output-discovery.mjs",
+          "symbol": "<operation>"
+        },
+        "beforeMultiplicity": 0,
+        "afterMultiplicity": 1,
+        "removedMultiplicity": 0,
+        "addedMultiplicity": 1,
+        "beforePositionsZeroBased": [],
+        "afterPositionsZeroBased": [
+          136
+        ],
+        "fullFactRepresentedInV1LastWriteDelta": false
+      }
+    ]
+  },
+  {
+    "source": "scripts/docs-configuration-inventory.mjs",
+    "priorDigestMatchesActualBaseline": true,
+    "oldFactCount": 2197,
+    "newFactCount": 2210,
+    "removedOccurrences": 3,
+    "addedOccurrences": 16,
+    "oldRepeatedIdentityExtraOccurrences": 992,
+    "newRepeatedIdentityExtraOccurrences": 993,
+    "fullMultisetDelta": [
+      {
+        "fullFact": {
+          "kind": "FirstStatement",
+          "sha256": "27b2ce52c91b8aa9dc37498eacaf10982ca07ca741153e882dbe516e1a3c1c94",
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "symbol": "freeze"
+        },
+        "beforeMultiplicity": 0,
+        "afterMultiplicity": 1,
+        "removedMultiplicity": 0,
+        "addedMultiplicity": 1,
+        "beforePositionsZeroBased": [],
+        "afterPositionsZeroBased": [
+          663
+        ],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "FirstStatement",
+          "sha256": "283009e4473ee801ff2efaa2ad2f9118adcf0ba84befd5da5f884dd87ec1f8b6",
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "symbol": "reviewedDocumentationOwnerPurposes"
+        },
+        "beforeMultiplicity": 0,
+        "afterMultiplicity": 1,
+        "removedMultiplicity": 0,
+        "addedMultiplicity": 1,
+        "beforePositionsZeroBased": [],
+        "afterPositionsZeroBased": [
+          667
+        ],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "FirstStatement",
+          "sha256": "767afcaab51284f9ce981aa865c5411b4e8dbb3bf4bac9f5bc1e924ed55011f2",
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "symbol": "readerArtifactCiProofs"
+        },
+        "beforeMultiplicity": 0,
+        "afterMultiplicity": 1,
+        "removedMultiplicity": 0,
+        "addedMultiplicity": 1,
+        "beforePositionsZeroBased": [],
+        "afterPositionsZeroBased": [
+          664
+        ],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "FirstStatement",
+          "sha256": "81f2a6c7d93b5a0383f4e2fc0c7b0724a23d702f5a7a5d2794cc53dac93fbfeb",
+          "source": "scripts/docs-api-output-role-classification.mjs",
+          "symbol": "reviewedApiUtilityDeclarations"
+        },
+        "beforeMultiplicity": 0,
+        "afterMultiplicity": 1,
+        "removedMultiplicity": 0,
+        "addedMultiplicity": 1,
+        "beforePositionsZeroBased": [],
+        "afterPositionsZeroBased": [
+          146
+        ],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "FirstStatement",
+          "sha256": "a12bde1592918da42128bf498dea09165ec82abaeff0b920a3fbcba791618942",
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "symbol": "readerArtifactCiRoleSources"
+        },
+        "beforeMultiplicity": 0,
+        "afterMultiplicity": 1,
+        "removedMultiplicity": 0,
+        "addedMultiplicity": 1,
+        "beforePositionsZeroBased": [],
+        "afterPositionsZeroBased": [
+          666
+        ],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "FirstStatement",
+          "sha256": "a43d48793b2695b0c96cb19ec2a32a686df7307c0eef8e528ff9b2e9d776f3c3",
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "symbol": "readerArtifactCiPurpose"
+        },
+        "beforeMultiplicity": 0,
+        "afterMultiplicity": 1,
+        "removedMultiplicity": 0,
+        "addedMultiplicity": 1,
+        "beforePositionsZeroBased": [],
+        "afterPositionsZeroBased": [
+          665
+        ],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "FirstStatement",
+          "sha256": "aebce3454045cb891a80c362896aa24d53257c8df68a07feb27132c52172320d",
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "symbol": "sha"
+        },
+        "beforeMultiplicity": 0,
+        "afterMultiplicity": 1,
+        "removedMultiplicity": 0,
+        "addedMultiplicity": 1,
+        "beforePositionsZeroBased": [],
+        "afterPositionsZeroBased": [
+          668
+        ],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "FunctionDeclaration",
+          "sha256": "3cc730f0460602237bb0e406b0e74f3a0023a78709da9e81f3d5a38300762fec",
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "symbol": "assertDocumentationOwnerAncestry"
+        },
+        "beforeMultiplicity": 0,
+        "afterMultiplicity": 1,
+        "removedMultiplicity": 0,
+        "addedMultiplicity": 1,
+        "beforePositionsZeroBased": [],
+        "afterPositionsZeroBased": [
+          670
+        ],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "FunctionDeclaration",
+          "sha256": "40296f405317443f5ddaa981abffa1cdb87ac1f760bc390b951feb83f1296412",
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "symbol": "addReaderArtifactExternalCiSeed"
+        },
+        "beforeMultiplicity": 0,
+        "afterMultiplicity": 1,
+        "removedMultiplicity": 0,
+        "addedMultiplicity": 1,
+        "beforePositionsZeroBased": [],
+        "afterPositionsZeroBased": [
+          669
+        ],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "FunctionDeclaration",
+          "sha256": "61fb25ded832071018e032e4a467f9fc83e3439e7f01c79ae83c0d874d126747",
+          "source": "scripts/docs-api-output-discovery.mjs",
+          "symbol": "documentationModuleGraph"
+        },
+        "beforeMultiplicity": 1,
+        "afterMultiplicity": 0,
+        "removedMultiplicity": 1,
+        "addedMultiplicity": 0,
+        "beforePositionsZeroBased": [
+          95
+        ],
+        "afterPositionsZeroBased": [],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "FunctionDeclaration",
+          "sha256": "768c00977d2d0f24d2c584fb07967320c2f2a7138a3662c7ca5277a39e02f807",
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "symbol": "documentationOwnerNativeEntryMatches"
+        },
+        "beforeMultiplicity": 0,
+        "afterMultiplicity": 1,
+        "removedMultiplicity": 0,
+        "addedMultiplicity": 1,
+        "beforePositionsZeroBased": [],
+        "afterPositionsZeroBased": [
+          673
+        ],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "FunctionDeclaration",
+          "sha256": "76cf87231363f7d8b4d73323bbca65dc51182ba8d0de789c52206592fbd45564",
+          "source": "scripts/docs-api-output-discovery.mjs",
+          "symbol": "documentationModuleGraph"
+        },
+        "beforeMultiplicity": 0,
+        "afterMultiplicity": 1,
+        "removedMultiplicity": 0,
+        "addedMultiplicity": 1,
+        "beforePositionsZeroBased": [],
+        "afterPositionsZeroBased": [
+          95
+        ],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "FunctionDeclaration",
+          "sha256": "7d54e4cfaf5e7d56ab53e7b1ed156bfb03bada24a33b9a1596b59cc96043cbc9",
+          "source": "scripts/docs-api-output-discovery.mjs",
+          "symbol": "assertDocumentationToolQualifications"
+        },
+        "beforeMultiplicity": 1,
+        "afterMultiplicity": 0,
+        "removedMultiplicity": 1,
+        "addedMultiplicity": 0,
+        "beforePositionsZeroBased": [
+          74
+        ],
+        "afterPositionsZeroBased": [],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "FunctionDeclaration",
+          "sha256": "8a83d14cb90d8aa40604700f7bfe2238d67515939e172287a94706d31d68d4e7",
+          "source": "scripts/docs-api-output-discovery.mjs",
+          "symbol": "assertDocumentationToolQualifications"
+        },
+        "beforeMultiplicity": 0,
+        "afterMultiplicity": 1,
+        "removedMultiplicity": 0,
+        "addedMultiplicity": 1,
+        "beforePositionsZeroBased": [],
+        "afterPositionsZeroBased": [
+          74
+        ],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "FunctionDeclaration",
+          "sha256": "a95b76a9c1ca824f62143e9e283b5d78560a00b9971796bab8ca31cecc0c437b",
+          "source": "scripts/docs-api-output-role-classification.mjs",
+          "symbol": "createSerializedOutputRoleClassifier"
+        },
+        "beforeMultiplicity": 0,
+        "afterMultiplicity": 1,
+        "removedMultiplicity": 0,
+        "addedMultiplicity": 1,
+        "beforePositionsZeroBased": [],
+        "afterPositionsZeroBased": [
+          149
+        ],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "FunctionDeclaration",
+          "sha256": "a9ce52880b647a09660c9e3dfbaca76c0a3544139ae63e3a643c6c0c330412a7",
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "symbol": "assertDocumentationOwnerPurpose"
+        },
+        "beforeMultiplicity": 0,
+        "afterMultiplicity": 1,
+        "removedMultiplicity": 0,
+        "addedMultiplicity": 1,
+        "beforePositionsZeroBased": [],
+        "afterPositionsZeroBased": [
+          671
+        ],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "FunctionDeclaration",
+          "sha256": "adec9db4236d9927d55eaa67557a62434a95d7d3b3462f3e1747db44231e6127",
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "symbol": "assertReaderArtifactExternalCiPurpose"
+        },
+        "beforeMultiplicity": 0,
+        "afterMultiplicity": 1,
+        "removedMultiplicity": 0,
+        "addedMultiplicity": 1,
+        "beforePositionsZeroBased": [],
+        "afterPositionsZeroBased": [
+          672
+        ],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "FunctionDeclaration",
+          "sha256": "ce8669097d547202eaf9edeb81e9a266275307f4e098215a5c6dfa68333bc832",
+          "source": "scripts/docs-api-output-role-classification.mjs",
+          "symbol": "createSerializedOutputRoleClassifier"
+        },
+        "beforeMultiplicity": 1,
+        "afterMultiplicity": 0,
+        "removedMultiplicity": 1,
+        "addedMultiplicity": 0,
+        "beforePositionsZeroBased": [
+          147
+        ],
+        "afterPositionsZeroBased": [],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "ImportDeclaration",
+          "sha256": "0dea52aa29095a9c3bd61034e6c0adbd7b466cf4553a9131f6d925682de010a6",
+          "source": "scripts/docs-api-output-discovery.mjs",
+          "symbol": "<operation>"
+        },
+        "beforeMultiplicity": 0,
+        "afterMultiplicity": 1,
+        "removedMultiplicity": 0,
+        "addedMultiplicity": 1,
+        "beforePositionsZeroBased": [],
+        "afterPositionsZeroBased": [
+          136
+        ],
+        "fullFactRepresentedInV1LastWriteDelta": false
+      }
+    ]
+  },
+  {
+    "source": "scripts/docs-generate.mjs",
+    "priorDigestMatchesActualBaseline": true,
+    "oldFactCount": 1523,
+    "newFactCount": 1536,
+    "removedOccurrences": 3,
+    "addedOccurrences": 16,
+    "oldRepeatedIdentityExtraOccurrences": 568,
+    "newRepeatedIdentityExtraOccurrences": 569,
+    "fullMultisetDelta": [
+      {
+        "fullFact": {
+          "kind": "FirstStatement",
+          "sha256": "27b2ce52c91b8aa9dc37498eacaf10982ca07ca741153e882dbe516e1a3c1c94",
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "symbol": "freeze"
+        },
+        "beforeMultiplicity": 0,
+        "afterMultiplicity": 1,
+        "removedMultiplicity": 0,
+        "addedMultiplicity": 1,
+        "beforePositionsZeroBased": [],
+        "afterPositionsZeroBased": [
+          374
+        ],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "FirstStatement",
+          "sha256": "283009e4473ee801ff2efaa2ad2f9118adcf0ba84befd5da5f884dd87ec1f8b6",
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "symbol": "reviewedDocumentationOwnerPurposes"
+        },
+        "beforeMultiplicity": 0,
+        "afterMultiplicity": 1,
+        "removedMultiplicity": 0,
+        "addedMultiplicity": 1,
+        "beforePositionsZeroBased": [],
+        "afterPositionsZeroBased": [
+          378
+        ],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "FirstStatement",
+          "sha256": "767afcaab51284f9ce981aa865c5411b4e8dbb3bf4bac9f5bc1e924ed55011f2",
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "symbol": "readerArtifactCiProofs"
+        },
+        "beforeMultiplicity": 0,
+        "afterMultiplicity": 1,
+        "removedMultiplicity": 0,
+        "addedMultiplicity": 1,
+        "beforePositionsZeroBased": [],
+        "afterPositionsZeroBased": [
+          375
+        ],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "FirstStatement",
+          "sha256": "81f2a6c7d93b5a0383f4e2fc0c7b0724a23d702f5a7a5d2794cc53dac93fbfeb",
+          "source": "scripts/docs-api-output-role-classification.mjs",
+          "symbol": "reviewedApiUtilityDeclarations"
+        },
+        "beforeMultiplicity": 0,
+        "afterMultiplicity": 1,
+        "removedMultiplicity": 0,
+        "addedMultiplicity": 1,
+        "beforePositionsZeroBased": [],
+        "afterPositionsZeroBased": [
+          146
+        ],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "FirstStatement",
+          "sha256": "a12bde1592918da42128bf498dea09165ec82abaeff0b920a3fbcba791618942",
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "symbol": "readerArtifactCiRoleSources"
+        },
+        "beforeMultiplicity": 0,
+        "afterMultiplicity": 1,
+        "removedMultiplicity": 0,
+        "addedMultiplicity": 1,
+        "beforePositionsZeroBased": [],
+        "afterPositionsZeroBased": [
+          377
+        ],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "FirstStatement",
+          "sha256": "a43d48793b2695b0c96cb19ec2a32a686df7307c0eef8e528ff9b2e9d776f3c3",
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "symbol": "readerArtifactCiPurpose"
+        },
+        "beforeMultiplicity": 0,
+        "afterMultiplicity": 1,
+        "removedMultiplicity": 0,
+        "addedMultiplicity": 1,
+        "beforePositionsZeroBased": [],
+        "afterPositionsZeroBased": [
+          376
+        ],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "FirstStatement",
+          "sha256": "aebce3454045cb891a80c362896aa24d53257c8df68a07feb27132c52172320d",
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "symbol": "sha"
+        },
+        "beforeMultiplicity": 0,
+        "afterMultiplicity": 1,
+        "removedMultiplicity": 0,
+        "addedMultiplicity": 1,
+        "beforePositionsZeroBased": [],
+        "afterPositionsZeroBased": [
+          379
+        ],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "FunctionDeclaration",
+          "sha256": "3cc730f0460602237bb0e406b0e74f3a0023a78709da9e81f3d5a38300762fec",
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "symbol": "assertDocumentationOwnerAncestry"
+        },
+        "beforeMultiplicity": 0,
+        "afterMultiplicity": 1,
+        "removedMultiplicity": 0,
+        "addedMultiplicity": 1,
+        "beforePositionsZeroBased": [],
+        "afterPositionsZeroBased": [
+          381
+        ],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "FunctionDeclaration",
+          "sha256": "40296f405317443f5ddaa981abffa1cdb87ac1f760bc390b951feb83f1296412",
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "symbol": "addReaderArtifactExternalCiSeed"
+        },
+        "beforeMultiplicity": 0,
+        "afterMultiplicity": 1,
+        "removedMultiplicity": 0,
+        "addedMultiplicity": 1,
+        "beforePositionsZeroBased": [],
+        "afterPositionsZeroBased": [
+          380
+        ],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "FunctionDeclaration",
+          "sha256": "61fb25ded832071018e032e4a467f9fc83e3439e7f01c79ae83c0d874d126747",
+          "source": "scripts/docs-api-output-discovery.mjs",
+          "symbol": "documentationModuleGraph"
+        },
+        "beforeMultiplicity": 1,
+        "afterMultiplicity": 0,
+        "removedMultiplicity": 1,
+        "addedMultiplicity": 0,
+        "beforePositionsZeroBased": [
+          95
+        ],
+        "afterPositionsZeroBased": [],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "FunctionDeclaration",
+          "sha256": "768c00977d2d0f24d2c584fb07967320c2f2a7138a3662c7ca5277a39e02f807",
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "symbol": "documentationOwnerNativeEntryMatches"
+        },
+        "beforeMultiplicity": 0,
+        "afterMultiplicity": 1,
+        "removedMultiplicity": 0,
+        "addedMultiplicity": 1,
+        "beforePositionsZeroBased": [],
+        "afterPositionsZeroBased": [
+          384
+        ],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "FunctionDeclaration",
+          "sha256": "76cf87231363f7d8b4d73323bbca65dc51182ba8d0de789c52206592fbd45564",
+          "source": "scripts/docs-api-output-discovery.mjs",
+          "symbol": "documentationModuleGraph"
+        },
+        "beforeMultiplicity": 0,
+        "afterMultiplicity": 1,
+        "removedMultiplicity": 0,
+        "addedMultiplicity": 1,
+        "beforePositionsZeroBased": [],
+        "afterPositionsZeroBased": [
+          95
+        ],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "FunctionDeclaration",
+          "sha256": "7d54e4cfaf5e7d56ab53e7b1ed156bfb03bada24a33b9a1596b59cc96043cbc9",
+          "source": "scripts/docs-api-output-discovery.mjs",
+          "symbol": "assertDocumentationToolQualifications"
+        },
+        "beforeMultiplicity": 1,
+        "afterMultiplicity": 0,
+        "removedMultiplicity": 1,
+        "addedMultiplicity": 0,
+        "beforePositionsZeroBased": [
+          74
+        ],
+        "afterPositionsZeroBased": [],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "FunctionDeclaration",
+          "sha256": "8a83d14cb90d8aa40604700f7bfe2238d67515939e172287a94706d31d68d4e7",
+          "source": "scripts/docs-api-output-discovery.mjs",
+          "symbol": "assertDocumentationToolQualifications"
+        },
+        "beforeMultiplicity": 0,
+        "afterMultiplicity": 1,
+        "removedMultiplicity": 0,
+        "addedMultiplicity": 1,
+        "beforePositionsZeroBased": [],
+        "afterPositionsZeroBased": [
+          74
+        ],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "FunctionDeclaration",
+          "sha256": "a95b76a9c1ca824f62143e9e283b5d78560a00b9971796bab8ca31cecc0c437b",
+          "source": "scripts/docs-api-output-role-classification.mjs",
+          "symbol": "createSerializedOutputRoleClassifier"
+        },
+        "beforeMultiplicity": 0,
+        "afterMultiplicity": 1,
+        "removedMultiplicity": 0,
+        "addedMultiplicity": 1,
+        "beforePositionsZeroBased": [],
+        "afterPositionsZeroBased": [
+          149
+        ],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "FunctionDeclaration",
+          "sha256": "a9ce52880b647a09660c9e3dfbaca76c0a3544139ae63e3a643c6c0c330412a7",
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "symbol": "assertDocumentationOwnerPurpose"
+        },
+        "beforeMultiplicity": 0,
+        "afterMultiplicity": 1,
+        "removedMultiplicity": 0,
+        "addedMultiplicity": 1,
+        "beforePositionsZeroBased": [],
+        "afterPositionsZeroBased": [
+          382
+        ],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "FunctionDeclaration",
+          "sha256": "adec9db4236d9927d55eaa67557a62434a95d7d3b3462f3e1747db44231e6127",
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "symbol": "assertReaderArtifactExternalCiPurpose"
+        },
+        "beforeMultiplicity": 0,
+        "afterMultiplicity": 1,
+        "removedMultiplicity": 0,
+        "addedMultiplicity": 1,
+        "beforePositionsZeroBased": [],
+        "afterPositionsZeroBased": [
+          383
+        ],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "FunctionDeclaration",
+          "sha256": "ce8669097d547202eaf9edeb81e9a266275307f4e098215a5c6dfa68333bc832",
+          "source": "scripts/docs-api-output-role-classification.mjs",
+          "symbol": "createSerializedOutputRoleClassifier"
+        },
+        "beforeMultiplicity": 1,
+        "afterMultiplicity": 0,
+        "removedMultiplicity": 1,
+        "addedMultiplicity": 0,
+        "beforePositionsZeroBased": [
+          147
+        ],
+        "afterPositionsZeroBased": [],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "ImportDeclaration",
+          "sha256": "0dea52aa29095a9c3bd61034e6c0adbd7b466cf4553a9131f6d925682de010a6",
+          "source": "scripts/docs-api-output-discovery.mjs",
+          "symbol": "<operation>"
+        },
+        "beforeMultiplicity": 0,
+        "afterMultiplicity": 1,
+        "removedMultiplicity": 0,
+        "addedMultiplicity": 1,
+        "beforePositionsZeroBased": [],
+        "afterPositionsZeroBased": [
+          136
+        ],
+        "fullFactRepresentedInV1LastWriteDelta": false
+      }
+    ]
+  },
+  {
+    "source": "scripts/docs-publication.mjs",
+    "priorDigestMatchesActualBaseline": true,
+    "oldFactCount": 165,
+    "newFactCount": 181,
+    "removedOccurrences": 4,
+    "addedOccurrences": 20,
+    "oldRepeatedIdentityExtraOccurrences": 26,
+    "newRepeatedIdentityExtraOccurrences": 29,
+    "fullMultisetDelta": [
+      {
+        "fullFact": {
+          "kind": "FirstStatement",
+          "sha256": "cea7730c06488fc85f6ce3ddafbe4b20074b3ebae05293811a495352a1c5f884",
+          "source": "scripts/docs-reader/page-records.mjs",
+          "symbol": "sha256"
+        },
+        "beforeMultiplicity": 0,
+        "afterMultiplicity": 1,
+        "removedMultiplicity": 0,
+        "addedMultiplicity": 1,
+        "beforePositionsZeroBased": [],
+        "afterPositionsZeroBased": [
+          105
+        ],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "FirstStatement",
+          "sha256": "edf837edd4c5d8c9cc5edbe690550f96b5ed444b9618779d6419d07609eae2d5",
+          "source": "scripts/docs-reader/page-records.mjs",
+          "symbol": "inputPaths"
+        },
+        "beforeMultiplicity": 0,
+        "afterMultiplicity": 1,
+        "removedMultiplicity": 0,
+        "addedMultiplicity": 1,
+        "beforePositionsZeroBased": [],
+        "afterPositionsZeroBased": [
+          104
+        ],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "FunctionDeclaration",
+          "sha256": "26e209edc130108dd7b873d93afe1fe8bc3db3fc2af73e0d3fbbe1af41c0c4fa",
+          "source": "scripts/docs-reader/page-records.mjs",
+          "symbol": "compileReaderPageRecords"
+        },
+        "beforeMultiplicity": 0,
+        "afterMultiplicity": 1,
+        "removedMultiplicity": 0,
+        "addedMultiplicity": 1,
+        "beforePositionsZeroBased": [],
+        "afterPositionsZeroBased": [
+          107
+        ],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "FunctionDeclaration",
+          "sha256": "2eee3a4a51cdde775250ec8c29d5af11b867105a5d15738e48fe4e191bc93b9d",
+          "source": "scripts/docs-reader/page-records.mjs",
+          "symbol": "physical"
+        },
+        "beforeMultiplicity": 0,
+        "afterMultiplicity": 1,
+        "removedMultiplicity": 0,
+        "addedMultiplicity": 1,
+        "beforePositionsZeroBased": [],
+        "afterPositionsZeroBased": [
+          109
+        ],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "FunctionDeclaration",
+          "sha256": "48d01154406f2b259b0072ed279ebece364400db84f1ed1ba9f36f8848c1b536",
+          "source": "scripts/docs-reader/renderer.mjs",
+          "symbol": "buildReader"
+        },
+        "beforeMultiplicity": 1,
+        "afterMultiplicity": 0,
+        "removedMultiplicity": 1,
+        "addedMultiplicity": 0,
+        "beforePositionsZeroBased": [
+          120
+        ],
+        "afterPositionsZeroBased": [],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "FunctionDeclaration",
+          "sha256": "4c2e013bcd569057b27541b4a8bc532774f2c0e768e9334713eab93cda8c2d96",
+          "source": "scripts/docs-publication.mjs",
+          "symbol": "build"
+        },
+        "beforeMultiplicity": 1,
+        "afterMultiplicity": 0,
+        "removedMultiplicity": 1,
+        "addedMultiplicity": 0,
+        "beforePositionsZeroBased": [
+          35
+        ],
+        "afterPositionsZeroBased": [],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "FunctionDeclaration",
+          "sha256": "4e4c836ade36b5dda5f08c08d804f143d93a9b52b4a5f956d5b253367b10fdbf",
+          "source": "scripts/docs-reader/page-records.mjs",
+          "symbol": "sourceReader"
+        },
+        "beforeMultiplicity": 0,
+        "afterMultiplicity": 1,
+        "removedMultiplicity": 0,
+        "addedMultiplicity": 1,
+        "beforePositionsZeroBased": [],
+        "afterPositionsZeroBased": [
+          111
+        ],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "FunctionDeclaration",
+          "sha256": "61fb30c758d3c443fe639efb199175569bb5fdda1fe121fae353d83e2856cef2",
+          "source": "scripts/docs-reader/redirects.mjs",
+          "symbol": "compileReaderRedirects"
+        },
+        "beforeMultiplicity": 0,
+        "afterMultiplicity": 1,
+        "removedMultiplicity": 0,
+        "addedMultiplicity": 1,
+        "beforePositionsZeroBased": [],
+        "afterPositionsZeroBased": [
+          120
+        ],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "FunctionDeclaration",
+          "sha256": "6be20d130b21601cfd49cb863656c15ad88ed49aff0f8ba467141feb083e7726",
+          "source": "scripts/docs-publication.mjs",
+          "symbol": "capabilityPage"
+        },
+        "beforeMultiplicity": 1,
+        "afterMultiplicity": 0,
+        "removedMultiplicity": 1,
+        "addedMultiplicity": 0,
+        "beforePositionsZeroBased": [
+          36
+        ],
+        "afterPositionsZeroBased": [],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "FunctionDeclaration",
+          "sha256": "7afcd2efa806b063ea448ac279454346be03d84af2cb396c82b0a9a517581234",
+          "source": "scripts/docs-reader/renderer.mjs",
+          "symbol": "buildReader"
+        },
+        "beforeMultiplicity": 0,
+        "afterMultiplicity": 1,
+        "removedMultiplicity": 0,
+        "addedMultiplicity": 1,
+        "beforePositionsZeroBased": [],
+        "afterPositionsZeroBased": [
+          134
+        ],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "FunctionDeclaration",
+          "sha256": "954b25f72f28edf3675c76fed1b66ecf9ab539ac94fea65615a85634a2ba4412",
+          "source": "scripts/docs-publication.mjs",
+          "symbol": "capabilityPage"
+        },
+        "beforeMultiplicity": 0,
+        "afterMultiplicity": 1,
+        "removedMultiplicity": 0,
+        "addedMultiplicity": 1,
+        "beforePositionsZeroBased": [],
+        "afterPositionsZeroBased": [
+          36
+        ],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "FunctionDeclaration",
+          "sha256": "ac972ce7c6b1e813069533047bcf122afcf1a3574599b7a05bd70e24b6cd265e",
+          "source": "scripts/docs-publication.mjs",
+          "symbol": "build"
+        },
+        "beforeMultiplicity": 0,
+        "afterMultiplicity": 1,
+        "removedMultiplicity": 0,
+        "addedMultiplicity": 1,
+        "beforePositionsZeroBased": [],
+        "afterPositionsZeroBased": [
+          35
+        ],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "FunctionDeclaration",
+          "sha256": "b6e9e39ed6c10b7591e20d6ffe3bf9cb5ea98a5cff865f1f1a3e42206d42c431",
+          "source": "scripts/docs-reader/renderer.mjs",
+          "symbol": "readerSharedAssets"
+        },
+        "beforeMultiplicity": 0,
+        "afterMultiplicity": 1,
+        "removedMultiplicity": 0,
+        "addedMultiplicity": 1,
+        "beforePositionsZeroBased": [],
+        "afterPositionsZeroBased": [
+          137
+        ],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "FunctionDeclaration",
+          "sha256": "b78b2a3146617c2ad59696acb4545982495d5d2156c55d3792f81dec0c3ca454",
+          "source": "scripts/docs-reader/page-records.mjs",
+          "symbol": "appendReaderPageRecords"
+        },
+        "beforeMultiplicity": 0,
+        "afterMultiplicity": 1,
+        "removedMultiplicity": 0,
+        "addedMultiplicity": 1,
+        "beforePositionsZeroBased": [],
+        "afterPositionsZeroBased": [
+          106
+        ],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "FunctionDeclaration",
+          "sha256": "b83a3a7bd67d5c95452f0ba2c5f8118ee1c763fe05ca3b0302f966c3a326ae37",
+          "source": "scripts/docs-reader/redirects.mjs",
+          "symbol": "readerRedirectPlan"
+        },
+        "beforeMultiplicity": 0,
+        "afterMultiplicity": 1,
+        "removedMultiplicity": 0,
+        "addedMultiplicity": 1,
+        "beforePositionsZeroBased": [],
+        "afterPositionsZeroBased": [
+          126
+        ],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "FunctionDeclaration",
+          "sha256": "c936dcf2e216ec3e088f1fc7cfc57b3fca2a4817a44ad6b51c5085751b7af3bb",
+          "source": "scripts/docs-reader/redirects.mjs",
+          "symbol": "compileReaderRedirects"
+        },
+        "beforeMultiplicity": 1,
+        "afterMultiplicity": 0,
+        "removedMultiplicity": 1,
+        "addedMultiplicity": 0,
+        "beforePositionsZeroBased": [
+          108
+        ],
+        "afterPositionsZeroBased": [],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "FunctionDeclaration",
+          "sha256": "d0510b61523dbe997e4b468f6d6a312c4d87c618e8f8ef82948c6f6d6a6f2cb6",
+          "source": "scripts/docs-reader/page-records.mjs",
+          "symbol": "outputReader"
+        },
+        "beforeMultiplicity": 0,
+        "afterMultiplicity": 1,
+        "removedMultiplicity": 0,
+        "addedMultiplicity": 1,
+        "beforePositionsZeroBased": [],
+        "afterPositionsZeroBased": [
+          108
+        ],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "FunctionDeclaration",
+          "sha256": "df8fc76f4c2d77bd46f51cfcc5b7e59a3c65ddc7a594a60899dfdfc7ea484c94",
+          "source": "scripts/docs-reader/renderer.mjs",
+          "symbol": "readerOutputLayout"
+        },
+        "beforeMultiplicity": 0,
+        "afterMultiplicity": 1,
+        "removedMultiplicity": 0,
+        "addedMultiplicity": 1,
+        "beforePositionsZeroBased": [],
+        "afterPositionsZeroBased": [
+          136
+        ],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "FunctionDeclaration",
+          "sha256": "e8c9f337d47ba759c2286653596ffab9bb69a9d7aa96a630cf6aa05cb26991db",
+          "source": "scripts/docs-reader/redirects.mjs",
+          "symbol": "verifyReaderRedirects"
+        },
+        "beforeMultiplicity": 0,
+        "afterMultiplicity": 1,
+        "removedMultiplicity": 0,
+        "addedMultiplicity": 1,
+        "beforePositionsZeroBased": [],
+        "afterPositionsZeroBased": [
+          127
+        ],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "FunctionDeclaration",
+          "sha256": "f97c7fc105a16575c7d216d1b99dd572b90f9d71d14931d7d46858c470ebb29f",
+          "source": "scripts/docs-reader/page-records.mjs",
+          "symbol": "relative"
+        },
+        "beforeMultiplicity": 0,
+        "afterMultiplicity": 1,
+        "removedMultiplicity": 0,
+        "addedMultiplicity": 1,
+        "beforePositionsZeroBased": [],
+        "afterPositionsZeroBased": [
+          110
+        ],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "ImportDeclaration",
+          "sha256": "0b07dc03d725e02245d90b3425f5311cd256908cba411094902ec1ac2cfbd4e8",
+          "source": "scripts/docs-reader/page-records.mjs",
+          "symbol": "<operation>"
+        },
+        "beforeMultiplicity": 0,
+        "afterMultiplicity": 1,
+        "removedMultiplicity": 0,
+        "addedMultiplicity": 1,
+        "beforePositionsZeroBased": [],
+        "afterPositionsZeroBased": [
+          112
+        ],
+        "fullFactRepresentedInV1LastWriteDelta": false
+      },
+      {
+        "fullFact": {
+          "kind": "ImportDeclaration",
+          "sha256": "47ed0e498c09185e284708989e0d09705078965512c0f821afa0ea1f1b1cacda",
+          "source": "scripts/docs-publication.mjs",
+          "symbol": "<operation>"
+        },
+        "beforeMultiplicity": 0,
+        "afterMultiplicity": 1,
+        "removedMultiplicity": 0,
+        "addedMultiplicity": 1,
+        "beforePositionsZeroBased": [],
+        "afterPositionsZeroBased": [
+          81
+        ],
+        "fullFactRepresentedInV1LastWriteDelta": false
+      },
+      {
+        "fullFact": {
+          "kind": "ImportDeclaration",
+          "sha256": "6024e24824120854da6890bc40ddd188e2720829de1a3ce1591a4d2f16be869b",
+          "source": "scripts/docs-reader/page-records.mjs",
+          "symbol": "<operation>"
+        },
+        "beforeMultiplicity": 0,
+        "afterMultiplicity": 1,
+        "removedMultiplicity": 0,
+        "addedMultiplicity": 1,
+        "beforePositionsZeroBased": [],
+        "afterPositionsZeroBased": [
+          113
+        ],
+        "fullFactRepresentedInV1LastWriteDelta": false
+      },
+      {
+        "fullFact": {
+          "kind": "ImportDeclaration",
+          "sha256": "632e7e3c7b3810a01e923cc1b80439a82b2e130d0868fb2a32174a210cb024b9",
+          "source": "scripts/docs-reader/page-records.mjs",
+          "symbol": "<operation>"
+        },
+        "beforeMultiplicity": 0,
+        "afterMultiplicity": 1,
+        "removedMultiplicity": 0,
+        "addedMultiplicity": 1,
+        "beforePositionsZeroBased": [],
+        "afterPositionsZeroBased": [
+          114
+        ],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      }
+    ]
+  },
+  {
+    "source": "scripts/docs-reader/renderer.mjs",
+    "priorDigestMatchesActualBaseline": true,
+    "oldFactCount": 34,
+    "newFactCount": 37,
+    "removedOccurrences": 2,
+    "addedOccurrences": 5,
+    "oldRepeatedIdentityExtraOccurrences": 7,
+    "newRepeatedIdentityExtraOccurrences": 7,
+    "fullMultisetDelta": [
+      {
+        "fullFact": {
+          "kind": "FunctionDeclaration",
+          "sha256": "48d01154406f2b259b0072ed279ebece364400db84f1ed1ba9f36f8848c1b536",
+          "source": "scripts/docs-reader/renderer.mjs",
+          "symbol": "buildReader"
+        },
+        "beforeMultiplicity": 1,
+        "afterMultiplicity": 0,
+        "removedMultiplicity": 1,
+        "addedMultiplicity": 0,
+        "beforePositionsZeroBased": [
+          18
+        ],
+        "afterPositionsZeroBased": [],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "FunctionDeclaration",
+          "sha256": "61fb30c758d3c443fe639efb199175569bb5fdda1fe121fae353d83e2856cef2",
+          "source": "scripts/docs-reader/redirects.mjs",
+          "symbol": "compileReaderRedirects"
+        },
+        "beforeMultiplicity": 0,
+        "afterMultiplicity": 1,
+        "removedMultiplicity": 0,
+        "addedMultiplicity": 1,
+        "beforePositionsZeroBased": [],
+        "afterPositionsZeroBased": [
+          7
+        ],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "FunctionDeclaration",
+          "sha256": "7afcd2efa806b063ea448ac279454346be03d84af2cb396c82b0a9a517581234",
+          "source": "scripts/docs-reader/renderer.mjs",
+          "symbol": "buildReader"
+        },
+        "beforeMultiplicity": 0,
+        "afterMultiplicity": 1,
+        "removedMultiplicity": 0,
+        "addedMultiplicity": 1,
+        "beforePositionsZeroBased": [],
+        "afterPositionsZeroBased": [
+          19
+        ],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "FunctionDeclaration",
+          "sha256": "b6e9e39ed6c10b7591e20d6ffe3bf9cb5ea98a5cff865f1f1a3e42206d42c431",
+          "source": "scripts/docs-reader/renderer.mjs",
+          "symbol": "readerSharedAssets"
+        },
+        "beforeMultiplicity": 0,
+        "afterMultiplicity": 1,
+        "removedMultiplicity": 0,
+        "addedMultiplicity": 1,
+        "beforePositionsZeroBased": [],
+        "afterPositionsZeroBased": [
+          22
+        ],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "FunctionDeclaration",
+          "sha256": "b83a3a7bd67d5c95452f0ba2c5f8118ee1c763fe05ca3b0302f966c3a326ae37",
+          "source": "scripts/docs-reader/redirects.mjs",
+          "symbol": "readerRedirectPlan"
+        },
+        "beforeMultiplicity": 0,
+        "afterMultiplicity": 1,
+        "removedMultiplicity": 0,
+        "addedMultiplicity": 1,
+        "beforePositionsZeroBased": [],
+        "afterPositionsZeroBased": [
+          12
+        ],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "FunctionDeclaration",
+          "sha256": "c936dcf2e216ec3e088f1fc7cfc57b3fca2a4817a44ad6b51c5085751b7af3bb",
+          "source": "scripts/docs-reader/redirects.mjs",
+          "symbol": "compileReaderRedirects"
+        },
+        "beforeMultiplicity": 1,
+        "afterMultiplicity": 0,
+        "removedMultiplicity": 1,
+        "addedMultiplicity": 0,
+        "beforePositionsZeroBased": [
+          7
+        ],
+        "afterPositionsZeroBased": [],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "FunctionDeclaration",
+          "sha256": "df8fc76f4c2d77bd46f51cfcc5b7e59a3c65ddc7a594a60899dfdfc7ea484c94",
+          "source": "scripts/docs-reader/renderer.mjs",
+          "symbol": "readerOutputLayout"
+        },
+        "beforeMultiplicity": 0,
+        "afterMultiplicity": 1,
+        "removedMultiplicity": 0,
+        "addedMultiplicity": 1,
+        "beforePositionsZeroBased": [],
+        "afterPositionsZeroBased": [
+          21
+        ],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      }
+    ]
+  },
+  {
+    "source": "scripts/docs-reader/check-artifact.mjs",
+    "priorDigestMatchesActualBaseline": true,
+    "oldFactCount": 15,
+    "newFactCount": 51,
+    "removedOccurrences": 1,
+    "addedOccurrences": 37,
+    "oldRepeatedIdentityExtraOccurrences": 7,
+    "newRepeatedIdentityExtraOccurrences": 13,
+    "fullMultisetDelta": [
+      {
+        "fullFact": {
+          "kind": "ExpressionStatement",
+          "sha256": "573e2d588ec6d311004a0628c3eeca3bbe6668cd9438c6c88f06e4a6bd42a79e",
+          "source": "scripts/docs-reader/check-artifact.mjs",
+          "symbol": "<operation>"
+        },
+        "beforeMultiplicity": 0,
+        "afterMultiplicity": 1,
+        "removedMultiplicity": 0,
+        "addedMultiplicity": 1,
+        "beforePositionsZeroBased": [],
+        "afterPositionsZeroBased": [
+          3
+        ],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "FirstStatement",
+          "sha256": "39f4b8a1c4f4a34b503257af91c226e8320a52b345450202e97fa07641954b46",
+          "source": "scripts/lib/docs-publication-assets.mjs",
+          "symbol": "files"
+        },
+        "beforeMultiplicity": 0,
+        "afterMultiplicity": 1,
+        "removedMultiplicity": 0,
+        "addedMultiplicity": 1,
+        "beforePositionsZeroBased": [],
+        "afterPositionsZeroBased": [
+          48
+        ],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "FirstStatement",
+          "sha256": "52e3ba937b3ed835998cd3be3d374190765a471683dc7e07143013725ea8de9e",
+          "source": "scripts/docs-reader/check-artifact.mjs",
+          "symbol": "legacyRendererFixture"
+        },
+        "beforeMultiplicity": 0,
+        "afterMultiplicity": 1,
+        "removedMultiplicity": 0,
+        "addedMultiplicity": 1,
+        "beforePositionsZeroBased": [],
+        "afterPositionsZeroBased": [
+          5
+        ],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "FirstStatement",
+          "sha256": "54caae4911b7302d936da5044933df20c456b824186378b25b405255aa72642d",
+          "source": "scripts/docs-reader/redirects.mjs",
+          "symbol": "redirectClient"
+        },
+        "beforeMultiplicity": 0,
+        "afterMultiplicity": 1,
+        "removedMultiplicity": 0,
+        "addedMultiplicity": 1,
+        "beforePositionsZeroBased": [],
+        "afterPositionsZeroBased": [
+          35
+        ],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "FirstStatement",
+          "sha256": "6749b3ac003cdbc1aff8903de9dac06197900f37742b4f140913a0a36f81bf0b",
+          "source": "scripts/docs-reader/renderer.mjs",
+          "symbol": "readerCss"
+        },
+        "beforeMultiplicity": 0,
+        "afterMultiplicity": 1,
+        "removedMultiplicity": 0,
+        "addedMultiplicity": 1,
+        "beforePositionsZeroBased": [],
+        "afterPositionsZeroBased": [
+          43
+        ],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "FirstStatement",
+          "sha256": "977792ccb25be4975f1dda3cf4205ec580dabd23ce4c6c23533fe6ccc3af7504",
+          "source": "scripts/docs-reader/check-artifact.mjs",
+          "symbol": "args"
+        },
+        "beforeMultiplicity": 0,
+        "afterMultiplicity": 1,
+        "removedMultiplicity": 0,
+        "addedMultiplicity": 1,
+        "beforePositionsZeroBased": [],
+        "afterPositionsZeroBased": [
+          4
+        ],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "FirstStatement",
+          "sha256": "b9502732a223ff4f94a9b72d1c872a29a61aabc8b714031c3d59c9145409e2d9",
+          "source": "scripts/docs-reader/redirects.mjs",
+          "symbol": "legacyReaderRoute"
+        },
+        "beforeMultiplicity": 0,
+        "afterMultiplicity": 1,
+        "removedMultiplicity": 0,
+        "addedMultiplicity": 1,
+        "beforePositionsZeroBased": [],
+        "afterPositionsZeroBased": [
+          34
+        ],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "FirstStatement",
+          "sha256": "cea7730c06488fc85f6ce3ddafbe4b20074b3ebae05293811a495352a1c5f884",
+          "source": "scripts/docs-reader/page-records.mjs",
+          "symbol": "sha256"
+        },
+        "beforeMultiplicity": 0,
+        "afterMultiplicity": 1,
+        "removedMultiplicity": 0,
+        "addedMultiplicity": 1,
+        "beforePositionsZeroBased": [],
+        "afterPositionsZeroBased": [
+          23
+        ],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "FirstStatement",
+          "sha256": "d684e6fc82a1ba5ef01bd4ce4b8ca38dee39c2257b02ececd77aea2587f18c8f",
+          "source": "scripts/docs-reader/redirects.mjs",
+          "symbol": "escape"
+        },
+        "beforeMultiplicity": 0,
+        "afterMultiplicity": 1,
+        "removedMultiplicity": 0,
+        "addedMultiplicity": 1,
+        "beforePositionsZeroBased": [],
+        "afterPositionsZeroBased": [
+          33
+        ],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "FirstStatement",
+          "sha256": "e7e6c24bf4f607cc41f5a8772ac5b78b6923c70bfc703c7b830ecc7024f5612e",
+          "source": "scripts/docs-reader/renderer.mjs",
+          "symbol": "readerScript"
+        },
+        "beforeMultiplicity": 0,
+        "afterMultiplicity": 1,
+        "removedMultiplicity": 0,
+        "addedMultiplicity": 1,
+        "beforePositionsZeroBased": [],
+        "afterPositionsZeroBased": [
+          44
+        ],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "FirstStatement",
+          "sha256": "eceaad90a811785a7462f2b2685427a618fef283e17bf7b0cf7447026c981f75",
+          "source": "scripts/docs-reader/check-artifact.mjs",
+          "symbol": "root"
+        },
+        "beforeMultiplicity": 1,
+        "afterMultiplicity": 0,
+        "removedMultiplicity": 1,
+        "addedMultiplicity": 0,
+        "beforePositionsZeroBased": [
+          7
+        ],
+        "afterPositionsZeroBased": [],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "FirstStatement",
+          "sha256": "edf837edd4c5d8c9cc5edbe690550f96b5ed444b9618779d6419d07609eae2d5",
+          "source": "scripts/docs-reader/page-records.mjs",
+          "symbol": "inputPaths"
+        },
+        "beforeMultiplicity": 0,
+        "afterMultiplicity": 1,
+        "removedMultiplicity": 0,
+        "addedMultiplicity": 1,
+        "beforePositionsZeroBased": [],
+        "afterPositionsZeroBased": [
+          22
+        ],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "FirstStatement",
+          "sha256": "f37c6d40b60958b3446565e4ee3c88a83b05542fae5ff58abfefbb7eeaa2eb9a",
+          "source": "scripts/docs-reader/check-artifact.mjs",
+          "symbol": "root"
+        },
+        "beforeMultiplicity": 0,
+        "afterMultiplicity": 1,
+        "removedMultiplicity": 0,
+        "addedMultiplicity": 1,
+        "beforePositionsZeroBased": [],
+        "afterPositionsZeroBased": [
+          10
+        ],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "FunctionDeclaration",
+          "sha256": "26e209edc130108dd7b873d93afe1fe8bc3db3fc2af73e0d3fbbe1af41c0c4fa",
+          "source": "scripts/docs-reader/page-records.mjs",
+          "symbol": "compileReaderPageRecords"
+        },
+        "beforeMultiplicity": 0,
+        "afterMultiplicity": 1,
+        "removedMultiplicity": 0,
+        "addedMultiplicity": 1,
+        "beforePositionsZeroBased": [],
+        "afterPositionsZeroBased": [
+          24
+        ],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "FunctionDeclaration",
+          "sha256": "2eee3a4a51cdde775250ec8c29d5af11b867105a5d15738e48fe4e191bc93b9d",
+          "source": "scripts/docs-reader/page-records.mjs",
+          "symbol": "physical"
+        },
+        "beforeMultiplicity": 0,
+        "afterMultiplicity": 1,
+        "removedMultiplicity": 0,
+        "addedMultiplicity": 1,
+        "beforePositionsZeroBased": [],
+        "afterPositionsZeroBased": [
+          26
+        ],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "FunctionDeclaration",
+          "sha256": "396cffcd6da5ea95d5c9ca62b7daf06185a26e4a2e41e3540adb5f91720beebc",
+          "source": "scripts/docs-reader/redirects.mjs",
+          "symbol": "readerRedirectPage"
+        },
+        "beforeMultiplicity": 0,
+        "afterMultiplicity": 1,
+        "removedMultiplicity": 0,
+        "addedMultiplicity": 1,
+        "beforePositionsZeroBased": [],
+        "afterPositionsZeroBased": [
+          39
+        ],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "FunctionDeclaration",
+          "sha256": "4e4c836ade36b5dda5f08c08d804f143d93a9b52b4a5f956d5b253367b10fdbf",
+          "source": "scripts/docs-reader/page-records.mjs",
+          "symbol": "sourceReader"
+        },
+        "beforeMultiplicity": 0,
+        "afterMultiplicity": 1,
+        "removedMultiplicity": 0,
+        "addedMultiplicity": 1,
+        "beforePositionsZeroBased": [],
+        "afterPositionsZeroBased": [
+          28
+        ],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "FunctionDeclaration",
+          "sha256": "8afe9744d16e37eb28dfd82e6608d407dd6822165baaaaac12129d7812a50d01",
+          "source": "scripts/lib/docs-route-continuity.mjs",
+          "symbol": "assertRouteContinuity"
+        },
+        "beforeMultiplicity": 0,
+        "afterMultiplicity": 1,
+        "removedMultiplicity": 0,
+        "addedMultiplicity": 1,
+        "beforePositionsZeroBased": [],
+        "afterPositionsZeroBased": [
+          50
+        ],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "FunctionDeclaration",
+          "sha256": "949d411f82d86d4626bcfc8f0ccc4f16b58c23449a453707791e871d2bb7cde1",
+          "source": "scripts/lib/docs-publication-assets.mjs",
+          "symbol": "publicationAssets"
+        },
+        "beforeMultiplicity": 0,
+        "afterMultiplicity": 1,
+        "removedMultiplicity": 0,
+        "addedMultiplicity": 1,
+        "beforePositionsZeroBased": [],
+        "afterPositionsZeroBased": [
+          49
+        ],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "FunctionDeclaration",
+          "sha256": "9f5c9d997f62dbe936ebfccfabf1c520f2900a86a7bdbe7e249e2a3dc472e931",
+          "source": "scripts/docs-reader/page-records.mjs",
+          "symbol": "verifyReaderPageRecords"
+        },
+        "beforeMultiplicity": 0,
+        "afterMultiplicity": 1,
+        "removedMultiplicity": 0,
+        "addedMultiplicity": 1,
+        "beforePositionsZeroBased": [],
+        "afterPositionsZeroBased": [
+          29
+        ],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "FunctionDeclaration",
+          "sha256": "b6e9e39ed6c10b7591e20d6ffe3bf9cb5ea98a5cff865f1f1a3e42206d42c431",
+          "source": "scripts/docs-reader/renderer.mjs",
+          "symbol": "readerSharedAssets"
+        },
+        "beforeMultiplicity": 0,
+        "afterMultiplicity": 1,
+        "removedMultiplicity": 0,
+        "addedMultiplicity": 1,
+        "beforePositionsZeroBased": [],
+        "afterPositionsZeroBased": [
+          46
+        ],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "FunctionDeclaration",
+          "sha256": "b717267f313a704a274f241da2d3b99e37e7ff5ccf4ffc0fcb19f1ff8f9d7cc7",
+          "source": "scripts/docs-reader/redirects.mjs",
+          "symbol": "outputFor"
+        },
+        "beforeMultiplicity": 0,
+        "afterMultiplicity": 1,
+        "removedMultiplicity": 0,
+        "addedMultiplicity": 1,
+        "beforePositionsZeroBased": [],
+        "afterPositionsZeroBased": [
+          38
+        ],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "FunctionDeclaration",
+          "sha256": "b83a3a7bd67d5c95452f0ba2c5f8118ee1c763fe05ca3b0302f966c3a326ae37",
+          "source": "scripts/docs-reader/redirects.mjs",
+          "symbol": "readerRedirectPlan"
+        },
+        "beforeMultiplicity": 0,
+        "afterMultiplicity": 1,
+        "removedMultiplicity": 0,
+        "addedMultiplicity": 1,
+        "beforePositionsZeroBased": [],
+        "afterPositionsZeroBased": [
+          40
+        ],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "FunctionDeclaration",
+          "sha256": "d0510b61523dbe997e4b468f6d6a312c4d87c618e8f8ef82948c6f6d6a6f2cb6",
+          "source": "scripts/docs-reader/page-records.mjs",
+          "symbol": "outputReader"
+        },
+        "beforeMultiplicity": 0,
+        "afterMultiplicity": 1,
+        "removedMultiplicity": 0,
+        "addedMultiplicity": 1,
+        "beforePositionsZeroBased": [],
+        "afterPositionsZeroBased": [
+          25
+        ],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "FunctionDeclaration",
+          "sha256": "d6554c775f71e6f61a9230f825e3ea153427a82026cbe022c79f0d7b59c84105",
+          "source": "scripts/docs-reader/redirects.mjs",
+          "symbol": "localRoute"
+        },
+        "beforeMultiplicity": 0,
+        "afterMultiplicity": 1,
+        "removedMultiplicity": 0,
+        "addedMultiplicity": 1,
+        "beforePositionsZeroBased": [],
+        "afterPositionsZeroBased": [
+          37
+        ],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "FunctionDeclaration",
+          "sha256": "df8fc76f4c2d77bd46f51cfcc5b7e59a3c65ddc7a594a60899dfdfc7ea484c94",
+          "source": "scripts/docs-reader/renderer.mjs",
+          "symbol": "readerOutputLayout"
+        },
+        "beforeMultiplicity": 0,
+        "afterMultiplicity": 1,
+        "removedMultiplicity": 0,
+        "addedMultiplicity": 1,
+        "beforePositionsZeroBased": [],
+        "afterPositionsZeroBased": [
+          45
+        ],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "FunctionDeclaration",
+          "sha256": "e04001dcd6d092e38dc3b7506e690e891fc4dbdf528903ebb9e1abf40dd70b83",
+          "source": "scripts/docs-reader/redirects.mjs",
+          "symbol": "ids"
+        },
+        "beforeMultiplicity": 0,
+        "afterMultiplicity": 1,
+        "removedMultiplicity": 0,
+        "addedMultiplicity": 1,
+        "beforePositionsZeroBased": [],
+        "afterPositionsZeroBased": [
+          36
+        ],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "FunctionDeclaration",
+          "sha256": "e4211203018f0f300d9a24ac9ba61658dcf61ff3837b71b04b2a9c3168886caa",
+          "source": "scripts/docs-reader/renderer.mjs",
+          "symbol": "searchReaderPages"
+        },
+        "beforeMultiplicity": 0,
+        "afterMultiplicity": 1,
+        "removedMultiplicity": 0,
+        "addedMultiplicity": 1,
+        "beforePositionsZeroBased": [],
+        "afterPositionsZeroBased": [
+          47
+        ],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "FunctionDeclaration",
+          "sha256": "e8c9f337d47ba759c2286653596ffab9bb69a9d7aa96a630cf6aa05cb26991db",
+          "source": "scripts/docs-reader/redirects.mjs",
+          "symbol": "verifyReaderRedirects"
+        },
+        "beforeMultiplicity": 0,
+        "afterMultiplicity": 1,
+        "removedMultiplicity": 0,
+        "addedMultiplicity": 1,
+        "beforePositionsZeroBased": [],
+        "afterPositionsZeroBased": [
+          41
+        ],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "FunctionDeclaration",
+          "sha256": "f97c7fc105a16575c7d216d1b99dd572b90f9d71d14931d7d46858c470ebb29f",
+          "source": "scripts/docs-reader/page-records.mjs",
+          "symbol": "relative"
+        },
+        "beforeMultiplicity": 0,
+        "afterMultiplicity": 1,
+        "removedMultiplicity": 0,
+        "addedMultiplicity": 1,
+        "beforePositionsZeroBased": [],
+        "afterPositionsZeroBased": [
+          27
+        ],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "IfStatement",
+          "sha256": "5b563952315716dbe5c2b0b7cb8f85f1ce0b4975c4c7df83fb30f5432a40910c",
+          "source": "scripts/docs-reader/check-artifact.mjs",
+          "symbol": "<operation>"
+        },
+        "beforeMultiplicity": 0,
+        "afterMultiplicity": 1,
+        "removedMultiplicity": 0,
+        "addedMultiplicity": 1,
+        "beforePositionsZeroBased": [],
+        "afterPositionsZeroBased": [
+          13
+        ],
+        "fullFactRepresentedInV1LastWriteDelta": false
+      },
+      {
+        "fullFact": {
+          "kind": "IfStatement",
+          "sha256": "e3fe55fa3c7d07c2508ed9dde89582a9a5d85401c262e28cbaf36ce9e048f770",
+          "source": "scripts/docs-reader/check-artifact.mjs",
+          "symbol": "<operation>"
+        },
+        "beforeMultiplicity": 0,
+        "afterMultiplicity": 1,
+        "removedMultiplicity": 0,
+        "addedMultiplicity": 1,
+        "beforePositionsZeroBased": [],
+        "afterPositionsZeroBased": [
+          14
+        ],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "ImportDeclaration",
+          "sha256": "0b07dc03d725e02245d90b3425f5311cd256908cba411094902ec1ac2cfbd4e8",
+          "source": "scripts/docs-reader/page-records.mjs",
+          "symbol": "<operation>"
+        },
+        "beforeMultiplicity": 0,
+        "afterMultiplicity": 1,
+        "removedMultiplicity": 0,
+        "addedMultiplicity": 1,
+        "beforePositionsZeroBased": [],
+        "afterPositionsZeroBased": [
+          30
+        ],
+        "fullFactRepresentedInV1LastWriteDelta": false
+      },
+      {
+        "fullFact": {
+          "kind": "ImportDeclaration",
+          "sha256": "336b18dd5dc9cb9c5d587503227270022936b0a9c40437d4b1413b6096e17ad1",
+          "source": "scripts/docs-reader/redirects.mjs",
+          "symbol": "<operation>"
+        },
+        "beforeMultiplicity": 0,
+        "afterMultiplicity": 1,
+        "removedMultiplicity": 0,
+        "addedMultiplicity": 1,
+        "beforePositionsZeroBased": [],
+        "afterPositionsZeroBased": [
+          42
+        ],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "ImportDeclaration",
+          "sha256": "3dc1ff3d3ec94c1b0799d5c99298e41f4fc507f35f290ddbf7f4d5ef318f39e3",
+          "source": "scripts/docs-reader/check-artifact.mjs",
+          "symbol": "<operation>"
+        },
+        "beforeMultiplicity": 0,
+        "afterMultiplicity": 1,
+        "removedMultiplicity": 0,
+        "addedMultiplicity": 1,
+        "beforePositionsZeroBased": [],
+        "afterPositionsZeroBased": [
+          17
+        ],
+        "fullFactRepresentedInV1LastWriteDelta": false
+      },
+      {
+        "fullFact": {
+          "kind": "ImportDeclaration",
+          "sha256": "6024e24824120854da6890bc40ddd188e2720829de1a3ce1591a4d2f16be869b",
+          "source": "scripts/docs-reader/page-records.mjs",
+          "symbol": "<operation>"
+        },
+        "beforeMultiplicity": 0,
+        "afterMultiplicity": 1,
+        "removedMultiplicity": 0,
+        "addedMultiplicity": 1,
+        "beforePositionsZeroBased": [],
+        "afterPositionsZeroBased": [
+          31
+        ],
+        "fullFactRepresentedInV1LastWriteDelta": false
+      },
+      {
+        "fullFact": {
+          "kind": "ImportDeclaration",
+          "sha256": "632e7e3c7b3810a01e923cc1b80439a82b2e130d0868fb2a32174a210cb024b9",
+          "source": "scripts/docs-reader/page-records.mjs",
+          "symbol": "<operation>"
+        },
+        "beforeMultiplicity": 0,
+        "afterMultiplicity": 1,
+        "removedMultiplicity": 0,
+        "addedMultiplicity": 1,
+        "beforePositionsZeroBased": [],
+        "afterPositionsZeroBased": [
+          32
+        ],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "ImportDeclaration",
+          "sha256": "c911664f1383262f472f293bf37442ecc966e75f7783f63641e87892a5d649c8",
+          "source": "scripts/docs-reader/check-artifact.mjs",
+          "symbol": "<operation>"
+        },
+        "beforeMultiplicity": 0,
+        "afterMultiplicity": 1,
+        "removedMultiplicity": 0,
+        "addedMultiplicity": 1,
+        "beforePositionsZeroBased": [],
+        "afterPositionsZeroBased": [
+          20
+        ],
+        "fullFactRepresentedInV1LastWriteDelta": false
+      }
+    ]
+  },
+  {
+    "source": "scripts/docs-reader/redirects.mjs",
+    "priorDigestMatchesActualBaseline": true,
+    "oldFactCount": 19,
+    "newFactCount": 21,
+    "removedOccurrences": 1,
+    "addedOccurrences": 3,
+    "oldRepeatedIdentityExtraOccurrences": 5,
+    "newRepeatedIdentityExtraOccurrences": 5,
+    "fullMultisetDelta": [
+      {
+        "fullFact": {
+          "kind": "FunctionDeclaration",
+          "sha256": "61fb30c758d3c443fe639efb199175569bb5fdda1fe121fae353d83e2856cef2",
+          "source": "scripts/docs-reader/redirects.mjs",
+          "symbol": "compileReaderRedirects"
+        },
+        "beforeMultiplicity": 0,
+        "afterMultiplicity": 1,
+        "removedMultiplicity": 0,
+        "addedMultiplicity": 1,
+        "beforePositionsZeroBased": [],
+        "afterPositionsZeroBased": [
+          5
+        ],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "FunctionDeclaration",
+          "sha256": "b83a3a7bd67d5c95452f0ba2c5f8118ee1c763fe05ca3b0302f966c3a326ae37",
+          "source": "scripts/docs-reader/redirects.mjs",
+          "symbol": "readerRedirectPlan"
+        },
+        "beforeMultiplicity": 0,
+        "afterMultiplicity": 1,
+        "removedMultiplicity": 0,
+        "addedMultiplicity": 1,
+        "beforePositionsZeroBased": [],
+        "afterPositionsZeroBased": [
+          11
+        ],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "FunctionDeclaration",
+          "sha256": "c936dcf2e216ec3e088f1fc7cfc57b3fca2a4817a44ad6b51c5085751b7af3bb",
+          "source": "scripts/docs-reader/redirects.mjs",
+          "symbol": "compileReaderRedirects"
+        },
+        "beforeMultiplicity": 1,
+        "afterMultiplicity": 0,
+        "removedMultiplicity": 1,
+        "addedMultiplicity": 0,
+        "beforePositionsZeroBased": [
+          5
+        ],
+        "afterPositionsZeroBased": [],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      },
+      {
+        "fullFact": {
+          "kind": "FunctionDeclaration",
+          "sha256": "e8c9f337d47ba759c2286653596ffab9bb69a9d7aa96a630cf6aa05cb26991db",
+          "source": "scripts/docs-reader/redirects.mjs",
+          "symbol": "verifyReaderRedirects"
+        },
+        "beforeMultiplicity": 0,
+        "afterMultiplicity": 1,
+        "removedMultiplicity": 0,
+        "addedMultiplicity": 1,
+        "beforePositionsZeroBased": [],
+        "afterPositionsZeroBased": [
+          12
+        ],
+        "fullFactRepresentedInV1LastWriteDelta": true
+      }
+    ]
+  }
+]

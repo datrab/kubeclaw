@@ -1,0 +1,97 @@
+{
+  "reviewer": "Root, nonauthor of capture/preparer/roster",
+  "revision": "7ef16585ba04eba3628cead304be85307436f091",
+  "authorManifestSha256": "da1a7d17f410ee6929c026874ee630c2edcf6999759b3fee3ba2eb99c41b6785",
+  "result": "BOUNDED_FACTS_ONLY_ACQUISITION_SCOPE_APPROVED",
+  "physicalFilesVerified": 430,
+  "absencesVerified": 148,
+  "linksVerified": [
+    {
+      "path": "/home/node/.openclaw/node_modules",
+      "target": "/opt/kubeclaw-tools/node_modules",
+      "canonical": "/opt/kubeclaw-tools/node_modules"
+    },
+    {
+      "path": "/usr/bin/python3",
+      "target": "python3.11",
+      "canonical": "/usr/bin/python3.11"
+    }
+  ],
+  "typedDirectoryContextsVerified": [
+    {
+      "path": "/home/node/.openclaw/node_modules/typescript",
+      "type": "directory",
+      "canonical": "/opt/kubeclaw-tools/node_modules/typescript",
+      "device": "217",
+      "inode": "19025631",
+      "purpose": "package-search candidate directory context only, not loaded code"
+    },
+    {
+      "path": "/home/node/.openclaw/node_modules/yaml",
+      "type": "directory",
+      "canonical": "/opt/kubeclaw-tools/node_modules/yaml",
+      "device": "217",
+      "inode": "19026011",
+      "purpose": "package-search candidate directory context only, not loaded code"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/node_modules",
+      "type": "directory",
+      "canonical": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/node_modules",
+      "device": "2306",
+      "inode": "14603978",
+      "purpose": "package-search candidate directory context only, not loaded code"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/node_modules/typescript",
+      "type": "directory",
+      "canonical": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/node_modules/typescript",
+      "device": "2306",
+      "inode": "16424968",
+      "purpose": "package-search candidate directory context only, not loaded code"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/node_modules/yaml",
+      "type": "directory",
+      "canonical": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/node_modules/yaml",
+      "device": "2306",
+      "inode": "16424994",
+      "purpose": "package-search candidate directory context only, not loaded code"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/docs-reader/node_modules",
+      "type": "directory",
+      "canonical": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/docs-reader/node_modules",
+      "device": "2306",
+      "inode": "14735087",
+      "purpose": "package-search candidate directory context only, not loaded code"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/tools/ops-mcp/node_modules",
+      "type": "directory",
+      "canonical": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/tools/ops-mcp/node_modules",
+      "device": "2306",
+      "inode": "17435853",
+      "purpose": "package-search candidate directory context only, not loaded code"
+    }
+  ],
+  "existingRecipes": 102,
+  "additionalObservationSeedsWithoutRoles": 5,
+  "oldClosureMembersParsedAsData": 115,
+  "unchangedReviewedInstalledFoundationFiles": 75,
+  "eagerSemantics": "Five original local facts modules only; role three literal SHA changes and guard activation+two literal SHA changes have separate complete independent reviews. Initialization imports builtins/unchanged TS/YAML, freezes data/declares deferred functions; no selected Source producer evaluation. All other eager implementations unchanged in reviewed scope.",
+  "resolutionScope": "Same reviewed Node YAML export/literal-relative require bootstrap and direct pinned TypeScript parser entry; process/buffer are Node builtins. Candidate/nearer absence, physical files, link pointers and canonical/dev/ino directories sealed; no replacement resolver or transformed modules.",
+  "captureSemantics": "Original selector/facts/child-authority getters cold/repeat, complete terminal/error/partial DATA; five explicit outer processes, zero allowed inner children in facts mode. Graph rejected at both entrypoints. No API/runtime/native/qualification/receipt installation.",
+  "reusedReviews": [
+    "reader-artifact-ci-purpose-v2-independent/review.md",
+    "final-five-purpose-renewal/bounded-independent-review.md",
+    "final-sourceboxes-independent/review.md",
+    "preparer-review.md",
+    "prior unchanged TS/YAML bootstrap review bounded by all75 complete equal bytes"
+  ],
+  "limits": [
+    "Installed TypeScript parser trust-anchor reuse is not fresh whole compiler semantic audit.",
+    "No role, graph or generated configuration acceptance follows from acquisition scope approval.",
+    "Four native receipts remain unexecuted; new five observations retain prior:null."
+  ]
+}

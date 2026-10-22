@@ -1,0 +1,46 @@
+{
+  "verdict": {
+    "sourceAccuracy": "PASS_PRESERVATION",
+    "readerUsability": "PASS_SEMANTIC_STRUCTURE",
+    "quality": "PASS"
+  },
+  "findings": [],
+  "scope": "Only components-and-authority source13: coherent heading and restored three-link implementation paragraph; not whole Sourcebox/corpus/gate acceptance.",
+  "beforeSha256": "2b920791a796db03c31a421b643dbc5d669da4808b086bcbf6104002e50745a2",
+  "afterSha256": "ef42550d5d6496396ec564fc2403289268d9630041bcc83a946a3f2d5818a8b5",
+  "sources": [
+    {
+      "path": "skills/common/plugins/openclaw-agent-observer/src/index.ts",
+      "revision": "f50e90cd19501dcbf422423310a8f1fe7f3ca9c8",
+      "sha256": "a800b92606e0c803ae51867c7625ae5610169e23b2074b54d69f58e5f0d6f3aa",
+      "priorWholeSourceProofUnchanged": true
+    },
+    {
+      "path": "skills/common/plugins/openclaw-agent-observer/src/redis-writer.ts",
+      "revision": "f50e90cd19501dcbf422423310a8f1fe7f3ca9c8",
+      "sha256": "8f974830cf10d931410d6bd1f23b4782aa8988b96baba13f4172a3b9f85d4a5d",
+      "priorWholeSourceProofUnchanged": true
+    },
+    {
+      "path": "contracts/agent-observability/v1/src/constants.ts",
+      "revision": "f50e90cd19501dcbf422423310a8f1fe7f3ca9c8",
+      "sha256": "7362261fe21d18e7acdf32b266f938a740e1106a4642579e7a1b203cb8b97924",
+      "priorWholeSourceProofUnchanged": true
+    }
+  ],
+  "checks": [
+    {
+      "step": "Read full surrounding separate host-observer ingress explanation and exact parent diff; inert original MarkdownIt parse/render and Source hash comparison",
+      "exitCode": 0,
+      "observation": "14same parsed top-level Sourceboxes; only13 changed; all outside bytes exact; three URLs/order exact; five other semantic field lines exact; implementation is now one complete3-link paragraph rather than a sentence interrupted by new fields.",
+      "receipt": "review-inert.json"
+    }
+  ],
+  "sourceBasis": "Exact unchanged full Source scope reused from authority-security-recovery-independent/review.json +bindings.json. No new factual/ordering, credentials, lifecycle, execution, durability or exactly-once claim.",
+  "readerBasis": "A standalone meaningful Sourceboundary heading precedes Claim and the complete Implementation sentence; links now reside with their named role, no dangling comma/list tail across fields. Source remains separately bounded from Nova lifecycle authority.",
+  "limits": [
+    "No Main/Source writes, product/producer/test/browser/graph/custody execution or gate acceptance.",
+    "Inert MarkdownIt rendering only; new actual grouped Reader refresh remains parent-owned.",
+    "Prior historical no-fresh-host-hook-to-Redis result and retained delivery-loss/retry limits unchanged."
+  ]
+}

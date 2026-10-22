@@ -1,0 +1,96 @@
+{
+  "reviewer": "Root, nonauthor of DATA proposal and original facts capture helpers",
+  "result": "EXACT_BOUNDED_ROLE_DATA_INTEGRATION_APPROVED",
+  "capturedRevision": "7ef16585ba04eba3628cead304be85307436f091",
+  "candidateSha256": "312926d4089e3d2b3c9d30b9b846bd27a4825e9d9511105aa9761c3f717a87de",
+  "oldRecipeCellsChanged": [
+    {
+      "source": "scripts/docs-api-output-discovery.mjs",
+      "field": "factsDigest"
+    },
+    {
+      "source": "scripts/docs-api-output-discovery.mjs",
+      "field": "selectors"
+    },
+    {
+      "source": "scripts/docs-api-output-role-classification.mjs",
+      "field": "factsDigest"
+    },
+    {
+      "source": "scripts/docs-api-output-role-classification.mjs",
+      "field": "selectors"
+    },
+    {
+      "source": "scripts/docs-api-product-scope.mjs",
+      "field": "factsDigest"
+    },
+    {
+      "source": "scripts/docs-api-reference.mjs",
+      "field": "factsDigest"
+    },
+    {
+      "source": "scripts/docs-configuration-inventory.mjs",
+      "field": "factsDigest"
+    },
+    {
+      "source": "scripts/docs-generate.mjs",
+      "field": "factsDigest"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "field": "factsDigest"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "field": "selectors"
+    },
+    {
+      "source": "scripts/docs-reader/renderer.mjs",
+      "field": "factsDigest"
+    },
+    {
+      "source": "scripts/docs-reader/renderer.mjs",
+      "field": "selectors"
+    },
+    {
+      "source": "scripts/docs-reader/check-artifact.mjs",
+      "field": "factsDigest"
+    },
+    {
+      "source": "scripts/docs-reader/check-artifact.mjs",
+      "field": "selectors"
+    },
+    {
+      "source": "scripts/docs-reader/redirects.mjs",
+      "field": "sourceSha256"
+    },
+    {
+      "source": "scripts/docs-reader/redirects.mjs",
+      "field": "factsDigest"
+    },
+    {
+      "source": "scripts/docs-reader/redirects.mjs",
+      "field": "selectors"
+    }
+  ],
+  "newRecipes": [
+    "scripts/check-capability-registrations-drift-controls.mjs",
+    "scripts/docs-ap09-mutation-fixture.mjs",
+    "scripts/plugin-system-inventory.mjs",
+    "scripts/vendor-external-helm-authorities.mjs",
+    "scripts/docs-reader/page-records.mjs"
+  ],
+  "preserved": "All other existing recipe fields, four native objects, complete outside-table module and old115closure tail exact. No registry/graph/native qualification inferred.",
+  "semanticBasis": {
+    "utilityClassifier": "Previously full nonauthor corrected classifier review: four exact Source-owned utility roles, physical cache invalidation, public/API-capable escape preservation; opaque/nonfinite data remains unqualified. Actual changed classifier functions match that scope.",
+    "ownerAndCi": "Complete current owner-purpose helper and external-CI14-input/ancestry/private acquired proof/cache/new-importer guards reviewed; five changed guard import occurrences are exact static import, not a new target evaluator. Old four transitive consumers retain selectors and only inherit reviewed defining operations.",
+    "reader": "Previously complete nonauthor170-line page-records/caller/renderer/readonly redirect/normal-checker review, plus current full artifact checker read: normal path cannot opt into legacy by deleting metadata. Source/layout imports, append build and five+one fixed capability-field template retain documentation-only consumers.",
+    "newFive": "Each four-owner whole Source/purpose/caller review plus complete page-record original producer/checker consumers already reviewed independently by Root/non-author reviewers; fixed selectors/digests/current purpose inputs bound to actual results. They remain subject to original graph/ancestor/module/API guards, not granted by file membership."
+  },
+  "reviewCorrection": "V1 operation identity map lost multiplicity; V2 complete fact Counters preserve26removed/153added occurrences and all7formerly omitted full facts. Root read all seven exact Source spans and semantic roles; no additional unreviewed code. Original V1 and actual DATA retained.",
+  "limits": [
+    "Source table integration only; current graph/new owner-purpose guard closure still NOT established.",
+    "Four native receipts unexecuted. No current whole generator/census/CI/runtime/release acceptance.",
+    "Installed whole-source role bindings are not permission to evaluate arbitrary scanned modules."
+  ]
+}

@@ -458,6 +458,9 @@ export const documentationExecutableRoleRecipes = {
         "expressionSha256": "abfcad28ec14344e651d5f0983b24be76635f7dc84460622b29987c2a7f15ad3"
       },
       {
+        "expressionSha256": "0dea52aa29095a9c3bd61034e6c0adbd7b466cf4553a9131f6d925682de010a6"
+      },
+      {
         "expressionSha256": "c2865402a65517e0f02b00d28ebaf49bc1d00800b90da4637b6306f32fd2215e"
       },
       {
@@ -587,7 +590,7 @@ export const documentationExecutableRoleRecipes = {
         "expressionSha256": "328f8dd702f5cb8ccffb9ae17cc3d577e76cd8ec81456fffa49b452e908adb55"
       }
     ],
-    "factsDigest": "6fc6d0010a2622ec3de5be14274a9098d25c0c1d1ae5bd537aadc46afcb38a49",
+    "factsDigest": "3f4f535fcb4ae34c7825111461da098c19aafeecc279ca01ae7014952a3b9828",
     "authorityInputs": [
       {
         "path": "scripts/docs-api-go-output-role-adapter.go",
@@ -641,7 +644,7 @@ export const documentationExecutableRoleRecipes = {
         "expressionSha256": "0c854ac2826131c497812bc34d4393c14463df9d8a1c60b4cf03b64ac0debfd9"
       },
       {
-        "expressionSha256": "ce8669097d547202eaf9edeb81e9a266275307f4e098215a5c6dfa68333bc832"
+        "expressionSha256": "a95b76a9c1ca824f62143e9e283b5d78560a00b9971796bab8ca31cecc0c437b"
       },
       {
         "expressionSha256": "835af7bbcac17efa8c8ac0b140dd504cdd4ad460d05550fd8beb8420535e8203"
@@ -671,7 +674,7 @@ export const documentationExecutableRoleRecipes = {
         "expressionSha256": "e9e3b5379d7855e12c57ee967d07dd15f67c5d13d4f7aab1c4f609dc35e0361d"
       }
     ],
-    "factsDigest": "1887d9a1485ae519bc942d3382fe886791b41c57b87dd707a9dc62a7dc760427",
+    "factsDigest": "871eae7269f25ef3fe6931f8ea2e9db479787968cbcc4e6cbd946752a892caa3",
     "authorityInputs": []
   },
   "scripts/docs-api-product-scope.mjs": {
@@ -805,7 +808,7 @@ export const documentationExecutableRoleRecipes = {
         "expressionSha256": "041aa7206a41cf5c3bdd66f61797f9b67c06085f6d0076ce1f84e2a9c8d57db8"
       }
     ],
-    "factsDigest": "4c380f89105f52e3cedee08e92030f28c5bba50012d6a143a926af6f86efe1bf",
+    "factsDigest": "8879c557d4f5dd232cbe8db06df86c817f64a6c7a8d0c3cf048305bd78a0509d",
     "authorityInputs": []
   },
   "scripts/docs-api-python-output-adapter.py": {
@@ -1084,7 +1087,7 @@ export const documentationExecutableRoleRecipes = {
         "expressionSha256": "9efac25cb0d8a53fc3a31aec649afa2cd99102c34366428833c403eccaef3fbe"
       }
     ],
-    "factsDigest": "63ac46a3486469178028e17968a851ce1b5b2887f8d7252a046fd22913e8fa99",
+    "factsDigest": "825de0d3ca7c6ca165f1319bd0ecd0d925251443bb0751d3aa5d32d5b159430b",
     "authorityInputs": []
   },
   "scripts/docs-api-schema-authorities.mjs": {
@@ -1880,7 +1883,7 @@ export const documentationExecutableRoleRecipes = {
         "expressionSha256": "7602a8f927b47cd0b4b4f2501bccd41bb8e4e4ea43e571cf4bce62f3c3717191"
       }
     ],
-    "factsDigest": "95b4e40937899f4c6ef3205e94bf68ea6d1d9d1ed6e5563a9ea7de99cfc7241b",
+    "factsDigest": "71eeb1bb6ea165c44d1aa72e7becd05d34bc84a98972360edae8c70dfd2c7069",
     "authorityInputs": [
       {
         "path": "scripts/vendor-external-helm-authorities.mjs",
@@ -1983,7 +1986,7 @@ export const documentationExecutableRoleRecipes = {
         "expressionSha256": "cba76d80649d6ce8d92897a224d01ee9877a1807a9de9e765cdad79d29f912ce"
       }
     ],
-    "factsDigest": "7e21fe00f14b77b58696c11bc3e3b669726867603a89c05dde7fe7605e7d2b12",
+    "factsDigest": "897e4202b1710f2abb1abd09868ecf86aa8199e1186fbe688be027a61b3f617e",
     "authorityInputs": []
   },
   "scripts/docs-governance.mjs": {
@@ -4204,6 +4207,9 @@ export const documentationExecutableRoleRecipes = {
         "expressionSha256": "2948024387391b149bf95db8466bc244e8c0bb1f158e0fbf6b9ba730c29aa67e"
       },
       {
+        "expressionSha256": "47ed0e498c09185e284708989e0d09705078965512c0f821afa0ea1f1b1cacda"
+      },
+      {
         "expressionSha256": "03d2a219590952d6856d98e14bda9af22b335224727810743d0a4d3cba8b1a3d"
       },
       {
@@ -4267,7 +4273,7 @@ export const documentationExecutableRoleRecipes = {
         "expressionSha256": "0c07d5c689b4e48cfa546e3f4be6056b06b0a07cbc7b16a08901bef75afef919"
       }
     ],
-    "factsDigest": "76033b3b65fff4b386e58411090cdc3f8524efe54b7a262618183dbb3a0c32d4",
+    "factsDigest": "8bbdb9ed22b6ecaa9c5ae7333c225c992e9df4c2efebaa76d4757cdb350a3b57",
     "authorityInputs": []
   },
   "scripts/docs-runtime-consumer-contracts.mjs": {
@@ -5430,10 +5436,16 @@ export const documentationExecutableRoleRecipes = {
         "expressionSha256": "f05d29332cd38f9e82b894523362ba3ed37cb2df35c3ec89540a4eea4cb7fa5a"
       },
       {
-        "expressionSha256": "48d01154406f2b259b0072ed279ebece364400db84f1ed1ba9f36f8848c1b536"
+        "expressionSha256": "7afcd2efa806b063ea448ac279454346be03d84af2cb396c82b0a9a517581234"
       },
       {
         "expressionSha256": "451127a16af5d7ebcdbfa0db3e5689b3d718475c40249b981f294b10563cc27e"
+      },
+      {
+        "expressionSha256": "df8fc76f4c2d77bd46f51cfcc5b7e59a3c65ddc7a594a60899dfdfc7ea484c94"
+      },
+      {
+        "expressionSha256": "b6e9e39ed6c10b7591e20d6ffe3bf9cb5ea98a5cff865f1f1a3e42206d42c431"
       },
       {
         "expressionSha256": "7493dab5a47e6cca4a4777dc981b015a897aabd9abcb72d0f1b5511022393bd3"
@@ -5469,7 +5481,7 @@ export const documentationExecutableRoleRecipes = {
         "expressionSha256": "36087d3c92600d99f8bafb5540394aeb4140680ee81b3de6b206bfc6ee17bf36"
       }
     ],
-    "factsDigest": "8712107db31b234bd94cfb02a61cedad8e6b870d3052084e5fd34b616a2d6f78",
+    "factsDigest": "653eeef16fe776d29f8bb17e687df4baa5e1d22ff424afafe00f14b666a43f26",
     "authorityInputs": []
   },
   "scripts/docs-reader/check-artifact.mjs": {
@@ -5478,6 +5490,9 @@ export const documentationExecutableRoleRecipes = {
     "selectors": [
       {
         "expressionSha256": "39b41069a19f6818c703ae0ce9a83c2efaf0c6f23d9cbe82afe85b402b2bc77e"
+      },
+      {
+        "expressionSha256": "573e2d588ec6d311004a0628c3eeca3bbe6668cd9438c6c88f06e4a6bd42a79e"
       },
       {
         "expressionSha256": "24502c0329d10c2649694b1de8333b3ad3289865e91745237cee6d0605e4620c"
@@ -5504,10 +5519,16 @@ export const documentationExecutableRoleRecipes = {
         "expressionSha256": "113f0af17fdf683cf360ab9d03b7eff1b572d3475e83119031d47ee4331621aa"
       },
       {
+        "expressionSha256": "c911664f1383262f472f293bf37442ecc966e75f7783f63641e87892a5d649c8"
+      },
+      {
         "expressionSha256": "f5ae85f5a46d92c524f5644181b77d8d84ce6b420d5c48738420decbec8dd743"
+      },
+      {
+        "expressionSha256": "3dc1ff3d3ec94c1b0799d5c99298e41f4fc507f35f290ddbf7f4d5ef318f39e3"
       }
     ],
-    "factsDigest": "8c1439fc35d9a1d063b9cbd1f9a7ac6bb7a27b1fc653e091d4c249d45077c574",
+    "factsDigest": "3035ba4888de3bfdf09230543f8fe520ae9b2478aac46f8cb848f8630ce3ea3a",
     "authorityInputs": []
   },
   "scripts/docs-reader/check-search.mjs": {
@@ -9087,7 +9108,7 @@ export const documentationExecutableRoleRecipes = {
   "scripts/docs-reader/redirects.mjs": {
     "role": "documentation-consumer",
     "qualificationKind": "reviewed-documentation-consumer/v1",
-    "sourceSha256": "bdeb3d97575e9e8116fc5d07eb2fd359aeac3a5ae824d0521e688ff187e43a60",
+    "sourceSha256": "0b186c9da87055e1a13afb0aace0b72e04099c3ed49879a422ca3acbbe778caf",
     "consumer": "Exact positive reader artifact redirect compiler/writer used by the actual documentation publication/renderer; selected physical asset hashes and validated local canonical fallback outputs, not product API bodies or example module execution.",
     "selectors": [
       {
@@ -9121,13 +9142,16 @@ export const documentationExecutableRoleRecipes = {
         "expressionSha256": "82a51bcfe018e6b4ffbde5427bea64ded1871c81b64b2358dcb90b5ad7710659"
       },
       {
-        "expressionSha256": "c936dcf2e216ec3e088f1fc7cfc57b3fca2a4817a44ad6b51c5085751b7af3bb"
+        "expressionSha256": "61fb30c758d3c443fe639efb199175569bb5fdda1fe121fae353d83e2856cef2"
       },
       {
         "expressionSha256": "d3f75effb0d479247d7a99426eac1f00ffbd9f67c7a61a8f8357f9d563aece3e"
       },
       {
         "expressionSha256": "396cffcd6da5ea95d5c9ca62b7daf06185a26e4a2e41e3540adb5f91720beebc"
+      },
+      {
+        "expressionSha256": "e8c9f337d47ba759c2286653596ffab9bb69a9d7aa96a630cf6aa05cb26991db"
       },
       {
         "expressionSha256": "1861278a0c63aed36c51b0c0f572a1174fe374394ba4db0dbd87c37d3ffec787"
@@ -9184,7 +9208,7 @@ export const documentationExecutableRoleRecipes = {
         "expressionSha256": "8d1bf50b992a7987f908cc2bc792bc39d2416eb08672a379bf59b0c357443e33"
       }
     ],
-    "factsDigest": "f31f9792439acba8b0b5a6faca613ce2bb5a6a9e453ab825d957c55e0a392513",
+    "factsDigest": "9a6e1412afa2e25b52509f6721d05e6690e677133b7e1d536ad35c8490ce2564",
     "authorityInputs": [],
     "purposeInputs": [
       {
@@ -9273,6 +9297,630 @@ export const documentationExecutableRoleRecipes = {
         "path": "docs/site/reference/documentation-site.md",
         "canonical": "docs/site/reference/documentation-site.md",
         "sha256": "c0c4b55949be05d571aa4ea5b353c5ab479caeafd3ebbcdeb70ebec0ca10a1e0"
+      }
+    ]
+  },
+  "scripts/check-capability-registrations-drift-controls.mjs": {
+    "role": "documentation-consumer",
+    "qualificationKind": "reviewed-documentation-consumer/v1",
+    "sourceSha256": "e76c88fe7d72eff87a6ba1e2ff63d8630ae6c7ec861e884dc8e3575c0ce5e3cb",
+    "consumer": "Owned temporary manifest Add/Change/Remove and malformed-input controls for the canonical capability reader, not runtime configuration.",
+    "selectors": [
+      {
+        "expressionSha256": "1466194c60c4db6cec6fce1e2c2c329c13b6da3900fa50b148d059220284209a"
+      },
+      {
+        "expressionSha256": "28c068f6544963b241744fc45a5b02429d5b98feb9edf1b3d40681fd7f52fc69"
+      },
+      {
+        "expressionSha256": "6450036bbf590e8ef7ba69d948a254d0a499edd1218ac69c014a236b03d6c20f"
+      },
+      {
+        "expressionSha256": "588ae9b273a5b16b2a30d485ac76729cc58e46ca7ee5e13c84d15b9e8fb1ad8f"
+      },
+      {
+        "expressionSha256": "fb1e803bb51ae53a0fb6afe91158bd2f9f0ec8a6261c04c046e7cee0f23862c6"
+      },
+      {
+        "expressionSha256": "d797673ea161c97ca127f6da5f63e6cf9dc5ebee707b75564eb3117ef20c3732"
+      },
+      {
+        "expressionSha256": "eda17088dbf75e08dff4dc37b6485d875f4595c0426b11a28415df5efda52b8f"
+      },
+      {
+        "expressionSha256": "c1daa764d6974efee7d2d895ef8f9d08c431466cddcc93966377716d9d5a495f"
+      },
+      {
+        "expressionSha256": "ea86d9e26f710a05c109c1f24a78c04bb604f7e92a5197cd076c2d289ff4ce43"
+      },
+      {
+        "expressionSha256": "3bd42e15e5427f946b98b898212af900ed0a4068cff03a37aa2ce1d3a081f2ec"
+      },
+      {
+        "expressionSha256": "99a8a8a7117b1395e3a209cdc8ba5a70424687458932bc4dc8a7b6e59ff53868"
+      },
+      {
+        "expressionSha256": "8f15d80e7efb2a5d032af6aeba410bc9b4bd498ba70c7278654526b1e2259752"
+      },
+      {
+        "expressionSha256": "113f0af17fdf683cf360ab9d03b7eff1b572d3475e83119031d47ee4331621aa"
+      },
+      {
+        "expressionSha256": "abfcad28ec14344e651d5f0983b24be76635f7dc84460622b29987c2a7f15ad3"
+      },
+      {
+        "expressionSha256": "4396bcb6be0a666f1f8f6a5fe67cdd44973caec8da03541652314d9dcb1f2d31"
+      }
+    ],
+    "factsDigest": "ee7048005760475515a138049032373eebf56defae6b60f10c5f7329316acf60",
+    "authorityInputs": [
+      {
+        "path": "scripts/check-capability-registrations-drift.mjs",
+        "canonical": "scripts/check-capability-registrations-drift.mjs",
+        "sha256": "8a4d3b81e0f8f2ac374bcda38a6502c78c37308a218230c908e544a7766f0180"
+      }
+    ],
+    "purposeInputs": [
+      {
+        "path": "docs/site/reference/capabilities.md",
+        "canonical": "docs/site/reference/capabilities.md",
+        "sha256": "1785cb37214915c9a52658cb68426fcb7d4ae1acd576052b5b7a398f50a9dfd4"
+      },
+      {
+        "path": "package.json",
+        "canonical": "package.json",
+        "sha256": "4ab1e90c2259aeb96acfdc877e5a9eed330f605abff46d7eca85faded0f020c3"
+      },
+      {
+        "path": "scripts/check-capability-registrations-drift.mjs",
+        "canonical": "scripts/check-capability-registrations-drift.mjs",
+        "sha256": "8a4d3b81e0f8f2ac374bcda38a6502c78c37308a218230c908e544a7766f0180"
+      },
+      {
+        "path": "scripts/docs-tree-boundary.mjs",
+        "canonical": "scripts/docs-tree-boundary.mjs",
+        "sha256": "ee1487ec2e081cc6630ac7869895bd69f3251e0c44ffd8877e574b335981ae52"
+      },
+      {
+        "path": "scripts/tests/docs-tree-boundary.test.mjs",
+        "canonical": "scripts/tests/docs-tree-boundary.test.mjs",
+        "sha256": "1f045e306575b2df32f9fc574b4f29c773cfa0c1489286441229a36853be348d"
+      }
+    ]
+  },
+  "scripts/docs-ap09-mutation-fixture.mjs": {
+    "role": "documentation-consumer",
+    "qualificationKind": "reviewed-documentation-consumer/v1",
+    "sourceSha256": "f46c275fce0ef9d55e2ac61a4bcc7b466519d42f07bec4ec8d86a7c2ce6fc687",
+    "consumer": "Registered deterministic unified patches consumed only by the already reviewed documentation mutation callers in owned temporary copies.",
+    "selectors": [
+      {
+        "expressionSha256": "5f153cc653cf3ca3775f99e611665d5ce1b63b40d969817621ade711d10d0233"
+      },
+      {
+        "expressionSha256": "147bcf3227ea1a9e30f26459ea1ba3885d804fd5b8559b5a4a4104d3d75bccc8"
+      },
+      {
+        "expressionSha256": "c781130e1ce3bad702bc8f1965cc1515871a302c29d316faa0df8a3781f6ff2f"
+      },
+      {
+        "expressionSha256": "d7daf9332ea623bdd1bd45c64a09120cce23e61039141d63da162bd75ffad70c"
+      },
+      {
+        "expressionSha256": "3bd42e15e5427f946b98b898212af900ed0a4068cff03a37aa2ce1d3a081f2ec"
+      },
+      {
+        "expressionSha256": "99a8a8a7117b1395e3a209cdc8ba5a70424687458932bc4dc8a7b6e59ff53868"
+      },
+      {
+        "expressionSha256": "8f15d80e7efb2a5d032af6aeba410bc9b4bd498ba70c7278654526b1e2259752"
+      },
+      {
+        "expressionSha256": "113f0af17fdf683cf360ab9d03b7eff1b572d3475e83119031d47ee4331621aa"
+      },
+      {
+        "expressionSha256": "abfcad28ec14344e651d5f0983b24be76635f7dc84460622b29987c2a7f15ad3"
+      },
+      {
+        "expressionSha256": "e304d8a64df52946bb23be030f59c7843dddb13193563352b5a2e6298baffe64"
+      },
+      {
+        "expressionSha256": "6a17f56e35325950987129f95711d1c6656809351e4f21f3cb61e13b6ae7828a"
+      }
+    ],
+    "factsDigest": "36647e648cccf910477c831913e0a711c85acb932aa9f938504b7668ee94dd12",
+    "authorityInputs": [],
+    "purposeInputs": [
+      {
+        "path": "charts/kubeclaw/files/config/swarm.config.json",
+        "canonical": "charts/kubeclaw/files/config/swarm.config.json",
+        "sha256": "e7331f631ed85b4c85ca6b4ab5fccd62a1381e40f973e441888d8aa59cb3f678"
+      },
+      {
+        "path": "charts/kubeclaw/templates/deployment.yaml",
+        "canonical": "charts/kubeclaw/templates/deployment.yaml",
+        "sha256": "8e780bc0033c3da5c0a3d4db53e8ba9e0753200a072ce0ed63a598c461231883"
+      },
+      {
+        "path": "charts/kubeclaw/values.yaml",
+        "canonical": "charts/kubeclaw/values.yaml",
+        "sha256": "2bff3214d88e912445b1c435b6353cfb438cd5184124b3eb0cc9f7394dfc05aa"
+      },
+      {
+        "path": "charts/prism/templates/services.yaml",
+        "canonical": "charts/prism/templates/services.yaml",
+        "sha256": "c09a05501eca8a1876e44c1d70898fb5dd6770210e777353d6eff0ee9cd9ae1b"
+      },
+      {
+        "path": "docs/blueprint/AP09-acceptance-fixtures.json",
+        "canonical": "docs/blueprint/AP09-acceptance-fixtures.json",
+        "sha256": "5671508592d263002a2689007cd554b7e2c179403bc9e0e793a7a6a22adb88a8"
+      },
+      {
+        "path": "docs/site/use/workflows/wait-resume/platform.template.json",
+        "canonical": "docs/site/use/workflows/wait-resume/platform.template.json",
+        "sha256": "8d9f160964ea4c3ff5c924c3c4c36291f5a6bfa969807721f5a8383578a5b1ef"
+      },
+      {
+        "path": "my-values/setup-secrets.sh",
+        "canonical": "my-values/setup-secrets.sh",
+        "sha256": "d417ee6bb8f6ba1008ad077f7cb4bf6172891aa9d8753681701aad4697e1834c"
+      },
+      {
+        "path": "package.json",
+        "canonical": "package.json",
+        "sha256": "4ab1e90c2259aeb96acfdc877e5a9eed330f605abff46d7eca85faded0f020c3"
+      },
+      {
+        "path": "scripts/check-capability-drift-mutations.mjs",
+        "canonical": "scripts/check-capability-drift-mutations.mjs",
+        "sha256": "31171d9e192c617b2a56cc752dd19339a485de22b19a97af30759e0d6c9a604f"
+      },
+      {
+        "path": "scripts/check-capability-policy-drift-mutations.mjs",
+        "canonical": "scripts/check-capability-policy-drift-mutations.mjs",
+        "sha256": "aab7f432c3f92f5c01397007c49e1527bb901741277fbfc6e2fd0a0c4887b08f"
+      },
+      {
+        "path": "scripts/check-capability-vocabulary-drift-mutations.mjs",
+        "canonical": "scripts/check-capability-vocabulary-drift-mutations.mjs",
+        "sha256": "160e780708a62f95238dfc435d105aaf60f8e653029f3c895b6fceb8c0b14325"
+      },
+      {
+        "path": "scripts/check-contract-drift-mutations.mjs",
+        "canonical": "scripts/check-contract-drift-mutations.mjs",
+        "sha256": "cd1bdc5438cb072bd495892f871888460226cfcb5a8e85a27cc48c173ae2e623"
+      },
+      {
+        "path": "scripts/check-error-code-drift-mutations.mjs",
+        "canonical": "scripts/check-error-code-drift-mutations.mjs",
+        "sha256": "47b1dd5a26085725b1464752e1c8c18753ed2bbff9f230affdf165b4c5c8ffb5"
+      },
+      {
+        "path": "scripts/check-extension-class-drift-mutations.mjs",
+        "canonical": "scripts/check-extension-class-drift-mutations.mjs",
+        "sha256": "34358ec82373a23a66cc47a489927b18a7612f92c778f7287f81c31795bb32f4"
+      },
+      {
+        "path": "scripts/check-fixture-registration-drift-mutations.mjs",
+        "canonical": "scripts/check-fixture-registration-drift-mutations.mjs",
+        "sha256": "69873ea3df07137d5ebaa89344de1168ca9786245d642436de3059d3f1b03ece"
+      },
+      {
+        "path": "scripts/check-plugin-manifest-drift-mutations.mjs",
+        "canonical": "scripts/check-plugin-manifest-drift-mutations.mjs",
+        "sha256": "d0463149d637e0061da26512f73048a949846c964ef6dfc82480325762675653"
+      },
+      {
+        "path": "scripts/check-progress-contract-drift-mutations.mjs",
+        "canonical": "scripts/check-progress-contract-drift-mutations.mjs",
+        "sha256": "c740b33340853111031e6ebea7adb0a145cdc1b1d1773ba7cc33c2b11467a5aa"
+      },
+      {
+        "path": "scripts/check-provider-registration-drift-mutations.mjs",
+        "canonical": "scripts/check-provider-registration-drift-mutations.mjs",
+        "sha256": "e923ea164e2686b835c70fc8edd3041c4e49a04f582b305d7859daf0782fb30d"
+      },
+      {
+        "path": "scripts/check-report-registration-drift-mutations.mjs",
+        "canonical": "scripts/check-report-registration-drift-mutations.mjs",
+        "sha256": "bc064e1f02567b515a69efe6b0c1b0d20b64ed835017e24d3a3739237f021c4e"
+      },
+      {
+        "path": "scripts/check-schema-drift-mutations.mjs",
+        "canonical": "scripts/check-schema-drift-mutations.mjs",
+        "sha256": "307a040b9875969e5533c2edd46f9ce301cca001d2ddc606f70e546cc9bac73f"
+      },
+      {
+        "path": "scripts/check-sdk-contract-mutation-constructors.mjs",
+        "canonical": "scripts/check-sdk-contract-mutation-constructors.mjs",
+        "sha256": "24837bf0fe0391ac6cc48b17bcce2ff2bf05da7f962c0cd3be1732321afdf325"
+      },
+      {
+        "path": "scripts/check-workflow-drift-mutations.mjs",
+        "canonical": "scripts/check-workflow-drift-mutations.mjs",
+        "sha256": "94324dda29e23fe924eb89282a882ed6e46442ec066caf5f728a641d1755fd41"
+      },
+      {
+        "path": "scripts/deploy.sh",
+        "canonical": "scripts/deploy.sh",
+        "sha256": "97c1e39bf9cec6c1d5d8e11198af90ed04efd15a6077f2bbac1129c2ea0741e2"
+      },
+      {
+        "path": "skills/buster/engine/test-gates/production.ts",
+        "canonical": "skills/buster/engine/test-gates/production.ts",
+        "sha256": "79c47d55e525f5ebb5e7e05a9c52e18514f9e464401c51e7def38dcec7f646a3"
+      },
+      {
+        "path": "skills/buster/plugins/junit-report-adapter/plugin.json",
+        "canonical": "skills/buster/plugins/junit-report-adapter/plugin.json",
+        "sha256": "9787400a76dea54fbfe31a6371c1724f60fdacb7fc544fa33c0c454132e92b77"
+      },
+      {
+        "path": "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+        "canonical": "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+        "sha256": "147fae4d867752edcb4cb1bf9966ed62372e77a5e90402a9f8fac9a8ab170fa0"
+      },
+      {
+        "path": "skills/common/plugin-runtime/foundation/registry/types.ts",
+        "canonical": "skills/common/plugin-runtime/foundation/registry/types.ts",
+        "sha256": "6667bd4389377d33ba41c2c7166f3488c40f0cad1fc0e7c067fb37a6f2eca291"
+      },
+      {
+        "path": "skills/common/plugin-runtime/sdk/src/generated/contracts.ts",
+        "canonical": "skills/common/plugin-runtime/sdk/src/generated/contracts.ts",
+        "sha256": "8ade81b1f64c78b4cf2198f7ae7dc0c726fb4cec3ffa553986310d353dbc71c1"
+      },
+      {
+        "path": "skills/common/plugin-runtime/sdk/src/index.ts",
+        "canonical": "skills/common/plugin-runtime/sdk/src/index.ts",
+        "sha256": "464a94399315ad25f40511b8d1ee93c76b3535a82cd90fbde06bf0a58aa0cc9a"
+      },
+      {
+        "path": "skills/nova/core/cli.ts",
+        "canonical": "skills/nova/core/cli.ts",
+        "sha256": "09121b4b0a160d2e5e35448795156856b15ccc078a229bb1895f570c22f76787"
+      },
+      {
+        "path": "skills/nova/core/test-gates/production.ts",
+        "canonical": "skills/nova/core/test-gates/production.ts",
+        "sha256": "886c5898b90473ac1f547a40136ed43de2e40bd556bb1acde025fcd95c2a0be1"
+      },
+      {
+        "path": "skills/nova/plugins/lint/plugin.json",
+        "canonical": "skills/nova/plugins/lint/plugin.json",
+        "sha256": "3d671a34bb259b1c031d7f2ac1c54b19b4821e023bb53c7d43e5642dd1a0ce04"
+      },
+      {
+        "path": "skills/nova/plugins/lint/schemas/config.schema.json",
+        "canonical": "skills/nova/plugins/lint/schemas/config.schema.json",
+        "sha256": "02ee8a644c0e7ce0bfa58b0fe22582ba12e97f65c3a1e13170304231662a5bf8"
+      },
+      {
+        "path": "skills/nova/plugins/lint/src/engine/policy-paths.ts",
+        "canonical": "skills/nova/plugins/lint/src/engine/policy-paths.ts",
+        "sha256": "4e7723eb14813fe5d594222d8a9b69809f809abaa379fbb44041793f28aa66e3"
+      },
+      {
+        "path": "skills/nova/project/compiler.ts",
+        "canonical": "skills/nova/project/compiler.ts",
+        "sha256": "9d8ccdb3a1ccc56c58c1ec510aed54473f7db6d4135d28b2e265bbf90d7f1ef5"
+      },
+      {
+        "path": "skills/nova/project_setup/tools/progress-scaffold-validation.ts",
+        "canonical": "skills/nova/project_setup/tools/progress-scaffold-validation.ts",
+        "sha256": "dafa016f41e824b82951a8532b0c291cda421181de1614d79f0cffd91ee436fe"
+      },
+      {
+        "path": "skills/prism/server/control-server.ts",
+        "canonical": "skills/prism/server/control-server.ts",
+        "sha256": "c165fb6b20bc6b608ae2bc859f52fc5700856e6cea3798916df921dcac5ce8ac"
+      },
+      {
+        "path": "tests/verification/e2e/fixture-coverage.mjs",
+        "canonical": "tests/verification/e2e/fixture-coverage.mjs",
+        "sha256": "eae30bf79e5ed942658322be75dc75a98b74ceacae57cd9072f5a7b81e118aa6"
+      },
+      {
+        "path": "tests/verification/e2e/provider-catalog.mjs",
+        "canonical": "tests/verification/e2e/provider-catalog.mjs",
+        "sha256": "04fe590099a3a9803cc610389528190d330b75527305b50c409d0e9de647293e"
+      },
+      {
+        "path": "tools/ops-mcp/src/server.mjs",
+        "canonical": "tools/ops-mcp/src/server.mjs",
+        "sha256": "a4fef1a5e66a45ea2885cc9a1715aba5835d77cb5219e39ac35a5f50b5bab65d"
+      }
+    ]
+  },
+  "scripts/plugin-system-inventory.mjs": {
+    "role": "documentation-consumer",
+    "qualificationKind": "reviewed-documentation-consumer/v1",
+    "sourceSha256": "e5bd5dc0d681be0762c51e42ee5654b973c8f260fe7ff5919c7494ac3f42fb2c",
+    "consumer": "Inert manifest/file discovery writes fixed documentation JSON/Markdown inventories; existing non-doc-prefixed command names do not grant plugin activation.",
+    "selectors": [
+      {
+        "expressionSha256": "1c945c577c60e4180397acbe483e191918f3232213eb38e0cce54b4d00e863d1"
+      },
+      {
+        "expressionSha256": "bc47678fd51cd9d24bb33b3b9892a4e4611007aa4377ec4284b54ad3cbebb51c"
+      },
+      {
+        "expressionSha256": "845f76bf3e8cd382870df6c987b6b5fc4eafb3ee230fdbccc7194e706e5c61f4"
+      },
+      {
+        "expressionSha256": "4bc7971f48fbfa7b18a1e46ba34126ada09e6be21acdd5779cf9884ee93b7808"
+      },
+      {
+        "expressionSha256": "99a8a8a7117b1395e3a209cdc8ba5a70424687458932bc4dc8a7b6e59ff53868"
+      },
+      {
+        "expressionSha256": "113f0af17fdf683cf360ab9d03b7eff1b572d3475e83119031d47ee4331621aa"
+      },
+      {
+        "expressionSha256": "93900a5adab188f7d142dc5bce2f6a0ffcaeba2510f2c200ce47f4d139249911"
+      }
+    ],
+    "factsDigest": "e71866e18615042e9496962ec969a15301bc2401585adb6c4df0cbc2a447ed59",
+    "authorityInputs": [],
+    "purposeInputs": [
+      {
+        "path": ".github/workflows/docs-checks.yaml",
+        "canonical": ".github/workflows/docs-checks.yaml",
+        "sha256": "96e54e68a99450a6b4cdd1568cd4309cf290ee54f8b368efa76b032f2c7b48b4"
+      },
+      {
+        "path": "package.json",
+        "canonical": "package.json",
+        "sha256": "4ab1e90c2259aeb96acfdc877e5a9eed330f605abff46d7eca85faded0f020c3"
+      }
+    ]
+  },
+  "scripts/vendor-external-helm-authorities.mjs": {
+    "role": "documentation-consumer",
+    "qualificationKind": "reviewed-documentation-consumer/v1",
+    "sourceSha256": "077c8136790d759262609f716ab6c77b0049d19bb7e2208c27a7c3733d6a96f8",
+    "consumer": "Locked archive extraction generates documentation field/schema/template-context evidence; copied chart inputs and Source evidence never grant deployed-chart authority or API apply.",
+    "selectors": [
+      {
+        "expressionSha256": "190c29387071c7e51bc6e12edccfc34b1068a36598b2b2556605babf76ec46cc"
+      },
+      {
+        "expressionSha256": "55e9b38b876fd33cb9bdd490d31c0f364f11304a8a9e890dea637751d2445331"
+      },
+      {
+        "expressionSha256": "e2d83b61363ec35fbdca65679b4fc97f3453548ca675a1d3377e20e1433f8d87"
+      },
+      {
+        "expressionSha256": "831a14b2ccdbf378ff1a357d07e15fa071d296ce77350bb5f6b963bff66f055b"
+      },
+      {
+        "expressionSha256": "9c0a5eb33f175061b37c730be978e11bc578b99269a2562bb7cd16f27df2b36d"
+      },
+      {
+        "expressionSha256": "a6071350f08770fe61969602e5f597aad83933ca21c2cd2edeaf8931ae4d7a74"
+      },
+      {
+        "expressionSha256": "b34dee38c49566c244710cce66fbf494d598dc42107371a024065bddb2669345"
+      },
+      {
+        "expressionSha256": "7d4c84618c0fb0d9b3d714032f9272a428270c8c4d46e0af6fe4c8fd5ed8bd4d"
+      },
+      {
+        "expressionSha256": "3ef9a780a699b15c4908ef64826e5d613a6b43f89004d7a92a1ab035a1910a29"
+      },
+      {
+        "expressionSha256": "3bd42e15e5427f946b98b898212af900ed0a4068cff03a37aa2ce1d3a081f2ec"
+      },
+      {
+        "expressionSha256": "967573157d8a0118a9b81842abb29015d82a1e83f6d2d055d56e848e4def640e"
+      },
+      {
+        "expressionSha256": "99a8a8a7117b1395e3a209cdc8ba5a70424687458932bc4dc8a7b6e59ff53868"
+      },
+      {
+        "expressionSha256": "8f15d80e7efb2a5d032af6aeba410bc9b4bd498ba70c7278654526b1e2259752"
+      },
+      {
+        "expressionSha256": "113f0af17fdf683cf360ab9d03b7eff1b572d3475e83119031d47ee4331621aa"
+      },
+      {
+        "expressionSha256": "abfcad28ec14344e651d5f0983b24be76635f7dc84460622b29987c2a7f15ad3"
+      },
+      {
+        "expressionSha256": "cba76d80649d6ce8d92897a224d01ee9877a1807a9de9e765cdad79d29f912ce"
+      },
+      {
+        "expressionSha256": "234e2ab4fae5964fbc0c2a876558fe8d4683d3080fae19c60df41a4cf76e3d52"
+      },
+      {
+        "expressionSha256": "3903b4d1b3a75c18758514725137325700f7b0e12400f46b8accf2567b9cf6d1"
+      },
+      {
+        "expressionSha256": "dc9cfd87702befa03fb10f02402512cc6ceeb85f8b357a0e55b38599d87c2442"
+      },
+      {
+        "expressionSha256": "368e9cbc72fda07f31c2a3ad8fee9c1015d31f05072b8291bff379318cce4c1d"
+      },
+      {
+        "expressionSha256": "d03597b82107f7fd56ea71a0e87c49a61f7379c110b2393045c30b2b82ecc4cf"
+      },
+      {
+        "expressionSha256": "21a1f1af8f681c993eb79f4a2e82d0b4fc81bf4a0ae81452a207b1da921e0415"
+      }
+    ],
+    "factsDigest": "d27dbe54e59e927087c4021689ddf39a197f90a8b9ad6a69888eeceb284a69b2",
+    "authorityInputs": [],
+    "purposeInputs": [
+      {
+        "path": "docs/generated/inventory/configuration-values.json",
+        "canonical": "docs/generated/inventory/configuration-values.json",
+        "sha256": "86576d0f96d9787028c87e6d2b489f956b34d00284ef6ad34cdcbdc01fcf9467"
+      },
+      {
+        "path": "docs/site/extend/documentation-maintenance.md",
+        "canonical": "docs/site/extend/documentation-maintenance.md",
+        "sha256": "c4371fb5186b88b6dc76f00024a1c2a993ebd53fa0404d0e28dcad0d5ace7dec"
+      },
+      {
+        "path": "package.json",
+        "canonical": "package.json",
+        "sha256": "4ab1e90c2259aeb96acfdc877e5a9eed330f605abff46d7eca85faded0f020c3"
+      },
+      {
+        "path": "scripts/docs-external-helm-authority-lock.json",
+        "canonical": "scripts/docs-external-helm-authority-lock.json",
+        "sha256": "257d829a2e4d79ed9bc886c33c8c5e8b8a64a9fc05a36e7f378173b54c76516a"
+      },
+      {
+        "path": "scripts/external-helm-archives.json",
+        "canonical": "scripts/external-helm-archives.json",
+        "sha256": "4b79ed0dc21517f54ae1a167a79930524c01e85418bd75e8694478ce7f365070"
+      },
+      {
+        "path": "scripts/external-helm-archives.sha256",
+        "canonical": "scripts/external-helm-archives.sha256",
+        "sha256": "55bf67770822d32ea8ab515be87dad57f7079d95dddb23a7aa5c2252965f75a3"
+      },
+      {
+        "path": "scripts/tests/vendor-external-helm-authorities.test.mjs",
+        "canonical": "scripts/tests/vendor-external-helm-authorities.test.mjs",
+        "sha256": "9fbf8dabefbeba2ee504204e5d1a7b9451505ffe685bff7b486218043d24640c"
+      },
+      {
+        "path": "scripts/yaml-field-path.mjs",
+        "canonical": "scripts/yaml-field-path.mjs",
+        "sha256": "646f14105e48d9401b8d8ac99a0c439f60c8b69e42d72c15c0b66e132a1c9a2d"
+      }
+    ]
+  },
+  "scripts/docs-reader/page-records.mjs": {
+    "role": "documentation-consumer",
+    "qualificationKind": "reviewed-documentation-consumer/v1",
+    "sourceSha256": "6268501ef047b13e0794950a85d57e2c7aaf54e85a16d77ca8c1263237691a2f",
+    "consumer": "Finite normal documentation reader page-record compiler, metadata append and artifact verification; declared Git Source file/tree and reader-output hashes, not product API bodies, module execution or transitive runtime closure.",
+    "selectors": [
+      {
+        "expressionSha256": "a28f04868819601b6c16561c223d370843ce815047f39d21b030d9e2a267fd8d"
+      },
+      {
+        "expressionSha256": "e8c2509229a4fa5fd8b657b9d3d152d79664cca8d3f14916c5238af561d225f7"
+      },
+      {
+        "expressionSha256": "9c1c0c75578882807d5f9e321338da7db002e4da8c3711681fd4866cbe9fd0a5"
+      },
+      {
+        "expressionSha256": "b78b2a3146617c2ad59696acb4545982495d5d2156c55d3792f81dec0c3ca454"
+      },
+      {
+        "expressionSha256": "26e209edc130108dd7b873d93afe1fe8bc3db3fc2af73e0d3fbbe1af41c0c4fa"
+      },
+      {
+        "expressionSha256": "9f5c9d997f62dbe936ebfccfabf1c520f2900a86a7bdbe7e249e2a3dc472e931"
+      },
+      {
+        "expressionSha256": "bd3bb5730d0c7c4d6887b7764abcaf677d93b9e5579ca52062f33be6ef3dd00c"
+      },
+      {
+        "expressionSha256": "3bd42e15e5427f946b98b898212af900ed0a4068cff03a37aa2ce1d3a081f2ec"
+      },
+      {
+        "expressionSha256": "967573157d8a0118a9b81842abb29015d82a1e83f6d2d055d56e848e4def640e"
+      },
+      {
+        "expressionSha256": "99a8a8a7117b1395e3a209cdc8ba5a70424687458932bc4dc8a7b6e59ff53868"
+      },
+      {
+        "expressionSha256": "113f0af17fdf683cf360ab9d03b7eff1b572d3475e83119031d47ee4331621aa"
+      },
+      {
+        "expressionSha256": "ba8cac7616d5fc8ce668e71ea22c4a957bd6384c2115060e9dd0355f96879897"
+      },
+      {
+        "expressionSha256": "632e7e3c7b3810a01e923cc1b80439a82b2e130d0868fb2a32174a210cb024b9"
+      },
+      {
+        "expressionSha256": "6024e24824120854da6890bc40ddd188e2720829de1a3ce1591a4d2f16be869b"
+      },
+      {
+        "expressionSha256": "0b07dc03d725e02245d90b3425f5311cd256908cba411094902ec1ac2cfbd4e8"
+      },
+      {
+        "expressionSha256": "513381bdf505da98a8e167972356a489817bafd9422efef66a347fa8d49c5b93"
+      }
+    ],
+    "factsDigest": "f8c807b2dd2a622ae761d3d76526cab1674847c654f0fbea6bbfd8c6c5e0dd78",
+    "authorityInputs": [],
+    "purposeInputs": [
+      {
+        "path": "scripts/docs-reader/check-artifact.mjs",
+        "canonical": "scripts/docs-reader/check-artifact.mjs",
+        "sha256": "7f4e8cb928a5fba48bbd590e5349ce6247264f9cae1935a1e3679ae54c1a2a67"
+      },
+      {
+        "path": "scripts/docs-reader/page-records.mjs",
+        "canonical": "scripts/docs-reader/page-records.mjs",
+        "sha256": "6268501ef047b13e0794950a85d57e2c7aaf54e85a16d77ca8c1263237691a2f"
+      },
+      {
+        "path": "scripts/docs-publication.mjs",
+        "canonical": "scripts/docs-publication.mjs",
+        "sha256": "fdae9667aa99505d4fcc90681f081fb45717ab9f9d4333a30544abdea33525a4"
+      },
+      {
+        "path": "scripts/docs-reader/renderer.mjs",
+        "canonical": "scripts/docs-reader/renderer.mjs",
+        "sha256": "a0bf02d079637cf862fe0a40bbc34e4bfbd982c58126e347d8aea079047abd87"
+      },
+      {
+        "path": "scripts/docs-reader/redirects.mjs",
+        "canonical": "scripts/docs-reader/redirects.mjs",
+        "sha256": "0b186c9da87055e1a13afb0aace0b72e04099c3ed49879a422ca3acbbe778caf"
+      },
+      {
+        "path": ".github/workflows/docs-checks.yaml",
+        "canonical": ".github/workflows/docs-checks.yaml",
+        "sha256": "96e54e68a99450a6b4cdd1568cd4309cf290ee54f8b368efa76b032f2c7b48b4"
+      },
+      {
+        "path": "scripts/tests/docs-reader-page-records.test.mjs",
+        "canonical": "scripts/tests/docs-reader-page-records.test.mjs",
+        "sha256": "0333fffb872837af59396ff47dafb1401a87b00627d96de524e9322e12f15d83"
+      },
+      {
+        "path": "scripts/tests/docs-reader.test.mjs",
+        "canonical": "scripts/tests/docs-reader.test.mjs",
+        "sha256": "abd6a6431110a7b8a1486bbbce4648a118d31fe6f517813c4d9d6ed2e6177e28"
+      },
+      {
+        "path": "scripts/tests/docs-reader-redirects.test.mjs",
+        "canonical": "scripts/tests/docs-reader-redirects.test.mjs",
+        "sha256": "4d08e2533bda82a536a9c61ab27a3fca94939a484a5a2154e012ff9507f26155"
+      },
+      {
+        "path": "docs/site/reference/documentation-site.md",
+        "canonical": "docs/site/reference/documentation-site.md",
+        "sha256": "c0c4b55949be05d571aa4ea5b353c5ab479caeafd3ebbcdeb70ebec0ca10a1e0"
+      },
+      {
+        "path": "package.json",
+        "canonical": "package.json",
+        "sha256": "4ab1e90c2259aeb96acfdc877e5a9eed330f605abff46d7eca85faded0f020c3"
+      },
+      {
+        "path": "scripts/lib/docs-publication-assets.mjs",
+        "canonical": "scripts/lib/docs-publication-assets.mjs",
+        "sha256": "239950ea0ebc87501d03aa178d07b99922cb4ec7dabdded3fbf8f8ab5c5de6f0"
+      },
+      {
+        "path": "scripts/lib/docs-route-continuity.mjs",
+        "canonical": "scripts/lib/docs-route-continuity.mjs",
+        "sha256": "95ebc24186da8c7b446a5bd3edb36f8514b79cb4104dc0394f0b381ddb5dd449"
+      },
+      {
+        "path": "scripts/docs-reader/metadata.mjs",
+        "canonical": "scripts/docs-reader/metadata.mjs",
+        "sha256": "51e0b027356401a68c52a3b8b1fe4d6c6ed35070dfcb300067dd1b9af8da0abc"
       }
     ]
   }

@@ -1,0 +1,640 @@
+{
+  "status": "AUTHOR_ROSTER_PREPARATION_COMPLETE_UNACCEPTED",
+  "preparerInvocationCount": 1,
+  "command": "python3 -I -S /home/node/.openclaw/workspace/tmp/pr13-finish-20261021/facts-successor-proposal-v2-five-seeds-ci-context/prepare-roster.py --revision 7ef16585ba04eba3628cead304be85307436f091",
+  "toolTerminalExitCode": 0,
+  "targetModuleImports": 0,
+  "originalSelectorGetterCalls": 0,
+  "captureInvocations": 0,
+  "innerNativeChildren": 0,
+  "nativeReceipts": "FOUR_PRESERVED_UNEXECUTED",
+  "revision": "7ef16585ba04eba3628cead304be85307436f091",
+  "staticCloseoutHEAD": "7ef16585ba04eba3628cead304be85307436f091",
+  "staticCloseoutTrackedAndUntrackedClean": true,
+  "manifestStatusUnchanged": "AUTHOR_FACTS_READY_FOR_REVIEW_NOT_RUN",
+  "manifestSha256": "da1a7d17f410ee6929c026874ee630c2edcf6999759b3fee3ba2eb99c41b6785",
+  "files": 430,
+  "absent": 148,
+  "symlinkPointers": [
+    {
+      "path": "/home/node/.openclaw/node_modules",
+      "target": "/opt/kubeclaw-tools/node_modules",
+      "canonical": "/opt/kubeclaw-tools/node_modules"
+    },
+    {
+      "path": "/usr/bin/python3",
+      "target": "python3.11",
+      "canonical": "/usr/bin/python3.11"
+    }
+  ],
+  "typedDirectoryContexts": 7,
+  "all430PhysicalBytesModesCanonicalVerified": true,
+  "all148AbsencesLstatVerified": true,
+  "allDirectoryCanonicalDeviceInodeAndPointerContextsVerified": true,
+  "sameFiveEagerLocalModules": [
+    {
+      "source": "scripts/docs-api-documentation-role-custody.mjs",
+      "sha256": "3d43e2a535ba2ad08d26c473876848734f1d2f17ff798b3cf96ebc2846ac3a66"
+    },
+    {
+      "source": "scripts/docs-api-output-role-classification.mjs",
+      "sha256": "400affe1cb7a07c69e397e0509bb994f7f44376687038f802830b63daf452b12"
+    },
+    {
+      "source": "scripts/docs-shell-source-custody.mjs",
+      "sha256": "a23ba2be33b619c32153d553ece1a548ebe3b0666a3f3afc5f702afcc1c91b67"
+    },
+    {
+      "source": "scripts/docs-api-observer-materialized-source.mjs",
+      "sha256": "c05f1fb516078ed1f2aecc4478e298877a9df061a967f1d7ff24689a82b96dc3"
+    },
+    {
+      "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+      "sha256": "2e86ef3fdc6090dec79d8ac5137c852a42c593861abcaadf603be1e521aa60b1"
+    }
+  ],
+  "foundation75": [
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/node_modules/typescript/lib/typescript.js",
+      "priorSha256": "3ae902c92cc44dace175c0e69e13a4b0899f6983c6121d76b9ab8dd5795e7675",
+      "observedSha256": "3ae902c92cc44dace175c0e69e13a4b0899f6983c6121d76b9ab8dd5795e7675",
+      "same": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/node_modules/typescript/package.json",
+      "priorSha256": "822ef7ca6452205657b6288b066481ecf508bfbf43455d715cf7d3ec457561e6",
+      "observedSha256": "822ef7ca6452205657b6288b066481ecf508bfbf43455d715cf7d3ec457561e6",
+      "same": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/node_modules/yaml/dist/compose/compose-collection.js",
+      "priorSha256": "a7db11a1a7987d6412df8adbbb85ccd4370171f82265703b2b6af2d13c45d646",
+      "observedSha256": "a7db11a1a7987d6412df8adbbb85ccd4370171f82265703b2b6af2d13c45d646",
+      "same": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/node_modules/yaml/dist/compose/compose-doc.js",
+      "priorSha256": "0f388537747b5c1a241639413f17fc2b5f831451b5017d6902e46db6842a5fe4",
+      "observedSha256": "0f388537747b5c1a241639413f17fc2b5f831451b5017d6902e46db6842a5fe4",
+      "same": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/node_modules/yaml/dist/compose/compose-node.js",
+      "priorSha256": "86562c85e4e5737d28b24aae2030b97bc9b672e1f2de5da9e4d25c4571e4345c",
+      "observedSha256": "86562c85e4e5737d28b24aae2030b97bc9b672e1f2de5da9e4d25c4571e4345c",
+      "same": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/node_modules/yaml/dist/compose/compose-scalar.js",
+      "priorSha256": "37920472755bdaa76399b6d33872f0015ae1fd9ba7faa031c03d501aa8c3e903",
+      "observedSha256": "37920472755bdaa76399b6d33872f0015ae1fd9ba7faa031c03d501aa8c3e903",
+      "same": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/node_modules/yaml/dist/compose/composer.js",
+      "priorSha256": "509c0bdb4cef641cc784c130b6cc2b350752f6841798daa1a13cbcaf4fc74c46",
+      "observedSha256": "509c0bdb4cef641cc784c130b6cc2b350752f6841798daa1a13cbcaf4fc74c46",
+      "same": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/node_modules/yaml/dist/compose/resolve-block-map.js",
+      "priorSha256": "dcfada448c8fc532ebba96d6788a4b41bb015fc5e697a9544ff429b9c4e4c70a",
+      "observedSha256": "dcfada448c8fc532ebba96d6788a4b41bb015fc5e697a9544ff429b9c4e4c70a",
+      "same": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/node_modules/yaml/dist/compose/resolve-block-scalar.js",
+      "priorSha256": "af562e2e3cd7ee7b3cb9342984177f6b5c77de73121e87695db3ff635e12d152",
+      "observedSha256": "af562e2e3cd7ee7b3cb9342984177f6b5c77de73121e87695db3ff635e12d152",
+      "same": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/node_modules/yaml/dist/compose/resolve-block-seq.js",
+      "priorSha256": "18f54a39d73b600ebbd74a343e6671d0d08423f125bd86963b72dc24d6261911",
+      "observedSha256": "18f54a39d73b600ebbd74a343e6671d0d08423f125bd86963b72dc24d6261911",
+      "same": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/node_modules/yaml/dist/compose/resolve-end.js",
+      "priorSha256": "532bf56299183e75bb7c20db75321367c28393b66ecb8ffd540faedd9817f116",
+      "observedSha256": "532bf56299183e75bb7c20db75321367c28393b66ecb8ffd540faedd9817f116",
+      "same": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/node_modules/yaml/dist/compose/resolve-flow-collection.js",
+      "priorSha256": "242470b54c0deba1507babba2e879f3005ed2ee3bd53a36affb6ecf82fddd375",
+      "observedSha256": "242470b54c0deba1507babba2e879f3005ed2ee3bd53a36affb6ecf82fddd375",
+      "same": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/node_modules/yaml/dist/compose/resolve-flow-scalar.js",
+      "priorSha256": "167fa296e6fb75618bb7b315acaa926d4e88b2b63a9ff139f1a7de9c78db4610",
+      "observedSha256": "167fa296e6fb75618bb7b315acaa926d4e88b2b63a9ff139f1a7de9c78db4610",
+      "same": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/node_modules/yaml/dist/compose/resolve-props.js",
+      "priorSha256": "0b49c6af0145c309883dbf24d1a00260c0c090412be10aaa301de126dad15983",
+      "observedSha256": "0b49c6af0145c309883dbf24d1a00260c0c090412be10aaa301de126dad15983",
+      "same": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/node_modules/yaml/dist/compose/util-contains-newline.js",
+      "priorSha256": "60182618fc9fa669e74ab74f4231c15b5d24bc52ab0a419684bb827a00d69be6",
+      "observedSha256": "60182618fc9fa669e74ab74f4231c15b5d24bc52ab0a419684bb827a00d69be6",
+      "same": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/node_modules/yaml/dist/compose/util-empty-scalar-position.js",
+      "priorSha256": "460516395ef7e961d5248e047ee6d52084f279b76e8af9f3c2bac92da1c7d656",
+      "observedSha256": "460516395ef7e961d5248e047ee6d52084f279b76e8af9f3c2bac92da1c7d656",
+      "same": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/node_modules/yaml/dist/compose/util-flow-indent-check.js",
+      "priorSha256": "c7c0c9837a1f828de19eb3ee0947dff39c4f69222c762aed9fa2fe14fc46ee3e",
+      "observedSha256": "c7c0c9837a1f828de19eb3ee0947dff39c4f69222c762aed9fa2fe14fc46ee3e",
+      "same": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/node_modules/yaml/dist/compose/util-map-includes.js",
+      "priorSha256": "0330dc34072cb499493176b293228631ca8ebaaaddcdc0e63b02bf24f6a25c2d",
+      "observedSha256": "0330dc34072cb499493176b293228631ca8ebaaaddcdc0e63b02bf24f6a25c2d",
+      "same": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/node_modules/yaml/dist/doc/Document.js",
+      "priorSha256": "9bc1c9a56de3902d554e77193125b6aadcfaec743073b3417b22c95a8f7d7923",
+      "observedSha256": "9bc1c9a56de3902d554e77193125b6aadcfaec743073b3417b22c95a8f7d7923",
+      "same": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/node_modules/yaml/dist/doc/anchors.js",
+      "priorSha256": "ea9a479b1e98d88235ffa6736d0405e2119e9dde7b5249b72185488ab2527261",
+      "observedSha256": "ea9a479b1e98d88235ffa6736d0405e2119e9dde7b5249b72185488ab2527261",
+      "same": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/node_modules/yaml/dist/doc/applyReviver.js",
+      "priorSha256": "7271668f41f264e4b9aeb184629cfd11c510b401c5a797fa7194d17a9652976e",
+      "observedSha256": "7271668f41f264e4b9aeb184629cfd11c510b401c5a797fa7194d17a9652976e",
+      "same": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/node_modules/yaml/dist/doc/createNode.js",
+      "priorSha256": "a39d14026d4cc6ff8d76d90db30c41facc26a146ebed30783bcf28e40b5caa65",
+      "observedSha256": "a39d14026d4cc6ff8d76d90db30c41facc26a146ebed30783bcf28e40b5caa65",
+      "same": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/node_modules/yaml/dist/doc/directives.js",
+      "priorSha256": "8f02c3c03571e377e33680b68027d4336234d7a6da3d8c6a8b7f1183c1c428ff",
+      "observedSha256": "8f02c3c03571e377e33680b68027d4336234d7a6da3d8c6a8b7f1183c1c428ff",
+      "same": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/node_modules/yaml/dist/errors.js",
+      "priorSha256": "c389d9c448193ce1bcb9641f5eda62cbe56467b2104357d2fc8dd86df88cb07b",
+      "observedSha256": "c389d9c448193ce1bcb9641f5eda62cbe56467b2104357d2fc8dd86df88cb07b",
+      "same": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/node_modules/yaml/dist/index.js",
+      "priorSha256": "2d58984e0ae80de4acbd8f009fab332f5ce77d9e1a5f138a3058a0ada6567fb9",
+      "observedSha256": "2d58984e0ae80de4acbd8f009fab332f5ce77d9e1a5f138a3058a0ada6567fb9",
+      "same": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/node_modules/yaml/dist/log.js",
+      "priorSha256": "f6ccc3593357801851aa1023b202f842733043ac3b25773048d836f89de8108d",
+      "observedSha256": "f6ccc3593357801851aa1023b202f842733043ac3b25773048d836f89de8108d",
+      "same": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/node_modules/yaml/dist/nodes/Alias.js",
+      "priorSha256": "80a8109b7cb1d0d73eee18463fdd3095d120fa21f49b282444d90d867e291ea1",
+      "observedSha256": "80a8109b7cb1d0d73eee18463fdd3095d120fa21f49b282444d90d867e291ea1",
+      "same": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/node_modules/yaml/dist/nodes/Collection.js",
+      "priorSha256": "e2d3ffdc9a997774602e72b296fba641558bc7355c9f12a3ee0502fb1e541306",
+      "observedSha256": "e2d3ffdc9a997774602e72b296fba641558bc7355c9f12a3ee0502fb1e541306",
+      "same": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/node_modules/yaml/dist/nodes/Node.js",
+      "priorSha256": "b57b42071f7ebab633626858656ec5187617f2290c272e87edc57467ef591215",
+      "observedSha256": "b57b42071f7ebab633626858656ec5187617f2290c272e87edc57467ef591215",
+      "same": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/node_modules/yaml/dist/nodes/Pair.js",
+      "priorSha256": "d5dad67916ba0e864a892da63265a062c45c15a191349ef50a540f2ddbae93e5",
+      "observedSha256": "d5dad67916ba0e864a892da63265a062c45c15a191349ef50a540f2ddbae93e5",
+      "same": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/node_modules/yaml/dist/nodes/Scalar.js",
+      "priorSha256": "616ac0f6a0a5a6565307a4bb4443691b0dd019c03d6bb8777353750bd3459487",
+      "observedSha256": "616ac0f6a0a5a6565307a4bb4443691b0dd019c03d6bb8777353750bd3459487",
+      "same": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/node_modules/yaml/dist/nodes/YAMLMap.js",
+      "priorSha256": "d140cfc5aa8d28737bd3c993d977d5a10ab81efe221e36708ac45b3cf18f5dce",
+      "observedSha256": "d140cfc5aa8d28737bd3c993d977d5a10ab81efe221e36708ac45b3cf18f5dce",
+      "same": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/node_modules/yaml/dist/nodes/YAMLSeq.js",
+      "priorSha256": "9f89417f3cba5f22a4436f67a9ff9dce627344b5874d2ed7957ff9acffb030e4",
+      "observedSha256": "9f89417f3cba5f22a4436f67a9ff9dce627344b5874d2ed7957ff9acffb030e4",
+      "same": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/node_modules/yaml/dist/nodes/addPairToJSMap.js",
+      "priorSha256": "e4977864d75c1fdbf7fc78c9f4329406e153deccfff090fd812dae2b27e6c2c2",
+      "observedSha256": "e4977864d75c1fdbf7fc78c9f4329406e153deccfff090fd812dae2b27e6c2c2",
+      "same": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/node_modules/yaml/dist/nodes/identity.js",
+      "priorSha256": "1a7cb042ae725ff68d05dc503efbbecbe65281f18b23dfc23f12d1749a440cfe",
+      "observedSha256": "1a7cb042ae725ff68d05dc503efbbecbe65281f18b23dfc23f12d1749a440cfe",
+      "same": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/node_modules/yaml/dist/nodes/toJS.js",
+      "priorSha256": "34de93bb4e16abbf317210a7bd1b062ed20acb028cd8395b69b591f433e277b6",
+      "observedSha256": "34de93bb4e16abbf317210a7bd1b062ed20acb028cd8395b69b591f433e277b6",
+      "same": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/node_modules/yaml/dist/parse/cst-scalar.js",
+      "priorSha256": "2f72b634348b04b395408ac427fb4f8ee67432244c327561d4b755a28a783b34",
+      "observedSha256": "2f72b634348b04b395408ac427fb4f8ee67432244c327561d4b755a28a783b34",
+      "same": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/node_modules/yaml/dist/parse/cst-stringify.js",
+      "priorSha256": "4d14a7a286cff9c1a578ab15839388ea76f77ae79293db25b235394bcc377b51",
+      "observedSha256": "4d14a7a286cff9c1a578ab15839388ea76f77ae79293db25b235394bcc377b51",
+      "same": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/node_modules/yaml/dist/parse/cst-visit.js",
+      "priorSha256": "525535fc05841407420be6505804c74d873eb3aaa9319679896f7a24a474ca01",
+      "observedSha256": "525535fc05841407420be6505804c74d873eb3aaa9319679896f7a24a474ca01",
+      "same": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/node_modules/yaml/dist/parse/cst.js",
+      "priorSha256": "acc25760d010068844f36f4aefc7fe6f5f6048fd7f8fcc29d4290e154819d1a4",
+      "observedSha256": "acc25760d010068844f36f4aefc7fe6f5f6048fd7f8fcc29d4290e154819d1a4",
+      "same": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/node_modules/yaml/dist/parse/lexer.js",
+      "priorSha256": "cb30a2c4628e270ee810530217f3f7bb0f2730ab89f8fbaf1f8a73ccd1883cf5",
+      "observedSha256": "cb30a2c4628e270ee810530217f3f7bb0f2730ab89f8fbaf1f8a73ccd1883cf5",
+      "same": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/node_modules/yaml/dist/parse/line-counter.js",
+      "priorSha256": "ddfd11ca2cdd42d36bc6c3090a31c21e6bbcc90bf3498bf6aacfbb30c5d79436",
+      "observedSha256": "ddfd11ca2cdd42d36bc6c3090a31c21e6bbcc90bf3498bf6aacfbb30c5d79436",
+      "same": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/node_modules/yaml/dist/parse/parser.js",
+      "priorSha256": "0adc5ffa51ffa4c0ceed1f80efa8b188d10f58c7b9389a6d46bc861e6bff34e1",
+      "observedSha256": "0adc5ffa51ffa4c0ceed1f80efa8b188d10f58c7b9389a6d46bc861e6bff34e1",
+      "same": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/node_modules/yaml/dist/public-api.js",
+      "priorSha256": "9b318ac7b3a3751127c74f59dd1dd209230a70ca116000348b82faae189f72f0",
+      "observedSha256": "9b318ac7b3a3751127c74f59dd1dd209230a70ca116000348b82faae189f72f0",
+      "same": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/node_modules/yaml/dist/schema/Schema.js",
+      "priorSha256": "d3b1bc956a766e2489c36114366f3b3f89762a257ae05ff6271ee3fc8c2a9bf5",
+      "observedSha256": "d3b1bc956a766e2489c36114366f3b3f89762a257ae05ff6271ee3fc8c2a9bf5",
+      "same": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/node_modules/yaml/dist/schema/common/map.js",
+      "priorSha256": "769207eaa56e34c113da10cdc22da845f92b4080ff2b921a72847a38d3ac03d8",
+      "observedSha256": "769207eaa56e34c113da10cdc22da845f92b4080ff2b921a72847a38d3ac03d8",
+      "same": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/node_modules/yaml/dist/schema/common/null.js",
+      "priorSha256": "f5d5f694ea3a42ef136e0fbcc674dfd7aa0a3da2b8d62183fb750166a12e52bb",
+      "observedSha256": "f5d5f694ea3a42ef136e0fbcc674dfd7aa0a3da2b8d62183fb750166a12e52bb",
+      "same": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/node_modules/yaml/dist/schema/common/seq.js",
+      "priorSha256": "51fc0e8bfc63d1d9c7c66b0370a069bb33e0dad865080ff76802803597b9909a",
+      "observedSha256": "51fc0e8bfc63d1d9c7c66b0370a069bb33e0dad865080ff76802803597b9909a",
+      "same": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/node_modules/yaml/dist/schema/common/string.js",
+      "priorSha256": "51d0b3aafab2ffa4ad9d86656a3b92c4b4824d0a8806423882ea5f92a1bf8d11",
+      "observedSha256": "51d0b3aafab2ffa4ad9d86656a3b92c4b4824d0a8806423882ea5f92a1bf8d11",
+      "same": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/node_modules/yaml/dist/schema/core/bool.js",
+      "priorSha256": "9fa696b1efc38cf8c73a398f30d9f9841658aa5afd0b7a6b0822947c3991ba7a",
+      "observedSha256": "9fa696b1efc38cf8c73a398f30d9f9841658aa5afd0b7a6b0822947c3991ba7a",
+      "same": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/node_modules/yaml/dist/schema/core/float.js",
+      "priorSha256": "139e3964f0e626ad3741500faf51d855ff98eafa2d9e7523cac06260e4515382",
+      "observedSha256": "139e3964f0e626ad3741500faf51d855ff98eafa2d9e7523cac06260e4515382",
+      "same": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/node_modules/yaml/dist/schema/core/int.js",
+      "priorSha256": "f0e474254f6877d5dd23bb57017980931ab333a7eaa3d33872247a80d11f754d",
+      "observedSha256": "f0e474254f6877d5dd23bb57017980931ab333a7eaa3d33872247a80d11f754d",
+      "same": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/node_modules/yaml/dist/schema/core/schema.js",
+      "priorSha256": "481d7c64817b40090d519fb65bd83730dadd4c6baec1440b9bf85d29e52c046e",
+      "observedSha256": "481d7c64817b40090d519fb65bd83730dadd4c6baec1440b9bf85d29e52c046e",
+      "same": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/node_modules/yaml/dist/schema/json/schema.js",
+      "priorSha256": "9efdd848455f6e0621feb13f3eb762453cb02b09d5e04b6501163cfb26af27ed",
+      "observedSha256": "9efdd848455f6e0621feb13f3eb762453cb02b09d5e04b6501163cfb26af27ed",
+      "same": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/node_modules/yaml/dist/schema/tags.js",
+      "priorSha256": "dba2f42d4dbe8cc8b13f662fd97d253da2da5567e71c47115305efede5a888f2",
+      "observedSha256": "dba2f42d4dbe8cc8b13f662fd97d253da2da5567e71c47115305efede5a888f2",
+      "same": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/node_modules/yaml/dist/schema/yaml-1.1/binary.js",
+      "priorSha256": "15d7b0b8516c8190b191ec9a0adaab16808d09751ef534d7829512944072011f",
+      "observedSha256": "15d7b0b8516c8190b191ec9a0adaab16808d09751ef534d7829512944072011f",
+      "same": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/node_modules/yaml/dist/schema/yaml-1.1/bool.js",
+      "priorSha256": "80a0046224dac3437f22e3b27b0180e1aad82277ab2fee4769094c6d12d67b6f",
+      "observedSha256": "80a0046224dac3437f22e3b27b0180e1aad82277ab2fee4769094c6d12d67b6f",
+      "same": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/node_modules/yaml/dist/schema/yaml-1.1/float.js",
+      "priorSha256": "a90c44db83152e4d902d46f667737dac90aa86b401abdefe89371ac3bd03abfe",
+      "observedSha256": "a90c44db83152e4d902d46f667737dac90aa86b401abdefe89371ac3bd03abfe",
+      "same": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/node_modules/yaml/dist/schema/yaml-1.1/int.js",
+      "priorSha256": "5ff72b08fecc3a924d4a76658a304859db5edb4fadf8893ee837aa06bba60a52",
+      "observedSha256": "5ff72b08fecc3a924d4a76658a304859db5edb4fadf8893ee837aa06bba60a52",
+      "same": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/node_modules/yaml/dist/schema/yaml-1.1/merge.js",
+      "priorSha256": "9c85b5e026e4369a96f3f7b5bc6c05da102dfa2968950b17986201cfe0be542c",
+      "observedSha256": "9c85b5e026e4369a96f3f7b5bc6c05da102dfa2968950b17986201cfe0be542c",
+      "same": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/node_modules/yaml/dist/schema/yaml-1.1/omap.js",
+      "priorSha256": "3174270cd59c0f0e3ffd73b3b44c4de679efd5c681325b7aac8e0935d547bee8",
+      "observedSha256": "3174270cd59c0f0e3ffd73b3b44c4de679efd5c681325b7aac8e0935d547bee8",
+      "same": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/node_modules/yaml/dist/schema/yaml-1.1/pairs.js",
+      "priorSha256": "46ba76da72ad65a6202358c486c6a3084ab7c48a8eb5be60d241d9e198c5a9b5",
+      "observedSha256": "46ba76da72ad65a6202358c486c6a3084ab7c48a8eb5be60d241d9e198c5a9b5",
+      "same": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/node_modules/yaml/dist/schema/yaml-1.1/schema.js",
+      "priorSha256": "a7320808484dc6d04817b33b2d09b65ead7ffc1c672ab54e068a80972b17702e",
+      "observedSha256": "a7320808484dc6d04817b33b2d09b65ead7ffc1c672ab54e068a80972b17702e",
+      "same": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/node_modules/yaml/dist/schema/yaml-1.1/set.js",
+      "priorSha256": "e4553b0cbde79090884908f44bb3b4afd04935fc23656a1b87ec1af87f24427a",
+      "observedSha256": "e4553b0cbde79090884908f44bb3b4afd04935fc23656a1b87ec1af87f24427a",
+      "same": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/node_modules/yaml/dist/schema/yaml-1.1/timestamp.js",
+      "priorSha256": "b157c946dc1b8854aadc4e7994b268ec8afe6d916721cb3580e0752c7d15a5f7",
+      "observedSha256": "b157c946dc1b8854aadc4e7994b268ec8afe6d916721cb3580e0752c7d15a5f7",
+      "same": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/node_modules/yaml/dist/stringify/foldFlowLines.js",
+      "priorSha256": "7819679e80222b80c564ea4a9cf3145fa4d5e28a6cfbac248283ac55b0249761",
+      "observedSha256": "7819679e80222b80c564ea4a9cf3145fa4d5e28a6cfbac248283ac55b0249761",
+      "same": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/node_modules/yaml/dist/stringify/stringify.js",
+      "priorSha256": "38efb5bc5553e98fee58c825a88131c59184368d8689e3e6f43c652a06e9c167",
+      "observedSha256": "38efb5bc5553e98fee58c825a88131c59184368d8689e3e6f43c652a06e9c167",
+      "same": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/node_modules/yaml/dist/stringify/stringifyCollection.js",
+      "priorSha256": "b55fd3b6e3f1346bbcd1fcdc48a59c089b7a4b0e6fac2b46846f7828f9488600",
+      "observedSha256": "b55fd3b6e3f1346bbcd1fcdc48a59c089b7a4b0e6fac2b46846f7828f9488600",
+      "same": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/node_modules/yaml/dist/stringify/stringifyComment.js",
+      "priorSha256": "490bff57104b7cfdb1893f14528610bb4d0a63c29b314e122233cf308cf96662",
+      "observedSha256": "490bff57104b7cfdb1893f14528610bb4d0a63c29b314e122233cf308cf96662",
+      "same": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/node_modules/yaml/dist/stringify/stringifyDocument.js",
+      "priorSha256": "dd5ba1813a16b62955c466bce8d1c16254e90b36d688f863c508dc8fe38f2afe",
+      "observedSha256": "dd5ba1813a16b62955c466bce8d1c16254e90b36d688f863c508dc8fe38f2afe",
+      "same": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/node_modules/yaml/dist/stringify/stringifyNumber.js",
+      "priorSha256": "26a1980d34a21a80704d356d475a0187a24ebcbeb37a2e3b149d4d791bb65598",
+      "observedSha256": "26a1980d34a21a80704d356d475a0187a24ebcbeb37a2e3b149d4d791bb65598",
+      "same": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/node_modules/yaml/dist/stringify/stringifyPair.js",
+      "priorSha256": "bc03ae533d85bf9122e87c0a256c841ae7fbf063499bc3034d49fd9f7b200659",
+      "observedSha256": "bc03ae533d85bf9122e87c0a256c841ae7fbf063499bc3034d49fd9f7b200659",
+      "same": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/node_modules/yaml/dist/stringify/stringifyString.js",
+      "priorSha256": "4113b71a9c4c087a197f71452794a6acb9929111f569c973ff4efe7caee8f777",
+      "observedSha256": "4113b71a9c4c087a197f71452794a6acb9929111f569c973ff4efe7caee8f777",
+      "same": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/node_modules/yaml/dist/visit.js",
+      "priorSha256": "a757e3b924af184b25e2386d1678b1fe341805a516ebf9bccee219b47aebd5e7",
+      "observedSha256": "a757e3b924af184b25e2386d1678b1fe341805a516ebf9bccee219b47aebd5e7",
+      "same": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/node_modules/yaml/package.json",
+      "priorSha256": "20b8b197cbd10dad245d45e463dfe58e4c8c25a47e24bc4256ad9ab58bf35683",
+      "observedSha256": "20b8b197cbd10dad245d45e463dfe58e4c8c25a47e24bc4256ad9ab58bf35683",
+      "same": true
+    }
+  ],
+  "yaml72Files228EdgesAndFourBareBuiltinSelectionsUnchanged": true,
+  "additionalFiveSeeds": [
+    {
+      "source": "scripts/check-capability-registrations-drift-controls.mjs",
+      "sourceSha256": "e76c88fe7d72eff87a6ba1e2ff63d8630ae6c7ec861e884dc8e3575c0ce5e3cb",
+      "prior": null,
+      "purposeInputs": 5
+    },
+    {
+      "source": "scripts/docs-ap09-mutation-fixture.mjs",
+      "sourceSha256": "f46c275fce0ef9d55e2ac61a4bcc7b466519d42f07bec4ec8d86a7c2ce6fc687",
+      "prior": null,
+      "purposeInputs": 40
+    },
+    {
+      "source": "scripts/plugin-system-inventory.mjs",
+      "sourceSha256": "e5bd5dc0d681be0762c51e42ee5654b973c8f260fe7ff5919c7494ac3f42fb2c",
+      "prior": null,
+      "purposeInputs": 2
+    },
+    {
+      "source": "scripts/vendor-external-helm-authorities.mjs",
+      "sourceSha256": "077c8136790d759262609f716ab6c77b0049d19bb7e2208c27a7c3733d6a96f8",
+      "prior": null,
+      "purposeInputs": 8
+    },
+    {
+      "source": "scripts/docs-reader/page-records.mjs",
+      "sourceSha256": "6268501ef047b13e0794950a85d57e2c7aaf54e85a16d77ca8c1263237691a2f",
+      "prior": null,
+      "purposeInputs": 14
+    }
+  ],
+  "fourteenExternalCiInputsPhysicalExact": true,
+  "existingRoleNames": 102,
+  "closureSourceCount": 115,
+  "additionalRosterFilesVersusOldApproved": [
+    "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/docs/generated/inventory/configuration-values.json",
+    "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/docs/site/extend/documentation-maintenance.md",
+    "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/docs/site/reference/capabilities.md",
+    "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/check-capability-registrations-drift-controls.mjs",
+    "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/docs-documentation-owner-purpose-custody.mjs",
+    "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/docs-reader/page-records.mjs",
+    "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/external-helm-archives.sha256",
+    "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/plugin-system-inventory.mjs",
+    "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/tests/docs-reader-page-records.test.mjs",
+    "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/tests/docs-reader.test.mjs",
+    "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/tests/docs-tree-boundary.test.mjs",
+    "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/tests/vendor-external-helm-authorities.test.mjs",
+    "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/skills/nova/core/test-gates/production.ts",
+    "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/skills/prism/server/control-server.ts"
+  ],
+  "changedRosterFilesVersusOldApproved": [
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/.github/workflows/docs-checks.yaml",
+      "priorSha256": "f44033eb4877618d34c65fb292a33f88f8dddb3dbe7c471439328f81f57ac2c5",
+      "observedSha256": "96e54e68a99450a6b4cdd1568cd4309cf290ee54f8b368efa76b032f2c7b48b4"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/docs/site/reference/documentation-site.md",
+      "priorSha256": "4f418aa28e32443300e50431ba9a80552a5bbcb96d2a58821316e6b1821300d8",
+      "observedSha256": "c0c4b55949be05d571aa4ea5b353c5ab479caeafd3ebbcdeb70ebec0ca10a1e0"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/docs-api-documentation-role-custody.mjs",
+      "priorSha256": "2c4cb1577483fdac81d1d715cec828fe9cd62f277a0e0ca15abe673016c43544",
+      "observedSha256": "3d43e2a535ba2ad08d26c473876848734f1d2f17ff798b3cf96ebc2846ac3a66"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/docs-api-output-discovery.mjs",
+      "priorSha256": "702af3563ec3a12e8a0726781a3a0a415c3473f668d342dd1c268579bee2912d",
+      "observedSha256": "acc5c54bc81293570e67346e6ea5b2062dd172556972517fd65909d3a70f0e9c"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/docs-api-output-role-classification.mjs",
+      "priorSha256": "42a4cb9d4487ede91fb225ff908adcea435611c31ec7450458e5ecfe0083354a",
+      "observedSha256": "400affe1cb7a07c69e397e0509bb994f7f44376687038f802830b63daf452b12"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/docs-publication.mjs",
+      "priorSha256": "3b22ff66706c132c96a3b3ba39c7c2d043d314336d46660d94e7481c0f0ef360",
+      "observedSha256": "fdae9667aa99505d4fcc90681f081fb45717ab9f9d4333a30544abdea33525a4"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/docs-reader/check-artifact.mjs",
+      "priorSha256": "bb5a1e754b4c34254f2bdd75765e196b9c5c49aa0122b22baa6bc63491480838",
+      "observedSha256": "7f4e8cb928a5fba48bbd590e5349ce6247264f9cae1935a1e3679ae54c1a2a67"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/docs-reader/redirects.mjs",
+      "priorSha256": "bdeb3d97575e9e8116fc5d07eb2fd359aeac3a5ae824d0521e688ff187e43a60",
+      "observedSha256": "0b186c9da87055e1a13afb0aace0b72e04099c3ed49879a422ca3acbbe778caf"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/docs-reader/renderer.mjs",
+      "priorSha256": "9e87c023a29932f35c9c0ca5169c7c4cc39953a849e31b206e6f431bf91acf2b",
+      "observedSha256": "a0bf02d079637cf862fe0a40bbc34e4bfbd982c58126e347d8aea079047abd87"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/tests/docs-reader-redirects.test.mjs",
+      "priorSha256": "dec1ca9dcfb5ca80adeb661ff57350029df06d3690794d3194cff8d406c4c646",
+      "observedSha256": "4d08e2533bda82a536a9c61ab27a3fca94939a484a5a2154e012ff9507f26155"
+    }
+  ],
+  "findings": [],
+  "readyPromoted": false,
+  "launchApprovedByThisReport": false,
+  "limits": [
+    "Inert authorpreparer ranonce;staticreads/publicGitclosout only. OriginalJSselectors/derivers/roles notimportedorexecuted.",
+    "AuthorrosterisnotqualificationDATA,roleacceptance,READYseal,capture,graph/module/native/runtimepermission.",
+    "Root owns independentactualroster/currentSource/absence/contextreview,READYhashseal and capturelaunch."
+  ],
+  "oldApprovedRosterRemovedMembers": [
+    "/usr/bin/dash",
+    "/usr/local/lib/node_modules/npm/bin/npm-cli.js",
+    "/usr/local/lib/node_modules/npm/package.json"
+  ],
+  "absenceContextDelta": {
+    "added": [],
+    "removed": [
+      "/etc/npmrc",
+      "/home/node/.npmrc",
+      "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/.npmrc",
+      "/usr/local/etc/npmrc",
+      "/usr/local/lib/node_modules/npm/npmrc"
+    ]
+  },
+  "directoryContextDelta": {
+    "priorCount": 7,
+    "currentCount": 7,
+    "equal": true
+  }
+}

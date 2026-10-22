@@ -1,0 +1,207 @@
+{
+  "captureRevision": "7ef16585ba04eba3628cead304be85307436f091",
+  "status": "ORIGINAL_CAPTURE_COMPLETE; ROLE_TABLE_DATA_REVIEWED_SEPARATELY; CURRENT_GRAPH_NOT_ESTABLISHED",
+  "rootCompletion": {
+    "status": "DATA_CAPTURE_COMPLETE_UNACCEPTED",
+    "mode": "facts",
+    "revision": "7ef16585ba04eba3628cead304be85307436f091",
+    "manifestSha256": "963e4468a45b50cf3a5211eb80d7d9e12eb2ec001f6323e955931ac20ffeb9f0",
+    "nodeCompletionSha256": "9fe4551e40013d2cb513840a0a2f828702fd6ba5deab3e4cd33c074f973ff354",
+    "limits": [
+      "No role/receipt automatically accepted or installed",
+      "No native/product/test/cluster execution acceptance"
+    ]
+  },
+  "nodeCompletion": {
+    "status": "DATA_CAPTURE_COMPLETE_UNACCEPTED",
+    "mode": "facts",
+    "revision": "7ef16585ba04eba3628cead304be85307436f091",
+    "nativeChildCount": 0,
+    "limits": [
+      "No receipt accepted or installed",
+      "UTF8 native return data is not raw OS pipes",
+      "No role/runtime/API/CI/native-test grant"
+    ]
+  },
+  "rows": 107,
+  "observedJS": 103,
+  "nativeReceiptsUnexecuted": 4,
+  "oldClosureRowsWithoutDiffs": 115,
+  "files": [
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/facts-original-7ef16585/completion.json",
+      "bytes": 446,
+      "sha256": "2fb381c5b6fa0cf95004e96ae0922717cdbae11e0cb2b500172da9ce187fbdb1"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/facts-original-7ef16585/context-after.json",
+      "bytes": 124668,
+      "sha256": "0899f3d2510203ba3218355841337c6b8a003453d5ee30b81ca53c50a602f886"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/facts-original-7ef16585/context-before.json",
+      "bytes": 124668,
+      "sha256": "0899f3d2510203ba3218355841337c6b8a003453d5ee30b81ca53c50a602f886"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/facts-original-7ef16585/node/actual-selected-data-repeat.json",
+      "bytes": 6575871,
+      "sha256": "b2f26c23cf7b834079a5d13c23b14b5d18caca6a6cab400aab5f0bb582dacd15"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/facts-original-7ef16585/node/closure-data-diffs.json",
+      "bytes": 1118742,
+      "sha256": "e792f358df673819f4455ad4c3be73df21df3a969e9141a7129877f2a6dab1a6"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/facts-original-7ef16585/node/completion.json",
+      "bytes": 310,
+      "sha256": "9fe4551e40013d2cb513840a0a2f828702fd6ba5deab3e4cd33c074f973ff354"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/facts-original-7ef16585/node/consumed-context-after-repeat.json",
+      "bytes": 99096,
+      "sha256": "8d4b65fa9be90dab5adda913802739010cae28c61745255ec4d9e5f28d63994c"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/facts-original-7ef16585/node/consumed-context-before-repeat.json",
+      "bytes": 99096,
+      "sha256": "8d4b65fa9be90dab5adda913802739010cae28c61745255ec4d9e5f28d63994c"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/facts-original-7ef16585/node/initialization-context-after.json",
+      "bytes": 107350,
+      "sha256": "d47fa9f4a0a50d8cef91399d92e75fd7ec2836780332721d29b35a2701e84766"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/facts-original-7ef16585/node/initialization-context-before.json",
+      "bytes": 107350,
+      "sha256": "d47fa9f4a0a50d8cef91399d92e75fd7ec2836780332721d29b35a2701e84766"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/facts-original-7ef16585/node/operation-data-diffs.json",
+      "bytes": 57857,
+      "sha256": "58ac3007cb52fa3b86568fc05ce3a3ceb8a553d613e6f7966bc896a0d57b09c4"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/facts-original-7ef16585/node/role-and-closure-observed.json",
+      "bytes": 6575871,
+      "sha256": "b2f26c23cf7b834079a5d13c23b14b5d18caca6a6cab400aab5f0bb582dacd15"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/facts-original-7ef16585/node/selector-and-discovery-closeout.json",
+      "bytes": 210,
+      "sha256": "de29b16f9f21e36d7e6041cdcc1d3ba7e2fc225f411d17aa58d185206b73a02e"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/facts-original-7ef16585/process-00/launch.json",
+      "bytes": 520,
+      "sha256": "7d0211d0fd94fe3cca74f75b2d419a67e2b4d3d5831e4a89a18db553ceee65f1"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/facts-original-7ef16585/process-00/stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/facts-original-7ef16585/process-00/stdout.bin",
+      "bytes": 41,
+      "sha256": "01c6119847802a5b04731a81eb916a2e3a69c38bb4105be62addac0b704fa4b3"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/facts-original-7ef16585/process-00/terminal.json",
+      "bytes": 371,
+      "sha256": "207bc343d03418c9ed2a7bff56960bbf09be02ce4b788ee64b047004090390a0"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/facts-original-7ef16585/process-01/launch.json",
+      "bytes": 556,
+      "sha256": "be5c0f65ef5dc956fda4993240c969ecd62e3303d560808e68db6261d8dd7953"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/facts-original-7ef16585/process-01/stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/facts-original-7ef16585/process-01/stdout.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/facts-original-7ef16585/process-01/terminal.json",
+      "bytes": 369,
+      "sha256": "980967f3268ff5f1c2b7d4228a79095e0c2b2b4becded10a3033debd7030b229"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/facts-original-7ef16585/process-02/launch.json",
+      "bytes": 1164,
+      "sha256": "0289f1a4aa36a55054d966001463c2527507e30b5510423b3895c5d8f420d65c"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/facts-original-7ef16585/process-02/stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/facts-original-7ef16585/process-02/stdout.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/facts-original-7ef16585/process-02/terminal.json",
+      "bytes": 370,
+      "sha256": "08535b83ed31dde0418ca5564d51bff39d8e95fdbff7b0f91aa022c6f34eb394"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/facts-original-7ef16585/process-03/launch.json",
+      "bytes": 520,
+      "sha256": "22188098ae9a0231c8413a3ea7fe550856d6a99dccd838eb845f316c0f3cfd9a"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/facts-original-7ef16585/process-03/stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/facts-original-7ef16585/process-03/stdout.bin",
+      "bytes": 41,
+      "sha256": "01c6119847802a5b04731a81eb916a2e3a69c38bb4105be62addac0b704fa4b3"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/facts-original-7ef16585/process-03/terminal.json",
+      "bytes": 370,
+      "sha256": "bdd3a6ad2f2e2f37cf077ee8eb4028dffa466da8a4103d3ce34a6e9d7a535f59"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/facts-original-7ef16585/process-04/launch.json",
+      "bytes": 556,
+      "sha256": "d56541c00d828fb2303b839b377038097da49bec6cd17e833542b7129431423b"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/facts-original-7ef16585/process-04/stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/facts-original-7ef16585/process-04/stdout.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/facts-original-7ef16585/process-04/terminal.json",
+      "bytes": 369,
+      "sha256": "77687690c7ed1ae85de211865fe01132f367f608c5b0dddd2391dcd1a326a05c"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/facts-original-7ef16585/root-observation-summary.json",
+      "bytes": 9287,
+      "sha256": "d6063793ac8ad86058a356feecdad42bcf98484f2196c966a310be997c781a40"
+    }
+  ],
+  "limits": [
+    "Complete original raw ordered results remain external in immutable captured files; this index does not pretend summaries are full DATA.",
+    "Original five process launches/terminals and all10rawouterstreams retained, including expectedemptyoutputs.",
+    "No current graph/module qualified closure or whole API/config generator success follows."
+  ]
+}
