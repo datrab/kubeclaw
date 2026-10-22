@@ -5,6 +5,7 @@ Audience: operator, security reviewer, architecture reader, maintainer
 Owner: platform security and runtime maintainers
 Evidence: my-values/infra/spire-values.yaml; charts/kubeclaw/templates/configmap-worker-trust.yaml; charts/prism/templates/networkpolicy.yaml; skills/nova/core/execution/authorization.ts; my-values/setup-secrets.sh; skills/nova/core/test-gates/source-snapshot.ts
 Evidence revision: `13bff0a18a64e74f2cbbaa1978e746fcdeff0c10`
+Upstream source scope: Ops changes on main at `34cf38ef53ee41381543785d0ffae90a37fac9ca`; runtime source adoption into this documentation branch remains separate
 Applies to: the current supported release and its documented lab deployment
 Last verified: 2026-09-20; diagram boundary correction source-checked on 2026-10-21; no live result
 
@@ -347,7 +348,7 @@ Do not duplicate secret values in documentation, values files, logs, test fixtur
 | `prism-runtime` | Session, ingress, dispatch, worker, and ingestion shared secrets | Prism deploy helper creates if absent; only the corresponding Prism services consume | Rotate by relationship and restart both ends. SPIFFE-enabled Control/Worker transport omits the dispatch/worker fallback, but session, ingress, and ingestion secrets still have their own uses. |
 | Prism product signing Secret and controller CA/token projection | Configured Ed25519 private key, configured CA, and short-lived audience-bound ServiceAccount token | External product-authority owner supplies signing/CA Secrets; Kubernetes projects the token to Control | The chart requires a signing Secret distinct from `prism-runtime`. Rotate signer with verifier trust and retained decisions. Token rotation is automatic; CA rotation needs overlap or coordinated restart. |
 | `prometheus-grafana` | `admin-user`, `admin-password` | External monitoring operator supplies; Grafana reads | Rotate and restart/reload Grafana. It grants UI administration, not Prometheus or Kubernetes authority. The chart does not create it. |
-| `codex-ops-bearer` and optional `codex-ops-github` | MCP bearer `token`; optional GitHub `token` | Ops bootstrap creates a missing bearer and retains an existing one. It applies the operator's GitHub token from `OPS_GITHUB_TOKEN_FILE` when set. Codex and loopback MCP share the bearer; Codex alone receives the GitHub token | Bind MCP to loopback and rotate both clients together. Scope the GitHub token separately. Neither belongs in the Ops PVC. |
+| Separate Codex, Nova and Buster MCP bearer Secrets; optional Codex GitHub Secret | One MCP token per client; independent GitHub token | Argo declares objects; the narrow provisioner retains/issues distinct credentials and trust before workloads. Each gateway receives only its own MCP credential; MCP reads client tokens for authentication. | Rotate the intended identity, prove new success and old-token denial; never substitute another client token. GitHub remains separate. |
 | `codex-ops-tailscale` | `authkey` | Ops bootstrap applies the operator's authkey from `OPS_TAILSCALE_AUTHKEY_FILE` when set; optional userspace Tailscale sidecar reads | Prefer reusable/ephemeral policy appropriate to recovery, revoke after use, and never treat the persisted device state as a second authkey. |
 | Registry client Secret and CA Secret | Configured username/password and CA certificate keys | External registry operator supplies; BuildKit/runtime/node configuration selects them | Credentials are allowed only with HTTPS in the generator. Rotate at registry and all clients. A CA bundle is trust material, not a bearer secret, but replacement still needs coordinated client rollout. |
 
@@ -401,9 +402,6 @@ and stops if that source is absent.
 > [Nova values select gateway, provider, Discord and Git Secret keys](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/my-values/nova-values.yaml#L31-L89).
 > [Bundle authentication has its own selected Secret](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/my-values/nova-values.yaml#L1-L30).
 > [Archviewer, Buster and source-attestation material use separate named references](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/my-values/nova-values.yaml#L91-L138).
-> [The Ops Pod mounts the bearer separately, gives the optional GitHub token only
-> to Codex](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/charts/ops-pod/templates/workload.yaml#L49-L76),
-> and [gives the Tailscale authkey only to its sidecar](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/charts/ops-pod/templates/workload.yaml#L113-L135).
 > [Grafana reads an externally managed administrator Secret](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/gitops/platform/values/prometheus.yaml#L3-L23).
 >
 > **Contract or setting:** Database roles, runtime relationships, signer/CA/audience and per-container credential selection must remain separated.
@@ -414,6 +412,24 @@ and stops if that source is absent.
 >
 > **Limit:** The shared setup inventory is not every deployment Secret or proof of external credential availability.
 >
+
+
+The current central Ops deployment has a separate upstream evidence record.
+
+> **Source evidence — current central Ops boundary**
+>
+> **Claim:** The separate MCP owns cluster authority and authenticates each client independently.
+>
+> **Implementation:** [Argo provisions distinct client credentials and trust through a scoped hook](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/charts/ops-pod/templates/provision.yaml#L1-L50)
+> [Codex mounts only its own MCP bearer and optional external credentials](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/charts/ops-pod/templates/workload.yaml#L48-L82)
+>
+> **Contract or setting:** MCP policy and RBAC bound each caller; agent Pods receive no direct Kubernetes credential.
+>
+> **Test evidence:** See the scoped observations in [Ops MCP verification](ops-mcp.md#verification).
+>
+> **Revision:** `34cf38ef53ee41381543785d0ffae90a37fac9ca`; upstream main, without runtime source adoption into this branch.
+>
+> **Limit:** Source inspection does not establish every live client or network boundary.
 
 The shared-Secret setup path uses this precedence. Other Secrets have their own
 setup paths; do not assume that they use the same order.
@@ -534,7 +550,7 @@ transport identity, and operation authority.
 | Buster/agents → local registry or mirror | Explicit registry ports; local registry 5000/5001 and mirror 5000 | Production registry can use HTTPS credentials/CA; checked lab local registry is anonymous HTTP | Build/runtime capability constrains registry prefix and immutable result | Credential on HTTP is rejected by config generator; undeclared registry prefix or changed digest fails |
 | Namespace controller → Kubernetes API | Controller policy permits API egress | Projected ServiceAccount token | Controller ClusterRole/RoleBindings and admission policy limit lease-owned namespaces/resources | An identity without the controller grants, existing unowned namespace, or reserved-label mutation fails |
 | Nova/Buster lease client → Kubernetes API | Selected lease-client policy permits API egress on 443/6443 | Mounted ServiceAccount token when enabled | Namespaced lease operations and Deployment/Service reads; optional verification grants Pod reads, the named IngressClass read, and one named OAuth Secret GET | Direct namespace creation, ungranted workload mutation, or an unrelated Secret read fails |
-| Ops MCP/Codex → Kubernetes API | Ops policy allows API; MCP listens only on loopback inside Pod | Short-lived projected token is mounted into MCP; Codex receives it only when exec namespaces are enabled | Read bindings cover named namespaces; cluster reads are limited; pod exec exists only in `rbac.execNamespaces` | MCP remote peer, Secret read, resource mutation, or exec outside the list fails |
+| Agent → central MCP → Kubernetes API | Internal HTTPS Service with allowed client Pod selectors and distinct bearers | Only MCP has the projected Kubernetes credential; agents have no direct API mount. Buster retains its worker lease-controller exception | MCP RBAC caps authority; per-request client policy narrows tools, namespace and exec targets | Unauthorized tool, namespace, label or container is denied; global read does not grant global exec |
 
 Network reachability does not override a missing lease capability. Kubernetes
 RBAC does not authorize an HTTP API operation. A valid SPIFFE certificate does
@@ -555,15 +571,12 @@ boundary does not silently expand another.
 > ingestion callers to exact ports](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/charts/prism/templates/networkpolicy.yaml#L24-L59).
 > [Worker ingress selects Control alone](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/charts/prism/templates/networkpolicy.yaml#L73-L81), and
 > [Worker application authorization accepts only the configured Control SVID](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/prism/server/worker-service.ts#L56-L58).
-> [The selected policy also permits Nova and Buster lease-client API egress](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/my-values/infra/network-policies.yaml#L366-L380).
+> [The older branch policy included Nova and Buster lease-client API egress; current main removes Nova's direct authority as described in the Ops grant matrix](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/my-values/infra/network-policies.yaml#L366-L380).
 > [The Studio ingress allow selects only the Tailscale proxy that owns the Prism
 > parent resource](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/charts/prism/templates/networkpolicy.yaml#L126-L136).
 >
 > [The lease-client role grants lease operations and read-only Deployment and
 > Service visibility, not general workload creation](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/charts/kubeclaw/templates/rbac.yaml#L1-L45).
-> [The Ops chart separates namespaced reads, cluster reads, and namespace-scoped
-> pod exec](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/charts/ops-pod/templates/rbac.yaml#L6-L63).
-> [Pod exec is a distinct Role created only for each configured exec namespace](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/charts/ops-pod/templates/rbac.yaml#L63-L92).
 >
 > **Contract or setting:** Exact caller/destination/port, peer identity and resource grant must match the selected operation.
 >
@@ -573,6 +586,24 @@ boundary does not silently expand another.
 >
 > **Limit:** A reachable port or valid certificate cannot grant every route or namespace operation.
 >
+
+
+The current central Ops deployment has a separate upstream evidence record.
+
+> **Source evidence — current central Ops boundary**
+>
+> **Claim:** The separate MCP owns cluster authority and authenticates each client independently.
+>
+> **Implementation:** [Only MCP receives the observer and exec bindings](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/charts/ops-pod/templates/rbac.yaml#L57-L117)
+> [Each client is authorized separately on every operation](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/tools/ops-mcp/src/access-policy.mjs#L85-L107)
+>
+> **Contract or setting:** MCP policy and RBAC bound each caller; agent Pods receive no direct Kubernetes credential.
+>
+> **Test evidence:** See the scoped observations in [Ops MCP verification](ops-mcp.md#verification).
+>
+> **Revision:** `34cf38ef53ee41381543785d0ffae90a37fac9ca`; upstream main, without runtime source adoption into this branch.
+>
+> **Limit:** Source inspection does not establish every live client or network boundary.
 
 Important negative checks are:
 
@@ -766,7 +797,7 @@ rule. Do not infer that a present control was the only alternative considered.
 | Layer | Normal authority | Important exception or limit |
 | --- | --- | --- |
 | Kubernetes ServiceAccount | Automatic token mounting is disabled by chart default | The namespace controller requires a token. Selected Nova values also enable a token for lease and verification operations. |
-| Kubernetes RBAC | Explicit verbs and resource scopes for each workload | Lease clients can request leases; optional verification includes one named OAuth Secret read. The optional Ops Pod has broad read access and optional namespace-scoped exec. |
+| Kubernetes RBAC | Explicit verbs/resource scopes for each workload | MCP owns observer/exec bindings. Agent Pods have no direct cluster grants; Buster keeps only its existing namespace-controller lease exception. |
 | SPIFFE peer policy | Exact ServiceAccount identities for one protected route | A valid SVID still needs application authorization. |
 | Network policy | Named pod, namespace, port, and external paths | Enforcement depends on the live CNI. |
 | Plugin lease | Named capabilities with resource constraints | A grant must still have a configured adapter. |
@@ -774,32 +805,33 @@ rule. Do not infer that a present control was the only alternative considered.
 | File and process access | Canonical roots, allowed commands, isolated runners, and Worker Core limits | Trusted in-process plugins share the host process boundary. |
 | OCI access | Configured endpoint, transport, and optional credential | The local HTTP lab registry is intentionally not production-grade. |
 
-The Ops Pod deserves explicit attention.
-It is an optional analysis and recovery tool, not a pipeline dependency.
-Its ClusterRoles can read selected cluster resources, and `rbac.execNamespaces` creates pod-exec authority in each named namespace.
-The default value contains `kubeclaw`.
-An operator must review that list as privileged access and keep it as small as possible.
+The Ops Pod is an optional operations workspace with a separate central MCP
+service. The MCP identity can observe all namespaces, while only the Ops client
+has the matching global-read grant. Nova and Buster remain narrower. Exec
+requires a separate client grant, live Pod labels and a regular-container match
+where exact targets are used. All three clients have the selected `test*`
+read/exec path; only Buster is limited exclusively to that prefix.
+
+The MCP alone holds these Kubernetes rights. The namespace-access reconciler
+and credential provisioner have their own bounded platform identities. Agent
+Pods cannot use their RBAC. Review exec as authority inside the selected target,
+including any credentials available there. No automatic replay is safe after
+an uncertain exec effect.
 
 > **Source evidence — Ops authority**
 >
-> **Claim:** Ops Kubernetes authority follows ServiceAccount RBAC, including optional namespace-scoped Pod execution.
+> **Claim:** MCP RBAC and per-client policy compose the read/exec boundary; agents have no direct API credential.
 >
-> **Implementation:** Read/exec Roles and the default namespace list below expose those distinct grants.
+> **Implementation:** [Separate MCP identity](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/charts/ops-pod/templates/mcp.yaml#L37-L91) [Client and target authorization](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/tools/ops-mcp/src/access-policy.mjs#L50-L107)
 >
+> **Contract or setting:** Per-client MCP grants remain bounded by the MCP ServiceAccount RBAC.
 >
-> [The Ops chart defines namespaced and cluster read authority](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/charts/ops-pod/templates/rbac.yaml#L1-L60).
-> [It defines pod exec separately for each selected namespace](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/charts/ops-pod/templates/rbac.yaml#L63-L92).
+> **Test evidence:** See the scoped 2026-10-22 results and remaining limits in [Ops MCP verification](ops-mcp.md#verification).
 >
-> [The default exec namespace list contains only `kubeclaw`](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/charts/ops-pod/values.yaml#L20-L29).
+> **Revision:** `34cf38ef53ee41381543785d0ffae90a37fac9ca`; upstream main, separate from documentation-branch source adoption.
 >
-> **Contract or setting:** execNamespaces selects exec grants; the shared credential retains their effective authority.
->
-> **Test evidence:** No deployed effective-RBAC or container-isolation exercise is established by these templates.
->
-> **Revision:** `13bff0a18a64e74f2cbbaa1978e746fcdeff0c10`. Source bindings, not execution receipts.
->
-> **Limit:** A read-oriented tool list cannot reduce the credential rights available inside its Pod.
->
+> **Limit:** Scoped local/live evidence does not prove every deployed RBAC combination or independent host recovery.
+
 
 ## Threats, Controls, and Residual Risk
 
@@ -812,7 +844,7 @@ An operator must review that list as privileged access and keep it as small as p
 | A workload reaches an undeclared service | Default deny and explicit paths | The operator must prove that the chosen CNI enforces policy. |
 | A secret remains valid after deletion | Rotation and upstream revocation procedure | External systems control final revocation. |
 | An observer or specialist changes lifecycle truth | Nova-owned journal and bounded plugin contract | A privileged operator can still modify storage or deployment configuration. |
-| The Ops Pod becomes a general shell | Optional deployment and bounded exec namespace list | Any granted pod exec is high authority inside that namespace. |
+| An agent requests excessive exec authority | Distinct MCP identity, exact tool/namespace/target grants, live label checks and audit | An allowed exec can use credentials and authority inside its target container. |
 
 ## Verification and Recovery Order
 
@@ -843,7 +875,7 @@ Those changes hide the failed boundary and create a second incident.
 - A trusted in-process plugin shares more authority than an isolated external plugin.
 - Image digests and source signatures prove identity, not vulnerability status or business approval.
 - Prism transport identity must not be described as general signed artifact provenance.
-- The Ops Pod remains a privileged optional component when namespace exec is enabled.
+- The central MCP remains a privileged component for its configured read/exec targets; agent credentials do not grant direct Kubernetes access.
 
 These limits are not reasons to remove the existing controls.
 They define where operators need additional production controls or live proof.

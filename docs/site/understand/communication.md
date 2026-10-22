@@ -5,6 +5,7 @@ Audience: platform operator, runtime maintainer, integration developer, security
 Owner: runtime and platform maintainers
 Evidence: contracts/pipeline-test-gate/v1; contracts/pipeline-worker-core/v1; skills/nova/core; skills/worker/core; skills/common/plugins/redis-transport; charts/kubeclaw; charts/prism; tests/verification/reliability
 Evidence revision: `13bff0a18a64e74f2cbbaa1978e746fcdeff0c10`
+Upstream source scope: Ops changes on main at `34cf38ef53ee41381543785d0ffae90a37fac9ca`; runtime source adoption into this documentation branch remains separate
 Applies to: current Nova, Buster, Prism, Worker Core, specialist, Redis, registry, Git, BuildKit, Tailscale, and SPIFFE paths
 Last verified: original path inspection on 2026-09-21; native restart, Core isolation, observer delivery and private-route source details extended on 2026-10-21; no live or native exercise asserted
 Scoped source correction: 2026-10-21 against `0e35889a3c4e65d5c47ba88e924611aace67eb1d`; selected role routing and mention policy reconciled; no observed model or Discord traffic.
@@ -152,7 +153,7 @@ individual route's schema or admission rules.
 | Nova / Buster → Git | Clone or fetch source; create a local worktree; commit selected files; merge an exact revision. | Operator-configured Git SSH/HTTPS remote and local filesystem worktrees. No supported local Git-mirror service exists in the current repository. | Deploy key and host trust at Git transport; Core capability grants and workspace owner records for mutation. | Git command deadlines; expected parent and source revision impose order. | Git objects and refs persist. Attempt generation separates worktrees. Commit SHA and owner record bind identity. | Repository size, command output, path count, disk, and lock-wait bounds. | Stale parent, conflict, lock timeout, remote failure, or owner mismatch blocks. Reconcile refs before retry. A managed Git mirror remains roadmap work and has no current fallback contract. |
 | Buster → BuildKit → OCI registry | Build an image, push immutable manifest/layers, verify digest, then let consumers pull it. | BuildKit client protocol to rootless BuildKit; OCI Distribution API to local registry; upstream pulls may use Docker Hub mirror. | Registry client configuration controls endpoints and credentials. Current lab local registry is anonymous HTTP; it is not production-grade HTTPS. | Build and push deadlines are provider settings. Manifest digest binds later verification and pull order. | BuildKit cache and registry blobs persist independently. Content digests deduplicate layers and bind the selected manifest. | Build context, output, cache, disk, concurrent build, and registry limits. | Build, push, digest check, or pull failure fails the node. Retry only after checking whether the digest exists. A mirror miss is not local-registry success. |
 | Workload → SPIRE / Envoy → protected service | Obtain SVID, establish mTLS, and forward verified SPIFFE identity to loopback application HTTP. | SPIFFE Workload API over CSI socket; Envoy mTLS listener and local plaintext application listener. | SPIRE issues workload identity. Envoy validates peer trust domain and SAN. Application accepts forwarded identity only from loopback proxy and an exact peer allowlist. | SVID rotation is handled by workload API/Envoy. Application request deadlines still apply. | No message persistence or deduplication at mTLS. Domain stores retain accepted operations. | Envoy connection/request limits plus application limits. | Missing SVID, invalid SAN, unlisted peer, non-loopback forwarded header, or proxy failure denies the request. Restore identity/proxy; never fall back silently to anonymous remote HTTP. |
-| Codex client → Ops MCP → Kubernetes API | Request read-only cluster, Argo, workload, event, or log evidence. | Bearer-authenticated MCP at Pod loopback `127.0.0.1:8080/mcp`; Ops MCP uses `GET {kubernetesApiPath}` over HTTPS to the configured Kubernetes API origin. The symbolic path covers tool-selected core and grouped API paths without inventing one static URL. | Rotating bearer for MCP; projected ServiceAccount token is re-read for every request, the configured CA verifies TLS, and RBAC authorizes Kubernetes reads; optional exact Origin allowlist and namespace enum constrain MCP callers. | Each Kubernetes request has a 10 s timeout and 8 MiB response ceiling; logs have 64 KiB. Lists reduce page size only after an oversized response. `namespace_overview` and `get_events` have no aggregate page, duration, scan-item, or encoded-output ceiling. | No durable MCP session or result store and no automatic general retry. Kubernetes supplies current state and continuation tokens; oversized list pages alone are retried with a smaller page size and the same selectors/token. | Per-request and log ceilings. The two full-scan tools remain unbounded at operation level. | Invalid path, token/CA, 401/403, RBAC, API, timeout, parse, or size error returns no write. Prefer a one-page or single-object tool. Do not interpret an absent full-scan response as an empty namespace. |
+| Codex/Nova/Buster → central Ops MCP → Kubernetes API | Typed read tools and separately authorized `exec_pod`. | Internal HTTPS at `codex-ops-mcp.kubeclaw-ops.svc:8080/mcp`; Nova/Buster use native OpenClaw with a local stdio-to-HTTPS adapter. | Distinct per-client bearer, CA verification, tool/namespace checks; exec checks live labels/container. Only MCP has Kubernetes credentials; Buster lease token is separate. | Reads: 10 s/8 MiB per API request. Exec: requested timeout up to 120 s, reduced by policy (selected grants 30 s), up to 64 KiB combined output, four active connections. | No durable MCP job/result store. Tokens and policy reload per call. | Full namespace/event scans retain their aggregate-pressure limits; native adapter bounds its response to 2 MiB. | Read retries are new observations. Never automatically replay exec after timeout, disconnect or cancellation; reconcile remote effects first. |
 | Ops MCP → Hubble Relay | Read bounded Cilium flow evidence. | Fixed `hubble observe` process to `hubble-relay.cilium.svc.cluster.local:4245`. | Ops Pod process and cluster network boundary; result filtering rechecks exact namespace and Pod identity. | Two concurrent queries; 12 s; maximum 15-minute window; 2 MiB raw and 192 KiB returned; 1–50 flows. | No lossless cursor. Warnings and partial reasons are part of the result. | Query semaphore, byte ceilings, and Hubble peer capacity. | Partial, lost-event, timeout, parse, relay, or process failure cannot prove absence of traffic or drops. Narrow the window and retain partial reasons. |
 | Prometheus / Alloy → monitoring stores → Grafana | Project metrics and logs for diagnosis. | Prometheus scrapes; Alloy reads CRI logs and posts to Loki `/loki/api/v1/push`; Grafana queries configured data sources. | Target-specific scrape identity; checked-in Loki uses network controls, not application auth; Grafana reads an existing admin Secret. | Profile-specific scrape and batch settings; Prometheus retains 15 days and Loki 720 hours. | Prometheus, Loki, and Alloy positions hold derived observations only. | Collector queues, storage, retention, and backend availability. | Monitoring failure reduces visibility. Recover backend before collectors and correlate gaps with canonical journals; do not synthesize lifecycle events. |
 
@@ -291,7 +292,7 @@ PostgreSQL or the artifact store.
 | Prism Agent Bridge | `/health`, `/ready`, `/v1/dispatch`, `/v1/design-set`, `/v1/revise` on loopback | Same-pod OpenClaw/Envoy path and durable job ID | 2 MB body; 30 s dispatch; 10 s job read. |
 | Buster `network.http` provider | `DYNAMIC {configuredUrl}` with a configured HTTP method | Admitted Buster capability request plus origin/suffix, port, method, and header policy | Runtime execution/request/response ceilings; redirects and implicit retry are denied. |
 | Common `network.http` adapter | `DYNAMIC {configuredUrl}` with a configured HTTP method | Core capability grant and adapter exact-origin/method/header policy; fence for non-confidential calls | 30 s, 1 MiB request, and 1 MiB response defaults; redirects and adapter retry are denied. |
-| Ops MCP | `/healthz`, `/mcp` on loopback 8080; outbound `GET {kubernetesApiPath}` over configured API HTTPS origin | Shared MCP bearer and optional Origin allowlist; projected Kubernetes bearer, CA, and RBAC | Logs 64 KiB; Kubernetes 8 MiB/10 s; Hubble 2 MiB raw/12 s and 192 KiB compact flows array; metadata and the encoded MCP response are additional. See [the complete Ops MCP contract](ops-mcp.md). |
+| Ops MCP | `/healthz`, `/mcp` on its internal HTTPS Service at port 8080; Kubernetes GETs and separate exec WebSocket | Per-client bearer and optional Origin allowlist; dedicated MCP Kubernetes token/CA/RBAC, narrowed by policy | Logs 64 KiB; Kubernetes reads 8 MiB/10 s; bounded Hubble; exec output/timeout capped by policy. See [the complete Ops MCP contract](ops-mcp.md). |
 | Archviewer | `/healthz`, static document paths on 3456 | Tailnet route plus Basic auth for documents | No directory listing; 401/403/404 fail closed. |
 | OCI registry | `/v2/` and OCI blob/manifest routes | Anonymous HTTP in the current lab service | Not suitable as the final production registry security posture. |
 | Direct retained-storage registry | `registry-local:5001` ClusterIP Service to container 5000, `/v2/` and OCI routes; selected namespace | Anonymous HTTP lab; no TLS or registry authentication | Explicit ReadWriteOncePod PVC and Recreate writer; delete/upload purging disabled. PVC survival and independent backup are separate. |
@@ -1247,11 +1248,11 @@ same Control result receipt after a lost response.
 
 ### Operations And Monitoring
 
-Ops MCP is a read path, not a repair path. A local client authenticates to the
-MCP server. The server then uses a projected ServiceAccount token for HTTPS GET
-requests to Kubernetes. The Hubble tool is different: it starts one fixed CLI
-against Hubble Relay and returns bounded, possibly partial flow evidence. The
-MCP server cannot mutate a workload through either path.
+Ops MCP provides observation tools and a separate authorized exec path.
+Each client authenticates over the internal HTTPS Service with its own bearer.
+Reads use the MCP identity for Kubernetes GETs or bounded Hubble queries.
+`exec_pod` checks namespace and live target grants before opening remotecommand;
+it can change the target. Audit and uncertain-effect recovery apply separately.
 
 Prometheus, Alloy, Loki, and Grafana are also projections. Prometheus scrapes
 metrics. Alloy reads node CRI logs and pushes batches to Loki. Grafana reads the
@@ -1265,8 +1266,6 @@ journal, database row, receipt, or digest proves the system transition.
 > **Implementation:** Projected-token wiring, Kubernetes GETs, Hubble process bounds and Alloy forwarding below define the observation paths.
 >
 >
-> [The deployed MCP binds to loopback and mounts the kube-api token volume](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/charts/ops-pod/templates/workload.yaml#L85-L101).
-> [Codex conditionally mounts the same volume](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/charts/ops-pod/templates/workload.yaml#L74-L77).
 >
 > [Kubernetes reads fix TLS, token rotation, timeout, and response size](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/tools/ops-mcp/src/kubernetes.mjs#L1-L58).
 >
@@ -1276,14 +1275,32 @@ journal, database row, receipt, or digest proves the system transition.
 >
 > [Alloy discovers and processes CRI log files](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/gitops/platform/values/alloy.yaml#L30-L79) and [pushes them to the fixed Loki endpoint](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/gitops/platform/values/alloy.yaml#L80-L101).
 >
-> **Contract or setting:** MCP grants, shared credential mounts and per-request/query bounds govern different authority and pressure.
+> **Contract or setting:** Per-client MCP grants, the separate service credential and per-request/query bounds govern different authority and pressure.
 >
 > **Test evidence:** No deployed Kubernetes RBAC, Relay completeness or CRI-to-Loki delivery result is established by these links.
 >
 > **Revision:** `13bff0a18a64e74f2cbbaa1978e746fcdeff0c10`. Source bindings, not execution receipts.
 >
-> **Limit:** A read-only tool list does not narrow the shared credential; empty/partial observations are not complete incident proof.
+> **Limit:** The MCP credential is wider than one client grant; exec is effectful and empty/partial reads are not complete incident proof.
 >
+
+
+The current central Ops deployment has a separate upstream evidence record.
+
+> **Source evidence — current central Ops boundary**
+>
+> **Claim:** The separate MCP owns cluster authority and authenticates each client independently.
+>
+> **Implementation:** [The separate MCP mounts the projected Kubernetes token](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/charts/ops-pod/templates/mcp.yaml#L37-L91)
+> [Codex has its own mounts without an API credential](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/charts/ops-pod/templates/workload.yaml#L48-L82)
+>
+> **Contract or setting:** MCP policy and RBAC bound each caller; agent Pods receive no direct Kubernetes credential.
+>
+> **Test evidence:** See the scoped observations in [Ops MCP verification](ops-mcp.md#verification).
+>
+> **Revision:** `34cf38ef53ee41381543785d0ffae90a37fac9ca`; upstream main, without runtime source adoption into this branch.
+>
+> **Limit:** Source inspection does not establish every live client or network boundary.
 
 ## Complete Showcase Success Trace
 
@@ -1456,3 +1473,10 @@ retries, and failure mapping. They do not by themselves prove live DNS, Tailnet
 ACLs, TLS certificates, SPIRE issuance, NetworkPolicy enforcement, registry
 retention, BuildKit isolation, Redis durability settings, or external model
 behavior. Those claims need the matching deployment and live acceptance checks.
+
+### Central Ops Update On 2026-10-22
+
+The Ops listener is now a separate Pod, with native Nova/Buster clients and
+central read/exec grants. The connection/endpoint rows above follow the pinned
+upstream main contract. The remaining component evidence retains its declared
+branch baseline. [Client authorization](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/tools/ops-mcp/src/access-policy.mjs#L50-L107) and [native transport](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/charts/kubeclaw/files/ops-mcp/stdio.mjs#L1-L53) define this update. See [verification and limits](ops-mcp.md#verification).

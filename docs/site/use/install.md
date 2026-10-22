@@ -606,6 +606,13 @@ Do not count Tailscale inside the target cluster as the only second route.
 A CNI or cluster failure can remove that route.
 
 The optional Ops Pod supports routine operations after cluster readiness.
+The selected release has a Codex StatefulSet and a separate central MCP Pod.
+Argo provisions MCP credentials and trust before workloads. Use a full Ops sync
+so provisioning hooks run. Nova and Buster receive their native MCP connector
+through the selected runtime bundle; no manual client installation is needed.
+See [native agent connection and central grants](../understand/ops-mcp.md#native-agent-connection).
+Direct Kubernetes commands in this installation guide belong to the independent
+administrator, not to the agent Pods.
 The [platform boundary](../understand/platform-and-operations.md#ops-pod-tool-policy-is-not-kubernetes-authority) explains the optional Ops Pod. Treat its installation and credentials as a separate administrative surface.
 
 [Automated host bootstrap and restore](../status/open-issues.md#automated-host-bootstrap-and-restore-prerequisites-are-incomplete) tracks the missing prerequisites.

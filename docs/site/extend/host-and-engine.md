@@ -154,17 +154,16 @@ tool provider, or the Kubernetes ServiceAccount.
 The package contains no pipeline manifest and no OpenClaw manifest. It also contains
 no MCP server declaration. The required read-only Ops tools must already be
 available through the Codex environment. The skill cannot create that connection.
-In the deployed Ops Pod, Codex and MCP share a ServiceAccount. The chart enables
-namespace-scoped Pod execution for Codex by default. Treat the chart RBAC and
-credential mounts as the effective authority, even though the plugin interface and
-the MCP tool surface are read-only. Set `rbac.execNamespaces` to `[]` to remove the
-Codex token, kubeconfig, and exec binding.
+The deployed main installation now separates Codex and MCP into different
+Pods and ServiceAccounts. Agents use distinct MCP bearers; only MCP holds the
+Kubernetes observer/exec credential. Buster retains its existing worker lease
+exception. `rbac.execNamespaces` bounds MCP authority and never gives Codex a
+token or kubeconfig. The MCP exposes separately authorized exec as well as
+read tools. See [the current deployment and native agent connection](../understand/ops-mcp.md).
 
 > **Codex manifest:** [The Ops manifest declares the skill directory, read capability, interface text, and example prompts](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/plugins/kubeclaw-ops/.codex-plugin/plugin.json#L1-L26).
 >
-> **Deployment authority:** [The chart mounts Kubernetes credentials into Codex when an exec namespace is configured](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/ops-pod/templates/workload.yaml#L51-L76).
->
-> [The default value selects `kubeclaw`](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/ops-pod/values.yaml#L21-L28).
+> **Deployment authority:** The [central MCP grant matrix](../understand/ops-mcp.md#authorization-and-data-exposure) describes the 2026-10-22 main contract. The manifest above remains the read-oriented diagnostic plugin boundary.
 
 Use this authoring path:
 

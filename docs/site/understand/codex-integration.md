@@ -5,6 +5,7 @@ Audience: Codex operator, plugin maintainer, platform operator, security special
 Owner: Codex integration maintainers
 Evidence: plugins/kubeclaw-ops; .agents/plugins/marketplace.json; charts/ops-pod; tools/ops-mcp
 Evidence revision: `569f7b4933d4859cc67c80ddf40d5154ffd95ce5`
+Upstream source scope: Ops changes on main at `34cf38ef53ee41381543785d0ffae90a37fac9ca`; runtime source adoption into this documentation branch remains separate
 Applies to: `kubeclaw-ops@0.2.0` and the current local marketplace entry
 Last verified: manifest, skill, chart, service, and test inspection on 2026-09-21
 
@@ -26,7 +27,7 @@ available separately in the Codex environment.
    skill selects an Ops MCP tool and the narrowest namespace, object, time, and
    result bounds that can answer the question.
 2. The Codex host sends an MCP request to the separate service. In the Ops Pod,
-   this is loopback `127.0.0.1:8080/mcp`. Every request carries the bearer token.
+   this is the internal HTTPS Service `codex-ops-mcp.kubeclaw-ops.svc:8080/mcp`. Every request carries that client's own bearer token.
 3. Ops MCP checks the bearer value, optional browser origin, tool schema, and
    namespace allowlist. It then reads the Kubernetes API or starts the fixed
    Hubble CLI. Kubernetes calls use the projected ServiceAccount token and CA.
@@ -84,56 +85,42 @@ history.
 
 ## Deployed Ops Pod
 
-The optional Ops Pod runs Codex and Ops MCP as separate containers in one
-single-replica StatefulSet. They share a pod network, bearer Secret, and Pod
-ServiceAccount identity, but have different filesystems and processes. MCP
-listens only on `127.0.0.1:8080`; Codex connects over the pod loopback.
+The `codex-ops` release in `kubeclaw-ops` contains a persistent Codex StatefulSet
+and a separate central Ops MCP Deployment. The MCP has its own ServiceAccount,
+internal HTTPS Service, TLS material, probes, credential policy and network
+boundary. Codex reaches `https://codex-ops-mcp.kubeclaw-ops.svc:8080/mcp`
+with its own bearer. Nova and Buster use distinct credentials against the same
+service. There is no MCP sidecar in the Codex Pod.
 
-The Codex and MCP containers run as user 1000, use the runtime-default seccomp profile,
-drop all Linux capabilities, forbid privilege escalation, and have read-only
-root filesystems. Codex has persistent home and workspace volumes. MCP always
-mounts the projected, one-hour ServiceAccount token and CA. When
-`rbac.execNamespaces` is non-empty, Codex mounts that same projected volume and
-a generated kubeconfig. This is the default because the default list contains
-`kubeclaw`. The bearer Secret is mounted read-only into both containers.
+Codex and Nova have no Kubernetes token or kubeconfig. Only MCP mounts the
+observer/exec credential. Buster's worker retains its separate namespace-
+controller lease exception. `rbac.execNamespaces` bounds MCP authority; it
+never enables a Codex API credential. Global Ops reads do not grant global exec.
 
-This pod-level boundary matters: the plugin's `Read` label and the MCP tool
-annotations describe their user interfaces. They do not reduce ServiceAccount
-RBAC. With the default execution namespace, the shared ServiceAccount has
-`pods/exec` `create`. The MCP API does not expose an exec tool and its Kubernetes
-client sends GET requests only, but the MCP process holds the same credential.
-Therefore, interface authority is read-only while effective process authority
-is wider.
+The Codex troubleshooting plugin remains guidance. Its Read capability does
+not install the MCP or grant execution. The server also exposes an independently
+authorized `exec_pod` tool; the diagnostic skill must not silently turn a read
+request into a mutation. Review the central grant and the requested effect.
+
+Nova and Buster already receive [native MCP integration](ops-mcp.md#native-agent-connection)
+through their selected chart/runtime bundles. They need no manual plugin or CLI
+installation for these tools. Discovery, schemas, authentication and every
+operation go through the central service.
 
 > **Source evidence — process and credential layout**
 >
-> **Claim:** Codex and MCP share a Pod network and, when exec namespaces are enabled, a projected Kubernetes identity with authority wider than MCP methods.
+> **Claim:** Codex and MCP run in separate Pods and ServiceAccounts; exec rights stay at the MCP.
 >
-> **Implementation:** The workload, token volume and RBAC templates below define process and credential layout.
+> **Implementation:** [Codex StatefulSet and mounts](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/charts/ops-pod/templates/workload.yaml#L28-L82) [MCP Deployment and mounts](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/charts/ops-pod/templates/mcp.yaml#L37-L91) [MCP authorization](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/tools/ops-mcp/src/access-policy.mjs#L50-L107) [Native OpenClaw connector](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/charts/kubeclaw/templates/configmap-gateway.yaml#L202-L223)
 >
-> [The chart requires immutable digests for the Codex and MCP images and fixes one writer](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/ops-pod/templates/workload.yaml#L1-L45).
+> **Contract or setting:** Per-client MCP grants remain bounded by the MCP ServiceAccount RBAC.
 >
-> [Codex receives its own environment, persistent mounts, and readiness boundary](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/ops-pod/templates/workload.yaml#L49-L84).
+> **Test evidence:** See the scoped 2026-10-22 results and remaining limits in [Ops MCP verification](ops-mcp.md#verification).
 >
-> [MCP receives the loopback, namespace, bearer, Kubernetes, and probe settings](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/ops-pod/templates/workload.yaml#L85-L112).
+> **Revision:** `34cf38ef53ee41381543785d0ffae90a37fac9ca`; upstream main, separate from documentation-branch source adoption.
 >
-> [The same projected token volume is always mounted into MCP and conditionally mounted into Codex](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/ops-pod/templates/workload.yaml#L69-L101).
->
-> [The shared volume projects one rotating token, pod namespace, and cluster CA](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/ops-pod/templates/workload.yaml#L137-L158).
->
-> [The optional Tailscale container uses its separately configured image and state](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/ops-pod/templates/workload.yaml#L113-L164).
->
-> [RBAC grants cluster reads and creates namespace-scoped bindings separately](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/ops-pod/templates/rbac.yaml#L1-L58).
->
-> [Optional pod-exec access is confined to the explicitly listed namespaces](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/ops-pod/templates/rbac.yaml#L60-L91).
->
-> **Contract or setting:** Immutable application image guards, conditional Codex token mount and exec Role values are Helm inputs; MCP keeps its projected read token.
->
-> **Test evidence:** The [local MCP boundary fixture](https://github.com/datrab/kubeclaw/blob/54a535b6046bc54e9aeeebee9c4cd24388477115/tools/ops-mcp/test/local.test.mjs#L43-L50) checks method listing and failed reads, not chart rollout or the shared credential permissions. No deployed process-isolation result is established here.
->
-> **Revision:** `569f7b4933d4859cc67c80ddf40d5154ffd95ce5`. These are the source bindings for the explanation above, not execution receipts.
->
-> **Limit:** Separate containers do not imply separate credentials. Interface Read labels do not prove a read-only effective ServiceAccount.
+> **Limit:** Native Nova discovery was observed; mobile pairing and a separate Buster gateway probe remain outside that proof.
+
 
 ## Workspace And Network Boundaries
 
@@ -142,9 +129,7 @@ workspace must not have concurrent writers. The home claim is 2 GiB. The
 workspace claim uses `persistence.size`, 20 GiB by default. A rolling update
 must release the old writer before the new writer uses the claim.
 
-Default NetworkPolicy denies ingress. Egress allows DNS, the discovered API
-server addresses, and public TCP 443 while excluding private, Tailnet,
-link-local, and loopback ranges. Optional userspace Tailscale adds its UDP paths
+Codex egress includes its configured MCP Service, DNS and approved remote-service paths. The separate MCP policy permits configured clients and its Kubernetes/Hubble dependencies. Effective CNI enforcement still needs live proof. Optional userspace Tailscale adds its UDP paths
 and a loopback SOCKS endpoint without `NET_ADMIN` or host networking.
 
 ## Configuration And Precedence
@@ -157,11 +142,11 @@ source.
 | Value | Default or rule |
 | --- | --- |
 | `codexImage`, `mcpImage` | Required `image@sha256:digest`; Helm render fails for a tag or empty value. |
-| `bearerSecret` | `codex-ops-bearer`; key `token` is mounted into both containers. |
+| `bearerSecret` | `codex-ops-bearer`; key `token` identifies Codex to the central MCP. Other agents receive their own token Secret. |
 | `githubSecret` | Empty; when set, key `token` becomes `GH_TOKEN` in Codex only. |
 | `persistence.size` | 20 GiB workspace; Codex home is fixed at 2 GiB. |
-| `rbac.namespaces` | `[kubeclaw]`; controls MCP namespaced reads. |
-| `rbac.execNamespaces` | `[kubeclaw]`; a non-empty list mounts the shared API token and kubeconfig into Codex and grants the Pod ServiceAccount `pods/exec` `create` in each listed namespace. MCP always mounts the same projected token. An empty list removes the Codex mount and exec Roles; it does not remove MCP read access. No setting adds an exec MCP tool. |
+| `rbac.namespaces` | Caps scoped MCP reads; selected production also enables global Ops observation with separate service/client flags. |
+| `rbac.execNamespaces` | Bounds the MCP exec identity in exact namespaces. Client exec additionally requires explicit Pod-label/container grants; it never mounts a Kubernetes credential into Codex. Dynamic `test*` access is managed separately. |
 | `argoNamespace`, `defaultNamespace` | `argocd` and `kubeclaw`. |
 | Network policy | Enabled; Cilium mode false until deployment discovery enables it; API server port 6443. |
 | `tailscale.enabled` | `false`. When enabled, the default image is mutable tag `ghcr.io/tailscale/tailscale:v1.102.3`; the chart does not require a digest for this optional image. Pin a tested digest for a controlled deployment. |
@@ -207,28 +192,10 @@ authentication, RBAC, the API route, Hubble, or Codex login works. On rollout,
 verify that the previous StatefulSet writer has released both claims before the
 replacement becomes active.
 
-Change troubleshooting guidance inside the plugin skill only when the existing
-Ops MCP contract can support it. A new evidence source or tool is an Ops MCP
-service change, not a skill-only extension. It requires server validation,
-least-privilege RBAC and network changes, chart wiring, the skill tool list,
-service tests, and this guide. In the colocated profile, new RBAC applies to the
-shared ServiceAccount and changes the effective authority of both processes
-when Codex has the token mount. Adding a mutation tool is outside the supported
-`kubeclaw-ops` boundary. Use another separately authorized system for changes.
-
-The historical reason for colocating Codex and MCP is not recorded. The current
-design assessment is an inference: loopback MCP avoids a cluster-wide MCP
-listener, and separate processes keep instruction packaging apart from the
-evidence implementation. Credentials are not separate in the default profile.
-The costs are a shared credential boundary, shared pod failure domain, one
-persistent writer, and coupled rollout. Set `rbac.execNamespaces=[]` when Codex
-does not need direct Kubernetes execution; Codex then has no API token mount and
-MCP retains its read path. If Codex must keep exec while MCP must have a strictly
-read-only credential, use separate pods and ServiceAccounts. Reconsider
-colocation when that isolation, independent scaling, or remote clients justify
-the extra authenticated network boundary.
-
-See [Ops MCP](ops-mcp.md) for every tool and service limit. The plugin tests are
-manifest and instruction checks. The chart and MCP tests cover their own
-boundaries. A live validation still needs a Codex connection, Kubernetes API,
-and Hubble Relay for network evidence.
+Change troubleshooting guidance with the selected MCP contract. A new tool
+needs a service release, input/effect contracts, central client grants, matching
+RBAC/network scope, audit behavior, tests and client-discovery proof. The
+troubleshooting skill remains a read-oriented workflow; execution is a separate
+explicitly authorized request. A lost exec response requires effect
+reconciliation before any retry. Keep host/control-plane recovery outside this
+cluster. See [the central MCP contract](ops-mcp.md) for current grants and limits.
