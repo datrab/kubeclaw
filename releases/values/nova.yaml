@@ -29,13 +29,13 @@ imagePullSecrets:
 codeBundle:
   enabled: true
   archiveUrl: >-
-    https://github.com/datrab/kubeclaw/releases/download/code-bundles-39731855192-1/nova-a0867b4caaf636d3cba8dd3bbf6eb53106d92c71.tgz
-  expectedCommit: a0867b4caaf636d3cba8dd3bbf6eb53106d92c71
+    https://github.com/datrab/kubeclaw/releases/download/code-bundles-39747800068-1/nova-34cf38ef53ee41381543785d0ffae90a37fac9ca.tgz
+  expectedCommit: 34cf38ef53ee41381543785d0ffae90a37fac9ca
   contractVersion: v2
   auth:
     existingSecret: github-bundle-reader
     existingSecretKey: token
-  sha256: 5a9f674ab56f371dd8da9e107ed06b6c6ce89fb06ed888e92e684c72e06ce6e7
+  sha256: 9de1f2828de622d1652276da08eabdb684523565f25161d0331d0f58582604ea
 auth:
   existingSecret: openclaw-shared-secrets
   existingSecretKey: gatewayToken-nova
@@ -286,9 +286,11 @@ workspace:
 
     Use only the central Ops MCP. No direct Kubernetes credentials or kubectl.
 
-    List available tools: `node /opt/ops-mcp-client/client.mjs list`
+    Use the native Ops MCP tools (for example `ops__get_pod`, `ops__get_pod_logs`, `ops__exec_pod`).
 
-    Call a tool: `node /opt/ops-mcp-client/client.mjs call get_pod '{"namespace":"kubeclaw","pod":"<pod-name>"}'`
+    Their schemas and availability come from the central MCP using Nova's identity.
+
+    The CLI remains available for diagnostics: `node /opt/ops-mcp-client/client.mjs list`.
 
     Exec is a separate, audited MCP tool; follow its schema and target grants.
 
