@@ -19,6 +19,8 @@ resources:
     limits: {cpu: 500m, memory: 512Mi}
 
 rbac:
+  # Namespace-wide observation is authorized per client, never on agent SAs.
+  readAllNamespaces: true
   # The deployment helper discovers existing platform namespaces. RoleBindings
   # must not refer to namespaces that do not exist yet.
   namespaces: [kubeclaw]
@@ -58,12 +60,13 @@ mcp:
   caConfigMap: ops-mcp-ca
   clients:
     - id: codex
+      readAllNamespaces: true
       tokenSecret: codex-ops-bearer
       namespace: kubeclaw-ops
       podLabels: {app.kubernetes.io/name: codex-ops}
       namespaces: [kubeclaw]
       namespacePrefixes: [test]
-      tools: [platform_cluster_state, platform_network_state, namespace_overview, get_pod, get_events, get_pod_logs, get_hubble_flows, get_pod_metrics, exec_pod]
+      tools: [list_argocd_applications, platform_cluster_state, platform_network_state, namespace_overview, get_pod, get_events, get_pod_logs, get_hubble_flows, get_pod_metrics, exec_pod]
       exec:
         - namespacePrefix: test
           allPods: true

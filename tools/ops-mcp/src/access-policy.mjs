@@ -11,14 +11,16 @@ const strings = (v, check) => Array.isArray(v) && v.every(x => typeof x === 'str
 const positive = (v, max) => Number.isInteger(v) && v > 0 && v <= max;
 const hash = v => createHash('sha256').update(v).digest();
 
+export const validNamespace = value => typeof value === 'string' && dns.test(value.toLowerCase());
+
 export function namespaceAllowed(namespace, namespaces = [], prefixes = []) {
   // Kubernetes namespace names are lowercase DNS labels. Canonicalize at the
   // tool boundary; keep this helper safe for policy and controller callers too.
-  return typeof namespace === 'string' && dns.test(namespace.toLowerCase()) &&
-    (namespaces.includes(namespace.toLowerCase()) || prefixes.some(prefix => namespace.toLowerCase().startsWith(prefix.toLowerCase())));
+  return validNamespace(namespace) &&
+    (namespaces.includes(namespace.toLowerCase()) || prefixes.some(prefix => prefix.length > 0 && namespace.toLowerCase().startsWith(prefix.toLowerCase())));
 }
 
-export function parsePolicy(text, allowedNamespaces, allowedPrefixes = []) {
+export function parsePolicy(text, allowedNamespaces, allowedPrefixes = [], readAllNamespaces = false) {
   const value = JSON.parse(text);
   if (!Array.isArray(value.clients) || !value.clients.length || value.clients.length > 64) throw new Error('Invalid Ops MCP client policy');
   const ids = new Set();
@@ -26,6 +28,8 @@ export function parsePolicy(text, allowedNamespaces, allowedPrefixes = []) {
     if (!dns.test(client.id) || ids.has(client.id) || typeof client.tokenFile !== 'string' || !client.tokenFile.startsWith('/') ||
         !strings(client.tools, x => TOOL_NAMES.includes(x)) ||
         !strings(client.namespaces, x => allowedNamespaces.includes(x)) ||
+        (client.readAllNamespaces !== undefined && typeof client.readAllNamespaces !== 'boolean') ||
+        (client.readAllNamespaces && !readAllNamespaces) ||
         !strings(client.namespacePrefixes ?? [], x => dns.test(x.toLowerCase()) && allowedPrefixes.includes(x.toLowerCase()))) throw new Error('Invalid Ops MCP client policy');
     ids.add(client.id);
     if (!Array.isArray(client.exec)) throw new Error('Explicit exec grants are required (use [] to deny)');
@@ -53,7 +57,7 @@ export function createAccessPolicy(config) {
   }
   if (config.bearer.file || config.bearer.token) throw new Error('Do not combine a client policy with a shared bearer');
   const load = () => {
-    const clients = parsePolicy(readFileSync(config.policyFile, 'utf8'), config.namespaces, config.namespacePrefixes);
+    const clients = parsePolicy(readFileSync(config.policyFile, 'utf8'), config.namespaces, config.namespacePrefixes, config.readAllNamespaces);
     const digests = new Set();
     return clients.map(client => {
       const token = readFileSync(client.tokenFile, 'utf8').trim();
@@ -79,9 +83,9 @@ export function createAccessPolicy(config) {
 }
 
 export function authorizeTool(client, tool, args, argoNamespace) {
-  if (!client?.tools.includes(tool)) throw new Error('OPS_TOOL_FORBIDDEN');
+  if (!client?.tools.includes(tool) || (tool === 'platform_cluster_state' && args.resource === 'namespaces' && !client.readAllNamespaces)) throw new Error('OPS_TOOL_FORBIDDEN');
   const namespace = tool === 'list_argocd_applications' ? argoNamespace : args.namespace;
-  if (namespace && !namespaceAllowed(namespace, client.namespaces, client.namespacePrefixes)) throw new Error('OPS_NAMESPACE_FORBIDDEN');
+  if (namespace && !(tool !== 'exec_pod' && client.readAllNamespaces && validNamespace(namespace)) && !namespaceAllowed(namespace, client.namespaces, client.namespacePrefixes)) throw new Error('OPS_NAMESPACE_FORBIDDEN');
 }
 
 export function authorizeExec(client, args, pod) {

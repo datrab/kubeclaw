@@ -33,6 +33,23 @@ rules:
   - apiGroups: [argoproj.io]
     resources: [applications]
     verbs: [get, list]
+---
+# Only MCP has this credential. Client policy grants global reads to Ops alone;
+# exec is deliberately absent from this ClusterRole.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata: {name: {{ .Release.Namespace }}-{{ .Release.Name }}-all-namespace-reader}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: {{ .Release.Namespace }}-{{ .Release.Name }}-reader
+{{- if .Values.rbac.readAllNamespaces }}
+subjects:
+  - {kind: ServiceAccount, name: {{ .Release.Name }}-mcp, namespace: {{ .Release.Namespace }}}
+{{- else }}
+# Revoke without relying on Argo pruning.
+subjects: []
+{{- end }}
 {{- range .Values.rbac.namespaces }}
 ---
 apiVersion: rbac.authorization.k8s.io/v1
@@ -53,7 +70,7 @@ kind: ClusterRole
 metadata: {name: {{ .Release.Namespace }}-{{ .Release.Name }}-cluster-reader}
 rules:
   - apiGroups: [""]
-    resources: [nodes]
+    resources: [nodes{{ if .Values.rbac.readAllNamespaces }}, namespaces{{ end }}]
     verbs: [get, list]
   - apiGroups: [cilium.io]
     resources: [ciliumclusterwidenetworkpolicies]

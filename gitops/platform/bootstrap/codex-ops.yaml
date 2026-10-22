@@ -23,6 +23,7 @@ spec:
           apiServerPort: 6443
           cilium: false
         rbac:
+          readAllNamespaces: true
           namespaces:
             - kubeclaw-ops
             - kubeclaw
@@ -34,6 +35,7 @@ spec:
         mcp:
           clients:
             - id: codex
+              readAllNamespaces: true
               tokenSecret: codex-ops-bearer
               namespace: kubeclaw-ops
               podLabels:

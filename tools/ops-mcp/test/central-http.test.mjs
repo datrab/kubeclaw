@@ -16,12 +16,12 @@ test('concurrent MCP clients get distinct tool lists and cannot cross namespace 
   const clients = Object.entries(tokens).map(([id, token]) => {
     writeFileSync(join(dir, id), token);
     return { id, tokenFile: join(dir, id), namespaces: id === 'buster' ? [] : [id === 'codex' ? 'kubeclaw' : 'argocd'], namespacePrefixes: ['test'],
-      tools: id === 'codex' ? ['platform_cluster_state', 'get_pod', 'exec_pod'] : ['get_pod'], exec: [] };
+      readAllNamespaces: id === 'codex', tools: id === 'codex' ? ['platform_cluster_state', 'get_pod', 'exec_pod'] : ['get_pod'], exec: [] };
   });
   const policy = join(dir, 'policy'); writeFileSync(policy, JSON.stringify({ clients }));
   const child = spawn(process.execPath, [fileURLToPath(new URL('../src/server.mjs', import.meta.url))], {
     env: { ...process.env, OPS_MCP_POLICY_FILE: policy, OPS_LOCAL_ONLY: '1', HOST: '127.0.0.1', PORT: '0',
-      OPS_MCP_BEARER_TOKEN: '', OPS_MCP_BEARER_TOKEN_FILE: '', OPS_ALLOWED_NAMESPACES: 'kubeclaw,argocd', OPS_ALLOWED_NAMESPACE_PREFIXES: 'test',
+      OPS_MCP_BEARER_TOKEN: '', OPS_MCP_BEARER_TOKEN_FILE: '', OPS_ALLOWED_NAMESPACES: 'kubeclaw,argocd', OPS_ALLOWED_NAMESPACE_PREFIXES: 'test', OPS_READ_ALL_NAMESPACES: '1',
       KUBERNETES_TOKEN_FILE: join(dir, 'forbidden-api-credential') }, stdio: ['ignore', 'ignore', 'pipe'] });
   let log = '';
   child.stderr.on('data', data => { log += data; });
@@ -54,6 +54,20 @@ test('concurrent MCP clients get distinct tool lists and cannot cross namespace 
   const busterDenied = await call('buster', 'tools/call', { name: 'get_pod', arguments: { namespace: 'kubeclaw', pod: 'private' } });
   assert.match(JSON.stringify(busterDenied), /NAMESPACE_FORBIDDEN/);
   assert.doesNotMatch(JSON.stringify(busterDenied), /forbidden-api-credential/);
+  const allNamespacesRead = await call('codex', 'tools/call', { name: 'get_pod', arguments: { namespace: 'Production-Future', pod: 'runtime' } });
+  assert.match(JSON.stringify(allNamespacesRead), /forbidden-api-credential/);
+  for (const id of ['nova', 'buster']) {
+    const denied = await call(id, 'tools/call', { name: 'get_pod', arguments: { namespace: 'production-future', pod: 'runtime' } });
+    assert.match(JSON.stringify(denied), /NAMESPACE_FORBIDDEN/);
+    assert.doesNotMatch(JSON.stringify(denied), /forbidden-api-credential/);
+    const discovery = await call(id, 'tools/call', { name: 'platform_cluster_state', arguments: { resource: 'namespaces' } });
+    assert.ok(discovery.error || discovery.result?.isError);
+  }
+  const forbiddenExec = await call('codex', 'tools/call', { name: 'exec_pod', arguments: { namespace: 'production-future', pod: 'runtime', container: 'runtime', command: ['id'] } });
+  assert.match(JSON.stringify(forbiddenExec), /NAMESPACE_FORBIDDEN/);
+  assert.doesNotMatch(JSON.stringify(forbiddenExec), /forbidden-api-credential/);
+  const discovery = await call('codex', 'tools/call', { name: 'platform_cluster_state', arguments: { resource: 'namespaces' } });
+  assert.match(JSON.stringify(discovery), /forbidden-api-credential/);
   // A malformed/revoked policy must reject an already authenticated client on
   // its very next request, regardless of a legacy MCP session header.
   writeFileSync(policy, '{invalid');

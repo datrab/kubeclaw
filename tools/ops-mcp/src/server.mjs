@@ -1,6 +1,6 @@
 import { boundedUtf8, logObservation } from './diagnostics.mjs';
 import { getHubbleFlows } from './hubble.mjs';
-import { namespaceAllowed, createAccessPolicy, requestIdentity, authorizeTool, authorizeExec, audit, identityContext } from './access-policy.mjs';
+import { validNamespace, namespaceAllowed, createAccessPolicy, requestIdentity, authorizeTool, authorizeExec, audit, identityContext } from './access-policy.mjs';
 import { createPodExec } from './exec.mjs';
 import { readTlsPair, reloadTls } from './tls.mjs';
 import { loadOpsMcpConfig } from './config.mjs';
@@ -26,7 +26,7 @@ const authentication = createAccessPolicy(config);
 const execPod = createPodExec();
 let activeExecs = 0;
 const namespaceSchema = z.string().min(1).max(63).transform(value => value.toLowerCase())
-  .refine(value => namespaceAllowed(value, config.namespaces, config.namespacePrefixes), 'Namespace outside the MCP scope').default(DEFAULT_NAMESPACE);
+  .refine(value => validNamespace(value) && (config.readAllNamespaces || namespaceAllowed(value, config.namespaces, config.namespacePrefixes)), 'Namespace outside the MCP scope').default(DEFAULT_NAMESPACE);
 const allowedOrigins = config.allowedOrigins;
 
 function jsonText(value) {
@@ -231,15 +231,16 @@ function buildServer() {
 
   {
     server.registerTool('platform_cluster_state', {
-      title: 'Nodes and global Cilium policies',
-      description: 'Read node health or global Cilium policies through the host API. Does not execute in nodes or Cilium pods.',
-      inputSchema: z.object({ resource: z.enum(['nodes', 'ciliumclusterwidenetworkpolicies']), continueToken: z.string().max(16384).optional() }),
+      title: 'Cluster resource state',
+      description: 'Read node health, discover namespaces, or read global Cilium policies. Namespace discovery requires global namespace observation. Does not execute in nodes or Cilium pods.',
+      inputSchema: z.object({ resource: z.enum(['nodes', 'namespaces', 'ciliumclusterwidenetworkpolicies']), continueToken: z.string().max(16384).optional() }),
       annotations: { readOnlyHint: true, destructiveHint: false, idempotentHint: true, openWorldHint: false },
     }, async ({ resource, continueToken }) => {
-      const path = resource === 'nodes' ? '/api/v1/nodes' : '/apis/cilium.io/v2/ciliumclusterwidenetworkpolicies';
+      const path = resource === 'nodes' ? '/api/v1/nodes' : resource === 'namespaces' ? '/api/v1/namespaces' : '/apis/cilium.io/v2/ciliumclusterwidenetworkpolicies';
       const page = await kubeList(path, { pageSize: 50, maxPages: 1, continueToken,
         mapItem: item => resource === 'nodes'
           ? { ...trimObjectMetadata(item), conditions: item.status?.conditions, nodeInfo: item.status?.nodeInfo, capacity: item.status?.capacity }
+          : resource === 'namespaces' ? { name: item.metadata?.name, creationTimestamp: item.metadata?.creationTimestamp, phase: item.status?.phase }
           : { ...trimObjectMetadata(item), spec: item.spec, specs: item.specs, status: item.status },
       });
       return jsonText({ ...page, nextContinueToken: page.continuation });

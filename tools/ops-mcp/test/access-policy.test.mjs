@@ -40,7 +40,7 @@ test('client identity, rotation, revocation and policy errors fail closed withou
 test('tool, namespace, pod label and exact container grants are independent boundaries', () => {
   const actor = client('nova', '/token');
   assert.doesNotThrow(() => authorizeTool(actor, 'get_pod', { namespace: 'kubeclaw' }, 'argocd'));
-  assert.throws(() => authorizeTool(actor, 'platform_cluster_state', {}, 'argocd'), /TOOL_FORBIDDEN/);
+  assert.throws(() => authorizeTool(actor, 'platform_cluster_state', { resource: 'namespaces' }, 'argocd'), /TOOL_FORBIDDEN/);
   assert.throws(() => authorizeTool(actor, 'get_pod', { namespace: 'argocd' }, 'argocd'), /NAMESPACE_FORBIDDEN/);
   assert.throws(() => authorizeTool({ ...actor, tools: ['list_argocd_applications'] }, 'list_argocd_applications', {}, 'argocd'), /NAMESPACE_FORBIDDEN/);
   const args = { namespace: 'kubeclaw', pod: 'buster-1', container: 'runtime', timeoutSeconds: 100, maxOutputBytes: 9000 };
@@ -51,4 +51,26 @@ test('tool, namespace, pod label and exact container grants are independent boun
   assert.throws(() => authorizeExec(actor, args, { ...pod, spec: { containers: [] } }), /TARGET_FORBIDDEN/);
   assert.throws(() => parsePolicy(JSON.stringify({ clients: [{ ...actor, exec: [{ ...grant, podLabels: {} }] }] }), ['kubeclaw']), /grant/);
   assert.throws(() => parsePolicy(JSON.stringify({ clients: [{ ...actor, tools: ['*'] }] }), ['kubeclaw']), /policy/);
+});
+
+test('global namespace observation is explicit, discoverable, and never an implicit exec grant', () => {
+  const ops = { ...client('codex', '/token'), readAllNamespaces: true, tools: ['get_pod', 'platform_cluster_state', 'exec_pod'] };
+  const parsed = parsePolicy(JSON.stringify({ clients: [ops] }), ['kubeclaw'], [], true)[0];
+  for (const namespace of ['production', 'future-namespace', 'kube-system', 'kubeclaw']) {
+    assert.doesNotThrow(() => authorizeTool(parsed, 'get_pod', { namespace }, 'argocd'));
+  }
+  assert.doesNotThrow(() => authorizeTool(parsed, 'platform_cluster_state', { resource: 'namespaces' }, 'argocd'));
+  assert.throws(() => authorizeTool(parsed, 'exec_pod', { namespace: 'production' }, 'argocd'), /NAMESPACE_FORBIDDEN/);
+  const pod = { metadata: { labels: { app: 'buster' } }, spec: { containers: [{ name: 'runtime' }] } };
+  assert.throws(() => authorizeExec(parsed, { namespace: 'production', container: 'runtime' }, pod), /TARGET_FORBIDDEN/);
+  for (const namespace of ['prod/../test', 'prod.example', '*', 'prod%2fother']) {
+    assert.throws(() => authorizeTool(parsed, 'get_pod', { namespace }, 'argocd'), /NAMESPACE_FORBIDDEN/);
+  }
+  assert.throws(() => parsePolicy(JSON.stringify({ clients: [ops] }), ['kubeclaw']), /policy/);
+  assert.throws(() => parsePolicy(JSON.stringify({ clients: [{ ...ops, readAllNamespaces: 'true' }] }), ['kubeclaw'], [], true), /policy/);
+  const scoped = { ...ops, readAllNamespaces: false };
+  assert.doesNotThrow(() => parsePolicy(JSON.stringify({ clients: [scoped] }), ['kubeclaw'], [], true));
+  assert.doesNotThrow(() => authorizeTool(scoped, 'platform_cluster_state', { resource: 'nodes' }, 'argocd'));
+  assert.throws(() => authorizeTool(scoped, 'platform_cluster_state', { resource: 'namespaces' }, 'argocd'), /TOOL_FORBIDDEN/);
+  assert.throws(() => authorizeTool(scoped, 'get_pod', { namespace: 'production' }, 'argocd'), /NAMESPACE_FORBIDDEN/);
 });

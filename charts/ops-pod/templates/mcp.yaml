@@ -6,6 +6,7 @@
 {{- fail "mcp client ids must be unique DNS labels" -}}
 {{- end -}}
 {{- $_ := set $ids .id true -}}
+{{- if and .readAllNamespaces (not $.Values.rbac.readAllNamespaces) -}}{{- fail "MCP all-namespace reads exceed rbac.readAllNamespaces" -}}{{- end -}}
 {{- range .namespaces -}}
 {{- if not (has . $.Values.rbac.namespaces) -}}{{- fail "MCP client namespace is outside rbac.namespaces" -}}{{- end -}}
 {{- end -}}
@@ -17,7 +18,7 @@
 {{- if not (has (lower .namespacePrefix) $.Values.rbac.namespacePrefixes) -}}{{- fail "MCP exec prefix is outside rbac.namespacePrefixes" -}}{{- end -}}
 {{- else if not (has .namespace $.Values.rbac.execNamespaces) -}}{{- fail "MCP exec grant is outside rbac.execNamespaces" -}}{{- end -}}
 {{- end -}}
-{{- $clients = append $clients (dict "id" .id "tokenFile" (printf "/var/run/ops-clients/%s/token" .id) "namespaces" .namespaces "namespacePrefixes" (.namespacePrefixes | default list) "tools" .tools "exec" .exec) -}}
+{{- $clients = append $clients (dict "id" .id "tokenFile" (printf "/var/run/ops-clients/%s/token" .id) "namespaces" .namespaces "readAllNamespaces" (.readAllNamespaces | default false) "namespacePrefixes" (.namespacePrefixes | default list) "tools" .tools "exec" .exec) -}}
 {{- end -}}
 apiVersion: v1
 kind: ConfigMap
@@ -62,6 +63,7 @@ spec:
             - {name: HOST, value: "0.0.0.0"}
             - {name: OPS_DEFAULT_NAMESPACE, value: {{ .Values.defaultNamespace | quote }}}
             - {name: OPS_ALLOWED_NAMESPACES, value: {{ join "," .Values.rbac.namespaces | quote }}}
+            - {name: OPS_READ_ALL_NAMESPACES, value: {{ ternary "1" "0" .Values.rbac.readAllNamespaces | quote }}}
             - {name: OPS_ALLOWED_NAMESPACE_PREFIXES, value: {{ join "," .Values.rbac.namespacePrefixes | quote }}}
             - {name: ARGOCD_NAMESPACE, value: {{ .Values.argoNamespace | quote }}}
             - {name: OPS_MCP_POLICY_FILE, value: /etc/ops-mcp/policy.json}
