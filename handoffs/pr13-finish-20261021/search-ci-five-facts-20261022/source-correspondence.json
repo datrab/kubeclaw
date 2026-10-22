@@ -1,0 +1,266 @@
+{
+  "status": "ROOT_EXACT_ORIGINAL_DATA_AND_REVIEWED_SOURCE_CORRESPONDENCE",
+  "changes": [
+    {
+      "source": "scripts/docs-api-output-discovery.mjs",
+      "oldDigest": "863bda7f7e7602c5c17da840d7dee822d809b40621d4b5917abfc4805692035a",
+      "newDigest": "67370f6fa46789c5eb7266ddceb4824797ea20b8f3338b301e0af8d66501de2b",
+      "removedFacts": [
+        {
+          "kind": "FirstStatement",
+          "sha256": "a43d48793b2695b0c96cb19ec2a32a686df7307c0eef8e528ff9b2e9d776f3c3",
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "symbol": "readerArtifactCiPurpose"
+        },
+        {
+          "kind": "FirstStatement",
+          "sha256": "a12bde1592918da42128bf498dea09165ec82abaeff0b920a3fbcba791618942",
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "symbol": "readerArtifactCiRoleSources"
+        },
+        {
+          "kind": "FunctionDeclaration",
+          "sha256": "40296f405317443f5ddaa981abffa1cdb87ac1f760bc390b951feb83f1296412",
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "symbol": "addReaderArtifactExternalCiSeed"
+        }
+      ],
+      "addedFacts": [
+        {
+          "kind": "FirstStatement",
+          "sha256": "656cee81d2546c51b5fc094f86c509f97e18c9519b686b88867b42b046b02872",
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "symbol": "readerArtifactCiEntrySources"
+        },
+        {
+          "kind": "FirstStatement",
+          "sha256": "c7700d7c6d7ac0f825349583e62e627b023d6b172ff8def62415a83e18861d04",
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "symbol": "readerArtifactCiPurpose"
+        },
+        {
+          "kind": "FirstStatement",
+          "sha256": "ce8d7270a983a2d848d7a22fc8bd12a08de08bc6353f17d50ef17fc698571c4e",
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "symbol": "readerArtifactCiRoleSources"
+        },
+        {
+          "kind": "FunctionDeclaration",
+          "sha256": "97e5528b660671a8185460fc0be03352986ab4eb40dd1009e62cfb97e865659f",
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "symbol": "addReaderArtifactExternalCiSeed"
+        }
+      ]
+    },
+    {
+      "source": "scripts/docs-api-product-scope.mjs",
+      "oldDigest": "e8737c52d817297652fea39cc2edda9bd96545f9f88bc253ab341092c23b975a",
+      "newDigest": "be59b64c1bede4305a5938c1570c22a93f0917dc168914f588dd7fbec21d93f9",
+      "removedFacts": [
+        {
+          "kind": "FirstStatement",
+          "sha256": "a43d48793b2695b0c96cb19ec2a32a686df7307c0eef8e528ff9b2e9d776f3c3",
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "symbol": "readerArtifactCiPurpose"
+        },
+        {
+          "kind": "FirstStatement",
+          "sha256": "a12bde1592918da42128bf498dea09165ec82abaeff0b920a3fbcba791618942",
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "symbol": "readerArtifactCiRoleSources"
+        },
+        {
+          "kind": "FunctionDeclaration",
+          "sha256": "40296f405317443f5ddaa981abffa1cdb87ac1f760bc390b951feb83f1296412",
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "symbol": "addReaderArtifactExternalCiSeed"
+        }
+      ],
+      "addedFacts": [
+        {
+          "kind": "FirstStatement",
+          "sha256": "656cee81d2546c51b5fc094f86c509f97e18c9519b686b88867b42b046b02872",
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "symbol": "readerArtifactCiEntrySources"
+        },
+        {
+          "kind": "FirstStatement",
+          "sha256": "c7700d7c6d7ac0f825349583e62e627b023d6b172ff8def62415a83e18861d04",
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "symbol": "readerArtifactCiPurpose"
+        },
+        {
+          "kind": "FirstStatement",
+          "sha256": "ce8d7270a983a2d848d7a22fc8bd12a08de08bc6353f17d50ef17fc698571c4e",
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "symbol": "readerArtifactCiRoleSources"
+        },
+        {
+          "kind": "FunctionDeclaration",
+          "sha256": "97e5528b660671a8185460fc0be03352986ab4eb40dd1009e62cfb97e865659f",
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "symbol": "addReaderArtifactExternalCiSeed"
+        }
+      ]
+    },
+    {
+      "source": "scripts/docs-api-reference.mjs",
+      "oldDigest": "3ba18240df29fc64fb643f3967b5c8c460b2a6996d5595fd4f31ca5975f97a1d",
+      "newDigest": "66835c7c1f23bf5f498dc58601666058530fe14659f91f90f896b875b7931e42",
+      "removedFacts": [
+        {
+          "kind": "FirstStatement",
+          "sha256": "a43d48793b2695b0c96cb19ec2a32a686df7307c0eef8e528ff9b2e9d776f3c3",
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "symbol": "readerArtifactCiPurpose"
+        },
+        {
+          "kind": "FirstStatement",
+          "sha256": "a12bde1592918da42128bf498dea09165ec82abaeff0b920a3fbcba791618942",
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "symbol": "readerArtifactCiRoleSources"
+        },
+        {
+          "kind": "FunctionDeclaration",
+          "sha256": "40296f405317443f5ddaa981abffa1cdb87ac1f760bc390b951feb83f1296412",
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "symbol": "addReaderArtifactExternalCiSeed"
+        }
+      ],
+      "addedFacts": [
+        {
+          "kind": "FirstStatement",
+          "sha256": "656cee81d2546c51b5fc094f86c509f97e18c9519b686b88867b42b046b02872",
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "symbol": "readerArtifactCiEntrySources"
+        },
+        {
+          "kind": "FirstStatement",
+          "sha256": "c7700d7c6d7ac0f825349583e62e627b023d6b172ff8def62415a83e18861d04",
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "symbol": "readerArtifactCiPurpose"
+        },
+        {
+          "kind": "FirstStatement",
+          "sha256": "ce8d7270a983a2d848d7a22fc8bd12a08de08bc6353f17d50ef17fc698571c4e",
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "symbol": "readerArtifactCiRoleSources"
+        },
+        {
+          "kind": "FunctionDeclaration",
+          "sha256": "97e5528b660671a8185460fc0be03352986ab4eb40dd1009e62cfb97e865659f",
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "symbol": "addReaderArtifactExternalCiSeed"
+        }
+      ]
+    },
+    {
+      "source": "scripts/docs-configuration-inventory.mjs",
+      "oldDigest": "0ed4dbeb70588242b941499537884877358711565b331aecc9fe66d091ab1356",
+      "newDigest": "780322939cebee0f109e194cd303b13b9ce53ff3a9fb0c924c72b09143b622dd",
+      "removedFacts": [
+        {
+          "kind": "FirstStatement",
+          "sha256": "a43d48793b2695b0c96cb19ec2a32a686df7307c0eef8e528ff9b2e9d776f3c3",
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "symbol": "readerArtifactCiPurpose"
+        },
+        {
+          "kind": "FirstStatement",
+          "sha256": "a12bde1592918da42128bf498dea09165ec82abaeff0b920a3fbcba791618942",
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "symbol": "readerArtifactCiRoleSources"
+        },
+        {
+          "kind": "FunctionDeclaration",
+          "sha256": "40296f405317443f5ddaa981abffa1cdb87ac1f760bc390b951feb83f1296412",
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "symbol": "addReaderArtifactExternalCiSeed"
+        }
+      ],
+      "addedFacts": [
+        {
+          "kind": "FirstStatement",
+          "sha256": "656cee81d2546c51b5fc094f86c509f97e18c9519b686b88867b42b046b02872",
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "symbol": "readerArtifactCiEntrySources"
+        },
+        {
+          "kind": "FirstStatement",
+          "sha256": "c7700d7c6d7ac0f825349583e62e627b023d6b172ff8def62415a83e18861d04",
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "symbol": "readerArtifactCiPurpose"
+        },
+        {
+          "kind": "FirstStatement",
+          "sha256": "ce8d7270a983a2d848d7a22fc8bd12a08de08bc6353f17d50ef17fc698571c4e",
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "symbol": "readerArtifactCiRoleSources"
+        },
+        {
+          "kind": "FunctionDeclaration",
+          "sha256": "97e5528b660671a8185460fc0be03352986ab4eb40dd1009e62cfb97e865659f",
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "symbol": "addReaderArtifactExternalCiSeed"
+        }
+      ]
+    },
+    {
+      "source": "scripts/docs-generate.mjs",
+      "oldDigest": "dd77f3cb825a20d7d0b2e9fad64a1c5645f096eeb0b992987a7808e9f389b43f",
+      "newDigest": "4f572b6c9121dbf833690004897b9a224d529e2dd9d44f4b43d3ce50087d79d6",
+      "removedFacts": [
+        {
+          "kind": "FirstStatement",
+          "sha256": "a43d48793b2695b0c96cb19ec2a32a686df7307c0eef8e528ff9b2e9d776f3c3",
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "symbol": "readerArtifactCiPurpose"
+        },
+        {
+          "kind": "FirstStatement",
+          "sha256": "a12bde1592918da42128bf498dea09165ec82abaeff0b920a3fbcba791618942",
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "symbol": "readerArtifactCiRoleSources"
+        },
+        {
+          "kind": "FunctionDeclaration",
+          "sha256": "40296f405317443f5ddaa981abffa1cdb87ac1f760bc390b951feb83f1296412",
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "symbol": "addReaderArtifactExternalCiSeed"
+        }
+      ],
+      "addedFacts": [
+        {
+          "kind": "FirstStatement",
+          "sha256": "656cee81d2546c51b5fc094f86c509f97e18c9519b686b88867b42b046b02872",
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "symbol": "readerArtifactCiEntrySources"
+        },
+        {
+          "kind": "FirstStatement",
+          "sha256": "c7700d7c6d7ac0f825349583e62e627b023d6b172ff8def62415a83e18861d04",
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "symbol": "readerArtifactCiPurpose"
+        },
+        {
+          "kind": "FirstStatement",
+          "sha256": "ce8d7270a983a2d848d7a22fc8bd12a08de08bc6353f17d50ef17fc698571c4e",
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "symbol": "readerArtifactCiRoleSources"
+        },
+        {
+          "kind": "FunctionDeclaration",
+          "sha256": "97e5528b660671a8185460fc0be03352986ab4eb40dd1009e62cfb97e865659f",
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "symbol": "addReaderArtifactExternalCiSeed"
+        }
+      ]
+    }
+  ],
+  "unchangedOrderedJSFacts": 98,
+  "nativeRecipesUnchangedNotExecuted": 4,
+  "selectorsAuthorityPurposeUnchanged": 103,
+  "firstRepeatAndPhysicalContextEqual": true,
+  "processAttempts": 0,
+  "limits": "Only facts digests of five existing recipes; no code or guard changes; not public-route/generator acceptance"
+}

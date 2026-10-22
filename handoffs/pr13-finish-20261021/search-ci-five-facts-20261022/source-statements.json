@@ -1,0 +1,192 @@
+{
+  "old": [
+    {
+      "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+      "kind": "ImportDeclaration",
+      "symbol": "<operation>",
+      "sha256": "3bd42e15e5427f946b98b898212af900ed0a4068cff03a37aa2ce1d3a081f2ec"
+    },
+    {
+      "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+      "kind": "ImportDeclaration",
+      "symbol": "<operation>",
+      "sha256": "99a8a8a7117b1395e3a209cdc8ba5a70424687458932bc4dc8a7b6e59ff53868"
+    },
+    {
+      "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+      "kind": "ImportDeclaration",
+      "symbol": "<operation>",
+      "sha256": "113f0af17fdf683cf360ab9d03b7eff1b572d3475e83119031d47ee4331621aa"
+    },
+    {
+      "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+      "kind": "ImportDeclaration",
+      "symbol": "<operation>",
+      "sha256": "7e25a3ca18b2b53c8848b179d637fb477a677b4401c4318a7e621cbb03c63964"
+    },
+    {
+      "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+      "kind": "FirstStatement",
+      "symbol": "freeze",
+      "sha256": "27b2ce52c91b8aa9dc37498eacaf10982ca07ca741153e882dbe516e1a3c1c94"
+    },
+    {
+      "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+      "kind": "FirstStatement",
+      "symbol": "reviewedDocumentationOwnerPurposes",
+      "sha256": "283009e4473ee801ff2efaa2ad2f9118adcf0ba84befd5da5f884dd87ec1f8b6"
+    },
+    {
+      "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+      "kind": "FirstStatement",
+      "symbol": "sha",
+      "sha256": "aebce3454045cb891a80c362896aa24d53257c8df68a07feb27132c52172320d"
+    },
+    {
+      "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+      "kind": "FunctionDeclaration",
+      "symbol": "assertDocumentationOwnerPurpose",
+      "sha256": "a9ce52880b647a09660c9e3dfbaca76c0a3544139ae63e3a643c6c0c330412a7"
+    },
+    {
+      "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+      "kind": "FunctionDeclaration",
+      "symbol": "assertDocumentationOwnerAncestry",
+      "sha256": "3cc730f0460602237bb0e406b0e74f3a0023a78709da9e81f3d5a38300762fec"
+    },
+    {
+      "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+      "kind": "FunctionDeclaration",
+      "symbol": "documentationOwnerNativeEntryMatches",
+      "sha256": "768c00977d2d0f24d2c584fb07967320c2f2a7138a3662c7ca5277a39e02f807"
+    },
+    {
+      "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+      "kind": "FirstStatement",
+      "symbol": "readerArtifactCiPurpose",
+      "sha256": "a43d48793b2695b0c96cb19ec2a32a686df7307c0eef8e528ff9b2e9d776f3c3"
+    },
+    {
+      "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+      "kind": "FirstStatement",
+      "symbol": "readerArtifactCiProofs",
+      "sha256": "767afcaab51284f9ce981aa865c5411b4e8dbb3bf4bac9f5bc1e924ed55011f2"
+    },
+    {
+      "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+      "kind": "FirstStatement",
+      "symbol": "readerArtifactCiRoleSources",
+      "sha256": "a12bde1592918da42128bf498dea09165ec82abaeff0b920a3fbcba791618942"
+    },
+    {
+      "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+      "kind": "FunctionDeclaration",
+      "symbol": "assertReaderArtifactExternalCiPurpose",
+      "sha256": "adec9db4236d9927d55eaa67557a62434a95d7d3b3462f3e1747db44231e6127"
+    },
+    {
+      "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+      "kind": "FunctionDeclaration",
+      "symbol": "addReaderArtifactExternalCiSeed",
+      "sha256": "40296f405317443f5ddaa981abffa1cdb87ac1f760bc390b951feb83f1296412"
+    }
+  ],
+  "new": [
+    {
+      "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+      "kind": "ImportDeclaration",
+      "symbol": "<operation>",
+      "sha256": "3bd42e15e5427f946b98b898212af900ed0a4068cff03a37aa2ce1d3a081f2ec"
+    },
+    {
+      "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+      "kind": "ImportDeclaration",
+      "symbol": "<operation>",
+      "sha256": "99a8a8a7117b1395e3a209cdc8ba5a70424687458932bc4dc8a7b6e59ff53868"
+    },
+    {
+      "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+      "kind": "ImportDeclaration",
+      "symbol": "<operation>",
+      "sha256": "113f0af17fdf683cf360ab9d03b7eff1b572d3475e83119031d47ee4331621aa"
+    },
+    {
+      "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+      "kind": "ImportDeclaration",
+      "symbol": "<operation>",
+      "sha256": "7e25a3ca18b2b53c8848b179d637fb477a677b4401c4318a7e621cbb03c63964"
+    },
+    {
+      "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+      "kind": "FirstStatement",
+      "symbol": "freeze",
+      "sha256": "27b2ce52c91b8aa9dc37498eacaf10982ca07ca741153e882dbe516e1a3c1c94"
+    },
+    {
+      "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+      "kind": "FirstStatement",
+      "symbol": "reviewedDocumentationOwnerPurposes",
+      "sha256": "283009e4473ee801ff2efaa2ad2f9118adcf0ba84befd5da5f884dd87ec1f8b6"
+    },
+    {
+      "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+      "kind": "FirstStatement",
+      "symbol": "sha",
+      "sha256": "aebce3454045cb891a80c362896aa24d53257c8df68a07feb27132c52172320d"
+    },
+    {
+      "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+      "kind": "FunctionDeclaration",
+      "symbol": "assertDocumentationOwnerPurpose",
+      "sha256": "a9ce52880b647a09660c9e3dfbaca76c0a3544139ae63e3a643c6c0c330412a7"
+    },
+    {
+      "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+      "kind": "FunctionDeclaration",
+      "symbol": "assertDocumentationOwnerAncestry",
+      "sha256": "3cc730f0460602237bb0e406b0e74f3a0023a78709da9e81f3d5a38300762fec"
+    },
+    {
+      "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+      "kind": "FunctionDeclaration",
+      "symbol": "documentationOwnerNativeEntryMatches",
+      "sha256": "768c00977d2d0f24d2c584fb07967320c2f2a7138a3662c7ca5277a39e02f807"
+    },
+    {
+      "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+      "kind": "FirstStatement",
+      "symbol": "readerArtifactCiPurpose",
+      "sha256": "c7700d7c6d7ac0f825349583e62e627b023d6b172ff8def62415a83e18861d04"
+    },
+    {
+      "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+      "kind": "FirstStatement",
+      "symbol": "readerArtifactCiProofs",
+      "sha256": "767afcaab51284f9ce981aa865c5411b4e8dbb3bf4bac9f5bc1e924ed55011f2"
+    },
+    {
+      "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+      "kind": "FirstStatement",
+      "symbol": "readerArtifactCiEntrySources",
+      "sha256": "656cee81d2546c51b5fc094f86c509f97e18c9519b686b88867b42b046b02872"
+    },
+    {
+      "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+      "kind": "FirstStatement",
+      "symbol": "readerArtifactCiRoleSources",
+      "sha256": "ce8d7270a983a2d848d7a22fc8bd12a08de08bc6353f17d50ef17fc698571c4e"
+    },
+    {
+      "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+      "kind": "FunctionDeclaration",
+      "symbol": "assertReaderArtifactExternalCiPurpose",
+      "sha256": "adec9db4236d9927d55eaa67557a62434a95d7d3b3462f3e1747db44231e6127"
+    },
+    {
+      "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+      "kind": "FunctionDeclaration",
+      "symbol": "addReaderArtifactExternalCiSeed",
+      "sha256": "97e5528b660671a8185460fc0be03352986ab4eb40dd1009e62cfb97e865659f"
+    }
+  ]
+}

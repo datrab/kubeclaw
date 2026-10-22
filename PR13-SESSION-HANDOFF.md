@@ -1,3 +1,9 @@
+## Search CI successor facts bindings — 2026-10-22
+
+- Original public b7a0bdd0 run passed graph/caller qualification then failed at docs-api-reference.mjs selected-helper facts after592successful children. First public result not returned; failure retained separately.
+- Reused unchanged original107-recipe DATA receiver, zero allowed target process APIs. Actual first/repeat/context equality,103JS observations and4native recipes preserved/not executed. Exactly5factdigests stale;98ordered JS arrays and all selectors/child authority/purpose inputs unchanged. Each changed multiset removes3/adds4reviewed purpose-helper statements, original AST hashes independently matched; complete reversal proves all other Source bytes unchanged.
+- Updated exactly5factsDigest literals.8/8originalrouting controlsPASS0skip. Independent autoreview clean on exact patch+correspondence data; reviewer filesystem inspection unavailable, so no broader review inferred. Evidence handoffs/pr13-finish-20261021/search-ci-five-facts-20261022. No new gate/requirement or public/API/generator acceptance. Next original full public route on frozen source; preserve real next failure.
+
 ## Restart recovery and exact search CI entry correction — 2026-10-22
 
 - Restart physical check matched all declared Source/tool/context boundaries at clean c89cf0d0; remote SHA verified. No retained child or old target process remained active; existing completed preparation/independent reports reused.

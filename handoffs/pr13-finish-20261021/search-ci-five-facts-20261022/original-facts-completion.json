@@ -1,0 +1,11 @@
+{
+  "status": "DATA_CAPTURE_COMPLETE_UNACCEPTED",
+  "mode": "facts-only",
+  "revision": "b7a0bdd0b3beb9109438c4ca98c3b851a211eafc",
+  "manifestSha256": "6c2d33a3de204e216dc3d03e8c36c9c9642c540fdfec19db3ed80d6c06bd51a0",
+  "nodeCompletionSha256": "bc9157affa4d50cd526cb0faf89fbb6000ba82a378a298f9994cbb2ffd2b8c55",
+  "limits": [
+    "No role/receipt automatically accepted or installed",
+    "All Node child-process APIs denied; no native AST, product/test/cluster execution acceptance"
+  ]
+}

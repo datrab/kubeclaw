@@ -1,0 +1,9 @@
+{
+  "error": {
+    "name": "AssertionError",
+    "message": "DOCUMENTATION_TOOL_OUTPUT_ROLE_UNQUALIFIED: scripts/docs-api-reference.mjs; selected producer/helper/initialization custody changed",
+    "code": "ERR_ASSERTION",
+    "stack": "AssertionError [ERR_ASSERTION]: DOCUMENTATION_TOOL_OUTPUT_ROLE_UNQUALIFIED: scripts/docs-api-reference.mjs; selected producer/helper/initialization custody changed\n    at assertDocumentationExecutableRole (file:///home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/docs-api-documentation-role-custody.mjs:10890:2)\n    at documentationToolSources (file:///home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/docs-api-output-discovery.mjs:809:45)\n    at Module.discoverScriptOutputRoleClassifications (file:///home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/docs-api-output-discovery.mjs:1898:28)\n    at file:///home/node/.openclaw/workspace/tmp/pr13-finish-20261021/public-role-search-root-ready-20261022/capture.mjs:111:24"
+  },
+  "completion": false
+}
