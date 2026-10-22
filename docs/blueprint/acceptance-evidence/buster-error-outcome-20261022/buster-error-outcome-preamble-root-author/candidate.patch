@@ -1,0 +1,29 @@
+--- current-ca11/scripts/generate-buster-error-reference.mjs
++++ candidate/scripts/generate-buster-error-reference.mjs
+@@ -838,7 +838,7 @@
+     "OPENAPI_SCHEMA_DEPTH_EXCEEDED",
+     [
+       "A schema-validation or local-reference traversal reached a recursion depth greater than the fixed value 64.",
+-      "The provider rejects that traversal instead of completing the operation checks; this code alone does not prove that earlier selected operations made no requests.",
++      "Inside the operation loop this error becomes a finding and can produce a failed provider result; catalog or preflight failures can throw instead. Earlier or current requests may already have effects.",
+       "Reduce schema or local-reference recursion while preserving the intended contract. No provider setting raises this traversal bound.",
+       "Reconcile any prior operation effects before retrying with a valid bounded contract."
+     ]
+@@ -1244,9 +1244,14 @@
+   'colon is diagnostic detail and is not part of the code. The table separates the',
+   'cause, effect, corrective action, and retry rule. Keep the complete message,',
+   'preserved cause, attempt identity, and attempt state with the code.', '',
+-  'A failed test assertion is a normal provider result with findings. These codes',
+-  'identify rejected contracts, unavailable authority, interrupted execution,',
+-  'unsafe output, or failed evidence handling. Do not convert them into findings.', '',
++  'A failed test assertion is a normal provider result with findings. A stable',
++  'diagnostic code alone does not determine the final outcome. The HTTP provider',
++  'translates HTTP_REQUEST_FAILED and HTTP_REQUEST_TIMEOUT into failed findings.',
++  'The OpenAPI provider can also catch schema-validation errors inside an',
++  'operation and report findings. Catalog or preflight errors can instead throw.',
++  'Use the owning provider contract and returned result to distinguish these',
++  'paths. Do not downgrade an unhandled execution, contract, authority, or',
++  'evidence failure into an ordinary test assertion or a passing result.', '',
+   'The generator discovers production source files. It inventories every stable',
+   'uppercase diagnostic literal in runtime code. This includes exceptions, HTTP',
+   'errors, negative readiness codes, result fields, summaries, and helper arguments.',

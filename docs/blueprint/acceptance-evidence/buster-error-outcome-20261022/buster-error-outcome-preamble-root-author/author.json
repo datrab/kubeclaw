@@ -1,0 +1,29 @@
+{
+  "role": "Root AUTHOR_ONLY; independent review pending",
+  "baseRevision": "ca11e55d69d816d819549b844801e609793192b7",
+  "source": "scripts/generate-buster-error-reference.mjs",
+  "beforeSha256": "0bea7e164b4acb8541af112fe8af4c36966ca967eca4581cf71d5c732006a4ca",
+  "candidateSha256": "11cf5c42d7b13565534eab04be11b9ed2f16bf8ee5ad6ba025850363f8ddd6d8",
+  "finding": "ERROR-REFERENCE-BLANKET-NO-FINDINGS-CLAIM",
+  "counterexampleSources": [
+    {
+      "path": "skills/buster/plugins/http/src/provider.js",
+      "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186",
+      "range": [
+        145,
+        175
+      ]
+    },
+    {
+      "path": "skills/buster/plugins/openapi/src/provider.js",
+      "sha256": "cabeb560867f9dc802a7e936c0efc1fb6f900f211b5563414b6016c780f48cca",
+      "range": [
+        207,
+        262
+      ]
+    }
+  ],
+  "scope": "Two exact static prose hunks only: generated preamble and one already-reviewed depth diagnosis effect; no other diagnoses/pins/parser/occurrence assertions/imports/guards/receiver changed. Root read complete displayed branches and current original output.",
+  "preserved": "Ca11 original13row source/output/write/write/check/independentPASS stays historical finitePASS; not retroactively global outcome acceptance.",
+  "execution": "No new candidate owner run; generated target untouched; current original graph preparer0 retained, capture postponed until known owner Source correction complete."
+}

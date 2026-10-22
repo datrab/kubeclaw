@@ -1,0 +1,129 @@
+{
+  "status": "BOUNDED_SOURCE_AND_ORIGINAL_GENERATOR_RESULT_PASS_NO_WHOLEGATE_ACCEPTANCE",
+  "files": [
+    {
+      "path": "buster-error-outcome-original-owner-run/context-after.json",
+      "bytes": 99844,
+      "sha256": "7cade866a525ffeec951c49f94f5fb87e0ebcb97a3aa5592e7e8c041bf79d5e0"
+    },
+    {
+      "path": "buster-error-outcome-original-owner-run/context-before.json",
+      "bytes": 99844,
+      "sha256": "7cade866a525ffeec951c49f94f5fb87e0ebcb97a3aa5592e7e8c041bf79d5e0"
+    },
+    {
+      "path": "buster-error-outcome-original-owner-run/process-00/launch.json",
+      "bytes": 742,
+      "sha256": "657e80d240dced122d4b0ea5f8add55b52d59c7380fbd8feb9d0ff667445c829"
+    },
+    {
+      "path": "buster-error-outcome-original-owner-run/process-00/stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "buster-error-outcome-original-owner-run/process-00/stdout.bin",
+      "bytes": 93,
+      "sha256": "7ee164b8f552ee02452710e2693d328f25a31437cfbc27c9a2190a569cc427e5"
+    },
+    {
+      "path": "buster-error-outcome-original-owner-run/process-00/terminal.json",
+      "bytes": 422,
+      "sha256": "2e954fca5a095e94549870783430b61d13fca2b22e52302130c31d599327db1a"
+    },
+    {
+      "path": "buster-error-outcome-original-owner-run/process-01/launch.json",
+      "bytes": 742,
+      "sha256": "e9efa18da3d4a7e5a9db4646a7d9035f77d17d93c9b4d0fd536f7a949eaa2630"
+    },
+    {
+      "path": "buster-error-outcome-original-owner-run/process-01/stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "buster-error-outcome-original-owner-run/process-01/stdout.bin",
+      "bytes": 93,
+      "sha256": "7ee164b8f552ee02452710e2693d328f25a31437cfbc27c9a2190a569cc427e5"
+    },
+    {
+      "path": "buster-error-outcome-original-owner-run/process-01/terminal.json",
+      "bytes": 423,
+      "sha256": "3a0302534819ea1651eb9c2fdfc4745f19df211b5a1f285d8fde609343836293"
+    },
+    {
+      "path": "buster-error-outcome-original-owner-run/process-02/launch.json",
+      "bytes": 742,
+      "sha256": "63680998b56ef89d16bbec083531a517010a27e4fa4ad4568b8494388b3a25fd"
+    },
+    {
+      "path": "buster-error-outcome-original-owner-run/process-02/stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "buster-error-outcome-original-owner-run/process-02/stdout.bin",
+      "bytes": 83,
+      "sha256": "b18fe4893228071571d6695b729574850d7cae499d5e77f079a6aec351555a59"
+    },
+    {
+      "path": "buster-error-outcome-original-owner-run/process-02/terminal.json",
+      "bytes": 423,
+      "sha256": "f070a8244eb6feabf952d770f87c418350efc286173fa97110c27f6807ae4285"
+    },
+    {
+      "path": "buster-error-outcome-original-owner-run/result.json",
+      "bytes": 645,
+      "sha256": "501e5e1fa9a70f8a2382333c84973f28f88e8c3c22d501fc425e832f675031d9"
+    },
+    {
+      "path": "buster-error-outcome-original-owner-run/root-admission.json",
+      "bytes": 1297,
+      "sha256": "0f1b0eee278e3cdb50076fe8b8fb92c7f5816b082dd2984420c691f99bb72431"
+    },
+    {
+      "path": "buster-error-outcome-original-result-independent/packet-hashes.json",
+      "bytes": 171,
+      "sha256": "d1095a1b02dee99ea29080c44e9062b1bc0a3113dd4f66dd8a2526857935d056"
+    },
+    {
+      "path": "buster-error-outcome-original-result-independent/review.json",
+      "bytes": 3431,
+      "sha256": "099b25c0f694adab82895ec49a376761eee42371f2a61704d606c5d86876a7e9"
+    },
+    {
+      "path": "buster-error-outcome-original-result-independent/review.md",
+      "bytes": 1576,
+      "sha256": "b59cb7601bb00fef8caca4da957c5f73c38fdc64fd1506597b0d8e800813e1ae"
+    },
+    {
+      "path": "buster-error-outcome-preamble-independent/packet-hashes.json",
+      "bytes": 171,
+      "sha256": "0aaaea6f14960e58f02b04af282f79073d5ad951aa2de86c889997d7d8ee9717"
+    },
+    {
+      "path": "buster-error-outcome-preamble-independent/review.json",
+      "bytes": 3442,
+      "sha256": "f8e53e8c89e27cdbab74cdb99d4b6083dc3277a4f3ba63c8bc501a2bb46654dc"
+    },
+    {
+      "path": "buster-error-outcome-preamble-independent/review.md",
+      "bytes": 3217,
+      "sha256": "63561048ed43b0f6b1bc95c7435413458fe5ebf0d7ef9cdaf286b71874579ea8"
+    },
+    {
+      "path": "buster-error-outcome-preamble-root-author/author.json",
+      "bytes": 1475,
+      "sha256": "c7c28e64afc1125abcee9e3d7662c9477b6f44a106fe7402a583e4145c4a96d7"
+    },
+    {
+      "path": "buster-error-outcome-preamble-root-author/candidate.patch",
+      "bytes": 2355,
+      "sha256": "c0f4cb03d7fddb18bc5023b42ec9b140a87a021139b0b8b5965b8b62e2742d30"
+    }
+  ],
+  "beforeTarget": "ExactGitca11e55d69d816d819549b844801e609793192b7:docs/site/reference/buster-error-codes.md; actualsavedbefore retainedscratch, firstlaunch binds SHA",
+  "priorEvidence": "Previous13row result+ca11originalpreparer0/manifestPASS remain atoriginalSource, notpromotedcurrent capture",
+  "currentOwnerSha256": "11cf5c42d7b13565534eab04be11b9ed2f16bf8ee5ad6ba025850363f8ddd6d8",
+  "currentGeneratedSha256": "17f84f2f0d505d56f8710ec8e40763a2bf5825aa7c22d6de3ab2e786bf63efa8"
+}

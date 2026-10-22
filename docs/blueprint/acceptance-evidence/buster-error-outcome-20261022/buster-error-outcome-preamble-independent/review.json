@@ -1,0 +1,52 @@
+{
+  "status": "PASS_TWO_STATIC_PROSE_RESPONSIBILITIES_ONLY",
+  "reviewer": "/root/operator_acceptance",
+  "author": "/root",
+  "Source": "PASS",
+  "semanticReader": "PASS",
+  "Quality": "PASS",
+  "candidateSha256": "11cf5c42d7b13565534eab04be11b9ed2f16bf8ee5ad6ba025850363f8ddd6d8",
+  "baselineSha256": "0bea7e164b4acb8541af112fe8af4c36966ca967eca4581cf71d5c732006a4ca",
+  "openIssues": [],
+  "exactDelta": {
+    "hunks": 2,
+    "depthEffectString": true,
+    "preambleOnly": true,
+    "allOtherOwnerBytesUnchanged": true,
+    "allLinksUnchanged": true
+  },
+  "sourceBindings": [
+    {
+      "path": "skills/buster/plugins/http/src/provider.js",
+      "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186"
+    },
+    {
+      "path": "skills/buster/plugins/openapi/src/provider.js",
+      "sha256": "cabeb560867f9dc802a7e936c0efc1fb6f900f211b5563414b6016c780f48cca"
+    },
+    {
+      "path": "skills/buster/plugins/openapi/src/schema-support.js",
+      "sha256": "05e27ae54dfd00cb9f1344eb171699a6e4fa87801f5c5f8ff97be18910377e4b"
+    }
+  ],
+  "sourceReviewBasis": [
+    "Fresh full changed strings and surrounding output constructor, original HTTP145\u2013175 plus result/config call context, OpenAPI resolve/catalog before-loop plus invocation/body/response/per-operationcatch/output/depth paths and complete schema-support traversal read.",
+    "Unchanged complete1206-line owner and13mechanism semantic scopes reused from workflow buster-fixed-parser-error-owner-independent/review.md with every recorded current Source hash checked exact; changed outcome semantics independently assessed here, not borrowed.",
+    "HTTP only translates exact HTTP_REQUEST_FAILED/TIMEOUT to failed connection/timeout findings; invalidresponse/config/other caught errors rethrow. OpenAPI catalog reference-depth errors beforeloop throw; schema failures inside per-operation try are appended to failure records, unless cancellation/invokeexecutionfailure revokes normal path. Records become high openapi.runtime findings and failed result. Response schema can fail after current request effects; earlier selected effects likewise remain.",
+    "New preamble says code alone cannot determine outcome, names actual handled examples and forbids downgrading unhandled execution/contract/authority/evidence errors or claiming pass. New depth effect distinguishes operation findings from catalog/preflight throw and keeps reconciliation."
+  ],
+  "checks": [
+    {
+      "command": "Python inert full-owner byte diff / old-link continuity / current Source-binding comparison",
+      "exitCode": 0,
+      "observation": "Exactly2static prose replacements:1line depth effect plus3\u21928preamble lines; all other bytes and all links unchanged; candidate11cf/baseline0bea exact, all prior workflow Source bindings current exact."
+    }
+  ],
+  "limits": [
+    "No owner/generator/provider/test/target/native/import/graph/consumer execution or Main changes.",
+    "New canonical original write/write/check and fresh generated output/Reader verification still required after reviewed installation.",
+    "Historical ca11 original13row results and preparer/manifestPASS remain unchanged bounded proofs, not final Source/capture acceptance.",
+    "No whole guide/REF005/gate/global/native/role/runtime/release claim.",
+    "Exploratory guessed .mjs test glob failed (actual tests are not that path); no nonexistent test or execution credited."
+  ]
+}

@@ -1,0 +1,82 @@
+{
+  "status": "PASS_ORIGINAL_TWO_HUNK_RESULT_ONLY",
+  "Source": "PASS",
+  "semanticReader": "PASS",
+  "Quality": "PASS",
+  "ownerSha256": "11cf5c42d7b13565534eab04be11b9ed2f16bf8ee5ad6ba025850363f8ddd6d8",
+  "outputSha256": "17f84f2f0d505d56f8710ec8e40763a2bf5825aa7c22d6de3ab2e786bf63efa8",
+  "context433ExactBeforeAfterAndCurrent": true,
+  "production66WholePinnedCurrentExact": true,
+  "exactTwoOutputHunks": true,
+  "allOtherBytesAndSourceLinksUnchanged": true,
+  "openIssues": [],
+  "sourceReviewBasis": "Reuses exact buster-error-outcome-preamble-independent/review.md for changed2responsibilities and workflow full unchanged owner/13-mechanism proof. This result review independently checks actual outputs/streams/context, not fresh target execution.",
+  "checks": [
+    {
+      "argv": [
+        "/usr/local/bin/node",
+        "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/generate-buster-error-reference.mjs",
+        "--write"
+      ],
+      "exitCode": 0,
+      "stdout": "wrote docs/site/reference/buster-error-codes.md (1027 stable codes from 66 production files)",
+      "streams": {
+        "stdout.bin": {
+          "bytes": 93,
+          "sha256": "7ee164b8f552ee02452710e2693d328f25a31437cfbc27c9a2190a569cc427e5"
+        },
+        "stderr.bin": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "targetAfterSha256": "17f84f2f0d505d56f8710ec8e40763a2bf5825aa7c22d6de3ab2e786bf63efa8"
+    },
+    {
+      "argv": [
+        "/usr/local/bin/node",
+        "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/generate-buster-error-reference.mjs",
+        "--write"
+      ],
+      "exitCode": 0,
+      "stdout": "wrote docs/site/reference/buster-error-codes.md (1027 stable codes from 66 production files)",
+      "streams": {
+        "stdout.bin": {
+          "bytes": 93,
+          "sha256": "7ee164b8f552ee02452710e2693d328f25a31437cfbc27c9a2190a569cc427e5"
+        },
+        "stderr.bin": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "targetAfterSha256": "17f84f2f0d505d56f8710ec8e40763a2bf5825aa7c22d6de3ab2e786bf63efa8"
+    },
+    {
+      "argv": [
+        "/usr/local/bin/node",
+        "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/generate-buster-error-reference.mjs",
+        "--check"
+      ],
+      "exitCode": 0,
+      "stdout": "Buster error reference verified: 18 groups, 1027 stable codes, 66 production files",
+      "streams": {
+        "stdout.bin": {
+          "bytes": 83,
+          "sha256": "b18fe4893228071571d6695b729574850d7cae499d5e77f079a6aec351555a59"
+        },
+        "stderr.bin": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "targetAfterSha256": "17f84f2f0d505d56f8710ec8e40763a2bf5825aa7c22d6de3ab2e786bf63efa8"
+    }
+  ],
+  "limits": [
+    "No execution/Main writes by this reviewer.",
+    "Original Root byteEqualWrites observation plus verified matching first/second/current SHA receipts; no separate retained first-output copy claimed.",
+    "New rendered Reader pending; no whole guide/REF005/gate/global/runtime/role/release acceptance.",
+    "Ca11 original13row and originalpreparer/manifestPASS preserved historical, not edited or current capture grant."
+  ]
+}
