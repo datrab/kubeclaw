@@ -1,0 +1,78 @@
+✔ actual physical caller proof seeds one selected verifier, never native entry facts (16.752841ms)
+✔ cold complete physical caller input drift rejects: scripts/docs-reader/check-artifact.mjs (3.595983ms)
+✔ retained-proof complete physical caller input drift rejects: scripts/docs-reader/check-artifact.mjs (4.544667ms)
+✔ cold complete physical caller input drift rejects: scripts/docs-reader/page-records.mjs (2.613067ms)
+✔ retained-proof complete physical caller input drift rejects: scripts/docs-reader/page-records.mjs (5.445821ms)
+✔ cold complete physical caller input drift rejects: scripts/docs-publication.mjs (2.699519ms)
+✔ retained-proof complete physical caller input drift rejects: scripts/docs-publication.mjs (4.125736ms)
+✔ cold complete physical caller input drift rejects: scripts/docs-reader/renderer.mjs (2.670469ms)
+✔ retained-proof complete physical caller input drift rejects: scripts/docs-reader/renderer.mjs (4.948438ms)
+✔ cold complete physical caller input drift rejects: scripts/docs-reader/redirects.mjs (2.943806ms)
+✔ retained-proof complete physical caller input drift rejects: scripts/docs-reader/redirects.mjs (4.873996ms)
+✔ cold complete physical caller input drift rejects: .github/workflows/docs-checks.yaml (2.642629ms)
+✔ retained-proof complete physical caller input drift rejects: .github/workflows/docs-checks.yaml (4.421074ms)
+✔ cold complete physical caller input drift rejects: scripts/tests/docs-reader-page-records.test.mjs (2.603017ms)
+✔ retained-proof complete physical caller input drift rejects: scripts/tests/docs-reader-page-records.test.mjs (4.796943ms)
+✔ cold complete physical caller input drift rejects: scripts/tests/docs-reader.test.mjs (2.939825ms)
+✔ retained-proof complete physical caller input drift rejects: scripts/tests/docs-reader.test.mjs (4.662ms)
+✔ cold complete physical caller input drift rejects: scripts/tests/docs-reader-redirects.test.mjs (5.488741ms)
+✔ retained-proof complete physical caller input drift rejects: scripts/tests/docs-reader-redirects.test.mjs (4.65885ms)
+✔ cold complete physical caller input drift rejects: docs/site/reference/documentation-site.md (2.769201ms)
+✔ retained-proof complete physical caller input drift rejects: docs/site/reference/documentation-site.md (5.198664ms)
+✔ cold complete physical caller input drift rejects: package.json (2.756601ms)
+✔ retained-proof complete physical caller input drift rejects: package.json (4.747533ms)
+✔ cold complete physical caller input drift rejects: scripts/lib/docs-publication-assets.mjs (2.740161ms)
+✔ retained-proof complete physical caller input drift rejects: scripts/lib/docs-publication-assets.mjs (7.947704ms)
+✔ cold complete physical caller input drift rejects: scripts/lib/docs-route-continuity.mjs (3.391727ms)
+✔ retained-proof complete physical caller input drift rejects: scripts/lib/docs-route-continuity.mjs (4.844795ms)
+✔ cold complete physical caller input drift rejects: scripts/docs-reader/metadata.mjs (2.807522ms)
+✔ retained-proof complete physical caller input drift rejects: scripts/docs-reader/metadata.mjs (4.839935ms)
+✔ forged, copied and unrelated proof objects cannot grant reachability (3.979003ms)
+✔ source plus arbitrary mutable registry SHA renewal cannot grant the route (3.700856ms)
+✔ new selected importer cannot borrow external CI authority: scripts/docs-unreviewed-consumer.mjs (4.290501ms)
+✔ new selected importer cannot borrow external CI authority: scripts/runtime-consumer.mjs (4.173197ms)
+✔ new public invocation cannot borrow route: non-doc-package (4.738282ms)
+✔ new public invocation cannot borrow route: public-bin-alias (4.409813ms)
+✔ retained proof cannot hide missing physical CI caller (3.48228ms)
+✔ retained proof cannot hide symlink physical CI caller (4.24819ms)
+✔ CI declaration cannot hide a missing verifier; unrelated roots receive no seed (2.30171ms)
+✔ normal discovery integration validates before graph-cache lookup and preserves ordinary graph guards (0.809841ms)
+✔ direct existing role-purpose entry revalidates external caller inputs before role-cache return (5.877991ms)
+✔ cold copied CI alone is not verifier/project authority (2.094114ms)
+✖ retained copied CI alone is not verifier/project authority (3.414978ms)
+✔ missing verifier in finite artifact-project context rejects: package-changed (2.129584ms)
+✔ missing verifier in finite artifact-project context rejects: package-removed (2.422073ms)
+✔ missing verifier in finite artifact-project context rejects: ci-changed (2.020042ms)
+✔ missing verifier in finite artifact-project context rejects: ci-removed (1.93431ms)
+✔ missing verifier in finite artifact-project context rejects: package-and-ci-changed (2.098384ms)
+✔ missing verifier in finite artifact-project context rejects: one-context-file-removed (2.023832ms)
+✔ dangling selected verifier entry cannot become unrelated-root absence (2.042512ms)
+✔ present selected verifier cannot borrow partial caller or changed package context (2.083344ms)
+ℹ tests 50
+ℹ suites 0
+ℹ pass 49
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 273.206878
+
+✖ failing tests:
+
+test at scripts/tests/docs-reader-artifact-ci-purpose.test.mjs:77:32
+✖ retained copied CI alone is not verifier/project authority (3.414978ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/tmp/pr13-finish-20261021/reader-artifact-ci-purpose-author-v2/snapshot/scripts/tests/docs-reader-artifact-ci-purpose.test.mjs:83:17)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /PURPOSE_DRIFT|ENOENT/,
+    operator: 'throws',
+    diff: 'simple'
+  }

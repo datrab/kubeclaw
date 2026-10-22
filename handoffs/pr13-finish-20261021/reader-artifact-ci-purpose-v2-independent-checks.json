@@ -1,0 +1,10 @@
+{
+  "packetHashesValid": true,
+  "twoCandidateHashesAndSnapshotCopiesValid": true,
+  "physicalMainStillBaseline": true,
+  "literal14ProfileCiManualAndEarlierPurposesUnchanged": true,
+  "all14SnapshotPhysicalBytesMatchRetainedInputs": true,
+  "testExecutionByReviewer": false,
+  "mainTargetImportsByReviewer": false,
+  "findings": []
+}

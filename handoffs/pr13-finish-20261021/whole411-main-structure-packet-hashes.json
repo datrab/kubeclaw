@@ -1,0 +1,10 @@
+{
+  "report.md": "0ef909633303bd30e2ba2be7455d98bb089a5bfcc5f3f59668a0b0eea2820a9f",
+  "summary.json": "b6f4b04fc8f1cfb7094f16a4e34d8801f3f4ae6c0fdc51484454ec586556ff0f",
+  "ledger.json": "cc50f2dd3d88eaaaa2e764091a5f07230b1f5c9ac95fd1097bc75fd6d2e6c389",
+  "contextual-equivalents.json": "555707fc9e73671945e8863534b79a254df47001f76b0c230440ad123ddb9894",
+  "prior-snapshot-delta.json": "317b0ee0d2fa50363d15386698ed227abd6db4c9f5641aa1586e985a5991b996",
+  "prepare-current.mjs": "f871a586328286d466536abdbc03c172c194baf7d6204b6b4e79ffc85fb35213",
+  "finalize-current.py": "ed95f0233e078cab6cb17f1c8eadc3d087d0f18f31e7a52b625a86143706cd7a",
+  "initial-ledger.json": "11b343b8436665db02380f44fd171f13fb22247c9565920dc6e89e6c97724963"
+}

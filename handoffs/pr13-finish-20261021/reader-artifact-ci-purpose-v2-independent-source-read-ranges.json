@@ -1,0 +1,80 @@
+[
+  {
+    "path": "scripts/docs-documentation-owner-purpose-custody.mjs",
+    "location": "candidate",
+    "ranges": [
+      [
+        375,
+        503
+      ]
+    ],
+    "sha256": "2fe905e3e36f7760c159257c23b2404b512e4aa42041744893dd42c6eb8cde87"
+  },
+  {
+    "path": "scripts/tests/docs-reader-artifact-ci-purpose.test.mjs",
+    "location": "candidate",
+    "ranges": [
+      [
+        1,
+        101
+      ]
+    ],
+    "sha256": "9330a21ff8bb4ae313a13b77fd9453af7d3b7dc9c05ade3e3cef146375278ac6"
+  },
+  {
+    "path": "scripts/docs-documentation-owner-purpose-custody.mjs",
+    "location": "main baseline",
+    "ranges": [
+      [
+        1,
+        10
+      ],
+      [
+        345,
+        378
+      ]
+    ],
+    "sha256": "1bac65a386940d2049f170ceea25e199603159831460a4fa56ca3270ba49a8a4"
+  },
+  {
+    "path": "scripts/docs-api-output-discovery.mjs",
+    "location": "main baseline",
+    "ranges": [
+      [
+        330,
+        425
+      ],
+      [
+        665,
+        815
+      ],
+      [
+        1495,
+        1535
+      ]
+    ],
+    "sha256": "acc5c54bc81293570e67346e6ea5b2062dd172556972517fd65909d3a70f0e9c"
+  },
+  {
+    "path": "scripts/docs-api-documentation-role-custody.mjs",
+    "location": "main baseline",
+    "ranges": [
+      [
+        10200,
+        10245
+      ]
+    ],
+    "sha256": "f1b4ed0a0c449d1ddb50605efac68c504e4945b7055ad621053bd0593498cfc6"
+  },
+  {
+    "path": "scripts/tests/docs-reader-purpose-routing.test.mjs",
+    "location": "main baseline",
+    "ranges": [
+      [
+        1,
+        91
+      ]
+    ],
+    "sha256": "44d32e470116bace61bb893af793762168fd5ab8c0883b945ec3664dfb9b2adc"
+  }
+]

@@ -1,3 +1,10 @@
+## Frozen Source for actual facts successor — 2026-10-22
+
+- Exact external-CI activation regression correction independently reviewed and installed. Copied CI alone supplies no artifact-verifier seed; actual verifier/context only triggers the unchanged full14physical-input proof. Retained handles reject disappearance. Actual installed84/84owningcontrols and originalServe cold/warm1/1PASS; broader originalrouting19/21NOTPASS remains disclosed pending originalcurrentfacts/source-binding work.
+- Exactly five publisher/capability purpose-input SHA cells renewed after full producer/consumer review and actual original generation. Separate independent exact-byte reversal proves all other role/selectors/facts/native/qualification bytes unchanged; no currentDATA installed or graph inferred.
+- All411Sourceblocks now physically present in177canonicalpages; separate inert ledger maps2466/2466semantic slots, preserving11context-equivalent slots in7exactnamedboxes. This structural count is NOT whole semantic/Reader/A91205 acceptance. Full3.3MBledger remains in external scratch; committed compact report/hash/contexts preserve its identity.
+- Next: independently seal final cleanSource/facts-only initializer/installed-package/resolution context, acquire actual original cold/repeat facts with every terminal/partial failure retained; independently adjudicate before role/closure/graph renewal. Current capture proposal is not self-approved. New Reader and affected-scope preservation remain outstanding.45/89gates,223/261requirements unchanged; runtime/release stop unchanged.
+
 ## Integrated final Source-callout content — 2026-10-22
 
 - Developer/Prism/dependency batch:25 new fieldsets;29 existing dispositions retained unchanged. Final reference/trust/architecture batch:17 new fieldsets;13 existing dispositions retained unchanged. Whole411-box structural ledger is separate from semantic acceptance; no new gate/count here.

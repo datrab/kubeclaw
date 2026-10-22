@@ -1,0 +1,20 @@
+{
+  "positivePages": 177,
+  "actualSourceBlocks": 411,
+  "semanticFieldSlotsMapped": 2466,
+  "unmapped": [],
+  "blocksByInputProvider": {
+    "main": 411
+  },
+  "contextSpecificEquivalentSlots": 11,
+  "overlayChecks": [],
+  "allSelectedPagesPhysicalAndFinalBytesRechecked": true,
+  "allFieldStartsBelongToActualInlineTokenInOwningBlock": true,
+  "priorContextualMappingsExact": true,
+  "contextualMappingBlocks": 7,
+  "priorSnapshotBoxIDsExact": true,
+  "priorSnapshotChangedBoxes": 3,
+  "allInputProvider": "actual physical main; no overlays",
+  "priorSnapshotRetainedUnchanged": true,
+  "scope": "Structure and exact contextual field-equivalence only;not semantic whole-corpus/A91205/Reader/gate acceptance"
+}

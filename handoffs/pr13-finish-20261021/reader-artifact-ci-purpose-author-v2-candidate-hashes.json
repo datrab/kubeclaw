@@ -1,0 +1,14 @@
+[
+  {
+    "path": "scripts/docs-documentation-owner-purpose-custody.mjs",
+    "baselineRevision": "935cfe511fc180dce6c62ddd44869e915e38ba57",
+    "baselineSha256": "1bac65a386940d2049f170ceea25e199603159831460a4fa56ca3270ba49a8a4",
+    "candidateSha256": "2fe905e3e36f7760c159257c23b2404b512e4aa42041744893dd42c6eb8cde87"
+  },
+  {
+    "path": "scripts/tests/docs-reader-artifact-ci-purpose.test.mjs",
+    "baselineRevision": "935cfe511fc180dce6c62ddd44869e915e38ba57",
+    "baselineSha256": "38e8943c7a8feddb442532e63a731276c24bdb1fd7a7f5028dd8521e939735ad",
+    "candidateSha256": "9330a21ff8bb4ae313a13b77fd9453af7d3b7dc9c05ade3e3cef146375278ac6"
+  }
+]

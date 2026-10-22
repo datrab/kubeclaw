@@ -1,0 +1,97 @@
+{
+  "reviewer": "/root/operator_acceptance",
+  "scope": "Exactly five root-authored purpose/authority input digest renewals only; no independent reacceptance of my CI applicability fix or authored template.",
+  "verdict": {
+    "source": "PASS_BOUNDED_RENEWAL",
+    "semanticReader": "PASS_PRESERVATION_ONLY_NO_NEW_RENDER",
+    "quality": "PASS"
+  },
+  "findings": [],
+  "files": [
+    {
+      "path": "scripts/docs-documentation-owner-purpose-custody.mjs",
+      "beforeSha256": "2fe905e3e36f7760c159257c23b2404b512e4aa42041744893dd42c6eb8cde87",
+      "afterSha256": "2e86ef3fdc6090dec79d8ac5137c852a42c593861abcaadf603be1e521aa60b1",
+      "mainMatchesAfter": true,
+      "allOtherBytesPreserved": true
+    },
+    {
+      "path": "scripts/docs-api-documentation-role-custody.mjs",
+      "beforeSha256": "f1b4ed0a0c449d1ddb50605efac68c504e4945b7055ad621053bd0593498cfc6",
+      "afterSha256": "3d43e2a535ba2ad08d26c473876848734f1d2f17ff798b3cf96ebc2846ac3a66",
+      "mainMatchesAfter": true,
+      "allOtherBytesPreserved": true
+    }
+  ],
+  "exactCells": [
+    {
+      "sourceStructure": "export const reviewedDocumentationOwnerPurposes=freeze(",
+      "owner": "scripts/check-capability-registrations-drift-controls.mjs",
+      "field": "purposeInputs",
+      "path": "docs/site/reference/capabilities.md",
+      "oldSha256": "ce5995d8150fe4c12fa1f8ea671bf7fc65e0a9f64ef70d74043c0821a791d627",
+      "newSha256": "1785cb37214915c9a52658cb68426fcb7d4ae1acd576052b5b7a398f50a9dfd4"
+    },
+    {
+      "sourceStructure": "const readerArtifactCiPurpose=freeze(",
+      "owner": null,
+      "field": "inputs",
+      "path": "scripts/docs-publication.mjs",
+      "oldSha256": "29d0305b4b4ad0de7fcea5810372e700b4b2a4d810e8cce22fbdd2bfd964cda8",
+      "newSha256": "fdae9667aa99505d4fcc90681f081fb45717ab9f9d4333a30544abdea33525a4"
+    },
+    {
+      "sourceStructure": "export const documentationExecutableRoleRecipes = ",
+      "owner": "scripts/check-capability-drift-mutations.mjs",
+      "field": "purposeInputs",
+      "path": "scripts/docs-publication.mjs",
+      "oldSha256": "29d0305b4b4ad0de7fcea5810372e700b4b2a4d810e8cce22fbdd2bfd964cda8",
+      "newSha256": "fdae9667aa99505d4fcc90681f081fb45717ab9f9d4333a30544abdea33525a4"
+    },
+    {
+      "sourceStructure": "export const documentationExecutableRoleRecipes = ",
+      "owner": "scripts/check-capability-swarm-boundary.mjs",
+      "field": "purposeInputs",
+      "path": "scripts/docs-publication.mjs",
+      "oldSha256": "29d0305b4b4ad0de7fcea5810372e700b4b2a4d810e8cce22fbdd2bfd964cda8",
+      "newSha256": "fdae9667aa99505d4fcc90681f081fb45717ab9f9d4333a30544abdea33525a4"
+    },
+    {
+      "sourceStructure": "export const documentationExecutableRoleRecipes = ",
+      "owner": "scripts/check-capability-swarm-boundary.mjs",
+      "field": "authorityInputs",
+      "path": "scripts/docs-publication.mjs",
+      "oldSha256": "29d0305b4b4ad0de7fcea5810372e700b4b2a4d810e8cce22fbdd2bfd964cda8",
+      "newSha256": "fdae9667aa99505d4fcc90681f081fb45717ab9f9d4333a30544abdea33525a4"
+    }
+  ],
+  "checks": {
+    "independentInertParsing": {
+      "exitCode": 0,
+      "observation": "Parsed each named Source-owned JSON literal without module evaluation; uniquely selected all five path/canonical/sha cells; restored old values to byte-identical entire before files. Main bytes equal after files; exact patch reconstructed; all five controlling physical target SHA values match."
+    },
+    "namedPriorIndependentReview": "final-sourceboxes-independent/review.json: all five exact sourcePurposeRebindingAssessment entries matched, Source/semanticReader/Quality PASS reused for exact publisher/capability delta, not self-accepted.",
+    "originalGeneration": "final-sourceboxes-original-generation-comparison.json: parent original node scripts/docs-publication.mjs generate exit0; only capabilities output changed, reviewed final hashes exact; report reused, not rerun.",
+    "installedControls": {
+      "source": "installed-84-owning-controls.txt",
+      "reportedPass": 84,
+      "reportedFail": 0,
+      "reportedSkip": 0,
+      "sha256": "ed0fd120e594dca526d091a62bd227811393cf6710c2284df32fda7d74124c0a",
+      "executionAttribution": "Parent execution, raw terminal summary inspected; not rerun by this reviewer."
+    },
+    "originalPreview": {
+      "source": "installed-original-preview-cold-warm.txt",
+      "reportedPass": 1,
+      "reportedFail": 0,
+      "sha256": "d4dfd84ceb940a3f6f685d78a94f5b1032915fea072910735f829b7d49c19fef",
+      "executionAttribution": "Parent execution, original cold/warm fixture summary inspected; not rerun by this reviewer."
+    }
+  },
+  "preserved": "Restoring only five SHA string values reconstructs entire before bytes: all role kinds, selectors, facts, native entries, qualifications/DATA, paths/canonical names, remaining digests and executable guard code unchanged.",
+  "limits": [
+    "No Source edits, helper execution, producer/current graph/facts/DATA capture, new Reader build, actual-root classification or global gate/release grant.",
+    "CI applicability correction not accepted here; parent/workflow separate reviews retained.",
+    "No arbitrary registry digest promotion; renewals exactly match independent bounded Source-purpose assessment and actual generated output digests."
+  ]
+}

@@ -1,0 +1,280 @@
+[
+  {
+    "box": "docs/site/extend/README.md#source-1",
+    "field": "Test",
+    "basis": "Named negative assertion source plus separately dated local-result scope.",
+    "locations": [
+      {
+        "label": "Negative test",
+        "startLine": 223,
+        "endLine": 224,
+        "text": "[The platform check rejects project-controlled installation roots](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/tests/verification/contracts/check-plugin-system-v2-platform-config.mjs#L44-L63).",
+        "actualInlineMaps": [
+          [
+            222,
+            223
+          ]
+        ]
+      },
+      {
+        "label": "Local result",
+        "startLine": 227,
+        "endLine": 228,
+        "text": "The focused platform-configuration check passed on 2026-09-16.",
+        "actualInlineMaps": [
+          [
+            226,
+            227
+          ]
+        ]
+      }
+    ],
+    "wholeBoxSha256": "982b380f97e35d6d3a9acca5d13c9f0eed9e953ec38ea574767db378bdc4b9c7",
+    "wholeBoxText": "> **Source evidence \u2014 configuration selects but does not create authority**\n>\n> **Platform fields:** [`PlatformConfig` separates installation, trust, providers, grants, adapters, and observers](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/common/plugin-runtime/foundation/config/platform.ts#L6-L27).\n>\n> **Capability mapping:** [Foundation resolves `platform.providers` as capability-to-adapter mappings and rejects missing or invalid providers](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/common/plugin-runtime/foundation/registry/capabilities.ts#L75-L119).\n>\n> **Runtime sequence:** [`prepareRuntime()` discovers packages before it resolves grants and activates registrations](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/nova/core/execution/engine-runtime.ts#L29-L50).\n>\n> **Project compiler:** [The compiler fixes its stage execution policy and validates the supplied resolved provider plan and its digest](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/nova/project/compiler.ts#L60-L113).\n>\n> **Explicit graph:** [The pipeline schema exposes graph concurrency and stage execution fields](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json#L481-L529).\n>\n> **Negative test:** [The platform check rejects project-controlled installation roots](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/tests/verification/contracts/check-plugin-system-v2-platform-config.mjs#L44-L63).\n>\n> **Decision:** [ADR-007 explains the separate operator grant](../decisions/core-and-plugins.md#adr-007-grant-bounded-capabilities-instead-of-ambient-authority).\n>\n> **Local result:** The focused platform-configuration check passed on 2026-09-16.\n>\n> **Claim:** Project input selects installed behavior; platform policy owns installation roots, trust, provider mappings and grants.\n> **Implementation:** `prepareRuntime()` discovers packages, resolves grants, validates selected configurations and activates the permitted registrations.\n> **Contract or setting:** `pipeline-platform.v2.providers` maps capability IDs to adapters, not Buster test-provider contracts.\n> **Revision:** `bcf032f241b432bf920baa9ee5f727947921447d`; linked configuration, compiler and runtime sources retain those bytes.\n> **Limit:** The recorded platform check does not establish package installation, external isolation or permission in a deployed host.",
+    "independentDisposition": "UNCHANGED_EXACT_CONTEXT_STRUCTURALLY_SUPPORTED;no generic alias authority"
+  },
+  {
+    "box": "docs/site/extend/README.md#source-5",
+    "field": "Test",
+    "basis": "Explicit dated runtime-role manifest check; no new execution inferred.",
+    "locations": [
+      {
+        "label": "Local result",
+        "startLine": 451,
+        "endLine": 452,
+        "text": "The runtime-role manifest check passed for all three roles on 2026-09-16.",
+        "actualInlineMaps": [
+          [
+            450,
+            451
+          ]
+        ]
+      }
+    ],
+    "wholeBoxSha256": "1ad17086b8203311c31eed698b6a0415a13c19f7e1ffe67e944cd2f225ae265e",
+    "wholeBoxText": "> **Source evidence \u2014 engines and roles are package boundaries**\n>\n> **Worker contract:** [`WorkerProfileV1` binds a worker type to one exact engine identity](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/contracts/pipeline-worker-core/v1/src/types.ts#L28-L65).\n>\n> **Operation boundary:** [`WorkerAttemptOperation` defines prepare, execute, terminate, measurement, cleanup, and evidence hooks](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/worker/core/worker/attempt-executor.ts#L62-L89).\n>\n> **Package ownership:** [The package map assigns Worker Core and specialist engines to explicit roles](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/packaging/runtime/package-ownership.json#L8-L26).\n>\n> **Role example:** [The Nova role lists every package, plugin, and host extension in its bundle](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/packaging/runtime/roles/nova.json#L1-L61).\n>\n> **Local result:** The runtime-role manifest check passed for all three roles on 2026-09-16.\n>\n> **Claim:** Worker profiles bind specialist engine identity; explicit package ownership and role manifests assemble deployable code.\n> **Implementation:** `WorkerAttemptOperation` supplies attempt hooks; the package map and Nova role independently select bundled owners and components.\n> **Contract or setting:** `WorkerProfileV1.engine` contains contract, version and content digest; it is not a generic engine-registration manifest.\n> **Revision:** `bcf032f241b432bf920baa9ee5f727947921447d`; linked profile, attempt interface, ownership map and Nova role retain those bytes.\n> **Limit:** The recorded role-manifest pass does not prove an installed bundle, native execution or a drop-in engine loader.",
+    "independentDisposition": "UNCHANGED_EXACT_CONTEXT_STRUCTURALLY_SUPPORTED;no generic alias authority"
+  },
+  {
+    "box": "docs/site/extend/documentation-maintenance.md#source-1",
+    "field": "Implementation",
+    "basis": "Snapshot label plus same-block exact implementation-function locators.",
+    "locations": [
+      {
+        "label": "Implementation snapshot",
+        "startLine": 125,
+        "endLine": 134,
+        "text": "`80178cbaea15b80393d370269a5b6225e9fd7129`. These links locate the inspected functions, not a saved generation result.\n\n[Page metadata and ownership](https://github.com/datrab/kubeclaw/blob/80178cbaea15b80393d370269a5b6225e9fd7129/scripts/docs-governance.mjs#L94-L120).\n\n[Map output and check/write branches](https://github.com/datrab/kubeclaw/blob/80178cbaea15b80393d370269a5b6225e9fd7129/scripts/docs-governance.mjs#L145-L164).\n\n[Selected reference outputs](https://github.com/datrab/kubeclaw/blob/80178cbaea15b80393d370269a5b6225e9fd7129/scripts/docs-generate.mjs#L151-L183).\n\n[Tree output and comparison branches](https://github.com/datrab/kubeclaw/blob/80178cbaea15b80393d370269a5b6225e9fd7129/scripts/docs-tree-boundary.mjs#L927-L954).",
+        "actualInlineMaps": [
+          [
+            123,
+            125
+          ]
+        ]
+      }
+    ],
+    "wholeBoxSha256": "27be7a86e7afae49b5c9d65a13849394496e2b136fcaabdc0b244e3a5efb40f6",
+    "wholeBoxText": "> **Source \u2014 ownership records and generator selection**\n>\n> Claim: page metadata supplies ownership/dependencies; generators select their owned outputs; check modes compare the derived result instead of making an authored page authoritative product input.\n> Implementation snapshot: `80178cbaea15b80393d370269a5b6225e9fd7129`. These links locate the inspected functions, not a saved generation result.\n>\n> [Page metadata and ownership](https://github.com/datrab/kubeclaw/blob/80178cbaea15b80393d370269a5b6225e9fd7129/scripts/docs-governance.mjs#L94-L120).\n>\n> [Map output and check/write branches](https://github.com/datrab/kubeclaw/blob/80178cbaea15b80393d370269a5b6225e9fd7129/scripts/docs-governance.mjs#L145-L164).\n>\n> [Selected reference outputs](https://github.com/datrab/kubeclaw/blob/80178cbaea15b80393d370269a5b6225e9fd7129/scripts/docs-generate.mjs#L151-L183).\n>\n> [Tree output and comparison branches](https://github.com/datrab/kubeclaw/blob/80178cbaea15b80393d370269a5b6225e9fd7129/scripts/docs-tree-boundary.mjs#L927-L954).\n>\n> Contract: metadata owns page dependencies; classification and the immutable baseline own the tree model. Neither proves complete source discovery.\n>\n> Validation for these locators: source comparison only, not successful reference generation or product execution.\n>\n> Governance snapshot SHA-256: `a7a194f1cbc8b6796bb3f33ab0121b950c9327c59afb00d30aac1d4d338c4a96`.\n>\n> Reference generator snapshot SHA-256: `aad4c1a16b693443bdd5ff1f663f59659c1a5da74efb62e65ae0b049f74a500e`.\n>\n> Tree checker snapshot SHA-256: `ee1487ec2e081cc6630ac7869895bd69f3251e0c44ffd8877e574b335981ae52`.\n>\n> These digests identify only that committed snapshot. Recheck current bytes before reusing the procedure.\n> Limit: selected SDK/discovery, source/Git and child-process prerequisites remain in force. No effect admission or current-output approval follows from these locators.",
+    "independentDisposition": "UNCHANGED_EXACT_CONTEXT_STRUCTURALLY_SUPPORTED;no generic alias authority"
+  },
+  {
+    "box": "docs/site/extend/documentation-maintenance.md#source-1",
+    "field": "Test",
+    "basis": "Explicit source-only validation, not successful generation or execution.",
+    "locations": [
+      {
+        "label": "Validation for these locators",
+        "startLine": 137,
+        "endLine": 145,
+        "text": "source comparison only, not successful reference generation or product execution.\n\nGovernance snapshot SHA-256: `a7a194f1cbc8b6796bb3f33ab0121b950c9327c59afb00d30aac1d4d338c4a96`.\n\nReference generator snapshot SHA-256: `aad4c1a16b693443bdd5ff1f663f59659c1a5da74efb62e65ae0b049f74a500e`.\n\nTree checker snapshot SHA-256: `ee1487ec2e081cc6630ac7869895bd69f3251e0c44ffd8877e574b335981ae52`.\n\nThese digests identify only that committed snapshot. Recheck current bytes before reusing the procedure.",
+        "actualInlineMaps": [
+          [
+            136,
+            137
+          ]
+        ]
+      }
+    ],
+    "wholeBoxSha256": "27be7a86e7afae49b5c9d65a13849394496e2b136fcaabdc0b244e3a5efb40f6",
+    "wholeBoxText": "> **Source \u2014 ownership records and generator selection**\n>\n> Claim: page metadata supplies ownership/dependencies; generators select their owned outputs; check modes compare the derived result instead of making an authored page authoritative product input.\n> Implementation snapshot: `80178cbaea15b80393d370269a5b6225e9fd7129`. These links locate the inspected functions, not a saved generation result.\n>\n> [Page metadata and ownership](https://github.com/datrab/kubeclaw/blob/80178cbaea15b80393d370269a5b6225e9fd7129/scripts/docs-governance.mjs#L94-L120).\n>\n> [Map output and check/write branches](https://github.com/datrab/kubeclaw/blob/80178cbaea15b80393d370269a5b6225e9fd7129/scripts/docs-governance.mjs#L145-L164).\n>\n> [Selected reference outputs](https://github.com/datrab/kubeclaw/blob/80178cbaea15b80393d370269a5b6225e9fd7129/scripts/docs-generate.mjs#L151-L183).\n>\n> [Tree output and comparison branches](https://github.com/datrab/kubeclaw/blob/80178cbaea15b80393d370269a5b6225e9fd7129/scripts/docs-tree-boundary.mjs#L927-L954).\n>\n> Contract: metadata owns page dependencies; classification and the immutable baseline own the tree model. Neither proves complete source discovery.\n>\n> Validation for these locators: source comparison only, not successful reference generation or product execution.\n>\n> Governance snapshot SHA-256: `a7a194f1cbc8b6796bb3f33ab0121b950c9327c59afb00d30aac1d4d338c4a96`.\n>\n> Reference generator snapshot SHA-256: `aad4c1a16b693443bdd5ff1f663f59659c1a5da74efb62e65ae0b049f74a500e`.\n>\n> Tree checker snapshot SHA-256: `ee1487ec2e081cc6630ac7869895bd69f3251e0c44ffd8877e574b335981ae52`.\n>\n> These digests identify only that committed snapshot. Recheck current bytes before reusing the procedure.\n> Limit: selected SDK/discovery, source/Git and child-process prerequisites remain in force. No effect admission or current-output approval follows from these locators.",
+    "independentDisposition": "UNCHANGED_EXACT_CONTEXT_STRUCTURALLY_SUPPORTED;no generic alias authority"
+  },
+  {
+    "box": "docs/site/extend/documentation-maintenance.md#source-1",
+    "field": "Revision",
+    "basis": "Explicit full80178commit, bounded snapshot statement and exact same-block committed locators.",
+    "locations": [
+      {
+        "label": "Implementation snapshot",
+        "startLine": 125,
+        "endLine": 134,
+        "text": "`80178cbaea15b80393d370269a5b6225e9fd7129`. These links locate the inspected functions, not a saved generation result.\n\n[Page metadata and ownership](https://github.com/datrab/kubeclaw/blob/80178cbaea15b80393d370269a5b6225e9fd7129/scripts/docs-governance.mjs#L94-L120).\n\n[Map output and check/write branches](https://github.com/datrab/kubeclaw/blob/80178cbaea15b80393d370269a5b6225e9fd7129/scripts/docs-governance.mjs#L145-L164).\n\n[Selected reference outputs](https://github.com/datrab/kubeclaw/blob/80178cbaea15b80393d370269a5b6225e9fd7129/scripts/docs-generate.mjs#L151-L183).\n\n[Tree output and comparison branches](https://github.com/datrab/kubeclaw/blob/80178cbaea15b80393d370269a5b6225e9fd7129/scripts/docs-tree-boundary.mjs#L927-L954).",
+        "actualInlineMaps": [
+          [
+            123,
+            125
+          ]
+        ]
+      }
+    ],
+    "wholeBoxSha256": "27be7a86e7afae49b5c9d65a13849394496e2b136fcaabdc0b244e3a5efb40f6",
+    "wholeBoxText": "> **Source \u2014 ownership records and generator selection**\n>\n> Claim: page metadata supplies ownership/dependencies; generators select their owned outputs; check modes compare the derived result instead of making an authored page authoritative product input.\n> Implementation snapshot: `80178cbaea15b80393d370269a5b6225e9fd7129`. These links locate the inspected functions, not a saved generation result.\n>\n> [Page metadata and ownership](https://github.com/datrab/kubeclaw/blob/80178cbaea15b80393d370269a5b6225e9fd7129/scripts/docs-governance.mjs#L94-L120).\n>\n> [Map output and check/write branches](https://github.com/datrab/kubeclaw/blob/80178cbaea15b80393d370269a5b6225e9fd7129/scripts/docs-governance.mjs#L145-L164).\n>\n> [Selected reference outputs](https://github.com/datrab/kubeclaw/blob/80178cbaea15b80393d370269a5b6225e9fd7129/scripts/docs-generate.mjs#L151-L183).\n>\n> [Tree output and comparison branches](https://github.com/datrab/kubeclaw/blob/80178cbaea15b80393d370269a5b6225e9fd7129/scripts/docs-tree-boundary.mjs#L927-L954).\n>\n> Contract: metadata owns page dependencies; classification and the immutable baseline own the tree model. Neither proves complete source discovery.\n>\n> Validation for these locators: source comparison only, not successful reference generation or product execution.\n>\n> Governance snapshot SHA-256: `a7a194f1cbc8b6796bb3f33ab0121b950c9327c59afb00d30aac1d4d338c4a96`.\n>\n> Reference generator snapshot SHA-256: `aad4c1a16b693443bdd5ff1f663f59659c1a5da74efb62e65ae0b049f74a500e`.\n>\n> Tree checker snapshot SHA-256: `ee1487ec2e081cc6630ac7869895bd69f3251e0c44ffd8877e574b335981ae52`.\n>\n> These digests identify only that committed snapshot. Recheck current bytes before reusing the procedure.\n> Limit: selected SDK/discovery, source/Git and child-process prerequisites remain in force. No effect admission or current-output approval follows from these locators.",
+    "independentDisposition": "UNCHANGED_EXACT_CONTEXT_STRUCTURALLY_SUPPORTED;no generic alias authority"
+  },
+  {
+    "box": "docs/site/reference/documentation-site.md#source-1",
+    "field": "Revision",
+    "basis": "Explicit source-binding limitation paired with same-block immutable f99 commit link; not fresh whole-file equality.",
+    "locations": [
+      {
+        "label": "Source binding",
+        "startLine": 71,
+        "endLine": 71,
+        "text": "these linked function bodies match the inspected checkout. Other publisher sections have local changes; this is not whole-file or publication acceptance.",
+        "actualInlineMaps": [
+          [
+            66,
+            72
+          ]
+        ]
+      }
+    ],
+    "wholeBoxSha256": "eacc3cfc1d4c93d688e1183644c768137383b4230d02bfc3fceecded1774e445",
+    "wholeBoxText": "> **Source \u2014 evidence revisions**\n>\n> Claim: selected catalogue evidence uses the documentation source revision; plain Evidence links in published pages use HEAD.\n> Implementation: [sourceEvidenceLink](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/scripts/docs-publication.mjs#L148-L166); current Evidence conversion belongs to `build` in `scripts/docs-publication.mjs`.\n> Contract: the catalogue checks tracked regular source bytes and the selected line range; the staging conversion uses its checkout commit. Existing explicit prose links retain their written revision.\n> Validation: no build or test execution for this statement.\n> Source binding: these linked function bodies match the inspected checkout. Other publisher sections have local changes; this is not whole-file or publication acceptance.\n> Limit: the displayed excerpt is historical source, not proof that HEAD contains local changes or that the cited behavior ran. Reconcile the source bytes before creating a commit permalink.",
+    "independentDisposition": "UNCHANGED_EXACT_CONTEXT_STRUCTURALLY_SUPPORTED;no generic alias authority"
+  },
+  {
+    "box": "docs/site/understand/README.md#source-1",
+    "field": "Contract",
+    "basis": "Actual typed-result to lifecycle-action rule link, separate from scheduler implementation.",
+    "locations": [
+      {
+        "label": "Result rules",
+        "startLine": 90,
+        "endLine": 91,
+        "text": "[`applyStageResult()` maps each typed result to one lifecycle action](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/skills/nova/core/lifecycle/reducer.ts#L106-L135).",
+        "actualInlineMaps": [
+          [
+            89,
+            90
+          ]
+        ]
+      }
+    ],
+    "wholeBoxSha256": "067021310d64e828a5b40bfa063181ea4aaba01bc5420657e22f051320e562ff",
+    "wholeBoxText": "> **Source evidence \u2014 one lifecycle authority**\n>\n> **Implementation:** [`PipelineLoop.run()` records stage decisions and finalizes the run](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/skills/nova/core/execution/pipeline-loop.ts#L20-L37).\n>\n> **Result rules:** [`applyStageResult()` maps each typed result to one lifecycle action](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/skills/nova/core/lifecycle/reducer.ts#L106-L135).\n>\n> **Decision record:** [ADR-001 explains why Core owns lifecycle state](../decisions/core-and-plugins.md#adr-001-core-owns-canonical-lifecycle-authority).\n>\n> **Revision:** `85e73b1885f04a9494f388cf6622ad0bde2db447`.\n>\n> **Claim:** Core records canonical lifecycle decisions; specialists return typed results rather than directly mutating run state.\n>\n> **Test evidence:** No fresh scheduling, illegal-result or terminal-closure execution accompanies these source and decision links.\n>\n> **Limit:** A specialist response does not acquire scheduler authority or prove the complete run succeeded.",
+    "independentDisposition": "UNCHANGED_EXACT_CONTEXT_STRUCTURALLY_SUPPORTED;no generic alias authority"
+  },
+  {
+    "box": "docs/site/understand/README.md#source-2",
+    "field": "Implementation",
+    "basis": "Exact named Nova/Buster/Prism role implementation declarations in same block.",
+    "locations": [
+      {
+        "label": "Role declarations",
+        "startLine": 160,
+        "endLine": 161,
+        "text": "[Nova](https://github.com/datrab/kubeclaw/blob/d8c38328ae305d431574aed008c4e1333e4b49f5/packaging/runtime/roles/nova.json), [Buster](https://github.com/datrab/kubeclaw/blob/d8c38328ae305d431574aed008c4e1333e4b49f5/packaging/runtime/roles/buster.json), and [Prism](https://github.com/datrab/kubeclaw/blob/d8c38328ae305d431574aed008c4e1333e4b49f5/packaging/runtime/roles/prism.json) define the deployable identities.",
+        "actualInlineMaps": [
+          [
+            159,
+            160
+          ]
+        ]
+      }
+    ],
+    "wholeBoxSha256": "a3b37c8029952b289bc3ffd08df4e33f804b50e508eaa53001cf59ea8d9838fc",
+    "wholeBoxText": "> **Source evidence \u2014 role and package boundary**\n>\n> **Role declarations:** [Nova](https://github.com/datrab/kubeclaw/blob/d8c38328ae305d431574aed008c4e1333e4b49f5/packaging/runtime/roles/nova.json), [Buster](https://github.com/datrab/kubeclaw/blob/d8c38328ae305d431574aed008c4e1333e4b49f5/packaging/runtime/roles/buster.json), and [Prism](https://github.com/datrab/kubeclaw/blob/d8c38328ae305d431574aed008c4e1333e4b49f5/packaging/runtime/roles/prism.json) define the deployable identities.\n>\n> **Package ownership:** [The ownership file assigns packages to their runtime roles](https://github.com/datrab/kubeclaw/blob/d8c38328ae305d431574aed008c4e1333e4b49f5/packaging/runtime/package-ownership.json).\n>\n> **Limit:** A role declaration proves intended package assembly. It does not prove deployment or reachability.\n>\n> **Claim:** Runtime roles assemble bounded package sets; package ownership does not itself activate registrations or grant operations.\n>\n> **Test evidence:** No fresh bundle assembly, activation or runtime reachability exercise accompanies these declarations.\n>\n> **Revision:** `d8c38328ae305d431574aed008c4e1333e4b49f5`. Source bindings, not execution receipts.",
+    "independentDisposition": "UNCHANGED_EXACT_CONTEXT_STRUCTURALLY_SUPPORTED;no generic alias authority"
+  },
+  {
+    "box": "docs/site/understand/README.md#source-2",
+    "field": "Contract",
+    "basis": "Exact owner-map contract assigning packages to runtime roles.",
+    "locations": [
+      {
+        "label": "Package ownership",
+        "startLine": 162,
+        "endLine": 163,
+        "text": "[The ownership file assigns packages to their runtime roles](https://github.com/datrab/kubeclaw/blob/d8c38328ae305d431574aed008c4e1333e4b49f5/packaging/runtime/package-ownership.json).",
+        "actualInlineMaps": [
+          [
+            161,
+            162
+          ]
+        ]
+      }
+    ],
+    "wholeBoxSha256": "a3b37c8029952b289bc3ffd08df4e33f804b50e508eaa53001cf59ea8d9838fc",
+    "wholeBoxText": "> **Source evidence \u2014 role and package boundary**\n>\n> **Role declarations:** [Nova](https://github.com/datrab/kubeclaw/blob/d8c38328ae305d431574aed008c4e1333e4b49f5/packaging/runtime/roles/nova.json), [Buster](https://github.com/datrab/kubeclaw/blob/d8c38328ae305d431574aed008c4e1333e4b49f5/packaging/runtime/roles/buster.json), and [Prism](https://github.com/datrab/kubeclaw/blob/d8c38328ae305d431574aed008c4e1333e4b49f5/packaging/runtime/roles/prism.json) define the deployable identities.\n>\n> **Package ownership:** [The ownership file assigns packages to their runtime roles](https://github.com/datrab/kubeclaw/blob/d8c38328ae305d431574aed008c4e1333e4b49f5/packaging/runtime/package-ownership.json).\n>\n> **Limit:** A role declaration proves intended package assembly. It does not prove deployment or reachability.\n>\n> **Claim:** Runtime roles assemble bounded package sets; package ownership does not itself activate registrations or grant operations.\n>\n> **Test evidence:** No fresh bundle assembly, activation or runtime reachability exercise accompanies these declarations.\n>\n> **Revision:** `d8c38328ae305d431574aed008c4e1333e4b49f5`. Source bindings, not execution receipts.",
+    "independentDisposition": "UNCHANGED_EXACT_CONTEXT_STRUCTURALLY_SUPPORTED;no generic alias authority"
+  },
+  {
+    "box": "docs/site/understand/README.md#source-3",
+    "field": "Implementation",
+    "basis": "Three actual role-manifest implementation links, not a global meaning of a product name.",
+    "locations": [
+      {
+        "label": "Nova",
+        "startLine": 194,
+        "endLine": 195,
+        "text": "[role manifest and selected plugins](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/packaging/runtime/roles/nova.json#L1-L61).",
+        "actualInlineMaps": [
+          [
+            193,
+            194
+          ]
+        ]
+      },
+      {
+        "label": "Buster",
+        "startLine": 196,
+        "endLine": 197,
+        "text": "[role manifest, Worker Core dependency, and external capabilities](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/packaging/runtime/roles/buster.json#L1-L60).",
+        "actualInlineMaps": [
+          [
+            195,
+            196
+          ]
+        ]
+      },
+      {
+        "label": "Prism",
+        "startLine": 198,
+        "endLine": 199,
+        "text": "[role manifest, Worker Core dependency, and source access](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/packaging/runtime/roles/prism.json#L1-L28).",
+        "actualInlineMaps": [
+          [
+            197,
+            198
+          ]
+        ]
+      }
+    ],
+    "wholeBoxSha256": "65ccac27da6041a5585aa6401232a898a6e788536044705996345fdfa8f3e242",
+    "wholeBoxText": "> **Source evidence \u2014 declared roles**\n>\n> **Nova:** [role manifest and selected plugins](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/packaging/runtime/roles/nova.json#L1-L61).\n>\n> **Buster:** [role manifest, Worker Core dependency, and external capabilities](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/packaging/runtime/roles/buster.json#L1-L60).\n>\n> **Prism:** [role manifest, Worker Core dependency, and source access](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/packaging/runtime/roles/prism.json#L1-L28).\n>\n> **Current limit:** Role membership proves packaging intent. It does not prove live deployment or acceptance.\n>\n> **Claim:** Nova, Buster and Prism role manifests declare their distinct packaged inputs and capabilities.\n>\n> **Contract or setting:** Role-specific assembly precedes the separate registry, activation, invocation and application-admission checks.\n>\n> **Test evidence:** No fresh role startup, enabled-registration or live acceptance result accompanies these manifests.\n>\n> **Revision:** `85e73b1885f04a9494f388cf6622ad0bde2db447`. Source bindings, not execution receipts.",
+    "independentDisposition": "UNCHANGED_EXACT_CONTEXT_STRUCTURALLY_SUPPORTED;no generic alias authority"
+  },
+  {
+    "box": "docs/site/understand/README.md#source-3",
+    "field": "Limit",
+    "basis": "Explicit packaging-intent versus live deployment/acceptance limit.",
+    "locations": [
+      {
+        "label": "Current limit",
+        "startLine": 200,
+        "endLine": 201,
+        "text": "Role membership proves packaging intent. It does not prove live deployment or acceptance.",
+        "actualInlineMaps": [
+          [
+            199,
+            200
+          ]
+        ]
+      }
+    ],
+    "wholeBoxSha256": "65ccac27da6041a5585aa6401232a898a6e788536044705996345fdfa8f3e242",
+    "wholeBoxText": "> **Source evidence \u2014 declared roles**\n>\n> **Nova:** [role manifest and selected plugins](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/packaging/runtime/roles/nova.json#L1-L61).\n>\n> **Buster:** [role manifest, Worker Core dependency, and external capabilities](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/packaging/runtime/roles/buster.json#L1-L60).\n>\n> **Prism:** [role manifest, Worker Core dependency, and source access](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/packaging/runtime/roles/prism.json#L1-L28).\n>\n> **Current limit:** Role membership proves packaging intent. It does not prove live deployment or acceptance.\n>\n> **Claim:** Nova, Buster and Prism role manifests declare their distinct packaged inputs and capabilities.\n>\n> **Contract or setting:** Role-specific assembly precedes the separate registry, activation, invocation and application-admission checks.\n>\n> **Test evidence:** No fresh role startup, enabled-registration or live acceptance result accompanies these manifests.\n>\n> **Revision:** `85e73b1885f04a9494f388cf6622ad0bde2db447`. Source bindings, not execution receipts.",
+    "independentDisposition": "UNCHANGED_EXACT_CONTEXT_STRUCTURALLY_SUPPORTED;no generic alias authority"
+  }
+]

@@ -72,3 +72,28 @@ test('direct existing role-purpose entry revalidates external caller inputs befo
  f.write('.github/workflows/docs-checks.yaml',Buffer.concat([f.read('.github/workflows/docs-checks.yaml'),Buffer.from('\nchanged caller\n')]));
  for(const selected of [source,'scripts/docs-reader/page-records.mjs','scripts/docs-publication.mjs','scripts/docs-reader/renderer.mjs','scripts/docs-reader/redirects.mjs'])assert.throws(()=>assertDocumentationOwnerPurpose(f.root,selected),/PURPOSE_DRIFT/);
 });
+
+// These are inert physical Source fixtures, not evaluated reader/product modules.
+for(const warm of [false,true])test(`${warm?'retained':'cold'} copied CI alone is not verifier/project authority`,t=>{
+ const f=fixture(t),proof=warm?assertReaderArtifactExternalCiPurpose(f.root):null;
+ for(const name of inputs)if(!['.github/workflows/docs-checks.yaml','docs/site/reference/documentation-site.md'].includes(name))fs.unlinkSync(path.join(f.root,name));
+ f.write('package.json','{}');
+ assert.equal(assertReaderArtifactExternalCiPurpose(f.root),null);
+ const reachable=new Set();assert.equal(addReaderArtifactExternalCiSeed(null,graph(),reachable),false);assert.deepEqual([...reachable],[]);
+ if(warm)assert.throws(()=>addReaderArtifactExternalCiSeed(proof,graph(),reachable),/PURPOSE_DRIFT|ENOENT/);
+});
+for(const mode of ['package-changed','package-removed','ci-changed','ci-removed','package-and-ci-changed','one-context-file-removed'])test(`missing verifier in finite artifact-project context rejects: ${mode}`,t=>{
+ const f=fixture(t);fs.unlinkSync(path.join(f.root,source));
+ if(mode.includes('package')){if(mode==='package-removed')fs.unlinkSync(path.join(f.root,'package.json'));else f.write('package.json','{}');}
+ if(mode.includes('ci')){if(mode==='ci-removed')fs.unlinkSync(path.join(f.root,'.github/workflows/docs-checks.yaml'));else f.write('.github/workflows/docs-checks.yaml','unrelated: true');}
+ if(mode==='one-context-file-removed')fs.unlinkSync(path.join(f.root,'scripts/docs-reader/page-records.mjs'));
+ assert.throws(()=>assertReaderArtifactExternalCiPurpose(f.root),/PURPOSE_DRIFT/);
+});
+test('dangling selected verifier entry cannot become unrelated-root absence',t=>{
+ const f=fixture(t);fs.unlinkSync(path.join(f.root,source));fs.symlinkSync('absent-verifier.mjs',path.join(f.root,source));
+ assert.throws(()=>assertReaderArtifactExternalCiPurpose(f.root),/PURPOSE_DRIFT/);
+});
+test('present selected verifier cannot borrow partial caller or changed package context',t=>{
+ const f=fixture(t);for(const name of inputs)if(name!==source)fs.unlinkSync(path.join(f.root,name));f.write('package.json','{}');
+ assert.throws(()=>assertReaderArtifactExternalCiPurpose(f.root),/PURPOSE_DRIFT/);
+});

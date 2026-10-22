@@ -16,7 +16,7 @@ export const reviewedDocumentationOwnerPurposes=freeze({
       {
         "path": "docs/site/reference/capabilities.md",
         "canonical": "docs/site/reference/capabilities.md",
-        "sha256": "ce5995d8150fe4c12fa1f8ea671bf7fc65e0a9f64ef70d74043c0821a791d627"
+        "sha256": "1785cb37214915c9a52658cb68426fcb7d4ae1acd576052b5b7a398f50a9dfd4"
       },
       {
         "path": "package.json",
@@ -396,7 +396,7 @@ const readerArtifactCiPurpose=freeze({
     {
       "path": "scripts/docs-publication.mjs",
       "canonical": "scripts/docs-publication.mjs",
-      "sha256": "29d0305b4b4ad0de7fcea5810372e700b4b2a4d810e8cce22fbdd2bfd964cda8"
+      "sha256": "fdae9667aa99505d4fcc90681f081fb45717ab9f9d4333a30544abdea33525a4"
     },
     {
       "path": "scripts/docs-reader/renderer.mjs",
@@ -462,9 +462,18 @@ const readerArtifactCiRoleSources=new Set(['scripts/docs-reader/check-artifact.m
 export function assertReaderArtifactExternalCiPurpose(root){
  root=path.resolve(root);
  const profile=readerArtifactCiPurpose,source=path.join(root,profile.source),ci=path.join(root,'.github/workflows/docs-checks.yaml');
- // Absent from unrelated synthetic roots means no seed, not an exemption.
- // An actual declared CI invocation must not hide a missing verifier source.
- if(!fs.existsSync(source)&&!(fs.existsSync(ci)&&fs.readFileSync(ci,'utf8').includes(profile.source)))return null;
+ // A copied external caller alone is not selected-verifier/project authority.
+ // Detect an actual verifier directory entry (including a dangling symlink), or
+ // the finite reviewed artifact-project context when its verifier is missing.
+ // Context only triggers the complete physical proof below; it never grants one.
+ const present=relative=>{try{fs.lstatSync(path.join(root,relative));return true;}catch(error){if(error.code==='ENOENT'||error.code==='ENOTDIR')return false;throw error;}};
+ const context=['scripts/docs-reader/page-records.mjs','scripts/docs-publication.mjs','scripts/docs-reader/renderer.mjs'];
+ const packageInput=profile.inputs.find(input=>input.path==='package.json');
+ const packageFile=path.join(root,packageInput.path);
+ const reviewedPackage=present(packageInput.path)&&fs.statSync(packageFile).isFile()&&sha(fs.readFileSync(packageFile))===packageInput.sha256;
+ const artifactProject=context.every(present)||(reviewedPackage&&context.some(present));
+ // No proof/seed for unrelated scoped roots; ordinary selected-graph guards remain.
+ if(!present(profile.source)&&!artifactProject)return null;
  assert.equal(fs.realpathSync(root),root,'DOCUMENTATION_READER_CI_PURPOSE_DRIFT: nonphysical root');
  for(const input of profile.inputs){
   const file=path.join(root,input.path);
@@ -485,7 +494,7 @@ export function addReaderArtifactExternalCiSeed(proof,graph,docsReachable){
  if(proof===null)return false;
  assert(readerArtifactCiProofs.has(proof),'DOCUMENTATION_READER_CI_PURPOSE_UNQUALIFIED: unacquired proof');
  const root=readerArtifactCiProofs.get(proof);
- assertReaderArtifactExternalCiPurpose(root); // stale acquired handles cannot bypass input revalidation
+ assert(assertReaderArtifactExternalCiPurpose(root)!==null,'DOCUMENTATION_READER_CI_PURPOSE_DRIFT: acquired verifier context removed'); // stale handles cannot become unrelated-root authority
  assert(Array.isArray(graph?.executableSources)&&Array.isArray(graph.edges)&&docsReachable instanceof Set,'DOCUMENTATION_READER_CI_PURPOSE_UNQUALIFIED: selected graph context');
  if(!graph.executableSources.includes(readerArtifactCiPurpose.source))return false;
  assert(!graph.edges.some(edge=>edge.target===readerArtifactCiPurpose.source),

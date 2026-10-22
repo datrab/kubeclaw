@@ -1,0 +1,42 @@
+[
+  {
+    "sourceStructure": "export const reviewedDocumentationOwnerPurposes=freeze(",
+    "owner": "scripts/check-capability-registrations-drift-controls.mjs",
+    "field": "purposeInputs",
+    "path": "docs/site/reference/capabilities.md",
+    "oldSha256": "ce5995d8150fe4c12fa1f8ea671bf7fc65e0a9f64ef70d74043c0821a791d627",
+    "newSha256": "1785cb37214915c9a52658cb68426fcb7d4ae1acd576052b5b7a398f50a9dfd4"
+  },
+  {
+    "sourceStructure": "const readerArtifactCiPurpose=freeze(",
+    "owner": null,
+    "field": "inputs",
+    "path": "scripts/docs-publication.mjs",
+    "oldSha256": "29d0305b4b4ad0de7fcea5810372e700b4b2a4d810e8cce22fbdd2bfd964cda8",
+    "newSha256": "fdae9667aa99505d4fcc90681f081fb45717ab9f9d4333a30544abdea33525a4"
+  },
+  {
+    "sourceStructure": "export const documentationExecutableRoleRecipes = ",
+    "owner": "scripts/check-capability-drift-mutations.mjs",
+    "field": "purposeInputs",
+    "path": "scripts/docs-publication.mjs",
+    "oldSha256": "29d0305b4b4ad0de7fcea5810372e700b4b2a4d810e8cce22fbdd2bfd964cda8",
+    "newSha256": "fdae9667aa99505d4fcc90681f081fb45717ab9f9d4333a30544abdea33525a4"
+  },
+  {
+    "sourceStructure": "export const documentationExecutableRoleRecipes = ",
+    "owner": "scripts/check-capability-swarm-boundary.mjs",
+    "field": "purposeInputs",
+    "path": "scripts/docs-publication.mjs",
+    "oldSha256": "29d0305b4b4ad0de7fcea5810372e700b4b2a4d810e8cce22fbdd2bfd964cda8",
+    "newSha256": "fdae9667aa99505d4fcc90681f081fb45717ab9f9d4333a30544abdea33525a4"
+  },
+  {
+    "sourceStructure": "export const documentationExecutableRoleRecipes = ",
+    "owner": "scripts/check-capability-swarm-boundary.mjs",
+    "field": "authorityInputs",
+    "path": "scripts/docs-publication.mjs",
+    "oldSha256": "29d0305b4b4ad0de7fcea5810372e700b4b2a4d810e8cce22fbdd2bfd964cda8",
+    "newSha256": "fdae9667aa99505d4fcc90681f081fb45717ab9f9d4333a30544abdea33525a4"
+  }
+]

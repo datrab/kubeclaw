@@ -1,0 +1,99 @@
+{
+  "baseline": "935cfe511fc180dce6c62ddd44869e915e38ba57",
+  "targets": [
+    {
+      "path": "scripts/docs-documentation-owner-purpose-custody.mjs",
+      "baselineRevision": "935cfe511fc180dce6c62ddd44869e915e38ba57",
+      "baselineSha256": "1bac65a386940d2049f170ceea25e199603159831460a4fa56ca3270ba49a8a4",
+      "candidateSha256": "2fe905e3e36f7760c159257c23b2404b512e4aa42041744893dd42c6eb8cde87"
+    },
+    {
+      "path": "scripts/tests/docs-reader-artifact-ci-purpose.test.mjs",
+      "baselineRevision": "935cfe511fc180dce6c62ddd44869e915e38ba57",
+      "baselineSha256": "38e8943c7a8feddb442532e63a731276c24bdb1fd7a7f5028dd8521e939735ad",
+      "candidateSha256": "9330a21ff8bb4ae313a13b77fd9453af7d3b7dc9c05ade3e3cef146375278ac6"
+    }
+  ],
+  "packet": {
+    "author-report.md": "fff28e1d38ed38ccc3669b2ddcd5fff269083729c4a9e9ae469d26d6f33b7833",
+    "candidate.patch": "57f5b1e146c68db6d704cdbca7bbdd2aa1d693e8ae6d9e36488207c92fc177cd",
+    "candidate-hashes.json": "c03556bbeb11471d034a72f92357d22b67b363e324b02427cdd3bf0d327ced79",
+    "checks.json": "338134b3ca25b4c2828296d3ed67151d18580dfb1246e4fba8e6984018e4c171",
+    "v2-owning-tests-first.txt": "205cd4887a085af786a2083acafcb216a2dafa108da81d21b9f651c605d0e69a",
+    "v2-owning-tests-final.txt": "c50788ecddf9286e2e84f2f27468f0a28af9e97b26260e60185ef86cede7d9bd",
+    "v2-original-preview-regression.txt": "e3d4c51773fc19a0deb6f44cd296f45773d2d531c67891a6709c3f69023c2982",
+    "v2-original-purpose-routing-full.txt": "0279fb6516ef58ff69b476eaa06b55cf6d9b15f95a0fde48ffa8593be365d081"
+  },
+  "inputs": [
+    {
+      "path": "scripts/docs-reader/check-artifact.mjs",
+      "canonical": "scripts/docs-reader/check-artifact.mjs",
+      "sha256": "7f4e8cb928a5fba48bbd590e5349ce6247264f9cae1935a1e3679ae54c1a2a67"
+    },
+    {
+      "path": "scripts/docs-reader/page-records.mjs",
+      "canonical": "scripts/docs-reader/page-records.mjs",
+      "sha256": "6268501ef047b13e0794950a85d57e2c7aaf54e85a16d77ca8c1263237691a2f"
+    },
+    {
+      "path": "scripts/docs-publication.mjs",
+      "canonical": "scripts/docs-publication.mjs",
+      "sha256": "29d0305b4b4ad0de7fcea5810372e700b4b2a4d810e8cce22fbdd2bfd964cda8"
+    },
+    {
+      "path": "scripts/docs-reader/renderer.mjs",
+      "canonical": "scripts/docs-reader/renderer.mjs",
+      "sha256": "a0bf02d079637cf862fe0a40bbc34e4bfbd982c58126e347d8aea079047abd87"
+    },
+    {
+      "path": "scripts/docs-reader/redirects.mjs",
+      "canonical": "scripts/docs-reader/redirects.mjs",
+      "sha256": "0b186c9da87055e1a13afb0aace0b72e04099c3ed49879a422ca3acbbe778caf"
+    },
+    {
+      "path": ".github/workflows/docs-checks.yaml",
+      "canonical": ".github/workflows/docs-checks.yaml",
+      "sha256": "96e54e68a99450a6b4cdd1568cd4309cf290ee54f8b368efa76b032f2c7b48b4"
+    },
+    {
+      "path": "scripts/tests/docs-reader-page-records.test.mjs",
+      "canonical": "scripts/tests/docs-reader-page-records.test.mjs",
+      "sha256": "0333fffb872837af59396ff47dafb1401a87b00627d96de524e9322e12f15d83"
+    },
+    {
+      "path": "scripts/tests/docs-reader.test.mjs",
+      "canonical": "scripts/tests/docs-reader.test.mjs",
+      "sha256": "abd6a6431110a7b8a1486bbbce4648a118d31fe6f517813c4d9d6ed2e6177e28"
+    },
+    {
+      "path": "scripts/tests/docs-reader-redirects.test.mjs",
+      "canonical": "scripts/tests/docs-reader-redirects.test.mjs",
+      "sha256": "4d08e2533bda82a536a9c61ab27a3fca94939a484a5a2154e012ff9507f26155"
+    },
+    {
+      "path": "docs/site/reference/documentation-site.md",
+      "canonical": "docs/site/reference/documentation-site.md",
+      "sha256": "c0c4b55949be05d571aa4ea5b353c5ab479caeafd3ebbcdeb70ebec0ca10a1e0"
+    },
+    {
+      "path": "package.json",
+      "canonical": "package.json",
+      "sha256": "4ab1e90c2259aeb96acfdc877e5a9eed330f605abff46d7eca85faded0f020c3"
+    },
+    {
+      "path": "scripts/lib/docs-publication-assets.mjs",
+      "canonical": "scripts/lib/docs-publication-assets.mjs",
+      "sha256": "239950ea0ebc87501d03aa178d07b99922cb4ec7dabdded3fbf8f8ab5c5de6f0"
+    },
+    {
+      "path": "scripts/lib/docs-route-continuity.mjs",
+      "canonical": "scripts/lib/docs-route-continuity.mjs",
+      "sha256": "95ebc24186da8c7b446a5bd3edb36f8514b79cb4104dc0394f0b381ddb5dd449"
+    },
+    {
+      "path": "scripts/docs-reader/metadata.mjs",
+      "canonical": "scripts/docs-reader/metadata.mjs",
+      "sha256": "51e0b027356401a68c52a3b8b1fe4d6c6ed35070dfcb300067dd1b9af8da0abc"
+    }
+  ]
+}

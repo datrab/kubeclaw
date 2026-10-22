@@ -1,0 +1,26 @@
+[
+  {
+    "command": "node --test scripts/tests/docs-reader-artifact-ci-purpose.test.mjs",
+    "exit": 1,
+    "observation": "Initial successor49/50; retained-proof context deletion exposed null revalidation ignored by addSeed; preserved before correction.",
+    "log": "v2-owning-tests-first.txt"
+  },
+  {
+    "command": "node --test scripts/tests/docs-reader-artifact-ci-purpose.test.mjs",
+    "exit": 0,
+    "observation": "Final50/50,0skip; inert Source fixtures, no scanned product module evaluation.",
+    "log": "v2-owning-tests-final.txt"
+  },
+  {
+    "command": "node --test --test-name-pattern='actual finite preview role and discovery work cold and warm' scripts/tests/docs-reader-purpose-routing.test.mjs",
+    "exit": 0,
+    "observation": "Original unchanged Serve-only fixture1/1; genuine discoverScriptApiOutputs fixture cold/warm, no invented package entry.",
+    "log": "v2-original-preview-regression.txt"
+  },
+  {
+    "command": "node --test scripts/tests/docs-reader-purpose-routing.test.mjs",
+    "exit": 1,
+    "observation": "19/21PASS. Two unrelated existing redirects purpose-source pin failures at test lines64/78: expected bdeb3d97575e9e8116fc5d07eb2fd359aeac3a5ae824d0521e688ff187e43a60; actual0b186c9da87055e1a13afb0aace0b72e04099c3ed49879a422ca3acbbe778caf. No renewal performed.",
+    "log": "v2-original-purpose-routing-full.txt"
+  }
+]
