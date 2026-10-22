@@ -137,3 +137,12 @@ test('exec is namespace scoped, independent of observer discovery, and removable
   assert.deepEqual(custom.filter(x => x.kind === 'Role' && !x.metadata.name.endsWith('-provisioner')).map(x => x.metadata.namespace), ['buster', 'prism']);
   assert.throws(() => render(['--set-json', 'rbac.execNamespaces=["*"]']));
 });
+
+
+test('global observation can be revoked declaratively without pruning or widening exec', () => {
+  assert.throws(() => render(['--set', 'rbac.readAllNamespaces=false']));
+  const clients = noExecClients.map(client => ({ ...client, readAllNamespaces: false }));
+  const resources = render(['--set', 'rbac.readAllNamespaces=false', '--set-json', 'mcp.clients=' + JSON.stringify(clients)]);
+  const retired = resources.find(x => x.kind === 'ClusterRoleBinding' && x.metadata.name.endsWith('-all-namespace-reader'));
+  assert.deepEqual(retired.subjects, []);
+});

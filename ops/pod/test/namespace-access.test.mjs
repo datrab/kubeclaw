@@ -19,7 +19,7 @@ test('rendered MCP scope, dynamic backend, admission guard and network edge agre
   assert.deepEqual(backend.prefixes, ['test']);
   assert.equal(backend.serviceAccount, 'codex-ops-mcp');
   const policy = JSON.parse(resources.find(x => x.kind === 'ConfigMap' && x.data['policy.json']).data['policy.json']);
-  const clients = parsePolicy(JSON.stringify(policy), ['kubeclaw'], backend.prefixes);
+  const clients = parsePolicy(JSON.stringify(policy), ['kubeclaw'], backend.prefixes, true);
   assert.deepEqual(clients.map(c => c.id), ['codex', 'nova', 'buster']);
   for (const client of clients) {
     assert.deepEqual(client.namespacePrefixes, ['test']);
@@ -50,9 +50,22 @@ test('rendered MCP scope, dynamic backend, admission guard and network edge agre
 
 test('production Ops retains its platform read scopes and all clients receive test access', () => {
   const values = parse(readFileSync(root + 'gitops/platform/values/codex-ops.yaml', 'utf8'));
-  const clients = parsePolicy(JSON.stringify({clients: values.mcp.clients.map(c => ({...c, tokenFile: '/token/'+c.id}))}), values.rbac.namespaces, ['test']);
+  const clients = parsePolicy(JSON.stringify({clients: values.mcp.clients.map(c => ({...c, tokenFile: '/token/'+c.id}))}), values.rbac.namespaces, ['test'], values.rbac.readAllNamespaces);
   assert.deepEqual(clients[0].namespaces, values.rbac.namespaces);
   assert.ok(clients[0].tools.includes('list_argocd_applications'));
   assert.deepEqual(clients.find(c => c.id === 'buster').namespaces, []);
   assert.ok(clients.every(c => c.namespacePrefixes.includes('test')));
+});
+
+
+test('global observer binding grants only MCP reads and cannot introduce cluster-wide exec', () => {
+  const binding = resources.find(x => x.kind === 'ClusterRoleBinding' && x.metadata.name.endsWith('-all-namespace-reader'));
+  assert.deepEqual(binding.subjects, [{ kind: 'ServiceAccount', name: 'codex-ops-mcp', namespace: 'kubeclaw-ops' }]);
+  const role = resources.find(x => x.kind === 'ClusterRole' && x.metadata.name === binding.roleRef.name);
+  assert.ok(role.rules.every(rule => rule.verbs.every(verb => ['get', 'list'].includes(verb))));
+  assert.ok(role.rules.every(rule => !rule.resources.some(resource => ['secrets', 'pods/exec', 'pods/portforward', '*'].includes(resource))));
+  assert.ok(resources.filter(x => x.kind === 'ClusterRoleBinding').every(x => !x.roleRef.name.endsWith('-test-exec') && !x.roleRef.name.endsWith('-exec')));
+  const policy = JSON.parse(resources.find(x => x.kind === 'ConfigMap' && x.data['policy.json']).data['policy.json']);
+  assert.deepEqual(policy.clients.filter(c => c.readAllNamespaces).map(c => c.id), ['codex']);
+  assert.ok(policy.clients.find(c => c.id === 'codex').tools.includes('platform_cluster_state'));
 });

@@ -74,7 +74,7 @@ from the Kubernetes API. The headless Codex Service remains its StatefulSet iden
 | Resource | Owner / purpose | Lifecycle |
 | --- | --- | --- |
 | StatefulSet and headless Service | Helm release `codex-ops` in `kubeclaw-ops` by default | One replica, rolling updates, three controller revisions |
-| ServiceAccounts, observer/exec roles and bindings | Helm; only MCP receives bindings | RoleBindings only in configured namespaces; separate cluster-reader binding |
+| ServiceAccounts, observer/exec roles and bindings | Helm; only MCP receives bindings | Global observer binding only to MCP; exec RoleBindings remain scoped |
 | NetworkPolicy, optional CiliumNetworkPolicy | Helm; Pod traffic boundary | Applied to all containers in the Pod |
 | Home and workspace PVCs | StatefulSet claim templates | Retained after ordinary StatefulSet/release deletion |
 | Optional Tailscale PVC | Helm resource with keep annotation | Retained on removal; separate from immutable StatefulSet claim templates |
@@ -161,8 +161,8 @@ Exact namespace grants require a nonempty Pod label selector and exact container
 names. Prefix exec grants explicitly set `namespacePrefix`, `allPods: true` and
 `allContainers: true`, with timeout and output ceilings. Empty `exec: []` denies
 exec. All calls check client scope before accessing Kubernetes. Buster has no
-exact namespaces and only the `test` prefix; Nova and Ops retain their existing
-namespaces plus `test`. Prefix matching ignores case; tool input is canonicalized
+exact namespaces and only the `test` prefix; Nova retains `kubeclaw` plus `test`; Ops reads all namespaces. Both retain their
+explicit exec targets plus `test`. Prefix matching ignores case; tool input is canonicalized
 to Kubernetes' lowercase namespace names. `test`, `testing` and `test-build` match;
 `prod-test` and `contest` do not.
 
@@ -180,7 +180,17 @@ and release name; it recognizes bindings without creating them. Kubernetes RBAC 
 creation by prefix, so a mandatory, fail-closed ValidatingAdmissionPolicy also
 checks the reconciler identity, namespace prefix, exact binding/role names and
 single MCP subject. Argo installs that guard before the reconciler's RBAC.
-The MCP has no cluster-wide namespaced reader/exec binding. Removing a client
+`rbac.readAllNamespaces: true` binds the existing read-only observer role globally
+to the MCP. Only the Ops/Codex client declares `readAllNamespaces: true`; Nova and
+Buster retain their explicit namespaces/prefixes. The `platform_cluster_state(resource=namespaces)`
+operation requires both an explicit tool grant and this global read capability. New
+namespaces are readable immediately without discovery or a per-namespace binding.
+Global observation never grants exec: that still requires a matching exact or
+prefix exec grant, checked before fetching a Pod or opening remotecommand.
+No agent receives the reader binding. The observer role contains no Secret reads,
+exec, port-forward or mutation rights. Disabling global reads reconciles the named
+ClusterRoleBinding to empty subjects, even with Argo pruning disabled.
+There is no cluster-wide exec binding. Removing a client
 prefix immediately denies its subsequent MCP calls; changing the backend prefix
 set also requires retiring old managed RoleBindings as part of that migration.
 
@@ -344,3 +354,17 @@ acceptance result is inferred from a green build.
 - [Ops Pod operations](../ops/ops-pod.md)
 - [Worker trust operations](../operations/worker-trust-runbook.md)
 - [Architecture index](README.md)
+
+
+## Argo application and portable deployment direction
+
+`codex-ops` is the Argo Application and Helm release, not a combined agent/MCP
+Pod. A full sync installs the Codex StatefulSet, separate `codex-ops-mcp`
+Deployment/Service and separate namespace-access reconciler Deployment. The Sync
+hook provisions credentials before these workloads start.
+
+The current installation remains in `kubeclaw-ops`. Kubernetes namespaces cannot
+be renamed: moving to `ops` requires a planned migration of workloads, retained
+PVCs/Secrets and client Service URLs. A portable cluster-operations package in a
+dedicated `ops` namespace is the intended later direction; the current change
+adds global observation without migrating state or changing namespace ownership.

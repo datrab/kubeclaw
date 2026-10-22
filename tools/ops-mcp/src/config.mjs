@@ -19,7 +19,7 @@ export function loadOpsMcpConfig(environment = process.env) {
   if (!namespacePrefixes.every(x => /^[a-z0-9][a-z0-9-]{0,62}$/.test(x))) throw new Error('Invalid Ops namespace prefixes');
   return Object.freeze({ port, host, localOnly, defaultNamespace, argoNamespace,
     namespaces: allowedNamespaces(environment.OPS_ALLOWED_NAMESPACES, defaultNamespace, argoNamespace),
-    namespacePrefixes,
+    namespacePrefixes, readAllNamespaces: environment.OPS_READ_ALL_NAMESPACES === '1',
     policyFile: environment.OPS_MCP_POLICY_FILE,
     bearer: { file: environment.OPS_MCP_BEARER_TOKEN_FILE, token: environment.OPS_MCP_BEARER_TOKEN },
     allowedOrigins: new Set((environment.MCP_ALLOWED_ORIGINS ?? '').split(',').map(value => value.trim()).filter(Boolean)),

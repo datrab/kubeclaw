@@ -128,11 +128,13 @@ so the operator can choose an idle Codex session; the sync itself runs in Argo.
    Ops images through the existing `Build Ops Images` / `Promote image release`
    workflows. Promotion updates the exact chart revision and immutable images.
    The generated Ops Application also carries exact credential-data diff rules.
-3. Perform a **full** Argo sync of `codex-ops` while the workspace is idle. Wave -3
+3. Perform a **full** Argo sync of the `codex-ops` Application (not an individual Pod) while the workspace is idle. Wave -3
    creates deterministic empty named Secrets/ConfigMaps, the provisioner identity,
    named get/patch permissions and network access. The Sync hook in wave -1 fills
    missing client tokens, the retained private CA, the service certificate and
-   public trust. Only after the hook succeeds do the wave-0 workloads start.
+   public trust. Only after the hook succeeds do the wave-0 workloads start. These include a
+   separate MCP Deployment/Pod and the namespace-access reconciler; the MCP does
+   not run as a Codex sidecar.
    Selective resource sync skips hooks and is not a supported initial cutover.
 4. Verify MCP readiness and Codex MCP access. Then promote/sync the runtime release
    for Nova and Buster. Explicit empty rules/subjects retire Nova's former grants
@@ -177,10 +179,15 @@ provisioning path and are not copied into Git.
 `mcp.clients` is the central configuration point. Each entry has `id`, a server-side
 `tokenSecret`, client namespace/Pod selector, `namespaces`, `namespacePrefixes`,
 exact `tools` and explicit `exec` grants. `rbac.namespaces`, `execNamespaces` and
-`namespacePrefixes` cap the backend. Buster receives only `test*` reads and exec;
-Nova and Ops receive `test*` in addition to their existing scopes. Matching ignores
+`namespacePrefixes` cap scoped access; `rbac.readAllNamespaces` explicitly enables global observation. Buster receives only `test*` reads and exec;
+Nova receives `test*` in addition to its existing scope; Ops can read every namespace. Matching ignores
 case and covers `test`, `testing`, `test-123` and future matching namespaces.
-The dedicated reconciler grants only the MCP access, normally within five seconds
+Only the Ops/Codex client has `readAllNamespaces: true` and the `platform_cluster_state(resource=namespaces)`
+operation. Its reads include current and future namespaces; exec remains separately
+scoped. Nova and Buster do not inherit this global read permission. The observer
+role excludes Secrets and all mutation/exec rights. Disabling global observation
+reconciles its named ClusterRoleBinding to empty subjects without relying on prune.
+The dedicated reconciler grants only the MCP test exec access, normally within five seconds
 of namespace creation. Its mandatory admission guard rejects other namespaces,
 roles or subjects. No agent gets these RoleBindings. Buster retains only its
 existing broker lease exception. Buster and Nova use the shipped client:
