@@ -163,7 +163,8 @@ test('activation preflight requires Secrets, sole ownership, native binding and 
   };
   preflightGitOps(root, result, 'argocd', run);
   assert.ok(calls.some(call => call[0] === process.execPath && call[1].endsWith('/scripts/native-worker-node-preflight.mjs')));
-  assert.ok(calls.some(call => call[2] === 'namespace' && call[3] === 'tailscale'));
+  assert.ok(calls.some(call => call[2] === 'namespace' && call[3] === 'tailscale'), 'legacy grant retirement still targets its existing operator namespace');
+  assert.ok(!calls.some(call => call[2] === 'secret' && call[3] === 'operator-oauth'), 'Nova no longer receives or preflights the operator OAuth Secret');
   cases.rootOwner = { metadata: { labels: {} } };
   assert.throws(() => preflightGitOps(root, result, 'argocd', run), /BOOTSTRAP_OWNER_CONFLICT/); cases.rootOwner = null;
   cases.releases = [{ name: 'agent-buster' }];

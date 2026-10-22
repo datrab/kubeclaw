@@ -1,9 +1,13 @@
 import { boundedUtf8, logObservation } from './diagnostics.mjs';
 import { getHubbleFlows } from './hubble.mjs';
-import { createBearerAuthorization } from './authentication.mjs';
+import { namespaceAllowed, createAccessPolicy, requestIdentity, authorizeTool, authorizeExec, audit, identityContext } from './access-policy.mjs';
+import { createPodExec } from './exec.mjs';
+import { readTlsPair, reloadTls } from './tls.mjs';
 import { loadOpsMcpConfig } from './config.mjs';
 import { createKubeRequest, createKubeList } from './kubernetes.mjs';
-import { createServer } from 'node:http';
+import { createServer as createHttpServer } from 'node:http';
+import { createServer as createHttpsServer } from 'node:https';
+import { createHash } from 'node:crypto';
 import { createMcpHandler, McpServer } from '@modelcontextprotocol/server';
 import { toNodeHandler } from '@modelcontextprotocol/node';
 import * as z from 'zod/v4';
@@ -18,8 +22,11 @@ const MAX_LOG_BYTES = 64 * 1024;
 const kubeList = createKubeList(kubeRequest);
 const EVENT_PAGE_SIZE = 500;
 
-const authentication = createBearerAuthorization(config.bearer);
-const namespaceSchema = z.enum(config.namespaces).default(DEFAULT_NAMESPACE);
+const authentication = createAccessPolicy(config);
+const execPod = createPodExec();
+let activeExecs = 0;
+const namespaceSchema = z.string().min(1).max(63).transform(value => value.toLowerCase())
+  .refine(value => namespaceAllowed(value, config.namespaces, config.namespacePrefixes), 'Namespace outside the MCP scope').default(DEFAULT_NAMESPACE);
 const allowedOrigins = config.allowedOrigins;
 
 function jsonText(value) {
@@ -194,14 +201,35 @@ function buildServer() {
     },
     {
       instructions:
-        'Read-only operations interface for the kubeclaw Kubernetes cluster. ' +
+        'Centrally authorized operations interface for the kubeclaw Kubernetes cluster. ' +
         'Correlate Argo CD, Kubernetes workload state, events, bounded pod logs and bounded Hubble network flows. ' +
         'For connectivity or policy symptoms, inspect dropped Hubble flows before guessing at network causes. ' +
-        'Never claim that a deployment or repair was performed: this server has no write capability.',
+        'Exec can change target workloads and requires an explicit per-client grant. Never infer a successful repair from a diagnostic read.',
     },
   );
 
-  if (config.localOnly) {
+  const principal = requestIdentity.getStore()?.client;
+  const register = server.registerTool.bind(server);
+  server.registerTool = (name, definition, handler) => {
+    if (!principal?.tools.includes(name)) return;
+    return register(name, definition, async (args, extra) => {
+      const start = Date.now();
+      const safeName = value => typeof value === 'string' && /^[a-z0-9][a-z0-9.-]{0,252}$/.test(value) ? value : undefined;
+      const target = { tool: name, namespace: safeName(args.namespace), pod: safeName(args.pod), container: safeName(args.container) };
+      try {
+        authorizeTool(principal, name, args, ARGO_NAMESPACE);
+        audit({ ...target, phase: 'started' });
+        const result = await handler(args, extra);
+        audit({ ...target, phase: 'completed', durationMs: Date.now() - start });
+        return result;
+      } catch (error) {
+        audit({ ...target, phase: 'failed', durationMs: Date.now() - start });
+        throw error;
+      }
+    });
+  };
+
+  {
     server.registerTool('platform_cluster_state', {
       title: 'Nodes and global Cilium policies',
       description: 'Read node health or global Cilium policies through the host API. Does not execute in nodes or Cilium pods.',
@@ -372,6 +400,7 @@ function buildServer() {
         ...podSummary(data),
         conditions: data?.status?.conditions ?? [],
         initContainerStatuses: data?.status?.initContainerStatuses ?? [],
+        resources: (data?.spec?.containers ?? []).map(({ name, resources }) => ({ name, resources })),
       });
     },
   );
@@ -488,15 +517,52 @@ function buildServer() {
     },
   );
 
+  server.registerTool('get_pod_metrics', {
+    title: 'Get pod resource usage',
+    description: 'Read metrics-server container CPU and RAM usage with sample timestamp. Unavailable metrics are reported as an error.',
+    inputSchema: z.object({ namespace: namespaceSchema, pod: z.string().min(1).max(253) }),
+    annotations: { readOnlyHint: true, destructiveHint: false, idempotentHint: true, openWorldHint: false },
+  }, async ({ namespace, pod }) => {
+    const data = await kubeRequest(`/apis/metrics.k8s.io/v1beta1/namespaces/${encodeURIComponent(namespace)}/pods/${encodeURIComponent(pod)}`);
+    return jsonText({ namespace, pod, timestamp: data.timestamp, window: data.window,
+      containers: (data.containers ?? []).map(({ name, usage }) => ({ name, usage })) });
+  });
+
+  server.registerTool('exec_pod', {
+    title: 'Execute in an authorized pod container',
+    description: 'Execute argv in a policy-selected container. May mutate workloads or read their credentials. No stdin or TTY. A timeout/disconnect does not prove remote process termination; do not automatically retry.',
+    inputSchema: z.object({ namespace: namespaceSchema,
+      pod: z.string().min(1).max(253).regex(/^[a-z0-9]([a-z0-9.-]*[a-z0-9])?$/),
+      container: z.string().min(1).max(63).regex(/^[a-z0-9]([a-z0-9-]*[a-z0-9])?$/),
+      command: z.array(z.string().max(4096).refine(s => !s.includes('\0'))).min(1).max(64)
+        .refine(argv => argv[0].length > 0 && argv.reduce((n, s) => n + Buffer.byteLength(s), 0) <= 16384),
+      timeoutSeconds: z.number().int().min(1).max(120).default(30),
+      maxOutputBytes: z.number().int().min(1).max(65536).default(65536),
+    }),
+    annotations: { readOnlyHint: false, destructiveHint: true, idempotentHint: false, openWorldHint: true },
+  }, async (args, extra) => {
+    // Fetch labels using the MCP identity; clients cannot assert target labels.
+    const pod = await kubeRequest(`/api/v1/namespaces/${encodeURIComponent(args.namespace)}/pods/${encodeURIComponent(args.pod)}`);
+    const authorized = authorizeExec(principal, args, pod);
+    if (activeExecs >= 4) throw new Error('OPS_EXEC_BUSY');
+    activeExecs++;
+    try {
+      audit({ phase: 'exec-authorized', namespace: args.namespace, pod: args.pod, container: args.container,
+        commandSha256: createHash('sha256').update(JSON.stringify(args.command)).digest('hex'),
+        timeoutSeconds: authorized.timeoutSeconds, maxOutputBytes: authorized.maxOutputBytes });
+      const result = await execPod(authorized, extra?.signal);
+      audit({ phase: 'exec-exited', exitCode: result.exitCode });
+      return jsonText(result);
+    }
+    finally { activeExecs--; }
+  });
+
   return server;
 }
 
 const mcpHandler = createMcpHandler(buildServer, { responseMode: 'json' });
 const nodeMcpHandler = toNodeHandler(mcpHandler);
 
-function requestAuthorized(req) {
-  return authentication.authorized(req.headers.authorization);
-}
 
 function originAllowed(req) {
   if (allowedOrigins.size === 0) return true;
@@ -505,6 +571,15 @@ function originAllowed(req) {
   return allowedOrigins.has(origin);
 }
 
+const tlsCert = process.env.OPS_MCP_TLS_CERT_FILE;
+const tlsKey = process.env.OPS_MCP_TLS_KEY_FILE;
+if (Boolean(tlsCert) !== Boolean(tlsKey)) throw new Error('Both Ops MCP TLS key and certificate are required');
+if (config.policyFile && !tlsCert && !config.localOnly) throw new Error('Network-accessible client policies require TLS');
+const createServer = tlsCert ? handler => {
+  const { cert, key } = readTlsPair(tlsCert, tlsKey);
+  return createHttpsServer({ cert, key, minVersion: 'TLSv1.2' }, handler);
+} : createHttpServer;
+let tlsReload;
 const httpServer = createServer((req, res) => {
   let url;
   try {
@@ -518,7 +593,7 @@ const httpServer = createServer((req, res) => {
   }
 
   if (url.pathname === '/healthz') {
-    const ready = authentication.ready();
+    const ready = authentication.ready() && (!tlsReload || tlsReload.ready());
     res.writeHead(ready ? 200 : 503, { 'content-type': 'application/json' });
     res.end(JSON.stringify({ ok: ready, service: 'kubeclaw-ops-mcp' }));
     return;
@@ -530,7 +605,9 @@ const httpServer = createServer((req, res) => {
     return;
   }
 
-  if (!requestAuthorized(req)) {
+  const client = authentication.authenticate(req.headers.authorization);
+  if (!client) {
+    audit({ phase: 'authentication-denied' });
     res.writeHead(401, { 'content-type': 'application/json', 'www-authenticate': 'Bearer' });
     res.end(JSON.stringify({ error: 'unauthorized' }));
     return;
@@ -542,19 +619,24 @@ const httpServer = createServer((req, res) => {
     return;
   }
 
-  Promise.resolve().then(() => nodeMcpHandler(req, res)).catch(() => {
+  const context = identityContext(client);
+  res.once('finish', () => requestIdentity.run(context, () => audit({ phase: 'http-completed', status: res.statusCode })));
+  requestIdentity.run(context, () => Promise.resolve().then(() => nodeMcpHandler(req, res)).catch(() => {
     if (res.headersSent) { res.destroy(); return; }
     res.writeHead(500, { 'content-type': 'application/json' });
     res.end(JSON.stringify({ error: 'request_failed' }));
-  });
+  }));
 });
 
+if (tlsCert) tlsReload = reloadTls(httpServer, tlsCert, tlsKey);
+
 httpServer.listen(PORT, HOST, () => {
-  console.error(`kubeclaw-ops-mcp listening on http://${HOST}:${httpServer.address().port}/mcp`);
+  console.error(`kubeclaw-ops-mcp listening on ${tlsCert ? 'https' : 'http'}://${HOST}:${httpServer.address().port}/mcp`);
 });
 
 async function shutdown(signal) {
   console.error(`received ${signal}, shutting down`);
+  tlsReload?.close();
   httpServer.close();
   await mcpHandler.close();
   process.exit(0);

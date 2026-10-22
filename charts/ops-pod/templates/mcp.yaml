@@ -1,0 +1,108 @@
+{{- $name := printf "%s-mcp" .Release.Name -}}
+{{- $clients := list -}}
+{{- $ids := dict -}}
+{{- range .Values.mcp.clients -}}
+{{- if or (not (regexMatch "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$" .id)) (gt (len .id) 63) (hasKey $ids .id) -}}
+{{- fail "mcp client ids must be unique DNS labels" -}}
+{{- end -}}
+{{- $_ := set $ids .id true -}}
+{{- range .namespaces -}}
+{{- if not (has . $.Values.rbac.namespaces) -}}{{- fail "MCP client namespace is outside rbac.namespaces" -}}{{- end -}}
+{{- end -}}
+{{- range .namespacePrefixes -}}
+{{- if not (has (lower .) $.Values.rbac.namespacePrefixes) -}}{{- fail "MCP client prefix is outside rbac.namespacePrefixes" -}}{{- end -}}
+{{- end -}}
+{{- range .exec -}}
+{{- if .namespacePrefix -}}
+{{- if not (has (lower .namespacePrefix) $.Values.rbac.namespacePrefixes) -}}{{- fail "MCP exec prefix is outside rbac.namespacePrefixes" -}}{{- end -}}
+{{- else if not (has .namespace $.Values.rbac.execNamespaces) -}}{{- fail "MCP exec grant is outside rbac.execNamespaces" -}}{{- end -}}
+{{- end -}}
+{{- $clients = append $clients (dict "id" .id "tokenFile" (printf "/var/run/ops-clients/%s/token" .id) "namespaces" .namespaces "namespacePrefixes" (.namespacePrefixes | default list) "tools" .tools "exec" .exec) -}}
+{{- end -}}
+apiVersion: v1
+kind: ConfigMap
+metadata: {name: {{ $name }}-policy}
+data:
+  policy.json: {{ dict "clients" $clients | toJson | quote }}
+---
+apiVersion: v1
+kind: Service
+metadata: {name: {{ $name }}}
+spec:
+  selector: {app.kubernetes.io/name: {{ $name }}}
+  ports: [{name: https-mcp, port: 8080, targetPort: 8080}]
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata: {name: {{ $name }}}
+spec:
+  replicas: 1
+  revisionHistoryLimit: 3
+  selector:
+    matchLabels: {app.kubernetes.io/name: {{ $name }}}
+  template:
+    metadata:
+      labels: {app.kubernetes.io/name: {{ $name }}}
+    spec:
+      serviceAccountName: {{ $name }}
+      automountServiceAccountToken: false
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        seccompProfile: {type: RuntimeDefault}
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets: {{ toYaml . | nindent 8 }}
+      {{- end }}
+      containers:
+        - name: ops-mcp
+          image: {{ .Values.mcpImage | quote }}
+          env:
+            - {name: HOST, value: "0.0.0.0"}
+            - {name: OPS_DEFAULT_NAMESPACE, value: {{ .Values.defaultNamespace | quote }}}
+            - {name: OPS_ALLOWED_NAMESPACES, value: {{ join "," .Values.rbac.namespaces | quote }}}
+            - {name: OPS_ALLOWED_NAMESPACE_PREFIXES, value: {{ join "," .Values.rbac.namespacePrefixes | quote }}}
+            - {name: ARGOCD_NAMESPACE, value: {{ .Values.argoNamespace | quote }}}
+            - {name: OPS_MCP_POLICY_FILE, value: /etc/ops-mcp/policy.json}
+            - {name: OPS_MCP_TLS_CERT_FILE, value: /etc/ops-tls/tls.crt}
+            - {name: OPS_MCP_TLS_KEY_FILE, value: /etc/ops-tls/tls.key}
+          ports: [{name: https-mcp, containerPort: 8080}]
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities: {drop: [ALL]}
+          resources: {{ toYaml .Values.resources.mcp | nindent 12 }}
+          volumeMounts:
+            - {name: kube-api, mountPath: /var/run/secrets/kubernetes.io/serviceaccount, readOnly: true}
+            - {name: policy, mountPath: /etc/ops-mcp, readOnly: true}
+            - {name: tls, mountPath: /etc/ops-tls, readOnly: true}
+            {{- range .Values.mcp.clients }}
+            - {name: client-{{ .id }}, mountPath: /var/run/ops-clients/{{ .id }}, readOnly: true}
+            {{- end }}
+          readinessProbe:
+            httpGet: {path: /healthz, port: https-mcp, scheme: HTTPS}
+            periodSeconds: 10
+          # Credential/policy failure affects readiness; it must not cause a
+          # restart loop. Liveness only checks that the TLS listener responds.
+          livenessProbe:
+            tcpSocket: {port: https-mcp}
+            initialDelaySeconds: 20
+            periodSeconds: 20
+      volumes:
+        - name: policy
+          configMap: {name: {{ $name }}-policy}
+        - name: tls
+          secret: {secretName: {{ required "mcp.tlsSecret is required" .Values.mcp.tlsSecret }}, defaultMode: 0440}
+        {{- range .Values.mcp.clients }}
+        - name: client-{{ .id }}
+          secret: {secretName: {{ required "client tokenSecret is required" .tokenSecret }}, defaultMode: 0440}
+        {{- end }}
+        - name: kube-api
+          projected:
+            defaultMode: 0440
+            sources:
+              - serviceAccountToken: {path: token, expirationSeconds: 3600}
+              - configMap:
+                  name: kube-root-ca.crt
+                  items: [{key: ca.crt, path: ca.crt}]

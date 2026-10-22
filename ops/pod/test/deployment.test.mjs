@@ -19,6 +19,8 @@ const render = extra => parseAllDocuments(execFileSync(helm, [...args, ...extra]
   return doc.toJSON();
 }).filter(Boolean);
 
+const noExecClients = parseAllDocuments(readFileSync(join(repo, 'charts/ops-pod/values.yaml'), 'utf8'))[0].toJSON().mcp.clients.map(client => ({ ...client, exec: [] }));
+
 test('real Helm render isolates credentials and persists a single non-root Codex identity', () => {
   const resources = render([]);
   const stateful = resources.find(x => x.kind === 'StatefulSet');
@@ -28,26 +30,35 @@ test('real Helm render isolates credentials and persists a single non-root Codex
   assert.equal(pod.hostNetwork, undefined);
   assert.equal(pod.shareProcessNamespace, undefined);
   assert.equal(pod.securityContext.runAsNonRoot, true);
-  assert.deepEqual(pod.containers.map(c => c.name), ['codex', 'ops-mcp']);
-  const [codex, mcp] = pod.containers;
-  assert.ok(codex.volumeMounts.some(m => m.name === 'kube-api' && m.readOnly));
-  assert.equal(codex.env.find(e => e.name === 'OPS_EXEC_NAMESPACES').value, 'kubeclaw');
-  assert.equal(codex.env.find(e => e.name === 'KUBECONFIG').value, '/var/run/kubeclaw-ops/kubeconfig/config');
-  const kubeconfig = parseAllDocuments(resources.find(x => x.kind === 'ConfigMap').data.config)[0].toJSON();
-  assert.equal(kubeconfig.users[0].user.tokenFile, '/var/run/secrets/kubernetes.io/serviceaccount/token');
-  assert.equal(kubeconfig.users[0].user.token, undefined);
-  assert.equal(kubeconfig.contexts[0].context.namespace, 'kubeclaw');
+  assert.deepEqual(pod.containers.map(c => c.name), ['codex']);
+  const codex = pod.containers[0];
+  const mcpPod = resources.find(x => x.kind === 'Deployment').spec.template.spec;
+  const mcp = mcpPod.containers[0];
+  assert.equal(mcpPod.serviceAccountName, 'codex-ops-mcp');
+  assert.equal(pod.serviceAccountName, 'codex-ops');
+  assert.equal(codex.volumeMounts.some(m => ['kube-api', 'kubeconfig', 'policy'].includes(m.name)), false);
+  assert.equal(codex.env.some(e => e.name === 'KUBECONFIG'), false);
+  assert.equal(codex.env.find(e => e.name === 'OPS_MCP_URL').value, 'https://codex-ops-mcp.kubeclaw-ops.svc:8080/mcp');
+  assert.ok(codex.volumeMounts.some(m => m.name === 'mcp-ca' && m.readOnly));
+  assert.equal(resources.some(x => x.kind === 'ConfigMap' && x.metadata.name.includes('kubeconfig')), false);
+  for (const binding of resources.filter(x => ['RoleBinding', 'ClusterRoleBinding'].includes(x.kind))) {
+    assert.deepEqual(binding.subjects, [{ kind: 'ServiceAccount', name: binding.metadata.name.endsWith('-namespace-access') ? 'codex-ops-mcp-namespace-access' : binding.metadata.name.endsWith('-provisioner') ? 'codex-ops-mcp-provisioner' : 'codex-ops-mcp', namespace: 'kubeclaw-ops' }]);
+  }
+  const policyData = JSON.parse(resources.find(x => x.kind === 'ConfigMap' && x.data['policy.json']).data['policy.json']);
+  assert.deepEqual(policyData.clients.map(x => x.id), ['codex', 'nova', 'buster']);
+  assert.equal(policyData.clients[0].tokenFile, '/var/run/ops-clients/codex/token');
+  assert.ok(policyData.clients.every(x => !('token' in x)));
   assert.equal(mcp.volumeMounts.some(m => ['home', 'workspace'].includes(m.name)), false);
   assert.ok(mcp.volumeMounts.some(m => m.name === 'kube-api' && m.readOnly));
   assert.deepEqual(stateful.spec.volumeClaimTemplates.map(x => x.metadata.name), ['home', 'workspace']);
-  for (const container of pod.containers) {
+  for (const container of [...pod.containers, mcp]) {
     assert.equal(container.securityContext.allowPrivilegeEscalation, false);
     assert.equal(container.securityContext.readOnlyRootFilesystem, true);
     assert.deepEqual(container.securityContext.capabilities.drop, ['ALL']);
   }
   const bound = resources.filter(x => x.kind === 'RoleBinding' && x.roleRef.kind === 'ClusterRole').map(x => x.metadata.namespace);
   assert.deepEqual(bound, ['kubeclaw']);
-  for (const role of resources.filter(x => x.kind === 'ClusterRole')) {
+  for (const role of resources.filter(x => x.kind === 'ClusterRole' && !x.metadata.name.endsWith('-namespace-access') && !x.metadata.name.endsWith('-test-exec'))) {
     for (const rule of role.rules) {
       assert.deepEqual(rule.verbs, ['get', 'list']);
       for (const resource of rule.resources) assert.ok(!['*', 'secrets', 'configmaps', 'pods/exec', 'pods/portforward', 'nodes/proxy', 'serviceaccounts/token'].includes(resource));
@@ -55,7 +66,10 @@ test('real Helm render isolates credentials and persists a single non-root Codex
   }
   const policy = resources.find(x => x.kind === 'NetworkPolicy');
   assert.deepEqual(policy.spec.ingress, []);
-  assert.ok(policy.spec.egress.some(x => x.to.some(y => y.ipBlock?.cidr === '10.0.0.1/32')));
+  assert.equal(policy.spec.egress.some(x => x.to.some(y => y.ipBlock?.cidr === '10.0.0.1/32')), false);
+  const mcpPolicy = resources.find(x => x.kind === 'NetworkPolicy' && x.metadata.name === 'codex-ops-mcp');
+  assert.equal(mcpPolicy.spec.ingress.length, 3);
+  assert.ok(mcpPolicy.spec.egress.some(x => x.to.some(y => y.ipBlock?.cidr === '10.0.0.1/32')));
 });
 
 test('optional Tailscale and Cilium render without privileged access or operator dependency', () => {
@@ -94,36 +108,32 @@ test('the actual pinned Codex CLI accepts the installed MCP config and exposes p
   } finally { rmSync(dir, { recursive: true, force: true }); }
 });
 
-test('custom observer namespace is shared by MCP and the Codex verification process', () => {
-  const resources = render(['--set', 'defaultNamespace=platform', '--set', 'rbac.namespaces[0]=platform']);
-  const pod = resources.find(x => x.kind === 'StatefulSet').spec.template.spec;
-  for (const container of pod.containers) {
-    assert.equal(container.env.find(x => x.name === 'OPS_DEFAULT_NAMESPACE').value, 'platform');
-  }
-  assert.deepEqual(resources.filter(x => x.kind === 'RoleBinding' && x.roleRef.kind === 'ClusterRole').map(x => x.metadata.namespace), ['platform']);
+test('client namespaces cannot exceed the MCP identity scope', () => {
+  assert.throws(() => render(['--set-json', 'rbac.namespaces=["platform"]', '--set', 'defaultNamespace=platform']));
+  assert.throws(() => render(['--set-json', 'mcp.clients[0].namespaces=["private"]']));
 });
 
 test('exec is namespace scoped, independent of observer discovery, and removable', () => {
   const resources = render(['--set-json', 'rbac.namespaces=["kubeclaw","argocd","kube-system"]']);
-  const roles = resources.filter(x => x.kind === 'Role');
+  const roles = resources.filter(x => x.kind === 'Role' && !x.metadata.name.endsWith('-provisioner'));
   assert.equal(roles.length, 1);
   assert.equal(roles[0].metadata.namespace, 'kubeclaw');
   assert.deepEqual(roles[0].rules, [
     { apiGroups: [''], resources: ['pods'], verbs: ['get', 'list'] },
     { apiGroups: [''], resources: ['pods/exec'], verbs: ['get', 'create'] },
   ]);
-  const binding = resources.find(x => x.kind === 'RoleBinding' && x.roleRef.kind === 'Role');
+  const binding = resources.find(x => x.kind === 'RoleBinding' && x.roleRef.kind === 'Role' && !x.metadata.name.endsWith('-provisioner'));
   assert.equal(binding.metadata.namespace, 'kubeclaw');
   assert.equal(binding.roleRef.name, roles[0].metadata.name);
-  assert.deepEqual(binding.subjects, [{ kind: 'ServiceAccount', name: 'codex-ops', namespace: 'kubeclaw-ops' }]);
-  const disabled = render(['--set-json', 'rbac.execNamespaces=[]']);
-  assert.ok(!disabled.some(x => x.kind === 'Role'));
+  assert.deepEqual(binding.subjects, [{ kind: 'ServiceAccount', name: 'codex-ops-mcp', namespace: 'kubeclaw-ops' }]);
+  const disabled = render(['--set-json', 'rbac.execNamespaces=[]', '--set-json', 'mcp.clients=' + JSON.stringify(noExecClients)]);
+  assert.ok(!disabled.some(x => x.kind === 'Role' && !x.metadata.name.endsWith('-provisioner')));
   const codex = disabled.find(x => x.kind === 'StatefulSet').spec.template.spec.containers[0];
   assert.ok(!codex.volumeMounts.some(m => m.name === 'kube-api'));
   assert.ok(!codex.env.some(e => e.name === 'KUBECONFIG'));
-  assert.ok(!disabled.some(x => x.kind === 'ConfigMap'));
-  assert.equal(codex.env.find(e => e.name === 'OPS_EXEC_NAMESPACES').value, '');
-  const custom = render(['--set-json', 'rbac.execNamespaces=["buster","prism"]']);
-  assert.deepEqual(custom.filter(x => x.kind === 'Role').map(x => x.metadata.namespace), ['buster', 'prism']);
+  assert.ok(disabled.some(x => x.kind === 'Deployment'));
+  assert.ok(!codex.env.some(e => e.name === 'OPS_EXEC_NAMESPACES'));
+  const custom = render(['--set-json', 'rbac.execNamespaces=["buster","prism"]', '--set-json', 'mcp.clients=' + JSON.stringify(noExecClients)]);
+  assert.deepEqual(custom.filter(x => x.kind === 'Role' && !x.metadata.name.endsWith('-provisioner')).map(x => x.metadata.namespace), ['buster', 'prism']);
   assert.throws(() => render(['--set-json', 'rbac.execNamespaces=["*"]']));
 });

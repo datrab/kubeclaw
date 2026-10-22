@@ -4,6 +4,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import yaml from 'js-yaml';
 import { platformServices } from './platform-services.mjs';
+import { opsMcpCredentialDiffs } from './ops-mcp-gitops.mjs';
 import { validateReleaseReceipt } from './updates/deployment-release.mjs';
 
 const root = path.resolve(import.meta.dirname, '..');
@@ -13,16 +14,19 @@ const health = fs.readFileSync(path.join(root, 'charts/gitops/files/application-
 const opsReceipt = JSON.parse(fs.readFileSync(path.join(root, 'releases/ops-images.json'), 'utf8'));
 validateReleaseReceipt(opsReceipt, 'ops');
 const opsValues = yaml.load(fs.readFileSync(path.join(root, 'gitops/platform/values/codex-ops.yaml'), 'utf8'));
+const opsChartDefaults = yaml.load(fs.readFileSync(path.join(root, 'charts/ops-pod/values.yaml'), 'utf8'));
 const project = {
   apiVersion: 'argoproj.io/v1alpha1', kind: 'AppProject',
   metadata: { name: 'infra', namespace: 'argocd', annotations: { 'argocd.argoproj.io/sync-wave': '-1' } },
   spec: {
     description: 'Infrastructure applications; destinations are added during reviewed handovers.',
     sourceRepos: [repository, 'https://argoproj.github.io/argo-helm', 'https://pkgs.tailscale.com/helmcharts'],
-    destinations: [...new Set(['argocd', 'tailscale', 'kubeclaw-ops', 'kubeclaw', ...opsValues.rbac.namespaces])].map(namespace => ({ server: 'https://kubernetes.default.svc', namespace })),
+    destinations: [...new Set(['argocd', 'tailscale', 'kubeclaw-ops', 'kubeclaw', ...opsValues.rbac.namespaces, ...(opsValues.mcp?.clients ?? opsChartDefaults.mcp.clients).map(client => client.namespace)])].map(namespace => ({ server: 'https://kubernetes.default.svc', namespace })),
     clusterResourceWhitelist: [
       { group: 'rbac.authorization.k8s.io', kind: 'ClusterRole' },
       { group: 'rbac.authorization.k8s.io', kind: 'ClusterRoleBinding' },
+      { group: 'admissionregistration.k8s.io', kind: 'ValidatingAdmissionPolicy' },
+      { group: 'admissionregistration.k8s.io', kind: 'ValidatingAdmissionPolicyBinding' },
       { group: 'apiextensions.k8s.io', kind: 'CustomResourceDefinition' },
       { group: 'networking.k8s.io', kind: 'IngressClass' },
     ],
@@ -70,6 +74,7 @@ const tailscale = {
     syncPolicy: { syncOptions: ['FailOnSharedResource=true', 'ServerSideApply=true'] },
   },
 };
+const credentialDiffs = opsMcpCredentialDiffs('kubeclaw-ops', opsChartDefaults.mcp, opsValues.mcp);
 const ops = {
   apiVersion: 'argoproj.io/v1alpha1', kind: 'Application',
   metadata: { name: 'codex-ops', namespace: 'argocd' },
@@ -83,7 +88,8 @@ const ops = {
       },
     },
     destination: { server: 'https://kubernetes.default.svc', namespace: 'kubeclaw-ops' },
-    syncPolicy: { syncOptions: ['FailOnSharedResource=true'] },
+    ...(credentialDiffs.length ? { ignoreDifferences: credentialDiffs } : {}),
+    syncPolicy: { syncOptions: ['FailOnSharedResource=true', ...(credentialDiffs.length ? ['RespectIgnoreDifferences=true'] : [])] },
   },
 };
 const dataProject = {

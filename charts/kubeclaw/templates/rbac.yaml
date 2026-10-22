@@ -1,11 +1,9 @@
-{{- $leaseClientEnabled := and .Values.busterNamespaceBroker.enabled (or (eq .Values.agentRole "buster") .Values.busterNamespaceBroker.leaseClient.enabled) -}}
-{{- $verificationReadEnabled := and $leaseClientEnabled .Values.busterNamespaceBroker.leaseClient.verificationRead.enabled -}}
+{{- $leaseClientEnabled := and .Values.busterNamespaceBroker.enabled (eq .Values.agentRole "buster") -}}
 {{- if and .Values.serviceAccount.create $leaseClientEnabled }}
 ---
 # Buster may request ephemeral namespaces but cannot create/delete namespaces or
-# mutate workloads outside broker-created namespace RoleBindings. Nova may opt
-# into this same lease-client role for real E2E verification without receiving
-# direct Kubernetes workload permissions.
+# mutate workloads outside broker-created namespace RoleBindings. Other agents
+# use the Ops MCP and must never receive a lease-client binding.
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
@@ -42,72 +40,51 @@ subjects:
   - kind: ServiceAccount
     name: {{ include "kubeclaw.fullname" . }}
     namespace: {{ .Release.Namespace }}
-{{- end }}
-{{- if and .Values.serviceAccount.create $verificationReadEnabled }}
+{{- else if and (eq .Values.agentRole "nova") .Values.busterNamespaceBroker.leaseClient.verificationRead.retireLegacyBindings }}
+# Explicitly revoke old grants in place. Runtime Argo apps deliberately have
+# prune=false; omitting these objects would leave their old permissions alive.
+{{- $name := include "kubeclaw.fullname" . -}}
 ---
-# Read-only visibility for Nova's real E2E capability probe. This does not grant
-# namespace/workload mutation. Secret access is separately namespace-scoped below.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: {{ $name }}-namespace-lease-client
+  namespace: {{ .Release.Namespace }}
+rules: []
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: {{ $name }}-namespace-lease-client
+  namespace: {{ .Release.Namespace }}
+roleRef: {apiGroup: rbac.authorization.k8s.io, kind: Role, name: {{ $name }}-namespace-lease-client}
+subjects: []
+---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
-metadata:
-  name: {{ include "kubeclaw.fullname" . }}-verification-read
-  labels:
-    {{- include "kubeclaw.labels" . | nindent 4 }}
-rules:
-  - apiGroups: [""]
-    resources: ["pods"]
-    verbs: ["get", "list", "watch"]
-  - apiGroups: ["networking.k8s.io"]
-    resources: ["ingressclasses"]
-    resourceNames: ["tailscale"]
-    verbs: ["get"]
+metadata: {name: {{ $name }}-verification-read}
+rules: []
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
-metadata:
-  name: {{ include "kubeclaw.fullname" . }}-verification-read
-  labels:
-    {{- include "kubeclaw.labels" . | nindent 4 }}
-roleRef:
-  apiGroup: rbac.authorization.k8s.io
-  kind: ClusterRole
-  name: {{ include "kubeclaw.fullname" . }}-verification-read
-subjects:
-  - kind: ServiceAccount
-    name: {{ include "kubeclaw.fullname" . }}
-    namespace: {{ .Release.Namespace }}
+metadata: {name: {{ $name }}-verification-read}
+roleRef: {apiGroup: rbac.authorization.k8s.io, kind: ClusterRole, name: {{ $name }}-verification-read}
+subjects: []
+{{- $namespace := .Values.busterNamespaceBroker.leaseClient.verificationRead.tailscaleOperatorNamespace | default "tailscale" -}}
+{{- $secretReadName := printf "%s-verification-secret-%s" $name (printf "%s/%s" .Release.Namespace .Release.Name | sha256sum | trunc 8) }}
 ---
-{{- $operatorNamespace := required "verificationRead.tailscaleOperatorNamespace is required" .Values.busterNamespaceBroker.leaseClient.verificationRead.tailscaleOperatorNamespace }}
-{{- $oauthSecret := required "verificationRead.tailscaleOAuthSecretName is required" .Values.busterNamespaceBroker.leaseClient.verificationRead.tailscaleOAuthSecretName }}
-{{- $secretReadName := printf "%s-verification-secret-%s" (include "kubeclaw.fullname" .) (printf "%s/%s" .Release.Namespace .Release.Name | sha256sum | trunc 8) }}
-# The operator namespace must already exist. The agent release owns only these
-# RBAC resources there, not the namespace or the OAuth Secret itself.
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
   name: {{ $secretReadName }}
-  namespace: {{ $operatorNamespace | quote }}
-  labels:
-    {{- include "kubeclaw.labels" . | nindent 4 }}
-rules:
-  - apiGroups: [""]
-    resources: ["secrets"]
-    resourceNames: [{{ $oauthSecret | quote }}]
-    verbs: ["get"]
+  namespace: {{ $namespace }}
+rules: []
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
   name: {{ $secretReadName }}
-  namespace: {{ $operatorNamespace | quote }}
-  labels:
-    {{- include "kubeclaw.labels" . | nindent 4 }}
-roleRef:
-  apiGroup: rbac.authorization.k8s.io
-  kind: Role
-  name: {{ $secretReadName }}
-subjects:
-  - kind: ServiceAccount
-    name: {{ include "kubeclaw.fullname" . }}
-    namespace: {{ .Release.Namespace }}
+  namespace: {{ $namespace }}
+roleRef: {apiGroup: rbac.authorization.k8s.io, kind: Role, name: {{ $secretReadName }}}
+subjects: []
 {{- end }}

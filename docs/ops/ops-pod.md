@@ -5,7 +5,7 @@ Audience: Kubernetes operator, incident responder, platform maintainer
 Owner: platform operations
 Evidence: `scripts/deploy-ops-pod.sh`; `ops/pod/verify.py`; `charts/ops-pod/`
 Applies to: the persistent Codex Ops Pod
-Last verified: source and CI checks on 2026-09-06; live acceptance pending
+Last verified: local source, transport and Helm checks on 2026-10-21; live acceptance pending
 
 Architecture: [Codex Ops Pod architecture](../architecture/ops-pod.md).
 
@@ -22,8 +22,8 @@ Architecture: [Codex Ops Pod architecture](../architecture/ops-pod.md).
 
 ## Overview
 
-One StatefulSet runs the official Codex CLI and the KubeClaw MCP server in separate
-containers. Argo owns the Helm release, but the `codex-ops` child Application has
+A StatefulSet runs the official Codex CLI. A separate Deployment runs the central
+Ops MCP, shared by Codex, Nova and Buster through per-client policy. Argo owns the Helm release, but the `codex-ops` child Application has
 no automated sync so an image promotion cannot restart an active workspace. There
 is no additional VM. An optional unprivileged Tailscale sidecar provides outbound
 access to the existing tailnet.
@@ -38,21 +38,21 @@ Pod itself is unreachable; this design does not replace that path.
 
 | Component | Persistent state | Normal access |
 | --- | --- | --- |
-| Codex CLI 0.162.0 | Home/auth/config (2 GiB), workspace (20 GiB) | Local MCP; GitHub using your separately authenticated identity |
-| Ops MCP | None | Read-only Kubernetes observer, exact discovered namespaces; nodes and global Cilium policies |
+| Codex CLI 0.162.0 | Home/auth/config (2 GiB), workspace (20 GiB) | Central MCP; GitHub using your separately authenticated identity |
+| Ops MCP | None | Namespace/tool-scoped Kubernetes observations and explicitly granted pod exec |
 | Optional Tailscale | Separate 1 GiB PVC | Outbound SOCKS5 on localhost:1055, subject to tailnet grants |
 
-Default CPU/memory requests total 125m/320Mi; limits total 2.5 CPU/3584Mi without
+Default steady-state CPU/memory requests total 135m/352Mi; limits total 2.7 CPU/3712Mi without
 Tailscale. These are initial scheduling budgets, not measured consumption. Local
 builds may need larger limits. Storage uses the cluster's default StorageClass
 unless overridden. With local-path storage, PVCs remain dependent on their node.
 
-Both primary containers run as UID 1000, with read-only root filesystems, no added
+Codex and MCP run as UID 1000, with read-only root filesystems, no added
 Linux capabilities, no privilege escalation, and no host mounts or runtime socket.
-Only MCP mounts a short-lived, kubelet-rotated observer token. Codex receives a
-separate random MCP bearer and has no Kubernetes credential by default. The MCP
-listens on loopback only. No Ingress, public MCP endpoint or inbound remote shell
-is created. The headless Service supplies StatefulSet identity, not MCP access.
+MCP and its separate platform provisioner/reconciler identities use short-lived Kubernetes tokens. Codex and Nova
+receive distinct MCP bearers and no API credentials or bindings. MCP is reachable
+through an internal TLS Service. NetworkPolicy permits only configured clients.
+The headless Codex Service remains its StatefulSet identity.
 
 The Codex configuration uses `danger-full-access` **inside this restricted
 container**, with `on-request` approvals. The container is the execution boundary;
@@ -60,11 +60,9 @@ there is no additional nested Codex OS sandbox. GitHub credentials and the
 persistent workspace are therefore accessible to processes launched by Codex.
 Choose repository-scoped GitHub credentials and review requested changes.
 
-NetworkPolicy denies ingress and permits cluster DNS, discovered API IPs and
-public HTTPS. Cilium API-server entity access is added when its CRD is detected.
-Policies apply to the entire Pod, including Codex. They do not enforce an OpenAI-
-or GitHub-only HTTPS allowlist. The public egress rule targets the existing IPv4
-setup; IPv6-only infrastructure needs corresponding explicit values/templates.
+Codex permits DNS, MCP access and public HTTPS; it has no Kubernetes API egress
+rule. The separate MCP permits API/DNS/Hubble access. Nova's own API egress is
+removed. Public HTTPS is not an OpenAI/GitHub hostname allowlist.
 
 ## Build and deploy once
 
@@ -87,7 +85,7 @@ export KUBE_CONTEXT='<your-existing-context>'
 The direct `deploy` helper remains a bootstrap/recovery path before Argo adoption;
 do not use it for routine upgrades of an Argo-owned release. The helper discovers
 actual API endpoints and existing observer namespaces, validates the Helm render,
-creates `kubeclaw-ops`, generates the MCP bearer and copies the existing
+creates `kubeclaw-ops` and copies the existing
 `kubeclaw/ghcr-secret` if needed. It does not print credentials. Initial `NotReady`
 while awaiting Codex login is expected.
 
@@ -111,6 +109,109 @@ or repository contents/pull-request write when you want Codex to propose fixes.
 Do not grant administrator or organization-wide access. The Tailscale key should
 use a dedicated tag and grants limited to required management destinations. Neither
 file is committed. Omit them for interactive GitHub login and no Tailscale.
+
+## Central MCP migration
+
+This source change does not itself alter the running cluster. Existing release
+receipts and generated values still select their recorded source commits/images.
+Publish and promote matching Ops/runtime releases before regenerating their values;
+do not hand-edit old receipts to claim that old images contain the new server.
+The deployment path is GitHub image promotion followed by an Argo sync. Agent Pods
+never need an administrative kubeconfig for it. `codex-ops` remains manually synced
+so the operator can choose an idle Codex session; the sync itself runs in Argo.
+
+1. Finish active Nova/Buster runs and record the selected revisions. Existing Nova
+   leases become unauthorized after its broker grant is removed. The controller
+   rejects those provisioned leases and deletes their owned test namespaces,
+   revoking the contained RoleBindings. Drain runs before this transition.
+2. Merge the implementation after CI succeeds. Publish and promote the matching
+   Ops images through the existing `Build Ops Images` / `Promote image release`
+   workflows. Promotion updates the exact chart revision and immutable images.
+   The generated Ops Application also carries exact credential-data diff rules.
+3. Perform a **full** Argo sync of `codex-ops` while the workspace is idle. Wave -3
+   creates deterministic empty named Secrets/ConfigMaps, the provisioner identity,
+   named get/patch permissions and network access. The Sync hook in wave -1 fills
+   missing client tokens, the retained private CA, the service certificate and
+   public trust. Only after the hook succeeds do the wave-0 workloads start.
+   Selective resource sync skips hooks and is not a supported initial cutover.
+4. Verify MCP readiness and Codex MCP access. Then promote/sync the runtime release
+   for Nova and Buster. Explicit empty rules/subjects retire Nova's former grants
+   even with `prune: false`; no manual RoleBinding deletion is needed.
+   Keep Ops and runtime promotion in this order so Nova's new mounts already exist.
+5. Confirm that both agent identities have no direct workload, Secret, exec or
+   namespace authority, including any separately managed group bindings. Check
+   absence of API-token mounts in Codex/Nova and allowed/denied MCP operations.
+   Run the Buster lease test. Local rendering and transport fixtures do not prove
+   live cluster authorization or a completed cutover.
+
+The chart creates no random credential bytes during rendering and commits no
+credential material. Its provisioner can only `get` and `patch` the predeclared
+Secret/ConfigMap names in the configured client namespaces: no `create`, `list`,
+workload exec or cluster-wide Secret grant. It uses optimistic resource-version
+checks. Existing valid client tokens are preserved; differing copies or reused
+client credentials fail the hook instead of silently rotating identities.
+
+Argo owns the credential objects; the provisioner owns their `/data`. The generated
+Application sets `RespectIgnoreDifferences=true` with exact kind/namespace/name
+rules for that field only. RBAC, policies, images, object metadata and all unrelated
+Secrets remain diffed normally. Credential objects are retained on prune/removal
+so a reconciliation cannot discard the CA or unexpectedly reset a client token.
+Removing a client from policy revokes access even while its old Secret is retained.
+These rules follow Argo's [sync phases and waves](https://argo-cd.readthedocs.io/en/stable/user-guide/sync-waves/)
+and [sync options](https://argo-cd.readthedocs.io/en/stable/user-guide/sync-options/).
+
+The daily CronJob runs the same idempotent provisioner. It renews the 90-day leaf
+certificate when fewer than 30 days remain, under the retained private service CA.
+The CA signing key stays in `kubeclaw-ops`, is not mounted into the MCP, and is never
+copied to clients. The MCP reloads a valid Secret key/certificate pair without
+restarting; a half-observed rotation retains the last valid context. Clients keep
+trusting the same CA. Back up the retained CA Secret; a lost CA with an existing
+leaf fails closed. Plan a reviewed CA rollover before the ten-year CA expires.
+
+Set `mcp.provision.enabled=false` only when an external credential/PKI controller
+owns these objects. That also disables the Job/CronJob and generated data-diff
+exceptions. Custom names/namespaces must align between clients and chart values.
+Existing image-pull/GitHub/Tailscale credentials remain separate from this MCP
+provisioning path and are not copied into Git.
+
+`mcp.clients` is the central configuration point. Each entry has `id`, a server-side
+`tokenSecret`, client namespace/Pod selector, `namespaces`, `namespacePrefixes`,
+exact `tools` and explicit `exec` grants. `rbac.namespaces`, `execNamespaces` and
+`namespacePrefixes` cap the backend. Buster receives only `test*` reads and exec;
+Nova and Ops receive `test*` in addition to their existing scopes. Matching ignores
+case and covers `test`, `testing`, `test-123` and future matching namespaces.
+The dedicated reconciler grants only the MCP access, normally within five seconds
+of namespace creation. Its mandatory admission guard rejects other namespaces,
+roles or subjects. No agent gets these RoleBindings. Buster retains only its
+existing broker lease exception. Buster and Nova use the shipped client:
+`node /opt/ops-mcp-client/client.mjs list`, or
+`node /opt/ops-mcp-client/client.mjs call get_pod '{"namespace":"test-build","pod":"runner"}'`.
+Prefix exec grants explicitly permit all Pods/regular containers in `test*`;
+exact grants elsewhere keep their label/container restrictions.
+
+Nova calls the shipped client without Kubernetes credentials:
+
+```bash
+node /opt/ops-mcp-client/client.mjs list
+node /opt/ops-mcp-client/client.mjs call get_pod '{"namespace":"kubeclaw","pod":"<pod-name>"}'
+```
+
+The Nova workspace TOOLS template documents this interface. Existing persisted
+TOOLS.md files are retained when `workspace.override=false`; reconcile that one
+section on an existing workspace without overwriting its other notes.
+
+Exec has no stdin or TTY, max 120-second transport deadline, max 64-KiB output,
+and at most four concurrent connections. Policy may set lower limits. A lost
+connection, timeout or output overflow does not confirm remote process termination;
+inspect effects before retrying. Audit JSON on MCP stderr records the client,
+request, tool, target and command digest, not argument contents, output or tokens.
+Send these records to the existing log collector for durable retention.
+
+Rotate Nova tokens in both namespaces together and restart the Codex supervised
+process after rotating its bearer (the server observes file rotation immediately).
+Leaf renewal is automatic and does not restart MCP. A CA replacement is a
+separate coordinated trust rollover for both clients.
+Keep recovery administrative credentials outside all agent Pods.
 
 ## Login, pair and use
 
@@ -147,8 +248,9 @@ cd /workspace/kubeclaw
 The MCP is preconfigured as `kubeclaw_ops`. It exposes namespace workloads, pod
 logs/events, Argo Application state, nodes and Cilium policy/DaemonSet state.
 Kubernetes unavailability produces tool errors, not fabricated healthy output.
-GitHub changes use `gh` and Git in the workspace. The default MCP provides
-observations; it cannot restart workloads, execute in other Pods or change policy.
+GitHub changes use `gh` and Git in the workspace. The central policy determines which tools each client can call. `exec_pod` is
+mutating and restricted by namespace, live Pod labels and exact container names.
+`get_pod` includes resource limits; `get_pod_metrics` reads actual metrics-server samples.
 
 `verify` calls the actual MCP and API and checks that listing Secrets with the
 observer token gets **403**. Connectivity failures and authentication failures do
@@ -161,14 +263,10 @@ Normal path: diagnose with MCP, make a targeted Git change and submit a PR using
 GitHub. If Argo is broken, apply the reviewed fix through your existing operator
 context rather than waiting for Argo to repair itself.
 
-For an approved imperative repair from the Pod, explicitly provide a short-lived,
-incident-scoped kubeconfig in `/tmp` through your existing administration session,
-then use `KUBECONFIG=/tmp/incident.kubeconfig kubectl ...`. Scope its identity to the
-required resources, namespace and verbs; approve each proposed change. Never
-replace the MCP observer binding with cluster-admin. Remove the file and revoke
-its credential after the incident; do not store it on either PVC. Temporary
-credentials remain accessible to Codex while present, so elevation is deliberate.
-The normal Pod does not have permission to mint its own elevated token.
+Use an authorized MCP exec tool for a container-level repair. Do not inject a
+kubeconfig into Codex or Nova. Changes outside the configured tools remain an
+external operator action; extending a tool/grant is a reviewed central change.
+Exec includes the target container's effective credentials, so grant targets narrowly.
 
 Host diagnosis/repair uses your existing SSH identity and management path. No host
 root key is provisioned into this Pod. If optional Tailscale is enabled, OpenSSH
@@ -188,8 +286,9 @@ Update `codex.version` in `versions.json`, run `npm run versions:sync`, then run
 `npm ci && npm test` in `ops/pod` with Helm installed. The sync command updates
 the generated package declaration, npm integrity lock, chart metadata and current
 operator documentation. Let CI build and smoke-test the actual image.
-The image currently pins kubectl v1.34.1; check client/server version skew before
-using it against a differently versioned cluster. Deploy new image digests with
+The installed kubectl binary has no agent API credentials; keeping a binary in
+the image does not grant cluster access. Operator-side tools must match the server
+version requirements. Deploy new image digests with
 the same helper. Auth, configuration and workspace survive Pod/image replacement.
 
 Back up the PVCs using your existing storage backup process. They contain account
@@ -263,6 +362,18 @@ For example, to observe an existing namespace `platform`, use:
 # Keep other intended overrides in this same file.
 defaultNamespace: platform
 argoNamespace: argocd
+rbac:
+  execNamespaces: []
+mcp:
+  # Lists replace defaults: include every intended client explicitly.
+  clients:
+    - id: codex
+      tokenSecret: codex-ops-bearer
+      namespace: kubeclaw-ops
+      podLabels: {app.kubernetes.io/name: codex-ops}
+      namespaces: [platform]
+      tools: [namespace_overview, get_pod, get_pod_logs, get_events, platform_cluster_state]
+      exec: []
 resources:
   mcp:
     requests:
@@ -287,11 +398,11 @@ Secrets are retained, but retaining a Secret alone does not enable its chart opt
 | Object | Name / location |
 | --- | --- |
 | Pod / StatefulSet | `codex-ops-0` / `codex-ops` in `kubeclaw-ops` |
-| Containers | `codex`, `ops-mcp`, optional `tailscale` |
+| Containers | `codex` and optional `tailscale` in the StatefulSet; `ops-mcp` in its own Deployment |
 | Home PVC | `home-codex-ops-0`, mounted at `/home/node` |
 | Workspace PVC | `workspace-codex-ops-0`, mounted at `/workspace` |
 | Tailscale PVC | `codex-ops-tailscale`, mounted in Tailscale only |
-| Observer ServiceAccount | `codex-ops` in `kubeclaw-ops` |
+| MCP ServiceAccount | `codex-ops-mcp` in `kubeclaw-ops`; `codex-ops` has no bindings |
 | Namespaced reader role/bindings | `kubeclaw-ops-codex-ops-reader` |
 | Cluster reader role/binding | `kubeclaw-ops-codex-ops-cluster-reader` |
 | MCP bearer Secret | `codex-ops-bearer`, key `token` |
@@ -322,14 +433,14 @@ upgrade of the affected running configuration.
 "${k[@]}" get events --sort-by=.metadata.creationTimestamp
 ```
 
-Expected: claims bind, images pull, both primary containers are running. Codex can
+Expected: claims bind, images pull, Codex and the separate MCP Pod are running. Codex can
 be not-ready while waiting for login. Helm success proves that installation was
 accepted, not that these conditions or mobile connectivity have passed.
 
 ### 2. Authenticate and verify the control path
 
 Run the login, GitHub-login (if needed), pair and verify helper commands above.
-The two verification stages must succeed: real local MCP/API reads, and a real
+The two verification stages must succeed: real central MCP/API reads, and a real
 403 for Secret listing with the observer credential in the configured default
 namespace. A 401, timeout, missing credential or missing file is a failed check.
 
@@ -404,11 +515,13 @@ host service/disk/kernel faults using the existing management connection.
 
 ### Local MCP health and interactive Codex
 
-Check MCP health inside its container, because it listens on loopback:
+Check the separate MCP Deployment from the operator session:
 
 ```bash
-"${k[@]}" exec "$pod" -c ops-mcp -- node -e 'fetch("http://127.0.0.1:8080/healthz").then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))'
+"${k[@]}" get deployment "$OPS_RELEASE-mcp"
+"${k[@]}" logs "deployment/$OPS_RELEASE-mcp" -c ops-mcp --tail=100
 ```
+
 
 The remote child inherits its bearer from the supervisor. The supported `shell`
 helper starts `/opt/codex/shell.sh`, which reads the mounted bearer, validates it
@@ -540,21 +653,16 @@ Restore sequence:
 3. Prefer a reviewed Git change for desired-state configuration. If reconciliation
    is unavailable, use an explicit operator context for the necessary imperative
    change and bring Git back into agreement afterwards.
-4. If repair must run inside Codex, deliberately supply a scoped short-lived
-   kubeconfig/SSH identity for this incident. Do not broaden the observer role.
+4. For container-level repairs, use centrally granted MCP exec. Keep API
+   credentials out of Codex and Nova; other changes use the external operator path.
 5. Check the affected service and normal Ops path after the change. Resume the
    pipeline only through its supported commands; do not edit its durable state to
    manufacture a successful result.
 6. Remove temporary credentials and revoke their authority, record what changed,
    and identify whether a durable source fix is still outstanding.
 
-For Kubernetes credential transfer, prefer the existing management context unless
-there is a concrete reason to execute inside the Pod. A temporary kubeconfig may
-reference certificate files or exec-auth plugins unavailable inside the image;
-prepare it for its actual execution environment. `/tmp` is ephemeral storage, not
-secure erasure and not an automatic revocation mechanism. A malicious process
-could copy a credential while it is present; expiry and server-side revocation
-are the actual end of authority.
+Do not transfer Kubernetes credentials into an agent Pod. The external operator
+retains recovery access when the MCP or cluster networking is unavailable.
 
 The existing [worker trust runbook](../operations/worker-trust-runbook.md) and
 [pipeline recovery guide](../site/use/recovery.md) describe their own recovery

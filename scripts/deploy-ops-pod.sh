@@ -49,7 +49,7 @@ case ${1:-help} in
     "${k[@]}" -n "$namespace" exec -i "$pod" -c codex -- python3 - < "$repo/ops/pod/verify.py"
     # Negative control uses the MCP's REAL mounted observer token. Only a 403
     # counts as success; missing files, network failure and 401 fail the check.
-    "${k[@]}" -n "$namespace" exec "$pod" -c ops-mcp -- node --input-type=module -e \
+    "${k[@]}" -n "$namespace" exec "deployment/$release-mcp" -c ops-mcp -- node --input-type=module -e \
       'import {createKubeRequest} from "/app/src/kubernetes.mjs"; try {await createKubeRequest()("/api/v1/namespaces/" + encodeURIComponent(process.env.OPS_DEFAULT_NAMESPACE) + "/secrets");process.exit(1)} catch(e) {if(!e.message.includes("Kubernetes API 403:"))throw e; console.log("PASS: observer Secret access denied by API");}'
     ;;
   *) echo "Usage: $0 deploy|render|login|github-login|pair|shell|status|verify"; exit 1 ;;

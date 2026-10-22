@@ -30,7 +30,7 @@ class PolicyContract(unittest.TestCase):
         self.assertEqual(controller['endpointSelector']['matchLabels']['app.kubernetes.io/component'], 'buster-namespace-controller')
         self.assertEqual({p['port'] for p in controller['egress'][0]['toPorts'][0]['ports']}, {'443', '6443'})
         clients = docs['kubeclaw-lease-clients-api-egress']['spec']['endpointSelector']['matchExpressions'][0]['values']
-        self.assertEqual(set(clients), {'nova', 'buster'})
+        self.assertEqual(set(clients), {'buster'})
         ingress = docs['kubeclaw-agents-ingress']
         self.assertEqual(ingress['kind'], 'NetworkPolicy')
         self.assertEqual(ingress['spec']['ingress'][0]['from'], [{'podSelector': {}}])

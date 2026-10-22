@@ -3,12 +3,20 @@ kind: ServiceAccount
 metadata: {name: {{ .Release.Name }}}
 automountServiceAccountToken: false
 ---
+apiVersion: v1
+kind: ServiceAccount
+metadata: {name: {{ .Release.Name }}-mcp}
+automountServiceAccountToken: false
+---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata: {name: {{ .Release.Namespace }}-{{ .Release.Name }}-reader}
 rules:
   - apiGroups: [""]
     resources: [pods, pods/log, services, events, persistentvolumeclaims]
+    verbs: [get, list]
+  - apiGroups: [metrics.k8s.io]
+    resources: [pods]
     verbs: [get, list]
   - apiGroups: [apps]
     resources: [deployments, statefulsets, daemonsets, replicasets]
@@ -37,7 +45,7 @@ roleRef:
   kind: ClusterRole
   name: {{ $.Release.Namespace }}-{{ $.Release.Name }}-reader
 subjects:
-  - {kind: ServiceAccount, name: {{ $.Release.Name }}, namespace: {{ $.Release.Namespace }}}
+  - {kind: ServiceAccount, name: {{ $.Release.Name }}-mcp, namespace: {{ $.Release.Namespace }}}
 {{- end }}
 ---
 apiVersion: rbac.authorization.k8s.io/v1
@@ -59,7 +67,7 @@ roleRef:
   kind: ClusterRole
   name: {{ .Release.Namespace }}-{{ .Release.Name }}-cluster-reader
 subjects:
-  - {kind: ServiceAccount, name: {{ .Release.Name }}, namespace: {{ .Release.Namespace }}}
+  - {kind: ServiceAccount, name: {{ .Release.Name }}-mcp, namespace: {{ .Release.Namespace }}}
 {{- range .Values.rbac.execNamespaces }}
 {{- if or (not (kindIs "string" .)) (not (regexMatch "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$" .)) (gt (len .) 63) }}
 {{- fail "rbac.execNamespaces must contain valid namespace names" }}
@@ -88,5 +96,5 @@ roleRef:
   kind: Role
   name: {{ $.Release.Namespace }}-{{ $.Release.Name }}-exec
 subjects:
-  - {kind: ServiceAccount, name: {{ $.Release.Name }}, namespace: {{ $.Release.Namespace }}}
+  - {kind: ServiceAccount, name: {{ $.Release.Name }}-mcp, namespace: {{ $.Release.Namespace }}}
 {{- end }}

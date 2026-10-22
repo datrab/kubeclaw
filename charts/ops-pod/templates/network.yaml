@@ -2,6 +2,7 @@
 {{- if not .Values.networkPolicy.apiServerCIDRs }}
 {{- fail "networkPolicy.apiServerCIDRs is required; use scripts/deploy-ops-pod.sh deploy to discover it" }}
 {{- end }}
+# Codex has no API egress rule. Its only cluster destination is the MCP.
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata: {name: {{ .Release.Name }}}
@@ -18,10 +19,9 @@ spec:
             matchLabels: {k8s-app: kube-dns}
       ports: [{protocol: UDP, port: 53}, {protocol: TCP, port: 53}]
     - to:
-        {{- range .Values.networkPolicy.apiServerCIDRs }}
-        - ipBlock: {cidr: {{ . | quote }}}
-        {{- end }}
-      ports: [{protocol: TCP, port: 443}, {protocol: TCP, port: {{ .Values.networkPolicy.apiServerPort }}}]
+        - podSelector:
+            matchLabels: {app.kubernetes.io/name: {{ .Release.Name }}-mcp}
+      ports: [{protocol: TCP, port: 8080}]
     - to:
         - ipBlock:
             cidr: 0.0.0.0/0
@@ -34,14 +34,122 @@ spec:
             except: [10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16, 169.254.0.0/16, 127.0.0.0/8]
       ports: [{protocol: UDP, port: 3478}, {protocol: UDP, port: 41641}]
     {{- end }}
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata: {name: {{ .Release.Name }}-mcp}
+spec:
+  podSelector:
+    matchLabels: {app.kubernetes.io/name: {{ .Release.Name }}-mcp}
+  policyTypes: [Ingress, Egress]
+  ingress:
+    {{- range .Values.mcp.clients }}
+    - from:
+        - namespaceSelector:
+            matchLabels: {kubernetes.io/metadata.name: {{ .namespace }}}
+          podSelector:
+            matchLabels: {{ toYaml .podLabels | nindent 14 }}
+      ports: [{protocol: TCP, port: 8080}]
+    {{- end }}
+  egress:
+    - to:
+        - namespaceSelector:
+            matchLabels: {kubernetes.io/metadata.name: kube-system}
+          podSelector:
+            matchLabels: {k8s-app: kube-dns}
+      ports: [{protocol: UDP, port: 53}, {protocol: TCP, port: 53}]
+    - to:
+        {{- range .Values.networkPolicy.apiServerCIDRs }}
+        - ipBlock: {cidr: {{ . | quote }}}
+        {{- end }}
+      ports: [{protocol: TCP, port: 443}, {protocol: TCP, port: {{ .Values.networkPolicy.apiServerPort }}}]
+    - to:
+        - namespaceSelector:
+            matchLabels: {kubernetes.io/metadata.name: cilium}
+          podSelector:
+            matchLabels: {k8s-app: hubble-relay}
+      ports: [{protocol: TCP, port: 4245}]
+{{- range .Values.mcp.clients }}
+---
+# Both sides of a default-deny boundary must allow the client -> MCP edge.
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: {{ $.Release.Name }}-mcp-client-{{ .id }}
+  namespace: {{ .namespace }}
+spec:
+  podSelector:
+    matchLabels: {{ toYaml .podLabels | nindent 6 }}
+  policyTypes: [Egress]
+  egress:
+    - to:
+        - namespaceSelector:
+            matchLabels: {kubernetes.io/metadata.name: {{ $.Release.Namespace }}}
+          podSelector:
+            matchLabels: {app.kubernetes.io/name: {{ $.Release.Name }}-mcp}
+      ports: [{protocol: TCP, port: 8080}]
+{{- end }}
+{{- if .Values.mcp.provision.enabled }}
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: {{ .Release.Name }}-mcp-provisioner
+  annotations: {argocd.argoproj.io/sync-wave: "-3"}
+spec:
+  podSelector:
+    matchLabels: {app.kubernetes.io/name: {{ .Release.Name }}-mcp-provisioner}
+  policyTypes: [Ingress, Egress]
+  ingress: []
+  egress:
+    - to:
+        - namespaceSelector:
+            matchLabels: {kubernetes.io/metadata.name: kube-system}
+          podSelector:
+            matchLabels: {k8s-app: kube-dns}
+      ports: [{protocol: UDP, port: 53}, {protocol: TCP, port: 53}]
+    - to:
+        {{- range .Values.networkPolicy.apiServerCIDRs }}
+        - ipBlock: {cidr: {{ . | quote }}}
+        {{- end }}
+      ports: [{protocol: TCP, port: 443}, {protocol: TCP, port: {{ .Values.networkPolicy.apiServerPort }}}]
+{{- end }}
+{{- if .Values.rbac.namespacePrefixes }}
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata: {name: {{ .Release.Name }}-mcp-namespace-access}
+spec:
+  podSelector:
+    matchLabels: {app.kubernetes.io/name: {{ .Release.Name }}-mcp-namespace-access}
+  policyTypes: [Ingress, Egress]
+  ingress: []
+  egress:
+    - to:
+        - namespaceSelector:
+            matchLabels: {kubernetes.io/metadata.name: kube-system}
+          podSelector:
+            matchLabels: {k8s-app: kube-dns}
+      ports: [{protocol: UDP, port: 53}, {protocol: TCP, port: 53}]
+    - to:
+        {{- range .Values.networkPolicy.apiServerCIDRs }}
+        - ipBlock: {cidr: {{ . | quote }}}
+        {{- end }}
+      ports: [{protocol: TCP, port: 443}, {protocol: TCP, port: {{ .Values.networkPolicy.apiServerPort }}}]
+{{- end }}
 {{- if .Values.networkPolicy.cilium }}
 ---
 apiVersion: cilium.io/v2
 kind: CiliumNetworkPolicy
-metadata: {name: {{ .Release.Name }}-apiserver}
+metadata:
+  name: {{ .Release.Name }}-apiserver
+  annotations: {argocd.argoproj.io/sync-wave: "-3"}
 spec:
   endpointSelector:
-    matchLabels: {app.kubernetes.io/name: {{ .Release.Name }}}
+    matchExpressions:
+      - key: app.kubernetes.io/name
+        operator: In
+        values: [{{ .Release.Name }}-mcp{{ if .Values.rbac.namespacePrefixes }}, {{ .Release.Name }}-mcp-namespace-access{{ end }}{{ if .Values.mcp.provision.enabled }}, {{ .Release.Name }}-mcp-provisioner{{ end }}]
   egress:
     - toEntities: [kube-apiserver]
       toPorts:

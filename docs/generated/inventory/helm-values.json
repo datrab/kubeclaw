@@ -61,7 +61,8 @@
         "archviewer",
         "extraVolumes",
         "extraVolumeMounts",
-        "busterRuntimePersistence"
+        "busterRuntimePersistence",
+        "opsMcp"
       ],
       "secretReferences": [
         {
@@ -98,7 +99,8 @@
         "extraContainers",
         "extraVolumes",
         "extraVolumeMounts",
-        "workspace"
+        "workspace",
+        "opsMcp"
       ],
       "secretReferences": [
         {
@@ -139,7 +141,7 @@
         {
           "key": "existingSecret",
           "value": "nova-archviewer-auth",
-          "line": 93
+          "line": 94
         }
       ]
     },
@@ -166,7 +168,8 @@
         "busterNamespaceBroker",
         "resources",
         "workspace",
-        "busterRuntimePersistence"
+        "busterRuntimePersistence",
+        "opsMcp"
       ],
       "secretReferences": [
         {

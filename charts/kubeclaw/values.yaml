@@ -387,16 +387,17 @@ busterApiEgress: []
 
 busterNamespaceBroker:
   enabled: false
-  # Grants the agent ServiceAccount permission to request ephemeral test
-  # namespaces through BusterNamespaceLease CRs. Buster gets this permission
-  # whenever broker mode is enabled. Other roles, such as Nova E2E, must opt in
-  # explicitly and still do not receive namespace/workload authority.
+  # Legacy configuration keys retained for older values files. They no longer
+  # grant other agents any API/Secret access. Only the Buster role can receive
+  # a lease-client binding; all other cluster operations go through the Ops MCP.
   leaseClient:
     enabled: false
     verificationRead:
       enabled: false
-      # Existing operator namespace; shared by the scoped RBAC and agent probe.
-      # The agent release does not create or own this namespace or Secret.
+      # Reconcile the old named grants to empty rules/subjects even with Argo prune=false.
+      # Enable for a migration only where the legacy operator namespace exists.
+      retireLegacyBindings: false
+      # Retired verification scopes are ignored; no RBAC or credential is created.
       tailscaleOperatorNamespace: tailscale
       tailscaleOAuthSecretName: operator-oauth
   # Opt-in trusted Nova runtime only; same-container code is not isolated by this mount.
@@ -412,6 +413,12 @@ busterNamespaceBroker:
   defaultTtlSeconds: 7200
   maxTtlSeconds: 86400
   controller:
+    # Expected platform RBAC only: this controller never creates these bindings.
+    # Must agree with the standalone Ops chart namespace/release.
+    opsMcpAccess:
+      enabled: false
+      namespace: kubeclaw-ops
+      releaseName: codex-ops
     # Independent human-decision authority; empty configuration denies all.
     productDecisions:
       enabled: false
@@ -433,8 +440,6 @@ busterNamespaceBroker:
       # Subjects without a namespace are resolved in the Helm release namespace.
       - subject: agent-buster
         modes: [deployer, tester]
-      - subject: agent-nova
-        modes: [deployer]
     # Only these Secrets can be copied from the release namespace into a test
     # namespace. Test-login Secrets are created separately and scoped by name.
     allowedSourceSecrets: []
@@ -551,3 +556,10 @@ busterRuntimePersistence:
   claimName: ""
   size: 64Gi
   storageClass: ""
+
+# Agents use this MCP client instead of Kubernetes credentials.
+opsMcp:
+  enabled: false
+  url: https://codex-ops-mcp.kubeclaw-ops.svc:8080/mcp
+  tokenSecret: nova-ops-bearer
+  caConfigMap: ops-mcp-ca

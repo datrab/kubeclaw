@@ -196,6 +196,12 @@ spec:
               value: {{ printf "%s-namespace-deployer" (include "kubeclaw.fullname" .) | quote }}
             - name: BUSTER_TESTER_ROLE_NAME
               value: {{ printf "%s-namespace-tester" (include "kubeclaw.fullname" .) | quote }}
+            {{- if .Values.busterNamespaceBroker.controller.opsMcpAccess.enabled }}
+            - name: BUSTER_OPS_MCP_NAMESPACE
+              value: {{ required "Ops MCP namespace is required" .Values.busterNamespaceBroker.controller.opsMcpAccess.namespace | quote }}
+            - name: BUSTER_OPS_MCP_RELEASE
+              value: {{ required "Ops MCP releaseName is required" .Values.busterNamespaceBroker.controller.opsMcpAccess.releaseName | quote }}
+            {{- end }}
             - name: BUSTER_ALLOWED_ACCESS_JSON
               {{- $allowedAccess := list -}}
               {{- range .Values.busterNamespaceBroker.controller.allowedAccess -}}

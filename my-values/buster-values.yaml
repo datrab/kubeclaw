@@ -219,9 +219,11 @@ extraVolumes:
 busterNamespaceBroker:
   enabled: true
   controller:
+    opsMcpAccess:
+      enabled: true
+      namespace: kubeclaw-ops
+      releaseName: codex-ops
     allowedAccess:
-      - subject: kubeclaw/agent-nova
-        modes: [deployer]
       - subject: kubeclaw/agent-buster
         modes: [deployer, tester]
     allowedSourceSecrets:
@@ -258,3 +260,10 @@ busterRuntimePersistence:
 # Supply runtimeInfrastructure.registry in your private overlay before rendering
 # this runtime. See docs/operations/registry-clients.md for HTTPS/auth/node trust
 # and the explicitly selected anonymous HTTP lab alternative.
+
+# Cluster reads and exec go through the central MCP; only test* is authorized.
+opsMcp:
+  enabled: true
+  url: https://codex-ops-mcp.kubeclaw-ops.svc:8080/mcp
+  tokenSecret: buster-ops-bearer
+  caConfigMap: ops-mcp-ca
