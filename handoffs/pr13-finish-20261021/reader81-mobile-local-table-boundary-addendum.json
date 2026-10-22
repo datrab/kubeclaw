@@ -1,0 +1,26 @@
+{
+  "status": "REAL_INITIAL_LOCAL_CLIPPING_NATIVE_ACCESS_PENDING",
+  "reviewer": "/root/operator_acceptance",
+  "actualObservation": "Independently viewed320screenshot: Owningguide thirdcolumn is clipped at the right inside localtable viewport. Prior table bounding rectangle16..304 within320does not establish content width/visibility.",
+  "priorScope": "Retake terminal0 means its exact outerbounds/hash/screenshot assertions passed; it did not record clientWidth/scrollWidth or verify every column visible. Do not rewrite that receipt or imply allcolumnsunclipped.",
+  "sourceFacts": [
+    "renderer.mjs sanitize transform adds table tabindex0; allowed table tabindex retained.",
+    "Original CSS: table display:block;overflow:auto;max-width100%; focus-visible outline applies to table.",
+    "reference/documentation-site.md:200 explicitly documents tables/code scrolling within own content region."
+  ],
+  "criterionDisposition": {
+    "A910-06": "No material classifier/assignment Source defect from initial local clipping alone. Full51classification/onecanonicalguide responsibility still SourcePASS; narrow rendered usability remains pending truthful native localaccess.",
+    "A912-07": "Still separate/open wholelayoutcriterion across navigation/table/code/diagram/callout/search. Local scrolling is distinct from prohibited page-wide horizontal navigation; actual accessible information must be checked, not inferred from outerbounds.",
+    "A912-08": "Still separate/open fullaccessibility including independent keyboard/screenreader. One native table path cannot accept it.",
+    "A912-10": "No newwholegateclaim: native noJS localtablefocus/scroll/link is supported design, its actual check pending."
+  },
+  "minimalNextCheck": "Frozen one320native tablefocus/ArrowRight\u2192fullOwningguideheader\u2192Tabfullfirstlink\u2192Entercanonicalguide, actual client/scroll dimensions and beforeafter Source/HTML/staged/declaredCSS/manifests. No153rowrecount,DOM/CSSrewrite or general waiver.",
+  "minimalFixIfNeeded": "Do not author a styling fix solely to make all columns simultaneously visible; that is not the documented local-scroll contract. If native access fails, retain exact failed action/dimensions and then correct the smallest renderer focus/scroll/access mechanism needed; do not weaken assertions or waive reader access.",
+  "hashes": {
+    "priorRetakeReport": "3cf1f9b8c0d0b3c6ad3182bcbedd4db3d0136a92677ee71e57cf5fedb7043f82",
+    "actualScreenshotViewed": "c01a350a6fddb91123a8a5abb3ab2e70d0c88375c2ceaac613463497fc2c03f5",
+    "rendererSource": "a0bf02d079637cf862fe0a40bbc34e4bfbd982c58126e347d8aea079047abd87",
+    "documentationSiteSource": "c0c4b55949be05d571aa4ea5b353c5ab479caeafd3ebbcdeb70ebec0ca10a1e0"
+  },
+  "execution": "Read-only original CSS/source/receipt plus actual local screenshot view. No browser/target/producer/native/graph execution or Main writes."
+}

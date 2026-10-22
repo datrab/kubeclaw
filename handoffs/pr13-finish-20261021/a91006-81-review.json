@@ -1,0 +1,163 @@
+{
+  "verdict": "READY",
+  "revision": "81db5f8a72746dd18439d2ca55d47f08ab5a8ba6",
+  "gateIds": [
+    "A910-06"
+  ],
+  "requirementIds": [],
+  "review": {
+    "sourceAccuracy": "PASS",
+    "readerUsability": "PASS",
+    "quality": "PASS"
+  },
+  "sourceReviewBasis": {
+    "criterion": "Classification from verifiable signals OR complete justifications; every complex package exactly one canonical deep-guide assignment; not author size judgment alone.",
+    "machine": "Complete179line original discovery/schema/multiplicity/Source binding/scalar guide/renderer/11controls/CLI read; unchanged original independent custody machine proof reused.",
+    "manual": "All153corrected judgments/threeexplicitinclusive predicates independently reviewed by workflow against complete direct/reused Source responsibilities; exact19adpolicy and66directreviewroster/current535bindingcells485unique objects preserved. Root/source count is not semantic evidence alone.",
+    "mappings": "Whole51actual manifest/policy/index rows and guide destinations independently reconciled.17persistence+1hostsignals added;49complex botholdnew; no routing changed. Shared guide permitted; assignment does not claim all51guide depth.",
+    "reader": "Fresh177/187normal Reader,51rows\u00d73widths and allhref/reason matches,3nativeguide navigations and native localoverflow access support the exact assignment/justification task. Unchanged411Sourceboxes retained, not reaccepted by count."
+  },
+  "openIssues": [],
+  "existingPreservation": {
+    "records": 1,
+    "id": "AP09-publication-positive-scope-7ef16585",
+    "other92Unchanged": true,
+    "newAcceptanceCountFromPreservation": 0
+  },
+  "nativeReaderFacts": {
+    "label": "Package",
+    "top": 463.953125,
+    "bottom": 535.140625,
+    "left": 16.5,
+    "right": 136.5,
+    "tableLeft": 16,
+    "tableRight": 304,
+    "pageWidth": 320,
+    "viewportWidth": 320,
+    "viewportHeight": 1000,
+    "initialLocalTable": {
+      "clientWidth": 288,
+      "scrollWidth": 361,
+      "scrollLeft": 0,
+      "clientLeft": 0,
+      "boxLeft": 16,
+      "boxRight": 304,
+      "contentLeft": 16,
+      "contentRight": 304,
+      "owningHeader": {
+        "left": 256.5,
+        "right": 376.5,
+        "top": 463.953125,
+        "bottom": 535.140625
+      },
+      "firstGuide": {
+        "left": 269,
+        "right": 337,
+        "top": 550.640625,
+        "bottom": 566.640625
+      },
+      "viewportWidth": 320,
+      "viewportHeight": 1000,
+      "pageWidth": 320,
+      "tabindex": "0",
+      "focused": false
+    },
+    "afterNativeHorizontalScroll": {
+      "clientWidth": 288,
+      "scrollWidth": 361,
+      "scrollLeft": 73,
+      "clientLeft": 0,
+      "boxLeft": 16,
+      "boxRight": 304,
+      "contentLeft": 16,
+      "contentRight": 304,
+      "owningHeader": {
+        "left": 183.5,
+        "right": 303.5,
+        "top": 0.953125,
+        "bottom": 72.140625
+      },
+      "firstGuide": {
+        "left": 196,
+        "right": 264,
+        "top": 87.640625,
+        "bottom": 103.640625
+      },
+      "viewportWidth": 320,
+      "viewportHeight": 1000,
+      "pageWidth": 320,
+      "tabindex": "0",
+      "focused": true
+    },
+    "afterNativeTab": {
+      "clientWidth": 288,
+      "scrollWidth": 361,
+      "scrollLeft": 73,
+      "clientLeft": 0,
+      "boxLeft": 16,
+      "boxRight": 304,
+      "contentLeft": 16,
+      "contentRight": 304,
+      "owningHeader": {
+        "left": 183.5,
+        "right": 303.5,
+        "top": 0.953125,
+        "bottom": 72.140625
+      },
+      "firstGuide": {
+        "left": 196,
+        "right": 264,
+        "top": 87.640625,
+        "bottom": 103.640625
+      },
+      "viewportWidth": 320,
+      "viewportHeight": 1000,
+      "pageWidth": 320,
+      "tabindex": "0",
+      "focused": false
+    },
+    "nativeEnter": {
+      "actualUrl": "file:///home/node/.openclaw/workspace/tmp/pr13-finish-20261021/production-first-81db5f8a/understand/openclaw.html",
+      "expectedUrl": "file:///home/node/.openclaw/workspace/tmp/pr13-finish-20261021/production-first-81db5f8a/understand/openclaw.html"
+    },
+    "limit": "Initially clipped local scrolling table, not all columns simultaneously visible. One native horizontal/Tab/Enter access path only; no153row or wholemobile/accessibility reacceptance."
+  },
+  "receiptHashes": {
+    "reader-artifact-81db5f8a.json": "928659a6e303d4f55f7adf19487b081ba7cd5d9ac93a57757a117a3bc869bc41",
+    "reader-search-81db5f8a.json": "f65734344ddbf315e22ea92246192f9ca609b27c2a1260abf38c119fbf91880d",
+    "reader-source-links-81db5f8a.json": "a62ea16169a5efe808b8483500687f2ac6fcd1a84fc37fcbac6c61cbea9d5a1c",
+    "reader-source-previews-81db5f8a.json": "50943cd2626a1ed21b868860bf9c84dd0b2a4b8322f8ad249684afe6b4018988",
+    "reader-diagrams-81db5f8a.json": "66f027803943f3133bb64af12d04b7db5814a63ed85f8fd846ce48daa890b976",
+    "browser-index-81db5f8a/report.json": "af46dc5eb8eb7426e29da43d1ac858e8fa794ca7eec0ca2bcf64f4a5b0caa36e",
+    "browser-index-table-retake-81db5f8a/report.json": "3cf1f9b8c0d0b3c6ad3182bcbedd4db3d0136a92677ee71e57cf5fedb7043f82",
+    "browser-index-native-access-81db5f8a/report.json": "70dfbecc74ee677f7c97dd7c391e533bfbb346fa00ece53780e3486b01f30e1e",
+    "reader-archive-81db5f8a-verified.json": "c85204e2f8e59bef1593857aa3bc5112ad634e58cd1abd71731145aac74a177c",
+    "reader-preview-81db5f8a.json": "d47fc7f261d7d2ef8ae91ebc8d9f874fa40638e82ca6aab39e1ae8f877733e59",
+    "reader-extracted-artifact-81db5f8a.json": "928659a6e303d4f55f7adf19487b081ba7cd5d9ac93a57757a117a3bc869bc41",
+    "reader-extracted-search-81db5f8a.json": "f65734344ddbf315e22ea92246192f9ca609b27c2a1260abf38c119fbf91880d"
+  },
+  "archive": {
+    "revision": "81db5f8a72746dd18439d2ca55d47f08ab5a8ba6",
+    "archive": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/kubeclaw-reader-offline-81db5f8a.zip",
+    "sha256": "3631e0530dc82d30db1620e0ba55b00614f85b6002730d73d261b4e367a3c140",
+    "bytes": 7895854,
+    "members": 242,
+    "copiedAssetsSourceCompared": 19,
+    "extracted": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/offline-reader-81db5f8a",
+    "limit": "Checkpoint reader, not aggregate documentation or release acceptance.",
+    "safeUniqueRegularUnencryptedMembers": 242,
+    "allFreshExtractedBytesExact": true,
+    "normalExtractedArtifactAndSearchTerminals": [
+      0,
+      0
+    ],
+    "actualLoopbackAll240OutputsExactBytes": true
+  },
+  "limits": [
+    "Classification/assignment criterion only; no A91007/08/09/13full51guide depth or practical-change union, and no requirement adoption.",
+    "Initial thirdcolumn clipping at320is retained as documented native localtableoverflow; actualnativehorizontal/Tab/Enter access succeeds. No allcolumns simultaneouslyunclipped or wholemobile/A91207/accessibility/A91208 claim.",
+    "No current registry consumer/role/API/globalgraph/generator/CI/native/product/runtime/deployment/release grant. Registry metadata consumer remains unexecuted as separately disclosed.",
+    "Original owner3commands/11controls and current Reader actual results are bounded successful processes; human source review has no exitCode.",
+    "No target/browser/producer/native/graph execution or Main/register writes by this reviewer."
+  ]
+}

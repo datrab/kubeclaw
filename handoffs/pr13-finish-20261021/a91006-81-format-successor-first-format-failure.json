@@ -1,0 +1,9 @@
+{
+  "status": "FIRST_INTEGRATION_REJECTION_PRESERVED",
+  "reportedBy": "/root",
+  "failure": "Completion record.sources included physical regular but UNTRACKED materialized observer complexity.ts; compact contract requires every declared source regularTRACKED. Root stopped before Main writes.",
+  "completeFamily": "Seven invalid declared members, not only the firstreported complexity.ts.",
+  "frozenOriginalCandidate": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/a91006-final-81db5f8a/completion-record-candidate.json",
+  "frozenOriginalSha256": "31c0130a03479fe8ea7eb4b5026eb107b2a163fb7002e454c1e78924b83f26c0",
+  "notClaimed": "No process/exitcode for this human/integration diagnostic invented."
+}

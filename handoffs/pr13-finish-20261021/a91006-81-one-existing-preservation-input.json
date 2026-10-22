@@ -1,0 +1,53 @@
+{
+  "recordId": "AP09-publication-positive-scope-7ef16585",
+  "originalRevision": "6a4e6de68411c4fe21ddb10b003f17c979a67825",
+  "originalRecordSha256": "dfa98697d3bb2f074e16ba4423bb5c3e74d36c54751959a7a8fdce0d522ddf2b",
+  "revision": "81db5f8a72746dd18439d2ca55d47f08ab5a8ba6",
+  "intersections": {
+    "pages": [
+      {
+        "declared": "docs/site/extend/deep-guides/README.md",
+        "changed": "docs/site/extend/deep-guides/README.md",
+        "relation": "exact"
+      }
+    ],
+    "sources": []
+  },
+  "reviewer": "/root/operator_acceptance",
+  "review": {
+    "sourceAccuracy": "PASS",
+    "readerUsability": "PASS",
+    "quality": "PASS"
+  },
+  "verdict": "PASS",
+  "summary": "Original whole positive-publication scope preserved. Only selected indexpage changes; complete original classifier/policy/index semantics independently reviewed and actual normal177page/187HTML/240outputselection remains exact. No new canonical page/route/internalAPcontent introduced; current51rowclassifications and guidehrefs follow exact reviewed policy. Five original currentReaderchecks0, all177Source/staged/HTMLbindings, index3/153/3andnative localtable access0; current242memberZIP/19Sourceassets/extractedartifact+search and240loopbackGET support delivery. Original Source/Reader/Quality proof/author/checks/summary/limits remain unchanged, no new acceptance count.",
+  "limits": [
+    "This addendum preserves only originalA91201selected-publication scope; no allcolumnsunclipped/mobile/accessibility or new consumer qualification.",
+    "Exactly1literalaffected originalrecord/92nointersection verified; original93completeobjects unchanged.",
+    "Registry finiteSource/purpose/rawcorrespondence remains independent Source-only review, no consumerexecution automatically approved."
+  ],
+  "receiptHashes": {
+    "reader-artifact-81db5f8a.json": "928659a6e303d4f55f7adf19487b081ba7cd5d9ac93a57757a117a3bc869bc41",
+    "reader-search-81db5f8a.json": "f65734344ddbf315e22ea92246192f9ca609b27c2a1260abf38c119fbf91880d",
+    "reader-source-links-81db5f8a.json": "a62ea16169a5efe808b8483500687f2ac6fcd1a84fc37fcbac6c61cbea9d5a1c",
+    "reader-source-previews-81db5f8a.json": "50943cd2626a1ed21b868860bf9c84dd0b2a4b8322f8ad249684afe6b4018988",
+    "reader-diagrams-81db5f8a.json": "66f027803943f3133bb64af12d04b7db5814a63ed85f8fd846ce48daa890b976",
+    "browser-index-81db5f8a/report.json": "af46dc5eb8eb7426e29da43d1ac858e8fa794ca7eec0ca2bcf64f4a5b0caa36e",
+    "browser-index-table-retake-81db5f8a/report.json": "3cf1f9b8c0d0b3c6ad3182bcbedd4db3d0136a92677ee71e57cf5fedb7043f82",
+    "browser-index-native-access-81db5f8a/report.json": "70dfbecc74ee677f7c97dd7c391e533bfbb346fa00ece53780e3486b01f30e1e",
+    "reader-archive-81db5f8a-verified.json": "c85204e2f8e59bef1593857aa3bc5112ad634e58cd1abd71731145aac74a177c",
+    "reader-preview-81db5f8a.json": "d47fc7f261d7d2ef8ae91ebc8d9f874fa40638e82ca6aab39e1ae8f877733e59",
+    "reader-extracted-artifact-81db5f8a.json": "928659a6e303d4f55f7adf19487b081ba7cd5d9ac93a57757a117a3bc869bc41",
+    "reader-extracted-search-81db5f8a.json": "f65734344ddbf315e22ea92246192f9ca609b27c2a1260abf38c119fbf91880d"
+  },
+  "originalFieldsImmutable": [
+    "author",
+    "reviewer",
+    "checks",
+    "verdict",
+    "summary",
+    "limits",
+    "gateIds",
+    "requirementIds"
+  ]
+}

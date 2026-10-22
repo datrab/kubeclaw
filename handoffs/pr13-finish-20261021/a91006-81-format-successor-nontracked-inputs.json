@@ -1,0 +1,191 @@
+[
+  {
+    "path": "skills/common/plugins/openclaw-agent-observer/src/generated/agent-observability/complexity.ts",
+    "kind": "ignored-materialized-contract-source",
+    "tracked": false,
+    "regularPhysicalNonSymlink": true,
+    "sha256": "cc1e3f8a9beaaec2d56cb04533a681b7569e2ac8a457694248249380624d6d60",
+    "policyBindings": [
+      {
+        "package": "kubeclaw-agent-observer",
+        "path": "skills/common/plugins/openclaw-agent-observer/src/generated/agent-observability/complexity.ts",
+        "sha256": "cc1e3f8a9beaaec2d56cb04533a681b7569e2ac8a457694248249380624d6d60",
+        "tracked": false
+      }
+    ],
+    "canonicalTrackedSource": {
+      "path": "contracts/agent-observability/v1/src/complexity.ts",
+      "sha256": "cc1e3f8a9beaaec2d56cb04533a681b7569e2ac8a457694248249380624d6d60"
+    },
+    "mappingAuthority": {
+      "producer": "skills/common/plugins/openclaw-agent-observer/scripts/sync-contract.mjs",
+      "producerPathSelection": "defaultContractSource=path.resolve(pluginRoot,../../../../contracts/agent-observability/v1/src); generatedTarget=pluginRoot/src/generated/agent-observability; syncContract removes/recreates target then recursive cp.",
+      "normalCaller": "skills/common/plugins/openclaw-agent-observer/scripts/build.mjs calls syncContract(--contract-source or undefined) before invoking compiler; package.json pretypecheck/sync-contract scripts own default path.",
+      "contextLimit": "Detached --contract-source override exists; not every historical copy is inferred canonical. This current seven-member regular tree is byte-identical to the exact default canonical source and is bound by existing finite materialized-source contract.",
+      "finiteDocumentationGuard": "scripts/docs-api-observer-materialized-source.mjs pins exact7canonical members, exact8staticcallers and producer/package/ignore Sources; rejects extra/incomplete/symlink/drift before Source mapping. Owning tests read, not executed here."
+    },
+    "guardPreservation": "Physical path remains required in original policy535cells and actual original owner check; moving typed receipt out of completionRecord.sources does not change/remove/alias its product input guard."
+  },
+  {
+    "path": "skills/common/plugins/openclaw-agent-observer/src/generated/agent-observability/constants.ts",
+    "kind": "ignored-materialized-contract-source",
+    "tracked": false,
+    "regularPhysicalNonSymlink": true,
+    "sha256": "7362261fe21d18e7acdf32b266f938a740e1106a4642579e7a1b203cb8b97924",
+    "policyBindings": [
+      {
+        "package": "kubeclaw-agent-observer",
+        "path": "skills/common/plugins/openclaw-agent-observer/src/generated/agent-observability/constants.ts",
+        "sha256": "7362261fe21d18e7acdf32b266f938a740e1106a4642579e7a1b203cb8b97924",
+        "tracked": false
+      }
+    ],
+    "canonicalTrackedSource": {
+      "path": "contracts/agent-observability/v1/src/constants.ts",
+      "sha256": "7362261fe21d18e7acdf32b266f938a740e1106a4642579e7a1b203cb8b97924"
+    },
+    "mappingAuthority": {
+      "producer": "skills/common/plugins/openclaw-agent-observer/scripts/sync-contract.mjs",
+      "producerPathSelection": "defaultContractSource=path.resolve(pluginRoot,../../../../contracts/agent-observability/v1/src); generatedTarget=pluginRoot/src/generated/agent-observability; syncContract removes/recreates target then recursive cp.",
+      "normalCaller": "skills/common/plugins/openclaw-agent-observer/scripts/build.mjs calls syncContract(--contract-source or undefined) before invoking compiler; package.json pretypecheck/sync-contract scripts own default path.",
+      "contextLimit": "Detached --contract-source override exists; not every historical copy is inferred canonical. This current seven-member regular tree is byte-identical to the exact default canonical source and is bound by existing finite materialized-source contract.",
+      "finiteDocumentationGuard": "scripts/docs-api-observer-materialized-source.mjs pins exact7canonical members, exact8staticcallers and producer/package/ignore Sources; rejects extra/incomplete/symlink/drift before Source mapping. Owning tests read, not executed here."
+    },
+    "guardPreservation": "Physical path remains required in original policy535cells and actual original owner check; moving typed receipt out of completionRecord.sources does not change/remove/alias its product input guard."
+  },
+  {
+    "path": "skills/common/plugins/openclaw-agent-observer/src/generated/agent-observability/index.ts",
+    "kind": "ignored-materialized-contract-source",
+    "tracked": false,
+    "regularPhysicalNonSymlink": true,
+    "sha256": "53701c60777f686a2f9da25235ad02e755e820714ca8621de795bf1a5376acb3",
+    "policyBindings": [
+      {
+        "package": "kubeclaw-agent-observer",
+        "path": "skills/common/plugins/openclaw-agent-observer/src/generated/agent-observability/index.ts",
+        "sha256": "53701c60777f686a2f9da25235ad02e755e820714ca8621de795bf1a5376acb3",
+        "tracked": false
+      }
+    ],
+    "canonicalTrackedSource": {
+      "path": "contracts/agent-observability/v1/src/index.ts",
+      "sha256": "53701c60777f686a2f9da25235ad02e755e820714ca8621de795bf1a5376acb3"
+    },
+    "mappingAuthority": {
+      "producer": "skills/common/plugins/openclaw-agent-observer/scripts/sync-contract.mjs",
+      "producerPathSelection": "defaultContractSource=path.resolve(pluginRoot,../../../../contracts/agent-observability/v1/src); generatedTarget=pluginRoot/src/generated/agent-observability; syncContract removes/recreates target then recursive cp.",
+      "normalCaller": "skills/common/plugins/openclaw-agent-observer/scripts/build.mjs calls syncContract(--contract-source or undefined) before invoking compiler; package.json pretypecheck/sync-contract scripts own default path.",
+      "contextLimit": "Detached --contract-source override exists; not every historical copy is inferred canonical. This current seven-member regular tree is byte-identical to the exact default canonical source and is bound by existing finite materialized-source contract.",
+      "finiteDocumentationGuard": "scripts/docs-api-observer-materialized-source.mjs pins exact7canonical members, exact8staticcallers and producer/package/ignore Sources; rejects extra/incomplete/symlink/drift before Source mapping. Owning tests read, not executed here."
+    },
+    "guardPreservation": "Physical path remains required in original policy535cells and actual original owner check; moving typed receipt out of completionRecord.sources does not change/remove/alias its product input guard."
+  },
+  {
+    "path": "skills/common/plugins/openclaw-agent-observer/src/generated/agent-observability/mapping.ts",
+    "kind": "ignored-materialized-contract-source",
+    "tracked": false,
+    "regularPhysicalNonSymlink": true,
+    "sha256": "76dcb599813722b108f9f0a918c60899c019ece2484b10587b628bf72f055592",
+    "policyBindings": [
+      {
+        "package": "kubeclaw-agent-observer",
+        "path": "skills/common/plugins/openclaw-agent-observer/src/generated/agent-observability/mapping.ts",
+        "sha256": "76dcb599813722b108f9f0a918c60899c019ece2484b10587b628bf72f055592",
+        "tracked": false
+      }
+    ],
+    "canonicalTrackedSource": {
+      "path": "contracts/agent-observability/v1/src/mapping.ts",
+      "sha256": "76dcb599813722b108f9f0a918c60899c019ece2484b10587b628bf72f055592"
+    },
+    "mappingAuthority": {
+      "producer": "skills/common/plugins/openclaw-agent-observer/scripts/sync-contract.mjs",
+      "producerPathSelection": "defaultContractSource=path.resolve(pluginRoot,../../../../contracts/agent-observability/v1/src); generatedTarget=pluginRoot/src/generated/agent-observability; syncContract removes/recreates target then recursive cp.",
+      "normalCaller": "skills/common/plugins/openclaw-agent-observer/scripts/build.mjs calls syncContract(--contract-source or undefined) before invoking compiler; package.json pretypecheck/sync-contract scripts own default path.",
+      "contextLimit": "Detached --contract-source override exists; not every historical copy is inferred canonical. This current seven-member regular tree is byte-identical to the exact default canonical source and is bound by existing finite materialized-source contract.",
+      "finiteDocumentationGuard": "scripts/docs-api-observer-materialized-source.mjs pins exact7canonical members, exact8staticcallers and producer/package/ignore Sources; rejects extra/incomplete/symlink/drift before Source mapping. Owning tests read, not executed here."
+    },
+    "guardPreservation": "Physical path remains required in original policy535cells and actual original owner check; moving typed receipt out of completionRecord.sources does not change/remove/alias its product input guard."
+  },
+  {
+    "path": "skills/common/plugins/openclaw-agent-observer/src/generated/agent-observability/routing.ts",
+    "kind": "ignored-materialized-contract-source",
+    "tracked": false,
+    "regularPhysicalNonSymlink": true,
+    "sha256": "ef7851b00d9c32b46d890ca4210f4afee6fa0ecc9796fab417b6b2c705af571d",
+    "policyBindings": [
+      {
+        "package": "kubeclaw-agent-observer",
+        "path": "skills/common/plugins/openclaw-agent-observer/src/generated/agent-observability/routing.ts",
+        "sha256": "ef7851b00d9c32b46d890ca4210f4afee6fa0ecc9796fab417b6b2c705af571d",
+        "tracked": false
+      }
+    ],
+    "canonicalTrackedSource": {
+      "path": "contracts/agent-observability/v1/src/routing.ts",
+      "sha256": "ef7851b00d9c32b46d890ca4210f4afee6fa0ecc9796fab417b6b2c705af571d"
+    },
+    "mappingAuthority": {
+      "producer": "skills/common/plugins/openclaw-agent-observer/scripts/sync-contract.mjs",
+      "producerPathSelection": "defaultContractSource=path.resolve(pluginRoot,../../../../contracts/agent-observability/v1/src); generatedTarget=pluginRoot/src/generated/agent-observability; syncContract removes/recreates target then recursive cp.",
+      "normalCaller": "skills/common/plugins/openclaw-agent-observer/scripts/build.mjs calls syncContract(--contract-source or undefined) before invoking compiler; package.json pretypecheck/sync-contract scripts own default path.",
+      "contextLimit": "Detached --contract-source override exists; not every historical copy is inferred canonical. This current seven-member regular tree is byte-identical to the exact default canonical source and is bound by existing finite materialized-source contract.",
+      "finiteDocumentationGuard": "scripts/docs-api-observer-materialized-source.mjs pins exact7canonical members, exact8staticcallers and producer/package/ignore Sources; rejects extra/incomplete/symlink/drift before Source mapping. Owning tests read, not executed here."
+    },
+    "guardPreservation": "Physical path remains required in original policy535cells and actual original owner check; moving typed receipt out of completionRecord.sources does not change/remove/alias its product input guard."
+  },
+  {
+    "path": "skills/common/plugins/openclaw-agent-observer/src/generated/agent-observability/types.ts",
+    "kind": "ignored-materialized-contract-source",
+    "tracked": false,
+    "regularPhysicalNonSymlink": true,
+    "sha256": "f1b3a0dff514d59f62a8448649c444b4eb6116de6d85500bc3aa6671ea63eb96",
+    "policyBindings": [
+      {
+        "package": "kubeclaw-agent-observer",
+        "path": "skills/common/plugins/openclaw-agent-observer/src/generated/agent-observability/types.ts",
+        "sha256": "f1b3a0dff514d59f62a8448649c444b4eb6116de6d85500bc3aa6671ea63eb96",
+        "tracked": false
+      }
+    ],
+    "canonicalTrackedSource": {
+      "path": "contracts/agent-observability/v1/src/types.ts",
+      "sha256": "f1b3a0dff514d59f62a8448649c444b4eb6116de6d85500bc3aa6671ea63eb96"
+    },
+    "mappingAuthority": {
+      "producer": "skills/common/plugins/openclaw-agent-observer/scripts/sync-contract.mjs",
+      "producerPathSelection": "defaultContractSource=path.resolve(pluginRoot,../../../../contracts/agent-observability/v1/src); generatedTarget=pluginRoot/src/generated/agent-observability; syncContract removes/recreates target then recursive cp.",
+      "normalCaller": "skills/common/plugins/openclaw-agent-observer/scripts/build.mjs calls syncContract(--contract-source or undefined) before invoking compiler; package.json pretypecheck/sync-contract scripts own default path.",
+      "contextLimit": "Detached --contract-source override exists; not every historical copy is inferred canonical. This current seven-member regular tree is byte-identical to the exact default canonical source and is bound by existing finite materialized-source contract.",
+      "finiteDocumentationGuard": "scripts/docs-api-observer-materialized-source.mjs pins exact7canonical members, exact8staticcallers and producer/package/ignore Sources; rejects extra/incomplete/symlink/drift before Source mapping. Owning tests read, not executed here."
+    },
+    "guardPreservation": "Physical path remains required in original policy535cells and actual original owner check; moving typed receipt out of completionRecord.sources does not change/remove/alias its product input guard."
+  },
+  {
+    "path": "skills/common/plugins/openclaw-agent-observer/src/generated/agent-observability/validation.ts",
+    "kind": "ignored-materialized-contract-source",
+    "tracked": false,
+    "regularPhysicalNonSymlink": true,
+    "sha256": "2e8b7c17d7deeb0cc87e4bd2b05dc8e9712372de161e7c1eeb7cc5270ad6697e",
+    "policyBindings": [
+      {
+        "package": "kubeclaw-agent-observer",
+        "path": "skills/common/plugins/openclaw-agent-observer/src/generated/agent-observability/validation.ts",
+        "sha256": "2e8b7c17d7deeb0cc87e4bd2b05dc8e9712372de161e7c1eeb7cc5270ad6697e",
+        "tracked": false
+      }
+    ],
+    "canonicalTrackedSource": {
+      "path": "contracts/agent-observability/v1/src/validation.ts",
+      "sha256": "2e8b7c17d7deeb0cc87e4bd2b05dc8e9712372de161e7c1eeb7cc5270ad6697e"
+    },
+    "mappingAuthority": {
+      "producer": "skills/common/plugins/openclaw-agent-observer/scripts/sync-contract.mjs",
+      "producerPathSelection": "defaultContractSource=path.resolve(pluginRoot,../../../../contracts/agent-observability/v1/src); generatedTarget=pluginRoot/src/generated/agent-observability; syncContract removes/recreates target then recursive cp.",
+      "normalCaller": "skills/common/plugins/openclaw-agent-observer/scripts/build.mjs calls syncContract(--contract-source or undefined) before invoking compiler; package.json pretypecheck/sync-contract scripts own default path.",
+      "contextLimit": "Detached --contract-source override exists; not every historical copy is inferred canonical. This current seven-member regular tree is byte-identical to the exact default canonical source and is bound by existing finite materialized-source contract.",
+      "finiteDocumentationGuard": "scripts/docs-api-observer-materialized-source.mjs pins exact7canonical members, exact8staticcallers and producer/package/ignore Sources; rejects extra/incomplete/symlink/drift before Source mapping. Owning tests read, not executed here."
+    },
+    "guardPreservation": "Physical path remains required in original policy535cells and actual original owner check; moving typed receipt out of completionRecord.sources does not change/remove/alias its product input guard."
+  }
+]

@@ -1,0 +1,16 @@
+{
+  "kind": "Root-observedtoolterminalsummary-not-rawstderr",
+  "mainWritesBeforeStop": false,
+  "adoptionScript": {
+    "terminal": 1,
+    "phase": "pre-write tracked-source assertion",
+    "firstInvalid": "skills/common/plugins/openclaw-agent-observer/src/generated/agent-observability/complexity.ts"
+  },
+  "checkerAfterUnadoptedAttempt": {
+    "terminal": 1,
+    "reason": "AP09-publication-positive-scope-7ef16585 relevant files changed docs/site/extend/deep-guides/README.md; expected prior-scope stale until exactonepreservation adopted",
+    "stdout": "compact-source81-first-unadopted.stdout.empty"
+  },
+  "continuation": "Originalcandidate/failurepreserved. Independenttyped-inputformat-successor pending; Mainstillclean81,priorregistercounts51/223 no currentwholegateclaim.",
+  "diagnostic": "AttemptedJSONparseofemptyfailedcheckerstdout rejected; no forged51/52successrecord."
+}

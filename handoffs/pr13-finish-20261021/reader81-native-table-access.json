@@ -1,0 +1,129 @@
+{
+  "scope": "ONE320NativeLocalTableScrollTabEnterAccess_No153RowRecount",
+  "scriptSha256": "5ca8dd0d7fd4bdde8287422945043dd0ec1ddd31dd3f5c1f06354fe833558b17",
+  "artifact": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/production-first-81db5f8a",
+  "before": {
+    "source": "9642f6b947cb4b29ebe6048ab4e14dc54e0c2888998bf2aac160c9d5143fac8c",
+    "html": "6fd36f546bc0b52cfdcd4101637ce7550db2e6be5d8d02ad2b413da34a731bcb",
+    "staged": "a24e152664c9a50074de8700929c7a487f8836ac88f22b7256200676cd33b1b9",
+    "manifest": "36215a13b3d858caf18b37f7df1a6f84e5b415be5a8da7cee092697b36f65824",
+    "previews": "775930e8cc2d2f9601bb020cb16e362e83153e60a68551444bf85d02011fd100",
+    "prior": "af46dc5eb8eb7426e29da43d1ac858e8fa794ca7eec0ca2bcf64f4a5b0caa36e",
+    "css0": "c389550d17ca53170ca7659041c0f7c2668b73829a0e4590f099c4ba08e1c698"
+  },
+  "after": {
+    "source": "9642f6b947cb4b29ebe6048ab4e14dc54e0c2888998bf2aac160c9d5143fac8c",
+    "html": "6fd36f546bc0b52cfdcd4101637ce7550db2e6be5d8d02ad2b413da34a731bcb",
+    "staged": "a24e152664c9a50074de8700929c7a487f8836ac88f22b7256200676cd33b1b9",
+    "manifest": "36215a13b3d858caf18b37f7df1a6f84e5b415be5a8da7cee092697b36f65824",
+    "previews": "775930e8cc2d2f9601bb020cb16e362e83153e60a68551444bf85d02011fd100",
+    "prior": "af46dc5eb8eb7426e29da43d1ac858e8fa794ca7eec0ca2bcf64f4a5b0caa36e",
+    "css0": "c389550d17ca53170ca7659041c0f7c2668b73829a0e4590f099c4ba08e1c698"
+  },
+  "observation": {
+    "label": "Package",
+    "top": 463.953125,
+    "bottom": 535.140625,
+    "left": 16.5,
+    "right": 136.5,
+    "tableLeft": 16,
+    "tableRight": 304,
+    "pageWidth": 320,
+    "viewportWidth": 320,
+    "viewportHeight": 1000,
+    "initialLocalTable": {
+      "clientWidth": 288,
+      "scrollWidth": 361,
+      "scrollLeft": 0,
+      "clientLeft": 0,
+      "boxLeft": 16,
+      "boxRight": 304,
+      "contentLeft": 16,
+      "contentRight": 304,
+      "owningHeader": {
+        "left": 256.5,
+        "right": 376.5,
+        "top": 463.953125,
+        "bottom": 535.140625
+      },
+      "firstGuide": {
+        "left": 269,
+        "right": 337,
+        "top": 550.640625,
+        "bottom": 566.640625
+      },
+      "viewportWidth": 320,
+      "viewportHeight": 1000,
+      "pageWidth": 320,
+      "tabindex": "0",
+      "focused": false
+    },
+    "afterNativeHorizontalScroll": {
+      "clientWidth": 288,
+      "scrollWidth": 361,
+      "scrollLeft": 73,
+      "clientLeft": 0,
+      "boxLeft": 16,
+      "boxRight": 304,
+      "contentLeft": 16,
+      "contentRight": 304,
+      "owningHeader": {
+        "left": 183.5,
+        "right": 303.5,
+        "top": 0.953125,
+        "bottom": 72.140625
+      },
+      "firstGuide": {
+        "left": 196,
+        "right": 264,
+        "top": 87.640625,
+        "bottom": 103.640625
+      },
+      "viewportWidth": 320,
+      "viewportHeight": 1000,
+      "pageWidth": 320,
+      "tabindex": "0",
+      "focused": true
+    },
+    "afterNativeTab": {
+      "clientWidth": 288,
+      "scrollWidth": 361,
+      "scrollLeft": 73,
+      "clientLeft": 0,
+      "boxLeft": 16,
+      "boxRight": 304,
+      "contentLeft": 16,
+      "contentRight": 304,
+      "owningHeader": {
+        "left": 183.5,
+        "right": 303.5,
+        "top": 0.953125,
+        "bottom": 72.140625
+      },
+      "firstGuide": {
+        "left": 196,
+        "right": 264,
+        "top": 87.640625,
+        "bottom": 103.640625
+      },
+      "viewportWidth": 320,
+      "viewportHeight": 1000,
+      "pageWidth": 320,
+      "tabindex": "0",
+      "focused": false
+    },
+    "nativeEnter": {
+      "actualUrl": "file:///home/node/.openclaw/workspace/tmp/pr13-finish-20261021/production-first-81db5f8a/understand/openclaw.html",
+      "expectedUrl": "file:///home/node/.openclaw/workspace/tmp/pr13-finish-20261021/production-first-81db5f8a/understand/openclaw.html"
+    },
+    "limit": "Initially clipped local scrolling table, not all columns simultaneously visible. One native horizontal/Tab/Enter access path only; no153row or wholemobile/accessibility reacceptance."
+  },
+  "findings": [],
+  "network": [],
+  "fatal": null,
+  "limits": [
+    "One real noJS offline320local-table ArrowRight/Tab/Enter access path and viewport image; initial clipping explicitly recorded, no DOM/style/HTML rewrite.",
+    "Prior actual3page153row3navigation evidence remains unchanged; this retake is not another classification/table-content census or wholeReader/accessibility acceptance.",
+    "No Source/canonical-guide semantic correctness or module/consumer/graph/runtime/release qualification inferred from screenshot."
+  ]
+}

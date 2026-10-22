@@ -1,0 +1,3216 @@
+{
+  "policySha256": "19ad54c83ac945e2f82927fdad65f4740292562b99752828d43068edfc5623b5",
+  "bindingCells": [
+    {
+      "package": "kubeclaw-agent-observer",
+      "path": "skills/common/plugins/openclaw-agent-observer/README.md",
+      "sha256": "70562cb03464e32946b91b0a166d91e8fb253c7f0df8bcf6efa749965aa8cb35",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw-agent-observer",
+      "path": "skills/common/plugins/openclaw-agent-observer/openclaw.plugin.json",
+      "sha256": "651bf5310a5261ee309e219453e534754e7738fdd86152e582183e3ba95ec5eb",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw-agent-observer",
+      "path": "skills/common/plugins/openclaw-agent-observer/src/config.ts",
+      "sha256": "1617f4937214a1b601b66d2525309a780c9202e54666a4ac3ff9135e3216297c",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw-agent-observer",
+      "path": "skills/common/plugins/openclaw-agent-observer/src/diagnostics.ts",
+      "sha256": "4957fc2f8b2dab174f7aaa7cac5ddc94ae42ea3cf83caf2b414553396a0b5719",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw-agent-observer",
+      "path": "skills/common/plugins/openclaw-agent-observer/src/generated/agent-observability/complexity.ts",
+      "sha256": "cc1e3f8a9beaaec2d56cb04533a681b7569e2ac8a457694248249380624d6d60",
+      "tracked": false
+    },
+    {
+      "package": "kubeclaw-agent-observer",
+      "path": "skills/common/plugins/openclaw-agent-observer/src/generated/agent-observability/constants.ts",
+      "sha256": "7362261fe21d18e7acdf32b266f938a740e1106a4642579e7a1b203cb8b97924",
+      "tracked": false
+    },
+    {
+      "package": "kubeclaw-agent-observer",
+      "path": "skills/common/plugins/openclaw-agent-observer/src/generated/agent-observability/index.ts",
+      "sha256": "53701c60777f686a2f9da25235ad02e755e820714ca8621de795bf1a5376acb3",
+      "tracked": false
+    },
+    {
+      "package": "kubeclaw-agent-observer",
+      "path": "skills/common/plugins/openclaw-agent-observer/src/generated/agent-observability/mapping.ts",
+      "sha256": "76dcb599813722b108f9f0a918c60899c019ece2484b10587b628bf72f055592",
+      "tracked": false
+    },
+    {
+      "package": "kubeclaw-agent-observer",
+      "path": "skills/common/plugins/openclaw-agent-observer/src/generated/agent-observability/routing.ts",
+      "sha256": "ef7851b00d9c32b46d890ca4210f4afee6fa0ecc9796fab417b6b2c705af571d",
+      "tracked": false
+    },
+    {
+      "package": "kubeclaw-agent-observer",
+      "path": "skills/common/plugins/openclaw-agent-observer/src/generated/agent-observability/types.ts",
+      "sha256": "f1b3a0dff514d59f62a8448649c444b4eb6116de6d85500bc3aa6671ea63eb96",
+      "tracked": false
+    },
+    {
+      "package": "kubeclaw-agent-observer",
+      "path": "skills/common/plugins/openclaw-agent-observer/src/generated/agent-observability/validation.ts",
+      "sha256": "2e8b7c17d7deeb0cc87e4bd2b05dc8e9712372de161e7c1eeb7cc5270ad6697e",
+      "tracked": false
+    },
+    {
+      "package": "kubeclaw-agent-observer",
+      "path": "skills/common/plugins/openclaw-agent-observer/src/hook-normalizers.ts",
+      "sha256": "58976e1ae44055663149b4cd830f593e2fdebb41705413c88f99e858722cbab0",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw-agent-observer",
+      "path": "skills/common/plugins/openclaw-agent-observer/src/hook-payloads.ts",
+      "sha256": "02a054facf3ca13ab0d875b1380c52a585362d96d5138b842f7bd026a03fcf6b",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw-agent-observer",
+      "path": "skills/common/plugins/openclaw-agent-observer/src/hook-values.ts",
+      "sha256": "7514c3213f914e60b91e5139e6c624c7c289fdc26b1351786a8ee287caeaa911",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw-agent-observer",
+      "path": "skills/common/plugins/openclaw-agent-observer/src/index.ts",
+      "sha256": "a800b92606e0c803ae51867c7625ae5610169e23b2074b54d69f58e5f0d6f3aa",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw-agent-observer",
+      "path": "skills/common/plugins/openclaw-agent-observer/src/observer-support.ts",
+      "sha256": "67444a5a791b2e408b53f3d166afce85937131890aba036b0037e42d9c78c774",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw-agent-observer",
+      "path": "skills/common/plugins/openclaw-agent-observer/src/plugin-api.ts",
+      "sha256": "848f5e17e9b474c8e7b27908d0ed65a1600cba50c4e6633c4108eb4f5bbd1581",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw-agent-observer",
+      "path": "skills/common/plugins/openclaw-agent-observer/src/redis-transport.ts",
+      "sha256": "cc49831a1ff6eef51642fd47a0e4a1d00d6ad6bb6337c09f709d7cfd5a5f46da",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw-agent-observer",
+      "path": "skills/common/plugins/openclaw-agent-observer/src/redis-writer-types.ts",
+      "sha256": "63ff685537b415cbe5a67c4b8d4ada42241ef2187fc278ec75ec403855763ac8",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw-agent-observer",
+      "path": "skills/common/plugins/openclaw-agent-observer/src/redis-writer.ts",
+      "sha256": "8f974830cf10d931410d6bd1f23b4782aa8988b96baba13f4172a3b9f85d4a5d",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw-agent-observer",
+      "path": "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json",
+      "sha256": "837efd7975991aa21b8c92b57881194e9bc8c7adc4370f238d1a15b6d85d44db",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw-ops",
+      "path": "plugins/kubeclaw-ops/.codex-plugin/plugin.json",
+      "sha256": "906bd92fc84b1ea15e3e76c8b39d8262d0cbaa5458c9923478233660521ff1e5",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw-ops",
+      "path": "plugins/kubeclaw-ops/skills/troubleshoot/SKILL.md",
+      "sha256": "52a7329b7176b69c98ca46069d1147e0dc242a6f812ac4efdceba0c86a8cc530",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw-ops",
+      "path": "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json",
+      "sha256": "837efd7975991aa21b8c92b57881194e9bc8c7adc4370f238d1a15b6d85d44db",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw-prism",
+      "path": "skills/prism/openclaw-plugin/README.md",
+      "sha256": "48eb6362bc55e2dec68324b49d66f4a3069d2c00955664e5fe48aa6c3be0db05",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw-prism",
+      "path": "skills/prism/openclaw-plugin/index.mjs",
+      "sha256": "97a30daa0a042f2cd9416746caffe9207828dd9a587e3a6c3e8de481f5d0640e",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw-prism",
+      "path": "skills/prism/openclaw-plugin/openclaw.plugin.json",
+      "sha256": "1cf3f06268870973f2d7131cf64d469e516a62bf4b5f3a9d5b6d6a1c9bdd0588",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw-prism",
+      "path": "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json",
+      "sha256": "837efd7975991aa21b8c92b57881194e9bc8c7adc4370f238d1a15b6d85d44db",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.agent-observability",
+      "path": "skills/common/plugins/agent-observability/README.md",
+      "sha256": "587baf990dd55b551e27ea93cc923b5365445f6a38f306f9cb0fb0a7abbb365a",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.agent-observability",
+      "path": "skills/common/plugins/agent-observability/plugin.json",
+      "sha256": "00319c7417cd253a0bcc0ae6574baba74a2592a8ee9284552f7d2fc2c341ce8c",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.agent-observability",
+      "path": "skills/common/plugins/agent-observability/schemas/checkpoint.schema.json",
+      "sha256": "c6d66f56cbb0c5cd0b277a1def6ce910dfbbd1707a6feaf5ef17674cfcf29759",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.agent-observability",
+      "path": "skills/common/plugins/agent-observability/schemas/config.schema.json",
+      "sha256": "67c0a3e017f62ab8fa45adf3782967e9fd83fd25da2b4cecd06cfb1ca77e2afa",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.agent-observability",
+      "path": "skills/common/plugins/agent-observability/src/observers.ts",
+      "sha256": "b52a00959c3ba7c122faf4fe364ce9ab5baf530e590df89b8f3ddc5e764b111c",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.agent-observability",
+      "path": "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json",
+      "sha256": "837efd7975991aa21b8c92b57881194e9bc8c7adc4370f238d1a15b6d85d44db",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.api-flow",
+      "path": "skills/buster/plugins/api-flow/README.md",
+      "sha256": "fdb4520d8d9a12e25a79787a5f2dd219a5bbc98d95ef0c22c204ee82d668a55e",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.api-flow",
+      "path": "skills/buster/plugins/api-flow/plugin.json",
+      "sha256": "d6c8f75a90ab142a4273893cd0e0bcf12a1d377432a42eb8f65127c177bbe536",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.api-flow",
+      "path": "skills/buster/plugins/api-flow/schemas/config.schema.json",
+      "sha256": "8f22f22a553bc7d12daca18756c1394596e0f953de909ad4569aef77119e9ebc",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.api-flow",
+      "path": "skills/buster/plugins/api-flow/schemas/flow.schema.json",
+      "sha256": "b4b30b26fbc0719f8438cb422124a1898691dd3b05af47d010d786b1400d76aa",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.api-flow",
+      "path": "skills/buster/plugins/api-flow/src/provider.js",
+      "sha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.api-flow",
+      "path": "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json",
+      "sha256": "837efd7975991aa21b8c92b57881194e9bc8c7adc4370f238d1a15b6d85d44db",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.architecture-validator",
+      "path": "skills/nova/plugins/architecture-validator/README.md",
+      "sha256": "1ea6563f1ca2b809d9cc3966ab11d6098caa39beb030bd907ed1aabf73ec4cf2",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.architecture-validator",
+      "path": "skills/nova/plugins/architecture-validator/plugin.json",
+      "sha256": "915926814bba76b52d9cce47961da67e43cf5ade85c077a417272023c5730792",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.architecture-validator",
+      "path": "skills/nova/plugins/architecture-validator/schemas/config.schema.json",
+      "sha256": "49b1391ff9c5076715c42cf37857f4a6ec6e5a90e7777ff9c94e0d664449981a",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.architecture-validator",
+      "path": "skills/nova/plugins/architecture-validator/schemas/input.schema.json",
+      "sha256": "105defd63fd5abe3baf1993b7477e13ef16010213ec5548051908433131f9d56",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.architecture-validator",
+      "path": "skills/nova/plugins/architecture-validator/schemas/result.schema.json",
+      "sha256": "6f0724b07d28e7599627452c02f7c6528acf74183bb03c8111ddbbdd4736a87d",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.architecture-validator",
+      "path": "skills/nova/plugins/architecture-validator/src/output.ts",
+      "sha256": "8b6ee1fe1f98b019f0fda4eb52f4f3786863885f52c67f9db3e7d667416d93ea",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.architecture-validator",
+      "path": "skills/nova/plugins/architecture-validator/src/protocol.ts",
+      "sha256": "46c3f8894c19ac12c8ca5c35493ef47ace66a8d8092056e102d513c93f29b07a",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.architecture-validator",
+      "path": "skills/nova/plugins/architecture-validator/src/stage.ts",
+      "sha256": "1d078730d6c276cba32fbdded3b289bff155638490e7a5d191750732e13565bc",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.architecture-validator",
+      "path": "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json",
+      "sha256": "837efd7975991aa21b8c92b57881194e9bc8c7adc4370f238d1a15b6d85d44db",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.artifact-store",
+      "path": "skills/common/plugins/artifact-store/README.md",
+      "sha256": "7151e61fd08387cba2f06f05f32bdc1ddfe0fa11c4e9fe0aba978ca86bb6ffb5",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.artifact-store",
+      "path": "skills/common/plugins/artifact-store/plugin.json",
+      "sha256": "48f2a67542f717818d50d395a74c66273078a0444cdebbc70e8f3cc4a840202f",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.artifact-store",
+      "path": "skills/common/plugins/artifact-store/schemas/config.schema.json",
+      "sha256": "dd34d3f97c673d7c011e989d98c11f68bb06c65cda50361bf5913b915bd90de5",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.artifact-store",
+      "path": "skills/common/plugins/artifact-store/src/adapter.ts",
+      "sha256": "12fa6150089d49da0a9065de560fb53436dc46e3f10f15da0f3fe8b112a50154",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.artifact-store",
+      "path": "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json",
+      "sha256": "837efd7975991aa21b8c92b57881194e9bc8c7adc4370f238d1a15b6d85d44db",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.axe",
+      "path": "skills/buster/plugins/axe/README.md",
+      "sha256": "1ab2a74127ab6340c77b01a9dcca756486c4b9a9ecec19e03e88bab05cb44a6a",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.axe",
+      "path": "skills/buster/plugins/axe/plugin.json",
+      "sha256": "178f07330165f84e5f6ac7be7876b74318eb939c97d5a560f5289d313fbbd0d7",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.axe",
+      "path": "skills/buster/plugins/axe/schemas/config.schema.json",
+      "sha256": "c3c0c64faf7194753f51dc73e40cf59d465889ae0bdbee691a8acba0b1f6cd6d",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.axe",
+      "path": "skills/buster/plugins/axe/src/provider.js",
+      "sha256": "3943f787c2d7fc1f2215268c043135f0a6d6425fd6e09b26d48bb2171e87c472",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.axe",
+      "path": "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json",
+      "sha256": "837efd7975991aa21b8c92b57881194e9bc8c7adc4370f238d1a15b6d85d44db",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.blueprint-sync",
+      "path": "skills/nova/plugins/blueprint-sync/README.md",
+      "sha256": "8d7826178378bd3fe2a9f368744f784e3003655eb48297e3b4782be57a94d9e4",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.blueprint-sync",
+      "path": "skills/nova/plugins/blueprint-sync/plugin.json",
+      "sha256": "b7d85a1c195d9d5280da1c396ac1d697be9e0d3a85babe1046850c18fa47e384",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.blueprint-sync",
+      "path": "skills/nova/plugins/blueprint-sync/schemas/config.schema.json",
+      "sha256": "67c0a3e017f62ab8fa45adf3782967e9fd83fd25da2b4cecd06cfb1ca77e2afa",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.blueprint-sync",
+      "path": "skills/nova/plugins/blueprint-sync/schemas/input.schema.json",
+      "sha256": "a32c6626b0da18a21ef666d7692f87c53f75cd582471751da650fe5a0ae773fa",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.blueprint-sync",
+      "path": "skills/nova/plugins/blueprint-sync/schemas/result.schema.json",
+      "sha256": "6f0724b07d28e7599627452c02f7c6528acf74183bb03c8111ddbbdd4736a87d",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.blueprint-sync",
+      "path": "skills/nova/plugins/blueprint-sync/src/stage.ts",
+      "sha256": "77735e30c7109aee73cd6c396fe11858275935df1f251aae77d582ed4a7f2765",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.blueprint-sync",
+      "path": "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json",
+      "sha256": "837efd7975991aa21b8c92b57881194e9bc8c7adc4370f238d1a15b6d85d44db",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.buster-quality-gate",
+      "path": "skills/nova/plugins/buster-quality-gate/README.md",
+      "sha256": "81f3cf942b15fc8a091eb34b9009dadb14cb4c8211febfa391b23b13a19862f6",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.buster-quality-gate",
+      "path": "skills/nova/plugins/buster-quality-gate/plugin.json",
+      "sha256": "19b03b5c61f4b6decbf06a650a3824db02f61ba010939246a7d1bd35ae3e6966",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.buster-quality-gate",
+      "path": "skills/nova/plugins/buster-quality-gate/schemas/config.schema.json",
+      "sha256": "77f3bc2d1d9a25347219cbb5f11d8580e57390abee3936a6de044b6d5cea68c5",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.buster-quality-gate",
+      "path": "skills/nova/plugins/buster-quality-gate/schemas/input.schema.json",
+      "sha256": "2d6fb0f0178d3b361d417a74303fe04c188a353114735e5809a8abd35fbd34f7",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.buster-quality-gate",
+      "path": "skills/nova/plugins/buster-quality-gate/schemas/result.schema.json",
+      "sha256": "6f0724b07d28e7599627452c02f7c6528acf74183bb03c8111ddbbdd4736a87d",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.buster-quality-gate",
+      "path": "skills/nova/plugins/buster-quality-gate/src/protocol.ts",
+      "sha256": "9f85b213f272e143dbc7a9736666054941b4d21c231afdbfc07b8e539c907711",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.buster-quality-gate",
+      "path": "skills/nova/plugins/buster-quality-gate/src/stage.ts",
+      "sha256": "3b58135f8f95a089a7776ca76152d51ae394627f13ce0da1f362c90ab7b1ea76",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.buster-quality-gate",
+      "path": "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json",
+      "sha256": "837efd7975991aa21b8c92b57881194e9bc8c7adc4370f238d1a15b6d85d44db",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.case-study",
+      "path": "skills/nova/plugins/case-study/README.md",
+      "sha256": "d896e5e31a642289a86806abd984add82a969fd6377257ff39b864c1967aaa56",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.case-study",
+      "path": "skills/nova/plugins/case-study/plugin.json",
+      "sha256": "e18697e96655c6b0fcf775de0a898a18821d7bd1c9e1960fdd150d18f9f68b8e",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.case-study",
+      "path": "skills/nova/plugins/case-study/schemas/config.schema.json",
+      "sha256": "4632cc51357ffecdbd593cf1d1928a99b9cd4855b3763354f67261b62cc0c895",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.case-study",
+      "path": "skills/nova/plugins/case-study/schemas/input.schema.json",
+      "sha256": "57b29f85dd70c0e69c90eed33563fde513533de0df258ab5f2b62c2ca693bd7b",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.case-study",
+      "path": "skills/nova/plugins/case-study/schemas/result.schema.json",
+      "sha256": "6f0724b07d28e7599627452c02f7c6528acf74183bb03c8111ddbbdd4736a87d",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.case-study",
+      "path": "skills/nova/plugins/case-study/src/protocol.ts",
+      "sha256": "3ff3c3dc70f2967d194896205cb1c7a2f7226d84de2a042f6c7bae46a25588c6",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.case-study",
+      "path": "skills/nova/plugins/case-study/src/stage.ts",
+      "sha256": "a537e4028ddc30ea19ae7fa18e828c10745f08f14b0cf16e534ee8b42ea720b9",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.case-study",
+      "path": "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json",
+      "sha256": "837efd7975991aa21b8c92b57881194e9bc8c7adc4370f238d1a15b6d85d44db",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.command-runner",
+      "path": "skills/common/plugins/command-runner/README.md",
+      "sha256": "0aa9d5c701c7c521d6eb580646130c65f8cf2d2bcf8078ba3a5d5c64d5097d2f",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.command-runner",
+      "path": "skills/common/plugins/command-runner/plugin.json",
+      "sha256": "6d59b5fdf3f954c2b11894024166b281d57583fa8d3e5b4b1a77b1090232c146",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.command-runner",
+      "path": "skills/common/plugins/command-runner/schemas/config.schema.json",
+      "sha256": "489dac2930cb42ad50dcd8174928471ecdd9b5be25354916aaa3813bed50e2b6",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.command-runner",
+      "path": "skills/common/plugins/command-runner/src/adapter.ts",
+      "sha256": "31265c4ce8ad540a119e74cc0b4449ffb0621af688f0c37fa848cdb509b4620b",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.command-runner",
+      "path": "skills/common/plugins/command-runner/src/cgroup.ts",
+      "sha256": "163b671691e314418a9c2c28a1b7bdbfe84e04e5162409e98607ff29d64f36da",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.command-runner",
+      "path": "skills/common/plugins/command-runner/src/execution.ts",
+      "sha256": "b08ca224ab8b6a6276c002152cc54814f236d2dcda84a7faebb2b4463fce2ee0",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.command-runner",
+      "path": "skills/common/plugins/command-runner/src/process-facts.ts",
+      "sha256": "d6220a90dc0cf14612e1e693c5ac708f3783d9d0d10fc6d451f052259a95742a",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.command-runner",
+      "path": "skills/common/plugins/command-runner/src/process-group.ts",
+      "sha256": "b58ed6ee068546fa44561a7875aee21633e02a4148dedb0104b15c441b8a3002",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.command-runner",
+      "path": "skills/common/plugins/command-runner/src/runner.ts",
+      "sha256": "3cf07ec2c39b3caa50419c48ce49119d37491abb83398d637d400f06ebf5e2ad",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.command-runner",
+      "path": "skills/common/plugins/command-runner/src/types.ts",
+      "sha256": "b6c616b30b31e0eab97685c9698674579cfac2762b43657536f08eb5ea70e3e7",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.command-runner",
+      "path": "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json",
+      "sha256": "837efd7975991aa21b8c92b57881194e9bc8c7adc4370f238d1a15b6d85d44db",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.container-build",
+      "path": "skills/buster/plugins/container-build/README.md",
+      "sha256": "9f717d5483450ff8aa9e01f95694bbe54165b6ee18f0014ece1fa6de77a892d3",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.container-build",
+      "path": "skills/buster/plugins/container-build/plugin.json",
+      "sha256": "6a43c756b8707be3a5efb3851ed8869a17e376658a30503bf9d51697a7e9c011",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.container-build",
+      "path": "skills/buster/plugins/container-build/schemas/config.schema.json",
+      "sha256": "2ee424bde723532cea47009ad63b3d59ae422cd60ac8a3ba375396abb1f6dae9",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.container-build",
+      "path": "skills/buster/plugins/container-build/src/provider.js",
+      "sha256": "1204d07c75942e9def8b703748bf97510e933b2cfb33b85f84c485d42b89c847",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.container-build",
+      "path": "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json",
+      "sha256": "837efd7975991aa21b8c92b57881194e9bc8c7adc4370f238d1a15b6d85d44db",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.coverage-budget",
+      "path": "skills/buster/plugins/coverage-budget/README.md",
+      "sha256": "2a8f2e52e59f5ee7be788636a86a36a0fa37306d65fc273caacf84494e47c217",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.coverage-budget",
+      "path": "skills/buster/plugins/coverage-budget/plugin.json",
+      "sha256": "0f0ae38312005bf70de5b8da45dd96122be24614b05079b2ed410248e9166067",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.coverage-budget",
+      "path": "skills/buster/plugins/coverage-budget/schemas/config.schema.json",
+      "sha256": "72fc0422bb8f35b01b44405d217a3a1a4d62c4f875ddbe3bce1ddb814126025f",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.coverage-budget",
+      "path": "skills/buster/plugins/coverage-budget/src/provider.js",
+      "sha256": "3e76c0b48e6728a195de48f8c7325e517e0681e8e0e169e7adb129bd0752430b",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.coverage-budget",
+      "path": "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json",
+      "sha256": "837efd7975991aa21b8c92b57881194e9bc8c7adc4370f238d1a15b6d85d44db",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.delivery-lint",
+      "path": "skills/nova/plugins/delivery-lint/README.md",
+      "sha256": "6ff50abaa584bcad2bd2be83034d06a30d3653e8e903bb40a8ebbfdabf5998a3",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.delivery-lint",
+      "path": "skills/nova/plugins/delivery-lint/plugin.json",
+      "sha256": "4d560ad2f25858a8f399097effb0f32c7a25bfbe326c3dfd61101346ee1d01d9",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.delivery-lint",
+      "path": "skills/nova/plugins/delivery-lint/schemas/config.schema.json",
+      "sha256": "2656294ca60aa23acaa3e6e1b688fa8b754196e6636657eb146a559936511803",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.delivery-lint",
+      "path": "skills/nova/plugins/delivery-lint/schemas/input.schema.json",
+      "sha256": "57a650703fe82e66f611097bf32652425a70d4be8ee5cd6cc63788f983a65ce4",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.delivery-lint",
+      "path": "skills/nova/plugins/delivery-lint/schemas/result.schema.json",
+      "sha256": "b7cf810d6de653ae98b1caf1ed6f77ec0940495ed1392bae577c55784f3b77e5",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.delivery-lint",
+      "path": "skills/nova/plugins/delivery-lint/src/dockerfile.ts",
+      "sha256": "189011bb0e9f89f2144c1ed883a746b5937b662d39d8b484ee9f4e88d9149849",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.delivery-lint",
+      "path": "skills/nova/plugins/delivery-lint/src/stage.ts",
+      "sha256": "b8f849c5d228713dd73ab7a47e73ef5be9ee5fd07af39e4276c483a3555ac862",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.delivery-lint",
+      "path": "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json",
+      "sha256": "837efd7975991aa21b8c92b57881194e9bc8c7adc4370f238d1a15b6d85d44db",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.demo-auth-smoke",
+      "path": "skills/buster/plugins/demo-auth-smoke/README.md",
+      "sha256": "3230e842192813df317830d44228dae9836152ce7bddde9e65c2c4a7a9a37631",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.demo-auth-smoke",
+      "path": "skills/buster/plugins/demo-auth-smoke/plugin.json",
+      "sha256": "a7dc11d0cd73886181c787be579552ed8f26eba3a4b364e87361ca6eff0db194",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.demo-auth-smoke",
+      "path": "skills/buster/plugins/demo-auth-smoke/schemas/config.schema.json",
+      "sha256": "5e0d5ea09c2070375cc558bca0f21484646c98b0de18023438cc29b830ad642e",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.demo-auth-smoke",
+      "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+      "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.demo-auth-smoke",
+      "path": "skills/buster/plugins/demo-auth-smoke/src/provider.js",
+      "sha256": "21e239a33d59c5849d8b9acef7ac0d6eba70b5652f885a430eefd82063f07c30",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.demo-auth-smoke",
+      "path": "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json",
+      "sha256": "837efd7975991aa21b8c92b57881194e9bc8c7adc4370f238d1a15b6d85d44db",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.demo-handoff",
+      "path": "skills/nova/plugins/demo-handoff/README.md",
+      "sha256": "5a80c23923eecb0361cd60ae3eec9ee72560eaecc73ef4b99dc459e5448561e0",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.demo-handoff",
+      "path": "skills/nova/plugins/demo-handoff/plugin.json",
+      "sha256": "6603951e6a1eb1eef6a48d400a942ca153ec064d2ea67b0ec7f78b4f7e680d6e",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.demo-handoff",
+      "path": "skills/nova/plugins/demo-handoff/schemas/adapter.schema.json",
+      "sha256": "908e54cafb1d4edac6aeffe49ded47dc578f87e3d37952b247b7520aa4560fa4",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.demo-handoff",
+      "path": "skills/nova/plugins/demo-handoff/schemas/candidate.schema.json",
+      "sha256": "20ef1065dadcf3236d091621eee86a81157f52dd9aca1b7f3535187aa09d3b13",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.demo-handoff",
+      "path": "skills/nova/plugins/demo-handoff/schemas/delivery.schema.json",
+      "sha256": "0c23e4a13b585c3c1acde7410fed759f034c05f90b2202664bcac9dc5e1010c9",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.demo-handoff",
+      "path": "skills/nova/plugins/demo-handoff/schemas/empty.schema.json",
+      "sha256": "2656294ca60aa23acaa3e6e1b688fa8b754196e6636657eb146a559936511803",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.demo-handoff",
+      "path": "skills/nova/plugins/demo-handoff/schemas/ready.schema.json",
+      "sha256": "5b61a49b5383f4d4c1b3227104e136ef0119383ec4c9d456658c20df136dcbb0",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.demo-handoff",
+      "path": "skills/nova/plugins/demo-handoff/schemas/result.schema.json",
+      "sha256": "b7cf810d6de653ae98b1caf1ed6f77ec0940495ed1392bae577c55784f3b77e5",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.demo-handoff",
+      "path": "skills/nova/plugins/demo-handoff/src/adapter.ts",
+      "sha256": "245bff96d5198426aa2bc73739fdc4976fb632b0a4737b923594efa052af0855",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.demo-handoff",
+      "path": "skills/nova/plugins/demo-handoff/src/binding.ts",
+      "sha256": "6b7065fbfafb91cb4caf987c3f0391121515c9ff0e84d90039dae9948cf9ec91",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.demo-handoff",
+      "path": "skills/nova/plugins/demo-handoff/src/candidate.ts",
+      "sha256": "0706b62469c38751d1b22fdc0486e66915cda45077b315b144ef8a4ec641eff3",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.demo-handoff",
+      "path": "skills/nova/plugins/demo-handoff/src/controller-client.ts",
+      "sha256": "bee2a2f89be6489a9e26af5fd53193191057ec0c061497f2b7a0b49dbaebe315",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.demo-handoff",
+      "path": "skills/nova/plugins/demo-handoff/src/delivery.ts",
+      "sha256": "a1dfb3d6fef144d5f11e3546039ba4a291c97ad4f5fcf7ee0279b83fdfadaff7",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.demo-handoff",
+      "path": "skills/nova/plugins/demo-handoff/src/protocol.ts",
+      "sha256": "930ab14445250fa1e4aa6bf65839ac4987f3f34fa5f0cd071285f1efc1d56f58",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.demo-handoff",
+      "path": "skills/nova/plugins/demo-handoff/src/ready.ts",
+      "sha256": "ae78a23722ab515d539b8ad4c0950ee8d487c5ff02a4b5f851f249f2026ffb82",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.demo-handoff",
+      "path": "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json",
+      "sha256": "837efd7975991aa21b8c92b57881194e9bc8c7adc4370f238d1a15b6d85d44db",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.direct-command",
+      "path": "skills/buster/plugins/direct-command/README.md",
+      "sha256": "6e1ec48fd7d145c7ab3cc9aff1c48c46c99a6ca07745a96535fa4d5bb4d3f4f9",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.direct-command",
+      "path": "skills/buster/plugins/direct-command/plugin.json",
+      "sha256": "649466714d77ce1afe3a753f48e1a77481aa757fb46a325f3ea05c0c3ed2835a",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.direct-command",
+      "path": "skills/buster/plugins/direct-command/schemas/config.schema.json",
+      "sha256": "8ea9a179b44f3bdcdeb0c9f251caf62757c3bf6a93724c993e3b51f23dc35ef8",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.direct-command",
+      "path": "skills/buster/plugins/direct-command/src/provider.js",
+      "sha256": "825182b963d34c1414fd779b5c523d00cc354fb38d6e8669cc68aa0b40261667",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.direct-command",
+      "path": "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json",
+      "sha256": "837efd7975991aa21b8c92b57881194e9bc8c7adc4370f238d1a15b6d85d44db",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.git-workspace",
+      "path": "skills/common/plugins/git-workspace/README.md",
+      "sha256": "605ae890a2fa87b4f23faf9f8a66b939de009efbcbc322d6f2bc7e724d16a778",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.git-workspace",
+      "path": "skills/common/plugins/git-workspace/plugin.json",
+      "sha256": "c7fac89445933a524d8f8032be5749a221cc8780de6cbcb20f483217841c8802",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.git-workspace",
+      "path": "skills/common/plugins/git-workspace/schemas/config.schema.json",
+      "sha256": "74c9d8c0287172334bd345b52d95de103c38559884d518d2d6f5b0cbb327505a",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.git-workspace",
+      "path": "skills/common/plugins/git-workspace/src/adapter.ts",
+      "sha256": "aa68298b0322f62bf8e64eef51f59107eb2fe4ab940d7aedbabc8041294dcbd7",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.git-workspace",
+      "path": "skills/common/plugins/git-workspace/src/operations.ts",
+      "sha256": "52562707281edf7bf484ee214a02034b74300bed8502c8ff465ceca50739c6a5",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.git-workspace",
+      "path": "skills/common/plugins/git-workspace/src/review-source.ts",
+      "sha256": "18eb4b6dc7d8118f9ad96dfb48379fd89f361d71a9b55a1d777a030bab10fe1b",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.git-workspace",
+      "path": "skills/common/plugins/git-workspace/src/runner.ts",
+      "sha256": "e5e03e53d63d0f48fea14b2789f68af4f986b5dd73867885d7c65212b98a3dcb",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.git-workspace",
+      "path": "skills/common/plugins/git-workspace/src/values.ts",
+      "sha256": "9e6b14a191f29b6f3bd672672b7fb457833ad73eb03e5a04bb3693f0e2e12c5a",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.git-workspace",
+      "path": "skills/common/plugins/git-workspace/src/workspace-ownership.ts",
+      "sha256": "af98b1c9b1ff29623e4c5369d8ccdac837940866987e3a8c649d8a8f97aededc",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.git-workspace",
+      "path": "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json",
+      "sha256": "837efd7975991aa21b8c92b57881194e9bc8c7adc4370f238d1a15b6d85d44db",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.http",
+      "path": "skills/buster/plugins/http/README.md",
+      "sha256": "d1e5043fc7de143d939eac59d9472ccd230fbe54e745ceb628b820d7bd759105",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.http",
+      "path": "skills/buster/plugins/http/plugin.json",
+      "sha256": "be8c584b93172cc05d88c547f43d351dd00a0570475bad0c2a6bfbebc6792453",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.http",
+      "path": "skills/buster/plugins/http/schemas/config.schema.json",
+      "sha256": "56553d307bebc7cc556ba66d35efeec08ba3d9825197df4b7cb0848db8b15e3f",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.http",
+      "path": "skills/buster/plugins/http/src/provider.js",
+      "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.http",
+      "path": "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json",
+      "sha256": "837efd7975991aa21b8c92b57881194e9bc8c7adc4370f238d1a15b6d85d44db",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.human-approval",
+      "path": "skills/nova/plugins/human-approval/README.md",
+      "sha256": "39f9c6805d61be22d45bc3d5709499dae9977e7c4dee1fb1e75ac8e3dd6e537f",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.human-approval",
+      "path": "skills/nova/plugins/human-approval/plugin.json",
+      "sha256": "a93144f20bcd0968995844516da5221e8d77aa5c559577c7f1165f00dfd0f4b8",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.human-approval",
+      "path": "skills/nova/plugins/human-approval/schemas/architecture-input.schema.json",
+      "sha256": "028c18b6829fba9b2acfd72e197558d87ae14e7a56e9fbf6b16add6c7c5bc3ab",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.human-approval",
+      "path": "skills/nova/plugins/human-approval/schemas/config.schema.json",
+      "sha256": "45d20ce3dd08dcecb65fb0b0dbd76bf63b917038a968dce4d20963167b78f581",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.human-approval",
+      "path": "skills/nova/plugins/human-approval/schemas/input.schema.json",
+      "sha256": "f4c7e20a48803202f36269ff3b04d3d8b4b4cea8dfdad4816fdddd5c063b3e2f",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.human-approval",
+      "path": "skills/nova/plugins/human-approval/schemas/result.schema.json",
+      "sha256": "6f0724b07d28e7599627452c02f7c6528acf74183bb03c8111ddbbdd4736a87d",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.human-approval",
+      "path": "skills/nova/plugins/human-approval/src/approval.ts",
+      "sha256": "5798d5bddb20d62a320114387f3f8df4275b83972f1cb41d9e4a823e92fee99d",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.human-approval",
+      "path": "skills/nova/plugins/human-approval/src/architecture-approval.ts",
+      "sha256": "3a6073a7c6ef98ba417ed1b38827c15b3449e70ac89b8a126b7ad14f380e304b",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.human-approval",
+      "path": "skills/nova/plugins/human-approval/src/stage.ts",
+      "sha256": "9e54e56d6b5acc631985cc2de9e9be943f3e8cdeaa09835dfdc1e402d67da8fd",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.human-approval",
+      "path": "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json",
+      "sha256": "837efd7975991aa21b8c92b57881194e9bc8c7adc4370f238d1a15b6d85d44db",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.implementation-agent",
+      "path": "skills/nova/plugins/implementation-agent/README.md",
+      "sha256": "9f6b149f2994f44abeefc59e9e960f240f3c4947c1dceaf1d97806cc0255192a",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.implementation-agent",
+      "path": "skills/nova/plugins/implementation-agent/plugin.json",
+      "sha256": "fde7e60285cf1fd687b85e9ce2372b1aaa02d7bbf35bced1b8741c073493e5c9",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.implementation-agent",
+      "path": "skills/nova/plugins/implementation-agent/schemas/config.schema.json",
+      "sha256": "49b1391ff9c5076715c42cf37857f4a6ec6e5a90e7777ff9c94e0d664449981a",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.implementation-agent",
+      "path": "skills/nova/plugins/implementation-agent/schemas/input.schema.json",
+      "sha256": "f2c8f956678a98cce81e8d6bd41fa444588ceb1519a9ca7a7f5db509f9478d5c",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.implementation-agent",
+      "path": "skills/nova/plugins/implementation-agent/schemas/result.schema.json",
+      "sha256": "6f0724b07d28e7599627452c02f7c6528acf74183bb03c8111ddbbdd4736a87d",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.implementation-agent",
+      "path": "skills/nova/plugins/implementation-agent/src/protocol.ts",
+      "sha256": "d1d2e0c5d82e37e3a3e51e89f1d002e1623a06fdcd0a4b9add816bf563b9cbe6",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.implementation-agent",
+      "path": "skills/nova/plugins/implementation-agent/src/repair-evidence.ts",
+      "sha256": "0ba38e4004d0b9c3058fdce363611beeb6170ee3cb37424da599eb3757fa5c99",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.implementation-agent",
+      "path": "skills/nova/plugins/implementation-agent/src/stage.ts",
+      "sha256": "4f2057feef1fdd4c81bbb90ae203564cd0ab3922a9fd44b098a1a99558da4870",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.implementation-agent",
+      "path": "skills/nova/plugins/implementation-agent/src/workspace.ts",
+      "sha256": "14cdeb066a35cbb2564928ca8ff8f4fa5ce2bd95a36c3607bda011f9c0e79c34",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.implementation-agent",
+      "path": "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json",
+      "sha256": "837efd7975991aa21b8c92b57881194e9bc8c7adc4370f238d1a15b6d85d44db",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.junit-report",
+      "path": "skills/buster/plugins/junit-report-adapter/README.md",
+      "sha256": "012b7603d9ff50ed2299576c94031c9c69d7359bf05a40bc3811f9e3adfe5cdf",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.junit-report",
+      "path": "skills/buster/plugins/junit-report-adapter/plugin.json",
+      "sha256": "9787400a76dea54fbfe31a6371c1724f60fdacb7fc544fa33c0c454132e92b77",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.junit-report",
+      "path": "skills/buster/plugins/junit-report-adapter/src/adapter.js",
+      "sha256": "dceb8492b6f03b31c9c57190cdff836e4d6917b33ab49480fe8001c02e247736",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.junit-report",
+      "path": "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json",
+      "sha256": "837efd7975991aa21b8c92b57881194e9bc8c7adc4370f238d1a15b6d85d44db",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.kubernetes-fixture",
+      "path": "skills/buster/plugins/kubernetes-fixture/README.md",
+      "sha256": "30cbdad838949b74272a02f1712169a5c1ec4856015ab024ece60ad2cce10e37",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.kubernetes-fixture",
+      "path": "skills/buster/plugins/kubernetes-fixture/plugin.json",
+      "sha256": "9c658fd6807beea11340609d22483ffac429a5e9184e74233a145774ec92feea",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.kubernetes-fixture",
+      "path": "skills/buster/plugins/kubernetes-fixture/schemas/config.schema.json",
+      "sha256": "b5bd127d9f7167d5cbb2c576f40ef6881fef16f12552a955e70576c7c730b443",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.kubernetes-fixture",
+      "path": "skills/buster/plugins/kubernetes-fixture/src/provider.js",
+      "sha256": "4af5c60de7d010bc6956e81429ee10cbbca38fcf25636c348e0ef4fbb0f2d50e",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.kubernetes-fixture",
+      "path": "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json",
+      "sha256": "837efd7975991aa21b8c92b57881194e9bc8c7adc4370f238d1a15b6d85d44db",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.lighthouse",
+      "path": "skills/buster/plugins/lighthouse/README.md",
+      "sha256": "747d7478d270fb9b8c2c9103ff0f10783627d4a619ce0206afd675c7eaca9bca",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.lighthouse",
+      "path": "skills/buster/plugins/lighthouse/plugin.json",
+      "sha256": "3c7fa93d06001f1b627aab1f161e90d19124028172b347ce7a64ccb369d2aaf1",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.lighthouse",
+      "path": "skills/buster/plugins/lighthouse/schemas/config.schema.json",
+      "sha256": "4aa52aca72efc6b1921838626717543b915dbe8c454223408a88ac89f739b958",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.lighthouse",
+      "path": "skills/buster/plugins/lighthouse/src/provider.js",
+      "sha256": "8858c30f362574414d16d8dcd99b963382b79e3195a670145c2e67d63dfa85a5",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.lighthouse",
+      "path": "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json",
+      "sha256": "837efd7975991aa21b8c92b57881194e9bc8c7adc4370f238d1a15b6d85d44db",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.lint",
+      "path": "skills/nova/plugins/lint/README.md",
+      "sha256": "95b6617ebe1ea090c7ac550f269ee82b17dfb82159eb777c6e25007fae95320c",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.lint",
+      "path": "skills/nova/plugins/lint/plugin.json",
+      "sha256": "3d671a34bb259b1c031d7f2ac1c54b19b4821e023bb53c7d43e5642dd1a0ce04",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.lint",
+      "path": "skills/nova/plugins/lint/schemas/adapter-config.schema.json",
+      "sha256": "07d9497e85246c310e93213a90ff22d7b1323302051902e6a75e3e0f6bb46b24",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.lint",
+      "path": "skills/nova/plugins/lint/schemas/config.schema.json",
+      "sha256": "02ee8a644c0e7ce0bfa58b0fe22582ba12e97f65c3a1e13170304231662a5bf8",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.lint",
+      "path": "skills/nova/plugins/lint/schemas/input.schema.json",
+      "sha256": "b5d3f14f5971057c8a5a81471b857b6f92ee9ac106b9cb1947441a5c96c4a84b",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.lint",
+      "path": "skills/nova/plugins/lint/schemas/result.schema.json",
+      "sha256": "6f0724b07d28e7599627452c02f7c6528acf74183bb03c8111ddbbdd4736a87d",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.lint",
+      "path": "skills/nova/plugins/lint/src/adapter.ts",
+      "sha256": "7d525ef53fc8a187eba48e7ee15ca7f8f2df1d00a4e23823de15bae47a1b49e4",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.lint",
+      "path": "skills/nova/plugins/lint/src/candidate.ts",
+      "sha256": "cb87e62587a7bad9f2d63a305870e85bdbf439440e02e4dfed5d91475ba6560e",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.lint",
+      "path": "skills/nova/plugins/lint/src/engine/architecture-tools.ts",
+      "sha256": "42720f0013e983cf28b693f2cd709b3fec3470c45ec1637d832eff7430fd0d03",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.lint",
+      "path": "skills/nova/plugins/lint/src/engine/constants.ts",
+      "sha256": "03e18f020b7e416463dc333c06d7ad24628e5105fa5ee10a457e364baa7bf058",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.lint",
+      "path": "skills/nova/plugins/lint/src/engine/container-yaml-tools.ts",
+      "sha256": "7a97ff6e62bc9e431c7dd1c8123bad9afa36fb797f0891edf879924ea5429cbc",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.lint",
+      "path": "skills/nova/plugins/lint/src/engine/discovery.ts",
+      "sha256": "ef94db8bda63eb74abe47cefabea3f3b64ef1e8848b868f61bb885059e8e4b16",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.lint",
+      "path": "skills/nova/plugins/lint/src/engine/evidence-file-partition.ts",
+      "sha256": "00caab4a144b1f76962249f6bc2098424540efd644686154eeeeb62e6ae8e9bb",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.lint",
+      "path": "skills/nova/plugins/lint/src/engine/execution.ts",
+      "sha256": "9aa2e64b50e9a9f7bb3bf1d181860f772c70dfc9c4ce058f376e4d56f2a675f4",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.lint",
+      "path": "skills/nova/plugins/lint/src/engine/finding-fingerprints.ts",
+      "sha256": "1a0e06f7bcb937839a43e5025e47831a173661240d9cce91125df3f3ff7ce317",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.lint",
+      "path": "skills/nova/plugins/lint/src/engine/go-terraform-tools.ts",
+      "sha256": "559229928d17cd3eff2c201eae78e705eb36b4d5c9f231a15faab2b917b00a9d",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.lint",
+      "path": "skills/nova/plugins/lint/src/engine/go-tools.ts",
+      "sha256": "2ca058762435596a50dcddecc8e33a65d6f5638aa01bbe74140bd7d89b808d3d",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.lint",
+      "path": "skills/nova/plugins/lint/src/engine/helm-render.ts",
+      "sha256": "acafef0f53da08c16d9836dea2f243999bd9fdd347220d47c68310191b0ffb2c",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.lint",
+      "path": "skills/nova/plugins/lint/src/engine/index.ts",
+      "sha256": "b7c408dc76e87aada6047264734c766b259a24254d7a3bb59e5fb735229c5214",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.lint",
+      "path": "skills/nova/plugins/lint/src/engine/kubeconform-tool.ts",
+      "sha256": "b7b24ece9566c430c480795b916f094faed7dbb372520b58da3b5a99ff56a0fc",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.lint",
+      "path": "skills/nova/plugins/lint/src/engine/kubernetes-manifests.ts",
+      "sha256": "16709307fb3b7b954902e20d3e8c7a8485ff4cd2160ac7944b8904a9ae7e6608",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.lint",
+      "path": "skills/nova/plugins/lint/src/engine/kubernetes-policy-pack.ts",
+      "sha256": "c449ee445791ed4c7e3e2fde96139bb46e1407e6898d4ab698203314f0a70171",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.lint",
+      "path": "skills/nova/plugins/lint/src/engine/kubernetes-policy-tools.ts",
+      "sha256": "a09beb82bd8db595e9467dcfe61bfa4bdaa07a09e8828dd83fda01f72150b002",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.lint",
+      "path": "skills/nova/plugins/lint/src/engine/kubernetes-security-tools.ts",
+      "sha256": "70b9625b994b9d210734941fdfd6cb6b663dbd5b4dd20db9ded0a144af8dfc4e",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.lint",
+      "path": "skills/nova/plugins/lint/src/engine/lint-governance.ts",
+      "sha256": "7904cc32edb9304644c02a705669624c224c87be0a176d1babc5cb0016bc6145",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.lint",
+      "path": "skills/nova/plugins/lint/src/engine/linux-process-group.ts",
+      "sha256": "83696b7511173f21e5af38f238758fc087afc0b3d84d8c62017aefa3527e6ea2",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.lint",
+      "path": "skills/nova/plugins/lint/src/engine/openapi-tool.ts",
+      "sha256": "5bf93fd93ea7e29019ea77fab78eeb365715c57504013ad82526d4db32dc9c61",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.lint",
+      "path": "skills/nova/plugins/lint/src/engine/output.ts",
+      "sha256": "cb405a9b8166ff3c6ea08d26a2eede788c0b3cbd007f06a5c09aef7340b7903c",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.lint",
+      "path": "skills/nova/plugins/lint/src/engine/parsers.ts",
+      "sha256": "4948bf6d3e1ce744d436ebf9e4e3b289d7bced8782d5364bb0ea54f4580ab638",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.lint",
+      "path": "skills/nova/plugins/lint/src/engine/paths.ts",
+      "sha256": "c84ba218c0185216e3e6eb1b4e348015e60833a761059f6388f0166eee347b83",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.lint",
+      "path": "skills/nova/plugins/lint/src/engine/policy-paths.ts",
+      "sha256": "4e7723eb14813fe5d594222d8a9b69809f809abaa379fbb44041793f28aa66e3",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.lint",
+      "path": "skills/nova/plugins/lint/src/engine/policy-patterns.ts",
+      "sha256": "7403829fae95019d046086f596f58035dae315c1b3def61e9849565b1c06584e",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.lint",
+      "path": "skills/nova/plugins/lint/src/engine/policy-validation.ts",
+      "sha256": "1c6f1e831d24a8df17557fe9919425042b995de3d28d92a0c6b8afb25293633e",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.lint",
+      "path": "skills/nova/plugins/lint/src/engine/policy-version.ts",
+      "sha256": "6324eb9a75f6151eaede8fae9ec4c48c61f2fe8265e4be64ec9fd6ce90db1d24",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.lint",
+      "path": "skills/nova/plugins/lint/src/engine/policy.ts",
+      "sha256": "9b48e0b8de2714bde16f58a667ac9356ec2b8a8f9ccd364673000dec076feb53",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.lint",
+      "path": "skills/nova/plugins/lint/src/engine/process-termination.ts",
+      "sha256": "47199969a22d1415bee97247400c9dfaf33ea843a41e5b68d13646febda59ed9",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.lint",
+      "path": "skills/nova/plugins/lint/src/engine/process.ts",
+      "sha256": "81320777e32a2af656cbb6f22903918d8c8a48074c0e33f47b4ae87b7bfeaca3",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.lint",
+      "path": "skills/nova/plugins/lint/src/engine/report-contract.ts",
+      "sha256": "9ef2cb385b805842b777c64add79c947c3844edd768733ebef31c312d2bb0fac",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.lint",
+      "path": "skills/nova/plugins/lint/src/engine/report.ts",
+      "sha256": "62246dd40865be23329e9c0ba091cfb97b41fabb8e26981a52713c1006d1244b",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.lint",
+      "path": "skills/nova/plugins/lint/src/engine/terraform-tools.ts",
+      "sha256": "b189a72a067325eca719e5c3a2c863aa8b8401938b590e258dc67fcc2ef9978c",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.lint",
+      "path": "skills/nova/plugins/lint/src/engine/tool-registry-core.ts",
+      "sha256": "766fba947b149d80b78789743b65d0e427804ae08e39f47d862f5163a583203d",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.lint",
+      "path": "skills/nova/plugins/lint/src/engine/tool-registry-dependency-tools.ts",
+      "sha256": "4c1e54233cc2af3e0e110937433c6258923f6d15d7a991317d7a07add38ba577",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.lint",
+      "path": "skills/nova/plugins/lint/src/engine/tool-registry-language-tools.ts",
+      "sha256": "85b1c25c238682acce0fcea59ceea75ba1b2d7aa91f95a8308194a0602cbd184",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.lint",
+      "path": "skills/nova/plugins/lint/src/engine/tool-registry-semgrep.ts",
+      "sha256": "6148c63c63ab2b8ad4fa258790e95bb89121d4e844969b7a91020f6803527de5",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.lint",
+      "path": "skills/nova/plugins/lint/src/engine/tool-registry.ts",
+      "sha256": "3e49b2dfecee85df614db7d2e89e9f1087ef31c412cf0dfecc7959c220d2fa28",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.lint",
+      "path": "skills/nova/plugins/lint/src/engine/tool-summary.ts",
+      "sha256": "e53ec5b5468aecffbe2ca0efd366c00e1eb585b7d1d8b0d34e9c7e13fd893904",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.lint",
+      "path": "skills/nova/plugins/lint/src/request.ts",
+      "sha256": "68d31dbdfb0a48764b436307be6998cd21700091f9f06f306bdef34532fb2453",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.lint",
+      "path": "skills/nova/plugins/lint/src/stage.ts",
+      "sha256": "87145aaf9cf42a78e5a9ad076b2d6c3799861bf0e78576076feb07c9c273c5e8",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.lint",
+      "path": "skills/nova/plugins/lint/src/support/optional-absence.ts",
+      "sha256": "09944ef955b43f0d1bd2e33ceed7d1655c1fc0bff100fc9c7e8053651b84a7d4",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.lint",
+      "path": "skills/nova/plugins/lint/src/support/value-boundary.ts",
+      "sha256": "d5982b5b79fce71aa8c61bfabbf5fc233c1afc3b73414f9df6f316c6439a16e0",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.lint",
+      "path": "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json",
+      "sha256": "837efd7975991aa21b8c92b57881194e9bc8c7adc4370f238d1a15b6d85d44db",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.network-http",
+      "path": "skills/common/plugins/network-http/README.md",
+      "sha256": "10b1f89e246820bff951b8a95ba671c7f71b65e1cd00395ef908c700892e66a6",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.network-http",
+      "path": "skills/common/plugins/network-http/plugin.json",
+      "sha256": "54d1a21a08c950e7a63731f2fc76c5dd479c349462880e2b50977c5518b3b1e3",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.network-http",
+      "path": "skills/common/plugins/network-http/schemas/config.schema.json",
+      "sha256": "a064ffe2b856d9a11ff45b51bc24cfb2506f321f66a54ea0707a17de59fa6219",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.network-http",
+      "path": "skills/common/plugins/network-http/src/adapter.ts",
+      "sha256": "8885ca56e2a2322c98e4c83ba935397f8f47d829c4feec69efbdde0113553e8d",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.network-http",
+      "path": "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json",
+      "sha256": "837efd7975991aa21b8c92b57881194e9bc8c7adc4370f238d1a15b6d85d44db",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.notification-observer",
+      "path": "skills/common/plugins/notification-observer/README.md",
+      "sha256": "64235a03c137827e4ef3db5cfa0313374a46f470bf91a86fbb7335fd8d99d52f",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.notification-observer",
+      "path": "skills/common/plugins/notification-observer/plugin.json",
+      "sha256": "7b5b349b4767d74db5df9db9b4580880dff6a86bdcecf5cbf9f11470e76f8e48",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.notification-observer",
+      "path": "skills/common/plugins/notification-observer/schemas/checkpoint.schema.json",
+      "sha256": "c6d66f56cbb0c5cd0b277a1def6ce910dfbbd1707a6feaf5ef17674cfcf29759",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.notification-observer",
+      "path": "skills/common/plugins/notification-observer/schemas/config.schema.json",
+      "sha256": "d1e51edc89a0ad7ef3cead4b4a769a2340c35d78cf501b3302c16740409860c3",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.notification-observer",
+      "path": "skills/common/plugins/notification-observer/src/observer.ts",
+      "sha256": "264990bdacb7d3598db99fb4c7aab9a050c1d717f08c4013ba6f19eced578a70",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.notification-observer",
+      "path": "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json",
+      "sha256": "837efd7975991aa21b8c92b57881194e9bc8c7adc4370f238d1a15b6d85d44db",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.openapi",
+      "path": "skills/buster/plugins/openapi/README.md",
+      "sha256": "afc989c4127027ad0f66ec95dea04953020f688b231427a77dff0714c9b1159a",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.openapi",
+      "path": "skills/buster/plugins/openapi/plugin.json",
+      "sha256": "ea64826e4be0b75620a11de0d375abb6ef0361492488adaa5c3b839e49fbf3af",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.openapi",
+      "path": "skills/buster/plugins/openapi/schemas/config.schema.json",
+      "sha256": "7f52e048a57a7527c47c02f6018af113cdb60a8e63cc446f1b9017f425bdab29",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.openapi",
+      "path": "skills/buster/plugins/openapi/src/provider.js",
+      "sha256": "cabeb560867f9dc802a7e936c0efc1fb6f900f211b5563414b6016c780f48cca",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.openapi",
+      "path": "skills/buster/plugins/openapi/src/schema-support.js",
+      "sha256": "05e27ae54dfd00cb9f1344eb171699a6e4fa87801f5c5f8ff97be18910377e4b",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.openapi",
+      "path": "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json",
+      "sha256": "837efd7975991aa21b8c92b57881194e9bc8c7adc4370f238d1a15b6d85d44db",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.openclaw-agent-events",
+      "path": "skills/common/plugins/openclaw-agent-events/README.md",
+      "sha256": "72403574cdae0eedc8995e2ba75af81ca940effcd34a16e73425a60dbe45fb48",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.openclaw-agent-events",
+      "path": "skills/common/plugins/openclaw-agent-events/plugin.json",
+      "sha256": "16e0baa799abd2a53ef43f3ccfb0a4055d90c2129453de750992eafec9112be5",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.openclaw-agent-events",
+      "path": "skills/common/plugins/openclaw-agent-events/schemas/config.schema.json",
+      "sha256": "d3e3295509aaa3d9c1c13fe1fca014058b36ae860621140025cd64734c5834fe",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.openclaw-agent-events",
+      "path": "skills/common/plugins/openclaw-agent-events/src/adapter.ts",
+      "sha256": "665d10a623f4e9e83dc50bc9a7c769aea0bec8658ab233f3a6d07a89338dd7c7",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.openclaw-agent-events",
+      "path": "skills/common/plugins/openclaw-agent-events/src/ingress-queue.ts",
+      "sha256": "7bbab8b7083c08c77b801f1a90ad439c9c166d1dc3734a0a8b4bf82ff64af7fa",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.openclaw-agent-events",
+      "path": "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json",
+      "sha256": "837efd7975991aa21b8c92b57881194e9bc8c7adc4370f238d1a15b6d85d44db",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.operator-messaging",
+      "path": "skills/common/plugins/operator-messaging/README.md",
+      "sha256": "84e6525da379f33bdd2a3543881737b6e14568f66297544548df2f35a1b25ed7",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.operator-messaging",
+      "path": "skills/common/plugins/operator-messaging/plugin.json",
+      "sha256": "e46b330a054495e0628168c03e7fe8c1e3ea58542ea40012b87def6185744563",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.operator-messaging",
+      "path": "skills/common/plugins/operator-messaging/schemas/config.schema.json",
+      "sha256": "4054963cbfc17820e7f11be45ed3bf087d09d16ffc9f2dd14953358637f7ebd4",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.operator-messaging",
+      "path": "skills/common/plugins/operator-messaging/schemas/payload.schema.json",
+      "sha256": "55bb4a333433f20da21a337830d7084bef0212651613d76f996defb93119744f",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.operator-messaging",
+      "path": "skills/common/plugins/operator-messaging/src/adapter.ts",
+      "sha256": "a6d719a5e69b401a0696af9a74dcf358015cdc57bfa062cca0514c54410b3785",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.operator-messaging",
+      "path": "skills/common/plugins/operator-messaging/src/config.ts",
+      "sha256": "0fc5440d5519c03c463073e95baeaf8206cfdf37cbd55bf0f70aaf45dd4a95c1",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.operator-messaging",
+      "path": "skills/common/plugins/operator-messaging/src/delivery-projection.ts",
+      "sha256": "8a9b796faeb8e4decc083deebc7624212798ade8e7243aa54b770b0250f40529",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.operator-messaging",
+      "path": "skills/common/plugins/operator-messaging/src/delivery-records.ts",
+      "sha256": "25ce708f55dfd154d04f044edfac8f232989b2fbd59a7b644bb41aa65dfcbddc",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.operator-messaging",
+      "path": "skills/common/plugins/operator-messaging/src/discord-payload.ts",
+      "sha256": "6473d2b2e902e7df43c6c45a5ab9f4bd7201d447a1c06482026f4cb3891c74b8",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.operator-messaging",
+      "path": "skills/common/plugins/operator-messaging/src/discord-receipt.ts",
+      "sha256": "8a02118800371d9d3318739cb0def5dc6ae6c3b6d634bf0793c924cafce77384",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.operator-messaging",
+      "path": "skills/common/plugins/operator-messaging/src/payload.ts",
+      "sha256": "c38da612f8ccf13fad4cf2ede6c37f1f9607f960c200ef3185914eca17766f17",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.operator-messaging",
+      "path": "skills/common/plugins/operator-messaging/src/receiver.ts",
+      "sha256": "3701e839cc513812a790a4a794ebdd2dc71bf56ab1def0854250c38494cf3ab1",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.operator-messaging",
+      "path": "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json",
+      "sha256": "837efd7975991aa21b8c92b57881194e9bc8c7adc4370f238d1a15b6d85d44db",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.pipeline-review",
+      "path": "skills/nova/plugins/pipeline-review/README.md",
+      "sha256": "acdf524d2b206d0f6152b537375a69b07b0abf5ad3ce6e57942a5e64ebde9141",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.pipeline-review",
+      "path": "skills/nova/plugins/pipeline-review/plugin.json",
+      "sha256": "113fad3ba88ebc4db595fd411230d3288a28e8dfc99583e5495cf34da2483cab",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.pipeline-review",
+      "path": "skills/nova/plugins/pipeline-review/schemas/config.schema.json",
+      "sha256": "49b1391ff9c5076715c42cf37857f4a6ec6e5a90e7777ff9c94e0d664449981a",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.pipeline-review",
+      "path": "skills/nova/plugins/pipeline-review/schemas/evidence-config.schema.json",
+      "sha256": "905fba3c46c2fbf13a617d385099dda9959302ab3414a67cc8f5d5c33502e530",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.pipeline-review",
+      "path": "skills/nova/plugins/pipeline-review/schemas/input.schema.json",
+      "sha256": "57b29f85dd70c0e69c90eed33563fde513533de0df258ab5f2b62c2ca693bd7b",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.pipeline-review",
+      "path": "skills/nova/plugins/pipeline-review/schemas/result.schema.json",
+      "sha256": "6f0724b07d28e7599627452c02f7c6528acf74183bb03c8111ddbbdd4736a87d",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.pipeline-review",
+      "path": "skills/nova/plugins/pipeline-review/src/evidence-adapter.ts",
+      "sha256": "477c0a5349d80816ab5af7dd06abbdeec3bf62ab94fe25ea88159d3f1b74293c",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.pipeline-review",
+      "path": "skills/nova/plugins/pipeline-review/src/evidence-bundle.ts",
+      "sha256": "ca3db15dbc1f008f690b79df3f4cb94143b924631b11711fb935f4ee3ccda7dd",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.pipeline-review",
+      "path": "skills/nova/plugins/pipeline-review/src/protocol.ts",
+      "sha256": "df3e02fd4c7a13aa38ce93292a55da9cb6c712799e813cbe0c8a283fd769081f",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.pipeline-review",
+      "path": "skills/nova/plugins/pipeline-review/src/stage.ts",
+      "sha256": "e2951394c77a1f57f8538dc8586fb6f8b571a5b2050b87fec65f42260055d51a",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.pipeline-review",
+      "path": "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json",
+      "sha256": "837efd7975991aa21b8c92b57881194e9bc8c7adc4370f238d1a15b6d85d44db",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.playwright",
+      "path": "skills/buster/plugins/playwright/README.md",
+      "sha256": "9b370d17fcf2a99824fe1506b703790bf149b26a73008a0f4fe628ce79b4e346",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.playwright",
+      "path": "skills/buster/plugins/playwright/plugin.json",
+      "sha256": "897cbd8bfbd302d7ed00d01340f18578fe9d3778c45bba95c6eff1c8951cf1c9",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.playwright",
+      "path": "skills/buster/plugins/playwright/schemas/config.schema.json",
+      "sha256": "82f37247278e500d4a9e5d0c210fe135766a9417b64b9b595cc92385377cc977",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.playwright",
+      "path": "skills/buster/plugins/playwright/src/provider.js",
+      "sha256": "7a380ecfc9dd2b42751ecd451222779f606f82668274cdc66e7b9136f1f988e8",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.playwright",
+      "path": "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json",
+      "sha256": "837efd7975991aa21b8c92b57881194e9bc8c7adc4370f238d1a15b6d85d44db",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.preflight-contract",
+      "path": "skills/nova/plugins/preflight-contract/README.md",
+      "sha256": "59edb208e51d04f8c675d23583aab236c1ecd2d7e23938acb99424d4d6c48da6",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.preflight-contract",
+      "path": "skills/nova/plugins/preflight-contract/plugin.json",
+      "sha256": "3db03aa245a1721e183ce3e035bf0c6a5a57b2c227e3ca230b528b1bc68c192c",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.preflight-contract",
+      "path": "skills/nova/plugins/preflight-contract/schemas/config.schema.json",
+      "sha256": "67c0a3e017f62ab8fa45adf3782967e9fd83fd25da2b4cecd06cfb1ca77e2afa",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.preflight-contract",
+      "path": "skills/nova/plugins/preflight-contract/schemas/input.schema.json",
+      "sha256": "eaf263b43e77b55cdeadf0d009e89186f28d4a50672e7f358a9106d0561758dc",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.preflight-contract",
+      "path": "skills/nova/plugins/preflight-contract/schemas/result.schema.json",
+      "sha256": "6f0724b07d28e7599627452c02f7c6528acf74183bb03c8111ddbbdd4736a87d",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.preflight-contract",
+      "path": "skills/nova/plugins/preflight-contract/schemas/source-input.schema.json",
+      "sha256": "f1f1be9585ad9a70d3a2b9fdb43b3a56179f1bf230440c109878d6749271bb44",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.preflight-contract",
+      "path": "skills/nova/plugins/preflight-contract/src/declarations.ts",
+      "sha256": "deb342dd39f6612567e5d67fc708a02a0db42ae9ff20027bb448a594c7cee309",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.preflight-contract",
+      "path": "skills/nova/plugins/preflight-contract/src/source-stage.ts",
+      "sha256": "9f7e566f15813cb4b096dbd5dcd84f9d4925e09da29075ef8a85dc1f352bb1c6",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.preflight-contract",
+      "path": "skills/nova/plugins/preflight-contract/src/stage.ts",
+      "sha256": "75da42cf49cb7a655e9edb4e4928bd3e708ece30f592cb5a14aa2627ce3fc4ef",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.preflight-contract",
+      "path": "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json",
+      "sha256": "837efd7975991aa21b8c92b57881194e9bc8c7adc4370f238d1a15b6d85d44db",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.prism-design",
+      "path": "skills/nova/plugins/prism-design/README.md",
+      "sha256": "578e856a2dc1bec26227012406c610bca1ed9ce569778347b9d90355ed4f96ac",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.prism-design",
+      "path": "skills/nova/plugins/prism-design/plugin.json",
+      "sha256": "063ef9316e7bfdbe8b2b9a0812bfc2a0b968294edc116d85e557d3e591dbf2d9",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.prism-design",
+      "path": "skills/nova/plugins/prism-design/schemas/config.schema.json",
+      "sha256": "15fc34fb28e0afe96ad1e248c32e6d9a9bb173bb731226fb52ccb78a8afcc61e",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.prism-design",
+      "path": "skills/nova/plugins/prism-design/schemas/input.schema.json",
+      "sha256": "0c636654897e05d3a4981009c4676e3a7fec517ff6c59822edd49259590fb66d",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.prism-design",
+      "path": "skills/nova/plugins/prism-design/schemas/result.schema.json",
+      "sha256": "3e80e0c6d65754ee88072b0d08c1780b6d196358d25f45175a7d2c8ff7d45fea",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.prism-design",
+      "path": "skills/nova/plugins/prism-design/src/architecture.ts",
+      "sha256": "bb4fab2431b51d68a787fefdaec95649678e86ede9961bc2fb1ad168b7eed10f",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.prism-design",
+      "path": "skills/nova/plugins/prism-design/src/archive.ts",
+      "sha256": "8875fcaa4c6efafa2f231c8e3fcc522dcd1ae1f23850a4d8941a89358726383e",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.prism-design",
+      "path": "skills/nova/plugins/prism-design/src/stage.ts",
+      "sha256": "20bee389c4868070dc7450d366b85745c2f26acb88e8d526463c3cb5a599db88",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.prism-design",
+      "path": "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json",
+      "sha256": "837efd7975991aa21b8c92b57881194e9bc8c7adc4370f238d1a15b6d85d44db",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.project-summary",
+      "path": "skills/nova/plugins/project-summary/README.md",
+      "sha256": "b04bfca11bc047ccfecab442c0dd6631a16dd93bca4ccb5f691cef6acf901f26",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.project-summary",
+      "path": "skills/nova/plugins/project-summary/plugin.json",
+      "sha256": "995ddb9dec1c6ad6ea9e55c7ed667e560a045365fcc6e4721908bd86b63b0454",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.project-summary",
+      "path": "skills/nova/plugins/project-summary/schemas/config.schema.json",
+      "sha256": "7c1bf8023f80f2bd5c3727b97636c804cd2c8b801fbe71fd8374a6edd7049bd9",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.project-summary",
+      "path": "skills/nova/plugins/project-summary/schemas/input.schema.json",
+      "sha256": "451591d9b115aa5aae88c4a08301845316f1207cdd24ed9baf7639adc83439cf",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.project-summary",
+      "path": "skills/nova/plugins/project-summary/schemas/result.schema.json",
+      "sha256": "6f0724b07d28e7599627452c02f7c6528acf74183bb03c8111ddbbdd4736a87d",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.project-summary",
+      "path": "skills/nova/plugins/project-summary/src/review-semantics.ts",
+      "sha256": "a14a5e8039d481063d2439a8c1060ca414012f7ba55b73ee153d2317effc2104",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.project-summary",
+      "path": "skills/nova/plugins/project-summary/src/stage.ts",
+      "sha256": "b16533ade1d6bbf08c53d3c31bbe7102f5b67b785b1f928524ca9879a99a4fee",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.project-summary",
+      "path": "skills/nova/plugins/project-summary/src/summary.ts",
+      "sha256": "bb82063929e9100dd42c3dff541eca77be2cfa624f8b5fd8733e773acb7ce7c5",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.project-summary",
+      "path": "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json",
+      "sha256": "837efd7975991aa21b8c92b57881194e9bc8c7adc4370f238d1a15b6d85d44db",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.redis-transport",
+      "path": "skills/common/plugins/redis-transport/README.md",
+      "sha256": "6522f6dc211b28863facf7296a42e50cf8607e36c418e65e013e94a5b667bcc0",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.redis-transport",
+      "path": "skills/common/plugins/redis-transport/plugin.json",
+      "sha256": "a90353c2451b1e6649929310944cdec0f9e5c9ff8ae44474b6c23dfb24aa2843",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.redis-transport",
+      "path": "skills/common/plugins/redis-transport/schemas/config.schema.json",
+      "sha256": "eecab538d12754deef07c9e1ff456f7fb9e27612dda944ed671877e80a021875",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.redis-transport",
+      "path": "skills/common/plugins/redis-transport/src/adapter.ts",
+      "sha256": "15c91e7eed9a98784d6fbdcb931160202295ea6ef20b1c18367bcd9eaab4cc01",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.redis-transport",
+      "path": "skills/common/plugins/redis-transport/src/exchange.ts",
+      "sha256": "c7ef23ecf720650c8c7415a0aee11120a8972406df7e1ef4a0886f9e2e804569",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.redis-transport",
+      "path": "skills/common/plugins/redis-transport/src/resp.ts",
+      "sha256": "2f5af011407659a9e3af4d21b6f9b5ec8042f63cc5f8be7b4a423fbbe108d7ea",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.redis-transport",
+      "path": "skills/common/plugins/redis-transport/src/stream-identity.ts",
+      "sha256": "a2657ab33a2833771bda44c8b2ef1904900a26c6773f7ba839f36a35da571167",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.redis-transport",
+      "path": "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json",
+      "sha256": "837efd7975991aa21b8c92b57881194e9bc8c7adc4370f238d1a15b6d85d44db",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.remote-test-gate",
+      "path": "skills/nova/plugins/remote-test-gate/README.md",
+      "sha256": "d3dbc1c4911286b1a7ffa0812d1cca86f6e4e0842da9dc82ce6db1eb83112331",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.remote-test-gate",
+      "path": "skills/nova/plugins/remote-test-gate/plugin.json",
+      "sha256": "7c42888270bb814bfeb9c47b2bc1daa4a858e649890866c9abb0f6b3c4b8d35e",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.remote-test-gate",
+      "path": "skills/nova/plugins/remote-test-gate/schemas/config.schema.json",
+      "sha256": "282ed6bdc8d07486e6e34b40cec822036a5cc851af4369e55f68ab7f146eef47",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.remote-test-gate",
+      "path": "skills/nova/plugins/remote-test-gate/schemas/evidence-config.schema.json",
+      "sha256": "767de53403900e5b72e8f35bb6d238eed5a889b6cb9141fb18b1ce56aef8461d",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.remote-test-gate",
+      "path": "skills/nova/plugins/remote-test-gate/src/adapter.ts",
+      "sha256": "41ae631fac290f59931c6243280b4991278cd0b1659bc70dee4898c16ed33237",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.remote-test-gate",
+      "path": "skills/nova/plugins/remote-test-gate/src/demo-evidence.ts",
+      "sha256": "28fc430c4e7840ae1dc0c76698981ebfe35ce08011032ed3380b19799ceb6a63",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.remote-test-gate",
+      "path": "skills/nova/plugins/remote-test-gate/src/demo-source-links.ts",
+      "sha256": "de4808cd82d0e5c0dad7157289388ed72b7249b1fc21cd78987a1d9a701b7fd7",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.remote-test-gate",
+      "path": "skills/nova/plugins/remote-test-gate/src/evidence-adapter.ts",
+      "sha256": "6afbc4274b2cbffa9fff2ed3c32deb9af3a381e7d3400e253fc3b871e139bffe",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.remote-test-gate",
+      "path": "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json",
+      "sha256": "837efd7975991aa21b8c92b57881194e9bc8c7adc4370f238d1a15b6d85d44db",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.repository-adapter",
+      "path": "skills/nova/plugins/repository-adapter/README.md",
+      "sha256": "e0d8e4885ec3f72abdeebf8f6d1b8f94618e7f4bb69bb24f91809195b9da8138",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.repository-adapter",
+      "path": "skills/nova/plugins/repository-adapter/plugin.json",
+      "sha256": "91fe75d56133722d51c62bb2b06f729cdf3ee35735f471857fb324aab34501bd",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.repository-adapter",
+      "path": "skills/nova/plugins/repository-adapter/schemas/config.schema.json",
+      "sha256": "f41b62a39c7f0dd5f959e94807d8bb60352fc4bbdab28929214c9199106978a2",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.repository-adapter",
+      "path": "skills/nova/plugins/repository-adapter/src/adapter.ts",
+      "sha256": "657ec9c38069eead03aa531e5d5b60041c8fe34b643e2bab838eb0a80e12afcd",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.repository-adapter",
+      "path": "skills/nova/plugins/repository-adapter/src/repository-file.ts",
+      "sha256": "a6d8442958b8d90132a23d69449058c6d146aa170ad5f63a11433e42fb73277e",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.repository-adapter",
+      "path": "skills/nova/plugins/repository-adapter/src/revision-parsers.ts",
+      "sha256": "de1770df42f8bcb5451b9b23cfa539c1f7d8fc0716d105e389ce95309a8fd295",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.repository-adapter",
+      "path": "skills/nova/plugins/repository-adapter/src/revision-reader.ts",
+      "sha256": "35aadab83485ed1dcf370ce2136a67d892b6026ba594d0d12d8c739dc3f0c71f",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.repository-adapter",
+      "path": "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json",
+      "sha256": "837efd7975991aa21b8c92b57881194e9bc8c7adc4370f238d1a15b6d85d44db",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.review",
+      "path": "skills/nova/plugins/review/README.md",
+      "sha256": "643e1eb16117035d97d8856a89de766d10f39de3cc61f944e6ebd92eb1902f67",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.review",
+      "path": "skills/nova/plugins/review/plugin.json",
+      "sha256": "5ced42bfc8ca0851739ed6bbd668085345dea0e1caa391c5f1520e7f919be8f1",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.review",
+      "path": "skills/nova/plugins/review/schemas/config.schema.json",
+      "sha256": "c03f8eee6b49a316a3bd61a9a33b02fec50eed7473c020fd0f503c047de410d3",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.review",
+      "path": "skills/nova/plugins/review/schemas/echo-review-verification.v1.schema.json",
+      "sha256": "af9b378497f3767feea7c073f6135b7a6ba522f8d900dc94e7c3d187cbab7466",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.review",
+      "path": "skills/nova/plugins/review/schemas/input.schema.json",
+      "sha256": "178399b3b8e27d28082b415c4101ef9213aad0e0b486238e0ef2348e9a52c71c",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.review",
+      "path": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+      "sha256": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.review",
+      "path": "skills/nova/plugins/review/schemas/repository-audit-input.schema.json",
+      "sha256": "f95e29e1e8dc9d9116f0be4b4713cdaf70826b455f4e3f9dd69d9055e4e02f8a",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.review",
+      "path": "skills/nova/plugins/review/schemas/repository-revalidation-input.schema.json",
+      "sha256": "a27a9d28800f6b7ec185603422885a1c68d0c24bfae447d5c0a426d97ec185e1",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.review",
+      "path": "skills/nova/plugins/review/schemas/result.schema.json",
+      "sha256": "6f0724b07d28e7599627452c02f7c6528acf74183bb03c8111ddbbdd4736a87d",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.review",
+      "path": "skills/nova/plugins/review/schemas/review-bundle.v1.schema.json",
+      "sha256": "54a7aece36f7f2336dae2b395b5fbe329bd3f03e4c5d9d88f75ea794b8d469a7",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.review",
+      "path": "skills/nova/plugins/review/schemas/review-bundle.v2.schema.json",
+      "sha256": "21ed8d2186fa9cfcc112edbd4a37306bf3d13cee92e0d74fefef67b47f492c3f",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.review",
+      "path": "skills/nova/plugins/review/schemas/review-policy.v1.schema.json",
+      "sha256": "4cfb503e7a6b5a41d0cd6abfb5b6915b2898768c4cd99a965a057975c3af040e",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.review",
+      "path": "skills/nova/plugins/review/schemas/review-policy.v2.schema.json",
+      "sha256": "d143ded923151da7f3174083b819cb8eefec0c5ef787b9b2ab593a259699a491",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.review",
+      "path": "skills/nova/plugins/review/schemas/review-report.v1.schema.json",
+      "sha256": "434a420494ed0e04b91a6eb9fa642f819aebf74397faa17f7a15fac7500ddfd0",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.review",
+      "path": "skills/nova/plugins/review/schemas/review-report.v2.schema.json",
+      "sha256": "4ce40c81ab1e80bcf95195898509532ecfb2b40db97d2d16809b79dd5a13980b",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.review",
+      "path": "skills/nova/plugins/review/schemas/review-report.v3.schema.json",
+      "sha256": "81406f36efb1cb45393b61059c32e800429c9cbc5b19c6709a9e470c54cb87b2",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.review",
+      "path": "skills/nova/plugins/review/src/echo-context-request-parser.ts",
+      "sha256": "694d0ead231697dbe8a000233148cd4957493fc34963e4f91b0efbf403339a7d",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.review",
+      "path": "skills/nova/plugins/review/src/echo-evidence-verification.ts",
+      "sha256": "e3320cb9d930bc08618206458181fb67d12c2dfd0ddf521cf6912eb46a9de435",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.review",
+      "path": "skills/nova/plugins/review/src/echo-review-contract.ts",
+      "sha256": "67193f1308ba53eab12c8f280cc4a03a7897289c54147921fe61561b09a684e6",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.review",
+      "path": "skills/nova/plugins/review/src/echo-review-parser.ts",
+      "sha256": "c950a64aa12b6bcf24503a63a4dbed3dc8d128d105d26eb83f7cc311987d0cda",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.review",
+      "path": "skills/nova/plugins/review/src/echo-review-verification-contract.ts",
+      "sha256": "3cb15e75b870e32689e10ee6dee92efa2fb2d0c2cf76f4b4a896d2258afd0802",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.review",
+      "path": "skills/nova/plugins/review/src/echo-review-verification-parser.ts",
+      "sha256": "bd6d4e3f6e6274e0767a22fe72b7ad32703fb4d5e4edb840712c8be34d7b3341",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.review",
+      "path": "skills/nova/plugins/review/src/protocol.ts",
+      "sha256": "3daf94d3d8f68696311299e6e005186f6adbf21c808e74410dbf9eea333c5bf7",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.review",
+      "path": "skills/nova/plugins/review/src/repository-audit-cache.ts",
+      "sha256": "36b4b8fd50e520cc3e1f7a9b5ace2f230fb77811c386cce1261dc7ee10441ef5",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.review",
+      "path": "skills/nova/plugins/review/src/repository-audit-results.ts",
+      "sha256": "4ffacf9710170425772503821d2d90d69da2e44d2e03212cb40fd2566efe1db9",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.review",
+      "path": "skills/nova/plugins/review/src/repository-audit-stage.ts",
+      "sha256": "da35c9701be5169975fb4a71b9462e32e6cea61ef46d2211989413d8c6a28f64",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.review",
+      "path": "skills/nova/plugins/review/src/repository-revalidation-contract.ts",
+      "sha256": "a502528b1f5e703d408de0f5233f9eef9ca5da7fe6f9e9b449892192f5c19b32",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.review",
+      "path": "skills/nova/plugins/review/src/repository-revalidation-stage.ts",
+      "sha256": "6f8071ea095b3f912fc91e4c812bc7bd5c9cfd4077b48422e6eb4de1e0c70be7",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.review",
+      "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+      "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.review",
+      "path": "skills/nova/plugins/review/src/review-bundle-bounds.ts",
+      "sha256": "5f295ba96fd54b113a368c587ed72e507f13b04d87cc338313b3db9069e250af",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.review",
+      "path": "skills/nova/plugins/review/src/review-bundle-contract.ts",
+      "sha256": "c3c8ecf218f696e0b1f1336ac5741b66d57f4f80cd36df8da9e9bb901c0ed580",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.review",
+      "path": "skills/nova/plugins/review/src/review-bundle-parser.ts",
+      "sha256": "0a86087762ed1b8596ab8d6b98ce268df2904a57bd8759f275754a7a31229024",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.review",
+      "path": "skills/nova/plugins/review/src/review-bundle-snapshot.ts",
+      "sha256": "2dd6e61e53aa9d49f254b277727f7bed17fcfab286ff614b22a2ed3ea6f4586e",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.review",
+      "path": "skills/nova/plugins/review/src/review-bundle-values.ts",
+      "sha256": "27940d8d993c6d6f4eac2d2cc1e97ec8a6c2c40ba4da62f7e9e8b3f220c93426",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.review",
+      "path": "skills/nova/plugins/review/src/review-cluster-contract.ts",
+      "sha256": "b54db562320062abe8ec681378bfbe596f210c69070d6cd99dfe4668c19cda6d",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.review",
+      "path": "skills/nova/plugins/review/src/review-cluster-identity.ts",
+      "sha256": "493ce9b17bf529debacd38044efe775ce93416746b939ea6cf2fd15966da5497",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.review",
+      "path": "skills/nova/plugins/review/src/review-cluster-ranking.ts",
+      "sha256": "22161b2e623c2168deecd632adc91f62028ce349703f1b952159d387dae38a26",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.review",
+      "path": "skills/nova/plugins/review/src/review-clustering.ts",
+      "sha256": "e04f41b6f18cef3cd4e6f1b701a36642e473a40177ec50030de5715fce1b2749",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.review",
+      "path": "skills/nova/plugins/review/src/review-completion.ts",
+      "sha256": "97e8c27f88068ac95535225afbdaaf95549571f0b5824699e987d6a1d9379781",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.review",
+      "path": "skills/nova/plugins/review/src/review-content-cache.ts",
+      "sha256": "aa4adcf19847251cc4b108ff0d3c3c299ce5f9c03a9843726cde4c0ad733a73a",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.review",
+      "path": "skills/nova/plugins/review/src/review-context-authority.ts",
+      "sha256": "fb2d7041de70b18beb8e094cb26bc33b9ba5a1cd9fba202fcc5d40e62b57ff8b",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.review",
+      "path": "skills/nova/plugins/review/src/review-context-candidates.ts",
+      "sha256": "27ed8d2b310a7e2f4684f916afe1a6aa8afaf8518cab7fadb9d506037c66a9c5",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.review",
+      "path": "skills/nova/plugins/review/src/review-context-production.ts",
+      "sha256": "0dce14f6fdfc22978cfc22d55527cdd0babf84baa54757ada507b089ecd98717",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.review",
+      "path": "skills/nova/plugins/review/src/review-context-selection.ts",
+      "sha256": "087aef0af489f28cfe3166401e48458405584e47362e0c6c3baeade940c87b38",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.review",
+      "path": "skills/nova/plugins/review/src/review-coverage.ts",
+      "sha256": "0c2e95eba29dc2760ad91285feddca5224444ab95337947129403098e1c07e5b",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.review",
+      "path": "skills/nova/plugins/review/src/review-evaluation-metadata.ts",
+      "sha256": "0dc381b467b0949e6f5c48b8274a5997292c9825ded0b834bea677cb1901086c",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.review",
+      "path": "skills/nova/plugins/review/src/review-evidence-authority.ts",
+      "sha256": "96e4749b53b38ed4f54d46df102182bacd177a54953e85672ec13e5e444cfa63",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.review",
+      "path": "skills/nova/plugins/review/src/review-evidence-encoding.ts",
+      "sha256": "cf706b3f25bd4293e3b7b7f7a0f41b427024d31f1689d6d536b7ec149dec2e93",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.review",
+      "path": "skills/nova/plugins/review/src/review-execution-settings.ts",
+      "sha256": "77eea575842e24901db60b4fa38e2239b00110df4e599ac0e76acc9a88ea8678",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.review",
+      "path": "skills/nova/plugins/review/src/review-fact-extractors.ts",
+      "sha256": "dc63fb5f67948db547c255b66dcf20374b306bcbae3c58521d6aaaa27ed470a1",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.review",
+      "path": "skills/nova/plugins/review/src/review-finding-governance.ts",
+      "sha256": "2467daabc95ab9ad8f089857f4fbb09dd0a7945c122be20f6bfa8a57bc2f62e0",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.review",
+      "path": "skills/nova/plugins/review/src/review-governor-decision.ts",
+      "sha256": "e24ce83007525a05ce698cd311cd018d03d3553915673b0bff47eb2173c58508",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.review",
+      "path": "skills/nova/plugins/review/src/review-governor-history.ts",
+      "sha256": "c4d57e25b8c73b97c79adb7a0d5b446d3e226ff0a62af19da0c2b5b93f39a292",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.review",
+      "path": "skills/nova/plugins/review/src/review-governor.ts",
+      "sha256": "9c34eb3615facd279f4da2661a5f15018b60ef20c8367f25d7390a4204344f7f",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.review",
+      "path": "skills/nova/plugins/review/src/review-graph.ts",
+      "sha256": "ee492bcafb667f304607a39b9e90eb57da69ff92e9512880d7ab8c593b9ff2f9",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.review",
+      "path": "skills/nova/plugins/review/src/review-hard-limits.ts",
+      "sha256": "93009f0054d57f2f02aef50a146aa3d146595640d2ee5f07220d1889ef0ea04d",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.review",
+      "path": "skills/nova/plugins/review/src/review-import-scanner.ts",
+      "sha256": "dca02be0f29d4b8eed478e6910b5431fdaea4b93da11b7232355c13354bb134a",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.review",
+      "path": "skills/nova/plugins/review/src/review-import-syntax.ts",
+      "sha256": "514fc3b02d15c902293778ecf077d02eb428e8784d1677e6cf35ea3ed58135bd",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.review",
+      "path": "skills/nova/plugins/review/src/review-invariants.ts",
+      "sha256": "7a63e531e4c8ecb7b531194b743718492bfdc4ebaa363ce8043a6a16a06b2d05",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.review",
+      "path": "skills/nova/plugins/review/src/review-inventory-lookup.ts",
+      "sha256": "abd77f489bb6e5e4ecad801995ce9d0cf88b852f96626d0d2c731a72c1ee6670",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.review",
+      "path": "skills/nova/plugins/review/src/review-json.ts",
+      "sha256": "fd24726bdb4733caccd6092715ebff91c507b4865d2de843eee6d0ec1df9e1d6",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.review",
+      "path": "skills/nova/plugins/review/src/review-local-aliases.ts",
+      "sha256": "bd4958b47307905920bc7182795badc499885e493f459c74f113dd68fa776bc6",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.review",
+      "path": "skills/nova/plugins/review/src/review-map-artifacts.ts",
+      "sha256": "88e55c81174ea25ab19f789728c8c9d617fb5f2fe71c5e0cb4fa890b9ae3911a",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.review",
+      "path": "skills/nova/plugins/review/src/review-ordering.ts",
+      "sha256": "61bc8cf0f2a44527ad18559827794c72e3d0dc589b82499a78a9f38e728c4e10",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.review",
+      "path": "skills/nova/plugins/review/src/review-phase-admission.ts",
+      "sha256": "5f57c09d10ffc77d11b7cf7c853951cbf936423b73490c4f75e0fdef17332ad7",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.review",
+      "path": "skills/nova/plugins/review/src/review-policy-contract.ts",
+      "sha256": "3dd3337e85c6e27f0b8ad1cf953448468bc67c22b927c4f09f7cdf008b6e70a2",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.review",
+      "path": "skills/nova/plugins/review/src/review-policy-parser.ts",
+      "sha256": "24c402161c2cf73a99969cd61c9f040d7598f9243327cd61325213f2b13bcbfb",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.review",
+      "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+      "sha256": "ee0adf218857f0be3c6b9bfae54e204dfeb73384cb1c5f9c78bad0b29c94df67",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.review",
+      "path": "skills/nova/plugins/review/src/review-policy-resolver.ts",
+      "sha256": "c05b626889142e5cf8bd8b9c30446c9bef87b3a7ac5d9dd10799ff769c9dc0ad",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.review",
+      "path": "skills/nova/plugins/review/src/review-preparation.ts",
+      "sha256": "1977321e91e90e628ac149ef93704038bf4a728103ce27d6458fa82b60a691f2",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.review",
+      "path": "skills/nova/plugins/review/src/review-prompt-budget.ts",
+      "sha256": "44b89cda9e7d2fa5269621841a8e1395f0c8bcaa9b77efbcaa7a12e66384613a",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.review",
+      "path": "skills/nova/plugins/review/src/review-proposal-preflight.ts",
+      "sha256": "3acc5aa16a2ea8b95507916bfb0bf8db5966481d40c0e21a4269bbc401b02a2d",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.review",
+      "path": "skills/nova/plugins/review/src/review-reducer.ts",
+      "sha256": "75f9fdb7d97894886e26dd54d6b245c16744116888fcbf2e99aed41dcabb3392",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.review",
+      "path": "skills/nova/plugins/review/src/review-reduction-state.ts",
+      "sha256": "60d43dd3513e2c9770ed262a5e87d91316081983f00487557403cbcc18c3d46c",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.review",
+      "path": "skills/nova/plugins/review/src/review-repair-batch.ts",
+      "sha256": "e79f7b2eb9308eb433cb33f60b13540c6c16a1611b523eddc5b3ed63e5a61059",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.review",
+      "path": "skills/nova/plugins/review/src/review-report-builder.ts",
+      "sha256": "9dfc7a524561c9d02da6d3fa85985d03834a34560807950cabcfab4d27fc10d8",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.review",
+      "path": "skills/nova/plugins/review/src/review-report-contract.ts",
+      "sha256": "28a76f5eb111741263ab88438a2fc7f9ca0e60e77ccc1f3b7f0bff081fd6f522",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.review",
+      "path": "skills/nova/plugins/review/src/review-report-encoding.ts",
+      "sha256": "64b604ae4f25b3825e68527b30ad9093b9f6eda7b72fe1b227a914f0b0acae5f",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.review",
+      "path": "skills/nova/plugins/review/src/review-report-flow.ts",
+      "sha256": "0769c1c76b65f88c6647adabcb5fc965e89980d431db30dfce2bf263063be6b4",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.review",
+      "path": "skills/nova/plugins/review/src/review-report-storage.ts",
+      "sha256": "2ac682bb07057feeec977c9b1446339f65555bf14977a2dbe1644cbaff72c4e5",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.review",
+      "path": "skills/nova/plugins/review/src/review-repository.ts",
+      "sha256": "02725152678d2b150d4e44dee7182b1b767e52d7cec4272d71c0f66c740e4169",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.review",
+      "path": "skills/nova/plugins/review/src/review-runtime-attestation.ts",
+      "sha256": "1154397de55d1e27dcb291d060e36fcc7ce95cc0ae8d79c9b755f1ed4157f43d",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.review",
+      "path": "skills/nova/plugins/review/src/review-scale-slicing.ts",
+      "sha256": "2c3926caebaa29cff3044486cd5f56415bcd0c54127b9b65857d888a86c63262",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.review",
+      "path": "skills/nova/plugins/review/src/review-semantic-flow.ts",
+      "sha256": "1bfd35614a35c1063eda4c44f6b7256d5bf38ae3141f67348276baf6d7b07452",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.review",
+      "path": "skills/nova/plugins/review/src/review-semantics.ts",
+      "sha256": "653f853d511c6955e3c44cc0db3ddf62e6e12321f791d0d427f4137747b75008",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.review",
+      "path": "skills/nova/plugins/review/src/review-slicing.ts",
+      "sha256": "4a3bc2bceb55c0a05774f2d07d05813a010e6280eea9a4c9ad0750e58188bfae",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.review",
+      "path": "skills/nova/plugins/review/src/review-snapshot-inventory.ts",
+      "sha256": "0198ab891853c1dbe061bd2ef081d2c6625b02447de90296d8d7cccbb82164c4",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.review",
+      "path": "skills/nova/plugins/review/src/review-stage-input.ts",
+      "sha256": "e68ca5e004df3567de6a84e5486791a435f4c7ccd1756a6ed79365f81aca564c",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.review",
+      "path": "skills/nova/plugins/review/src/review-stage-result.ts",
+      "sha256": "f1e97b73fffcc52ad783fa77b1d5a0e6907bf33869dd659f34bd969fba089ac0",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.review",
+      "path": "skills/nova/plugins/review/src/review-stage-verification.ts",
+      "sha256": "d88dc67ae2c703d10057467064a7d56bf12c6ffc3b6b7bd629ee2e2c247994cd",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.review",
+      "path": "skills/nova/plugins/review/src/review-test-relations.ts",
+      "sha256": "62c9e6db1171d4a28b6f88119362f57a1154633ae5b2ad014506e429459b5426",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.review",
+      "path": "skills/nova/plugins/review/src/review-verdict-policy.ts",
+      "sha256": "a999675b9e6bf2d704f07aa8df339250a86d04b166b1a1b5d9cd65a376f2d5b3",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.review",
+      "path": "skills/nova/plugins/review/src/review-verification-reconciliation.ts",
+      "sha256": "b2d8f81a7dfb695abfa03253142b3829aa1f8ca1009597343c1abfa6f822bb00",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.review",
+      "path": "skills/nova/plugins/review/src/review-verified-findings.ts",
+      "sha256": "f02530f3acf50325854eaac7b77790177364e255770e9eee4457859a4226587a",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.review",
+      "path": "skills/nova/plugins/review/src/review-verifier.ts",
+      "sha256": "673c969e165888d52d90068fb227c0330d70527c7ea574b20385f4db81bf1f20",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.review",
+      "path": "skills/nova/plugins/review/src/scalable-review-compiler.ts",
+      "sha256": "9ab253c3605ac971385e4d4787da26669f9623ff50dcc30b6fe0a250301329a9",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.review",
+      "path": "skills/nova/plugins/review/src/scalable-review-execution.ts",
+      "sha256": "cefa01d1a541ea1d56eb939fa3785d478a81f7b58c740742d26aec07800f3e88",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.review",
+      "path": "skills/nova/plugins/review/src/scalable-review-jobs.ts",
+      "sha256": "727d9042c598be9920c15c11e7c1aab20ca4bdfcb2f0a41f4b30860296fc9c90",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.review",
+      "path": "skills/nova/plugins/review/src/scalable-review-topology.ts",
+      "sha256": "e8bdf3721245ef58ae25891dc90c776b580973355f9d9946bd71eaf4956b4c0e",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.review",
+      "path": "skills/nova/plugins/review/src/scalable-review-types.ts",
+      "sha256": "075703db30e3ae27a53b306a8a7916a10dc6ab0e29d460b0631c2ebce97e8f96",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.review",
+      "path": "skills/nova/plugins/review/src/scalable-review-verification-evidence.ts",
+      "sha256": "23e712559f40c75beaa25cdb95cd8fea1bbd8b59e157bcfbf60f9ae038581d23",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.review",
+      "path": "skills/nova/plugins/review/src/scalable-review-verification.ts",
+      "sha256": "d06f9d7524d75b61ac8cd6493418f4689d0fd5883d10a93390393f7df320034d",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.review",
+      "path": "skills/nova/plugins/review/src/simplification-contract.ts",
+      "sha256": "02b979eb33a1af0018dc592975e155ac1ab3fd90c1c91d6e54ba6fd4bfa1ca62",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.review",
+      "path": "skills/nova/plugins/review/src/simplification-fact-producer.ts",
+      "sha256": "8b50db4716f53cd4cca472d0c52ff1da2d49d7d1921ebf2751f57801831a207f",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.review",
+      "path": "skills/nova/plugins/review/src/simplification-manifest.ts",
+      "sha256": "332141613dbcdc22d945d610de83553475a72b2524f7abe87398ff8b7761f7ae",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.review",
+      "path": "skills/nova/plugins/review/src/simplification-miner.ts",
+      "sha256": "9859a85740834da159dc21caa1fef2f96460a389d46f599b86f57a439ed9b635",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.review",
+      "path": "skills/nova/plugins/review/src/simplification-parser.ts",
+      "sha256": "e6d8edeb8bb90c75c6b99dbfec47025ced51b139555bf8f5ee27724d46e92850",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.review",
+      "path": "skills/nova/plugins/review/src/simplification-registry.ts",
+      "sha256": "04e1049839f794cdddc7836fa1f6b8dde35d008cbd1abffc5612268d41e40026",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.review",
+      "path": "skills/nova/plugins/review/src/stage.ts",
+      "sha256": "24edd137f6742ed10cdec57f43fc29ac6a270fd25019ca6b9ba2c348cdcb372c",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.review",
+      "path": "skills/nova/plugins/review/src/verification-protocol.ts",
+      "sha256": "e348f736e76125c89d10b0ac6b2d1d86f0ace2109ca94f8d3dce3c98aabe4185",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.review",
+      "path": "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json",
+      "sha256": "837efd7975991aa21b8c92b57881194e9bc8c7adc4370f238d1a15b6d85d44db",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.runtime-dispatch",
+      "path": "skills/common/plugins/runtime-dispatch/README.md",
+      "sha256": "8d35a3f4317061a91daa80dba389e3a4e453052e815ffce9db7a5c23875e8f47",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.runtime-dispatch",
+      "path": "skills/common/plugins/runtime-dispatch/plugin.json",
+      "sha256": "b3c3a77253ce191a184c8c85f6d02595a1df26b472a63f252339205cae04f349",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.runtime-dispatch",
+      "path": "skills/common/plugins/runtime-dispatch/schemas/config.schema.json",
+      "sha256": "c780e8086e6d6c954734e62c171f3de67a37b1c94c7483c887571ea08f18a641",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.runtime-dispatch",
+      "path": "skills/common/plugins/runtime-dispatch/schemas/openclaw-config.schema.json",
+      "sha256": "defa712aa87820a8e2d4fa593f6e3dedf2fbc6c22a22f2a6933dc36e3d8d95b7",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.runtime-dispatch",
+      "path": "skills/common/plugins/runtime-dispatch/src/adapter.ts",
+      "sha256": "5bf2d0c003497e74b0bfdf7524b4725bcd77d12b592f00e121be553868009e5e",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.runtime-dispatch",
+      "path": "skills/common/plugins/runtime-dispatch/src/dispatch-adapter.ts",
+      "sha256": "16ccaa5e974de17c36d20078fb2912ddd9d2fa1c6a0a677af760e242ce3cd33a",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.runtime-dispatch",
+      "path": "skills/common/plugins/runtime-dispatch/src/openclaw-adapter.ts",
+      "sha256": "1532db26c17561feba17d5bdbba2771de2730df9bd299af203c4b0432d5842f4",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.runtime-dispatch",
+      "path": "skills/common/plugins/runtime-dispatch/src/openclaw-cleanup.ts",
+      "sha256": "9cd036b48db02117734aea56e9e77bf4010f5487150e3bab0fcdc99585ac22fd",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.runtime-dispatch",
+      "path": "skills/common/plugins/runtime-dispatch/src/openclaw-config.ts",
+      "sha256": "52ba5eff35c441ee727753a3d154a357257df525c0461b6f81941ceadaf1add1",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.runtime-dispatch",
+      "path": "skills/common/plugins/runtime-dispatch/src/openclaw-response.ts",
+      "sha256": "70a2a376fcf885861af37075646b0868a810f9bc3cd109781fc48fb62fe8444d",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.runtime-dispatch",
+      "path": "skills/common/plugins/runtime-dispatch/src/openclaw-result.ts",
+      "sha256": "38290ff080cc31a5465f911bf8adaf1d7d82c1c0a019914d088a5dd6c35b9643",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.runtime-dispatch",
+      "path": "skills/common/plugins/runtime-dispatch/src/openclaw-session.ts",
+      "sha256": "8f3bfbfe9d3d9fa3fa88ac532f8f59abe457d830089a340b196cb8c25bd97217",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.runtime-dispatch",
+      "path": "skills/common/plugins/runtime-dispatch/src/openclaw.ts",
+      "sha256": "a66a16088c28519c1d88a63b650bf7caa416e13cee5eefe3b773df2691832af5",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.runtime-dispatch",
+      "path": "skills/common/plugins/runtime-dispatch/src/result-persistence.ts",
+      "sha256": "4939307a37adc3aea6dfba4d7f196a897c5ee3ca72a7594c6b7b8c02f4509a41",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.runtime-dispatch",
+      "path": "skills/common/plugins/runtime-dispatch/src/workspace-target.ts",
+      "sha256": "163d6442b6eb4261db013c55af03183a04cedaa1a4a90c0893dc1f65f36f2ab5",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.runtime-dispatch",
+      "path": "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json",
+      "sha256": "837efd7975991aa21b8c92b57881194e9bc8c7adc4370f238d1a15b6d85d44db",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.secret-resolver",
+      "path": "skills/common/plugins/secret-resolver/README.md",
+      "sha256": "20d8c301684dad82c2c43cb192e134baddcfcb187d7c121f1dc7e4d686520964",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.secret-resolver",
+      "path": "skills/common/plugins/secret-resolver/plugin.json",
+      "sha256": "c36463ec4caa7adc8334d5adc6ac362d8a6fa5763e9a3b1ff03bf044024ed347",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.secret-resolver",
+      "path": "skills/common/plugins/secret-resolver/schemas/config.schema.json",
+      "sha256": "572ebe9929ea533da85909fc65c3a6e8ba4a14a62ee941500bd8b246092d6629",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.secret-resolver",
+      "path": "skills/common/plugins/secret-resolver/src/adapter.ts",
+      "sha256": "89e997cbc5c533ab70b5c17e71f29e72ce26a49263345ae635ad9a41f8b56eb3",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.secret-resolver",
+      "path": "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json",
+      "sha256": "837efd7975991aa21b8c92b57881194e9bc8c7adc4370f238d1a15b6d85d44db",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.security-providers",
+      "path": "skills/buster/plugins/security-providers/README.md",
+      "sha256": "97f0db9adda62d1b15cfa518816547b15ad66b1c38f35010c75d6d5797f5cd20",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.security-providers",
+      "path": "skills/buster/plugins/security-providers/plugin.json",
+      "sha256": "14d1e66e0ee7a0063964555222332d7345bf172bfc8186f9a12fdca7d2c9d510",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.security-providers",
+      "path": "skills/buster/plugins/security-providers/schemas/dependency.schema.json",
+      "sha256": "e28b92a94df642a3527df914c9406a215684fb099bf98ded536d1e5743873ee4",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.security-providers",
+      "path": "skills/buster/plugins/security-providers/schemas/headers.schema.json",
+      "sha256": "d85b934ca0577f4ca2ac170efbe9157e7ccb46a1bae36cca3e36843f336e0191",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.security-providers",
+      "path": "skills/buster/plugins/security-providers/schemas/image.schema.json",
+      "sha256": "1215ea1d598f31ebe569812962c66b1a75f506fd1d63eeecee5ec523beb1b9ca",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.security-providers",
+      "path": "skills/buster/plugins/security-providers/schemas/kubernetes-policy.schema.json",
+      "sha256": "8dece95ab9c5062a62269a6dc85528017fe7b65f71433b612058a52b7e4ff6ea",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.security-providers",
+      "path": "skills/buster/plugins/security-providers/schemas/kubernetes-runtime.schema.json",
+      "sha256": "8dece95ab9c5062a62269a6dc85528017fe7b65f71433b612058a52b7e4ff6ea",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.security-providers",
+      "path": "skills/buster/plugins/security-providers/src/common.js",
+      "sha256": "74fd765615fdee3f5876cfffa0b7baca6405b57fc3830e39dd56293fdc8d04b3",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.security-providers",
+      "path": "skills/buster/plugins/security-providers/src/database-evidence.js",
+      "sha256": "2aa34c8cfe07618191408a280ca7e9b36169056f33cf441e233cae6bba4dad57",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.security-providers",
+      "path": "skills/buster/plugins/security-providers/src/dependency.js",
+      "sha256": "e44c6d32e9609c914493108ecbbe14de459d0eb57f917cdbe95c9ff81836af55",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.security-providers",
+      "path": "skills/buster/plugins/security-providers/src/headers.js",
+      "sha256": "7799951ab8165572b3779b0a97306e33597115069de51400f7476df03ac2b7e7",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.security-providers",
+      "path": "skills/buster/plugins/security-providers/src/image.js",
+      "sha256": "7e54a7a0140628c26d2e81572ef8959fb0816cd5cd9cb663759c4b175bc71588",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.security-providers",
+      "path": "skills/buster/plugins/security-providers/src/kubernetes-policy.js",
+      "sha256": "aac3c6388e4238df46b5cc9b59f62b6fd0df4192061d29ff5be6625f26f392fd",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.security-providers",
+      "path": "skills/buster/plugins/security-providers/src/kubernetes-runtime.js",
+      "sha256": "0694947eb3fcfb8637ad8a80be41e7b9985fae79df1b348a5279b9c6959203c5",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.security-providers",
+      "path": "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json",
+      "sha256": "837efd7975991aa21b8c92b57881194e9bc8c7adc4370f238d1a15b6d85d44db",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.size-budget",
+      "path": "skills/buster/plugins/size-budget/README.md",
+      "sha256": "9cab80aae3f14c2c1dac300c3875ffa561dda4e64bdec0bfcec530e1e1ceb7a4",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.size-budget",
+      "path": "skills/buster/plugins/size-budget/plugin.json",
+      "sha256": "5f9a11dad63edf557454124ae8a71a6382ddac5212dbeaf064e86019fe28a737",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.size-budget",
+      "path": "skills/buster/plugins/size-budget/schemas/config.schema.json",
+      "sha256": "e20a56b4cb1bba2d69355a3da142db17bb9d254d8276b86809c8b32994dbd894",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.size-budget",
+      "path": "skills/buster/plugins/size-budget/src/provider.js",
+      "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.size-budget",
+      "path": "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json",
+      "sha256": "837efd7975991aa21b8c92b57881194e9bc8c7adc4370f238d1a15b6d85d44db",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.state-store",
+      "path": "skills/common/plugins/state-store/README.md",
+      "sha256": "f3cb1eff736094a1fdcab144000f4f700c76fd5107160ca1e5a7a5317ebce028",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.state-store",
+      "path": "skills/common/plugins/state-store/plugin.json",
+      "sha256": "57fa3d6179e5f6d781f716a164eb88e26630a69d768f2fd1022eab7c3580a8eb",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.state-store",
+      "path": "skills/common/plugins/state-store/schemas/config.schema.json",
+      "sha256": "4c5a84b166a37eccdb6e2ea0a62151995d7e9fcec71453e961f5633c4b826944",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.state-store",
+      "path": "skills/common/plugins/state-store/src/adapter.ts",
+      "sha256": "1805e68a4d478af60df925fb6c38204344d53e17a8134fafdd47732263c473c7",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.state-store",
+      "path": "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json",
+      "sha256": "837efd7975991aa21b8c92b57881194e9bc8c7adc4370f238d1a15b6d85d44db",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.tailscale-exposure",
+      "path": "skills/buster/plugins/tailscale-exposure/README.md",
+      "sha256": "7fcb51b8fb8d22dddab78d9e5aa09abe37f547aa8385e0e9d22cfcfcf88db4df",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.tailscale-exposure",
+      "path": "skills/buster/plugins/tailscale-exposure/plugin.json",
+      "sha256": "c61695a3a068a240a335949e27287829fa8183b465bd648662525da67fc9648b",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.tailscale-exposure",
+      "path": "skills/buster/plugins/tailscale-exposure/schemas/config.schema.json",
+      "sha256": "0ffe60c3f3b2ab2fa054a239892663c20bb59621b9e5fdbf05541d862a986ccd",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.tailscale-exposure",
+      "path": "skills/buster/plugins/tailscale-exposure/src/provider.js",
+      "sha256": "7e8f092bf66aac62bcd7ffd01b80710ccdd97c87f1ceec126139ba23d08ca1f0",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.tailscale-exposure",
+      "path": "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json",
+      "sha256": "837efd7975991aa21b8c92b57881194e9bc8c7adc4370f238d1a15b6d85d44db",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.telemetry-observer",
+      "path": "skills/common/plugins/telemetry-observer/README.md",
+      "sha256": "921d2ddf474987a9d2417171cf0bad32d409cf961e76ecaa963d84fe70941133",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.telemetry-observer",
+      "path": "skills/common/plugins/telemetry-observer/plugin.json",
+      "sha256": "e8f47d3fe54481f200935675f1899a29fe428b636060e5cf61756958044221b6",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.telemetry-observer",
+      "path": "skills/common/plugins/telemetry-observer/schemas/checkpoint.schema.json",
+      "sha256": "c6d66f56cbb0c5cd0b277a1def6ce910dfbbd1707a6feaf5ef17674cfcf29759",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.telemetry-observer",
+      "path": "skills/common/plugins/telemetry-observer/schemas/config.schema.json",
+      "sha256": "67c0a3e017f62ab8fa45adf3782967e9fd83fd25da2b4cecd06cfb1ca77e2afa",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.telemetry-observer",
+      "path": "skills/common/plugins/telemetry-observer/src/observer.ts",
+      "sha256": "21abca7f49d39ccb085bac5aa152c3e2fd7b5b477d7fbc897785a8750854b71c",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.telemetry-observer",
+      "path": "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json",
+      "sha256": "837efd7975991aa21b8c92b57881194e9bc8c7adc4370f238d1a15b6d85d44db",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.telemetry-store",
+      "path": "skills/common/plugins/telemetry-store/README.md",
+      "sha256": "86528774651ce1cc75349470f02ce8c1ac9dfa6610c98211b74e74a27f67e503",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.telemetry-store",
+      "path": "skills/common/plugins/telemetry-store/plugin.json",
+      "sha256": "77c3f887ed4068b00a3d3a3019c5257b9a9a7c397c5d94a2bc21095b5481b848",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.telemetry-store",
+      "path": "skills/common/plugins/telemetry-store/schemas/config.schema.json",
+      "sha256": "2b0186fbdf59b80a4c247cfd9622e88c8d3d2bec986e75647e1a178e777bf3c8",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.telemetry-store",
+      "path": "skills/common/plugins/telemetry-store/src/adapter.ts",
+      "sha256": "f5a3ff64dce028471c800e9a5da01bcc3a405f26b1e68ccdd8e78cd54e00fb13",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.telemetry-store",
+      "path": "skills/common/plugins/telemetry-store/src/projection.ts",
+      "sha256": "b570c21e64b262cb12edb0f92c94fd7643f3c7bfadcbcb63da7d999aba415f31",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.telemetry-store",
+      "path": "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json",
+      "sha256": "837efd7975991aa21b8c92b57881194e9bc8c7adc4370f238d1a15b6d85d44db",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.transport-publisher",
+      "path": "skills/common/plugins/transport-publisher/README.md",
+      "sha256": "92a62894d0171bc3ea702f18fd4d7ae16d0842e8e7e8353401b6b4333a70b839",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.transport-publisher",
+      "path": "skills/common/plugins/transport-publisher/plugin.json",
+      "sha256": "91473413670e5fa02bb197c71deaeffba26a9661dae26e6d04f9c527c026a76f",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.transport-publisher",
+      "path": "skills/common/plugins/transport-publisher/schemas/config.schema.json",
+      "sha256": "31dccf98f7921ed10af125417de5e913a899ad39eca6efc6386d28c7d64fdc8e",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.transport-publisher",
+      "path": "skills/common/plugins/transport-publisher/schemas/publish.schema.json",
+      "sha256": "8e8b5ae0b5d434ca945fd1b0ed6365934d67c00e045c61bccbc5f35df8d4fd73",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.transport-publisher",
+      "path": "skills/common/plugins/transport-publisher/schemas/receipt.schema.json",
+      "sha256": "8795863128e337e4c0cce3c64cc9122bbbb245ade722e387a6ace77ec45da36f",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.transport-publisher",
+      "path": "skills/common/plugins/transport-publisher/src/adapter.ts",
+      "sha256": "017501aea38f59ede67adf7249ed0bfa9c2d16430b2c7acf6380944350f2cd31",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.transport-publisher",
+      "path": "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json",
+      "sha256": "837efd7975991aa21b8c92b57881194e9bc8c7adc4370f238d1a15b6d85d44db",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.visual",
+      "path": "skills/buster/plugins/visual/README.md",
+      "sha256": "96654f60f76342f316b001db5e94b9a730938bed691808f729f3ce970cc95ac4",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.visual",
+      "path": "skills/buster/plugins/visual/plugin.json",
+      "sha256": "3f637455f6577136024318784f35e724a04abfe43e24406f31e37ded4f6f5a90",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.visual",
+      "path": "skills/buster/plugins/visual/schemas/config.schema.json",
+      "sha256": "b7804886b708d164ddade0d54585337e508ba0a869756d39f1eb561db28ea7da",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.visual",
+      "path": "skills/buster/plugins/visual/src/browser-identity.js",
+      "sha256": "44ab23cb793d764710dae28b0a3a4c340ae57aeeb6e36dc7bfae192c05c265d3",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.visual",
+      "path": "skills/buster/plugins/visual/src/provider.js",
+      "sha256": "1a321386019f583561a20297bf8ad1ff57599aac2e906ed1f48bada2f08419b1",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.visual",
+      "path": "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json",
+      "sha256": "837efd7975991aa21b8c92b57881194e9bc8c7adc4370f238d1a15b6d85d44db",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.wait-store",
+      "path": "skills/common/plugins/wait-store/README.md",
+      "sha256": "1e950161e573a8dfe0ae3700bce649c16e7935a833702d9032992bb75e6ea5f3",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.wait-store",
+      "path": "skills/common/plugins/wait-store/plugin.json",
+      "sha256": "f7564d3bb167b2aebe69bba54ab7ba2d59cf588475ea21c8c4cb4ab658a210ed",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.wait-store",
+      "path": "skills/common/plugins/wait-store/schemas/config.schema.json",
+      "sha256": "4c5a84b166a37eccdb6e2ea0a62151995d7e9fcec71453e961f5633c4b826944",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.wait-store",
+      "path": "skills/common/plugins/wait-store/src/adapter.ts",
+      "sha256": "b55d76d4913c0c6f4074af43615046365ba226dfb51189fd26fa6d486753b92d",
+      "tracked": true
+    },
+    {
+      "package": "kubeclaw.wait-store",
+      "path": "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json",
+      "sha256": "837efd7975991aa21b8c92b57881194e9bc8c7adc4370f238d1a15b6d85d44db",
+      "tracked": true
+    }
+  ],
+  "limits": "Original535requiredphysicalbindings retained, not runtime/generaltrackedsourceapproval; current inert bytecontinuity only."
+}

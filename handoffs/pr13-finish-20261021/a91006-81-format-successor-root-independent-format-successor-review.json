@@ -1,0 +1,17 @@
+{
+  "status": "ROOT_INDEPENDENT_FINITE_TYPED_INPUT_FORMAT_PASS",
+  "candidateSha256": "ca3c3862facd427e53718f38ecc2494d78fa955327d6c0c5aa55cda261a083a1",
+  "fullActualSourceRead": [
+    "sync-contract.mjs32lines",
+    "build.mjs41lines",
+    "package.json/.gitignore",
+    "finite observermaterializedsource76lines",
+    "owningtests47lines"
+  ],
+  "actualChecks": "Originalallothercandidatefields/checks/verdict/limits exact;510trackedregular Sources; sevenphysicalcopies+canonicalactualmembership and535currentbindingcell equality verified. Currentpolicy/owner guards unchanged, no target/native/helper execution.",
+  "limits": [
+    "Materializedfileproof currentSource only, not historicalsync/buildexecution",
+    "No ignoredinput removed from535ownerguard; no arbitrarysamehash mapping",
+    "READY\u2192PASS onlyRootactualadoption after allpreviousSource/Reader/Qualityproofs; not othergates/runtime"
+  ]
+}

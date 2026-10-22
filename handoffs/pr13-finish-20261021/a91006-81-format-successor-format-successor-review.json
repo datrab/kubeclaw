@@ -1,0 +1,71 @@
+{
+  "status": "BOUNDED_SOURCE_SERIALIZATION_SUCCESSOR_READY_FOR_ROOT_REVIEW",
+  "sourceRevision": "81db5f8a72746dd18439d2ca55d47f08ab5a8ba6",
+  "originalSources": 504,
+  "invalidMembers": [
+    "skills/common/plugins/openclaw-agent-observer/src/generated/agent-observability/complexity.ts",
+    "skills/common/plugins/openclaw-agent-observer/src/generated/agent-observability/constants.ts",
+    "skills/common/plugins/openclaw-agent-observer/src/generated/agent-observability/index.ts",
+    "skills/common/plugins/openclaw-agent-observer/src/generated/agent-observability/mapping.ts",
+    "skills/common/plugins/openclaw-agent-observer/src/generated/agent-observability/routing.ts",
+    "skills/common/plugins/openclaw-agent-observer/src/generated/agent-observability/types.ts",
+    "skills/common/plugins/openclaw-agent-observer/src/generated/agent-observability/validation.ts"
+  ],
+  "successorSources": 510,
+  "removedFromSourcesOnly": [
+    "skills/common/plugins/openclaw-agent-observer/src/generated/agent-observability/complexity.ts",
+    "skills/common/plugins/openclaw-agent-observer/src/generated/agent-observability/constants.ts",
+    "skills/common/plugins/openclaw-agent-observer/src/generated/agent-observability/index.ts",
+    "skills/common/plugins/openclaw-agent-observer/src/generated/agent-observability/mapping.ts",
+    "skills/common/plugins/openclaw-agent-observer/src/generated/agent-observability/routing.ts",
+    "skills/common/plugins/openclaw-agent-observer/src/generated/agent-observability/types.ts",
+    "skills/common/plugins/openclaw-agent-observer/src/generated/agent-observability/validation.ts"
+  ],
+  "addedTrackedCanonicalOrOwnerSources": [
+    "contracts/agent-observability/v1/src/complexity.ts",
+    "contracts/agent-observability/v1/src/constants.ts",
+    "contracts/agent-observability/v1/src/index.ts",
+    "contracts/agent-observability/v1/src/mapping.ts",
+    "contracts/agent-observability/v1/src/routing.ts",
+    "contracts/agent-observability/v1/src/types.ts",
+    "contracts/agent-observability/v1/src/validation.ts",
+    "scripts/docs-api-observer-materialized-source.mjs",
+    "scripts/tests/observer-materialized-source.test.mjs",
+    "skills/common/plugins/openclaw-agent-observer/.gitignore",
+    "skills/common/plugins/openclaw-agent-observer/package.json",
+    "skills/common/plugins/openclaw-agent-observer/scripts/build.mjs",
+    "skills/common/plugins/openclaw-agent-observer/scripts/sync-contract.mjs"
+  ],
+  "allSuccessorSourcesTrackedRegular": true,
+  "physical535BindingsRetained": true,
+  "allOtherRecordFieldsExactAfterReversingOnlyExplicitChanges": true,
+  "ownerSourceBindings": {
+    "skills/common/plugins/openclaw-agent-observer/scripts/sync-contract.mjs": "9cf81c81f0fa85ea740e578d6a3e10bcf86c7d85dec3c1ea287f3e7bab7d9fab",
+    "skills/common/plugins/openclaw-agent-observer/scripts/build.mjs": "82b56e00d0aa995ec786f53b8d07036622507f47101dda78a02f2f2fe13b6098",
+    "skills/common/plugins/openclaw-agent-observer/package.json": "3685149c841d4a5a65e8e1b99e20fcf405fe0020c608f965ee334045997d60ce",
+    "skills/common/plugins/openclaw-agent-observer/.gitignore": "6a422561c8e2c996c88b744abd47737ecf65612a1fea716496425276f20329af",
+    "scripts/docs-api-observer-materialized-source.mjs": "c05f1fb516078ed1f2aecc4478e298877a9df061a967f1d7ff24689a82b96dc3",
+    "scripts/tests/observer-materialized-source.test.mjs": "0eea59cfa4768eb3161c5903154894e6419f9b6c10b9ba64bfc165e99ade046b"
+  },
+  "candidateSha256": "ca3c3862facd427e53718f38ecc2494d78fa955327d6c0c5aa55cda261a083a1",
+  "decisionUnchanged": {
+    "verdict": "READY (Root may convert to PASS at actual adoption only)",
+    "review": {
+      "sourceAccuracy": "PASS",
+      "readerUsability": "PASS",
+      "quality": "PASS"
+    },
+    "gateIds": [
+      "A910-06"
+    ],
+    "requirementIds": []
+  },
+  "normalizationBoundary": "Checks remain actualprocesses only. Root may losslessly serialize structured observations into string+observationData; no human review exitCode added. No author/reviewer/checks/limits/verdict semantic changes in this successor.",
+  "limits": [
+    "No Main/policy/index/guard/registry/role/Source metadata write or target/producer/browser/native/graph execution.",
+    "Canonical mapping is existing exact Source-owned finite copy relation; no new source classifier substitution or generic samebytes exception.",
+    "All seven nontracked copy paths remain actual required observed inputs, not declared unnecessary or treated as independently tracked Git Source.",
+    "Node executable remains separately typed native execution input in original receipt, outside535policySourcecells and not inserted into tracked sources.",
+    "No acceptance count or actualowner rerun; only gate A91006/zero requirements, prior onepreservationinput unchanged."
+  ]
+}
