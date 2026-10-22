@@ -10,7 +10,7 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { PGlite } from '@electric-sql/pglite';
 import { exchangeTailscaleIdentity } from '../control/session.ts';
-import { PRODUCT_DOMAIN, parseProductIntent, productActor, loadProductConfig, signProductIntent, type ProductConfig } from '../control/product-decisions.ts';
+import { PRODUCT_DOMAIN, parseProductIntent, productActor, loadProductConfig, loadSelectedProductConfig, signProductIntent, type ProductConfig } from '../control/product-decisions.ts';
 import { recordProductIntent, storedProductDecision, recordProductReceipt } from '../storage/product-decisions.ts';
 import { handleStudioRequest } from '../server/studio-request.ts';
 import { productAuthorityHandler, receiptFor } from '../server/product-decisions.ts';
@@ -116,4 +116,13 @@ test('selected product decision lifetime bounds issuance while session expiry an
  assert.equal(Date.parse(capped.payload.expiresAt),Math.floor((now+2200)/1000)*1000);
  assert.throws(()=>signProductIntent(intent,actor,config,1,now),/session expires/);
  for(const value of [undefined,0,-1,1.5,2147483648]) assert.throws(()=>signProductIntent(intent,actor,config,value as number,now),/valid product decision lifetime/);
+});
+
+test('selected product switch rejects duplicate ENV authors before credentials and preserves disabled false', async () => {
+  assert.equal(await loadSelectedProductConfig(false, {PRISM_PRODUCT_PRIVATE_KEY_FILE: '/not-present'}), undefined);
+  for (const flag of ['', 'true', 'false']) for (const enabled of [false, true]) {
+    await assert.rejects(loadSelectedProductConfig(enabled, {PRISM_PRODUCT_DECISIONS_ENABLED: flag}), /SWARM_CONFIG_LEGACY_OVERRIDE/);
+  }
+  await assert.rejects(loadSelectedProductConfig(undefined as unknown as boolean, {}), /SELECTION_REQUIRED/);
+  await assert.rejects(loadSelectedProductConfig(true, {}), /PRISM_PRODUCT_ORIGIN is required/);
 });

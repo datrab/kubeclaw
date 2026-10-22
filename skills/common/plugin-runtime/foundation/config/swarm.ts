@@ -168,6 +168,8 @@ export interface PrismControlSettings {
   readonly maximumInternalEvidenceBytes: number;
   readonly maximumProductControllerTokenCharacters: number;
   readonly productDecisionLifetimeMs: number;
+  /** Required on component-v5; historical component codecs retain their ENV switch. */
+  readonly productDecisionsEnabled?: boolean;
   readonly productDecisionHistoryLimit: number;
   readonly maximumProductInputBytes: number;
   readonly productControllerTimeoutMs: number;

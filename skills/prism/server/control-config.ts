@@ -1,4 +1,4 @@
-import { loadProductConfig, type ProductConfig } from '../control/product-decisions.ts';
+import { loadProductConfig, loadSelectedProductConfig, type ProductConfig } from '../control/product-decisions.ts';
 import { authorizePipelinePreferenceSubject } from '../control/pipeline-preference-subject.ts';
 import { rejectLegacyAuthors, type PrismControlSettings } from '@kubeclaw/plugin-foundation/config/swarm';
 import { projectControlSettings } from '@kubeclaw/plugin-foundation/config/pipeline-composition';
@@ -54,6 +54,8 @@ export function loadControlServerConfig(capture: PipelineBootCapture, environmen
   const { native: settings, control, workerCore } = projectControlSettings(capture);
   return Object.freeze({
     ...(workerCore ? {workerCore} : {}), ...controlPolicy(control),
+    ...(capture.components['prism-control']!.schemaVersion === 'pipeline-component.v5'
+      ? {productDecisionsEnabled: control.productDecisionsEnabled!} : {}),
     port: control.port,
     maximumArtifactAcknowledgmentBytes: control.maximumArtifactAcknowledgmentBytes,
     agentLauncher: control.agentLauncher,
@@ -110,6 +112,8 @@ export function loadProductAuthorityConfig(environment: NodeJS.ProcessEnv = proc
 export async function loadControlCompositionConfig(capture: PipelineBootCapture, environment: NodeJS.ProcessEnv = process.env) {
   const snapshot = {...environment};
   const service = loadControlServerConfig(capture, snapshot);
-  const product = await loadProductAuthorityConfig(snapshot);
+  const product = 'productDecisionsEnabled' in service
+    ? await loadSelectedProductConfig(service.productDecisionsEnabled!, snapshot)
+    : await loadProductAuthorityConfig(snapshot);
   return Object.freeze({service, product, listener: Object.freeze({port: service.port, databaseUrl: snapshot.DATABASE_URL})});
 }

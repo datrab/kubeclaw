@@ -26,7 +26,7 @@ test('v4 fixed original role domain is mandatory on every selected/unselected pr
  const token=exchangeSelectedTailscaleIdentity(headers,'edge','session',900,a as unknown as readonly ['editor']);assert.deepEqual(verifySession(token,'session').roles,['editor']);
 });
 test('original v3 capture and signed tokens retain legacy roles without loading a current owner',t=>{
- const f=fixture(t);f.author.schemaVersion='pipeline-component.v3';for(const p of Object.values(f.author.profiles) as any[])delete p.settings.sessionDefaultRoles;
+ const f=fixture(t);f.author.schemaVersion='pipeline-component.v3';for(const p of Object.values(f.author.profiles) as any[]){delete p.settings.sessionDefaultRoles;delete p.settings.productDecisionsEnabled;}
  f.write();const original=f.load();assert.equal(original.components['prism-control']!.settings.sessionDefaultRoles,undefined);
  const token=exchangeTailscaleIdentity(headers,'edge','session',900);f.author.schemaVersion='pipeline-component.v4';f.write();assert.throws(f.load,/SWARM_CONFIG_INVALID/);
  assert.deepEqual(verifySession(token,'session').roles,['editor']);

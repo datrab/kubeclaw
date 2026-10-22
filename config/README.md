@@ -19,6 +19,15 @@ and configuration generation route for delivery; these changes do not deploy it.
 
 ## Prism ingestion and artifact clients
 
+The Product decision opt-in is the required boolean `productDecisionsEnabled`
+under each component-v5 Control profile. Both shipped profiles explicitly disable
+it. The authenticated Control startup retains this value before asynchronous key
+loading. `config:prism:sync` projects the same selection into Helm; neither the
+former ENV flag nor `control.productDecisions.enabled` may override it. Signing
+keys, operator identity and controller installation inputs remain separate and
+mandatory when enabled. Older component-v2/v3/v4 captures keep their original
+versioned ENV codec; they are not silently promoted to v5.
+
 `components/prism-control.config.json` owns `ingestionServer` (the standalone
 receiver policy), `maximumArtifactAcknowledgmentBytes`, and `agentLauncher`
 (claim lifetime plus accepted attempt limits). The receiver has its own

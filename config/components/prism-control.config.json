@@ -1,5 +1,5 @@
 {
-  "schemaVersion": "pipeline-component.v4",
+  "schemaVersion": "pipeline-component.v5",
   "owner": "prism-control",
   "profiles": {
     "standard": {
@@ -93,7 +93,8 @@
         },
         "sessionDefaultRoles": [
           "editor"
-        ]
+        ],
+        "productDecisionsEnabled": false
       }
     },
     "spiffe": {
@@ -187,7 +188,8 @@
         },
         "sessionDefaultRoles": [
           "editor"
-        ]
+        ],
+        "productDecisionsEnabled": false
       }
     }
   }

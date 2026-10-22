@@ -40,7 +40,7 @@ spec:
         kubeclaw.dev/native-worker-role: prism
         kubeclaw.dev/native-worker-policy: {{ $.Values.worker.native.policyDigest | quote }}
         {{- end }}
-        {{- if and (eq $name "control") $.Values.control.productDecisions.enabled }}
+        {{- if and (eq $name "control") (eq (include "prism.productDecisions.enabled" $) "true") }}
         checksum/product-decisions: {{ toJson $.Values.control.productDecisions | sha256sum }}
         {{- end }}
         {{- if and $.Values.workerTrust.spiffe.enabled (or (eq $name "control") (eq $name "worker")) }}
@@ -139,7 +139,7 @@ spec:
             {{- end }}
             {{- if eq $name "control" }}
             - { name: artifacts, mountPath: {{ $swarm.operator.prism.control.artifactRoot | quote }} }
-            {{- if $.Values.control.productDecisions.enabled }}
+            {{- if (eq (include "prism.productDecisions.enabled" $) "true") }}
             - { name: product-decision-signing, mountPath: /var/run/prism/product-signing, readOnly: true }
             - { name: product-decision-controller, mountPath: /var/run/prism/product-controller, readOnly: true }
             {{- end }}

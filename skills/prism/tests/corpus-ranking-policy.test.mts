@@ -31,11 +31,11 @@ test('v3 validates the complete owner, rejects missing/equal-old authors and uns
     ()=>{f.author.schemaVersion='pipeline-component.v2';},
     ()=>{f.author.profiles[f.selected].settings.corpusRanking.candidateMultiplier=2147483647;},
   ]) {Object.assign(f.author,structuredClone(original));mutation();f.write();assert.throws(f.load,/SWARM_CONFIG_INVALID|CORPUS_CANDIDATE_LIMIT_INVALID/);}
-  Object.assign(f.author,original);f.write();assert.equal(f.load().components['prism-control']!.schemaVersion,'pipeline-component.v4');
+  Object.assign(f.author,original);f.write();assert.equal(f.load().components['prism-control']!.schemaVersion,'pipeline-component.v5');
 });
 test('original v2 reader remains closed and does not refill missing v3 policy',t=>{
   const f=fixture(t);f.author.schemaVersion='pipeline-component.v2';
-  for(const p of Object.values(f.author.profiles) as any[]){delete p.settings.corpusRanking;delete p.settings.sessionDefaultRoles;}
+  for(const p of Object.values(f.author.profiles) as any[]){delete p.settings.corpusRanking;delete p.settings.sessionDefaultRoles;delete p.settings.productDecisionsEnabled;}
   f.write();const capture=f.load();assert.equal(capture.components['prism-control']!.settings.corpusRanking,undefined);
 });
 test('captured original ranking survives new B and author deletion without a current read',async t=>{

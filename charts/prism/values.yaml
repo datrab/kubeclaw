@@ -8,7 +8,7 @@ imagePullSecrets:
 control:
   # Explicit human decision authority. No operator, issuer or endpoint is inferred.
   productDecisions:
-    enabled: false
+    # Enablement is selected by prism-control.config.json, not Helm values.
     issuer: ""
     operators: []
     origin: ""

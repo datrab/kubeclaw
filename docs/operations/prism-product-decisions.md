@@ -5,14 +5,23 @@ portal. It is disabled by default. A valid editor session alone is insufficient:
 the session user must exactly match the configured product operator allowlist.
 CSRF and exact HTTPS origin checks are additionally required for mutation.
 
-Configure `control.productDecisions` only alongside the paired controller
+Select `productDecisionsEnabled` in the root-selected profile under
+`config/components/prism-control.config.json` (component-v5). Both shipped profiles
+explicitly select `false`. Regenerate the chart projection with
+`npm run config:prism:sync` after changing the central author; the installed
+Control startup and Helm use that same selection. A retained startup snapshot
+does not reload a later profile. `control.productDecisions.enabled` and
+`PRISM_PRODUCT_DECISIONS_ENABLED` are rejected as duplicate authors on this path.
+Historical component-v2/v3/v4 startup retains its versioned ENV codec.
+
+Configure the installation inputs in `control.productDecisions` only alongside the paired controller
 `busterNamespaceBroker.controller.productDecisions` configuration. No operator,
 issuer, key or endpoint is inferred from a service account or from the values
 examples. The configuration fields are:
 
 | Field | Meaning |
 | --- | --- |
-| `enabled` | Explicit opt-in; false renders no authority, key mount, projected token or additional egress. |
+| Central `productDecisionsEnabled` | Explicit opt-in in the Control owner; false renders no authority, key mount, projected token or additional egress. This is not a Helm-values field. |
 | `issuer` | Exact dedicated Product decision issuer accepted by the controller. |
 | `operators` | Exact authenticated Prism session user IDs; a nonempty, duplicate-free allowlist. Not caller-provided actor labels. |
 | `origin` | Actual HTTPS Studio origin used for same-origin mutation checks. |

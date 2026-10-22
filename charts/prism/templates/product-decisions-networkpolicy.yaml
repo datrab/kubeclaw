@@ -1,4 +1,4 @@
-{{- if .Values.control.productDecisions.enabled }}
+{{- if eq (include "prism.productDecisions.enabled" .) "true" }}
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata: { name: prism-product-decisions }

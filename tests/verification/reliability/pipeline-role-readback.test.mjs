@@ -498,12 +498,24 @@ test('real Prism role package readback drives all service caller compositions', 
   const productKeys = generateKeyPairSync('ed25519');
   const productKeyFile = path.join(root, 'product-installation-key.pem');
   fs.writeFileSync(productKeyFile, productKeys.privateKey.export({ type: 'pkcs8', format: 'pem' }), { mode: 0o600 });
-  const productEnvironment = { ...credentials, PRISM_PRODUCT_DECISIONS_ENABLED: 'true',
+  const productEnvironment = { ...credentials,
     PRISM_PRODUCT_ORIGIN: 'https://studio.example.test', PRISM_PRODUCT_CONTROLLER_URL: 'https://controller.example.test',
     PRISM_PRODUCT_OPERATORS: JSON.stringify(['fixture-operator']), PRISM_PRODUCT_PRIVATE_KEY_FILE: productKeyFile,
     PRISM_PRODUCT_ISSUER: 'fixture-issuer', PRISM_PRODUCT_CONTROLLER_CA_FILE: path.join(root, 'installed-ca.pem'),
     PRISM_PRODUCT_CONTROLLER_TOKEN_FILE: path.join(root, 'installed-token') };
-  const productComposition = configs.control.loadControlCompositionConfig(controlB, productEnvironment);
+  const enabledAuthor = path.join(root, 'product-enabled-author');
+  fs.cpSync(author, enabledAuthor, {recursive:true});
+  const enabledOwner = JSON.parse(fs.readFileSync(path.join(enabledAuthor,'components/prism-control.config.json')));
+  for (const profile of Object.values(enabledOwner.profiles)) profile.settings.productDecisionsEnabled = true;
+  write(path.join(enabledAuthor,'components/prism-control.config.json'),enabledOwner);
+  const enabledGeneration = path.join(root,'product-enabled-generation');
+  await materializePipelineGeneration({authorRoot:enabledAuthor,packageRoot:code,output:enabledGeneration,services,publisher});
+  const enabledMount = path.join(root,'product-enabled-transport'); fs.mkdirSync(enabledMount);
+  fs.cpSync(path.join(enabledGeneration,'expected/prism-control'),path.join(enabledMount,'version-C'),{recursive:true});
+  fs.symlinkSync('version-C',path.join(enabledMount,'..data'));
+  const enabledCapture = boot.capturePipelineBootReceipts(enabledMount,
+    path.join(enabledGeneration,'system'),'prism-control',code,'/app/prism/skills');
+  const productComposition = configs.control.loadControlCompositionConfig(enabledCapture, productEnvironment);
   const originalProductEnvironment = { ...productEnvironment };
   productEnvironment.PRISM_PRODUCT_ISSUER = 'replacement-issuer';
   productEnvironment.PRISM_PRODUCT_CONTROLLER_CA_FILE = 'replacement-ca';
@@ -519,14 +531,14 @@ test('real Prism role package readback drives all service caller compositions', 
   assert.equal(productComposed.product.origin, 'https://studio.example.test');
   assert.equal(productComposed.listener.databaseUrl, credentials.DATABASE_URL);
   assert.equal(productComposed.service.productDecisionLifetimeMs, 120000);
-  assert.equal((await configs.control.loadControlCompositionConfig(captures['prism-control'], originalProductEnvironment))
-    .service.productDecisionLifetimeMs, 300000);
+  assert.equal((await configs.control.loadControlCompositionConfig(captures['prism-control'], originalProductEnvironment)).product, undefined);
+  assert.equal(configs.control.loadControlServerConfig(captures['prism-control'],credentials).productDecisionLifetimeMs,300000);
   const signingProbe = Buffer.from('delivered-product-composition');
   assert.equal(verify(null, signingProbe, productKeys.publicKey,
     sign(null, signingProbe, productComposed.product.privateKey)), true);
   const missingProductKey = { ...originalProductEnvironment, PRISM_PRODUCT_PRIVATE_KEY_FILE: path.join(root, 'absent-key') };
-  await assert.rejects(configs.control.loadControlCompositionConfig(controlB, missingProductKey), { code: 'ENOENT' });
-  await assert.rejects(configs.control.loadControlCompositionConfig(controlB,
+  await assert.rejects(configs.control.loadControlCompositionConfig(enabledCapture, missingProductKey), { code: 'ENOENT' });
+  await assert.rejects(configs.control.loadControlCompositionConfig(enabledCapture,
     { ...originalProductEnvironment, PRISM_PRODUCT_CONTROLLER_URL: 'http://controller.example.test' }), /requires HTTPS origins/);
   const controlInstallation = { ...credentials };
   const installedControl = configs.control.loadControlServerConfig(controlB, controlInstallation);

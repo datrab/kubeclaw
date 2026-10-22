@@ -35,9 +35,9 @@ export async function setup() {
   const keyFile = join(root, 'authority.pem');
   await writeFile(keyFile, keys.privateKey.export({format: 'pem', type: 'pkcs8'}), {mode: 0o600});
   const disposals: Array<() => void> = [];
-  const fixture = await publishedControlConfig({after: callback => {disposals.push(callback as () => void);}}, {artifactRoot: join(root, 'artifacts')});
+  const fixture = await publishedControlConfig({after: callback => {disposals.push(callback as () => void);}}, {artifactRoot: join(root, 'artifacts'), productDecisionsEnabled: true});
   const compose = async (pool: import('../storage/index.ts').Database, env: NodeJS.ProcessEnv) => createConfiguredControlServer(pool, await fixture.loadControlCompositionConfig(fixture.capture, env));
-  const environment = {...shared, PRISM_PRODUCT_DECISIONS_ENABLED: 'true',
+  const environment = {...shared,
     PRISM_PRODUCT_ORIGIN: origin, PRISM_PRODUCT_CONTROLLER_URL: 'https://127.0.0.1:1',
     PRISM_PRODUCT_OPERATORS: JSON.stringify([operator]), PRISM_PRODUCT_PRIVATE_KEY_FILE: keyFile,
     PRISM_PRODUCT_ISSUER: 'composition-authority', PRISM_PRODUCT_CONTROLLER_CA_FILE: join(root, 'missing-ca'),
@@ -72,7 +72,9 @@ test('original composed Control preserves disabled routes and rejects incomplete
   try {
     assert.equal((await fetch(`${url}/health`)).status, 200);
     assert.equal((await fetch(`${url}/v1/product-decisions`)).status, 404);
-    await assert.rejects(createControlServer(db, {...shared, PRISM_PRODUCT_DECISIONS_ENABLED: 'true'}), /PRISM_PRODUCT_ORIGIN is required/);
+    const enabled = await publishedControlConfig(t, {productDecisionsEnabled: true});
+    await assert.rejects(enabled.loadControlCompositionConfig(enabled.capture, shared), /PRISM_PRODUCT_ORIGIN is required/);
+    await assert.rejects(f.loadControlCompositionConfig(f.capture, {...shared, PRISM_PRODUCT_DECISIONS_ENABLED: 'false'}), /SWARM_CONFIG_LEGACY_OVERRIDE:PRISM_PRODUCT_DECISIONS_ENABLED/);
   } finally {await close(server); await db.close();}
 });
 
@@ -126,4 +128,27 @@ test('actual Control session and product wrapper persist original signed intent 
     assert.equal((await context.request('/v1/product-decisions', undefined, sessionHeaders(outsider))).status, 403);
     assert.equal((await storedProductDecision(context.db(), intent.decisionId))?.receipt, null);
   } finally {await context.close();}
+});
+
+test('central product switch is required and boolean on every selected and unselected profile', async t => {
+  for (const profile of ['standard','spiffe']) for (const invalid of [undefined,null,'true',0]) {
+    await assert.rejects(publishedControlConfig(t,{},undefined,undefined,async author => {
+      const fs=await import('node:fs'); const file=join(author,'components/prism-control.config.json');
+      const owner=JSON.parse(fs.readFileSync(file,'utf8'));owner.profiles[profile].settings.productDecisionsEnabled=invalid;
+      fs.writeFileSync(file,JSON.stringify(owner));
+    }),/SWARM_CONFIG_INVALID/);
+  }
+});
+
+test('historical component-v4 startup keeps its original ENV switch without v5 refill', async t => {
+  const legacy=await publishedControlConfig(t,{},undefined,undefined,async author => {
+    const fs=await import('node:fs'); const file=join(author,'components/prism-control.config.json');
+    const owner=JSON.parse(fs.readFileSync(file,'utf8'));owner.schemaVersion='pipeline-component.v4';
+    for (const profile of Object.values(owner.profiles) as any[]) delete profile.settings.productDecisionsEnabled;
+    fs.writeFileSync(file,JSON.stringify(owner));
+  });
+  const disabled=await legacy.loadControlCompositionConfig(legacy.capture,{...shared,PRISM_PRODUCT_DECISIONS_ENABLED:'false',PRISM_PRODUCT_PRIVATE_KEY_FILE:'/not-present'});
+  assert.equal(disabled.product,undefined);
+  assert.equal('productDecisionsEnabled' in disabled.service,false);
+  await assert.rejects(legacy.loadControlCompositionConfig(legacy.capture,{...shared,PRISM_PRODUCT_DECISIONS_ENABLED:'true'}),/PRISM_PRODUCT_ORIGIN is required/);
 });
