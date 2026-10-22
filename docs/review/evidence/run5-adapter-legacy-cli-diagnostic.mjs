@@ -30,7 +30,14 @@ const original=path.join(root,'tests/verification/contracts/check-project-compil
 const temporary=path.join(path.dirname(original),`.legacy-resume-cutover-${process.pid}.mts`);
 // Run against the clean baseline before the authoring test writes progress.json.
 const marker='  await checkLegacyProjectImport({ project, platformFile, temporary, runtime, compilerFile });';
-const source=fs.readFileSync(original,'utf8');
+const originalSource=fs.readFileSync(original,'utf8');
+const childImport="import { execFileSync, spawnSync } from 'node:child_process';";
+if(originalSource.split(childImport).length!==2)throw new Error('ORIGINAL_SPAWN_BOUNDARY_CHANGED');
+// Publish the parent's already-compiled modules before synchronous children start.
+// Node normally flushes on exit, too late for this still-running parent to share.
+const source=originalSource.replace(childImport,`import { execFileSync, spawnSync as originalSpawnSync } from 'node:child_process';
+import { flushCompileCache } from 'node:module';
+const spawnSync = (...args) => { flushCompileCache(); return originalSpawnSync(...args); };`);
 if(source.split(marker).length!==2)throw new Error('ORIGINAL_HOOK_BOUNDARY_CHANGED');
 const hook=String.raw`
   const legacyStarted=performance.now();
@@ -92,7 +99,10 @@ const hook=String.raw`
 try{
  fs.writeFileSync(temporary,source.replace(marker,hook+'\n'+marker),{flag:'wx'});
  phase('execute-original-contract-with-legacy-hook');
- const result=spawnSync(process.execPath,[temporary],{cwd:root,stdio:'inherit',timeout:120000,env:{...process.env,REVIEW_HISTORICAL_CORE:oldCore}});
+ // All CLI descendants share only this run-owned bytecode cache. Node keys it by
+ // runtime and source bytes; original sources, import-audit permissions and the
+ // existing 120-second deadlines remain unchanged. Cleanup removes it with staging.
+ const result=spawnSync(process.execPath,[temporary],{cwd:root,stdio:'inherit',timeout:120000,env:{...process.env,NODE_COMPILE_CACHE:path.join(staging,'compile-cache'),REVIEW_HISTORICAL_CORE:oldCore}});
  console.error(JSON.stringify({diagnostic:'legacy-cli-phase',phase:'original-contract-terminal',elapsedMs:Math.round(performance.now()-started),status:result.status,signal:result.signal,errorCode:result.error?.code??null}));
  process.exitCode=result.status??1;
 }finally{fs.rmSync(temporary,{force:true});fs.rmSync(staging,{recursive:true,force:true});}
