@@ -1,0 +1,48 @@
+{
+  "status": "BOUNDED_PRELAUNCH_FIXTURE_PASS_NOT_EXECUTION_ACCEPTANCE",
+  "scriptSha256": "4a5c81d5f233616a95954ab0579169aa59df703b0502ce1dcc4e2934745ba8ae",
+  "priorReportSha256": "a4940fc2cf17a0d9591c42082c81b4ac623e6fcdc59f75e839bfd00079a222fb",
+  "ledgerSha256": "cc50f2dd3d88eaaaa2e764091a5f07230b1f5c9ac95fd1097bc75fd6d2e6c389",
+  "originalObservations": 531,
+  "originalBoxObservations": 1233,
+  "searchObservations": 2,
+  "originalFindings": 6,
+  "originalNetwork": 0,
+  "all1233NativeSixKeysAndSixFieldsLinksContainmentVerified": true,
+  "boxes": [
+    {
+      "id": "docs/site/understand/components-and-authority.md#source-13",
+      "globalIndex": 129,
+      "pageLocalIndex": 12,
+      "pageSha256": "2b920791a796db03c31a421b643dbc5d669da4808b086bcbf6104002e50745a2",
+      "boxSha256": "66afa14762465175a2e596bebe17298c62dc4a779d8856d6897a29d3d5cb71db",
+      "html": {
+        "page": "docs/site/understand/components-and-authority.md",
+        "route": "understand/components-and-authority.html",
+        "sha256": "02c8f66446dc2df9a9997baeae985c180e6d4d33ccadc0ce40b76f6e06f2cac7"
+      },
+      "fullRawBoxRead": true
+    },
+    {
+      "id": "docs/site/understand/platform-and-operations.md#source-13",
+      "globalIndex": 225,
+      "pageLocalIndex": 12,
+      "pageSha256": "12474c7960e6703ab586ee50d9b2fa9a249e727d672bea5d46cd2ab5244b9ca5",
+      "boxSha256": "3f4d95c1c93a3a1f27d778ebe3d803267cf0f6889ae1a6a1002861ab8885899e",
+      "html": {
+        "page": "docs/site/understand/platform-and-operations.md",
+        "route": "understand/platform-and-operations.html",
+        "sha256": "102996db3a5b7c8c90e9bac464dc96ebd2940b46fe368050ff9cb7c6065d4b10"
+      },
+      "fullRawBoxRead": true
+    }
+  ],
+  "finding": "Prior report bytes are retained before/after but not pinned to reviewed expected SHA; exact assertion required before trusting its artifact hashes/results.",
+  "noLaunch": true,
+  "noMainEdit": true,
+  "limits": "Source-backed measurement fixture review only; no new rendered/browser/global/semantic acceptance.",
+  "finalScriptSha256": "f48073816032e387a82cbc9f74fe133d01736f7438c3e5fca8cdb82c983b0d68",
+  "oldScriptPreserved": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/browser-whole411-title-retest-pre-custody-pin.mjs",
+  "findingResolution": "Exact reviewed prior report hash asserted before parsed report trusted; only this assertion added; prior finding retained.",
+  "successorDiff": "--- \n+++ \n@@ -13,7 +13,7 @@\n const output=scratch+'/browser-whole411-title-retest-7ef16585.json';\n assert.equal(process.argv[2],'--run-reviewed-six-cases');assert.equal(process.argv.length,3);assert(!fs.existsSync(output));\n const hash=b=>createHash('sha256').update(b).digest('hex');\n-const priorBytes=fs.readFileSync(priorFile),prior=JSON.parse(priorBytes),ledger=JSON.parse(fs.readFileSync(ledgerFile));\n+const priorBytes=fs.readFileSync(priorFile);assert.equal(hash(priorBytes),'a4940fc2cf17a0d9591c42082c81b4ac623e6fcdc59f75e839bfd00079a222fb','Reviewed prior report changed before launch');const prior=JSON.parse(priorBytes),ledger=JSON.parse(fs.readFileSync(ledgerFile));\n assert.equal(hash(fs.readFileSync(ledgerFile)),'cc50f2dd3d88eaaaa2e764091a5f07230b1f5c9ac95fd1097bc75fd6d2e6c389');\n assert.equal(prior.observations.length,531);assert.equal(prior.boxObservations.length,1233);assert.equal(prior.searchObservations.length,2);assert.equal(prior.findings.length,6);assert.equal(prior.network.length,0);assert.equal(prior.fatal,null);\n const ids=['docs/site/understand/components-and-authority.md#source-13','docs/site/understand/platform-and-operations.md#source-13'];\n"
+}

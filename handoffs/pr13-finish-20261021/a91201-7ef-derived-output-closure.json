@@ -1,0 +1,53 @@
+{
+  "status": "PASS",
+  "independentlyDerivedFromSource": "Exact static19assetallowlist,177positivecanonicalroutes,27freshSVGbindings,Source renderer ancestor-directory algorithm and7fixed support output names; not trusting arbitrary manifest membership.",
+  "canonicalHtml": 177,
+  "supportHtml": [
+    "diagrams/index.html",
+    "extend/examples/index.html",
+    "extend/examples/minimal-stage/index.html",
+    "extend/examples/minimal-stage/schemas/index.html",
+    "extend/examples/minimal-stage/src/index.html",
+    "extend/examples/minimal-stage/tests/index.html",
+    "index.html",
+    "search.html",
+    "use/workflows/examples/index.html",
+    "use/workflows/wait-resume/index.html"
+  ],
+  "assetsCopiedByteExact": [
+    "extend/examples/minimal-stage/package.json",
+    "extend/examples/minimal-stage/plugin.json",
+    "extend/examples/minimal-stage/schemas/config.schema.json",
+    "extend/examples/minimal-stage/schemas/input.schema.json",
+    "extend/examples/minimal-stage/schemas/result.schema.json",
+    "extend/examples/minimal-stage/src/stage.js",
+    "extend/examples/minimal-stage/tests/stage.test.mjs",
+    "extend/examples/platform-change-nova-lifecycle.json",
+    "reference/generated-documentation-map.json",
+    "reference/documentation-route-registry.json",
+    "use/workflows/examples/buster-fixture-matrix-report.pipeline.json",
+    "use/workflows/examples/first-project.mjs",
+    "use/workflows/examples/local-core.mjs",
+    "use/workflows/examples/repair-retry.mjs",
+    "use/workflows/examples/request-trace-redis-unavailable.json",
+    "use/workflows/examples/request-trace-success.json",
+    "use/workflows/wait-resume/approval.pipeline.json",
+    "use/workflows/wait-resume/platform.template.json",
+    "use/workflows/wait-resume/signal.template.json"
+  ],
+  "svgCount": 27,
+  "sharedOutputs": [
+    "diagram-manifest.json",
+    "reader-redirect.js",
+    "reader.css",
+    "reader.js",
+    "redirect-manifest.json",
+    "search-index.js",
+    "source-previews.json"
+  ],
+  "exactDerivedOutputCount": 240,
+  "actualManifestCount": 240,
+  "actualWholeTreeCount": 419,
+  "additionalNonOutputFiles": "177selected staged Markdown + reader-manifest.json + build-report.json only",
+  "unexpectedFiles": []
+}

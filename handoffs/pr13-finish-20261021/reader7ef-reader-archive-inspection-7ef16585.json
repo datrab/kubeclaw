@@ -1,0 +1,17 @@
+{
+  "revision": "7ef16585ba04eba3628cead304be85307436f091",
+  "archiveSha256": "5e08063188fc92a237b9b6f401eb389fa802d45c1f28b0f04b13f69dd8dc155e",
+  "bytes": 7888671,
+  "safeUniqueRegularUnencryptedMembers": 242,
+  "allMemberBytesEqualFreshExtraction": true,
+  "completeOriginalOutputsPlusMetadataAndCopiedAssets": true,
+  "copiedAssetsComparedToExactGitSource": 19,
+  "normalExtractedArtifactCheck": {
+    "selectedPages": 177,
+    "htmlPages": 187,
+    "localLinks": 40832,
+    "verifiedOutputDigests": 240
+  },
+  "normalExtractedSearchTasks": 12,
+  "scope": "Delivered archive explicitly inspected including all19copied assets, not manifest-selfmembership only; no aggregate release permission."
+}

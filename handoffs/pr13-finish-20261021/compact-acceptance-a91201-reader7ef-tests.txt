@@ -1,0 +1,15 @@
+✔ one compact independent topic review accepts related requirements and gates without raw artifacts (2.368926ms)
+✔ self review, missing review aspects and failed checks cannot accept content (1.717057ms)
+✔ unknown IDs, missing canonical page and duplicate acceptance are rejected (0.636218ms)
+✔ PASS requires atomic state update, while FAIL cannot close a point (0.673669ms)
+✔ changed relevant files require a scoped recheck, not a new global evidence bundle (0.540295ms)
+✔ unknown revisions and nonexistent sources cannot support PASS (0.398031ms)
+✔ real Git checks commit ancestry and regular files without requiring artifact storage (40.258488ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 111.666843

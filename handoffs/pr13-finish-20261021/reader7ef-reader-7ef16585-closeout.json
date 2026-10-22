@@ -1,0 +1,196 @@
+{
+  "revision": "7ef16585ba04eba3628cead304be85307436f091",
+  "normalSuccessfulProductionBuilds": 2,
+  "priorBuildEnvironmentFailureRetained": "reader-build-first-7ef16585-missing-library-environment-failure.txt",
+  "wholeByteEqualPhysicalFiles": 419,
+  "originalChecks": {
+    "artifact": {
+      "selectedPages": 177,
+      "htmlPages": 187,
+      "localLinks": 40832,
+      "verifiedOutputDigests": 240
+    },
+    "searchTasks": 12,
+    "sourceLinks": {
+      "uniqueVerifiedLinks": 14840,
+      "uniqueSourceObjects": 3961
+    },
+    "sourcePreviews": {
+      "pages": 177,
+      "sourceBoxes": 411,
+      "boxesWithPreviews": 411,
+      "excerpts": 1888,
+      "uniqueSourceObjects": 983,
+      "limit": "Exact linked source and rendered excerpt verification; no semantic claim or test/runtime result inferred."
+    },
+    "diagrams": {
+      "pages": 177,
+      "diagrams": 27,
+      "freshRenderHashesMatched": 27,
+      "localOnly": true,
+      "limit": "Source/owner/question/visible alternative routing, static SVG and deterministic render checks only; not per-edge semantic or human screenreader acceptance."
+    }
+  },
+  "owningPublicationReaderTests": {
+    "executed": 23,
+    "passed": 23,
+    "skipped": 0
+  },
+  "browser": {
+    "canonicalPages": 177,
+    "widths": [
+      320,
+      768,
+      1440
+    ],
+    "pageObservations": 531,
+    "sourceBoxObservations": 1233,
+    "uniqueSourceBoxes": 411,
+    "originalOfflineSearches": 2,
+    "networkRequests": 0,
+    "originalTerminal": 1,
+    "originalTitleMeasurementFindings": 6,
+    "correctedTargetedParagraphObservations": 6,
+    "retestTerminal": 0,
+    "retestFindings": 0,
+    "preservation": "All1233field/native/ordinarySourceLink/containment observations passed originally. Six title-only measurement findings corrected through independently reviewed exact6case additive paragraph comparison; original failed report retained, not rewritten/recounted."
+  },
+  "manualVisualInspection": {
+    "reviewer": "Root",
+    "width": 320,
+    "screenshots": [
+      "understand__prism-320.png",
+      "reference__capabilities-320.png",
+      "extend__README-320.png",
+      "understand__worker-trust-320.png"
+    ],
+    "findings": [],
+    "limit": "Four actual current screenshots; not full accessibility or visual inspection of177pages."
+  },
+  "archive": {
+    "revision": "7ef16585ba04eba3628cead304be85307436f091",
+    "archiveSha256": "5e08063188fc92a237b9b6f401eb389fa802d45c1f28b0f04b13f69dd8dc155e",
+    "bytes": 7888671,
+    "safeUniqueRegularUnencryptedMembers": 242,
+    "allMemberBytesEqualFreshExtraction": true,
+    "completeOriginalOutputsPlusMetadataAndCopiedAssets": true,
+    "copiedAssetsComparedToExactGitSource": 19,
+    "normalExtractedArtifactCheck": {
+      "selectedPages": 177,
+      "htmlPages": 187,
+      "localLinks": 40832,
+      "verifiedOutputDigests": 240
+    },
+    "normalExtractedSearchTasks": 12,
+    "scope": "Delivered archive explicitly inspected including all19copied assets, not manifest-selfmembership only; no aggregate release permission."
+  },
+  "loopbackPreview": {
+    "revision": "7ef16585ba04eba3628cead304be85307436f091",
+    "outputsGET200ExactBytes": 240,
+    "selectedCopiedAssets": 19,
+    "home308QueryPreserved": true,
+    "headSelectedAsset200Empty": true,
+    "unselected404": true,
+    "post405": true,
+    "limit": "Actual loopback Reader preview only; empty maintained redirect registry; no deployment or release approval."
+  },
+  "deliveredDiscordMessage": "1562631994968506459",
+  "rawEvidence": [
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/reader-build-first-7ef16585-missing-library-environment-failure.txt",
+      "bytes": 7947,
+      "sha256": "e9ac685b4afd408359e84bdbf3d2ec48ee4bbce10f0f820abe6b1d7d1028537e"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/reader-build-first-7ef16585.txt",
+      "bytes": 73,
+      "sha256": "5e83e6345589c8f49d1e0307a9772c54187b30dd9780660fa34a9d51c782b863"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/reader-build-second-7ef16585.txt",
+      "bytes": 73,
+      "sha256": "5e83e6345589c8f49d1e0307a9772c54187b30dd9780660fa34a9d51c782b863"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/production-determinism-7ef16585.json",
+      "bytes": 65895,
+      "sha256": "8b0b2b393cb15255c62462d55d46247708e4c3af093044b9bb43b73b8f7535b1"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/reader-artifact-7ef16585.json",
+      "bytes": 85,
+      "sha256": "8f670e6d61f2fd55de4e57bea47ff72b664ff2370c4ad4a5efb6da19f902ca6b"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/reader-search-7ef16585.json",
+      "bytes": 3062,
+      "sha256": "f65734344ddbf315e22ea92246192f9ca609b27c2a1260abf38c119fbf91880d"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/reader-source-links-7ef16585.json",
+      "bytes": 1438392,
+      "sha256": "e2433c66e42421356bb7a3be65cfdc3a82d341806e4f3911b7e07039b503864b"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/reader-source-previews-7ef16585.json",
+      "bytes": 239,
+      "sha256": "50943cd2626a1ed21b868860bf9c84dd0b2a4b8322f8ad249684afe6b4018988"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/reader-diagrams-7ef16585.json",
+      "bytes": 262,
+      "sha256": "66f027803943f3133bb64af12d04b7db5814a63ed85f8fd846ce48daa890b976"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/reader-publication-selection-owning-7ef16585.txt",
+      "bytes": 2403,
+      "sha256": "8439c45735826bf4f53faaff81bb4c5ba295295dfc277ba8f38164564cfc30c0"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/browser-whole411-7ef16585/report.json",
+      "bytes": 5722312,
+      "sha256": "a4940fc2cf17a0d9591c42082c81b4ac623e6fcdc59f75e839bfd00079a222fb"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/browser-whole411-title-retest-7ef16585.json",
+      "bytes": 3042,
+      "sha256": "8da5f95b448e1b9816512af156aaaed779e48aa715439e524d2670945f4ff498"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/browser-whole411-title-review.json",
+      "bytes": 3643,
+      "sha256": "76b0f38f44fff34be3afbb493ac1f6a943d106497ba58fcebea1508296bad590"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/reader-archive-7ef16585.json",
+      "bytes": 506,
+      "sha256": "5eb20a23d6d976f95367c8275813548a42ea19881cabdfbc85f7bbb7a6e9e41e"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/reader-archive-inspection-7ef16585.json",
+      "bytes": 701,
+      "sha256": "712fcd99bdb25e99deaccc6e1a299210590150d1539eba9586c329e2b6760e98"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/reader-extracted-artifact-7ef16585.json",
+      "bytes": 85,
+      "sha256": "8f670e6d61f2fd55de4e57bea47ff72b664ff2370c4ad4a5efb6da19f902ca6b"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/reader-extracted-search-7ef16585.json",
+      "bytes": 3062,
+      "sha256": "f65734344ddbf315e22ea92246192f9ca609b27c2a1260abf38c119fbf91880d"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/reader-preview-7ef16585.json",
+      "bytes": 361,
+      "sha256": "3704fa38220a28abcff33ff67b05c0f1ca80b1c9db5ada25af6ceee53da826f7"
+    }
+  ],
+  "limits": [
+    "Checkpoint reader; not aggregate documentation/CI/runtime/release acceptance.",
+    "One minor Source-list readability correction authored/reviewed off-tree after this frozen build; not installed or claimed observed in this Reader.",
+    "Current classification DATA observed separately; current original graph/module-qualified closure remains pending.",
+    "No human screenreader or fresh-context persona proof inferred."
+  ]
+}

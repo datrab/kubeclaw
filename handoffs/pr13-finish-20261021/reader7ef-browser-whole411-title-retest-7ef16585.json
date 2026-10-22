@@ -1,0 +1,66 @@
+{
+  "priorReportSha256": "a4940fc2cf17a0d9591c42082c81b4ac623e6fcdc59f75e839bfd00079a222fb",
+  "scriptSha256": "f48073816032e387a82cbc9f74fe133d01736f7438c3e5fca8cdb82c983b0d68",
+  "observations": [
+    {
+      "id": "docs/site/understand/components-and-authority.md#source-13",
+      "width": 320,
+      "expectedSourceFirstParagraph": "Source boundary: Host observer,",
+      "actualRenderedFirstParagraph": "Source boundary: Host observer,",
+      "matched": true,
+      "offline": true,
+      "javaScript": false
+    },
+    {
+      "id": "docs/site/understand/platform-and-operations.md#source-13",
+      "width": 320,
+      "expectedSourceFirstParagraph": "Source evidence: The chart defaults to requiring a mention.",
+      "actualRenderedFirstParagraph": "Source evidence: The chart defaults to requiring a mention.",
+      "matched": true,
+      "offline": true,
+      "javaScript": false
+    },
+    {
+      "id": "docs/site/understand/components-and-authority.md#source-13",
+      "width": 768,
+      "expectedSourceFirstParagraph": "Source boundary: Host observer,",
+      "actualRenderedFirstParagraph": "Source boundary: Host observer,",
+      "matched": true,
+      "offline": true,
+      "javaScript": false
+    },
+    {
+      "id": "docs/site/understand/platform-and-operations.md#source-13",
+      "width": 768,
+      "expectedSourceFirstParagraph": "Source evidence: The chart defaults to requiring a mention.",
+      "actualRenderedFirstParagraph": "Source evidence: The chart defaults to requiring a mention.",
+      "matched": true,
+      "offline": true,
+      "javaScript": false
+    },
+    {
+      "id": "docs/site/understand/components-and-authority.md#source-13",
+      "width": 1440,
+      "expectedSourceFirstParagraph": "Source boundary: Host observer,",
+      "actualRenderedFirstParagraph": "Source boundary: Host observer,",
+      "matched": true,
+      "offline": true,
+      "javaScript": false
+    },
+    {
+      "id": "docs/site/understand/platform-and-operations.md#source-13",
+      "width": 1440,
+      "expectedSourceFirstParagraph": "Source evidence: The chart defaults to requiring a mention.",
+      "actualRenderedFirstParagraph": "Source evidence: The chart defaults to requiring a mention.",
+      "matched": true,
+      "offline": true,
+      "javaScript": false
+    }
+  ],
+  "findings": [],
+  "network": [],
+  "fatal": null,
+  "correction": "Original measurement compared the first strong child with a physical first line containing non-bold or line-wrapped prose. Retest compares the complete actual Source first inline paragraph with the complete rendered first paragraph, exact after whitespace normalization only; no prefix/product-name exemption.",
+  "preservation": "Original complete 531/1233/2 observations retained unchanged. Every six-field/link/native/containment observation already passed. Only these six title measurement findings can be superseded by this exact additive retest.",
+  "limits": "No Source correctness, whole accessibility or global/runtime/Reader gate approval."
+}

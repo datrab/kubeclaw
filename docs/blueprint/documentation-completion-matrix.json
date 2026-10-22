@@ -4,7 +4,7 @@
   "completionRecords": [
     {
       "id": "A911-03-REF-007-20261020",
-      "revision": "0ded6b68eb6170c4ea5e76251ad5e13adf2f664b",
+      "revision": "7ef16585ba04eba3628cead304be85307436f091",
       "author": "PR13 automation capability author",
       "reviewer": "/root/review_a91103",
       "gateIds": [
@@ -162,6 +162,20 @@
           "summary": "Publisher now appends finite reader metadata after normal rendering; capability generators, canonical namespace facts, grants/RBAC versus interface metadata and safe denial remain unchanged. No capability translation or runtime grant is introduced. Actual frozen Reader/2normalbuilds and output/Git inspection separately witnessed; historical checks and original scopes/limits remain unchanged.",
           "report": "handoffs/pr13-finish-20261021/a91211-final-57-preservation.json",
           "limit": "Existing named scope preserved only; no new count or globalqualification/runtime/release approval."
+        },
+        {
+          "previousReviewedRevision": "0ded6b68eb6170c4ea5e76251ad5e13adf2f664b",
+          "revision": "7ef16585ba04eba3628cead304be85307436f091",
+          "changedDependencies": [
+            "docs/site/reference/capabilities.md",
+            "docs/site/understand/security-and-trust.md",
+            "scripts/docs-publication.mjs"
+          ],
+          "reviewer": "/root/operator_acceptance",
+          "verdict": "PASS",
+          "summary": "Within this original declared scope, the exact recent changed paths are individually bound to the coherent semantic/consumer review above; unchanged named original product mechanisms and original limits remain supported. These are purpose/content preservation decisions, not hash-only source refresh or a new full transitive product audit. Actual7ef177canonical/187HTML/240outputs normal artifact and complete local/source/excerpt/diagram checks are terminal0; current two normal419file builds byte-equal; exact declared route/source metadata checked. All531page and1233box observations preserve noJS/native fields/links/containment; initial6titlemeasurement failures retained and exact6case retake passes. Whole search12 plus actualoffline2, real240GET preview and forensic242member/19Sourceasset ZIP/extracted checks preserve only original reader scope. Four selected320px visual views are explicitly limited, not full accessibility/freshpersona proof. Original technical meaning, negative-vs-execution distinction, historical/revision/live limits and reader-task decisions retained via named nonauthor topic/delta reviews. No removed condition or broader authority was hidden by field completion. Existing historical failure/unexecuted/native/global configuration stops stay unchanged.",
+          "report": "handoffs/pr13-finish-20261021/reader7ef-prior88-preservation.json",
+          "limit": "Only original named supported or NOT_READY scope preserved; original author/reviewer/checks/summary/limits/verdict/gate/requirement IDs remain immutable. No new count, global qualification or release grant."
         }
       ],
       "previousReviewedRevision": "08d8f917b08b3faacd0909ccbda3fa069a094a67",
@@ -210,7 +224,7 @@
     },
     {
       "id": "AP09.1-ready-topics-20261020",
-      "revision": "0ded6b68eb6170c4ea5e76251ad5e13adf2f664b",
+      "revision": "7ef16585ba04eba3628cead304be85307436f091",
       "author": "Documentation implementation authors before review campaign",
       "reviewer": "/root/review_ready_foundations (01a157c4-a915-7bd0-9f54-0de78011b9b7)",
       "gateIds": [],
@@ -541,6 +555,19 @@
           "summary": "Owner-map delta affects only documentation-site declarations/dated verification metadata, not page membership, ownership, stable decisions, product request or authority. Publisher metadata append does not change entry selection. Actual frozen Reader/2normalbuilds and output/Git inspection separately witnessed; historical checks and original scopes/limits remain unchanged.",
           "report": "handoffs/pr13-finish-20261021/a91211-final-57-preservation.json",
           "limit": "Existing named scope preserved only; no new count or globalqualification/runtime/release approval."
+        },
+        {
+          "previousReviewedRevision": "0ded6b68eb6170c4ea5e76251ad5e13adf2f664b",
+          "revision": "7ef16585ba04eba3628cead304be85307436f091",
+          "changedDependencies": [
+            "docs/site/understand/README.md",
+            "scripts/docs-publication.mjs"
+          ],
+          "reviewer": "/root/operator_acceptance",
+          "verdict": "PASS",
+          "summary": "Within this original declared scope, the exact recent changed paths are individually bound to the coherent semantic/consumer review above; unchanged named original product mechanisms and original limits remain supported. These are purpose/content preservation decisions, not hash-only source refresh or a new full transitive product audit. Actual7ef177canonical/187HTML/240outputs normal artifact and complete local/source/excerpt/diagram checks are terminal0; current two normal419file builds byte-equal; exact declared route/source metadata checked. All531page and1233box observations preserve noJS/native fields/links/containment; initial6titlemeasurement failures retained and exact6case retake passes. Whole search12 plus actualoffline2, real240GET preview and forensic242member/19Sourceasset ZIP/extracted checks preserve only original reader scope. Four selected320px visual views are explicitly limited, not full accessibility/freshpersona proof. Original technical meaning, negative-vs-execution distinction, historical/revision/live limits and reader-task decisions retained via named nonauthor topic/delta reviews. No removed condition or broader authority was hidden by field completion. Existing historical failure/unexecuted/native/global configuration stops stay unchanged.",
+          "report": "handoffs/pr13-finish-20261021/reader7ef-prior88-preservation.json",
+          "limit": "Only original named supported or NOT_READY scope preserved; original author/reviewer/checks/summary/limits/verdict/gate/requirement IDs remain immutable. No new count, global qualification or release grant."
         }
       ],
       "revisionHistory": [
@@ -616,7 +643,7 @@
     },
     {
       "id": "AP09.2-ready-topics-20261020",
-      "revision": "0ded6b68eb6170c4ea5e76251ad5e13adf2f664b",
+      "revision": "7ef16585ba04eba3628cead304be85307436f091",
       "author": "Documentation implementation authors before review campaign",
       "reviewer": "/root/review_events (01a157c4-8ec4-7273-b286-baaaae1e8176)",
       "gateIds": [],
@@ -876,6 +903,20 @@
           "summary": "Nova/Core and Plugin added evidence fields summarize the existing admission/graph/state/recovery/effect/package boundaries. Corrected durable-effect summary avoids false chronology; exact configuration equality remains separate from permitted package upgrades. No runtime contract changes. Actual frozen Reader/2normalbuilds and output/Git inspection separately witnessed; historical checks and original scopes/limits remain unchanged.",
           "report": "handoffs/pr13-finish-20261021/a91211-final-57-preservation.json",
           "limit": "Existing named scope preserved only; no new count or globalqualification/runtime/release approval."
+        },
+        {
+          "previousReviewedRevision": "0ded6b68eb6170c4ea5e76251ad5e13adf2f664b",
+          "revision": "7ef16585ba04eba3628cead304be85307436f091",
+          "changedDependencies": [
+            "docs/site/extend/README.md",
+            "docs/site/understand/components-and-authority.md",
+            "docs/site/understand/request-state-recovery.md"
+          ],
+          "reviewer": "/root/operator_acceptance",
+          "verdict": "PASS",
+          "summary": "Within this original declared scope, the exact recent changed paths are individually bound to the coherent semantic/consumer review above; unchanged named original product mechanisms and original limits remain supported. These are purpose/content preservation decisions, not hash-only source refresh or a new full transitive product audit. Actual7ef177canonical/187HTML/240outputs normal artifact and complete local/source/excerpt/diagram checks are terminal0; current two normal419file builds byte-equal; exact declared route/source metadata checked. All531page and1233box observations preserve noJS/native fields/links/containment; initial6titlemeasurement failures retained and exact6case retake passes. Whole search12 plus actualoffline2, real240GET preview and forensic242member/19Sourceasset ZIP/extracted checks preserve only original reader scope. Four selected320px visual views are explicitly limited, not full accessibility/freshpersona proof. Original technical meaning, negative-vs-execution distinction, historical/revision/live limits and reader-task decisions retained via named nonauthor topic/delta reviews. No removed condition or broader authority was hidden by field completion. Existing historical failure/unexecuted/native/global configuration stops stay unchanged.",
+          "report": "handoffs/pr13-finish-20261021/reader7ef-prior88-preservation.json",
+          "limit": "Only original named supported or NOT_READY scope preserved; original author/reviewer/checks/summary/limits/verdict/gate/requirement IDs remain immutable. No new count, global qualification or release grant."
         }
       ],
       "previousReviewedRevision": "a7d0e07cacc037b94e8a45ed2f0d90bd0259b213",
@@ -892,7 +933,7 @@
     },
     {
       "id": "AP09.4-ready-prism-topics-20261020",
-      "revision": "0ded6b68eb6170c4ea5e76251ad5e13adf2f664b",
+      "revision": "7ef16585ba04eba3628cead304be85307436f091",
       "author": "Documentation implementation authors before review campaign",
       "reviewer": "/root/review_a91103 (01a157bb-c870-79c0-917a-0e2191dd73cc)",
       "gateIds": [],
@@ -1016,6 +1057,19 @@
           "summary": "Prism data callouts preserve revision/CAS, approval-versus-publication, subject snapshots, corpus and retention boundaries. Existing complete corpus/generation block is unchanged; no model result becomes committed design authority. Actual frozen Reader/2normalbuilds and output/Git inspection separately witnessed; historical checks and original scopes/limits remain unchanged.",
           "report": "handoffs/pr13-finish-20261021/a91211-final-57-preservation.json",
           "limit": "Existing named scope preserved only; no new count or globalqualification/runtime/release approval."
+        },
+        {
+          "previousReviewedRevision": "0ded6b68eb6170c4ea5e76251ad5e13adf2f664b",
+          "revision": "7ef16585ba04eba3628cead304be85307436f091",
+          "changedDependencies": [
+            "docs/site/extend/platform/prism.md",
+            "docs/site/understand/prism.md"
+          ],
+          "reviewer": "/root/operator_acceptance",
+          "verdict": "PASS",
+          "summary": "Within this original declared scope, the exact recent changed paths are individually bound to the coherent semantic/consumer review above; unchanged named original product mechanisms and original limits remain supported. These are purpose/content preservation decisions, not hash-only source refresh or a new full transitive product audit. Actual7ef177canonical/187HTML/240outputs normal artifact and complete local/source/excerpt/diagram checks are terminal0; current two normal419file builds byte-equal; exact declared route/source metadata checked. All531page and1233box observations preserve noJS/native fields/links/containment; initial6titlemeasurement failures retained and exact6case retake passes. Whole search12 plus actualoffline2, real240GET preview and forensic242member/19Sourceasset ZIP/extracted checks preserve only original reader scope. Four selected320px visual views are explicitly limited, not full accessibility/freshpersona proof. Original technical meaning, negative-vs-execution distinction, historical/revision/live limits and reader-task decisions retained via named nonauthor topic/delta reviews. No removed condition or broader authority was hidden by field completion. Existing historical failure/unexecuted/native/global configuration stops stay unchanged.",
+          "report": "handoffs/pr13-finish-20261021/reader7ef-prior88-preservation.json",
+          "limit": "Only original named supported or NOT_READY scope preserved; original author/reviewer/checks/summary/limits/verdict/gate/requirement IDs remain immutable. No new count, global qualification or release grant."
         }
       ]
     },
@@ -1067,7 +1121,7 @@
     },
     {
       "id": "AP09.3-ready-worker-topics-20261020",
-      "revision": "d0bb52c4d8bcf323c0ff32b95e8e3120ffa6eefb",
+      "revision": "7ef16585ba04eba3628cead304be85307436f091",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/review_worker_ready",
       "gateIds": [],
@@ -1239,6 +1293,18 @@
           "reviewer": "Scope-aware independent union: original topic reviewers; operator_acceptance checkpoint53; custody_review maintenance locator correction; /root independent authored package/telemetry/pin scopes",
           "verdict": "PASS",
           "summary": "Only changed dependencies preserved against the named independent topic reports and actual d0bb Reader. Original summary and limitations retained; no duplicate or aggregate/release approval."
+        },
+        {
+          "previousReviewedRevision": "d0bb52c4d8bcf323c0ff32b95e8e3120ffa6eefb",
+          "revision": "7ef16585ba04eba3628cead304be85307436f091",
+          "changedDependencies": [
+            "docs/site/understand/components-and-authority.md"
+          ],
+          "reviewer": "/root/operator_acceptance",
+          "verdict": "PASS",
+          "summary": "Within this original declared scope, the exact recent changed paths are individually bound to the coherent semantic/consumer review above; unchanged named original product mechanisms and original limits remain supported. These are purpose/content preservation decisions, not hash-only source refresh or a new full transitive product audit. Actual7ef177canonical/187HTML/240outputs normal artifact and complete local/source/excerpt/diagram checks are terminal0; current two normal419file builds byte-equal; exact declared route/source metadata checked. All531page and1233box observations preserve noJS/native fields/links/containment; initial6titlemeasurement failures retained and exact6case retake passes. Whole search12 plus actualoffline2, real240GET preview and forensic242member/19Sourceasset ZIP/extracted checks preserve only original reader scope. Four selected320px visual views are explicitly limited, not full accessibility/freshpersona proof. Original technical meaning, negative-vs-execution distinction, historical/revision/live limits and reader-task decisions retained via named nonauthor topic/delta reviews. No removed condition or broader authority was hidden by field completion. Existing historical failure/unexecuted/native/global configuration stops stay unchanged.",
+          "report": "handoffs/pr13-finish-20261021/reader7ef-prior88-preservation.json",
+          "limit": "Only original named supported or NOT_READY scope preserved; original author/reviewer/checks/summary/limits/verdict/gate/requirement IDs remain immutable. No new count, global qualification or release grant."
         }
       ],
       "previousReviewedRevision": "8f79e328cf216b53dc2e665896c65cbb19a2e0ce",
@@ -1263,7 +1329,7 @@
     },
     {
       "id": "AP09.7-ready-platform-topics-20261020",
-      "revision": "0ded6b68eb6170c4ea5e76251ad5e13adf2f664b",
+      "revision": "7ef16585ba04eba3628cead304be85307436f091",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/review_platform_ready",
       "gateIds": [
@@ -1520,6 +1586,18 @@
           "summary": "Platform evidence fields preserve enabled/conditional/optional dependency ownership and security distinctions. Corrected Ops field identifies the same ServiceAccount token and effective exec grants, without asserting deployed RBAC or isolation. Actual frozen Reader/2normalbuilds and output/Git inspection separately witnessed; historical checks and original scopes/limits remain unchanged.",
           "report": "handoffs/pr13-finish-20261021/a91211-final-57-preservation.json",
           "limit": "Existing named scope preserved only; no new count or globalqualification/runtime/release approval."
+        },
+        {
+          "previousReviewedRevision": "0ded6b68eb6170c4ea5e76251ad5e13adf2f664b",
+          "revision": "7ef16585ba04eba3628cead304be85307436f091",
+          "changedDependencies": [
+            "docs/site/understand/security-and-trust.md"
+          ],
+          "reviewer": "/root/operator_acceptance",
+          "verdict": "PASS",
+          "summary": "Within this original declared scope, the exact recent changed paths are individually bound to the coherent semantic/consumer review above; unchanged named original product mechanisms and original limits remain supported. These are purpose/content preservation decisions, not hash-only source refresh or a new full transitive product audit. Actual7ef177canonical/187HTML/240outputs normal artifact and complete local/source/excerpt/diagram checks are terminal0; current two normal419file builds byte-equal; exact declared route/source metadata checked. All531page and1233box observations preserve noJS/native fields/links/containment; initial6titlemeasurement failures retained and exact6case retake passes. Whole search12 plus actualoffline2, real240GET preview and forensic242member/19Sourceasset ZIP/extracted checks preserve only original reader scope. Four selected320px visual views are explicitly limited, not full accessibility/freshpersona proof. Original technical meaning, negative-vs-execution distinction, historical/revision/live limits and reader-task decisions retained via named nonauthor topic/delta reviews. No removed condition or broader authority was hidden by field completion. Existing historical failure/unexecuted/native/global configuration stops stay unchanged.",
+          "report": "handoffs/pr13-finish-20261021/reader7ef-prior88-preservation.json",
+          "limit": "Only original named supported or NOT_READY scope preserved; original author/reviewer/checks/summary/limits/verdict/gate/requirement IDs remain immutable. No new count, global qualification or release grant."
         }
       ],
       "previousReviewedRevision": "8f79e328cf216b53dc2e665896c65cbb19a2e0ce",
@@ -1544,7 +1622,7 @@
     },
     {
       "id": "AP09.7-ready-data-topics-20261020",
-      "revision": "0ded6b68eb6170c4ea5e76251ad5e13adf2f664b",
+      "revision": "7ef16585ba04eba3628cead304be85307436f091",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/review_data_ready",
       "gateIds": [],
@@ -1810,6 +1888,18 @@
           "summary": "Communication/data/telemetry evidence additions preserve dispatch/result/Worker control identities, store authority, stream trim/dedup and observer delivery limits. No XADD/HTTP ACK becomes consumption, accepted result or replay authority. Actual frozen Reader/2normalbuilds and output/Git inspection separately witnessed; historical checks and original scopes/limits remain unchanged.",
           "report": "handoffs/pr13-finish-20261021/a91211-final-57-preservation.json",
           "limit": "Existing named scope preserved only; no new count or globalqualification/runtime/release approval."
+        },
+        {
+          "previousReviewedRevision": "0ded6b68eb6170c4ea5e76251ad5e13adf2f664b",
+          "revision": "7ef16585ba04eba3628cead304be85307436f091",
+          "changedDependencies": [
+            "docs/site/understand/deployment-and-trust.md"
+          ],
+          "reviewer": "/root/operator_acceptance",
+          "verdict": "PASS",
+          "summary": "Within this original declared scope, the exact recent changed paths are individually bound to the coherent semantic/consumer review above; unchanged named original product mechanisms and original limits remain supported. These are purpose/content preservation decisions, not hash-only source refresh or a new full transitive product audit. Actual7ef177canonical/187HTML/240outputs normal artifact and complete local/source/excerpt/diagram checks are terminal0; current two normal419file builds byte-equal; exact declared route/source metadata checked. All531page and1233box observations preserve noJS/native fields/links/containment; initial6titlemeasurement failures retained and exact6case retake passes. Whole search12 plus actualoffline2, real240GET preview and forensic242member/19Sourceasset ZIP/extracted checks preserve only original reader scope. Four selected320px visual views are explicitly limited, not full accessibility/freshpersona proof. Original technical meaning, negative-vs-execution distinction, historical/revision/live limits and reader-task decisions retained via named nonauthor topic/delta reviews. No removed condition or broader authority was hidden by field completion. Existing historical failure/unexecuted/native/global configuration stops stay unchanged.",
+          "report": "handoffs/pr13-finish-20261021/reader7ef-prior88-preservation.json",
+          "limit": "Only original named supported or NOT_READY scope preserved; original author/reviewer/checks/summary/limits/verdict/gate/requirement IDs remain immutable. No new count, global qualification or release grant."
         }
       ],
       "previousReviewedRevision": "6abafbbc81a728f3ea7f12e83426c9565a72c473",
@@ -1826,7 +1916,7 @@
     },
     {
       "id": "Reviewed-corrections-20261020",
-      "revision": "0ded6b68eb6170c4ea5e76251ad5e13adf2f664b",
+      "revision": "7ef16585ba04eba3628cead304be85307436f091",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/review_worker_ready",
       "gateIds": [],
@@ -2177,6 +2267,18 @@
           "summary": "Owner-map changes only documentation-site evidence/verification projection; the seven original retry/error/lint corrections and actual implementations are unchanged. Historical generated freshness evidence is not relabeled current. Actual frozen Reader/2normalbuilds and output/Git inspection separately witnessed; historical checks and original scopes/limits remain unchanged.",
           "report": "handoffs/pr13-finish-20261021/a91211-final-57-preservation.json",
           "limit": "Existing named scope preserved only; no new count or globalqualification/runtime/release approval."
+        },
+        {
+          "previousReviewedRevision": "0ded6b68eb6170c4ea5e76251ad5e13adf2f664b",
+          "revision": "7ef16585ba04eba3628cead304be85307436f091",
+          "changedDependencies": [
+            "docs/site/reference/capabilities.md"
+          ],
+          "reviewer": "/root/operator_acceptance",
+          "verdict": "PASS",
+          "summary": "Within this original declared scope, the exact recent changed paths are individually bound to the coherent semantic/consumer review above; unchanged named original product mechanisms and original limits remain supported. These are purpose/content preservation decisions, not hash-only source refresh or a new full transitive product audit. Actual7ef177canonical/187HTML/240outputs normal artifact and complete local/source/excerpt/diagram checks are terminal0; current two normal419file builds byte-equal; exact declared route/source metadata checked. All531page and1233box observations preserve noJS/native fields/links/containment; initial6titlemeasurement failures retained and exact6case retake passes. Whole search12 plus actualoffline2, real240GET preview and forensic242member/19Sourceasset ZIP/extracted checks preserve only original reader scope. Four selected320px visual views are explicitly limited, not full accessibility/freshpersona proof. Original technical meaning, negative-vs-execution distinction, historical/revision/live limits and reader-task decisions retained via named nonauthor topic/delta reviews. No removed condition or broader authority was hidden by field completion. Existing historical failure/unexecuted/native/global configuration stops stay unchanged.",
+          "report": "handoffs/pr13-finish-20261021/reader7ef-prior88-preservation.json",
+          "limit": "Only original named supported or NOT_READY scope preserved; original author/reviewer/checks/summary/limits/verdict/gate/requirement IDs remain immutable. No new count, global qualification or release grant."
         }
       ],
       "previousReviewedRevision": "078105e40a50f23983e31c136f9bd81912ae6310",
@@ -2249,7 +2351,7 @@
     },
     {
       "id": "AP09-reader-operators-20261020",
-      "revision": "0ded6b68eb6170c4ea5e76251ad5e13adf2f664b",
+      "revision": "7ef16585ba04eba3628cead304be85307436f091",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/review_worker_ready",
       "gateIds": [
@@ -2465,6 +2567,18 @@
           "summary": "Only publisher shared dependency intersects. New metadata checking neither changes operator tasks nor widens their named requirements/gates; all live/deployment and broader-gate exclusions remain. Actual frozen Reader/2normalbuilds and output/Git inspection separately witnessed; historical checks and original scopes/limits remain unchanged.",
           "report": "handoffs/pr13-finish-20261021/a91211-final-57-preservation.json",
           "limit": "Existing named scope preserved only; no new count or globalqualification/runtime/release approval."
+        },
+        {
+          "previousReviewedRevision": "0ded6b68eb6170c4ea5e76251ad5e13adf2f664b",
+          "revision": "7ef16585ba04eba3628cead304be85307436f091",
+          "changedDependencies": [
+            "scripts/docs-publication.mjs"
+          ],
+          "reviewer": "/root/operator_acceptance",
+          "verdict": "PASS",
+          "summary": "Within this original declared scope, the exact recent changed paths are individually bound to the coherent semantic/consumer review above; unchanged named original product mechanisms and original limits remain supported. These are purpose/content preservation decisions, not hash-only source refresh or a new full transitive product audit. Actual7ef177canonical/187HTML/240outputs normal artifact and complete local/source/excerpt/diagram checks are terminal0; current two normal419file builds byte-equal; exact declared route/source metadata checked. All531page and1233box observations preserve noJS/native fields/links/containment; initial6titlemeasurement failures retained and exact6case retake passes. Whole search12 plus actualoffline2, real240GET preview and forensic242member/19Sourceasset ZIP/extracted checks preserve only original reader scope. Four selected320px visual views are explicitly limited, not full accessibility/freshpersona proof. Original technical meaning, negative-vs-execution distinction, historical/revision/live limits and reader-task decisions retained via named nonauthor topic/delta reviews. No removed condition or broader authority was hidden by field completion. Existing historical failure/unexecuted/native/global configuration stops stay unchanged.",
+          "report": "handoffs/pr13-finish-20261021/reader7ef-prior88-preservation.json",
+          "limit": "Only original named supported or NOT_READY scope preserved; original author/reviewer/checks/summary/limits/verdict/gate/requirement IDs remain immutable. No new count, global qualification or release grant."
         }
       ],
       "previousReviewedRevision": "3be8232a024f551f163d55f770c5fc97127d7902",
@@ -2665,7 +2779,7 @@
     },
     {
       "id": "AP09-reader-developers-20261020",
-      "revision": "0ded6b68eb6170c4ea5e76251ad5e13adf2f664b",
+      "revision": "7ef16585ba04eba3628cead304be85307436f091",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/review_platform_ready",
       "gateIds": [
@@ -2986,6 +3100,19 @@
           "summary": "Publisher/CI changes add page-record verification and one owning suite; developer/extension teaching paths, contracts, local-vs-hosted limits and exact named gate scope remain intact. Actual frozen Reader/2normalbuilds and output/Git inspection separately witnessed; historical checks and original scopes/limits remain unchanged.",
           "report": "handoffs/pr13-finish-20261021/a91211-final-57-preservation.json",
           "limit": "Existing named scope preserved only; no new count or globalqualification/runtime/release approval."
+        },
+        {
+          "previousReviewedRevision": "0ded6b68eb6170c4ea5e76251ad5e13adf2f664b",
+          "revision": "7ef16585ba04eba3628cead304be85307436f091",
+          "changedDependencies": [
+            "docs/site/extend/README.md",
+            "scripts/docs-publication.mjs"
+          ],
+          "reviewer": "/root/operator_acceptance",
+          "verdict": "PASS",
+          "summary": "Within this original declared scope, the exact recent changed paths are individually bound to the coherent semantic/consumer review above; unchanged named original product mechanisms and original limits remain supported. These are purpose/content preservation decisions, not hash-only source refresh or a new full transitive product audit. Actual7ef177canonical/187HTML/240outputs normal artifact and complete local/source/excerpt/diagram checks are terminal0; current two normal419file builds byte-equal; exact declared route/source metadata checked. All531page and1233box observations preserve noJS/native fields/links/containment; initial6titlemeasurement failures retained and exact6case retake passes. Whole search12 plus actualoffline2, real240GET preview and forensic242member/19Sourceasset ZIP/extracted checks preserve only original reader scope. Four selected320px visual views are explicitly limited, not full accessibility/freshpersona proof. Original technical meaning, negative-vs-execution distinction, historical/revision/live limits and reader-task decisions retained via named nonauthor topic/delta reviews. No removed condition or broader authority was hidden by field completion. Existing historical failure/unexecuted/native/global configuration stops stay unchanged.",
+          "report": "handoffs/pr13-finish-20261021/reader7ef-prior88-preservation.json",
+          "limit": "Only original named supported or NOT_READY scope preserved; original author/reviewer/checks/summary/limits/verdict/gate/requirement IDs remain immutable. No new count, global qualification or release grant."
         }
       ],
       "previousReviewedRevision": "2f8a116e00d6d38a5cc5076b10befcabe426f9f4",
@@ -3038,7 +3165,7 @@
     },
     {
       "id": "AP09-reviewed-configuration-20261020",
-      "revision": "0ded6b68eb6170c4ea5e76251ad5e13adf2f664b",
+      "revision": "7ef16585ba04eba3628cead304be85307436f091",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/review_worker_ready",
       "gateIds": [],
@@ -3202,6 +3329,18 @@
           "summary": "Publisher append does not change configuration ownership, precedence, resolution, schemas or claimed narrow CFG coverage. New metadata authority is about reader files, not configuration runtime validity. Actual frozen Reader/2normalbuilds and output/Git inspection separately witnessed; historical checks and original scopes/limits remain unchanged.",
           "report": "handoffs/pr13-finish-20261021/a91211-final-57-preservation.json",
           "limit": "Existing named scope preserved only; no new count or globalqualification/runtime/release approval."
+        },
+        {
+          "previousReviewedRevision": "0ded6b68eb6170c4ea5e76251ad5e13adf2f664b",
+          "revision": "7ef16585ba04eba3628cead304be85307436f091",
+          "changedDependencies": [
+            "scripts/docs-publication.mjs"
+          ],
+          "reviewer": "/root/operator_acceptance",
+          "verdict": "PASS",
+          "summary": "Within this original declared scope, the exact recent changed paths are individually bound to the coherent semantic/consumer review above; unchanged named original product mechanisms and original limits remain supported. These are purpose/content preservation decisions, not hash-only source refresh or a new full transitive product audit. Actual7ef177canonical/187HTML/240outputs normal artifact and complete local/source/excerpt/diagram checks are terminal0; current two normal419file builds byte-equal; exact declared route/source metadata checked. All531page and1233box observations preserve noJS/native fields/links/containment; initial6titlemeasurement failures retained and exact6case retake passes. Whole search12 plus actualoffline2, real240GET preview and forensic242member/19Sourceasset ZIP/extracted checks preserve only original reader scope. Four selected320px visual views are explicitly limited, not full accessibility/freshpersona proof. Original technical meaning, negative-vs-execution distinction, historical/revision/live limits and reader-task decisions retained via named nonauthor topic/delta reviews. No removed condition or broader authority was hidden by field completion. Existing historical failure/unexecuted/native/global configuration stops stay unchanged.",
+          "report": "handoffs/pr13-finish-20261021/reader7ef-prior88-preservation.json",
+          "limit": "Only original named supported or NOT_READY scope preserved; original author/reviewer/checks/summary/limits/verdict/gate/requirement IDs remain immutable. No new count, global qualification or release grant."
         }
       ],
       "previousReviewedRevision": "2f8a116e00d6d38a5cc5076b10befcabe426f9f4",
@@ -3242,7 +3381,7 @@
     },
     {
       "id": "AP09-reviewed-reference-20261020",
-      "revision": "0ded6b68eb6170c4ea5e76251ad5e13adf2f664b",
+      "revision": "7ef16585ba04eba3628cead304be85307436f091",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/review_platform_ready",
       "gateIds": [],
@@ -3434,6 +3573,18 @@
           "summary": "Publisher append leaves existing generated reference content/selectors and source/version distinctions intact. Narrow REF scopes do not expand to metadata or global current qualification. Actual frozen Reader/2normalbuilds and output/Git inspection separately witnessed; historical checks and original scopes/limits remain unchanged.",
           "report": "handoffs/pr13-finish-20261021/a91211-final-57-preservation.json",
           "limit": "Existing named scope preserved only; no new count or globalqualification/runtime/release approval."
+        },
+        {
+          "previousReviewedRevision": "0ded6b68eb6170c4ea5e76251ad5e13adf2f664b",
+          "revision": "7ef16585ba04eba3628cead304be85307436f091",
+          "changedDependencies": [
+            "scripts/docs-publication.mjs"
+          ],
+          "reviewer": "/root/operator_acceptance",
+          "verdict": "PASS",
+          "summary": "Within this original declared scope, the exact recent changed paths are individually bound to the coherent semantic/consumer review above; unchanged named original product mechanisms and original limits remain supported. These are purpose/content preservation decisions, not hash-only source refresh or a new full transitive product audit. Actual7ef177canonical/187HTML/240outputs normal artifact and complete local/source/excerpt/diagram checks are terminal0; current two normal419file builds byte-equal; exact declared route/source metadata checked. All531page and1233box observations preserve noJS/native fields/links/containment; initial6titlemeasurement failures retained and exact6case retake passes. Whole search12 plus actualoffline2, real240GET preview and forensic242member/19Sourceasset ZIP/extracted checks preserve only original reader scope. Four selected320px visual views are explicitly limited, not full accessibility/freshpersona proof. Original technical meaning, negative-vs-execution distinction, historical/revision/live limits and reader-task decisions retained via named nonauthor topic/delta reviews. No removed condition or broader authority was hidden by field completion. Existing historical failure/unexecuted/native/global configuration stops stay unchanged.",
+          "report": "handoffs/pr13-finish-20261021/reader7ef-prior88-preservation.json",
+          "limit": "Only original named supported or NOT_READY scope preserved; original author/reviewer/checks/summary/limits/verdict/gate/requirement IDs remain immutable. No new count, global qualification or release grant."
         }
       ],
       "previousReviewedRevision": "2f8a116e00d6d38a5cc5076b10befcabe426f9f4",
@@ -3474,7 +3625,7 @@
     },
     {
       "id": "AP09-reviewed-maintenance-20261020",
-      "revision": "0ded6b68eb6170c4ea5e76251ad5e13adf2f664b",
+      "revision": "7ef16585ba04eba3628cead304be85307436f091",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/review_data_ready",
       "gateIds": [],
@@ -3688,6 +3839,18 @@
           "summary": "Publisher append leaves maintenance authorship/quality obligations and narrow MNT scopes unchanged. Original executed checks remain historical, not new generator execution. Actual frozen Reader/2normalbuilds and output/Git inspection separately witnessed; historical checks and original scopes/limits remain unchanged.",
           "report": "handoffs/pr13-finish-20261021/a91211-final-57-preservation.json",
           "limit": "Existing named scope preserved only; no new count or globalqualification/runtime/release approval."
+        },
+        {
+          "previousReviewedRevision": "0ded6b68eb6170c4ea5e76251ad5e13adf2f664b",
+          "revision": "7ef16585ba04eba3628cead304be85307436f091",
+          "changedDependencies": [
+            "scripts/docs-publication.mjs"
+          ],
+          "reviewer": "/root/operator_acceptance",
+          "verdict": "PASS",
+          "summary": "Within this original declared scope, the exact recent changed paths are individually bound to the coherent semantic/consumer review above; unchanged named original product mechanisms and original limits remain supported. These are purpose/content preservation decisions, not hash-only source refresh or a new full transitive product audit. Actual7ef177canonical/187HTML/240outputs normal artifact and complete local/source/excerpt/diagram checks are terminal0; current two normal419file builds byte-equal; exact declared route/source metadata checked. All531page and1233box observations preserve noJS/native fields/links/containment; initial6titlemeasurement failures retained and exact6case retake passes. Whole search12 plus actualoffline2, real240GET preview and forensic242member/19Sourceasset ZIP/extracted checks preserve only original reader scope. Four selected320px visual views are explicitly limited, not full accessibility/freshpersona proof. Original technical meaning, negative-vs-execution distinction, historical/revision/live limits and reader-task decisions retained via named nonauthor topic/delta reviews. No removed condition or broader authority was hidden by field completion. Existing historical failure/unexecuted/native/global configuration stops stay unchanged.",
+          "report": "handoffs/pr13-finish-20261021/reader7ef-prior88-preservation.json",
+          "limit": "Only original named supported or NOT_READY scope preserved; original author/reviewer/checks/summary/limits/verdict/gate/requirement IDs remain immutable. No new count, global qualification or release grant."
         }
       ],
       "previousReviewedRevision": "078105e40a50f23983e31c136f9bd81912ae6310",
@@ -3728,7 +3891,7 @@
     },
     {
       "id": "AP09-reviewed-publication-navigation-20261020",
-      "revision": "0ded6b68eb6170c4ea5e76251ad5e13adf2f664b",
+      "revision": "7ef16585ba04eba3628cead304be85307436f091",
       "author": "Documentation implementation authors",
       "reviewer": "/root/review_publication",
       "gateIds": [
@@ -4007,6 +4170,20 @@
           "summary": "New documentation-site subsection stays within the same canonical page/section hierarchy. Positive pages, task links and route ownership are unchanged; metadata binding is not a new navigation gate. Historical reachability result needs separate fresh mechanical binding. Actual frozen Reader/2normalbuilds and output/Git inspection separately witnessed; historical checks and original scopes/limits remain unchanged.",
           "report": "handoffs/pr13-finish-20261021/a91211-final-57-preservation.json",
           "limit": "Existing named scope preserved only; no new count or globalqualification/runtime/release approval."
+        },
+        {
+          "previousReviewedRevision": "0ded6b68eb6170c4ea5e76251ad5e13adf2f664b",
+          "revision": "7ef16585ba04eba3628cead304be85307436f091",
+          "changedDependencies": [
+            "docs/site/extend/README.md",
+            "docs/site/understand/README.md",
+            "scripts/docs-publication.mjs"
+          ],
+          "reviewer": "/root/operator_acceptance",
+          "verdict": "PASS",
+          "summary": "Within this original declared scope, the exact recent changed paths are individually bound to the coherent semantic/consumer review above; unchanged named original product mechanisms and original limits remain supported. These are purpose/content preservation decisions, not hash-only source refresh or a new full transitive product audit. Actual7ef177canonical/187HTML/240outputs normal artifact and complete local/source/excerpt/diagram checks are terminal0; current two normal419file builds byte-equal; exact declared route/source metadata checked. All531page and1233box observations preserve noJS/native fields/links/containment; initial6titlemeasurement failures retained and exact6case retake passes. Whole search12 plus actualoffline2, real240GET preview and forensic242member/19Sourceasset ZIP/extracted checks preserve only original reader scope. Four selected320px visual views are explicitly limited, not full accessibility/freshpersona proof. Original technical meaning, negative-vs-execution distinction, historical/revision/live limits and reader-task decisions retained via named nonauthor topic/delta reviews. No removed condition or broader authority was hidden by field completion. Existing historical failure/unexecuted/native/global configuration stops stay unchanged.",
+          "report": "handoffs/pr13-finish-20261021/reader7ef-prior88-preservation.json",
+          "limit": "Only original named supported or NOT_READY scope preserved; original author/reviewer/checks/summary/limits/verdict/gate/requirement IDs remain immutable. No new count, global qualification or release grant."
         }
       ],
       "previousReviewedRevision": "3be8232a024f551f163d55f770c5fc97127d7902",
@@ -4076,7 +4253,7 @@
     },
     {
       "id": "AP09-closeout-runtime-20261020",
-      "revision": "0ded6b68eb6170c4ea5e76251ad5e13adf2f664b",
+      "revision": "7ef16585ba04eba3628cead304be85307436f091",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/close_runtime_docs",
       "gateIds": [],
@@ -4282,6 +4459,18 @@
           "summary": "Data evidence fields retain Core/Worker state ownership, attestation versus receipt, spool/trust and store-local versus whole-backup guarantees. Added assertions do not establish execution or off-host restore. Actual frozen Reader/2normalbuilds and output/Git inspection separately witnessed; historical checks and original scopes/limits remain unchanged.",
           "report": "handoffs/pr13-finish-20261021/a91211-final-57-preservation.json",
           "limit": "Existing named scope preserved only; no new count or globalqualification/runtime/release approval."
+        },
+        {
+          "previousReviewedRevision": "0ded6b68eb6170c4ea5e76251ad5e13adf2f664b",
+          "revision": "7ef16585ba04eba3628cead304be85307436f091",
+          "changedDependencies": [
+            "docs/site/understand/components-and-authority.md"
+          ],
+          "reviewer": "/root/operator_acceptance",
+          "verdict": "PASS",
+          "summary": "Within this original declared scope, the exact recent changed paths are individually bound to the coherent semantic/consumer review above; unchanged named original product mechanisms and original limits remain supported. These are purpose/content preservation decisions, not hash-only source refresh or a new full transitive product audit. Actual7ef177canonical/187HTML/240outputs normal artifact and complete local/source/excerpt/diagram checks are terminal0; current two normal419file builds byte-equal; exact declared route/source metadata checked. All531page and1233box observations preserve noJS/native fields/links/containment; initial6titlemeasurement failures retained and exact6case retake passes. Whole search12 plus actualoffline2, real240GET preview and forensic242member/19Sourceasset ZIP/extracted checks preserve only original reader scope. Four selected320px visual views are explicitly limited, not full accessibility/freshpersona proof. Original technical meaning, negative-vs-execution distinction, historical/revision/live limits and reader-task decisions retained via named nonauthor topic/delta reviews. No removed condition or broader authority was hidden by field completion. Existing historical failure/unexecuted/native/global configuration stops stay unchanged.",
+          "report": "handoffs/pr13-finish-20261021/reader7ef-prior88-preservation.json",
+          "limit": "Only original named supported or NOT_READY scope preserved; original author/reviewer/checks/summary/limits/verdict/gate/requirement IDs remain immutable. No new count, global qualification or release grant."
         }
       ],
       "previousReviewedRevision": "3be8232a024f551f163d55f770c5fc97127d7902",
@@ -4306,7 +4495,7 @@
     },
     {
       "id": "AP09-closeout-config-reference-20261020",
-      "revision": "0ded6b68eb6170c4ea5e76251ad5e13adf2f664b",
+      "revision": "7ef16585ba04eba3628cead304be85307436f091",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/close_config_reference",
       "gateIds": [],
@@ -4498,6 +4687,18 @@
           "summary": "Publisher append changes no configuration/reference source facts, ownership or errors. Exact original CFG/REF correction claims and narrower accepted scopes remain. Actual frozen Reader/2normalbuilds and output/Git inspection separately witnessed; historical checks and original scopes/limits remain unchanged.",
           "report": "handoffs/pr13-finish-20261021/a91211-final-57-preservation.json",
           "limit": "Existing named scope preserved only; no new count or globalqualification/runtime/release approval."
+        },
+        {
+          "previousReviewedRevision": "0ded6b68eb6170c4ea5e76251ad5e13adf2f664b",
+          "revision": "7ef16585ba04eba3628cead304be85307436f091",
+          "changedDependencies": [
+            "scripts/docs-publication.mjs"
+          ],
+          "reviewer": "/root/operator_acceptance",
+          "verdict": "PASS",
+          "summary": "Within this original declared scope, the exact recent changed paths are individually bound to the coherent semantic/consumer review above; unchanged named original product mechanisms and original limits remain supported. These are purpose/content preservation decisions, not hash-only source refresh or a new full transitive product audit. Actual7ef177canonical/187HTML/240outputs normal artifact and complete local/source/excerpt/diagram checks are terminal0; current two normal419file builds byte-equal; exact declared route/source metadata checked. All531page and1233box observations preserve noJS/native fields/links/containment; initial6titlemeasurement failures retained and exact6case retake passes. Whole search12 plus actualoffline2, real240GET preview and forensic242member/19Sourceasset ZIP/extracted checks preserve only original reader scope. Four selected320px visual views are explicitly limited, not full accessibility/freshpersona proof. Original technical meaning, negative-vs-execution distinction, historical/revision/live limits and reader-task decisions retained via named nonauthor topic/delta reviews. No removed condition or broader authority was hidden by field completion. Existing historical failure/unexecuted/native/global configuration stops stay unchanged.",
+          "report": "handoffs/pr13-finish-20261021/reader7ef-prior88-preservation.json",
+          "limit": "Only original named supported or NOT_READY scope preserved; original author/reviewer/checks/summary/limits/verdict/gate/requirement IDs remain immutable. No new count, global qualification or release grant."
         }
       ],
       "previousReviewedRevision": "2f8a116e00d6d38a5cc5076b10befcabe426f9f4",
@@ -4549,7 +4750,7 @@
     },
     {
       "id": "AP09-closeout-developer-maintenance-20261020",
-      "revision": "0ded6b68eb6170c4ea5e76251ad5e13adf2f664b",
+      "revision": "7ef16585ba04eba3628cead304be85307436f091",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/close_developer_maintenance",
       "gateIds": [],
@@ -4811,6 +5012,19 @@
           "summary": "Only publisher intersects; metadata append does not alter supported author/local lifecycle, removal, generation ownership or documentation status procedures. No general install/remove or runtime readiness is invented. Actual frozen Reader/2normalbuilds and output/Git inspection separately witnessed; historical checks and original scopes/limits remain unchanged.",
           "report": "handoffs/pr13-finish-20261021/a91211-final-57-preservation.json",
           "limit": "Existing named scope preserved only; no new count or globalqualification/runtime/release approval."
+        },
+        {
+          "previousReviewedRevision": "0ded6b68eb6170c4ea5e76251ad5e13adf2f664b",
+          "revision": "7ef16585ba04eba3628cead304be85307436f091",
+          "changedDependencies": [
+            "docs/site/extend/README.md",
+            "scripts/docs-publication.mjs"
+          ],
+          "reviewer": "/root/operator_acceptance",
+          "verdict": "PASS",
+          "summary": "Within this original declared scope, the exact recent changed paths are individually bound to the coherent semantic/consumer review above; unchanged named original product mechanisms and original limits remain supported. These are purpose/content preservation decisions, not hash-only source refresh or a new full transitive product audit. Actual7ef177canonical/187HTML/240outputs normal artifact and complete local/source/excerpt/diagram checks are terminal0; current two normal419file builds byte-equal; exact declared route/source metadata checked. All531page and1233box observations preserve noJS/native fields/links/containment; initial6titlemeasurement failures retained and exact6case retake passes. Whole search12 plus actualoffline2, real240GET preview and forensic242member/19Sourceasset ZIP/extracted checks preserve only original reader scope. Four selected320px visual views are explicitly limited, not full accessibility/freshpersona proof. Original technical meaning, negative-vs-execution distinction, historical/revision/live limits and reader-task decisions retained via named nonauthor topic/delta reviews. No removed condition or broader authority was hidden by field completion. Existing historical failure/unexecuted/native/global configuration stops stay unchanged.",
+          "report": "handoffs/pr13-finish-20261021/reader7ef-prior88-preservation.json",
+          "limit": "Only original named supported or NOT_READY scope preserved; original author/reviewer/checks/summary/limits/verdict/gate/requirement IDs remain immutable. No new count, global qualification or release grant."
         }
       ],
       "previousReviewedRevision": "2f8a116e00d6d38a5cc5076b10befcabe426f9f4",
@@ -4851,7 +5065,7 @@
     },
     {
       "id": "AP09-closeout-ARC006-20261020",
-      "revision": "c5d0062db699056ebc044c0a016a77ace6a1ede9",
+      "revision": "7ef16585ba04eba3628cead304be85307436f091",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/close_runtime_docs",
       "gateIds": [],
@@ -4913,6 +5127,20 @@
           ],
           "review": "docs/blueprint/acceptance-evidence/diagram-boundaries-20261021/prior-record-preservation-review.json",
           "reason": "Narrow independent preservation after four source-backed diagram boundary corrections, exact alternative/registry updates, four owner-generated metadata fields and nine explicitly internal proof records. No reapproval of untouched historical claims or broad diagram/runtime semantics."
+        }
+      ],
+      "impactReviews": [
+        {
+          "previousReviewedRevision": "c5d0062db699056ebc044c0a016a77ace6a1ede9",
+          "revision": "7ef16585ba04eba3628cead304be85307436f091",
+          "changedDependencies": [
+            "docs/site/understand/components-and-authority.md"
+          ],
+          "reviewer": "/root/operator_acceptance",
+          "verdict": "PASS",
+          "summary": "Within this original declared scope, the exact recent changed paths are individually bound to the coherent semantic/consumer review above; unchanged named original product mechanisms and original limits remain supported. These are purpose/content preservation decisions, not hash-only source refresh or a new full transitive product audit. Actual7ef177canonical/187HTML/240outputs normal artifact and complete local/source/excerpt/diagram checks are terminal0; current two normal419file builds byte-equal; exact declared route/source metadata checked. All531page and1233box observations preserve noJS/native fields/links/containment; initial6titlemeasurement failures retained and exact6case retake passes. Whole search12 plus actualoffline2, real240GET preview and forensic242member/19Sourceasset ZIP/extracted checks preserve only original reader scope. Four selected320px visual views are explicitly limited, not full accessibility/freshpersona proof. Original technical meaning, negative-vs-execution distinction, historical/revision/live limits and reader-task decisions retained via named nonauthor topic/delta reviews. No removed condition or broader authority was hidden by field completion. Existing historical failure/unexecuted/native/global configuration stops stay unchanged.",
+          "report": "handoffs/pr13-finish-20261021/reader7ef-prior88-preservation.json",
+          "limit": "Only original named supported or NOT_READY scope preserved; original author/reviewer/checks/summary/limits/verdict/gate/requirement IDs remain immutable. No new count, global qualification or release grant."
         }
       ]
     },
@@ -5320,7 +5548,7 @@
     },
     {
       "id": "AP09-compiler-import-provider-diagnosis-20261021",
-      "revision": "0ded6b68eb6170c4ea5e76251ad5e13adf2f664b",
+      "revision": "7ef16585ba04eba3628cead304be85307436f091",
       "author": "Documentation authors and /root correction coordinator",
       "reviewer": "Independent Codex autoreview 2026-10-21 (ready, correction-final and contributor invocations)",
       "gateIds": [
@@ -5492,6 +5720,19 @@
           "summary": "Added Nova/Plugin fields retain compiler defaults/snapshot admission, capability provider selection, import audit versus isolation and symptom-first stop decisions. No source implementation or diagnostic contract changes. Actual frozen Reader/2normalbuilds and output/Git inspection separately witnessed; historical checks and original scopes/limits remain unchanged.",
           "report": "handoffs/pr13-finish-20261021/a91211-final-57-preservation.json",
           "limit": "Existing named scope preserved only; no new count or globalqualification/runtime/release approval."
+        },
+        {
+          "previousReviewedRevision": "0ded6b68eb6170c4ea5e76251ad5e13adf2f664b",
+          "revision": "7ef16585ba04eba3628cead304be85307436f091",
+          "changedDependencies": [
+            "docs/site/reference/capabilities.md",
+            "docs/site/reference/nova-project.md"
+          ],
+          "reviewer": "/root/operator_acceptance",
+          "verdict": "PASS",
+          "summary": "Within this original declared scope, the exact recent changed paths are individually bound to the coherent semantic/consumer review above; unchanged named original product mechanisms and original limits remain supported. These are purpose/content preservation decisions, not hash-only source refresh or a new full transitive product audit. Actual7ef177canonical/187HTML/240outputs normal artifact and complete local/source/excerpt/diagram checks are terminal0; current two normal419file builds byte-equal; exact declared route/source metadata checked. All531page and1233box observations preserve noJS/native fields/links/containment; initial6titlemeasurement failures retained and exact6case retake passes. Whole search12 plus actualoffline2, real240GET preview and forensic242member/19Sourceasset ZIP/extracted checks preserve only original reader scope. Four selected320px visual views are explicitly limited, not full accessibility/freshpersona proof. Original technical meaning, negative-vs-execution distinction, historical/revision/live limits and reader-task decisions retained via named nonauthor topic/delta reviews. No removed condition or broader authority was hidden by field completion. Existing historical failure/unexecuted/native/global configuration stops stay unchanged.",
+          "report": "handoffs/pr13-finish-20261021/reader7ef-prior88-preservation.json",
+          "limit": "Only original named supported or NOT_READY scope preserved; original author/reviewer/checks/summary/limits/verdict/gate/requirement IDs remain immutable. No new count, global qualification or release grant."
         }
       ],
       "previousReviewedRevision": "a7d0e07cacc037b94e8a45ed2f0d90bd0259b213",
@@ -5651,7 +5892,7 @@
     },
     {
       "id": "AP09-selected-model-gateway-20261021",
-      "revision": "0ded6b68eb6170c4ea5e76251ad5e13adf2f664b",
+      "revision": "7ef16585ba04eba3628cead304be85307436f091",
       "author": "Documentation authors and /root correction coordinator",
       "reviewer": "Independent Codex autoreview 2026-10-21 (ready, correction-final and contributor invocations)",
       "gateIds": [
@@ -5764,6 +6005,18 @@
           "summary": "Platform callouts preserve configured model/provider routing versus observed readiness, credential authorities and optional monitoring/embedding limits. No remote provider result follows from configuration. Actual frozen Reader/2normalbuilds and output/Git inspection separately witnessed; historical checks and original scopes/limits remain unchanged.",
           "report": "handoffs/pr13-finish-20261021/a91211-final-57-preservation.json",
           "limit": "Existing named scope preserved only; no new count or globalqualification/runtime/release approval."
+        },
+        {
+          "previousReviewedRevision": "0ded6b68eb6170c4ea5e76251ad5e13adf2f664b",
+          "revision": "7ef16585ba04eba3628cead304be85307436f091",
+          "changedDependencies": [
+            "docs/site/understand/pipeline-dependencies.md"
+          ],
+          "reviewer": "/root/operator_acceptance",
+          "verdict": "PASS",
+          "summary": "Within this original declared scope, the exact recent changed paths are individually bound to the coherent semantic/consumer review above; unchanged named original product mechanisms and original limits remain supported. These are purpose/content preservation decisions, not hash-only source refresh or a new full transitive product audit. Actual7ef177canonical/187HTML/240outputs normal artifact and complete local/source/excerpt/diagram checks are terminal0; current two normal419file builds byte-equal; exact declared route/source metadata checked. All531page and1233box observations preserve noJS/native fields/links/containment; initial6titlemeasurement failures retained and exact6case retake passes. Whole search12 plus actualoffline2, real240GET preview and forensic242member/19Sourceasset ZIP/extracted checks preserve only original reader scope. Four selected320px visual views are explicitly limited, not full accessibility/freshpersona proof. Original technical meaning, negative-vs-execution distinction, historical/revision/live limits and reader-task decisions retained via named nonauthor topic/delta reviews. No removed condition or broader authority was hidden by field completion. Existing historical failure/unexecuted/native/global configuration stops stay unchanged.",
+          "report": "handoffs/pr13-finish-20261021/reader7ef-prior88-preservation.json",
+          "limit": "Only original named supported or NOT_READY scope preserved; original author/reviewer/checks/summary/limits/verdict/gate/requirement IDs remain immutable. No new count, global qualification or release grant."
         }
       ],
       "previousReviewedRevision": "8f79e328cf216b53dc2e665896c65cbb19a2e0ce",
@@ -5914,7 +6167,7 @@
     },
     {
       "id": "AP09-install-maintenance-project-entry-20261021",
-      "revision": "cfc97be096908c1193877d054bb80662120f1eca",
+      "revision": "7ef16585ba04eba3628cead304be85307436f091",
       "author": "Documentation authors and /root entry correction coordinator",
       "reviewer": "Independent Codex autoreview 2026-10-21 (operator, entry closeout and publication impact invocations)",
       "gateIds": [],
@@ -6062,6 +6315,19 @@
           ],
           "verdict": "PASS",
           "summary": "Exact original scope and limits preserved; no new approval. See checkpoint-cfc97-22-record-preservation and reader-cfc97-closeout."
+        },
+        {
+          "previousReviewedRevision": "cfc97be096908c1193877d054bb80662120f1eca",
+          "revision": "7ef16585ba04eba3628cead304be85307436f091",
+          "changedDependencies": [
+            "docs/site/reference/nova-project.md",
+            "docs/site/understand/README.md"
+          ],
+          "reviewer": "/root/operator_acceptance",
+          "verdict": "PASS",
+          "summary": "Within this original declared scope, the exact recent changed paths are individually bound to the coherent semantic/consumer review above; unchanged named original product mechanisms and original limits remain supported. These are purpose/content preservation decisions, not hash-only source refresh or a new full transitive product audit. Actual7ef177canonical/187HTML/240outputs normal artifact and complete local/source/excerpt/diagram checks are terminal0; current two normal419file builds byte-equal; exact declared route/source metadata checked. All531page and1233box observations preserve noJS/native fields/links/containment; initial6titlemeasurement failures retained and exact6case retake passes. Whole search12 plus actualoffline2, real240GET preview and forensic242member/19Sourceasset ZIP/extracted checks preserve only original reader scope. Four selected320px visual views are explicitly limited, not full accessibility/freshpersona proof. Original technical meaning, negative-vs-execution distinction, historical/revision/live limits and reader-task decisions retained via named nonauthor topic/delta reviews. No removed condition or broader authority was hidden by field completion. Existing historical failure/unexecuted/native/global configuration stops stay unchanged.",
+          "report": "handoffs/pr13-finish-20261021/reader7ef-prior88-preservation.json",
+          "limit": "Only original named supported or NOT_READY scope preserved; original author/reviewer/checks/summary/limits/verdict/gate/requirement IDs remain immutable. No new count, global qualification or release grant."
         }
       ]
     },
@@ -6811,7 +7077,7 @@
     },
     {
       "id": "AP09-decision-record-content-20261021",
-      "revision": "0ded6b68eb6170c4ea5e76251ad5e13adf2f664b",
+      "revision": "7ef16585ba04eba3628cead304be85307436f091",
       "author": "Nova /root authored content and correction coordinator",
       "reviewer": "Independent Codex autoreview 2026-10-21 platform-ready-review",
       "gateIds": [],
@@ -6975,12 +7241,24 @@
           "summary": "Only publisher intersects; metadata append changes no rationale, alternatives, consequences, supersession or unknown approval status. Actual frozen Reader/2normalbuilds and output/Git inspection separately witnessed; historical checks and original scopes/limits remain unchanged.",
           "report": "handoffs/pr13-finish-20261021/a91211-final-57-preservation.json",
           "limit": "Existing named scope preserved only; no new count or globalqualification/runtime/release approval."
+        },
+        {
+          "previousReviewedRevision": "0ded6b68eb6170c4ea5e76251ad5e13adf2f664b",
+          "revision": "7ef16585ba04eba3628cead304be85307436f091",
+          "changedDependencies": [
+            "scripts/docs-publication.mjs"
+          ],
+          "reviewer": "/root/operator_acceptance",
+          "verdict": "PASS",
+          "summary": "Within this original declared scope, the exact recent changed paths are individually bound to the coherent semantic/consumer review above; unchanged named original product mechanisms and original limits remain supported. These are purpose/content preservation decisions, not hash-only source refresh or a new full transitive product audit. Actual7ef177canonical/187HTML/240outputs normal artifact and complete local/source/excerpt/diagram checks are terminal0; current two normal419file builds byte-equal; exact declared route/source metadata checked. All531page and1233box observations preserve noJS/native fields/links/containment; initial6titlemeasurement failures retained and exact6case retake passes. Whole search12 plus actualoffline2, real240GET preview and forensic242member/19Sourceasset ZIP/extracted checks preserve only original reader scope. Four selected320px visual views are explicitly limited, not full accessibility/freshpersona proof. Original technical meaning, negative-vs-execution distinction, historical/revision/live limits and reader-task decisions retained via named nonauthor topic/delta reviews. No removed condition or broader authority was hidden by field completion. Existing historical failure/unexecuted/native/global configuration stops stay unchanged.",
+          "report": "handoffs/pr13-finish-20261021/reader7ef-prior88-preservation.json",
+          "limit": "Only original named supported or NOT_READY scope preserved; original author/reviewer/checks/summary/limits/verdict/gate/requirement IDs remain immutable. No new count, global qualification or release grant."
         }
       ]
     },
     {
       "id": "AP09-documentation-agent-maintenance-20261021",
-      "revision": "1fc619b56359e964f5fb8de382cf41367ab7c627",
+      "revision": "7ef16585ba04eba3628cead304be85307436f091",
       "author": "Nova /root authored content and correction coordinator",
       "reviewer": "Independent Codex autoreview 2026-10-21 maintenance-ready-review",
       "gateIds": [],
@@ -7389,6 +7667,18 @@
           "summary": "Original MNT017 or bounded Reader claim preserved: exact new external-CI analysis reachability is separate from runtime/native/package authority; fresh physical proof precedes graph/direct-role caches, ordinary full graph/entry/alias/public/module/operation/unresolved guards remain. Seven exact binding values correspond only to independently reviewed0ded caller/consumer deltas, not selector/fact/role acceptance.",
           "report": "handoffs/pr13-finish-20261021/post0ded-ci-six-review.json",
           "limit": "Reader remains observed0ded, not a newHEADbuild. Actual graph/facts/globalqualification/newroleDATA remain pending; no new counts."
+        },
+        {
+          "previousReviewedRevision": "1fc619b56359e964f5fb8de382cf41367ab7c627",
+          "revision": "7ef16585ba04eba3628cead304be85307436f091",
+          "changedDependencies": [
+            "scripts/docs-publication.mjs"
+          ],
+          "reviewer": "/root/operator_acceptance",
+          "verdict": "PASS",
+          "summary": "Within this original declared scope, the exact recent changed paths are individually bound to the coherent semantic/consumer review above; unchanged named original product mechanisms and original limits remain supported. These are purpose/content preservation decisions, not hash-only source refresh or a new full transitive product audit. Actual7ef177canonical/187HTML/240outputs normal artifact and complete local/source/excerpt/diagram checks are terminal0; current two normal419file builds byte-equal; exact declared route/source metadata checked. All531page and1233box observations preserve noJS/native fields/links/containment; initial6titlemeasurement failures retained and exact6case retake passes. Whole search12 plus actualoffline2, real240GET preview and forensic242member/19Sourceasset ZIP/extracted checks preserve only original reader scope. Four selected320px visual views are explicitly limited, not full accessibility/freshpersona proof. Original technical meaning, negative-vs-execution distinction, historical/revision/live limits and reader-task decisions retained via named nonauthor topic/delta reviews. No removed condition or broader authority was hidden by field completion. Existing historical failure/unexecuted/native/global configuration stops stay unchanged.",
+          "report": "handoffs/pr13-finish-20261021/reader7ef-prior88-preservation.json",
+          "limit": "Only original named supported or NOT_READY scope preserved; original author/reviewer/checks/summary/limits/verdict/gate/requirement IDs remain immutable. No new count, global qualification or release grant."
         }
       ],
       "previousReviewedRevision": "ac6de3002f7556d2975da44616c6ed220e35e189",
@@ -7627,7 +7917,7 @@
     },
     {
       "id": "AP09-complete-platform-change-content-20261021",
-      "revision": "0ded6b68eb6170c4ea5e76251ad5e13adf2f664b",
+      "revision": "7ef16585ba04eba3628cead304be85307436f091",
       "author": "Nova /root authored content and correction coordinator",
       "reviewer": "Independent Codex autoreview 2026-10-21 platform-final-review",
       "gateIds": [],
@@ -7913,6 +8203,18 @@
           "summary": "Publisher/CI metadata verification adds no product effect-format, capability/event, integration or GitOps change authority. Existing source/recovery/ownership/security tasks remain; CI insertion does not imply all current jobs ran. Actual frozen Reader/2normalbuilds and output/Git inspection separately witnessed; historical checks and original scopes/limits remain unchanged.",
           "report": "handoffs/pr13-finish-20261021/a91211-final-57-preservation.json",
           "limit": "Existing named scope preserved only; no new count or globalqualification/runtime/release approval."
+        },
+        {
+          "previousReviewedRevision": "0ded6b68eb6170c4ea5e76251ad5e13adf2f664b",
+          "revision": "7ef16585ba04eba3628cead304be85307436f091",
+          "changedDependencies": [
+            "scripts/docs-publication.mjs"
+          ],
+          "reviewer": "/root/operator_acceptance",
+          "verdict": "PASS",
+          "summary": "Within this original declared scope, the exact recent changed paths are individually bound to the coherent semantic/consumer review above; unchanged named original product mechanisms and original limits remain supported. These are purpose/content preservation decisions, not hash-only source refresh or a new full transitive product audit. Actual7ef177canonical/187HTML/240outputs normal artifact and complete local/source/excerpt/diagram checks are terminal0; current two normal419file builds byte-equal; exact declared route/source metadata checked. All531page and1233box observations preserve noJS/native fields/links/containment; initial6titlemeasurement failures retained and exact6case retake passes. Whole search12 plus actualoffline2, real240GET preview and forensic242member/19Sourceasset ZIP/extracted checks preserve only original reader scope. Four selected320px visual views are explicitly limited, not full accessibility/freshpersona proof. Original technical meaning, negative-vs-execution distinction, historical/revision/live limits and reader-task decisions retained via named nonauthor topic/delta reviews. No removed condition or broader authority was hidden by field completion. Existing historical failure/unexecuted/native/global configuration stops stay unchanged.",
+          "report": "handoffs/pr13-finish-20261021/reader7ef-prior88-preservation.json",
+          "limit": "Only original named supported or NOT_READY scope preserved; original author/reviewer/checks/summary/limits/verdict/gate/requirement IDs remain immutable. No new count, global qualification or release grant."
         }
       ],
       "previousReviewedRevision": "2f8a116e00d6d38a5cc5076b10befcabe426f9f4",
@@ -7965,7 +8267,7 @@
     },
     {
       "id": "AP09-registry-data-path-20261021",
-      "revision": "0ded6b68eb6170c4ea5e76251ad5e13adf2f664b",
+      "revision": "7ef16585ba04eba3628cead304be85307436f091",
       "author": "Nova /root authored guide and selected registry profile correction coordinator",
       "reviewer": "Independent Codex autoreview 2026-10-21 remaining-surfaces and registry-profiles-final",
       "gateIds": [],
@@ -8201,6 +8503,18 @@
           "summary": "Communication/platform fields preserve Git/OCI/BuildKit/registry/mirror owner, credential/digest and retained-versus-ephemeral failure distinctions. No configuration receipt becomes operational registry success. Actual frozen Reader/2normalbuilds and output/Git inspection separately witnessed; historical checks and original scopes/limits remain unchanged.",
           "report": "handoffs/pr13-finish-20261021/a91211-final-57-preservation.json",
           "limit": "Existing named scope preserved only; no new count or globalqualification/runtime/release approval."
+        },
+        {
+          "previousReviewedRevision": "0ded6b68eb6170c4ea5e76251ad5e13adf2f664b",
+          "revision": "7ef16585ba04eba3628cead304be85307436f091",
+          "changedDependencies": [
+            "docs/site/understand/pipeline-dependencies.md"
+          ],
+          "reviewer": "/root/operator_acceptance",
+          "verdict": "PASS",
+          "summary": "Within this original declared scope, the exact recent changed paths are individually bound to the coherent semantic/consumer review above; unchanged named original product mechanisms and original limits remain supported. These are purpose/content preservation decisions, not hash-only source refresh or a new full transitive product audit. Actual7ef177canonical/187HTML/240outputs normal artifact and complete local/source/excerpt/diagram checks are terminal0; current two normal419file builds byte-equal; exact declared route/source metadata checked. All531page and1233box observations preserve noJS/native fields/links/containment; initial6titlemeasurement failures retained and exact6case retake passes. Whole search12 plus actualoffline2, real240GET preview and forensic242member/19Sourceasset ZIP/extracted checks preserve only original reader scope. Four selected320px visual views are explicitly limited, not full accessibility/freshpersona proof. Original technical meaning, negative-vs-execution distinction, historical/revision/live limits and reader-task decisions retained via named nonauthor topic/delta reviews. No removed condition or broader authority was hidden by field completion. Existing historical failure/unexecuted/native/global configuration stops stay unchanged.",
+          "report": "handoffs/pr13-finish-20261021/reader7ef-prior88-preservation.json",
+          "limit": "Only original named supported or NOT_READY scope preserved; original author/reviewer/checks/summary/limits/verdict/gate/requirement IDs remain immutable. No new count, global qualification or release grant."
         }
       ]
     },
@@ -8362,7 +8676,7 @@
     },
     {
       "id": "AP09-complete-plugin-maintenance-mechanisms-20261021",
-      "revision": "0ded6b68eb6170c4ea5e76251ad5e13adf2f664b",
+      "revision": "7ef16585ba04eba3628cead304be85307436f091",
       "author": "Nova /root documentation coordinator",
       "reviewer": "Independent Codex autoreview 2026-10-21 plugin-mechanisms whole original MNT obligations",
       "gateIds": [],
@@ -9001,6 +9315,18 @@
           "summary": "Only publisher intersects. Actual plugin inventory/discovery and registration comparison sources are unchanged; appended reader mapping does not change the 51-manifest/registration facts or editorial-versus-mechanical distinction. Newly guarded inventory CI input still needs exact renewal. Actual frozen Reader/2normalbuilds and output/Git inspection separately witnessed; historical checks and original scopes/limits remain unchanged.",
           "report": "handoffs/pr13-finish-20261021/a91211-final-57-preservation.json",
           "limit": "Existing named scope preserved only; no new count or globalqualification/runtime/release approval."
+        },
+        {
+          "previousReviewedRevision": "0ded6b68eb6170c4ea5e76251ad5e13adf2f664b",
+          "revision": "7ef16585ba04eba3628cead304be85307436f091",
+          "changedDependencies": [
+            "scripts/docs-publication.mjs"
+          ],
+          "reviewer": "/root/operator_acceptance",
+          "verdict": "PASS",
+          "summary": "Within this original declared scope, the exact recent changed paths are individually bound to the coherent semantic/consumer review above; unchanged named original product mechanisms and original limits remain supported. These are purpose/content preservation decisions, not hash-only source refresh or a new full transitive product audit. Actual7ef177canonical/187HTML/240outputs normal artifact and complete local/source/excerpt/diagram checks are terminal0; current two normal419file builds byte-equal; exact declared route/source metadata checked. All531page and1233box observations preserve noJS/native fields/links/containment; initial6titlemeasurement failures retained and exact6case retake passes. Whole search12 plus actualoffline2, real240GET preview and forensic242member/19Sourceasset ZIP/extracted checks preserve only original reader scope. Four selected320px visual views are explicitly limited, not full accessibility/freshpersona proof. Original technical meaning, negative-vs-execution distinction, historical/revision/live limits and reader-task decisions retained via named nonauthor topic/delta reviews. No removed condition or broader authority was hidden by field completion. Existing historical failure/unexecuted/native/global configuration stops stay unchanged.",
+          "report": "handoffs/pr13-finish-20261021/reader7ef-prior88-preservation.json",
+          "limit": "Only original named supported or NOT_READY scope preserved; original author/reviewer/checks/summary/limits/verdict/gate/requirement IDs remain immutable. No new count, global qualification or release grant."
         }
       ],
       "previousReviewedRevision": "5276ecde0b50f86936e58c5de2de233e5a061e1e",
@@ -9042,7 +9368,7 @@
     },
     {
       "id": "AP09-litellm-complete-data-contract-20261021",
-      "revision": "0ded6b68eb6170c4ea5e76251ad5e13adf2f664b",
+      "revision": "7ef16585ba04eba3628cead304be85307436f091",
       "author": "Nova /root documentation author and correction coordinator",
       "reviewer": "Independent Codex autoreview whole finished-reader-topics and LiteLLM audits with correction-final follow-up",
       "gateIds": [],
@@ -9221,12 +9547,24 @@
           "summary": "Data callout gains only same-section pinned implementation links/fields; preserves official Git contract and registry metadata proof, credential/encryption/startup and capacity/restore limits. Rejected image-layer/source equality remains rejected. Actual frozen Reader/2normalbuilds and output/Git inspection separately witnessed; historical checks and original scopes/limits remain unchanged.",
           "report": "handoffs/pr13-finish-20261021/a91211-final-57-preservation.json",
           "limit": "Existing named scope preserved only; no new count or globalqualification/runtime/release approval."
+        },
+        {
+          "previousReviewedRevision": "0ded6b68eb6170c4ea5e76251ad5e13adf2f664b",
+          "revision": "7ef16585ba04eba3628cead304be85307436f091",
+          "changedDependencies": [
+            "docs/site/understand/pipeline-dependencies.md"
+          ],
+          "reviewer": "/root/operator_acceptance",
+          "verdict": "PASS",
+          "summary": "Within this original declared scope, the exact recent changed paths are individually bound to the coherent semantic/consumer review above; unchanged named original product mechanisms and original limits remain supported. These are purpose/content preservation decisions, not hash-only source refresh or a new full transitive product audit. Actual7ef177canonical/187HTML/240outputs normal artifact and complete local/source/excerpt/diagram checks are terminal0; current two normal419file builds byte-equal; exact declared route/source metadata checked. All531page and1233box observations preserve noJS/native fields/links/containment; initial6titlemeasurement failures retained and exact6case retake passes. Whole search12 plus actualoffline2, real240GET preview and forensic242member/19Sourceasset ZIP/extracted checks preserve only original reader scope. Four selected320px visual views are explicitly limited, not full accessibility/freshpersona proof. Original technical meaning, negative-vs-execution distinction, historical/revision/live limits and reader-task decisions retained via named nonauthor topic/delta reviews. No removed condition or broader authority was hidden by field completion. Existing historical failure/unexecuted/native/global configuration stops stay unchanged.",
+          "report": "handoffs/pr13-finish-20261021/reader7ef-prior88-preservation.json",
+          "limit": "Only original named supported or NOT_READY scope preserved; original author/reviewer/checks/summary/limits/verdict/gate/requirement IDs remain immutable. No new count, global qualification or release grant."
         }
       ]
     },
     {
       "id": "AP09-complete-publication-reference-navigation-20261021",
-      "revision": "0ded6b68eb6170c4ea5e76251ad5e13adf2f664b",
+      "revision": "7ef16585ba04eba3628cead304be85307436f091",
       "author": "Nova /root documentation author and correction coordinator",
       "reviewer": "Independent Codex autoreview whole finished-reader-topics and LiteLLM audits with correction-final follow-up",
       "gateIds": [],
@@ -9524,12 +9862,25 @@
           "summary": "Added same-mechanism Kubernetes links are pinned to original source and do not change update/reload claims. Documentation-site metadata describes finite source/output bindings and incomplete closure explicitly. Canonical routes/legacy navigation and current hosting limits remain. Actual frozen Reader/2normalbuilds and output/Git inspection separately witnessed; historical checks and original scopes/limits remain unchanged.",
           "report": "handoffs/pr13-finish-20261021/a91211-final-57-preservation.json",
           "limit": "Existing named scope preserved only; no new count or globalqualification/runtime/release approval."
+        },
+        {
+          "previousReviewedRevision": "0ded6b68eb6170c4ea5e76251ad5e13adf2f664b",
+          "revision": "7ef16585ba04eba3628cead304be85307436f091",
+          "changedDependencies": [
+            "docs/site/extend/platform/prism.md",
+            "scripts/docs-publication.mjs"
+          ],
+          "reviewer": "/root/operator_acceptance",
+          "verdict": "PASS",
+          "summary": "Within this original declared scope, the exact recent changed paths are individually bound to the coherent semantic/consumer review above; unchanged named original product mechanisms and original limits remain supported. These are purpose/content preservation decisions, not hash-only source refresh or a new full transitive product audit. Actual7ef177canonical/187HTML/240outputs normal artifact and complete local/source/excerpt/diagram checks are terminal0; current two normal419file builds byte-equal; exact declared route/source metadata checked. All531page and1233box observations preserve noJS/native fields/links/containment; initial6titlemeasurement failures retained and exact6case retake passes. Whole search12 plus actualoffline2, real240GET preview and forensic242member/19Sourceasset ZIP/extracted checks preserve only original reader scope. Four selected320px visual views are explicitly limited, not full accessibility/freshpersona proof. Original technical meaning, negative-vs-execution distinction, historical/revision/live limits and reader-task decisions retained via named nonauthor topic/delta reviews. No removed condition or broader authority was hidden by field completion. Existing historical failure/unexecuted/native/global configuration stops stay unchanged.",
+          "report": "handoffs/pr13-finish-20261021/reader7ef-prior88-preservation.json",
+          "limit": "Only original named supported or NOT_READY scope preserved; original author/reviewer/checks/summary/limits/verdict/gate/requirement IDs remain immutable. No new count, global qualification or release grant."
         }
       ]
     },
     {
       "id": "AP09-complete-developer-reader-contracts-20261021",
-      "revision": "0ded6b68eb6170c4ea5e76251ad5e13adf2f664b",
+      "revision": "7ef16585ba04eba3628cead304be85307436f091",
       "author": "Nova /root documentation author and correction coordinator",
       "reviewer": "Independent Codex autoreview whole finished-reader-topics and LiteLLM audits with correction-final follow-up",
       "gateIds": [],
@@ -9899,12 +10250,25 @@
           "summary": "Shared documentation-site/configuration-link/CI/publisher changes leave actual developer teaching paths and lifecycle tasks intact; no deployment or whole generator success is inferred from added metadata checks. Actual frozen Reader/2normalbuilds and output/Git inspection separately witnessed; historical checks and original scopes/limits remain unchanged.",
           "report": "handoffs/pr13-finish-20261021/a91211-final-57-preservation.json",
           "limit": "Existing named scope preserved only; no new count or globalqualification/runtime/release approval."
+        },
+        {
+          "previousReviewedRevision": "0ded6b68eb6170c4ea5e76251ad5e13adf2f664b",
+          "revision": "7ef16585ba04eba3628cead304be85307436f091",
+          "changedDependencies": [
+            "docs/site/extend/platform/prism.md",
+            "scripts/docs-publication.mjs"
+          ],
+          "reviewer": "/root/operator_acceptance",
+          "verdict": "PASS",
+          "summary": "Within this original declared scope, the exact recent changed paths are individually bound to the coherent semantic/consumer review above; unchanged named original product mechanisms and original limits remain supported. These are purpose/content preservation decisions, not hash-only source refresh or a new full transitive product audit. Actual7ef177canonical/187HTML/240outputs normal artifact and complete local/source/excerpt/diagram checks are terminal0; current two normal419file builds byte-equal; exact declared route/source metadata checked. All531page and1233box observations preserve noJS/native fields/links/containment; initial6titlemeasurement failures retained and exact6case retake passes. Whole search12 plus actualoffline2, real240GET preview and forensic242member/19Sourceasset ZIP/extracted checks preserve only original reader scope. Four selected320px visual views are explicitly limited, not full accessibility/freshpersona proof. Original technical meaning, negative-vs-execution distinction, historical/revision/live limits and reader-task decisions retained via named nonauthor topic/delta reviews. No removed condition or broader authority was hidden by field completion. Existing historical failure/unexecuted/native/global configuration stops stay unchanged.",
+          "report": "handoffs/pr13-finish-20261021/reader7ef-prior88-preservation.json",
+          "limit": "Only original named supported or NOT_READY scope preserved; original author/reviewer/checks/summary/limits/verdict/gate/requirement IDs remain immutable. No new count, global qualification or release grant."
         }
       ]
     },
     {
       "id": "AP09-complete-static-reader-search-20261021",
-      "revision": "1fc619b56359e964f5fb8de382cf41367ab7c627",
+      "revision": "7ef16585ba04eba3628cead304be85307436f091",
       "author": "Nova /root documentation author and implementation coordinator",
       "reviewer": "Independent Codex autoreview static-reader whole PUB-002 Source/reader-quality closeout",
       "verdict": "PASS",
@@ -10508,12 +10872,41 @@
           "summary": "Original MNT017 or bounded Reader claim preserved: exact new external-CI analysis reachability is separate from runtime/native/package authority; fresh physical proof precedes graph/direct-role caches, ordinary full graph/entry/alias/public/module/operation/unresolved guards remain. Seven exact binding values correspond only to independently reviewed0ded caller/consumer deltas, not selector/fact/role acceptance.",
           "report": "handoffs/pr13-finish-20261021/post0ded-ci-six-review.json",
           "limit": "Reader remains observed0ded, not a newHEADbuild. Actual graph/facts/globalqualification/newroleDATA remain pending; no new counts."
+        },
+        {
+          "previousReviewedRevision": "1fc619b56359e964f5fb8de382cf41367ab7c627",
+          "revision": "7ef16585ba04eba3628cead304be85307436f091",
+          "changedDependencies": [
+            "docs/site/extend/README.md",
+            "docs/site/extend/platform/prism.md",
+            "docs/site/reference/buster-runtime-configuration.md",
+            "docs/site/reference/capabilities.md",
+            "docs/site/reference/contracts.md",
+            "docs/site/reference/errors.md",
+            "docs/site/reference/nova-project.md",
+            "docs/site/understand/README.md",
+            "docs/site/understand/components-and-authority.md",
+            "docs/site/understand/deployment-and-trust.md",
+            "docs/site/understand/pipeline-dependencies.md",
+            "docs/site/understand/prism.md",
+            "docs/site/understand/request-state-recovery.md",
+            "docs/site/understand/security-and-trust.md",
+            "docs/site/understand/worker-trust.md",
+            "docs/site/use/worker-trust.md",
+            "scripts/docs-api-documentation-role-custody.mjs",
+            "scripts/docs-publication.mjs"
+          ],
+          "reviewer": "/root/operator_acceptance",
+          "verdict": "PASS",
+          "summary": "Within this original declared scope, the exact recent changed paths are individually bound to the coherent semantic/consumer review above; unchanged named original product mechanisms and original limits remain supported. These are purpose/content preservation decisions, not hash-only source refresh or a new full transitive product audit. Actual7ef177canonical/187HTML/240outputs normal artifact and complete local/source/excerpt/diagram checks are terminal0; current two normal419file builds byte-equal; exact declared route/source metadata checked. All531page and1233box observations preserve noJS/native fields/links/containment; initial6titlemeasurement failures retained and exact6case retake passes. Whole search12 plus actualoffline2, real240GET preview and forensic242member/19Sourceasset ZIP/extracted checks preserve only original reader scope. Four selected320px visual views are explicitly limited, not full accessibility/freshpersona proof. Original technical meaning, negative-vs-execution distinction, historical/revision/live limits and reader-task decisions retained via named nonauthor topic/delta reviews. No removed condition or broader authority was hidden by field completion. Existing historical failure/unexecuted/native/global configuration stops stay unchanged.",
+          "report": "handoffs/pr13-finish-20261021/reader7ef-prior88-preservation.json",
+          "limit": "Only original named supported or NOT_READY scope preserved; original author/reviewer/checks/summary/limits/verdict/gate/requirement IDs remain immutable. No new count, global qualification or release grant."
         }
       ]
     },
     {
       "id": "AP09-search-reader-gate-20261021",
-      "revision": "1fc619b56359e964f5fb8de382cf41367ab7c627",
+      "revision": "7ef16585ba04eba3628cead304be85307436f091",
       "author": "Nova /root documentation author and implementation coordinator",
       "reviewer": "Independent Codex autoreview whole A912-04 code/evidence review plus narrow Source/Reader/Quality native-impact follow-up",
       "verdict": "PASS",
@@ -10789,12 +11182,24 @@
           "summary": "Original MNT017 or bounded Reader claim preserved: exact new external-CI analysis reachability is separate from runtime/native/package authority; fresh physical proof precedes graph/direct-role caches, ordinary full graph/entry/alias/public/module/operation/unresolved guards remain. Seven exact binding values correspond only to independently reviewed0ded caller/consumer deltas, not selector/fact/role acceptance.",
           "report": "handoffs/pr13-finish-20261021/post0ded-ci-six-review.json",
           "limit": "Reader remains observed0ded, not a newHEADbuild. Actual graph/facts/globalqualification/newroleDATA remain pending; no new counts."
+        },
+        {
+          "previousReviewedRevision": "1fc619b56359e964f5fb8de382cf41367ab7c627",
+          "revision": "7ef16585ba04eba3628cead304be85307436f091",
+          "changedDependencies": [
+            "scripts/docs-api-documentation-role-custody.mjs"
+          ],
+          "reviewer": "/root/operator_acceptance",
+          "verdict": "PASS",
+          "summary": "Within this original declared scope, the exact recent changed paths are individually bound to the coherent semantic/consumer review above; unchanged named original product mechanisms and original limits remain supported. These are purpose/content preservation decisions, not hash-only source refresh or a new full transitive product audit. Actual7ef177canonical/187HTML/240outputs normal artifact and complete local/source/excerpt/diagram checks are terminal0; current two normal419file builds byte-equal; exact declared route/source metadata checked. All531page and1233box observations preserve noJS/native fields/links/containment; initial6titlemeasurement failures retained and exact6case retake passes. Whole search12 plus actualoffline2, real240GET preview and forensic242member/19Sourceasset ZIP/extracted checks preserve only original reader scope. Four selected320px visual views are explicitly limited, not full accessibility/freshpersona proof. Original technical meaning, negative-vs-execution distinction, historical/revision/live limits and reader-task decisions retained via named nonauthor topic/delta reviews. No removed condition or broader authority was hidden by field completion. Existing historical failure/unexecuted/native/global configuration stops stay unchanged.",
+          "report": "handoffs/pr13-finish-20261021/reader7ef-prior88-preservation.json",
+          "limit": "Only original named supported or NOT_READY scope preserved; original author/reviewer/checks/summary/limits/verdict/gate/requirement IDs remain immutable. No new count, global qualification or release grant."
         }
       ]
     },
     {
       "id": "AP09-rendered-source-bounds-gate-20261021",
-      "revision": "1fc619b56359e964f5fb8de382cf41367ab7c627",
+      "revision": "7ef16585ba04eba3628cead304be85307436f091",
       "author": "Nova /root documentation author and implementation coordinator",
       "reviewer": "Independent Codex autoreview whole A912-09 Source/Reader/Quality review and narrow changed-boundary impact review for 21 prior PASS records",
       "verdict": "PASS",
@@ -11077,12 +11482,25 @@
           "summary": "Original MNT017 or bounded Reader claim preserved: exact new external-CI analysis reachability is separate from runtime/native/package authority; fresh physical proof precedes graph/direct-role caches, ordinary full graph/entry/alias/public/module/operation/unresolved guards remain. Seven exact binding values correspond only to independently reviewed0ded caller/consumer deltas, not selector/fact/role acceptance.",
           "report": "handoffs/pr13-finish-20261021/post0ded-ci-six-review.json",
           "limit": "Reader remains observed0ded, not a newHEADbuild. Actual graph/facts/globalqualification/newroleDATA remain pending; no new counts."
+        },
+        {
+          "previousReviewedRevision": "1fc619b56359e964f5fb8de382cf41367ab7c627",
+          "revision": "7ef16585ba04eba3628cead304be85307436f091",
+          "changedDependencies": [
+            "scripts/docs-api-documentation-role-custody.mjs",
+            "scripts/docs-publication.mjs"
+          ],
+          "reviewer": "/root/operator_acceptance",
+          "verdict": "PASS",
+          "summary": "Within this original declared scope, the exact recent changed paths are individually bound to the coherent semantic/consumer review above; unchanged named original product mechanisms and original limits remain supported. These are purpose/content preservation decisions, not hash-only source refresh or a new full transitive product audit. Actual7ef177canonical/187HTML/240outputs normal artifact and complete local/source/excerpt/diagram checks are terminal0; current two normal419file builds byte-equal; exact declared route/source metadata checked. All531page and1233box observations preserve noJS/native fields/links/containment; initial6titlemeasurement failures retained and exact6case retake passes. Whole search12 plus actualoffline2, real240GET preview and forensic242member/19Sourceasset ZIP/extracted checks preserve only original reader scope. Four selected320px visual views are explicitly limited, not full accessibility/freshpersona proof. Original technical meaning, negative-vs-execution distinction, historical/revision/live limits and reader-task decisions retained via named nonauthor topic/delta reviews. No removed condition or broader authority was hidden by field completion. Existing historical failure/unexecuted/native/global configuration stops stay unchanged.",
+          "report": "handoffs/pr13-finish-20261021/reader7ef-prior88-preservation.json",
+          "limit": "Only original named supported or NOT_READY scope preserved; original author/reviewer/checks/summary/limits/verdict/gate/requirement IDs remain immutable. No new count, global qualification or release grant."
         }
       ]
     },
     {
       "id": "AP09-complete-static-offline-fallback-20261021",
-      "revision": "0ded6b68eb6170c4ea5e76251ad5e13adf2f664b",
+      "revision": "7ef16585ba04eba3628cead304be85307436f091",
       "author": "Nova /root documentation author and implementation coordinator",
       "reviewer": "Independent Codex autoreview whole PUB-006/A912-10 Source/Reader/Quality closeout, inspecting original obligation, actual browser provenance and critical task prose",
       "verdict": "PASS",
@@ -11257,12 +11675,25 @@
           "summary": "Renderer shared asset text and no-script redirect/manual-fragment limits remain unchanged; metadata is not required by reader browser runtime. New subsection/callouts remain ordinary static text; fresh no-JS/offline observations are separate. Actual frozen Reader/2normalbuilds and output/Git inspection separately witnessed; historical checks and original scopes/limits remain unchanged.",
           "report": "handoffs/pr13-finish-20261021/a91211-final-57-preservation.json",
           "limit": "Existing named scope preserved only; no new count or globalqualification/runtime/release approval."
+        },
+        {
+          "previousReviewedRevision": "0ded6b68eb6170c4ea5e76251ad5e13adf2f664b",
+          "revision": "7ef16585ba04eba3628cead304be85307436f091",
+          "changedDependencies": [
+            "docs/site/extend/README.md",
+            "scripts/docs-publication.mjs"
+          ],
+          "reviewer": "/root/operator_acceptance",
+          "verdict": "PASS",
+          "summary": "Within this original declared scope, the exact recent changed paths are individually bound to the coherent semantic/consumer review above; unchanged named original product mechanisms and original limits remain supported. These are purpose/content preservation decisions, not hash-only source refresh or a new full transitive product audit. Actual7ef177canonical/187HTML/240outputs normal artifact and complete local/source/excerpt/diagram checks are terminal0; current two normal419file builds byte-equal; exact declared route/source metadata checked. All531page and1233box observations preserve noJS/native fields/links/containment; initial6titlemeasurement failures retained and exact6case retake passes. Whole search12 plus actualoffline2, real240GET preview and forensic242member/19Sourceasset ZIP/extracted checks preserve only original reader scope. Four selected320px visual views are explicitly limited, not full accessibility/freshpersona proof. Original technical meaning, negative-vs-execution distinction, historical/revision/live limits and reader-task decisions retained via named nonauthor topic/delta reviews. No removed condition or broader authority was hidden by field completion. Existing historical failure/unexecuted/native/global configuration stops stay unchanged.",
+          "report": "handoffs/pr13-finish-20261021/reader7ef-prior88-preservation.json",
+          "limit": "Only original named supported or NOT_READY scope preserved; original author/reviewer/checks/summary/limits/verdict/gate/requirement IDs remain immutable. No new count, global qualification or release grant."
         }
       ]
     },
     {
       "id": "AP09-complete-same-source-code-preview-20261021",
-      "revision": "1fc619b56359e964f5fb8de382cf41367ab7c627",
+      "revision": "7ef16585ba04eba3628cead304be85307436f091",
       "author": "Nova /root documentation author and implementation coordinator",
       "reviewer": "Independent Codex autoreview whole PUB004 Source/Reader/Quality closeout plus narrow changed-boundary preservation for21priorPASSrecords",
       "verdict": "PASS",
@@ -11504,12 +11935,25 @@
           "summary": "Original MNT017 or bounded Reader claim preserved: exact new external-CI analysis reachability is separate from runtime/native/package authority; fresh physical proof precedes graph/direct-role caches, ordinary full graph/entry/alias/public/module/operation/unresolved guards remain. Seven exact binding values correspond only to independently reviewed0ded caller/consumer deltas, not selector/fact/role acceptance.",
           "report": "handoffs/pr13-finish-20261021/post0ded-ci-six-review.json",
           "limit": "Reader remains observed0ded, not a newHEADbuild. Actual graph/facts/globalqualification/newroleDATA remain pending; no new counts."
+        },
+        {
+          "previousReviewedRevision": "1fc619b56359e964f5fb8de382cf41367ab7c627",
+          "revision": "7ef16585ba04eba3628cead304be85307436f091",
+          "changedDependencies": [
+            "scripts/docs-api-documentation-role-custody.mjs",
+            "scripts/docs-publication.mjs"
+          ],
+          "reviewer": "/root/operator_acceptance",
+          "verdict": "PASS",
+          "summary": "Within this original declared scope, the exact recent changed paths are individually bound to the coherent semantic/consumer review above; unchanged named original product mechanisms and original limits remain supported. These are purpose/content preservation decisions, not hash-only source refresh or a new full transitive product audit. Actual7ef177canonical/187HTML/240outputs normal artifact and complete local/source/excerpt/diagram checks are terminal0; current two normal419file builds byte-equal; exact declared route/source metadata checked. All531page and1233box observations preserve noJS/native fields/links/containment; initial6titlemeasurement failures retained and exact6case retake passes. Whole search12 plus actualoffline2, real240GET preview and forensic242member/19Sourceasset ZIP/extracted checks preserve only original reader scope. Four selected320px visual views are explicitly limited, not full accessibility/freshpersona proof. Original technical meaning, negative-vs-execution distinction, historical/revision/live limits and reader-task decisions retained via named nonauthor topic/delta reviews. No removed condition or broader authority was hidden by field completion. Existing historical failure/unexecuted/native/global configuration stops stay unchanged.",
+          "report": "handoffs/pr13-finish-20261021/reader7ef-prior88-preservation.json",
+          "limit": "Only original named supported or NOT_READY scope preserved; original author/reviewer/checks/summary/limits/verdict/gate/requirement IDs remain immutable. No new count, global qualification or release grant."
         }
       ]
     },
     {
       "id": "AP09-complete-responsive-reader-layout-20261021",
-      "revision": "1fc619b56359e964f5fb8de382cf41367ab7c627",
+      "revision": "7ef16585ba04eba3628cead304be85307436f091",
       "author": "Nova /root documentation author and implementation coordinator",
       "reviewer": "Independent Codex autoreview whole A91207 responsive-layout closeout and narrow24-record prior-boundary preservation",
       "verdict": "PASS",
@@ -11834,12 +12278,25 @@
           "summary": "Original MNT017 or bounded Reader claim preserved: exact new external-CI analysis reachability is separate from runtime/native/package authority; fresh physical proof precedes graph/direct-role caches, ordinary full graph/entry/alias/public/module/operation/unresolved guards remain. Seven exact binding values correspond only to independently reviewed0ded caller/consumer deltas, not selector/fact/role acceptance.",
           "report": "handoffs/pr13-finish-20261021/post0ded-ci-six-review.json",
           "limit": "Reader remains observed0ded, not a newHEADbuild. Actual graph/facts/globalqualification/newroleDATA remain pending; no new counts."
+        },
+        {
+          "previousReviewedRevision": "1fc619b56359e964f5fb8de382cf41367ab7c627",
+          "revision": "7ef16585ba04eba3628cead304be85307436f091",
+          "changedDependencies": [
+            "scripts/docs-api-documentation-role-custody.mjs",
+            "scripts/docs-publication.mjs"
+          ],
+          "reviewer": "/root/operator_acceptance",
+          "verdict": "PASS",
+          "summary": "Within this original declared scope, the exact recent changed paths are individually bound to the coherent semantic/consumer review above; unchanged named original product mechanisms and original limits remain supported. These are purpose/content preservation decisions, not hash-only source refresh or a new full transitive product audit. Actual7ef177canonical/187HTML/240outputs normal artifact and complete local/source/excerpt/diagram checks are terminal0; current two normal419file builds byte-equal; exact declared route/source metadata checked. All531page and1233box observations preserve noJS/native fields/links/containment; initial6titlemeasurement failures retained and exact6case retake passes. Whole search12 plus actualoffline2, real240GET preview and forensic242member/19Sourceasset ZIP/extracted checks preserve only original reader scope. Four selected320px visual views are explicitly limited, not full accessibility/freshpersona proof. Original technical meaning, negative-vs-execution distinction, historical/revision/live limits and reader-task decisions retained via named nonauthor topic/delta reviews. No removed condition or broader authority was hidden by field completion. Existing historical failure/unexecuted/native/global configuration stops stay unchanged.",
+          "report": "handoffs/pr13-finish-20261021/reader7ef-prior88-preservation.json",
+          "limit": "Only original named supported or NOT_READY scope preserved; original author/reviewer/checks/summary/limits/verdict/gate/requirement IDs remain immutable. No new count, global qualification or release grant."
         }
       ]
     },
     {
       "id": "AP09-complete-source-backed-diagrams-20261021",
-      "revision": "0ded6b68eb6170c4ea5e76251ad5e13adf2f664b",
+      "revision": "7ef16585ba04eba3628cead304be85307436f091",
       "author": "Nova /root documentation author and coordinator",
       "reviewer": "Independent Codex diagram_services whole-topic review coordinating independent source reviews; no content authorship",
       "gateIds": [
@@ -12058,6 +12515,25 @@
           "summary": "Diagram implementation, registry, questions, owners and alternatives are unchanged. Added Source fields preserve existing authorities, including design versus generation/native execution and public-web blocked admission. New renderer layout export does not change diagram composition. Actual frozen Reader/2normalbuilds and output/Git inspection separately witnessed; historical checks and original scopes/limits remain unchanged.",
           "report": "handoffs/pr13-finish-20261021/a91211-final-57-preservation.json",
           "limit": "Existing named scope preserved only; no new count or globalqualification/runtime/release approval."
+        },
+        {
+          "previousReviewedRevision": "0ded6b68eb6170c4ea5e76251ad5e13adf2f664b",
+          "revision": "7ef16585ba04eba3628cead304be85307436f091",
+          "changedDependencies": [
+            "docs/site/extend/README.md",
+            "docs/site/understand/components-and-authority.md",
+            "docs/site/understand/deployment-and-trust.md",
+            "docs/site/understand/pipeline-dependencies.md",
+            "docs/site/understand/prism.md",
+            "docs/site/understand/request-state-recovery.md",
+            "docs/site/understand/security-and-trust.md",
+            "scripts/docs-publication.mjs"
+          ],
+          "reviewer": "/root/operator_acceptance",
+          "verdict": "PASS",
+          "summary": "Within this original declared scope, the exact recent changed paths are individually bound to the coherent semantic/consumer review above; unchanged named original product mechanisms and original limits remain supported. These are purpose/content preservation decisions, not hash-only source refresh or a new full transitive product audit. Actual7ef177canonical/187HTML/240outputs normal artifact and complete local/source/excerpt/diagram checks are terminal0; current two normal419file builds byte-equal; exact declared route/source metadata checked. All531page and1233box observations preserve noJS/native fields/links/containment; initial6titlemeasurement failures retained and exact6case retake passes. Whole search12 plus actualoffline2, real240GET preview and forensic242member/19Sourceasset ZIP/extracted checks preserve only original reader scope. Four selected320px visual views are explicitly limited, not full accessibility/freshpersona proof. Original technical meaning, negative-vs-execution distinction, historical/revision/live limits and reader-task decisions retained via named nonauthor topic/delta reviews. No removed condition or broader authority was hidden by field completion. Existing historical failure/unexecuted/native/global configuration stops stay unchanged.",
+          "report": "handoffs/pr13-finish-20261021/reader7ef-prior88-preservation.json",
+          "limit": "Only original named supported or NOT_READY scope preserved; original author/reviewer/checks/summary/limits/verdict/gate/requirement IDs remain immutable. No new count, global qualification or release grant."
         }
       ]
     },
@@ -12238,7 +12714,7 @@
     },
     {
       "id": "AP09-whole-trust-and-spiffe-contract-20261021",
-      "revision": "0ded6b68eb6170c4ea5e76251ad5e13adf2f664b",
+      "revision": "7ef16585ba04eba3628cead304be85307436f091",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/operator_acceptance",
       "gateIds": [
@@ -12325,6 +12801,20 @@
           "summary": "Communication fields retain proxy identity versus Core grants/fences and loopback/deployed-enforcement limits. No trust/RBAC source changed; Ops same-token correction occurs in a related page and does not create a separate credential. Actual frozen Reader/2normalbuilds and output/Git inspection separately witnessed; historical checks and original scopes/limits remain unchanged.",
           "report": "handoffs/pr13-finish-20261021/a91211-final-57-preservation.json",
           "limit": "Existing named scope preserved only; no new count or globalqualification/runtime/release approval."
+        },
+        {
+          "previousReviewedRevision": "0ded6b68eb6170c4ea5e76251ad5e13adf2f664b",
+          "revision": "7ef16585ba04eba3628cead304be85307436f091",
+          "changedDependencies": [
+            "docs/site/understand/deployment-and-trust.md",
+            "docs/site/understand/security-and-trust.md",
+            "docs/site/use/worker-trust.md"
+          ],
+          "reviewer": "/root/operator_acceptance",
+          "verdict": "PASS",
+          "summary": "Within this original declared scope, the exact recent changed paths are individually bound to the coherent semantic/consumer review above; unchanged named original product mechanisms and original limits remain supported. These are purpose/content preservation decisions, not hash-only source refresh or a new full transitive product audit. Actual7ef177canonical/187HTML/240outputs normal artifact and complete local/source/excerpt/diagram checks are terminal0; current two normal419file builds byte-equal; exact declared route/source metadata checked. All531page and1233box observations preserve noJS/native fields/links/containment; initial6titlemeasurement failures retained and exact6case retake passes. Whole search12 plus actualoffline2, real240GET preview and forensic242member/19Sourceasset ZIP/extracted checks preserve only original reader scope. Four selected320px visual views are explicitly limited, not full accessibility/freshpersona proof. Original technical meaning, negative-vs-execution distinction, historical/revision/live limits and reader-task decisions retained via named nonauthor topic/delta reviews. No removed condition or broader authority was hidden by field completion. Existing historical failure/unexecuted/native/global configuration stops stay unchanged.",
+          "report": "handoffs/pr13-finish-20261021/reader7ef-prior88-preservation.json",
+          "limit": "Only original named supported or NOT_READY scope preserved; original author/reviewer/checks/summary/limits/verdict/gate/requirement IDs remain immutable. No new count, global qualification or release grant."
         }
       ]
     },
@@ -12403,7 +12893,7 @@
     },
     {
       "id": "AP09-whole-install-and-readiness-20261021",
-      "revision": "0e35889a3c4e65d5c47ba88e924611aace67eb1d",
+      "revision": "7ef16585ba04eba3628cead304be85307436f091",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/operator_acceptance",
       "gateIds": [
@@ -12454,7 +12944,21 @@
         "Parallel custody-metadata and negative-test corrections do not alter reviewed named product-source claims; changes to those sources or reader claims require bounded impact review. Unrelated whole-source generator/source-pin failures are not passed checks here."
       ],
       "openIssues": [],
-      "verdict": "PASS"
+      "verdict": "PASS",
+      "impactReviews": [
+        {
+          "previousReviewedRevision": "0e35889a3c4e65d5c47ba88e924611aace67eb1d",
+          "revision": "7ef16585ba04eba3628cead304be85307436f091",
+          "changedDependencies": [
+            "docs/site/use/worker-trust.md"
+          ],
+          "reviewer": "/root/operator_acceptance",
+          "verdict": "PASS",
+          "summary": "Within this original declared scope, the exact recent changed paths are individually bound to the coherent semantic/consumer review above; unchanged named original product mechanisms and original limits remain supported. These are purpose/content preservation decisions, not hash-only source refresh or a new full transitive product audit. Actual7ef177canonical/187HTML/240outputs normal artifact and complete local/source/excerpt/diagram checks are terminal0; current two normal419file builds byte-equal; exact declared route/source metadata checked. All531page and1233box observations preserve noJS/native fields/links/containment; initial6titlemeasurement failures retained and exact6case retake passes. Whole search12 plus actualoffline2, real240GET preview and forensic242member/19Sourceasset ZIP/extracted checks preserve only original reader scope. Four selected320px visual views are explicitly limited, not full accessibility/freshpersona proof. Original technical meaning, negative-vs-execution distinction, historical/revision/live limits and reader-task decisions retained via named nonauthor topic/delta reviews. No removed condition or broader authority was hidden by field completion. Existing historical failure/unexecuted/native/global configuration stops stay unchanged.",
+          "report": "handoffs/pr13-finish-20261021/reader7ef-prior88-preservation.json",
+          "limit": "Only original named supported or NOT_READY scope preserved; original author/reviewer/checks/summary/limits/verdict/gate/requirement IDs remain immutable. No new count, global qualification or release grant."
+        }
+      ]
     },
     {
       "id": "AP09-whole-upgrade-and-retirement-20261021",
@@ -12686,7 +13190,7 @@
     },
     {
       "id": "A99-02-whole-content-20261021",
-      "revision": "0ded6b68eb6170c4ea5e76251ad5e13adf2f664b",
+      "revision": "7ef16585ba04eba3628cead304be85307436f091",
       "author": "PR13 documentation contributors",
       "reviewer": "/root/workflow_acceptance",
       "gateIds": [
@@ -12775,12 +13279,24 @@
           "summary": "Nova evidence fields preserve compile ordering/defaults/registry/role/matrix/gates and immutable identity. Corrected effect summary is nonchronological and does not change compiler semantics. Actual frozen Reader/2normalbuilds and output/Git inspection separately witnessed; historical checks and original scopes/limits remain unchanged.",
           "report": "handoffs/pr13-finish-20261021/a91211-final-57-preservation.json",
           "limit": "Existing named scope preserved only; no new count or globalqualification/runtime/release approval."
+        },
+        {
+          "previousReviewedRevision": "0ded6b68eb6170c4ea5e76251ad5e13adf2f664b",
+          "revision": "7ef16585ba04eba3628cead304be85307436f091",
+          "changedDependencies": [
+            "docs/site/reference/nova-project.md"
+          ],
+          "reviewer": "/root/operator_acceptance",
+          "verdict": "PASS",
+          "summary": "Within this original declared scope, the exact recent changed paths are individually bound to the coherent semantic/consumer review above; unchanged named original product mechanisms and original limits remain supported. These are purpose/content preservation decisions, not hash-only source refresh or a new full transitive product audit. Actual7ef177canonical/187HTML/240outputs normal artifact and complete local/source/excerpt/diagram checks are terminal0; current two normal419file builds byte-equal; exact declared route/source metadata checked. All531page and1233box observations preserve noJS/native fields/links/containment; initial6titlemeasurement failures retained and exact6case retake passes. Whole search12 plus actualoffline2, real240GET preview and forensic242member/19Sourceasset ZIP/extracted checks preserve only original reader scope. Four selected320px visual views are explicitly limited, not full accessibility/freshpersona proof. Original technical meaning, negative-vs-execution distinction, historical/revision/live limits and reader-task decisions retained via named nonauthor topic/delta reviews. No removed condition or broader authority was hidden by field completion. Existing historical failure/unexecuted/native/global configuration stops stay unchanged.",
+          "report": "handoffs/pr13-finish-20261021/reader7ef-prior88-preservation.json",
+          "limit": "Only original named supported or NOT_READY scope preserved; original author/reviewer/checks/summary/limits/verdict/gate/requirement IDs remain immutable. No new count, global qualification or release grant."
         }
       ]
     },
     {
       "id": "A99-03-whole-content-20261021",
-      "revision": "d0bb52c4d8bcf323c0ff32b95e8e3120ffa6eefb",
+      "revision": "7ef16585ba04eba3628cead304be85307436f091",
       "author": "PR13 documentation contributors",
       "reviewer": "/root/workflow_acceptance",
       "gateIds": [
@@ -12852,6 +13368,18 @@
           "reviewer": "Scope-aware independent union: original topic reviewers; operator_acceptance checkpoint53; custody_review maintenance locator correction; /root independent authored package/telemetry/pin scopes",
           "verdict": "PASS",
           "summary": "Only changed dependencies preserved against the named independent topic reports and actual d0bb Reader. Original summary and limitations retained; no duplicate or aggregate/release approval."
+        },
+        {
+          "previousReviewedRevision": "d0bb52c4d8bcf323c0ff32b95e8e3120ffa6eefb",
+          "revision": "7ef16585ba04eba3628cead304be85307436f091",
+          "changedDependencies": [
+            "docs/site/reference/nova-project.md"
+          ],
+          "reviewer": "/root/operator_acceptance",
+          "verdict": "PASS",
+          "summary": "Within this original declared scope, the exact recent changed paths are individually bound to the coherent semantic/consumer review above; unchanged named original product mechanisms and original limits remain supported. These are purpose/content preservation decisions, not hash-only source refresh or a new full transitive product audit. Actual7ef177canonical/187HTML/240outputs normal artifact and complete local/source/excerpt/diagram checks are terminal0; current two normal419file builds byte-equal; exact declared route/source metadata checked. All531page and1233box observations preserve noJS/native fields/links/containment; initial6titlemeasurement failures retained and exact6case retake passes. Whole search12 plus actualoffline2, real240GET preview and forensic242member/19Sourceasset ZIP/extracted checks preserve only original reader scope. Four selected320px visual views are explicitly limited, not full accessibility/freshpersona proof. Original technical meaning, negative-vs-execution distinction, historical/revision/live limits and reader-task decisions retained via named nonauthor topic/delta reviews. No removed condition or broader authority was hidden by field completion. Existing historical failure/unexecuted/native/global configuration stops stay unchanged.",
+          "report": "handoffs/pr13-finish-20261021/reader7ef-prior88-preservation.json",
+          "limit": "Only original named supported or NOT_READY scope preserved; original author/reviewer/checks/summary/limits/verdict/gate/requirement IDs remain immutable. No new count, global qualification or release grant."
         }
       ]
     },
@@ -12926,7 +13454,7 @@
     },
     {
       "id": "A99-05-whole-content-20261021",
-      "revision": "d0bb52c4d8bcf323c0ff32b95e8e3120ffa6eefb",
+      "revision": "7ef16585ba04eba3628cead304be85307436f091",
       "author": "PR13 documentation contributors",
       "reviewer": "/root/workflow_acceptance",
       "gateIds": [
@@ -12995,6 +13523,18 @@
           "reviewer": "Scope-aware independent union: original topic reviewers; operator_acceptance checkpoint53; custody_review maintenance locator correction; /root independent authored package/telemetry/pin scopes",
           "verdict": "PASS",
           "summary": "Only changed dependencies preserved against the named independent topic reports and actual d0bb Reader. Original summary and limitations retained; no duplicate or aggregate/release approval."
+        },
+        {
+          "previousReviewedRevision": "d0bb52c4d8bcf323c0ff32b95e8e3120ffa6eefb",
+          "revision": "7ef16585ba04eba3628cead304be85307436f091",
+          "changedDependencies": [
+            "docs/site/reference/nova-project.md"
+          ],
+          "reviewer": "/root/operator_acceptance",
+          "verdict": "PASS",
+          "summary": "Within this original declared scope, the exact recent changed paths are individually bound to the coherent semantic/consumer review above; unchanged named original product mechanisms and original limits remain supported. These are purpose/content preservation decisions, not hash-only source refresh or a new full transitive product audit. Actual7ef177canonical/187HTML/240outputs normal artifact and complete local/source/excerpt/diagram checks are terminal0; current two normal419file builds byte-equal; exact declared route/source metadata checked. All531page and1233box observations preserve noJS/native fields/links/containment; initial6titlemeasurement failures retained and exact6case retake passes. Whole search12 plus actualoffline2, real240GET preview and forensic242member/19Sourceasset ZIP/extracted checks preserve only original reader scope. Four selected320px visual views are explicitly limited, not full accessibility/freshpersona proof. Original technical meaning, negative-vs-execution distinction, historical/revision/live limits and reader-task decisions retained via named nonauthor topic/delta reviews. No removed condition or broader authority was hidden by field completion. Existing historical failure/unexecuted/native/global configuration stops stay unchanged.",
+          "report": "handoffs/pr13-finish-20261021/reader7ef-prior88-preservation.json",
+          "limit": "Only original named supported or NOT_READY scope preserved; original author/reviewer/checks/summary/limits/verdict/gate/requirement IDs remain immutable. No new count, global qualification or release grant."
         }
       ]
     },
@@ -13067,7 +13607,7 @@
     },
     {
       "id": "A910-11-whole-content-20261021",
-      "revision": "d0bb52c4d8bcf323c0ff32b95e8e3120ffa6eefb",
+      "revision": "7ef16585ba04eba3628cead304be85307436f091",
       "author": "PR13 documentation contributors",
       "reviewer": "/root/workflow_acceptance",
       "gateIds": [
@@ -13140,12 +13680,24 @@
           "reviewer": "Scope-aware independent union: original topic reviewers; operator_acceptance checkpoint53; custody_review maintenance locator correction; /root independent authored package/telemetry/pin scopes",
           "verdict": "PASS",
           "summary": "Only changed dependencies preserved against the named independent topic reports and actual d0bb Reader. Original summary and limitations retained; no duplicate or aggregate/release approval."
+        },
+        {
+          "previousReviewedRevision": "d0bb52c4d8bcf323c0ff32b95e8e3120ffa6eefb",
+          "revision": "7ef16585ba04eba3628cead304be85307436f091",
+          "changedDependencies": [
+            "docs/site/extend/platform/prism.md"
+          ],
+          "reviewer": "/root/operator_acceptance",
+          "verdict": "PASS",
+          "summary": "Within this original declared scope, the exact recent changed paths are individually bound to the coherent semantic/consumer review above; unchanged named original product mechanisms and original limits remain supported. These are purpose/content preservation decisions, not hash-only source refresh or a new full transitive product audit. Actual7ef177canonical/187HTML/240outputs normal artifact and complete local/source/excerpt/diagram checks are terminal0; current two normal419file builds byte-equal; exact declared route/source metadata checked. All531page and1233box observations preserve noJS/native fields/links/containment; initial6titlemeasurement failures retained and exact6case retake passes. Whole search12 plus actualoffline2, real240GET preview and forensic242member/19Sourceasset ZIP/extracted checks preserve only original reader scope. Four selected320px visual views are explicitly limited, not full accessibility/freshpersona proof. Original technical meaning, negative-vs-execution distinction, historical/revision/live limits and reader-task decisions retained via named nonauthor topic/delta reviews. No removed condition or broader authority was hidden by field completion. Existing historical failure/unexecuted/native/global configuration stops stay unchanged.",
+          "report": "handoffs/pr13-finish-20261021/reader7ef-prior88-preservation.json",
+          "limit": "Only original named supported or NOT_READY scope preserved; original author/reviewer/checks/summary/limits/verdict/gate/requirement IDs remain immutable. No new count, global qualification or release grant."
         }
       ]
     },
     {
       "id": "A99-01-whole-recursive-input-content-20261021",
-      "revision": "d0bb52c4d8bcf323c0ff32b95e8e3120ffa6eefb",
+      "revision": "7ef16585ba04eba3628cead304be85307436f091",
       "author": "PR13 documentation contributors; parent lint-wording correction",
       "reviewer": "/root/workflow_acceptance",
       "gateIds": [
@@ -13235,12 +13787,24 @@
           "reviewer": "Scope-aware independent union: original topic reviewers; operator_acceptance checkpoint53; custody_review maintenance locator correction; /root independent authored package/telemetry/pin scopes",
           "verdict": "PASS",
           "summary": "Only changed dependencies preserved against the named independent topic reports and actual d0bb Reader. Original summary and limitations retained; no duplicate or aggregate/release approval."
+        },
+        {
+          "previousReviewedRevision": "d0bb52c4d8bcf323c0ff32b95e8e3120ffa6eefb",
+          "revision": "7ef16585ba04eba3628cead304be85307436f091",
+          "changedDependencies": [
+            "docs/site/reference/nova-project.md"
+          ],
+          "reviewer": "/root/operator_acceptance",
+          "verdict": "PASS",
+          "summary": "Within this original declared scope, the exact recent changed paths are individually bound to the coherent semantic/consumer review above; unchanged named original product mechanisms and original limits remain supported. These are purpose/content preservation decisions, not hash-only source refresh or a new full transitive product audit. Actual7ef177canonical/187HTML/240outputs normal artifact and complete local/source/excerpt/diagram checks are terminal0; current two normal419file builds byte-equal; exact declared route/source metadata checked. All531page and1233box observations preserve noJS/native fields/links/containment; initial6titlemeasurement failures retained and exact6case retake passes. Whole search12 plus actualoffline2, real240GET preview and forensic242member/19Sourceasset ZIP/extracted checks preserve only original reader scope. Four selected320px visual views are explicitly limited, not full accessibility/freshpersona proof. Original technical meaning, negative-vs-execution distinction, historical/revision/live limits and reader-task decisions retained via named nonauthor topic/delta reviews. No removed condition or broader authority was hidden by field completion. Existing historical failure/unexecuted/native/global configuration stops stay unchanged.",
+          "report": "handoffs/pr13-finish-20261021/reader7ef-prior88-preservation.json",
+          "limit": "Only original named supported or NOT_READY scope preserved; original author/reviewer/checks/summary/limits/verdict/gate/requirement IDs remain immutable. No new count, global qualification or release grant."
         }
       ]
     },
     {
       "id": "AP09-whole-current-communication-union-20261021-d477",
-      "revision": "0ded6b68eb6170c4ea5e76251ad5e13adf2f664b",
+      "revision": "7ef16585ba04eba3628cead304be85307436f091",
       "author": "Documentation authors and correction coordinator; /root/operator_acceptance for399d bounded corrections",
       "reviewer": "/root/operator_acceptance (remaining whole-topic Source and semantic Reader review); /root (independent399d corrections, finite source-pin repair and d477 HTTP-package corrections)",
       "gateIds": [
@@ -13395,6 +13959,18 @@
           "summary": "Communication/platform fields preserve all original owner-group protocol/auth/deadline/order/durable-pressure distinctions. Generic runtime and signed HTTP publisher uncertainties still resolve at original identity/receiver; no OpenClaw cancel or Redis replay substitute. Actual frozen Reader/2normalbuilds and output/Git inspection separately witnessed; historical checks and original scopes/limits remain unchanged.",
           "report": "handoffs/pr13-finish-20261021/a91211-final-57-preservation.json",
           "limit": "Existing named scope preserved only; no new count or globalqualification/runtime/release approval."
+        },
+        {
+          "previousReviewedRevision": "0ded6b68eb6170c4ea5e76251ad5e13adf2f664b",
+          "revision": "7ef16585ba04eba3628cead304be85307436f091",
+          "changedDependencies": [
+            "docs/site/understand/security-and-trust.md"
+          ],
+          "reviewer": "/root/operator_acceptance",
+          "verdict": "PASS",
+          "summary": "Within this original declared scope, the exact recent changed paths are individually bound to the coherent semantic/consumer review above; unchanged named original product mechanisms and original limits remain supported. These are purpose/content preservation decisions, not hash-only source refresh or a new full transitive product audit. Actual7ef177canonical/187HTML/240outputs normal artifact and complete local/source/excerpt/diagram checks are terminal0; current two normal419file builds byte-equal; exact declared route/source metadata checked. All531page and1233box observations preserve noJS/native fields/links/containment; initial6titlemeasurement failures retained and exact6case retake passes. Whole search12 plus actualoffline2, real240GET preview and forensic242member/19Sourceasset ZIP/extracted checks preserve only original reader scope. Four selected320px visual views are explicitly limited, not full accessibility/freshpersona proof. Original technical meaning, negative-vs-execution distinction, historical/revision/live limits and reader-task decisions retained via named nonauthor topic/delta reviews. No removed condition or broader authority was hidden by field completion. Existing historical failure/unexecuted/native/global configuration stops stay unchanged.",
+          "report": "handoffs/pr13-finish-20261021/reader7ef-prior88-preservation.json",
+          "limit": "Only original named supported or NOT_READY scope preserved; original author/reviewer/checks/summary/limits/verdict/gate/requirement IDs remain immutable. No new count, global qualification or release grant."
         }
       ]
     },
@@ -13545,7 +14121,7 @@
     },
     {
       "id": "AP09-whole-independent-platform-decision-review-20261021-d477",
-      "revision": "0ded6b68eb6170c4ea5e76251ad5e13adf2f664b",
+      "revision": "7ef16585ba04eba3628cead304be85307436f091",
       "author": "Documentation authors and correction coordinator; /root/operator_acceptance for399d bounded corrections",
       "reviewer": "/root/operator_acceptance (remaining whole-topic Source and semantic Reader review); /root (independent399d corrections, finite source-pin repair and d477 HTTP-package corrections)",
       "gateIds": [
@@ -13832,12 +14408,24 @@
           "summary": "Four-page fields preserve dependency classification, safe repair and original uncertain-outcome authority. Shared Ops credential correction agrees with existing workload/RBAC, not a new effective-isolation guarantee. Actual frozen Reader/2normalbuilds and output/Git inspection separately witnessed; historical checks and original scopes/limits remain unchanged.",
           "report": "handoffs/pr13-finish-20261021/a91211-final-57-preservation.json",
           "limit": "Existing named scope preserved only; no new count or globalqualification/runtime/release approval."
+        },
+        {
+          "previousReviewedRevision": "0ded6b68eb6170c4ea5e76251ad5e13adf2f664b",
+          "revision": "7ef16585ba04eba3628cead304be85307436f091",
+          "changedDependencies": [
+            "docs/site/understand/security-and-trust.md"
+          ],
+          "reviewer": "/root/operator_acceptance",
+          "verdict": "PASS",
+          "summary": "Within this original declared scope, the exact recent changed paths are individually bound to the coherent semantic/consumer review above; unchanged named original product mechanisms and original limits remain supported. These are purpose/content preservation decisions, not hash-only source refresh or a new full transitive product audit. Actual7ef177canonical/187HTML/240outputs normal artifact and complete local/source/excerpt/diagram checks are terminal0; current two normal419file builds byte-equal; exact declared route/source metadata checked. All531page and1233box observations preserve noJS/native fields/links/containment; initial6titlemeasurement failures retained and exact6case retake passes. Whole search12 plus actualoffline2, real240GET preview and forensic242member/19Sourceasset ZIP/extracted checks preserve only original reader scope. Four selected320px visual views are explicitly limited, not full accessibility/freshpersona proof. Original technical meaning, negative-vs-execution distinction, historical/revision/live limits and reader-task decisions retained via named nonauthor topic/delta reviews. No removed condition or broader authority was hidden by field completion. Existing historical failure/unexecuted/native/global configuration stops stay unchanged.",
+          "report": "handoffs/pr13-finish-20261021/reader7ef-prior88-preservation.json",
+          "limit": "Only original named supported or NOT_READY scope preserved; original author/reviewer/checks/summary/limits/verdict/gate/requirement IDs remain immutable. No new count, global qualification or release grant."
         }
       ]
     },
     {
       "id": "AP09-reference-network-paths-80178-20261021",
-      "revision": "0ded6b68eb6170c4ea5e76251ad5e13adf2f664b",
+      "revision": "7ef16585ba04eba3628cead304be85307436f091",
       "author": "Documentation authors; /root/operator_acceptance for separately independently reviewed bounded corrections",
       "reviewer": "/root/operator_acceptance (whole remaining reference topic); /root (independent399d and d477 authored corrections), /root/custody_review (unchanged Worker/package constituent scope)",
       "gateIds": [],
@@ -13974,6 +14562,18 @@
           "summary": "Communication/platform fields preserve endpoint methods/identity/transport/time/pressure and original-owner recovery; generated network facts and product Sources remain unchanged. No live traffic, remote receiver or broad network test is implied. Actual frozen Reader/2normalbuilds and output/Git inspection separately witnessed; historical checks and original scopes/limits remain unchanged.",
           "report": "handoffs/pr13-finish-20261021/a91211-final-57-preservation.json",
           "limit": "Existing named scope preserved only; no new count or globalqualification/runtime/release approval."
+        },
+        {
+          "previousReviewedRevision": "0ded6b68eb6170c4ea5e76251ad5e13adf2f664b",
+          "revision": "7ef16585ba04eba3628cead304be85307436f091",
+          "changedDependencies": [
+            "docs/site/understand/security-and-trust.md"
+          ],
+          "reviewer": "/root/operator_acceptance",
+          "verdict": "PASS",
+          "summary": "Within this original declared scope, the exact recent changed paths are individually bound to the coherent semantic/consumer review above; unchanged named original product mechanisms and original limits remain supported. These are purpose/content preservation decisions, not hash-only source refresh or a new full transitive product audit. Actual7ef177canonical/187HTML/240outputs normal artifact and complete local/source/excerpt/diagram checks are terminal0; current two normal419file builds byte-equal; exact declared route/source metadata checked. All531page and1233box observations preserve noJS/native fields/links/containment; initial6titlemeasurement failures retained and exact6case retake passes. Whole search12 plus actualoffline2, real240GET preview and forensic242member/19Sourceasset ZIP/extracted checks preserve only original reader scope. Four selected320px visual views are explicitly limited, not full accessibility/freshpersona proof. Original technical meaning, negative-vs-execution distinction, historical/revision/live limits and reader-task decisions retained via named nonauthor topic/delta reviews. No removed condition or broader authority was hidden by field completion. Existing historical failure/unexecuted/native/global configuration stops stay unchanged.",
+          "report": "handoffs/pr13-finish-20261021/reader7ef-prior88-preservation.json",
+          "limit": "Only original named supported or NOT_READY scope preserved; original author/reviewer/checks/summary/limits/verdict/gate/requirement IDs remain immutable. No new count, global qualification or release grant."
         }
       ]
     },
@@ -14456,7 +15056,7 @@
       ]
     },
     {
-      "revision": "0ded6b68eb6170c4ea5e76251ad5e13adf2f664b",
+      "revision": "7ef16585ba04eba3628cead304be85307436f091",
       "author": "existing documentation authors",
       "reviewer": "/root/workflow_acceptance",
       "review": {
@@ -14539,6 +15139,19 @@
           "summary": "Plugin fields retain request-versus-grant, Core-only capability prohibition, credential/environment authority and redaction/isolation limits. Test language still disclaims combined/deployed-kernel proof; provider ACK is not accepted result. Actual frozen Reader/2normalbuilds and output/Git inspection separately witnessed; historical checks and original scopes/limits remain unchanged.",
           "report": "handoffs/pr13-finish-20261021/a91211-final-57-preservation.json",
           "limit": "Existing named scope preserved only; no new count or globalqualification/runtime/release approval."
+        },
+        {
+          "previousReviewedRevision": "0ded6b68eb6170c4ea5e76251ad5e13adf2f664b",
+          "revision": "7ef16585ba04eba3628cead304be85307436f091",
+          "changedDependencies": [
+            "docs/site/reference/capabilities.md",
+            "docs/site/understand/security-and-trust.md"
+          ],
+          "reviewer": "/root/operator_acceptance",
+          "verdict": "PASS",
+          "summary": "Within this original declared scope, the exact recent changed paths are individually bound to the coherent semantic/consumer review above; unchanged named original product mechanisms and original limits remain supported. These are purpose/content preservation decisions, not hash-only source refresh or a new full transitive product audit. Actual7ef177canonical/187HTML/240outputs normal artifact and complete local/source/excerpt/diagram checks are terminal0; current two normal419file builds byte-equal; exact declared route/source metadata checked. All531page and1233box observations preserve noJS/native fields/links/containment; initial6titlemeasurement failures retained and exact6case retake passes. Whole search12 plus actualoffline2, real240GET preview and forensic242member/19Sourceasset ZIP/extracted checks preserve only original reader scope. Four selected320px visual views are explicitly limited, not full accessibility/freshpersona proof. Original technical meaning, negative-vs-execution distinction, historical/revision/live limits and reader-task decisions retained via named nonauthor topic/delta reviews. No removed condition or broader authority was hidden by field completion. Existing historical failure/unexecuted/native/global configuration stops stay unchanged.",
+          "report": "handoffs/pr13-finish-20261021/reader7ef-prior88-preservation.json",
+          "limit": "Only original named supported or NOT_READY scope preserved; original author/reviewer/checks/summary/limits/verdict/gate/requirement IDs remain immutable. No new count, global qualification or release grant."
         }
       ]
     },
@@ -14711,7 +15324,7 @@
       ]
     },
     {
-      "revision": "d0bb52c4d8bcf323c0ff32b95e8e3120ffa6eefb",
+      "revision": "7ef16585ba04eba3628cead304be85307436f091",
       "author": "/root/workflow_acceptance",
       "reviewer": "/root",
       "pages": [
@@ -14782,11 +15395,25 @@
       "limits": [
         "Credits independent root source/reader/quality inspection and actual clean-checkout reproduction, not author selfacceptance.",
         "Local explicit-graph Core and local file telemetry only; not Nova project compilation, eight-stage implementation project, Forge, Buster/provider, Redis, image/cluster deployment, remote collector, human acceptance or release. No complete telemetry replay/failure suite inferred."
+      ],
+      "impactReviews": [
+        {
+          "previousReviewedRevision": "d0bb52c4d8bcf323c0ff32b95e8e3120ffa6eefb",
+          "revision": "7ef16585ba04eba3628cead304be85307436f091",
+          "changedDependencies": [
+            "docs/site/use/workflows/README.md"
+          ],
+          "reviewer": "/root/operator_acceptance",
+          "verdict": "PASS",
+          "summary": "Only earlier reviewed workflow README additions intersect the old revision: canonical workflow task/navigation additions and accepted scoped failure/HTTP/image/Tailnet routes, already covered by prior checkpoint preservation. No additional declared page/source changed after the latest reviewed checkpoint. No old claim/result is promoted. Actual7ef177canonical/187HTML/240outputs normal artifact and complete local/source/excerpt/diagram checks are terminal0; current two normal419file builds byte-equal; exact declared route/source metadata checked. All531page and1233box observations preserve noJS/native fields/links/containment; initial6titlemeasurement failures retained and exact6case retake passes. Whole search12 plus actualoffline2, real240GET preview and forensic242member/19Sourceasset ZIP/extracted checks preserve only original reader scope. Four selected320px visual views are explicitly limited, not full accessibility/freshpersona proof. Original technical meaning, negative-vs-execution distinction, historical/revision/live limits and reader-task decisions retained via named nonauthor topic/delta reviews. No removed condition or broader authority was hidden by field completion. Existing historical failure/unexecuted/native/global configuration stops stay unchanged.",
+          "report": "handoffs/pr13-finish-20261021/reader7ef-prior88-preservation.json",
+          "limit": "Only original named supported or NOT_READY scope preserved; original author/reviewer/checks/summary/limits/verdict/gate/requirement IDs remain immutable. No new count, global qualification or release grant."
+        }
       ]
     },
     {
       "id": "A99-07-representative-buster-workflow-content-20261021",
-      "revision": "cfc97be096908c1193877d054bb80662120f1eca",
+      "revision": "7ef16585ba04eba3628cead304be85307436f091",
       "author": "existing Buster workflow authors; package citation repair independently reviewed by root",
       "reviewer": "/root/workflow_acceptance",
       "gateIds": [
@@ -14861,12 +15488,24 @@
           ],
           "verdict": "PASS",
           "summary": "Exact original scope and limits preserved; no new approval. See checkpoint-cfc97-22-record-preservation and reader-cfc97-closeout."
+        },
+        {
+          "previousReviewedRevision": "cfc97be096908c1193877d054bb80662120f1eca",
+          "revision": "7ef16585ba04eba3628cead304be85307436f091",
+          "changedDependencies": [
+            "docs/site/reference/buster-runtime-configuration.md"
+          ],
+          "reviewer": "/root/operator_acceptance",
+          "verdict": "PASS",
+          "summary": "Within this original declared scope, the exact recent changed paths are individually bound to the coherent semantic/consumer review above; unchanged named original product mechanisms and original limits remain supported. These are purpose/content preservation decisions, not hash-only source refresh or a new full transitive product audit. Actual7ef177canonical/187HTML/240outputs normal artifact and complete local/source/excerpt/diagram checks are terminal0; current two normal419file builds byte-equal; exact declared route/source metadata checked. All531page and1233box observations preserve noJS/native fields/links/containment; initial6titlemeasurement failures retained and exact6case retake passes. Whole search12 plus actualoffline2, real240GET preview and forensic242member/19Sourceasset ZIP/extracted checks preserve only original reader scope. Four selected320px visual views are explicitly limited, not full accessibility/freshpersona proof. Original technical meaning, negative-vs-execution distinction, historical/revision/live limits and reader-task decisions retained via named nonauthor topic/delta reviews. No removed condition or broader authority was hidden by field completion. Existing historical failure/unexecuted/native/global configuration stops stay unchanged.",
+          "report": "handoffs/pr13-finish-20261021/reader7ef-prior88-preservation.json",
+          "limit": "Only original named supported or NOT_READY scope preserved; original author/reviewer/checks/summary/limits/verdict/gate/requirement IDs remain immutable. No new count, global qualification or release grant."
         }
       ]
     },
     {
       "id": "REF010-current-contract-directions-20261021",
-      "revision": "af1b987ee4d461fc6205a18553db3e21461ca203",
+      "revision": "7ef16585ba04eba3628cead304be85307436f091",
       "author": "/root/operator_acceptance; existing contract topic authors",
       "reviewer": "/root independent Source/Reader/quality",
       "gateIds": [],
@@ -14943,6 +15582,20 @@
       "summary": "Whole authored compatibility hub distinguishes logical/package/API/content/schema/record/encoding/migration identity; existing9overview families corrected;16actual selected-reader/version/normalization/rejection groups and9canonical owner groups explain supported write/read/recovery/reject directions, retained schema-only and external-reader boundaries. Source/reader review reconciles25observed multi-version stems through actual producer/reader branches; four publisher states are distinct records, not four versions or whole-contract coverage alone. Unsupported migration/downgrade/retirement stays explicit and routed to exact owner.",
       "limits": [
         "Content reference PASS, not global schema/config-generation freshness, absent external readers, universal compatibility, conversion, deployed upgrade, live migration/retirement/recovery or aggregate reference/release acceptance. Exact fields remain with canonical schema authorities."
+      ],
+      "impactReviews": [
+        {
+          "previousReviewedRevision": "af1b987ee4d461fc6205a18553db3e21461ca203",
+          "revision": "7ef16585ba04eba3628cead304be85307436f091",
+          "changedDependencies": [
+            "docs/site/reference/contracts.md"
+          ],
+          "reviewer": "/root/operator_acceptance",
+          "verdict": "PASS",
+          "summary": "Within this original declared scope, the exact recent changed paths are individually bound to the coherent semantic/consumer review above; unchanged named original product mechanisms and original limits remain supported. These are purpose/content preservation decisions, not hash-only source refresh or a new full transitive product audit. Actual7ef177canonical/187HTML/240outputs normal artifact and complete local/source/excerpt/diagram checks are terminal0; current two normal419file builds byte-equal; exact declared route/source metadata checked. All531page and1233box observations preserve noJS/native fields/links/containment; initial6titlemeasurement failures retained and exact6case retake passes. Whole search12 plus actualoffline2, real240GET preview and forensic242member/19Sourceasset ZIP/extracted checks preserve only original reader scope. Four selected320px visual views are explicitly limited, not full accessibility/freshpersona proof. Original technical meaning, negative-vs-execution distinction, historical/revision/live limits and reader-task decisions retained via named nonauthor topic/delta reviews. No removed condition or broader authority was hidden by field completion. Existing historical failure/unexecuted/native/global configuration stops stay unchanged.",
+          "report": "handoffs/pr13-finish-20261021/reader7ef-prior88-preservation.json",
+          "limit": "Only original named supported or NOT_READY scope preserved; original author/reviewer/checks/summary/limits/verdict/gate/requirement IDs remain immutable. No new count, global qualification or release grant."
+        }
       ]
     },
     {
@@ -15259,7 +15912,7 @@
     },
     {
       "id": "A99-08-complete-supported-failure-journey-union-20261021",
-      "revision": "0ded6b68eb6170c4ea5e76251ad5e13adf2f664b",
+      "revision": "7ef16585ba04eba3628cead304be85307436f091",
       "author": "Documentation topic authors and integration coordinator",
       "reviewer": "Independent topic-review union: operator_acceptance (new Redis/Worker topics); original independent Codex topic reviewers (registry/Tailnet diagnosis); workflow_acceptance (uncertain-effect/Demo); root nonauthor (BuildKit/Tailnet task guides)",
       "gateIds": [
@@ -15401,12 +16054,25 @@
           "summary": "Nova/Plugin evidence fields leave the six routed failure procedures and native/live unavailable controls intact. Safe stop, original identity, owner, follow-up and cleanup remain; added source summaries are not fresh task execution. Actual frozen Reader/2normalbuilds and output/Git inspection separately witnessed; historical checks and original scopes/limits remain unchanged.",
           "report": "handoffs/pr13-finish-20261021/a91211-final-57-preservation.json",
           "limit": "Existing named scope preserved only; no new count or globalqualification/runtime/release approval."
+        },
+        {
+          "previousReviewedRevision": "0ded6b68eb6170c4ea5e76251ad5e13adf2f664b",
+          "revision": "7ef16585ba04eba3628cead304be85307436f091",
+          "changedDependencies": [
+            "docs/site/reference/capabilities.md",
+            "docs/site/reference/nova-project.md"
+          ],
+          "reviewer": "/root/operator_acceptance",
+          "verdict": "PASS",
+          "summary": "Within this original declared scope, the exact recent changed paths are individually bound to the coherent semantic/consumer review above; unchanged named original product mechanisms and original limits remain supported. These are purpose/content preservation decisions, not hash-only source refresh or a new full transitive product audit. Actual7ef177canonical/187HTML/240outputs normal artifact and complete local/source/excerpt/diagram checks are terminal0; current two normal419file builds byte-equal; exact declared route/source metadata checked. All531page and1233box observations preserve noJS/native fields/links/containment; initial6titlemeasurement failures retained and exact6case retake passes. Whole search12 plus actualoffline2, real240GET preview and forensic242member/19Sourceasset ZIP/extracted checks preserve only original reader scope. Four selected320px visual views are explicitly limited, not full accessibility/freshpersona proof. Original technical meaning, negative-vs-execution distinction, historical/revision/live limits and reader-task decisions retained via named nonauthor topic/delta reviews. No removed condition or broader authority was hidden by field completion. Existing historical failure/unexecuted/native/global configuration stops stay unchanged.",
+          "report": "handoffs/pr13-finish-20261021/reader7ef-prior88-preservation.json",
+          "limit": "Only original named supported or NOT_READY scope preserved; original author/reviewer/checks/summary/limits/verdict/gate/requirement IDs remain immutable. No new count, global qualification or release grant."
         }
       ]
     },
     {
       "id": "A912-03-supported-redirect-paths-20261021",
-      "revision": "0ded6b68eb6170c4ea5e76251ad5e13adf2f664b",
+      "revision": "7ef16585ba04eba3628cead304be85307436f091",
       "author": "operator_acceptance original implementation; root coherent F1/F2 correction",
       "reviewer": "workflow_acceptance independent full affected-topic Source/semantic Reader/quality review",
       "gateIds": [
@@ -15491,12 +16157,24 @@
           "summary": "Read-only redirect verification is distinct from unchanged collision-rejecting emission; original known routes, exact fallback bytes, fragment/manual no-JS and copied-asset behavior remain. Four old fixture calls explicitly request legacy mode; production CI does not, and normal checking requires records. Current route/facts qualification and fresh browser evidence remain separate. Actual frozen Reader/2normalbuilds and output/Git inspection separately witnessed; historical checks and original scopes/limits remain unchanged.",
           "report": "handoffs/pr13-finish-20261021/a91211-final-57-preservation.json",
           "limit": "Existing named scope preserved only; no new count or globalqualification/runtime/release approval."
+        },
+        {
+          "previousReviewedRevision": "0ded6b68eb6170c4ea5e76251ad5e13adf2f664b",
+          "revision": "7ef16585ba04eba3628cead304be85307436f091",
+          "changedDependencies": [
+            "scripts/docs-publication.mjs"
+          ],
+          "reviewer": "/root/operator_acceptance",
+          "verdict": "PASS",
+          "summary": "Within this original declared scope, the exact recent changed paths are individually bound to the coherent semantic/consumer review above; unchanged named original product mechanisms and original limits remain supported. These are purpose/content preservation decisions, not hash-only source refresh or a new full transitive product audit. Actual7ef177canonical/187HTML/240outputs normal artifact and complete local/source/excerpt/diagram checks are terminal0; current two normal419file builds byte-equal; exact declared route/source metadata checked. All531page and1233box observations preserve noJS/native fields/links/containment; initial6titlemeasurement failures retained and exact6case retake passes. Whole search12 plus actualoffline2, real240GET preview and forensic242member/19Sourceasset ZIP/extracted checks preserve only original reader scope. Four selected320px visual views are explicitly limited, not full accessibility/freshpersona proof. Original technical meaning, negative-vs-execution distinction, historical/revision/live limits and reader-task decisions retained via named nonauthor topic/delta reviews. No removed condition or broader authority was hidden by field completion. Existing historical failure/unexecuted/native/global configuration stops stay unchanged.",
+          "report": "handoffs/pr13-finish-20261021/reader7ef-prior88-preservation.json",
+          "limit": "Only original named supported or NOT_READY scope preserved; original author/reviewer/checks/summary/limits/verdict/gate/requirement IDs remain immutable. No new count, global qualification or release grant."
         }
       ]
     },
     {
       "id": "A912-11-deterministic-page-records-20261022",
-      "revision": "0ded6b68eb6170c4ea5e76251ad5e13adf2f664b",
+      "revision": "7ef16585ba04eba3628cead304be85307436f091",
       "author": "/root/workflow_acceptance metadata author; /root installed integration and original production builds",
       "reviewer": "/root/custody_review; independent of metadata author",
       "gateIds": [
@@ -15567,6 +16245,272 @@
         "Source dependencies are actualdeclared owner-map bindings,not complete transitive implementation/installed/externalinput closure.",
         "Metadata/Reader execution is not product API/apply/moduleauthority;four native receipts UNEXECUTED.",
         "Root owns matrix/record integration;this review writes only scratch."
+      ],
+      "openIssues": [],
+      "verdict": "PASS",
+      "impactReviews": [
+        {
+          "previousReviewedRevision": "0ded6b68eb6170c4ea5e76251ad5e13adf2f664b",
+          "revision": "7ef16585ba04eba3628cead304be85307436f091",
+          "changedDependencies": [
+            "scripts/docs-publication.mjs"
+          ],
+          "reviewer": "/root/operator_acceptance",
+          "verdict": "PASS",
+          "summary": "Within this original declared scope, the exact recent changed paths are individually bound to the coherent semantic/consumer review above; unchanged named original product mechanisms and original limits remain supported. These are purpose/content preservation decisions, not hash-only source refresh or a new full transitive product audit. Actual7ef177canonical/187HTML/240outputs normal artifact and complete local/source/excerpt/diagram checks are terminal0; current two normal419file builds byte-equal; exact declared route/source metadata checked. All531page and1233box observations preserve noJS/native fields/links/containment; initial6titlemeasurement failures retained and exact6case retake passes. Whole search12 plus actualoffline2, real240GET preview and forensic242member/19Sourceasset ZIP/extracted checks preserve only original reader scope. Four selected320px visual views are explicitly limited, not full accessibility/freshpersona proof. Original technical meaning, negative-vs-execution distinction, historical/revision/live limits and reader-task decisions retained via named nonauthor topic/delta reviews. No removed condition or broader authority was hidden by field completion. Existing historical failure/unexecuted/native/global configuration stops stay unchanged.",
+          "report": "handoffs/pr13-finish-20261021/reader7ef-prior88-preservation.json",
+          "limit": "Only original named supported or NOT_READY scope preserved; original author/reviewer/checks/summary/limits/verdict/gate/requirement IDs remain immutable. No new count, global qualification or release grant."
+        }
+      ]
+    },
+    {
+      "id": "AP09-publication-positive-scope-7ef16585",
+      "revision": "7ef16585ba04eba3628cead304be85307436f091",
+      "author": "existing publication/content maintainers; final authored Sourcefield additions separately reviewed by workflow_acceptance",
+      "reviewer": "/root/operator_acceptance",
+      "gateIds": [
+        "A912-01"
+      ],
+      "requirementIds": [],
+      "pages": [
+        "docs/site/README.md",
+        "docs/site/decisions/README.md",
+        "docs/site/decisions/acceptance.md",
+        "docs/site/decisions/core-and-plugins.md",
+        "docs/site/decisions/echo.md",
+        "docs/site/decisions/implementation.md",
+        "docs/site/decisions/prism.md",
+        "docs/site/decisions/runtime-and-operations.md",
+        "docs/site/decisions/test-gate.md",
+        "docs/site/extend/README.md",
+        "docs/site/extend/buster.md",
+        "docs/site/extend/contracts.md",
+        "docs/site/extend/deep-guides/README.md",
+        "docs/site/extend/deep-guides/demo-handoff.md",
+        "docs/site/extend/deep-guides/reports.md",
+        "docs/site/extend/developer-handbook.md",
+        "docs/site/extend/documentation-maintenance.md",
+        "docs/site/extend/effectful-plugin.md",
+        "docs/site/extend/first-plugin.md",
+        "docs/site/extend/host-and-engine.md",
+        "docs/site/extend/lint.md",
+        "docs/site/extend/nova.md",
+        "docs/site/extend/platform/README.md",
+        "docs/site/extend/platform/buster.md",
+        "docs/site/extend/platform/prism.md",
+        "docs/site/extend/plugin-catalogue/README.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw-agent-observer.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw-ops.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw-prism.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.agent-observability.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.api-flow.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.architecture-validator.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.artifact-store.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.axe.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.blueprint-sync.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.buster-quality-gate.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.case-study.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.command-runner.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.container-build.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.coverage-budget.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.delivery-lint.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.demo-auth-smoke.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.demo-handoff.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.direct-command.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.git-workspace.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.http.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.human-approval.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.implementation-agent.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.junit-report.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.kubernetes-fixture.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.lighthouse.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.lint.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.network-http.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.notification-observer.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.openapi.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.openclaw-agent-events.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.operator-messaging.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.pipeline-review.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.playwright.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.preflight-contract.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.prism-design.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.project-summary.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.redis-transport.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.remote-test-gate.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.repository-adapter.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.review.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.runtime-dispatch.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.secret-resolver.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.security-providers.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.size-budget.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.state-store.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.tailscale-exposure.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.telemetry-observer.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.telemetry-store.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.transport-publisher.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.visual.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.wait-store.md",
+        "docs/site/extend/testing.md",
+        "docs/site/product-surfaces.md",
+        "docs/site/reference/README.md",
+        "docs/site/reference/api-object-updates.md",
+        "docs/site/reference/buster-error-codes.md",
+        "docs/site/reference/buster-namespace-lease.md",
+        "docs/site/reference/buster-provider-configuration.md",
+        "docs/site/reference/buster-runtime-configuration.md",
+        "docs/site/reference/buster-suites.md",
+        "docs/site/reference/capabilities.md",
+        "docs/site/reference/cli.md",
+        "docs/site/reference/configuration-change-impact.md",
+        "docs/site/reference/configuration-compatibility.md",
+        "docs/site/reference/configuration-errors.md",
+        "docs/site/reference/configuration-precedence.md",
+        "docs/site/reference/configuration.md",
+        "docs/site/reference/contracts.md",
+        "docs/site/reference/documentation-governance.md",
+        "docs/site/reference/documentation-site.md",
+        "docs/site/reference/endpoints.md",
+        "docs/site/reference/environment-variables.md",
+        "docs/site/reference/errors.md",
+        "docs/site/reference/events.md",
+        "docs/site/reference/glossary.md",
+        "docs/site/reference/helm-values.md",
+        "docs/site/reference/host-and-prism-configuration.md",
+        "docs/site/reference/images-and-digests.md",
+        "docs/site/reference/lint-policy-generated.md",
+        "docs/site/reference/lint-policy.md",
+        "docs/site/reference/lint-rules.md",
+        "docs/site/reference/nova-project.md",
+        "docs/site/reference/pipeline-definition.md",
+        "docs/site/reference/pipeline-json.md",
+        "docs/site/reference/pipeline-platform.md",
+        "docs/site/reference/platform-surfaces-generated.md",
+        "docs/site/reference/plugin-configuration.md",
+        "docs/site/reference/project-pipeline-publication.md",
+        "docs/site/reference/roles-and-package-ownership.md",
+        "docs/site/reference/schemas.md",
+        "docs/site/reference/sdk-exports.md",
+        "docs/site/reference/sdk.md",
+        "docs/site/reference/secrets.md",
+        "docs/site/reference/service-routing.md",
+        "docs/site/reference/stores-and-retention.md",
+        "docs/site/reference/verification-commands.md",
+        "docs/site/reference/worker-profiles-and-roles.md",
+        "docs/site/reference/workflows.md",
+        "docs/site/status/acceptance.md",
+        "docs/site/status/current.md",
+        "docs/site/status/open-issues.md",
+        "docs/site/status/roadmap.md",
+        "docs/site/understand/README.md",
+        "docs/site/understand/archviewer.md",
+        "docs/site/understand/buster-namespace-controller.md",
+        "docs/site/understand/buster.md",
+        "docs/site/understand/codex-integration.md",
+        "docs/site/understand/communication.md",
+        "docs/site/understand/components-and-authority.md",
+        "docs/site/understand/data-and-state.md",
+        "docs/site/understand/deployment-and-trust.md",
+        "docs/site/understand/echo.md",
+        "docs/site/understand/forge.md",
+        "docs/site/understand/nova-core.md",
+        "docs/site/understand/openclaw.md",
+        "docs/site/understand/ops-mcp.md",
+        "docs/site/understand/pipeline-dependencies.md",
+        "docs/site/understand/platform-and-operations.md",
+        "docs/site/understand/plugin-runtime.md",
+        "docs/site/understand/prism-data.md",
+        "docs/site/understand/prism-runtime.md",
+        "docs/site/understand/prism.md",
+        "docs/site/understand/request-state-recovery.md",
+        "docs/site/understand/request-to-result.md",
+        "docs/site/understand/security-and-trust.md",
+        "docs/site/understand/telemetry.md",
+        "docs/site/understand/worker-core.md",
+        "docs/site/understand/worker-trust.md",
+        "docs/site/use/README.md",
+        "docs/site/use/capacity.md",
+        "docs/site/use/demo-delivery.md",
+        "docs/site/use/diagnose.md",
+        "docs/site/use/install.md",
+        "docs/site/use/maintenance.md",
+        "docs/site/use/operate.md",
+        "docs/site/use/plugins.md",
+        "docs/site/use/prism-studio.md",
+        "docs/site/use/quickstart.md",
+        "docs/site/use/recovery.md",
+        "docs/site/use/worker-trust.md",
+        "docs/site/use/workflows/README.md",
+        "docs/site/use/workflows/build-image.md",
+        "docs/site/use/workflows/buster-suite.md",
+        "docs/site/use/workflows/interruption-recovery.md",
+        "docs/site/use/workflows/kubernetes-fixture.md",
+        "docs/site/use/workflows/local-core.md",
+        "docs/site/use/workflows/redis-replay-recovery.md",
+        "docs/site/use/workflows/repair-retry.md",
+        "docs/site/use/workflows/tailnet-exposure.md",
+        "docs/site/use/workflows/wait-resume.md",
+        "docs/site/use/workflows/worker-result-recovery.md"
+      ],
+      "sources": [
+        "scripts/docs-publication.mjs",
+        "scripts/lib/docs-publication-assets.mjs",
+        "scripts/docs-reader/metadata.mjs",
+        "scripts/docs-reader/renderer.mjs",
+        "scripts/docs-reader/page-records.mjs",
+        "scripts/docs-reader/check-artifact.mjs",
+        "scripts/docs-reader/redirects.mjs",
+        "scripts/tests/docs-publication-assets.test.mjs",
+        "scripts/tests/docs-reader.test.mjs",
+        "scripts/tests/docs-reader-redirects.test.mjs",
+        "docs/config/documentation-publication-manifest.json",
+        "docs/config/documentation-tree-classification.json",
+        "docs/site/reference/generated-documentation-map.json",
+        "docs/site/reference/documentation-site.md",
+        "docs/site/decisions/runtime-and-operations.md"
+      ],
+      "checks": [
+        {
+          "command": "node --test --test-name-pattern='actual positive selector to renderer path refuses injected docs/site Markdown with no rogue route or output' scripts/tests/docs-reader-redirects.test.mjs",
+          "exitCode": 0,
+          "observation": "Independent current original test1/1PASS: exact selector→renderer path, inject private-review.md, reject, no rogue positive route, HTML or manifest output. Inert temporary fixture only."
+        },
+        {
+          "command": "node a91201-independent-7ef16585/census.mjs",
+          "exitCode": 0,
+          "observation": "177positive/classification/owner/pageRecords memberships exact;177physical Source hashes matched immutable artifact mapping; actual419file tree finite; parsed all177article prose and links, no AP/internal work path findings."
+        },
+        {
+          "command": "Independent Source-derived output closure",
+          "exitCode": 0,
+          "observation": "Without treating manifest membership as authority: Source finite19copiedassets byte-exact,177canonicalHTML,10supportHTML,27SVG,7fixedfiles =240outputs;177stagedMD+2metadata =419total. No extras."
+        },
+        {
+          "command": "Root current three owning publication/reader suites",
+          "exitCode": 0,
+          "observation": "Raw terminal23/23PASS0skip inspected; attributed to root execution, not reviewer rerun."
+        },
+        {
+          "command": "node scripts/docs-reader/check-artifact.mjs IMMUTABLE_FIRST SOURCE_CHECKOUT",
+          "exitCode": 0,
+          "observation": "Root actual original normal checker177selected/187HTML/40832localLinks/240outputdigests; read terminal JSON."
+        },
+        {
+          "command": "Original built search/source-links/source-previews/diagrams checks against immutable first7ef",
+          "exitCode": 0,
+          "observation": "Root terminal0 per actual reports: search177pages/12questions/0internal; Source14840links/3961objects; previews411boxes/1888excerpts/983objects;27fresh diagrams. No reexecution or semantic wholeproduct inference."
+        }
+      ],
+      "review": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "summary": "Whole positive publication/reader boundary: exact revision-bound177canonical pages, finite declared support/output set, actual rogueMarkdown no-route/no-output negative and no internal documentation-work prose/link leakage.",
+      "limits": [
+        "No Main/register writes; no scanned product module, target classifier, global graph/current custody/DATA/producer execution. Only original isolated publication fixture test executed.",
+        "Actual419file immutable first artifact7ef only; two normal builds determinism/current wholeReader browser/accessibility/freshpersona acceptance remain separate. Root browser title-comparison harness findings not used as PASS evidence here.",
+        "No wholeA91205/11, otherPUBgate, runtime/deployment/configuration/knip or release grant.",
+        "No new independent selfacceptance of prior authored Source content; exact independent workflow/root scopes retained."
       ],
       "openIssues": [],
       "verdict": "PASS"
@@ -36534,7 +37478,7 @@
       "id": "A912-01",
       "passCondition": "Nur Seiten aus einem revisionsgebundenen positiven Publication-Manifest erscheinen in der Publication; AP-, Review-, Migrations-, Prompt-, temporäre und lokale Evidence-Artefakte werden ausgeschlossen. Leserprosa enthält keine interne AP-/Review-/Migrationssprache oder Verweise auf interne Arbeitsdateien. Ein Negativtest injiziert eine unerwartete Markdown-Datei unter `docs/site` und beweist, dass sie weder Route noch Output erhält.",
       "automaticFailure": "Ein unerwarteter Pfad wird wegen seiner Markdown-Endung publiziert, der Checker setzt alle Markdown-Dateien mit der Positivliste gleich, oder Leser müssen interne Arbeitsgeschichte verstehen.",
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [
         {
@@ -36557,7 +37501,14 @@
         }
       ],
       "readerFixtureIds": [],
-      "executionScenarioIds": []
+      "executionScenarioIds": [],
+      "closureDecision": {
+        "verdict": "PASS",
+        "revision": "7ef16585ba04eba3628cead304be85307436f091",
+        "reason": "Whole positive publication/reader boundary: exact revision-bound177canonical pages, finite declared support/output set, actual rogueMarkdown no-route/no-output negative and no internal documentation-work prose/link leakage.",
+        "completionRecord": "AP09-publication-positive-scope-7ef16585"
+      },
+      "completionRecord": "AP09-publication-positive-scope-7ef16585"
     },
     {
       "id": "A912-02",
@@ -48316,6 +49267,22 @@
         "Three stale generated Helm reader-boundary findings",
         "Remaining complete field/Source corpus and open acceptance gates",
         "Runtime RELEASE_CONFIGURATION_CHANGED: charts/kubeclaw/files/config/knip.json"
+      ]
+    },
+    "positivePublication20261022": {
+      "reviewedReaderRevision": "7ef16585ba04eba3628cead304be85307436f091",
+      "newAcceptedGate": "A912-01",
+      "existingScopeRecordsChecked": 88,
+      "affectedExistingScopesPreservedWithoutNewCounts": 53,
+      "deliveredReaderMessage": "1562631994968506459",
+      "acceptedGates": 46,
+      "acceptedRequirements": 223,
+      "overall": "in-progress; not aggregate acceptance",
+      "pending": [
+        "Current actual graph/module-qualified closure after bounded role DATA integration",
+        "Reviewed off-tree observer Source-list readability correction and grouped Reader refresh/A91205",
+        "Remaining criteria and real compiled-project prerequisites",
+        "Runtime RELEASE_CONFIGURATION_CHANGED: charts/kubeclaw/files/config/knip.json unchanged"
       ]
     }
   },
