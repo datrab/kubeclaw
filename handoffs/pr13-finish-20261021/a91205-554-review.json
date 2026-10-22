@@ -1,0 +1,695 @@
+{
+  "revision": "55496fa427f536fb9ad6c1a833a4da38dce4839f",
+  "reviewer": "/root/operator_acceptance",
+  "gateIds": [
+    "A912-05"
+  ],
+  "verdict": "PASS",
+  "review": {
+    "sourceAccuracy": "PASS",
+    "readerUsability": "PASS",
+    "quality": "PASS"
+  },
+  "openIssues": [],
+  "pages": [
+    "docs/site/extend/README.md",
+    "docs/site/extend/buster.md",
+    "docs/site/extend/developer-handbook.md",
+    "docs/site/extend/documentation-maintenance.md",
+    "docs/site/extend/platform/buster.md",
+    "docs/site/extend/platform/prism.md",
+    "docs/site/reference/buster-runtime-configuration.md",
+    "docs/site/reference/capabilities.md",
+    "docs/site/reference/configuration-change-impact.md",
+    "docs/site/reference/configuration-compatibility.md",
+    "docs/site/reference/configuration-errors.md",
+    "docs/site/reference/configuration-precedence.md",
+    "docs/site/reference/contracts.md",
+    "docs/site/reference/documentation-site.md",
+    "docs/site/reference/errors.md",
+    "docs/site/reference/glossary.md",
+    "docs/site/reference/host-and-prism-configuration.md",
+    "docs/site/reference/nova-project.md",
+    "docs/site/reference/pipeline-definition.md",
+    "docs/site/reference/pipeline-json.md",
+    "docs/site/reference/pipeline-platform.md",
+    "docs/site/reference/project-pipeline-publication.md",
+    "docs/site/reference/worker-profiles-and-roles.md",
+    "docs/site/understand/README.md",
+    "docs/site/understand/archviewer.md",
+    "docs/site/understand/buster-namespace-controller.md",
+    "docs/site/understand/buster.md",
+    "docs/site/understand/codex-integration.md",
+    "docs/site/understand/communication.md",
+    "docs/site/understand/components-and-authority.md",
+    "docs/site/understand/data-and-state.md",
+    "docs/site/understand/deployment-and-trust.md",
+    "docs/site/understand/echo.md",
+    "docs/site/understand/forge.md",
+    "docs/site/understand/nova-core.md",
+    "docs/site/understand/openclaw.md",
+    "docs/site/understand/ops-mcp.md",
+    "docs/site/understand/pipeline-dependencies.md",
+    "docs/site/understand/platform-and-operations.md",
+    "docs/site/understand/plugin-runtime.md",
+    "docs/site/understand/prism-data.md",
+    "docs/site/understand/prism-runtime.md",
+    "docs/site/understand/prism.md",
+    "docs/site/understand/request-state-recovery.md",
+    "docs/site/understand/security-and-trust.md",
+    "docs/site/understand/telemetry.md",
+    "docs/site/understand/worker-trust.md",
+    "docs/site/use/capacity.md",
+    "docs/site/use/diagnose.md",
+    "docs/site/use/install.md",
+    "docs/site/use/maintenance.md",
+    "docs/site/use/operate.md",
+    "docs/site/use/prism-studio.md",
+    "docs/site/use/recovery.md",
+    "docs/site/use/worker-trust.md",
+    "docs/site/use/workflows/wait-resume.md"
+  ],
+  "sources": [
+    {
+      "path": "scripts/docs-reader/source-previews.mjs",
+      "sha256": "44a78b3922c7cc9af759ca1e2757c6f91e85d5ee8204a35eab56a7119576e13d"
+    },
+    {
+      "path": "scripts/docs-reader/source-links.mjs",
+      "sha256": "710eba36c3f4d674923a9db42707695e6c1d391530adc668dfad130b33a74b03"
+    },
+    {
+      "path": "scripts/docs-reader/renderer.mjs",
+      "sha256": "a0bf02d079637cf862fe0a40bbc34e4bfbd982c58126e347d8aea079047abd87"
+    },
+    {
+      "path": "scripts/docs-reader/metadata.mjs",
+      "sha256": "51e0b027356401a68c52a3b8b1fe4d6c6ed35070dfcb300067dd1b9af8da0abc"
+    },
+    {
+      "path": "scripts/docs-reader/check-source-previews.mjs",
+      "sha256": "d4cd1e6e31e550844fbb1d8de5a6aef64da41114c5f3fc3ae7f4249051aaecc1"
+    },
+    {
+      "path": "scripts/docs-reader/check-source-links.mjs",
+      "sha256": "464ca70cdd65dcb4c82e8e464717672534127ec2514e34d638599776cacb22c5"
+    },
+    {
+      "path": "scripts/tests/docs-reader-source-previews.test.mjs",
+      "sha256": "3bc212cf8ae30dcc09800553331f83f9e2da21ffb2ddc4920c375028869a6e5d"
+    },
+    {
+      "path": "scripts/tests/docs-reader-source-links.test.mjs",
+      "sha256": "c853ef821bf39c8b85af528c903ba656ee4e64a3cd277d18581850b9a473a5cf"
+    },
+    {
+      "path": "scripts/docs-publication.mjs",
+      "sha256": "fdae9667aa99505d4fcc90681f081fb45717ab9f9d4333a30544abdea33525a4"
+    },
+    {
+      "path": "scripts/docs-reader/page-records.mjs",
+      "sha256": "6268501ef047b13e0794950a85d57e2c7aaf54e85a16d77ca8c1263237691a2f"
+    },
+    {
+      "path": "scripts/docs-reader/check-artifact.mjs",
+      "sha256": "7f4e8cb928a5fba48bbd590e5349ce6247264f9cae1935a1e3679ae54c1a2a67"
+    },
+    {
+      "path": "scripts/lib/docs-markdown-anchors.mjs",
+      "sha256": "b0358c0f628781c5056376f673ca23465b7b8cc54a722c1e0892f0268c42c652"
+    },
+    {
+      "path": "docs/config/documentation-publication-manifest.json",
+      "sha256": "15858632cc67db446d945bda9a7209d0bdf05c776b7b4242e190cd3afeafefe5"
+    },
+    {
+      "path": "docs/config/documentation-tree-classification.json",
+      "sha256": "18e6e05a152d43d31d48b9d245f40137612385f419fb24c1d28631c527fe0f18"
+    }
+  ],
+  "criterionDecision": {
+    "exactLinkedCommitExcerpt": "PASS: fullimmutable40SHAcanonicalblob URL; localGitcommittedregularblobs or fixedupstreamrawbytes, ranges/UTF8/escaping; actual554freshreconstruction comparesrenderedexcerpt+hrefmultisets andsources, not copiedsnippets or updatedHTMLhashalone.",
+    "sixSemanticFields": "PASS: exact411MarkdownIt top-levelboxes,2466actualfieldslots,11specificcontextualequivalents; correctedcoherent semanticreviewunion and exactSource17nonauthorworkflowreview reused. Plain/equivalentfieldsnotpadded; assertion-vs-execution/revision/live limits retained.",
+    "ordinaryLinkNoJs": "PASS: originalnoJSfield/native/source-linkproof all397unchangedboxes reused from7ef and all14changedpageboxes observedfresh\u00d73widths; currentfreshall1888excerptsverified, ordinaryfullcommitlinks remain actualanchors, not tooltip/clientstate/GitHubsnippetassumption.",
+    "automaticFailureBoundary": "No manuallycopiedproductionexcerpt/differentrevision/GitHubsnippetassumption found. EscapedCodeandfreshGit/range reconstruction plusmeaningful negatives preventdigest-consistentcounterfeit. Authored runnableexamples areseparate, notmisrepresentedproductionpreview."
+  },
+  "checks": [
+    {
+      "command": "Original normal node scripts/docs-reader/check-artifact.mjs IMMUTABLE_554 SOURCE_CHECKOUT",
+      "exitCode": 0,
+      "observation": "Root actual normal177canonical/187HTML/240outputdigests/40832localtargets, inspected terminal JSON.",
+      "report": "reader-artifact-55496fa4.json"
+    },
+    {
+      "command": "Original built search/source-links/source-previews/diagrams checkers against immutable554",
+      "exitCode": 0,
+      "observation": "Root actual terminal0: search12; Source14840locators/3961objects; previews411boxes/1888exactfresh excerpts/983objects;27freshSVGs. Execution attributed, not rerun.",
+      "reports": [
+        "reader-search-55496fa4.json",
+        "reader-source-links-55496fa4.json",
+        "reader-source-previews-55496fa4.json",
+        "reader-diagrams-55496fa4.json"
+      ]
+    },
+    {
+      "command": "Root reviewed focused original Playwright successor against immutable554",
+      "exitCode": 0,
+      "observation": "Only3page/42box+2originalofflineJSsearch observations;14currentpageboxes\u00d73widths all6fields/titles/nativeEnter/ordinaryimmutablelinks/containment PASS,0findings/0network. All177Source/stagedMD/HTML/pageRecordbindings and pre/postbytes exact.",
+      "report": "browser-focused14-55496fa4/report.json"
+    },
+    {
+      "command": "Independent inert final receipt/Source/ledger/completed-review binding comparison",
+      "exitCode": 0,
+      "observation": "All411boxes/2466slots/11specificcontextmappings;56Sourceboxpages. Builder/verifier/currentSource hashes and exact unchanged nonauthor report bindings verified, no target/Source execution.",
+      "report": "a91205-review-preparation/preparation.json"
+    },
+    {
+      "command": "Retained original source-preview owning negative controls and old7efwhole corpus observations (unchanged code/scopes)",
+      "exitCode": 0,
+      "observation": "Existing4native Sourcepreview cases historicalcommitted-vs-worktree/inertHTML/symlink/mutableSHA/range/remoteobject/fencedfakebox/digestconsistenttamper; oldactual531page/1233box+6title-retakes retained at7ef, not newlyrun/recounted."
+    }
+  ],
+  "semanticReviewUnion": {
+    "reference": "a91205-review-preparation/preparation.json",
+    "sha256": "65357deaeb69d71b75bb07ffb480e3f1177e5f3bf7c3ed37a14642d2f566473c",
+    "groups": [
+      {
+        "pages": [
+          "understand/forge.md",
+          "understand/echo.md",
+          "understand/openclaw.md",
+          "understand/ops-mcp.md",
+          "understand/archviewer.md",
+          "understand/codex-integration.md"
+        ],
+        "reports": [
+          "integration-callouts-independent-review.json",
+          "integration-callouts-two-style-delta-independent.json"
+        ],
+        "reportHashes": {
+          "integration-callouts-independent-review.json": "bcf00524f232ad5edd46291b22204e43a7b78111aa1c4c21137e5370b5d30eb9",
+          "integration-callouts-two-style-delta-independent.json": "c80c22c731d2ad431caf08a14e97a717774c677bd5f5b5d2467b771368e99045"
+        },
+        "actualBoxes": [
+          "docs/site/understand/archviewer.md#source-1",
+          "docs/site/understand/archviewer.md#source-2",
+          "docs/site/understand/archviewer.md#source-3",
+          "docs/site/understand/codex-integration.md#source-1",
+          "docs/site/understand/codex-integration.md#source-2",
+          "docs/site/understand/codex-integration.md#source-3",
+          "docs/site/understand/echo.md#source-1",
+          "docs/site/understand/echo.md#source-2",
+          "docs/site/understand/echo.md#source-3",
+          "docs/site/understand/echo.md#source-4",
+          "docs/site/understand/echo.md#source-5",
+          "docs/site/understand/echo.md#source-6",
+          "docs/site/understand/forge.md#source-1",
+          "docs/site/understand/forge.md#source-2",
+          "docs/site/understand/forge.md#source-3",
+          "docs/site/understand/forge.md#source-4",
+          "docs/site/understand/forge.md#source-5",
+          "docs/site/understand/openclaw.md#source-1",
+          "docs/site/understand/openclaw.md#source-2",
+          "docs/site/understand/openclaw.md#source-3",
+          "docs/site/understand/openclaw.md#source-4",
+          "docs/site/understand/openclaw.md#source-5",
+          "docs/site/understand/ops-mcp.md#source-1",
+          "docs/site/understand/ops-mcp.md#source-2",
+          "docs/site/understand/ops-mcp.md#source-3",
+          "docs/site/understand/ops-mcp.md#source-4",
+          "docs/site/understand/ops-mcp.md#source-5"
+        ]
+      },
+      {
+        "pages": [
+          "understand/telemetry.md",
+          "understand/nova-core.md"
+        ],
+        "reports": [
+          "telemetry-nova-callouts-independent-review.json",
+          "telemetry-nova-v2-independent-addendum.json",
+          "callout-style-19-independent.json"
+        ],
+        "note": "InitialF1finding retained; exact1Claimv2correction and independentstyle addendum supply final acceptance, notinitialNOT_READY.",
+        "reportHashes": {
+          "telemetry-nova-callouts-independent-review.json": "184d3a6943a616030aad7875f561935561cfc3386b6ae62cb81f7eb7959d8811",
+          "telemetry-nova-v2-independent-addendum.json": "2d5f54f342b3536713b04f56e652e4d5b30874a74869f303d62cb45285365363",
+          "callout-style-19-independent.json": "626c96d4b1b07be7e893ffb07c619ee73018fe51ac13b388579040f4ca6ce6fc"
+        },
+        "actualBoxes": [
+          "docs/site/understand/nova-core.md#source-1",
+          "docs/site/understand/nova-core.md#source-2",
+          "docs/site/understand/nova-core.md#source-3",
+          "docs/site/understand/nova-core.md#source-4",
+          "docs/site/understand/nova-core.md#source-5",
+          "docs/site/understand/nova-core.md#source-6",
+          "docs/site/understand/nova-core.md#source-7",
+          "docs/site/understand/nova-core.md#source-8",
+          "docs/site/understand/nova-core.md#source-9",
+          "docs/site/understand/nova-core.md#source-10",
+          "docs/site/understand/nova-core.md#source-11",
+          "docs/site/understand/nova-core.md#source-12",
+          "docs/site/understand/nova-core.md#source-13",
+          "docs/site/understand/nova-core.md#source-14",
+          "docs/site/understand/nova-core.md#source-15",
+          "docs/site/understand/nova-core.md#source-16",
+          "docs/site/understand/nova-core.md#source-17",
+          "docs/site/understand/nova-core.md#source-18",
+          "docs/site/understand/nova-core.md#source-19",
+          "docs/site/understand/nova-core.md#source-20",
+          "docs/site/understand/nova-core.md#source-21",
+          "docs/site/understand/nova-core.md#source-22",
+          "docs/site/understand/nova-core.md#source-23",
+          "docs/site/understand/nova-core.md#source-24",
+          "docs/site/understand/nova-core.md#source-25",
+          "docs/site/understand/nova-core.md#source-26",
+          "docs/site/understand/nova-core.md#source-27",
+          "docs/site/understand/nova-core.md#source-28",
+          "docs/site/understand/telemetry.md#source-1",
+          "docs/site/understand/telemetry.md#source-2",
+          "docs/site/understand/telemetry.md#source-3",
+          "docs/site/understand/telemetry.md#source-4",
+          "docs/site/understand/telemetry.md#source-5",
+          "docs/site/understand/telemetry.md#source-6",
+          "docs/site/understand/telemetry.md#source-7",
+          "docs/site/understand/telemetry.md#source-8",
+          "docs/site/understand/telemetry.md#source-9",
+          "docs/site/understand/telemetry.md#source-10",
+          "docs/site/understand/telemetry.md#source-11",
+          "docs/site/understand/telemetry.md#source-12",
+          "docs/site/understand/telemetry.md#source-13",
+          "docs/site/understand/telemetry.md#source-14",
+          "docs/site/understand/telemetry.md#source-15",
+          "docs/site/understand/telemetry.md#source-16",
+          "docs/site/understand/telemetry.md#source-17",
+          "docs/site/understand/telemetry.md#source-18",
+          "docs/site/understand/telemetry.md#source-19",
+          "docs/site/understand/telemetry.md#source-20",
+          "docs/site/understand/telemetry.md#source-21",
+          "docs/site/understand/telemetry.md#source-22",
+          "docs/site/understand/telemetry.md#source-23",
+          "docs/site/understand/telemetry.md#source-24",
+          "docs/site/understand/telemetry.md#source-25",
+          "docs/site/understand/telemetry.md#source-26",
+          "docs/site/understand/telemetry.md#source-27",
+          "docs/site/understand/telemetry.md#source-28",
+          "docs/site/understand/telemetry.md#source-29",
+          "docs/site/understand/telemetry.md#source-30"
+        ]
+      },
+      {
+        "pages": [
+          "understand/plugin-runtime.md",
+          "understand/prism-runtime.md"
+        ],
+        "reports": [
+          "plugin-prism-callouts-independent-review.json",
+          "plugin-prism-v2-independent-addendum.json",
+          "callout-style-19-independent.json"
+        ],
+        "note": "Initial3findings retained; exact3delta v2 and independentstyle supply finalproof.",
+        "reportHashes": {
+          "plugin-prism-callouts-independent-review.json": "d6f83d4acada01e4f122779ee19815b3cd329f9472e47cce3851be59cafe6e91",
+          "plugin-prism-v2-independent-addendum.json": "fd450fc761f957b3b28139ca94f5d4cff98c04ea759fea5ca74fc44c61ff1054",
+          "callout-style-19-independent.json": "626c96d4b1b07be7e893ffb07c619ee73018fe51ac13b388579040f4ca6ce6fc"
+        },
+        "actualBoxes": [
+          "docs/site/understand/plugin-runtime.md#source-1",
+          "docs/site/understand/plugin-runtime.md#source-2",
+          "docs/site/understand/plugin-runtime.md#source-3",
+          "docs/site/understand/plugin-runtime.md#source-4",
+          "docs/site/understand/plugin-runtime.md#source-5",
+          "docs/site/understand/plugin-runtime.md#source-6",
+          "docs/site/understand/plugin-runtime.md#source-7",
+          "docs/site/understand/plugin-runtime.md#source-8",
+          "docs/site/understand/plugin-runtime.md#source-9",
+          "docs/site/understand/plugin-runtime.md#source-10",
+          "docs/site/understand/plugin-runtime.md#source-11",
+          "docs/site/understand/plugin-runtime.md#source-12",
+          "docs/site/understand/plugin-runtime.md#source-13",
+          "docs/site/understand/plugin-runtime.md#source-14",
+          "docs/site/understand/plugin-runtime.md#source-15",
+          "docs/site/understand/plugin-runtime.md#source-16",
+          "docs/site/understand/plugin-runtime.md#source-17",
+          "docs/site/understand/plugin-runtime.md#source-18",
+          "docs/site/understand/plugin-runtime.md#source-19",
+          "docs/site/understand/plugin-runtime.md#source-20",
+          "docs/site/understand/plugin-runtime.md#source-21",
+          "docs/site/understand/prism-runtime.md#source-1",
+          "docs/site/understand/prism-runtime.md#source-2",
+          "docs/site/understand/prism-runtime.md#source-3",
+          "docs/site/understand/prism-runtime.md#source-4",
+          "docs/site/understand/prism-runtime.md#source-5",
+          "docs/site/understand/prism-runtime.md#source-6",
+          "docs/site/understand/prism-runtime.md#source-7",
+          "docs/site/understand/prism-runtime.md#source-8",
+          "docs/site/understand/prism-runtime.md#source-9",
+          "docs/site/understand/prism-runtime.md#source-10",
+          "docs/site/understand/prism-runtime.md#source-11",
+          "docs/site/understand/prism-runtime.md#source-12",
+          "docs/site/understand/prism-runtime.md#source-13",
+          "docs/site/understand/prism-runtime.md#source-14",
+          "docs/site/understand/prism-runtime.md#source-15",
+          "docs/site/understand/prism-runtime.md#source-16",
+          "docs/site/understand/prism-runtime.md#source-17",
+          "docs/site/understand/prism-runtime.md#source-18",
+          "docs/site/understand/prism-runtime.md#source-19",
+          "docs/site/understand/prism-runtime.md#source-20"
+        ]
+      },
+      {
+        "pages": [
+          "understand/communication.md",
+          "understand/platform-and-operations.md",
+          "understand/data-and-state.md",
+          "understand/prism-data.md"
+        ],
+        "reports": [
+          "communication-platform-data-independent/review.json",
+          "communication-platform-data-v2-independent/review.json"
+        ],
+        "note": "SourceServiceAccounttokenF1corrected underindependentv2; alloriginal61other Sourcegroups exact; existing completefields and6LiteLLMlinks preserved.",
+        "reportHashes": {
+          "communication-platform-data-independent/review.json": "c3ef3da9fdfc995f4145369ffcad9a25ae1e218ef798704894cf29b5de2af8da",
+          "communication-platform-data-v2-independent/review.json": "3b35175aac6cfbf3740df4897ec1f95b776ce07177e74ef12b2d11f7075dfc73"
+        },
+        "actualBoxes": [
+          "docs/site/understand/communication.md#source-1",
+          "docs/site/understand/communication.md#source-2",
+          "docs/site/understand/communication.md#source-3",
+          "docs/site/understand/communication.md#source-4",
+          "docs/site/understand/communication.md#source-5",
+          "docs/site/understand/communication.md#source-6",
+          "docs/site/understand/communication.md#source-7",
+          "docs/site/understand/communication.md#source-8",
+          "docs/site/understand/communication.md#source-9",
+          "docs/site/understand/communication.md#source-10",
+          "docs/site/understand/communication.md#source-11",
+          "docs/site/understand/communication.md#source-12",
+          "docs/site/understand/communication.md#source-13",
+          "docs/site/understand/communication.md#source-14",
+          "docs/site/understand/data-and-state.md#source-1",
+          "docs/site/understand/data-and-state.md#source-2",
+          "docs/site/understand/data-and-state.md#source-3",
+          "docs/site/understand/data-and-state.md#source-4",
+          "docs/site/understand/data-and-state.md#source-5",
+          "docs/site/understand/data-and-state.md#source-6",
+          "docs/site/understand/data-and-state.md#source-7",
+          "docs/site/understand/data-and-state.md#source-8",
+          "docs/site/understand/data-and-state.md#source-9",
+          "docs/site/understand/data-and-state.md#source-10",
+          "docs/site/understand/data-and-state.md#source-11",
+          "docs/site/understand/data-and-state.md#source-12",
+          "docs/site/understand/data-and-state.md#source-13",
+          "docs/site/understand/data-and-state.md#source-14",
+          "docs/site/understand/data-and-state.md#source-15",
+          "docs/site/understand/data-and-state.md#source-16",
+          "docs/site/understand/platform-and-operations.md#source-1",
+          "docs/site/understand/platform-and-operations.md#source-2",
+          "docs/site/understand/platform-and-operations.md#source-3",
+          "docs/site/understand/platform-and-operations.md#source-4",
+          "docs/site/understand/platform-and-operations.md#source-5",
+          "docs/site/understand/platform-and-operations.md#source-6",
+          "docs/site/understand/platform-and-operations.md#source-7",
+          "docs/site/understand/platform-and-operations.md#source-8",
+          "docs/site/understand/platform-and-operations.md#source-9",
+          "docs/site/understand/platform-and-operations.md#source-10",
+          "docs/site/understand/platform-and-operations.md#source-11",
+          "docs/site/understand/platform-and-operations.md#source-12",
+          "docs/site/understand/platform-and-operations.md#source-13",
+          "docs/site/understand/platform-and-operations.md#source-14",
+          "docs/site/understand/platform-and-operations.md#source-15",
+          "docs/site/understand/platform-and-operations.md#source-16",
+          "docs/site/understand/prism-data.md#source-1",
+          "docs/site/understand/prism-data.md#source-2",
+          "docs/site/understand/prism-data.md#source-3",
+          "docs/site/understand/prism-data.md#source-4",
+          "docs/site/understand/prism-data.md#source-5",
+          "docs/site/understand/prism-data.md#source-6",
+          "docs/site/understand/prism-data.md#source-7",
+          "docs/site/understand/prism-data.md#source-8",
+          "docs/site/understand/prism-data.md#source-9",
+          "docs/site/understand/prism-data.md#source-10",
+          "docs/site/understand/prism-data.md#source-11",
+          "docs/site/understand/prism-data.md#source-12",
+          "docs/site/understand/prism-data.md#source-13",
+          "docs/site/understand/prism-data.md#source-14",
+          "docs/site/understand/prism-data.md#source-15",
+          "docs/site/understand/prism-data.md#source-16"
+        ]
+      },
+      {
+        "pages": [
+          "understand/components-and-authority.md",
+          "understand/security-and-trust.md",
+          "understand/request-state-recovery.md",
+          "understand/deployment-and-trust.md"
+        ],
+        "reports": [
+          "authority-security-recovery-independent/review.json",
+          "observer-sourcebox-structure-correction/review.json"
+        ],
+        "note": "Complete Source50andseparateAdminconditionreview, thenboundedSource13heading/linksentencecorrection; no broadsigning/live claim.",
+        "reportHashes": {
+          "authority-security-recovery-independent/review.json": "3ff2a4f2b61436a28db2db4018b443cddac72de4ce570b288e67a3bdbfe4bda8",
+          "observer-sourcebox-structure-correction/review.json": "ba9e79c5dbe7f07869e34362b161bea90e02785025fb8a20a6cd24dd5d23e379"
+        },
+        "actualBoxes": [
+          "docs/site/understand/components-and-authority.md#source-1",
+          "docs/site/understand/components-and-authority.md#source-2",
+          "docs/site/understand/components-and-authority.md#source-3",
+          "docs/site/understand/components-and-authority.md#source-4",
+          "docs/site/understand/components-and-authority.md#source-5",
+          "docs/site/understand/components-and-authority.md#source-6",
+          "docs/site/understand/components-and-authority.md#source-7",
+          "docs/site/understand/components-and-authority.md#source-8",
+          "docs/site/understand/components-and-authority.md#source-9",
+          "docs/site/understand/components-and-authority.md#source-10",
+          "docs/site/understand/components-and-authority.md#source-11",
+          "docs/site/understand/components-and-authority.md#source-12",
+          "docs/site/understand/components-and-authority.md#source-13",
+          "docs/site/understand/components-and-authority.md#source-14",
+          "docs/site/understand/deployment-and-trust.md#source-1",
+          "docs/site/understand/deployment-and-trust.md#source-2",
+          "docs/site/understand/deployment-and-trust.md#source-3",
+          "docs/site/understand/deployment-and-trust.md#source-4",
+          "docs/site/understand/deployment-and-trust.md#source-5",
+          "docs/site/understand/deployment-and-trust.md#source-6",
+          "docs/site/understand/deployment-and-trust.md#source-7",
+          "docs/site/understand/deployment-and-trust.md#source-8",
+          "docs/site/understand/deployment-and-trust.md#source-9",
+          "docs/site/understand/deployment-and-trust.md#source-10",
+          "docs/site/understand/request-state-recovery.md#source-1",
+          "docs/site/understand/request-state-recovery.md#source-2",
+          "docs/site/understand/request-state-recovery.md#source-3",
+          "docs/site/understand/request-state-recovery.md#source-4",
+          "docs/site/understand/request-state-recovery.md#source-5",
+          "docs/site/understand/request-state-recovery.md#source-6",
+          "docs/site/understand/request-state-recovery.md#source-7",
+          "docs/site/understand/request-state-recovery.md#source-8",
+          "docs/site/understand/request-state-recovery.md#source-9",
+          "docs/site/understand/request-state-recovery.md#source-10",
+          "docs/site/understand/request-state-recovery.md#source-11",
+          "docs/site/understand/request-state-recovery.md#source-12",
+          "docs/site/understand/security-and-trust.md#source-1",
+          "docs/site/understand/security-and-trust.md#source-2",
+          "docs/site/understand/security-and-trust.md#source-3",
+          "docs/site/understand/security-and-trust.md#source-4",
+          "docs/site/understand/security-and-trust.md#source-5",
+          "docs/site/understand/security-and-trust.md#source-6",
+          "docs/site/understand/security-and-trust.md#source-7",
+          "docs/site/understand/security-and-trust.md#source-8",
+          "docs/site/understand/security-and-trust.md#source-9",
+          "docs/site/understand/security-and-trust.md#source-10",
+          "docs/site/understand/security-and-trust.md#source-11",
+          "docs/site/understand/security-and-trust.md#source-12",
+          "docs/site/understand/security-and-trust.md#source-13",
+          "docs/site/understand/security-and-trust.md#source-14"
+        ]
+      },
+      {
+        "pages": [
+          "extend/developer-handbook.md",
+          "extend/README.md",
+          "extend/platform/prism.md",
+          "understand/pipeline-dependencies.md"
+        ],
+        "reports": [
+          "developer-prism-dependencies-independent/review.json"
+        ],
+        "trackedSupplement": "handoffs/pr13-finish-20261021/developer-style-addendum-independent-review.json",
+        "note": "54dispositions,25additions/29unchanged; independent3styleaddendum; explicitold/currentSource5diff scope.",
+        "reportHashes": {
+          "developer-prism-dependencies-independent/review.json": "5e6fbe2c28f41cb4eb6b719d6781a7d57d31dc390c6ab510151d8645d8fa1129"
+        },
+        "actualBoxes": [
+          "docs/site/extend/README.md#source-1",
+          "docs/site/extend/README.md#source-2",
+          "docs/site/extend/README.md#source-3",
+          "docs/site/extend/README.md#source-4",
+          "docs/site/extend/README.md#source-5",
+          "docs/site/extend/README.md#source-6",
+          "docs/site/extend/developer-handbook.md#source-1",
+          "docs/site/extend/developer-handbook.md#source-2",
+          "docs/site/extend/developer-handbook.md#source-3",
+          "docs/site/extend/developer-handbook.md#source-4",
+          "docs/site/extend/developer-handbook.md#source-5",
+          "docs/site/extend/developer-handbook.md#source-6",
+          "docs/site/extend/developer-handbook.md#source-7",
+          "docs/site/extend/developer-handbook.md#source-8",
+          "docs/site/extend/developer-handbook.md#source-9",
+          "docs/site/extend/developer-handbook.md#source-10",
+          "docs/site/extend/developer-handbook.md#source-11",
+          "docs/site/extend/developer-handbook.md#source-12",
+          "docs/site/extend/developer-handbook.md#source-13",
+          "docs/site/extend/developer-handbook.md#source-14",
+          "docs/site/extend/developer-handbook.md#source-15",
+          "docs/site/extend/developer-handbook.md#source-16",
+          "docs/site/extend/developer-handbook.md#source-17",
+          "docs/site/extend/developer-handbook.md#source-18",
+          "docs/site/extend/developer-handbook.md#source-19",
+          "docs/site/extend/developer-handbook.md#source-20",
+          "docs/site/extend/developer-handbook.md#source-21",
+          "docs/site/extend/developer-handbook.md#source-22",
+          "docs/site/extend/developer-handbook.md#source-23",
+          "docs/site/extend/developer-handbook.md#source-24",
+          "docs/site/extend/developer-handbook.md#source-25",
+          "docs/site/extend/developer-handbook.md#source-26",
+          "docs/site/extend/developer-handbook.md#source-27",
+          "docs/site/extend/developer-handbook.md#source-28",
+          "docs/site/extend/platform/prism.md#source-1",
+          "docs/site/extend/platform/prism.md#source-2",
+          "docs/site/extend/platform/prism.md#source-3",
+          "docs/site/extend/platform/prism.md#source-4",
+          "docs/site/extend/platform/prism.md#source-5",
+          "docs/site/extend/platform/prism.md#source-6",
+          "docs/site/extend/platform/prism.md#source-7",
+          "docs/site/extend/platform/prism.md#source-8",
+          "docs/site/extend/platform/prism.md#source-9",
+          "docs/site/extend/platform/prism.md#source-10",
+          "docs/site/extend/platform/prism.md#source-11",
+          "docs/site/extend/platform/prism.md#source-12",
+          "docs/site/extend/platform/prism.md#source-13",
+          "docs/site/understand/pipeline-dependencies.md#source-1",
+          "docs/site/understand/pipeline-dependencies.md#source-2",
+          "docs/site/understand/pipeline-dependencies.md#source-3",
+          "docs/site/understand/pipeline-dependencies.md#source-4",
+          "docs/site/understand/pipeline-dependencies.md#source-5",
+          "docs/site/understand/pipeline-dependencies.md#source-6",
+          "docs/site/understand/pipeline-dependencies.md#source-7"
+        ]
+      },
+      {
+        "pages": [
+          "extend/documentation-maintenance.md",
+          "reference/buster-runtime-configuration.md",
+          "reference/capabilities.md",
+          "reference/contracts.md",
+          "reference/documentation-site.md",
+          "reference/errors.md",
+          "reference/nova-project.md",
+          "understand/README.md",
+          "understand/prism.md",
+          "understand/worker-trust.md",
+          "use/capacity.md",
+          "use/worker-trust.md"
+        ],
+        "reports": [
+          "final-sourceboxes-independent/review.json"
+        ],
+        "note": "Workflownonauthor Source17additions/13existingcomplete plus owning generatedtemplate. This reviewer authored17: no selfacceptance.",
+        "reportHashes": {
+          "final-sourceboxes-independent/review.json": "d5009e9389c38a1563b53f3bab5762dc2655e328b3fff8567a7a5db5176e6a1c"
+        },
+        "actualBoxes": [
+          "docs/site/extend/documentation-maintenance.md#source-1",
+          "docs/site/reference/buster-runtime-configuration.md#source-1",
+          "docs/site/reference/buster-runtime-configuration.md#source-2",
+          "docs/site/reference/capabilities.md#source-1",
+          "docs/site/reference/contracts.md#source-1",
+          "docs/site/reference/documentation-site.md#source-1",
+          "docs/site/reference/errors.md#source-1",
+          "docs/site/reference/errors.md#source-2",
+          "docs/site/reference/errors.md#source-3",
+          "docs/site/reference/nova-project.md#source-1",
+          "docs/site/reference/nova-project.md#source-2",
+          "docs/site/reference/nova-project.md#source-3",
+          "docs/site/understand/README.md#source-1",
+          "docs/site/understand/README.md#source-2",
+          "docs/site/understand/README.md#source-3",
+          "docs/site/understand/prism.md#source-1",
+          "docs/site/understand/prism.md#source-2",
+          "docs/site/understand/prism.md#source-3",
+          "docs/site/understand/prism.md#source-4",
+          "docs/site/understand/worker-trust.md#source-1",
+          "docs/site/understand/worker-trust.md#source-2",
+          "docs/site/understand/worker-trust.md#source-3",
+          "docs/site/use/capacity.md#source-1",
+          "docs/site/use/capacity.md#source-2",
+          "docs/site/use/capacity.md#source-3",
+          "docs/site/use/capacity.md#source-4",
+          "docs/site/use/worker-trust.md#source-1",
+          "docs/site/use/worker-trust.md#source-2",
+          "docs/site/use/worker-trust.md#source-3",
+          "docs/site/use/worker-trust.md#source-4"
+        ]
+      }
+    ],
+    "existingCompleteBoxes": 89,
+    "actualTotalBoxes": 411,
+    "note": "Sevennamedcompletecorrectedbatchgroups322boxes plus89existingcompleteunchangedboxes; not anewwholeproductSourceaudit. Six oldconfiguration boxes were additionally readindividually forrealclaim/implementation/contract/assertion/revision/limitmeaning; dated17expander/24render/3Controlassertion results remainhistorical, not rerun/live or wholeconfigurationacceptance."
+  },
+  "currentEvidence": {
+    "readerReportHashes": {
+      "reader-artifact-55496fa4.json": "8f670e6d61f2fd55de4e57bea47ff72b664ff2370c4ad4a5efb6da19f902ca6b",
+      "reader-search-55496fa4.json": "f65734344ddbf315e22ea92246192f9ca609b27c2a1260abf38c119fbf91880d",
+      "reader-source-links-55496fa4.json": "a47d816793a00970321dc22482b8c591ce287ac1e0f66fd142d6d45c5b23e2e0",
+      "reader-source-previews-55496fa4.json": "50943cd2626a1ed21b868860bf9c84dd0b2a4b8322f8ad249684afe6b4018988",
+      "reader-diagrams-55496fa4.json": "66f027803943f3133bb64af12d04b7db5814a63ed85f8fd846ce48daa890b976"
+    },
+    "focusedReportSha256": "8c146144bc190245380cb99d0db6d5b1fceffbc59c36e66ad52165f96fafee85",
+    "focusedScriptSha256": "474c2e9be1d9eea9bdbc0350f6631319e93a52cd4a7cbdb07057b8b7c68a7f23",
+    "ledgerSha256": "0f5b018d32b186c94d78ff0cd5f93348f9dc4e2ea5e8bb87205b8455d7658356",
+    "currentPreflightPages": 177,
+    "currentBrowserPages": 3,
+    "currentBrowserBoxes": 42,
+    "currentOfflineSearches": 2,
+    "currentFindings": 0,
+    "currentNetwork": 0,
+    "oldFullActualReuse": {
+      "revision": "7ef16585ba04eba3628cead304be85307436f091",
+      "pageObservations": 531,
+      "boxObservations": 1233,
+      "initialTitleMeasurementFindingsRetained": 6,
+      "targetedRetakeObservations": 6,
+      "unchangedPhysicalPages": 176,
+      "unchangedOtherBoxObjects": 397,
+      "meaning": "Unionofunchangedactualproofandtargetedfreshsuccessor, not535/1275newfullrunornewacceptancecounts."
+    },
+    "rootCurrentVisualObservation": "Root viewed actual components-and-authority-source13-320.png: coherent completeImplementationparagraph/readablesource-disclosurewrapping/nohorizontalclipping; native focusedskiplinkoverlaynotfullaccessibilityacceptance."
+  },
+  "authorshipBoundary": "This reviewer authored17field/templateadditions andfocusedharness. Correctnessof17fieldsreliesonworkflowindependentfullSource/consumer/semanticReader/Qualityreview. Rootfullscriptdiffreview+actualexecution/freshGitartifactcheckersexternallysupplymeasurement/effectproof. No authoredclaimselfacceptance.",
+  "limits": [
+    "WholeA912-05only; no otherpublication/accessibility/freshpersona/globaldocumentation/runtime/releasegate.",
+    "SourcesnippetsproveexactlinkedhistoricalSource,notcurrentwholeimplementation/livebehavior/testexecution. Datedexistingtestsandno-new-executionlimitsstayintact.",
+    "No currentglobalmodulegraph/closure/role/custody/API/nativequalification requiredorgranted; thatseparateworkcanhonestlySTOP. Four native receipts remain UNEXECUTED.",
+    "Current 554 normal artifact, focused browser, delivered ZIP/extraction and loopback checkpoint only. Exactly one normal build was performed at 554; two-build determinism at 7ef remains its separate historical proof. Old full 7ef browser observations are never relabeled a new full 554 run.",
+    "NoMain/registerwrite,productiontargetSourceimports/evaluation,currentgraph/native/producer/Reader/browserexecutionbythisreviewer; inertSource/evidenceinspectiononly."
+  ],
+  "currentDeliveryReceipt": {
+    "report": "reader-55496fa4-closeout.json",
+    "sha256": "c21efb35c725138b78a9eb87b8964ea27caed8000c55dbc8a515966a82e10f7a",
+    "normalBuildsActuallyAt554": 1,
+    "notTwoBuildClaim": true,
+    "archiveSha256": "4cffb4c4231fb75862a5d4470807bd53a150173f70e16f6a18b0cd4a145c5f1e",
+    "safeRegularUniqueMembers": 242,
+    "sourceComparedAssets": 19,
+    "normalExtractedArtifactAndSearch": [
+      0,
+      0
+    ],
+    "loopback240ExactBytes": true,
+    "deliveryDiscordMessage": "1562639327853281352",
+    "attribution": "Root actual execution and archive inspection; independently inspected reported fields and evidence file/archive hashes, not reexecuted."
+  }
+}

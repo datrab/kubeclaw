@@ -1,0 +1,129 @@
+{
+  "revision": "55496fa427f536fb9ad6c1a833a4da38dce4839f",
+  "status": "READER_CHECKPOINT_VALIDATED_NOT_AGGREGATE_ACCEPTANCE",
+  "originalBuild": {
+    "terminal": 0,
+    "physicalFiles": 419,
+    "buildsActuallyPerformedAtThisRevision": 1,
+    "notTwoBuildClaim": true
+  },
+  "checks": {
+    "artifact": {
+      "terminal": 0,
+      "canonicalPages": 177,
+      "htmlPages": 187,
+      "localLinks": 40832,
+      "outputs": 240
+    },
+    "search": {
+      "terminal": 0,
+      "questions": 12
+    },
+    "sourceLinks": {
+      "terminal": 0,
+      "links": 14840,
+      "objects": 3961
+    },
+    "sourcePreviews": {
+      "terminal": 0,
+      "boxes": 411,
+      "excerpts": 1888,
+      "objects": 983
+    },
+    "diagrams": {
+      "terminal": 0,
+      "freshSvgHashes": 27
+    }
+  },
+  "focusedBrowser": {
+    "terminal": 0,
+    "pageObservations": 3,
+    "boxObservations": 42,
+    "searches": 2,
+    "findings": [],
+    "priorFull7efProofPreservedNotRecounted": true,
+    "rootActuallyViewedScreenshot": "browser-focused14-55496fa4/components-and-authority-source13-320.png",
+    "rootObservation": "Coherent complete Implementation paragraph; readable wrapped Source disclosures and all six fields; no horizontal clipping. Focused skiplink overlay is observed native focus, not complete accessibility acceptance."
+  },
+  "archive": {
+    "revision": "55496fa427f536fb9ad6c1a833a4da38dce4839f",
+    "archive": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/kubeclaw-reader-offline-55496fa4.zip",
+    "sha256": "4cffb4c4231fb75862a5d4470807bd53a150173f70e16f6a18b0cd4a145c5f1e",
+    "bytes": 7888642,
+    "members": 242,
+    "copiedAssetsSourceCompared": 19,
+    "extracted": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/offline-reader-55496fa4",
+    "limit": "Checkpoint reader, not aggregate documentation or release acceptance.",
+    "safeUniqueRegularUnencryptedMembers": 242,
+    "allFreshExtractedBytesExact": true,
+    "normalExtractedArtifactAndSearchTerminals": [
+      0,
+      0
+    ],
+    "actualLoopbackAll240OutputsExactBytes": true,
+    "deliveredDiscordMessage": "1562639327853281352"
+  },
+  "evidenceFiles": [
+    {
+      "path": "reader-build-55496fa4.txt",
+      "sha256": "080aa7e9a149dae76c828e03259c34c46783e72c11df5c5f9ed8b7338ac742f8",
+      "bytes": 73
+    },
+    {
+      "path": "reader-artifact-55496fa4.json",
+      "sha256": "8f670e6d61f2fd55de4e57bea47ff72b664ff2370c4ad4a5efb6da19f902ca6b",
+      "bytes": 85
+    },
+    {
+      "path": "reader-search-55496fa4.json",
+      "sha256": "f65734344ddbf315e22ea92246192f9ca609b27c2a1260abf38c119fbf91880d",
+      "bytes": 3062
+    },
+    {
+      "path": "reader-source-links-55496fa4.json",
+      "sha256": "a47d816793a00970321dc22482b8c591ce287ac1e0f66fd142d6d45c5b23e2e0",
+      "bytes": 1438392
+    },
+    {
+      "path": "reader-source-previews-55496fa4.json",
+      "sha256": "50943cd2626a1ed21b868860bf9c84dd0b2a4b8322f8ad249684afe6b4018988",
+      "bytes": 239
+    },
+    {
+      "path": "reader-diagrams-55496fa4.json",
+      "sha256": "66f027803943f3133bb64af12d04b7db5814a63ed85f8fd846ce48daa890b976",
+      "bytes": 262
+    },
+    {
+      "path": "reader-archive-55496fa4.json",
+      "sha256": "f23d51a5987961d82475b53cc03901584ea988521bd88190ac3f40557c18f493",
+      "bytes": 506
+    },
+    {
+      "path": "reader-extracted-artifact-55496fa4.json",
+      "sha256": "8f670e6d61f2fd55de4e57bea47ff72b664ff2370c4ad4a5efb6da19f902ca6b",
+      "bytes": 85
+    },
+    {
+      "path": "reader-extracted-search-55496fa4.json",
+      "sha256": "f65734344ddbf315e22ea92246192f9ca609b27c2a1260abf38c119fbf91880d",
+      "bytes": 3062
+    },
+    {
+      "path": "reader-preview-55496fa4.json",
+      "sha256": "899d64ac4db125119a7a76a19e16e9734f76b3bc1d7344eed3b297872fce9bb1",
+      "bytes": 361
+    },
+    {
+      "path": "browser-focused14-55496fa4/report.json",
+      "sha256": "8c146144bc190245380cb99d0db6d5b1fceffbc59c36e66ad52165f96fafee85",
+      "bytes": 422001
+    }
+  ],
+  "limits": [
+    "No current graph/module/producer/native runtime grant",
+    "No complete accessibility or fresh-persona acceptance",
+    "No repeated count of historical source/browser/determinism scopes",
+    "Runtime release stop unchanged"
+  ]
+}
