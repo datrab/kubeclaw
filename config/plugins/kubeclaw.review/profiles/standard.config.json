@@ -3,7 +3,7 @@
   "profiles": {
     "standard": {
       "settings": {
-        "schemaVersion": "review-owned-decision-profiles.v2",
+        "schemaVersion": "review-owned-decision-profiles.v3",
         "profiles": {
           "gate": {
             "schemaVersion": "review-policy.v2",
@@ -382,7 +382,8 @@
               "simplification"
             ]
           }
-        }
+        },
+        "promptTokenBoundaryReserve": 64
       }
     }
   }

@@ -9,10 +9,12 @@ export type {ReviewPolicyProfileId} from './legacy-review-policy-profiles.ts';
 export function getReviewPolicyProfile(profile: string, owned?: unknown): ReviewPolicy {
   if (owned === undefined) return legacyProfile(profile);
   if (!owned || typeof owned !== 'object' || Array.isArray(owned)
-    || !['profiles,schemaVersion','profiles,repositoryGrades,schemaVersion'].includes(Object.keys(owned).sort().join(','))) throw new Error('REVIEW_OWNED_POLICY_INVALID');
+    || !['profiles,schemaVersion','profiles,repositoryGrades,schemaVersion','profiles,promptTokenBoundaryReserve,repositoryGrades,schemaVersion'].includes(Object.keys(owned).sort().join(','))) throw new Error('REVIEW_OWNED_POLICY_INVALID');
   const value=owned as Record<string,unknown>;
-  if(!['review-owned-decision-profiles.v1','review-owned-decision-profiles.v2'].includes(String(value.schemaVersion)) || !value.profiles || typeof value.profiles!=='object' || Array.isArray(value.profiles)
+  if(!['review-owned-decision-profiles.v1','review-owned-decision-profiles.v2','review-owned-decision-profiles.v3'].includes(String(value.schemaVersion)) || !value.profiles || typeof value.profiles!=='object' || Array.isArray(value.profiles)
     || Object.keys(value.profiles).sort().join(',')!=='audit,gate,lean')throw new Error('REVIEW_OWNED_POLICY_INVALID');
+  if(value.schemaVersion==='review-owned-decision-profiles.v3' && (Object.keys(value).sort().join(',')!=='profiles,promptTokenBoundaryReserve,repositoryGrades,schemaVersion' || !Number.isSafeInteger(value.promptTokenBoundaryReserve) || Number(value.promptTokenBoundaryReserve)<0 || Number(value.promptTokenBoundaryReserve)>1_000_000))throw new Error('REVIEW_OWNED_POLICY_INVALID');
+  if(value.schemaVersion!=='review-owned-decision-profiles.v3' && Object.hasOwn(value,'promptTokenBoundaryReserve'))throw new Error('REVIEW_OWNED_POLICY_INVALID');
   const profiles=value.profiles as Record<string,unknown>;
   const parsed=new Map<string,ReviewPolicy>();
   for(const name of ['gate','lean','audit']) {

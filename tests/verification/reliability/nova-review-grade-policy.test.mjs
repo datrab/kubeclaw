@@ -17,7 +17,13 @@ test('every selected grade preserves original values; runtime-owned tokenizer/ou
   const stage=selectedStageConfiguration(type,config,undefined,undefined,policy.reviewPolicyCapture,b);
   assert.equal(stage.repositoryRuntimeTarget.tokenizerEncoding,actual.tokenizerEncoding);
   assert.equal(stage.repositoryRuntimeTarget.maxOutputTokens,actual.maxOutputTokens);
-  for(const grade of ['fast','standard','deep'])assert.deepEqual(parseRepositoryReviewInput({grade},selectedRepositoryGrades(stage)),legacy({grade}));
+  for(const grade of ['fast','standard','deep']) {
+   const original=structuredClone(stage);original.ownedPolicyProfiles.schemaVersion='review-owned-decision-profiles.v2';delete original.ownedPolicyProfiles.promptTokenBoundaryReserve;
+   assert.deepEqual(parseRepositoryReviewInput({grade},selectedRepositoryGrades(original)),legacy({grade}));
+   const current=parseRepositoryReviewInput({grade},selectedRepositoryGrades(stage));
+   assert.equal(current.schemaVersion,'repository-review-profile.v2');assert.equal(current.promptTokenBoundaryReserve,64);
+   const {digest,schemaVersion,promptTokenBoundaryReserve,...rest}=current;const {digest:oldDigest,schemaVersion:oldVersion,...oldRest}=legacy({grade});assert.deepEqual(rest,oldRest);assert.notEqual(digest,oldDigest);
+  }
   for(const overrides of [undefined,null,{},{maxPrimaryJobs:75},{maxInputTokens:8000000}])assert.throws(()=>parseRepositoryReviewInput({grade:'fast',overrides},selectedRepositoryGrades(stage)),/COMPETING_AUTHOR/);
  }
  const forbidden=structuredClone(policy);forbidden.reviewPolicyCapture.settings.repositoryGrades.fast.maxOutputTokensPerJob=6000;assert.throws(()=>captureCoreRuntimePolicy(forbidden),/CAPTURE_INVALID/);

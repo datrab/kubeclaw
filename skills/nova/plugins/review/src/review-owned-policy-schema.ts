@@ -14,5 +14,6 @@ export function ownedPolicyProfilesSchema(policyRef:string) {
  const profiles={type:'object',additionalProperties:false,required:['gate','lean','audit'],properties:Object.fromEntries(['gate','lean','audit'].map(name=>[name,{allOf:[{$ref:policyRef},{type:'object',properties:{profile:{const:name}}}]}]))};
  const v1={type:'object',additionalProperties:false,required:['schemaVersion','profiles'],properties:{schemaVersion:{const:'review-owned-decision-profiles.v1'},profiles}};
  const v2={...v1,required:[...v1.required,'repositoryGrades'],properties:{...v1.properties,schemaVersion:{const:'review-owned-decision-profiles.v2'},repositoryGrades:{type:'object',additionalProperties:false,required:['fast','standard','deep'],properties:{fast:repositoryGradeSchema,standard:repositoryGradeSchema,deep:repositoryGradeSchema}}}};
- return {oneOf:[v1,v2]};
+ const v3={...v2,required:[...v2.required,'promptTokenBoundaryReserve'],properties:{...v2.properties,schemaVersion:{const:'review-owned-decision-profiles.v3'},promptTokenBoundaryReserve:integer(0,1000000)}};
+ return {oneOf:[v1,v2,v3]};
 }

@@ -206,7 +206,7 @@ export function retainedRuntimePolicies(runRoot: string): Readonly<{storeBinding
     }
   }
   const provider=configuration.providers?.['runtime.dispatch'];
-  const reviewRuntimeBinding=corePolicy.reviewPolicyCapture?.settings.schemaVersion==='review-owned-decision-profiles.v2' && provider==='kubeclaw.runtime-dispatch:openclaw' && configuration.activeAdapters?.includes(provider)
+  const reviewRuntimeBinding=['review-owned-decision-profiles.v2','review-owned-decision-profiles.v3'].includes(String(corePolicy.reviewPolicyCapture?.settings.schemaVersion)) && provider==='kubeclaw.runtime-dispatch:openclaw' && configuration.activeAdapters?.includes(provider)
     ? {provider,configuration:deepFreeze(structuredClone(configuration.adapters?.[provider] ?? {}))} : undefined;
   return Object.freeze({storeBindings:captureStoreRuntimeBindings(configuration.adapters ?? {},corePolicy),httpBindings:captureHttpRuntimeBindings(configuration.adapters ?? {},corePolicy),gitBindings:captureGitRuntimeBindings(configuration.adapters ?? {},corePolicy),publisherBindings:capturePublisherRuntimeBindings(configuration.adapters ?? {},corePolicy),operatorBindings:captureOperatorRuntimeBindings(configuration.adapters ?? {},corePolicy),redisBindings:captureRedisRuntimeBindings(configuration.adapters ?? {},corePolicy),reviewRuntimeBinding,corePolicy,operatorSelections:Object.freeze(operatorSelections),publisherSelections:Object.freeze(publisherSelections),timingSelections:Object.freeze(selections),httpSelections:Object.freeze(httpSelections)});
 }

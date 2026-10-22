@@ -69,3 +69,15 @@ It reports numeric candidates requiring semantic review, not confirmed remaining
 settings or a completeness score. Strings, booleans, environment fallbacks,
 embedded code and deployment configuration also need review. Ordinary counters,
 unit conversions and protocol constants should remain code, not operator config.
+
+### Review prompt reservation
+
+`plugins/kubeclaw.review/profiles/standard.config.json` uses the closed
+`review-owned-decision-profiles.v3` owner. Its required
+`promptTokenBoundaryReserve` is a nonnegative integer token margin (0–1000000),
+explicitly 64 in the standard profile. The same captured selection drives
+repository-review job fitting, initial/expansion/verification accounting, retries
+and dispatch admission. It is not a task override or a second model/tokenizer
+author. Resolved profiles include the margin in their v2 digest. Historical
+v1/v2 owners and v1 resolved profiles retain their original 64-token codec;
+recovery uses the original owner and runtime target without reading current files.

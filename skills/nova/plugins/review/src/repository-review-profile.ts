@@ -46,7 +46,8 @@ export type RepositoryReviewLens =
   | 'architecture' | 'contracts' | 'security' | 'lifecycle' | 'resilience' | 'deployment' | 'simplification';
 
 export interface ResolvedRepositoryReviewProfile {
-  readonly schemaVersion: 'repository-review-profile.v1';
+  readonly schemaVersion: 'repository-review-profile.v1' | 'repository-review-profile.v2';
+  readonly promptTokenBoundaryReserve?: number | undefined;
   readonly grade: RepositoryReviewGrade;
   readonly mode: RepositoryReviewMode;
   readonly scope: RepositoryReviewScope;
@@ -283,7 +284,7 @@ export function resolveRepositoryReviewProfile(values: {
   readonly mode?: RepositoryReviewMode;
   readonly scope?: RepositoryReviewScope;
   readonly overrides?: RepositoryReviewProfileOverrides;
-}, selected?: {readonly grades: unknown; readonly target: RepositoryRuntimeTarget}): ResolvedRepositoryReviewProfile {
+}, selected?: {readonly grades: unknown; readonly target: RepositoryRuntimeTarget; readonly promptTokenBoundaryReserve?: number | undefined}): ResolvedRepositoryReviewProfile {
   if (selected === undefined) return resolveLegacyProfile(values);
   if (Object.hasOwn(values,'overrides')) throw new Error('REPOSITORY_GRADE_COMPETING_AUTHOR');
   const grade = reviewGrade(values.grade), target = selected.target;
@@ -299,14 +300,15 @@ export function resolveRepositoryReviewProfile(values: {
   });
   const enabledLenses = reviewLenses(overrides, defaults);
   const unsigned = {
-    schemaVersion: 'repository-review-profile.v1' as const, grade, mode, scope,
+    schemaVersion: selected.promptTokenBoundaryReserve === undefined ? 'repository-review-profile.v1' as const : 'repository-review-profile.v2' as const,
+    ...(selected.promptTokenBoundaryReserve === undefined ? {} : {promptTokenBoundaryReserve: nonNegative(selected.promptTokenBoundaryReserve, 0, 'prompt token boundary reserve', 1_000_000)}), grade, mode, scope,
     allowedPrefixes: prefixes(scope), tokenizerEncoding: tokenizerEncoding(overrides.tokenizerEncoding, defaults.tokenizerEncoding, target),
     componentBudget, boundaryBudget, ...operationalLimits(overrides, defaults, target), enabledLenses,
   };
   return Object.freeze({ ...unsigned, digest: sha256Text(canonicalJson(unsigned)) });
 }
 
-export function parseRepositoryReviewInput(value: unknown, selected?: {readonly grades:unknown;readonly target:RepositoryRuntimeTarget}): ResolvedRepositoryReviewProfile {
+export function parseRepositoryReviewInput(value: unknown, selected?: {readonly grades:unknown;readonly target:RepositoryRuntimeTarget;readonly promptTokenBoundaryReserve?:number|undefined}): ResolvedRepositoryReviewProfile {
   // Retained v1 input uses its original parser, not a current-policy projection.
   if (selected === undefined) return parseLegacyInput(value);
   if (!value || typeof value !== 'object' || Array.isArray(value)) throw new Error('repository audit input is invalid');
@@ -337,13 +339,16 @@ export function validateOwnedRepositoryGrades(value:unknown):Readonly<Record<Rep
 const AjvConstructor=Ajv2020 as unknown as new(options:object)=>{compile(schema:object):(value:unknown)=>boolean};
 const validateGrades=new AjvConstructor({strict:true}).compile({type:'object',additionalProperties:false,required:['fast','standard','deep'],properties:{fast:repositoryGradeSchema,standard:repositoryGradeSchema,deep:repositoryGradeSchema}});
 
-export function selectedRepositoryGrades(config:Readonly<Record<string,unknown>>):{readonly grades:unknown;readonly target:RepositoryRuntimeTarget}|undefined {
+export function selectedRepositoryGrades(config:Readonly<Record<string,unknown>>):{readonly grades:unknown;readonly target:RepositoryRuntimeTarget;readonly promptTokenBoundaryReserve?:number|undefined}|undefined {
  const owned=config.ownedPolicyProfiles as Record<string,unknown>|undefined;
- if(owned?.schemaVersion!=='review-owned-decision-profiles.v2') {
+ if(!['review-owned-decision-profiles.v2','review-owned-decision-profiles.v3'].includes(String(owned?.schemaVersion))) {
   if(Object.hasOwn(config,'repositoryRuntimeTarget'))throw new Error('REPOSITORY_RUNTIME_TARGET_UNEXPECTED');
   return undefined;
  }
- const selected={grades:owned.repositoryGrades,target:config.repositoryRuntimeTarget as RepositoryRuntimeTarget};
+ const v3=owned!.schemaVersion==='review-owned-decision-profiles.v3';
+ if(v3 && (!Object.hasOwn(owned!,'promptTokenBoundaryReserve') || !Number.isSafeInteger(owned!.promptTokenBoundaryReserve) || Number(owned!.promptTokenBoundaryReserve)<0 || Number(owned!.promptTokenBoundaryReserve)>1_000_000))throw new Error('REVIEW_PROMPT_RESERVE_INVALID');
+ const selected={grades:owned!.repositoryGrades,target:config.repositoryRuntimeTarget as RepositoryRuntimeTarget,
+  ...(v3?{promptTokenBoundaryReserve:Number(owned!.promptTokenBoundaryReserve)}:{})};
  for(const grade of ['fast','standard','deep'] as const)resolveRepositoryReviewProfile({grade},selected);
  return selected;
 }

@@ -39,6 +39,7 @@ export interface ScalableVerificationJob {
 
 export interface ScalableVerificationBudget {
   readonly tokenizerEncoding: ReviewTokenizerEncoding;
+  readonly promptTokenBoundaryReserve?: number | undefined;
   readonly maxPromptBytes: number; readonly maxInputTokens: number;
 }
 
@@ -259,7 +260,7 @@ function lineHints(job: UnsignedVerificationJob, path: string): readonly number[
 }
 
 function withinVerificationBudget(job: ScalableVerificationJob, budget: ScalableVerificationBudget): boolean {
-  const measured = reserveReviewRuntimePrompt(buildScalableVerificationDispatchPayload(job), budget.tokenizerEncoding);
+  const measured = reserveReviewRuntimePrompt(buildScalableVerificationDispatchPayload(job), budget.tokenizerEncoding, budget.promptTokenBoundaryReserve);
   return measured.bytes <= budget.maxPromptBytes && measured.tokens <= budget.maxInputTokens;
 }
 

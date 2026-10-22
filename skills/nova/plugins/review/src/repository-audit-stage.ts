@@ -426,6 +426,7 @@ async function verifiedReduction(
   }
   const requestedVerificationJobs = buildScalableVerificationJobs(preflight, finalJobs, policyDigest, {
     tokenizerEncoding: compilation.profile.tokenizerEncoding,
+    promptTokenBoundaryReserve: compilation.profile.promptTokenBoundaryReserve,
     maxPromptBytes: compilation.profile.maxPromptBytesPerJob,
     maxInputTokens: Math.min(compilation.profile.maxInputTokensPerJob,
       compilation.profile.maxContextTokensPerJob - compilation.profile.maxOutputTokensPerJob),
@@ -494,7 +495,7 @@ function enforceExpansionBudget(
   }
   const reservation = reserveReviewAttempts(jobs.map(buildScalableReviewDispatchPayload),
     compilation.profile.tokenizerEncoding, compilation.profile.maxRetries,
-    compilation.profile.maxRetryAttemptsPerPhase);
+    compilation.profile.maxRetryAttemptsPerPhase, compilation.profile.promptTokenBoundaryReserve);
   const inputTokens = reservation.inputTokens;
   const outputTokens = reservation.attempts * compilation.profile.maxOutputTokensPerJob;
   const cost = estimatedReviewCostUsd({ inputTokens, outputTokens,
@@ -533,10 +534,10 @@ function verificationJobAccounting(
   compilation: ReturnType<typeof compileScalableReview>, jobs: readonly ScalableVerificationJob[],
 ): VerificationAccounting {
   const metrics = jobs.map((job) => reserveReviewRuntimePrompt(
-    buildScalableVerificationDispatchPayload(job), compilation.profile.tokenizerEncoding));
+    buildScalableVerificationDispatchPayload(job), compilation.profile.tokenizerEncoding, compilation.profile.promptTokenBoundaryReserve));
   const reservation = reserveReviewAttempts(jobs.map(buildScalableVerificationDispatchPayload),
     compilation.profile.tokenizerEncoding, compilation.profile.maxRetries,
-    compilation.profile.maxRetryAttemptsPerPhase);
+    compilation.profile.maxRetryAttemptsPerPhase, compilation.profile.promptTokenBoundaryReserve);
   const inputTokens = reservation.inputTokens;
   const reservedOutputTokens = reservation.attempts * compilation.profile.maxOutputTokensPerJob;
   return Object.freeze({ jobs: jobs.length,

@@ -115,7 +115,7 @@ function jobAccounting(
   profile: ResolvedRepositoryReviewProfile,
 ): ScalableReviewJobAccounting {
   const metrics = jobs.map((job) => ({ job,
-    ...reserveReviewRuntimePrompt(buildScalableReviewDispatchPayload(job), profile.tokenizerEncoding) }));
+    ...reserveReviewRuntimePrompt(buildScalableReviewDispatchPayload(job), profile.tokenizerEncoding, profile.promptTokenBoundaryReserve) }));
   const sortedTokens = metrics.map(({ tokens }) => tokens).sort((left, right) => left - right);
   const inputTokens = metrics.reduce((total, value) => total + value.tokens, 0);
   const outputTokens = jobs.length * profile.maxOutputTokensPerJob;
