@@ -20,8 +20,8 @@ Last verified: local source, transport and Helm checks on 2026-10-21; live cutov
 ## Decision
 
 Run a persistent Kubernetes StatefulSet for Codex and a separate Ops MCP
-Deployment in `kubeclaw-ops`. Codex and Nova authenticate to the central service
-using distinct credentials and centrally configured grants. Install it directly with Helm from the existing administration machine.
+Deployment in `kubeclaw-ops`. Codex, Nova and Buster authenticate to the central service
+using distinct credentials and centrally configured grants. Promote immutable image receipts in Git; Argo installs the chart.
 Keep host/K3s recovery on the existing management/KVM path. The operator explicitly
 accepts that a failure of the host or the cluster dependencies can make this Pod
 unreachable. No additional VM is required.
@@ -41,10 +41,10 @@ Its chart is not installed through the pipeline it is meant to diagnose. A stopp
 Argo controller does not by itself stop a running Ops Pod. Kubernetes still owns
 scheduling, restart, networking, projected credentials and storage.
 
-Codex is the interactive operations workspace; Nova can use the same central MCP.
+Codex is the interactive operations workspace; Nova and Buster use the same central MCP.
 The MCP Service is internal, with TLS and per-client bearer authentication. There
 is no public Ingress, external tunnel or Kubernetes credential in an agent Pod.
-The MCP alone owns the API credential and observer/exec bindings.
+The MCP owns the observer/exec bindings. Separate platform identities provision credentials and reconcile namespace access; agents never receive them.
 
 This chart installs no pipeline worker, task queue, generic privileged command
 executor, backup service, monitoring stack, or cluster repair controller.
@@ -58,7 +58,8 @@ flowchart TD
   Nova["Nova Pod: no API credentials"] -->|"TLS + Nova bearer"| MCP
   Codex --> Relay
   MCP -->|"projected service-account token"| API["Kubernetes API"]
-  Buster["Buster runtime"] -->|"lease request"| Broker["Namespace controller"]
+  Buster["Buster"] -->|"TLS + Buster bearer: test* only"| MCP
+  Buster -->|"lease request"| Broker["Namespace controller"]
   Broker --> API
 ```
 
@@ -92,10 +93,11 @@ recovery change and must be considered during that migration.
 | --- | --- | --- |
 | Codex | 100m / 2 | 256Mi / 3Gi |
 | MCP | 25m / 500m | 64Mi / 512Mi |
+| Namespace access reconciler | 10m / 200m | 32Mi / 128Mi |
 | Optional Tailscale | 25m / 500m | 64Mi / 256Mi |
 
-Without Tailscale, requests total 125m and 320Mi; limits total 2.5 CPU and 3584Mi.
-With it, requests total 150m and 384Mi; limits total 3 CPU and 3840Mi. Requests are
+Without Tailscale, steady-state requests total 135m and 352Mi; limits total 2.7 CPU and 3712Mi.
+With it, steady-state requests total 160m and 416Mi; limits total 3.2 CPU and 3968Mi. Requests are
 scheduler reservations, not observed working sets. Limits are per-container,
 not a shared pool: unused Codex memory does not raise the MCP limit.
 
@@ -150,21 +152,33 @@ remote process, so that this connection remains attached to the deployed service
 | Codex runtime | Own workspace, MCP client bearer and separately configured GitHub identity | No Kubernetes token, kubeconfig or RBAC binding |
 | Nova runtime | Own workspace and distinct MCP client bearer | No API token, lease-client role, verification-read role or broker deployer grant |
 | Central MCP | Selected observer reads and pod exec | Dedicated `codex-ops-mcp` ServiceAccount; per-client policy further restricts its authority |
-| Buster runtime | Namespace leases and existing lease-scoped test execution | Explicit token mount only in the worker; controller retains namespace management |
+| Buster | Read/exec through MCP only in `test*`; existing broker lease exception | Own MCP bearer; explicit lease token only in worker; controller retains namespace management |
+| Namespace access reconciler | List namespaces; maintain two named MCP RoleBindings | Admission restricts writes to configured prefixes, exact roles and MCP subject; no workload, exec or Secret rights |
 
 `mcp.clients` is the authorization source. Each client declares exact tool names,
-readable namespaces and explicit exec grants (namespace, nonempty Pod label
-selector, exact container names, timeout and output ceiling). Empty `exec: []`
-denies exec. Clients see only their configured tools; every tool call also checks
-its namespace before using Kubernetes. Argo reads check the configured Argo
-namespace. Cluster-scoped reads require their own explicit tool grant.
+readable `namespaces`, dynamic `namespacePrefixes`, and explicit exec grants.
+Exact namespace grants require a nonempty Pod label selector and exact container
+names. Prefix exec grants explicitly set `namespacePrefix`, `allPods: true` and
+`allContainers: true`, with timeout and output ceilings. Empty `exec: []` denies
+exec. All calls check client scope before accessing Kubernetes. Buster has no
+exact namespaces and only the `test` prefix; Nova and Ops retain their existing
+namespaces plus `test`. Prefix matching ignores case; tool input is canonicalized
+to Kubernetes' lowercase namespace names. `test`, `testing` and `test-build` match;
+`prod-test` and `contest` do not.
 
-`rbac.namespaces` and `rbac.execNamespaces` define the upper bound available to the
-MCP identity. Client grants must fit these bounds; discovery does not expand
-client privileges. The default clients observe `kubeclaw`. To permit Argo or
-platform namespaces, configure both client grants and MCP bindings explicitly.
-Only the MCP mounts its short-lived, rotated Kubernetes token. Removing exec
-namespaces removes its exec roles; clients never receive API credentials.
+`rbac.namespaces`, `rbac.execNamespaces` and `rbac.namespacePrefixes` cap the MCP
+identity. The separate namespace-access reconciler lists namespaces every five
+seconds and maintains reader/exec RoleBindings for every matching namespace,
+including existing, newly created and recreated namespaces. No opt-in label or
+per-namespace Git change is needed. New namespace access may initially return
+403 until the next successful reconciliation; terminating namespaces are skipped.
+Only the MCP receives these RoleBindings. Kubernetes RBAC cannot restrict binding
+creation by prefix, so a mandatory, fail-closed ValidatingAdmissionPolicy also
+checks the reconciler identity, namespace prefix, exact binding/role names and
+single MCP subject. Argo installs that guard before the reconciler's RBAC.
+The MCP has no cluster-wide namespaced reader/exec binding. Removing a client
+prefix immediately denies its subsequent MCP calls; changing the backend prefix
+set also requires retiring old managed RoleBindings as part of that migration.
 
 `exec_pod` uses Kubernetes remotecommand over verified TLS/WebSocket. It accepts
 bounded argv, no stdin or TTY, and no arbitrary API method or URL. It is a mutating,

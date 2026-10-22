@@ -1,6 +1,6 @@
 import { boundedUtf8, logObservation } from './diagnostics.mjs';
 import { getHubbleFlows } from './hubble.mjs';
-import { createAccessPolicy, requestIdentity, authorizeTool, authorizeExec, audit, identityContext } from './access-policy.mjs';
+import { namespaceAllowed, createAccessPolicy, requestIdentity, authorizeTool, authorizeExec, audit, identityContext } from './access-policy.mjs';
 import { createPodExec } from './exec.mjs';
 import { readTlsPair, reloadTls } from './tls.mjs';
 import { loadOpsMcpConfig } from './config.mjs';
@@ -25,7 +25,8 @@ const EVENT_PAGE_SIZE = 500;
 const authentication = createAccessPolicy(config);
 const execPod = createPodExec();
 let activeExecs = 0;
-const namespaceSchema = z.enum(config.namespaces).default(DEFAULT_NAMESPACE);
+const namespaceSchema = z.string().min(1).max(63).transform(value => value.toLowerCase())
+  .refine(value => namespaceAllowed(value, config.namespaces, config.namespacePrefixes), 'Namespace outside the MCP scope').default(DEFAULT_NAMESPACE);
 const allowedOrigins = config.allowedOrigins;
 
 function jsonText(value) {

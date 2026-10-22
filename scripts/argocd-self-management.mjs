@@ -25,6 +25,8 @@ const project = {
     clusterResourceWhitelist: [
       { group: 'rbac.authorization.k8s.io', kind: 'ClusterRole' },
       { group: 'rbac.authorization.k8s.io', kind: 'ClusterRoleBinding' },
+      { group: 'admissionregistration.k8s.io', kind: 'ValidatingAdmissionPolicy' },
+      { group: 'admissionregistration.k8s.io', kind: 'ValidatingAdmissionPolicyBinding' },
       { group: 'apiextensions.k8s.io', kind: 'CustomResourceDefinition' },
       { group: 'networking.k8s.io', kind: 'IngressClass' },
     ],

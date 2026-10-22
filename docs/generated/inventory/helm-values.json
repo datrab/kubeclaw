@@ -168,7 +168,8 @@
         "busterNamespaceBroker",
         "resources",
         "workspace",
-        "busterRuntimePersistence"
+        "busterRuntimePersistence",
+        "opsMcp"
       ],
       "secretReferences": [
         {

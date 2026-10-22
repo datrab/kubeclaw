@@ -31,6 +31,9 @@ test('Buster retains its explicit runtime token and broker but cannot delegate l
   const resources = render('buster');
   const pod = resources.find(x => x.kind === 'Deployment' && x.metadata.name === 'agent-buster').spec.template.spec;
   assert.equal(pod.automountServiceAccountToken, false);
+  assert.equal(pod.volumes.find(v => v.name === 'ops-mcp-token').secret.secretName, 'buster-ops-bearer');
+  const gateway = pod.containers.find(c => c.name === 'kubeclaw');
+  assert.ok(gateway.volumeMounts.find(v => v.name === 'ops-mcp-token').readOnly);
   const leaseBinding = resources.find(x => x.kind === 'RoleBinding' && x.metadata.name.endsWith('namespace-lease-client'));
   assert.deepEqual(leaseBinding.subjects, [{ kind: 'ServiceAccount', name: 'agent-buster', namespace: 'kubeclaw' }]);
   assert.ok(pod.volumes.some(v => v.projected?.sources?.some(s => s.serviceAccountToken)));

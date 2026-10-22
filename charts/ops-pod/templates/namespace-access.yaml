@@ -1,0 +1,148 @@
+{{- if .Values.rbac.namespacePrefixes }}
+{{- $name := printf "%s-mcp-namespace-access" .Release.Name }}
+{{- $reader := printf "%s-%s-reader" .Release.Namespace .Release.Name }}
+{{- $exec := printf "%s-%s-test-exec" .Release.Namespace .Release.Name }}
+{{- range .Values.rbac.namespacePrefixes }}
+{{- if or (not (regexMatch "^[a-z0-9][a-z0-9-]{0,62}$" .)) (gt (len .) 63) }}{{ fail "rbac.namespacePrefixes must be lowercase DNS prefixes" }}{{ end }}
+{{- end }}
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: {{ $name }}
+  annotations: {argocd.argoproj.io/sync-wave: "-2"}
+automountServiceAccountToken: false
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata: {name: {{ $exec }}}
+rules:
+  - apiGroups: [""]
+    resources: [pods/exec]
+    verbs: [get, create]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: {{ $name }}
+  annotations: {argocd.argoproj.io/sync-wave: "-2"}
+rules:
+  - apiGroups: [""]
+    resources: [namespaces]
+    verbs: [list]
+  # Kubernetes cannot restrict create by resourceNames. The mandatory admission
+  # policy below checks namespace prefix, binding name, roleRef and sole subject.
+  - apiGroups: [rbac.authorization.k8s.io]
+    resources: [rolebindings]
+    verbs: [create]
+  - apiGroups: [rbac.authorization.k8s.io]
+    resources: [rolebindings]
+    resourceNames: [{{ $reader }}, {{ $exec }}]
+    verbs: [get, patch]
+  - apiGroups: [rbac.authorization.k8s.io]
+    resources: [clusterroles]
+    resourceNames: [{{ $reader }}, {{ $exec }}]
+    verbs: [bind]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: {{ $name }}
+  annotations: {argocd.argoproj.io/sync-wave: "-2"}
+roleRef: {apiGroup: rbac.authorization.k8s.io, kind: ClusterRole, name: {{ $name }}}
+subjects:
+  - {kind: ServiceAccount, name: {{ $name }}, namespace: {{ .Release.Namespace }}}
+---
+apiVersion: admissionregistration.k8s.io/v1
+kind: ValidatingAdmissionPolicy
+metadata:
+  name: {{ .Release.Namespace }}-{{ $name }}
+  annotations: {argocd.argoproj.io/sync-wave: "-3"}
+spec:
+  failurePolicy: Fail
+  matchConstraints:
+    resourceRules:
+      - apiGroups: [rbac.authorization.k8s.io]
+        apiVersions: [v1]
+        operations: [CREATE, UPDATE]
+        resources: [rolebindings]
+  matchConditions:
+    - name: reconciler-identity
+      expression: {{ printf "request.userInfo.username == 'system:serviceaccount:%s:%s'" .Release.Namespace $name | quote }}
+  validations:
+    - expression: {{ printf "%s.exists(prefix, request.namespace.startsWith(prefix))" (toJson .Values.rbac.namespacePrefixes) | quote }}
+      message: Namespace access reconciler may only bind configured namespace prefixes
+    - expression: {{ printf "object.metadata.name in ['%s', '%s'] && object.roleRef.apiGroup == 'rbac.authorization.k8s.io' && object.roleRef.kind == 'ClusterRole' && object.roleRef.name == object.metadata.name" $reader $exec | quote }}
+      message: Only the two dedicated MCP roles may be bound
+    - expression: {{ printf "has(object.subjects) && size(object.subjects) == 1 && object.subjects[0].kind == 'ServiceAccount' && object.subjects[0].name == '%s-mcp' && object.subjects[0].namespace == '%s' && (!has(object.subjects[0].apiGroup) || object.subjects[0].apiGroup == '')" .Release.Name .Release.Namespace | quote }}
+      message: Only the central MCP service account may receive these bindings
+---
+apiVersion: admissionregistration.k8s.io/v1
+kind: ValidatingAdmissionPolicyBinding
+metadata:
+  name: {{ .Release.Namespace }}-{{ $name }}
+  annotations: {argocd.argoproj.io/sync-wave: "-3"}
+spec:
+  policyName: {{ .Release.Namespace }}-{{ $name }}
+  validationActions: [Deny]
+---
+apiVersion: v1
+kind: ConfigMap
+metadata: {name: {{ $name }}}
+data:
+  config.json: {{ dict "namespace" .Release.Namespace "serviceAccount" (printf "%s-mcp" .Release.Name) "prefixes" .Values.rbac.namespacePrefixes "roles" (list $reader $exec) | toJson | quote }}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata: {name: {{ $name }}}
+spec:
+  replicas: 1
+  revisionHistoryLimit: 3
+  selector:
+    matchLabels: {app.kubernetes.io/name: {{ $name }}}
+  template:
+    metadata:
+      labels: {app.kubernetes.io/name: {{ $name }}}
+    spec:
+      serviceAccountName: {{ $name }}
+      automountServiceAccountToken: false
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        seccompProfile: {type: RuntimeDefault}
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets: {{ toYaml . | nindent 8 }}
+      {{- end }}
+      containers:
+        - name: namespace-access
+          image: {{ .Values.mcpImage | quote }}
+          command: [node, /app/src/namespace-access.mjs]
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities: {drop: [ALL]}
+          resources:
+            requests: {cpu: 10m, memory: 32Mi}
+            limits: {cpu: 200m, memory: 128Mi}
+          readinessProbe:
+            exec:
+              command: [node, -e, "process.exit(Date.now()-Number(require('fs').readFileSync('/tmp/ready','utf8'))<30000?0:1)"]
+            periodSeconds: 10
+          volumeMounts:
+            - {name: config, mountPath: /etc/ops-namespace-access, readOnly: true}
+            - {name: kube-api, mountPath: /var/run/secrets/kubernetes.io/serviceaccount, readOnly: true}
+            - {name: tmp, mountPath: /tmp}
+      volumes:
+        - name: config
+          configMap: {name: {{ $name }}}
+        - {name: tmp, emptyDir: {medium: Memory, sizeLimit: 1Mi}}
+        - name: kube-api
+          projected:
+            defaultMode: 0440
+            sources:
+              - serviceAccountToken: {path: token, expirationSeconds: 3600}
+              - configMap:
+                  name: kube-root-ca.crt
+                  items: [{key: ca.crt, path: ca.crt}]
+{{- end }}

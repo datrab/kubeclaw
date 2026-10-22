@@ -15,8 +15,11 @@ export function loadOpsMcpConfig(environment = process.env) {
   if (localOnly && host !== '127.0.0.1') throw new Error('Local-only MCP requires HOST=127.0.0.1');
   const defaultNamespace = environment.OPS_DEFAULT_NAMESPACE ?? 'kubeclaw';
   const argoNamespace = environment.ARGOCD_NAMESPACE ?? 'argocd';
+  const namespacePrefixes = [...new Set((environment.OPS_ALLOWED_NAMESPACE_PREFIXES ?? '').split(',').filter(Boolean).map(x => x.toLowerCase()))];
+  if (!namespacePrefixes.every(x => /^[a-z0-9][a-z0-9-]{0,62}$/.test(x))) throw new Error('Invalid Ops namespace prefixes');
   return Object.freeze({ port, host, localOnly, defaultNamespace, argoNamespace,
     namespaces: allowedNamespaces(environment.OPS_ALLOWED_NAMESPACES, defaultNamespace, argoNamespace),
+    namespacePrefixes,
     policyFile: environment.OPS_MCP_POLICY_FILE,
     bearer: { file: environment.OPS_MCP_BEARER_TOKEN_FILE, token: environment.OPS_MCP_BEARER_TOKEN },
     allowedOrigins: new Set((environment.MCP_ALLOWED_ORIGINS ?? '').split(',').map(value => value.trim()).filter(Boolean)),

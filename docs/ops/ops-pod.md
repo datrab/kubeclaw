@@ -23,7 +23,7 @@ Architecture: [Codex Ops Pod architecture](../architecture/ops-pod.md).
 ## Overview
 
 A StatefulSet runs the official Codex CLI. A separate Deployment runs the central
-Ops MCP, shared by Codex and Nova through per-client policy. Argo owns the Helm release, but the `codex-ops` child Application has
+Ops MCP, shared by Codex, Nova and Buster through per-client policy. Argo owns the Helm release, but the `codex-ops` child Application has
 no automated sync so an image promotion cannot restart an active workspace. There
 is no additional VM. An optional unprivileged Tailscale sidecar provides outbound
 access to the existing tailnet.
@@ -42,14 +42,14 @@ Pod itself is unreachable; this design does not replace that path.
 | Ops MCP | None | Namespace/tool-scoped Kubernetes observations and explicitly granted pod exec |
 | Optional Tailscale | Separate 1 GiB PVC | Outbound SOCKS5 on localhost:1055, subject to tailnet grants |
 
-Default CPU/memory requests total 125m/320Mi; limits total 2.5 CPU/3584Mi without
+Default steady-state CPU/memory requests total 135m/352Mi; limits total 2.7 CPU/3712Mi without
 Tailscale. These are initial scheduling budgets, not measured consumption. Local
 builds may need larger limits. Storage uses the cluster's default StorageClass
 unless overridden. With local-path storage, PVCs remain dependent on their node.
 
 Codex and MCP run as UID 1000, with read-only root filesystems, no added
 Linux capabilities, no privilege escalation, and no host mounts or runtime socket.
-Only MCP mounts a short-lived, kubelet-rotated Kubernetes token. Codex and Nova
+MCP and its separate platform provisioner/reconciler identities use short-lived Kubernetes tokens. Codex and Nova
 receive distinct MCP bearers and no API credentials or bindings. MCP is reachable
 through an internal TLS Service. NetworkPolicy permits only configured clients.
 The headless Codex Service remains its StatefulSet identity.
@@ -175,12 +175,19 @@ Existing image-pull/GitHub/Tailscale credentials remain separate from this MCP
 provisioning path and are not copied into Git.
 
 `mcp.clients` is the central configuration point. Each entry has `id`, a server-side
-`tokenSecret`, the client's network `namespace`/`podLabels`, allowed `namespaces`,
-exact `tools` and explicit `exec` grants. `rbac.namespaces`/`execNamespaces` cap the
-MCP's own rights. The defaults observe `kubeclaw`; additional scopes must be added
-explicitly to the client policy. Policy and token files reload on every request.
-Remove a client entry or its exec grant to revoke future calls; this does not undo
-an already executed command or terminate an in-flight command.
+`tokenSecret`, client namespace/Pod selector, `namespaces`, `namespacePrefixes`,
+exact `tools` and explicit `exec` grants. `rbac.namespaces`, `execNamespaces` and
+`namespacePrefixes` cap the backend. Buster receives only `test*` reads and exec;
+Nova and Ops receive `test*` in addition to their existing scopes. Matching ignores
+case and covers `test`, `testing`, `test-123` and future matching namespaces.
+The dedicated reconciler grants only the MCP access, normally within five seconds
+of namespace creation. Its mandatory admission guard rejects other namespaces,
+roles or subjects. No agent gets these RoleBindings. Buster retains only its
+existing broker lease exception. Buster and Nova use the shipped client:
+`node /opt/ops-mcp-client/client.mjs list`, or
+`node /opt/ops-mcp-client/client.mjs call get_pod '{"namespace":"test-build","pod":"runner"}'`.
+Prefix exec grants explicitly permit all Pods/regular containers in `test*`;
+exact grants elsewhere keep their label/container restrictions.
 
 Nova calls the shipped client without Kubernetes credentials:
 

@@ -79,6 +79,18 @@ spec:
       name: ops-mcp-ca
       jsonPointers:
         - /data
+    - group: ''
+      kind: Secret
+      namespace: kubeclaw-ops
+      name: buster-ops-bearer
+      jsonPointers:
+        - /data
+    - group: ''
+      kind: Secret
+      namespace: kubeclaw
+      name: buster-ops-bearer
+      jsonPointers:
+        - /data
   syncPolicy:
     syncOptions:
       - FailOnSharedResource=true

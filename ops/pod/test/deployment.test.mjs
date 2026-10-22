@@ -42,10 +42,10 @@ test('real Helm render isolates credentials and persists a single non-root Codex
   assert.ok(codex.volumeMounts.some(m => m.name === 'mcp-ca' && m.readOnly));
   assert.equal(resources.some(x => x.kind === 'ConfigMap' && x.metadata.name.includes('kubeconfig')), false);
   for (const binding of resources.filter(x => ['RoleBinding', 'ClusterRoleBinding'].includes(x.kind))) {
-    assert.deepEqual(binding.subjects, [{ kind: 'ServiceAccount', name: binding.metadata.name.endsWith('-provisioner') ? 'codex-ops-mcp-provisioner' : 'codex-ops-mcp', namespace: 'kubeclaw-ops' }]);
+    assert.deepEqual(binding.subjects, [{ kind: 'ServiceAccount', name: binding.metadata.name.endsWith('-namespace-access') ? 'codex-ops-mcp-namespace-access' : binding.metadata.name.endsWith('-provisioner') ? 'codex-ops-mcp-provisioner' : 'codex-ops-mcp', namespace: 'kubeclaw-ops' }]);
   }
   const policyData = JSON.parse(resources.find(x => x.kind === 'ConfigMap' && x.data['policy.json']).data['policy.json']);
-  assert.deepEqual(policyData.clients.map(x => x.id), ['codex', 'nova']);
+  assert.deepEqual(policyData.clients.map(x => x.id), ['codex', 'nova', 'buster']);
   assert.equal(policyData.clients[0].tokenFile, '/var/run/ops-clients/codex/token');
   assert.ok(policyData.clients.every(x => !('token' in x)));
   assert.equal(mcp.volumeMounts.some(m => ['home', 'workspace'].includes(m.name)), false);
@@ -58,7 +58,7 @@ test('real Helm render isolates credentials and persists a single non-root Codex
   }
   const bound = resources.filter(x => x.kind === 'RoleBinding' && x.roleRef.kind === 'ClusterRole').map(x => x.metadata.namespace);
   assert.deepEqual(bound, ['kubeclaw']);
-  for (const role of resources.filter(x => x.kind === 'ClusterRole')) {
+  for (const role of resources.filter(x => x.kind === 'ClusterRole' && !x.metadata.name.endsWith('-namespace-access') && !x.metadata.name.endsWith('-test-exec'))) {
     for (const rule of role.rules) {
       assert.deepEqual(rule.verbs, ['get', 'list']);
       for (const resource of rule.resources) assert.ok(!['*', 'secrets', 'configmaps', 'pods/exec', 'pods/portforward', 'nodes/proxy', 'serviceaccounts/token'].includes(resource));
@@ -68,7 +68,7 @@ test('real Helm render isolates credentials and persists a single non-root Codex
   assert.deepEqual(policy.spec.ingress, []);
   assert.equal(policy.spec.egress.some(x => x.to.some(y => y.ipBlock?.cidr === '10.0.0.1/32')), false);
   const mcpPolicy = resources.find(x => x.kind === 'NetworkPolicy' && x.metadata.name === 'codex-ops-mcp');
-  assert.equal(mcpPolicy.spec.ingress.length, 2);
+  assert.equal(mcpPolicy.spec.ingress.length, 3);
   assert.ok(mcpPolicy.spec.egress.some(x => x.to.some(y => y.ipBlock?.cidr === '10.0.0.1/32')));
 });
 
