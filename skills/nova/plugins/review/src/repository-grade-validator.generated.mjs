@@ -8,9 +8,9 @@ var __commonJS = (cb, mod) => function __require() {
   }
 };
 
-// ../../../../node_modules/.pnpm/fast-deep-equal@3.1.3/node_modules/fast-deep-equal/index.js
+// grade-runtime:fast-deep-equal
 var require_fast_deep_equal = __commonJS({
-  "../../../../node_modules/.pnpm/fast-deep-equal@3.1.3/node_modules/fast-deep-equal/index.js"(exports, module) {
+  "grade-runtime:fast-deep-equal"(exports, module) {
     "use strict";
     module.exports = function equal(a, b) {
       if (a === b) return true;
@@ -43,9 +43,9 @@ var require_fast_deep_equal = __commonJS({
   }
 });
 
-// ../../../../node_modules/.pnpm/ajv@8.20.0/node_modules/ajv/dist/runtime/equal.js
+// grade-runtime:ajv/dist/runtime/equal
 var require_equal = __commonJS({
-  "../../../../node_modules/.pnpm/ajv@8.20.0/node_modules/ajv/dist/runtime/equal.js"(exports) {
+  "grade-runtime:ajv/dist/runtime/equal"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var equal = require_fast_deep_equal();

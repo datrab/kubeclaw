@@ -5,6 +5,7 @@ import { fileURLToPath } from 'node:url';
 import { repositoryGradeSchema } from '../src/review-owned-policy-schema.ts';
 import {ownedPolicyProfilesSchema} from '../src/review-owned-policy-schema.ts';
 import fs from 'node:fs';
+import { createRequire } from 'node:module';
 
 import { reviewPolicySchema } from '../src/review-policy-contract.ts';
 import { REVIEW_SEMANTIC_ENCODING } from '../src/review-semantics.ts';
@@ -63,7 +64,21 @@ const gradeAjv = new Ajv2020({ strict: true, code: { source: true, esm: true } }
 const gradeValidator = gradeAjv.compile({ type: 'object', additionalProperties: false,
   required: ['fast', 'standard', 'deep'],
   properties: { fast: repositoryGradeSchema, standard: repositoryGradeSchema, deep: repositoryGradeSchema } });
-const gradeBuild = await build({ absWorkingDir: fileURLToPath(new URL('../', import.meta.url)), stdin: { contents: standaloneCode(gradeAjv, gradeValidator),
+// Resolve through the actual installation, but use canonical module identities in
+// the emitted bundle. npm and pnpm must generate byte-identical static validators.
+const requireFromGenerator = createRequire(import.meta.url);
+const gradeRuntimePlugin = {
+  name: 'grade-runtime',
+  setup(builder) {
+    builder.onResolve({ filter: /^(?:ajv\/dist\/runtime\/equal|fast-deep-equal)$/ }, (args) => ({
+      path: args.path, namespace: 'grade-runtime',
+    }));
+    builder.onLoad({ filter: /.*/, namespace: 'grade-runtime' }, (args) => ({
+      contents: fs.readFileSync(requireFromGenerator.resolve(args.path), 'utf8'), loader: 'js',
+    }));
+  },
+};
+const gradeBuild = await build({ plugins: [gradeRuntimePlugin], absWorkingDir: fileURLToPath(new URL('../', import.meta.url)), stdin: { contents: standaloneCode(gradeAjv, gradeValidator),
   resolveDir: fileURLToPath(new URL('../', import.meta.url)), loader: 'js' },
   bundle: true, platform: 'neutral', format: 'esm', write: false, legalComments: 'inline' });
 const gradeSource = gradeBuild.outputFiles[0].text.replace(/^\s*(?:ucs2length|equal)\.code = [^\n]+;$/gmu, '');
