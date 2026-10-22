@@ -10,7 +10,7 @@
     "testProviders": 19,
     "reportAdapters": 1,
     "registrations": 67,
-    "files": 1184
+    "files": 1185
   },
   "runtime": {
     "roots": [
@@ -61,6 +61,7 @@
       "skills/buster/engine/test-gates/native-fixture-lifetime.ts",
       "skills/buster/engine/test-gates/native-fixture-state.ts",
       "skills/buster/engine/test-gates/network-http-runtime.ts",
+      "skills/buster/engine/test-gates/original-execution.ts",
       "skills/buster/engine/test-gates/pngjs.d.ts",
       "skills/buster/engine/test-gates/preparation-archive.ts",
       "skills/buster/engine/test-gates/preparation-boot-bootstrap.ts",
@@ -2460,6 +2461,7 @@
     "skills/buster/engine/test-gates/native-fixture-lifetime.ts",
     "skills/buster/engine/test-gates/native-fixture-state.ts",
     "skills/buster/engine/test-gates/network-http-runtime.ts",
+    "skills/buster/engine/test-gates/original-execution.ts",
     "skills/buster/engine/test-gates/pngjs.d.ts",
     "skills/buster/engine/test-gates/preparation-archive.ts",
     "skills/buster/engine/test-gates/preparation-boot-bootstrap.ts",
