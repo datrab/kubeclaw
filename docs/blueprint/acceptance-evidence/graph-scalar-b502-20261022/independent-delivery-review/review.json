@@ -1,0 +1,38 @@
+{
+  "status": "PASS-BOUNDED-ARCHIVE-DELIVERY-CUSTODY-NOT-CONSUMER-ACCEPTANCE",
+  "byteReview": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/graph-scalar-b502-archive-independent/byte-review.json",
+  "byteReviewSha256": "d5890515367cca91ae145b5374b6e8392ae08a3840437f51b6f497702c35964d",
+  "archiveSha256": "379da73a69f7d5618e695035e7f7a845667ad71c7592bb054bf2312577928775",
+  "archiveBytes": 15486517,
+  "members": 593,
+  "captureSource": "b50210b5928b26d895bfe6fe2e3110d0da394341",
+  "originalCaptureStatus": "DATA_CAPTURE_COMPLETE_UNACCEPTED",
+  "originalCaptureIndependentReview": {
+    "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/graph-caller-original-b50210b5-result-independent/review.md",
+    "sha256": "6a00dfbff787028247b2e777a88fb336111196951dcd9c7f1655954c8b18f8a2",
+    "reusedScope": "ExactoriginalDATA/terminal/contextcorrespondence; not newsemanticrecount/globalrole/consumeracceptance"
+  },
+  "scalarIndependentReview": {
+    "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/scalar-finite-two-constant-independent/review.md",
+    "sha256": "77e8a0dbc498a4a8b9515f2ad88bde01e4ec010ec38abd6afb75b7a0c7703ea0",
+    "scope": "Exact2SourceDATAconstantadoption justified; no executedqualifier/fullconsumerpermission"
+  },
+  "owningControls": {
+    "result": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/eleven-guide-scalar-checks/scalar-controls/result.json",
+    "sha256": "46523d15ea3e3e6554a991eb37830d61d5440b3b0a4e359e7fb89d04dbc9dbf2",
+    "exitCode": 0,
+    "tests": 19,
+    "pass": 19,
+    "fail": 0,
+    "skip": 0,
+    "reviewerExecuted": false
+  },
+  "limits": [
+    "Fiveouterprocesses retain rawstdout/stderr;104inneroriginalspawnSyncUTF8returns are not raw OS pipes.",
+    "Allarchivebytes/memberindex/fulloriginalbytesverified, but provenance paths to earlier historicalscratchproofs remain external: not a standalonefulltool/sourceinstallation/reproductionclosure.",
+    "TwoScalarconstantadoption+19controls != complete currentnative-role/publicconsumer/globalgeneration acceptance. Four native receipts/115/module/alias/runtime/release guards remain separate.",
+    "Elevenuncommittedguidecandidates/currentReaderoutsidearchivecodecheckpoint; actualBusterstyleFAILretainedoutsidearchive under eleven-guide-scalar-checks/buster-guides, not converted to PASS or claimed a member.",
+    "Earlier failedproposalrootdiagnostic preserved as its actualauthor failure, not fabricated failedcapture; alloriginal actualcapture records remain unmodified.",
+    "NoMain/qualificationwrite/extraction/import/preparer/Node/npm/native/product/test/consumer/Readerexecution by reviewer."
+  ]
+}

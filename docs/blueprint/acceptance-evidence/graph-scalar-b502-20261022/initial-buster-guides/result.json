@@ -1,0 +1,32 @@
+{
+  "argv": [
+    "/usr/local/bin/node",
+    "scripts/check-buster-guides.mjs"
+  ],
+  "cwd": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery",
+  "environment": {
+    "PATH": "/usr/local/bin:/usr/bin:/bin",
+    "HOME": "/home/node",
+    "LANG": "C.UTF-8",
+    "LC_ALL": "C.UTF-8",
+    "TZ": "UTC",
+    "TMPDIR": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/eleven-guide-scalar-checks/tmp",
+    "npm_config_cache": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/eleven-guide-scalar-checks/npm-cache",
+    "npm_config_logs_max": "0",
+    "npm_config_timing": "false",
+    "npm_config_update_notifier": "false"
+  },
+  "start": 1792643135.5849524,
+  "exitCode": 1,
+  "end": 1792643136.2065935,
+  "streams": {
+    "stdout.raw": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "stderr.raw": {
+      "bytes": 724,
+      "sha256": "1389a57e6b21afe2de498b66f0b59c8ed73237774d05261c184b14e0ee590909"
+    }
+  }
+}

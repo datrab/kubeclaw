@@ -1,0 +1,20 @@
+{
+  "argv": [
+    "/usr/local/bin/node",
+    "scripts/check-core-architecture-guides.mjs"
+  ],
+  "cwd": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery",
+  "environment": {
+    "PATH": "/usr/local/bin:/usr/bin:/bin",
+    "HOME": "/home/node",
+    "LANG": "C.UTF-8",
+    "LC_ALL": "C.UTF-8",
+    "TZ": "UTC",
+    "TMPDIR": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/eleven-guide-scalar-checks/tmp",
+    "npm_config_cache": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/eleven-guide-scalar-checks/npm-cache",
+    "npm_config_logs_max": "0",
+    "npm_config_timing": "false",
+    "npm_config_update_notifier": "false"
+  },
+  "start": 1792643135.5905805
+}

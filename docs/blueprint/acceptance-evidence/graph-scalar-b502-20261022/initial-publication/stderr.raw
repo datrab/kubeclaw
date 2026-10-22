@@ -1,0 +1,25 @@
+documentation publication failed:
+- docs/site/extend/lint.md contains vague term: normally
+- docs/site/extend/lint.md has a 26-word sentence; limit is 25: [Successful report reduction](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5
+- docs/site/extend/lint.md has a 28-word sentence; limit is 25: > **Contract/setting:** [The common execution guard rejects timeout/start failure, not every nonzero exit](htt
+- docs/site/reference/buster-suites.md contains avoidable passive voice: was written
+- docs/site/reference/buster-suites.md contains avoidable passive voice: are validated
+- docs/site/reference/buster-suites.md contains avoidable passive voice: is configured
+- docs/site/reference/buster-suites.md contains avoidable passive voice: was executed
+- docs/site/reference/buster-suites.md contains avoidable passive voice: are accepted
+- docs/site/reference/buster-suites.md contains avoidable passive voice: is granted
+- docs/site/understand/buster.md has a 33-word sentence; limit is 25: > **Test evidence:** [Protocol vectors](https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c
+- docs/site/understand/data-and-state.md contains vague term: just
+- docs/site/understand/data-and-state.md has a 31-word sentence; limit is 25: > **Test evidence:** [State package assertions](https://github.com/datrab/kubeclaw/blob/38d5c8f22d9cc3a923a7fd
+- docs/site/understand/data-and-state.md has a 36-word sentence; limit is 25: > **Test evidence:** [Read and duplicate assertions](https://github.com/datrab/kubeclaw/blob/38d5c8f22d9cc3a92
+- docs/site/understand/echo.md contains avoidable passive voice: is accepted
+- docs/site/understand/echo.md contains vague term: normally
+- docs/site/understand/echo.md contains avoidable passive voice: were accepted
+- docs/site/understand/echo.md has a 28-word sentence; limit is 25: > **Implementation:** [Both phase checkpoints and selected-work completion guards](https://github.com/datrab/k
+- docs/site/understand/openclaw.md has a 33-word sentence; limit is 25: > **Implementation:** [Activation, hook subscription, status and shutdown](https://github.com/datrab/kubeclaw/
+- docs/site/understand/openclaw.md has a 28-word sentence; limit is 25: > **Test evidence:** [The original-journal fixture asserts capacity, immediate status, cancelled waits and lat
+- docs/site/use/workflows/wait-resume.md contains avoidable passive voice: be recorded
+- docs/site/use/workflows/wait-resume.md has a 26-word sentence; limit is 25: > **Contract or setting:** [Endpoint modes, origin and format](https://github.com/datrab/kubeclaw/blob/38d5c8f
+- docs/site/use/workflows/wait-resume.md has a 41-word sentence; limit is 25: > **Test evidence:** [Wire/HMAC/presentation and confidential endpoint assertions](https://github.com/datrab/k
+- docs/site/use/workflows/wait-resume.md has a 47-word sentence; limit is 25: > **Test evidence:** [Original receiver scenario and response protocol](https://github.com/datrab/kubeclaw/blo
+- docs/site/use/workflows/wait-resume.md has a 44-word sentence; limit is 25: > **Test evidence:** [Original reconstructed receipt lookup and foreign binding assertions](https://github.com

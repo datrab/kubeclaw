@@ -1,0 +1,30 @@
+{
+  "status": "PASS-EXACT-OUTER-DELIVERY-BYTES-ONLY",
+  "deliveryIndexSha256": "fcddd400a69d957b3eb662bad2d4f1992bd75e07f2fc840acb8a362276ec3d64",
+  "listedRegularFiles": 16,
+  "allListedSizesHashesExact": true,
+  "noUnlistedFilesExceptSelfIndex": true,
+  "all12OriginalCheckEvidenceFilesByteExact": [
+    "initial-buster-guides/invocation.json",
+    "initial-buster-guides/result.json",
+    "initial-buster-guides/stdout.raw",
+    "initial-buster-guides/stderr.raw",
+    "initial-core-guides/invocation.json",
+    "initial-core-guides/result.json",
+    "initial-core-guides/stdout.raw",
+    "initial-core-guides/stderr.raw",
+    "initial-publication/invocation.json",
+    "initial-publication/result.json",
+    "initial-publication/stdout.raw",
+    "initial-publication/stderr.raw"
+  ],
+  "originalCheckExitCodes": {
+    "initial-buster-guides": 1,
+    "initial-core-guides": 0,
+    "initial-publication": 1
+  },
+  "controllerBytesExactOriginalNotExecuted": true,
+  "archiveStillSha256": "379da73a69f7d5618e695035e7f7a845667ad71c7592bb054bf2312577928775",
+  "READMEsha256": "b6b705bb543e02af606402e7c518aed08b1c48e5a73000398cbad8fe765df623",
+  "limits": "Codecheckpointdeliveryonly; bothactualstyleFAILsretained,11guidesoutsidecodecommit; noReader/Gate/consumer/native/runtimegrant."
+}

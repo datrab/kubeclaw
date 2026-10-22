@@ -1,0 +1,11 @@
+# Independent original graph/scalar archive delivery review
+
+**PASS — exact archive/member/index custody and bounded delivery only. No whole consumer, role, Reader or gate acceptance.**
+
+Archive15486517bytes SHA379da73a69f7d5618e695035e7f7a845667ad71c7592bb054bf2312577928775; index SHA593d1dd0adfc6e52170749d3555985f532b407f9752bbd46832e2a9878b8ff6f. Independently opened the actualtar.gz, checked593unique explicitlyindexedregularsafe relativepaths, zero symlink/hardlink/special/traversal/duplicates. Read every member completely and compared every byte directly with its originalscratchfile, independently hashing/sizing all593;118332885uncompressedindexedbytes.32internalpacket hashreferences independently agree; no unmatched memberreferences in thosepacket tables. No archive extraction or included script execution.
+
+Exact included originalcapturereview and scalarreview retain their existing boundednonauthor semantics, not reaccepted from archivecounts. Original capture remains DATA_CAPTURE_COMPLETE_UNACCEPTED atb502: fiveouterrawprocess stdout/stderr records versus104innerdecodedUTF8originalreturns remain distinct, cold/repeat/context and original115guard scopes are not role/native/product/globalauthority. TwoSourceDATAconstant adoption is separately justified by originalorderedDATA+13Sourcepurposeproof; unchanged private/profile/caller/actualreceiver/cacheguards remain, normalfullconsumer is not therebyexecuted. Actualowningcontrols receipt/rawhashes independently checked exit0/19pass/0fail/0skip, not run by reviewer.
+
+Historicalprovenance references retain originalscratchlocations; archive embeds currentb502receivers/manifests/capture/finiteScalarproof but is not a standaloneentireSource/toolinstallation/reproduction closure. The initialfailedproposaldiagnostic is retained as actualauthorfailure, not invented targetexecution. Elevenuncommittedguidecandidates and actualcurrentReader are outside this codecheckpoint. CurrentBusterstyleFAIL remains active separately; its absence from this finitecodearchive is not permission to discard or relabel it.
+
+No materialbyte/indexdeliverydiscrepancy found. Allnative4/115/module/role/consumer/currentglobalgenerator/runtime/releaseconditions stay separate. NoMain/register/qualificationDATAwrite or preparer/targetimport/native/product/tests/Readerexecution by reviewer.

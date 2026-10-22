@@ -1,0 +1,27 @@
+{
+  "status": "PASS-EXACT-ARCHIVE-BYTES-INDEX-MEMBERS-AND-ORIGINALS-ONLY",
+  "captureSource": "b50210b5928b26d895bfe6fe2e3110d0da394341",
+  "archive": {
+    "path": "original-capture-and-scalar-proof.tar.gz",
+    "bytes": 15486517,
+    "sha256": "379da73a69f7d5618e695035e7f7a845667ad71c7592bb054bf2312577928775",
+    "actualSha256": "379da73a69f7d5618e695035e7f7a845667ad71c7592bb054bf2312577928775"
+  },
+  "indexSha256": "593d1dd0adfc6e52170749d3555985f532b407f9752bbd46832e2a9878b8ff6f",
+  "members": 593,
+  "regularMembers": 593,
+  "symlinksHardlinksSpecialDuplicatesTraversal": 0,
+  "uncompressedIndexedBytes": 118332885,
+  "all593FullBytesComparedToOriginalScratch": true,
+  "all593IndexSizesHashesExact": true,
+  "internalPacketHashReferencesChecked": 32,
+  "nonMemberPacketHashReferences": [],
+  "limits": [
+    "Capture is original b502 DATA only. Five outer raw process streams; 104 inner original UTF8 returns are not raw OS pipes.",
+    "Two scalar digest literals independently reviewed and 19 owning tests passed. Native role/public whole consumer and global generation remain unexecuted/unaccepted.",
+    "Prior preparation provenance links retain their original scratch paths; included b502 receivers, author/ready/final manifests, actual full capture and independent reports support this finite delivery.",
+    "Initial failed proposal and first actual failures retained. Eleven uncommitted guide candidates are outside this code checkpoint and are not current Reader accepted."
+  ],
+  "targetImportsOrExecution": false,
+  "mainWrites": false
+}
