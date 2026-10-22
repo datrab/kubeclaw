@@ -9885,7 +9885,7 @@
     },
     {
       "id": "AP09-documentation-agent-maintenance-20261021",
-      "revision": "68d31a42188dc8aa1dce7a972ce9488d124d6826",
+      "revision": "512022c3c63e4b96633d8633552f9a037ba200ee",
       "author": "Nova /root authored content and correction coordinator",
       "reviewer": "Independent Codex autoreview 2026-10-21 maintenance-ready-review",
       "gateIds": [],
@@ -10149,6 +10149,11 @@
           "command": "node --test scripts/tests/docs-api-top-level-script-purpose.test.mjs scripts/tests/deployment-config-output-custody.test.mjs",
           "exitCode": 0,
           "observation": "14/14 actual main tests passed. Original owning failure at later probe output is retained separately, not included as a passing check."
+        },
+        {
+          "command": "node --test scripts/tests/docs-api-probe39-original-output.test.mjs scripts/tests/docs-api-versions-map-output.test.mjs",
+          "exitCode": 0,
+          "observation": "13/13 current main tests PASS. Separate14/14 scalar tests,103 existing native recipe checks,5 original renewed-guard helper mutation rejections and2 helper purpose source/input mutation controls PASS. These preserve only existing bounded scopes; no new requirement/gate/runtime/global-generator acceptance."
         }
       ],
       "review": {
@@ -10547,9 +10552,17 @@
           "report": "docs/blueprint/acceptance-evidence/eleven-purpose-20261022/recovered-eleven-purpose-independent-review.json",
           "reason": "Independent four-file delta review preserves unchanged reader pages and prior exact Source/quality/reader claims and limits. Eleven specific purposes remain private, canonical UNKNOWN retained. Original scalar and consumer guards passed in main owning receiver; next probe API output remains blocked, not generator success.",
           "historicalPracticalEvidenceNotReexecuted": true
+        },
+        {
+          "revision": "512022c3c63e4b96633d8633552f9a037ba200ee",
+          "reviewer": "Independent combined integration/guard reviewer plus parent independent two-helper-purpose review",
+          "verdict": "PASS_BOUNDED_EXISTING_SCOPE_PRESERVATION",
+          "report": "docs/blueprint/acceptance-evidence/combined-api-adapters-20261022/restart-two-helper-purpose-parent-review.json",
+          "reason": "Whole helper, receiver composition and ordered native metadata reviewed. Two exact immutable original DATA adapters and their Source-native documentation qualifications only; prior content/reader/quality sources and explicit scopes unchanged. All107 previous role recipes preserved by final helper qualification delta. Canonical raw UNKNOWN and false runtime/apply remain. Original owning result retained separately, not a passing global-generator or acceptance claim.",
+          "historicalPracticalEvidenceNotReexecuted": true
         }
       ],
-      "previousReviewedRevision": "ac6de3002f7556d2975da44616c6ed220e35e189",
+      "previousReviewedRevision": "68d31a42188dc8aa1dce7a972ce9488d124d6826",
       "revisionHistory": [
         {
           "revision": "3745dce3d46361806f86f17595f20aef1e044f1b",
@@ -10626,7 +10639,8 @@
           ],
           "review": "docs/blueprint/acceptance-evidence/diagram-boundaries-20261021/prior-record-preservation-review.json",
           "reason": "Narrow independent preservation after four source-backed diagram boundary corrections, exact alternative/registry updates, four owner-generated metadata fields and nine explicitly internal proof records. No reapproval of untouched historical claims or broad diagram/runtime semantics."
-        }
+        },
+        "68d31a42188dc8aa1dce7a972ce9488d124d6826"
       ],
       "scopePreservation3408": {
         "priorRevision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
@@ -14051,7 +14065,7 @@
     },
     {
       "id": "AP09-complete-static-reader-search-20261021",
-      "revision": "68d31a42188dc8aa1dce7a972ce9488d124d6826",
+      "revision": "512022c3c63e4b96633d8633552f9a037ba200ee",
       "author": "Nova /root documentation author and implementation coordinator",
       "reviewer": "Independent Codex autoreview static-reader whole PUB-002 Source/reader-quality closeout",
       "verdict": "PASS",
@@ -14397,6 +14411,11 @@
           "command": "node --test scripts/tests/docs-api-top-level-script-purpose.test.mjs scripts/tests/deployment-config-output-custody.test.mjs",
           "exitCode": 0,
           "observation": "14/14 actual main tests passed. Original owning failure at later probe output is retained separately, not included as a passing check."
+        },
+        {
+          "command": "node --test scripts/tests/docs-api-probe39-original-output.test.mjs scripts/tests/docs-api-versions-map-output.test.mjs",
+          "exitCode": 0,
+          "observation": "13/13 current main tests PASS. Separate14/14 scalar tests,103 existing native recipe checks,5 original renewed-guard helper mutation rejections and2 helper purpose source/input mutation controls PASS. These preserve only existing bounded scopes; no new requirement/gate/runtime/global-generator acceptance."
         }
       ],
       "limits": [
@@ -14536,7 +14555,8 @@
           ],
           "review": "handoffs/pr13-finish-20261021/custody-review.md",
           "reason": "Independent bounded preservation: exact test fixture55declarations and tree closure44units/7ranges/16initializers renewed after source/caller/consumer review. Same selectors/callers/guard logic; tree native operation digest unchanged;7custody tests including2newwarm-cache source-revocation negatives PASS. Existing renderer/search/Source/preview/layout facts and limits retained;no fresh whole-reader or live reapproval."
-        }
+        },
+        "68d31a42188dc8aa1dce7a972ce9488d124d6826"
       ],
       "impactReviews": [
         {
@@ -15184,6 +15204,14 @@
           "report": "docs/blueprint/acceptance-evidence/eleven-purpose-20261022/recovered-eleven-purpose-independent-review.json",
           "reason": "Independent four-file delta review preserves unchanged reader pages and prior exact Source/quality/reader claims and limits. Eleven specific purposes remain private, canonical UNKNOWN retained. Original scalar and consumer guards passed in main owning receiver; next probe API output remains blocked, not generator success.",
           "historicalPracticalEvidenceNotReexecuted": true
+        },
+        {
+          "revision": "512022c3c63e4b96633d8633552f9a037ba200ee",
+          "reviewer": "Independent combined integration/guard reviewer plus parent independent two-helper-purpose review",
+          "verdict": "PASS_BOUNDED_EXISTING_SCOPE_PRESERVATION",
+          "report": "docs/blueprint/acceptance-evidence/combined-api-adapters-20261022/restart-two-helper-purpose-parent-review.json",
+          "reason": "Whole helper, receiver composition and ordered native metadata reviewed. Two exact immutable original DATA adapters and their Source-native documentation qualifications only; prior content/reader/quality sources and explicit scopes unchanged. All107 previous role recipes preserved by final helper qualification delta. Canonical raw UNKNOWN and false runtime/apply remain. Original owning result retained separately, not a passing global-generator or acceptance claim.",
+          "historicalPracticalEvidenceNotReexecuted": true
         }
       ],
       "scopePreservation3408": {
@@ -15226,11 +15254,12 @@
         "currentOutput": "One real5b1b complete normal Reader build and four separate original artifact/search/Source-link/Source-preview processes reused across six records, not six builds.",
         "browserPreservation": "No new browser, screenreader or fresh-persona exercise: unchanged authored pages/shared renderer outputs retain only prior successful original scopes. Current Source/output checks separately executed.",
         "globalGeneratorLimit": "Original normal5b1b localHelm exits1 at scripts/install/register-runtime-argo.mjs29; infrastructure slots passed. No global configuration/API/schema/runtime acceptance."
-      }
+      },
+      "previousReviewedRevision": "68d31a42188dc8aa1dce7a972ce9488d124d6826"
     },
     {
       "id": "AP09-search-reader-gate-20261021",
-      "revision": "68d31a42188dc8aa1dce7a972ce9488d124d6826",
+      "revision": "512022c3c63e4b96633d8633552f9a037ba200ee",
       "author": "Nova /root documentation author and implementation coordinator",
       "reviewer": "Independent Codex autoreview whole A912-04 code/evidence review plus narrow Source/Reader/Quality native-impact follow-up",
       "verdict": "PASS",
@@ -15368,6 +15397,11 @@
           "command": "node --test scripts/tests/docs-api-top-level-script-purpose.test.mjs scripts/tests/deployment-config-output-custody.test.mjs",
           "exitCode": 0,
           "observation": "14/14 actual main tests passed. Original owning failure at later probe output is retained separately, not included as a passing check."
+        },
+        {
+          "command": "node --test scripts/tests/docs-api-probe39-original-output.test.mjs scripts/tests/docs-api-versions-map-output.test.mjs",
+          "exitCode": 0,
+          "observation": "13/13 current main tests PASS. Separate14/14 scalar tests,103 existing native recipe checks,5 original renewed-guard helper mutation rejections and2 helper purpose source/input mutation controls PASS. These preserve only existing bounded scopes; no new requirement/gate/runtime/global-generator acceptance."
         }
       ],
       "limits": [
@@ -15444,7 +15478,8 @@
           ],
           "review": "handoffs/pr13-finish-20261021/custody-review.md",
           "reason": "Independent bounded preservation: exact test fixture55declarations and tree closure44units/7ranges/16initializers renewed after source/caller/consumer review. Same selectors/callers/guard logic; tree native operation digest unchanged;7custody tests including2newwarm-cache source-revocation negatives PASS. Existing renderer/search/Source/preview/layout facts and limits retained;no fresh whole-reader or live reapproval."
-        }
+        },
+        "68d31a42188dc8aa1dce7a972ce9488d124d6826"
       ],
       "impactReviews": [
         {
@@ -15766,6 +15801,14 @@
           "report": "docs/blueprint/acceptance-evidence/eleven-purpose-20261022/recovered-eleven-purpose-independent-review.json",
           "reason": "Independent four-file delta review preserves unchanged reader pages and prior exact Source/quality/reader claims and limits. Eleven specific purposes remain private, canonical UNKNOWN retained. Original scalar and consumer guards passed in main owning receiver; next probe API output remains blocked, not generator success.",
           "historicalPracticalEvidenceNotReexecuted": true
+        },
+        {
+          "revision": "512022c3c63e4b96633d8633552f9a037ba200ee",
+          "reviewer": "Independent combined integration/guard reviewer plus parent independent two-helper-purpose review",
+          "verdict": "PASS_BOUNDED_EXISTING_SCOPE_PRESERVATION",
+          "report": "docs/blueprint/acceptance-evidence/combined-api-adapters-20261022/restart-two-helper-purpose-parent-review.json",
+          "reason": "Whole helper, receiver composition and ordered native metadata reviewed. Two exact immutable original DATA adapters and their Source-native documentation qualifications only; prior content/reader/quality sources and explicit scopes unchanged. All107 previous role recipes preserved by final helper qualification delta. Canonical raw UNKNOWN and false runtime/apply remain. Original owning result retained separately, not a passing global-generator or acceptance claim.",
+          "historicalPracticalEvidenceNotReexecuted": true
         }
       ],
       "scopePreservation3408": {
@@ -15807,11 +15850,12 @@
         "currentOutput": "One real5b1b complete normal Reader build and four separate original artifact/search/Source-link/Source-preview processes reused across six records, not six builds.",
         "browserPreservation": "No new browser, screenreader or fresh-persona exercise: unchanged authored pages/shared renderer outputs retain only prior successful original scopes. Current Source/output checks separately executed.",
         "globalGeneratorLimit": "Original normal5b1b localHelm exits1 at scripts/install/register-runtime-argo.mjs29; infrastructure slots passed. No global configuration/API/schema/runtime acceptance."
-      }
+      },
+      "previousReviewedRevision": "68d31a42188dc8aa1dce7a972ce9488d124d6826"
     },
     {
       "id": "AP09-rendered-source-bounds-gate-20261021",
-      "revision": "68d31a42188dc8aa1dce7a972ce9488d124d6826",
+      "revision": "512022c3c63e4b96633d8633552f9a037ba200ee",
       "author": "Nova /root documentation author and implementation coordinator",
       "reviewer": "Independent Codex autoreview whole A912-09 Source/Reader/Quality review and narrow changed-boundary impact review for 21 prior PASS records",
       "verdict": "PASS",
@@ -15958,6 +16002,11 @@
           "command": "node --test scripts/tests/docs-api-top-level-script-purpose.test.mjs scripts/tests/deployment-config-output-custody.test.mjs",
           "exitCode": 0,
           "observation": "14/14 actual main tests passed. Original owning failure at later probe output is retained separately, not included as a passing check."
+        },
+        {
+          "command": "node --test scripts/tests/docs-api-probe39-original-output.test.mjs scripts/tests/docs-api-versions-map-output.test.mjs",
+          "exitCode": 0,
+          "observation": "13/13 current main tests PASS. Separate14/14 scalar tests,103 existing native recipe checks,5 original renewed-guard helper mutation rejections and2 helper purpose source/input mutation controls PASS. These preserve only existing bounded scopes; no new requirement/gate/runtime/global-generator acceptance."
         }
       ],
       "limits": [
@@ -16030,7 +16079,8 @@
           ],
           "review": "handoffs/pr13-finish-20261021/custody-review.md",
           "reason": "Independent bounded preservation: exact test fixture55declarations and tree closure44units/7ranges/16initializers renewed after source/caller/consumer review. Same selectors/callers/guard logic; tree native operation digest unchanged;7custody tests including2newwarm-cache source-revocation negatives PASS. Existing renderer/search/Source/preview/layout facts and limits retained;no fresh whole-reader or live reapproval."
-        }
+        },
+        "68d31a42188dc8aa1dce7a972ce9488d124d6826"
       ],
       "impactReviews": [
         {
@@ -16355,6 +16405,14 @@
           "report": "docs/blueprint/acceptance-evidence/eleven-purpose-20261022/recovered-eleven-purpose-independent-review.json",
           "reason": "Independent four-file delta review preserves unchanged reader pages and prior exact Source/quality/reader claims and limits. Eleven specific purposes remain private, canonical UNKNOWN retained. Original scalar and consumer guards passed in main owning receiver; next probe API output remains blocked, not generator success.",
           "historicalPracticalEvidenceNotReexecuted": true
+        },
+        {
+          "revision": "512022c3c63e4b96633d8633552f9a037ba200ee",
+          "reviewer": "Independent combined integration/guard reviewer plus parent independent two-helper-purpose review",
+          "verdict": "PASS_BOUNDED_EXISTING_SCOPE_PRESERVATION",
+          "report": "docs/blueprint/acceptance-evidence/combined-api-adapters-20261022/restart-two-helper-purpose-parent-review.json",
+          "reason": "Whole helper, receiver composition and ordered native metadata reviewed. Two exact immutable original DATA adapters and their Source-native documentation qualifications only; prior content/reader/quality sources and explicit scopes unchanged. All107 previous role recipes preserved by final helper qualification delta. Canonical raw UNKNOWN and false runtime/apply remain. Original owning result retained separately, not a passing global-generator or acceptance claim.",
+          "historicalPracticalEvidenceNotReexecuted": true
         }
       ],
       "scopePreservation3408": {
@@ -16396,7 +16454,8 @@
         "currentOutput": "One real5b1b complete normal Reader build and four separate original artifact/search/Source-link/Source-preview processes reused across six records, not six builds.",
         "browserPreservation": "No new browser, screenreader or fresh-persona exercise: unchanged authored pages/shared renderer outputs retain only prior successful original scopes. Current Source/output checks separately executed.",
         "globalGeneratorLimit": "Original normal5b1b localHelm exits1 at scripts/install/register-runtime-argo.mjs29; infrastructure slots passed. No global configuration/API/schema/runtime acceptance."
-      }
+      },
+      "previousReviewedRevision": "68d31a42188dc8aa1dce7a972ce9488d124d6826"
     },
     {
       "id": "AP09-complete-static-offline-fallback-20261021",
@@ -16719,7 +16778,7 @@
     },
     {
       "id": "AP09-complete-same-source-code-preview-20261021",
-      "revision": "68d31a42188dc8aa1dce7a972ce9488d124d6826",
+      "revision": "512022c3c63e4b96633d8633552f9a037ba200ee",
       "author": "Nova /root documentation author and implementation coordinator",
       "reviewer": "Independent Codex autoreview whole PUB004 Source/Reader/Quality closeout plus narrow changed-boundary preservation for21priorPASSrecords",
       "verdict": "PASS",
@@ -16854,6 +16913,11 @@
           "command": "node --test scripts/tests/docs-api-top-level-script-purpose.test.mjs scripts/tests/deployment-config-output-custody.test.mjs",
           "exitCode": 0,
           "observation": "14/14 actual main tests passed. Original owning failure at later probe output is retained separately, not included as a passing check."
+        },
+        {
+          "command": "node --test scripts/tests/docs-api-probe39-original-output.test.mjs scripts/tests/docs-api-versions-map-output.test.mjs",
+          "exitCode": 0,
+          "observation": "13/13 current main tests PASS. Separate14/14 scalar tests,103 existing native recipe checks,5 original renewed-guard helper mutation rejections and2 helper purpose source/input mutation controls PASS. These preserve only existing bounded scopes; no new requirement/gate/runtime/global-generator acceptance."
         }
       ],
       "limits": [
@@ -16901,7 +16965,8 @@
           ],
           "review": "handoffs/pr13-finish-20261021/custody-review.md",
           "reason": "Independent bounded preservation: exact test fixture55declarations and tree closure44units/7ranges/16initializers renewed after source/caller/consumer review. Same selectors/callers/guard logic; tree native operation digest unchanged;7custody tests including2newwarm-cache source-revocation negatives PASS. Existing renderer/search/Source/preview/layout facts and limits retained;no fresh whole-reader or live reapproval."
-        }
+        },
+        "68d31a42188dc8aa1dce7a972ce9488d124d6826"
       ],
       "impactReviews": [
         {
@@ -17224,6 +17289,14 @@
           "report": "docs/blueprint/acceptance-evidence/eleven-purpose-20261022/recovered-eleven-purpose-independent-review.json",
           "reason": "Independent four-file delta review preserves unchanged reader pages and prior exact Source/quality/reader claims and limits. Eleven specific purposes remain private, canonical UNKNOWN retained. Original scalar and consumer guards passed in main owning receiver; next probe API output remains blocked, not generator success.",
           "historicalPracticalEvidenceNotReexecuted": true
+        },
+        {
+          "revision": "512022c3c63e4b96633d8633552f9a037ba200ee",
+          "reviewer": "Independent combined integration/guard reviewer plus parent independent two-helper-purpose review",
+          "verdict": "PASS_BOUNDED_EXISTING_SCOPE_PRESERVATION",
+          "report": "docs/blueprint/acceptance-evidence/combined-api-adapters-20261022/restart-two-helper-purpose-parent-review.json",
+          "reason": "Whole helper, receiver composition and ordered native metadata reviewed. Two exact immutable original DATA adapters and their Source-native documentation qualifications only; prior content/reader/quality sources and explicit scopes unchanged. All107 previous role recipes preserved by final helper qualification delta. Canonical raw UNKNOWN and false runtime/apply remain. Original owning result retained separately, not a passing global-generator or acceptance claim.",
+          "historicalPracticalEvidenceNotReexecuted": true
         }
       ],
       "scopePreservation3408": {
@@ -17265,11 +17338,12 @@
         "currentOutput": "One real5b1b complete normal Reader build and four separate original artifact/search/Source-link/Source-preview processes reused across six records, not six builds.",
         "browserPreservation": "No new browser, screenreader or fresh-persona exercise: unchanged authored pages/shared renderer outputs retain only prior successful original scopes. Current Source/output checks separately executed.",
         "globalGeneratorLimit": "Original normal5b1b localHelm exits1 at scripts/install/register-runtime-argo.mjs29; infrastructure slots passed. No global configuration/API/schema/runtime acceptance."
-      }
+      },
+      "previousReviewedRevision": "68d31a42188dc8aa1dce7a972ce9488d124d6826"
     },
     {
       "id": "AP09-complete-responsive-reader-layout-20261021",
-      "revision": "68d31a42188dc8aa1dce7a972ce9488d124d6826",
+      "revision": "512022c3c63e4b96633d8633552f9a037ba200ee",
       "author": "Nova /root documentation author and implementation coordinator",
       "reviewer": "Independent Codex autoreview whole A91207 responsive-layout closeout and narrow24-record prior-boundary preservation",
       "verdict": "PASS",
@@ -17464,6 +17538,11 @@
           "command": "node --test scripts/tests/docs-api-top-level-script-purpose.test.mjs scripts/tests/deployment-config-output-custody.test.mjs",
           "exitCode": 0,
           "observation": "14/14 actual main tests passed. Original owning failure at later probe output is retained separately, not included as a passing check."
+        },
+        {
+          "command": "node --test scripts/tests/docs-api-probe39-original-output.test.mjs scripts/tests/docs-api-versions-map-output.test.mjs",
+          "exitCode": 0,
+          "observation": "13/13 current main tests PASS. Separate14/14 scalar tests,103 existing native recipe checks,5 original renewed-guard helper mutation rejections and2 helper purpose source/input mutation controls PASS. These preserve only existing bounded scopes; no new requirement/gate/runtime/global-generator acceptance."
         }
       ],
       "limits": [
@@ -17543,7 +17622,8 @@
           ],
           "review": "handoffs/pr13-finish-20261021/custody-review.md",
           "reason": "Independent bounded preservation: exact test fixture55declarations and tree closure44units/7ranges/16initializers renewed after source/caller/consumer review. Same selectors/callers/guard logic; tree native operation digest unchanged;7custody tests including2newwarm-cache source-revocation negatives PASS. Existing renderer/search/Source/preview/layout facts and limits retained;no fresh whole-reader or live reapproval."
-        }
+        },
+        "68d31a42188dc8aa1dce7a972ce9488d124d6826"
       ],
       "impactReviews": [
         {
@@ -17857,6 +17937,14 @@
           "report": "docs/blueprint/acceptance-evidence/eleven-purpose-20261022/recovered-eleven-purpose-independent-review.json",
           "reason": "Independent four-file delta review preserves unchanged reader pages and prior exact Source/quality/reader claims and limits. Eleven specific purposes remain private, canonical UNKNOWN retained. Original scalar and consumer guards passed in main owning receiver; next probe API output remains blocked, not generator success.",
           "historicalPracticalEvidenceNotReexecuted": true
+        },
+        {
+          "revision": "512022c3c63e4b96633d8633552f9a037ba200ee",
+          "reviewer": "Independent combined integration/guard reviewer plus parent independent two-helper-purpose review",
+          "verdict": "PASS_BOUNDED_EXISTING_SCOPE_PRESERVATION",
+          "report": "docs/blueprint/acceptance-evidence/combined-api-adapters-20261022/restart-two-helper-purpose-parent-review.json",
+          "reason": "Whole helper, receiver composition and ordered native metadata reviewed. Two exact immutable original DATA adapters and their Source-native documentation qualifications only; prior content/reader/quality sources and explicit scopes unchanged. All107 previous role recipes preserved by final helper qualification delta. Canonical raw UNKNOWN and false runtime/apply remain. Original owning result retained separately, not a passing global-generator or acceptance claim.",
+          "historicalPracticalEvidenceNotReexecuted": true
         }
       ],
       "scopePreservation3408": {
@@ -17898,7 +17986,8 @@
         "currentOutput": "One real5b1b complete normal Reader build and four separate original artifact/search/Source-link/Source-preview processes reused across six records, not six builds.",
         "browserPreservation": "No new browser, screenreader or fresh-persona exercise: unchanged authored pages/shared renderer outputs retain only prior successful original scopes. Current Source/output checks separately executed.",
         "globalGeneratorLimit": "Original normal5b1b localHelm exits1 at scripts/install/register-runtime-argo.mjs29; infrastructure slots passed. No global configuration/API/schema/runtime acceptance."
-      }
+      },
+      "previousReviewedRevision": "68d31a42188dc8aa1dce7a972ce9488d124d6826"
     },
     {
       "id": "AP09-complete-source-backed-diagrams-20261021",
