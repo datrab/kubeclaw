@@ -87,6 +87,7 @@ busterNamespaceBroker:
     enabled: false
     verificationRead:
       enabled: false
+      retireLegacyBindings: true
 
 archviewer:
   enabled: true

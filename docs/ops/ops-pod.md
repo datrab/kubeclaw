@@ -135,7 +135,8 @@ so the operator can choose an idle Codex session; the sync itself runs in Argo.
    public trust. Only after the hook succeeds do the wave-0 workloads start.
    Selective resource sync skips hooks and is not a supported initial cutover.
 4. Verify MCP readiness and Codex MCP access. Then promote/sync the runtime release
-   for Nova and Buster, including pruning the removed Nova lease/verification RBAC.
+   for Nova and Buster. Explicit empty rules/subjects retire Nova's former grants
+   even with `prune: false`; no manual RoleBinding deletion is needed.
    Keep Ops and runtime promotion in this order so Nova's new mounts already exist.
 5. Confirm that both agent identities have no direct workload, Secret, exec or
    namespace authority, including any separately managed group bindings. Check

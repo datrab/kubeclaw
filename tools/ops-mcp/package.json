@@ -13,11 +13,11 @@
   "dependencies": {
     "@modelcontextprotocol/node": "2.1.1",
     "@modelcontextprotocol/server": "2.3.0",
-    "hono": "4.13.7",
     "ws": "8.21.3",
     "zod": "4.5.4"
   },
   "overrides": {
-    "@hono/node-server": "2.0.12"
+    "@hono/node-server": "2.0.12",
+    "hono": "4.13.7"
   }
 }

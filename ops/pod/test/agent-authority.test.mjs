@@ -8,10 +8,14 @@ const root = fileURLToPath(new URL('../../../', import.meta.url));
 const render = (role, extra = []) => parseAllDocuments(execFileSync('helm', ['template', `agent-${role}`, root + 'charts/kubeclaw', '-n', 'kubeclaw',
   '-f', root + `my-values/${role}-values.yaml`, ...(role === 'buster' ? ['-f', root + 'gitops/production/overlays/buster-ax41.yaml'] : []), ...extra], { encoding: 'utf8', maxBuffer: 16 * 1024 * 1024 })).map(x => { assert.deepEqual(x.errors, []); return x.toJSON(); }).filter(Boolean);
 
-test('Nova has no API token or RBAC, including old lease verification flags; its only ops credential is the MCP token', () => {
+test('Nova has no API token or grants and explicitly revokes old RBAC even without pruning', () => {
   for (const extra of [[], ['--set', 'serviceAccount.automount=true', '--set', 'busterNamespaceBroker.leaseClient.enabled=true', '--set', 'busterNamespaceBroker.leaseClient.verificationRead.enabled=true']]) {
     const resources = render('nova', extra);
-    assert.equal(resources.some(x => ['RoleBinding', 'ClusterRoleBinding', 'Role', 'ClusterRole'].includes(x.kind)), false);
+    const retired = resources.filter(x => ['RoleBinding', 'ClusterRoleBinding', 'Role', 'ClusterRole'].includes(x.kind));
+    assert.equal(retired.length, 6);
+    for (const resource of retired) assert.deepEqual(resource.rules ?? resource.subjects, []);
+    assert.ok(retired.some(x => x.kind === 'ClusterRoleBinding' && x.metadata.name === 'agent-nova-verification-read'));
+    assert.ok(retired.some(x => x.kind === 'RoleBinding' && x.metadata.namespace === 'tailscale'));
     const pod = resources.find(x => x.kind === 'Deployment' && x.metadata.name === 'agent-nova').spec.template.spec;
     assert.equal(pod.automountServiceAccountToken, false);
     assert.equal(pod.volumes.some(v => v.projected?.sources?.some(s => s.serviceAccountToken)), false);

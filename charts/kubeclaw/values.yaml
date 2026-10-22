@@ -394,6 +394,9 @@ busterNamespaceBroker:
     enabled: false
     verificationRead:
       enabled: false
+      # Reconcile the old named grants to empty rules/subjects even with Argo prune=false.
+      # Enable for a migration only where the legacy operator namespace exists.
+      retireLegacyBindings: false
       # Retired verification scopes are ignored; no RBAC or credential is created.
       tailscaleOperatorNamespace: tailscale
       tailscaleOAuthSecretName: operator-oauth

@@ -188,7 +188,8 @@ grant rights inside leased test namespaces; this change preserves that exception
 removes Nova from the broker allowlist, and does not give Buster global namespace
 creation rights. Drain Nova leases before cutover: the controller deletes owned
 test namespaces for provisioned leases rejected by the tightened allowlist,
-revoking their RoleBindings. Argo prunes Nova's former tracked roles/bindings.
+revoking their RoleBindings. Argo reconciles Nova's former named roles/bindings
+to empty rules/subjects, which also revokes grants when `prune: false`.
 
 Codex uses `danger-full-access` within the restricted container and `on-request`
 approvals. There is no nested Codex OS sandbox. Account credentials, GitHub access,

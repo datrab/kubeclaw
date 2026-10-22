@@ -40,4 +40,51 @@ subjects:
   - kind: ServiceAccount
     name: {{ include "kubeclaw.fullname" . }}
     namespace: {{ .Release.Namespace }}
+{{- else if and (eq .Values.agentRole "nova") .Values.busterNamespaceBroker.leaseClient.verificationRead.retireLegacyBindings }}
+# Explicitly revoke old grants in place. Runtime Argo apps deliberately have
+# prune=false; omitting these objects would leave their old permissions alive.
+{{- $name := include "kubeclaw.fullname" . -}}
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: {{ $name }}-namespace-lease-client
+  namespace: {{ .Release.Namespace }}
+rules: []
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: {{ $name }}-namespace-lease-client
+  namespace: {{ .Release.Namespace }}
+roleRef: {apiGroup: rbac.authorization.k8s.io, kind: Role, name: {{ $name }}-namespace-lease-client}
+subjects: []
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata: {name: {{ $name }}-verification-read}
+rules: []
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata: {name: {{ $name }}-verification-read}
+roleRef: {apiGroup: rbac.authorization.k8s.io, kind: ClusterRole, name: {{ $name }}-verification-read}
+subjects: []
+{{- $namespace := .Values.busterNamespaceBroker.leaseClient.verificationRead.tailscaleOperatorNamespace | default "tailscale" -}}
+{{- $secretReadName := printf "%s-verification-secret-%s" $name (printf "%s/%s" .Release.Namespace .Release.Name | sha256sum | trunc 8) }}
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: {{ $secretReadName }}
+  namespace: {{ $namespace }}
+rules: []
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: {{ $secretReadName }}
+  namespace: {{ $namespace }}
+roleRef: {apiGroup: rbac.authorization.k8s.io, kind: Role, name: {{ $secretReadName }}}
+subjects: []
 {{- end }}
