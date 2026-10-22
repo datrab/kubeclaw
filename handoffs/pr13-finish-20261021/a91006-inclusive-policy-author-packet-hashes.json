@@ -1,0 +1,24 @@
+{
+  "status": "FROZEN_AUTHOR_CANDIDATE_NOT_ACCEPTED",
+  "sourceRevision": "9f4a304524da258c5454a9361d83f5d69092ed07",
+  "files": {
+    "author-policy.py": "f7a228b88d1b371f3ed72e3fe0abea79458dfa02a109041461c344f34c114684",
+    "author-report.md": "37e5677a61eece978ef33154b800cd5b2b6e867e8ceaefc053c6498964e1ae80",
+    "author-summary.json": "d92ffe9f115fa8cc867a07f1de4a4f768289426198dd96823c4c844780fcd0dc",
+    "author-worklog.md": "c7fd053d355ac6676b3aea47cc48c13292f222568dfd50a0eb4f50f418b72055",
+    "authored-153-judgments.json": "065d12e72002b5222c4863a80915279f5f9beb39bd5077b7fac24812410b5e25",
+    "baseline-policy.json": "350aea2edc2c80426474888a4ef5f558f640c78b1d80399c5e81765ba1ed1100",
+    "build-tailnet-unchanged-reuse.json": "332b6ce59ccd256720eb5c271faf17f38e397a1f020f720e776348a3fd946b11",
+    "candidate-policy.json": "19ad54c83ac945e2f82927fdad65f4740292562b99752828d43068edfc5623b5",
+    "candidate.patch": "d294b2a32087df101c900412c96f489d5343c0146638d5fbd0f49af73b466d5d",
+    "classification-deltas.json": "97c994a0fe67846dab86d03fae912c11c2d1815202e17f2f453bfaf69055116b",
+    "exact-153-judgment-deltas.json": "c963369a656060040c591fb538d848646a5140f63b608e8359e182d8be92bcfd",
+    "finite-rule-proof-map.json": "cf888a23449a4cd71d9aba3b0d33d3ed4d584e078d1e818f87049dd6a3f971be",
+    "inert-input-controls.json": "7b9ca9743ef5a14c8e8179e1a2e85e79d2f00570b42f3c05e0ceee2012168a94",
+    "seal-author-proof.py": "bf9a6163d16fc42bb1cb49a9b0350d9057f4aad8cc093b12467037c2149efbff",
+    "source-read-reuse-map.json": "45a2ec195e4c76617d07baa95455f8cd581d33152466575cf194516a2c68a47e",
+    "supplemental-receiver-source-bindings.json": "e5b49e0e150fa6aa569d226e8750275bd22cd94a64af6a63d4ca72eda478fa31",
+    "unchanged-physical-context.json": "eeaa96bd64b47cb8b4b434a840824697976f7bad917b3206577bd39cefebff27",
+    "working-proof-map.json": "ddcf8f0ca91575d2173b289f71df72f191d969680e76d7070556fe6c3e1c1af2"
+  }
+}

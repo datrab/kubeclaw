@@ -1,0 +1,761 @@
+[
+  {
+    "package": "kubeclaw-agent-observer",
+    "source": "skills/common/plugins/openclaw-agent-observer/src/index.ts",
+    "range": [
+      1,
+      314
+    ],
+    "sha256": "a800b92606e0c803ae51867c7625ae5610169e23b2074b54d69f58e5f0d6f3aa",
+    "method": "CURRENT_COMPLETE_DIRECT_ENTRY_READ_FOR_NEW_PREDICATES",
+    "limit": "Supported effect/retained-state/host-registration responsibility only; no new claim of every transitive algorithm, initialization execution or guide depth."
+  },
+  {
+    "package": "kubeclaw-ops",
+    "source": "plugins/kubeclaw-ops/skills/troubleshoot/SKILL.md",
+    "range": [
+      1,
+      35
+    ],
+    "sha256": "52a7329b7176b69c98ca46069d1147e0dc242a6f812ac4efdceba0c86a8cc530",
+    "method": "CURRENT_COMPLETE_DIRECT_ENTRY_READ_FOR_NEW_PREDICATES",
+    "limit": "Supported effect/retained-state/host-registration responsibility only; no new claim of every transitive algorithm, initialization execution or guide depth."
+  },
+  {
+    "package": "kubeclaw-prism",
+    "source": "skills/prism/openclaw-plugin/index.mjs",
+    "range": [
+      1,
+      81
+    ],
+    "sha256": "97a30daa0a042f2cd9416746caffe9207828dd9a587e3a6c3e8de481f5d0640e",
+    "method": "CURRENT_COMPLETE_DIRECT_ENTRY_READ_FOR_NEW_PREDICATES",
+    "limit": "Supported effect/retained-state/host-registration responsibility only; no new claim of every transitive algorithm, initialization execution or guide depth."
+  },
+  {
+    "package": "kubeclaw.agent-observability",
+    "source": "skills/common/plugins/agent-observability/src/observers.ts",
+    "range": [
+      1,
+      35
+    ],
+    "sha256": "b52a00959c3ba7c122faf4fe364ce9ab5baf530e590df89b8f3ddc5e764b111c",
+    "method": "CURRENT_COMPLETE_DIRECT_ENTRY_READ_FOR_NEW_PREDICATES",
+    "limit": "Supported effect/retained-state/host-registration responsibility only; no new claim of every transitive algorithm, initialization execution or guide depth."
+  },
+  {
+    "package": "kubeclaw.api-flow",
+    "source": "skills/buster/plugins/api-flow/src/provider.js",
+    "range": [
+      1,
+      150
+    ],
+    "sha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b",
+    "method": "CURRENT_COMPLETE_DIRECT_ENTRY_READ_FOR_NEW_PREDICATES",
+    "limit": "Supported effect/retained-state/host-registration responsibility only; no new claim of every transitive algorithm, initialization execution or guide depth."
+  },
+  {
+    "package": "kubeclaw.architecture-validator",
+    "source": "skills/nova/plugins/architecture-validator/src/stage.ts",
+    "range": [
+      1,
+      60
+    ],
+    "sha256": "1d078730d6c276cba32fbdded3b289bff155638490e7a5d191750732e13565bc",
+    "method": "REUSED_EXACT_PRIOR_COMPLETE_TOPIC_SOURCE",
+    "priorReport": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/handoffs/pr13-finish-20261021/six-guide-independent-review.md",
+    "priorRevision": "0e35889a",
+    "wholeSourceEqual": true
+  },
+  {
+    "package": "kubeclaw.artifact-store",
+    "source": "skills/common/plugins/artifact-store/src/adapter.ts",
+    "range": [
+      1,
+      179
+    ],
+    "sha256": "12fa6150089d49da0a9065de560fb53436dc46e3f10f15da0f3fe8b112a50154",
+    "method": "CURRENT_COMPLETE_DIRECT_ENTRY_READ_FOR_NEW_PREDICATES",
+    "limit": "Supported effect/retained-state/host-registration responsibility only; no new claim of every transitive algorithm, initialization execution or guide depth."
+  },
+  {
+    "package": "kubeclaw.axe",
+    "source": "skills/buster/plugins/axe/src/provider.js",
+    "range": [
+      1,
+      114
+    ],
+    "sha256": "3943f787c2d7fc1f2215268c043135f0a6d6425fd6e09b26d48bb2171e87c472",
+    "method": "CURRENT_COMPLETE_DIRECT_ENTRY_READ_FOR_NEW_PREDICATES",
+    "limit": "Supported effect/retained-state/host-registration responsibility only; no new claim of every transitive algorithm, initialization execution or guide depth."
+  },
+  {
+    "package": "kubeclaw.blueprint-sync",
+    "source": "skills/nova/plugins/blueprint-sync/src/stage.ts",
+    "range": [
+      1,
+      64
+    ],
+    "sha256": "77735e30c7109aee73cd6c396fe11858275935df1f251aae77d582ed4a7f2765",
+    "method": "REUSED_EXACT_PRIOR_COMPLETE_TOPIC_SOURCE",
+    "priorReport": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/handoffs/pr13-finish-20261021/six-guide-independent-review.md",
+    "priorRevision": "0e35889a",
+    "wholeSourceEqual": true
+  },
+  {
+    "package": "kubeclaw.buster-quality-gate",
+    "source": "skills/nova/plugins/buster-quality-gate/src/stage.ts",
+    "range": [
+      1,
+      71
+    ],
+    "sha256": "3b58135f8f95a089a7776ca76152d51ae394627f13ce0da1f362c90ab7b1ea76",
+    "method": "REUSED_EXACT_PRIOR_COMPLETE_TOPIC_SOURCE",
+    "priorReport": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/compiled-project-journey-independent-review.md",
+    "priorRevision": "7ef16585ba04eba3628cead304be85307436f091",
+    "wholeSourceEqual": true
+  },
+  {
+    "package": "kubeclaw.case-study",
+    "source": "skills/nova/plugins/case-study/src/stage.ts",
+    "range": [
+      1,
+      29
+    ],
+    "sha256": "a537e4028ddc30ea19ae7fa18e828c10745f08f14b0cf16e534ee8b42ea720b9",
+    "method": "REUSED_EXACT_PRIOR_COMPLETE_TOPIC_SOURCE",
+    "priorReport": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/handoffs/pr13-finish-20261021/reports-guide-independent-review.md",
+    "priorRevision": "0e35889a",
+    "wholeSourceEqual": true
+  },
+  {
+    "package": "kubeclaw.command-runner",
+    "source": "skills/common/plugins/command-runner/src/adapter.ts",
+    "range": [
+      1,
+      87
+    ],
+    "sha256": "31265c4ce8ad540a119e74cc0b4449ffb0621af688f0c37fa848cdb509b4620b",
+    "method": "REUSED_EXACT_PRIOR_COMPLETE_TOPIC_SOURCE",
+    "priorReport": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/handoffs/pr13-finish-20261021/six-guide-independent-review.md",
+    "priorRevision": "0e35889a",
+    "wholeSourceEqual": true
+  },
+  {
+    "package": "kubeclaw.container-build",
+    "source": "skills/buster/plugins/container-build/src/provider.js",
+    "range": [
+      1,
+      145
+    ],
+    "sha256": "1204d07c75942e9def8b703748bf97510e933b2cfb33b85f84c485d42b89c847",
+    "method": "CURRENT_COMPLETE_DIRECT_ENTRY_READ_FOR_NEW_PREDICATES",
+    "limit": "Supported effect/retained-state/host-registration responsibility only; no new claim of every transitive algorithm, initialization execution or guide depth."
+  },
+  {
+    "package": "kubeclaw.coverage-budget",
+    "source": "skills/buster/plugins/coverage-budget/src/provider.js",
+    "range": [
+      1,
+      98
+    ],
+    "sha256": "3e76c0b48e6728a195de48f8c7325e517e0681e8e0e169e7adb129bd0752430b",
+    "method": "CURRENT_COMPLETE_DIRECT_ENTRY_READ_FOR_NEW_PREDICATES",
+    "limit": "Supported effect/retained-state/host-registration responsibility only; no new claim of every transitive algorithm, initialization execution or guide depth."
+  },
+  {
+    "package": "kubeclaw.delivery-lint",
+    "source": "skills/nova/plugins/delivery-lint/src/stage.ts",
+    "range": [
+      1,
+      146
+    ],
+    "sha256": "b8f849c5d228713dd73ab7a47e73ef5be9ee5fd07af39e4276c483a3555ac862",
+    "method": "REUSED_EXACT_PRIOR_COMPLETE_TOPIC_SOURCE",
+    "priorReport": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/handoffs/pr13-finish-20261021/six-guide-independent-review.md",
+    "priorRevision": "0e35889a",
+    "wholeSourceEqual": true
+  },
+  {
+    "package": "kubeclaw.demo-auth-smoke",
+    "source": "skills/buster/plugins/demo-auth-smoke/src/provider.js",
+    "range": [
+      1,
+      59
+    ],
+    "sha256": "21e239a33d59c5849d8b9acef7ac0d6eba70b5652f885a430eefd82063f07c30",
+    "method": "REUSED_OWN_COMPLETED_NONAUTHOR_DEMO_AUTH_SOURCE_REVIEW",
+    "priorReport": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/demo-auth-guide-independent-review/review.md",
+    "wholeSourceEqual": true
+  },
+  {
+    "package": "kubeclaw.demo-handoff",
+    "source": "skills/nova/plugins/demo-handoff/src/adapter.ts",
+    "range": [
+      1,
+      68
+    ],
+    "sha256": "245bff96d5198426aa2bc73739fdc4976fb632b0a4737b923594efa052af0855",
+    "method": "CURRENT_COMPLETE_DIRECT_ENTRY_READ_FOR_NEW_PREDICATES",
+    "limit": "Supported effect/retained-state/host-registration responsibility only; no new claim of every transitive algorithm, initialization execution or guide depth."
+  },
+  {
+    "package": "kubeclaw.demo-handoff",
+    "source": "skills/nova/plugins/demo-handoff/src/candidate.ts",
+    "range": [
+      1,
+      14
+    ],
+    "sha256": "0706b62469c38751d1b22fdc0486e66915cda45077b315b144ef8a4ec641eff3",
+    "method": "CURRENT_COMPLETE_DIRECT_ENTRY_READ_FOR_NEW_PREDICATES",
+    "limit": "Supported effect/retained-state/host-registration responsibility only; no new claim of every transitive algorithm, initialization execution or guide depth."
+  },
+  {
+    "package": "kubeclaw.demo-handoff",
+    "source": "skills/nova/plugins/demo-handoff/src/delivery.ts",
+    "range": [
+      1,
+      10
+    ],
+    "sha256": "a1dfb3d6fef144d5f11e3546039ba4a291c97ad4f5fcf7ee0279b83fdfadaff7",
+    "method": "CURRENT_COMPLETE_DIRECT_ENTRY_READ_FOR_NEW_PREDICATES",
+    "limit": "Supported effect/retained-state/host-registration responsibility only; no new claim of every transitive algorithm, initialization execution or guide depth."
+  },
+  {
+    "package": "kubeclaw.demo-handoff",
+    "source": "skills/nova/plugins/demo-handoff/src/ready.ts",
+    "range": [
+      1,
+      11
+    ],
+    "sha256": "ae78a23722ab515d539b8ad4c0950ee8d487c5ff02a4b5f851f249f2026ffb82",
+    "method": "CURRENT_COMPLETE_DIRECT_ENTRY_READ_FOR_NEW_PREDICATES",
+    "limit": "Supported effect/retained-state/host-registration responsibility only; no new claim of every transitive algorithm, initialization execution or guide depth."
+  },
+  {
+    "package": "kubeclaw.direct-command",
+    "source": "skills/buster/plugins/direct-command/src/provider.js",
+    "range": [
+      1,
+      206
+    ],
+    "sha256": "825182b963d34c1414fd779b5c523d00cc354fb38d6e8669cc68aa0b40261667",
+    "method": "CURRENT_COMPLETE_DIRECT_ENTRY_READ_FOR_NEW_PREDICATES",
+    "limit": "Supported effect/retained-state/host-registration responsibility only; no new claim of every transitive algorithm, initialization execution or guide depth."
+  },
+  {
+    "package": "kubeclaw.git-workspace",
+    "source": "skills/common/plugins/git-workspace/src/adapter.ts",
+    "range": [
+      1,
+      27
+    ],
+    "sha256": "aa68298b0322f62bf8e64eef51f59107eb2fe4ab940d7aedbabc8041294dcbd7",
+    "method": "REUSED_EXACT_PRIOR_COMPLETE_TOPIC_SOURCE",
+    "priorReport": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/handoffs/pr13-finish-20261021/git-workspace-independent-review.md",
+    "priorRevision": "0e35889a",
+    "wholeSourceEqual": true
+  },
+  {
+    "package": "kubeclaw.http",
+    "source": "skills/buster/plugins/http/src/provider.js",
+    "range": [
+      1,
+      175
+    ],
+    "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186",
+    "method": "CURRENT_COMPLETE_DIRECT_ENTRY_READ_FOR_NEW_PREDICATES",
+    "limit": "Supported effect/retained-state/host-registration responsibility only; no new claim of every transitive algorithm, initialization execution or guide depth."
+  },
+  {
+    "package": "kubeclaw.human-approval",
+    "source": "skills/nova/plugins/human-approval/src/architecture-approval.ts",
+    "range": [
+      1,
+      141
+    ],
+    "sha256": "3a6073a7c6ef98ba417ed1b38827c15b3449e70ac89b8a126b7ad14f380e304b",
+    "method": "CURRENT_COMPLETE_DIRECT_ENTRY_READ_FOR_NEW_PREDICATES",
+    "limit": "Supported effect/retained-state/host-registration responsibility only; no new claim of every transitive algorithm, initialization execution or guide depth."
+  },
+  {
+    "package": "kubeclaw.human-approval",
+    "source": "skills/nova/plugins/human-approval/src/stage.ts",
+    "range": [
+      1,
+      55
+    ],
+    "sha256": "9e54e56d6b5acc631985cc2de9e9be943f3e8cdeaa09835dfdc1e402d67da8fd",
+    "method": "CURRENT_COMPLETE_DIRECT_ENTRY_READ_FOR_NEW_PREDICATES",
+    "limit": "Supported effect/retained-state/host-registration responsibility only; no new claim of every transitive algorithm, initialization execution or guide depth."
+  },
+  {
+    "package": "kubeclaw.implementation-agent",
+    "source": "skills/nova/plugins/implementation-agent/src/stage.ts",
+    "range": [
+      1,
+      152
+    ],
+    "sha256": "4f2057feef1fdd4c81bbb90ae203564cd0ab3922a9fd44b098a1a99558da4870",
+    "method": "REUSED_EXACT_PRIOR_COMPLETE_TOPIC_SOURCE",
+    "priorReport": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/compiled-project-journey-independent-review.md",
+    "priorRevision": "7ef16585ba04eba3628cead304be85307436f091",
+    "wholeSourceEqual": true
+  },
+  {
+    "package": "kubeclaw.junit-report",
+    "source": "skills/buster/plugins/junit-report-adapter/src/adapter.js",
+    "range": [
+      1,
+      365
+    ],
+    "sha256": "dceb8492b6f03b31c9c57190cdff836e4d6917b33ab49480fe8001c02e247736",
+    "method": "CURRENT_COMPLETE_DIRECT_ENTRY_READ_FOR_NEW_PREDICATES",
+    "limit": "Supported effect/retained-state/host-registration responsibility only; no new claim of every transitive algorithm, initialization execution or guide depth."
+  },
+  {
+    "package": "kubeclaw.kubernetes-fixture",
+    "source": "skills/buster/plugins/kubernetes-fixture/src/provider.js",
+    "range": [
+      1,
+      146
+    ],
+    "sha256": "4af5c60de7d010bc6956e81429ee10cbbca38fcf25636c348e0ef4fbb0f2d50e",
+    "method": "CURRENT_COMPLETE_DIRECT_ENTRY_READ_FOR_NEW_PREDICATES",
+    "limit": "Supported effect/retained-state/host-registration responsibility only; no new claim of every transitive algorithm, initialization execution or guide depth."
+  },
+  {
+    "package": "kubeclaw.lighthouse",
+    "source": "skills/buster/plugins/lighthouse/src/provider.js",
+    "range": [
+      1,
+      151
+    ],
+    "sha256": "8858c30f362574414d16d8dcd99b963382b79e3195a670145c2e67d63dfa85a5",
+    "method": "CURRENT_COMPLETE_DIRECT_ENTRY_READ_FOR_NEW_PREDICATES",
+    "limit": "Supported effect/retained-state/host-registration responsibility only; no new claim of every transitive algorithm, initialization execution or guide depth."
+  },
+  {
+    "package": "kubeclaw.lint",
+    "source": "skills/nova/plugins/lint/src/adapter.ts",
+    "range": [
+      1,
+      64
+    ],
+    "sha256": "7d525ef53fc8a187eba48e7ee15ca7f8f2df1d00a4e23823de15bae47a1b49e4",
+    "method": "REUSED_EXACT_PRIOR_COMPLETE_TOPIC_SOURCE",
+    "priorReport": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/compiled-project-journey-independent-review.md",
+    "priorRevision": "7ef16585ba04eba3628cead304be85307436f091",
+    "wholeSourceEqual": true
+  },
+  {
+    "package": "kubeclaw.lint",
+    "source": "skills/nova/plugins/lint/src/stage.ts",
+    "range": [
+      1,
+      110
+    ],
+    "sha256": "87145aaf9cf42a78e5a9ad076b2d6c3799861bf0e78576076feb07c9c273c5e8",
+    "method": "REUSED_EXACT_PRIOR_COMPLETE_TOPIC_SOURCE",
+    "priorReport": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/compiled-project-journey-independent-review.md",
+    "priorRevision": "7ef16585ba04eba3628cead304be85307436f091",
+    "wholeSourceEqual": true
+  },
+  {
+    "package": "kubeclaw.network-http",
+    "source": "skills/common/plugins/network-http/src/adapter.ts",
+    "range": [
+      1,
+      137
+    ],
+    "sha256": "8885ca56e2a2322c98e4c83ba935397f8f47d829c4feec69efbdde0113553e8d",
+    "method": "CURRENT_COMPLETE_DIRECT_ENTRY_READ_FOR_NEW_PREDICATES",
+    "limit": "Supported effect/retained-state/host-registration responsibility only; no new claim of every transitive algorithm, initialization execution or guide depth."
+  },
+  {
+    "package": "kubeclaw.notification-observer",
+    "source": "skills/common/plugins/notification-observer/src/observer.ts",
+    "range": [
+      1,
+      199
+    ],
+    "sha256": "264990bdacb7d3598db99fb4c7aab9a050c1d717f08c4013ba6f19eced578a70",
+    "method": "CURRENT_COMPLETE_DIRECT_ENTRY_READ_FOR_NEW_PREDICATES",
+    "limit": "Supported effect/retained-state/host-registration responsibility only; no new claim of every transitive algorithm, initialization execution or guide depth."
+  },
+  {
+    "package": "kubeclaw.openapi",
+    "source": "skills/buster/plugins/openapi/src/provider.js",
+    "range": [
+      1,
+      262
+    ],
+    "sha256": "cabeb560867f9dc802a7e936c0efc1fb6f900f211b5563414b6016c780f48cca",
+    "method": "CURRENT_COMPLETE_DIRECT_ENTRY_READ_FOR_NEW_PREDICATES",
+    "limit": "Supported effect/retained-state/host-registration responsibility only; no new claim of every transitive algorithm, initialization execution or guide depth."
+  },
+  {
+    "package": "kubeclaw.openclaw-agent-events",
+    "source": "skills/common/plugins/openclaw-agent-events/src/adapter.ts",
+    "range": [
+      1,
+      119
+    ],
+    "sha256": "665d10a623f4e9e83dc50bc9a7c769aea0bec8658ab233f3a6d07a89338dd7c7",
+    "method": "CURRENT_COMPLETE_DIRECT_ENTRY_READ_FOR_NEW_PREDICATES",
+    "limit": "Supported effect/retained-state/host-registration responsibility only; no new claim of every transitive algorithm, initialization execution or guide depth."
+  },
+  {
+    "package": "kubeclaw.operator-messaging",
+    "source": "skills/common/plugins/operator-messaging/src/adapter.ts",
+    "range": [
+      1,
+      117
+    ],
+    "sha256": "a6d719a5e69b401a0696af9a74dcf358015cdc57bfa062cca0514c54410b3785",
+    "method": "CURRENT_COMPLETE_DIRECT_ENTRY_READ_FOR_NEW_PREDICATES",
+    "limit": "Supported effect/retained-state/host-registration responsibility only; no new claim of every transitive algorithm, initialization execution or guide depth."
+  },
+  {
+    "package": "kubeclaw.pipeline-review",
+    "source": "skills/nova/plugins/pipeline-review/src/evidence-adapter.ts",
+    "range": [
+      1,
+      49
+    ],
+    "sha256": "477c0a5349d80816ab5af7dd06abbdeec3bf62ab94fe25ea88159d3f1b74293c",
+    "method": "REUSED_EXACT_PRIOR_COMPLETE_TOPIC_SOURCE",
+    "priorReport": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/handoffs/pr13-finish-20261021/reports-guide-independent-review.md",
+    "priorRevision": "0e35889a",
+    "wholeSourceEqual": true
+  },
+  {
+    "package": "kubeclaw.pipeline-review",
+    "source": "skills/nova/plugins/pipeline-review/src/stage.ts",
+    "range": [
+      1,
+      33
+    ],
+    "sha256": "e2951394c77a1f57f8538dc8586fb6f8b571a5b2050b87fec65f42260055d51a",
+    "method": "REUSED_EXACT_PRIOR_COMPLETE_TOPIC_SOURCE",
+    "priorReport": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/handoffs/pr13-finish-20261021/reports-guide-independent-review.md",
+    "priorRevision": "0e35889a",
+    "wholeSourceEqual": true
+  },
+  {
+    "package": "kubeclaw.playwright",
+    "source": "skills/buster/plugins/playwright/src/provider.js",
+    "range": [
+      1,
+      93
+    ],
+    "sha256": "7a380ecfc9dd2b42751ecd451222779f606f82668274cdc66e7b9136f1f988e8",
+    "method": "CURRENT_COMPLETE_DIRECT_ENTRY_READ_FOR_NEW_PREDICATES",
+    "limit": "Supported effect/retained-state/host-registration responsibility only; no new claim of every transitive algorithm, initialization execution or guide depth."
+  },
+  {
+    "package": "kubeclaw.preflight-contract",
+    "source": "skills/nova/plugins/preflight-contract/src/source-stage.ts",
+    "range": [
+      1,
+      41
+    ],
+    "sha256": "9f7e566f15813cb4b096dbd5dcd84f9d4925e09da29075ef8a85dc1f352bb1c6",
+    "method": "REUSED_EXACT_PRIOR_COMPLETE_TOPIC_SOURCE",
+    "priorReport": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/handoffs/pr13-finish-20261021/six-guide-independent-review.md",
+    "priorRevision": "0e35889a",
+    "wholeSourceEqual": true
+  },
+  {
+    "package": "kubeclaw.preflight-contract",
+    "source": "skills/nova/plugins/preflight-contract/src/stage.ts",
+    "range": [
+      1,
+      93
+    ],
+    "sha256": "75da42cf49cb7a655e9edb4e4928bd3e708ece30f592cb5a14aa2627ce3fc4ef",
+    "method": "REUSED_EXACT_PRIOR_COMPLETE_TOPIC_SOURCE",
+    "priorReport": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/handoffs/pr13-finish-20261021/six-guide-independent-review.md",
+    "priorRevision": "0e35889a",
+    "wholeSourceEqual": true
+  },
+  {
+    "package": "kubeclaw.prism-design",
+    "source": "skills/nova/plugins/prism-design/src/stage.ts",
+    "range": [
+      1,
+      36
+    ],
+    "sha256": "20bee389c4868070dc7450d366b85745c2f26acb88e8d526463c3cb5a599db88",
+    "method": "CURRENT_COMPLETE_DIRECT_ENTRY_READ_FOR_NEW_PREDICATES",
+    "limit": "Supported effect/retained-state/host-registration responsibility only; no new claim of every transitive algorithm, initialization execution or guide depth."
+  },
+  {
+    "package": "kubeclaw.project-summary",
+    "source": "skills/nova/plugins/project-summary/src/stage.ts",
+    "range": [
+      1,
+      19
+    ],
+    "sha256": "b16533ade1d6bbf08c53d3c31bbe7102f5b67b785b1f928524ca9879a99a4fee",
+    "method": "REUSED_EXACT_PRIOR_COMPLETE_TOPIC_SOURCE",
+    "priorReport": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/handoffs/pr13-finish-20261021/six-guide-independent-review.md",
+    "priorRevision": "0e35889a",
+    "wholeSourceEqual": true
+  },
+  {
+    "package": "kubeclaw.redis-transport",
+    "source": "skills/common/plugins/redis-transport/src/adapter.ts",
+    "range": [
+      1,
+      91
+    ],
+    "sha256": "15c91e7eed9a98784d6fbdcb931160202295ea6ef20b1c18367bcd9eaab4cc01",
+    "method": "CURRENT_COMPLETE_DIRECT_ENTRY_READ_FOR_NEW_PREDICATES",
+    "limit": "Supported effect/retained-state/host-registration responsibility only; no new claim of every transitive algorithm, initialization execution or guide depth."
+  },
+  {
+    "package": "kubeclaw.remote-test-gate",
+    "source": "skills/nova/plugins/remote-test-gate/src/adapter.ts",
+    "range": [
+      1,
+      118
+    ],
+    "sha256": "41ae631fac290f59931c6243280b4991278cd0b1659bc70dee4898c16ed33237",
+    "method": "CURRENT_COMPLETE_DIRECT_ENTRY_READ_FOR_NEW_PREDICATES",
+    "limit": "Supported effect/retained-state/host-registration responsibility only; no new claim of every transitive algorithm, initialization execution or guide depth."
+  },
+  {
+    "package": "kubeclaw.remote-test-gate",
+    "source": "skills/nova/plugins/remote-test-gate/src/evidence-adapter.ts",
+    "range": [
+      1,
+      65
+    ],
+    "sha256": "6afbc4274b2cbffa9fff2ed3c32deb9af3a381e7d3400e253fc3b871e139bffe",
+    "method": "CURRENT_COMPLETE_DIRECT_ENTRY_READ_FOR_NEW_PREDICATES",
+    "limit": "Supported effect/retained-state/host-registration responsibility only; no new claim of every transitive algorithm, initialization execution or guide depth."
+  },
+  {
+    "package": "kubeclaw.repository-adapter",
+    "source": "skills/nova/plugins/repository-adapter/src/adapter.ts",
+    "range": [
+      1,
+      91
+    ],
+    "sha256": "657ec9c38069eead03aa531e5d5b60041c8fe34b643e2bab838eb0a80e12afcd",
+    "method": "REUSED_EXACT_PRIOR_COMPLETE_TOPIC_SOURCE",
+    "priorReport": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/handoffs/pr13-finish-20261021/repository-adapter-independent-review.md",
+    "priorRevision": "0e35889a",
+    "wholeSourceEqual": true
+  },
+  {
+    "package": "kubeclaw.review",
+    "source": "skills/nova/plugins/review/src/repository-audit-stage.ts",
+    "range": [
+      1,
+      771
+    ],
+    "sha256": "da35c9701be5169975fb4a71b9462e32e6cea61ef46d2211989413d8c6a28f64",
+    "method": "CURRENT_COMPLETE_DIRECT_ENTRY_READ_FOR_NEW_PREDICATES",
+    "limit": "Supported effect/retained-state/host-registration responsibility only; no new claim of every transitive algorithm, initialization execution or guide depth."
+  },
+  {
+    "package": "kubeclaw.review",
+    "source": "skills/nova/plugins/review/src/repository-revalidation-stage.ts",
+    "range": [
+      1,
+      357
+    ],
+    "sha256": "6f8071ea095b3f912fc91e4c812bc7bd5c9cfd4077b48422e6eb4de1e0c70be7",
+    "method": "CURRENT_COMPLETE_DIRECT_ENTRY_READ_FOR_NEW_PREDICATES",
+    "limit": "Supported effect/retained-state/host-registration responsibility only; no new claim of every transitive algorithm, initialization execution or guide depth."
+  },
+  {
+    "package": "kubeclaw.review",
+    "source": "skills/nova/plugins/review/src/stage.ts",
+    "range": [
+      1,
+      289
+    ],
+    "sha256": "24edd137f6742ed10cdec57f43fc29ac6a270fd25019ca6b9ba2c348cdcb372c",
+    "method": "CURRENT_COMPLETE_DIRECT_ENTRY_READ_FOR_NEW_PREDICATES",
+    "limit": "Supported effect/retained-state/host-registration responsibility only; no new claim of every transitive algorithm, initialization execution or guide depth."
+  },
+  {
+    "package": "kubeclaw.runtime-dispatch",
+    "source": "skills/common/plugins/runtime-dispatch/src/adapter.ts",
+    "range": [
+      1,
+      147
+    ],
+    "sha256": "5bf2d0c003497e74b0bfdf7524b4725bcd77d12b592f00e121be553868009e5e",
+    "method": "CURRENT_COMPLETE_DIRECT_ENTRY_READ_FOR_NEW_PREDICATES",
+    "limit": "Supported effect/retained-state/host-registration responsibility only; no new claim of every transitive algorithm, initialization execution or guide depth."
+  },
+  {
+    "package": "kubeclaw.runtime-dispatch",
+    "source": "skills/common/plugins/runtime-dispatch/src/openclaw-adapter.ts",
+    "range": [
+      1,
+      24
+    ],
+    "sha256": "1532db26c17561feba17d5bdbba2771de2730df9bd299af203c4b0432d5842f4",
+    "method": "CURRENT_COMPLETE_DIRECT_ENTRY_READ_FOR_NEW_PREDICATES",
+    "limit": "Supported effect/retained-state/host-registration responsibility only; no new claim of every transitive algorithm, initialization execution or guide depth."
+  },
+  {
+    "package": "kubeclaw.secret-resolver",
+    "source": "skills/common/plugins/secret-resolver/src/adapter.ts",
+    "range": [
+      1,
+      23
+    ],
+    "sha256": "89e997cbc5c533ab70b5c17e71f29e72ce26a49263345ae635ad9a41f8b56eb3",
+    "method": "CURRENT_COMPLETE_DIRECT_ENTRY_READ_FOR_NEW_PREDICATES",
+    "limit": "Supported effect/retained-state/host-registration responsibility only; no new claim of every transitive algorithm, initialization execution or guide depth."
+  },
+  {
+    "package": "kubeclaw.security-providers",
+    "source": "skills/buster/plugins/security-providers/src/dependency.js",
+    "range": [
+      1,
+      40
+    ],
+    "sha256": "e44c6d32e9609c914493108ecbbe14de459d0eb57f917cdbe95c9ff81836af55",
+    "method": "CURRENT_COMPLETE_DIRECT_ENTRY_READ_FOR_NEW_PREDICATES",
+    "limit": "Supported effect/retained-state/host-registration responsibility only; no new claim of every transitive algorithm, initialization execution or guide depth."
+  },
+  {
+    "package": "kubeclaw.security-providers",
+    "source": "skills/buster/plugins/security-providers/src/headers.js",
+    "range": [
+      1,
+      118
+    ],
+    "sha256": "7799951ab8165572b3779b0a97306e33597115069de51400f7476df03ac2b7e7",
+    "method": "CURRENT_COMPLETE_DIRECT_ENTRY_READ_FOR_NEW_PREDICATES",
+    "limit": "Supported effect/retained-state/host-registration responsibility only; no new claim of every transitive algorithm, initialization execution or guide depth."
+  },
+  {
+    "package": "kubeclaw.security-providers",
+    "source": "skills/buster/plugins/security-providers/src/image.js",
+    "range": [
+      1,
+      43
+    ],
+    "sha256": "7e54a7a0140628c26d2e81572ef8959fb0816cd5cd9cb663759c4b175bc71588",
+    "method": "CURRENT_COMPLETE_DIRECT_ENTRY_READ_FOR_NEW_PREDICATES",
+    "limit": "Supported effect/retained-state/host-registration responsibility only; no new claim of every transitive algorithm, initialization execution or guide depth."
+  },
+  {
+    "package": "kubeclaw.security-providers",
+    "source": "skills/buster/plugins/security-providers/src/kubernetes-policy.js",
+    "range": [
+      1,
+      47
+    ],
+    "sha256": "aac3c6388e4238df46b5cc9b59f62b6fd0df4192061d29ff5be6625f26f392fd",
+    "method": "CURRENT_COMPLETE_DIRECT_ENTRY_READ_FOR_NEW_PREDICATES",
+    "limit": "Supported effect/retained-state/host-registration responsibility only; no new claim of every transitive algorithm, initialization execution or guide depth."
+  },
+  {
+    "package": "kubeclaw.security-providers",
+    "source": "skills/buster/plugins/security-providers/src/kubernetes-runtime.js",
+    "range": [
+      1,
+      59
+    ],
+    "sha256": "0694947eb3fcfb8637ad8a80be41e7b9985fae79df1b348a5279b9c6959203c5",
+    "method": "CURRENT_COMPLETE_DIRECT_ENTRY_READ_FOR_NEW_PREDICATES",
+    "limit": "Supported effect/retained-state/host-registration responsibility only; no new claim of every transitive algorithm, initialization execution or guide depth."
+  },
+  {
+    "package": "kubeclaw.size-budget",
+    "source": "skills/buster/plugins/size-budget/src/provider.js",
+    "range": [
+      1,
+      369
+    ],
+    "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce",
+    "method": "CURRENT_COMPLETE_DIRECT_ENTRY_READ_FOR_NEW_PREDICATES",
+    "limit": "Supported effect/retained-state/host-registration responsibility only; no new claim of every transitive algorithm, initialization execution or guide depth."
+  },
+  {
+    "package": "kubeclaw.state-store",
+    "source": "skills/common/plugins/state-store/src/adapter.ts",
+    "range": [
+      1,
+      85
+    ],
+    "sha256": "1805e68a4d478af60df925fb6c38204344d53e17a8134fafdd47732263c473c7",
+    "method": "CURRENT_COMPLETE_DIRECT_ENTRY_READ_FOR_NEW_PREDICATES",
+    "limit": "Supported effect/retained-state/host-registration responsibility only; no new claim of every transitive algorithm, initialization execution or guide depth."
+  },
+  {
+    "package": "kubeclaw.tailscale-exposure",
+    "source": "skills/buster/plugins/tailscale-exposure/src/provider.js",
+    "range": [
+      1,
+      106
+    ],
+    "sha256": "7e8f092bf66aac62bcd7ffd01b80710ccdd97c87f1ceec126139ba23d08ca1f0",
+    "method": "CURRENT_COMPLETE_DIRECT_ENTRY_READ_FOR_NEW_PREDICATES",
+    "limit": "Supported effect/retained-state/host-registration responsibility only; no new claim of every transitive algorithm, initialization execution or guide depth."
+  },
+  {
+    "package": "kubeclaw.telemetry-observer",
+    "source": "skills/common/plugins/telemetry-observer/src/observer.ts",
+    "range": [
+      1,
+      30
+    ],
+    "sha256": "21abca7f49d39ccb085bac5aa152c3e2fd7b5b477d7fbc897785a8750854b71c",
+    "method": "CURRENT_COMPLETE_DIRECT_ENTRY_READ_FOR_NEW_PREDICATES",
+    "limit": "Supported effect/retained-state/host-registration responsibility only; no new claim of every transitive algorithm, initialization execution or guide depth."
+  },
+  {
+    "package": "kubeclaw.telemetry-store",
+    "source": "skills/common/plugins/telemetry-store/src/adapter.ts",
+    "range": [
+      1,
+      43
+    ],
+    "sha256": "f5a3ff64dce028471c800e9a5da01bcc3a405f26b1e68ccdd8e78cd54e00fb13",
+    "method": "CURRENT_COMPLETE_DIRECT_ENTRY_READ_FOR_NEW_PREDICATES",
+    "limit": "Supported effect/retained-state/host-registration responsibility only; no new claim of every transitive algorithm, initialization execution or guide depth."
+  },
+  {
+    "package": "kubeclaw.transport-publisher",
+    "source": "skills/common/plugins/transport-publisher/src/adapter.ts",
+    "range": [
+      1,
+      339
+    ],
+    "sha256": "017501aea38f59ede67adf7249ed0bfa9c2d16430b2c7acf6380944350f2cd31",
+    "method": "CURRENT_COMPLETE_DIRECT_ENTRY_READ_FOR_NEW_PREDICATES",
+    "limit": "Supported effect/retained-state/host-registration responsibility only; no new claim of every transitive algorithm, initialization execution or guide depth."
+  },
+  {
+    "package": "kubeclaw.visual",
+    "source": "skills/buster/plugins/visual/src/provider.js",
+    "range": [
+      1,
+      196
+    ],
+    "sha256": "1a321386019f583561a20297bf8ad1ff57599aac2e906ed1f48bada2f08419b1",
+    "method": "CURRENT_COMPLETE_DIRECT_ENTRY_READ_FOR_NEW_PREDICATES",
+    "limit": "Supported effect/retained-state/host-registration responsibility only; no new claim of every transitive algorithm, initialization execution or guide depth."
+  },
+  {
+    "package": "kubeclaw.wait-store",
+    "source": "skills/common/plugins/wait-store/src/adapter.ts",
+    "range": [
+      1,
+      241
+    ],
+    "sha256": "b55d76d4913c0c6f4074af43615046365ba226dfb51189fd26fa6d486753b92d",
+    "method": "CURRENT_COMPLETE_DIRECT_ENTRY_READ_FOR_NEW_PREDICATES",
+    "limit": "Supported effect/retained-state/host-registration responsibility only; no new claim of every transitive algorithm, initialization execution or guide depth."
+  }
+]

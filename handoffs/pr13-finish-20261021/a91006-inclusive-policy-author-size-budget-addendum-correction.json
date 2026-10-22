@@ -1,0 +1,60 @@
+{
+  "status": "AUTHOR_FACTUAL_CORRECTION_NOT_ACCEPTANCE",
+  "originalFrozenPacket": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/a91006-inclusive-policy-author",
+  "originalPins": {
+    "candidate-policy.json": "19ad54c83ac945e2f82927fdad65f4740292562b99752828d43068edfc5623b5",
+    "author-report.md": "37e5677a61eece978ef33154b800cd5b2b6e867e8ceaefc053c6498964e1ae80",
+    "packet-hashes.json": "867366a2ebd1c00d3bb1829de78360d5ac7e52ffe1ae6028e3c195dd7528cf00"
+  },
+  "oldStatement": "This changes its previously no-signal classification; its existing single guide assignment remains, with depth explicitly outside scope.",
+  "replacementStatement": "Size-budget was already complex via nested-configuration; persistence=true adds its explicit retained-baseline responsibility without changing that complex status or its existing single guide assignment. Guide depth remains outside scope.",
+  "candidatePolicyChanged": false,
+  "manualBooleanDeltasChanged": false,
+  "complexStatusChangeClaimWithdrawn": true,
+  "newMissingGuideClaim": false,
+  "sourceEvidence": [
+    {
+      "source": "docs/site/extend/deep-guides/README.md",
+      "sha256": "9d2da3a18f28d69c5db78ec520cf71416b50e92c1d9f8032e7768cdad5a24ccd",
+      "lines": [
+        59,
+        59
+      ],
+      "frozenAuthorSourceRevision": "9f4a304524da258c5454a9361d83f5d69092ed07",
+      "wholeBytesEqualFrozenAuthorRevision": true
+    },
+    {
+      "source": "skills/buster/plugins/size-budget/schemas/config.schema.json",
+      "sha256": "e20a56b4cb1bba2d69355a3da142db17bb9d254d8276b86809c8b32994dbd894",
+      "lines": [
+        9,
+        23
+      ],
+      "frozenAuthorSourceRevision": "9f4a304524da258c5454a9361d83f5d69092ed07",
+      "wholeBytesEqualFrozenAuthorRevision": true
+    },
+    {
+      "source": "skills/buster/plugins/size-budget/plugin.json",
+      "sha256": "5f9a11dad63edf557454124ae8a71a6382ddac5212dbeaf064e86019fe28a737",
+      "lines": [
+        8,
+        15
+      ],
+      "frozenAuthorSourceRevision": "9f4a304524da258c5454a9361d83f5d69092ed07",
+      "wholeBytesEqualFrozenAuthorRevision": true
+    },
+    {
+      "source": "scripts/docs-plugin-complexity.mjs",
+      "sha256": "13f72761a196e2ca8769e30dec965dc1a59d3b9a0fb5ac16b1e1a15ec2b844e6",
+      "lines": [
+        57,
+        78
+      ],
+      "frozenAuthorSourceRevision": "9f4a304524da258c5454a9361d83f5d69092ed07",
+      "wholeBytesEqualFrozenAuthorRevision": true
+    }
+  ],
+  "targetImports": 0,
+  "originalOwnerExecutions": 0,
+  "mainWrites": 0
+}

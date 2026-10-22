@@ -15,38 +15,38 @@ Use this index to find the owning behavior and change guide for a package. Relat
 | --- | --- | --- |
 | `kubeclaw-agent-observer` | externalEffects, internalExtension, persistence | [openclaw](../../understand/openclaw.md) |
 | `kubeclaw-ops` | externalEffects, internalExtension | [ops-mcp](../../understand/ops-mcp.md) |
-| `kubeclaw-prism` | externalEffects, internalExtension | [prism-runtime](../../understand/prism-runtime.md) |
+| `kubeclaw-prism` | externalEffects, internalExtension, persistence | [prism-runtime](../../understand/prism-runtime.md) |
 | `kubeclaw.agent-observability` | externalEffects, multiple-registrations, persistence | [telemetry](../../understand/telemetry.md) |
-| `kubeclaw.api-flow` | externalEffects | [buster-suites](../../reference/buster-suites.md) |
-| `kubeclaw.architecture-validator` | externalEffects | [echo](../../understand/echo.md) |
+| `kubeclaw.api-flow` | externalEffects, persistence | [buster-suites](../../reference/buster-suites.md) |
+| `kubeclaw.architecture-validator` | externalEffects, persistence | [echo](../../understand/echo.md) |
 | `kubeclaw.artifact-store` | externalEffects, persistence | [data-and-state](../../understand/data-and-state.md) |
-| `kubeclaw.axe` | externalEffects, nested-configuration | [buster-suites](../../reference/buster-suites.md) |
+| `kubeclaw.axe` | externalEffects, nested-configuration, persistence | [buster-suites](../../reference/buster-suites.md) |
 | `kubeclaw.blueprint-sync` | externalEffects, persistence | [forge](../../understand/forge.md) |
-| `kubeclaw.buster-quality-gate` | externalEffects | [buster](../../understand/buster.md) |
+| `kubeclaw.buster-quality-gate` | externalEffects, persistence | [buster](../../understand/buster.md) |
 | `kubeclaw.case-study` | externalEffects, persistence | [reports](reports.md) |
 | `kubeclaw.command-runner` | externalEffects, nested-configuration | [worker-core](../../understand/worker-core.md) |
-| `kubeclaw.container-build` | conditional-configuration, externalEffects, nested-configuration | [buster-suites](../../reference/buster-suites.md) |
+| `kubeclaw.container-build` | conditional-configuration, externalEffects, nested-configuration, persistence | [buster-suites](../../reference/buster-suites.md) |
 | `kubeclaw.coverage-budget` | No complex signal in current sources | [buster-suites](../../reference/buster-suites.md) |
-| `kubeclaw.delivery-lint` | externalEffects | [lint](../lint.md) |
+| `kubeclaw.delivery-lint` | externalEffects, persistence | [lint](../lint.md) |
 | `kubeclaw.demo-auth-smoke` | conditional-configuration, externalEffects, nested-configuration | [buster-suites](../../reference/buster-suites.md) |
 | `kubeclaw.demo-handoff` | externalEffects, multiple-registrations, persistence | [demo-handoff](demo-handoff.md) |
-| `kubeclaw.direct-command` | externalEffects, nested-configuration | [buster-suites](../../reference/buster-suites.md) |
+| `kubeclaw.direct-command` | externalEffects, nested-configuration, persistence | [buster-suites](../../reference/buster-suites.md) |
 | `kubeclaw.git-workspace` | externalEffects, nested-configuration, persistence | [forge](../../understand/forge.md) |
 | `kubeclaw.http` | externalEffects, nested-configuration | [buster-suites](../../reference/buster-suites.md) |
 | `kubeclaw.human-approval` | externalEffects, multiple-registrations, persistence | [wait-resume](../../use/workflows/wait-resume.md) |
 | `kubeclaw.implementation-agent` | externalEffects, persistence | [forge](../../understand/forge.md) |
 | `kubeclaw.junit-report` | No complex signal in current sources | [buster-suites](../../reference/buster-suites.md) |
-| `kubeclaw.kubernetes-fixture` | externalEffects, nested-configuration | [buster-suites](../../reference/buster-suites.md) |
-| `kubeclaw.lighthouse` | conditional-configuration, externalEffects, nested-configuration | [buster-suites](../../reference/buster-suites.md) |
+| `kubeclaw.kubernetes-fixture` | externalEffects, nested-configuration, persistence | [buster-suites](../../reference/buster-suites.md) |
+| `kubeclaw.lighthouse` | conditional-configuration, externalEffects, nested-configuration, persistence | [buster-suites](../../reference/buster-suites.md) |
 | `kubeclaw.lint` | externalEffects, multiple-registrations, nested-configuration, persistence | [lint](../lint.md) |
 | `kubeclaw.network-http` | externalEffects, nested-configuration | [buster](../../understand/buster.md) |
 | `kubeclaw.notification-observer` | externalEffects, multiple-registrations, nested-configuration, persistence | [telemetry](../../understand/telemetry.md) |
-| `kubeclaw.openapi` | conditional-configuration, externalEffects, nested-configuration | [buster-suites](../../reference/buster-suites.md) |
-| `kubeclaw.openclaw-agent-events` | externalEffects, nested-configuration | [openclaw](../../understand/openclaw.md) |
+| `kubeclaw.openapi` | conditional-configuration, externalEffects, nested-configuration, persistence | [buster-suites](../../reference/buster-suites.md) |
+| `kubeclaw.openclaw-agent-events` | externalEffects, internalExtension, nested-configuration, persistence | [openclaw](../../understand/openclaw.md) |
 | `kubeclaw.operator-messaging` | conditional-configuration, externalEffects, nested-configuration, persistence | [wait-resume](../../use/workflows/wait-resume.md) |
 | `kubeclaw.pipeline-review` | externalEffects, multiple-registrations, persistence | [reports](reports.md) |
-| `kubeclaw.playwright` | externalEffects, nested-configuration | [buster-suites](../../reference/buster-suites.md) |
-| `kubeclaw.preflight-contract` | externalEffects, multiple-registrations | [nova-project](../../reference/nova-project.md) |
+| `kubeclaw.playwright` | externalEffects, nested-configuration, persistence | [buster-suites](../../reference/buster-suites.md) |
+| `kubeclaw.preflight-contract` | externalEffects, multiple-registrations, persistence | [nova-project](../../reference/nova-project.md) |
 | `kubeclaw.prism-design` | externalEffects, persistence | [prism-runtime](../../understand/prism-runtime.md) |
 | `kubeclaw.project-summary` | externalEffects, persistence | [nova-project](../../reference/nova-project.md) |
 | `kubeclaw.redis-transport` | externalEffects, multiple-registrations, persistence | [telemetry](../../understand/telemetry.md) |
@@ -56,13 +56,13 @@ Use this index to find the owning behavior and change guide for a package. Relat
 | `kubeclaw.runtime-dispatch` | conditional-configuration, externalEffects, multiple-registrations, nested-configuration, persistence | [openclaw](../../understand/openclaw.md) |
 | `kubeclaw.secret-resolver` | nested-configuration | [security-and-trust](../../understand/security-and-trust.md) |
 | `kubeclaw.security-providers` | externalEffects, multiple-registrations, nested-configuration | [buster-suites](../../reference/buster-suites.md) |
-| `kubeclaw.size-budget` | nested-configuration | [buster-suites](../../reference/buster-suites.md) |
+| `kubeclaw.size-budget` | nested-configuration, persistence | [buster-suites](../../reference/buster-suites.md) |
 | `kubeclaw.state-store` | externalEffects, persistence | [data-and-state](../../understand/data-and-state.md) |
-| `kubeclaw.tailscale-exposure` | externalEffects | [buster-suites](../../reference/buster-suites.md) |
+| `kubeclaw.tailscale-exposure` | externalEffects, persistence | [buster-suites](../../reference/buster-suites.md) |
 | `kubeclaw.telemetry-observer` | externalEffects, persistence | [telemetry](../../understand/telemetry.md) |
 | `kubeclaw.telemetry-store` | externalEffects, persistence | [telemetry](../../understand/telemetry.md) |
 | `kubeclaw.transport-publisher` | externalEffects, nested-configuration, persistence | [communication](../../understand/communication.md) |
-| `kubeclaw.visual` | externalEffects, nested-configuration | [buster-suites](../../reference/buster-suites.md) |
+| `kubeclaw.visual` | externalEffects, nested-configuration, persistence | [buster-suites](../../reference/buster-suites.md) |
 | `kubeclaw.wait-store` | externalEffects, persistence | [wait-resume](../../use/workflows/wait-resume.md) |
 
 <!-- END GENERATED: plugin complexity -->

@@ -1,0 +1,51 @@
+{
+  "status": "AUTHOR_ONLY_UNACCEPTED_REGISTRY_DATA_PROPOSAL_NOT_INSTALLED_NOT_EXECUTED",
+  "revision": "9f4a304524da258c5454a9361d83f5d69092ed07",
+  "files": [
+    {
+      "path": "actual-raw-ancestry-and-entry-traces.json",
+      "sha256": "74d85af9ebdad983d1de1dee5bee461692b6a5bed4ffc7ae042bfab4d9bdaf52",
+      "bytes": 41143
+    },
+    {
+      "path": "assessment-and-next-route.md",
+      "sha256": "473093e300f278d59cdf3de90632b2e30ac02f9be5857e205641c958e96f8351",
+      "bytes": 12007
+    },
+    {
+      "path": "basis-receipt-bindings.json",
+      "sha256": "14ff7bbc0bebdd8988b1a4150f235b1f16742a3049cc52be60b5f00e9caa0dfb",
+      "bytes": 1524
+    },
+    {
+      "path": "candidate-summary.json",
+      "sha256": "72226b9f8641fc894eb3d27369a3bf225f41272805086645cecdfd7b96764db0",
+      "bytes": 1228
+    },
+    {
+      "path": "registry.before.json",
+      "sha256": "4bcf2a83b03c4d405b810cffddc7da22a6bc6756a05807f3d3481ecd5bfe8980",
+      "bytes": 4729277
+    },
+    {
+      "path": "registry.candidate.json",
+      "sha256": "b4a6052b6e9307b654d5fb2c2899f618ae6e6b747e9491207edf606b7cb6a660",
+      "bytes": 5058996
+    },
+    {
+      "path": "registry.patch",
+      "sha256": "8ff124fdca6bb0609e47cd3a63cab8f5feaeac4b560e5c1011df4997711b5a20",
+      "bytes": 446458
+    },
+    {
+      "path": "seven-new-source-purpose-proofs.json",
+      "sha256": "42072e28d745dc66cb22545c66e7ed0b777c7f9fae03899943be9a4cc77fb9fe",
+      "bytes": 38648
+    },
+    {
+      "path": "whole-record-multiset-deltas.json",
+      "sha256": "c1aab7b50f598b7608697d59c3c5db74b1699236cc5075abb10bde2a5724afa0",
+      "bytes": 83677
+    }
+  ]
+}

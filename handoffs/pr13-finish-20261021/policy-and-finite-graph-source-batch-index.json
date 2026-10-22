@@ -1,0 +1,288 @@
+{
+  "baseRevision": "d4f2184f4011fc998f5ba04360f9d6b73fd77f17",
+  "status": "REVIEWED_SOURCE_BATCH_NOT_CURRENT_READER_OR_CONSUMER_ACCEPTANCE",
+  "files": [
+    {
+      "path": "handoffs/pr13-finish-20261021/a91006-inclusive-policy-author-author-report.md",
+      "source": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/a91006-inclusive-policy-author/author-report.md",
+      "sha256": "37e5677a61eece978ef33154b800cd5b2b6e867e8ceaefc053c6498964e1ae80",
+      "bytes": 11479
+    },
+    {
+      "path": "handoffs/pr13-finish-20261021/a91006-inclusive-policy-author-packet-hashes.json",
+      "source": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/a91006-inclusive-policy-author/packet-hashes.json",
+      "sha256": "867366a2ebd1c00d3bb1829de78360d5ac7e52ffe1ae6028e3c195dd7528cf00",
+      "bytes": 1937
+    },
+    {
+      "path": "handoffs/pr13-finish-20261021/a91006-inclusive-policy-author-exact-153-judgment-deltas.json",
+      "source": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/a91006-inclusive-policy-author/exact-153-judgment-deltas.json",
+      "sha256": "c963369a656060040c591fb538d848646a5140f63b608e8359e182d8be92bcfd",
+      "bytes": 170727
+    },
+    {
+      "path": "handoffs/pr13-finish-20261021/a91006-inclusive-policy-author-source-read-reuse-map.json",
+      "source": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/a91006-inclusive-policy-author/source-read-reuse-map.json",
+      "sha256": "45a2ec195e4c76617d07baa95455f8cd581d33152466575cf194516a2c68a47e",
+      "bytes": 37962
+    },
+    {
+      "path": "handoffs/pr13-finish-20261021/a91006-inclusive-policy-author-size-budget-addendum-correction.md",
+      "source": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/a91006-inclusive-policy-author-size-budget-addendum/correction.md",
+      "sha256": "43575c8ea38e73db3974e64ad56aca86aa6398361ade205fd73f414c9ca7c70a",
+      "bytes": 2853
+    },
+    {
+      "path": "handoffs/pr13-finish-20261021/a91006-inclusive-policy-author-size-budget-addendum-correction.json",
+      "source": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/a91006-inclusive-policy-author-size-budget-addendum/correction.json",
+      "sha256": "4531640fb6cc8f790595251f41d6b5bf8517cc60be29852a37d0dc67455c872b",
+      "bytes": 2518
+    },
+    {
+      "path": "handoffs/pr13-finish-20261021/a91006-inclusive-policy-independent-review-review.md",
+      "source": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/a91006-inclusive-policy-independent-review/review.md",
+      "sha256": "2119efd162f5e0252ab8e9588a58cc2fd5c9f5481c62e719403283d7c3694f9b",
+      "bytes": 10670
+    },
+    {
+      "path": "handoffs/pr13-finish-20261021/a91006-inclusive-policy-independent-review-review.json",
+      "source": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/a91006-inclusive-policy-independent-review/review.json",
+      "sha256": "061f537a257838800610c692199a1ab8f5740314908447c42306296f5abdf54e",
+      "bytes": 853
+    },
+    {
+      "path": "handoffs/pr13-finish-20261021/a91006-inclusive-policy-independent-review-independent-direct-source-read-reuse.json",
+      "source": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/a91006-inclusive-policy-independent-review/independent-direct-source-read-reuse.json",
+      "sha256": "0154d7bf7aa5e739da21ebe5c58191db95a5b82b36b4be0564c498f954ff5c8d",
+      "bytes": 32310
+    },
+    {
+      "path": "handoffs/pr13-finish-20261021/a91006-inclusive-policy-independent-review-independent-inert-checks.json",
+      "source": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/a91006-inclusive-policy-independent-review/independent-inert-checks.json",
+      "sha256": "73ae8bc84fb454ca14f73659bea64c43551a9a027839f7aa43f7dba08726c3f6",
+      "bytes": 6002
+    },
+    {
+      "path": "handoffs/pr13-finish-20261021/policy-original-owner-d4f2184f-launch-plan.json",
+      "source": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/policy-original-owner-d4f2184f/launch-plan.json",
+      "sha256": "76ce61ac5b8e16b7a100c1ee11458c6e03a002ed1ddcec9af8311dfce041fcbf",
+      "bytes": 4088
+    },
+    {
+      "path": "handoffs/pr13-finish-20261021/policy-original-owner-d4f2184f-index-observation.json",
+      "source": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/policy-original-owner-d4f2184f/index-observation.json",
+      "sha256": "593f81edc076b94d726ebcf70b14eb2db2765d349930d4d65c71921ef8eaae6d",
+      "bytes": 383
+    },
+    {
+      "path": "handoffs/pr13-finish-20261021/policy-original-owner-d4f2184f-execution-receipt.json",
+      "source": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/policy-original-owner-d4f2184f/execution-receipt.json",
+      "sha256": "16ecbaa2130f4b5a7f91a91b3113cf4feac3abb5c44cc7c23df34f86ea3db935",
+      "bytes": 3561
+    },
+    {
+      "path": "handoffs/pr13-finish-20261021/policy-original-owner-d4f2184f-index.stdout.bin",
+      "source": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/policy-original-owner-d4f2184f/index.stdout.bin",
+      "sha256": "9642f6b947cb4b29ebe6048ab4e14dc54e0c2888998bf2aac160c9d5143fac8c",
+      "bytes": 8044
+    },
+    {
+      "path": "handoffs/pr13-finish-20261021/policy-original-owner-d4f2184f-index.stderr.bin",
+      "source": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/policy-original-owner-d4f2184f/index.stderr.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "handoffs/pr13-finish-20261021/policy-original-owner-d4f2184f-check.stdout.bin",
+      "source": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/policy-original-owner-d4f2184f/check.stdout.bin",
+      "sha256": "c16c4606c42a22b6181fc950bc95c36b51ffc5aecb03cab38fd3471e81dee9f9",
+      "bytes": 194
+    },
+    {
+      "path": "handoffs/pr13-finish-20261021/policy-original-owner-d4f2184f-check.stderr.bin",
+      "source": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/policy-original-owner-d4f2184f/check.stderr.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "handoffs/pr13-finish-20261021/policy-original-owner-d4f2184f-self-test.stdout.bin",
+      "source": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/policy-original-owner-d4f2184f/self-test.stdout.bin",
+      "sha256": "a04b331f36b98912707f896b3fec1daa8adedc23504cb7f981e519e16fdc12ea",
+      "bytes": 248
+    },
+    {
+      "path": "handoffs/pr13-finish-20261021/policy-original-owner-d4f2184f-self-test.stderr.bin",
+      "source": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/policy-original-owner-d4f2184f/self-test.stderr.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "handoffs/pr13-finish-20261021/graph-boundary-registry-author-9f4a3045-assessment-and-next-route.md",
+      "source": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/graph-boundary-registry-author-9f4a3045/assessment-and-next-route.md",
+      "sha256": "473093e300f278d59cdf3de90632b2e30ac02f9be5857e205641c958e96f8351",
+      "bytes": 12007
+    },
+    {
+      "path": "handoffs/pr13-finish-20261021/graph-boundary-registry-author-9f4a3045-packet-hashes.json",
+      "source": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/graph-boundary-registry-author-9f4a3045/packet-hashes.json",
+      "sha256": "b59d3b04e7b95ccf099cad6c2b5c7d13c538ba5fa2de35594809ba5c8c88568c",
+      "bytes": 1637
+    },
+    {
+      "path": "handoffs/pr13-finish-20261021/graph-boundary-registry-author-9f4a3045-root-independent-finite-review.json",
+      "source": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/graph-boundary-registry-author-9f4a3045/root-independent-finite-review.json",
+      "sha256": "9d74ebeaa635f5959062b8466436a4edacd4f15050fd42f3b5ca54f714377ae9",
+      "bytes": 2128
+    },
+    {
+      "path": "handoffs/pr13-finish-20261021/graph-boundary-registry-author-9f4a3045-root-installation-receipt.json",
+      "source": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/graph-boundary-registry-author-9f4a3045/root-installation-receipt.json",
+      "sha256": "ba79873c65150e463e5262e23e0005c76421149f0652da1462471e2040d5a257",
+      "bytes": 3181
+    },
+    {
+      "path": "handoffs/pr13-finish-20261021/graph-boundary-registry-author-9f4a3045-seven-new-source-purpose-proofs.json",
+      "source": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/graph-boundary-registry-author-9f4a3045/seven-new-source-purpose-proofs.json",
+      "sha256": "42072e28d745dc66cb22545c66e7ed0b777c7f9fae03899943be9a4cc77fb9fe",
+      "bytes": 38648
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/a91006-inclusive-policy-author/author-policy.py",
+      "sha256": "f7a228b88d1b371f3ed72e3fe0abea79458dfa02a109041461c344f34c114684",
+      "bytes": 34810,
+      "storage": "retained original scratch; source metadata candidate is tracked at its real owning path"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/a91006-inclusive-policy-author/author-summary.json",
+      "sha256": "d92ffe9f115fa8cc867a07f1de4a4f768289426198dd96823c4c844780fcd0dc",
+      "bytes": 1128,
+      "storage": "retained original scratch; source metadata candidate is tracked at its real owning path"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/a91006-inclusive-policy-author/author-worklog.md",
+      "sha256": "c7fd053d355ac6676b3aea47cc48c13292f222568dfd50a0eb4f50f418b72055",
+      "bytes": 704,
+      "storage": "retained original scratch; source metadata candidate is tracked at its real owning path"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/a91006-inclusive-policy-author/authored-153-judgments.json",
+      "sha256": "065d12e72002b5222c4863a80915279f5f9beb39bd5077b7fac24812410b5e25",
+      "bytes": 140109,
+      "storage": "retained original scratch; source metadata candidate is tracked at its real owning path"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/a91006-inclusive-policy-author/baseline-policy.json",
+      "sha256": "350aea2edc2c80426474888a4ef5f558f640c78b1d80399c5e81765ba1ed1100",
+      "bytes": 164404,
+      "storage": "retained original scratch; source metadata candidate is tracked at its real owning path"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/a91006-inclusive-policy-author/build-tailnet-unchanged-reuse.json",
+      "sha256": "332b6ce59ccd256720eb5c271faf17f38e397a1f020f720e776348a3fd946b11",
+      "bytes": 2327,
+      "storage": "retained original scratch; source metadata candidate is tracked at its real owning path"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/a91006-inclusive-policy-author/candidate-policy.json",
+      "sha256": "19ad54c83ac945e2f82927fdad65f4740292562b99752828d43068edfc5623b5",
+      "bytes": 203904,
+      "storage": "retained original scratch; source metadata candidate is tracked at its real owning path"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/a91006-inclusive-policy-author/candidate.patch",
+      "sha256": "d294b2a32087df101c900412c96f489d5343c0146638d5fbd0f49af73b466d5d",
+      "bytes": 146504,
+      "storage": "retained original scratch; source metadata candidate is tracked at its real owning path"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/a91006-inclusive-policy-author/classification-deltas.json",
+      "sha256": "97c994a0fe67846dab86d03fae912c11c2d1815202e17f2f453bfaf69055116b",
+      "bytes": 2581,
+      "storage": "retained original scratch; source metadata candidate is tracked at its real owning path"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/a91006-inclusive-policy-author/finite-rule-proof-map.json",
+      "sha256": "cf888a23449a4cd71d9aba3b0d33d3ed4d584e078d1e818f87049dd6a3f971be",
+      "bytes": 327510,
+      "storage": "retained original scratch; source metadata candidate is tracked at its real owning path"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/a91006-inclusive-policy-author/inert-input-controls.json",
+      "sha256": "7b9ca9743ef5a14c8e8179e1a2e85e79d2f00570b42f3c05e0ceee2012168a94",
+      "bytes": 353,
+      "storage": "retained original scratch; source metadata candidate is tracked at its real owning path"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/a91006-inclusive-policy-author/seal-author-proof.py",
+      "sha256": "bf9a6163d16fc42bb1cb49a9b0350d9057f4aad8cc093b12467037c2149efbff",
+      "bytes": 8294,
+      "storage": "retained original scratch; source metadata candidate is tracked at its real owning path"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/a91006-inclusive-policy-author/supplemental-receiver-source-bindings.json",
+      "sha256": "e5b49e0e150fa6aa569d226e8750275bd22cd94a64af6a63d4ca72eda478fa31",
+      "bytes": 8422,
+      "storage": "retained original scratch; source metadata candidate is tracked at its real owning path"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/a91006-inclusive-policy-author/unchanged-physical-context.json",
+      "sha256": "eeaa96bd64b47cb8b4b434a840824697976f7bad917b3206577bd39cefebff27",
+      "bytes": 162583,
+      "storage": "retained original scratch; source metadata candidate is tracked at its real owning path"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/a91006-inclusive-policy-author/working-proof-map.json",
+      "sha256": "ddcf8f0ca91575d2173b289f71df72f191d969680e76d7070556fe6c3e1c1af2",
+      "bytes": 75761,
+      "storage": "retained original scratch; source metadata candidate is tracked at its real owning path"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/graph-boundary-registry-author-9f4a3045/actual-raw-ancestry-and-entry-traces.json",
+      "sha256": "74d85af9ebdad983d1de1dee5bee461692b6a5bed4ffc7ae042bfab4d9bdaf52",
+      "bytes": 41143,
+      "storage": "retained original scratch; source metadata candidate is tracked at its real owning path"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/graph-boundary-registry-author-9f4a3045/basis-receipt-bindings.json",
+      "sha256": "14ff7bbc0bebdd8988b1a4150f235b1f16742a3049cc52be60b5f00e9caa0dfb",
+      "bytes": 1524,
+      "storage": "retained original scratch; source metadata candidate is tracked at its real owning path"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/graph-boundary-registry-author-9f4a3045/candidate-summary.json",
+      "sha256": "72226b9f8641fc894eb3d27369a3bf225f41272805086645cecdfd7b96764db0",
+      "bytes": 1228,
+      "storage": "retained original scratch; source metadata candidate is tracked at its real owning path"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/graph-boundary-registry-author-9f4a3045/registry.before.json",
+      "sha256": "4bcf2a83b03c4d405b810cffddc7da22a6bc6756a05807f3d3481ecd5bfe8980",
+      "bytes": 4729277,
+      "storage": "retained original scratch; source metadata candidate is tracked at its real owning path"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/graph-boundary-registry-author-9f4a3045/registry.candidate.json",
+      "sha256": "b4a6052b6e9307b654d5fb2c2899f618ae6e6b747e9491207edf606b7cb6a660",
+      "bytes": 5058996,
+      "storage": "retained original scratch; source metadata candidate is tracked at its real owning path"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/graph-boundary-registry-author-9f4a3045/registry.patch",
+      "sha256": "8ff124fdca6bb0609e47cd3a63cab8f5feaeac4b560e5c1011df4997711b5a20",
+      "bytes": 446458,
+      "storage": "retained original scratch; source metadata candidate is tracked at its real owning path"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/graph-boundary-registry-author-9f4a3045/whole-record-multiset-deltas.json",
+      "sha256": "c1aab7b50f598b7608697d59c3c5db74b1699236cc5075abb10bde2a5724afa0",
+      "bytes": 83677,
+      "storage": "retained original scratch; source metadata candidate is tracked at its real owning path"
+    }
+  ],
+  "limits": [
+    "Original classification index/check/11controls actualPASS, no deepguide/activation claim",
+    "Registry finite42records Source/DATA reviewed only, original publicconsumer still UNEXECUTED",
+    "Accepted51/223 counts belong to prior secured register; this batch needs exactimpactpreservation/currentReader",
+    "Runtime stop unchanged; no115closure/native receipts/code/guard relaxations"
+  ]
+}

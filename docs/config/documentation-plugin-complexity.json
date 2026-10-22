@@ -8,7 +8,12 @@
       "plugins/**/.codex-plugin/plugin.json"
     ],
     "classification": "Complex if any multi-registration,recursive nested/conditional configuration or explicitly source-bound external-effect/persistence/host-extension signal applies. No word count,package count or test result implies completeness.",
-    "acceptanceBoundary": "Canonical guide assignment and structural checks do not certify guide depth. Missing content needs an independent full topic review before A910-07/08/09/13 acceptance."
+    "acceptanceBoundary": "Canonical guide assignment and structural checks do not certify guide depth. Missing content needs an independent full topic review before A910-07/08/09/13 acceptance.",
+    "criteriaDefinitions": {
+      "persistence": "The plugin supported operation initiates or owns a retained write: brokered artifact/evidence emission, source commit, append/store mutation, or an intentional external retained-state operation. A returned value or read alone is not a retained write. A downstream owner may hold bytes and determine retention; no plugin-owned replay journal is required. Temporary workspace setup removed by the same operation is not alone persistence. Generic caller-controlled commands/HTTP methods are not proof of a particular retained effect; explicit emitted evidence or supported retained-state semantics are.",
+      "externalEffects": "The supported operation invokes a brokered capability, directly uses a network/subprocess/host integration, or implements a retained storage adapter. Local declared-input reads and serialization of the plugin own declared evidence alone are separate configuration/persistence responsibilities, not this signal. Sensitive environment reads remain sensitive; a false judgment is not execution or mutation authority.",
+      "internalExtension": "The supported operation binds a host integration surface (OpenClaw tools/hooks/services/Gateway methods or a Codex installed skill), including adapter-owned SDK callbacks. Existing pipeline registration alone is not sufficient, and packaging is distinct from actual binding/loading. This is a classification signal, never execution authority."
+    }
   },
   "schemaAuthorities": {
     "https://kubeclaw.dev/contracts/plugin-system/v2/plugin-system-v2.schema.json": "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json"
@@ -22,26 +27,35 @@
       "criteria": {
         "externalEffects": {
           "applies": true,
-          "reason": "Registration implementation reaches brokered external operations or host service requests; caller grants and result/effect authority remain separate.",
+          "reason": "OpenClaw hooks, runtime agent-event/diagnostic subscriptions and service callbacks enqueue events through AgentObserverRedisWriter, whose Redis client connects and XADDs streams. This is actual host/network integration, not only JSON normalization.",
           "sources": [
+            "skills/common/plugins/openclaw-agent-observer/openclaw.plugin.json",
             "skills/common/plugins/openclaw-agent-observer/README.md",
-            "skills/common/plugins/openclaw-agent-observer/src/index.ts"
+            "skills/common/plugins/openclaw-agent-observer/src/index.ts",
+            "skills/common/plugins/openclaw-agent-observer/src/redis-writer.ts",
+            "skills/common/plugins/openclaw-agent-observer/src/diagnostics.ts"
           ]
         },
         "persistence": {
           "applies": true,
-          "reason": "Package owns or emits durable artifacts,delivery/checkpoint records,source commits or store mutations; these are not erased by removing the registration.",
+          "reason": "Enabled accepted events are intentionally XADDed to Redis streams, including bounded dead letters for failed control writes. Redis owns retained bytes; streamMaxLen/deadLetterMaxLen and Redis deployment retention bound lifetime. The in-memory queue itself is not durable and enqueue is not proof of delivery.",
           "sources": [
+            "skills/common/plugins/openclaw-agent-observer/openclaw.plugin.json",
             "skills/common/plugins/openclaw-agent-observer/README.md",
-            "skills/common/plugins/openclaw-agent-observer/src/index.ts"
+            "skills/common/plugins/openclaw-agent-observer/src/index.ts",
+            "skills/common/plugins/openclaw-agent-observer/src/redis-writer.ts",
+            "skills/common/plugins/openclaw-agent-observer/src/diagnostics.ts"
           ]
         },
         "internalExtension": {
           "applies": true,
-          "reason": "Host tool/hook/skill integration has independent registration,activation and removal semantics outside the pipeline registry.",
+          "reason": "registerOpenClawAgentObserver calls api.on for actual host hooks, installs agent-event subscription, Gateway methods and a service. This is host-extension integration, distinct from pipeline observer registration; activation/configuration still controls whether actual events reach Redis.",
           "sources": [
+            "skills/common/plugins/openclaw-agent-observer/openclaw.plugin.json",
             "skills/common/plugins/openclaw-agent-observer/README.md",
-            "skills/common/plugins/openclaw-agent-observer/src/index.ts"
+            "skills/common/plugins/openclaw-agent-observer/src/index.ts",
+            "skills/common/plugins/openclaw-agent-observer/src/redis-writer.ts",
+            "skills/common/plugins/openclaw-agent-observer/src/diagnostics.ts"
           ]
         }
       },
@@ -77,22 +91,25 @@
       "criteria": {
         "externalEffects": {
           "applies": true,
-          "reason": "Registration implementation reaches brokered external operations or host service requests; caller grants and result/effect authority remain separate.",
+          "reason": "The installed troubleshoot skill directs actual read-only Argo/Kubernetes/Hubble MCP calls, including bounded logs and flow retrieval. Read-only remote observation still crosses the host/tool boundary; the skill does not itself authorize mutations.",
           "sources": [
+            "plugins/kubeclaw-ops/.codex-plugin/plugin.json",
             "plugins/kubeclaw-ops/skills/troubleshoot/SKILL.md"
           ]
         },
         "persistence": {
           "applies": false,
-          "reason": "No package-owned durable replay journal is claimed. Attempt evidence and external resources remain with the Buster/controller or calling runtime owner; inspect that adjacent lifecycle.",
+          "reason": "The supported skill requests read-only observations and reports findings; it specifies no artifact/store/commit or retained mutation operation. Tool/server logs and host conversation history belong to those owners, not an intentional retained-write feature of this skill.",
           "sources": [
+            "plugins/kubeclaw-ops/.codex-plugin/plugin.json",
             "plugins/kubeclaw-ops/skills/troubleshoot/SKILL.md"
           ]
         },
         "internalExtension": {
           "applies": true,
-          "reason": "Host tool/hook/skill integration has independent registration,activation and removal semantics outside the pipeline registry.",
+          "reason": "The Codex manifest installs the troubleshoot skill directory; its SKILL.md defines the host-invoked MCP investigation workflow. This is a host skill integration, not a new pipeline stage or a runtime permission grant.",
           "sources": [
+            "plugins/kubeclaw-ops/.codex-plugin/plugin.json",
             "plugins/kubeclaw-ops/skills/troubleshoot/SKILL.md"
           ]
         }
@@ -111,24 +128,27 @@
       "criteria": {
         "externalEffects": {
           "applies": true,
-          "reason": "Registration implementation reaches brokered external operations or host service requests; caller grants and result/effect authority remain separate.",
+          "reason": "The OpenClaw register entry installs two model tools whose execute callbacks POST to the Control design-set and revision endpoints. Tool registration and remote invocation are actual host/network effects.",
           "sources": [
+            "skills/prism/openclaw-plugin/openclaw.plugin.json",
             "skills/prism/openclaw-plugin/README.md",
             "skills/prism/openclaw-plugin/index.mjs"
           ]
         },
         "persistence": {
-          "applies": false,
-          "reason": "No package-owned durable replay journal is claimed. Attempt evidence and external resources remain with the Buster/controller or calling runtime owner; inspect that adjacent lifecycle.",
+          "applies": true,
+          "reason": "The two tools deliberately request retained design-set creation and document revision commits through Control. Control validates the request and delegates to RevisionRepository PostgreSQL transactions; Control/database owns document history and retention, not this host plugin or an owned local replay journal.",
           "sources": [
+            "skills/prism/openclaw-plugin/openclaw.plugin.json",
             "skills/prism/openclaw-plugin/README.md",
             "skills/prism/openclaw-plugin/index.mjs"
           ]
         },
         "internalExtension": {
           "applies": true,
-          "reason": "Host tool/hook/skill integration has independent registration,activation and removal semantics outside the pipeline registry.",
+          "reason": "The OpenClaw register entry calls api.registerTool for prism_create_design_set and prism_apply_revision. Host tool exposure belongs to this extension, not the private HTTP bridge or Control database, and declaration alone does not prove loaded activation.",
           "sources": [
+            "skills/prism/openclaw-plugin/openclaw.plugin.json",
             "skills/prism/openclaw-plugin/README.md",
             "skills/prism/openclaw-plugin/index.mjs"
           ]
@@ -149,28 +169,28 @@
       "criteria": {
         "externalEffects": {
           "applies": true,
-          "reason": "Registration implementation reaches brokered external operations or host service requests; caller grants and result/effect authority remain separate.",
+          "reason": "The ingester observer invokes telemetry.emit/append and the evidence observer invokes artifacts.write/put_json after projecting a delivery. These are brokered operations beyond local redaction.",
           "sources": [
+            "skills/common/plugins/agent-observability/plugin.json",
             "skills/common/plugins/agent-observability/README.md",
-            "skills/common/plugins/agent-observability/src/observers.ts",
             "skills/common/plugins/agent-observability/src/observers.ts"
           ]
         },
         "persistence": {
           "applies": true,
-          "reason": "Package owns or emits durable artifacts,delivery/checkpoint records,source commits or store mutations; these are not erased by removing the registration.",
+          "reason": "ingest intentionally requests retained telemetry records and recordEvidence requests retained JSON artifacts. The selected telemetry/artifact provider owns bytes and quotas/lifetime; observer removal does not retract earlier accepted writes. In-memory projection is not the persistence claim.",
           "sources": [
+            "skills/common/plugins/agent-observability/plugin.json",
             "skills/common/plugins/agent-observability/README.md",
-            "skills/common/plugins/agent-observability/src/observers.ts",
             "skills/common/plugins/agent-observability/src/observers.ts"
           ]
         },
         "internalExtension": {
           "applies": false,
-          "reason": "Uses existing pipeline registry registration classes (observer); no additional host hook,Worker engine or runtime-role class is introduced by this package.",
+          "reason": "The actual supported entry surface is observers:ingester->src/observers.ts#ingest; observers:evidence->src/observers.ts#recordEvidence. These entries implement existing pipeline registration/capability contracts; their reviewed supported paths do not bind host tools/hooks/services/Gateway methods or install a host skill. Calling a separately selected runtime/provider does not transfer that provider's host registration responsibility to this package. This does not deny ordinary pipeline extensibility or grant module execution.",
           "sources": [
+            "skills/common/plugins/agent-observability/plugin.json",
             "skills/common/plugins/agent-observability/README.md",
-            "skills/common/plugins/agent-observability/src/observers.ts",
             "skills/common/plugins/agent-observability/src/observers.ts"
           ]
         }
@@ -192,24 +212,27 @@
       "criteria": {
         "externalEffects": {
           "applies": true,
-          "reason": "Registration implementation reaches brokered external operations or host service requests; caller grants and result/effect authority remain separate.",
+          "reason": "execute invokes network.http request/WebSocket for validated setup/main/cleanup steps. Local flow parsing does not remove that declared external network responsibility.",
           "sources": [
+            "skills/buster/plugins/api-flow/plugin.json",
             "skills/buster/plugins/api-flow/README.md",
             "skills/buster/plugins/api-flow/src/provider.js"
           ]
         },
         "persistence": {
-          "applies": false,
-          "reason": "No package-owned durable replay journal is claimed. Attempt evidence and external resources remain with the Buster/controller or calling runtime owner; inspect that adjacent lifecycle.",
+          "applies": true,
+          "reason": "execute writes api-flow-result.json and declares it as test-report evidence. Buster stages selected evidence and its configured EvidenceStore retains artifact bytes; plan evidence selection and owner retention apply, not a plugin-owned replay journal. Remote API mutations remain target/flow-specific, not inferred from an arbitrary HTTP method.",
           "sources": [
+            "skills/buster/plugins/api-flow/plugin.json",
             "skills/buster/plugins/api-flow/README.md",
             "skills/buster/plugins/api-flow/src/provider.js"
           ]
         },
         "internalExtension": {
           "applies": false,
-          "reason": "Uses existing pipeline registry registration classes (test-provider); no additional host hook,Worker engine or runtime-role class is introduced by this package.",
+          "reason": "The actual supported entry surface is testProviders:flow->src/provider.js#provider. These entries implement existing pipeline registration/capability contracts; their reviewed supported paths do not bind host tools/hooks/services/Gateway methods or install a host skill. Calling a separately selected runtime/provider does not transfer that provider's host registration responsibility to this package. This does not deny ordinary pipeline extensibility or grant module execution.",
           "sources": [
+            "skills/buster/plugins/api-flow/plugin.json",
             "skills/buster/plugins/api-flow/README.md",
             "skills/buster/plugins/api-flow/src/provider.js"
           ]
@@ -232,24 +255,27 @@
       "criteria": {
         "externalEffects": {
           "applies": true,
-          "reason": "Registration implementation reaches brokered external operations or host service requests; caller grants and result/effect authority remain separate.",
+          "reason": "The stage verifies source and invokes runtime.dispatch for architecture review, then artifacts.write for the validated report. Model/broker effects are distinct from pure output parsing.",
           "sources": [
+            "skills/nova/plugins/architecture-validator/plugin.json",
             "skills/nova/plugins/architecture-validator/README.md",
             "skills/nova/plugins/architecture-validator/src/stage.ts"
           ]
         },
         "persistence": {
-          "applies": false,
-          "reason": "No package-owned durable replay journal is claimed. Attempt evidence and external resources remain with the Buster/controller or calling runtime owner; inspect that adjacent lifecycle.",
+          "applies": true,
+          "reason": "The stage explicitly requests artifacts.write/put_json for architecture-validation and returns its artifact reference. The selected artifact provider owns retained JSON bytes and lifetime; failure before or during publication is not a completed write and no private journal is claimed.",
           "sources": [
+            "skills/nova/plugins/architecture-validator/plugin.json",
             "skills/nova/plugins/architecture-validator/README.md",
             "skills/nova/plugins/architecture-validator/src/stage.ts"
           ]
         },
         "internalExtension": {
           "applies": false,
-          "reason": "Uses existing pipeline registry registration classes (stage); no additional host hook,Worker engine or runtime-role class is introduced by this package.",
+          "reason": "The actual supported entry surface is stages:architecture->src/stage.ts#execute. These entries implement existing pipeline registration/capability contracts; their reviewed supported paths do not bind host tools/hooks/services/Gateway methods or install a host skill. Calling a separately selected runtime/provider does not transfer that provider's host registration responsibility to this package. This does not deny ordinary pipeline extensibility or grant module execution.",
           "sources": [
+            "skills/nova/plugins/architecture-validator/plugin.json",
             "skills/nova/plugins/architecture-validator/README.md",
             "skills/nova/plugins/architecture-validator/src/stage.ts"
           ]
@@ -275,24 +301,27 @@
       "criteria": {
         "externalEffects": {
           "applies": true,
-          "reason": "Registration implementation reaches brokered external operations or host service requests; caller grants and result/effect authority remain separate.",
+          "reason": "The adapter implements artifacts.read/write against FileDurableRecordStore and FileDurableBlobStore under configured artifactRoot. This is a durable filesystem service, not only parsing a supplied value.",
           "sources": [
+            "skills/common/plugins/artifact-store/plugin.json",
             "skills/common/plugins/artifact-store/README.md",
             "skills/common/plugins/artifact-store/src/adapter.ts"
           ]
         },
         "persistence": {
           "applies": true,
-          "reason": "Package owns or emits durable artifacts,delivery/checkpoint records,source commits or store mutations; these are not erased by removing the registration.",
+          "reason": "put_json appends bounded artifact metadata and then puts content-addressed bytes. This adapter owns that configured record/blob store; quotas and its storage owner govern lifetime, while read operations and rejected admission do not imply new successful artifacts.",
           "sources": [
+            "skills/common/plugins/artifact-store/plugin.json",
             "skills/common/plugins/artifact-store/README.md",
             "skills/common/plugins/artifact-store/src/adapter.ts"
           ]
         },
         "internalExtension": {
           "applies": false,
-          "reason": "Uses existing pipeline registry registration classes (adapter); no additional host hook,Worker engine or runtime-role class is introduced by this package.",
+          "reason": "The actual supported entry surface is adapters:artifact-store->src/adapter.ts#activate. These entries implement existing pipeline registration/capability contracts; their reviewed supported paths do not bind host tools/hooks/services/Gateway methods or install a host skill. Calling a separately selected runtime/provider does not transfer that provider's host registration responsibility to this package. This does not deny ordinary pipeline extensibility or grant module execution.",
           "sources": [
+            "skills/common/plugins/artifact-store/plugin.json",
             "skills/common/plugins/artifact-store/README.md",
             "skills/common/plugins/artifact-store/src/adapter.ts"
           ]
@@ -314,24 +343,27 @@
       "criteria": {
         "externalEffects": {
           "applies": true,
-          "reason": "Registration implementation reaches brokered external operations or host service requests; caller grants and result/effect authority remain separate.",
+          "reason": "The provider invokes browser.axe/scan for actual route/profile combinations; local acceptance/severity evaluation does not execute the browser itself.",
           "sources": [
+            "skills/buster/plugins/axe/plugin.json",
             "skills/buster/plugins/axe/README.md",
             "skills/buster/plugins/axe/src/provider.js"
           ]
         },
         "persistence": {
-          "applies": false,
-          "reason": "No package-owned durable replay journal is claimed. Attempt evidence and external resources remain with the Buster/controller or calling runtime owner; inspect that adjacent lifecycle.",
+          "applies": true,
+          "reason": "The provider writes axe-results.json and optional screenshots, declares evidence, and delegates retained selected evidence to Buster EvidenceStore. Buster policy/quotas and storage owner govern lifetime; it does not own a separate replay journal or guarantee screenshots on every result.",
           "sources": [
+            "skills/buster/plugins/axe/plugin.json",
             "skills/buster/plugins/axe/README.md",
             "skills/buster/plugins/axe/src/provider.js"
           ]
         },
         "internalExtension": {
           "applies": false,
-          "reason": "Uses existing pipeline registry registration classes (test-provider); no additional host hook,Worker engine or runtime-role class is introduced by this package.",
+          "reason": "The actual supported entry surface is testProviders:axe->src/provider.js#provider. These entries implement existing pipeline registration/capability contracts; their reviewed supported paths do not bind host tools/hooks/services/Gateway methods or install a host skill. Calling a separately selected runtime/provider does not transfer that provider's host registration responsibility to this package. This does not deny ordinary pipeline extensibility or grant module execution.",
           "sources": [
+            "skills/buster/plugins/axe/plugin.json",
             "skills/buster/plugins/axe/README.md",
             "skills/buster/plugins/axe/src/provider.js"
           ]
@@ -353,24 +385,27 @@
       "criteria": {
         "externalEffects": {
           "applies": true,
-          "reason": "Registration implementation reaches brokered external operations or host service requests; caller grants and result/effect authority remain separate.",
+          "reason": "The sync stage invokes git.sync, conditional git.commit, state.append and artifacts.write against an approved source/workspace. These are actual brokered repository/state operations.",
           "sources": [
+            "skills/nova/plugins/blueprint-sync/plugin.json",
             "skills/nova/plugins/blueprint-sync/README.md",
             "skills/nova/plugins/blueprint-sync/src/stage.ts"
           ]
         },
         "persistence": {
           "applies": true,
-          "reason": "Package owns or emits durable artifacts,delivery/checkpoint records,source commits or store mutations; these are not erased by removing the registration.",
+          "reason": "Successful supported paths commit source changes and request state.append plus a retained report artifact. Git owns commits/repository lifetime, selected state/artifact providers own records/blobs; partial mutation and later publication failure are not transaction rollback.",
           "sources": [
+            "skills/nova/plugins/blueprint-sync/plugin.json",
             "skills/nova/plugins/blueprint-sync/README.md",
             "skills/nova/plugins/blueprint-sync/src/stage.ts"
           ]
         },
         "internalExtension": {
           "applies": false,
-          "reason": "Uses existing pipeline registry registration classes (stage); no additional host hook,Worker engine or runtime-role class is introduced by this package.",
+          "reason": "The actual supported entry surface is stages:sync->src/stage.ts#execute. These entries implement existing pipeline registration/capability contracts; their reviewed supported paths do not bind host tools/hooks/services/Gateway methods or install a host skill. Calling a separately selected runtime/provider does not transfer that provider's host registration responsibility to this package. This does not deny ordinary pipeline extensibility or grant module execution.",
           "sources": [
+            "skills/nova/plugins/blueprint-sync/plugin.json",
             "skills/nova/plugins/blueprint-sync/README.md",
             "skills/nova/plugins/blueprint-sync/src/stage.ts"
           ]
@@ -394,24 +429,27 @@
       "criteria": {
         "externalEffects": {
           "applies": true,
-          "reason": "Registration implementation reaches brokered external operations or host service requests; caller grants and result/effect authority remain separate.",
+          "reason": "The stage executes test.plan.execute, stores the decision and optionally invokes runtime.dispatch for agent judgment. Disabling the agent path does not disable the native test operation.",
           "sources": [
+            "skills/nova/plugins/buster-quality-gate/plugin.json",
             "skills/nova/plugins/buster-quality-gate/README.md",
             "skills/nova/plugins/buster-quality-gate/src/stage.ts"
           ]
         },
         "persistence": {
-          "applies": false,
-          "reason": "No package-owned durable replay journal is claimed. Attempt evidence and external resources remain with the Buster/controller or calling runtime owner; inspect that adjacent lifecycle.",
+          "applies": true,
+          "reason": "The stage explicitly stores the decision and native or judged result via artifacts.write. The selected artifact provider owns retained bytes/lifetime, separately from remote Buster attempt stores. Failed writes are not publication and no stage-owned replay journal is required.",
           "sources": [
+            "skills/nova/plugins/buster-quality-gate/plugin.json",
             "skills/nova/plugins/buster-quality-gate/README.md",
             "skills/nova/plugins/buster-quality-gate/src/stage.ts"
           ]
         },
         "internalExtension": {
           "applies": false,
-          "reason": "Uses existing pipeline registry registration classes (stage); no additional host hook,Worker engine or runtime-role class is introduced by this package.",
+          "reason": "The actual supported entry surface is stages:quality->src/stage.ts#execute. These entries implement existing pipeline registration/capability contracts; their reviewed supported paths do not bind host tools/hooks/services/Gateway methods or install a host skill. Calling a separately selected runtime/provider does not transfer that provider's host registration responsibility to this package. This does not deny ordinary pipeline extensibility or grant module execution.",
           "sources": [
+            "skills/nova/plugins/buster-quality-gate/plugin.json",
             "skills/nova/plugins/buster-quality-gate/README.md",
             "skills/nova/plugins/buster-quality-gate/src/stage.ts"
           ]
@@ -436,24 +474,27 @@
       "criteria": {
         "externalEffects": {
           "applies": true,
-          "reason": "Registration implementation reaches brokered external operations or host service requests; caller grants and result/effect authority remain separate.",
+          "reason": "The stage reads report.evidence.read, dispatches the report agent, validates output and calls artifacts.write. A generated narrative does not itself establish historical result authority.",
           "sources": [
+            "skills/nova/plugins/case-study/plugin.json",
             "skills/nova/plugins/case-study/README.md",
             "skills/nova/plugins/case-study/src/stage.ts"
           ]
         },
         "persistence": {
           "applies": true,
-          "reason": "Package owns or emits durable artifacts,delivery/checkpoint records,source commits or store mutations; these are not erased by removing the registration.",
+          "reason": "The completed stage requests artifacts.write for its case-study report and returns the verified reference. The selected artifact provider owns stored bytes and retention; source history read for evidence belongs to Core, not a new stage-owned history store.",
           "sources": [
+            "skills/nova/plugins/case-study/plugin.json",
             "skills/nova/plugins/case-study/README.md",
             "skills/nova/plugins/case-study/src/stage.ts"
           ]
         },
         "internalExtension": {
           "applies": false,
-          "reason": "Uses existing pipeline registry registration classes (stage); no additional host hook,Worker engine or runtime-role class is introduced by this package.",
+          "reason": "The actual supported entry surface is stages:case-study->src/stage.ts#execute. These entries implement existing pipeline registration/capability contracts; their reviewed supported paths do not bind host tools/hooks/services/Gateway methods or install a host skill. Calling a separately selected runtime/provider does not transfer that provider's host registration responsibility to this package. This does not deny ordinary pipeline extensibility or grant module execution.",
           "sources": [
+            "skills/nova/plugins/case-study/plugin.json",
             "skills/nova/plugins/case-study/README.md",
             "skills/nova/plugins/case-study/src/stage.ts"
           ]
@@ -478,26 +519,35 @@
       "criteria": {
         "externalEffects": {
           "applies": true,
-          "reason": "Registration implementation reaches brokered external operations or host service requests; caller grants and result/effect authority remain separate.",
+          "reason": "The adapter resolves admitted executable/cwd and invokes CommandRunner to spawn and control a real subprocess with output/timeout/cleanup limits. An executable allowlist is not a sandbox or mutation guarantee.",
           "sources": [
+            "skills/common/plugins/command-runner/plugin.json",
             "skills/common/plugins/command-runner/README.md",
-            "skills/common/plugins/command-runner/src/adapter.ts"
+            "skills/common/plugins/command-runner/src/adapter.ts",
+            "skills/common/plugins/command-runner/src/runner.ts",
+            "skills/common/plugins/command-runner/src/execution.ts"
           ]
         },
         "persistence": {
           "applies": false,
-          "reason": "No package-owned durable replay journal is claimed. Attempt evidence and external resources remain with the Buster/controller or calling runtime owner; inspect that adjacent lifecycle.",
+          "reason": "The adapter returns command output/records and defines no own retained artifact, journal or repository commit operation. Caller-chosen executables can mutate files or external state, but that generic possibility is not classified as a plugin-defined retained-write contract; callers own and must review those effects.",
           "sources": [
+            "skills/common/plugins/command-runner/plugin.json",
             "skills/common/plugins/command-runner/README.md",
-            "skills/common/plugins/command-runner/src/adapter.ts"
+            "skills/common/plugins/command-runner/src/adapter.ts",
+            "skills/common/plugins/command-runner/src/runner.ts",
+            "skills/common/plugins/command-runner/src/execution.ts"
           ]
         },
         "internalExtension": {
           "applies": false,
-          "reason": "Uses existing pipeline registry registration classes (adapter); no additional host hook,Worker engine or runtime-role class is introduced by this package.",
+          "reason": "The actual supported entry surface is adapters:command->src/adapter.ts#activate. These entries implement existing pipeline registration/capability contracts; their reviewed supported paths do not bind host tools/hooks/services/Gateway methods or install a host skill. Calling a separately selected runtime/provider does not transfer that provider's host registration responsibility to this package. This does not deny ordinary pipeline extensibility or grant module execution.",
           "sources": [
+            "skills/common/plugins/command-runner/plugin.json",
             "skills/common/plugins/command-runner/README.md",
-            "skills/common/plugins/command-runner/src/adapter.ts"
+            "skills/common/plugins/command-runner/src/adapter.ts",
+            "skills/common/plugins/command-runner/src/runner.ts",
+            "skills/common/plugins/command-runner/src/execution.ts"
           ]
         }
       },
@@ -523,24 +573,27 @@
       "criteria": {
         "externalEffects": {
           "applies": true,
-          "reason": "Registration implementation reaches brokered external operations or host service requests; caller grants and result/effect authority remain separate.",
+          "reason": "The provider invokes container.build/build_push_verify with an admitted Dockerfile or built-in template, build arguments and platform. Actual build/registry operations are delegated, not proved by template parsing.",
           "sources": [
+            "skills/buster/plugins/container-build/plugin.json",
             "skills/buster/plugins/container-build/README.md",
             "skills/buster/plugins/container-build/src/provider.js"
           ]
         },
         "persistence": {
-          "applies": false,
-          "reason": "No package-owned durable replay journal is claimed. Attempt evidence and external resources remain with the Buster/controller or calling runtime owner; inspect that adjacent lifecycle.",
+          "applies": true,
+          "reason": "The supported build_push_verify operation intentionally builds and pushes a content-addressed image, returning immutable registry identity. The selected build service/registry owns retained image bytes and retention; scratch template files are not the durable-write justification and failure is not a pushed-image receipt.",
           "sources": [
+            "skills/buster/plugins/container-build/plugin.json",
             "skills/buster/plugins/container-build/README.md",
             "skills/buster/plugins/container-build/src/provider.js"
           ]
         },
         "internalExtension": {
           "applies": false,
-          "reason": "Uses existing pipeline registry registration classes (test-provider); no additional host hook,Worker engine or runtime-role class is introduced by this package.",
+          "reason": "The actual supported entry surface is testProviders:buildkit->src/provider.js#provider. These entries implement existing pipeline registration/capability contracts; their reviewed supported paths do not bind host tools/hooks/services/Gateway methods or install a host skill. Calling a separately selected runtime/provider does not transfer that provider's host registration responsibility to this package. This does not deny ordinary pipeline extensibility or grant module execution.",
           "sources": [
+            "skills/buster/plugins/container-build/plugin.json",
             "skills/buster/plugins/container-build/README.md",
             "skills/buster/plugins/container-build/src/provider.js"
           ]
@@ -562,24 +615,27 @@
       "criteria": {
         "externalEffects": {
           "applies": false,
-          "reason": "This package parses supplied evidence or resolves confidential environment data; it does not own a network/process mutation. Adjacent storage/runtime effects stay with the caller.",
+          "reason": "The LCOV provider reads declared local file artifacts, verifies size/digest, parses/combines measurements and returns a result; it invokes no broker, network, process or host integration. Local reads are still I/O, not a claim of no execution.",
           "sources": [
+            "skills/buster/plugins/coverage-budget/plugin.json",
             "skills/buster/plugins/coverage-budget/README.md",
             "skills/buster/plugins/coverage-budget/src/provider.js"
           ]
         },
         "persistence": {
           "applies": false,
-          "reason": "No package-owned durable replay journal is claimed. Attempt evidence and external resources remain with the Buster/controller or calling runtime owner; inspect that adjacent lifecycle.",
+          "reason": "The provider returns metrics/findings with empty evidenceFiles/reports/outputs and performs no write. Input artifacts and Buster-owned generic attempt records pre-exist or belong to their owners; reading them is not this plugin initiating retained output.",
           "sources": [
+            "skills/buster/plugins/coverage-budget/plugin.json",
             "skills/buster/plugins/coverage-budget/README.md",
             "skills/buster/plugins/coverage-budget/src/provider.js"
           ]
         },
         "internalExtension": {
           "applies": false,
-          "reason": "Uses existing pipeline registry registration classes (test-provider); no additional host hook,Worker engine or runtime-role class is introduced by this package.",
+          "reason": "The actual supported entry surface is testProviders:lcov->src/provider.js#provider. These entries implement existing pipeline registration/capability contracts; their reviewed supported paths do not bind host tools/hooks/services/Gateway methods or install a host skill. Calling a separately selected runtime/provider does not transfer that provider's host registration responsibility to this package. This does not deny ordinary pipeline extensibility or grant module execution.",
           "sources": [
+            "skills/buster/plugins/coverage-budget/plugin.json",
             "skills/buster/plugins/coverage-budget/README.md",
             "skills/buster/plugins/coverage-budget/src/provider.js"
           ]
@@ -601,24 +657,27 @@
       "criteria": {
         "externalEffects": {
           "applies": true,
-          "reason": "Registration implementation reaches brokered external operations or host service requests; caller grants and result/effect authority remain separate.",
+          "reason": "The stage reads repository content through git.repository.read and publishes artifacts.write reports after checking delivery expectations. It is not the native lint executor or an image build.",
           "sources": [
+            "skills/nova/plugins/delivery-lint/plugin.json",
             "skills/nova/plugins/delivery-lint/README.md",
             "skills/nova/plugins/delivery-lint/src/stage.ts"
           ]
         },
         "persistence": {
-          "applies": false,
-          "reason": "No package-owned durable replay journal is claimed. Attempt evidence and external resources remain with the Buster/controller or calling runtime owner; inspect that adjacent lifecycle.",
+          "applies": true,
+          "reason": "writeReport explicitly requests retained delivery-lint JSON artifacts on supported success/failure paths, including the no-Dockerfile success. The selected artifact provider owns bytes/lifetime; blocked paths or write failure do not establish successful retention.",
           "sources": [
+            "skills/nova/plugins/delivery-lint/plugin.json",
             "skills/nova/plugins/delivery-lint/README.md",
             "skills/nova/plugins/delivery-lint/src/stage.ts"
           ]
         },
         "internalExtension": {
           "applies": false,
-          "reason": "Uses existing pipeline registry registration classes (stage); no additional host hook,Worker engine or runtime-role class is introduced by this package.",
+          "reason": "The actual supported entry surface is stages:delivery-lint->src/stage.ts#execute. These entries implement existing pipeline registration/capability contracts; their reviewed supported paths do not bind host tools/hooks/services/Gateway methods or install a host skill. Calling a separately selected runtime/provider does not transfer that provider's host registration responsibility to this package. This does not deny ordinary pipeline extensibility or grant module execution.",
           "sources": [
+            "skills/nova/plugins/delivery-lint/plugin.json",
             "skills/nova/plugins/delivery-lint/README.md",
             "skills/nova/plugins/delivery-lint/src/stage.ts"
           ]
@@ -643,24 +702,27 @@
       "criteria": {
         "externalEffects": {
           "applies": true,
-          "reason": "Registration implementation reaches brokered external operations or host service requests; caller grants and result/effect authority remain separate.",
+          "reason": "The provider makes declared protected GET/login POST/protected GET requests through network.http and validates cookie/identity/business assertions. This is real external protocol activity, not a model result or a read-only-only claim.",
           "sources": [
+            "skills/buster/plugins/demo-auth-smoke/plugin.json",
             "skills/buster/plugins/demo-auth-smoke/README.md",
             "skills/buster/plugins/demo-auth-smoke/src/provider.js"
           ]
         },
         "persistence": {
           "applies": false,
-          "reason": "No package-owned durable replay journal is claimed. Attempt evidence and external resources remain with the Buster/controller or calling runtime owner; inspect that adjacent lifecycle.",
+          "reason": "The provider returns a value authentication receipt and declares no written artifact/store operation. Login may create target-owned session state, but this generic external protocol does not specify a durable retained session store or lifetime; no durable mutation is inferred merely from POST or a cookie.",
           "sources": [
+            "skills/buster/plugins/demo-auth-smoke/plugin.json",
             "skills/buster/plugins/demo-auth-smoke/README.md",
             "skills/buster/plugins/demo-auth-smoke/src/provider.js"
           ]
         },
         "internalExtension": {
           "applies": false,
-          "reason": "Uses existing pipeline registry registration classes (test-provider); no additional host hook,Worker engine or runtime-role class is introduced by this package.",
+          "reason": "The actual supported entry surface is testProviders:session->src/provider.js#provider. These entries implement existing pipeline registration/capability contracts; their reviewed supported paths do not bind host tools/hooks/services/Gateway methods or install a host skill. Calling a separately selected runtime/provider does not transfer that provider's host registration responsibility to this package. This does not deny ordinary pipeline extensibility or grant module execution.",
           "sources": [
+            "skills/buster/plugins/demo-auth-smoke/plugin.json",
             "skills/buster/plugins/demo-auth-smoke/README.md",
             "skills/buster/plugins/demo-auth-smoke/src/provider.js"
           ]
@@ -683,8 +745,9 @@
       "criteria": {
         "externalEffects": {
           "applies": true,
-          "reason": "Registration implementation reaches brokered external operations or host service requests; caller grants and result/effect authority remain separate.",
+          "reason": "Candidate/delivery/ready stages invoke evidence, operator and handoff capabilities; the adapter performs controller HTTPS and operator receipt operations. These are actual transport/commit boundaries, not only constructing demo JSON.",
           "sources": [
+            "skills/nova/plugins/demo-handoff/plugin.json",
             "skills/nova/plugins/demo-handoff/README.md",
             "skills/nova/plugins/demo-handoff/src/candidate.ts",
             "skills/nova/plugins/demo-handoff/src/delivery.ts",
@@ -694,8 +757,9 @@
         },
         "persistence": {
           "applies": true,
-          "reason": "Package owns or emits durable artifacts,delivery/checkpoint records,source commits or store mutations; these are not erased by removing the registration.",
+          "reason": "Stages request retained candidate/delivery/ready artifacts; the adapter also appends handoff intents/receipts in its FileDurableRecordStore and requests the controller ready commit. Selected artifact storage, adapter stateRoot and controller each own their records/lifetime; timeout/unknown outcomes are not rolled back by removing the plugin.",
           "sources": [
+            "skills/nova/plugins/demo-handoff/plugin.json",
             "skills/nova/plugins/demo-handoff/README.md",
             "skills/nova/plugins/demo-handoff/src/candidate.ts",
             "skills/nova/plugins/demo-handoff/src/delivery.ts",
@@ -705,8 +769,9 @@
         },
         "internalExtension": {
           "applies": false,
-          "reason": "Uses existing pipeline registry registration classes (adapter,stage); no additional host hook,Worker engine or runtime-role class is introduced by this package.",
+          "reason": "The actual supported entry surface is stages:candidate->src/candidate.ts#execute; stages:delivery->src/delivery.ts#execute; stages:ready->src/ready.ts#execute; adapters:handoff->src/adapter.ts#activate. These entries implement existing pipeline registration/capability contracts; their reviewed supported paths do not bind host tools/hooks/services/Gateway methods or install a host skill. Calling a separately selected runtime/provider does not transfer that provider's host registration responsibility to this package. This does not deny ordinary pipeline extensibility or grant module execution.",
           "sources": [
+            "skills/nova/plugins/demo-handoff/plugin.json",
             "skills/nova/plugins/demo-handoff/README.md",
             "skills/nova/plugins/demo-handoff/src/candidate.ts",
             "skills/nova/plugins/demo-handoff/src/delivery.ts",
@@ -742,24 +807,27 @@
       "criteria": {
         "externalEffects": {
           "applies": true,
-          "reason": "Registration implementation reaches brokered external operations or host service requests; caller grants and result/effect authority remain separate.",
+          "reason": "The provider invokes command.execute with an admitted catalog executable, bounded args/environment and repository writableRoot, then interprets original command termination. The command is an external subprocess effect, not a parser.",
           "sources": [
+            "skills/buster/plugins/direct-command/plugin.json",
             "skills/buster/plugins/direct-command/README.md",
             "skills/buster/plugins/direct-command/src/provider.js"
           ]
         },
         "persistence": {
-          "applies": false,
-          "reason": "No package-owned durable replay journal is claimed. Attempt evidence and external resources remain with the Buster/controller or calling runtime owner; inspect that adjacent lifecycle.",
+          "applies": true,
+          "reason": "Configured report/coverage/artifact declarations cause copyEvidence to create exclusive evidence files and return their declarations/outputs. Buster stages and retains selected evidence through EvidenceStore; its policy/quotas/storage owner govern lifetime. No specific arbitrary command mutation or private replay journal is inferred.",
           "sources": [
+            "skills/buster/plugins/direct-command/plugin.json",
             "skills/buster/plugins/direct-command/README.md",
             "skills/buster/plugins/direct-command/src/provider.js"
           ]
         },
         "internalExtension": {
           "applies": false,
-          "reason": "Uses existing pipeline registry registration classes (test-provider); no additional host hook,Worker engine or runtime-role class is introduced by this package.",
+          "reason": "The actual supported entry surface is testProviders:command->src/provider.js#provider. These entries implement existing pipeline registration/capability contracts; their reviewed supported paths do not bind host tools/hooks/services/Gateway methods or install a host skill. Calling a separately selected runtime/provider does not transfer that provider's host registration responsibility to this package. This does not deny ordinary pipeline extensibility or grant module execution.",
           "sources": [
+            "skills/buster/plugins/direct-command/plugin.json",
             "skills/buster/plugins/direct-command/README.md",
             "skills/buster/plugins/direct-command/src/provider.js"
           ]
@@ -781,26 +849,35 @@
       "criteria": {
         "externalEffects": {
           "applies": true,
-          "reason": "Registration implementation reaches brokered external operations or host service requests; caller grants and result/effect authority remain separate.",
+          "reason": "The adapter delegates supported create/remove/commit/merge/sync operations to invokeGit and a real GitRunner. Source approval, ownership and argument checks constrain rather than eliminate process/repository effects.",
           "sources": [
+            "skills/common/plugins/git-workspace/plugin.json",
             "skills/common/plugins/git-workspace/README.md",
-            "skills/common/plugins/git-workspace/src/adapter.ts"
+            "skills/common/plugins/git-workspace/src/adapter.ts",
+            "skills/common/plugins/git-workspace/src/operations.ts",
+            "skills/common/plugins/git-workspace/src/runner.ts"
           ]
         },
         "persistence": {
           "applies": true,
-          "reason": "Package owns or emits durable artifacts,delivery/checkpoint records,source commits or store mutations; these are not erased by removing the registration.",
+          "reason": "Supported Git commit/merge/sync paths intentionally change retained repository history/refs, and workspace ownership records support bounded lifecycle. Git repositories and configured workspace/storage owners govern retention; workspace removal is not deletion of previously committed history or guaranteed rollback.",
           "sources": [
+            "skills/common/plugins/git-workspace/plugin.json",
             "skills/common/plugins/git-workspace/README.md",
-            "skills/common/plugins/git-workspace/src/adapter.ts"
+            "skills/common/plugins/git-workspace/src/adapter.ts",
+            "skills/common/plugins/git-workspace/src/operations.ts",
+            "skills/common/plugins/git-workspace/src/runner.ts"
           ]
         },
         "internalExtension": {
           "applies": false,
-          "reason": "Uses existing pipeline registry registration classes (adapter); no additional host hook,Worker engine or runtime-role class is introduced by this package.",
+          "reason": "The actual supported entry surface is adapters:git->src/adapter.ts#activate. These entries implement existing pipeline registration/capability contracts; their reviewed supported paths do not bind host tools/hooks/services/Gateway methods or install a host skill. Calling a separately selected runtime/provider does not transfer that provider's host registration responsibility to this package. This does not deny ordinary pipeline extensibility or grant module execution.",
           "sources": [
+            "skills/common/plugins/git-workspace/plugin.json",
             "skills/common/plugins/git-workspace/README.md",
-            "skills/common/plugins/git-workspace/src/adapter.ts"
+            "skills/common/plugins/git-workspace/src/adapter.ts",
+            "skills/common/plugins/git-workspace/src/operations.ts",
+            "skills/common/plugins/git-workspace/src/runner.ts"
           ]
         }
       },
@@ -825,24 +902,27 @@
       "criteria": {
         "externalEffects": {
           "applies": true,
-          "reason": "Registration implementation reaches brokered external operations or host service requests; caller grants and result/effect authority remain separate.",
+          "reason": "The provider invokes network.http for admitted GET/HEAD requests and checks actual response fields. A read-only HTTP method still requires an external network operation.",
           "sources": [
+            "skills/buster/plugins/http/plugin.json",
             "skills/buster/plugins/http/README.md",
             "skills/buster/plugins/http/src/provider.js"
           ]
         },
         "persistence": {
           "applies": false,
-          "reason": "No package-owned durable replay journal is claimed. Attempt evidence and external resources remain with the Buster/controller or calling runtime owner; inspect that adjacent lifecycle.",
+          "reason": "The provider returns findings/metrics/details with empty evidenceFiles/reports/outputs and writes no retained object. Target access logs or generic Buster attempt records are downstream incidental records, not an intentional provider retained-write contract.",
           "sources": [
+            "skills/buster/plugins/http/plugin.json",
             "skills/buster/plugins/http/README.md",
             "skills/buster/plugins/http/src/provider.js"
           ]
         },
         "internalExtension": {
           "applies": false,
-          "reason": "Uses existing pipeline registry registration classes (test-provider); no additional host hook,Worker engine or runtime-role class is introduced by this package.",
+          "reason": "The actual supported entry surface is testProviders:request->src/provider.js#provider. These entries implement existing pipeline registration/capability contracts; their reviewed supported paths do not bind host tools/hooks/services/Gateway methods or install a host skill. Calling a separately selected runtime/provider does not transfer that provider's host registration responsibility to this package. This does not deny ordinary pipeline extensibility or grant module execution.",
           "sources": [
+            "skills/buster/plugins/http/plugin.json",
             "skills/buster/plugins/http/README.md",
             "skills/buster/plugins/http/src/provider.js"
           ]
@@ -864,8 +944,9 @@
       "criteria": {
         "externalEffects": {
           "applies": true,
-          "reason": "Registration implementation reaches brokered external operations or host service requests; caller grants and result/effect authority remain separate.",
+          "reason": "The approval stage creates signal waits and publishes operator requests; architecture approval additionally verifies repository/artifact evidence and publishes an approval artifact. Existing pipeline registration does not grant operator authority.",
           "sources": [
+            "skills/nova/plugins/human-approval/plugin.json",
             "skills/nova/plugins/human-approval/README.md",
             "skills/nova/plugins/human-approval/src/stage.ts",
             "skills/nova/plugins/human-approval/src/architecture-approval.ts"
@@ -873,8 +954,9 @@
         },
         "persistence": {
           "applies": true,
-          "reason": "Package owns or emits durable artifacts,delivery/checkpoint records,source commits or store mutations; these are not erased by removing the registration.",
+          "reason": "The pending path requests retained waits and operator delivery records; approved architecture paths request an artifacts.write approval record. Wait/operator/artifact providers own storage and lifetime; an expiry or rejected guidance is not proof of approval or deletion of earlier records.",
           "sources": [
+            "skills/nova/plugins/human-approval/plugin.json",
             "skills/nova/plugins/human-approval/README.md",
             "skills/nova/plugins/human-approval/src/stage.ts",
             "skills/nova/plugins/human-approval/src/architecture-approval.ts"
@@ -882,8 +964,9 @@
         },
         "internalExtension": {
           "applies": false,
-          "reason": "Uses existing pipeline registry registration classes (stage); no additional host hook,Worker engine or runtime-role class is introduced by this package.",
+          "reason": "The actual supported entry surface is stages:approval->src/stage.ts#execute; stages:architecture-approval->src/architecture-approval.ts#execute. These entries implement existing pipeline registration/capability contracts; their reviewed supported paths do not bind host tools/hooks/services/Gateway methods or install a host skill. Calling a separately selected runtime/provider does not transfer that provider's host registration responsibility to this package. This does not deny ordinary pipeline extensibility or grant module execution.",
           "sources": [
+            "skills/nova/plugins/human-approval/plugin.json",
             "skills/nova/plugins/human-approval/README.md",
             "skills/nova/plugins/human-approval/src/stage.ts",
             "skills/nova/plugins/human-approval/src/architecture-approval.ts"
@@ -911,24 +994,27 @@
       "criteria": {
         "externalEffects": {
           "applies": true,
-          "reason": "Registration implementation reaches brokered external operations or host service requests; caller grants and result/effect authority remain separate.",
+          "reason": "The stage creates an approved Git worktree, dispatches the implementation agent, commits/merges changes and requests cleanup/report artifacts. Model and Git operations are real brokered effects.",
           "sources": [
+            "skills/nova/plugins/implementation-agent/plugin.json",
             "skills/nova/plugins/implementation-agent/README.md",
             "skills/nova/plugins/implementation-agent/src/stage.ts"
           ]
         },
         "persistence": {
           "applies": true,
-          "reason": "Package owns or emits durable artifacts,delivery/checkpoint records,source commits or store mutations; these are not erased by removing the registration.",
+          "reason": "Supported success paths deliberately commit/merge source and request retained implementation/cleanup artifacts. Git owns history and selected artifact storage owns reports; removing the temporary worktree does not erase retained source/artifacts, and cleanup failure remains distinct from rollback.",
           "sources": [
+            "skills/nova/plugins/implementation-agent/plugin.json",
             "skills/nova/plugins/implementation-agent/README.md",
             "skills/nova/plugins/implementation-agent/src/stage.ts"
           ]
         },
         "internalExtension": {
           "applies": false,
-          "reason": "Uses existing pipeline registry registration classes (stage); no additional host hook,Worker engine or runtime-role class is introduced by this package.",
+          "reason": "The actual supported entry surface is stages:implementation->src/stage.ts#execute. These entries implement existing pipeline registration/capability contracts; their reviewed supported paths do not bind host tools/hooks/services/Gateway methods or install a host skill. Calling a separately selected runtime/provider does not transfer that provider's host registration responsibility to this package. This does not deny ordinary pipeline extensibility or grant module execution.",
           "sources": [
+            "skills/nova/plugins/implementation-agent/plugin.json",
             "skills/nova/plugins/implementation-agent/README.md",
             "skills/nova/plugins/implementation-agent/src/stage.ts"
           ]
@@ -955,24 +1041,27 @@
       "criteria": {
         "externalEffects": {
           "applies": false,
-          "reason": "This package parses supplied evidence or resolves confidential environment data; it does not own a network/process mutation. Adjacent storage/runtime effects stay with the caller.",
+          "reason": "adapt receives supplied XML bytes and limits, validates/normalizes them and returns cases/counts/findings. Its only imported service is local crypto hashing; no broker, host hook, network or process is called.",
           "sources": [
+            "skills/buster/plugins/junit-report-adapter/plugin.json",
             "skills/buster/plugins/junit-report-adapter/README.md",
             "skills/buster/plugins/junit-report-adapter/src/adapter.js"
           ]
         },
         "persistence": {
           "applies": false,
-          "reason": "No package-owned durable replay journal is claimed. Attempt evidence and external resources remain with the Buster/controller or calling runtime owner; inspect that adjacent lifecycle.",
+          "reason": "The adapter performs no file/store/commit write and returns a normalized report value. Buster owns any later report/attempt serialization; consuming supplied bytes is not this report adapter initiating a durable write.",
           "sources": [
+            "skills/buster/plugins/junit-report-adapter/plugin.json",
             "skills/buster/plugins/junit-report-adapter/README.md",
             "skills/buster/plugins/junit-report-adapter/src/adapter.js"
           ]
         },
         "internalExtension": {
           "applies": false,
-          "reason": "Uses existing pipeline registry registration classes (report-adapter); no additional host hook,Worker engine or runtime-role class is introduced by this package.",
+          "reason": "The actual supported entry surface is reportAdapters:junit->src/adapter.js#adapt. These entries implement existing pipeline registration/capability contracts; their reviewed supported paths do not bind host tools/hooks/services/Gateway methods or install a host skill. Calling a separately selected runtime/provider does not transfer that provider's host registration responsibility to this package. This does not deny ordinary pipeline extensibility or grant module execution.",
           "sources": [
+            "skills/buster/plugins/junit-report-adapter/plugin.json",
             "skills/buster/plugins/junit-report-adapter/README.md",
             "skills/buster/plugins/junit-report-adapter/src/adapter.js"
           ]
@@ -993,24 +1082,27 @@
       "criteria": {
         "externalEffects": {
           "applies": true,
-          "reason": "Registration implementation reaches brokered external operations or host service requests; caller grants and result/effect authority remain separate.",
+          "reason": "The provider invokes kubernetes.fixture/prepare and later release against a controller-owned lease/namespace, with checked manifest and image identity. It is actual Kubernetes fixture activity, never an inert manifest-only claim.",
           "sources": [
+            "skills/buster/plugins/kubernetes-fixture/plugin.json",
             "skills/buster/plugins/kubernetes-fixture/README.md",
             "skills/buster/plugins/kubernetes-fixture/src/provider.js"
           ]
         },
         "persistence": {
-          "applies": false,
-          "reason": "No package-owned durable replay journal is claimed. Attempt evidence and external resources remain with the Buster/controller or calling runtime owner; inspect that adjacent lifecycle.",
+          "applies": true,
+          "reason": "prepare intentionally creates controller-managed API state that outlives execute; retention.mode=retain can preserve it until configured expiry and cleanup skips explicit release in that mode. The selected controller/Kubernetes store owns resources and TTL/cleanup lifetime. A returned deployment value is not itself the storage, and cleanup success/deployed readiness are not inferred.",
           "sources": [
+            "skills/buster/plugins/kubernetes-fixture/plugin.json",
             "skills/buster/plugins/kubernetes-fixture/README.md",
             "skills/buster/plugins/kubernetes-fixture/src/provider.js"
           ]
         },
         "internalExtension": {
           "applies": false,
-          "reason": "Uses existing pipeline registry registration classes (test-provider); no additional host hook,Worker engine or runtime-role class is introduced by this package.",
+          "reason": "The actual supported entry surface is testProviders:deployment->src/provider.js#provider. These entries implement existing pipeline registration/capability contracts; their reviewed supported paths do not bind host tools/hooks/services/Gateway methods or install a host skill. Calling a separately selected runtime/provider does not transfer that provider's host registration responsibility to this package. This does not deny ordinary pipeline extensibility or grant module execution.",
           "sources": [
+            "skills/buster/plugins/kubernetes-fixture/plugin.json",
             "skills/buster/plugins/kubernetes-fixture/README.md",
             "skills/buster/plugins/kubernetes-fixture/src/provider.js"
           ]
@@ -1032,24 +1124,27 @@
       "criteria": {
         "externalEffects": {
           "applies": true,
-          "reason": "Registration implementation reaches brokered external operations or host service requests; caller grants and result/effect authority remain separate.",
+          "reason": "The provider invokes browser.lighthouse/audit for actual routes/profiles/runs and evaluates returned reports. Local budgets/acceptances do not replace browser execution.",
           "sources": [
+            "skills/buster/plugins/lighthouse/plugin.json",
             "skills/buster/plugins/lighthouse/README.md",
             "skills/buster/plugins/lighthouse/src/provider.js"
           ]
         },
         "persistence": {
-          "applies": false,
-          "reason": "No package-owned durable replay journal is claimed. Attempt evidence and external resources remain with the Buster/controller or calling runtime owner; inspect that adjacent lifecycle.",
+          "applies": true,
+          "reason": "The provider serializes returned Lighthouse reports into declared evidence files. Buster selects/stages and retains evidence through its EvidenceStore; plan policy and storage owner govern lifetime, with no provider-owned replay journal or guaranteed executed browser result here.",
           "sources": [
+            "skills/buster/plugins/lighthouse/plugin.json",
             "skills/buster/plugins/lighthouse/README.md",
             "skills/buster/plugins/lighthouse/src/provider.js"
           ]
         },
         "internalExtension": {
           "applies": false,
-          "reason": "Uses existing pipeline registry registration classes (test-provider); no additional host hook,Worker engine or runtime-role class is introduced by this package.",
+          "reason": "The actual supported entry surface is testProviders:lighthouse->src/provider.js#provider. These entries implement existing pipeline registration/capability contracts; their reviewed supported paths do not bind host tools/hooks/services/Gateway methods or install a host skill. Calling a separately selected runtime/provider does not transfer that provider's host registration responsibility to this package. This does not deny ordinary pipeline extensibility or grant module execution.",
           "sources": [
+            "skills/buster/plugins/lighthouse/plugin.json",
             "skills/buster/plugins/lighthouse/README.md",
             "skills/buster/plugins/lighthouse/src/provider.js"
           ]
@@ -1071,30 +1166,30 @@
       "criteria": {
         "externalEffects": {
           "applies": true,
-          "reason": "Registration implementation reaches brokered external operations or host service requests; caller grants and result/effect authority remain separate.",
+          "reason": "The stage invokes lint.execute and the executor adapter runs selected real analysis tools through the lint engine; both stage registrations publish artifact reports. Required tool errors remain blocked, not waived by classification.",
           "sources": [
+            "skills/nova/plugins/lint/plugin.json",
             "skills/nova/plugins/lint/README.md",
-            "skills/nova/plugins/lint/src/stage.ts",
             "skills/nova/plugins/lint/src/stage.ts",
             "skills/nova/plugins/lint/src/adapter.ts"
           ]
         },
         "persistence": {
           "applies": true,
-          "reason": "Package owns or emits durable artifacts,delivery/checkpoint records,source commits or store mutations; these are not erased by removing the registration.",
+          "reason": "The stage explicitly requests retained lint report artifacts via artifacts.write. The selected artifact provider owns bytes and retention; analyzer temporary candidates and transient process output are separate from this intentional report publication.",
           "sources": [
+            "skills/nova/plugins/lint/plugin.json",
             "skills/nova/plugins/lint/README.md",
-            "skills/nova/plugins/lint/src/stage.ts",
             "skills/nova/plugins/lint/src/stage.ts",
             "skills/nova/plugins/lint/src/adapter.ts"
           ]
         },
         "internalExtension": {
           "applies": false,
-          "reason": "Uses existing pipeline registry registration classes (adapter,stage); no additional host hook,Worker engine or runtime-role class is introduced by this package.",
+          "reason": "The actual supported entry surface is stages:pre-check->src/stage.ts#executePreCheck; stages:full->src/stage.ts#executeFull; adapters:executor->src/adapter.ts#activate. These entries implement existing pipeline registration/capability contracts; their reviewed supported paths do not bind host tools/hooks/services/Gateway methods or install a host skill. Calling a separately selected runtime/provider does not transfer that provider's host registration responsibility to this package. This does not deny ordinary pipeline extensibility or grant module execution. The executor registerTool functions populate its existing analysis-tool registry, not an OpenClaw/Codex model tool or Gateway surface.",
           "sources": [
+            "skills/nova/plugins/lint/plugin.json",
             "skills/nova/plugins/lint/README.md",
-            "skills/nova/plugins/lint/src/stage.ts",
             "skills/nova/plugins/lint/src/stage.ts",
             "skills/nova/plugins/lint/src/adapter.ts"
           ]
@@ -1162,24 +1257,27 @@
       "criteria": {
         "externalEffects": {
           "applies": true,
-          "reason": "Registration implementation reaches brokered external operations or host service requests; caller grants and result/effect authority remain separate.",
+          "reason": "The adapter admits origin/method/header/body budgets and performs fetch with cancellation, redirect denial and bounded response decoding. This is actual network service activity even for GET.",
           "sources": [
+            "skills/common/plugins/network-http/plugin.json",
             "skills/common/plugins/network-http/README.md",
             "skills/common/plugins/network-http/src/adapter.ts"
           ]
         },
         "persistence": {
           "applies": false,
-          "reason": "No package-owned durable replay journal is claimed. Attempt evidence and external resources remain with the Buster/controller or calling runtime owner; inspect that adjacent lifecycle.",
+          "reason": "The adapter returns the remote response and defines no local retained artifact/store mutation. Caller-selected HTTP methods/bodies can cause remote mutations, but no particular durable target operation/lifetime follows from this generic transport contract; each caller owns that semantic proof.",
           "sources": [
+            "skills/common/plugins/network-http/plugin.json",
             "skills/common/plugins/network-http/README.md",
             "skills/common/plugins/network-http/src/adapter.ts"
           ]
         },
         "internalExtension": {
           "applies": false,
-          "reason": "Uses existing pipeline registry registration classes (adapter); no additional host hook,Worker engine or runtime-role class is introduced by this package.",
+          "reason": "The actual supported entry surface is adapters:http->src/adapter.ts#activate. These entries implement existing pipeline registration/capability contracts; their reviewed supported paths do not bind host tools/hooks/services/Gateway methods or install a host skill. Calling a separately selected runtime/provider does not transfer that provider's host registration responsibility to this package. This does not deny ordinary pipeline extensibility or grant module execution.",
           "sources": [
+            "skills/common/plugins/network-http/plugin.json",
             "skills/common/plugins/network-http/README.md",
             "skills/common/plugins/network-http/src/adapter.ts"
           ]
@@ -1201,28 +1299,28 @@
       "criteria": {
         "externalEffects": {
           "applies": true,
-          "reason": "Registration implementation reaches brokered external operations or host service requests; caller grants and result/effect authority remain separate.",
+          "reason": "Lifecycle and preview observer callbacks invoke operator.request/publish after bounded presentation/redaction. They call the selected messaging provider rather than merely formatting text.",
           "sources": [
+            "skills/common/plugins/notification-observer/plugin.json",
             "skills/common/plugins/notification-observer/README.md",
-            "skills/common/plugins/notification-observer/src/observer.ts",
             "skills/common/plugins/notification-observer/src/observer.ts"
           ]
         },
         "persistence": {
           "applies": true,
-          "reason": "Package owns or emits durable artifacts,delivery/checkpoint records,source commits or store mutations; these are not erased by removing the registration.",
+          "reason": "publish intentionally requests delivery through operator.request; the selected operator provider owns durable delivery intent/receipt records and remote messages. Its storage/receiver retention governs lifetime, independently of observer removal or best-effort failure; suppression paths do not publish.",
           "sources": [
+            "skills/common/plugins/notification-observer/plugin.json",
             "skills/common/plugins/notification-observer/README.md",
-            "skills/common/plugins/notification-observer/src/observer.ts",
             "skills/common/plugins/notification-observer/src/observer.ts"
           ]
         },
         "internalExtension": {
           "applies": false,
-          "reason": "Uses existing pipeline registry registration classes (observer); no additional host hook,Worker engine or runtime-role class is introduced by this package.",
+          "reason": "The actual supported entry surface is observers:notifications->src/observer.ts#observe; observers:preview-delivery->src/observer.ts#deliverPreview. These entries implement existing pipeline registration/capability contracts; their reviewed supported paths do not bind host tools/hooks/services/Gateway methods or install a host skill. Calling a separately selected runtime/provider does not transfer that provider's host registration responsibility to this package. This does not deny ordinary pipeline extensibility or grant module execution.",
           "sources": [
+            "skills/common/plugins/notification-observer/plugin.json",
             "skills/common/plugins/notification-observer/README.md",
-            "skills/common/plugins/notification-observer/src/observer.ts",
             "skills/common/plugins/notification-observer/src/observer.ts"
           ]
         }
@@ -1244,24 +1342,27 @@
       "criteria": {
         "externalEffects": {
           "applies": true,
-          "reason": "Registration implementation reaches brokered external operations or host service requests; caller grants and result/effect authority remain separate.",
+          "reason": "The provider reads the declared specification, validates selected operations and invokes network.http with the declared operation method/body. Local schema validation does not imply read-only target operations.",
           "sources": [
+            "skills/buster/plugins/openapi/plugin.json",
             "skills/buster/plugins/openapi/README.md",
             "skills/buster/plugins/openapi/src/provider.js"
           ]
         },
         "persistence": {
-          "applies": false,
-          "reason": "No package-owned durable replay journal is claimed. Attempt evidence and external resources remain with the Buster/controller or calling runtime owner; inspect that adjacent lifecycle.",
+          "applies": true,
+          "reason": "The provider writes openapi-runtime-result.json and declares test-report evidence. Buster EvidenceStore retains selected evidence according to plan/storage policy. Arbitrary API operation mutation is not itself inferred as durable; the concrete retained report is the persistence basis.",
           "sources": [
+            "skills/buster/plugins/openapi/plugin.json",
             "skills/buster/plugins/openapi/README.md",
             "skills/buster/plugins/openapi/src/provider.js"
           ]
         },
         "internalExtension": {
           "applies": false,
-          "reason": "Uses existing pipeline registry registration classes (test-provider); no additional host hook,Worker engine or runtime-role class is introduced by this package.",
+          "reason": "The actual supported entry surface is testProviders:operations->src/provider.js#provider. These entries implement existing pipeline registration/capability contracts; their reviewed supported paths do not bind host tools/hooks/services/Gateway methods or install a host skill. Calling a separately selected runtime/provider does not transfer that provider's host registration responsibility to this package. This does not deny ordinary pipeline extensibility or grant module execution.",
           "sources": [
+            "skills/buster/plugins/openapi/plugin.json",
             "skills/buster/plugins/openapi/README.md",
             "skills/buster/plugins/openapi/src/provider.js"
           ]
@@ -1284,26 +1385,32 @@
       "criteria": {
         "externalEffects": {
           "applies": true,
-          "reason": "Registration implementation reaches brokered external operations or host service requests; caller grants and result/effect authority remain separate.",
+          "reason": "activate loads OpenClaw SDK and ready subscribes sdk.on callbacks; accepted events flow through IngressQueue to context.emit. This is real host callback integration, not just pure event normalization.",
           "sources": [
+            "skills/common/plugins/openclaw-agent-events/plugin.json",
             "skills/common/plugins/openclaw-agent-events/README.md",
-            "skills/common/plugins/openclaw-agent-events/src/adapter.ts"
+            "skills/common/plugins/openclaw-agent-events/src/adapter.ts",
+            "skills/common/plugins/openclaw-agent-events/src/ingress-queue.ts"
           ]
         },
         "persistence": {
-          "applies": false,
-          "reason": "No package-owned durable replay journal is claimed. Attempt evidence and external resources remain with the Buster/controller or calling runtime owner; inspect that adjacent lifecycle.",
+          "applies": true,
+          "reason": "Accepted queue entries intentionally call context.emit to publish plugin domain events; the normal Core adapter context appends them to the run FileJournal. Core owns those retained events and run-storage lifetime; the queue is volatile, rejected/dropped events are not persisted, and custom supplied emit callbacks do not prove durable storage.",
           "sources": [
+            "skills/common/plugins/openclaw-agent-events/plugin.json",
             "skills/common/plugins/openclaw-agent-events/README.md",
-            "skills/common/plugins/openclaw-agent-events/src/adapter.ts"
+            "skills/common/plugins/openclaw-agent-events/src/adapter.ts",
+            "skills/common/plugins/openclaw-agent-events/src/ingress-queue.ts"
           ]
         },
         "internalExtension": {
-          "applies": false,
-          "reason": "Uses existing pipeline registry registration classes (adapter); no additional host hook,Worker engine or runtime-role class is introduced by this package.",
+          "applies": true,
+          "reason": "Despite pipeline adapter packaging, activate loads openclaw/plugin-sdk and ready actually binds sdk.on callbacks for configured host hooks. It therefore integrates the host callback surface; pipeline registration alone neither grants loading nor proves activation. Shutdown unsubscribes/drains and does not retract prior events.",
           "sources": [
+            "skills/common/plugins/openclaw-agent-events/plugin.json",
             "skills/common/plugins/openclaw-agent-events/README.md",
-            "skills/common/plugins/openclaw-agent-events/src/adapter.ts"
+            "skills/common/plugins/openclaw-agent-events/src/adapter.ts",
+            "skills/common/plugins/openclaw-agent-events/src/ingress-queue.ts"
           ]
         }
       },
@@ -1324,24 +1431,27 @@
       "criteria": {
         "externalEffects": {
           "applies": true,
-          "reason": "Registration implementation reaches brokered external operations or host service requests; caller grants and result/effect authority remain separate.",
+          "reason": "The adapter resolves secrets and POSTs operator deliveries through network.http, with Discord/JSON receiver receipt logic. It is a real external messaging boundary, not presentation-only.",
           "sources": [
+            "skills/common/plugins/operator-messaging/plugin.json",
             "skills/common/plugins/operator-messaging/README.md",
             "skills/common/plugins/operator-messaging/src/adapter.ts"
           ]
         },
         "persistence": {
           "applies": true,
-          "reason": "Package owns or emits durable artifacts,delivery/checkpoint records,source commits or store mutations; these are not erased by removing the registration.",
+          "reason": "The adapter reserves, completes or fails deliveries using FileDurableRecordStore at configured deliveryRoot; supported delivery also creates receiver-owned messages. Adapter quotas/storage owner and receiver policy govern lifetime; missing response can leave uncertain delivery and no removal rollback is promised.",
           "sources": [
+            "skills/common/plugins/operator-messaging/plugin.json",
             "skills/common/plugins/operator-messaging/README.md",
             "skills/common/plugins/operator-messaging/src/adapter.ts"
           ]
         },
         "internalExtension": {
           "applies": false,
-          "reason": "Uses existing pipeline registry registration classes (adapter); no additional host hook,Worker engine or runtime-role class is introduced by this package.",
+          "reason": "The actual supported entry surface is adapters:operator->src/adapter.ts#activate. These entries implement existing pipeline registration/capability contracts; their reviewed supported paths do not bind host tools/hooks/services/Gateway methods or install a host skill. Calling a separately selected runtime/provider does not transfer that provider's host registration responsibility to this package. This does not deny ordinary pipeline extensibility or grant module execution.",
           "sources": [
+            "skills/common/plugins/operator-messaging/plugin.json",
             "skills/common/plugins/operator-messaging/README.md",
             "skills/common/plugins/operator-messaging/src/adapter.ts"
           ]
@@ -1371,8 +1481,9 @@
       "criteria": {
         "externalEffects": {
           "applies": true,
-          "reason": "Registration implementation reaches brokered external operations or host service requests; caller grants and result/effect authority remain separate.",
+          "reason": "The stage invokes report.evidence.read, runtime.dispatch and artifacts.write; the evidence adapter reads original Core/artifact evidence. Draft narrative is not the authority for source-run facts.",
           "sources": [
+            "skills/nova/plugins/pipeline-review/plugin.json",
             "skills/nova/plugins/pipeline-review/README.md",
             "skills/nova/plugins/pipeline-review/src/stage.ts",
             "skills/nova/plugins/pipeline-review/src/evidence-adapter.ts"
@@ -1380,8 +1491,9 @@
         },
         "persistence": {
           "applies": true,
-          "reason": "Package owns or emits durable artifacts,delivery/checkpoint records,source commits or store mutations; these are not erased by removing the registration.",
+          "reason": "The stage intentionally writes the validated pipeline-review JSON report through artifacts.write. The selected artifact provider owns bytes/retention; evidence adapter reads do not independently create a report store and upstream history remains Core-owned.",
           "sources": [
+            "skills/nova/plugins/pipeline-review/plugin.json",
             "skills/nova/plugins/pipeline-review/README.md",
             "skills/nova/plugins/pipeline-review/src/stage.ts",
             "skills/nova/plugins/pipeline-review/src/evidence-adapter.ts"
@@ -1389,8 +1501,9 @@
         },
         "internalExtension": {
           "applies": false,
-          "reason": "Uses existing pipeline registry registration classes (adapter,stage); no additional host hook,Worker engine or runtime-role class is introduced by this package.",
+          "reason": "The actual supported entry surface is stages:review->src/stage.ts#execute; adapters:evidence->src/evidence-adapter.ts#activate. These entries implement existing pipeline registration/capability contracts; their reviewed supported paths do not bind host tools/hooks/services/Gateway methods or install a host skill. Calling a separately selected runtime/provider does not transfer that provider's host registration responsibility to this package. This does not deny ordinary pipeline extensibility or grant module execution.",
           "sources": [
+            "skills/nova/plugins/pipeline-review/plugin.json",
             "skills/nova/plugins/pipeline-review/README.md",
             "skills/nova/plugins/pipeline-review/src/stage.ts",
             "skills/nova/plugins/pipeline-review/src/evidence-adapter.ts"
@@ -1419,24 +1532,27 @@
       "criteria": {
         "externalEffects": {
           "applies": true,
-          "reason": "Registration implementation reaches brokered external operations or host service requests; caller grants and result/effect authority remain separate.",
+          "reason": "The provider invokes browser.playwright/run with the actual project config/limits, assesses returned tests and enforces execution coverage. It does not execute tests merely by reading a config.",
           "sources": [
+            "skills/buster/plugins/playwright/plugin.json",
             "skills/buster/plugins/playwright/README.md",
             "skills/buster/plugins/playwright/src/provider.js"
           ]
         },
         "persistence": {
-          "applies": false,
-          "reason": "No package-owned durable replay journal is claimed. Attempt evidence and external resources remain with the Buster/controller or calling runtime owner; inspect that adjacent lifecycle.",
+          "applies": true,
+          "reason": "The provider writes playwright-report.json and admitted screenshot/video/trace attachments into declared evidence files. Buster stages/retains selected evidence via EvidenceStore; its quotas/policy/storage owner govern lifetime, not a private provider journal.",
           "sources": [
+            "skills/buster/plugins/playwright/plugin.json",
             "skills/buster/plugins/playwright/README.md",
             "skills/buster/plugins/playwright/src/provider.js"
           ]
         },
         "internalExtension": {
           "applies": false,
-          "reason": "Uses existing pipeline registry registration classes (test-provider); no additional host hook,Worker engine or runtime-role class is introduced by this package.",
+          "reason": "The actual supported entry surface is testProviders:playwright->src/provider.js#provider. These entries implement existing pipeline registration/capability contracts; their reviewed supported paths do not bind host tools/hooks/services/Gateway methods or install a host skill. Calling a separately selected runtime/provider does not transfer that provider's host registration responsibility to this package. This does not deny ordinary pipeline extensibility or grant module execution.",
           "sources": [
+            "skills/buster/plugins/playwright/plugin.json",
             "skills/buster/plugins/playwright/README.md",
             "skills/buster/plugins/playwright/src/provider.js"
           ]
@@ -1458,17 +1574,19 @@
       "criteria": {
         "externalEffects": {
           "applies": true,
-          "reason": "Registration implementation reaches brokered external operations or host service requests; caller grants and result/effect authority remain separate.",
+          "reason": "Both standalone and source preflight registrations invoke git.repository.read and artifacts.write around exact source/declaration validation. Input parsing does not eliminate those brokered read/write operations.",
           "sources": [
+            "skills/nova/plugins/preflight-contract/plugin.json",
             "skills/nova/plugins/preflight-contract/README.md",
             "skills/nova/plugins/preflight-contract/src/stage.ts",
             "skills/nova/plugins/preflight-contract/src/source-stage.ts"
           ]
         },
         "persistence": {
-          "applies": false,
-          "reason": "No package-owned durable replay journal is claimed. Attempt evidence and external resources remain with the Buster/controller or calling runtime owner; inspect that adjacent lifecycle.",
+          "applies": true,
+          "reason": "Both registrations explicitly request retained preflight report artifacts. The selected artifact provider owns bytes/lifetime; source-preflight catches publication failure as blocked/no artifact, while standalone publication errors propagate. Neither failure path negates the supported successful retained write.",
           "sources": [
+            "skills/nova/plugins/preflight-contract/plugin.json",
             "skills/nova/plugins/preflight-contract/README.md",
             "skills/nova/plugins/preflight-contract/src/stage.ts",
             "skills/nova/plugins/preflight-contract/src/source-stage.ts"
@@ -1476,8 +1594,9 @@
         },
         "internalExtension": {
           "applies": false,
-          "reason": "Uses existing pipeline registry registration classes (stage); no additional host hook,Worker engine or runtime-role class is introduced by this package.",
+          "reason": "The actual supported entry surface is stages:validate->src/stage.ts#execute; stages:source->src/source-stage.ts#execute. These entries implement existing pipeline registration/capability contracts; their reviewed supported paths do not bind host tools/hooks/services/Gateway methods or install a host skill. Calling a separately selected runtime/provider does not transfer that provider's host registration responsibility to this package. This does not deny ordinary pipeline extensibility or grant module execution.",
           "sources": [
+            "skills/nova/plugins/preflight-contract/plugin.json",
             "skills/nova/plugins/preflight-contract/README.md",
             "skills/nova/plugins/preflight-contract/src/stage.ts",
             "skills/nova/plugins/preflight-contract/src/source-stage.ts"
@@ -1505,24 +1624,27 @@
       "criteria": {
         "externalEffects": {
           "applies": true,
-          "reason": "Registration implementation reaches brokered external operations or host service requests; caller grants and result/effect authority remain separate.",
+          "reason": "The stage reads architecture artifacts, dispatches Prism, creates waits/operator requests and imports the approved baseline archive. These are brokered model/approval/storage operations, not only archive mapping.",
           "sources": [
+            "skills/nova/plugins/prism-design/plugin.json",
             "skills/nova/plugins/prism-design/README.md",
             "skills/nova/plugins/prism-design/src/stage.ts"
           ]
         },
         "persistence": {
           "applies": true,
-          "reason": "Package owns or emits durable artifacts,delivery/checkpoint records,source commits or store mutations; these are not erased by removing the registration.",
+          "reason": "Supported pending paths create retained waits/operator requests; approved paths request a retained baseline artifact. Wait/operator/artifact providers and Prism Control own respective records and lifetimes; requiresDesign=false bypasses these operations and does not imply an unconditional write.",
           "sources": [
+            "skills/nova/plugins/prism-design/plugin.json",
             "skills/nova/plugins/prism-design/README.md",
             "skills/nova/plugins/prism-design/src/stage.ts"
           ]
         },
         "internalExtension": {
           "applies": false,
-          "reason": "Uses existing pipeline registry registration classes (stage); no additional host hook,Worker engine or runtime-role class is introduced by this package.",
+          "reason": "The actual supported entry surface is stages:design->src/stage.ts#execute. These entries implement existing pipeline registration/capability contracts; their reviewed supported paths do not bind host tools/hooks/services/Gateway methods or install a host skill. Calling a separately selected runtime/provider does not transfer that provider's host registration responsibility to this package. This does not deny ordinary pipeline extensibility or grant module execution.",
           "sources": [
+            "skills/nova/plugins/prism-design/plugin.json",
             "skills/nova/plugins/prism-design/README.md",
             "skills/nova/plugins/prism-design/src/stage.ts"
           ]
@@ -1548,24 +1670,27 @@
       "criteria": {
         "externalEffects": {
           "applies": true,
-          "reason": "Registration implementation reaches brokered external operations or host service requests; caller grants and result/effect authority remain separate.",
+          "reason": "The stage resolves verified original artifact/source/gate evidence and calls artifacts.write for the delivery manifest. It is a brokered evidence consumer/producer, not a caller-supplied count formatter.",
           "sources": [
+            "skills/nova/plugins/project-summary/plugin.json",
             "skills/nova/plugins/project-summary/README.md",
             "skills/nova/plugins/project-summary/src/stage.ts"
           ]
         },
         "persistence": {
           "applies": true,
-          "reason": "Package owns or emits durable artifacts,delivery/checkpoint records,source commits or store mutations; these are not erased by removing the registration.",
+          "reason": "The stage intentionally writes the final delivery manifest JSON via artifacts.write. Selected artifact storage owns bytes/lifetime; a technical summary is neither public publication nor automatic human/demo acceptance and failed validation/publication does not create a successful manifest.",
           "sources": [
+            "skills/nova/plugins/project-summary/plugin.json",
             "skills/nova/plugins/project-summary/README.md",
             "skills/nova/plugins/project-summary/src/stage.ts"
           ]
         },
         "internalExtension": {
           "applies": false,
-          "reason": "Uses existing pipeline registry registration classes (stage); no additional host hook,Worker engine or runtime-role class is introduced by this package.",
+          "reason": "The actual supported entry surface is stages:summary->src/stage.ts#execute. These entries implement existing pipeline registration/capability contracts; their reviewed supported paths do not bind host tools/hooks/services/Gateway methods or install a host skill. Calling a separately selected runtime/provider does not transfer that provider's host registration responsibility to this package. This does not deny ordinary pipeline extensibility or grant module execution.",
           "sources": [
+            "skills/nova/plugins/project-summary/plugin.json",
             "skills/nova/plugins/project-summary/README.md",
             "skills/nova/plugins/project-summary/src/stage.ts"
           ]
@@ -1591,28 +1716,28 @@
       "criteria": {
         "externalEffects": {
           "applies": true,
-          "reason": "Registration implementation reaches brokered external operations or host service requests; caller grants and result/effect authority remain separate.",
+          "reason": "Publisher/telemetry adapters resolve a secret and execute the bounded Redis EVAL exchange. Redis network access is actual external service activity.",
           "sources": [
+            "skills/common/plugins/redis-transport/plugin.json",
             "skills/common/plugins/redis-transport/README.md",
-            "skills/common/plugins/redis-transport/src/adapter.ts",
             "skills/common/plugins/redis-transport/src/adapter.ts"
           ]
         },
         "persistence": {
           "applies": true,
-          "reason": "Package owns or emits durable artifacts,delivery/checkpoint records,source commits or store mutations; these are not erased by removing the registration.",
+          "reason": "The Lua operation XADDs retained stream entries and SETs dedup state with PX lifetime. Redis owns bytes; configured MAXLEN, dedupTtlMs and deployment retention govern lifetime. Accepted stream identity is not an infinite-retention or exactly-once consumer guarantee.",
           "sources": [
+            "skills/common/plugins/redis-transport/plugin.json",
             "skills/common/plugins/redis-transport/README.md",
-            "skills/common/plugins/redis-transport/src/adapter.ts",
             "skills/common/plugins/redis-transport/src/adapter.ts"
           ]
         },
         "internalExtension": {
           "applies": false,
-          "reason": "Uses existing pipeline registry registration classes (adapter); no additional host hook,Worker engine or runtime-role class is introduced by this package.",
+          "reason": "The actual supported entry surface is adapters:publisher->src/adapter.ts#activatePublisher; adapters:telemetry->src/adapter.ts#activateTelemetry. These entries implement existing pipeline registration/capability contracts; their reviewed supported paths do not bind host tools/hooks/services/Gateway methods or install a host skill. Calling a separately selected runtime/provider does not transfer that provider's host registration responsibility to this package. This does not deny ordinary pipeline extensibility or grant module execution.",
           "sources": [
+            "skills/common/plugins/redis-transport/plugin.json",
             "skills/common/plugins/redis-transport/README.md",
-            "skills/common/plugins/redis-transport/src/adapter.ts",
             "skills/common/plugins/redis-transport/src/adapter.ts"
           ]
         }
@@ -1636,8 +1761,9 @@
       "criteria": {
         "externalEffects": {
           "applies": true,
-          "reason": "Registration implementation reaches brokered external operations or host service requests; caller grants and result/effect authority remain separate.",
+          "reason": "The plan adapter calls the production Nova remote test gate with signed source, endpoint and limits; the evidence adapter reads verified imported results/artifacts. Remote worker execution is a distinct external effect, not a local value check.",
           "sources": [
+            "skills/nova/plugins/remote-test-gate/plugin.json",
             "skills/nova/plugins/remote-test-gate/README.md",
             "skills/nova/plugins/remote-test-gate/src/adapter.ts",
             "skills/nova/plugins/remote-test-gate/src/evidence-adapter.ts"
@@ -1645,8 +1771,9 @@
         },
         "persistence": {
           "applies": true,
-          "reason": "Package owns or emits durable artifacts,delivery/checkpoint records,source commits or store mutations; these are not erased by removing the registration.",
+          "reason": "The production gate persists source/dispatch/import/evidence state under configured stateRoot and imports original Buster results; the evidence adapter consumes that state. Core gate stores and Buster own retention/lifetime, not a newly invented result signature; a rejected remote outcome is not successful test publication.",
           "sources": [
+            "skills/nova/plugins/remote-test-gate/plugin.json",
             "skills/nova/plugins/remote-test-gate/README.md",
             "skills/nova/plugins/remote-test-gate/src/adapter.ts",
             "skills/nova/plugins/remote-test-gate/src/evidence-adapter.ts"
@@ -1654,8 +1781,9 @@
         },
         "internalExtension": {
           "applies": false,
-          "reason": "Uses existing pipeline registry registration classes (adapter); no additional host hook,Worker engine or runtime-role class is introduced by this package.",
+          "reason": "The actual supported entry surface is adapters:plan->src/adapter.ts#activate; adapters:evidence->src/evidence-adapter.ts#activate. These entries implement existing pipeline registration/capability contracts; their reviewed supported paths do not bind host tools/hooks/services/Gateway methods or install a host skill. Calling a separately selected runtime/provider does not transfer that provider's host registration responsibility to this package. This does not deny ordinary pipeline extensibility or grant module execution.",
           "sources": [
+            "skills/nova/plugins/remote-test-gate/plugin.json",
             "skills/nova/plugins/remote-test-gate/README.md",
             "skills/nova/plugins/remote-test-gate/src/adapter.ts",
             "skills/nova/plugins/remote-test-gate/src/evidence-adapter.ts"
@@ -1682,26 +1810,35 @@
       "criteria": {
         "externalEffects": {
           "applies": true,
-          "reason": "Registration implementation reaches brokered external operations or host service requests; caller grants and result/effect authority remain separate.",
+          "reason": "The adapter uses local filesystem reads and RevisionReader Git subprocess operations to freeze/read/compare exact source revisions. Those process/repository observations are external effects even without mutation.",
           "sources": [
+            "skills/nova/plugins/repository-adapter/plugin.json",
             "skills/nova/plugins/repository-adapter/README.md",
-            "skills/nova/plugins/repository-adapter/src/adapter.ts"
+            "skills/nova/plugins/repository-adapter/src/adapter.ts",
+            "skills/nova/plugins/repository-adapter/src/revision-reader.ts",
+            "skills/nova/plugins/repository-adapter/src/repository-file.ts"
           ]
         },
         "persistence": {
           "applies": false,
-          "reason": "No package-owned durable replay journal is claimed. Attempt evidence and external resources remain with the Buster/controller or calling runtime owner; inspect that adjacent lifecycle.",
+          "reason": "The supported operations read source and produce attempt-bound in-memory revision proofs/values; they define no retained write/commit operation. Git input objects and caller/Core history already belong to those owners; a proof generated in memory is not a durable repository mutation.",
           "sources": [
+            "skills/nova/plugins/repository-adapter/plugin.json",
             "skills/nova/plugins/repository-adapter/README.md",
-            "skills/nova/plugins/repository-adapter/src/adapter.ts"
+            "skills/nova/plugins/repository-adapter/src/adapter.ts",
+            "skills/nova/plugins/repository-adapter/src/revision-reader.ts",
+            "skills/nova/plugins/repository-adapter/src/repository-file.ts"
           ]
         },
         "internalExtension": {
           "applies": false,
-          "reason": "Uses existing pipeline registry registration classes (adapter); no additional host hook,Worker engine or runtime-role class is introduced by this package.",
+          "reason": "The actual supported entry surface is adapters:repository->src/adapter.ts#activate. These entries implement existing pipeline registration/capability contracts; their reviewed supported paths do not bind host tools/hooks/services/Gateway methods or install a host skill. Calling a separately selected runtime/provider does not transfer that provider's host registration responsibility to this package. This does not deny ordinary pipeline extensibility or grant module execution.",
           "sources": [
+            "skills/nova/plugins/repository-adapter/plugin.json",
             "skills/nova/plugins/repository-adapter/README.md",
-            "skills/nova/plugins/repository-adapter/src/adapter.ts"
+            "skills/nova/plugins/repository-adapter/src/adapter.ts",
+            "skills/nova/plugins/repository-adapter/src/revision-reader.ts",
+            "skills/nova/plugins/repository-adapter/src/repository-file.ts"
           ]
         }
       },
@@ -1724,32 +1861,41 @@
       "criteria": {
         "externalEffects": {
           "applies": true,
-          "reason": "Registration implementation reaches brokered external operations or host service requests; caller grants and result/effect authority remain separate.",
+          "reason": "The review/audit/revalidation stages read frozen repository/artifact evidence and dispatch actual review/verification agents through runtime.dispatch. Compiler/reducer calculations remain distinct from those brokered operations.",
           "sources": [
+            "skills/nova/plugins/review/plugin.json",
             "skills/nova/plugins/review/README.md",
             "skills/nova/plugins/review/src/stage.ts",
             "skills/nova/plugins/review/src/repository-audit-stage.ts",
-            "skills/nova/plugins/review/src/repository-revalidation-stage.ts"
+            "skills/nova/plugins/review/src/repository-revalidation-stage.ts",
+            "skills/nova/plugins/review/src/review-report-flow.ts",
+            "skills/nova/plugins/review/src/review-report-storage.ts"
           ]
         },
         "persistence": {
           "applies": true,
-          "reason": "Package owns or emits durable artifacts,delivery/checkpoint records,source commits or store mutations; these are not erased by removing the registration.",
+          "reason": "Review outcome flow stores report/bundle artifacts; repository audit stores prepared-plan, per-job checkpoint/follow-up and final reports; revalidation stores backlog artifacts through artifacts.write. The selected artifact provider owns retained bytes/lifetime; plan mode still publishes its plan, and invalid/failed writes are not successful reports.",
           "sources": [
+            "skills/nova/plugins/review/plugin.json",
             "skills/nova/plugins/review/README.md",
             "skills/nova/plugins/review/src/stage.ts",
             "skills/nova/plugins/review/src/repository-audit-stage.ts",
-            "skills/nova/plugins/review/src/repository-revalidation-stage.ts"
+            "skills/nova/plugins/review/src/repository-revalidation-stage.ts",
+            "skills/nova/plugins/review/src/review-report-flow.ts",
+            "skills/nova/plugins/review/src/review-report-storage.ts"
           ]
         },
         "internalExtension": {
           "applies": false,
-          "reason": "Uses existing pipeline registry registration classes (stage); no additional host hook,Worker engine or runtime-role class is introduced by this package.",
+          "reason": "The actual supported entry surface is stages:review->src/stage.ts#execute; stages:repository-audit->src/repository-audit-stage.ts#executeRepositoryAudit; stages:repository-revalidation->src/repository-revalidation-stage.ts#executeRepositoryRevalidation. These entries implement existing pipeline registration/capability contracts; their reviewed supported paths do not bind host tools/hooks/services/Gateway methods or install a host skill. Calling a separately selected runtime/provider does not transfer that provider's host registration responsibility to this package. This does not deny ordinary pipeline extensibility or grant module execution.",
           "sources": [
+            "skills/nova/plugins/review/plugin.json",
             "skills/nova/plugins/review/README.md",
             "skills/nova/plugins/review/src/stage.ts",
             "skills/nova/plugins/review/src/repository-audit-stage.ts",
-            "skills/nova/plugins/review/src/repository-revalidation-stage.ts"
+            "skills/nova/plugins/review/src/repository-revalidation-stage.ts",
+            "skills/nova/plugins/review/src/review-report-flow.ts",
+            "skills/nova/plugins/review/src/review-report-storage.ts"
           ]
         }
       },
@@ -1875,29 +2021,38 @@
       "criteria": {
         "externalEffects": {
           "applies": true,
-          "reason": "Registration implementation reaches brokered external operations or host service requests; caller grants and result/effect authority remain separate.",
+          "reason": "The generic adapter POSTs to admitted runtime endpoints; the OpenClaw adapter uses authenticated Gateway session operations and repository reads through the shared dispatch boundary. These are actual remote model/session effects.",
           "sources": [
+            "skills/common/plugins/runtime-dispatch/plugin.json",
             "skills/common/plugins/runtime-dispatch/README.md",
             "skills/common/plugins/runtime-dispatch/src/adapter.ts",
-            "skills/common/plugins/runtime-dispatch/src/openclaw-adapter.ts"
+            "skills/common/plugins/runtime-dispatch/src/openclaw-adapter.ts",
+            "skills/common/plugins/runtime-dispatch/src/openclaw-result.ts",
+            "skills/common/plugins/runtime-dispatch/src/result-persistence.ts"
           ]
         },
         "persistence": {
           "applies": true,
-          "reason": "Package owns or emits durable artifacts,delivery/checkpoint records,source commits or store mutations; these are not erased by removing the registration.",
+          "reason": "The supported OpenClaw local-result path uses persistResult to publish stable no-follow result bytes in the repository result directory; result endpoint variants delegate retention to that endpoint. Runtime/repository or endpoint owners govern lifetime. Generic HMAC POST alone is not proof of a retained result and not every dispatch path writes locally.",
           "sources": [
+            "skills/common/plugins/runtime-dispatch/plugin.json",
             "skills/common/plugins/runtime-dispatch/README.md",
             "skills/common/plugins/runtime-dispatch/src/adapter.ts",
-            "skills/common/plugins/runtime-dispatch/src/openclaw-adapter.ts"
+            "skills/common/plugins/runtime-dispatch/src/openclaw-adapter.ts",
+            "skills/common/plugins/runtime-dispatch/src/openclaw-result.ts",
+            "skills/common/plugins/runtime-dispatch/src/result-persistence.ts"
           ]
         },
         "internalExtension": {
           "applies": false,
-          "reason": "Uses existing pipeline registry registration classes (adapter); no additional host hook,Worker engine or runtime-role class is introduced by this package.",
+          "reason": "The actual supported entry surface is adapters:runtime->src/adapter.ts#activate; adapters:openclaw->src/openclaw-adapter.ts#activate. These entries implement existing pipeline registration/capability contracts; their reviewed supported paths do not bind host tools/hooks/services/Gateway methods or install a host skill. Calling a separately selected runtime/provider does not transfer that provider's host registration responsibility to this package. This does not deny ordinary pipeline extensibility or grant module execution.",
           "sources": [
+            "skills/common/plugins/runtime-dispatch/plugin.json",
             "skills/common/plugins/runtime-dispatch/README.md",
             "skills/common/plugins/runtime-dispatch/src/adapter.ts",
-            "skills/common/plugins/runtime-dispatch/src/openclaw-adapter.ts"
+            "skills/common/plugins/runtime-dispatch/src/openclaw-adapter.ts",
+            "skills/common/plugins/runtime-dispatch/src/openclaw-result.ts",
+            "skills/common/plugins/runtime-dispatch/src/result-persistence.ts"
           ]
         }
       },
@@ -1928,24 +2083,27 @@
       "criteria": {
         "externalEffects": {
           "applies": false,
-          "reason": "This package parses supplied evidence or resolves confidential environment data; it does not own a network/process mutation. Adjacent storage/runtime effects stay with the caller.",
+          "reason": "The adapter resolves only explicitly mapped process.env values and returns them after capability/cancellation checks. It performs no network/process/host registration or broker dependency; reading the supplied process environment is still sensitive input access, not a general no-effect permission.",
           "sources": [
+            "skills/common/plugins/secret-resolver/plugin.json",
             "skills/common/plugins/secret-resolver/README.md",
             "skills/common/plugins/secret-resolver/src/adapter.ts"
           ]
         },
         "persistence": {
           "applies": false,
-          "reason": "No package-owned durable replay journal is claimed. Attempt evidence and external resources remain with the Buster/controller or calling runtime owner; inspect that adjacent lifecycle.",
+          "reason": "It returns a mapped secret value and performs no retained write/artifact/commit. Environment and Core confidential handling remain owned elsewhere; reading a secret does not create plugin-owned durable state.",
           "sources": [
+            "skills/common/plugins/secret-resolver/plugin.json",
             "skills/common/plugins/secret-resolver/README.md",
             "skills/common/plugins/secret-resolver/src/adapter.ts"
           ]
         },
         "internalExtension": {
           "applies": false,
-          "reason": "Uses existing pipeline registry registration classes (adapter); no additional host hook,Worker engine or runtime-role class is introduced by this package.",
+          "reason": "The actual supported entry surface is adapters:secrets->src/adapter.ts#activate. These entries implement existing pipeline registration/capability contracts; their reviewed supported paths do not bind host tools/hooks/services/Gateway methods or install a host skill. Calling a separately selected runtime/provider does not transfer that provider's host registration responsibility to this package. This does not deny ordinary pipeline extensibility or grant module execution.",
           "sources": [
+            "skills/common/plugins/secret-resolver/plugin.json",
             "skills/common/plugins/secret-resolver/README.md",
             "skills/common/plugins/secret-resolver/src/adapter.ts"
           ]
@@ -1967,38 +2125,44 @@
       "criteria": {
         "externalEffects": {
           "applies": true,
-          "reason": "Registration implementation reaches brokered external operations or host service requests; caller grants and result/effect authority remain separate.",
+          "reason": "Headers calls network.http, dependency/image/policy invoke security.scan, and runtime invokes kubernetes.runtime-security/inspect. These are actual remote/native scanning boundaries, not only severity normalization.",
           "sources": [
+            "skills/buster/plugins/security-providers/plugin.json",
             "skills/buster/plugins/security-providers/README.md",
             "skills/buster/plugins/security-providers/src/headers.js",
             "skills/buster/plugins/security-providers/src/dependency.js",
             "skills/buster/plugins/security-providers/src/image.js",
             "skills/buster/plugins/security-providers/src/kubernetes-policy.js",
-            "skills/buster/plugins/security-providers/src/kubernetes-runtime.js"
+            "skills/buster/plugins/security-providers/src/kubernetes-runtime.js",
+            "skills/buster/plugins/security-providers/src/common.js"
           ]
         },
         "persistence": {
           "applies": false,
-          "reason": "No package-owned durable replay journal is claimed. Attempt evidence and external resources remain with the Buster/controller or calling runtime owner; inspect that adjacent lifecycle.",
+          "reason": "The five providers return findings/details with empty evidenceFiles/reports/outputs and do not initiate a retained evidence/store operation. Scanner caches, controller resources and generic Buster logs/attempt records remain their owners; invoking an inspector alone is not a plugin-defined durable mutation contract.",
           "sources": [
+            "skills/buster/plugins/security-providers/plugin.json",
             "skills/buster/plugins/security-providers/README.md",
             "skills/buster/plugins/security-providers/src/headers.js",
             "skills/buster/plugins/security-providers/src/dependency.js",
             "skills/buster/plugins/security-providers/src/image.js",
             "skills/buster/plugins/security-providers/src/kubernetes-policy.js",
-            "skills/buster/plugins/security-providers/src/kubernetes-runtime.js"
+            "skills/buster/plugins/security-providers/src/kubernetes-runtime.js",
+            "skills/buster/plugins/security-providers/src/common.js"
           ]
         },
         "internalExtension": {
           "applies": false,
-          "reason": "Uses existing pipeline registry registration classes (test-provider); no additional host hook,Worker engine or runtime-role class is introduced by this package.",
+          "reason": "The actual supported entry surface is testProviders:headers->src/headers.js#provider; testProviders:dependency-trivy->src/dependency.js#provider; testProviders:image-trivy->src/image.js#provider; testProviders:kubernetes-policy->src/kubernetes-policy.js#provider; testProviders:kubernetes-runtime->src/kubernetes-runtime.js#provider. These entries implement existing pipeline registration/capability contracts; their reviewed supported paths do not bind host tools/hooks/services/Gateway methods or install a host skill. Calling a separately selected runtime/provider does not transfer that provider's host registration responsibility to this package. This does not deny ordinary pipeline extensibility or grant module execution.",
           "sources": [
+            "skills/buster/plugins/security-providers/plugin.json",
             "skills/buster/plugins/security-providers/README.md",
             "skills/buster/plugins/security-providers/src/headers.js",
             "skills/buster/plugins/security-providers/src/dependency.js",
             "skills/buster/plugins/security-providers/src/image.js",
             "skills/buster/plugins/security-providers/src/kubernetes-policy.js",
-            "skills/buster/plugins/security-providers/src/kubernetes-runtime.js"
+            "skills/buster/plugins/security-providers/src/kubernetes-runtime.js",
+            "skills/buster/plugins/security-providers/src/common.js"
           ]
         }
       },
@@ -2028,24 +2192,27 @@
       "criteria": {
         "externalEffects": {
           "applies": false,
-          "reason": "This package parses supplied evidence or resolves confidential environment data; it does not own a network/process mutation. Adjacent storage/runtime effects stay with the caller.",
+          "reason": "The provider verifies local declared file artifacts, scans file/tar/gzip bytes without extraction and computes budget/growth results. It invokes no broker, network, process or host integration; its explicit local output serialization is covered separately by persistence.",
           "sources": [
+            "skills/buster/plugins/size-budget/plugin.json",
             "skills/buster/plugins/size-budget/README.md",
             "skills/buster/plugins/size-budget/src/provider.js"
           ]
         },
         "persistence": {
-          "applies": false,
-          "reason": "No package-owned durable replay journal is claimed. Attempt evidence and external resources remain with the Buster/controller or calling runtime owner; inspect that adjacent lifecycle.",
+          "applies": true,
+          "reason": "baselineEvidence writes size-budget-baseline.json and returns a required artifact output referencing that evidence declaration. Buster stages the output evidence even when ordinary evidence selection omits its type and retains it through EvidenceStore; Buster policy/storage owner controls lifetime. It is not read-only or excluded merely because no plugin-owned journal exists.",
           "sources": [
+            "skills/buster/plugins/size-budget/plugin.json",
             "skills/buster/plugins/size-budget/README.md",
             "skills/buster/plugins/size-budget/src/provider.js"
           ]
         },
         "internalExtension": {
           "applies": false,
-          "reason": "Uses existing pipeline registry registration classes (test-provider); no additional host hook,Worker engine or runtime-role class is introduced by this package.",
+          "reason": "The actual supported entry surface is testProviders:artifact->src/provider.js#provider. These entries implement existing pipeline registration/capability contracts; their reviewed supported paths do not bind host tools/hooks/services/Gateway methods or install a host skill. Calling a separately selected runtime/provider does not transfer that provider's host registration responsibility to this package. This does not deny ordinary pipeline extensibility or grant module execution.",
           "sources": [
+            "skills/buster/plugins/size-budget/plugin.json",
             "skills/buster/plugins/size-budget/README.md",
             "skills/buster/plugins/size-budget/src/provider.js"
           ]
@@ -2067,24 +2234,27 @@
       "criteria": {
         "externalEffects": {
           "applies": true,
-          "reason": "Registration implementation reaches brokered external operations or host service requests; caller grants and result/effect authority remain separate.",
+          "reason": "The adapter implements state.read/append with configured FileDurableRecordStore, validated namespaces and idempotency. This is a durable filesystem service, not only returning an input record.",
           "sources": [
+            "skills/common/plugins/state-store/plugin.json",
             "skills/common/plugins/state-store/README.md",
             "skills/common/plugins/state-store/src/adapter.ts"
           ]
         },
         "persistence": {
           "applies": true,
-          "reason": "Package owns or emits durable artifacts,delivery/checkpoint records,source commits or store mutations; these are not erased by removing the registration.",
+          "reason": "state.append writes a bounded namespace record under configured root and supports idempotent reads. This adapter/storage owner owns retained records and quotas/lifetime; reads and duplicate-return paths do not imply a new append, and plugin removal is not record deletion.",
           "sources": [
+            "skills/common/plugins/state-store/plugin.json",
             "skills/common/plugins/state-store/README.md",
             "skills/common/plugins/state-store/src/adapter.ts"
           ]
         },
         "internalExtension": {
           "applies": false,
-          "reason": "Uses existing pipeline registry registration classes (adapter); no additional host hook,Worker engine or runtime-role class is introduced by this package.",
+          "reason": "The actual supported entry surface is adapters:state->src/adapter.ts#activate. These entries implement existing pipeline registration/capability contracts; their reviewed supported paths do not bind host tools/hooks/services/Gateway methods or install a host skill. Calling a separately selected runtime/provider does not transfer that provider's host registration responsibility to this package. This does not deny ordinary pipeline extensibility or grant module execution.",
           "sources": [
+            "skills/common/plugins/state-store/plugin.json",
             "skills/common/plugins/state-store/README.md",
             "skills/common/plugins/state-store/src/adapter.ts"
           ]
@@ -2106,24 +2276,27 @@
       "criteria": {
         "externalEffects": {
           "applies": true,
-          "reason": "Registration implementation reaches brokered external operations or host service requests; caller grants and result/effect authority remain separate.",
+          "reason": "execute invokes kubernetes.exposure/prepare and cleanup requests release for an admitted controller lease/service. This is actual external Kubernetes/exposure activity, not mere URL formatting.",
           "sources": [
+            "skills/buster/plugins/tailscale-exposure/plugin.json",
             "skills/buster/plugins/tailscale-exposure/README.md",
             "skills/buster/plugins/tailscale-exposure/src/provider.js"
           ]
         },
         "persistence": {
-          "applies": false,
-          "reason": "No package-owned durable replay journal is claimed. Attempt evidence and external resources remain with the Buster/controller or calling runtime owner; inspect that adjacent lifecycle.",
+          "applies": true,
+          "reason": "prepare intentionally creates controller-owned exposure state across execute/cleanup, including the await-readiness handoff mode. The controller/Kubernetes store owns resource retention bounded by deployment expiry, release or readiness lifecycle; cleanup requests are not proof of completed deletion or an everlasting exposure.",
           "sources": [
+            "skills/buster/plugins/tailscale-exposure/plugin.json",
             "skills/buster/plugins/tailscale-exposure/README.md",
             "skills/buster/plugins/tailscale-exposure/src/provider.js"
           ]
         },
         "internalExtension": {
           "applies": false,
-          "reason": "Uses existing pipeline registry registration classes (test-provider); no additional host hook,Worker engine or runtime-role class is introduced by this package.",
+          "reason": "The actual supported entry surface is testProviders:exposure->src/provider.js#provider. These entries implement existing pipeline registration/capability contracts; their reviewed supported paths do not bind host tools/hooks/services/Gateway methods or install a host skill. Calling a separately selected runtime/provider does not transfer that provider's host registration responsibility to this package. This does not deny ordinary pipeline extensibility or grant module execution.",
           "sources": [
+            "skills/buster/plugins/tailscale-exposure/plugin.json",
             "skills/buster/plugins/tailscale-exposure/README.md",
             "skills/buster/plugins/tailscale-exposure/src/provider.js"
           ]
@@ -2145,24 +2318,27 @@
       "criteria": {
         "externalEffects": {
           "applies": true,
-          "reason": "Registration implementation reaches brokered external operations or host service requests; caller grants and result/effect authority remain separate.",
+          "reason": "observe invokes telemetry.emit/append after building the bounded redacted envelope. Projection is pure, but its selected telemetry-provider call is a brokered effect.",
           "sources": [
+            "skills/common/plugins/telemetry-observer/plugin.json",
             "skills/common/plugins/telemetry-observer/README.md",
             "skills/common/plugins/telemetry-observer/src/observer.ts"
           ]
         },
         "persistence": {
           "applies": true,
-          "reason": "Package owns or emits durable artifacts,delivery/checkpoint records,source commits or store mutations; these are not erased by removing the registration.",
+          "reason": "The observer intentionally requests a retained telemetry append. The selected telemetry provider owns bytes/quotas/lifetime; observer checkpoint/delivery state belongs to Core, and failed/best-effort delivery does not prove telemetry storage.",
           "sources": [
+            "skills/common/plugins/telemetry-observer/plugin.json",
             "skills/common/plugins/telemetry-observer/README.md",
             "skills/common/plugins/telemetry-observer/src/observer.ts"
           ]
         },
         "internalExtension": {
           "applies": false,
-          "reason": "Uses existing pipeline registry registration classes (observer); no additional host hook,Worker engine or runtime-role class is introduced by this package.",
+          "reason": "The actual supported entry surface is observers:telemetry->src/observer.ts#observe. These entries implement existing pipeline registration/capability contracts; their reviewed supported paths do not bind host tools/hooks/services/Gateway methods or install a host skill. Calling a separately selected runtime/provider does not transfer that provider's host registration responsibility to this package. This does not deny ordinary pipeline extensibility or grant module execution.",
           "sources": [
+            "skills/common/plugins/telemetry-observer/plugin.json",
             "skills/common/plugins/telemetry-observer/README.md",
             "skills/common/plugins/telemetry-observer/src/observer.ts"
           ]
@@ -2185,24 +2361,27 @@
       "criteria": {
         "externalEffects": {
           "applies": true,
-          "reason": "Registration implementation reaches brokered external operations or host service requests; caller grants and result/effect authority remain separate.",
+          "reason": "The adapter implements telemetry.emit/append through FileDurableRecordStore after bounded projection. This is a durable filesystem service rather than only redacting a value.",
           "sources": [
+            "skills/common/plugins/telemetry-store/plugin.json",
             "skills/common/plugins/telemetry-store/README.md",
             "skills/common/plugins/telemetry-store/src/adapter.ts"
           ]
         },
         "persistence": {
           "applies": true,
-          "reason": "Package owns or emits durable artifacts,delivery/checkpoint records,source commits or store mutations; these are not erased by removing the registration.",
+          "reason": "append stores telemetry/plugin-events under configured root with run correlation and quotas. This adapter/storage owner owns retained records/lifetime; rejected/oversize or duplicate paths are not a new stored event, and removal is not erasure.",
           "sources": [
+            "skills/common/plugins/telemetry-store/plugin.json",
             "skills/common/plugins/telemetry-store/README.md",
             "skills/common/plugins/telemetry-store/src/adapter.ts"
           ]
         },
         "internalExtension": {
           "applies": false,
-          "reason": "Uses existing pipeline registry registration classes (adapter); no additional host hook,Worker engine or runtime-role class is introduced by this package.",
+          "reason": "The actual supported entry surface is adapters:telemetry->src/adapter.ts#activate. These entries implement existing pipeline registration/capability contracts; their reviewed supported paths do not bind host tools/hooks/services/Gateway methods or install a host skill. Calling a separately selected runtime/provider does not transfer that provider's host registration responsibility to this package. This does not deny ordinary pipeline extensibility or grant module execution.",
           "sources": [
+            "skills/common/plugins/telemetry-store/plugin.json",
             "skills/common/plugins/telemetry-store/README.md",
             "skills/common/plugins/telemetry-store/src/adapter.ts"
           ]
@@ -2225,24 +2404,27 @@
       "criteria": {
         "externalEffects": {
           "applies": true,
-          "reason": "Registration implementation reaches brokered external operations or host service requests; caller grants and result/effect authority remain separate.",
+          "reason": "The adapter resolves signing secrets and POSTs admitted publications through network.http, validating receiver identity/receipt. This is a real external transport boundary.",
           "sources": [
+            "skills/common/plugins/transport-publisher/plugin.json",
             "skills/common/plugins/transport-publisher/README.md",
             "skills/common/plugins/transport-publisher/src/adapter.ts"
           ]
         },
         "persistence": {
           "applies": true,
-          "reason": "Package owns or emits durable artifacts,delivery/checkpoint records,source commits or store mutations; these are not erased by removing the registration.",
+          "reason": "The adapter appends request/reservation records and transitions them to receipt/failure under deliveryRoot before/after external publication. Adapter quotas/storage owner and receiver policy govern retained state; unknown external outcomes and record transition failures are not automatic rollback or exactly-once remote delivery.",
           "sources": [
+            "skills/common/plugins/transport-publisher/plugin.json",
             "skills/common/plugins/transport-publisher/README.md",
             "skills/common/plugins/transport-publisher/src/adapter.ts"
           ]
         },
         "internalExtension": {
           "applies": false,
-          "reason": "Uses existing pipeline registry registration classes (adapter); no additional host hook,Worker engine or runtime-role class is introduced by this package.",
+          "reason": "The actual supported entry surface is adapters:publisher->src/adapter.ts#activate. These entries implement existing pipeline registration/capability contracts; their reviewed supported paths do not bind host tools/hooks/services/Gateway methods or install a host skill. Calling a separately selected runtime/provider does not transfer that provider's host registration responsibility to this package. This does not deny ordinary pipeline extensibility or grant module execution.",
           "sources": [
+            "skills/common/plugins/transport-publisher/plugin.json",
             "skills/common/plugins/transport-publisher/README.md",
             "skills/common/plugins/transport-publisher/src/adapter.ts"
           ]
@@ -2266,24 +2448,27 @@
       "criteria": {
         "externalEffects": {
           "applies": true,
-          "reason": "Registration implementation reaches brokered external operations or host service requests; caller grants and result/effect authority remain separate.",
+          "reason": "The provider invokes browser.visual/capture and compare for exact baseline/profile/browser identities. Local PNG/baseline checks do not themselves perform capture.",
           "sources": [
+            "skills/buster/plugins/visual/plugin.json",
             "skills/buster/plugins/visual/README.md",
             "skills/buster/plugins/visual/src/provider.js"
           ]
         },
         "persistence": {
-          "applies": false,
-          "reason": "No package-owned durable replay journal is claimed. Attempt evidence and external resources remain with the Buster/controller or calling runtime owner; inspect that adjacent lifecycle.",
+          "applies": true,
+          "reason": "The provider explicitly writes baseline/current/difference PNGs and visual-results.json into declared evidence. Buster stages/retains selected evidence under plan/store quotas and lifetime; baseline inputs are not silently rewritten and no private provider journal is required.",
           "sources": [
+            "skills/buster/plugins/visual/plugin.json",
             "skills/buster/plugins/visual/README.md",
             "skills/buster/plugins/visual/src/provider.js"
           ]
         },
         "internalExtension": {
           "applies": false,
-          "reason": "Uses existing pipeline registry registration classes (test-provider); no additional host hook,Worker engine or runtime-role class is introduced by this package.",
+          "reason": "The actual supported entry surface is testProviders:visual->src/provider.js#provider. These entries implement existing pipeline registration/capability contracts; their reviewed supported paths do not bind host tools/hooks/services/Gateway methods or install a host skill. Calling a separately selected runtime/provider does not transfer that provider's host registration responsibility to this package. This does not deny ordinary pipeline extensibility or grant module execution.",
           "sources": [
+            "skills/buster/plugins/visual/plugin.json",
             "skills/buster/plugins/visual/README.md",
             "skills/buster/plugins/visual/src/provider.js"
           ]
@@ -2306,24 +2491,27 @@
       "criteria": {
         "externalEffects": {
           "applies": true,
-          "reason": "Registration implementation reaches brokered external operations or host service requests; caller grants and result/effect authority remain separate.",
+          "reason": "The adapter implements signal.wait create/read against configured FileDurableRecordStore with issuer/expiry/idempotency checks. This is a durable filesystem service, not only validating a wait value.",
           "sources": [
+            "skills/common/plugins/wait-store/plugin.json",
             "skills/common/plugins/wait-store/README.md",
             "skills/common/plugins/wait-store/src/adapter.ts"
           ]
         },
         "persistence": {
           "applies": true,
-          "reason": "Package owns or emits durable artifacts,delivery/checkpoint records,source commits or store mutations; these are not erased by removing the registration.",
+          "reason": "create appends an idempotent wait record in waits/all under configured root. This adapter/storage owner controls retained records/quotas/lifetime; expiresAt is a wait semantic field, not proof that storage is erased at that instant, and read/duplicate paths do not append anew.",
           "sources": [
+            "skills/common/plugins/wait-store/plugin.json",
             "skills/common/plugins/wait-store/README.md",
             "skills/common/plugins/wait-store/src/adapter.ts"
           ]
         },
         "internalExtension": {
           "applies": false,
-          "reason": "Uses existing pipeline registry registration classes (adapter); no additional host hook,Worker engine or runtime-role class is introduced by this package.",
+          "reason": "The actual supported entry surface is adapters:waits->src/adapter.ts#activate. These entries implement existing pipeline registration/capability contracts; their reviewed supported paths do not bind host tools/hooks/services/Gateway methods or install a host skill. Calling a separately selected runtime/provider does not transfer that provider's host registration responsibility to this package. This does not deny ordinary pipeline extensibility or grant module execution.",
           "sources": [
+            "skills/common/plugins/wait-store/plugin.json",
             "skills/common/plugins/wait-store/README.md",
             "skills/common/plugins/wait-store/src/adapter.ts"
           ]

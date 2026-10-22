@@ -1,0 +1,18 @@
+{
+  "reviewer": "/root/workflow_acceptance",
+  "candidateSha256": "19ad54c83ac945e2f82927fdad65f4740292562b99752828d43068edfc5623b5",
+  "scope": "Three new manual predicate definitions and all153 authored policy judgments; no original classifier selfacceptance",
+  "sourceAccuracy": "PASS",
+  "semanticCoherence": "PASS",
+  "renderedReader": "NOT_EXECUTED_NOT_CLAIMED",
+  "wholeGate": "NOT_GRANTED_OWNER_OUTPUT_INDEX_CHECK_PENDING",
+  "materialCandidateFindings": [],
+  "resolvedNonshippingFinding": {
+    "id": "F1",
+    "scope": "author-report23 size-budget old classification",
+    "resolution": "Separate preserved-packet correction addendum reviewed PASS"
+  },
+  "execution": "NONE: no target/producer/classifier/import/native/npm/test",
+  "mainWrites": false,
+  "reviewSha256": "2119efd162f5e0252ab8e9588a58cc2fd5c9f5481c62e719403283d7c3694f9b"
+}

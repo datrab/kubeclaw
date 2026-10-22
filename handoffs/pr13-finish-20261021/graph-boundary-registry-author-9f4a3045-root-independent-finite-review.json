@@ -1,0 +1,32 @@
+{
+  "status": "ROOT_INDEPENDENT_FINITE_SOURCE_DATA_CANDIDATE_REVIEW_PASS_CONSUMER_UNEXECUTED",
+  "candidateSha256": "b4a6052b6e9307b654d5fb2c2899f618ae6e6b747e9491207edf606b7cb6a660",
+  "sourceRevision": "6a4e6de68411c4fe21ddb10b003f17c979a67825",
+  "actualPriorOriginalRecords": 35,
+  "explicitNewSourceProposals": [
+    "scripts/docs-reader/redirects.mjs",
+    "scripts/docs-reader/serve.mjs",
+    "scripts/check-capability-registrations-drift-controls.mjs",
+    "scripts/docs-ap09-mutation-fixture.mjs",
+    "scripts/plugin-system-inventory.mjs",
+    "scripts/vendor-external-helm-authorities.mjs",
+    "scripts/docs-reader/page-records.mjs"
+  ],
+  "actualOriginalProposalsAllEqualCandidateRecords": 42,
+  "currentOriginalConsumedContexts": {
+    "files": 1450,
+    "absent": 131,
+    "typedDirectories": 16
+  },
+  "semanticReview": [
+    "Full originalqualification678\u2013747/toolSources801\u2013811/publicrole1897\u20131933 read; no guard bypass/privateextraction route.",
+    "Seven explicit Source purposes and actual caller/receiver/native/public ancestry proofs read, independently pinned prior nonauthor reports unchanged. Manual serve onlypurposeRoutes; four owner native exceptions staySource-defined.",
+    "Whole renderer removed oldbuildReader and four actual new statements read;16other statements byteidentical. Exact three original graph edges added,no old edge removed. Existing shared visual-legacy dynamic operation conservatively propagated by actual hint regex, not newexecution permission.",
+    "Old115operative harness guard actually ran in raw getter; neweagerhelper absence alone is not missingproof."
+  ],
+  "limits": [
+    "Candidate is metadata proposal only; no actual current consumer success/global179waiver/roleAPIclassification/generator/runtime/native/release permission.",
+    "All1450regular131absent16typed context observations still physically match; Source output prose/SDK regeneration doesnot change this finite graph input union. Fresh future consumer must still use actual originalstartup/purpose/role/graph guards.",
+    "No Mainregistry install performed by this review."
+  ]
+}

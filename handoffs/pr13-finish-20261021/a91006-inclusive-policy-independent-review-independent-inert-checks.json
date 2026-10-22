@@ -1,0 +1,168 @@
+{
+  "status": "INDEPENDENT_INERT_STRUCTURE_AND_SOURCE_CONTINUITY_ONLY",
+  "frozenCandidateSha256": "19ad54c83ac945e2f82927fdad65f4740292562b99752828d43068edfc5623b5",
+  "frozenPacketSha256": "867366a2ebd1c00d3bb1829de78360d5ac7e52ffe1ae6028e3c195dd7528cf00",
+  "authorRevision": "9f4a304524da258c5454a9361d83f5d69092ed07",
+  "reviewCurrentRevision": "6a4e6de68411c4fe21ddb10b003f17c979a67825",
+  "candidateStructureExactExceptCriteriaAndThreeDefinitions": true,
+  "packages": 51,
+  "authoredJudgments": 153,
+  "booleanChanges": [
+    {
+      "package": "kubeclaw-prism",
+      "criterion": "persistence",
+      "before": false,
+      "after": true
+    },
+    {
+      "package": "kubeclaw.api-flow",
+      "criterion": "persistence",
+      "before": false,
+      "after": true
+    },
+    {
+      "package": "kubeclaw.architecture-validator",
+      "criterion": "persistence",
+      "before": false,
+      "after": true
+    },
+    {
+      "package": "kubeclaw.axe",
+      "criterion": "persistence",
+      "before": false,
+      "after": true
+    },
+    {
+      "package": "kubeclaw.buster-quality-gate",
+      "criterion": "persistence",
+      "before": false,
+      "after": true
+    },
+    {
+      "package": "kubeclaw.container-build",
+      "criterion": "persistence",
+      "before": false,
+      "after": true
+    },
+    {
+      "package": "kubeclaw.delivery-lint",
+      "criterion": "persistence",
+      "before": false,
+      "after": true
+    },
+    {
+      "package": "kubeclaw.direct-command",
+      "criterion": "persistence",
+      "before": false,
+      "after": true
+    },
+    {
+      "package": "kubeclaw.kubernetes-fixture",
+      "criterion": "persistence",
+      "before": false,
+      "after": true
+    },
+    {
+      "package": "kubeclaw.lighthouse",
+      "criterion": "persistence",
+      "before": false,
+      "after": true
+    },
+    {
+      "package": "kubeclaw.openapi",
+      "criterion": "persistence",
+      "before": false,
+      "after": true
+    },
+    {
+      "package": "kubeclaw.openclaw-agent-events",
+      "criterion": "persistence",
+      "before": false,
+      "after": true
+    },
+    {
+      "package": "kubeclaw.openclaw-agent-events",
+      "criterion": "internalExtension",
+      "before": false,
+      "after": true
+    },
+    {
+      "package": "kubeclaw.playwright",
+      "criterion": "persistence",
+      "before": false,
+      "after": true
+    },
+    {
+      "package": "kubeclaw.preflight-contract",
+      "criterion": "persistence",
+      "before": false,
+      "after": true
+    },
+    {
+      "package": "kubeclaw.size-budget",
+      "criterion": "persistence",
+      "before": false,
+      "after": true
+    },
+    {
+      "package": "kubeclaw.tailscale-exposure",
+      "criterion": "persistence",
+      "before": false,
+      "after": true
+    },
+    {
+      "package": "kubeclaw.visual",
+      "criterion": "persistence",
+      "before": false,
+      "after": true
+    }
+  ],
+  "bindingsOccurrences": 535,
+  "distinctBindings": 485,
+  "allBindingBytesCurrentEqual": true,
+  "changedPathsSinceAuthorRevision": [
+    "docs/generated/inventory/sdk-reference.json",
+    "docs/site/extend/developer-handbook.md",
+    "docs/site/reference/buster-suites.md",
+    "docs/site/reference/sdk-exports.md",
+    "docs/site/use/quickstart.md",
+    "handoffs/pr13-finish-20261021/a910-current-gates-55496-review.md",
+    "handoffs/pr13-finish-20261021/a98-procedures-whole-before-correction-review.md",
+    "handoffs/pr13-finish-20261021/demo-auth-chapter-first-finding.json",
+    "handoffs/pr13-finish-20261021/demo-auth-chapter-review.json",
+    "handoffs/pr13-finish-20261021/demo-auth-chapter-review.md",
+    "handoffs/pr13-finish-20261021/five-source-corrections-checkpoint.md",
+    "handoffs/pr13-finish-20261021/handbook-publication-build-root-review.json",
+    "handoffs/pr13-finish-20261021/module-input9f4-independent-review.json",
+    "handoffs/pr13-finish-20261021/module-input9f4-independent-review.md",
+    "handoffs/pr13-finish-20261021/module-input9f4-launch.json",
+    "handoffs/pr13-finish-20261021/module-input9f4-terminal.json",
+    "handoffs/pr13-finish-20261021/publication-five-source-corrections.txt",
+    "handoffs/pr13-finish-20261021/quickstart-prerequisite-author-report.md",
+    "handoffs/pr13-finish-20261021/quickstart-prerequisite-candidate-hashes.json",
+    "handoffs/pr13-finish-20261021/quickstart-prerequisite-root-review.json",
+    "handoffs/pr13-finish-20261021/quickstart-prerequisite-v1-candidate-hashes.json",
+    "handoffs/pr13-finish-20261021/quickstart-prerequisite-v2-addendum.md",
+    "handoffs/pr13-finish-20261021/sdk9f4-and-module-evidence-index.json",
+    "handoffs/pr13-finish-20261021/sdk9f4-completion.json",
+    "handoffs/pr13-finish-20261021/sdk9f4-controller-author-report.md",
+    "handoffs/pr13-finish-20261021/sdk9f4-controller-root-independent-review.json",
+    "handoffs/pr13-finish-20261021/sdk9f4-independent-result-review.json",
+    "handoffs/pr13-finish-20261021/sdk9f4-independent-result-review.md",
+    "handoffs/pr13-finish-20261021/sdk9f4-installed-check-launch.json",
+    "handoffs/pr13-finish-20261021/sdk9f4-installed-check-source-after.json",
+    "handoffs/pr13-finish-20261021/sdk9f4-installed-check-source-before.json",
+    "handoffs/pr13-finish-20261021/sdk9f4-installed-check-terminal.json",
+    "handoffs/pr13-finish-20261021/sdk9f4-root-result-review.json",
+    "handoffs/pr13-finish-20261021/sdk9f4-startup-review.json",
+    "handoffs/pr13-finish-20261021/sdk9f4-startup-review.md"
+  ],
+  "changedBindingPaths": [],
+  "countsFromCandidateDataNotClassifierExecution": {
+    "externalEffects": 47,
+    "persistence": 41,
+    "internalExtension": 4
+  },
+  "execution": "No original classifier, test, producer, product, import, npm or native launch; Python data/hash comparison and original read-only git diff/rev-parse only.",
+  "limit": "Physical equality/roster consistency is not semantic review; semantic responsibility verdict and actual ranges are separately reported."
+}
