@@ -1,10 +1,10 @@
+import { validateBusterReportPackageSnapshot, type BusterReportPackageSnapshotSettings } from '@kubeclaw/plugin-foundation/config/buster-execution';
 import crypto from 'node:crypto';
 import fs from 'node:fs';
 import path from 'node:path';
 
-const MAXIMUM_PACKAGE_FILES = 2_048;
-const MAXIMUM_PACKAGE_BYTES = 64 * 1024 * 1024;
-const PACKAGE_SNAPSHOT_TIMEOUT_MS = 30_000;
+// Explicit retained reader for unversioned/v2 original execution captures.
+const LEGACY_PACKAGE_POLICY = Object.freeze({ maximumFiles: 2_048, maximumBytes: 64 * 1024 * 1024, timeoutMs: 30_000 });
 
 async function readPackageFile(source: string, maximumBytes: number, check: () => void): Promise<Buffer> {
   const handle = await fs.promises.open(source, fs.constants.O_RDONLY | fs.constants.O_NOFOLLOW | fs.constants.O_NONBLOCK);
@@ -31,13 +31,14 @@ interface PackageFile {
   readonly bytes: Buffer;
 }
 
-export async function readPackage(root: string, signal?: AbortSignal): Promise<{ digest: string; files: PackageFile[] }> {
+export async function readPackage(root: string, signal?: AbortSignal, selectedPolicy?: BusterReportPackageSnapshotSettings): Promise<{ digest: string; files: PackageFile[] }> {
+  const policy = selectedPolicy === undefined ? LEGACY_PACKAGE_POLICY : validateBusterReportPackageSnapshot(selectedPolicy);
   const started = Date.now();
   const files: PackageFile[] = [];
   let totalBytes = 0;
   const check = () => {
     if (signal?.aborted) throw signal.reason ?? new Error('REPORT_ADAPTER_CANCELLED');
-    if (Date.now() - started > PACKAGE_SNAPSHOT_TIMEOUT_MS) throw new Error('REPORT_ADAPTER_PACKAGE_SNAPSHOT_TIMEOUT');
+    if (Date.now() - started > policy.timeoutMs) throw new Error('REPORT_ADAPTER_PACKAGE_SNAPSHOT_TIMEOUT');
   };
   const visit = async (relative = ''): Promise<void> => {
     check();
@@ -50,8 +51,8 @@ export async function readPackage(root: string, signal?: AbortSignal): Promise<{
       if (entry.isSymbolicLink()) throw new Error(`REPORT_ADAPTER_PACKAGE_SYMLINK:${child}`);
       if (entry.isDirectory()) { await visit(child); continue; }
       if (!entry.isFile()) throw new Error(`REPORT_ADAPTER_PACKAGE_ENTRY_INVALID:${child}`);
-      if (files.length >= MAXIMUM_PACKAGE_FILES) throw new Error('REPORT_ADAPTER_PACKAGE_FILE_LIMIT');
-      const bytes = await readPackageFile(path.join(root, child), MAXIMUM_PACKAGE_BYTES - totalBytes, check);
+      if (files.length >= policy.maximumFiles) throw new Error('REPORT_ADAPTER_PACKAGE_FILE_LIMIT');
+      const bytes = await readPackageFile(path.join(root, child), policy.maximumBytes - totalBytes, check);
       totalBytes += bytes.byteLength;
       files.push({ relative: child, bytes });
     }
@@ -66,12 +67,13 @@ export async function readPackage(root: string, signal?: AbortSignal): Promise<{
   return { digest: `sha256:${hash.digest('hex')}`, files };
 }
 
-export async function writePackageSnapshot(destination: string, files: readonly PackageFile[], signal?: AbortSignal): Promise<void> {
+export async function writePackageSnapshot(destination: string, files: readonly PackageFile[], signal?: AbortSignal, selectedPolicy?: BusterReportPackageSnapshotSettings): Promise<void> {
+  const policy = selectedPolicy === undefined ? LEGACY_PACKAGE_POLICY : validateBusterReportPackageSnapshot(selectedPolicy);
   const started = Date.now();
   await fs.promises.mkdir(destination, { mode: 0o700 });
   for (const file of files) {
     if (signal?.aborted) throw signal.reason ?? new Error('REPORT_ADAPTER_CANCELLED');
-    if (Date.now() - started > PACKAGE_SNAPSHOT_TIMEOUT_MS) throw new Error('REPORT_ADAPTER_PACKAGE_SNAPSHOT_TIMEOUT');
+    if (Date.now() - started > policy.timeoutMs) throw new Error('REPORT_ADAPTER_PACKAGE_SNAPSHOT_TIMEOUT');
     const target = path.join(destination, file.relative);
     await fs.promises.mkdir(path.dirname(target), { recursive: true, mode: 0o700 });
     await fs.promises.writeFile(target, file.bytes, { flag: 'wx', mode: 0o600 });

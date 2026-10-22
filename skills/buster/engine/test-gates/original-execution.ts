@@ -6,7 +6,7 @@ import { validateLocalWorkerRuntimePolicy, type LocalWorkerRuntimePolicy } from 
 
 /** Original selected execution values, not a new task/source authority. */
 export interface BusterOriginalExecution {
-  readonly schemaVersion: 'buster-original-execution.v1' | 'buster-original-execution.v2';
+  readonly schemaVersion: 'buster-original-execution.v1' | 'buster-original-execution.v2' | 'buster-original-execution.v3';
   readonly generationDigest: string;
   readonly selectionDigest: string;
   readonly executionPolicy: BusterExecutionSettings;
@@ -20,7 +20,7 @@ export function readBusterOriginalExecution(value: unknown): BusterOriginalExecu
     throw new Error('BUSTER_ORIGINAL_EXECUTION_INVALID');
   }
   const original = value as BusterOriginalExecution;
-  if (!['buster-original-execution.v1', 'buster-original-execution.v2'].includes(original.schemaVersion)
+  if (!['buster-original-execution.v1', 'buster-original-execution.v2', 'buster-original-execution.v3'].includes(original.schemaVersion)
     || ![original.generationDigest, original.selectionDigest].every(v => typeof v === 'string' && /^sha256:[a-f0-9]{64}$/u.test(v))) {
     throw new Error('BUSTER_ORIGINAL_EXECUTION_INVALID');
   }
@@ -28,7 +28,8 @@ export function readBusterOriginalExecution(value: unknown): BusterOriginalExecu
     throw new Error('BUSTER_ORIGINAL_EXECUTION_INVALID');
   }
   const executionPolicy = validateBusterExecutionSettings(original.executionPolicy);
-  if ((original.schemaVersion === 'buster-original-execution.v2') !== ('schemaVersion' in executionPolicy)) {
+  const expectedVersion = !('schemaVersion' in executionPolicy) ? 'buster-original-execution.v1' : executionPolicy.schemaVersion === 'buster-execution.v3' ? 'buster-original-execution.v3' : 'buster-original-execution.v2';
+  if (original.schemaVersion !== expectedVersion) {
     throw new Error('BUSTER_ORIGINAL_EXECUTION_VERSION_MISMATCH');
   }
   return Object.freeze({ schemaVersion: original.schemaVersion,
@@ -43,7 +44,7 @@ export function captureBusterOriginalExecution(boot: PipelineBootCapture): Buste
   assertPipelineBootCapture(boot, 'buster-runtime');
   const executionPolicy = projectBusterSettings(boot, 'buster-runtime').execution;
   return readBusterOriginalExecution({ schemaVersion: 'schemaVersion' in executionPolicy
-      ? 'buster-original-execution.v2' : 'buster-original-execution.v1',
+      ? executionPolicy.schemaVersion === 'buster-execution.v3' ? 'buster-original-execution.v3' : 'buster-original-execution.v2' : 'buster-original-execution.v1',
     generationDigest: boot.selectionReceipt.generationDigest, selectionDigest: boot.selectionReceipt.digest,
     executionPolicy,
     workerLocalRuntime: projectBusterWorkerCore(boot).localRuntime,

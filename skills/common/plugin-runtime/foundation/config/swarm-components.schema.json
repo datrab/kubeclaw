@@ -3599,6 +3599,398 @@
           "$ref": "#/$defs/buster-cluster-invokers"
         }
       }
+    },
+    "buster-report-package-snapshot": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "maximumFiles",
+        "maximumBytes",
+        "timeoutMs"
+      ],
+      "properties": {
+        "maximumFiles": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 2048
+        },
+        "maximumBytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 67108864
+        },
+        "timeoutMs": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 30000
+        }
+      }
+    },
+    "buster-execution-reports-v2": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "maximumAggregateResultBytes",
+        "maximumSourceBytes",
+        "maximumCases",
+        "maximumFindings",
+        "maximumCaseFindings",
+        "maximumTimeoutMs",
+        "memoryBytes",
+        "minimumCpuTimeMs",
+        "maximumOpenFiles",
+        "minimumOpenFiles",
+        "minimumHeapMiB",
+        "heapFraction",
+        "runtimeMemoryReserveBytes",
+        "schemaVersion",
+        "packageSnapshot"
+      ],
+      "properties": {
+        "maximumAggregateResultBytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 16777216
+        },
+        "maximumSourceBytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 67108864
+        },
+        "maximumCases": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 5000
+        },
+        "maximumFindings": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 5000
+        },
+        "maximumCaseFindings": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100
+        },
+        "maximumTimeoutMs": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 300000
+        },
+        "memoryBytes": {
+          "type": "integer",
+          "minimum": 67108869,
+          "maximum": 2147483648
+        },
+        "minimumCpuTimeMs": {
+          "type": "integer",
+          "minimum": 1000,
+          "maximum": 300000,
+          "multipleOf": 1000
+        },
+        "maximumOpenFiles": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 256
+        },
+        "minimumOpenFiles": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 256
+        },
+        "minimumHeapMiB": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 8589934591
+        },
+        "heapFraction": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "maximum": 1
+        },
+        "runtimeMemoryReserveBytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 2147483648
+        },
+        "schemaVersion": {
+          "const": "buster-reports.v2"
+        },
+        "packageSnapshot": {
+          "$ref": "#/$defs/buster-report-package-snapshot"
+        }
+      }
+    },
+    "buster-execution-v3": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "provider",
+        "reports",
+        "observation",
+        "stores",
+        "processInput",
+        "schemaVersion"
+      ],
+      "properties": {
+        "provider": {
+          "$ref": "#/$defs/buster-execution-provider"
+        },
+        "reports": {
+          "$ref": "#/$defs/buster-execution-reports-v2"
+        },
+        "observation": {
+          "$ref": "#/$defs/buster-execution-observation"
+        },
+        "stores": {
+          "$ref": "#/$defs/buster-execution-stores-v2"
+        },
+        "processInput": {
+          "$ref": "#/$defs/buster-execution-processInput"
+        },
+        "schemaVersion": {
+          "const": "buster-execution.v3"
+        }
+      }
+    },
+    "buster-engine-v4": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "preparation",
+        "admission",
+        "dependencyReadiness",
+        "execution",
+        "clusterInvokers"
+      ],
+      "properties": {
+        "preparation": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "resourcePolicy",
+            "timeoutMs",
+            "cleanupTimeoutMs",
+            "maximumActivePreparations",
+            "maximumPendingAdmissions",
+            "maximumRequestBytes",
+            "maximumArchiveBytes",
+            "maximumExtractedBytes",
+            "maximumHeaderBytes",
+            "maximumSourceBytes",
+            "maximumMetadataBytes",
+            "maximumRecords",
+            "maximumOwnershipBytes",
+            "maximumJournalBytes",
+            "maximumInputBytes",
+            "maximumOutputBytes",
+            "maximumResultBytes",
+            "pollIntervalMs",
+            "drainTimeoutMs",
+            "closeTimeoutMs",
+            "tarTimeoutMs",
+            "maximumArchiveEntries",
+            "maximumListingLineBytes",
+            "maximumTarStderrBytes",
+            "maximumSourceEntries",
+            "sourceEntryReservationBytes",
+            "maximumOpenFiles"
+          ],
+          "properties": {
+            "resourcePolicy": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "cpuTimeMs",
+                "memoryBytes",
+                "tasks"
+              ],
+              "properties": {
+                "cpuTimeMs": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 9007199254740991
+                },
+                "memoryBytes": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 9007199254740991
+                },
+                "tasks": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 9007199254740991
+                }
+              }
+            },
+            "timeoutMs": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "cleanupTimeoutMs": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "maximumActivePreparations": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 2
+            },
+            "maximumPendingAdmissions": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "maximumRequestBytes": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "maximumArchiveBytes": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "maximumExtractedBytes": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "maximumHeaderBytes": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "maximumSourceBytes": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "maximumMetadataBytes": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "maximumRecords": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "maximumOwnershipBytes": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "maximumJournalBytes": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "maximumInputBytes": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "maximumOutputBytes": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "maximumResultBytes": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "pollIntervalMs": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "drainTimeoutMs": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "closeTimeoutMs": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "tarTimeoutMs": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "maximumArchiveEntries": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "maximumListingLineBytes": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "maximumTarStderrBytes": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "maximumSourceEntries": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "sourceEntryReservationBytes": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "maximumOpenFiles": {
+              "type": "integer",
+              "minimum": 8,
+              "maximum": 2147483647
+            }
+          }
+        },
+        "admission": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "maximumActiveJobs",
+            "maximumQueuedJobs",
+            "maximumConcurrentAttempts"
+          ],
+          "properties": {
+            "maximumActiveJobs": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "maximumQueuedJobs": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "maximumConcurrentAttempts": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            }
+          }
+        },
+        "dependencyReadiness": {
+          "$ref": "#/$defs/buster-dependency-readiness"
+        },
+        "execution": {
+          "$ref": "#/$defs/buster-execution-v3"
+        },
+        "clusterInvokers": {
+          "$ref": "#/$defs/buster-cluster-invokers"
+        }
+      }
     }
   },
   "oneOf": [
@@ -3992,6 +4384,42 @@
             "properties": {
               "settings": {
                 "$ref": "#/$defs/buster-engine-v3"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schemaVersion",
+        "owner",
+        "profiles"
+      ],
+      "properties": {
+        "schemaVersion": {
+          "const": "pipeline-component.v4"
+        },
+        "owner": {
+          "const": "buster-engine"
+        },
+        "profiles": {
+          "type": "object",
+          "minProperties": 1,
+          "propertyNames": {
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$"
+          },
+          "additionalProperties": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "settings"
+            ],
+            "properties": {
+              "settings": {
+                "$ref": "#/$defs/buster-engine-v4"
               }
             }
           }

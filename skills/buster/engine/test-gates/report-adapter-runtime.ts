@@ -190,7 +190,7 @@ export class RegisteredReportAdapterRuntime {
     this.#assertRuntimeRoot();
     const bytes = await this.#readSource(entry, artifact, limits, signal);
     const expectedDigest = entry.registration.package.contentDigest;
-    const sourcePackage = await abortable(readPackage(entry.package.root, signal), signal);
+    const sourcePackage = await abortable(readPackage(entry.package.root, signal, 'schemaVersion' in this.#policy ? this.#policy.packageSnapshot : undefined), signal);
     if (sourcePackage.digest !== expectedDigest) {
       throw new Error(`REPORT_ADAPTER_PACKAGE_DIGEST_MISMATCH:${entry.registration.adapterId}`);
     }
@@ -198,9 +198,9 @@ export class RegisteredReportAdapterRuntime {
     const snapshot = path.join(this.#runtimeRoot, `adapter-${crypto.randomUUID()}`);
     let disposalConfirmed = true;
     try {
-      await abortable(writePackageSnapshot(snapshot, sourcePackage.files, signal), signal);
+      await abortable(writePackageSnapshot(snapshot, sourcePackage.files, signal, 'schemaVersion' in this.#policy ? this.#policy.packageSnapshot : undefined), signal);
       this.#assertRuntimeRoot();
-      const copiedPackage = await abortable(readPackage(snapshot, signal), signal);
+      const copiedPackage = await abortable(readPackage(snapshot, signal, 'schemaVersion' in this.#policy ? this.#policy.packageSnapshot : undefined), signal);
       if (copiedPackage.digest !== expectedDigest) throw new Error('REPORT_ADAPTER_PACKAGE_SNAPSHOT_MISMATCH');
       if (signal.aborted) throw signal.reason ?? new Error('REPORT_ADAPTER_CANCELLED');
       const packageRoot = fs.realpathSync(snapshot);

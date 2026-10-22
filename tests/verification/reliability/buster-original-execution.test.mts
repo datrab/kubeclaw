@@ -43,6 +43,8 @@ import type { BusterRemotePlanServiceOptions } from '../../../skills/buster/engi
 // Explicit historical v1 decoder fixture: legacy policy did not contain execution/store wait keys.
 const legacyPolicy = structuredClone(runnerExecutionPolicy) as any;
 delete legacyPolicy.schemaVersion;
+delete legacyPolicy.reports.schemaVersion;
+delete legacyPolicy.reports.packageSnapshot;
 delete legacyPolicy.stores.attempts.lockWaitSeconds;
 delete legacyPolicy.stores.admission.lockWaitSeconds;
 const original = () => readBusterOriginalExecution({schemaVersion: 'buster-original-execution.v1',
@@ -110,7 +112,7 @@ test('versioned execution waits retain A through durable replay and never enter 
  const root=await fs.mkdtemp(path.join(os.tmpdir(),'buster-original-lock-'));
  try {
   const selected=(wait:number)=>readBusterOriginalExecution({...original(),schemaVersion:'buster-original-execution.v2',
-   executionPolicy:{...runnerExecutionPolicy,schemaVersion:'buster-execution.v2',stores:{
+   executionPolicy:{...runnerExecutionPolicy,reports:legacyPolicy.reports,schemaVersion:'buster-execution.v2',stores:{
     attempts:{...runnerExecutionPolicy.stores.attempts,lockWaitSeconds:wait},
     admission:{...runnerExecutionPolicy.stores.admission,lockWaitSeconds:wait}}}});
   const a=selected(5),b=selected(1),store=storeAt(root),staged={job,input} as BusterStagedAdmission;
@@ -125,4 +127,44 @@ test('versioned execution waits retain A through durable replay and never enter 
    assert.throws(()=>readBusterOriginalExecution(missing));
   }
  }finally{await fs.rm(root,{recursive:true,force:true});}
+});
+
+
+import { readPackage, writePackageSnapshot } from '../../../skills/buster/engine/test-gates/report-adapter-package.ts';
+import { validateBusterExecutionSettings } from '../../../skills/common/plugin-runtime/foundation/config/buster-execution.ts';
+
+test('selected package policy A survives original replay under B and governs actual read/copy/read', async () => {
+ const root=await fs.mkdtemp(path.join(os.tmpdir(),'buster-package-policy-'));
+ try {
+  const source=path.join(root,'source');await fs.mkdir(source);
+  await fs.writeFile(path.join(source,'a.mjs'),'abc');await fs.writeFile(path.join(source,'b.mjs'),'def');
+  const a=structuredClone(runnerExecutionPolicy) as any;
+  assert.equal(a.schemaVersion,'buster-execution.v3');
+  a.reports.packageSnapshot={maximumFiles:2,maximumBytes:6,timeoutMs:30000};
+  const b=structuredClone(a);b.reports.packageSnapshot.maximumFiles=1;
+  const originalA=readBusterOriginalExecution({...original(),schemaVersion:'buster-original-execution.v3',executionPolicy:a});
+  const durable=JSON.parse(JSON.stringify(originalA));
+  const currentB=validateBusterExecutionSettings(b);
+  assert.equal((currentB.reports as any).packageSnapshot.maximumFiles,1);
+  const restored=readBusterOriginalExecution(durable);
+  const policy=(restored.executionPolicy.reports as any).packageSnapshot;
+  assert.ok(Object.isFrozen(policy));assert.equal(policy.maximumFiles,2);
+  const first=await readPackage(source,undefined,policy);
+  const snapshot=path.join(root,'snapshot');await writePackageSnapshot(snapshot,first.files,undefined,policy);
+  assert.equal((await readPackage(snapshot,undefined,policy)).digest,first.digest);
+  await assert.rejects(readPackage(source,undefined,(currentB.reports as any).packageSnapshot),/PACKAGE_FILE_LIMIT/);
+  await assert.rejects(readPackage(source,undefined,{...policy,maximumBytes:5}),/PACKAGE_BYTE_LIMIT/);
+  const cancelled=new AbortController();cancelled.abort(new Error('CANCELLED_ORIGINAL_POLICY'));
+  await assert.rejects(readPackage(source,cancelled.signal,policy),/CANCELLED_ORIGINAL_POLICY/);
+  for(const changed of [null,{}, {...policy,maximumFiles:0}, {...policy,maximumBytes:67108865}, {...policy,timeoutMs:30001}]) {
+   const bad=structuredClone(a);bad.reports.packageSnapshot=changed;
+   assert.throws(()=>validateBusterExecutionSettings(bad),/BUSTER_EXECUTION_INVALID/);
+  }
+  const missing=structuredClone(a);delete missing.reports.packageSnapshot;
+  assert.throws(()=>validateBusterExecutionSettings(missing),/BUSTER_EXECUTION_INVALID/);
+  assert.throws(()=>readBusterOriginalExecution({...durable,schemaVersion:'buster-original-execution.v2'}),/VERSION_MISMATCH/);
+  const v2={...structuredClone(a),schemaVersion:'buster-execution.v2',reports:legacyPolicy.reports};
+  assert.doesNotThrow(()=>validateBusterExecutionSettings(v2));
+  assert.throws(()=>validateBusterExecutionSettings({...v2,reports:a.reports}),/BUSTER_EXECUTION_INVALID/);
+ } finally {await fs.rm(root,{recursive:true,force:true});}
 });

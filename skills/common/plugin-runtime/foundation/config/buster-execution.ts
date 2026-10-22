@@ -17,7 +17,7 @@ export interface BusterProviderExecutionSettings {
   readonly claimGraceMs: number;
   readonly queueTimeoutMs: number;
 }
-export interface BusterReportExecutionSettings {
+export interface BusterLegacyReportExecutionSettings {
   readonly runtimeMemoryReserveBytes: number;
   readonly minimumOpenFiles: number;
   readonly minimumHeapMiB: number;
@@ -31,6 +31,20 @@ export interface BusterReportExecutionSettings {
   readonly memoryBytes: number;
   readonly minimumCpuTimeMs: number;
   readonly maximumOpenFiles: number;
+}
+export interface BusterReportPackageSnapshotSettings {
+  readonly maximumFiles: number;
+  readonly maximumBytes: number;
+  readonly timeoutMs: number;
+}
+export interface BusterReportExecutionSettingsV2 extends BusterLegacyReportExecutionSettings {
+  readonly schemaVersion: 'buster-reports.v2';
+  readonly packageSnapshot: BusterReportPackageSnapshotSettings;
+}
+export type BusterReportExecutionSettings = BusterLegacyReportExecutionSettings | BusterReportExecutionSettingsV2;
+export function validateBusterReportPackageSnapshot(value: unknown): BusterReportPackageSnapshotSettings {
+  validateComponentSettings('buster-report-package-snapshot', value, 'SWARM_CONFIG_BUSTER_PACKAGE_POLICY_INVALID');
+  return Object.freeze({ ...value as BusterReportPackageSnapshotSettings });
 }
 export interface BusterObservationSettings {
   readonly resourceSampleIntervalMs: number;
@@ -73,11 +87,16 @@ export interface BusterExecutionSettingsV2 extends BusterLegacyExecutionSettings
     admission: BusterAdmissionStoreSettings & { readonly lockWaitSeconds: number };
   }>;
 }
-export type BusterExecutionSettings = BusterLegacyExecutionSettings | BusterExecutionSettingsV2;
+export interface BusterExecutionSettingsV3 extends Omit<BusterExecutionSettingsV2, 'schemaVersion' | 'reports'> {
+  readonly schemaVersion: 'buster-execution.v3';
+  readonly reports: BusterReportExecutionSettingsV2;
+}
+export type BusterExecutionSettings = BusterLegacyExecutionSettings | BusterExecutionSettingsV2 | BusterExecutionSettingsV3;
 
 export function validateBusterExecutionSettings(value: unknown): BusterExecutionSettings {
   const versioned = !!value && typeof value === 'object' && Object.hasOwn(value, 'schemaVersion');
-  validateComponentSettings(versioned ? 'buster-execution-v2' : 'buster-execution', value, 'SWARM_CONFIG_BUSTER_EXECUTION_INVALID');
+  const version = (value as {schemaVersion?: unknown} | null)?.schemaVersion;
+  validateComponentSettings(version === 'buster-execution.v3' ? 'buster-execution-v3' : versioned ? 'buster-execution-v2' : 'buster-execution', value, 'SWARM_CONFIG_BUSTER_EXECUTION_INVALID');
   const policy = value as BusterExecutionSettings;
   const processInput = validateBusterProcessInputSettings(policy.processInput);
   validateProviderTiming(policy.provider);
@@ -88,7 +107,7 @@ export function validateBusterExecutionSettings(value: unknown): BusterExecution
   if (policy.stores.attempts.maximumEvidenceObjectBytes > policy.stores.attempts.maximumEvidenceBytes) {
     throw new Error('SWARM_CONFIG_BUSTER_EXECUTION_EVIDENCE_POOL_INVALID');
   }
-  return Object.freeze({ ...(versioned ? { schemaVersion: 'buster-execution.v2' as const } : {}), processInput, provider: Object.freeze({ ...policy.provider }), reports: Object.freeze({ ...policy.reports }),
+  return Object.freeze({ ...(versioned ? { schemaVersion: version } : {}), processInput, provider: Object.freeze({ ...policy.provider }), reports: validateBusterReportSettings(policy.reports),
     observation: Object.freeze({ ...policy.observation }), stores: Object.freeze({
       attempts: Object.freeze({ ...policy.stores.attempts }), admission: Object.freeze({ ...policy.stores.admission }),
     }) }) as BusterExecutionSettings;
@@ -123,10 +142,11 @@ function validateReportCoherence(policy: BusterReportExecutionSettings): void {
   if (policy.minimumOpenFiles > policy.maximumOpenFiles) throw new Error('SWARM_CONFIG_BUSTER_REPORT_DESCRIPTOR_RANGE_INVALID');
 }
 export function validateBusterReportSettings(value: unknown): BusterReportExecutionSettings {
-  validateComponentSettings('buster-execution-reports', value, 'SWARM_CONFIG_BUSTER_REPORT_POLICY_INVALID');
+  const versioned = !!value && typeof value === 'object' && Object.hasOwn(value, 'schemaVersion');
+  validateComponentSettings(versioned ? 'buster-execution-reports-v2' : 'buster-execution-reports', value, 'SWARM_CONFIG_BUSTER_REPORT_POLICY_INVALID');
   const policy = value as BusterReportExecutionSettings;
   validateReportCoherence(policy);
-  return Object.freeze({ ...policy });
+  return Object.freeze({ ...policy, ...('schemaVersion' in policy ? {packageSnapshot: validateBusterReportPackageSnapshot(policy.packageSnapshot)} : {}) });
 }
 
 export function validateBusterProcessInputSettings(value: unknown): BusterProcessInputSettings {

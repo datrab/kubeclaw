@@ -1,5 +1,5 @@
 {
-  "schemaVersion": "pipeline-component.v3",
+  "schemaVersion": "pipeline-component.v4",
   "owner": "buster-engine",
   "profiles": {
     "standard": {
@@ -76,7 +76,13 @@
             "minimumOpenFiles": 16,
             "minimumHeapMiB": 16,
             "heapFraction": 0.7,
-            "runtimeMemoryReserveBytes": 67108864
+            "runtimeMemoryReserveBytes": 67108864,
+            "schemaVersion": "buster-reports.v2",
+            "packageSnapshot": {
+              "maximumFiles": 2048,
+              "maximumBytes": 67108864,
+              "timeoutMs": 30000
+            }
           },
           "observation": {
             "resourceSampleIntervalMs": 10,
@@ -107,7 +113,7 @@
             "terminationGraceMs": 250,
             "acknowledgementPollMs": 10
           },
-          "schemaVersion": "buster-execution.v2"
+          "schemaVersion": "buster-execution.v3"
         },
         "clusterInvokers": {
           "shared": {
@@ -251,7 +257,13 @@
             "minimumOpenFiles": 16,
             "minimumHeapMiB": 16,
             "heapFraction": 0.7,
-            "runtimeMemoryReserveBytes": 67108864
+            "runtimeMemoryReserveBytes": 67108864,
+            "schemaVersion": "buster-reports.v2",
+            "packageSnapshot": {
+              "maximumFiles": 2048,
+              "maximumBytes": 67108864,
+              "timeoutMs": 30000
+            }
           },
           "observation": {
             "resourceSampleIntervalMs": 10,
@@ -282,7 +294,7 @@
             "terminationGraceMs": 250,
             "acknowledgementPollMs": 10
           },
-          "schemaVersion": "buster-execution.v2"
+          "schemaVersion": "buster-execution.v3"
         },
         "clusterInvokers": {
           "shared": {
