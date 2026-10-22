@@ -1495,6 +1495,118 @@ function assertReviewedDiagnosticOutputSources(root) {
     assert(fs.realpathSync(file)===path.resolve(file)&&hash(fs.readFileSync(file))===sha256,`API_PRODUCT_DIAGNOSTIC_SOURCE_ROLE_UNQUALIFIED: ${source}; changed error/input/output authority requires renewed Source review`);
   }
 }
+// These finite original local observations qualify output purposes, not
+// execution authority. The immutable witness binds original product modules,
+// inputs, member identities and callers; mutable role-registry refreshes cannot
+// enlarge it. Inventory never imports or invokes those product modules.
+const reviewedGitOpsProfile = Object.freeze({
+  authority: 'scripts/docs-api-gitops-output-profile-authority.json',
+  authoritySha256: '1f5316ad9c99959473cb938a79c44b8bee01f8a5399a95d2df36fcd9a17d17ca',
+  activationSource: 'scripts/gitops-continuous.mjs',
+  activationSha256: 'f2b35d956ffaa40dc9644f7f3c22c3d7e6f34747e890f1c139de8211cd2e3734',
+});
+const qualifiedGitOpsProfiles = new WeakSet();
+export function checkedGitOpsOutputProfiles(root, graph) {
+  const profile = reviewedGitOpsProfile;
+  const authorityFile = path.join(root, profile.authority);
+  if (!fs.existsSync(authorityFile)) {
+    const source = path.join(root, profile.activationSource);
+    if (!fs.existsSync(source) || hash(fs.readFileSync(source)) !== profile.activationSha256) return null;
+  }
+  const fail = detail => assert.fail(`API_PRODUCT_GITOPS_OUTPUT_PROFILE_UNQUALIFIED: ${detail}`);
+  if (!path.isAbsolute(root) || fs.realpathSync(root) !== root) fail('canonical checkout root');
+  const read = file => {
+    if (typeof file !== 'string' || !file || file.includes('\\') || path.posix.isAbsolute(file)
+      || path.posix.normalize(file) !== file || file.split('/').some(part => part === '..' || part === '.')) fail('relative input path');
+    const absolute = path.join(root, file);
+    if (!fs.existsSync(absolute) || fs.realpathSync(absolute) !== absolute || !fs.lstatSync(absolute).isFile()) fail(`physical input ${file}`);
+    return fs.readFileSync(absolute);
+  };
+  const bytes = read(profile.authority);
+  if (hash(bytes) !== profile.authoritySha256) fail('immutable witness digest');
+  const authority = JSON.parse(bytes), buffers = new Map();
+  for (const fact of authority.inputs) {
+    const content = read(fact.path);
+    if (hash(content) !== fact.sha256 || content.length !== fact.bytes) fail(`changed input ${fact.path}`);
+    buffers.set(fact.path, content);
+  }
+  for (const [source, digest] of Object.entries(authority.sourcePins)) {
+    if (!buffers.has(source) || hash(buffers.get(source)) !== digest) fail(`producer source ${source}`);
+  }
+  for (const file of authority.absentPackageBoundaries) {
+    try { fs.lstatSync(path.join(root, file)); fail(`new package boundary ${file}`); }
+    catch (error) { if (error.code !== 'ENOENT') throw error; }
+  }
+  const members = relative => {
+    const absolute = path.join(root, relative);
+    if (fs.realpathSync(absolute) !== absolute || !fs.lstatSync(absolute).isDirectory()) fail(`physical directory ${relative}`);
+    return fs.readdirSync(absolute).sort().flatMap(name => {
+      const file = relative + '/' + name, entry = fs.lstatSync(path.join(root, file));
+      if (entry.isSymbolicLink()) fail(`aliased member ${file}`);
+      if (entry.isDirectory()) return members(file);
+      if (!entry.isFile()) fail(`nonregular member ${file}`);
+      return [file];
+    }).sort();
+  };
+  for (const roster of authority.directoryRosters) {
+    if (JSON.stringify(members(roster.directory)) !== JSON.stringify(roster.files)) fail(`member roster ${roster.directory}`);
+  }
+  const sources = Object.keys(authority.sourcePins);
+  if (!graph || JSON.stringify(graph.edges.filter(edge => sources.includes(edge.target))) !== JSON.stringify(authority.incomingEdges)
+    || JSON.stringify(graph.publicEntries.filter(entry => sources.includes(entry.canonicalSource))) !== JSON.stringify(authority.publicEntries)) fail('imported or aliased entry context');
+  const dependencies = [profile.authority, ...buffers.keys()], outputs = [], outputMembers = [];
+  for (const observation of authority.profiles) {
+    let documentOrdinal = 0;
+    if (observation.exitCode !== 0) fail('original observation exit');
+    for (const stream of observation.streams) {
+      if (stream.payload.encoding !== 'utf8' || hash(stream.payload.bytes) !== stream.payload.sha256) fail('recorded output bytes');
+      if (stream.destination !== 'stdout' && (!buffers.has(stream.destination)
+        || !buffers.get(stream.destination).equals(Buffer.from(stream.payload.bytes)))) fail(`output/current input equality ${stream.destination}`);
+      outputMembers.push({profile: observation.id, source: observation.source, destination: stream.destination,
+        role: stream.role, sha256: stream.payload.sha256});
+      const documents = YAML.parseAllDocuments(stream.payload.bytes);
+      if (documents.some(document => document.errors.length)) fail(`output YAML ${stream.destination}`);
+      documents.forEach(document => {
+        const value = document.toJS();
+        if (stream.role !== 'api') {
+          if (!value || typeof value !== 'object' || Array.isArray(value) || value.apiVersion || value.kind) fail(`non-API member substitution ${stream.destination}`);
+          if (stream.role === 'selection-metadata' && (JSON.stringify(Object.keys(value)) !== '["directory"]'
+            || value.directory !== JSON.parse(buffers.get('gitops/production/selection.json')).directory)) fail('selection metadata');
+          return;
+        }
+        if (value?.apiVersion !== 'argoproj.io/v1alpha1' || !['Application', 'AppProject'].includes(value.kind)
+          || !value.metadata?.name) fail(`API member identity ${stream.destination}`);
+        outputs.push({value, context: {apiVersion: value.apiVersion, kind: value.kind, path: observation.source,
+          document: documentOrdinal++, sourceDigest: authority.sourcePins[observation.source], producer: 'node-original-finite-output-profile',
+          profile: observation.id, observationRevision: authority.sourceRevision,
+          ...(observation.fixtureCommits ? {observationFixtureCommits: observation.fixtureCommits} : {}),
+          publicOutput: stream.destination, inputs: dependencies, inputDigest: profile.authoritySha256,
+          outputDigest: hash(JSON.stringify(value)), outputBytesDigest: stream.payload.sha256,
+          executionLimit: 'Sealed historical output snapshot only, not a renewed current Git/history/loader/environment or original-command-success claim. Finite original bootstrap/check and isolated read-only planner observations; no inventory execution, apply, preflight, live ownership/adoption, healthy rollback or unobserved caller/configuration profile.'}});
+      });
+    }
+  }
+  const result = Object.freeze({sources: Object.freeze(sources), dependencies: Object.freeze(dependencies),
+    outputs: Object.freeze(outputs), outputMembers: Object.freeze(outputMembers.map(Object.freeze)),
+    descriptors: Object.freeze(authority.descriptors.map(Object.freeze)), witnessDigest: profile.authoritySha256});
+  qualifiedGitOpsProfiles.add(result);
+  return result;
+}
+export function gitOpsOutputProfileRole(source, role, witness) {
+  if (!witness || !witness.sources.includes(source) || role.role !== 'unknown') return role;
+  assert(qualifiedGitOpsProfiles.has(witness), 'API_PRODUCT_GITOPS_OUTPUT_PROFILE_UNQUALIFIED: unacquired witness');
+  const descriptor = witness.descriptors.find(item => item.source === source && item.line === role.line && item.sink === role.sink);
+  if (!descriptor) return role;
+  const nativeDescriptor = Object.fromEntries(['line', 'sink', 'expression', 'sinkContract'].map(key => [key, role[key] ?? null]));
+  assert.equal(hash(JSON.stringify(nativeDescriptor)), descriptor.classifierDescriptorSha256,
+    'API_PRODUCT_GITOPS_OUTPUT_PROFILE_UNQUALIFIED: native descriptor');
+  return {...role, role: descriptor.role, basis: descriptor.purpose,
+    gitOpsWitnessDigest: witness.witnessDigest,
+    qualifiedOutputMembers: descriptor.role === 'api-adapted' ? witness.outputMembers.filter(member => member.source === source) : [],
+    executionAuthority: false,
+    dependencies: [...new Set([...role.dependencies, ...witness.dependencies])]};
+}
+
 export function discoverScriptApiOutputs(root) {
   assertReviewedDiagnosticOutputSources(root);
   // Qualification includes graph metadata (for example directory symlinks)
@@ -1522,9 +1634,10 @@ export function discoverScriptApiOutputs(root) {
   const scalarSources=['scripts/bundle-values-field.mjs','scripts/buster-resource-overlay.mjs'];
   const scalarOccurrences=new Map(scalarSources.filter(source=>executableSourceSet.has(source)).map(source=>
     [source,deploymentScalarOccurrenceCustody(root,source,fs.readFileSync(path.join(root,source)),documentationGraphCache.get(root))]));
+  const gitOpsProfile=checkedGitOpsOutputProfiles(root,documentationGraphCache.get(root));
   const sourceInputs=walkProductSources(root,producerRoots,()=>true);
   if(fs.existsSync(path.join(root,'package.json')))sourceInputs.push('package.json');
-  const inputKey=hash(JSON.stringify([documentationGraphCache.get(root).inputKey,bundleCopy?.inputDigest??null,configOutput?.inputDigest??null,minimalPlugin?.inputDigest??null,[...scalarOccurrences].map(([source,receipt])=>[source,receipt.inputDigest]),sourceInputs.map(source=>[source,hash(fs.readFileSync(path.join(root,source)))])]));
+  const inputKey=hash(JSON.stringify([documentationGraphCache.get(root).inputKey,gitOpsProfile?.witnessDigest??null,bundleCopy?.inputDigest??null,configOutput?.inputDigest??null,minimalPlugin?.inputDigest??null,[...scalarOccurrences].map(([source,receipt])=>[source,receipt.inputDigest]),sourceInputs.map(source=>[source,hash(fs.readFileSync(path.join(root,source)))])]));
   const cached=scriptOutputCache.get(root);
   if(cached?.inputKey===inputKey&&cached.dependencies.every(([source,digest])=>fs.existsSync(path.join(root,source))&&hash(fs.readFileSync(path.join(root,source)))===digest))return cached.result;
   const classifiedDependencies=new Set();
@@ -1590,7 +1703,7 @@ export function discoverScriptApiOutputs(root) {
     assert(!/(?:from\s*|(?:require|import)\(\s*)['"]@kubernetes\/client-node['"]/u.test(bytes),`API_PRODUCT_SCRIPT_TYPED_SDK_UNQUALIFIED: ${source}; documentation output adapter maintainers must classify the typed emitter`);
     if(/\b(?:spawnSync|execFileSync|execFile|spawn)\(\s*['"]helm['"]/u.test(bytes))assertProducerAdapterAuthority(root,[source]);
     const witness=source===reviewedArgocdArtifactProfile.source?checkedArtifact:null;
-    const outputRoles=classifyOutputRoles(source).map(role=>checkedArtifactRole(role,witness)).map(role=>runtimeBundleCopyRole(role,source===bundleSource?bundleCopy:null)).map(role=>deploymentConfigOutputRole(role,source===configSource?configOutput:null)).map(role=>minimalPluginFixtureOutputRole(role,source===minimalPluginSource?minimalPlugin:null));
+    const outputRoles=classifyOutputRoles(source).map(role=>checkedArtifactRole(role,witness)).map(role=>gitOpsOutputProfileRole(source,role,gitOpsProfile)).map(role=>runtimeBundleCopyRole(role,source===bundleSource?bundleCopy:null)).map(role=>deploymentConfigOutputRole(role,source===configSource?configOutput:null)).map(role=>minimalPluginFixtureOutputRole(role,source===minimalPluginSource?minimalPlugin:null));
     for(const role of outputRoles)for(const dependency of role.dependencies??[])classifiedDependencies.add(dependency);
     // A canonical traversal seed is not proof of a bare CLI invocation. The
     // separate receipts cover only the original captured configuration uses; public
@@ -1599,6 +1712,7 @@ export function discoverScriptApiOutputs(root) {
       ?selectedDeploymentScalarOccurrences(role,scalarOccurrences.get(source)):role.role!=='unknown',
       `API_PRODUCT_SCRIPT_OUTPUT_ROLE_UNQUALIFIED: ${source}:${role.line}: ${role.expression}`);
     if(witness){result.push(...witness.outputs);continue;}
+    if(gitOpsProfile?.sources.includes(source)){result.push(...gitOpsProfile.outputs.filter(output=>output.context.path===source));continue;}
     if(!outputRoles.some(role=>role.role==='api')&&(!/apiVersion/u.test(bytes)||!/(?:kind\s*:|['"]kind['"]\s*:)/u.test(bytes)))continue;
     const tree=ts.createSourceFile(source,bytes,ts.ScriptTarget.Latest,true,/\.[cm]?ts$/u.test(source)?ts.ScriptKind.TS:ts.ScriptKind.JS);
     assert(!tree.parseDiagnostics.length,`API_PRODUCT_PRODUCER_PARSE_FAILED: ${source}`);
@@ -1899,6 +2013,7 @@ export function discoverScriptOutputRoleClassifications(root) {
   const sources=nodeOutputExecutableSources(root).filter(file=>!documentationTools.has(file));
   const classify=createSerializedOutputRoleClassifier(root,sources);
   const observations=discoverDeploymentNodeOutputObservations(root);
+  const gitOpsProfile=checkedGitOpsOutputProfiles(root,documentationGraphCache.get(root));
   const scalarSources=['scripts/bundle-values-field.mjs','scripts/buster-resource-overlay.mjs'];
   const scalarOccurrences=new Map(scalarSources.filter(source=>sources.includes(source)).map(source=>
     [source,deploymentScalarOccurrenceCustody(root,source,fs.readFileSync(path.join(root,source)),documentationGraphCache.get(root))]));
@@ -1908,7 +2023,7 @@ export function discoverScriptOutputRoleClassifications(root) {
     const bundleCopy=runtimeBundleCopyCustody(root,source,fs.readFileSync(path.join(root,source)));
     const configOutput=deploymentConfigOutputCustody(root,source,fs.readFileSync(path.join(root,source)));
     const minimalPlugin=minimalPluginFixtureOutputCustody(root,source,fs.readFileSync(path.join(root,source)));
-    return classify(source).map(role=>checkedArtifactRole(role,witness)).map(role=>runtimeBundleCopyRole(role,bundleCopy)).map(role=>deploymentConfigOutputRole(role,configOutput)).map(role=>minimalPluginFixtureOutputRole(role,minimalPlugin)).flatMap(role=>{
+    return classify(source).map(role=>checkedArtifactRole(role,witness)).map(role=>gitOpsOutputProfileRole(source,role,gitOpsProfile)).map(role=>runtimeBundleCopyRole(role,bundleCopy)).map(role=>deploymentConfigOutputRole(role,configOutput)).map(role=>minimalPluginFixtureOutputRole(role,minimalPlugin)).flatMap(role=>{
     // Deployment observations alone remain annotations, never role grants.
     // The separate Source-owned checked-artifact profile above binds one exact
     // descriptor and API output set; all other unknown outputs stay unknown.

@@ -1,0 +1,750 @@
+{
+  "schemaVersion": "original-gitops-finite-output-profiles.v1",
+  "sourceRevision": "557bab463b9ca9a897ea094a86640eacb05090c7",
+  "productCliExecuted": true,
+  "inventoryExecutesProduct": false,
+  "applyPreflightRollbackCliOrLiveExecuted": false,
+  "sourcePins": {
+    "scripts/gitops-continuous.mjs": "f2b35d956ffaa40dc9644f7f3c22c3d7e6f34747e890f1c139de8211cd2e3734",
+    "scripts/gitops-owner.mjs": "201b9e820af600cfef179ed299d82e65855aa30598bc165c330c13c56a20de51",
+    "scripts/gitops-rollback.mjs": "cb99e161b264852a620710b73dbbc4f3162d1abb78e8ff36be741889e667b958",
+    "scripts/gitops.mjs": "4f6de3a78c0e2bab93ac3b3420b672e155dd2016acd39bc086dd9fb176c54746"
+  },
+  "inputs": [
+    {
+      "path": "charts/gitops/Chart.yaml",
+      "sha256": "128484e2551cdd707552aef34bf7282520e2d29dab32c4ee3540e16ee4ea7356",
+      "bytes": 113
+    },
+    {
+      "path": "charts/gitops/files/application-health.lua",
+      "sha256": "51b93a1c1c7a46ff5d5b25977194b9c946d59f5c9e0a24c287f992d7de51d9e5",
+      "bytes": 3803
+    },
+    {
+      "path": "charts/gitops/templates/applications.yaml",
+      "sha256": "db8564cbc9ab705454123e8e1f209115c0f128c8746a6c7dd6361e824b2dd107",
+      "bytes": 2000
+    },
+    {
+      "path": "charts/gitops/values.yaml",
+      "sha256": "13594b5b5bf3bbe761f98090ee82cd6b20831a1419b2d9d11e4bca950b039a9b",
+      "bytes": 218
+    },
+    {
+      "path": "contracts/pipeline-observability/v1/package.json",
+      "sha256": "54a92a1b6802019a8654ee4224a12abaad3fcc580f4b01d6baaaec91ba7c687a",
+      "bytes": 496
+    },
+    {
+      "path": "contracts/pipeline-observability/v1/src/canonical-json.ts",
+      "sha256": "378c3ba35ca88e40527e3912dfc0f897e6d5cbdc1dfd40b3a825fbf1241e9177",
+      "bytes": 1397
+    },
+    {
+      "path": "contracts/pipeline-observability/v1/src/index.ts",
+      "sha256": "f4f928c9b1b8c1345c829a44b89d05f847b057051aff05ce6d8cd8b98ed897c2",
+      "bytes": 61
+    },
+    {
+      "path": "contracts/pipeline-observability/v1/src/types.ts",
+      "sha256": "667337c76a94709fa5b4b817adfd112859397924e163fc5bca3bacf50c5287f9",
+      "bytes": 2359
+    },
+    {
+      "path": "contracts/pipeline-observability/v1/src/validation.ts",
+      "sha256": "7901db9ca3d9253e1edfb9b816034334b1d4f763fca197b64e6249f86bfc5977",
+      "bytes": 6344
+    },
+    {
+      "path": "contracts/pipeline-worker-core/v1/package.json",
+      "sha256": "40d234e5ba169853c0c1ca4dcab3590373163c6b7189461157ff569a7aa42df5",
+      "bytes": 666
+    },
+    {
+      "path": "contracts/pipeline-worker-core/v1/src/digest.ts",
+      "sha256": "10c61ec122ca6e65c7deef2c059a19ad70627cf65bdf1eb65f0ac2539457d780",
+      "bytes": 2829
+    },
+    {
+      "path": "contracts/pipeline-worker-core/v1/src/index.ts",
+      "sha256": "013609ae51e836644640820de878378c0cbc797d6c299f06d926925790676c72",
+      "bytes": 288
+    },
+    {
+      "path": "contracts/pipeline-worker-core/v1/src/resource-types-v2.ts",
+      "sha256": "e75e058344978e1a94856c05caf03cfcff92ccb67e6fefe5c91249d4bc3e5fc8",
+      "bytes": 2532
+    },
+    {
+      "path": "contracts/pipeline-worker-core/v1/src/resource-types-v3.ts",
+      "sha256": "37133709e46db3c537178b2ce4ec0666317e9b461360f25b4c349e71f5adab36",
+      "bytes": 2101
+    },
+    {
+      "path": "contracts/pipeline-worker-core/v1/src/resource-validation-v2.ts",
+      "sha256": "9c75271a9830c86faa484acaaa52e042d03a56c53b027d4aeae5f8531d06e54e",
+      "bytes": 6501
+    },
+    {
+      "path": "contracts/pipeline-worker-core/v1/src/resource-validation-v3.ts",
+      "sha256": "00332a01a4674616f0859a83d704771b497d0c0d4220629a35b9a7414f924784",
+      "bytes": 6355
+    },
+    {
+      "path": "contracts/pipeline-worker-core/v1/src/trust.ts",
+      "sha256": "c650fdbe7f43b422f36d050df291d2a00fdd4bc694a1dae5d6236b4814743cd5",
+      "bytes": 1978
+    },
+    {
+      "path": "contracts/pipeline-worker-core/v1/src/types.ts",
+      "sha256": "399e42c696f561fbea8f38305252f873179f1b71115f7eacd961f7b5f899ec43",
+      "bytes": 6606
+    },
+    {
+      "path": "contracts/pipeline-worker-core/v1/src/validation.ts",
+      "sha256": "a4caf6147b58a5a68e49ed02bbe6ed75ce7f84f8d5baca4243b3519aecaa3147",
+      "bytes": 11476
+    },
+    {
+      "path": "gitops/production/apps/applications.yaml",
+      "sha256": "237d439f5b54e5775ac4e5a3ffbd0784fd3424aefc14f8fb27e124f2ce0802f5",
+      "bytes": 4171
+    },
+    {
+      "path": "gitops/production/bootstrap.yaml",
+      "sha256": "c87c6cddf689d45c2e2fcde4f2a178f27b6971c944498376c38c9af4058d4935",
+      "bytes": 1235
+    },
+    {
+      "path": "gitops/production/config.json",
+      "sha256": "aa3d20f6787b1ea18f828a42a1d5235544444aad0e660576db0e76bb9a35529c",
+      "bytes": 442
+    },
+    {
+      "path": "gitops/production/selection.json",
+      "sha256": "773c7171e3c8e48e7f0da21d9debf801420d9ea3a67a943a2469a0af109331f8",
+      "bytes": 59
+    },
+    {
+      "path": "node_modules/.package-lock.json",
+      "sha256": "5de787895573574c33b442fa83a469c616269de39ed7941662031b5b6d638474",
+      "bytes": 230613
+    },
+    {
+      "path": "node_modules/js-yaml/dist/js-yaml.mjs",
+      "sha256": "33e98d04719e7a7fc8e0433803ad4b26a6f72d4545d279a5b053d45bd7871c7a",
+      "bytes": 103891
+    },
+    {
+      "path": "node_modules/js-yaml/package.json",
+      "sha256": "82b932c87c5da7901c6a8f984698c57912570146fffd3156dcdc96a6c210d847",
+      "bytes": 2281
+    },
+    {
+      "path": "package-lock.json",
+      "sha256": "9a75a764e3a27a2163736ec097e99b305a05d9ec2748cb7e38a19b8f88d7fafe",
+      "bytes": 278187
+    },
+    {
+      "path": "package.json",
+      "sha256": "4ab1e90c2259aeb96acfdc877e5a9eed330f605abff46d7eca85faded0f020c3",
+      "bytes": 53756
+    },
+    {
+      "path": "releases/gitops/runtime-38542596018-1/bundle.receipt",
+      "sha256": "bedb93d86b55fb99b912ba48769fb990a5880d7dc9c889b01418911669d0dedf",
+      "bytes": 23394
+    },
+    {
+      "path": "releases/gitops/runtime-38542596018-1/buster/resources.yaml",
+      "sha256": "7b27d22d324c91b3d97e73d94368eaf69a0540e454b89194f5b8315645d71b59",
+      "bytes": 249601
+    },
+    {
+      "path": "releases/gitops/runtime-38542596018-1/nova/resources.yaml",
+      "sha256": "4bf63feaea712f8b731626ec2e85840ccef8b7b45de1afe68cfe5caa36a3e205",
+      "bytes": 212438
+    },
+    {
+      "path": "releases/gitops/runtime-38542596018-1/prism/resources.yaml",
+      "sha256": "314f318cf3c49355cdb53cb381226cfdce07e048fece9a9946e6bdfabf601a1d",
+      "bytes": 299765
+    },
+    {
+      "path": "releases/runtime-code.json",
+      "sha256": "9733ee12b239bdb75679d9091ff9785241a802d35e39dbd7f367c5715533d82b",
+      "bytes": 1004
+    },
+    {
+      "path": "releases/runtime-images.json",
+      "sha256": "d5fd243a82dc6cee5743761330abf9689a647f9925ee2ce91328dfb4c4bf285f",
+      "bytes": 1484
+    },
+    {
+      "path": "releases/values/buster.yaml",
+      "sha256": "30c4cd7ce00a01a0779d3e89bf6c1ea6e1cabf7a6d29d9690c5bff8ba1bfe66a",
+      "bytes": 7156
+    },
+    {
+      "path": "releases/values/nova.yaml",
+      "sha256": "65e17ab4dd9bf35b7cad19c8281353c06b8568f35fd06f3a5e49ac714ddacfe4",
+      "bytes": 9586
+    },
+    {
+      "path": "releases/values/prism-agent.yaml",
+      "sha256": "5ffdadeac20c4a209aea1c79c7c7541749fe61fae51ed6551aebc6a16807c9ec",
+      "bytes": 4748
+    },
+    {
+      "path": "releases/values/prism.yaml",
+      "sha256": "957165d2ed019f7c5da147598bc0ea775683e630722b680db3c19312737e1c07",
+      "bytes": 1966
+    },
+    {
+      "path": "scripts/gitops-adoption-shape.mjs",
+      "sha256": "1bc1cbba3fae534e98fb0dca242cf40cba06bafa0b6216d7cc7a11871f3163b3",
+      "bytes": 1978
+    },
+    {
+      "path": "scripts/gitops-bundle.mjs",
+      "sha256": "5fa709e2141442529bd2aa271a8e26bb96885fe3597a65e86b3201752eb37ef8",
+      "bytes": 7854
+    },
+    {
+      "path": "scripts/gitops-continuous.mjs",
+      "sha256": "f2b35d956ffaa40dc9644f7f3c22c3d7e6f34747e890f1c139de8211cd2e3734",
+      "bytes": 6424
+    },
+    {
+      "path": "scripts/gitops-owner.mjs",
+      "sha256": "201b9e820af600cfef179ed299d82e65855aa30598bc165c330c13c56a20de51",
+      "bytes": 2272
+    },
+    {
+      "path": "scripts/gitops-rollback.mjs",
+      "sha256": "cb99e161b264852a620710b73dbbc4f3162d1abb78e8ff36be741889e667b958",
+      "bytes": 4331
+    },
+    {
+      "path": "scripts/gitops.mjs",
+      "sha256": "4f6de3a78c0e2bab93ac3b3420b672e155dd2016acd39bc086dd9fb176c54746",
+      "bytes": 14834
+    },
+    {
+      "path": "scripts/install/register-runtime-argo.mjs",
+      "sha256": "aef8a00017be23e6e6e7153b9391fde1942f666545bc918f310e8171769a1df7",
+      "bytes": 4176
+    },
+    {
+      "path": "scripts/native-worker-deployment-preflight.mjs",
+      "sha256": "2e98c9e9420baf85b4bca0d3f0ed4cf1f947f9a75f5bce845d6e5cd4819a46e3",
+      "bytes": 2876
+    },
+    {
+      "path": "scripts/native-worker-node-capacity.mjs",
+      "sha256": "ad4635917bf9d1679eeb427e933fe423ed63f604b0cf57cc09c40be497d0e149",
+      "bytes": 4800
+    },
+    {
+      "path": "scripts/native-worker-node-policy.mjs",
+      "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+      "bytes": 3383
+    },
+    {
+      "path": "scripts/native-worker-node-preflight.mjs",
+      "sha256": "e17c6c2570d3a4926b063330adfbdb67f3c0014915f570d6ad8b95333e1c2e56",
+      "bytes": 3497
+    },
+    {
+      "path": "scripts/updates/code-release.mjs",
+      "sha256": "bedd4f2a8668a27b675e53aa415451a4b428543e6fc6a99bc88988355bff3259",
+      "bytes": 2499
+    },
+    {
+      "path": "scripts/updates/deployment-release.mjs",
+      "sha256": "87d7c5e64c9718aba77a259611a760666f05626379dd2cc3f218b75869ed9ac3",
+      "bytes": 10781
+    },
+    {
+      "path": "scripts/updates/runtime-inputs.mjs",
+      "sha256": "2381e5d7398f48fa8e15d3d582c8db6e6bc37de2bfb690f8aebeccc437f791f7",
+      "bytes": 3300
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/admission-retirement.ts",
+      "sha256": "11172dcc4e8704ab48da4a0ec9c36c889b52672e201f9a5c729fda551e5b8b1a",
+      "bytes": 9069
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/attempt-projection.ts",
+      "sha256": "4e7e1217ec7142f3e414c7c93f3b187e77b74768901da310118db939b2bb4523",
+      "bytes": 12302
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/attempt-replay.ts",
+      "sha256": "f0d7de829604fdb1650abf10f6b0fa5c65db018a579f6fd43367e7ac98befd91",
+      "bytes": 8053
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/durable-attempts.ts",
+      "sha256": "4c0fe1e20bafcddcb21997eb56de19dfcb1ceedeaf0df134c1c19b48781da750",
+      "bytes": 30761
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts",
+      "sha256": "5624aa2b5f980a373ab30fdf012dee1346418ac3b2537244475f2a496d3766a0",
+      "bytes": 30682
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/hash-journal.ts",
+      "sha256": "b00c2271bb662055d7250ca193f842d1e6346edf22dfa713b33df1b637ce957a",
+      "bytes": 1457
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/replay-validation.ts",
+      "sha256": "8e11ae8d57a44f7a0947ee9f81a794630eab3c5cbdfcde38673ba1e41e62cbbc",
+      "bytes": 8140
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/package.json",
+      "sha256": "d2639c87351035eb4ed0d34569934d18151b4024ec81a7604680ad3a6ae71ae2",
+      "bytes": 778
+    },
+    {
+      "path": "skills/common/plugin-runtime/package.json",
+      "sha256": "986062eca168e284cab36b5837221350a9d0f1fc72b08b4e114be11eac694710",
+      "bytes": 80
+    },
+    {
+      "path": "skills/worker/core/package.json",
+      "sha256": "115273bab79eb997cff67343773f542c33924227ef9e172c742a807843fe34ac",
+      "bytes": 239
+    },
+    {
+      "path": "skills/worker/core/worker/digest.ts",
+      "sha256": "d8c005287076f3ca2a6e84daf386c17ff77858ba5dc22cfebd3b9063d48ef402",
+      "bytes": 185
+    },
+    {
+      "path": "skills/worker/core/worker/native-pool-policy.ts",
+      "sha256": "3b64878629a5ee897e8dd71ae6b592bc1c89df36677fc2860f8d7f4bb4227307",
+      "bytes": 2508
+    },
+    {
+      "path": "skills/worker/core/worker/native-resource-observation.ts",
+      "sha256": "903fe22c2b9c51c908111361bb0423819a32ce1a4bf99b49b08cb39f490b976c",
+      "bytes": 3048
+    },
+    {
+      "path": "skills/worker/core/worker/native-resource-pool.ts",
+      "sha256": "2a002b796bae216210186f258d32f5dd267ec10a4940f4d0fc2f12ea72bd93ee",
+      "bytes": 3100
+    },
+    {
+      "path": "skills/worker/core/worker/native-resource-scope.ts",
+      "sha256": "2aa1a46145ff77451e85796c1ce13ade3c4eaf7beba5063cabf0acb081190d4c",
+      "bytes": 7537
+    },
+    {
+      "path": "skills/worker/core/worker/native-runtime-identity.ts",
+      "sha256": "4bb8600bf48477411e75148e6edbd0dae345809316d60a3d3cd4b8ad6f8a057e",
+      "bytes": 1345
+    },
+    {
+      "path": "skills/worker/core/worker/ownership-state.ts",
+      "sha256": "fb56676102eadf6a00d3a138cacab4ff945ba5974ba78786c3840ba18faed05a",
+      "bytes": 6295
+    },
+    {
+      "path": "skills/worker/core/worker/ownership-store.ts",
+      "sha256": "d784b4196a6103a0ad1e1eaa086640d89ea3205db74be0b0d569045183d20b79",
+      "bytes": 8306
+    },
+    {
+      "path": "skills/worker/core/worker/resource-reservations.ts",
+      "sha256": "781ba82f68942a44ba3c40652adffb76d8ceb369c279909dc826fbc361fd63e9",
+      "bytes": 1474
+    }
+  ],
+  "absentPackageBoundaries": [
+    "contracts/node_modules/js-yaml",
+    "contracts/package.json",
+    "contracts/pipeline-observability/node_modules/js-yaml",
+    "contracts/pipeline-observability/package.json",
+    "contracts/pipeline-observability/v1/node_modules/js-yaml",
+    "contracts/pipeline-observability/v1/src/node_modules/js-yaml",
+    "contracts/pipeline-observability/v1/src/package.json",
+    "contracts/pipeline-worker-core/node_modules/js-yaml",
+    "contracts/pipeline-worker-core/package.json",
+    "contracts/pipeline-worker-core/v1/node_modules/js-yaml",
+    "contracts/pipeline-worker-core/v1/src/node_modules/js-yaml",
+    "contracts/pipeline-worker-core/v1/src/package.json",
+    "scripts/install/node_modules/js-yaml",
+    "scripts/install/package.json",
+    "scripts/node_modules/js-yaml",
+    "scripts/package.json",
+    "scripts/updates/node_modules/js-yaml",
+    "scripts/updates/package.json",
+    "skills/common/node_modules/js-yaml",
+    "skills/common/package.json",
+    "skills/common/plugin-runtime/foundation/node_modules/js-yaml",
+    "skills/common/plugin-runtime/foundation/observability/node_modules/js-yaml",
+    "skills/common/plugin-runtime/foundation/observability/package.json",
+    "skills/common/plugin-runtime/node_modules/js-yaml",
+    "skills/node_modules/js-yaml",
+    "skills/package.json",
+    "skills/worker/core/node_modules/js-yaml",
+    "skills/worker/core/worker/node_modules/js-yaml",
+    "skills/worker/core/worker/package.json",
+    "skills/worker/node_modules/js-yaml",
+    "skills/worker/package.json"
+  ],
+  "directoryRosters": [
+    {
+      "directory": "charts/gitops",
+      "files": [
+        "charts/gitops/Chart.yaml",
+        "charts/gitops/files/application-health.lua",
+        "charts/gitops/templates/applications.yaml",
+        "charts/gitops/values.yaml"
+      ]
+    },
+    {
+      "directory": "releases/gitops/runtime-38542596018-1",
+      "files": [
+        "releases/gitops/runtime-38542596018-1/bundle.receipt",
+        "releases/gitops/runtime-38542596018-1/buster/resources.yaml",
+        "releases/gitops/runtime-38542596018-1/nova/resources.yaml",
+        "releases/gitops/runtime-38542596018-1/prism/resources.yaml"
+      ]
+    }
+  ],
+  "incomingEdges": [
+    {
+      "source": "scripts/gitops-continuous.mjs",
+      "target": "scripts/gitops.mjs",
+      "kind": "import",
+      "operation": "import { bootstrapDocuments, preflightGitOps } from './gitops.mjs';"
+    },
+    {
+      "source": "scripts/gitops-rollback.mjs",
+      "target": "scripts/gitops.mjs",
+      "kind": "import",
+      "operation": "import { readCommittedBundle } from './gitops.mjs';"
+    },
+    {
+      "source": "scripts/gitops-rollback.mjs",
+      "target": "scripts/gitops-continuous.mjs",
+      "kind": "import",
+      "operation": "import { renderContinuousEnvironment } from './gitops-continuous.mjs';"
+    },
+    {
+      "source": "scripts/gitops.mjs",
+      "target": "scripts/gitops-owner.mjs",
+      "kind": "import",
+      "operation": "import { claimedNamespaces } from './gitops-owner.mjs';"
+    },
+    {
+      "source": "scripts/install/register-runtime-argo.mjs",
+      "target": "scripts/gitops-continuous.mjs",
+      "kind": "import",
+      "operation": "import {renderContinuousEnvironment} from '../gitops-continuous.mjs';"
+    }
+  ],
+  "publicEntries": [
+    {
+      "path": "scripts/gitops-continuous.mjs",
+      "canonicalSource": "scripts/gitops-continuous.mjs"
+    },
+    {
+      "path": "scripts/gitops-owner.mjs",
+      "canonicalSource": "scripts/gitops-owner.mjs"
+    },
+    {
+      "path": "scripts/gitops-rollback.mjs",
+      "canonicalSource": "scripts/gitops-rollback.mjs"
+    },
+    {
+      "path": "scripts/gitops.mjs",
+      "canonicalSource": "scripts/gitops.mjs"
+    }
+  ],
+  "descriptors": [
+    {
+      "source": "scripts/gitops-continuous.mjs",
+      "line": 103,
+      "sink": "kubectl-request",
+      "classifierDescriptorSha256": "cf8abdc7acdb60011803c677ab21a5b8c5d2a10a1354a3ae6c8ce721ec9ca00a",
+      "role": "api-adapted",
+      "purpose": "finite-original-API-and-per-member-output-profiles"
+    },
+    {
+      "source": "scripts/gitops-continuous.mjs",
+      "line": 99,
+      "sink": "fs.writeFileSync",
+      "classifierDescriptorSha256": "7967adcf260e64882325ddd89f3793180ca51a561b35d7dff14c86e746e42793",
+      "role": "api-adapted",
+      "purpose": "finite-original-API-and-per-member-output-profiles"
+    },
+    {
+      "source": "scripts/gitops-continuous.mjs",
+      "line": 107,
+      "sink": "process.stderr.write",
+      "classifierDescriptorSha256": "b6a78c1b7a942682cbec909d1bd45ead23eb19cb4523b8305893d3bb64e0570d",
+      "role": "non-api",
+      "purpose": "terminal-CLI-diagnostic-only-not-input-or-effect-inertness"
+    },
+    {
+      "source": "scripts/gitops-owner.mjs",
+      "line": 15,
+      "sink": "kubectl-request",
+      "classifierDescriptorSha256": "480308c7adce3025fbe2a37824cec3c52a197f32c24853d5a7338566c23469d9",
+      "role": "non-api",
+      "purpose": "default-callback-three-read-only-query-vectors"
+    },
+    {
+      "source": "scripts/gitops-rollback.mjs",
+      "line": 62,
+      "sink": "fs.writeFileSync",
+      "classifierDescriptorSha256": "6c50c0e1da6d562186d79846f553c803a5b7bf9ba43fe9ecd1dac58098e9d2ef",
+      "role": "api-adapted",
+      "purpose": "finite-original-API-and-per-member-output-profiles"
+    },
+    {
+      "source": "scripts/gitops-rollback.mjs",
+      "line": 66,
+      "sink": "process.stderr.write",
+      "classifierDescriptorSha256": "a3bae31a81f26a9ca4bf0ebd2d98822eed2167fef2d5f87eafb584008a2b7850",
+      "role": "non-api",
+      "purpose": "terminal-CLI-diagnostic-only-not-input-or-effect-inertness"
+    },
+    {
+      "source": "scripts/gitops.mjs",
+      "line": 190,
+      "sink": "kubectl-request",
+      "classifierDescriptorSha256": "7f599e2997b1ffd5de54d4acb3c52f4e1454fc75a55cc21c5e4250711e148914",
+      "role": "api-adapted",
+      "purpose": "finite-original-API-and-per-member-output-profiles"
+    },
+    {
+      "source": "scripts/gitops.mjs",
+      "line": 181,
+      "sink": "process.stdout.write",
+      "classifierDescriptorSha256": "ed2cf51ac231dc5ee19e4359c37dfeaa92693f94a8e8f92b9681bfc124c15b6d",
+      "role": "api-adapted",
+      "purpose": "finite-original-API-and-per-member-output-profiles"
+    },
+    {
+      "source": "scripts/gitops.mjs",
+      "line": 198,
+      "sink": "process.stdout.write",
+      "classifierDescriptorSha256": "306e788e416b89a4503cd21f77abf1ca4de6b8d0b2e0d0947e376cf54557244a",
+      "role": "non-api",
+      "purpose": "terminal-CLI-diagnostic-only-not-input-or-effect-inertness"
+    },
+    {
+      "source": "scripts/gitops.mjs",
+      "line": 202,
+      "sink": "process.stderr.write",
+      "classifierDescriptorSha256": "604680e413a3cbab61f98485aee4b45b13708a79c292ef7733ca4adfd6499961",
+      "role": "non-api",
+      "purpose": "terminal-CLI-diagnostic-only-not-input-or-effect-inertness"
+    }
+  ],
+  "profiles": [
+    {
+      "id": "original-bootstrap-cli-default-naming",
+      "source": "scripts/gitops.mjs",
+      "argv": [
+        "scripts/gitops.mjs",
+        "bootstrap",
+        "releases/gitops/runtime-38542596018-1",
+        "https://github.com/datrab/kubeclaw.git",
+        "557bab463b9ca9a897ea094a86640eacb05090c7",
+        "argocd"
+      ],
+      "exitCode": 0,
+      "streams": [
+        {
+          "destination": "stdout",
+          "role": "api",
+          "payload": {
+            "encoding": "utf8",
+            "sha256": "004e6071d7ae1c8a82fa9a1659c4f19451681e2ed927a4452c3ef925f8baaf99",
+            "bytes": "apiVersion: argoproj.io/v1alpha1\nkind: AppProject\nmetadata:\n  name: kubeclaw-runtime\n  namespace: argocd\n  labels:\n    kubeclaw.dev/gitops-root: kubeclaw-runtime\nspec:\n  description: 'Administrative bootstrap: only this reviewed repository may define runtime Applications and their Project.'\n  sourceRepos:\n    - https://github.com/datrab/kubeclaw.git\n  destinations:\n    - namespace: argocd\n      server: https://kubernetes.default.svc\n  clusterResourceWhitelist: []\n  namespaceResourceWhitelist:\n    - group: argoproj.io\n      kind: Application\n    - group: argoproj.io\n      kind: AppProject\n---\napiVersion: argoproj.io/v1alpha1\nkind: Application\nmetadata:\n  name: kubeclaw-runtime\n  namespace: argocd\n  labels:\n    kubeclaw.dev/gitops-root: kubeclaw-runtime\n  annotations:\n    kubeclaw.dev/runtime-namespaces: '[\"kubeclaw\"]'\nspec:\n  project: kubeclaw-runtime\n  source:\n    repoURL: https://github.com/datrab/kubeclaw.git\n    targetRevision: 557bab463b9ca9a897ea094a86640eacb05090c7\n    path: charts/gitops\n    helm:\n      valuesObject:\n        repository: https://github.com/datrab/kubeclaw.git\n        revision: 557bab463b9ca9a897ea094a86640eacb05090c7\n        destinations:\n          - kubeclaw\n          - tailscale\n        rootName: kubeclaw-runtime\n        project: kubeclaw-runtime-workloads\n        groups:\n          - role: buster\n            name: kubeclaw-buster\n            namespace: kubeclaw\n            helmReleases:\n              - agent-buster\n            path: releases/gitops/runtime-38542596018-1/buster\n            wave: 0\n            manifestDigest: 7b27d22d324c91b3d97e73d94368eaf69a0540e454b89194f5b8315645d71b59\n            resources:\n              - apiVersion: v1\n                kind: ServiceAccount\n                namespace: kubeclaw\n                name: agent-buster-namespace-controller\n              - apiVersion: v1\n                kind: ServiceAccount\n                namespace: kubeclaw\n                name: agent-buster\n              - apiVersion: v1\n                kind: ConfigMap\n                namespace: kubeclaw\n                name: agent-buster-config\n              - apiVersion: v1\n                kind: ConfigMap\n                namespace: kubeclaw\n                name: agent-buster-swarm-config\n              - apiVersion: v1\n                kind: ConfigMap\n                namespace: kubeclaw\n                name: agent-buster-worker-trust\n              - apiVersion: v1\n                kind: PersistentVolumeClaim\n                namespace: kubeclaw\n                name: agent-buster-runtime-state\n              - apiVersion: v1\n                kind: PersistentVolumeClaim\n                namespace: kubeclaw\n                name: agent-buster-config\n              - apiVersion: v1\n                kind: PersistentVolumeClaim\n                namespace: kubeclaw\n                name: agent-buster-workspace\n              - apiVersion: apiextensions.k8s.io/v1\n                kind: CustomResourceDefinition\n                namespace: ''\n                name: busternamespaceleases.kubeclaw.forgestack.ai\n              - apiVersion: rbac.authorization.k8s.io/v1\n                kind: ClusterRole\n                namespace: ''\n                name: agent-buster-controller-secrets\n              - apiVersion: rbac.authorization.k8s.io/v1\n                kind: ClusterRole\n                namespace: ''\n                name: agent-buster-namespace-deployer\n              - apiVersion: rbac.authorization.k8s.io/v1\n                kind: ClusterRole\n                namespace: ''\n                name: agent-buster-namespace-tester\n              - apiVersion: rbac.authorization.k8s.io/v1\n                kind: ClusterRole\n                namespace: ''\n                name: agent-buster-namespace-controller\n              - apiVersion: rbac.authorization.k8s.io/v1\n                kind: ClusterRoleBinding\n                namespace: ''\n                name: agent-buster-namespace-controller\n              - apiVersion: rbac.authorization.k8s.io/v1\n                kind: Role\n                namespace: kubeclaw\n                name: agent-buster-namespace-controller-source-secrets\n              - apiVersion: rbac.authorization.k8s.io/v1\n                kind: Role\n                namespace: kubeclaw\n                name: agent-buster-namespace-lease-client\n              - apiVersion: rbac.authorization.k8s.io/v1\n                kind: RoleBinding\n                namespace: kubeclaw\n                name: agent-buster-namespace-controller-source-secrets\n              - apiVersion: rbac.authorization.k8s.io/v1\n                kind: RoleBinding\n                namespace: kubeclaw\n                name: agent-buster-namespace-lease-client\n              - apiVersion: v1\n                kind: Service\n                namespace: kubeclaw\n                name: agent-buster\n              - apiVersion: apps/v1\n                kind: Deployment\n                namespace: kubeclaw\n                name: agent-buster-namespace-controller\n              - apiVersion: apps/v1\n                kind: Deployment\n                namespace: kubeclaw\n                name: agent-buster\n              - apiVersion: admissionregistration.k8s.io/v1\n                kind: ValidatingAdmissionPolicy\n                namespace: ''\n                name: agent-buster-63a1240a-namespace-fence\n              - apiVersion: admissionregistration.k8s.io/v1\n                kind: ValidatingAdmissionPolicyBinding\n                namespace: ''\n                name: agent-buster-63a1240a-namespace-fence\n            images:\n              - envoyproxy/envoy:v1.39.0@sha256:d59f7f5fa10cff6d5892b6c5e7df5c9297ddfb2c3683e33fbfb82da24de4fa66\n              - >-\n                ghcr.io/datrab/kubeclaw-buster-gateway@sha256:abffa4dda820550ad69c67999b26ba8be1884c4600c3a2cd326424071812ce6c\n              - >-\n                ghcr.io/datrab/kubeclaw-buster-runtime@sha256:bdffca01610c68cb55041bdeb44add21e8877f71693e0e6033ae03d0a8c2255e\n              - >-\n                ghcr.io/datrab/kubeclaw-namespace-controller@sha256:74f241144e013e47300412e2078b1cb7b31fc90136667c1b33a06f2e4716d6c8\n            requiredSecrets:\n              - name: ghcr-secret\n                keys: []\n              - name: git-deploy-key-buster\n                keys: []\n              - name: github-bundle-reader\n                keys:\n                  - token\n              - name: openclaw-shared-secrets\n                keys:\n                  - busterV2Token\n                  - discordToken-buster\n                  - discordWebhook\n                  - gatewayToken-buster\n                  - litellmApiKey\n              - name: pipeline-test-gate-source-attestation\n                keys:\n                  - publicKey\n              - name: redis-secrets\n                keys:\n                  - redis-password\n          - role: prism\n            name: kubeclaw-prism\n            namespace: kubeclaw\n            helmReleases:\n              - prism\n              - agent-prism\n            path: releases/gitops/runtime-38542596018-1/prism\n            wave: 0\n            manifestDigest: 314f318cf3c49355cdb53cb381226cfdce07e048fece9a9946e6bdfabf601a1d\n            resources:\n              - apiVersion: networking.k8s.io/v1\n                kind: NetworkPolicy\n                namespace: kubeclaw\n                name: prism-default-deny\n              - apiVersion: networking.k8s.io/v1\n                kind: NetworkPolicy\n                namespace: kubeclaw\n                name: prism-dns\n              - apiVersion: networking.k8s.io/v1\n                kind: NetworkPolicy\n                namespace: kubeclaw\n                name: prism-application-paths\n              - apiVersion: networking.k8s.io/v1\n                kind: NetworkPolicy\n                namespace: kubeclaw\n                name: prism-studio-control\n              - apiVersion: networking.k8s.io/v1\n                kind: NetworkPolicy\n                namespace: kubeclaw\n                name: prism-worker-control\n              - apiVersion: networking.k8s.io/v1\n                kind: NetworkPolicy\n                namespace: kubeclaw\n                name: prism-worker-egress\n              - apiVersion: networking.k8s.io/v1\n                kind: NetworkPolicy\n                namespace: kubeclaw\n                name: prism-openclaw-agent\n              - apiVersion: networking.k8s.io/v1\n                kind: NetworkPolicy\n                namespace: kubeclaw\n                name: prism-studio-entry\n              - apiVersion: networking.k8s.io/v1\n                kind: NetworkPolicy\n                namespace: kubeclaw\n                name: prism-postgresql\n              - apiVersion: networking.k8s.io/v1\n                kind: NetworkPolicy\n                namespace: kubeclaw\n                name: prism-database-clients\n              - apiVersion: networking.k8s.io/v1\n                kind: NetworkPolicy\n                namespace: kubeclaw\n                name: prism-test-runner\n              - apiVersion: policy/v1\n                kind: PodDisruptionBudget\n                namespace: kubeclaw\n                name: prism-studio\n              - apiVersion: policy/v1\n                kind: PodDisruptionBudget\n                namespace: kubeclaw\n                name: prism-worker\n              - apiVersion: v1\n                kind: ServiceAccount\n                namespace: kubeclaw\n                name: prism-control\n              - apiVersion: v1\n                kind: ServiceAccount\n                namespace: kubeclaw\n                name: prism-studio\n              - apiVersion: v1\n                kind: ServiceAccount\n                namespace: kubeclaw\n                name: prism-worker\n              - apiVersion: v1\n                kind: ServiceAccount\n                namespace: kubeclaw\n                name: prism-ingestion\n              - apiVersion: v1\n                kind: ServiceAccount\n                namespace: kubeclaw\n                name: prism-backup\n              - apiVersion: v1\n                kind: ServiceAccount\n                namespace: kubeclaw\n                name: prism-test-runner\n              - apiVersion: v1\n                kind: ConfigMap\n                namespace: kubeclaw\n                name: prism-backup-script\n              - apiVersion: v1\n                kind: ConfigMap\n                namespace: kubeclaw\n                name: prism-worker-trust\n              - apiVersion: v1\n                kind: ConfigMap\n                namespace: kubeclaw\n                name: prism-postgresql-init\n              - apiVersion: v1\n                kind: PersistentVolumeClaim\n                namespace: kubeclaw\n                name: prism-backups\n              - apiVersion: v1\n                kind: PersistentVolumeClaim\n                namespace: kubeclaw\n                name: prism-artifacts\n              - apiVersion: v1\n                kind: Service\n                namespace: kubeclaw\n                name: prism-postgresql\n              - apiVersion: v1\n                kind: Service\n                namespace: kubeclaw\n                name: prism-studio\n              - apiVersion: v1\n                kind: Service\n                namespace: kubeclaw\n                name: prism-control\n              - apiVersion: v1\n                kind: Service\n                namespace: kubeclaw\n                name: prism-control-internal\n              - apiVersion: v1\n                kind: Service\n                namespace: kubeclaw\n                name: prism-worker\n              - apiVersion: v1\n                kind: Service\n                namespace: kubeclaw\n                name: prism-worker-internal\n              - apiVersion: apps/v1\n                kind: Deployment\n                namespace: kubeclaw\n                name: prism-control\n              - apiVersion: apps/v1\n                kind: Deployment\n                namespace: kubeclaw\n                name: prism-studio\n              - apiVersion: apps/v1\n                kind: Deployment\n                namespace: kubeclaw\n                name: prism-worker\n              - apiVersion: apps/v1\n                kind: StatefulSet\n                namespace: kubeclaw\n                name: prism-postgresql\n              - apiVersion: batch/v1\n                kind: CronJob\n                namespace: kubeclaw\n                name: prism-backup\n              - apiVersion: batch/v1\n                kind: CronJob\n                namespace: kubeclaw\n                name: prism-backup-verification\n              - apiVersion: batch/v1\n                kind: CronJob\n                namespace: kubeclaw\n                name: prism-restore-proof\n              - apiVersion: networking.k8s.io/v1\n                kind: Ingress\n                namespace: kubeclaw\n                name: prism-studio\n              - apiVersion: batch/v1\n                kind: Job\n                namespace: kubeclaw\n                name: prism-backup-storage-check\n              - apiVersion: batch/v1\n                kind: Job\n                namespace: kubeclaw\n                name: prism-migrate\n              - apiVersion: v1\n                kind: ServiceAccount\n                namespace: kubeclaw\n                name: agent-prism\n              - apiVersion: v1\n                kind: ConfigMap\n                namespace: kubeclaw\n                name: agent-prism-config\n              - apiVersion: v1\n                kind: ConfigMap\n                namespace: kubeclaw\n                name: agent-prism-swarm-config\n              - apiVersion: v1\n                kind: ConfigMap\n                namespace: kubeclaw\n                name: agent-prism-worker-trust\n              - apiVersion: v1\n                kind: ConfigMap\n                namespace: kubeclaw\n                name: agent-prism-workspace\n              - apiVersion: v1\n                kind: PersistentVolumeClaim\n                namespace: kubeclaw\n                name: agent-prism-config\n              - apiVersion: v1\n                kind: PersistentVolumeClaim\n                namespace: kubeclaw\n                name: agent-prism-workspace\n              - apiVersion: v1\n                kind: Service\n                namespace: kubeclaw\n                name: agent-prism\n              - apiVersion: apps/v1\n                kind: Deployment\n                namespace: kubeclaw\n                name: agent-prism\n            images:\n              - envoyproxy/envoy:v1.39.0@sha256:d59f7f5fa10cff6d5892b6c5e7df5c9297ddfb2c3683e33fbfb82da24de4fa66\n              - >-\n                ghcr.io/datrab/kubeclaw-prism-agent@sha256:4c83f7b2d0788c5c853f50a1ceeca75a348b1f7aa7e74044fe13b95028e119e1\n              - >-\n                ghcr.io/datrab/kubeclaw-prism-control@sha256:c72b91cc64280ee20502186d2f838739f82e7a3d94f8c5d8c136ab606d7b9db1\n              - >-\n                ghcr.io/datrab/kubeclaw-prism-studio@sha256:82a49fc7714180e269162d5d284fb2c6a23c4d903cc7798b2b0998daad757236\n              - >-\n                ghcr.io/datrab/kubeclaw-prism-worker@sha256:21cf7a7a1ab2015e84aa4b82c1169720857e842d20eba37d425891436ba6930d\n              - pgvector/pgvector:pg17@sha256:cf134a767f474095eeba57e0117be8e568e011a63f33fbf252f14c9b760f8e6f\n            requiredSecrets:\n              - name: ghcr-secret\n                keys: []\n              - name: git-deploy-key-nova\n                keys: []\n              - name: github-bundle-reader\n                keys:\n                  - token\n              - name: openclaw-shared-secrets\n                keys:\n                  - gatewayToken-prism\n                  - litellmApiKey\n              - name: prism-postgresql-auth\n                keys:\n                  - admin-url\n                  - migrator-password\n                  - migrator-url\n                  - password\n                  - readonly-password\n                  - runtime-password\n                  - runtime-url\n              - name: prism-runtime\n                keys:\n                  - ingestion-secret\n                  - ingress-secret\n                  - session-secret\n              - name: redis-secrets\n                keys:\n                  - redis-password\n          - role: nova\n            name: kubeclaw-nova\n            namespace: kubeclaw\n            helmReleases:\n              - agent-nova\n            path: releases/gitops/runtime-38542596018-1/nova\n            wave: 1\n            manifestDigest: 4bf63feaea712f8b731626ec2e85840ccef8b7b45de1afe68cfe5caa36a3e205\n            resources:\n              - apiVersion: networking.k8s.io/v1\n                kind: NetworkPolicy\n                namespace: kubeclaw\n                name: agent-nova-archviewer\n              - apiVersion: v1\n                kind: ServiceAccount\n                namespace: kubeclaw\n                name: agent-nova\n              - apiVersion: v1\n                kind: ConfigMap\n                namespace: kubeclaw\n                name: agent-nova-config\n              - apiVersion: v1\n                kind: ConfigMap\n                namespace: kubeclaw\n                name: agent-nova-swarm-config\n              - apiVersion: v1\n                kind: ConfigMap\n                namespace: kubeclaw\n                name: agent-nova-worker-trust\n              - apiVersion: v1\n                kind: PersistentVolumeClaim\n                namespace: kubeclaw\n                name: agent-nova-config\n              - apiVersion: v1\n                kind: PersistentVolumeClaim\n                namespace: kubeclaw\n                name: agent-nova-workspace\n              - apiVersion: rbac.authorization.k8s.io/v1\n                kind: ClusterRole\n                namespace: ''\n                name: agent-nova-verification-read\n              - apiVersion: rbac.authorization.k8s.io/v1\n                kind: ClusterRoleBinding\n                namespace: ''\n                name: agent-nova-verification-read\n              - apiVersion: rbac.authorization.k8s.io/v1\n                kind: Role\n                namespace: kubeclaw\n                name: agent-nova-namespace-lease-client\n              - apiVersion: rbac.authorization.k8s.io/v1\n                kind: Role\n                namespace: tailscale\n                name: agent-nova-verification-secret-9f5def8f\n              - apiVersion: rbac.authorization.k8s.io/v1\n                kind: RoleBinding\n                namespace: kubeclaw\n                name: agent-nova-namespace-lease-client\n              - apiVersion: rbac.authorization.k8s.io/v1\n                kind: RoleBinding\n                namespace: tailscale\n                name: agent-nova-verification-secret-9f5def8f\n              - apiVersion: v1\n                kind: Service\n                namespace: kubeclaw\n                name: agent-nova-archviewer\n              - apiVersion: v1\n                kind: Service\n                namespace: kubeclaw\n                name: agent-nova\n              - apiVersion: apps/v1\n                kind: Deployment\n                namespace: kubeclaw\n                name: agent-nova\n              - apiVersion: networking.k8s.io/v1\n                kind: Ingress\n                namespace: kubeclaw\n                name: agent-nova-archviewer\n            images:\n              - envoyproxy/envoy:v1.39.0@sha256:d59f7f5fa10cff6d5892b6c5e7df5c9297ddfb2c3683e33fbfb82da24de4fa66\n              - >-\n                ghcr.io/datrab/kubeclaw-archviewer@sha256:0389de26a0b4497ca348a97984ccbb43a5200747fcc5a9647a4df7223d6f03d5\n              - ghcr.io/datrab/kubeclaw-nova@sha256:36e4ecc526490feb278f06929978255bac3fb457c1ad9cdbc63178a5cbbfa87b\n            requiredSecrets:\n              - name: ghcr-secret\n                keys: []\n              - name: git-deploy-key-nova\n                keys: []\n              - name: github-bundle-reader\n                keys:\n                  - token\n              - name: nova-archviewer-auth\n                keys:\n                  - htpasswd\n              - name: openclaw-shared-secrets\n                keys:\n                  - busterV2Token\n                  - discordToken-nova\n                  - discordWebhook\n                  - gatewayToken-buster\n                  - gatewayToken-nova\n                  - litellmApiKey\n                  - stitchApiKey\n              - name: pipeline-test-gate-source-attestation\n                keys:\n                  - privateKey\n              - name: redis-secrets\n                keys:\n                  - redis-password\n        clusterResourceWhitelist:\n          - group: apiextensions.k8s.io\n            kind: CustomResourceDefinition\n          - group: rbac.authorization.k8s.io\n            kind: ClusterRole\n          - group: rbac.authorization.k8s.io\n            kind: ClusterRoleBinding\n          - group: admissionregistration.k8s.io\n            kind: ValidatingAdmissionPolicy\n          - group: admissionregistration.k8s.io\n            kind: ValidatingAdmissionPolicyBinding\n        namespaceResourceWhitelist:\n          - group: ''\n            kind: ServiceAccount\n          - group: ''\n            kind: ConfigMap\n          - group: ''\n            kind: PersistentVolumeClaim\n          - group: rbac.authorization.k8s.io\n            kind: Role\n          - group: rbac.authorization.k8s.io\n            kind: RoleBinding\n          - group: ''\n            kind: Service\n          - group: apps\n            kind: Deployment\n          - group: networking.k8s.io\n            kind: NetworkPolicy\n          - group: policy\n            kind: PodDisruptionBudget\n          - group: apps\n            kind: StatefulSet\n          - group: batch\n            kind: CronJob\n          - group: networking.k8s.io\n            kind: Ingress\n          - group: batch\n            kind: Job\n  destination:\n    server: https://kubernetes.default.svc\n    namespace: argocd\n  syncPolicy:\n    automated:\n      prune: false\n      selfHeal: true\n      allowEmpty: false\n    syncOptions:\n      - FailOnSharedResource=true\n"
+          }
+        }
+      ],
+      "limits": [
+        "Original bootstrap CLI only; apply/preflight not executed."
+      ]
+    },
+    {
+      "id": "original-continuous-check-configured-auto",
+      "source": "scripts/gitops-continuous.mjs",
+      "argv": [
+        "scripts/gitops-continuous.mjs",
+        "check",
+        "releases/gitops/runtime-38542596018-1",
+        "https://github.com/datrab/kubeclaw.git",
+        "557bab463b9ca9a897ea094a86640eacb05090c7"
+      ],
+      "exitCode": 0,
+      "streams": [
+        {
+          "destination": "gitops/production/apps/applications.yaml",
+          "role": "api",
+          "payload": {
+            "encoding": "utf8",
+            "sha256": "237d439f5b54e5775ac4e5a3ffbd0784fd3424aefc14f8fb27e124f2ce0802f5",
+            "bytes": "apiVersion: argoproj.io/v1alpha1\nkind: AppProject\nmetadata:\n  name: kubeclaw\n  labels:\n    kubeclaw.dev/gitops-root: kubeclaw\n  namespace: argocd\n  annotations:\n    argocd.argoproj.io/sync-wave: '-1'\nspec:\n  sourceRepos:\n    - https://github.com/datrab/kubeclaw.git\n  destinations:\n    - namespace: kubeclaw\n      server: https://kubernetes.default.svc\n    - namespace: tailscale\n      server: https://kubernetes.default.svc\n  clusterResourceWhitelist:\n    - group: apiextensions.k8s.io\n      kind: CustomResourceDefinition\n    - group: rbac.authorization.k8s.io\n      kind: ClusterRole\n    - group: rbac.authorization.k8s.io\n      kind: ClusterRoleBinding\n    - group: admissionregistration.k8s.io\n      kind: ValidatingAdmissionPolicy\n    - group: admissionregistration.k8s.io\n      kind: ValidatingAdmissionPolicyBinding\n  namespaceResourceWhitelist:\n    - group: ''\n      kind: ServiceAccount\n    - group: ''\n      kind: ConfigMap\n    - group: ''\n      kind: PersistentVolumeClaim\n    - group: rbac.authorization.k8s.io\n      kind: Role\n    - group: rbac.authorization.k8s.io\n      kind: RoleBinding\n    - group: ''\n      kind: Service\n    - group: apps\n      kind: Deployment\n    - group: networking.k8s.io\n      kind: NetworkPolicy\n    - group: policy\n      kind: PodDisruptionBudget\n    - group: apps\n      kind: StatefulSet\n    - group: batch\n      kind: CronJob\n    - group: networking.k8s.io\n      kind: Ingress\n    - group: batch\n      kind: Job\n  orphanedResources:\n    warn: true\n---\napiVersion: argoproj.io/v1alpha1\nkind: Application\nmetadata:\n  name: kubeclaw-buster\n  namespace: argocd\n  annotations:\n    argocd.argoproj.io/sync-wave: '0'\n    kubeclaw.dev/helm-releases: '[\"agent-buster\"]'\n    kubeclaw.dev/immutable-bundle-path: releases/gitops/runtime-38542596018-1/buster\n  labels:\n    kubeclaw.dev/gitops-project: kubeclaw\nspec:\n  project: kubeclaw\n  source:\n    repoURL: https://github.com/datrab/kubeclaw.git\n    targetRevision: main\n    path: releases/gitops/runtime-38542596018-1/buster\n    directory:\n      include: resources.yaml\n  destination:\n    server: https://kubernetes.default.svc\n    namespace: kubeclaw\n  syncPolicy:\n    automated:\n      prune: false\n      selfHeal: true\n      allowEmpty: false\n    syncOptions:\n      - FailOnSharedResource=true\n    retry:\n      limit: 3\n      backoff:\n        duration: 10s\n        factor: 2\n        maxDuration: 1m\n---\napiVersion: argoproj.io/v1alpha1\nkind: Application\nmetadata:\n  name: kubeclaw-prism\n  namespace: argocd\n  annotations:\n    argocd.argoproj.io/sync-wave: '0'\n    kubeclaw.dev/helm-releases: '[\"prism\",\"agent-prism\"]'\n    kubeclaw.dev/immutable-bundle-path: releases/gitops/runtime-38542596018-1/prism\n  labels:\n    kubeclaw.dev/gitops-project: kubeclaw\nspec:\n  project: kubeclaw\n  source:\n    repoURL: https://github.com/datrab/kubeclaw.git\n    targetRevision: main\n    path: releases/gitops/runtime-38542596018-1/prism\n    directory:\n      include: resources.yaml\n  destination:\n    server: https://kubernetes.default.svc\n    namespace: kubeclaw\n  syncPolicy:\n    automated:\n      prune: false\n      selfHeal: true\n      allowEmpty: false\n    syncOptions:\n      - FailOnSharedResource=true\n    retry:\n      limit: 3\n      backoff:\n        duration: 10s\n        factor: 2\n        maxDuration: 1m\n---\napiVersion: argoproj.io/v1alpha1\nkind: Application\nmetadata:\n  name: kubeclaw-nova\n  namespace: argocd\n  annotations:\n    argocd.argoproj.io/sync-wave: '1'\n    kubeclaw.dev/helm-releases: '[\"agent-nova\"]'\n    kubeclaw.dev/immutable-bundle-path: releases/gitops/runtime-38542596018-1/nova\n  labels:\n    kubeclaw.dev/gitops-project: kubeclaw\nspec:\n  project: kubeclaw\n  source:\n    repoURL: https://github.com/datrab/kubeclaw.git\n    targetRevision: main\n    path: releases/gitops/runtime-38542596018-1/nova\n    directory:\n      include: resources.yaml\n  destination:\n    server: https://kubernetes.default.svc\n    namespace: kubeclaw\n  syncPolicy:\n    automated:\n      prune: false\n      selfHeal: true\n      allowEmpty: false\n    syncOptions:\n      - FailOnSharedResource=true\n    retry:\n      limit: 3\n      backoff:\n        duration: 10s\n        factor: 2\n        maxDuration: 1m\n"
+          }
+        },
+        {
+          "destination": "gitops/production/bootstrap.yaml",
+          "role": "api",
+          "payload": {
+            "encoding": "utf8",
+            "sha256": "c87c6cddf689d45c2e2fcde4f2a178f27b6971c944498376c38c9af4058d4935",
+            "bytes": "apiVersion: argoproj.io/v1alpha1\nkind: AppProject\nmetadata:\n  name: kubeclaw-bootstrap\n  namespace: argocd\n  labels:\n    kubeclaw.dev/gitops-root: kubeclaw\nspec:\n  description: 'Administrative bootstrap: only this reviewed repository may define runtime Applications and their Project.'\n  sourceRepos:\n    - https://github.com/datrab/kubeclaw.git\n  destinations:\n    - namespace: argocd\n      server: https://kubernetes.default.svc\n  clusterResourceWhitelist: []\n  namespaceResourceWhitelist:\n    - group: argoproj.io\n      kind: Application\n    - group: argoproj.io\n      kind: AppProject\n---\napiVersion: argoproj.io/v1alpha1\nkind: Application\nmetadata:\n  name: kubeclaw\n  namespace: argocd\n  labels:\n    kubeclaw.dev/gitops-root: kubeclaw\n  annotations:\n    kubeclaw.dev/runtime-namespaces: '[\"kubeclaw\"]'\nspec:\n  project: kubeclaw-bootstrap\n  source:\n    repoURL: https://github.com/datrab/kubeclaw.git\n    targetRevision: main\n    path: gitops/production/apps\n    directory:\n      include: applications.yaml\n  destination:\n    server: https://kubernetes.default.svc\n    namespace: argocd\n  syncPolicy:\n    automated:\n      prune: false\n      selfHeal: true\n      allowEmpty: false\n    syncOptions:\n      - FailOnSharedResource=true\n"
+          }
+        },
+        {
+          "destination": "gitops/production/selection.json",
+          "role": "selection-metadata",
+          "payload": {
+            "encoding": "utf8",
+            "sha256": "773c7171e3c8e48e7f0da21d9debf801420d9ea3a67a943a2469a0af109331f8",
+            "bytes": "{\n  \"directory\": \"releases/gitops/runtime-38542596018-1\"\n}\n"
+          }
+        }
+      ],
+      "limits": [
+        "Actual original check compared all three files; no prepare/apply/preflight."
+      ]
+    },
+    {
+      "id": "original-rollback-planner-owned-second-selection",
+      "source": "scripts/gitops-rollback.mjs",
+      "function": "planGitOpsRollback",
+      "inputRepository": "owned full tracked clone only",
+      "requested": [
+        "previous",
+        "b15da2fb96ce6b11678b6572af1661067af03430"
+      ],
+      "fixtureCommits": [
+        "5b85c58998dd7c2a09d0ef3b9ef201cd49296c70",
+        "3787c6bf8ba8c89ea3475b88c5e91087a489ecc0"
+      ],
+      "exitCode": 0,
+      "streams": [
+        {
+          "destination": "releases/runtime-images.json",
+          "role": "runtime-image-receipt",
+          "payload": {
+            "encoding": "utf8",
+            "sha256": "d5fd243a82dc6cee5743761330abf9689a647f9925ee2ce91328dfb4c4bf285f",
+            "bytes": "{\n  \"schemaVersion\": 1,\n  \"commit\": \"fc2cd5b73c78cb12aac4fceaf23ac0b64b8eff90\",\n  \"images\": {\n    \"archviewer\": \"ghcr.io/datrab/kubeclaw-archviewer@sha256:0389de26a0b4497ca348a97984ccbb43a5200747fcc5a9647a4df7223d6f03d5\",\n    \"buster-gateway\": \"ghcr.io/datrab/kubeclaw-buster-gateway@sha256:abffa4dda820550ad69c67999b26ba8be1884c4600c3a2cd326424071812ce6c\",\n    \"buster-runtime\": \"ghcr.io/datrab/kubeclaw-buster-runtime@sha256:bdffca01610c68cb55041bdeb44add21e8877f71693e0e6033ae03d0a8c2255e\",\n    \"namespace-controller\": \"ghcr.io/datrab/kubeclaw-namespace-controller@sha256:74f241144e013e47300412e2078b1cb7b31fc90136667c1b33a06f2e4716d6c8\",\n    \"nova\": \"ghcr.io/datrab/kubeclaw-nova@sha256:36e4ecc526490feb278f06929978255bac3fb457c1ad9cdbc63178a5cbbfa87b\",\n    \"prism-agent\": \"ghcr.io/datrab/kubeclaw-prism-agent@sha256:4c83f7b2d0788c5c853f50a1ceeca75a348b1f7aa7e74044fe13b95028e119e1\",\n    \"prism-control\": \"ghcr.io/datrab/kubeclaw-prism-control@sha256:c72b91cc64280ee20502186d2f838739f82e7a3d94f8c5d8c136ab606d7b9db1\",\n    \"prism-ingestion\": \"ghcr.io/datrab/kubeclaw-prism-ingestion@sha256:1ddcfdc8aaf7e48a646e1e7dffd431ab250bd05148aff88be5f90fde59b586ad\",\n    \"prism-studio\": \"ghcr.io/datrab/kubeclaw-prism-studio@sha256:82a49fc7714180e269162d5d284fb2c6a23c4d903cc7798b2b0998daad757236\",\n    \"prism-worker\": \"ghcr.io/datrab/kubeclaw-prism-worker@sha256:21cf7a7a1ab2015e84aa4b82c1169720857e842d20eba37d425891436ba6930d\"\n  },\n  \"sourceRunId\": 38532312084,\n  \"sourceRunAttempt\": 1\n}\n"
+          }
+        },
+        {
+          "destination": "releases/runtime-code.json",
+          "role": "runtime-code-receipt",
+          "payload": {
+            "encoding": "utf8",
+            "sha256": "9733ee12b239bdb75679d9091ff9785241a802d35e39dbd7f367c5715533d82b",
+            "bytes": "{\n  \"schemaVersion\": 1,\n  \"commit\": \"92518c7ce206baf67a573e0e78f97269ae06447b\",\n  \"sourceRunId\": 38542596018,\n  \"sourceRunAttempt\": 1,\n  \"bundles\": {\n    \"nova\": {\n      \"url\": \"https://github.com/datrab/kubeclaw/releases/download/code-bundles-38542596018-1/nova-92518c7ce206baf67a573e0e78f97269ae06447b.tgz\",\n      \"sha256\": \"3c594e042305104082dda335396b22bde962fb11b6f8befaf8265d50e9aca541\",\n      \"contractVersion\": \"v2\"\n    },\n    \"buster\": {\n      \"url\": \"https://github.com/datrab/kubeclaw/releases/download/code-bundles-38542596018-1/buster-92518c7ce206baf67a573e0e78f97269ae06447b.tgz\",\n      \"sha256\": \"165dcb4d1d76050f788fcc0e3b592b8d4d9a98d885f1a5feb8769998b1f6db12\",\n      \"contractVersion\": \"v2\"\n    },\n    \"prism\": {\n      \"url\": \"https://github.com/datrab/kubeclaw/releases/download/code-bundles-38542596018-1/prism-92518c7ce206baf67a573e0e78f97269ae06447b.tgz\",\n      \"sha256\": \"dcbd4a27720f3ea31aa67e462af2111520819429d8515b401ad50b3e06732ac0\",\n      \"contractVersion\": \"v2\"\n    }\n  }\n}\n"
+          }
+        },
+        {
+          "destination": "releases/values/buster.yaml",
+          "role": "helm-values",
+          "payload": {
+            "encoding": "utf8",
+            "sha256": "30c4cd7ce00a01a0779d3e89bf6c1ea6e1cabf7a6d29d9690c5bff8ba1bfe66a",
+            "bytes": "# Generated from release fc2cd5b73c78cb12aac4fceaf23ac0b64b8eff90 and byte-matched source configuration; do not edit.\nagentRole: buster\ngateway:\n  startupDoctor:\n    enabled: true\n    nodeOptions: '--max-old-space-size=3072'\n    resources:\n      requests:\n        cpu: 100m\n        memory: 256Mi\n      limits:\n        cpu: '2'\n        memory: 4Gi\n  resources:\n    requests:\n      cpu: 1000m\n      memory: 12288Mi\n      ephemeral-storage: 1Gi\n    limits:\n      cpu: '6'\n      memory: 24576Mi\n      ephemeral-storage: 50Gi\ninitSetup:\n  resources:\n    requests:\n      cpu: 500m\n      memory: 1Gi\n    limits:\n      cpu: '2'\n      memory: 8Gi\nimage:\n  repository: ghcr.io/datrab/kubeclaw-buster-gateway\n  digest: sha256:abffa4dda820550ad69c67999b26ba8be1884c4600c3a2cd326424071812ce6c\n  tag: ''\n  pullPolicy: IfNotPresent\nimagePullSecrets:\n  - name: ghcr-secret\ncodeBundle:\n  enabled: true\n  archiveUrl: >-\n    https://github.com/datrab/kubeclaw/releases/download/code-bundles-38542596018-1/buster-92518c7ce206baf67a573e0e78f97269ae06447b.tgz\n  expectedCommit: 92518c7ce206baf67a573e0e78f97269ae06447b\n  contractVersion: v2\n  auth:\n    existingSecret: github-bundle-reader\n    existingSecretKey: token\n  sha256: 165dcb4d1d76050f788fcc0e3b592b8d4d9a98d885f1a5feb8769998b1f6db12\nauth:\n  existingSecret: openclaw-shared-secrets\n  existingSecretKey: gatewayToken-buster\nlitellm:\n  existingSecret: openclaw-shared-secrets\n  existingSecretKey: litellmApiKey\ndiscord:\n  enabled: true\n  existingSecret: openclaw-shared-secrets\n  existingSecretKey: discordToken-buster\n  channelId: '1473692599125540985'\n  execApprovers:\n    - user:849379821536804864\ncommands:\n  ownerAllowFrom:\n    - discord:849379821536804864\n  allowFromDiscord:\n    - '849379821536804864'\n    - user:849379821536804864\ndiscordWebhook:\n  secretName: openclaw-shared-secrets\n  secretKey: discordWebhook\nagent:\n  project: clawdeck\n  git:\n    enabled: true\n    secretName: git-deploy-key-buster\n    repoUrl: git@github.com:datrab/kubeclaw.git\nserviceAccount:\n  create: true\n  automount: false\nworkerTrust:\n  spiffe:\n    enabled: true\n    trustDomain: kubeclaw.internal\nservice:\n  extraPorts:\n    - name: buster-plan\n      port: 18891\n      targetPort: buster-plan\nextraContainers:\n  - name: buster-v2-runtime\n    image: ghcr.io/datrab/kubeclaw-buster-runtime@sha256:bdffca01610c68cb55041bdeb44add21e8877f71693e0e6033ae03d0a8c2255e\n    imagePullPolicy: Always\n    env:\n      - name: BUSTER_V2_TOKEN\n        valueFrom:\n          secretKeyRef:\n            name: openclaw-shared-secrets\n            key: busterV2Token\n      - name: BUSTER_SOURCE_ATTESTATION_PUBLIC_KEY\n        valueFrom:\n          secretKeyRef:\n            name: pipeline-test-gate-source-attestation\n            key: publicKey\n      - name: BUSTER_TRUSTED_PEER_SPIFFE_ID\n        value: spiffe://kubeclaw.internal/ns/kubeclaw/sa/agent-nova\n      - name: BUSTER_PLAN_PORT\n        value: '28891'\n      - name: BUSTER_PLAN_STATE_DIR\n        value: /var/lib/buster-v2/plan-jobs\n      - name: BUSTER_PLAN_RUN_DIR\n        value: /var/lib/buster-v2/runs\n      - name: BUSTER_V2_MAX_ARCHIVE_BYTES\n        value: '67108864'\n      - name: BUSTER_V2_MAX_EXTRACTED_BYTES\n        value: '536870912'\n      - name: BUSTER_V2_RESULT_ROOT\n        value: /workspace/git-repo/.swarm/runtime-results\n      - name: BUSTER_V2_KUBERNETES_CREDENTIALS\n        value: /var/run/buster-worker/kubernetes\n      - name: BUSTER_ALLOWED_SOURCE_SECRETS\n        value: kubeclaw-fixture-preflight,prism-test-provider,prism-test-runtime,prism-test-postgresql-auth,prism-test-ghcr\n      - name: CONTAINER_BUILD_BUILDKIT_HOST\n        value: unix:///run/user/1000/buildkit/buildkitd.sock\n      - name: BUSTER_BROWSER_PLAYWRIGHT_CGROUP_ROOT\n        value: /var/run/kubeclaw-browser-cgroup\n    ports:\n      - name: plan-runtime\n        containerPort: 28891\n        protocol: TCP\n    startupProbe:\n      httpGet:\n        scheme: HTTP\n        path: /bootstrapz\n        port: 28891\n      periodSeconds: 2\n      timeoutSeconds: 2\n      failureThreshold: 60\n    readinessProbe:\n      httpGet:\n        scheme: HTTP\n        path: /readyz\n        port: 28891\n      initialDelaySeconds: 5\n      periodSeconds: 5\n      timeoutSeconds: 2\n      failureThreshold: 6\n    livenessProbe:\n      httpGet:\n        scheme: HTTP\n        path: /healthz\n        port: 28891\n      initialDelaySeconds: 30\n      periodSeconds: 15\n      timeoutSeconds: 2\n      failureThreshold: 3\n    volumeMounts:\n      - name: workspace\n        mountPath: /workspace\n      - name: buster-v2-state\n        mountPath: /var/lib/buster-v2\n      - name: buster-api-token\n        mountPath: /var/run/buster-worker/kubernetes\n        readOnly: true\n      - name: buster-browser-cgroup\n        mountPath: /var/run/kubeclaw-browser-cgroup\n    resources:\n      requests:\n        cpu: '2'\n        memory: 8Gi\n        ephemeral-storage: 8Gi\n      limits:\n        cpu: '8'\n        memory: 24Gi\n        ephemeral-storage: 60Gi\n    securityContext:\n      runAsUser: 0\n      runAsGroup: 0\n      runAsNonRoot: false\n      privileged: false\n      allowPrivilegeEscalation: true\n      appArmorProfile:\n        type: Unconfined\n      seccompProfile:\n        type: Unconfined\n      capabilities:\n        drop:\n          - ALL\n        add:\n          - CHOWN\n          - SETGID\n          - SETPCAP\n          - SETUID\nextraVolumes:\n  - name: buster-v2-state\n    persistentVolumeClaim:\n      claimName: agent-buster-runtime-state\n  - name: buster-api-token\n    projected:\n      defaultMode: 288\n      sources:\n        - serviceAccountToken:\n            path: token\n            expirationSeconds: 3600\n        - configMap:\n            name: kube-root-ca.crt\n            items:\n              - key: ca.crt\n                path: ca.crt\n        - downwardAPI:\n            items:\n              - path: namespace\n                fieldRef:\n                  apiVersion: v1\n                  fieldPath: metadata.namespace\n  - name: buster-browser-cgroup\n    hostPath:\n      path: /sys/fs/cgroup/kubeclaw-buster-browser\n      type: DirectoryOrCreate\nbusterNamespaceBroker:\n  enabled: true\n  controller:\n    allowedAccess:\n      - subject: kubeclaw/agent-nova\n        modes:\n          - deployer\n      - subject: kubeclaw/agent-buster\n        modes:\n          - deployer\n          - tester\n    allowedSourceSecrets:\n      - kubeclaw-fixture-preflight\n      - prism-test-provider\n      - prism-test-runtime\n      - prism-test-postgresql-auth\n      - prism-test-ghcr\n    image:\n      repository: ghcr.io/datrab/kubeclaw-namespace-controller\n      digest: sha256:74f241144e013e47300412e2078b1cb7b31fc90136667c1b33a06f2e4716d6c8\n      tag: ''\n      pullPolicy: IfNotPresent\nresources:\n  requests:\n    cpu: 500m\n    memory: 4096Mi\n  limits:\n    cpu: 4000m\n    memory: 24576Mi\nworkspace:\n  enabled: false\n  soul: |\n    You are Buster. Hunt for bugs, report exact reproduction evidence, and\n    never repair product code. Pipeline lifecycle authority stays in v2 core.\n  identity: |\n    Buster \ud83d\udca5 \u2014 Destructive tester. Cold, precise, relentless.\nbusterRuntimePersistence:\n  enabled: true\n  claimName: agent-buster-runtime-state\n  size: 64Gi\n  storageClass: ''\n"
+          }
+        },
+        {
+          "destination": "releases/values/prism.yaml",
+          "role": "helm-values",
+          "payload": {
+            "encoding": "utf8",
+            "sha256": "957165d2ed019f7c5da147598bc0ea775683e630722b680db3c19312737e1c07",
+            "bytes": "# Generated from release fc2cd5b73c78cb12aac4fceaf23ac0b64b8eff90 and byte-matched source configuration; do not edit.\nimages:\n  control:\n    repository: ghcr.io/datrab/kubeclaw-prism-control\n    digest: sha256:c72b91cc64280ee20502186d2f838739f82e7a3d94f8c5d8c136ab606d7b9db1\n    pullPolicy: IfNotPresent\n  studio:\n    repository: ghcr.io/datrab/kubeclaw-prism-studio\n    digest: sha256:82a49fc7714180e269162d5d284fb2c6a23c4d903cc7798b2b0998daad757236\n    pullPolicy: IfNotPresent\n  worker:\n    repository: ghcr.io/datrab/kubeclaw-prism-worker\n    digest: sha256:21cf7a7a1ab2015e84aa4b82c1169720857e842d20eba37d425891436ba6930d\n    pullPolicy: IfNotPresent\n  ingestion:\n    repository: ghcr.io/datrab/kubeclaw-prism-ingestion\n    digest: sha256:1ddcfdc8aaf7e48a646e1e7dffd431ab250bd05148aff88be5f90fde59b586ad\n    pullPolicy: IfNotPresent\nimagePullSecrets:\n  - name: ghcr-secret\ncontrol:\n  replicas: 1\n  resources:\n    requests:\n      cpu: 500m\n      memory: 1Gi\n    limits:\n      cpu: '4'\n      memory: 4Gi\nstudio:\n  replicas: 1\n  resources:\n    requests:\n      cpu: 250m\n      memory: 256Mi\n    limits:\n      cpu: '2'\n      memory: 1Gi\nworker:\n  replicas: 1\n  resources:\n    requests:\n      cpu: '1'\n      memory: 2Gi\n    limits:\n      cpu: '8'\n      memory: 8Gi\ningestion:\n  enabled: false\n  replicas: 1\npostgresql:\n  enabled: true\n  image: pgvector/pgvector:pg17@sha256:cf134a767f474095eeba57e0117be8e568e011a63f33fbf252f14c9b760f8e6f\n  storage: 100Gi\n  storageClass: ''\n  existingSecret: prism-postgresql-auth\n  resources:\n    requests:\n      cpu: 500m\n      memory: 1Gi\n    limits:\n      cpu: '4'\n      memory: 8Gi\nsecrets:\n  runtime: prism-runtime\n  database: prism-postgresql-auth\nartifactStorage:\n  storage: 100Gi\n  storageClass: ''\ntailscale:\n  enabled: true\n  hostname: prism-studio\n  operatorNamespace: tailscale\nworkerTrust:\n  spiffe:\n    enabled: true\n    trustDomain: kubeclaw.internal\n    agentNamespace: kubeclaw\n    agentServiceAccount: agent-prism\n"
+          }
+        },
+        {
+          "destination": "releases/values/prism-agent.yaml",
+          "role": "helm-values",
+          "payload": {
+            "encoding": "utf8",
+            "sha256": "5ffdadeac20c4a209aea1c79c7c7541749fe61fae51ed6551aebc6a16807c9ec",
+            "bytes": "# Generated from release fc2cd5b73c78cb12aac4fceaf23ac0b64b8eff90 and byte-matched source configuration; do not edit.\nagentRole: prism\ngateway:\n  startupDoctor:\n    enabled: true\n    nodeOptions: '--max-old-space-size=3072'\n    resources:\n      requests:\n        cpu: 100m\n        memory: 256Mi\n      limits:\n        cpu: '2'\n        memory: 4Gi\nimage:\n  repository: ghcr.io/datrab/kubeclaw-prism-agent\n  digest: sha256:4c83f7b2d0788c5c853f50a1ceeca75a348b1f7aa7e74044fe13b95028e119e1\n  tag: ''\n  pullPolicy: IfNotPresent\nimagePullSecrets:\n  - name: ghcr-secret\nrunAsRoot: false\ncodeBundle:\n  enabled: true\n  archiveUrl: >-\n    https://github.com/datrab/kubeclaw/releases/download/code-bundles-38542596018-1/prism-92518c7ce206baf67a573e0e78f97269ae06447b.tgz\n  expectedCommit: 92518c7ce206baf67a573e0e78f97269ae06447b\n  contractVersion: v2\n  auth:\n    existingSecret: github-bundle-reader\n    existingSecretKey: token\n  sha256: dcbd4a27720f3ea31aa67e462af2111520819429d8515b401ad50b3e06732ac0\nauth:\n  existingSecret: openclaw-shared-secrets\n  existingSecretKey: gatewayToken-prism\nlitellm:\n  endpoint: http://litellm.kubeclaw.svc.cluster.local:4000/v1\n  existingSecret: openclaw-shared-secrets\n  existingSecretKey: litellmApiKey\ndiscord:\n  enabled: false\n  existingSecret: openclaw-shared-secrets\n  existingSecretKey: discordToken-prism\n  channelId: ''\ncommands:\n  ownerAllowFrom:\n    - discord:849379821536804864\n  allowFromDiscord:\n    - '849379821536804864'\n    - user:849379821536804864\nagent:\n  project: prism\n  model:\n    primary: openai/gpt-5.6-sol\n    fallbacks:\n      - openai/gpt-5.5\n  git:\n    enabled: true\n    secretName: git-deploy-key-nova\n    repoUrl: git@github.com:datrab/kubeclaw.git\nserviceAccount:\n  create: true\n  automount: false\nworkerTrust:\n  spiffe:\n    enabled: true\n    trustDomain: kubeclaw.internal\nservice:\n  gatewayPort: 8080\n  gatewayTargetPort: prism-dispatch\n  bridgeEnabled: false\nextraEnv:\n  - name: PRISM_CONTROL_URL\n    value: http://127.0.0.1:28080\n  - name: PRISM_STUDIO_PUBLIC_URL\n    value: https://prism-studio\nextraContainers:\n  - name: prism-agent-bridge\n    image: ghcr.io/datrab/kubeclaw-prism-agent@sha256:4c83f7b2d0788c5c853f50a1ceeca75a348b1f7aa7e74044fe13b95028e119e1\n    imagePullPolicy: Always\n    command:\n      - node\n      - /opt/kubeclaw-prism/agent-bridge.mjs\n    env:\n      - name: PORT\n        value: '18080'\n      - name: PRISM_CONTROL_URL\n        value: http://127.0.0.1:28080\n      - name: PRISM_STUDIO_PUBLIC_URL\n        value: https://prism-studio\n      - name: OPENCLAW_GATEWAY_TOKEN\n        valueFrom:\n          secretKeyRef:\n            name: openclaw-shared-secrets\n            key: gatewayToken-prism\n    volumeMounts:\n      - name: config\n        mountPath: /home/node/.openclaw\n      - name: tmp\n        mountPath: /tmp\n    securityContext:\n      runAsUser: 1000\n      runAsGroup: 1000\n      allowPrivilegeEscalation: false\n      readOnlyRootFilesystem: true\n      capabilities:\n        drop:\n          - ALL\n    readinessProbe:\n      exec:\n        command:\n          - node\n          - '-e'\n          - >-\n            fetch('http://127.0.0.1:18080/ready',{signal:AbortSignal.timeout(800)}).then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))\n      initialDelaySeconds: 3\n    livenessProbe:\n      exec:\n        command:\n          - node\n          - '-e'\n          - >-\n            fetch('http://127.0.0.1:18080/health',{signal:AbortSignal.timeout(800)}).then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))\n      initialDelaySeconds: 10\n    resources:\n      requests:\n        cpu: 50m\n        memory: 128Mi\n      limits:\n        cpu: 500m\n        memory: 512Mi\nworkspace:\n  enabled: true\n  overrideOnRestart: true\n  soul: >\n    You are Prism, KubeClaw's single design agent. Nova gives you an architecture and product context.\n\n    Produce exactly three materially distinct, complete, accessible Prism designs and commit them with\n    prism_create_design_set.\n\n    When Studio or Discord sends feedback, continue the same project session and commit the complete update with\n    prism_apply_revision.\n\n    Never call a model provider outside OpenClaw. All reasoning uses the managed OpenAI route through this OpenClaw\n    gateway.\n  tools: >\n    prism_create_design_set is mandatory for a new architecture and accepts exactly three designs.\n\n    prism_apply_revision is mandatory for Studio or Discord design changes.\n\n    Read /app/skills/packages/prism-contract/schemas/prism-v1.schema.json for the canonical contract and\n    /app/skills/packages/prism-contract/fixtures/minimal-web.json for a minimal valid example before creating a\n    document.\nprobes:\n  dependencies:\n    redis:\n      enabled: false\n    registries:\n      enabled: false\n      endpoints: []\n"
+          }
+        },
+        {
+          "destination": "releases/values/nova.yaml",
+          "role": "helm-values",
+          "payload": {
+            "encoding": "utf8",
+            "sha256": "65e17ab4dd9bf35b7cad19c8281353c06b8568f35fd06f3a5e49ac714ddacfe4",
+            "bytes": "# Generated from release fc2cd5b73c78cb12aac4fceaf23ac0b64b8eff90 and byte-matched source configuration; do not edit.\nagentRole: nova\ngateway:\n  startupDoctor:\n    enabled: true\n    nodeOptions: '--max-old-space-size=3072'\n    resources:\n      requests:\n        cpu: 100m\n        memory: 256Mi\n      limits:\n        cpu: '2'\n        memory: 4Gi\ninitSetup:\n  resources:\n    requests:\n      cpu: 500m\n      memory: 1Gi\n    limits:\n      cpu: '2'\n      memory: 8Gi\nimage:\n  repository: ghcr.io/datrab/kubeclaw-nova\n  digest: sha256:36e4ecc526490feb278f06929978255bac3fb457c1ad9cdbc63178a5cbbfa87b\n  tag: ''\n  pullPolicy: IfNotPresent\nimagePullSecrets:\n  - name: ghcr-secret\ncodeBundle:\n  enabled: true\n  archiveUrl: >-\n    https://github.com/datrab/kubeclaw/releases/download/code-bundles-38542596018-1/nova-92518c7ce206baf67a573e0e78f97269ae06447b.tgz\n  expectedCommit: 92518c7ce206baf67a573e0e78f97269ae06447b\n  contractVersion: v2\n  auth:\n    existingSecret: github-bundle-reader\n    existingSecretKey: token\n  sha256: 3c594e042305104082dda335396b22bde962fb11b6f8befaf8265d50e9aca541\nauth:\n  existingSecret: openclaw-shared-secrets\n  existingSecretKey: gatewayToken-nova\nstitch:\n  existingSecret: openclaw-shared-secrets\n  existingSecretKey: stitchApiKey\nlitellm:\n  existingSecret: openclaw-shared-secrets\n  existingSecretKey: litellmApiKey\ndiscord:\n  requireMention: false\n  enabled: true\n  existingSecret: openclaw-shared-secrets\n  existingSecretKey: discordToken-nova\n  channelId: '1475581795021099169'\ndiscordWebhook:\n  secretName: openclaw-shared-secrets\n  secretKey: discordWebhook\ncommands:\n  ownerAllowFrom:\n    - discord:849379821536804864\n  allowFromDiscord:\n    - '849379821536804864'\n    - user:849379821536804864\nagent:\n  project: clawdeck\n  model:\n    primary: openai/gpt-6.1-sol\n    fallbacks:\n      - openai/gpt-5.5\n  git:\n    enabled: true\n    secretName: git-deploy-key-nova\n    repoUrl: git@github.com:datrab/kubeclaw.git\nserviceAccount:\n  create: true\n  automount: true\nbusterNamespaceBroker:\n  enabled: true\n  leaseClient:\n    enabled: true\n    verificationRead:\n      enabled: true\narchviewer:\n  enabled: true\n  existingSecret: nova-archviewer-auth\n  hostname: nova-architecture\n  tailscaleOperatorNamespace: tailscale\ncapabilityProviders:\n  buster:\n    agentRole: buster\n    capabilities:\n      runtime.dispatch:\n        adapter: openclaw\n        port: 18789\n      test.plan.execute:\n        adapter: buster-plan-v1\n        scheme: http\n        port: 18891\n        proxyPort: 28891\n  prism:\n    agentRole: prism\n    capabilities:\n      runtime.dispatch:\n        adapter: runtime\n        port: 8080\n        proxyPort: 28080\n        authentication: spiffe-proxy\nworkerTrust:\n  spiffe:\n    enabled: true\n    trustDomain: kubeclaw.internal\nextraEnv:\n  - name: BUSTER_V2_TOKEN\n    valueFrom:\n      secretKeyRef:\n        name: openclaw-shared-secrets\n        key: busterV2Token\n  - name: BUSTER_SOURCE_ATTESTATION_PRIVATE_KEY\n    valueFrom:\n      secretKeyRef:\n        name: pipeline-test-gate-source-attestation\n        key: privateKey\n  - name: BUSTER_GATEWAY_TOKEN\n    valueFrom:\n      secretKeyRef:\n        name: openclaw-shared-secrets\n        key: gatewayToken-buster\n  - name: BUSTER_GATEWAY_REPOSITORY_ROOT\n    value: /home/node/.openclaw/workspace/git-repo\nresources:\n  requests:\n    cpu: 1000m\n    memory: 12288Mi\n  limits:\n    cpu: 4000m\n    memory: 16384Mi\nprobes:\n  liveness:\n    timeoutSeconds: 10\n    failureThreshold: 5\nextraContainers:\n  - name: archviewer\n    image: ghcr.io/datrab/kubeclaw-archviewer@sha256:0389de26a0b4497ca348a97984ccbb43a5200747fcc5a9647a4df7223d6f03d5\n    imagePullPolicy: Always\n    ports:\n      - name: archviewer\n        containerPort: 3456\n        protocol: TCP\n    volumeMounts:\n      - name: archviewer-auth\n        mountPath: /etc/archviewer-auth\n        readOnly: true\n      - name: workspace\n        mountPath: /designs\n        subPath: prism/designs\n        readOnly: true\n    startupProbe:\n      httpGet:\n        path: /healthz\n        port: archviewer\n      periodSeconds: 2\n      failureThreshold: 30\n    readinessProbe:\n      httpGet:\n        path: /healthz\n        port: archviewer\n      periodSeconds: 10\n    livenessProbe:\n      httpGet:\n        path: /healthz\n        port: archviewer\n      initialDelaySeconds: 10\n      periodSeconds: 15\n    resources:\n      requests:\n        cpu: 50m\n        memory: 64Mi\n      limits:\n        cpu: 200m\n        memory: 128Mi\nextraVolumes: []\nextraVolumeMounts: []\nworkspace:\n  enabled: false\n  soul: >\n    You are Nova, architect and visionary of the KubeClaw Swarm. You are the operator's right hand.\n\n\n    WHO YOU ARE:\n\n    You think in systems. You see the big picture \u2014 architecture, business value, resource constraints, what's possible\n    with the swarm. You plan software from vision to modules. You advise on strategy, prioritization, and trade-offs.\n    You take initiative: if you see a better approach, a missing opportunity, or a smarter way to ship \u2014 say it. You\n    know the full infrastructure (K8s, agents, pipeline, memory, tooling) and you leverage that knowledge creatively.\n\n\n    WHAT YOU DO:\n\n    - Architect: declare module dependencies, ownership and requirements using the packaged project runtime guide\n\n    - Orchestrate: run pipeline.ts, analyze failures, craft better retry prompts, manage swarm memory\n\n    - Advise: suggest features, flag risks, estimate effort, think about product-market fit and positioning\n\n    - Automate: if a task can be a skill, make it a skill and notify davide. If an agent can handle it, delegate it.\n\n\n    RULES:\n\n    - State lives in files. Trust files over context.\n\n    - You never write code, run tests, or review. You delegate to Forge, Buster, Echo.\n\n    - BLOCKED = stop. Alert Davide. No creative workarounds past 3 fails.\n\n    - Pipeline first: use pipeline.ts for standard module flow.\n\n    - Memory duty: recall before delegating, store after every outcome. Atomic facts only.\n\n    - Cost aware: plan before executing. Read files instead of spawning agents when possible.\n\n    - You can spawn persistent agents for ongoing tasks (design, research)\n\n\n    STYLE: Direct, opinionated, proactive. Terse when orchestrating, thoughtful when advising. You have a point of view\n    and you share it.\n  agents: >\n    ## Swarm\n\n    Forge (code writer) \u2014 ACP subagent, spawned by pipeline as thread-bound session\n\n    Buster (tester) \u2014 separate pod, receives typed v2 suite jobs and runs them against its local BuildKit\n\n    Echo (reviewer) \u2014 ACP subagent, spawned by pipeline for gate reviews\n\n    You are the only coordination point. Agents never contact each other directly.\n\n\n    ## Project Pipeline\n\n    Use a nova-project.v2 JSON file with explicit architecture/source declarations,\n\n    module blueprints, dependencies, owned paths, requirements, resolved provider plans\n\n    and cumulative final checks. Use the installed platform configuration.\n\n    ```\n\n    node /app/skills/pipeline.ts --platform /path/platform.json --project /path/project.json\n\n    ```\n\n    The project route requires deterministic source preflight and Blueprint sync,\n\n    then serializes implementation, lint, optional Echo review and native provider\n\n    quality gates before cumulative final checks. Failed gates request repair;\n\n    all later checks rerun before a dependent module can proceed.\n\n    Prism approval/import and deployment remain separate prerequisites; this command\n\n    does not establish their completion.\n\n\n    ## Validation and Recovery\n\n    Compile and validate the installed stage contracts before starting:\n\n    `node /app/skills/pipeline.ts --platform /path/platform.json --project /path/project.json --compile\n    /path/new-pipeline.json`\n\n    Recover the same immutable project/run configuration:\n\n    `node /app/skills/pipeline.ts --platform /path/platform.json --project /path/project.json --recover <run-id>`\n\n    Supply an authenticated continuation using `--signal /path/resume-signal.json`.\n\n    Read stdout JSON for runId, status and stage states; read the durable run journal\n\n    and artifacts for findings. Do not retry an unresolved external mutation manually.\n\n    Exit 0 means succeeded (or compiled); exit 1 means a non-success result or error.\n  tools: >\n    ## Pipeline\n\n    pipeline.ts --platform <platform.json> --project <project.json> [--compile <new-pipeline.json> | --recover <run-id>\n    | --signal <resume-signal.json>]\n\n    Explicit core graphs remain supported with --pipeline <pipeline.json> and\n\n    --run-id <run-id>, --recover <run-id>, or --run-id <run-id> --signal <file>.\n\n\n    ## Buster\n\n    Buster execution is available only through the v2 pipeline capability. Do not\n\n    call a queue, Redis tool, or worker endpoint manually.\n\n\n    Confidence: \u2605\u2605\u2605 \u22650.75 (validated), \u2605\u2605\u2606 0.45-0.74 (neutral), \u2605\u2606\u2606 <0.45 (unverified).\n\n    Scope: project (default, current project), global (cross-project patterns), agent (private).\n\n\n    ## Lint\n\n    Lint runs through each compiled module stage using its declared policyPath and policyProject. Read its durable\n    artifacts for findings.\n\n\n    ## Project Setup guide\n\n    /app/skills/packages/nova-project/README.md\n  user: |\n    Name: Davide\n    rest can be filled by you as you learn about me\n  identity: |\n    Nova \ud83d\udd2d \u2014 Architect, visionary, orchestrator. Thinks in systems, ships with intent.\n  bootstrap: |\n    1. Read SOUL.md, AGENTS.md, TOOLS.md.\n    2. Get familiar with your enviroment\n    3. Post to Discord: \"\ud83d\udd2d Nova online.\" + quick summary of your enviroment\n    4. Delete this file.\n"
+          }
+        },
+        {
+          "destination": "gitops/production/apps/applications.yaml",
+          "role": "api",
+          "payload": {
+            "encoding": "utf8",
+            "sha256": "237d439f5b54e5775ac4e5a3ffbd0784fd3424aefc14f8fb27e124f2ce0802f5",
+            "bytes": "apiVersion: argoproj.io/v1alpha1\nkind: AppProject\nmetadata:\n  name: kubeclaw\n  labels:\n    kubeclaw.dev/gitops-root: kubeclaw\n  namespace: argocd\n  annotations:\n    argocd.argoproj.io/sync-wave: '-1'\nspec:\n  sourceRepos:\n    - https://github.com/datrab/kubeclaw.git\n  destinations:\n    - namespace: kubeclaw\n      server: https://kubernetes.default.svc\n    - namespace: tailscale\n      server: https://kubernetes.default.svc\n  clusterResourceWhitelist:\n    - group: apiextensions.k8s.io\n      kind: CustomResourceDefinition\n    - group: rbac.authorization.k8s.io\n      kind: ClusterRole\n    - group: rbac.authorization.k8s.io\n      kind: ClusterRoleBinding\n    - group: admissionregistration.k8s.io\n      kind: ValidatingAdmissionPolicy\n    - group: admissionregistration.k8s.io\n      kind: ValidatingAdmissionPolicyBinding\n  namespaceResourceWhitelist:\n    - group: ''\n      kind: ServiceAccount\n    - group: ''\n      kind: ConfigMap\n    - group: ''\n      kind: PersistentVolumeClaim\n    - group: rbac.authorization.k8s.io\n      kind: Role\n    - group: rbac.authorization.k8s.io\n      kind: RoleBinding\n    - group: ''\n      kind: Service\n    - group: apps\n      kind: Deployment\n    - group: networking.k8s.io\n      kind: NetworkPolicy\n    - group: policy\n      kind: PodDisruptionBudget\n    - group: apps\n      kind: StatefulSet\n    - group: batch\n      kind: CronJob\n    - group: networking.k8s.io\n      kind: Ingress\n    - group: batch\n      kind: Job\n  orphanedResources:\n    warn: true\n---\napiVersion: argoproj.io/v1alpha1\nkind: Application\nmetadata:\n  name: kubeclaw-buster\n  namespace: argocd\n  annotations:\n    argocd.argoproj.io/sync-wave: '0'\n    kubeclaw.dev/helm-releases: '[\"agent-buster\"]'\n    kubeclaw.dev/immutable-bundle-path: releases/gitops/runtime-38542596018-1/buster\n  labels:\n    kubeclaw.dev/gitops-project: kubeclaw\nspec:\n  project: kubeclaw\n  source:\n    repoURL: https://github.com/datrab/kubeclaw.git\n    targetRevision: main\n    path: releases/gitops/runtime-38542596018-1/buster\n    directory:\n      include: resources.yaml\n  destination:\n    server: https://kubernetes.default.svc\n    namespace: kubeclaw\n  syncPolicy:\n    automated:\n      prune: false\n      selfHeal: true\n      allowEmpty: false\n    syncOptions:\n      - FailOnSharedResource=true\n    retry:\n      limit: 3\n      backoff:\n        duration: 10s\n        factor: 2\n        maxDuration: 1m\n---\napiVersion: argoproj.io/v1alpha1\nkind: Application\nmetadata:\n  name: kubeclaw-prism\n  namespace: argocd\n  annotations:\n    argocd.argoproj.io/sync-wave: '0'\n    kubeclaw.dev/helm-releases: '[\"prism\",\"agent-prism\"]'\n    kubeclaw.dev/immutable-bundle-path: releases/gitops/runtime-38542596018-1/prism\n  labels:\n    kubeclaw.dev/gitops-project: kubeclaw\nspec:\n  project: kubeclaw\n  source:\n    repoURL: https://github.com/datrab/kubeclaw.git\n    targetRevision: main\n    path: releases/gitops/runtime-38542596018-1/prism\n    directory:\n      include: resources.yaml\n  destination:\n    server: https://kubernetes.default.svc\n    namespace: kubeclaw\n  syncPolicy:\n    automated:\n      prune: false\n      selfHeal: true\n      allowEmpty: false\n    syncOptions:\n      - FailOnSharedResource=true\n    retry:\n      limit: 3\n      backoff:\n        duration: 10s\n        factor: 2\n        maxDuration: 1m\n---\napiVersion: argoproj.io/v1alpha1\nkind: Application\nmetadata:\n  name: kubeclaw-nova\n  namespace: argocd\n  annotations:\n    argocd.argoproj.io/sync-wave: '1'\n    kubeclaw.dev/helm-releases: '[\"agent-nova\"]'\n    kubeclaw.dev/immutable-bundle-path: releases/gitops/runtime-38542596018-1/nova\n  labels:\n    kubeclaw.dev/gitops-project: kubeclaw\nspec:\n  project: kubeclaw\n  source:\n    repoURL: https://github.com/datrab/kubeclaw.git\n    targetRevision: main\n    path: releases/gitops/runtime-38542596018-1/nova\n    directory:\n      include: resources.yaml\n  destination:\n    server: https://kubernetes.default.svc\n    namespace: kubeclaw\n  syncPolicy:\n    automated:\n      prune: false\n      selfHeal: true\n      allowEmpty: false\n    syncOptions:\n      - FailOnSharedResource=true\n    retry:\n      limit: 3\n      backoff:\n        duration: 10s\n        factor: 2\n        maxDuration: 1m\n"
+          }
+        },
+        {
+          "destination": "gitops/production/bootstrap.yaml",
+          "role": "api",
+          "payload": {
+            "encoding": "utf8",
+            "sha256": "c87c6cddf689d45c2e2fcde4f2a178f27b6971c944498376c38c9af4058d4935",
+            "bytes": "apiVersion: argoproj.io/v1alpha1\nkind: AppProject\nmetadata:\n  name: kubeclaw-bootstrap\n  namespace: argocd\n  labels:\n    kubeclaw.dev/gitops-root: kubeclaw\nspec:\n  description: 'Administrative bootstrap: only this reviewed repository may define runtime Applications and their Project.'\n  sourceRepos:\n    - https://github.com/datrab/kubeclaw.git\n  destinations:\n    - namespace: argocd\n      server: https://kubernetes.default.svc\n  clusterResourceWhitelist: []\n  namespaceResourceWhitelist:\n    - group: argoproj.io\n      kind: Application\n    - group: argoproj.io\n      kind: AppProject\n---\napiVersion: argoproj.io/v1alpha1\nkind: Application\nmetadata:\n  name: kubeclaw\n  namespace: argocd\n  labels:\n    kubeclaw.dev/gitops-root: kubeclaw\n  annotations:\n    kubeclaw.dev/runtime-namespaces: '[\"kubeclaw\"]'\nspec:\n  project: kubeclaw-bootstrap\n  source:\n    repoURL: https://github.com/datrab/kubeclaw.git\n    targetRevision: main\n    path: gitops/production/apps\n    directory:\n      include: applications.yaml\n  destination:\n    server: https://kubernetes.default.svc\n    namespace: argocd\n  syncPolicy:\n    automated:\n      prune: false\n      selfHeal: true\n      allowEmpty: false\n    syncOptions:\n      - FailOnSharedResource=true\n"
+          }
+        },
+        {
+          "destination": "gitops/production/selection.json",
+          "role": "selection-metadata",
+          "payload": {
+            "encoding": "utf8",
+            "sha256": "773c7171e3c8e48e7f0da21d9debf801420d9ea3a67a943a2469a0af109331f8",
+            "bytes": "{\n  \"directory\": \"releases/gitops/runtime-38542596018-1\"\n}\n"
+          }
+        }
+      ],
+      "remove": [],
+      "limits": [
+        "Plan only, never applied; real checkout previous remains ROLLBACK_NO_PREVIOUS_SELECTION.",
+        "Fixture selects path-only copy of real bundle; original resource, receipt, historical value and chart bytes unchanged."
+      ]
+    }
+  ],
+  "negativeControls": [
+    {
+      "name": "real-no-previous",
+      "error": "ROLLBACK_NO_PREVIOUS_SELECTION"
+    },
+    {
+      "name": "fixture-already-selected",
+      "error": "ROLLBACK_ALREADY_SELECTED"
+    },
+    {
+      "name": "fixture-invalid-target",
+      "error": "ROLLBACK_TARGET_MUST_BE_FULL_COMMIT"
+    }
+  ],
+  "limits": [
+    "Finite selected original local observations, not arbitrary argv, inputs, modes or imports.",
+    "No ownership/adoption, health, image build, release promotion, runtime-host or general API admission.",
+    "Argo/Kubernetes schema qualification remains a distinct downstream receiving check."
+  ]
+}

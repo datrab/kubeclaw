@@ -848,6 +848,52 @@ Do not use Argo history rollback while automatic sync can immediately reverse it
 
 Keep database rollback rules separate from manifest rollback.
 
+### Select a previous GitOps release
+
+The **Roll back production deployment** workflow proposes a selection change;
+it does not restore data or prove that the target was healthy. Its `target`
+is `previous` or the full 40-character **deployment-selection commit**, not an
+image-build commit. `previous` searches first-parent history for a different
+`gitops/production/selection.json` directory. The planner rejects an absent
+previous selection, the current selection, or a non-ancestor explicit target.
+See the [target and history checks](https://github.com/datrab/kubeclaw/blob/557bab463b9ca9a897ea094a86640eacb05090c7/scripts/gitops-rollback.mjs#L14-L29).
+
+Before dispatch, the release owner must verify retained immutable images and
+code bundles, compatible data and schema state, unchanged historical bundle
+bytes, and the same deployment scope. Complete the release-selection checks
+above; their current configuration stop is not cleared by a rollback plan.
+The maintainer needs Actions dispatch authority. The repository administrator
+must supply the same GitHub App inputs used for promotion, with Contents and
+Pull requests write access. Cluster credentials do not supply that authority.
+
+1. In Actions, select **Roll back production deployment**, branch `main`, and
+   the reviewed target. Record the run URL and target commit. The workflow
+   prepares the plan, verifies release provenance, commits a proposed selection,
+   and checks the continuous files before pushing a branch or opening a PR.
+   Retain the first failed step; check for an existing branch or PR before retry.
+2. Review the proposed `release/rollback-<run-id>-<attempt>` branch against
+   `main`. The planner can restore image and code receipts, four
+   `releases/values/*.yaml` files, and three production GitOps files. Compare
+   every planned member with the committed diff, including a required deletion
+   of `releases/runtime-code.json` when the target has no code receipt.
+3. **Current workflow limitation:** its [explicit staging list](https://github.com/datrab/kubeclaw/blob/557bab463b9ca9a897ea094a86640eacb05090c7/.github/workflows/rollback-runtime.yaml#L47-L64)
+   omits `releases/runtime-code.json`, although the
+   [planner can write or remove it](https://github.com/datrab/kubeclaw/blob/557bab463b9ca9a897ea094a86640eacb05090c7/scripts/gitops-rollback.mjs#L45-L51).
+   When the target requires a different code receipt or its removal, stop:
+   the workflow is not a complete code-selection rollback path. A plan or
+   provenance check against uncommitted files does not prove that the proposed
+   commit contains them. The release owner must correct and validate that
+   publication path before using it for this case; do not bypass the check or
+   merge a partial selection.
+4. Only after the complete reviewed PR passes its checks may an authorized
+   reviewer merge it. Then observe Argo's resolved revision, operation result,
+   workload ownership, active image and code identities, and application reads.
+   A merged selection is desired state, not proof of completed recovery.
+
+No rollback workflow, PR merge, Argo sync or live recovery was executed for
+this procedure. A local plan with unchanged code-receipt bytes does not test
+the changed-code publication limitation.
+
 ## Upgrade Order
 
 Use this order unless a component guide requires a narrower sequence:
