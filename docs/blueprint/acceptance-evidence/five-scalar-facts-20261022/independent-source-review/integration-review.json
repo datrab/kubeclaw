@@ -1,0 +1,192 @@
+{
+  "status": "PASS_EXACT_FIVE_FACTS_SOURCE_ADOPTION_AND_FIVE_RECORD_PRESERVATION",
+  "reviewer": "/root/source_closeout",
+  "role": "SOURCE_ONLY",
+  "baselineRevision": "51c99c8b550b1684c206e73f40c13f5bd88c8aad",
+  "source": "scripts/docs-api-documentation-role-custody.mjs",
+  "baselineSha256": "6bc09e510942108efb904fc22649c25d7d2787e756977d5e314fa02fd9bf8c94",
+  "candidateSha256": "990724e0b92d2fc390d1411fa26c427978e31c7a43aeced224ac904871d14757",
+  "currentPhysicalCandidateExact": true,
+  "proofBindings": [
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/facts-original-487f4e00-result-independent/review.md",
+      "sha256": "7fde81dce66046456ce039def83cd915506e3a45d530f3abb9bdc906045c5cba"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/facts-original-487f4e00-result-independent/review.json",
+      "sha256": "f119cc420645fcd2b2da43f5052eefa33293b23088f575c6a00de7e848f44946"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/facts-only-current107-root-reviewed-seal/review.json",
+      "sha256": "b85c8c15f49731ae94866828c230a4ad5f607926e650e67fc1d46d9f2647223a"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/scalar-finite-two-constant-independent/review.md",
+      "sha256": "77e8a0dbc498a4a8b9515f2ad88bde01e4ec010ec38abd6afb75b7a0c7703ea0"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/scalar-finite-two-constant-root-adoption.json",
+      "sha256": "8d5120137ae38f0d3e6d7c1fa07083cca2444766ab2775841750b2f7b8376ae5"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/four-purpose-cells-root-independent/review.json",
+      "sha256": "4bcbbe7fde3dd93ebde57bb8cc35e7358e711ab3a575e2d3faa0a4c9ffa149f3"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/four-purpose-cells-root-independent/adoption.json",
+      "sha256": "290b3eff07c2de1d84ff452081a160787df7be9ac08b5c3d9c28da4ab5d1a2b3"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/facts-original-487f4e00/node/actual-role-facts-first.json",
+      "sha256": "6707cd5ca3fbd9f175c4ec807fabc1439dc1fc693bf09d54ba3ea24349ee2e74"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/five-scalar-facts-cells-root-independent/review.json",
+      "sha256": "34092aa6a487094522edfc6e5a2bccc72cb8c236c1ef4ba72b276ef2596048b5"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/five-scalar-facts-cells-author/finite-five-facts-delta-inventory.json",
+      "sha256": "772985cf6c1fc072bd66559df8e66d6c82936a43cfd739a6843841f339eda9ea"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/five-scalar-facts-cells-author/five-cells-and-complete-facts.json",
+      "sha256": "38752352f3f9bc9a131f6503e0b831d216edad17e283ba52e666d157afeb8b3f"
+    }
+  ],
+  "actualFactsVerification": {
+    "status": "PASS_INERT_EXACT_FIVE_DATA_CELL_VERIFICATION",
+    "baselineRevision": "51c99c8b550b1684c206e73f40c13f5bd88c8aad",
+    "baselineSha256": "6bc09e510942108efb904fc22649c25d7d2787e756977d5e314fa02fd9bf8c94",
+    "candidateSha256": "990724e0b92d2fc390d1411fa26c427978e31c7a43aeced224ac904871d14757",
+    "all107RecipeOrderPreserved": true,
+    "other102WholeRecipeObjectsExact": true,
+    "completeSourceRestoredByReverseFiveLiterals": true,
+    "all103JsOriginalOrderedFactDigestsRecomputed": true,
+    "other98OrderedFactArraysExact": true,
+    "fiveFactDeltas": [
+      {
+        "source": "scripts/docs-api-output-discovery.mjs",
+        "records": 225,
+        "changedPositions": [
+          180,
+          181
+        ]
+      },
+      {
+        "source": "scripts/docs-api-product-scope.mjs",
+        "records": 1418,
+        "changedPositions": [
+          344,
+          345
+        ]
+      },
+      {
+        "source": "scripts/docs-api-reference.mjs",
+        "records": 1440,
+        "changedPositions": [
+          366,
+          367
+        ]
+      },
+      {
+        "source": "scripts/docs-configuration-inventory.mjs",
+        "records": 2210,
+        "changedPositions": [
+          653,
+          654
+        ]
+      },
+      {
+        "source": "scripts/docs-generate.mjs",
+        "records": 1536,
+        "changedPositions": [
+          364,
+          365
+        ]
+      }
+    ],
+    "directlyDeclaringRecords": [
+      "AP09-complete-static-reader-search-20261021",
+      "AP09-search-reader-gate-20261021",
+      "AP09-rendered-source-bounds-gate-20261021",
+      "AP09-complete-same-source-code-preview-20261021",
+      "AP09-complete-responsive-reader-layout-20261021"
+    ],
+    "otherDeclaredCurrentSourceAndPageBytesUnchanged": true,
+    "execution": "Only inert Python JSON/hash/text and Git object reads; no target imports/getter/consumer/native/browser execution.",
+    "diagnostic": "Initial inert attempt accessed native row operationFacts as mandatory; corrected to distinguish4native rows from103JS arrays, not target failure."
+  },
+  "recordPreservation": [
+    {
+      "id": "AP09-complete-static-reader-search-20261021",
+      "originalRevision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+      "originalCanonicalSha256": "908d1986750f034578bd0274b419e3ef9eb8de7c273e86299b0ba79dfa678ff1",
+      "sourceVerdict": "PASS_SEMANTIC_EQUIVALENCE_REBIND_SUPPORTED",
+      "reason": "Published Markdown/canonical inventory, headings, search corpus/question behavior and static findability are unchanged. Five expected custody digests are not emitted as reader prose/search tokens.",
+      "allowedIntegrationDelta": [
+        "revision \u2192 actual next frozen source commit containing only this exact reviewed candidate and separately approved closeout metadata",
+        "impactReviews append one PASS entry bound to exact candidate/hash and this independent report; retain every existing impact review"
+      ],
+      "fieldsToPreserve": "All original author/reviewer attribution, IDs, pages, sources, checks, review, summary, limits, openIssues and verdict. No new gate/requirement/guide count or global qualification."
+    },
+    {
+      "id": "AP09-search-reader-gate-20261021",
+      "originalRevision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+      "originalCanonicalSha256": "5972536eb520e56796c00264e5e85cdea9d10a8d6ba9963ade3a7667aacacdbe",
+      "sourceVerdict": "PASS_SEMANTIC_EQUIVALENCE_REBIND_SUPPORTED",
+      "reason": "Search question targets/index inputs and current search checker remain exact. Role custody import presence is not a new search semantic path.",
+      "allowedIntegrationDelta": [
+        "revision \u2192 actual next frozen source commit containing only this exact reviewed candidate and separately approved closeout metadata",
+        "impactReviews append one PASS entry bound to exact candidate/hash and this independent report; retain every existing impact review"
+      ],
+      "fieldsToPreserve": "All original author/reviewer attribution, IDs, pages, sources, checks, review, summary, limits, openIssues and verdict. No new gate/requirement/guide count or global qualification."
+    },
+    {
+      "id": "AP09-rendered-source-bounds-gate-20261021",
+      "originalRevision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+      "originalCanonicalSha256": "187acf694123c82ada2c9b16b1692b3ce94df1ac7850951a3b8d1b0ec2ffc419",
+      "sourceVerdict": "PASS_SEMANTIC_EQUIVALENCE_REBIND_SUPPORTED",
+      "reason": "Source URLs/ranges/page text and source-links implementation remain exact. Links resolve explicit full immutable commits; changing current expected facts cannot rewrite linked committed blobs.",
+      "allowedIntegrationDelta": [
+        "revision \u2192 actual next frozen source commit containing only this exact reviewed candidate and separately approved closeout metadata",
+        "impactReviews append one PASS entry bound to exact candidate/hash and this independent report; retain every existing impact review"
+      ],
+      "fieldsToPreserve": "All original author/reviewer attribution, IDs, pages, sources, checks, review, summary, limits, openIssues and verdict. No new gate/requirement/guide count or global qualification."
+    },
+    {
+      "id": "AP09-complete-same-source-code-preview-20261021",
+      "originalRevision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+      "originalCanonicalSha256": "ada67d19d35c38055f48cf40be4cdd34a7d5c7430fe94cace8336b5becd51791",
+      "sourceVerdict": "PASS_SEMANTIC_EQUIVALENCE_REBIND_SUPPORTED",
+      "reason": "Source-preview implementation remains exact: extracts Markdown-pinned revision/file/range, requires regular Git blob, reads cat-file blob bytes, records whole-object and exact excerpt hashes. It explicitly excludes current worktree bytes and program import/evaluation. Five current data literals cannot alter these already-pinned excerpts or their display/hash contract.",
+      "allowedIntegrationDelta": [
+        "revision \u2192 actual next frozen source commit containing only this exact reviewed candidate and separately approved closeout metadata",
+        "impactReviews append one PASS entry bound to exact candidate/hash and this independent report; retain every existing impact review"
+      ],
+      "fieldsToPreserve": "All original author/reviewer attribution, IDs, pages, sources, checks, review, summary, limits, openIssues and verdict. No new gate/requirement/guide count or global qualification."
+    },
+    {
+      "id": "AP09-complete-responsive-reader-layout-20261021",
+      "originalRevision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+      "originalCanonicalSha256": "348f09a6c176f1b92cc7e79cb13dc194e502c36fa9997df350f2ddfb01c32e4e",
+      "sourceVerdict": "PASS_SEMANTIC_EQUIVALENCE_REBIND_SUPPORTED",
+      "reason": "Shared renderer/layout/CSS/DOM/table/disclosure/search inputs remain exact; literal strings in a guard-data table do not generate a new layout or interaction. Existing bounded width/containment/disclosure observations remain applicable.",
+      "allowedIntegrationDelta": [
+        "revision \u2192 actual next frozen source commit containing only this exact reviewed candidate and separately approved closeout metadata",
+        "impactReviews append one PASS entry bound to exact candidate/hash and this independent report; retain every existing impact review"
+      ],
+      "fieldsToPreserve": "All original author/reviewer attribution, IDs, pages, sources, checks, review, summary, limits, openIssues and verdict. No new gate/requirement/guide count or global qualification."
+    }
+  ],
+  "revisionRebindDecision": "SUPPORTED: these exact five records may be rebound to the actual next frozen source commit by an append-only PASS semantic-equivalence impact review, with every other original field retained. No speculative SHA is asserted. Root owns adoption/freezing and actual8purpose routing-control results.",
+  "renderedEvidenceDecision": "No new Reader/browser run is necessary solely for these five data literals and these five stable accepted static-reader scopes: Markdown, immutable source URLs/blobs/ranges/excerpts, index/search inputs, parser/layout and reader output semantics do not change. No current build/run is fabricated.",
+  "realTransitiveExposure": "Actual role validation of the five named producers changes from rejecting stale expected operation-fact digests to comparing against the exact independently reviewed current ordered arrays. This is real metadata-admission effect, not a new producer/selector/authority/role/consumer body. Five arrays transitively include the two already-reviewed scalar const statements; other98 arrays and all4native recipes remain exact. Complete source reconstruction confirms no guard/cache/native/importer/writer logic change. Shared imports alone do not expose new rendered-reader semantics; the maintenance page mentions this recipe owner only as a code-admission boundary and that prose remains truthful. Full public whole-consumer/current graph/native paths can still STOP and are not qualified by this review.",
+  "owningControlBoundary": "Root plans actual owning8purpose routing controls after adoption. This Source report neither runs them nor claims their result; use actual terminal results in integration. No repeat of whole public consumer, getter, graph/native or browser is authorized by it.",
+  "openIssues": [],
+  "limits": [
+    "No Source/Main/script/matrix/evidence mutation by reviewer; only new scratch files.",
+    "No target imports, original getters/scanners/consumer/native tests/browser/product execution. All checks here inert Python/Git.",
+    "Exactly5record preservation; no other historical acceptance is rebound or semantically promoted. Original scopes/limits and all prior model/proof attribution stay intact.",
+    "No global API/role/module/graph/native/runtime/publication/release qualification; ordinary source-purpose, selector, caller, alias, dynamic-import, authority and native4/115 guards remain."
+  ]
+}

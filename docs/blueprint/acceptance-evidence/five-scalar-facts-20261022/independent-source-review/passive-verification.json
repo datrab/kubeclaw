@@ -1,0 +1,63 @@
+{
+  "status": "PASS_INERT_EXACT_FIVE_DATA_CELL_VERIFICATION",
+  "baselineRevision": "51c99c8b550b1684c206e73f40c13f5bd88c8aad",
+  "baselineSha256": "6bc09e510942108efb904fc22649c25d7d2787e756977d5e314fa02fd9bf8c94",
+  "candidateSha256": "990724e0b92d2fc390d1411fa26c427978e31c7a43aeced224ac904871d14757",
+  "all107RecipeOrderPreserved": true,
+  "other102WholeRecipeObjectsExact": true,
+  "completeSourceRestoredByReverseFiveLiterals": true,
+  "all103JsOriginalOrderedFactDigestsRecomputed": true,
+  "other98OrderedFactArraysExact": true,
+  "fiveFactDeltas": [
+    {
+      "source": "scripts/docs-api-output-discovery.mjs",
+      "records": 225,
+      "changedPositions": [
+        180,
+        181
+      ]
+    },
+    {
+      "source": "scripts/docs-api-product-scope.mjs",
+      "records": 1418,
+      "changedPositions": [
+        344,
+        345
+      ]
+    },
+    {
+      "source": "scripts/docs-api-reference.mjs",
+      "records": 1440,
+      "changedPositions": [
+        366,
+        367
+      ]
+    },
+    {
+      "source": "scripts/docs-configuration-inventory.mjs",
+      "records": 2210,
+      "changedPositions": [
+        653,
+        654
+      ]
+    },
+    {
+      "source": "scripts/docs-generate.mjs",
+      "records": 1536,
+      "changedPositions": [
+        364,
+        365
+      ]
+    }
+  ],
+  "directlyDeclaringRecords": [
+    "AP09-complete-static-reader-search-20261021",
+    "AP09-search-reader-gate-20261021",
+    "AP09-rendered-source-bounds-gate-20261021",
+    "AP09-complete-same-source-code-preview-20261021",
+    "AP09-complete-responsive-reader-layout-20261021"
+  ],
+  "otherDeclaredCurrentSourceAndPageBytesUnchanged": true,
+  "execution": "Only inert Python JSON/hash/text and Git object reads; no target imports/getter/consumer/native/browser execution.",
+  "diagnostic": "Initial inert attempt accessed native row operationFacts as mandatory; corrected to distinguish4native rows from103JS arrays, not target failure."
+}
