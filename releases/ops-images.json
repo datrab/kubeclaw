@@ -1,10 +1,10 @@
 {
   "schemaVersion": 1,
-  "commit": "a0867b4caaf636d3cba8dd3bbf6eb53106d92c71",
+  "commit": "9968c3fdb277a2f12277dd5736e76f6e00bd47f3",
   "images": {
-    "codex-ops": "ghcr.io/datrab/kubeclaw-codex-ops@sha256:a4574b0989ac2c8f5db93935ced619d9bca4706e262764441e31ea3fd027a4b4",
-    "ops-mcp": "ghcr.io/datrab/kubeclaw-ops-mcp@sha256:3a6fff5c212e0dc48f7edcdb7eb7f5bb86efcd3f7f59b1eae52cef2f705808ad"
+    "codex-ops": "ghcr.io/datrab/kubeclaw-codex-ops@sha256:77a949c7bbede25233c9d7e608e2eea2378bcd289dd0eb15a0a555a29f8680e8",
+    "ops-mcp": "ghcr.io/datrab/kubeclaw-ops-mcp@sha256:f0810bd4fea9cea52c88e271d2b503e26c315034e6cf682a93cbd95bcb951b17"
   },
-  "sourceRunId": 39731855162,
+  "sourceRunId": 39736494506,
   "sourceRunAttempt": 1
 }
