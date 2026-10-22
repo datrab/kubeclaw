@@ -1,3 +1,9 @@
+## Current continuation — diagram and exact root-harness successor ready — 2026-10-22
+
+- 52c5bc0f pushed/SHAverified; originalpublicationbuildSTOPunregisteredOpsdiagram aftercheckSite, rawreceipt preserved. Sourcepassed9directededges/fulladjacenttextalt, registry27→28(oneOpsnew,oneplatformhash,26exact). NativecollectorPASS177pages/28diagrams, NOT renderedSVG/HTMLacceptance.
+- ActualoriginalgetterDATAfirst/repeat0childattempts exactlymatches independentSourceprepared15declarations/29selectors/52CLIunits/36init. Onlyrefsrootentry+CLIclosure[27]updated; allother17entries/114closures/callers/wildcards/protocol/outsidebytes exact.8/8nativeowningtestsPASSincluding10warm/freshdenials; independentSourcePASSandautoreviewclean. No facts/scalar/globalAPI/generatorPASS.
+- Evidence handoffs/pr13-finish-20261021/diagram-and-harness-52c5. Nextcommit/pushthenregularpublicationbuild/originallocalHelmcheck; preserve actualnextSTOP. NewaffectedReader/render/Quality stillpending;95historicalcompletionobjectsunchanged,56/224historicalonly. Runtimeknipandrealjourneyhost/cgroupblocksremain; finish-alltaskongoing.
+
 ## Current continuation — publication prose corrected, exact harness STOP remains — 2026-10-22
 
 - e63f0be1 pushed/SHAverified/clean. ActualnormalpublicationbuildSTOP before render on controlledlanguage; normalgenerate-local-helm--checkSTOPon docs-check-refs.test.mjs root-node-harness declarations. Originalinvocations/exits/raw evidence retained, no new artifact/current generatorPASS.

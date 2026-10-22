@@ -1,0 +1,157 @@
+{
+  "head": "52c5bc0f6fdd2be5810ad78829ef9fc9e7882615",
+  "role": "Source-only bounded stale-receipt successor analysis; no repository edit/getter/import/target execution",
+  "reviewedSources": [
+    {
+      "path": "scripts/docs-api-documentation-role-custody.mjs",
+      "sha256": "a7abb978c137a13b6f0fe3c3ccaab0fabaab674a82bd309ad7f83d627ea877ea",
+      "bytes": 1231221,
+      "lines": 31187,
+      "coverage": "exact reused/source-delta or bounded consumer as explicitly described, not whole-file semantic claim"
+    },
+    {
+      "path": "scripts/docs-api-output-discovery.mjs",
+      "sha256": "6f86030aee31258b012f0f7cee7361769a311db00d43afb183458c7890175769",
+      "bytes": 415879,
+      "lines": 3311,
+      "coverage": "exact reused/source-delta or bounded consumer as explicitly described, not whole-file semantic claim"
+    },
+    {
+      "path": "scripts/docs-api-output-role-classification.mjs",
+      "sha256": "400affe1cb7a07c69e397e0509bb994f7f44376687038f802830b63daf452b12",
+      "bytes": 141940,
+      "lines": 920,
+      "coverage": "exact reused/source-delta or bounded consumer as explicitly described, not whole-file semantic claim"
+    },
+    {
+      "path": "scripts/tests/docs-check-refs.test.mjs",
+      "sha256": "e31e6ed1a4966e43e78068dec2d6ad00493cc8a94936a8c0449019a83e5667e8",
+      "bytes": 10925,
+      "lines": 244,
+      "coverage": "exact reused/source-delta or bounded consumer as explicitly described, not whole-file semantic claim"
+    },
+    {
+      "path": "scripts/docs-check-refs.mjs",
+      "sha256": "d04c5245b1555b275f27b40ad7461071d476615f177557ee07ca5b5b812ee604",
+      "bytes": 14639,
+      "lines": 375,
+      "coverage": "exact reused/source-delta or bounded consumer as explicitly described, not whole-file semantic claim"
+    },
+    {
+      "path": "scripts/docs-source-evidence-pin.mjs",
+      "sha256": "e3a40956e8960b504e157cfcd7ca8f20a9a2bea38155c91f48f774a7fc69ba75",
+      "bytes": 2603,
+      "lines": 48,
+      "coverage": "exact reused/source-delta or bounded consumer as explicitly described, not whole-file semantic claim"
+    },
+    {
+      "path": "scripts/tests/docs-source-evidence-pin.test.mjs",
+      "sha256": "da6e5ed7dbca46c38110368ce28377419fb300286409a95116a2713ccad2603e",
+      "bytes": 4835,
+      "lines": 82,
+      "coverage": "exact reused/source-delta or bounded consumer as explicitly described, not whole-file semantic claim"
+    },
+    {
+      "path": "scripts/tests/docs-upstream-module-input-custody.test.mjs",
+      "sha256": "7be6aa490cd2c98a113423e5836e1db71ba0699c09284d7b6f52d9c01b84fbfa",
+      "bytes": 3691,
+      "lines": 75,
+      "coverage": "exact reused/source-delta or bounded consumer as explicitly described, not whole-file semantic claim"
+    },
+    {
+      "path": "scripts/ops-mcp-docs-upstream.json",
+      "sha256": "598430eeb8501cf6de6f15ebfdc4b82268db9fb87d067e5976983c0e93aba077",
+      "bytes": 2951,
+      "lines": 36,
+      "coverage": "exact reused/source-delta or bounded consumer as explicitly described, not whole-file semantic claim"
+    },
+    {
+      "path": "scripts/lib/docs-upstream-reference.mjs",
+      "sha256": "1741bd5738fda0c2ed3954ad074a91ca0045479beb6484b61eb446eaf74296c2",
+      "bytes": 4228,
+      "lines": 68,
+      "coverage": "exact reused/source-delta or bounded consumer as explicitly described, not whole-file semantic claim"
+    },
+    {
+      "path": "scripts/tests/api-output-node-entry-custody.test.mjs",
+      "sha256": "d153dcce25143c0110d2848049492f23672760f43e3e5920995e3958585fb6f6",
+      "bytes": 11330,
+      "lines": 100,
+      "coverage": "exact reused/source-delta or bounded consumer as explicitly described, not whole-file semantic claim"
+    },
+    {
+      "path": "package.json",
+      "sha256": "4ab1e90c2259aeb96acfdc877e5a9eed330f605abff46d7eca85faded0f020c3",
+      "bytes": 53756,
+      "lines": 348,
+      "coverage": "exact reused/source-delta or bounded consumer as explicitly described, not whole-file semantic claim"
+    }
+  ],
+  "reviewedReceipts": {
+    "rootEntry": "complete entries[scripts/tests/docs-check-refs.test.mjs] purpose/callers/declarations/selectors/exports",
+    "closure": "complete closure[27] and closure[113]; closure[114] inspected unchanged, no proposal",
+    "roster": "18entry keys/115closure source-key census only, not full semantic registry review"
+  },
+  "consumerRanges": {
+    "scripts/docs-api-documentation-role-custody.mjs": [
+      "9928-9935",
+      "10745-10764",
+      "10879-10896",
+      "30896-31000"
+    ],
+    "scripts/docs-api-output-discovery.mjs": [
+      "291-314",
+      "327-350",
+      "362-405",
+      "680-693"
+    ],
+    "scripts/docs-api-output-role-classification.mjs": [
+      "334-447 selected sink-acquisition dependency only"
+    ],
+    "scripts/generate-local-helm-authorities.mjs": [
+      "1-45"
+    ]
+  },
+  "newOwningAssertionsRead": "prior complete current refs244lines, pin82lines and direct custody75lines reused after exact SHA match; complete existing api-output-node-entry-custody100lines freshly read",
+  "rawFailure": [
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/e63-localhelm/result.json",
+      "sha256": "8ece0c1c08747c0f83ffdb3f89560b2d84678d030599379b8e7434347bdaf533",
+      "bytes": 779,
+      "read": "complete"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/e63-localhelm/invocation.json",
+      "sha256": "0b6f1f874e83518124fe0b7aa3d17a3527a6d675da02f616f5f5770161d5d88e",
+      "bytes": 707,
+      "read": "complete"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/e63-localhelm/stderr.raw",
+      "sha256": "2d39da221e922b838538fc4bf39855200bcd27c37ce06126d1da4f986f7a948e",
+      "bytes": 6504,
+      "read": "complete"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/e63-localhelm/stdout.raw",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "read": "complete"
+    }
+  ],
+  "unreadAssignedBoundedScope": 0,
+  "remainingRequiredData": "original native receipt getters have not been run; later finite capture + exact comparison + negative execution results required before ready",
+  "counts": {
+    "declarationsOld": 14,
+    "declarationsExpected": 15,
+    "selectorsOld": 27,
+    "selectorsExpected": 29,
+    "closureUnits": 52,
+    "unchangedInitializationMembers": 36
+  },
+  "independentRawSliceProof": {
+    "successorUnitHashMismatches": [],
+    "unchangedInitializationMatchesFiniteUnitProjection": true,
+    "scope": "raw slice/hash observation, not execution of original AST receipt getter"
+  }
+}

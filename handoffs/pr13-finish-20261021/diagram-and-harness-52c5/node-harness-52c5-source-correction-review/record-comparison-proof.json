@@ -1,0 +1,26 @@
+{
+  "changedEntryKeys": [
+    "scripts/tests/docs-check-refs.test.mjs"
+  ],
+  "changedClosureIndices": [
+    27
+  ],
+  "entryMembershipEqual": true,
+  "closureSourceRosterEqual": true,
+  "otherTopFieldsEqual": true,
+  "actualEntryEqualsPriorSourcePreparedExpected": true,
+  "actualClosureEqualsPriorSourcePreparedExpected": true,
+  "nativeDataFirstRepeatRawEqual": true,
+  "nativeDataFirstRepeatDecodedEqual": true,
+  "nativeDataDeclEqualsActualReceiver": true,
+  "nativeDataSelectorsEqualsActualReceiver": true,
+  "nativeDataClosureEqualsActualReceiver": true,
+  "nativeDataInitializationEqualsActualReceiver": true,
+  "nativeDataCliDeclarationsEqualUnitsKindHash": true,
+  "nativeDataTestInitializationEqualsDeclarationsWithoutFunctions": true,
+  "testNewBlockRemovalEqualsHEAD": true,
+  "independentCompleteCustodyTwoRecordReversalEqualsHEAD": true,
+  "all29SelectorExpressionsAreExactActualSourceSubstrings": true,
+  "all29SelectorExpressionHashesEqualNativeReceipts": true,
+  "selectorExpressionsSortedAndUnique": true
+}

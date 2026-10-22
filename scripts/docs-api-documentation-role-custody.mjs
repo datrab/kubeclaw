@@ -14254,6 +14254,10 @@ export const reviewedRootNodeEntryRecipes = {
         {
           "kind": "ExpressionStatement",
           "syntaxSha256": "fca89d5f4203b438402665d6e99cbf68cee7d788041c1157bc5d0203db21c73d"
+        },
+        {
+          "kind": "ExpressionStatement",
+          "syntaxSha256": "3535e7e10a3e1d18145825c778dbd3fa3e0d6a7411248089e50ca966b2d3f519"
         }
       ],
       "selectors": [
@@ -14277,6 +14281,9 @@ export const reviewedRootNodeEntryRecipes = {
         },
         {
           "expressionSha256": "7890eada1963190e15d654b00eb2aafbac898a197a74d8f661f1e3b7d0c66e80"
+        },
+        {
+          "expressionSha256": "db62e4f6d186448653375816574e081d3a991e435c147fc223c50874bc21a93b"
         },
         {
           "expressionSha256": "68d7f33ca87a8e80fb47dd427d218bf8d36363c3daa290fd349e026b5a341ffe"
@@ -14331,6 +14338,9 @@ export const reviewedRootNodeEntryRecipes = {
         },
         {
           "expressionSha256": "bd4aa59595f98eb936aefdae0ab98c7a31921f4e33d8f19831266b3878f19ed4"
+        },
+        {
+          "expressionSha256": "3535e7e10a3e1d18145825c778dbd3fa3e0d6a7411248089e50ca966b2d3f519"
         },
         {
           "expressionSha256": "306797bef0ee4284643f474d71cd5bfbdce47232f5c1621b1d0f3563d7ec705b"
@@ -20505,106 +20515,106 @@ export const reviewedRootNodeEntryRecipes = {
           "symbol": "checkSourceCalloutRevisions",
           "kind": "FunctionDeclaration",
           "startLine": 266,
-          "endLine": 288,
-          "syntaxSha256": "b1084a4228443fc3ab0b1012db143e9435fede06aff10ff6a17688f8c865d213"
+          "endLine": 292,
+          "syntaxSha256": "b8fbf0c4dea197ada56ddb482038610460aad742c46d556e89cff53a940824c7"
         },
         {
           "symbol": "physicalLineCount",
           "kind": "FunctionDeclaration",
-          "startLine": 290,
-          "endLine": 294,
+          "startLine": 294,
+          "endLine": 298,
           "syntaxSha256": "4faa5e45675b058b637508897c6d151be9775aae728cf947c9355a92bc5b3baa"
         },
         {
           "symbol": "pinnedObject",
           "kind": "FunctionDeclaration",
-          "startLine": 296,
-          "endLine": 314,
+          "startLine": 300,
+          "endLine": 318,
           "syntaxSha256": "861665318a633bda21b283ab81de5ea216ab31862bd799dbdcfadd829c2ec931"
         },
         {
           "symbol": "pinnedLinkErrors",
           "kind": "FunctionDeclaration",
-          "startLine": 316,
-          "endLine": 338,
+          "startLine": 320,
+          "endLine": 342,
           "syntaxSha256": "48606ca28216f36ced581bd38d3d8cd1ac0e007b96db965dc346317da6eef893"
         },
         {
           "symbol": "FirstStatement",
           "kind": "FirstStatement",
-          "startLine": 340,
-          "endLine": 340,
+          "startLine": 344,
+          "endLine": 344,
           "syntaxSha256": "5014a2e044deae5ce3a4c21ad587fbb0becdc9eb9d2ce4d081126daa02f6b6b0"
         },
         {
           "symbol": "FirstStatement",
           "kind": "FirstStatement",
-          "startLine": 341,
-          "endLine": 341,
-          "syntaxSha256": "dd75a83493d3e93481eb48c200017b26e382b59850fa6bddf3870ca0195af530"
-        },
-        {
-          "symbol": "FirstStatement",
-          "kind": "FirstStatement",
-          "startLine": 342,
-          "endLine": 342,
-          "syntaxSha256": "2c4ae88a6422c2b4e14eb657b3402f5e7ee9a13704c66c53e0290257819f48cc"
-        },
-        {
-          "symbol": "IfStatement",
-          "kind": "IfStatement",
-          "startLine": 343,
+          "startLine": 345,
           "endLine": 345,
-          "syntaxSha256": "b845cd955b64a1ce44fd3ac4a9bf5e0cc9979a48ed2dab976babbfa33e9d8d74"
+          "syntaxSha256": "dd75a83493d3e93481eb48c200017b26e382b59850fa6bddf3870ca0195af530"
         },
         {
           "symbol": "FirstStatement",
           "kind": "FirstStatement",
           "startLine": 346,
           "endLine": 346,
-          "syntaxSha256": "293d8744faa3d03753bd00cdc85f6db412a270b92dadfd34817a04673422b4c8"
+          "syntaxSha256": "2c4ae88a6422c2b4e14eb657b3402f5e7ee9a13704c66c53e0290257819f48cc"
         },
         {
           "symbol": "IfStatement",
           "kind": "IfStatement",
           "startLine": 347,
           "endLine": 349,
+          "syntaxSha256": "b845cd955b64a1ce44fd3ac4a9bf5e0cc9979a48ed2dab976babbfa33e9d8d74"
+        },
+        {
+          "symbol": "FirstStatement",
+          "kind": "FirstStatement",
+          "startLine": 350,
+          "endLine": 350,
+          "syntaxSha256": "293d8744faa3d03753bd00cdc85f6db412a270b92dadfd34817a04673422b4c8"
+        },
+        {
+          "symbol": "IfStatement",
+          "kind": "IfStatement",
+          "startLine": 351,
+          "endLine": 353,
           "syntaxSha256": "cb336c962a7bd73582cffb862c938db25ff4d57ceb0840a555dd196e5da0af41"
         },
         {
           "symbol": "ExpressionStatement",
           "kind": "ExpressionStatement",
-          "startLine": 350,
-          "endLine": 350,
+          "startLine": 354,
+          "endLine": 354,
           "syntaxSha256": "056d51dbc5115ced9ce93b9a4e6a1ecf293eb02581b28a9747fe4006cfd00d09"
         },
         {
           "symbol": "ForOfStatement",
           "kind": "ForOfStatement",
-          "startLine": 352,
-          "endLine": 361,
+          "startLine": 356,
+          "endLine": 365,
           "syntaxSha256": "a2472854ffb4d124729f02334f4d57bece74899b48638abc24350ea35f445ca8"
         },
         {
           "symbol": "IfStatement",
           "kind": "IfStatement",
-          "startLine": 363,
-          "endLine": 369,
+          "startLine": 367,
+          "endLine": 373,
           "syntaxSha256": "76ff0bfbba43052e75e1d4ef9168c90ffb10ff026f71452a16d1c398a6462fdd"
         },
         {
           "symbol": "ExpressionStatement",
           "kind": "ExpressionStatement",
-          "startLine": 371,
-          "endLine": 371,
+          "startLine": 375,
+          "endLine": 375,
           "syntaxSha256": "9ed37504d27f144d42f5178c398e6bf712101ec1da9b50957e20138017061002"
         }
       ],
       "ranges": [
         {
           "startLine": 1,
-          "endLine": 371,
-          "sha256": "d035b294daf16677de5263ff5818a766e5ad89cdb2362b66ed9b16c5e20b1fab"
+          "endLine": 375,
+          "sha256": "d04c5245b1555b275f27b40ad7461071d476615f177557ee07ca5b5b812ee604"
         }
       ],
       "initialization": [

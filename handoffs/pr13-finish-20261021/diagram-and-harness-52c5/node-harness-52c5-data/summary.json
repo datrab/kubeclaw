@@ -1,0 +1,9 @@
+{
+  "before": {
+    "scripts/tests/docs-check-refs.test.mjs": "e31e6ed1a4966e43e78068dec2d6ad00493cc8a94936a8c0449019a83e5667e8",
+    "scripts/docs-check-refs.mjs": "d04c5245b1555b275f27b40ad7461071d476615f177557ee07ca5b5b812ee604"
+  },
+  "firstRepeatEqual": true,
+  "childProcessAttempts": 0,
+  "childrenAuthorized": false
+}

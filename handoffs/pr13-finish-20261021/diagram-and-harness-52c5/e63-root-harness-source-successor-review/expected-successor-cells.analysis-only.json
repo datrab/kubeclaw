@@ -1,0 +1,1376 @@
+{
+  "status": "SOURCE-prepared expected DATA cells only; not applied or native getter-corroborated",
+  "entries": {
+    "scripts/tests/docs-check-refs.test.mjs": {
+      "old": {
+        "purpose": "Reference-check parser and copied-CLI temporary Git/site consumer",
+        "terminalPurpose": "12\u201329 finite write helper copies the exact upstream resolver only when preparing the reference-check CLI in its owned temporary Git/site root; 31\u201337 run invokes the copied CLI there. Pure parser checks and missing-link/path/symlink/SHA256 assertions remain fixture-local.",
+        "limits": "outside-link deliberately points to /etc/passwd but actual reference-check path rejects absolute/escaping/symlink inputs before file read; temporary output only. The node_modules link is external code authority, not a license to classify every dependency as test-only. CLI has top-level Git/probe/read execution and is not passive on import. The copied upstream resolver is passive at import apart from imported dependencies; on fixture invocation the absent provenance manifest returns a false-only resolver before any upstream Git/read loop. A present manifest takes the real byte/commit/path/anchor validation branch; no link exemptions, package export or product authority is granted. The resolver and its original caller are exact closure-bound; maintained markdown helper import authority remains independent.",
+        "callers": [
+          {
+            "name": "docs:tree:mutations",
+            "command": "node --test scripts/tests/docs-tree-boundary.test.mjs scripts/tests/docs-markdown-anchors.test.mjs scripts/tests/docs-check-refs.test.mjs scripts/tests/docs-check-links.test.mjs"
+          }
+        ],
+        "declarations": [
+          {
+            "kind": "ImportDeclaration",
+            "syntaxSha256": "3bd42e15e5427f946b98b898212af900ed0a4068cff03a37aa2ce1d3a081f2ec"
+          },
+          {
+            "kind": "ImportDeclaration",
+            "syntaxSha256": "ad73ca8dd2be89150d9ce0f13eae68ebf5fc6eae24f81e521b6223459d4a6005"
+          },
+          {
+            "kind": "ImportDeclaration",
+            "syntaxSha256": "99a8a8a7117b1395e3a209cdc8ba5a70424687458932bc4dc8a7b6e59ff53868"
+          },
+          {
+            "kind": "ImportDeclaration",
+            "syntaxSha256": "8f15d80e7efb2a5d032af6aeba410bc9b4bd498ba70c7278654526b1e2259752"
+          },
+          {
+            "kind": "ImportDeclaration",
+            "syntaxSha256": "113f0af17fdf683cf360ab9d03b7eff1b572d3475e83119031d47ee4331621aa"
+          },
+          {
+            "kind": "ImportDeclaration",
+            "syntaxSha256": "839cf2655267094fdbf41ad83d7b89fa202606d6b1235454745934a1c6f2529f"
+          },
+          {
+            "kind": "ImportDeclaration",
+            "syntaxSha256": "9e5c5f24875a2c9d303704ece0b5dbf1ad327c006908160e414a26f199507b73"
+          },
+          {
+            "kind": "FirstStatement",
+            "syntaxSha256": "30906b0c310d837fd9065322aaabd37ea7ae203214e5a620f2b620fb64352c27"
+          },
+          {
+            "kind": "FunctionDeclaration",
+            "syntaxSha256": "15655da5748d943e3780f0f5dfd72ccdf674a0c93a6da0ef47916722b727a7cf"
+          },
+          {
+            "kind": "FunctionDeclaration",
+            "syntaxSha256": "90e6f764db2782fada8f0e92cedbc59427913062465a81b55f6909a0f741c5d3"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntaxSha256": "f5f5cbf21cb70de2149b091d8ab0daa2d2d272a63b6c52cdd2fc05393b6978c7"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntaxSha256": "306797bef0ee4284643f474d71cd5bfbdce47232f5c1621b1d0f3563d7ec705b"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntaxSha256": "bd4aa59595f98eb936aefdae0ab98c7a31921f4e33d8f19831266b3878f19ed4"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntaxSha256": "fca89d5f4203b438402665d6e99cbf68cee7d788041c1157bc5d0203db21c73d"
+          }
+        ],
+        "selectors": [
+          {
+            "expressionSha256": "ced3a367351dfbf7e8b82ab94b4a4f5fee6e8554a054552e1f406e653d246e5c"
+          },
+          {
+            "expressionSha256": "c2db5b90ad646faeb9a344975abba73a3b417966f0a3c34fbd77070492e98188"
+          },
+          {
+            "expressionSha256": "dd957e190a46942f6e399dc9458c74de600b84c1fb953c5cd5116bfdd4f9cf03"
+          },
+          {
+            "expressionSha256": "d8c159f9c2d16cdc69570196e5540afd78a4e8009241408e1e6acc67d1ff038b"
+          },
+          {
+            "expressionSha256": "2ff19d4680d8acb7ccaea631b904c7481a48d19ac226108c45c321a6c250f55b"
+          },
+          {
+            "expressionSha256": "e6ed815c349bf9003c508a0b723975960a425a2cf09fad2c42ba96f9f8b69a50"
+          },
+          {
+            "expressionSha256": "7890eada1963190e15d654b00eb2aafbac898a197a74d8f661f1e3b7d0c66e80"
+          },
+          {
+            "expressionSha256": "68d7f33ca87a8e80fb47dd427d218bf8d36363c3daa290fd349e026b5a341ffe"
+          },
+          {
+            "expressionSha256": "b6cfc5b5e8ee6f375181e7a64029b0db10ee881ec48997f05a416f54450ef671"
+          },
+          {
+            "expressionSha256": "65ac157cfa917fd8bded385f6a3c8bff96351d36d51bcc6ab09ae28bb76c23a5"
+          },
+          {
+            "expressionSha256": "2f8676bb282eedb7dafadaf4a566b9f6a612269597515aec930bbcc9ee84a478"
+          },
+          {
+            "expressionSha256": "261bc796fb0842b30503ec3f9f72525ad4973cdc396a188e7e86b40d3ae503c8"
+          },
+          {
+            "expressionSha256": "82a0cda21e6a429b4e68c251ddf00ec2306908d8271f82dd38e71a4ebb5d2536"
+          },
+          {
+            "expressionSha256": "43893626daaf5feb0b36735fa1f03ce4b668bb33ad96af32a2e333a73911e327"
+          },
+          {
+            "expressionSha256": "4d284b929ab7ee96d27e1f63698c618c9061495ddfa68d104f4562964022c531"
+          },
+          {
+            "expressionSha256": "180d3fbe6b837c3e87557b38fdb1d0a98953f5dc9bef2c76b3da08c1b61db86d"
+          },
+          {
+            "expressionSha256": "3bd42e15e5427f946b98b898212af900ed0a4068cff03a37aa2ce1d3a081f2ec"
+          },
+          {
+            "expressionSha256": "99a8a8a7117b1395e3a209cdc8ba5a70424687458932bc4dc8a7b6e59ff53868"
+          },
+          {
+            "expressionSha256": "8f15d80e7efb2a5d032af6aeba410bc9b4bd498ba70c7278654526b1e2259752"
+          },
+          {
+            "expressionSha256": "113f0af17fdf683cf360ab9d03b7eff1b572d3475e83119031d47ee4331621aa"
+          },
+          {
+            "expressionSha256": "839cf2655267094fdbf41ad83d7b89fa202606d6b1235454745934a1c6f2529f"
+          },
+          {
+            "expressionSha256": "ad73ca8dd2be89150d9ce0f13eae68ebf5fc6eae24f81e521b6223459d4a6005"
+          },
+          {
+            "expressionSha256": "9e5c5f24875a2c9d303704ece0b5dbf1ad327c006908160e414a26f199507b73"
+          },
+          {
+            "expressionSha256": "fca89d5f4203b438402665d6e99cbf68cee7d788041c1157bc5d0203db21c73d"
+          },
+          {
+            "expressionSha256": "bd4aa59595f98eb936aefdae0ab98c7a31921f4e33d8f19831266b3878f19ed4"
+          },
+          {
+            "expressionSha256": "306797bef0ee4284643f474d71cd5bfbdce47232f5c1621b1d0f3563d7ec705b"
+          },
+          {
+            "expressionSha256": "f5f5cbf21cb70de2149b091d8ab0daa2d2d272a63b6c52cdd2fc05393b6978c7"
+          }
+        ],
+        "exports": []
+      },
+      "new": {
+        "purpose": "Reference-check parser and copied-CLI temporary Git/site consumer",
+        "terminalPurpose": "12\u201329 finite write helper copies the exact upstream resolver only when preparing the reference-check CLI in its owned temporary Git/site root; 31\u201337 run invokes the copied CLI there. Pure parser checks and missing-link/path/symlink/SHA256 assertions remain fixture-local.",
+        "limits": "outside-link deliberately points to /etc/passwd but actual reference-check path rejects absolute/escaping/symlink inputs before file read; temporary output only. The node_modules link is external code authority, not a license to classify every dependency as test-only. CLI has top-level Git/probe/read execution and is not passive on import. The copied upstream resolver is passive at import apart from imported dependencies; on fixture invocation the absent provenance manifest returns a false-only resolver before any upstream Git/read loop. A present manifest takes the real byte/commit/path/anchor validation branch; no link exemptions, package export or product authority is granted. The resolver and its original caller are exact closure-bound; maintained markdown helper import authority remains independent.",
+        "callers": [
+          {
+            "name": "docs:tree:mutations",
+            "command": "node --test scripts/tests/docs-tree-boundary.test.mjs scripts/tests/docs-markdown-anchors.test.mjs scripts/tests/docs-check-refs.test.mjs scripts/tests/docs-check-links.test.mjs"
+          }
+        ],
+        "declarations": [
+          {
+            "kind": "ImportDeclaration",
+            "syntaxSha256": "3bd42e15e5427f946b98b898212af900ed0a4068cff03a37aa2ce1d3a081f2ec"
+          },
+          {
+            "kind": "ImportDeclaration",
+            "syntaxSha256": "ad73ca8dd2be89150d9ce0f13eae68ebf5fc6eae24f81e521b6223459d4a6005"
+          },
+          {
+            "kind": "ImportDeclaration",
+            "syntaxSha256": "99a8a8a7117b1395e3a209cdc8ba5a70424687458932bc4dc8a7b6e59ff53868"
+          },
+          {
+            "kind": "ImportDeclaration",
+            "syntaxSha256": "8f15d80e7efb2a5d032af6aeba410bc9b4bd498ba70c7278654526b1e2259752"
+          },
+          {
+            "kind": "ImportDeclaration",
+            "syntaxSha256": "113f0af17fdf683cf360ab9d03b7eff1b572d3475e83119031d47ee4331621aa"
+          },
+          {
+            "kind": "ImportDeclaration",
+            "syntaxSha256": "839cf2655267094fdbf41ad83d7b89fa202606d6b1235454745934a1c6f2529f"
+          },
+          {
+            "kind": "ImportDeclaration",
+            "syntaxSha256": "9e5c5f24875a2c9d303704ece0b5dbf1ad327c006908160e414a26f199507b73"
+          },
+          {
+            "kind": "FirstStatement",
+            "syntaxSha256": "30906b0c310d837fd9065322aaabd37ea7ae203214e5a620f2b620fb64352c27"
+          },
+          {
+            "kind": "FunctionDeclaration",
+            "syntaxSha256": "15655da5748d943e3780f0f5dfd72ccdf674a0c93a6da0ef47916722b727a7cf"
+          },
+          {
+            "kind": "FunctionDeclaration",
+            "syntaxSha256": "90e6f764db2782fada8f0e92cedbc59427913062465a81b55f6909a0f741c5d3"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntaxSha256": "f5f5cbf21cb70de2149b091d8ab0daa2d2d272a63b6c52cdd2fc05393b6978c7"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntaxSha256": "306797bef0ee4284643f474d71cd5bfbdce47232f5c1621b1d0f3563d7ec705b"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntaxSha256": "bd4aa59595f98eb936aefdae0ab98c7a31921f4e33d8f19831266b3878f19ed4"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntaxSha256": "fca89d5f4203b438402665d6e99cbf68cee7d788041c1157bc5d0203db21c73d"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntaxSha256": "3535e7e10a3e1d18145825c778dbd3fa3e0d6a7411248089e50ca966b2d3f519"
+          }
+        ],
+        "selectors": [
+          {
+            "expressionSha256": "ced3a367351dfbf7e8b82ab94b4a4f5fee6e8554a054552e1f406e653d246e5c"
+          },
+          {
+            "expressionSha256": "c2db5b90ad646faeb9a344975abba73a3b417966f0a3c34fbd77070492e98188"
+          },
+          {
+            "expressionSha256": "dd957e190a46942f6e399dc9458c74de600b84c1fb953c5cd5116bfdd4f9cf03"
+          },
+          {
+            "expressionSha256": "d8c159f9c2d16cdc69570196e5540afd78a4e8009241408e1e6acc67d1ff038b"
+          },
+          {
+            "expressionSha256": "2ff19d4680d8acb7ccaea631b904c7481a48d19ac226108c45c321a6c250f55b"
+          },
+          {
+            "expressionSha256": "e6ed815c349bf9003c508a0b723975960a425a2cf09fad2c42ba96f9f8b69a50"
+          },
+          {
+            "expressionSha256": "7890eada1963190e15d654b00eb2aafbac898a197a74d8f661f1e3b7d0c66e80"
+          },
+          {
+            "expressionSha256": "db62e4f6d186448653375816574e081d3a991e435c147fc223c50874bc21a93b"
+          },
+          {
+            "expressionSha256": "68d7f33ca87a8e80fb47dd427d218bf8d36363c3daa290fd349e026b5a341ffe"
+          },
+          {
+            "expressionSha256": "b6cfc5b5e8ee6f375181e7a64029b0db10ee881ec48997f05a416f54450ef671"
+          },
+          {
+            "expressionSha256": "65ac157cfa917fd8bded385f6a3c8bff96351d36d51bcc6ab09ae28bb76c23a5"
+          },
+          {
+            "expressionSha256": "2f8676bb282eedb7dafadaf4a566b9f6a612269597515aec930bbcc9ee84a478"
+          },
+          {
+            "expressionSha256": "261bc796fb0842b30503ec3f9f72525ad4973cdc396a188e7e86b40d3ae503c8"
+          },
+          {
+            "expressionSha256": "82a0cda21e6a429b4e68c251ddf00ec2306908d8271f82dd38e71a4ebb5d2536"
+          },
+          {
+            "expressionSha256": "43893626daaf5feb0b36735fa1f03ce4b668bb33ad96af32a2e333a73911e327"
+          },
+          {
+            "expressionSha256": "4d284b929ab7ee96d27e1f63698c618c9061495ddfa68d104f4562964022c531"
+          },
+          {
+            "expressionSha256": "180d3fbe6b837c3e87557b38fdb1d0a98953f5dc9bef2c76b3da08c1b61db86d"
+          },
+          {
+            "expressionSha256": "3bd42e15e5427f946b98b898212af900ed0a4068cff03a37aa2ce1d3a081f2ec"
+          },
+          {
+            "expressionSha256": "99a8a8a7117b1395e3a209cdc8ba5a70424687458932bc4dc8a7b6e59ff53868"
+          },
+          {
+            "expressionSha256": "8f15d80e7efb2a5d032af6aeba410bc9b4bd498ba70c7278654526b1e2259752"
+          },
+          {
+            "expressionSha256": "113f0af17fdf683cf360ab9d03b7eff1b572d3475e83119031d47ee4331621aa"
+          },
+          {
+            "expressionSha256": "839cf2655267094fdbf41ad83d7b89fa202606d6b1235454745934a1c6f2529f"
+          },
+          {
+            "expressionSha256": "ad73ca8dd2be89150d9ce0f13eae68ebf5fc6eae24f81e521b6223459d4a6005"
+          },
+          {
+            "expressionSha256": "9e5c5f24875a2c9d303704ece0b5dbf1ad327c006908160e414a26f199507b73"
+          },
+          {
+            "expressionSha256": "fca89d5f4203b438402665d6e99cbf68cee7d788041c1157bc5d0203db21c73d"
+          },
+          {
+            "expressionSha256": "bd4aa59595f98eb936aefdae0ab98c7a31921f4e33d8f19831266b3878f19ed4"
+          },
+          {
+            "expressionSha256": "3535e7e10a3e1d18145825c778dbd3fa3e0d6a7411248089e50ca966b2d3f519"
+          },
+          {
+            "expressionSha256": "306797bef0ee4284643f474d71cd5bfbdce47232f5c1621b1d0f3563d7ec705b"
+          },
+          {
+            "expressionSha256": "f5f5cbf21cb70de2149b091d8ab0daa2d2d272a63b6c52cdd2fc05393b6978c7"
+          }
+        ],
+        "exports": []
+      }
+    }
+  },
+  "closure": {
+    "27": {
+      "old": {
+        "source": "scripts/docs-check-refs.mjs",
+        "kind": "selected-operative-definition",
+        "purpose": "PROPOSED full actual source effect/closure qualification for exact copied CLI and upstream resolver; independent review required, no runtime/public product exemption.",
+        "units": [
+          {
+            "symbol": "ImportDeclaration",
+            "kind": "ImportDeclaration",
+            "startLine": 2,
+            "endLine": 2,
+            "syntaxSha256": "99a8a8a7117b1395e3a209cdc8ba5a70424687458932bc4dc8a7b6e59ff53868"
+          },
+          {
+            "symbol": "ImportDeclaration",
+            "kind": "ImportDeclaration",
+            "startLine": 3,
+            "endLine": 3,
+            "syntaxSha256": "080d31f6cf476116b931c1dcd9019983598c482b737296dc01ba7663e92d4e02"
+          },
+          {
+            "symbol": "ImportDeclaration",
+            "kind": "ImportDeclaration",
+            "startLine": 4,
+            "endLine": 4,
+            "syntaxSha256": "113f0af17fdf683cf360ab9d03b7eff1b572d3475e83119031d47ee4331621aa"
+          },
+          {
+            "symbol": "ImportDeclaration",
+            "kind": "ImportDeclaration",
+            "startLine": 5,
+            "endLine": 5,
+            "syntaxSha256": "ad73ca8dd2be89150d9ce0f13eae68ebf5fc6eae24f81e521b6223459d4a6005"
+          },
+          {
+            "symbol": "ImportDeclaration",
+            "kind": "ImportDeclaration",
+            "startLine": 6,
+            "endLine": 6,
+            "syntaxSha256": "c911664f1383262f472f293bf37442ecc966e75f7783f63641e87892a5d649c8"
+          },
+          {
+            "symbol": "ImportDeclaration",
+            "kind": "ImportDeclaration",
+            "startLine": 8,
+            "endLine": 14,
+            "syntaxSha256": "48d70fe4ee921845af3fd30818353c00602b670408c6fc0647a8e3bc37300ba5"
+          },
+          {
+            "symbol": "FirstStatement",
+            "kind": "FirstStatement",
+            "startLine": 16,
+            "endLine": 16,
+            "syntaxSha256": "f6055bf37a2744ecd109a220117928b82359853c93ea2274e97993770e5ac65a"
+          },
+          {
+            "symbol": "FirstStatement",
+            "kind": "FirstStatement",
+            "startLine": 17,
+            "endLine": 17,
+            "syntaxSha256": "1911678d1717fce4506ae9e22816d72d7700382e250c9ed7a1190a816204c34c"
+          },
+          {
+            "symbol": "FirstStatement",
+            "kind": "FirstStatement",
+            "startLine": 18,
+            "endLine": 18,
+            "syntaxSha256": "4fd5d1ef2b78b5ef134ddfad1cdb0888eff3a468482595f0e76fed794c5aa608"
+          },
+          {
+            "symbol": "FirstStatement",
+            "kind": "FirstStatement",
+            "startLine": 19,
+            "endLine": 21,
+            "syntaxSha256": "b3ded15078946186cc88eb27baabecfd2fa4b467386ded8d8e98a4b35d62468d"
+          },
+          {
+            "symbol": "IfStatement",
+            "kind": "IfStatement",
+            "startLine": 22,
+            "endLine": 22,
+            "syntaxSha256": "82e3ab970af3418d1d534691eb07965f7ca26e90632872f3f66948563ae1e93a"
+          },
+          {
+            "symbol": "FirstStatement",
+            "kind": "FirstStatement",
+            "startLine": 23,
+            "endLine": 23,
+            "syntaxSha256": "d09838829aa8d978d592cf0489ad0b78ab93c5574009c93b174c5affab628750"
+          },
+          {
+            "symbol": "FirstStatement",
+            "kind": "FirstStatement",
+            "startLine": 24,
+            "endLine": 24,
+            "syntaxSha256": "5632d97aa28532fdf01728726391c2d06930a6c2443ea77f729199a3c430141e"
+          },
+          {
+            "symbol": "FirstStatement",
+            "kind": "FirstStatement",
+            "startLine": 26,
+            "endLine": 37,
+            "syntaxSha256": "e9059f640cbe9114521822f7d3cec4803a032632e74e32aa123c9f2ae0e1cbb9"
+          },
+          {
+            "symbol": "FirstStatement",
+            "kind": "FirstStatement",
+            "startLine": 39,
+            "endLine": 43,
+            "syntaxSha256": "41fdf5340e3267fc0fa8d391ba17ce7e7723a6f58173ab0a743e5069ccccb084"
+          },
+          {
+            "symbol": "FirstStatement",
+            "kind": "FirstStatement",
+            "startLine": 45,
+            "endLine": 47,
+            "syntaxSha256": "0086866050ae5cf0a7d57a25f0c6f80bcce9eae569a2ce01d87bd01015bedc06"
+          },
+          {
+            "symbol": "FirstStatement",
+            "kind": "FirstStatement",
+            "startLine": 49,
+            "endLine": 58,
+            "syntaxSha256": "f4eee836ad2a7df21ae2257ae2b6c577913ddafbb9c8dfd0d818f82d6473af1b"
+          },
+          {
+            "symbol": "FirstStatement",
+            "kind": "FirstStatement",
+            "startLine": 60,
+            "endLine": 63,
+            "syntaxSha256": "20d6d755421bb9981fccc611c843b355a6412525156a3f8c04d236a536b9171a"
+          },
+          {
+            "symbol": "FirstStatement",
+            "kind": "FirstStatement",
+            "startLine": 65,
+            "endLine": 65,
+            "syntaxSha256": "f53a56ba0c26895836a10e6c4319d5a54505f49cd2a87c5b5719f041265f38fb"
+          },
+          {
+            "symbol": "FirstStatement",
+            "kind": "FirstStatement",
+            "startLine": 66,
+            "endLine": 66,
+            "syntaxSha256": "ac228d66c71157c513d7062053ab88caad54d6c9aaaa980fadc6adc971b5bcfa"
+          },
+          {
+            "symbol": "FirstStatement",
+            "kind": "FirstStatement",
+            "startLine": 67,
+            "endLine": 67,
+            "syntaxSha256": "4506df4d7f4afcf3f31c161d3d9c4b55af71caaaec5f08ef862f63babf3b838f"
+          },
+          {
+            "symbol": "FirstStatement",
+            "kind": "FirstStatement",
+            "startLine": 68,
+            "endLine": 68,
+            "syntaxSha256": "e62cff4620b97c827e92db94fab92a1d8bcbc297a8f397af1c37d4858630f170"
+          },
+          {
+            "symbol": "rel",
+            "kind": "FunctionDeclaration",
+            "startLine": 70,
+            "endLine": 72,
+            "syntaxSha256": "24afe72d75b5729c78d7a08deaeb99484c04e268b8d4dcb34053ac627088474a"
+          },
+          {
+            "symbol": "walk",
+            "kind": "FunctionDeclaration",
+            "startLine": 74,
+            "endLine": 83,
+            "syntaxSha256": "0e8bc9fc3b5b7d4dc5f559cc383e54325648c067f5e518f3f3bbac57d4b9ee1e"
+          },
+          {
+            "symbol": "docsToScan",
+            "kind": "FunctionDeclaration",
+            "startLine": 85,
+            "endLine": 93,
+            "syntaxSha256": "2b29031824c98a019e359c1b9de1addca035218ef24dc51005cfd233ce9ffabe"
+          },
+          {
+            "symbol": "markdownDestination",
+            "kind": "FunctionDeclaration",
+            "startLine": 95,
+            "endLine": 102,
+            "syntaxSha256": "b00c674a39daff22d6f5050735d445101330f449c31ed8f94c6eba654f637576"
+          },
+          {
+            "symbol": "markdownAnchors",
+            "kind": "FunctionDeclaration",
+            "startLine": 104,
+            "endLine": 106,
+            "syntaxSha256": "fa89ba0371b00f23779f313a9cd1a4334d591b3141e8d00f011d0e51d4ec9e3d"
+          },
+          {
+            "symbol": "normalizeReference",
+            "kind": "FunctionDeclaration",
+            "startLine": 108,
+            "endLine": 121,
+            "syntaxSha256": "7000892bad2bd94f1d4e3be516b8ff63b5d39526ee3f928fde9ec25e60f7d2ab"
+          },
+          {
+            "symbol": "isRepoReference",
+            "kind": "FunctionDeclaration",
+            "startLine": 123,
+            "endLine": 127,
+            "syntaxSha256": "90efe55ffdcf98e57b025bf66b0f377d015c0eb5aef28b3c966528cd731438f2"
+          },
+          {
+            "symbol": "shouldSkipRepoReference",
+            "kind": "FunctionDeclaration",
+            "startLine": 129,
+            "endLine": 143,
+            "syntaxSha256": "10c30c4e817d0e7b5e3ba1d182bddae21198dc507ac48a7080d1e5f03f025130"
+          },
+          {
+            "symbol": "existsRepoReference",
+            "kind": "FunctionDeclaration",
+            "startLine": 145,
+            "endLine": 148,
+            "syntaxSha256": "3500f6a6ca67de0e0b80b73415547660c1b9d4d85db4857f348d0c7f4e8c025f"
+          },
+          {
+            "symbol": "checkMarkdownLinks",
+            "kind": "FunctionDeclaration",
+            "startLine": 150,
+            "endLine": 219,
+            "syntaxSha256": "6a524e23f5f3ccaa895e4e4b6308bc7fbbd7b63046c8c0b329b3cfc2a5d1bdc5"
+          },
+          {
+            "symbol": "candidateRefs",
+            "kind": "FunctionDeclaration",
+            "startLine": 221,
+            "endLine": 231,
+            "syntaxSha256": "3e2cb1f669304748e1ec8e43a9cec660e308f73308f0b7ccc0c1d8cdbb4d9b84"
+          },
+          {
+            "symbol": "checkRepoRefs",
+            "kind": "FunctionDeclaration",
+            "startLine": 233,
+            "endLine": 246,
+            "syntaxSha256": "b0296b2a222f7dbe8020c2188a9386dfcca790f191e3cd0337d28f01c8c6f69d"
+          },
+          {
+            "symbol": "FirstStatement",
+            "kind": "FirstStatement",
+            "startLine": 248,
+            "endLine": 248,
+            "syntaxSha256": "b0d617c453bd352192807e44cca325c5acd2dfebf8ed29454b5750a21993f868"
+          },
+          {
+            "symbol": "FirstStatement",
+            "kind": "FirstStatement",
+            "startLine": 249,
+            "endLine": 249,
+            "syntaxSha256": "84e75ba3439b7b07335b10a76b72491635c81c55a217e33dafe9427dc21a8485"
+          },
+          {
+            "symbol": "IfStatement",
+            "kind": "IfStatement",
+            "startLine": 250,
+            "endLine": 252,
+            "syntaxSha256": "f41193233bd1b6290021995287a4fb46febd3e33a20f4b84cdd160af3c7d30af"
+          },
+          {
+            "symbol": "ForOfStatement",
+            "kind": "ForOfStatement",
+            "startLine": 254,
+            "endLine": 264,
+            "syntaxSha256": "1450efbbd592db3b35891a725b2ba7dfdbba670ffa992d251efbf8c6c9c40bce"
+          },
+          {
+            "symbol": "checkSourceCalloutRevisions",
+            "kind": "FunctionDeclaration",
+            "startLine": 266,
+            "endLine": 288,
+            "syntaxSha256": "b1084a4228443fc3ab0b1012db143e9435fede06aff10ff6a17688f8c865d213"
+          },
+          {
+            "symbol": "physicalLineCount",
+            "kind": "FunctionDeclaration",
+            "startLine": 290,
+            "endLine": 294,
+            "syntaxSha256": "4faa5e45675b058b637508897c6d151be9775aae728cf947c9355a92bc5b3baa"
+          },
+          {
+            "symbol": "pinnedObject",
+            "kind": "FunctionDeclaration",
+            "startLine": 296,
+            "endLine": 314,
+            "syntaxSha256": "861665318a633bda21b283ab81de5ea216ab31862bd799dbdcfadd829c2ec931"
+          },
+          {
+            "symbol": "pinnedLinkErrors",
+            "kind": "FunctionDeclaration",
+            "startLine": 316,
+            "endLine": 338,
+            "syntaxSha256": "48606ca28216f36ced581bd38d3d8cd1ac0e007b96db965dc346317da6eef893"
+          },
+          {
+            "symbol": "FirstStatement",
+            "kind": "FirstStatement",
+            "startLine": 340,
+            "endLine": 340,
+            "syntaxSha256": "5014a2e044deae5ce3a4c21ad587fbb0becdc9eb9d2ce4d081126daa02f6b6b0"
+          },
+          {
+            "symbol": "FirstStatement",
+            "kind": "FirstStatement",
+            "startLine": 341,
+            "endLine": 341,
+            "syntaxSha256": "dd75a83493d3e93481eb48c200017b26e382b59850fa6bddf3870ca0195af530"
+          },
+          {
+            "symbol": "FirstStatement",
+            "kind": "FirstStatement",
+            "startLine": 342,
+            "endLine": 342,
+            "syntaxSha256": "2c4ae88a6422c2b4e14eb657b3402f5e7ee9a13704c66c53e0290257819f48cc"
+          },
+          {
+            "symbol": "IfStatement",
+            "kind": "IfStatement",
+            "startLine": 343,
+            "endLine": 345,
+            "syntaxSha256": "b845cd955b64a1ce44fd3ac4a9bf5e0cc9979a48ed2dab976babbfa33e9d8d74"
+          },
+          {
+            "symbol": "FirstStatement",
+            "kind": "FirstStatement",
+            "startLine": 346,
+            "endLine": 346,
+            "syntaxSha256": "293d8744faa3d03753bd00cdc85f6db412a270b92dadfd34817a04673422b4c8"
+          },
+          {
+            "symbol": "IfStatement",
+            "kind": "IfStatement",
+            "startLine": 347,
+            "endLine": 349,
+            "syntaxSha256": "cb336c962a7bd73582cffb862c938db25ff4d57ceb0840a555dd196e5da0af41"
+          },
+          {
+            "symbol": "ExpressionStatement",
+            "kind": "ExpressionStatement",
+            "startLine": 350,
+            "endLine": 350,
+            "syntaxSha256": "056d51dbc5115ced9ce93b9a4e6a1ecf293eb02581b28a9747fe4006cfd00d09"
+          },
+          {
+            "symbol": "ForOfStatement",
+            "kind": "ForOfStatement",
+            "startLine": 352,
+            "endLine": 361,
+            "syntaxSha256": "a2472854ffb4d124729f02334f4d57bece74899b48638abc24350ea35f445ca8"
+          },
+          {
+            "symbol": "IfStatement",
+            "kind": "IfStatement",
+            "startLine": 363,
+            "endLine": 369,
+            "syntaxSha256": "76ff0bfbba43052e75e1d4ef9168c90ffb10ff026f71452a16d1c398a6462fdd"
+          },
+          {
+            "symbol": "ExpressionStatement",
+            "kind": "ExpressionStatement",
+            "startLine": 371,
+            "endLine": 371,
+            "syntaxSha256": "9ed37504d27f144d42f5178c398e6bf712101ec1da9b50957e20138017061002"
+          }
+        ],
+        "ranges": [
+          {
+            "startLine": 1,
+            "endLine": 371,
+            "sha256": "d035b294daf16677de5263ff5818a766e5ad89cdb2362b66ed9b16c5e20b1fab"
+          }
+        ],
+        "initialization": [
+          {
+            "kind": "ImportDeclaration",
+            "syntaxSha256": "99a8a8a7117b1395e3a209cdc8ba5a70424687458932bc4dc8a7b6e59ff53868"
+          },
+          {
+            "kind": "ImportDeclaration",
+            "syntaxSha256": "080d31f6cf476116b931c1dcd9019983598c482b737296dc01ba7663e92d4e02"
+          },
+          {
+            "kind": "ImportDeclaration",
+            "syntaxSha256": "113f0af17fdf683cf360ab9d03b7eff1b572d3475e83119031d47ee4331621aa"
+          },
+          {
+            "kind": "ImportDeclaration",
+            "syntaxSha256": "ad73ca8dd2be89150d9ce0f13eae68ebf5fc6eae24f81e521b6223459d4a6005"
+          },
+          {
+            "kind": "ImportDeclaration",
+            "syntaxSha256": "c911664f1383262f472f293bf37442ecc966e75f7783f63641e87892a5d649c8"
+          },
+          {
+            "kind": "ImportDeclaration",
+            "syntaxSha256": "48d70fe4ee921845af3fd30818353c00602b670408c6fc0647a8e3bc37300ba5"
+          },
+          {
+            "kind": "FirstStatement",
+            "syntaxSha256": "f6055bf37a2744ecd109a220117928b82359853c93ea2274e97993770e5ac65a"
+          },
+          {
+            "kind": "FirstStatement",
+            "syntaxSha256": "1911678d1717fce4506ae9e22816d72d7700382e250c9ed7a1190a816204c34c"
+          },
+          {
+            "kind": "FirstStatement",
+            "syntaxSha256": "4fd5d1ef2b78b5ef134ddfad1cdb0888eff3a468482595f0e76fed794c5aa608"
+          },
+          {
+            "kind": "FirstStatement",
+            "syntaxSha256": "b3ded15078946186cc88eb27baabecfd2fa4b467386ded8d8e98a4b35d62468d"
+          },
+          {
+            "kind": "IfStatement",
+            "syntaxSha256": "82e3ab970af3418d1d534691eb07965f7ca26e90632872f3f66948563ae1e93a"
+          },
+          {
+            "kind": "FirstStatement",
+            "syntaxSha256": "d09838829aa8d978d592cf0489ad0b78ab93c5574009c93b174c5affab628750"
+          },
+          {
+            "kind": "FirstStatement",
+            "syntaxSha256": "5632d97aa28532fdf01728726391c2d06930a6c2443ea77f729199a3c430141e"
+          },
+          {
+            "kind": "FirstStatement",
+            "syntaxSha256": "e9059f640cbe9114521822f7d3cec4803a032632e74e32aa123c9f2ae0e1cbb9"
+          },
+          {
+            "kind": "FirstStatement",
+            "syntaxSha256": "41fdf5340e3267fc0fa8d391ba17ce7e7723a6f58173ab0a743e5069ccccb084"
+          },
+          {
+            "kind": "FirstStatement",
+            "syntaxSha256": "0086866050ae5cf0a7d57a25f0c6f80bcce9eae569a2ce01d87bd01015bedc06"
+          },
+          {
+            "kind": "FirstStatement",
+            "syntaxSha256": "f4eee836ad2a7df21ae2257ae2b6c577913ddafbb9c8dfd0d818f82d6473af1b"
+          },
+          {
+            "kind": "FirstStatement",
+            "syntaxSha256": "20d6d755421bb9981fccc611c843b355a6412525156a3f8c04d236a536b9171a"
+          },
+          {
+            "kind": "FirstStatement",
+            "syntaxSha256": "f53a56ba0c26895836a10e6c4319d5a54505f49cd2a87c5b5719f041265f38fb"
+          },
+          {
+            "kind": "FirstStatement",
+            "syntaxSha256": "ac228d66c71157c513d7062053ab88caad54d6c9aaaa980fadc6adc971b5bcfa"
+          },
+          {
+            "kind": "FirstStatement",
+            "syntaxSha256": "4506df4d7f4afcf3f31c161d3d9c4b55af71caaaec5f08ef862f63babf3b838f"
+          },
+          {
+            "kind": "FirstStatement",
+            "syntaxSha256": "e62cff4620b97c827e92db94fab92a1d8bcbc297a8f397af1c37d4858630f170"
+          },
+          {
+            "kind": "FirstStatement",
+            "syntaxSha256": "b0d617c453bd352192807e44cca325c5acd2dfebf8ed29454b5750a21993f868"
+          },
+          {
+            "kind": "FirstStatement",
+            "syntaxSha256": "84e75ba3439b7b07335b10a76b72491635c81c55a217e33dafe9427dc21a8485"
+          },
+          {
+            "kind": "IfStatement",
+            "syntaxSha256": "f41193233bd1b6290021995287a4fb46febd3e33a20f4b84cdd160af3c7d30af"
+          },
+          {
+            "kind": "ForOfStatement",
+            "syntaxSha256": "1450efbbd592db3b35891a725b2ba7dfdbba670ffa992d251efbf8c6c9c40bce"
+          },
+          {
+            "kind": "FirstStatement",
+            "syntaxSha256": "5014a2e044deae5ce3a4c21ad587fbb0becdc9eb9d2ce4d081126daa02f6b6b0"
+          },
+          {
+            "kind": "FirstStatement",
+            "syntaxSha256": "dd75a83493d3e93481eb48c200017b26e382b59850fa6bddf3870ca0195af530"
+          },
+          {
+            "kind": "FirstStatement",
+            "syntaxSha256": "2c4ae88a6422c2b4e14eb657b3402f5e7ee9a13704c66c53e0290257819f48cc"
+          },
+          {
+            "kind": "IfStatement",
+            "syntaxSha256": "b845cd955b64a1ce44fd3ac4a9bf5e0cc9979a48ed2dab976babbfa33e9d8d74"
+          },
+          {
+            "kind": "FirstStatement",
+            "syntaxSha256": "293d8744faa3d03753bd00cdc85f6db412a270b92dadfd34817a04673422b4c8"
+          },
+          {
+            "kind": "IfStatement",
+            "syntaxSha256": "cb336c962a7bd73582cffb862c938db25ff4d57ceb0840a555dd196e5da0af41"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntaxSha256": "056d51dbc5115ced9ce93b9a4e6a1ecf293eb02581b28a9747fe4006cfd00d09"
+          },
+          {
+            "kind": "ForOfStatement",
+            "syntaxSha256": "a2472854ffb4d124729f02334f4d57bece74899b48638abc24350ea35f445ca8"
+          },
+          {
+            "kind": "IfStatement",
+            "syntaxSha256": "76ff0bfbba43052e75e1d4ef9168c90ffb10ff026f71452a16d1c398a6462fdd"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntaxSha256": "9ed37504d27f144d42f5178c398e6bf712101ec1da9b50957e20138017061002"
+          }
+        ]
+      },
+      "new": {
+        "source": "scripts/docs-check-refs.mjs",
+        "kind": "selected-operative-definition",
+        "purpose": "PROPOSED full actual source effect/closure qualification for exact copied CLI and upstream resolver; independent review required, no runtime/public product exemption.",
+        "units": [
+          {
+            "symbol": "ImportDeclaration",
+            "kind": "ImportDeclaration",
+            "startLine": 2,
+            "endLine": 2,
+            "syntaxSha256": "99a8a8a7117b1395e3a209cdc8ba5a70424687458932bc4dc8a7b6e59ff53868"
+          },
+          {
+            "symbol": "ImportDeclaration",
+            "kind": "ImportDeclaration",
+            "startLine": 3,
+            "endLine": 3,
+            "syntaxSha256": "080d31f6cf476116b931c1dcd9019983598c482b737296dc01ba7663e92d4e02"
+          },
+          {
+            "symbol": "ImportDeclaration",
+            "kind": "ImportDeclaration",
+            "startLine": 4,
+            "endLine": 4,
+            "syntaxSha256": "113f0af17fdf683cf360ab9d03b7eff1b572d3475e83119031d47ee4331621aa"
+          },
+          {
+            "symbol": "ImportDeclaration",
+            "kind": "ImportDeclaration",
+            "startLine": 5,
+            "endLine": 5,
+            "syntaxSha256": "ad73ca8dd2be89150d9ce0f13eae68ebf5fc6eae24f81e521b6223459d4a6005"
+          },
+          {
+            "symbol": "ImportDeclaration",
+            "kind": "ImportDeclaration",
+            "startLine": 6,
+            "endLine": 6,
+            "syntaxSha256": "c911664f1383262f472f293bf37442ecc966e75f7783f63641e87892a5d649c8"
+          },
+          {
+            "symbol": "ImportDeclaration",
+            "kind": "ImportDeclaration",
+            "startLine": 8,
+            "endLine": 14,
+            "syntaxSha256": "48d70fe4ee921845af3fd30818353c00602b670408c6fc0647a8e3bc37300ba5"
+          },
+          {
+            "symbol": "FirstStatement",
+            "kind": "FirstStatement",
+            "startLine": 16,
+            "endLine": 16,
+            "syntaxSha256": "f6055bf37a2744ecd109a220117928b82359853c93ea2274e97993770e5ac65a"
+          },
+          {
+            "symbol": "FirstStatement",
+            "kind": "FirstStatement",
+            "startLine": 17,
+            "endLine": 17,
+            "syntaxSha256": "1911678d1717fce4506ae9e22816d72d7700382e250c9ed7a1190a816204c34c"
+          },
+          {
+            "symbol": "FirstStatement",
+            "kind": "FirstStatement",
+            "startLine": 18,
+            "endLine": 18,
+            "syntaxSha256": "4fd5d1ef2b78b5ef134ddfad1cdb0888eff3a468482595f0e76fed794c5aa608"
+          },
+          {
+            "symbol": "FirstStatement",
+            "kind": "FirstStatement",
+            "startLine": 19,
+            "endLine": 21,
+            "syntaxSha256": "b3ded15078946186cc88eb27baabecfd2fa4b467386ded8d8e98a4b35d62468d"
+          },
+          {
+            "symbol": "IfStatement",
+            "kind": "IfStatement",
+            "startLine": 22,
+            "endLine": 22,
+            "syntaxSha256": "82e3ab970af3418d1d534691eb07965f7ca26e90632872f3f66948563ae1e93a"
+          },
+          {
+            "symbol": "FirstStatement",
+            "kind": "FirstStatement",
+            "startLine": 23,
+            "endLine": 23,
+            "syntaxSha256": "d09838829aa8d978d592cf0489ad0b78ab93c5574009c93b174c5affab628750"
+          },
+          {
+            "symbol": "FirstStatement",
+            "kind": "FirstStatement",
+            "startLine": 24,
+            "endLine": 24,
+            "syntaxSha256": "5632d97aa28532fdf01728726391c2d06930a6c2443ea77f729199a3c430141e"
+          },
+          {
+            "symbol": "FirstStatement",
+            "kind": "FirstStatement",
+            "startLine": 26,
+            "endLine": 37,
+            "syntaxSha256": "e9059f640cbe9114521822f7d3cec4803a032632e74e32aa123c9f2ae0e1cbb9"
+          },
+          {
+            "symbol": "FirstStatement",
+            "kind": "FirstStatement",
+            "startLine": 39,
+            "endLine": 43,
+            "syntaxSha256": "41fdf5340e3267fc0fa8d391ba17ce7e7723a6f58173ab0a743e5069ccccb084"
+          },
+          {
+            "symbol": "FirstStatement",
+            "kind": "FirstStatement",
+            "startLine": 45,
+            "endLine": 47,
+            "syntaxSha256": "0086866050ae5cf0a7d57a25f0c6f80bcce9eae569a2ce01d87bd01015bedc06"
+          },
+          {
+            "symbol": "FirstStatement",
+            "kind": "FirstStatement",
+            "startLine": 49,
+            "endLine": 58,
+            "syntaxSha256": "f4eee836ad2a7df21ae2257ae2b6c577913ddafbb9c8dfd0d818f82d6473af1b"
+          },
+          {
+            "symbol": "FirstStatement",
+            "kind": "FirstStatement",
+            "startLine": 60,
+            "endLine": 63,
+            "syntaxSha256": "20d6d755421bb9981fccc611c843b355a6412525156a3f8c04d236a536b9171a"
+          },
+          {
+            "symbol": "FirstStatement",
+            "kind": "FirstStatement",
+            "startLine": 65,
+            "endLine": 65,
+            "syntaxSha256": "f53a56ba0c26895836a10e6c4319d5a54505f49cd2a87c5b5719f041265f38fb"
+          },
+          {
+            "symbol": "FirstStatement",
+            "kind": "FirstStatement",
+            "startLine": 66,
+            "endLine": 66,
+            "syntaxSha256": "ac228d66c71157c513d7062053ab88caad54d6c9aaaa980fadc6adc971b5bcfa"
+          },
+          {
+            "symbol": "FirstStatement",
+            "kind": "FirstStatement",
+            "startLine": 67,
+            "endLine": 67,
+            "syntaxSha256": "4506df4d7f4afcf3f31c161d3d9c4b55af71caaaec5f08ef862f63babf3b838f"
+          },
+          {
+            "symbol": "FirstStatement",
+            "kind": "FirstStatement",
+            "startLine": 68,
+            "endLine": 68,
+            "syntaxSha256": "e62cff4620b97c827e92db94fab92a1d8bcbc297a8f397af1c37d4858630f170"
+          },
+          {
+            "symbol": "rel",
+            "kind": "FunctionDeclaration",
+            "startLine": 70,
+            "endLine": 72,
+            "syntaxSha256": "24afe72d75b5729c78d7a08deaeb99484c04e268b8d4dcb34053ac627088474a"
+          },
+          {
+            "symbol": "walk",
+            "kind": "FunctionDeclaration",
+            "startLine": 74,
+            "endLine": 83,
+            "syntaxSha256": "0e8bc9fc3b5b7d4dc5f559cc383e54325648c067f5e518f3f3bbac57d4b9ee1e"
+          },
+          {
+            "symbol": "docsToScan",
+            "kind": "FunctionDeclaration",
+            "startLine": 85,
+            "endLine": 93,
+            "syntaxSha256": "2b29031824c98a019e359c1b9de1addca035218ef24dc51005cfd233ce9ffabe"
+          },
+          {
+            "symbol": "markdownDestination",
+            "kind": "FunctionDeclaration",
+            "startLine": 95,
+            "endLine": 102,
+            "syntaxSha256": "b00c674a39daff22d6f5050735d445101330f449c31ed8f94c6eba654f637576"
+          },
+          {
+            "symbol": "markdownAnchors",
+            "kind": "FunctionDeclaration",
+            "startLine": 104,
+            "endLine": 106,
+            "syntaxSha256": "fa89ba0371b00f23779f313a9cd1a4334d591b3141e8d00f011d0e51d4ec9e3d"
+          },
+          {
+            "symbol": "normalizeReference",
+            "kind": "FunctionDeclaration",
+            "startLine": 108,
+            "endLine": 121,
+            "syntaxSha256": "7000892bad2bd94f1d4e3be516b8ff63b5d39526ee3f928fde9ec25e60f7d2ab"
+          },
+          {
+            "symbol": "isRepoReference",
+            "kind": "FunctionDeclaration",
+            "startLine": 123,
+            "endLine": 127,
+            "syntaxSha256": "90efe55ffdcf98e57b025bf66b0f377d015c0eb5aef28b3c966528cd731438f2"
+          },
+          {
+            "symbol": "shouldSkipRepoReference",
+            "kind": "FunctionDeclaration",
+            "startLine": 129,
+            "endLine": 143,
+            "syntaxSha256": "10c30c4e817d0e7b5e3ba1d182bddae21198dc507ac48a7080d1e5f03f025130"
+          },
+          {
+            "symbol": "existsRepoReference",
+            "kind": "FunctionDeclaration",
+            "startLine": 145,
+            "endLine": 148,
+            "syntaxSha256": "3500f6a6ca67de0e0b80b73415547660c1b9d4d85db4857f348d0c7f4e8c025f"
+          },
+          {
+            "symbol": "checkMarkdownLinks",
+            "kind": "FunctionDeclaration",
+            "startLine": 150,
+            "endLine": 219,
+            "syntaxSha256": "6a524e23f5f3ccaa895e4e4b6308bc7fbbd7b63046c8c0b329b3cfc2a5d1bdc5"
+          },
+          {
+            "symbol": "candidateRefs",
+            "kind": "FunctionDeclaration",
+            "startLine": 221,
+            "endLine": 231,
+            "syntaxSha256": "3e2cb1f669304748e1ec8e43a9cec660e308f73308f0b7ccc0c1d8cdbb4d9b84"
+          },
+          {
+            "symbol": "checkRepoRefs",
+            "kind": "FunctionDeclaration",
+            "startLine": 233,
+            "endLine": 246,
+            "syntaxSha256": "b0296b2a222f7dbe8020c2188a9386dfcca790f191e3cd0337d28f01c8c6f69d"
+          },
+          {
+            "symbol": "FirstStatement",
+            "kind": "FirstStatement",
+            "startLine": 248,
+            "endLine": 248,
+            "syntaxSha256": "b0d617c453bd352192807e44cca325c5acd2dfebf8ed29454b5750a21993f868"
+          },
+          {
+            "symbol": "FirstStatement",
+            "kind": "FirstStatement",
+            "startLine": 249,
+            "endLine": 249,
+            "syntaxSha256": "84e75ba3439b7b07335b10a76b72491635c81c55a217e33dafe9427dc21a8485"
+          },
+          {
+            "symbol": "IfStatement",
+            "kind": "IfStatement",
+            "startLine": 250,
+            "endLine": 252,
+            "syntaxSha256": "f41193233bd1b6290021995287a4fb46febd3e33a20f4b84cdd160af3c7d30af"
+          },
+          {
+            "symbol": "ForOfStatement",
+            "kind": "ForOfStatement",
+            "startLine": 254,
+            "endLine": 264,
+            "syntaxSha256": "1450efbbd592db3b35891a725b2ba7dfdbba670ffa992d251efbf8c6c9c40bce"
+          },
+          {
+            "symbol": "checkSourceCalloutRevisions",
+            "kind": "FunctionDeclaration",
+            "startLine": 266,
+            "endLine": 292,
+            "syntaxSha256": "b8fbf0c4dea197ada56ddb482038610460aad742c46d556e89cff53a940824c7"
+          },
+          {
+            "symbol": "physicalLineCount",
+            "kind": "FunctionDeclaration",
+            "startLine": 294,
+            "endLine": 298,
+            "syntaxSha256": "4faa5e45675b058b637508897c6d151be9775aae728cf947c9355a92bc5b3baa"
+          },
+          {
+            "symbol": "pinnedObject",
+            "kind": "FunctionDeclaration",
+            "startLine": 300,
+            "endLine": 318,
+            "syntaxSha256": "861665318a633bda21b283ab81de5ea216ab31862bd799dbdcfadd829c2ec931"
+          },
+          {
+            "symbol": "pinnedLinkErrors",
+            "kind": "FunctionDeclaration",
+            "startLine": 320,
+            "endLine": 342,
+            "syntaxSha256": "48606ca28216f36ced581bd38d3d8cd1ac0e007b96db965dc346317da6eef893"
+          },
+          {
+            "symbol": "FirstStatement",
+            "kind": "FirstStatement",
+            "startLine": 344,
+            "endLine": 344,
+            "syntaxSha256": "5014a2e044deae5ce3a4c21ad587fbb0becdc9eb9d2ce4d081126daa02f6b6b0"
+          },
+          {
+            "symbol": "FirstStatement",
+            "kind": "FirstStatement",
+            "startLine": 345,
+            "endLine": 345,
+            "syntaxSha256": "dd75a83493d3e93481eb48c200017b26e382b59850fa6bddf3870ca0195af530"
+          },
+          {
+            "symbol": "FirstStatement",
+            "kind": "FirstStatement",
+            "startLine": 346,
+            "endLine": 346,
+            "syntaxSha256": "2c4ae88a6422c2b4e14eb657b3402f5e7ee9a13704c66c53e0290257819f48cc"
+          },
+          {
+            "symbol": "IfStatement",
+            "kind": "IfStatement",
+            "startLine": 347,
+            "endLine": 349,
+            "syntaxSha256": "b845cd955b64a1ce44fd3ac4a9bf5e0cc9979a48ed2dab976babbfa33e9d8d74"
+          },
+          {
+            "symbol": "FirstStatement",
+            "kind": "FirstStatement",
+            "startLine": 350,
+            "endLine": 350,
+            "syntaxSha256": "293d8744faa3d03753bd00cdc85f6db412a270b92dadfd34817a04673422b4c8"
+          },
+          {
+            "symbol": "IfStatement",
+            "kind": "IfStatement",
+            "startLine": 351,
+            "endLine": 353,
+            "syntaxSha256": "cb336c962a7bd73582cffb862c938db25ff4d57ceb0840a555dd196e5da0af41"
+          },
+          {
+            "symbol": "ExpressionStatement",
+            "kind": "ExpressionStatement",
+            "startLine": 354,
+            "endLine": 354,
+            "syntaxSha256": "056d51dbc5115ced9ce93b9a4e6a1ecf293eb02581b28a9747fe4006cfd00d09"
+          },
+          {
+            "symbol": "ForOfStatement",
+            "kind": "ForOfStatement",
+            "startLine": 356,
+            "endLine": 365,
+            "syntaxSha256": "a2472854ffb4d124729f02334f4d57bece74899b48638abc24350ea35f445ca8"
+          },
+          {
+            "symbol": "IfStatement",
+            "kind": "IfStatement",
+            "startLine": 367,
+            "endLine": 373,
+            "syntaxSha256": "76ff0bfbba43052e75e1d4ef9168c90ffb10ff026f71452a16d1c398a6462fdd"
+          },
+          {
+            "symbol": "ExpressionStatement",
+            "kind": "ExpressionStatement",
+            "startLine": 375,
+            "endLine": 375,
+            "syntaxSha256": "9ed37504d27f144d42f5178c398e6bf712101ec1da9b50957e20138017061002"
+          }
+        ],
+        "ranges": [
+          {
+            "startLine": 1,
+            "endLine": 375,
+            "sha256": "d04c5245b1555b275f27b40ad7461071d476615f177557ee07ca5b5b812ee604"
+          }
+        ],
+        "initialization": [
+          {
+            "kind": "ImportDeclaration",
+            "syntaxSha256": "99a8a8a7117b1395e3a209cdc8ba5a70424687458932bc4dc8a7b6e59ff53868"
+          },
+          {
+            "kind": "ImportDeclaration",
+            "syntaxSha256": "080d31f6cf476116b931c1dcd9019983598c482b737296dc01ba7663e92d4e02"
+          },
+          {
+            "kind": "ImportDeclaration",
+            "syntaxSha256": "113f0af17fdf683cf360ab9d03b7eff1b572d3475e83119031d47ee4331621aa"
+          },
+          {
+            "kind": "ImportDeclaration",
+            "syntaxSha256": "ad73ca8dd2be89150d9ce0f13eae68ebf5fc6eae24f81e521b6223459d4a6005"
+          },
+          {
+            "kind": "ImportDeclaration",
+            "syntaxSha256": "c911664f1383262f472f293bf37442ecc966e75f7783f63641e87892a5d649c8"
+          },
+          {
+            "kind": "ImportDeclaration",
+            "syntaxSha256": "48d70fe4ee921845af3fd30818353c00602b670408c6fc0647a8e3bc37300ba5"
+          },
+          {
+            "kind": "FirstStatement",
+            "syntaxSha256": "f6055bf37a2744ecd109a220117928b82359853c93ea2274e97993770e5ac65a"
+          },
+          {
+            "kind": "FirstStatement",
+            "syntaxSha256": "1911678d1717fce4506ae9e22816d72d7700382e250c9ed7a1190a816204c34c"
+          },
+          {
+            "kind": "FirstStatement",
+            "syntaxSha256": "4fd5d1ef2b78b5ef134ddfad1cdb0888eff3a468482595f0e76fed794c5aa608"
+          },
+          {
+            "kind": "FirstStatement",
+            "syntaxSha256": "b3ded15078946186cc88eb27baabecfd2fa4b467386ded8d8e98a4b35d62468d"
+          },
+          {
+            "kind": "IfStatement",
+            "syntaxSha256": "82e3ab970af3418d1d534691eb07965f7ca26e90632872f3f66948563ae1e93a"
+          },
+          {
+            "kind": "FirstStatement",
+            "syntaxSha256": "d09838829aa8d978d592cf0489ad0b78ab93c5574009c93b174c5affab628750"
+          },
+          {
+            "kind": "FirstStatement",
+            "syntaxSha256": "5632d97aa28532fdf01728726391c2d06930a6c2443ea77f729199a3c430141e"
+          },
+          {
+            "kind": "FirstStatement",
+            "syntaxSha256": "e9059f640cbe9114521822f7d3cec4803a032632e74e32aa123c9f2ae0e1cbb9"
+          },
+          {
+            "kind": "FirstStatement",
+            "syntaxSha256": "41fdf5340e3267fc0fa8d391ba17ce7e7723a6f58173ab0a743e5069ccccb084"
+          },
+          {
+            "kind": "FirstStatement",
+            "syntaxSha256": "0086866050ae5cf0a7d57a25f0c6f80bcce9eae569a2ce01d87bd01015bedc06"
+          },
+          {
+            "kind": "FirstStatement",
+            "syntaxSha256": "f4eee836ad2a7df21ae2257ae2b6c577913ddafbb9c8dfd0d818f82d6473af1b"
+          },
+          {
+            "kind": "FirstStatement",
+            "syntaxSha256": "20d6d755421bb9981fccc611c843b355a6412525156a3f8c04d236a536b9171a"
+          },
+          {
+            "kind": "FirstStatement",
+            "syntaxSha256": "f53a56ba0c26895836a10e6c4319d5a54505f49cd2a87c5b5719f041265f38fb"
+          },
+          {
+            "kind": "FirstStatement",
+            "syntaxSha256": "ac228d66c71157c513d7062053ab88caad54d6c9aaaa980fadc6adc971b5bcfa"
+          },
+          {
+            "kind": "FirstStatement",
+            "syntaxSha256": "4506df4d7f4afcf3f31c161d3d9c4b55af71caaaec5f08ef862f63babf3b838f"
+          },
+          {
+            "kind": "FirstStatement",
+            "syntaxSha256": "e62cff4620b97c827e92db94fab92a1d8bcbc297a8f397af1c37d4858630f170"
+          },
+          {
+            "kind": "FirstStatement",
+            "syntaxSha256": "b0d617c453bd352192807e44cca325c5acd2dfebf8ed29454b5750a21993f868"
+          },
+          {
+            "kind": "FirstStatement",
+            "syntaxSha256": "84e75ba3439b7b07335b10a76b72491635c81c55a217e33dafe9427dc21a8485"
+          },
+          {
+            "kind": "IfStatement",
+            "syntaxSha256": "f41193233bd1b6290021995287a4fb46febd3e33a20f4b84cdd160af3c7d30af"
+          },
+          {
+            "kind": "ForOfStatement",
+            "syntaxSha256": "1450efbbd592db3b35891a725b2ba7dfdbba670ffa992d251efbf8c6c9c40bce"
+          },
+          {
+            "kind": "FirstStatement",
+            "syntaxSha256": "5014a2e044deae5ce3a4c21ad587fbb0becdc9eb9d2ce4d081126daa02f6b6b0"
+          },
+          {
+            "kind": "FirstStatement",
+            "syntaxSha256": "dd75a83493d3e93481eb48c200017b26e382b59850fa6bddf3870ca0195af530"
+          },
+          {
+            "kind": "FirstStatement",
+            "syntaxSha256": "2c4ae88a6422c2b4e14eb657b3402f5e7ee9a13704c66c53e0290257819f48cc"
+          },
+          {
+            "kind": "IfStatement",
+            "syntaxSha256": "b845cd955b64a1ce44fd3ac4a9bf5e0cc9979a48ed2dab976babbfa33e9d8d74"
+          },
+          {
+            "kind": "FirstStatement",
+            "syntaxSha256": "293d8744faa3d03753bd00cdc85f6db412a270b92dadfd34817a04673422b4c8"
+          },
+          {
+            "kind": "IfStatement",
+            "syntaxSha256": "cb336c962a7bd73582cffb862c938db25ff4d57ceb0840a555dd196e5da0af41"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntaxSha256": "056d51dbc5115ced9ce93b9a4e6a1ecf293eb02581b28a9747fe4006cfd00d09"
+          },
+          {
+            "kind": "ForOfStatement",
+            "syntaxSha256": "a2472854ffb4d124729f02334f4d57bece74899b48638abc24350ea35f445ca8"
+          },
+          {
+            "kind": "IfStatement",
+            "syntaxSha256": "76ff0bfbba43052e75e1d4ef9168c90ffb10ff026f71452a16d1c398a6462fdd"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntaxSha256": "9ed37504d27f144d42f5178c398e6bf712101ec1da9b50957e20138017061002"
+          }
+        ]
+      }
+    }
+  },
+  "preserved": "all other root entry/closure/protocol/caller/export/wildcard cells unchanged; purpose prose extension identified separately in report"
+}

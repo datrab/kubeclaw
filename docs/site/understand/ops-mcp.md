@@ -61,15 +61,20 @@ flowchart LR
   AdapterB -->|HTTPS and Buster bearer| MCP
   MCP -->|MCP ServiceAccount| API[Kubernetes API]
   Worker[Buster worker] -->|Lease CR and lease-bound workload or test operations| API
-  API -->|Lease resource list polling| Controller[Namespace controller]
+  Controller[Namespace controller] -->|Poll lease resources| API
   Controller -->|Namespace and RBAC reconciliation| API
 ```
 
-The gateway-to-MCP edges use each gateway's bearer; they do not describe the
-worker's Kubernetes credential. The worker submits lease resources to the API,
-the controller polls/reconciles them and binds the selected namespace role,
-and the worker uses that granted role for workload/test operations. Lease
-completion is not proof that every later workload operation succeeded.
+**Text alternative to the diagram**
+
+Codex sends HTTPS requests with its bearer to the separate MCP Pod.
+Nova and Buster gateways each call a local transport adapter.
+Each adapter sends HTTPS with that gateway's own bearer to MCP.
+MCP calls Kubernetes with its ServiceAccount.
+Buster's worker sends lease resources and granted workload/test operations to Kubernetes directly.
+The controller polls lease resources through Kubernetes and reconciles namespaces and RBAC through that API.
+These configured source paths do not prove successful live traffic.
+A completed lease does not prove that a later workload operation succeeded.
 
 [Worker credential selection](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/my-values/buster-values.yaml#L193-L213),
 [base lease and read grants](https://github.com/datrab/kubeclaw/blob/34cf38ef53ee41381543785d0ffae90a37fac9ca/charts/kubeclaw/templates/rbac.yaml#L1-L29),

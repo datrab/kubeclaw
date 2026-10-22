@@ -1,0 +1,18 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: Unregistered diagram: understand/ops-mcp.md
+    at collectDocumentationDiagrams (file:///home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/docs-reader/diagrams.mjs:64:66)
+    at prepareDiagramPages (file:///home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/docs-reader/diagrams.mjs:121:23)
+    at build (file:///home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/docs-publication.mjs:1103:26)
+    at async file:///home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/docs-publication.mjs:1138:31 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: undefined,
+  expected: true,
+  operator: '==',
+  diff: 'simple'
+}
+
+Node.js v24.21.0

@@ -1,0 +1,187 @@
+[
+  {
+    "path": "52c5-diagram-registration/collector.stderr.raw",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "52c5-diagram-registration/collector.stdout.raw",
+    "bytes": 169,
+    "sha256": "5a7bf86679e872d4daa340352dda6df09539d961780fa78c288fab19ce16d85c"
+  },
+  {
+    "path": "52c5-diagram-registration/delta.json",
+    "bytes": 772,
+    "sha256": "c42ec465202c69810f2e6fa6de48476ee4ccb84320eb4259b2a727fc62660209"
+  },
+  {
+    "path": "52c5-diagram-registration/source-review.json",
+    "bytes": 5586,
+    "sha256": "f37038427c397339a103c0ce4913b3522ae1a7ddac645101081f2592f64fb300"
+  },
+  {
+    "path": "52c5-diagram-registration/source-review.md",
+    "bytes": 4454,
+    "sha256": "f9c2d3bc3dfdbf8cc989d7f51da74403922073e1d5b95d91d0c69c67c5affc37"
+  },
+  {
+    "path": "README.md",
+    "bytes": 1678,
+    "sha256": "f8eebde0320e7d8ae0081d2fd4b591c1292798ffdb04038374d50027879237cb"
+  },
+  {
+    "path": "capture-node-harness-52c5-complete.mjs",
+    "bytes": 3515,
+    "sha256": "04c85f74d829f14745d8c35396883a27cbf5e41994e79775d723314bdea5ecbb"
+  },
+  {
+    "path": "capture-node-harness-52c5.mjs",
+    "bytes": 2387,
+    "sha256": "3997e71af4ef858334f8d59c9d04833142cdfabecbc10bef789d114d0c2556b0"
+  },
+  {
+    "path": "e63-root-harness-source-successor-review/coverage-hashes.json",
+    "bytes": 6671,
+    "sha256": "78600e7f9a2b88a8cc36e3e25643ae992e50aa75638a647b700a7c60dbbad3e9"
+  },
+  {
+    "path": "e63-root-harness-source-successor-review/expected-successor-cells.analysis-only.json",
+    "bytes": 54609,
+    "sha256": "9068f6742c6f9361acec6d1b8bc99a33a22c9cf8597c3f1a762cec6fb4081343"
+  },
+  {
+    "path": "e63-root-harness-source-successor-review/report.md",
+    "bytes": 11453,
+    "sha256": "0003d403d9144c8a39d2fa95178d554ff003eedf5eceb59f14f275bb12b75dfe"
+  },
+  {
+    "path": "node-harness-52c5-autoreview/actual-consumer-context.mjs",
+    "bytes": 11036,
+    "sha256": "4fb32a0fb087f7e738a43146bf9db9105a486f3890ec94c7958f6f1e1027580b"
+  },
+  {
+    "path": "node-harness-52c5-autoreview/closure-new.json",
+    "bytes": 16500,
+    "sha256": "09474c655fc34eb2f0e01f333260f74060664d6a1151701a2feb9f7711a081e3"
+  },
+  {
+    "path": "node-harness-52c5-autoreview/closure-old.json",
+    "bytes": 16500,
+    "sha256": "64a50c1de440a16b4e942abeb8a1c9455baf7fdddca61bd3812a2d6aeee2f937"
+  },
+  {
+    "path": "node-harness-52c5-autoreview/entry-new.json",
+    "bytes": 6690,
+    "sha256": "54fdbf55a41897840dc9d13c1ee48cf6fa5dfd04939b7765a723f925799f9b86"
+  },
+  {
+    "path": "node-harness-52c5-autoreview/entry-old.json",
+    "bytes": 6339,
+    "sha256": "bf5eba8351e404f0ffd449432bf947ac51d9d7cbd4d2ef68eeebb52d69d32942"
+  },
+  {
+    "path": "node-harness-52c5-autoreview/observed-current-closure.json",
+    "bytes": 16500,
+    "sha256": "09474c655fc34eb2f0e01f333260f74060664d6a1151701a2feb9f7711a081e3"
+  },
+  {
+    "path": "node-harness-52c5-autoreview/observed-test.json",
+    "bytes": 20645,
+    "sha256": "8e6f71955309f11acdd9e207f9247d8208bfbc5fa97d719801c25a405b4912f5"
+  },
+  {
+    "path": "node-harness-52c5-autoreview/review.json",
+    "bytes": 505,
+    "sha256": "b361831cea7ccb617e0251d86540a7eb91c7e9478eef9459e287b8a2a0dfe733"
+  },
+  {
+    "path": "node-harness-52c5-autoreview/review.txt",
+    "bytes": 473,
+    "sha256": "f358fc45e26d021ff5bce4dbbb59c0cb9ef189f731f9a487e4ba82636080e58e"
+  },
+  {
+    "path": "node-harness-52c5-data/first.json",
+    "bytes": 38950,
+    "sha256": "ca2364c3241ddc3f07d594a78b8d0c4a10889616d294e1c820035f365a7b0d20"
+  },
+  {
+    "path": "node-harness-52c5-data/repeat.json",
+    "bytes": 38950,
+    "sha256": "ca2364c3241ddc3f07d594a78b8d0c4a10889616d294e1c820035f365a7b0d20"
+  },
+  {
+    "path": "node-harness-52c5-data/summary.json",
+    "bytes": 326,
+    "sha256": "1c74956ae9dd556e49a00add7fef082ae80165fa142d1dc93bf85145e35d7451"
+  },
+  {
+    "path": "node-harness-52c5-data-complete/first.json",
+    "bytes": 71264,
+    "sha256": "bc42bd478e4c339abc37b86f19694bb5e1830b1343fefec3002bf7140fa288e4"
+  },
+  {
+    "path": "node-harness-52c5-data-complete/patch-integrity.json",
+    "bytes": 282,
+    "sha256": "8679a0d5f1a0e4aa7a904b6ee72144fbb26ca659d5e0c8b5472a646b6737a20b"
+  },
+  {
+    "path": "node-harness-52c5-data-complete/repeat.json",
+    "bytes": 71264,
+    "sha256": "bc42bd478e4c339abc37b86f19694bb5e1830b1343fefec3002bf7140fa288e4"
+  },
+  {
+    "path": "node-harness-52c5-data-complete/summary.json",
+    "bytes": 716,
+    "sha256": "ab4dbbaabe09e927662eda9bc1c35b0152e19acfac4c0a6327de9f2c4d203d21"
+  },
+  {
+    "path": "node-harness-52c5-source-correction-review/coverage-hashes.json",
+    "bytes": 6494,
+    "sha256": "034c5ba8fba3cbc2775ea07690d9c8006cb320af80f9107bdbe6cf9036157e50"
+  },
+  {
+    "path": "node-harness-52c5-source-correction-review/record-comparison-proof.json",
+    "bytes": 1026,
+    "sha256": "3a16ab6bcd5a0d2e5f7ee3286bc71629c7989c1d080253cdbafaa43ef1dc48b3"
+  },
+  {
+    "path": "node-harness-52c5-source-correction-review/report.md",
+    "bytes": 7764,
+    "sha256": "ff14c6c3cbb64d52bc451d1be3659bca8c925ab94ca46e19704395050d6f17ff"
+  },
+  {
+    "path": "node-harness-52c5-source-correction-review/reviewed.diff",
+    "bytes": 8550,
+    "sha256": "58532257ed45ee2b74ef24bd5fa99dbc0575223213a1aedab8a631e1c974721d"
+  },
+  {
+    "path": "node-harness-52c5-tests/stderr.raw",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "node-harness-52c5-tests/stdout.raw",
+    "bytes": 1037,
+    "sha256": "f026d4cfa17dd396f8516258985c5b483e54950d85c439c1dc73a2434c6ec5b5"
+  },
+  {
+    "path": "original-52c5-publication/invocation.json",
+    "bytes": 692,
+    "sha256": "eb6a534c347c3f6260b2cf48919538a018ac57e54b46f155ef0d8277b8ff810e"
+  },
+  {
+    "path": "original-52c5-publication/result.json",
+    "bytes": 764,
+    "sha256": "d1bc76295f192fb49266daad6d273a921a361129dab1aa74137dd6b3c376a9ee"
+  },
+  {
+    "path": "original-52c5-publication/stderr.raw",
+    "bytes": 788,
+    "sha256": "12645c25e9d7e379f6fb15672cf6215951ef8f283501f2844b989a59ac919aeb"
+  },
+  {
+    "path": "original-52c5-publication/stdout.raw",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+]

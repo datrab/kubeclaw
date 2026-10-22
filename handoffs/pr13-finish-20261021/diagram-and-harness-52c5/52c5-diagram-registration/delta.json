@@ -1,0 +1,18 @@
+[
+  {
+    "newEntry": {
+      "id": "diagram-3b61c09b1f7672db",
+      "page": "understand/ops-mcp.md",
+      "index": 0,
+      "readerQuestion": "Which credentials and direct worker operations cross the central Ops and Kubernetes boundaries?",
+      "owner": "Ops MCP maintainers",
+      "sourceSha256": "c1c9dd770a063bee7d52074991920f78be324f4ee3fb399a348e0e80f69f445f",
+      "textAlternative": "The adjacent visible text alternative lists every client, adapter, worker and controller handoff; source paths are not live traffic evidence."
+    }
+  },
+  {
+    "page": "understand/platform-and-operations.md",
+    "old": "9a43ba6d7729478ca293d3ff75aa1dd494b83765c30ca3aca1a13d0545481b36",
+    "new": "105b49a2ea4415cfd63dcf7200eae9e75b74cabbb556fe037d967fdb88ea197a"
+  }
+]

@@ -1,0 +1,168 @@
+{
+  "verdict": "Source PASS for bounded diagram/text-alternative/registry delta",
+  "baseline": "52c5bc0f6fdd2be5810ad78829ef9fc9e7882615",
+  "registry": {
+    "path": "docs/config/documentation-diagrams.json",
+    "baselineSha256": "1e3bc507ad0a36dd66f2e4e7f0f9832964d16d574de59c0650da8c8149a64f40",
+    "currentSha256": "34c59ec47799fe7526d63eba3cda291808ba0b9b888793a6cba4d92c2ac1441a",
+    "oldRecords": 27,
+    "currentRecords": 28,
+    "oldRawRecordsByteIdentical": 26,
+    "changedOldIndex": 11,
+    "changedOldFields": [
+      "sourceSha256"
+    ],
+    "newEntry": {
+      "id": "diagram-3b61c09b1f7672db",
+      "page": "understand/ops-mcp.md",
+      "index": 0,
+      "readerQuestion": "Which credentials and direct worker operations cross the central Ops and Kubernetes boundaries?",
+      "owner": "Ops MCP maintainers",
+      "sourceSha256": "c1c9dd770a063bee7d52074991920f78be324f4ee3fb399a348e0e80f69f445f",
+      "textAlternative": "The adjacent visible text alternative lists every client, adapter, worker and controller handoff; source paths are not live traffic evidence."
+    },
+    "idUnique": true,
+    "pageIndexUnique": true,
+    "newIdMatchesPageIndexHash": true
+  },
+  "fences": [
+    {
+      "page": "understand/ops-mcp.md",
+      "index": 0,
+      "id": "diagram-3b61c09b1f7672db",
+      "sourceSha256": "c1c9dd770a063bee7d52074991920f78be324f4ee3fb399a348e0e80f69f445f"
+    },
+    {
+      "page": "understand/platform-and-operations.md",
+      "index": 0,
+      "id": "diagram-4dc422d67c265fd9",
+      "sourceSha256": "105b49a2ea4415cfd63dcf7200eae9e75b74cabbb556fe037d967fdb88ea197a"
+    }
+  ],
+  "directedEdges": [
+    {
+      "sender": "Codex",
+      "receiver": "MCP",
+      "label": "HTTPS; own bearer",
+      "textAlternativeLine": "70"
+    },
+    {
+      "sender": "Nova gateway",
+      "receiver": "local adapter N",
+      "label": "native local transport",
+      "textAlternativeLine": "71"
+    },
+    {
+      "sender": "Buster gateway",
+      "receiver": "local adapter B",
+      "label": "native local transport",
+      "textAlternativeLine": "71"
+    },
+    {
+      "sender": "adapter N",
+      "receiver": "MCP",
+      "label": "HTTPS and Nova bearer",
+      "textAlternativeLine": "72"
+    },
+    {
+      "sender": "adapter B",
+      "receiver": "MCP",
+      "label": "HTTPS and Buster bearer",
+      "textAlternativeLine": "72"
+    },
+    {
+      "sender": "MCP",
+      "receiver": "Kubernetes API",
+      "label": "MCP ServiceAccount",
+      "textAlternativeLine": "73"
+    },
+    {
+      "sender": "Buster worker",
+      "receiver": "Kubernetes API",
+      "label": "Lease CR and granted lease-bound workload/test operations",
+      "textAlternativeLine": "74"
+    },
+    {
+      "sender": "namespace controller",
+      "receiver": "Kubernetes API",
+      "label": "poll lease resources by ordinary GET collection",
+      "textAlternativeLine": "75"
+    },
+    {
+      "sender": "namespace controller",
+      "receiver": "Kubernetes API",
+      "label": "namespace and RBAC reconciliation",
+      "textAlternativeLine": "75"
+    }
+  ],
+  "pages": [
+    {
+      "path": "docs/site/understand/ops-mcp.md",
+      "baselineSha256": "d7cb5f39021ecbe21085398d3fc7093f0f204363681348d0d5ef3a0da477622a",
+      "currentSha256": "1eff5e5078921e8ec0b7fdc7c29541c2a1f45b50b001e6064cef7a8f2b73d42c",
+      "changed": true,
+      "linksUnchanged": true
+    },
+    {
+      "path": "docs/site/understand/codex-integration.md",
+      "baselineSha256": "66c2873de311b5570a18541155ea71a69708f94144a77824381bc7f9c085a6e7",
+      "currentSha256": "66c2873de311b5570a18541155ea71a69708f94144a77824381bc7f9c085a6e7",
+      "changed": false,
+      "linksUnchanged": true
+    },
+    {
+      "path": "docs/site/understand/platform-and-operations.md",
+      "baselineSha256": "d8770138576c3616fe304435853e803fe1191262dcfcac127066e27e11727be7",
+      "currentSha256": "d8770138576c3616fe304435853e803fe1191262dcfcac127066e27e11727be7",
+      "changed": false,
+      "linksUnchanged": true
+    },
+    {
+      "path": "docs/site/understand/security-and-trust.md",
+      "baselineSha256": "70b6be688d25911d1b7a6b0d75b0487c443946590037348fb18b56e8181c905a",
+      "currentSha256": "70b6be688d25911d1b7a6b0d75b0487c443946590037348fb18b56e8181c905a",
+      "changed": false,
+      "linksUnchanged": true
+    },
+    {
+      "path": "docs/site/understand/communication.md",
+      "baselineSha256": "b2f603cea91375758d6e687b7c4c7886cd49354c4e14fc8c5cd63652c00cbcf5",
+      "currentSha256": "b2f603cea91375758d6e687b7c4c7886cd49354c4e14fc8c5cd63652c00cbcf5",
+      "changed": false,
+      "linksUnchanged": true
+    }
+  ],
+  "supplementalReads": [
+    {
+      "revision": "34cf38ef53ee41381543785d0ffae90a37fac9ca",
+      "path": "cmd/buster-namespace-controller/main.go",
+      "sha256": "b1780a101cf81bd468af4434fb287b1e4540bc37cbb0e58b77932a8ec9410eca",
+      "readRanges": [
+        [
+          122,
+          131
+        ],
+        [
+          231,
+          240
+        ]
+      ],
+      "scope": "actual controller polling invocation"
+    },
+    {
+      "revision": "HEAD",
+      "path": "scripts/docs-reader/diagrams.mjs",
+      "sha256": "c37045c51e6bbbf2c6c473389900497444f6194dafe61f29f9efacbf2dc08b81",
+      "readRanges": [
+        [
+          1,
+          78
+        ]
+      ],
+      "scope": "registration consumer contract only; no SVG/runtime verdict"
+    }
+  ],
+  "priorFullSourceBridge": "e63-publication-prose/source-review.json -> merge83d-ops-content-source-review-correction2/coverage.json",
+  "unreadChangedScope": [],
+  "remainingMaterialFindings": []
+}

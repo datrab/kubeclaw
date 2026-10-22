@@ -1,0 +1,129 @@
+{
+  "head": "52c5bc0f6fdd2be5810ad78829ef9fc9e7882615",
+  "workingTree": true,
+  "scope": "complete2record patch, native DATA representation-to-actual receiver binding, complete newnegative test+fixture; original7test bodies reuse by exactbyte reversal",
+  "proof": {
+    "changedEntryKeys": [
+      "scripts/tests/docs-check-refs.test.mjs"
+    ],
+    "changedClosureIndices": [
+      27
+    ],
+    "entryMembershipEqual": true,
+    "closureSourceRosterEqual": true,
+    "otherTopFieldsEqual": true,
+    "actualEntryEqualsPriorSourcePreparedExpected": true,
+    "actualClosureEqualsPriorSourcePreparedExpected": true,
+    "nativeDataFirstRepeatRawEqual": true,
+    "nativeDataFirstRepeatDecodedEqual": true,
+    "nativeDataDeclEqualsActualReceiver": true,
+    "nativeDataSelectorsEqualsActualReceiver": true,
+    "nativeDataClosureEqualsActualReceiver": true,
+    "nativeDataInitializationEqualsActualReceiver": true,
+    "nativeDataCliDeclarationsEqualUnitsKindHash": true,
+    "nativeDataTestInitializationEqualsDeclarationsWithoutFunctions": true,
+    "testNewBlockRemovalEqualsHEAD": true,
+    "independentCompleteCustodyTwoRecordReversalEqualsHEAD": true,
+    "all29SelectorExpressionsAreExactActualSourceSubstrings": true,
+    "all29SelectorExpressionHashesEqualNativeReceipts": true,
+    "selectorExpressionsSortedAndUnique": true
+  },
+  "sources": [
+    {
+      "path": "scripts/docs-api-documentation-role-custody.mjs",
+      "sha256": "4dae45adcf42f80ab3854c8c86f2e617c80fe293bc8e3cd47dfb74df33f45332",
+      "bytes": 1231612,
+      "lineCount": 31197,
+      "semanticCoverage": "bounded as report; whole-file identity is not a whole-source verdict"
+    },
+    {
+      "path": "scripts/tests/api-output-node-entry-custody.test.mjs",
+      "sha256": "d414512ef3d13870009d0eb0e4d6c600b2011258f28a17f034abffb2e82114d1",
+      "bytes": 12537,
+      "lineCount": 118,
+      "semanticCoverage": "bounded as report; whole-file identity is not a whole-source verdict"
+    },
+    {
+      "path": "scripts/tests/docs-check-refs.test.mjs",
+      "sha256": "e31e6ed1a4966e43e78068dec2d6ad00493cc8a94936a8c0449019a83e5667e8",
+      "bytes": 10925,
+      "lineCount": 244,
+      "semanticCoverage": "bounded as report; whole-file identity is not a whole-source verdict"
+    },
+    {
+      "path": "scripts/docs-check-refs.mjs",
+      "sha256": "d04c5245b1555b275f27b40ad7461071d476615f177557ee07ca5b5b812ee604",
+      "bytes": 14639,
+      "lineCount": 375,
+      "semanticCoverage": "bounded as report; whole-file identity is not a whole-source verdict"
+    },
+    {
+      "path": "scripts/lib/docs-upstream-reference.mjs",
+      "sha256": "1741bd5738fda0c2ed3954ad074a91ca0045479beb6484b61eb446eaf74296c2",
+      "bytes": 4228,
+      "lineCount": 68,
+      "semanticCoverage": "bounded as report; whole-file identity is not a whole-source verdict"
+    },
+    {
+      "path": "scripts/docs-api-output-role-classification.mjs",
+      "sha256": "400affe1cb7a07c69e397e0509bb994f7f44376687038f802830b63daf452b12",
+      "bytes": 141940,
+      "lineCount": 920,
+      "semanticCoverage": "bounded as report; whole-file identity is not a whole-source verdict"
+    },
+    {
+      "path": "node_modules/typescript/lib/typescript.js",
+      "sha256": "3ae902c92cc44dace175c0e69e13a4b0899f6983c6121d76b9ab8dd5795e7675",
+      "bytes": 9112572,
+      "lineCount": 200276,
+      "semanticCoverage": "bounded as report; whole-file identity is not a whole-source verdict"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/node-harness-52c5-data-complete/repeat.json",
+      "sha256": "bc42bd478e4c339abc37b86f19694bb5e1830b1343fefec3002bf7140fa288e4",
+      "bytes": 71264,
+      "read": "complete producer/summary/proof/log; complete native DATA fields compared losslessly against previously fully read actual Source/receipt records"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/node-harness-52c5-data-complete/first.json",
+      "sha256": "bc42bd478e4c339abc37b86f19694bb5e1830b1343fefec3002bf7140fa288e4",
+      "bytes": 71264,
+      "read": "complete producer/summary/proof/log; complete native DATA fields compared losslessly against previously fully read actual Source/receipt records"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/node-harness-52c5-data-complete/patch-integrity.json",
+      "sha256": "8679a0d5f1a0e4aa7a904b6ee72144fbb26ca659d5e0c8b5472a646b6737a20b",
+      "bytes": 282,
+      "read": "complete producer/summary/proof/log; complete native DATA fields compared losslessly against previously fully read actual Source/receipt records"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/node-harness-52c5-data-complete/summary.json",
+      "sha256": "ab4dbbaabe09e927662eda9bc1c35b0152e19acfac4c0a6327de9f2c4d203d21",
+      "bytes": 716,
+      "read": "complete producer/summary/proof/log; complete native DATA fields compared losslessly against previously fully read actual Source/receipt records"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/capture-node-harness-52c5-complete.mjs",
+      "sha256": "04c85f74d829f14745d8c35396883a27cbf5e41994e79775d723314bdea5ecbb",
+      "bytes": 3515,
+      "read": "complete producer/summary/proof/log; complete native DATA fields compared losslessly against previously fully read actual Source/receipt records"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/node-harness-52c5-tests/stdout.raw",
+      "sha256": "f026d4cfa17dd396f8516258985c5b483e54950d85c439c1dc73a2434c6ec5b5",
+      "bytes": 1037,
+      "read": "complete producer/summary/proof/log; complete native DATA fields compared losslessly against previously fully read actual Source/receipt records"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/node-harness-52c5-tests/stderr.raw",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "read": "complete producer/summary/proof/log; complete native DATA fields compared losslessly against previously fully read actual Source/receipt records"
+    }
+  ],
+  "unreadAssignedScope": 0,
+  "nativeExecution": "reviewer ran no target/getter/import/test; submitted stdout/stderr completely read separately from Source verdict",
+  "diffSha256": "58532257ed45ee2b74ef24bd5fa99dbc0575223213a1aedab8a631e1c974721d"
+}

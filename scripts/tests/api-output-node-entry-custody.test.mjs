@@ -61,6 +61,24 @@ test('literal generated supervisor child argument/lease and declarative registra
  });
 });
 
+test('reviewed refs fixture and copied CLI still reject changed authority with warm and fresh roots',()=>{
+ for(const [source,before,after]of [
+  ['scripts/tests/docs-check-refs.test.mjs',"const second = git('rev-parse', 'HEAD');",'const second = first;'],
+  ['scripts/docs-check-refs.mjs','!declared.includes(revision)','false'],
+  ['scripts/docs-check-refs.mjs',"from 'node:fs'","from 'node:fs/promises'"],
+  ['scripts/docs-check-refs.mjs','const errors = [];',"const errors = ['unreviewed'];"],
+  ['scripts/lib/docs-upstream-reference.mjs',null,'\nprocess.stdout.write(process.argv[2]);\n'],
+ ])for(const mode of ['warm','fresh'])harnessFixture(({root,write})=>{
+  if(mode==='warm')assertHarnessSources(qualifiedRootNodeHarnessSources(root,activeDefinition,allHarnessEntries));
+  const original=fs.readFileSync(path.join(root,source),'utf8');
+  if(before)assert(original.includes(before),'reviewed mutation target missing: '+source);
+  const changed=before?original.replace(before,after):original+after;
+  assert.notEqual(changed,original);
+  write(source,changed);
+  assert.throws(()=>qualifiedRootNodeHarnessSources(root,activeDefinition,allHarnessEntries),/NODE_ENTRY_CUSTODY_UNQUALIFIED/);
+ });
+});
+
 function globFixture(run){fixture(context=>{context.write('package.json',JSON.stringify({scripts:Object.fromEntries(reviewedRootNodeEntryRecipes.wildcards.map(recipe=>[recipe.script,recipe.command]))}));for(const recipe of reviewedRootNodeEntryRecipes.wildcards)for(const item of recipe.selectedSources)context.write(item.source,'export {};\n');run(context);});}
 function globArgs(recipe){return {name:recipe.script,command:recipe.command,word:{value:recipe.pattern,raw:recipe.pattern},nativeTest:true};}
 test('bounded4 native POSIX package globs acquire every142 source and no harness roles',()=>globFixture(({root})=>{

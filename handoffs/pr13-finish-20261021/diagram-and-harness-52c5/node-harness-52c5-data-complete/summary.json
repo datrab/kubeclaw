@@ -1,0 +1,14 @@
+{
+  "before": {
+    "scripts/tests/docs-check-refs.test.mjs": "e31e6ed1a4966e43e78068dec2d6ad00493cc8a94936a8c0449019a83e5667e8",
+    "scripts/docs-check-refs.mjs": "d04c5245b1555b275f27b40ad7461071d476615f177557ee07ca5b5b812ee604"
+  },
+  "firstRepeatEqual": true,
+  "childProcessAttempts": 0,
+  "childrenAuthorized": false,
+  "producerSources": {
+    "scripts/docs-api-documentation-role-custody.mjs": "a7abb978c137a13b6f0fe3c3ccaab0fabaab674a82bd309ad7f83d627ea877ea",
+    "scripts/docs-api-output-role-classification.mjs": "400affe1cb7a07c69e397e0509bb994f7f44376687038f802830b63daf452b12",
+    "node_modules/typescript/lib/typescript.js": "3ae902c92cc44dace175c0e69e13a4b0899f6983c6121d76b9ab8dd5795e7675"
+  }
+}

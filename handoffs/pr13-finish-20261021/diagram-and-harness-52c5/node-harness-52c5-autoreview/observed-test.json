@@ -1,0 +1,297 @@
+{
+  "sourceSha256": "e31e6ed1a4966e43e78068dec2d6ad00493cc8a94936a8c0449019a83e5667e8",
+  "declarations": [
+    {
+      "kind": "ImportDeclaration",
+      "syntaxSha256": "3bd42e15e5427f946b98b898212af900ed0a4068cff03a37aa2ce1d3a081f2ec"
+    },
+    {
+      "kind": "ImportDeclaration",
+      "syntaxSha256": "ad73ca8dd2be89150d9ce0f13eae68ebf5fc6eae24f81e521b6223459d4a6005"
+    },
+    {
+      "kind": "ImportDeclaration",
+      "syntaxSha256": "99a8a8a7117b1395e3a209cdc8ba5a70424687458932bc4dc8a7b6e59ff53868"
+    },
+    {
+      "kind": "ImportDeclaration",
+      "syntaxSha256": "8f15d80e7efb2a5d032af6aeba410bc9b4bd498ba70c7278654526b1e2259752"
+    },
+    {
+      "kind": "ImportDeclaration",
+      "syntaxSha256": "113f0af17fdf683cf360ab9d03b7eff1b572d3475e83119031d47ee4331621aa"
+    },
+    {
+      "kind": "ImportDeclaration",
+      "syntaxSha256": "839cf2655267094fdbf41ad83d7b89fa202606d6b1235454745934a1c6f2529f"
+    },
+    {
+      "kind": "ImportDeclaration",
+      "syntaxSha256": "9e5c5f24875a2c9d303704ece0b5dbf1ad327c006908160e414a26f199507b73"
+    },
+    {
+      "kind": "FirstStatement",
+      "syntaxSha256": "30906b0c310d837fd9065322aaabd37ea7ae203214e5a620f2b620fb64352c27"
+    },
+    {
+      "kind": "FunctionDeclaration",
+      "syntaxSha256": "15655da5748d943e3780f0f5dfd72ccdf674a0c93a6da0ef47916722b727a7cf"
+    },
+    {
+      "kind": "FunctionDeclaration",
+      "syntaxSha256": "90e6f764db2782fada8f0e92cedbc59427913062465a81b55f6909a0f741c5d3"
+    },
+    {
+      "kind": "ExpressionStatement",
+      "syntaxSha256": "f5f5cbf21cb70de2149b091d8ab0daa2d2d272a63b6c52cdd2fc05393b6978c7"
+    },
+    {
+      "kind": "ExpressionStatement",
+      "syntaxSha256": "306797bef0ee4284643f474d71cd5bfbdce47232f5c1621b1d0f3563d7ec705b"
+    },
+    {
+      "kind": "ExpressionStatement",
+      "syntaxSha256": "bd4aa59595f98eb936aefdae0ab98c7a31921f4e33d8f19831266b3878f19ed4"
+    },
+    {
+      "kind": "ExpressionStatement",
+      "syntaxSha256": "fca89d5f4203b438402665d6e99cbf68cee7d788041c1157bc5d0203db21c73d"
+    },
+    {
+      "kind": "ExpressionStatement",
+      "syntaxSha256": "3535e7e10a3e1d18145825c778dbd3fa3e0d6a7411248089e50ca966b2d3f519"
+    }
+  ],
+  "initialization": [
+    {
+      "kind": "ImportDeclaration",
+      "syntaxSha256": "3bd42e15e5427f946b98b898212af900ed0a4068cff03a37aa2ce1d3a081f2ec"
+    },
+    {
+      "kind": "ImportDeclaration",
+      "syntaxSha256": "ad73ca8dd2be89150d9ce0f13eae68ebf5fc6eae24f81e521b6223459d4a6005"
+    },
+    {
+      "kind": "ImportDeclaration",
+      "syntaxSha256": "99a8a8a7117b1395e3a209cdc8ba5a70424687458932bc4dc8a7b6e59ff53868"
+    },
+    {
+      "kind": "ImportDeclaration",
+      "syntaxSha256": "8f15d80e7efb2a5d032af6aeba410bc9b4bd498ba70c7278654526b1e2259752"
+    },
+    {
+      "kind": "ImportDeclaration",
+      "syntaxSha256": "113f0af17fdf683cf360ab9d03b7eff1b572d3475e83119031d47ee4331621aa"
+    },
+    {
+      "kind": "ImportDeclaration",
+      "syntaxSha256": "839cf2655267094fdbf41ad83d7b89fa202606d6b1235454745934a1c6f2529f"
+    },
+    {
+      "kind": "ImportDeclaration",
+      "syntaxSha256": "9e5c5f24875a2c9d303704ece0b5dbf1ad327c006908160e414a26f199507b73"
+    },
+    {
+      "kind": "FirstStatement",
+      "syntaxSha256": "30906b0c310d837fd9065322aaabd37ea7ae203214e5a620f2b620fb64352c27"
+    },
+    {
+      "kind": "ExpressionStatement",
+      "syntaxSha256": "f5f5cbf21cb70de2149b091d8ab0daa2d2d272a63b6c52cdd2fc05393b6978c7"
+    },
+    {
+      "kind": "ExpressionStatement",
+      "syntaxSha256": "306797bef0ee4284643f474d71cd5bfbdce47232f5c1621b1d0f3563d7ec705b"
+    },
+    {
+      "kind": "ExpressionStatement",
+      "syntaxSha256": "bd4aa59595f98eb936aefdae0ab98c7a31921f4e33d8f19831266b3878f19ed4"
+    },
+    {
+      "kind": "ExpressionStatement",
+      "syntaxSha256": "fca89d5f4203b438402665d6e99cbf68cee7d788041c1157bc5d0203db21c73d"
+    },
+    {
+      "kind": "ExpressionStatement",
+      "syntaxSha256": "3535e7e10a3e1d18145825c778dbd3fa3e0d6a7411248089e50ca966b2d3f519"
+    }
+  ],
+  "selectorExpressions": [
+    {
+      "expression": "execFileSync('git', ['add', '.'], { cwd: root })"
+    },
+    {
+      "expression": "execFileSync('git', ['commit', '-qm', 'fixture'], { cwd: root })"
+    },
+    {
+      "expression": "execFileSync('git', ['config', 'user.email', 'docs-test@example.invalid'], { cwd: root })"
+    },
+    {
+      "expression": "execFileSync('git', ['config', 'user.name', 'Docs Test'], { cwd: root })"
+    },
+    {
+      "expression": "execFileSync('git', ['init', '-q', '--object-format=sha256'], { cwd: root })"
+    },
+    {
+      "expression": "execFileSync('git', ['init', '-q'], { cwd: root })"
+    },
+    {
+      "expression": "execFileSync('git', ['rev-parse', 'HEAD'], { cwd: root, encoding: 'utf8' })"
+    },
+    {
+      "expression": "execFileSync('git', args, { cwd: root, encoding: 'utf8' })"
+    },
+    {
+      "expression": "execFileSync('node', ['scripts/docs-check-refs.mjs'], {\n    cwd: root,\n    encoding: 'utf8',\n    stdio: 'pipe',\n  })"
+    },
+    {
+      "expression": "fs.readFileSync(indexPath, 'utf8')"
+    },
+    {
+      "expression": "fs.readFileSync(indexPath, 'utf8')\n    .replace('`skills/missing-real-source.ts:1\u20132`\\n', '')"
+    },
+    {
+      "expression": "fs.readFileSync(indexPath, 'utf8')\n    .replace('`skills/missing-real-source.ts:1\u20132`\\n', '')\n    .replace('[Absolute](/etc/passwd)\\n', '')"
+    },
+    {
+      "expression": "fs.readFileSync(indexPath, 'utf8')\n    .replace('`skills/missing-real-source.ts:1\u20132`\\n', '')\n    .replace('[Absolute](/etc/passwd)\\n', '').replace('[Escape](../../../outside.md)\\n', '')"
+    },
+    {
+      "expression": "fs.readFileSync(indexPath, 'utf8')\n    .replace('`skills/missing-real-source.ts:1\u20132`\\n', '')\n    .replace('[Absolute](/etc/passwd)\\n', '').replace('[Escape](../../../outside.md)\\n', '')\n    .replace('[Symlink](../../outside-link)\\n', '')"
+    },
+    {
+      "expression": "fs.readFileSync(indexPath, 'utf8')\n    .replace('`skills/missing-real-source.ts:1\u20132`\\n', '')\n    .replace('[Absolute](/etc/passwd)\\n', '').replace('[Escape](../../../outside.md)\\n', '')\n    .replace('[Symlink](../../outside-link)\\n', '').replace('#real#missing', '#real')"
+    },
+    {
+      "expression": "fs.writeFileSync(indexPath, fs.readFileSync(indexPath, 'utf8')\n    .replace('`skills/missing-real-source.ts:1\u20132`\\n', '')\n    .replace('[Absolute](/etc/passwd)\\n', '').replace('[Escape](../../../outside.md)\\n', '')\n    .replace('[Symlink](../../outside-link)\\n', '').replace('#real#missing', '#real'))"
+    },
+    {
+      "expression": "fs.writeFileSync(target, value)"
+    },
+    {
+      "expression": "import assert from 'node:assert/strict';"
+    },
+    {
+      "expression": "import fs from 'node:fs';"
+    },
+    {
+      "expression": "import os from 'node:os';"
+    },
+    {
+      "expression": "import path from 'node:path';"
+    },
+    {
+      "expression": "import test from 'node:test';"
+    },
+    {
+      "expression": "import { execFileSync } from 'node:child_process';"
+    },
+    {
+      "expression": "import { markdownInlineLinks, markdownReferenceLinks } from '../lib/docs-markdown-anchors.mjs';"
+    },
+    {
+      "expression": "test('docs-check-refs starts and validates in a SHA-256 Git repository', (context) => {\n  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'kubeclaw-doc-refs-sha256-'));\n  try { execFileSync('git', ['init', '-q', '--object-format=sha256'], { cwd: root }); }\n  catch {\n    context.diagnostic('Git does not support SHA-256 repositories; fixture skipped');\n    return;\n  }\n  write(root, 'scripts/docs-check-refs.mjs', fs.readFileSync(\n    path.join(sourceRoot, 'scripts/docs-check-refs.mjs'), 'utf8'));\n  write(root, 'scripts/lib/docs-markdown-anchors.mjs', fs.readFileSync(\n    path.join(sourceRoot, 'scripts/lib/docs-markdown-anchors.mjs'), 'utf8'));\n  write(root, 'package.json', '{}\\n');\n  write(root, 'docs/site/index.md', '# SHA-256 fixture\\n');\n  fs.symlinkSync(path.join(sourceRoot, 'node_modules'), path.join(root, 'node_modules'), 'dir');\n  execFileSync('git', ['config', 'user.name', 'Docs Test'], { cwd: root });\n  execFileSync('git', ['config', 'user.email', 'docs-test@example.invalid'], { cwd: root });\n  execFileSync('git', ['add', '.'], { cwd: root });\n  execFileSync('git', ['commit', '-qm', 'fixture'], { cwd: root });\n  assert.match(execFileSync('git', ['rev-parse', 'HEAD'], { cwd: root, encoding: 'utf8' }), /^[0-9a-f]{64}\\n$/u);\n  assert.match(run(root), /docs reference check passed/u);\n});"
+    },
+    {
+      "expression": "test('docs-check-refs validates reference destinations and their fragments', () => {\n  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'kubeclaw-doc-refs-'));\n  write(root, 'scripts/docs-check-refs.mjs', fs.readFileSync(\n    path.join(sourceRoot, 'scripts/docs-check-refs.mjs'), 'utf8'));\n  write(root, 'scripts/lib/docs-markdown-anchors.mjs', fs.readFileSync(\n    path.join(sourceRoot, 'scripts/lib/docs-markdown-anchors.mjs'), 'utf8'));\n  write(root, 'docs/blueprint/acceptance-evidence/historical/publication/input/old.md',\n    '[captured relative asset](missing-snapshot-only.json)\\n');\n  write(root, 'package.json', '{}\\n');\n  fs.symlinkSync(path.join(sourceRoot, 'node_modules'), path.join(root, 'node_modules'), 'dir');\n  fs.symlinkSync('/etc/passwd', path.join(root, 'outside-link'));\n  write(root, 'docs/site/index.md', [\n    '[Full][full] [Collapsed][] [Shortcut] ![Diagram][diagram]',\n    '`scripts/docs-check-refs.mjs:1\u20132` and `scripts/docs-check-refs.mjs:1\u20142`',\n    '`skills/missing-real-source.ts:1\u20132`',\n    '',\n    '[full]: missing-full.md',\n    '[collapsed]: missing-collapsed.md',\n    '[shortcut]: missing-shortcut.md#expected-section',\n    '[diagram]: missing-image.svg',\n    '[multiline]:',\n    '  missing-multiline.md',\n    '[Multiline][multiline]',\n    '[Absolute](/etc/passwd)',\n    '[Escape](../../../outside.md)',\n    '[Balanced](exists(missing).md)',\n    '[Escaped](guide_\\\\(v2\\\\).md)',\n    '[Symlink](../../outside-link)',\n    '[Broken fragment](fragment.md#real#missing)',\n    '[Angle inline](<missing-angle-inline.md>)',\n    '[angle-ref]: <missing-angle-reference.md>',\n    '[Angle reference][angle-ref]',\n    '',\n    '```md',\n    '[code-only]: missing-code.md',\n    '```',\n    '[code-only]',\n    '',\n    '<div>',\n    '[html-only]: missing-html.md',\n    '</div>',\n    '',\n    '[html-only]',\n    '',\n  ].join('\\n'));\n  execFileSync('git', ['init', '-q'], { cwd: root });\n  execFileSync('git', ['config', 'user.name', 'Docs Test'], { cwd: root });\n  execFileSync('git', ['config', 'user.email', 'docs-test@example.invalid'], { cwd: root });\n  execFileSync('git', ['add', '.'], { cwd: root });\n  execFileSync('git', ['commit', '-qm', 'fixture'], { cwd: root });\n\n  assert.throws(() => run(root), (error) => {\n    const output = `${error.stdout ?? ''}${error.stderr ?? ''}`;\n    return ['missing-full.md', 'missing-collapsed.md', 'missing-shortcut.md', 'missing-image.svg',\n      'missing-multiline.md', 'absolute local path', 'outside the repository', 'exists(missing).md',\n      'symbolic link', 'real#missing', 'missing-angle-inline.md', 'missing-angle-reference.md']\n      .every((name) => output.includes(name))\n      && output.includes('skills/missing-real-source.ts')\n      && !output.includes('missing-snapshot-only.json')\n      && !output.includes('missing-code.md') && !output.includes('missing-html.md');\n  });\n\n  write(root, 'docs/site/missing-full.md', '# Full\\n');\n  write(root, 'docs/site/missing-collapsed.md', '# Collapsed\\n');\n  write(root, 'docs/site/missing-shortcut.md', 'Expected section\\n================\\n');\n  write(root, 'docs/site/missing-image.svg', '<svg xmlns=\"http://www.w3.org/2000/svg\"/>\\n');\n  write(root, 'docs/site/missing-multiline.md', '# Multiline\\n');\n  write(root, 'docs/site/exists(missing).md', '# Balanced\\n');\n  write(root, 'docs/site/guide_(v2).md', '# Escaped\\n');\n  write(root, 'docs/site/fragment.md', '# Real\\n');\n  write(root, 'docs/site/missing-angle-inline.md', '# Inline angle\\n');\n  write(root, 'docs/site/missing-angle-reference.md', '# Reference angle\\n');\n  const indexPath = path.join(root, 'docs/site/index.md');\n  fs.writeFileSync(indexPath, fs.readFileSync(indexPath, 'utf8')\n    .replace('`skills/missing-real-source.ts:1\u20132`\\n', '')\n    .replace('[Absolute](/etc/passwd)\\n', '').replace('[Escape](../../../outside.md)\\n', '')\n    .replace('[Symlink](../../outside-link)\\n', '').replace('#real#missing', '#real'));\n  assert.match(run(root), /docs reference check passed/u);\n});"
+    },
+    {
+      "expression": "test('mixed source callouts admit only explicitly declared immutable revisions', () => {\n  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'kubeclaw-mixed-callout-'));\n  try {\n    for (const file of ['scripts/docs-check-refs.mjs', 'scripts/lib/docs-markdown-anchors.mjs']) {\n      write(root, file, fs.readFileSync(path.join(sourceRoot, file), 'utf8'));\n    }\n    write(root, 'package.json', '{}\\n');\n    write(root, 'skills/one.ts', 'export const one = 1;\\n');\n    write(root, 'skills/two.ts', 'export const two = 2;\\n');\n    fs.symlinkSync(path.join(sourceRoot, 'node_modules'), path.join(root, 'node_modules'), 'dir');\n    const git = (...args) => execFileSync('git', args, { cwd: root, encoding: 'utf8' }).trim();\n    git('init', '-q');\n    git('config', 'user.name', 'Docs Test');\n    git('config', 'user.email', 'docs-test@example.invalid');\n    git('add', '.'); git('commit', '-qm', 'first');\n    const first = git('rev-parse', 'HEAD');\n    write(root, 'sentinel.txt', 'second commit\\n');\n    git('add', '.'); git('commit', '-qm', 'second');\n    const second = git('rev-parse', 'HEAD');\n    const page = (declaration, extra = '') => [\n      '# Evidence', '', '> **Source evidence \u2014 mixed immutable scope**', '>',\n      `> [One](https://github.com/datrab/kubeclaw/blob/${first}/skills/one.ts#L1-L1).`,\n      `> [Two](https://github.com/datrab/kubeclaw/blob/${second}/skills/two.ts#L1-L1).`,\n      `> **Revision:** ${declaration}. Source bindings, not execution receipts.`,\n      `> ${extra}`, '',\n    ].join('\\n');\n    write(root, 'docs/site/index.md', page('`' + first + '`; `' + second + '`'));\n    assert.match(run(root), /docs reference check passed/u);\n    write(root, 'docs/site/index.md', page('`' + first + '`', 'Other prose mentions `' + second + '`.'));\n    assert.throws(() => run(root), error => String(error.stderr).includes(`but links ${second}`));\n    write(root, 'docs/site/index.md', page('`' + first + '`; ' + second));\n    assert.throws(() => run(root), error => String(error.stderr).includes(`but links ${second}`));\n    const callout = (linked, declared) => [\n      '> **Source evidence \u2014 independent adjacent scope**', '>',\n      `> [Source](https://github.com/datrab/kubeclaw/blob/${linked}/skills/one.ts#L1-L1).`,\n      '> **Revision:** `' + declared + '`.', '',\n    ].join('\\n');\n    write(root, 'docs/site/index.md', callout(first, first) + '\\n' + callout(second, second));\n    assert.match(run(root), /docs reference check passed/u);\n    write(root, 'docs/site/index.md', callout(second, first) + '\\n' + callout(second, second));\n    assert.throws(() => run(root), error => String(error.stderr).includes(`but links ${second}`));\n  } finally { fs.rmSync(root, { recursive: true, force: true }); }\n});"
+    },
+    {
+      "expression": "test('parses balanced inline destinations without accepting a decoy prefix', () => {\n  assert.deepEqual(markdownInlineLinks([\n    '[Guide](guide_(v2).md)',\n    '[Missing](exists(missing).md)',\n    '\\\\[schema\\\\](?:not-a-link)',\n    '<span title=\"[not-a-link](missing.md) [ref][bad]\">x</span>',\n    '[bad]: missing-ref.md',\n    '[Angle](<missing-angle.md>)',\n  ].join('\\n')).map((link) => link.destination),\n  ['guide_(v2).md', 'exists(missing).md', '<missing-angle.md>']);\n});"
+    },
+    {
+      "expression": "test('resolves full, collapsed, shortcut, and image reference links only from real definitions', () => {\n  const links = markdownReferenceLinks([\n    '[Full text][target] [Collapsed][] [Shortcut] ![Diagram][flow]',\n    '',\n    '[target]: full.md',\n    '[collapsed]: collapsed.md \"Optional title\"',\n    '[shortcut]: shortcut.md',\n    '[flow]: flow.svg',\n    '[multiline]:',\n    '  multiline.md',\n    '[Multiline][multiline]',\n    '[zero-indent]:',\n    'zero.md',\n    '[Zero][zero-indent]',\n    '- [list-definition]:',\n    '  list.md',\n    '- [List][list-definition]',\n    '> [quote-definition]:',\n    '> quote.md',\n    '> [Quote][quote-definition]',\n    '[angle-definition]: <angle.md>',\n    '[Angle reference][angle-definition]',\n    '',\n    '```md',\n    '[fenced]: missing-fenced.md',\n    '```',\n    '[fenced]',\n    '',\n    '> ```md',\n    '> [quoted-code]: missing-quoted-code.md',\n    '> ```',\n    '[quoted-code]',\n    '',\n    '    [indented]: missing-indented.md',\n    '[indented]',\n    '',\n    '<div>',\n    '[raw]: missing-raw.md',\n    '</div>',\n    '',\n    '[raw]',\n    '',\n  ].join('\\n'));\n  assert.deepEqual(links.map(({ destination, image }) => [destination, image]), [\n    ['full.md', false],\n    ['collapsed.md', false],\n    ['shortcut.md', false],\n    ['flow.svg', true],\n    ['multiline.md', false],\n    ['zero.md', false],\n    ['list.md', false],\n    ['quote.md', false],\n    ['angle.md', false],\n  ]);\n});"
+    }
+  ],
+  "selectors": [
+    {
+      "expressionSha256": "ced3a367351dfbf7e8b82ab94b4a4f5fee6e8554a054552e1f406e653d246e5c"
+    },
+    {
+      "expressionSha256": "c2db5b90ad646faeb9a344975abba73a3b417966f0a3c34fbd77070492e98188"
+    },
+    {
+      "expressionSha256": "dd957e190a46942f6e399dc9458c74de600b84c1fb953c5cd5116bfdd4f9cf03"
+    },
+    {
+      "expressionSha256": "d8c159f9c2d16cdc69570196e5540afd78a4e8009241408e1e6acc67d1ff038b"
+    },
+    {
+      "expressionSha256": "2ff19d4680d8acb7ccaea631b904c7481a48d19ac226108c45c321a6c250f55b"
+    },
+    {
+      "expressionSha256": "e6ed815c349bf9003c508a0b723975960a425a2cf09fad2c42ba96f9f8b69a50"
+    },
+    {
+      "expressionSha256": "7890eada1963190e15d654b00eb2aafbac898a197a74d8f661f1e3b7d0c66e80"
+    },
+    {
+      "expressionSha256": "db62e4f6d186448653375816574e081d3a991e435c147fc223c50874bc21a93b"
+    },
+    {
+      "expressionSha256": "68d7f33ca87a8e80fb47dd427d218bf8d36363c3daa290fd349e026b5a341ffe"
+    },
+    {
+      "expressionSha256": "b6cfc5b5e8ee6f375181e7a64029b0db10ee881ec48997f05a416f54450ef671"
+    },
+    {
+      "expressionSha256": "65ac157cfa917fd8bded385f6a3c8bff96351d36d51bcc6ab09ae28bb76c23a5"
+    },
+    {
+      "expressionSha256": "2f8676bb282eedb7dafadaf4a566b9f6a612269597515aec930bbcc9ee84a478"
+    },
+    {
+      "expressionSha256": "261bc796fb0842b30503ec3f9f72525ad4973cdc396a188e7e86b40d3ae503c8"
+    },
+    {
+      "expressionSha256": "82a0cda21e6a429b4e68c251ddf00ec2306908d8271f82dd38e71a4ebb5d2536"
+    },
+    {
+      "expressionSha256": "43893626daaf5feb0b36735fa1f03ce4b668bb33ad96af32a2e333a73911e327"
+    },
+    {
+      "expressionSha256": "4d284b929ab7ee96d27e1f63698c618c9061495ddfa68d104f4562964022c531"
+    },
+    {
+      "expressionSha256": "180d3fbe6b837c3e87557b38fdb1d0a98953f5dc9bef2c76b3da08c1b61db86d"
+    },
+    {
+      "expressionSha256": "3bd42e15e5427f946b98b898212af900ed0a4068cff03a37aa2ce1d3a081f2ec"
+    },
+    {
+      "expressionSha256": "99a8a8a7117b1395e3a209cdc8ba5a70424687458932bc4dc8a7b6e59ff53868"
+    },
+    {
+      "expressionSha256": "8f15d80e7efb2a5d032af6aeba410bc9b4bd498ba70c7278654526b1e2259752"
+    },
+    {
+      "expressionSha256": "113f0af17fdf683cf360ab9d03b7eff1b572d3475e83119031d47ee4331621aa"
+    },
+    {
+      "expressionSha256": "839cf2655267094fdbf41ad83d7b89fa202606d6b1235454745934a1c6f2529f"
+    },
+    {
+      "expressionSha256": "ad73ca8dd2be89150d9ce0f13eae68ebf5fc6eae24f81e521b6223459d4a6005"
+    },
+    {
+      "expressionSha256": "9e5c5f24875a2c9d303704ece0b5dbf1ad327c006908160e414a26f199507b73"
+    },
+    {
+      "expressionSha256": "fca89d5f4203b438402665d6e99cbf68cee7d788041c1157bc5d0203db21c73d"
+    },
+    {
+      "expressionSha256": "bd4aa59595f98eb936aefdae0ab98c7a31921f4e33d8f19831266b3878f19ed4"
+    },
+    {
+      "expressionSha256": "3535e7e10a3e1d18145825c778dbd3fa3e0d6a7411248089e50ca966b2d3f519"
+    },
+    {
+      "expressionSha256": "306797bef0ee4284643f474d71cd5bfbdce47232f5c1621b1d0f3563d7ec705b"
+    },
+    {
+      "expressionSha256": "f5f5cbf21cb70de2149b091d8ab0daa2d2d272a63b6c52cdd2fc05393b6978c7"
+    }
+  ]
+}
