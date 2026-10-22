@@ -45,9 +45,13 @@ tailscale:
     requests: {cpu: 25m, memory: 64Mi}
     limits: {cpu: 500m, memory: 256Mi}
 
-# Central MCP service. Credentials/TLS are provisioned by the operator bootstrap,
-# not stored in Helm values. Each client receives only its own credential.
+# Central MCP service. Argo creates credential objects and a scoped Sync Job
+# fills them inside the cluster. Each client receives only its own credential.
 mcp:
+  provision:
+    enabled: true
+    caSecret: codex-ops-mcp-ca
+    schedule: "17 3 * * *"
   tlsSecret: codex-ops-mcp-tls
   caConfigMap: ops-mcp-ca
   clients:

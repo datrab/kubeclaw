@@ -36,6 +36,50 @@ spec:
   destination:
     server: https://kubernetes.default.svc
     namespace: kubeclaw-ops
+  ignoreDifferences:
+    - group: ''
+      kind: Secret
+      namespace: kubeclaw-ops
+      name: codex-ops-mcp-ca
+      jsonPointers:
+        - /data
+    - group: ''
+      kind: Secret
+      namespace: kubeclaw-ops
+      name: codex-ops-mcp-tls
+      jsonPointers:
+        - /data
+    - group: ''
+      kind: ConfigMap
+      namespace: kubeclaw-ops
+      name: ops-mcp-ca
+      jsonPointers:
+        - /data
+    - group: ''
+      kind: Secret
+      namespace: kubeclaw-ops
+      name: codex-ops-bearer
+      jsonPointers:
+        - /data
+    - group: ''
+      kind: Secret
+      namespace: kubeclaw-ops
+      name: nova-ops-bearer
+      jsonPointers:
+        - /data
+    - group: ''
+      kind: Secret
+      namespace: kubeclaw
+      name: nova-ops-bearer
+      jsonPointers:
+        - /data
+    - group: ''
+      kind: ConfigMap
+      namespace: kubeclaw
+      name: ops-mcp-ca
+      jsonPointers:
+        - /data
   syncPolicy:
     syncOptions:
       - FailOnSharedResource=true
+      - RespectIgnoreDifferences=true

@@ -85,7 +85,7 @@ jobs:
         run: |
           git config user.name github-actions[bot]
           git config user.email 41898282+github-actions[bot]@users.noreply.github.com
-          git add releases gitops/platform/bootstrap/codex-ops.yaml
+          git add releases gitops/platform/bootstrap/codex-ops.yaml gitops/platform/bootstrap/infra-project.yaml
           git commit -m "Select tested ops images from run $RUN_ID"
           git pull --rebase origin main
           gh auth setup-git

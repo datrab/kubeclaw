@@ -85,7 +85,7 @@ export KUBE_CONTEXT='<your-existing-context>'
 The direct `deploy` helper remains a bootstrap/recovery path before Argo adoption;
 do not use it for routine upgrades of an Argo-owned release. The helper discovers
 actual API endpoints and existing observer namespaces, validates the Helm render,
-creates `kubeclaw-ops`, generates separate MCP client bearers, TLS trust and copies the existing
+creates `kubeclaw-ops` and copies the existing
 `kubeclaw/ghcr-secret` if needed. It does not print credentials. Initial `NotReady`
 while awaiting Codex login is expected.
 
@@ -116,33 +116,62 @@ This source change does not itself alter the running cluster. Existing release
 receipts and generated values still select their recorded source commits/images.
 Publish and promote matching Ops/runtime releases before regenerating their values;
 do not hand-edit old receipts to claim that old images contain the new server.
-Perform the cutover from the external administration context, never from an agent.
+The deployment path is GitHub image promotion followed by an Argo sync. Agent Pods
+never need an administrative kubeconfig for it. `codex-ops` remains manually synced
+so the operator can choose an idle Codex session; the sync itself runs in Argo.
 
-1. Finish active Nova/Buster runs. Inventory RoleBindings and ClusterRoleBindings
-   for `kubeclaw/agent-nova` and `kubeclaw-ops/codex-ops`, including bindings in
-   leased test namespaces. Record the old chart, image selection and configuration.
-2. Provision `codex-ops-bearer` and `nova-ops-bearer` in `kubeclaw-ops`. Only the
-   latter token is also provisioned in Nova's namespace. Run the bootstrap `secrets`
-   step externally for the default names, or provision all custom client Secrets
-   yourself. No token belongs in values or source control.
-3. Provision `codex-ops-mcp-tls` for `codex-ops-mcp.kubeclaw-ops.svc` and its
-   `.cluster.local` name. Publish the public trust certificate as `ops-mcp-ca` in
-   both client namespaces. Bootstrap creates a 90-day private service certificate
-   when absent; renew it before expiry or use your managed PKI. Custom names and
-   custom client namespaces require matching chart values and operator provisioning.
-4. Apply the new Ops chart/image selection. Its existing observer/exec bindings
-   change subject to `codex-ops-mcp`; Codex loses its API token/kubeconfig mount.
-   Roll the Codex StatefulSet only when its workspace is idle. Verify central MCP
-   readiness and Codex MCP access before restarting Nova.
-5. Apply the new Buster controller allowlist, Nova chart/values and network policy.
-   Sync with targeted pruning of removed Nova lease-client/verification RBAC.
-   Drain/revoke any existing leases granting Nova access and remove their residual
-   bindings. Updating an allowlist alone does not revoke an already existing binding.
-6. Verify externally that both agent identities have no direct workload, Secret,
-   exec or namespace authority, including via group bindings. Verify absence of
-   mounted API tokens in Codex/Nova, and a successful allowed MCP read/exec plus
-   a denied namespace/container/tool for each client. Run the Buster lease test.
-   Do not declare live acceptance based on Helm rendering or local transport tests.
+1. Finish active Nova/Buster runs and record the selected revisions. Existing Nova
+   leases become unauthorized after its broker grant is removed. The controller
+   rejects those provisioned leases and deletes their owned test namespaces,
+   revoking the contained RoleBindings. Drain runs before this transition.
+2. Merge the implementation after CI succeeds. Publish and promote the matching
+   Ops images through the existing `Build Ops Images` / `Promote image release`
+   workflows. Promotion updates the exact chart revision and immutable images.
+   The generated Ops Application also carries exact credential-data diff rules.
+3. Perform a **full** Argo sync of `codex-ops` while the workspace is idle. Wave -3
+   creates deterministic empty named Secrets/ConfigMaps, the provisioner identity,
+   named get/patch permissions and network access. The Sync hook in wave -1 fills
+   missing client tokens, the retained private CA, the service certificate and
+   public trust. Only after the hook succeeds do the wave-0 workloads start.
+   Selective resource sync skips hooks and is not a supported initial cutover.
+4. Verify MCP readiness and Codex MCP access. Then promote/sync the runtime release
+   for Nova and Buster, including pruning the removed Nova lease/verification RBAC.
+   Keep Ops and runtime promotion in this order so Nova's new mounts already exist.
+5. Confirm that both agent identities have no direct workload, Secret, exec or
+   namespace authority, including any separately managed group bindings. Check
+   absence of API-token mounts in Codex/Nova and allowed/denied MCP operations.
+   Run the Buster lease test. Local rendering and transport fixtures do not prove
+   live cluster authorization or a completed cutover.
+
+The chart creates no random credential bytes during rendering and commits no
+credential material. Its provisioner can only `get` and `patch` the predeclared
+Secret/ConfigMap names in the configured client namespaces: no `create`, `list`,
+workload exec or cluster-wide Secret grant. It uses optimistic resource-version
+checks. Existing valid client tokens are preserved; differing copies or reused
+client credentials fail the hook instead of silently rotating identities.
+
+Argo owns the credential objects; the provisioner owns their `/data`. The generated
+Application sets `RespectIgnoreDifferences=true` with exact kind/namespace/name
+rules for that field only. RBAC, policies, images, object metadata and all unrelated
+Secrets remain diffed normally. Credential objects are retained on prune/removal
+so a reconciliation cannot discard the CA or unexpectedly reset a client token.
+Removing a client from policy revokes access even while its old Secret is retained.
+These rules follow Argo's [sync phases and waves](https://argo-cd.readthedocs.io/en/stable/user-guide/sync-waves/)
+and [sync options](https://argo-cd.readthedocs.io/en/stable/user-guide/sync-options/).
+
+The daily CronJob runs the same idempotent provisioner. It renews the 90-day leaf
+certificate when fewer than 30 days remain, under the retained private service CA.
+The CA signing key stays in `kubeclaw-ops`, is not mounted into the MCP, and is never
+copied to clients. The MCP reloads a valid Secret key/certificate pair without
+restarting; a half-observed rotation retains the last valid context. Clients keep
+trusting the same CA. Back up the retained CA Secret; a lost CA with an existing
+leaf fails closed. Plan a reviewed CA rollover before the ten-year CA expires.
+
+Set `mcp.provision.enabled=false` only when an external credential/PKI controller
+owns these objects. That also disables the Job/CronJob and generated data-diff
+exceptions. Custom names/namespaces must align between clients and chart values.
+Existing image-pull/GitHub/Tailscale credentials remain separate from this MCP
+provisioning path and are not copied into Git.
 
 `mcp.clients` is the central configuration point. Each entry has `id`, a server-side
 `tokenSecret`, the client's network `namespace`/`podLabels`, allowed `namespaces`,
@@ -172,7 +201,8 @@ Send these records to the existing log collector for durable retention.
 
 Rotate Nova tokens in both namespaces together and restart the Codex supervised
 process after rotating its bearer (the server observes file rotation immediately).
-After changing TLS material, restart MCP and update both client trust stores.
+Leaf renewal is automatic and does not restart MCP. A CA replacement is a
+separate coordinated trust rollover for both clients.
 Keep recovery administrative credentials outside all agent Pods.
 
 ## Login, pair and use

@@ -163,7 +163,7 @@ test('activation preflight requires Secrets, sole ownership, native binding and 
   };
   preflightGitOps(root, result, 'argocd', run);
   assert.ok(calls.some(call => call[0] === process.execPath && call[1].endsWith('/scripts/native-worker-node-preflight.mjs')));
-  assert.ok(calls.some(call => call[2] === 'namespace' && call[3] === 'tailscale'));
+  assert.ok(!calls.some(call => call[2] === 'namespace' && call[3] === 'tailscale'), 'Nova no longer receives cross-namespace verification Secret grants');
   cases.rootOwner = { metadata: { labels: {} } };
   assert.throws(() => preflightGitOps(root, result, 'argocd', run), /BOOTSTRAP_OWNER_CONFLICT/); cases.rootOwner = null;
   cases.releases = [{ name: 'agent-buster' }];

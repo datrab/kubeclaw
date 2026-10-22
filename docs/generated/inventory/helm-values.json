@@ -61,7 +61,8 @@
         "archviewer",
         "extraVolumes",
         "extraVolumeMounts",
-        "busterRuntimePersistence"
+        "busterRuntimePersistence",
+        "opsMcp"
       ],
       "secretReferences": [
         {
@@ -98,7 +99,8 @@
         "extraContainers",
         "extraVolumes",
         "extraVolumeMounts",
-        "workspace"
+        "workspace",
+        "opsMcp"
       ],
       "secretReferences": [
         {

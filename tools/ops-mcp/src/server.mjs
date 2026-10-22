@@ -2,11 +2,11 @@ import { boundedUtf8, logObservation } from './diagnostics.mjs';
 import { getHubbleFlows } from './hubble.mjs';
 import { createAccessPolicy, requestIdentity, authorizeTool, authorizeExec, audit, identityContext } from './access-policy.mjs';
 import { createPodExec } from './exec.mjs';
+import { readTlsPair, reloadTls } from './tls.mjs';
 import { loadOpsMcpConfig } from './config.mjs';
 import { createKubeRequest, createKubeList } from './kubernetes.mjs';
 import { createServer as createHttpServer } from 'node:http';
 import { createServer as createHttpsServer } from 'node:https';
-import { readFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import { createMcpHandler, McpServer } from '@modelcontextprotocol/server';
 import { toNodeHandler } from '@modelcontextprotocol/node';
@@ -574,7 +574,11 @@ const tlsCert = process.env.OPS_MCP_TLS_CERT_FILE;
 const tlsKey = process.env.OPS_MCP_TLS_KEY_FILE;
 if (Boolean(tlsCert) !== Boolean(tlsKey)) throw new Error('Both Ops MCP TLS key and certificate are required');
 if (config.policyFile && !tlsCert && !config.localOnly) throw new Error('Network-accessible client policies require TLS');
-const createServer = tlsCert ? handler => createHttpsServer({ cert: readFileSync(tlsCert), key: readFileSync(tlsKey) }, handler) : createHttpServer;
+const createServer = tlsCert ? handler => {
+  const { cert, key } = readTlsPair(tlsCert, tlsKey);
+  return createHttpsServer({ cert, key, minVersion: 'TLSv1.2' }, handler);
+} : createHttpServer;
+let tlsReload;
 const httpServer = createServer((req, res) => {
   let url;
   try {
@@ -588,7 +592,7 @@ const httpServer = createServer((req, res) => {
   }
 
   if (url.pathname === '/healthz') {
-    const ready = authentication.ready();
+    const ready = authentication.ready() && (!tlsReload || tlsReload.ready());
     res.writeHead(ready ? 200 : 503, { 'content-type': 'application/json' });
     res.end(JSON.stringify({ ok: ready, service: 'kubeclaw-ops-mcp' }));
     return;
@@ -623,12 +627,15 @@ const httpServer = createServer((req, res) => {
   }));
 });
 
+if (tlsCert) tlsReload = reloadTls(httpServer, tlsCert, tlsKey);
+
 httpServer.listen(PORT, HOST, () => {
   console.error(`kubeclaw-ops-mcp listening on ${tlsCert ? 'https' : 'http'}://${HOST}:${httpServer.address().port}/mcp`);
 });
 
 async function shutdown(signal) {
   console.error(`received ${signal}, shutting down`);
+  tlsReload?.close();
   httpServer.close();
   await mcpHandler.close();
   process.exit(0);

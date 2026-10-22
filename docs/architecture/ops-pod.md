@@ -77,7 +77,8 @@ from the Kubernetes API. The headless Codex Service remains its StatefulSet iden
 | NetworkPolicy, optional CiliumNetworkPolicy | Helm; Pod traffic boundary | Applied to all containers in the Pod |
 | Home and workspace PVCs | StatefulSet claim templates | Retained after ordinary StatefulSet/release deletion |
 | Optional Tailscale PVC | Helm resource with keep annotation | Retained on removal; separate from immutable StatefulSet claim templates |
-| Bearer, GitHub, Tailscale and pull Secrets | Operator bootstrap / operator | Outside Helm's resource lifecycle; explicit rotation and deletion |
+| MCP credentials and trust | Argo declares objects; scoped provisioner fills data | Retained CA/client credentials; daily leaf renewal |
+| GitHub, Tailscale and pull Secrets | Operator / existing credential owner | Separate from MCP provisioning |
 | API credential projection | Kubelet | Short-lived token, requested expiry 3600 seconds; API CA ConfigMap projection |
 | Codex auth and user configuration | Codex / operator | Persistent home; sensitive account state |
 
@@ -185,7 +186,9 @@ bearers, command arguments or output. Ship stderr through the cluster's log coll
 Buster remains the only agent with direct API credentials. Its existing broker may
 grant rights inside leased test namespaces; this change preserves that exception,
 removes Nova from the broker allowlist, and does not give Buster global namespace
-creation rights. Existing Nova lease bindings must be drained/revoked during migration.
+creation rights. Drain Nova leases before cutover: the controller deletes owned
+test namespaces for provisioned leases rejected by the tightened allowlist,
+revoking their RoleBindings. Argo prunes Nova's former tracked roles/bindings.
 
 Codex uses `danger-full-access` within the restricted container and `on-request`
 approvals. There is no nested Codex OS sandbox. Account credentials, GitHub access,
@@ -211,9 +214,18 @@ Buster/controller keep their existing API path; Nova's lease API allowance is re
 The MCP uses a service certificate and client trust ConfigMap; private keys remain
 only in the MCP Pod. Codex uses `CODEX_CA_CERTIFICATE`, as documented in the
 [official OpenAI environment-variable reference](https://learn.chatgpt.com/docs/config-file/environment-variables).
-Nova's client verifies both CA and hostname. TLS Secret renewal requires a MCP
-restart; clients must trust the replacement certificate before the server switches.
-No public endpoint or externally exposed API credential is created.
+Nova's client verifies both CA and hostname. A daily scoped CronJob renews the
+90-day leaf under the retained private CA before fewer than 30 days remain. MCP
+validates and reloads Secret certificate/key rotations without restarting. The CA
+signing key is only accessible to the provisioner, never the MCP or agent Pods.
+Argo wave -3 creates empty named credential objects and the provisioner RBAC;
+the wave -1 Sync hook fills them before workloads start. The provisioner can only
+get/patch those exact names, not create arbitrary Secrets or list them. Argo ignores
+`/data` only on those exact objects and uses `RespectIgnoreDifferences=true` to
+preserve generated state. The chart render remains deterministic. Existing client
+credentials and the CA survive retries, re-sync and pruning. A lost CA fails closed
+when an existing leaf would otherwise lose its trust anchor. No public endpoint
+or externally exposed API credential is created.
 
 Optional Tailscale runs in userspace with SOCKS5 at localhost:1055 and persistent
 file state. Kubernetes Secret state storage is disabled. `TS_AUTH_ONCE=true`
