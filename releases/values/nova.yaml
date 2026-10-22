@@ -1,4 +1,4 @@
-# Generated from release dbf8b9fe99ebc572baa09e800fa5ee30d98f8318 and byte-matched source configuration; do not edit.
+# Generated from release a0867b4caaf636d3cba8dd3bbf6eb53106d92c71 and byte-matched source configuration; do not edit.
 agentRole: nova
 gateway:
   startupDoctor:
@@ -21,7 +21,7 @@ initSetup:
       memory: 8Gi
 image:
   repository: ghcr.io/datrab/kubeclaw-nova
-  digest: sha256:cf9115545e7c4725c62f5cbe3fe399227528641658e97f248bd46f345240e37e
+  digest: sha256:3b7462c060dc40522859745af191e1e7d474470e7acb29bb1079a14c0400e463
   tag: ''
   pullPolicy: IfNotPresent
 imagePullSecrets:
@@ -29,13 +29,13 @@ imagePullSecrets:
 codeBundle:
   enabled: true
   archiveUrl: >-
-    https://github.com/datrab/kubeclaw/releases/download/code-bundles-39635601716-1/nova-2c636491391330c3137162ff0afc0b108b0c91a5.tgz
-  expectedCommit: 2c636491391330c3137162ff0afc0b108b0c91a5
+    https://github.com/datrab/kubeclaw/releases/download/code-bundles-39731855192-1/nova-a0867b4caaf636d3cba8dd3bbf6eb53106d92c71.tgz
+  expectedCommit: a0867b4caaf636d3cba8dd3bbf6eb53106d92c71
   contractVersion: v2
   auth:
     existingSecret: github-bundle-reader
     existingSecretKey: token
-  sha256: 68c984c73f26a5ef288cd6645f586c1d061da431d41a70619c4671d0d7e06187
+  sha256: 5a9f674ab56f371dd8da9e107ed06b6c6ce89fb06ed888e92e684c72e06ce6e7
 auth:
   existingSecret: openclaw-shared-secrets
   existingSecretKey: gatewayToken-nova
@@ -72,13 +72,14 @@ agent:
     repoUrl: git@github.com:datrab/kubeclaw.git
 serviceAccount:
   create: true
-  automount: true
+  automount: false
 busterNamespaceBroker:
   enabled: true
   leaseClient:
-    enabled: true
+    enabled: false
     verificationRead:
-      enabled: true
+      enabled: false
+      retireLegacyBindings: true
 archviewer:
   enabled: true
   existingSecret: nova-archviewer-auth
@@ -139,7 +140,7 @@ probes:
     failureThreshold: 5
 extraContainers:
   - name: archviewer
-    image: ghcr.io/datrab/kubeclaw-archviewer@sha256:7b391f3ef0a77e2a203d0603a402472c15da7ad6e2f320894825693e74a78e99
+    image: ghcr.io/datrab/kubeclaw-archviewer@sha256:9b6d1384d9bedb19f704b3882d477bcc4b10569136910eff017bffd508bef4bb
     imagePullPolicy: Always
     ports:
       - name: archviewer
@@ -281,6 +282,19 @@ workspace:
 
     Exit 0 means succeeded (or compiled); exit 1 means a non-success result or error.
   tools: >
+    ## Cluster operations
+
+    Use only the central Ops MCP. No direct Kubernetes credentials or kubectl.
+
+    List available tools: `node /opt/ops-mcp-client/client.mjs list`
+
+    Call a tool: `node /opt/ops-mcp-client/client.mjs call get_pod '{"namespace":"kubeclaw","pod":"<pod-name>"}'`
+
+    Exec is a separate, audited MCP tool; follow its schema and target grants.
+
+    Never retry an exec after timeout/disconnect without checking its effects.
+
+
     ## Pipeline
 
     pipeline.ts --platform <platform.json> --project <project.json> [--compile <new-pipeline.json> | --recover <run-id>
@@ -322,3 +336,8 @@ workspace:
     2. Get familiar with your enviroment
     3. Post to Discord: "🔭 Nova online." + quick summary of your enviroment
     4. Delete this file.
+opsMcp:
+  enabled: true
+  url: https://codex-ops-mcp.kubeclaw-ops.svc:8080/mcp
+  tokenSecret: nova-ops-bearer
+  caConfigMap: ops-mcp-ca

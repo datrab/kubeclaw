@@ -1,4 +1,4 @@
-# Generated from release dbf8b9fe99ebc572baa09e800fa5ee30d98f8318 and byte-matched source configuration; do not edit.
+# Generated from release a0867b4caaf636d3cba8dd3bbf6eb53106d92c71 and byte-matched source configuration; do not edit.
 agentRole: buster
 gateway:
   startupDoctor:
@@ -30,7 +30,7 @@ initSetup:
       memory: 8Gi
 image:
   repository: ghcr.io/datrab/kubeclaw-buster-gateway
-  digest: sha256:4a9b942eeafbd7a8b41306d2f8ec5e11be6ce492fc079e4ba5d3e1ea29e9a761
+  digest: sha256:6881fd93ec8b6c7fe4ae560fc9b3caf6b918f02d5c20eb5c016d9581a0eb92d8
   tag: ''
   pullPolicy: IfNotPresent
 imagePullSecrets:
@@ -38,13 +38,13 @@ imagePullSecrets:
 codeBundle:
   enabled: true
   archiveUrl: >-
-    https://github.com/datrab/kubeclaw/releases/download/code-bundles-39635601716-1/buster-2c636491391330c3137162ff0afc0b108b0c91a5.tgz
-  expectedCommit: 2c636491391330c3137162ff0afc0b108b0c91a5
+    https://github.com/datrab/kubeclaw/releases/download/code-bundles-39731855192-1/buster-a0867b4caaf636d3cba8dd3bbf6eb53106d92c71.tgz
+  expectedCommit: a0867b4caaf636d3cba8dd3bbf6eb53106d92c71
   contractVersion: v2
   auth:
     existingSecret: github-bundle-reader
     existingSecretKey: token
-  sha256: 2cf08779d44dc4a97509a0d065908b83ab0a73edd7617b10e0fc0ddc4a1efc99
+  sha256: b7d72f6ab124b74560743e4860241b9ae75a851773b21569275aea6673bfd6d0
 auth:
   existingSecret: openclaw-shared-secrets
   existingSecretKey: gatewayToken-buster
@@ -92,7 +92,7 @@ service:
       targetPort: buster-plan
 extraContainers:
   - name: buster-v2-runtime
-    image: ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5413e3f76d9c588607eea3933672f4a6662380ae962a60b898bed616ff1726f6
+    image: ghcr.io/datrab/kubeclaw-buster-runtime@sha256:9133b142d62acf1d9e2a47b88dca221d75d426b686b9229a19c9d9fd7157ac3f
     imagePullPolicy: Always
     env:
       - name: BUSTER_V2_TOKEN
@@ -223,10 +223,11 @@ extraVolumes:
 busterNamespaceBroker:
   enabled: true
   controller:
+    opsMcpAccess:
+      enabled: true
+      namespace: kubeclaw-ops
+      releaseName: codex-ops
     allowedAccess:
-      - subject: kubeclaw/agent-nova
-        modes:
-          - deployer
       - subject: kubeclaw/agent-buster
         modes:
           - deployer
@@ -239,7 +240,7 @@ busterNamespaceBroker:
       - prism-test-ghcr
     image:
       repository: ghcr.io/datrab/kubeclaw-namespace-controller
-      digest: sha256:0ca365db3dbe30c55e972d640cd055338766be5429c4435e849329508eadbde0
+      digest: sha256:5828feb294771ca0ae1a3495fb52e3375dd7240e6c3c29829d3698c6a132e5e4
       tag: ''
       pullPolicy: IfNotPresent
 resources:
@@ -261,3 +262,8 @@ busterRuntimePersistence:
   claimName: agent-buster-runtime-state
   size: 64Gi
   storageClass: ''
+opsMcp:
+  enabled: true
+  url: https://codex-ops-mcp.kubeclaw-ops.svc:8080/mcp
+  tokenSecret: buster-ops-bearer
+  caConfigMap: ops-mcp-ca
