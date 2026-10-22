@@ -1,0 +1,36 @@
+{
+  "reviewedSourceRevision": "72d079eb51f5398e42f525a85fd02ab18c041916",
+  "changedSource": "scripts/docs-api-documentation-role-custody.mjs",
+  "fiveOriginalRecords": [
+    {
+      "id": "AP09-complete-static-reader-search-20261021",
+      "before": "908d1986750f034578bd0274b419e3ef9eb8de7c273e86299b0ba79dfa678ff1",
+      "after": "80ee9d88587c43a7b75fff1b8e5b1fa2c765f4ea369ae5eaa6d052968f0a93bc"
+    },
+    {
+      "id": "AP09-search-reader-gate-20261021",
+      "before": "5972536eb520e56796c00264e5e85cdea9d10a8d6ba9963ade3a7667aacacdbe",
+      "after": "7525ef8273a00a4b9ab2379c92130bb74b788aa8d127baf9c87895adfec46820"
+    },
+    {
+      "id": "AP09-rendered-source-bounds-gate-20261021",
+      "before": "187acf694123c82ada2c9b16b1692b3ce94df1ac7850951a3b8d1b0ec2ffc419",
+      "after": "7d5fa8f1a9f16e11670353df649f4be8cb1d7312dc6594aa2f87857645af8b72"
+    },
+    {
+      "id": "AP09-complete-same-source-code-preview-20261021",
+      "before": "ada67d19d35c38055f48cf40be4cdd34a7d5c7430fe94cace8336b5becd51791",
+      "after": "98cfe36df7757ec5f43fb0131ccd072c424f8b149b91fb0cd8cbfbc8866bb127"
+    },
+    {
+      "id": "AP09-complete-responsive-reader-layout-20261021",
+      "before": "348f09a6c176f1b92cc7e79cb13dc194e502c36fa9997df350f2ddfb01c32e4e",
+      "after": "ac4b358b4843bbc0056e434504b55d86ee23525bfebb8c04899ad5c8625aa1f0"
+    }
+  ],
+  "other90OriginalRecordObjectsUnchanged": true,
+  "noNewAcceptedIDs": true,
+  "acceptedGates": 56,
+  "acceptedRequirements": 224,
+  "independentReview": "docs/blueprint/acceptance-evidence/five-scalar-facts-20261022/independent-source-review/integration-review.json"
+}

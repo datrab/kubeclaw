@@ -13014,7 +13014,7 @@
     },
     {
       "id": "AP09-complete-static-reader-search-20261021",
-      "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+      "revision": "72d079eb51f5398e42f525a85fd02ab18c041916",
       "author": "Nova /root documentation author and implementation coordinator",
       "reviewer": "Independent Codex autoreview static-reader whole PUB-002 Source/reader-quality closeout",
       "verdict": "PASS",
@@ -14018,12 +14018,28 @@
             "docs/site/use/workflows/redis-replay-recovery.md",
             "docs/site/use/workflows/wait-resume.md"
           ]
+        },
+        {
+          "previousReviewedRevision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+          "revision": "72d079eb51f5398e42f525a85fd02ab18c041916",
+          "changedDependencies": [
+            "scripts/docs-api-documentation-role-custody.mjs"
+          ],
+          "reviewer": "/root/source_closeout (independent Source/preservation); /root adopts exact bounded metadata successor",
+          "verdict": "PASS",
+          "summary": "Five factsDigest literal values only, independently matched to actual original current fact arrays; full107recipe reversal and all other fields exact. Pinned immutable Source ranges/bytes, publication Markdown/search/layout and all previously reviewed Reader/Quality behavior remain unchanged. Reuse original bound Reader487, no new browser claim or recount.",
+          "independentReview": {
+            "path": "docs/blueprint/acceptance-evidence/five-scalar-facts-20261022/independent-source-review/integration-review.json",
+            "sha256": "5af2f30a90f38bf0be122ddd6631daf7266d850fedd36446373e5d7ec4ed47be"
+          },
+          "originalRecordCanonicalSha256": "908d1986750f034578bd0274b419e3ef9eb8de7c273e86299b0ba79dfa678ff1",
+          "limit": "Only this original record scope preserved; original author/checks/review/summary/limits/verdict/pages/sources/IDs remain exact. Five producer-custody comparisons now match actual original arrays; no whole consumer/graph/native/API/generator/runtime/release acceptance."
         }
       ]
     },
     {
       "id": "AP09-search-reader-gate-20261021",
-      "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+      "revision": "72d079eb51f5398e42f525a85fd02ab18c041916",
       "author": "Nova /root documentation author and implementation coordinator",
       "reviewer": "Independent Codex autoreview whole A912-04 code/evidence review plus narrow Source/Reader/Quality native-impact follow-up",
       "verdict": "PASS",
@@ -14457,12 +14473,28 @@
             "docs/site/use/workflows/redis-replay-recovery.md",
             "docs/site/use/workflows/wait-resume.md"
           ]
+        },
+        {
+          "previousReviewedRevision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+          "revision": "72d079eb51f5398e42f525a85fd02ab18c041916",
+          "changedDependencies": [
+            "scripts/docs-api-documentation-role-custody.mjs"
+          ],
+          "reviewer": "/root/source_closeout (independent Source/preservation); /root adopts exact bounded metadata successor",
+          "verdict": "PASS",
+          "summary": "Five factsDigest literal values only, independently matched to actual original current fact arrays; full107recipe reversal and all other fields exact. Pinned immutable Source ranges/bytes, publication Markdown/search/layout and all previously reviewed Reader/Quality behavior remain unchanged. Reuse original bound Reader487, no new browser claim or recount.",
+          "independentReview": {
+            "path": "docs/blueprint/acceptance-evidence/five-scalar-facts-20261022/independent-source-review/integration-review.json",
+            "sha256": "5af2f30a90f38bf0be122ddd6631daf7266d850fedd36446373e5d7ec4ed47be"
+          },
+          "originalRecordCanonicalSha256": "5972536eb520e56796c00264e5e85cdea9d10a8d6ba9963ade3a7667aacacdbe",
+          "limit": "Only this original record scope preserved; original author/checks/review/summary/limits/verdict/pages/sources/IDs remain exact. Five producer-custody comparisons now match actual original arrays; no whole consumer/graph/native/API/generator/runtime/release acceptance."
         }
       ]
     },
     {
       "id": "AP09-rendered-source-bounds-gate-20261021",
-      "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+      "revision": "72d079eb51f5398e42f525a85fd02ab18c041916",
       "author": "Nova /root documentation author and implementation coordinator",
       "reviewer": "Independent Codex autoreview whole A912-09 Source/Reader/Quality review and narrow changed-boundary impact review for 21 prior PASS records",
       "verdict": "PASS",
@@ -14904,6 +14936,22 @@
             "docs/site/use/workflows/redis-replay-recovery.md",
             "docs/site/use/workflows/wait-resume.md"
           ]
+        },
+        {
+          "previousReviewedRevision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+          "revision": "72d079eb51f5398e42f525a85fd02ab18c041916",
+          "changedDependencies": [
+            "scripts/docs-api-documentation-role-custody.mjs"
+          ],
+          "reviewer": "/root/source_closeout (independent Source/preservation); /root adopts exact bounded metadata successor",
+          "verdict": "PASS",
+          "summary": "Five factsDigest literal values only, independently matched to actual original current fact arrays; full107recipe reversal and all other fields exact. Pinned immutable Source ranges/bytes, publication Markdown/search/layout and all previously reviewed Reader/Quality behavior remain unchanged. Reuse original bound Reader487, no new browser claim or recount.",
+          "independentReview": {
+            "path": "docs/blueprint/acceptance-evidence/five-scalar-facts-20261022/independent-source-review/integration-review.json",
+            "sha256": "5af2f30a90f38bf0be122ddd6631daf7266d850fedd36446373e5d7ec4ed47be"
+          },
+          "originalRecordCanonicalSha256": "187acf694123c82ada2c9b16b1692b3ce94df1ac7850951a3b8d1b0ec2ffc419",
+          "limit": "Only this original record scope preserved; original author/checks/review/summary/limits/verdict/pages/sources/IDs remain exact. Five producer-custody comparisons now match actual original arrays; no whole consumer/graph/native/API/generator/runtime/release acceptance."
         }
       ]
     },
@@ -15228,7 +15276,7 @@
     },
     {
       "id": "AP09-complete-same-source-code-preview-20261021",
-      "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+      "revision": "72d079eb51f5398e42f525a85fd02ab18c041916",
       "author": "Nova /root documentation author and implementation coordinator",
       "reviewer": "Independent Codex autoreview whole PUB004 Source/Reader/Quality closeout plus narrow changed-boundary preservation for21priorPASSrecords",
       "verdict": "PASS",
@@ -15631,12 +15679,28 @@
             "docs/site/use/workflows/redis-replay-recovery.md",
             "docs/site/use/workflows/wait-resume.md"
           ]
+        },
+        {
+          "previousReviewedRevision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+          "revision": "72d079eb51f5398e42f525a85fd02ab18c041916",
+          "changedDependencies": [
+            "scripts/docs-api-documentation-role-custody.mjs"
+          ],
+          "reviewer": "/root/source_closeout (independent Source/preservation); /root adopts exact bounded metadata successor",
+          "verdict": "PASS",
+          "summary": "Five factsDigest literal values only, independently matched to actual original current fact arrays; full107recipe reversal and all other fields exact. Pinned immutable Source ranges/bytes, publication Markdown/search/layout and all previously reviewed Reader/Quality behavior remain unchanged. Reuse original bound Reader487, no new browser claim or recount.",
+          "independentReview": {
+            "path": "docs/blueprint/acceptance-evidence/five-scalar-facts-20261022/independent-source-review/integration-review.json",
+            "sha256": "5af2f30a90f38bf0be122ddd6631daf7266d850fedd36446373e5d7ec4ed47be"
+          },
+          "originalRecordCanonicalSha256": "ada67d19d35c38055f48cf40be4cdd34a7d5c7430fe94cace8336b5becd51791",
+          "limit": "Only this original record scope preserved; original author/checks/review/summary/limits/verdict/pages/sources/IDs remain exact. Five producer-custody comparisons now match actual original arrays; no whole consumer/graph/native/API/generator/runtime/release acceptance."
         }
       ]
     },
     {
       "id": "AP09-complete-responsive-reader-layout-20261021",
-      "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+      "revision": "72d079eb51f5398e42f525a85fd02ab18c041916",
       "author": "Nova /root documentation author and implementation coordinator",
       "reviewer": "Independent Codex autoreview whole A91207 responsive-layout closeout and narrow24-record prior-boundary preservation",
       "verdict": "PASS",
@@ -16122,6 +16186,22 @@
             "docs/site/use/workflows/redis-replay-recovery.md",
             "docs/site/use/workflows/wait-resume.md"
           ]
+        },
+        {
+          "previousReviewedRevision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+          "revision": "72d079eb51f5398e42f525a85fd02ab18c041916",
+          "changedDependencies": [
+            "scripts/docs-api-documentation-role-custody.mjs"
+          ],
+          "reviewer": "/root/source_closeout (independent Source/preservation); /root adopts exact bounded metadata successor",
+          "verdict": "PASS",
+          "summary": "Five factsDigest literal values only, independently matched to actual original current fact arrays; full107recipe reversal and all other fields exact. Pinned immutable Source ranges/bytes, publication Markdown/search/layout and all previously reviewed Reader/Quality behavior remain unchanged. Reuse original bound Reader487, no new browser claim or recount.",
+          "independentReview": {
+            "path": "docs/blueprint/acceptance-evidence/five-scalar-facts-20261022/independent-source-review/integration-review.json",
+            "sha256": "5af2f30a90f38bf0be122ddd6631daf7266d850fedd36446373e5d7ec4ed47be"
+          },
+          "originalRecordCanonicalSha256": "348f09a6c176f1b92cc7e79cb13dc194e502c36fa9997df350f2ddfb01c32e4e",
+          "limit": "Only this original record scope preserved; original author/checks/review/summary/limits/verdict/pages/sources/IDs remain exact. Five producer-custody comparisons now match actual original arrays; no whole consumer/graph/native/API/generator/runtime/release acceptance."
         }
       ]
     },

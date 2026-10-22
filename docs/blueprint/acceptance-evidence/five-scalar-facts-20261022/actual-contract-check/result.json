@@ -1,0 +1,18 @@
+{
+  "argv": [
+    "/usr/local/bin/node",
+    "scripts/check-ap09-acceptance-contract.mjs"
+  ],
+  "exitCode": 0,
+  "seconds": 21.93615174293518,
+  "streams": {
+    "stdout": {
+      "bytes": 206,
+      "sha256": "facbb5b5fdb13892f51baa1f876cf439acdb10a3d8806e9def6fcad1f073799c"
+    },
+    "stderr": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  }
+}
