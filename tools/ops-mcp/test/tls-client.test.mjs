@@ -10,7 +10,7 @@ import { fileURLToPath } from 'node:url';
 import { createInterface } from 'node:readline';
 import { createServer } from 'node:https';
 import { setTimeout as delay } from 'node:timers/promises';
-import { callMcp } from '../../../charts/kubeclaw/files/ops-mcp-client.mjs';
+import { callMcp } from '../../../charts/kubeclaw/files/ops-mcp/client.mjs';
 
 // This is an actual MCP backend and the shipped Nova client over real TLS.
 // No successful Kubernetes response is fabricated.
@@ -37,8 +37,8 @@ test('shipped Nova client verifies MCP TLS and propagates tool denials without l
 
   // The deployed adapter is the actual native connector process, not a shell
   // tool or a second catalog of locally hardcoded schemas/permissions.
-  copyFileSync(fileURLToPath(new URL('../../../charts/kubeclaw/files/ops-mcp-client.mjs', import.meta.url)), join(dir, 'client.mjs'));
-  copyFileSync(fileURLToPath(new URL('../../../charts/kubeclaw/files/ops-mcp-stdio.mjs', import.meta.url)), join(dir, 'stdio.mjs'));
+  copyFileSync(fileURLToPath(new URL('../../../charts/kubeclaw/files/ops-mcp/client.mjs', import.meta.url)), join(dir, 'client.mjs'));
+  copyFileSync(fileURLToPath(new URL('../../../charts/kubeclaw/files/ops-mcp/stdio.mjs', import.meta.url)), join(dir, 'stdio.mjs'));
   const adapter = spawn(process.execPath, [join(dir, 'stdio.mjs')], {
     env: { ...process.env, ...env }, stdio: ['pipe', 'pipe', 'pipe'],
   });
@@ -119,8 +119,8 @@ test('native adapter never replays an exec after the remote connection drops', a
   });
   server.listen(0, '127.0.0.1'); await once(server, 'listening');
   t.after(() => new Promise(resolve => server.close(resolve)));
-  for (const [source, target] of [['ops-mcp-client.mjs', 'client.mjs'], ['ops-mcp-stdio.mjs', 'stdio.mjs']]) {
-    copyFileSync(fileURLToPath(new URL(`../../../charts/kubeclaw/files/${source}`, import.meta.url)), join(dir, target));
+  for (const [source, target] of [['client.mjs', 'client.mjs'], ['stdio.mjs', 'stdio.mjs']]) {
+    copyFileSync(fileURLToPath(new URL(`../../../charts/kubeclaw/files/ops-mcp/${source}`, import.meta.url)), join(dir, target));
   }
   const adapter = spawn(process.execPath, [join(dir, 'stdio.mjs')], {
     env: { ...process.env, OPS_MCP_URL: `https://localhost:${server.address().port}/mcp`, OPS_MCP_TOKEN_FILE: token, OPS_MCP_CA_FILE: cert },
