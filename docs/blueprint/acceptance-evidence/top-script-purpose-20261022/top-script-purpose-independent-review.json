@@ -1,0 +1,74 @@
+{
+  "reviewer": "/root/review_cli_maintenance_closeout independent native Codex",
+  "authorWorktree": "/home/node/.openclaw/workspace/tmp/pr13-top-script-purpose-author",
+  "baseRevision": "c4ebd7e428209c1d2fcf3599dab424ce9e0df23f",
+  "reviewedFrozenFilesSha256": {
+    "scripts/docs-api-output-discovery.mjs": "d7c12d4734a9a828bff799a50e89a92c82c859f6dd86453434a46de482ff85a0",
+    "scripts/docs-api-top-level-script-purpose.mjs": "0140d61924b7e766685e1f9ef52e3132d167f56cdf46cf22dab3bca44386a938",
+    "scripts/docs-api-top-level-script-purpose-authority.json": "a6a3658aa6f769ba512eb5cd5e13fab82c013ce83b05ffbefd2d4e0a63a04e8a",
+    "scripts/tests/docs-api-top-level-script-purpose.test.mjs": "88fa7ba8a75f0ef7fefde95aaf24e1fec31e865351b66c884be50f8800405ed8"
+  },
+  "verdict": "PASS_BOUNDED_SOURCE_PURPOSE_AND_CODE;ACTUAL_RECEIVER_INTEGRATION_PENDING",
+  "findings": [],
+  "acceptedActionableFindings": [],
+  "sourceReview": {
+    "primarySources": 11,
+    "canonicalDescriptors": 24,
+    "rawUnknown": 14,
+    "existingNonApi": 10,
+    "physicalSourceHelperCallerInputPins": 68,
+    "pinsComparedToActualFilesAndBaseGitBlobs": true,
+    "authorityDigestMatchesImmutableHelperPin": true,
+    "privatePurposeSlots": [
+      "scripts/lint-baseline-update.mjs:74 localbaselinefile",
+      "scripts/lint-baseline-update.mjs:75 rawtoolstatus",
+      "scripts/observability-retirement-plan.mjs:138 fixedreportroot",
+      "scripts/updates/check-upstream-refresh.mjs:20 temporaryversionsinput",
+      "scripts/updates/deployment-release.mjs:177 validatedcommit",
+      "scripts/updates/release-images.mjs:29 fixedreceiptenvelope"
+    ],
+    "blockedUnknownStreams": [
+      "recover:70",
+      "probe:39",
+      "statefulpolicies:68",
+      "deploymentrelease:195",
+      "materialize:50",
+      "refreshversions:140",
+      "refreshversions:151",
+      "refreshversions:155",
+      "versions:181"
+    ],
+    "canonicalRolesChanged": false
+  },
+  "reasoning": [
+    "Read whole new helper/authority/test and19line original discoverydelta. The six granted purposes correspond to actual constructor/validator/receiving operations; raw toolstatus remains explicitly arbitrary and UNKNOWN. The fixed planner root says executablefalse and retainallblockers; receipt constructor validates finite families/commit/digests/run identifiers without inventing authenticated build identity. Commit stdout uses full40hex validated selectedCode/receipt; verification success not inferred. Temp versions writer feeds an owned Git fixture and grants no laternetwork regression execution.",
+    "Exact immutable authority binds eleven source definitions,all24full native role descriptors,all68actualphysicalinputs,absent packageboundaries,incoming/publicalias roster. WeakSet receipt rejects clones. Mutable role promotion/missingnewslots fail wholecanonicalroster before ordinarynonunknownfallback; private purpose only exists for six keys and compares exactsink/descriptor first.",
+    "Actual receiving code acquires helper before scriptoutputcache and before public observation acquisition; same documentation-tool-filtered universe/classifier used for acquisition+roleloop. Inputdigest participates in cachekey and dependencies include all pinnedfiles; acquisition happens eachcall including absent-loader/callergraph checks. Public contexts retain rawrole and explicit runtimeExecutionAuthorized/apiApplyAuthorizedfalse; receipt only propagates as limited metadata.",
+    "Original rawAPI/mixed streams not in purposes returnnull and remain subject to original API adapter/errorpath. No product import/execution by newhelper. Static original classifier walks sources; this review grants no fresh fullgraph/loader/compiler/API semantic qualification."
+  ],
+  "readScope": [
+    "Whole four changedfiles; originalmain/publicreceiving cache/role/descriptor boundaries.",
+    "Whole lint updater,observabilityplanner,checkupstream,releaseimages,deploymentrelease,code-release,recovery,probe,statefulpolicies,materializerelease; relevant refreshversions/versionOutputs writer/restore and caller/validator routes.",
+    "Actual lint report/baseline schema/digest/fingerprint validation; plannerfixedroot and retainallreturn; selectedCode receipt validation and deployshellconsume; releaseworkflow writer/asset route.",
+    "Prior complete eleven-script Sourceplan read and retained for blockedpaths; no authorblindseal based solelymetadata."
+  ],
+  "testsAndExecution": {
+    "authorActualFocusedRun": "node --test scripts/tests/docs-api-top-level-script-purpose.test.mjs scripts/tests/deployment-config-output-custody.test.mjs:11/11PASS reported in frozen result; tests source fully reviewed,not relabelled independent rerun.",
+    "actualNativeParser": "Originalparser exact24descriptor agreement present in first test; preserved Source/currenthash basis,not anewfull1272census.",
+    "authorAutoreview": "Exit0,noactionablefinding reported; suppliedbundle/shellsandbox-limited,not full independent local execution. This native reviewer read actualcode.",
+    "normalInventory": "Realexit1pre-discoverylocalHelmpinmismatch; NOTPASS.",
+    "isolatedDirectReceiver": "Realexit1canonicalcompilerrootallowlist; NOTPASS. No guard changed or install required by review."
+  },
+  "integrationDisposition": {
+    "safeNextAction": "Integrate only these exactfourreviewed files into previouslyqualifiedmainroot after writerhold;run actual original receiving/publicpath and retain first failure. No new rootallowlist/trustanchor or bytepin waiver.",
+    "successNotYetEstablished": true,
+    "safeCorrectionNeeded": null,
+    "possibleFreshFailures": "Originalcompletegraph/rolepurpose/Sourcepins may legitimately reject newhelper or changedparentinputs at qualifiedroot; resolve exact owning cause,not broadnonAPIwaiver."
+  },
+  "limits": [
+    "No completiongate/newrequirement/globalAPI/normalgenerator/practicalreader/live/runtime/deploy/network/release approval.",
+    "Whole68physicalpin comparison is not independent fullsemantic audit of every deep imported helper or productexecution closure.",
+    "All9blockedunknown streams remain work; positive Source-purpose seal cannot substitute original API captures/adapters or successful selectedrelease/materialization.",
+    "No source/test/register edits,baseline updates,commits,productexecution or newtoolqualification by reviewer."
+  ]
+}

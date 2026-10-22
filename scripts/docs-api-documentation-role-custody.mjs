@@ -10,6 +10,10 @@ import { serializedOutputSinkSites, deriveNativeOperationFacts, nativeOperationF
 // Source-owned roles, not authority granted by registry membership. Entries
 // bind executable operations to the original documentation consumer class.
 // Refreshing the mutable boundary registry cannot introduce another publisher.
+// Finite source-purpose renewal: five consumers reach the reviewed11-source/24-slot
+// seal helper; governance joins reviewed source inventory to reader metadata.
+// Only their native closure facts and changed discovery/governance selectors
+// change; caller/child authority and canonical product roles stay unchanged.
 export const documentationExecutableRoleRecipes = {
   "scripts/docs-ap09-catalogue.mjs": {
     "role": "documentation-consumer",
@@ -329,7 +333,7 @@ export const documentationExecutableRoleRecipes = {
         "expressionSha256": "5a61aace8ba69be1179466f6c1b6ff69114de4d3bc786724ce21f78f06627702"
       },
       {
-        "expressionSha256": "620df8b173487f2bf66200121ffc4293cc9a273b8d80946d3d702ab2877f8acc"
+        "expressionSha256": "7065337db6a631d8504d844836f9e394e00373216d392b3d6554b63a544e40db"
       },
       {
         "expressionSha256": "1cbd339d9613dcdce3ecbc06beeebdf6320e9bb76de8f88770dc76f0259dbcc2"
@@ -338,7 +342,7 @@ export const documentationExecutableRoleRecipes = {
         "expressionSha256": "c8ddaea1f14c4b8a1bcbb6c7b193a9f756263ff4f26fbe6192fca3f30df82fa7"
       },
       {
-        "expressionSha256": "93ccde70529ceda1e991cafeccfc22c34c4adc53482dccc62afdf7eb178c16f3"
+        "expressionSha256": "4983224281401e881d5e60b88fb80b08eddd9ecb20be87485c37f5d7a50b2c39"
       },
       {
         "expressionSha256": "02922e8453bb5e7401332bbcf78311f6606627413665ef7b4c9d42b8df130b7a"
@@ -479,6 +483,9 @@ export const documentationExecutableRoleRecipes = {
         "expressionSha256": "0dea52aa29095a9c3bd61034e6c0adbd7b466cf4553a9131f6d925682de010a6"
       },
       {
+        "expressionSha256": "fe8b7e0d51b4c69a47f21772740add286eb683621b2c273ebdc05a3f53e3ff2b"
+      },
+      {
         "expressionSha256": "c2865402a65517e0f02b00d28ebaf49bc1d00800b90da4637b6306f32fd2215e"
       },
       {
@@ -608,7 +615,7 @@ export const documentationExecutableRoleRecipes = {
         "expressionSha256": "328f8dd702f5cb8ccffb9ae17cc3d577e76cd8ec81456fffa49b452e908adb55"
       }
     ],
-    "factsDigest": "fb0e9be68a87067a799098a28c459209432255b502ce0d72ea2066bc0e9a95d4",
+    "factsDigest": "b9ba12cbd62e95cd5e3e35e9b6d884256c14af85bfd948cf122fbe7622465d64",
     "authorityInputs": [
       {
         "path": "scripts/docs-api-go-output-role-adapter.go",
@@ -826,7 +833,7 @@ export const documentationExecutableRoleRecipes = {
         "expressionSha256": "041aa7206a41cf5c3bdd66f61797f9b67c06085f6d0076ce1f84e2a9c8d57db8"
       }
     ],
-    "factsDigest": "3345b286bbc016297d6c42714759ea17badca1d02b2c61a55d88579eedd20bdb",
+    "factsDigest": "47415b9987ea03eb5a0ded0a7bdc25838d7b675f5d47cc0f0479858e19ce612a",
     "authorityInputs": []
   },
   "scripts/docs-api-python-output-adapter.py": {
@@ -1105,7 +1112,7 @@ export const documentationExecutableRoleRecipes = {
         "expressionSha256": "9efac25cb0d8a53fc3a31aec649afa2cd99102c34366428833c403eccaef3fbe"
       }
     ],
-    "factsDigest": "23e6fd12f76439d21ecc7fc7b98c7846e0d0bf35f5bea05efafaf93cd76f1424",
+    "factsDigest": "e53229ea96db3ae6ddf4bc49363c7ee1a47f3579f0c5c531d812c969a65b4472",
     "authorityInputs": []
   },
   "scripts/docs-api-schema-authorities.mjs": {
@@ -1901,7 +1908,7 @@ export const documentationExecutableRoleRecipes = {
         "expressionSha256": "7602a8f927b47cd0b4b4f2501bccd41bb8e4e4ea43e571cf4bce62f3c3717191"
       }
     ],
-    "factsDigest": "fb06b489412075fc524c1ad3b169f486c50fce3bc5f0d29f87d232389e931188",
+    "factsDigest": "55a2a60ed96bc5596057a4d22aca3d8ddaa242e3c431e73be4914c215d654821",
     "authorityInputs": [
       {
         "path": "scripts/vendor-external-helm-authorities.mjs",
@@ -2004,7 +2011,7 @@ export const documentationExecutableRoleRecipes = {
         "expressionSha256": "cba76d80649d6ce8d92897a224d01ee9877a1807a9de9e765cdad79d29f912ce"
       }
     ],
-    "factsDigest": "ad6341fda708aca0cca127abf120b398956bd3cb1d2f9219d89b8c127b84519a",
+    "factsDigest": "b466515062993c1af25815c4df4652658ba0de64cb1136af69dce383be672085",
     "authorityInputs": []
   },
   "scripts/docs-governance.mjs": {
@@ -2036,6 +2043,9 @@ export const documentationExecutableRoleRecipes = {
         "expressionSha256": "87c1a01170256c5b575d5d63bf6dca7e78fc11a15de8890817e9775cd3604281"
       },
       {
+        "expressionSha256": "9fb0793d72ee0428040566f9348971cb93a06c7b61adc5a73cba1db6aaaf63d2"
+      },
+      {
         "expressionSha256": "9d196a1875159c508cfac6bfb2060ff64a56d5d38cb28623767e3b75870fba67"
       },
       {
@@ -2045,7 +2055,7 @@ export const documentationExecutableRoleRecipes = {
         "expressionSha256": "8822d4226b033690779549d0864e7c5c76234ba63a86ca4c368e95029190058b"
       }
     ],
-    "factsDigest": "5648d927494ccf8cc14df4bf8c8bfc2dc54ac086322e95e8b5460be629f65e38",
+    "factsDigest": "f74ee092872b6d418f07e1fd87ed858a8a5f1d88e0f78eaa58a62840b6478158",
     "authorityInputs": []
   },
   "scripts/docs-inventory.mjs": {

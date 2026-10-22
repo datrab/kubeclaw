@@ -1,0 +1,627 @@
+{
+  "sourcePins": {
+    "scripts/lint-baseline-update.mjs": "876b93c47f0b50171b08545f34448d009934809acadc7d7ebd08c3f1dca58126",
+    "scripts/observability-retirement-plan.mjs": "2ca72dadd16843704d47392ebfd7398a8e00a6121904dacba5cf1b173a4f756e",
+    "scripts/recover-openclaw-audit-input.mjs": "c076ad46a6ff29bfb897b5f9cf218d164706e76bf00cb735dc0a89ffc20cc80f",
+    "scripts/render-kubernetes-api-probe.mjs": "f081a58cdce9aea6a958ae9bd543c0c440b47c97b4a4d5d284a66262e8753eb0",
+    "scripts/render-stateful-network-policies.mjs": "4b2777294145a1605113238cc6319558abad3a6bd0409dc974e7684e495d0e25",
+    "scripts/updates/check-upstream-refresh.mjs": "cbc42cd5476a3edb1b89e24fb7d18fce2b92af582e95c1151f187c9e7c504f43",
+    "scripts/updates/deployment-release.mjs": "87d7c5e64c9718aba77a259611a760666f05626379dd2cc3f218b75869ed9ac3",
+    "scripts/updates/materialize-release.mjs": "ad026a32e4e9cad21ab3f2f0e87fcafe6c5d563f5133191f70b4c5ef4c925475",
+    "scripts/updates/refresh-versions.mjs": "f125cb70dd7dec201ab1415a61d21d5f87e8e6e8ea3f5bd8f2ce1deaa5a04356",
+    "scripts/updates/release-images.mjs": "6c9afb34ba328142af2b086985ceda3313e74a48fac1608dc2271d8f80e47bf5",
+    "scripts/versions.mjs": "c837f871d19a8d37bc1748c3f85db9cb46ccdf9d53b1c0aaa6f64c7c6efbf00b"
+  },
+  "descriptors": [
+    {
+      "source": "scripts/lint-baseline-update.mjs",
+      "line": 74,
+      "sink": "fs.writeFileSync",
+      "expression": null,
+      "sinkContract": {
+        "destination": "baselinePath",
+        "expression": "`${JSON.stringify(baseline,null,2)}\\n`"
+      },
+      "role": "non-api"
+    },
+    {
+      "source": "scripts/lint-baseline-update.mjs",
+      "line": 75,
+      "sink": "process.stdout.write",
+      "expression": "`${args.tool}: added ${additions.length} approved fingerprints\\n`",
+      "sinkContract": null,
+      "role": "unknown"
+    },
+    {
+      "source": "scripts/observability-retirement-plan.mjs",
+      "line": 138,
+      "sink": "process.stdout.write",
+      "expression": "`${JSON.stringify(result, null, 2)}\\n`",
+      "sinkContract": null,
+      "role": "unknown"
+    },
+    {
+      "source": "scripts/observability-retirement-plan.mjs",
+      "line": 141,
+      "sink": "process.stderr.write",
+      "expression": null,
+      "sinkContract": null,
+      "role": "non-api"
+    },
+    {
+      "source": "scripts/recover-openclaw-audit-input.mjs",
+      "line": 70,
+      "sink": "fs.writeFileSync",
+      "expression": "fs.readFileSync(sanitizedPath)",
+      "sinkContract": null,
+      "role": "unknown"
+    },
+    {
+      "source": "scripts/recover-openclaw-audit-input.mjs",
+      "line": 86,
+      "sink": "console.log",
+      "expression": null,
+      "sinkContract": null,
+      "role": "non-api"
+    },
+    {
+      "source": "scripts/render-kubernetes-api-probe.mjs",
+      "line": 39,
+      "sink": "process.stdout.write",
+      "expression": null,
+      "sinkContract": {
+        "destination": "[config, job].map(value => dump(value, { noRefs: true, lineWidth: -1 })).join('---\\n')",
+        "expression": "[config,job].map(value=>dump(value,{noRefs:true,lineWidth:-1})).join('---\\n')"
+      },
+      "role": "unknown"
+    },
+    {
+      "source": "scripts/render-stateful-network-policies.mjs",
+      "line": 68,
+      "sink": "process.stdout.write",
+      "expression": null,
+      "sinkContract": {
+        "destination": "documents.map(value => dump(value, { noRefs: true, lineWidth: -1 })).join('---\\n')",
+        "expression": "documents.map(value=>dump(value,{noRefs:true,lineWidth:-1})).join('---\\n')"
+      },
+      "role": "unknown"
+    },
+    {
+      "source": "scripts/updates/check-upstream-refresh.mjs",
+      "line": 20,
+      "sink": "fs.writeFileSync",
+      "expression": "JSON.stringify(baseline)",
+      "sinkContract": null,
+      "role": "unknown"
+    },
+    {
+      "source": "scripts/updates/check-upstream-refresh.mjs",
+      "line": 25,
+      "sink": "console.log",
+      "expression": null,
+      "sinkContract": null,
+      "role": "non-api"
+    },
+    {
+      "source": "scripts/updates/deployment-release.mjs",
+      "line": 149,
+      "sink": "fs.writeFileSync",
+      "expression": null,
+      "sinkContract": null,
+      "role": "non-api"
+    },
+    {
+      "source": "scripts/updates/deployment-release.mjs",
+      "line": 177,
+      "sink": "process.stdout.write",
+      "expression": null,
+      "sinkContract": {
+        "destination": "`${receipt.code?.commit ?? receipt.commit}\\n`",
+        "expression": "`${receipt.code?.commit??receipt.commit}\\n`"
+      },
+      "role": "unknown"
+    },
+    {
+      "source": "scripts/updates/deployment-release.mjs",
+      "line": 195,
+      "sink": "process.stdout.write",
+      "expression": null,
+      "sinkContract": {
+        "destination": "rendered",
+        "expression": "rendered"
+      },
+      "role": "unknown"
+    },
+    {
+      "source": "scripts/updates/materialize-release.mjs",
+      "line": 50,
+      "sink": "fs.writeFileSync",
+      "expression": "`# Generated from release ${release.commit} and byte-matched source configuration; do not edit.\\n${yaml.dump(values, { lineWidth: 120, noRefs: true })}`",
+      "sinkContract": null,
+      "role": "unknown"
+    },
+    {
+      "source": "scripts/updates/refresh-versions.mjs",
+      "line": 140,
+      "sink": "console.log",
+      "expression": null,
+      "sinkContract": {
+        "destination": "`Verifying upstream ${tool} ${version} linux/${arch}`",
+        "expression": "`Verifyingupstream${tool}${version}linux/${arch}`"
+      },
+      "role": "unknown"
+    },
+    {
+      "source": "scripts/updates/refresh-versions.mjs",
+      "line": 151,
+      "sink": "fs.writeFileSync",
+      "expression": "`${JSON.stringify(next, null, 2)}\\n`",
+      "sinkContract": null,
+      "role": "unknown"
+    },
+    {
+      "source": "scripts/updates/refresh-versions.mjs",
+      "line": 152,
+      "sink": "console.log",
+      "expression": null,
+      "sinkContract": null,
+      "role": "non-api"
+    },
+    {
+      "source": "scripts/updates/refresh-versions.mjs",
+      "line": 153,
+      "sink": "console.log",
+      "expression": null,
+      "sinkContract": null,
+      "role": "non-api"
+    },
+    {
+      "source": "scripts/updates/refresh-versions.mjs",
+      "line": 154,
+      "sink": "console.log",
+      "expression": null,
+      "sinkContract": null,
+      "role": "non-api"
+    },
+    {
+      "source": "scripts/updates/refresh-versions.mjs",
+      "line": 155,
+      "sink": "fs.writeFileSync",
+      "expression": null,
+      "sinkContract": {
+        "destination": "file",
+        "expression": "original"
+      },
+      "role": "unknown"
+    },
+    {
+      "source": "scripts/updates/release-images.mjs",
+      "line": 29,
+      "sink": "fs.writeFileSync",
+      "expression": "JSON.stringify(release, null, 2) + '\\n'",
+      "sinkContract": null,
+      "role": "unknown"
+    },
+    {
+      "source": "scripts/versions.mjs",
+      "line": 181,
+      "sink": "fs.writeFileSync",
+      "expression": null,
+      "sinkContract": {
+        "destination": "path.join(root, file)",
+        "expression": "content"
+      },
+      "role": "unknown"
+    },
+    {
+      "source": "scripts/versions.mjs",
+      "line": 187,
+      "sink": "console.log",
+      "expression": null,
+      "sinkContract": null,
+      "role": "non-api"
+    },
+    {
+      "source": "scripts/versions.mjs",
+      "line": 188,
+      "sink": "console.log",
+      "expression": null,
+      "sinkContract": null,
+      "role": "non-api"
+    }
+  ],
+  "inputs": [
+    {
+      "path": "scripts/lint-baseline-update.mjs",
+      "sha256": "876b93c47f0b50171b08545f34448d009934809acadc7d7ebd08c3f1dca58126"
+    },
+    {
+      "path": "scripts/observability-retirement-plan.mjs",
+      "sha256": "2ca72dadd16843704d47392ebfd7398a8e00a6121904dacba5cf1b173a4f756e"
+    },
+    {
+      "path": "scripts/recover-openclaw-audit-input.mjs",
+      "sha256": "c076ad46a6ff29bfb897b5f9cf218d164706e76bf00cb735dc0a89ffc20cc80f"
+    },
+    {
+      "path": "scripts/render-kubernetes-api-probe.mjs",
+      "sha256": "f081a58cdce9aea6a958ae9bd543c0c440b47c97b4a4d5d284a66262e8753eb0"
+    },
+    {
+      "path": "scripts/render-stateful-network-policies.mjs",
+      "sha256": "4b2777294145a1605113238cc6319558abad3a6bd0409dc974e7684e495d0e25"
+    },
+    {
+      "path": "scripts/updates/check-upstream-refresh.mjs",
+      "sha256": "cbc42cd5476a3edb1b89e24fb7d18fce2b92af582e95c1151f187c9e7c504f43"
+    },
+    {
+      "path": "scripts/updates/deployment-release.mjs",
+      "sha256": "87d7c5e64c9718aba77a259611a760666f05626379dd2cc3f218b75869ed9ac3"
+    },
+    {
+      "path": "scripts/updates/materialize-release.mjs",
+      "sha256": "ad026a32e4e9cad21ab3f2f0e87fcafe6c5d563f5133191f70b4c5ef4c925475"
+    },
+    {
+      "path": "scripts/updates/refresh-versions.mjs",
+      "sha256": "f125cb70dd7dec201ab1415a61d21d5f87e8e6e8ea3f5bd8f2ce1deaa5a04356"
+    },
+    {
+      "path": "scripts/updates/release-images.mjs",
+      "sha256": "6c9afb34ba328142af2b086985ceda3313e74a48fac1608dc2271d8f80e47bf5"
+    },
+    {
+      "path": "scripts/versions.mjs",
+      "sha256": "c837f871d19a8d37bc1748c3f85db9cb46ccdf9d53b1c0aaa6f64c7c6efbf00b"
+    },
+    {
+      "path": "scripts/observability-retirement/files.mjs",
+      "sha256": "880140b982f4863601132300040b4b1f776d2d0bd12dd99814e314e137f90a6e"
+    },
+    {
+      "path": "scripts/observability-retirement/stores.mjs",
+      "sha256": "982888f6ce9d33fa827b7285ffbe8f57c6f43a402ab9a9c87072b1d93ae7451e"
+    },
+    {
+      "path": "scripts/observability-retirement/journals.mjs",
+      "sha256": "73db89833172db848b733e687d6f14d6a1a35799269097f97c0a2713b2292d30"
+    },
+    {
+      "path": "skills/nova/core/execution/run-root.ts",
+      "sha256": "38ac1d4f579cbda7db66487edc274619e79d212f03e7f5a193a7c8a7168907b3"
+    },
+    {
+      "path": "scripts/runtime-tool-locks.mjs",
+      "sha256": "df643a11bbb1327b5502151002bb5b88c21d83d35922ba1fee4e0c38bf5a6c25"
+    },
+    {
+      "path": "scripts/sync-codex-lock.mjs",
+      "sha256": "53a4aab992b52935d162cbdba9eb8a695eb64a8de3b359123a5e566c8e1c84c7"
+    },
+    {
+      "path": "scripts/updates/upstream-fetch.mjs",
+      "sha256": "7ab172e144e97ccf697e4f6b946e696c39773681d70403f2f58d9d671ee8e0a4"
+    },
+    {
+      "path": "scripts/kubernetes-api-probe.mjs",
+      "sha256": "ee81430754dfd3f936e86ce8c18ce13441b3c5aaaaf430dd90bfbffcfa242817"
+    },
+    {
+      "path": "scripts/updates/release-configuration.mjs",
+      "sha256": "0872cf880d89d2d6627548d2629cfdcbdb597b55951decfebc0c45ee89603bc2"
+    },
+    {
+      "path": "scripts/updates/code-release.mjs",
+      "sha256": "bedd4f2a8668a27b675e53aa415451a4b428543e6fc6a99bc88988355bff3259"
+    },
+    {
+      "path": "scripts/updates/runtime-inputs.mjs",
+      "sha256": "2381e5d7398f48fa8e15d3d582c8db6e6bc37de2bfb690f8aebeccc437f791f7"
+    },
+    {
+      "path": "scripts/infrastructure-chart-lock.mjs",
+      "sha256": "8884d8e41166f9739ea8f5986cbd8a4c8ae66e8756f0fa3ccb8712e9124601e5"
+    },
+    {
+      "path": "scripts/stateful-database-service.mjs",
+      "sha256": "fd96f1a30f997d4a6a71a23b81cad2dc4ccca69b223e4945e22c9261819bbfa8"
+    },
+    {
+      "path": "scripts/updates/inspect-release-image.mjs",
+      "sha256": "5bff13e7bb6dd44af029a80fa92ca3b46c0c35ff41f9ff3b8479f4d23b702a7c"
+    },
+    {
+      "path": "scripts/updates/select-runtime-deployment.mjs",
+      "sha256": "a5c8032a3437fa3e1803f0ad3cbba19272e6471431f35c24518df3ebed0df4de"
+    },
+    {
+      "path": "scripts/updates/verify-release-source.mjs",
+      "sha256": "498f7e2d08546f1587d70c5e256ae17129dda1e10172abac5f949f2fc90e91b3"
+    },
+    {
+      "path": "skills/nova/plugins/lint/src/engine/lint-governance.ts",
+      "sha256": "7904cc32edb9304644c02a705669624c224c87be0a176d1babc5cb0016bc6145"
+    },
+    {
+      "path": "skills/nova/plugins/lint/src/engine/policy-validation.ts",
+      "sha256": "1c6f1e831d24a8df17557fe9919425042b995de3d28d92a0c6b8afb25293633e"
+    },
+    {
+      "path": "scripts/tests/recover-openclaw-audit-input.test.mjs",
+      "sha256": "9d597e37804688426369398b646dfde95ccc28954802a006c51247a9e7059069"
+    },
+    {
+      "path": "scripts/tests/recover-openclaw-audit-input.integration.mjs",
+      "sha256": "35f71a050141442e5caadc855b03758b6509c9aa71875526ba054aa8c56e185a"
+    },
+    {
+      "path": "tests/verification/deployment/release-images.test.mjs",
+      "sha256": "90bb50dd95eb4181074e1eafcb9ce48cbcc0e16385705fd5689dfea8b6fcba52"
+    },
+    {
+      "path": "tests/verification/deployment/stateful-network-policies.test.mjs",
+      "sha256": "70d25fa68e7d7d305dbf48c425a6df67d84eded9b4bc28d22ffed95c8de2a054"
+    },
+    {
+      "path": "tests/verification/deployment/trusted-version-updater.test.mjs",
+      "sha256": "a2dc66aed53cd65b2e3aa4f62571134bb28b758d218714c7590c838f667fcaa0"
+    },
+    {
+      "path": "tests/verification/deployment/versions.test.mjs",
+      "sha256": "15a4f27400f3d3a1642b71c793e3a48f62dd9731df50bf35c6830410b99d40f5"
+    },
+    {
+      "path": "tests/verification/deployment/deployment-release.test.mjs",
+      "sha256": "d4cef16c856897fe37f80427a161f0325ac97e43eb0d61459622c31fc1e8d923"
+    },
+    {
+      "path": "tests/verification/deployment/prism-release-evidence.test.mjs",
+      "sha256": "9c59aa4376dae9ca593cd8799f3099a5fe489b9090cb7185d1a8b8cb2b86f77c"
+    },
+    {
+      "path": "tests/verification/reliability/observability-retirement-plan.test.mjs",
+      "sha256": "80f405b854fe427b2250e792acb64464acedb4bec00eb6b32b22ecea646e7971"
+    },
+    {
+      "path": "scripts/updates/renovate.cjs",
+      "sha256": "9ca4879ac4ba446bd2ba4923e86a11517d69d84535adf033b651d4a0da80dce7"
+    },
+    {
+      "path": ".github/workflows/dependency-updates.yaml",
+      "sha256": "cd69649aaed977e116aa7e8c113480601305dc168d0407f72d7f33be3b56cc3c"
+    },
+    {
+      "path": ".github/workflows/publish-image-receipts.yaml",
+      "sha256": "dcbba52eb6c0c7bbae79681c7401fabed6f6182213e5b8410081d6d79380ffe5"
+    },
+    {
+      "path": ".github/workflows/update-checks.yaml",
+      "sha256": "9e79cbe1038aebffe367916d5b0705e617c27d672d87082839902694f97c910f"
+    },
+    {
+      "path": "scripts/deploy-ops-pod.sh",
+      "sha256": "b7b114e886142185732eb285a59f5b2f8a5b509ffedfd23de2d1fbf67ea3e73e"
+    },
+    {
+      "path": "versions.json",
+      "sha256": "04281d9b2addd93073bd548293ea9ba6e1d88c2a18fff0f34cbdbc14ca7fe2c1"
+    },
+    {
+      "path": "charts/kubeclaw/files/config/lint-baseline.json",
+      "sha256": "de99dfe709e8779d55b1079334cea0415b661f3933cc32bd36260fb3bc393ed7"
+    },
+    {
+      "path": "gitops/platform/bootstrap/spire.yaml",
+      "sha256": "b6bb6863509706131898ce576c14249e1d483209ce99f201142dc758ba3521dd"
+    },
+    {
+      "path": "gitops/platform/bootstrap/spire-crds.yaml",
+      "sha256": "0e4d2e2b54c905eaa372749b99a8a2a65585a238875e5fa7c5ea880869276278"
+    },
+    {
+      "path": "gitops/platform/bootstrap/csi-driver-smb.yaml",
+      "sha256": "ce561dc5a9a2b5f8b06fbb80c59f5590fcab9b43906a6acc5df12ca62122c99e"
+    },
+    {
+      "path": "gitops/platform/bootstrap/prometheus.yaml",
+      "sha256": "d9c81c5644d744237997d336031cce970159da626024f3573cd7b4d0b55a7d44"
+    },
+    {
+      "path": "gitops/platform/bootstrap/loki.yaml",
+      "sha256": "2b3721a57154eb14e92ebccd1e9cabf82499cddf9c98369b88b195e042958c6e"
+    },
+    {
+      "path": "gitops/platform/bootstrap/alloy.yaml",
+      "sha256": "b2c06f6acba94c24edd5b30980376675ba920a9ea6f92c403577d2a236073434"
+    },
+    {
+      "path": "gitops/platform/bootstrap/promtail.yaml",
+      "sha256": "f6d4fe2568c154f4db415d404cb9c4087d05ea373492eb7fa7160830de169855"
+    },
+    {
+      "path": "gitops/platform/bootstrap/redis.yaml",
+      "sha256": "79b2c61df2d6feee7a3946da486ebaefc64af6365c5655600c514971bc4dc47d"
+    },
+    {
+      "path": "gitops/platform/bootstrap/postgresql.yaml",
+      "sha256": "97755ce4b6dfe852cf5492d27c8ab7e33a7dd3d9278cb755d184b72239ea0256"
+    },
+    {
+      "path": "gitops/platform/litellm/resources.yaml",
+      "sha256": "faf5a32f91568604ee1726ac60a58c7490fb95802d61a0019171006423474637"
+    },
+    {
+      "path": "my-values/infra/registry-mirror.yaml",
+      "sha256": "383c470fb991a43aa9dfc1634d2399c53a1e77c19f37d5bb4b8bc0d26ef207f5"
+    },
+    {
+      "path": "scripts/deploy.sh",
+      "sha256": "97c1e39bf9cec6c1d5d8e11198af90ed04efd15a6077f2bbac1129c2ea0741e2"
+    },
+    {
+      "path": "skills/nova/plugins/lint/src/engine/report-contract.ts",
+      "sha256": "9ef2cb385b805842b777c64add79c947c3844edd768733ebef31c312d2bb0fac"
+    },
+    {
+      "path": "skills/nova/plugins/lint/src/engine/policy.ts",
+      "sha256": "9b48e0b8de2714bde16f58a667ac9356ec2b8a8f9ccd364673000dec076feb53"
+    },
+    {
+      "path": "scripts/argocd-self-management.mjs",
+      "sha256": "79330ccdc6c86a6a3187e538f3a11fb2ab13e97d24e7b9681b1b2a52d2fe7b26"
+    },
+    {
+      "path": ".github/workflows/promote-runtime.yaml",
+      "sha256": "e780ca12d34fccd047f130ea8dce2d82e82c645236160fea97651cc0ee12c2fd"
+    },
+    {
+      "path": ".github/workflows/auto-promote-runtime.yaml",
+      "sha256": "e233296becb27f3da4f188298e397e487952f89f02639d04ef114e4968ced0e9"
+    },
+    {
+      "path": ".github/workflows/build-images.yaml",
+      "sha256": "8fe4c8b087a816429e08cf5901a4db6e55dd9e3e17211528541bd142a731f06d"
+    },
+    {
+      "path": ".github/workflows/build-ops-mcp.yaml",
+      "sha256": "79cb301569d096bfff6c82135c6d4ee84df487da8cc2f0ccf1ee1b6e196460ba"
+    },
+    {
+      "path": "tests/verification/reliability/telemetry-retirement.test.mjs",
+      "sha256": "6bf54dc5c3479250c5ab1bad4702419bbcaee4c9f738cbd9eb9870aa784fc90d"
+    },
+    {
+      "path": "tests/verification/reliability/admission-retirement.test.mjs",
+      "sha256": "75c5258cf16c8d0ce3c4d36c80d246dbbcdc6a339e456cd219bc065839b1c2dd"
+    },
+    {
+      "path": "docs/site/extend/lint.md",
+      "sha256": "8e84ad80f6b9fff4557073d77796f64e6374c170ad23d261c1a3ae6b0dac461e"
+    },
+    {
+      "path": "scripts/docs-api-output-role-classification.mjs",
+      "sha256": "400affe1cb7a07c69e397e0509bb994f7f44376687038f802830b63daf452b12"
+    }
+  ],
+  "incomingEdges": [
+    {
+      "source": "scripts/argocd-self-management.mjs",
+      "target": "scripts/updates/deployment-release.mjs",
+      "kind": "import",
+      "operation": "import { validateReleaseReceipt } from './updates/deployment-release.mjs';"
+    },
+    {
+      "source": "scripts/gitops-bundle.mjs",
+      "target": "scripts/updates/deployment-release.mjs",
+      "kind": "import",
+      "operation": "import { selectedRelease } from './updates/deployment-release.mjs';"
+    },
+    {
+      "source": "scripts/gitops.mjs",
+      "target": "scripts/updates/deployment-release.mjs",
+      "kind": "import",
+      "operation": "import { validateReleaseReceipt, validateRenderedRelease } from './updates/deployment-release.mjs';"
+    },
+    {
+      "source": "scripts/updates/check-upstream-refresh.mjs",
+      "target": "scripts/versions.mjs",
+      "kind": "import",
+      "operation": "import { versionOutputs } from '../versions.mjs';"
+    },
+    {
+      "source": "scripts/updates/inspect-release-image.mjs",
+      "target": "scripts/updates/deployment-release.mjs",
+      "kind": "import",
+      "operation": "import { selectedRelease } from './deployment-release.mjs';"
+    },
+    {
+      "source": "scripts/updates/refresh-versions.mjs",
+      "target": "scripts/versions.mjs",
+      "kind": "import",
+      "operation": "import { syncVersions } from '../versions.mjs';"
+    },
+    {
+      "source": "scripts/updates/select-runtime-deployment.mjs",
+      "target": "scripts/updates/deployment-release.mjs",
+      "kind": "import",
+      "operation": "import { validateReleaseReceipt } from './deployment-release.mjs';"
+    },
+    {
+      "source": "tests/verification/deployment/prism-release-evidence.test.mjs",
+      "target": "scripts/updates/release-images.mjs",
+      "kind": "import",
+      "operation": "import { collectReceipts } from '../../../scripts/updates/release-images.mjs';"
+    },
+    {
+      "source": "tests/verification/reliability/admission-retirement.test.mjs",
+      "target": "scripts/observability-retirement-plan.mjs",
+      "kind": "import",
+      "operation": "import {planRetirement} from '../../../scripts/observability-retirement-plan.mjs';"
+    },
+    {
+      "source": "tests/verification/reliability/observability-retirement-plan.test.mjs",
+      "target": "scripts/observability-retirement-plan.mjs",
+      "kind": "import",
+      "operation": "import { planRetirement } from '../../../scripts/observability-retirement-plan.mjs';"
+    },
+    {
+      "source": "tests/verification/reliability/telemetry-retirement.test.mjs",
+      "target": "scripts/observability-retirement-plan.mjs",
+      "kind": "import",
+      "operation": "import {planRetirement} from '../../../scripts/observability-retirement-plan.mjs';"
+    }
+  ],
+  "publicEntries": [
+    {
+      "path": "scripts/lint-baseline-update.mjs",
+      "canonicalSource": "scripts/lint-baseline-update.mjs"
+    },
+    {
+      "path": "scripts/observability-retirement-plan.mjs",
+      "canonicalSource": "scripts/observability-retirement-plan.mjs"
+    },
+    {
+      "path": "scripts/recover-openclaw-audit-input.mjs",
+      "canonicalSource": "scripts/recover-openclaw-audit-input.mjs"
+    },
+    {
+      "path": "scripts/render-kubernetes-api-probe.mjs",
+      "canonicalSource": "scripts/render-kubernetes-api-probe.mjs"
+    },
+    {
+      "path": "scripts/render-stateful-network-policies.mjs",
+      "canonicalSource": "scripts/render-stateful-network-policies.mjs"
+    },
+    {
+      "path": "scripts/updates/check-upstream-refresh.mjs",
+      "canonicalSource": "scripts/updates/check-upstream-refresh.mjs"
+    },
+    {
+      "path": "scripts/updates/deployment-release.mjs",
+      "canonicalSource": "scripts/updates/deployment-release.mjs"
+    },
+    {
+      "path": "scripts/updates/materialize-release.mjs",
+      "canonicalSource": "scripts/updates/materialize-release.mjs"
+    },
+    {
+      "path": "scripts/updates/refresh-versions.mjs",
+      "canonicalSource": "scripts/updates/refresh-versions.mjs"
+    },
+    {
+      "path": "scripts/updates/release-images.mjs",
+      "canonicalSource": "scripts/updates/release-images.mjs"
+    },
+    {
+      "path": "scripts/versions.mjs",
+      "canonicalSource": "scripts/versions.mjs"
+    }
+  ],
+  "absentPackageBoundaries": [
+    "scripts/package.json",
+    "scripts/updates/package.json",
+    "scripts/observability-retirement/package.json"
+  ],
+  "authority": "Source-owned finite output-purpose/descriptor seal, not producer execution observations, global non-API classification, API admission or apply authorization."
+}

@@ -1,0 +1,17 @@
+{
+  "focusedTests": {
+    "command": "node --test scripts/tests/docs-api-top-level-script-purpose.test.mjs scripts/tests/deployment-config-output-custody.test.mjs",
+    "exitCode": 0,
+    "passed": 13,
+    "failed": 0,
+    "skipped": 0
+  },
+  "owningMaintenanceCheck": {
+    "command": "node --max-old-space-size=4096 scripts/generate-local-helm-authorities.mjs --check",
+    "exitCode": 1,
+    "receipt": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/current-top-purpose-six-recipe-owning-check",
+    "failure": "DEPLOYMENT_SCALAR_OCCURRENCE_UNQUALIFIED: changed/new executable caller census",
+    "meaning": "Earlier documentation consumer custody stop corrected. Broad existing scalar caller census now requires exact reviewed-source renewal; no generation success claimed."
+  },
+  "apiRuntimeApplyAcceptance": false
+}
