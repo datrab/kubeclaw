@@ -16,7 +16,7 @@ test('concurrent MCP clients get distinct tool lists and cannot cross namespace 
   const clients = Object.entries(tokens).map(([id, token]) => {
     writeFileSync(join(dir, id), token);
     return { id, tokenFile: join(dir, id), namespaces: id === 'buster' ? [] : [id === 'codex' ? 'kubeclaw' : 'argocd'], namespacePrefixes: ['test'],
-      readAllNamespaces: id === 'codex', tools: id === 'codex' ? ['platform_cluster_state', 'get_pod', 'exec_pod'] : ['get_pod'], exec: [] };
+      readAllNamespaces: id === 'codex', tools: id === 'codex' ? ['platform_cluster_state', 'get_namespace', 'get_pod', 'exec_pod'] : ['get_namespace', 'get_pod'], exec: [] };
   });
   const policy = join(dir, 'policy'); writeFileSync(policy, JSON.stringify({ clients }));
   const child = spawn(process.execPath, [fileURLToPath(new URL('../src/server.mjs', import.meta.url))], {
@@ -40,7 +40,7 @@ test('concurrent MCP clients get distinct tool lists and cannot cross namespace 
       ? JSON.parse(text.split('\n').find(x => x.startsWith('data:')).slice(5)) : JSON.parse(text);
   };
   const lists = await Promise.all(Array.from({ length: 12 }, (_, i) => call(i % 2 ? 'nova' : 'codex', 'tools/list', {})));
-  lists.forEach((list, i) => assert.deepEqual(list.result.tools.map(x => x.name).sort(), i % 2 ? ['get_pod'] : ['exec_pod', 'get_pod', 'platform_cluster_state']));
+  lists.forEach((list, i) => assert.deepEqual(list.result.tools.map(x => x.name).sort(), i % 2 ? ['get_namespace', 'get_pod'] : ['exec_pod', 'get_namespace', 'get_pod', 'platform_cluster_state']));
   const denied = await call('nova', 'tools/call', { name: 'get_pod', arguments: { namespace: 'kubeclaw', pod: 'private' } });
   assert.match(JSON.stringify(denied), /NAMESPACE_FORBIDDEN/);
   assert.doesNotMatch(JSON.stringify(denied), /forbidden-api-credential/);
@@ -51,6 +51,21 @@ test('concurrent MCP clients get distinct tool lists and cannot cross namespace 
     assert.match(JSON.stringify(result), /forbidden-api-credential/, 'dynamic prefix must pass input and client checks before reaching the fixture backend');
     assert.doesNotMatch(JSON.stringify(result), /NAMESPACE_FORBIDDEN|outside the MCP scope/);
   }
+  // Existence lookup must enforce the same test-only scope before touching
+  // Kubernetes, including namespaces that may or may not actually exist.
+  const busterTools = await call('buster', 'tools/list', {});
+  assert.deepEqual(busterTools.result.tools.map(x => x.name).sort(), ['get_namespace', 'get_pod']);
+  for (const namespace of ['kubeclaw', 'production-future']) {
+    const denied = await call('buster', 'tools/call', { name: 'get_namespace', arguments: { namespace } });
+    assert.equal(denied.result.isError, true);
+    assert.deepEqual(JSON.parse(denied.result.content[0].text), {
+      namespace, status: 'forbidden', exists: null, source: 'mcp_policy',
+    });
+    assert.doesNotMatch(JSON.stringify(denied), /forbidden-api-credential/);
+  }
+  const testLookup = await call('buster', 'tools/call', { name: 'get_namespace', arguments: { namespace: 'TeSt-New' } });
+  assert.match(JSON.stringify(testLookup), /forbidden-api-credential/);
+  assert.doesNotMatch(JSON.stringify(testLookup), /not_found/);
   const busterDenied = await call('buster', 'tools/call', { name: 'get_pod', arguments: { namespace: 'kubeclaw', pod: 'private' } });
   assert.match(JSON.stringify(busterDenied), /NAMESPACE_FORBIDDEN/);
   assert.doesNotMatch(JSON.stringify(busterDenied), /forbidden-api-credential/);

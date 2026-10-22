@@ -54,6 +54,7 @@ spec:
                 - platform_cluster_state
                 - platform_network_state
                 - list_argocd_applications
+                - get_namespace
                 - namespace_overview
                 - get_pod
                 - get_events
@@ -92,6 +93,7 @@ spec:
               namespacePrefixes:
                 - test
               tools:
+                - get_namespace
                 - namespace_overview
                 - get_pod
                 - get_events
@@ -120,6 +122,7 @@ spec:
               namespacePrefixes:
                 - test
               tools:
+                - get_namespace
                 - namespace_overview
                 - get_pod
                 - get_events

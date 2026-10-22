@@ -44,6 +44,7 @@ test('HTTPS verifies CA/hostname, rotates credentials, bounds requests and refus
     if (req.url === '/leak') redirectFollowed = true;
     if (req.url === '/timeout') return;
     if (req.url === '/large') { res.end('x'.repeat(2048)); return; }
+    if (url.pathname === '/missing') { res.writeHead(404); res.end('do-not-echo-body'); return; }
     if (url.pathname === '/denied') { res.writeHead(403); res.end('do-not-echo-body'); return; }
     res.end(JSON.stringify({ received: true }));
   });
@@ -63,7 +64,8 @@ test('HTTPS verifies CA/hostname, rotates credentials, bounds requests and refus
   assert.equal(redirectFollowed, false);
   await assert.rejects(get('/large'), /byte limit/);
   await assert.rejects(get('/timeout'), /timed out/);
-  await assert.rejects(get('/denied'), error => /403/.test(error.message) && !error.message.includes('do-not-echo'));
+  await assert.rejects(get('/denied'), error => error.status === 403 && /403/.test(error.message) && !error.message.includes('do-not-echo'));
+  await assert.rejects(get('/missing'), error => error.status === 404 && !error.message.includes('do-not-echo'));
   const list = createKubeList(get);
   const listed = await list('/list', { pageSize: 4, params: { labelSelector: 'app=ops' }, mapItem: item => item.id });
   assert.deepEqual(listed, { items: [0, 1, 2, 3, 4], pages: 3, continuation: null, partial: false });

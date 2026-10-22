@@ -47,7 +47,9 @@ export function createKubeRequest({
           // Do not follow redirects with a credential, or return API error bodies
           // containing unrelated diagnostics. Tool callers get status + path.
           if (res.statusCode < 200 || res.statusCode >= 300) {
-            reject(new Error(`Kubernetes API ${res.statusCode}: ${path.split('?')[0]}`));
+            const error = new Error(`Kubernetes API ${res.statusCode}: ${path.split('?')[0]}`);
+            error.status = res.statusCode;
+            reject(error);
             return;
           }
           const body = Buffer.concat(chunks).toString('utf8');

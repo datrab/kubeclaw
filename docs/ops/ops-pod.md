@@ -507,6 +507,25 @@ host/Cilium outage solely to complete this initial acceptance.
 
 ## Observability and incident triage
 
+Use `get_namespace({namespace: "test-example"})` to check whether a namespace
+object still exists. Buster retains its `test` prefix scope; other namespace
+names return `status: forbidden`, `exists: null`, `source: mcp_policy` before any
+Kubernetes request. No global namespace listing is granted to Buster.
+
+For authorized names, the exact Kubernetes namespace GET returns `present`
+(`exists: true`, with phase, deletion timestamp and namespace finalizers),
+`not_found` (`exists: false`, API 404), or `forbidden` (`exists: null`, API 403,
+`source: kubernetes`). Both forbidden results are MCP tool errors. A terminating
+namespace is still present. Authentication, transport and other API failures
+remain errors and never imply absence. Empty `namespace_overview` resource lists
+alone do not establish namespace deletion. Absence establishes current state,
+not who deleted the namespace or when.
+
+The MCP service account needs cluster-scoped `get` on namespace objects even
+when global observation is disabled; namespace RoleBindings cannot grant it.
+Per-client namespace policy runs before this GET. Clients receive no Kubernetes
+credential, namespace list permission or additional namespace scope.
+
 ```bash
 ./scripts/deploy-ops-pod.sh status
 "${k[@]}" logs "$pod" -c codex --tail=100

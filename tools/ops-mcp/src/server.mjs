@@ -5,6 +5,7 @@ import { createPodExec } from './exec.mjs';
 import { readTlsPair, reloadTls } from './tls.mjs';
 import { loadOpsMcpConfig } from './config.mjs';
 import { createKubeRequest, createKubeList } from './kubernetes.mjs';
+import { getNamespaceStatus } from './namespace-status.mjs';
 import { createServer as createHttpServer } from 'node:http';
 import { createServer as createHttpsServer } from 'node:https';
 import { createHash } from 'node:crypto';
@@ -224,6 +225,9 @@ function buildServer() {
         return result;
       } catch (error) {
         audit({ ...target, phase: 'failed', durationMs: Date.now() - start });
+        if (name === 'get_namespace' && error.message === 'OPS_NAMESPACE_FORBIDDEN') {
+          return { ...jsonText({ namespace: args.namespace, status: 'forbidden', exists: null, source: 'mcp_policy' }), isError: true };
+        }
         throw error;
       }
     });
@@ -308,12 +312,24 @@ function buildServer() {
     },
   );
 
+  server.registerTool('get_namespace', {
+    title: 'Check namespace existence',
+    description: 'Read one namespace object within your namespace scope. Reports present (including Terminating), not_found, or forbidden. Forbidden does not reveal existence. Other failures remain errors. Empty namespace_overview resource lists do not prove namespace deletion.',
+    inputSchema: z.object({
+      namespace: z.string().min(1).max(63).transform(value => value.toLowerCase()).refine(validNamespace, 'Invalid namespace name'),
+    }),
+    annotations: { readOnlyHint: true, destructiveHint: false, idempotentHint: true, openWorldHint: false },
+  }, async ({ namespace }) => {
+    const result = await getNamespaceStatus(kubeRequest, namespace);
+    return { ...jsonText(result), ...(result.status === 'forbidden' ? { isError: true } : {}) };
+  });
+
   server.registerTool(
     'namespace_overview',
     {
       title: 'Kubernetes namespace overview',
       description:
-        'Summarize deployments, statefulsets, pods, jobs, services and ingresses in one namespace.',
+        'Summarize deployments, statefulsets, pods, jobs, services and ingresses in one namespace. Empty lists do not prove namespace absence; use get_namespace to check existence.',
       inputSchema: z.object({
         namespace: namespaceSchema,
       }),

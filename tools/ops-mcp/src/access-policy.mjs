@@ -5,7 +5,7 @@ import { createBearerAuthorization } from './authentication.mjs';
 
 export const requestIdentity = new AsyncLocalStorage();
 export const TOOL_NAMES = ['platform_cluster_state', 'platform_network_state', 'list_argocd_applications',
-  'namespace_overview', 'get_pod', 'get_events', 'get_pod_logs', 'get_hubble_flows', 'get_pod_metrics', 'exec_pod'];
+  'get_namespace', 'namespace_overview', 'get_pod', 'get_events', 'get_pod_logs', 'get_hubble_flows', 'get_pod_metrics', 'exec_pod'];
 const dns = /^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$/;
 const strings = (v, check) => Array.isArray(v) && v.every(x => typeof x === 'string' && check(x));
 const positive = (v, max) => Number.isInteger(v) && v > 0 && v <= max;

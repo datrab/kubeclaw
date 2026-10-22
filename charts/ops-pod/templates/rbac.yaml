@@ -72,6 +72,13 @@ rules:
   - apiGroups: [""]
     resources: [nodes{{ if .Values.rbac.readAllNamespaces }}, namespaces{{ end }}]
     verbs: [get, list]
+{{- if not .Values.rbac.readAllNamespaces }}
+  # Namespace objects are cluster-scoped. MCP enforces per-client scope before
+  # this exact GET; no namespace listing is granted by this rule.
+  - apiGroups: [""]
+    resources: [namespaces]
+    verbs: [get]
+{{- end }}
   - apiGroups: [cilium.io]
     resources: [ciliumclusterwidenetworkpolicies]
     verbs: [get, list]

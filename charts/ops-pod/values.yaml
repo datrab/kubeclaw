@@ -66,7 +66,7 @@ mcp:
       podLabels: {app.kubernetes.io/name: codex-ops}
       namespaces: [kubeclaw]
       namespacePrefixes: [test]
-      tools: [list_argocd_applications, platform_cluster_state, platform_network_state, namespace_overview, get_pod, get_events, get_pod_logs, get_hubble_flows, get_pod_metrics, exec_pod]
+      tools: [list_argocd_applications, platform_cluster_state, platform_network_state, get_namespace, namespace_overview, get_pod, get_events, get_pod_logs, get_hubble_flows, get_pod_metrics, exec_pod]
       exec:
         - namespacePrefix: test
           allPods: true
@@ -89,7 +89,7 @@ mcp:
       podLabels: {app.kubernetes.io/instance: agent-nova}
       namespaces: [kubeclaw]
       namespacePrefixes: [test]
-      tools: [namespace_overview, get_pod, get_events, get_pod_logs, get_pod_metrics, exec_pod]
+      tools: [get_namespace, namespace_overview, get_pod, get_events, get_pod_logs, get_pod_metrics, exec_pod]
       exec:
         - namespacePrefix: test
           allPods: true
@@ -107,7 +107,7 @@ mcp:
       podLabels: {app.kubernetes.io/instance: agent-buster}
       namespaces: []
       namespacePrefixes: [test]
-      tools: [namespace_overview, get_pod, get_events, get_pod_logs, get_pod_metrics, exec_pod]
+      tools: [get_namespace, namespace_overview, get_pod, get_events, get_pod_logs, get_pod_metrics, exec_pod]
       exec:
         - namespacePrefix: test
           allPods: true
