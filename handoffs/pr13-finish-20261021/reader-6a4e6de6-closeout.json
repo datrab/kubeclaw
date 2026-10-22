@@ -1,0 +1,171 @@
+{
+  "revision": "6a4e6de68411c4fe21ddb10b003f17c979a67825",
+  "status": "READER_CHECKPOINT_VALIDATED_NOT_AGGREGATE_ACCEPTANCE",
+  "originalBuild": {
+    "terminal": 0,
+    "physicalFiles": 419,
+    "buildsActuallyPerformedAtThisRevision": 1,
+    "notTwoBuildClaim": true
+  },
+  "originalChecks": {
+    "artifact": {
+      "actualTerminal": 0,
+      "report": "reader-artifact-6a4e6de6.json"
+    },
+    "search": {
+      "actualTerminal": 0,
+      "report": "reader-search-6a4e6de6.json"
+    },
+    "source-links": {
+      "actualTerminal": 0,
+      "report": "reader-source-links-6a4e6de6.json"
+    },
+    "source-previews": {
+      "actualTerminal": 0,
+      "report": "reader-source-previews-6a4e6de6.json"
+    },
+    "diagrams": {
+      "actualTerminal": 0,
+      "report": "reader-diagrams-6a4e6de6.json"
+    }
+  },
+  "focusedBrowser": {
+    "actualTerminal": 0,
+    "report": "browser-fourpage-6a4e6de6-v3/report.json",
+    "pageObservations": 12,
+    "boxObservations": 84,
+    "searches": 2,
+    "findings": [],
+    "network": [],
+    "actualViewed320Screenshots": 5,
+    "rootVisualObservation": "Readable wrapped text and Source disclosure; recovery table fits both columns. Viewports show targeted content portions, not full pages or fullbox capture. SDK revision-only full semantic byte proof separate. No human screenreader/global accessibility claim.",
+    "firstAttempt": {
+      "actualTerminal": 1,
+      "report": "browser-fourpage-6a4e6de6/report.json",
+      "result": "1page28box; screenshot element stability timeout,0search,2incompletecensus findings; retained unchanged,not contentPASS.",
+      "successorDifference": "Only element screenshot replaced by actual viewport screenshot after same exact Source27 scroll; all content/native assertions unchanged."
+    },
+    "priorFull7efAndFocused554ScopesPreservedNotRecounted": true
+  },
+  "archive": {
+    "revision": "6a4e6de68411c4fe21ddb10b003f17c979a67825",
+    "archive": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/kubeclaw-reader-offline-6a4e6de6.zip",
+    "sha256": "4f40046ff3f3e644460694427170a9ef4d29a6cad5b35b3fafd3b74a450b4c57",
+    "bytes": 7895751,
+    "members": 242,
+    "copiedAssetsSourceCompared": 19,
+    "extracted": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/offline-reader-6a4e6de6",
+    "limit": "Checkpoint reader, not aggregate documentation or release acceptance.",
+    "safeUniqueRegularUnencryptedMembers": 242,
+    "allFreshExtractedBytesExact": true,
+    "normalExtractedArtifactAndSearchTerminals": [
+      0,
+      0
+    ],
+    "actualLoopbackAll240OutputsExactBytes": true,
+    "deliveredDiscordMessage": "1562652479840063599"
+  },
+  "evidenceFiles": [
+    {
+      "path": "reader-build-6a4e6de6.txt",
+      "sha256": "f291a51b5dd977552931cc6a69faf6577c5dd7b418bf7e2b092ca7fa39f5c14b",
+      "bytes": 73
+    },
+    {
+      "path": "reader-artifact-6a4e6de6.json",
+      "sha256": "928659a6e303d4f55f7adf19487b081ba7cd5d9ac93a57757a117a3bc869bc41",
+      "bytes": 85
+    },
+    {
+      "path": "reader-search-6a4e6de6.json",
+      "sha256": "f65734344ddbf315e22ea92246192f9ca609b27c2a1260abf38c119fbf91880d",
+      "bytes": 3062
+    },
+    {
+      "path": "reader-source-links-6a4e6de6.json",
+      "sha256": "e8f76d2730915a16c278d5193625994dfaa5c9246682733e98787895a7dbcc9a",
+      "bytes": 1444408
+    },
+    {
+      "path": "reader-source-previews-6a4e6de6.json",
+      "sha256": "50943cd2626a1ed21b868860bf9c84dd0b2a4b8322f8ad249684afe6b4018988",
+      "bytes": 239
+    },
+    {
+      "path": "reader-diagrams-6a4e6de6.json",
+      "sha256": "66f027803943f3133bb64af12d04b7db5814a63ed85f8fd846ce48daa890b976",
+      "bytes": 262
+    },
+    {
+      "path": "reader-extracted-artifact-6a4e6de6.json",
+      "sha256": "928659a6e303d4f55f7adf19487b081ba7cd5d9ac93a57757a117a3bc869bc41",
+      "bytes": 85
+    },
+    {
+      "path": "reader-extracted-search-6a4e6de6.json",
+      "sha256": "f65734344ddbf315e22ea92246192f9ca609b27c2a1260abf38c119fbf91880d",
+      "bytes": 3062
+    },
+    {
+      "path": "reader-preview-6a4e6de6.json",
+      "sha256": "d3e61efc0fb779556f009d358516597be91bec90ad72362a31b121633b2a5478",
+      "bytes": 361
+    },
+    {
+      "path": "reader-archive-6a4e6de6-verified.json",
+      "sha256": "b23b0d97cd57296f48dcae82538ac831d9b68ab18a1a57576685d3c1c93ec943",
+      "bytes": 707
+    },
+    {
+      "path": "browser-fourpage-6a4e6de6/report.json",
+      "sha256": "60709dc736f38de798094af5e26ac951a63891d293b4c39dae716a4c830252f5",
+      "bytes": 357606
+    },
+    {
+      "path": "browser-fourpage-6a4e6de6-v3/report.json",
+      "sha256": "d03007b18cf65ddbc087ffa8e6f7fe9c9a3d928edb259ecf9391eaa195ea16f3",
+      "bytes": 589090
+    },
+    {
+      "path": "browser-fourpage-6a4e6de6-author-v2/browser-fourpage.mjs",
+      "sha256": "ba6c86599482f5e1ee64591d703894e0dc98bc0af89c1fba697e5f2b24d46d34",
+      "bytes": 20733
+    },
+    {
+      "path": "browser-fourpage-6a4e6de6-author-v3/browser-fourpage.mjs",
+      "sha256": "a692a9a33c1c50ecaf6f2df5e3bc84b466f249023dbd18f3e3abe87085565f4b",
+      "bytes": 20727
+    },
+    {
+      "path": "browser-fourpage-6a4e6de6-v3/buster-suites-demo-session-result-table-320.png",
+      "sha256": "760c462c2db1e3acba09db876f81d64042c7c6965096d8628c9759ba18bb5407",
+      "bytes": 46246
+    },
+    {
+      "path": "browser-fourpage-6a4e6de6-v3/developer-handbook-source27-320.png",
+      "sha256": "48e9624a88f168dbd11bbeaf611bcb4cee4871778f672637719111f48129f650",
+      "bytes": 49465
+    },
+    {
+      "path": "browser-fourpage-6a4e6de6-v3/reference__buster-suites-320.png",
+      "sha256": "dba41901f820360414fdeee36c6c739c581656a91da8b026929c463a86717cd1",
+      "bytes": 52728
+    },
+    {
+      "path": "browser-fourpage-6a4e6de6-v3/reference__sdk-exports-320.png",
+      "sha256": "150525971eb7425937afd3c7fd1d106cdc7e4e3e149be2ac730c426b407a6597",
+      "bytes": 47524
+    },
+    {
+      "path": "browser-fourpage-6a4e6de6-v3/use__quickstart-320.png",
+      "sha256": "b83594e617b4bc7f1b9b7152faadb763b97f5585661823586efd5c2172448e12",
+      "bytes": 54494
+    }
+  ],
+  "limits": [
+    "No aggregate documentation/AP acceptance inferred",
+    "No role/API graph/generator/native/runtime/deployment/release grant",
+    "No second fullbrowser or two-build-determinism claim at thisrevision",
+    "223/261requirements unchanged; prior47/89gates until actualregisterintegration"
+  ]
+}

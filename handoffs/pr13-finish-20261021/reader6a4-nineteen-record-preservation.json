@@ -1,0 +1,1072 @@
+{
+  "revision": "6a4e6de68411c4fe21ddb10b003f17c979a67825",
+  "status": "FINAL_SOURCE_READER_QUALITY_PRESERVATION_PASS",
+  "distinctAffectedRecords": 19,
+  "unaffectedOriginalRecords": 71,
+  "newAcceptanceCount": 0,
+  "records": [
+    {
+      "recordId": "Reviewed-corrections-20261020",
+      "originalRecordSha256": "bd67d3440d1f9b8d1807e540bc47afe8d6c7e26a32b8850bc0004118e28075b2",
+      "originalRevision": "7ef16585ba04eba3628cead304be85307436f091",
+      "revision": "6a4e6de68411c4fe21ddb10b003f17c979a67825",
+      "intersections": {
+        "pages": [
+          {
+            "declared": "docs/site/reference/buster-suites.md",
+            "changed": "docs/site/reference/buster-suites.md",
+            "relation": "exact"
+          }
+        ],
+        "sources": []
+      },
+      "reviewer": "/root/operator_acceptance; authored quickstart delta supported by independent /root review",
+      "review": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "verdict": "PASS",
+      "summary": "Append-only demo-auth chapter adds protocol/cookie/partial-login recovery detail; all old page content outside insertion byte-exact. Workflow independent full source/consumer/schema review and corrected equality-string exception preserve the original Buster suite/workflow scope, without claiming login/session/native tests executed. Actual original6a4normal Reader/five checks terminal0:177canonical187HTML240verifiedoutputs40834localtargets;12search;14851SourceLinks3977objects;411/411previewboxes1888excerpts983objects;27freshSVG. Actual focusedv3browser12page/84box/2search0findings0network, all177physical/staged/HTML/pageRecord bindings stable; oldfull7ef531/1233+6retakes and5543/42 retained only for exactunchanged scopes. Root visually viewed5real320viewport screenshots; bounded readability, not fullaccessibility. v2element screenshot timeout/incomplete1/28 retained separately. Current archive242safeunique members/19Sourceassets/extracted artifact+search0 and240byte-exactloopbackGET preserve delivery only.",
+      "proofs": [
+        "handoffs/pr13-finish-20261021/demo-auth-chapter-review.json"
+      ],
+      "originalFieldsImmutable": [
+        "author",
+        "reviewer",
+        "checks",
+        "verdict",
+        "summary",
+        "limits",
+        "gateIds",
+        "requirementIds"
+      ],
+      "limits": [
+        "Preserves only original complete named record scope, no new acceptance/count or global qualification.",
+        "Original historical failures and nonexecution/live/native limits remain; new setup/login commands not executed."
+      ],
+      "currentReaderReceiptHashes": {
+        "reader-artifact-6a4e6de6.json": "928659a6e303d4f55f7adf19487b081ba7cd5d9ac93a57757a117a3bc869bc41",
+        "reader-search-6a4e6de6.json": "f65734344ddbf315e22ea92246192f9ca609b27c2a1260abf38c119fbf91880d",
+        "reader-source-links-6a4e6de6.json": "e8f76d2730915a16c278d5193625994dfaa5c9246682733e98787895a7dbcc9a",
+        "reader-source-previews-6a4e6de6.json": "50943cd2626a1ed21b868860bf9c84dd0b2a4b8322f8ad249684afe6b4018988",
+        "reader-diagrams-6a4e6de6.json": "66f027803943f3133bb64af12d04b7db5814a63ed85f8fd846ce48daa890b976",
+        "browser-fourpage-6a4e6de6-v3/report.json": "d03007b18cf65ddbc087ffa8e6f7fe9c9a3d928edb259ecf9391eaa195ea16f3",
+        "browser-fourpage-6a4e6de6/report.json": "60709dc736f38de798094af5e26ac951a63891d293b4c39dae716a4c830252f5",
+        "reader-archive-6a4e6de6-verified.json": "b23b0d97cd57296f48dcae82538ac831d9b68ab18a1a57576685d3c1c93ec943",
+        "reader-preview-6a4e6de6.json": "d3e61efc0fb779556f009d358516597be91bec90ad72362a31b121633b2a5478",
+        "reader-extracted-artifact-6a4e6de6.json": "928659a6e303d4f55f7adf19487b081ba7cd5d9ac93a57757a117a3bc869bc41",
+        "reader-extracted-search-6a4e6de6.json": "f65734344ddbf315e22ea92246192f9ca609b27c2a1260abf38c119fbf91880d"
+      }
+    },
+    {
+      "recordId": "AP09-reader-developers-20261020",
+      "originalRecordSha256": "225e26a26682efa2a6e16136e1fd8b9aacd1d20a1c041423640542818139b034",
+      "originalRevision": "7ef16585ba04eba3628cead304be85307436f091",
+      "revision": "6a4e6de68411c4fe21ddb10b003f17c979a67825",
+      "intersections": {
+        "pages": [
+          {
+            "declared": "docs/site/extend/developer-handbook.md",
+            "changed": "docs/site/extend/developer-handbook.md",
+            "relation": "exact"
+          }
+        ],
+        "sources": []
+      },
+      "reviewer": "/root/operator_acceptance; authored quickstart delta supported by independent /root review",
+      "review": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "verdict": "PASS",
+      "summary": "Corrects misleading Markdown-only staging description to the actual original publisher build: previews/diagrams/HTML/page records/report. Keeps separate checks and unexecuted/failed outcomes, owner cleanup and all outside procedure scopes. Two final Sourceboxes accurately separate map/input selector from current full build; no new combined execution proof. Root independent full bounded Source/procedure review supplies this correction. Actual original6a4normal Reader/five checks terminal0:177canonical187HTML240verifiedoutputs40834localtargets;12search;14851SourceLinks3977objects;411/411previewboxes1888excerpts983objects;27freshSVG. Actual focusedv3browser12page/84box/2search0findings0network, all177physical/staged/HTML/pageRecord bindings stable; oldfull7ef531/1233+6retakes and5543/42 retained only for exactunchanged scopes. Root visually viewed5real320viewport screenshots; bounded readability, not fullaccessibility. v2element screenshot timeout/incomplete1/28 retained separately. Current archive242safeunique members/19Sourceassets/extracted artifact+search0 and240byte-exactloopbackGET preserve delivery only.",
+      "proofs": [
+        "handoffs/pr13-finish-20261021/handbook-publication-build-root-review.json"
+      ],
+      "originalFieldsImmutable": [
+        "author",
+        "reviewer",
+        "checks",
+        "verdict",
+        "summary",
+        "limits",
+        "gateIds",
+        "requirementIds"
+      ],
+      "limits": [
+        "Preserves only original complete named record scope, no new acceptance/count or global qualification.",
+        "Original historical failures and nonexecution/live/native limits remain; new setup/login commands not executed."
+      ],
+      "currentReaderReceiptHashes": {
+        "reader-artifact-6a4e6de6.json": "928659a6e303d4f55f7adf19487b081ba7cd5d9ac93a57757a117a3bc869bc41",
+        "reader-search-6a4e6de6.json": "f65734344ddbf315e22ea92246192f9ca609b27c2a1260abf38c119fbf91880d",
+        "reader-source-links-6a4e6de6.json": "e8f76d2730915a16c278d5193625994dfaa5c9246682733e98787895a7dbcc9a",
+        "reader-source-previews-6a4e6de6.json": "50943cd2626a1ed21b868860bf9c84dd0b2a4b8322f8ad249684afe6b4018988",
+        "reader-diagrams-6a4e6de6.json": "66f027803943f3133bb64af12d04b7db5814a63ed85f8fd846ce48daa890b976",
+        "browser-fourpage-6a4e6de6-v3/report.json": "d03007b18cf65ddbc087ffa8e6f7fe9c9a3d928edb259ecf9391eaa195ea16f3",
+        "browser-fourpage-6a4e6de6/report.json": "60709dc736f38de798094af5e26ac951a63891d293b4c39dae716a4c830252f5",
+        "reader-archive-6a4e6de6-verified.json": "b23b0d97cd57296f48dcae82538ac831d9b68ab18a1a57576685d3c1c93ec943",
+        "reader-preview-6a4e6de6.json": "d3e61efc0fb779556f009d358516597be91bec90ad72362a31b121633b2a5478",
+        "reader-extracted-artifact-6a4e6de6.json": "928659a6e303d4f55f7adf19487b081ba7cd5d9ac93a57757a117a3bc869bc41",
+        "reader-extracted-search-6a4e6de6.json": "f65734344ddbf315e22ea92246192f9ca609b27c2a1260abf38c119fbf91880d"
+      }
+    },
+    {
+      "recordId": "AP09-reviewed-reference-20261020",
+      "originalRecordSha256": "b2f67c1dc8e0861f57aeac2095169465599aa857a319b580862defc521756c5e",
+      "originalRevision": "7ef16585ba04eba3628cead304be85307436f091",
+      "revision": "6a4e6de68411c4fe21ddb10b003f17c979a67825",
+      "intersections": {
+        "pages": [
+          {
+            "declared": "docs/site/reference/sdk-exports.md",
+            "changed": "docs/site/reference/sdk-exports.md",
+            "relation": "exact"
+          }
+        ],
+        "sources": []
+      },
+      "reviewer": "/root/operator_acceptance; authored quickstart delta supported by independent /root review",
+      "review": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "verdict": "PASS",
+      "summary": "Two actual original SDK CLI stages plus installed original --check succeeded. Complete Markdown equals old bytes with2361revision-only substitutions; complete companion inventory differs only sourceRevision. All119exports/28support/551schemafacts/consumer meanings remain identical, backed by existing whole119Source scope and exact58current/7994bindings. No new runtime or full Program census claim. Actual original6a4normal Reader/five checks terminal0:177canonical187HTML240verifiedoutputs40834localtargets;12search;14851SourceLinks3977objects;411/411previewboxes1888excerpts983objects;27freshSVG. Actual focusedv3browser12page/84box/2search0findings0network, all177physical/staged/HTML/pageRecord bindings stable; oldfull7ef531/1233+6retakes and5543/42 retained only for exactunchanged scopes. Root visually viewed5real320viewport screenshots; bounded readability, not fullaccessibility. v2element screenshot timeout/incomplete1/28 retained separately. Current archive242safeunique members/19Sourceassets/extracted artifact+search0 and240byte-exactloopbackGET preserve delivery only.",
+      "proofs": [
+        "handoffs/pr13-finish-20261021/sdk9f4-independent-result-review.json"
+      ],
+      "originalFieldsImmutable": [
+        "author",
+        "reviewer",
+        "checks",
+        "verdict",
+        "summary",
+        "limits",
+        "gateIds",
+        "requirementIds"
+      ],
+      "limits": [
+        "Preserves only original complete named record scope, no new acceptance/count or global qualification.",
+        "Original historical failures and nonexecution/live/native limits remain; new setup/login commands not executed."
+      ],
+      "currentReaderReceiptHashes": {
+        "reader-artifact-6a4e6de6.json": "928659a6e303d4f55f7adf19487b081ba7cd5d9ac93a57757a117a3bc869bc41",
+        "reader-search-6a4e6de6.json": "f65734344ddbf315e22ea92246192f9ca609b27c2a1260abf38c119fbf91880d",
+        "reader-source-links-6a4e6de6.json": "e8f76d2730915a16c278d5193625994dfaa5c9246682733e98787895a7dbcc9a",
+        "reader-source-previews-6a4e6de6.json": "50943cd2626a1ed21b868860bf9c84dd0b2a4b8322f8ad249684afe6b4018988",
+        "reader-diagrams-6a4e6de6.json": "66f027803943f3133bb64af12d04b7db5814a63ed85f8fd846ce48daa890b976",
+        "browser-fourpage-6a4e6de6-v3/report.json": "d03007b18cf65ddbc087ffa8e6f7fe9c9a3d928edb259ecf9391eaa195ea16f3",
+        "browser-fourpage-6a4e6de6/report.json": "60709dc736f38de798094af5e26ac951a63891d293b4c39dae716a4c830252f5",
+        "reader-archive-6a4e6de6-verified.json": "b23b0d97cd57296f48dcae82538ac831d9b68ab18a1a57576685d3c1c93ec943",
+        "reader-preview-6a4e6de6.json": "d3e61efc0fb779556f009d358516597be91bec90ad72362a31b121633b2a5478",
+        "reader-extracted-artifact-6a4e6de6.json": "928659a6e303d4f55f7adf19487b081ba7cd5d9ac93a57757a117a3bc869bc41",
+        "reader-extracted-search-6a4e6de6.json": "f65734344ddbf315e22ea92246192f9ca609b27c2a1260abf38c119fbf91880d"
+      }
+    },
+    {
+      "recordId": "AP09-reviewed-publication-navigation-20261020",
+      "originalRecordSha256": "3f8deaddf77aca5d036a3629c1dd9c6b5c4359bbd04bb4547b82400594542ac4",
+      "originalRevision": "7ef16585ba04eba3628cead304be85307436f091",
+      "revision": "6a4e6de68411c4fe21ddb10b003f17c979a67825",
+      "intersections": {
+        "pages": [
+          {
+            "declared": "docs/site/extend/developer-handbook.md",
+            "changed": "docs/site/extend/developer-handbook.md",
+            "relation": "exact"
+          }
+        ],
+        "sources": []
+      },
+      "reviewer": "/root/operator_acceptance; authored quickstart delta supported by independent /root review",
+      "review": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "verdict": "PASS",
+      "summary": "Corrects misleading Markdown-only staging description to the actual original publisher build: previews/diagrams/HTML/page records/report. Keeps separate checks and unexecuted/failed outcomes, owner cleanup and all outside procedure scopes. Two final Sourceboxes accurately separate map/input selector from current full build; no new combined execution proof. Root independent full bounded Source/procedure review supplies this correction. Actual original6a4normal Reader/five checks terminal0:177canonical187HTML240verifiedoutputs40834localtargets;12search;14851SourceLinks3977objects;411/411previewboxes1888excerpts983objects;27freshSVG. Actual focusedv3browser12page/84box/2search0findings0network, all177physical/staged/HTML/pageRecord bindings stable; oldfull7ef531/1233+6retakes and5543/42 retained only for exactunchanged scopes. Root visually viewed5real320viewport screenshots; bounded readability, not fullaccessibility. v2element screenshot timeout/incomplete1/28 retained separately. Current archive242safeunique members/19Sourceassets/extracted artifact+search0 and240byte-exactloopbackGET preserve delivery only.",
+      "proofs": [
+        "handoffs/pr13-finish-20261021/handbook-publication-build-root-review.json"
+      ],
+      "originalFieldsImmutable": [
+        "author",
+        "reviewer",
+        "checks",
+        "verdict",
+        "summary",
+        "limits",
+        "gateIds",
+        "requirementIds"
+      ],
+      "limits": [
+        "Preserves only original complete named record scope, no new acceptance/count or global qualification.",
+        "Original historical failures and nonexecution/live/native limits remain; new setup/login commands not executed."
+      ],
+      "currentReaderReceiptHashes": {
+        "reader-artifact-6a4e6de6.json": "928659a6e303d4f55f7adf19487b081ba7cd5d9ac93a57757a117a3bc869bc41",
+        "reader-search-6a4e6de6.json": "f65734344ddbf315e22ea92246192f9ca609b27c2a1260abf38c119fbf91880d",
+        "reader-source-links-6a4e6de6.json": "e8f76d2730915a16c278d5193625994dfaa5c9246682733e98787895a7dbcc9a",
+        "reader-source-previews-6a4e6de6.json": "50943cd2626a1ed21b868860bf9c84dd0b2a4b8322f8ad249684afe6b4018988",
+        "reader-diagrams-6a4e6de6.json": "66f027803943f3133bb64af12d04b7db5814a63ed85f8fd846ce48daa890b976",
+        "browser-fourpage-6a4e6de6-v3/report.json": "d03007b18cf65ddbc087ffa8e6f7fe9c9a3d928edb259ecf9391eaa195ea16f3",
+        "browser-fourpage-6a4e6de6/report.json": "60709dc736f38de798094af5e26ac951a63891d293b4c39dae716a4c830252f5",
+        "reader-archive-6a4e6de6-verified.json": "b23b0d97cd57296f48dcae82538ac831d9b68ab18a1a57576685d3c1c93ec943",
+        "reader-preview-6a4e6de6.json": "d3e61efc0fb779556f009d358516597be91bec90ad72362a31b121633b2a5478",
+        "reader-extracted-artifact-6a4e6de6.json": "928659a6e303d4f55f7adf19487b081ba7cd5d9ac93a57757a117a3bc869bc41",
+        "reader-extracted-search-6a4e6de6.json": "f65734344ddbf315e22ea92246192f9ca609b27c2a1260abf38c119fbf91880d"
+      }
+    },
+    {
+      "recordId": "AP09-closeout-developer-maintenance-20261020",
+      "originalRecordSha256": "bb4b8eab325b7b453f64f3270ea437ddf07c8b676732fe072b01cbe917f11ccd",
+      "originalRevision": "7ef16585ba04eba3628cead304be85307436f091",
+      "revision": "6a4e6de68411c4fe21ddb10b003f17c979a67825",
+      "intersections": {
+        "pages": [
+          {
+            "declared": "docs/site/extend/developer-handbook.md",
+            "changed": "docs/site/extend/developer-handbook.md",
+            "relation": "exact"
+          }
+        ],
+        "sources": []
+      },
+      "reviewer": "/root/operator_acceptance; authored quickstart delta supported by independent /root review",
+      "review": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "verdict": "PASS",
+      "summary": "Corrects misleading Markdown-only staging description to the actual original publisher build: previews/diagrams/HTML/page records/report. Keeps separate checks and unexecuted/failed outcomes, owner cleanup and all outside procedure scopes. Two final Sourceboxes accurately separate map/input selector from current full build; no new combined execution proof. Root independent full bounded Source/procedure review supplies this correction. Actual original6a4normal Reader/five checks terminal0:177canonical187HTML240verifiedoutputs40834localtargets;12search;14851SourceLinks3977objects;411/411previewboxes1888excerpts983objects;27freshSVG. Actual focusedv3browser12page/84box/2search0findings0network, all177physical/staged/HTML/pageRecord bindings stable; oldfull7ef531/1233+6retakes and5543/42 retained only for exactunchanged scopes. Root visually viewed5real320viewport screenshots; bounded readability, not fullaccessibility. v2element screenshot timeout/incomplete1/28 retained separately. Current archive242safeunique members/19Sourceassets/extracted artifact+search0 and240byte-exactloopbackGET preserve delivery only.",
+      "proofs": [
+        "handoffs/pr13-finish-20261021/handbook-publication-build-root-review.json"
+      ],
+      "originalFieldsImmutable": [
+        "author",
+        "reviewer",
+        "checks",
+        "verdict",
+        "summary",
+        "limits",
+        "gateIds",
+        "requirementIds"
+      ],
+      "limits": [
+        "Preserves only original complete named record scope, no new acceptance/count or global qualification.",
+        "Original historical failures and nonexecution/live/native limits remain; new setup/login commands not executed."
+      ],
+      "currentReaderReceiptHashes": {
+        "reader-artifact-6a4e6de6.json": "928659a6e303d4f55f7adf19487b081ba7cd5d9ac93a57757a117a3bc869bc41",
+        "reader-search-6a4e6de6.json": "f65734344ddbf315e22ea92246192f9ca609b27c2a1260abf38c119fbf91880d",
+        "reader-source-links-6a4e6de6.json": "e8f76d2730915a16c278d5193625994dfaa5c9246682733e98787895a7dbcc9a",
+        "reader-source-previews-6a4e6de6.json": "50943cd2626a1ed21b868860bf9c84dd0b2a4b8322f8ad249684afe6b4018988",
+        "reader-diagrams-6a4e6de6.json": "66f027803943f3133bb64af12d04b7db5814a63ed85f8fd846ce48daa890b976",
+        "browser-fourpage-6a4e6de6-v3/report.json": "d03007b18cf65ddbc087ffa8e6f7fe9c9a3d928edb259ecf9391eaa195ea16f3",
+        "browser-fourpage-6a4e6de6/report.json": "60709dc736f38de798094af5e26ac951a63891d293b4c39dae716a4c830252f5",
+        "reader-archive-6a4e6de6-verified.json": "b23b0d97cd57296f48dcae82538ac831d9b68ab18a1a57576685d3c1c93ec943",
+        "reader-preview-6a4e6de6.json": "d3e61efc0fb779556f009d358516597be91bec90ad72362a31b121633b2a5478",
+        "reader-extracted-artifact-6a4e6de6.json": "928659a6e303d4f55f7adf19487b081ba7cd5d9ac93a57757a117a3bc869bc41",
+        "reader-extracted-search-6a4e6de6.json": "f65734344ddbf315e22ea92246192f9ca609b27c2a1260abf38c119fbf91880d"
+      }
+    },
+    {
+      "recordId": "AP09-contributor-baselines-and-migrations-20261021",
+      "originalRecordSha256": "e02878d36574bd59beaaf96d5f19fdff586df8dbfbbb49a8c09d6ea16832814c",
+      "originalRevision": "d0bb52c4d8bcf323c0ff32b95e8e3120ffa6eefb",
+      "revision": "6a4e6de68411c4fe21ddb10b003f17c979a67825",
+      "intersections": {
+        "pages": [
+          {
+            "declared": "docs/site/extend/developer-handbook.md",
+            "changed": "docs/site/extend/developer-handbook.md",
+            "relation": "exact"
+          }
+        ],
+        "sources": []
+      },
+      "reviewer": "/root/operator_acceptance; authored quickstart delta supported by independent /root review",
+      "review": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "verdict": "PASS",
+      "summary": "Corrects misleading Markdown-only staging description to the actual original publisher build: previews/diagrams/HTML/page records/report. Keeps separate checks and unexecuted/failed outcomes, owner cleanup and all outside procedure scopes. Two final Sourceboxes accurately separate map/input selector from current full build; no new combined execution proof. Root independent full bounded Source/procedure review supplies this correction. Actual original6a4normal Reader/five checks terminal0:177canonical187HTML240verifiedoutputs40834localtargets;12search;14851SourceLinks3977objects;411/411previewboxes1888excerpts983objects;27freshSVG. Actual focusedv3browser12page/84box/2search0findings0network, all177physical/staged/HTML/pageRecord bindings stable; oldfull7ef531/1233+6retakes and5543/42 retained only for exactunchanged scopes. Root visually viewed5real320viewport screenshots; bounded readability, not fullaccessibility. v2element screenshot timeout/incomplete1/28 retained separately. Current archive242safeunique members/19Sourceassets/extracted artifact+search0 and240byte-exactloopbackGET preserve delivery only.",
+      "proofs": [
+        "handoffs/pr13-finish-20261021/handbook-publication-build-root-review.json"
+      ],
+      "originalFieldsImmutable": [
+        "author",
+        "reviewer",
+        "checks",
+        "verdict",
+        "summary",
+        "limits",
+        "gateIds",
+        "requirementIds"
+      ],
+      "limits": [
+        "Preserves only original complete named record scope, no new acceptance/count or global qualification.",
+        "Original historical failures and nonexecution/live/native limits remain; new setup/login commands not executed."
+      ],
+      "currentReaderReceiptHashes": {
+        "reader-artifact-6a4e6de6.json": "928659a6e303d4f55f7adf19487b081ba7cd5d9ac93a57757a117a3bc869bc41",
+        "reader-search-6a4e6de6.json": "f65734344ddbf315e22ea92246192f9ca609b27c2a1260abf38c119fbf91880d",
+        "reader-source-links-6a4e6de6.json": "e8f76d2730915a16c278d5193625994dfaa5c9246682733e98787895a7dbcc9a",
+        "reader-source-previews-6a4e6de6.json": "50943cd2626a1ed21b868860bf9c84dd0b2a4b8322f8ad249684afe6b4018988",
+        "reader-diagrams-6a4e6de6.json": "66f027803943f3133bb64af12d04b7db5814a63ed85f8fd846ce48daa890b976",
+        "browser-fourpage-6a4e6de6-v3/report.json": "d03007b18cf65ddbc087ffa8e6f7fe9c9a3d928edb259ecf9391eaa195ea16f3",
+        "browser-fourpage-6a4e6de6/report.json": "60709dc736f38de798094af5e26ac951a63891d293b4c39dae716a4c830252f5",
+        "reader-archive-6a4e6de6-verified.json": "b23b0d97cd57296f48dcae82538ac831d9b68ab18a1a57576685d3c1c93ec943",
+        "reader-preview-6a4e6de6.json": "d3e61efc0fb779556f009d358516597be91bec90ad72362a31b121633b2a5478",
+        "reader-extracted-artifact-6a4e6de6.json": "928659a6e303d4f55f7adf19487b081ba7cd5d9ac93a57757a117a3bc869bc41",
+        "reader-extracted-search-6a4e6de6.json": "f65734344ddbf315e22ea92246192f9ca609b27c2a1260abf38c119fbf91880d"
+      }
+    },
+    {
+      "recordId": "AP09-install-maintenance-project-entry-20261021",
+      "originalRecordSha256": "0ebcc07d89575a9ce855097313065e88ee72d2985d06901219efc78ba2abfb45",
+      "originalRevision": "7ef16585ba04eba3628cead304be85307436f091",
+      "revision": "6a4e6de68411c4fe21ddb10b003f17c979a67825",
+      "intersections": {
+        "pages": [
+          {
+            "declared": "docs/site/use/quickstart.md",
+            "changed": "docs/site/use/quickstart.md",
+            "relation": "exact"
+          }
+        ],
+        "sources": []
+      },
+      "reviewer": "/root/operator_acceptance; authored quickstart delta supported by independent /root review",
+      "review": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "verdict": "PASS",
+      "summary": "Canonical locked include-dev installation and required module resolution repair the single independently identified A98 preparation gap. Root independently read full changed procedure/installed npm include+omit branches/handbook pattern and approved final non-execution metadata. All other task authorities retain exact prior behavior. Actual original6a4normal Reader/five checks terminal0:177canonical187HTML240verifiedoutputs40834localtargets;12search;14851SourceLinks3977objects;411/411previewboxes1888excerpts983objects;27freshSVG. Actual focusedv3browser12page/84box/2search0findings0network, all177physical/staged/HTML/pageRecord bindings stable; oldfull7ef531/1233+6retakes and5543/42 retained only for exactunchanged scopes. Root visually viewed5real320viewport screenshots; bounded readability, not fullaccessibility. v2element screenshot timeout/incomplete1/28 retained separately. Current archive242safeunique members/19Sourceassets/extracted artifact+search0 and240byte-exactloopbackGET preserve delivery only.",
+      "proofs": [
+        "handoffs/pr13-finish-20261021/quickstart-prerequisite-root-review.json"
+      ],
+      "originalFieldsImmutable": [
+        "author",
+        "reviewer",
+        "checks",
+        "verdict",
+        "summary",
+        "limits",
+        "gateIds",
+        "requirementIds"
+      ],
+      "limits": [
+        "Preserves only original complete named record scope, no new acceptance/count or global qualification.",
+        "Original historical failures and nonexecution/live/native limits remain; new setup/login commands not executed."
+      ],
+      "currentReaderReceiptHashes": {
+        "reader-artifact-6a4e6de6.json": "928659a6e303d4f55f7adf19487b081ba7cd5d9ac93a57757a117a3bc869bc41",
+        "reader-search-6a4e6de6.json": "f65734344ddbf315e22ea92246192f9ca609b27c2a1260abf38c119fbf91880d",
+        "reader-source-links-6a4e6de6.json": "e8f76d2730915a16c278d5193625994dfaa5c9246682733e98787895a7dbcc9a",
+        "reader-source-previews-6a4e6de6.json": "50943cd2626a1ed21b868860bf9c84dd0b2a4b8322f8ad249684afe6b4018988",
+        "reader-diagrams-6a4e6de6.json": "66f027803943f3133bb64af12d04b7db5814a63ed85f8fd846ce48daa890b976",
+        "browser-fourpage-6a4e6de6-v3/report.json": "d03007b18cf65ddbc087ffa8e6f7fe9c9a3d928edb259ecf9391eaa195ea16f3",
+        "browser-fourpage-6a4e6de6/report.json": "60709dc736f38de798094af5e26ac951a63891d293b4c39dae716a4c830252f5",
+        "reader-archive-6a4e6de6-verified.json": "b23b0d97cd57296f48dcae82538ac831d9b68ab18a1a57576685d3c1c93ec943",
+        "reader-preview-6a4e6de6.json": "d3e61efc0fb779556f009d358516597be91bec90ad72362a31b121633b2a5478",
+        "reader-extracted-artifact-6a4e6de6.json": "928659a6e303d4f55f7adf19487b081ba7cd5d9ac93a57757a117a3bc869bc41",
+        "reader-extracted-search-6a4e6de6.json": "f65734344ddbf315e22ea92246192f9ca609b27c2a1260abf38c119fbf91880d"
+      }
+    },
+    {
+      "recordId": "AP09-documentation-agent-maintenance-20261021",
+      "originalRecordSha256": "e47092dbc25e6a43d2d6036db4a34b200c381df4ada2077377180d2216a067d7",
+      "originalRevision": "7ef16585ba04eba3628cead304be85307436f091",
+      "revision": "6a4e6de68411c4fe21ddb10b003f17c979a67825",
+      "intersections": {
+        "pages": [
+          {
+            "declared": "docs/site/extend/developer-handbook.md",
+            "changed": "docs/site/extend/developer-handbook.md",
+            "relation": "exact"
+          }
+        ],
+        "sources": []
+      },
+      "reviewer": "/root/operator_acceptance; authored quickstart delta supported by independent /root review",
+      "review": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "verdict": "PASS",
+      "summary": "Corrects misleading Markdown-only staging description to the actual original publisher build: previews/diagrams/HTML/page records/report. Keeps separate checks and unexecuted/failed outcomes, owner cleanup and all outside procedure scopes. Two final Sourceboxes accurately separate map/input selector from current full build; no new combined execution proof. Root independent full bounded Source/procedure review supplies this correction. Actual original6a4normal Reader/five checks terminal0:177canonical187HTML240verifiedoutputs40834localtargets;12search;14851SourceLinks3977objects;411/411previewboxes1888excerpts983objects;27freshSVG. Actual focusedv3browser12page/84box/2search0findings0network, all177physical/staged/HTML/pageRecord bindings stable; oldfull7ef531/1233+6retakes and5543/42 retained only for exactunchanged scopes. Root visually viewed5real320viewport screenshots; bounded readability, not fullaccessibility. v2element screenshot timeout/incomplete1/28 retained separately. Current archive242safeunique members/19Sourceassets/extracted artifact+search0 and240byte-exactloopbackGET preserve delivery only.",
+      "proofs": [
+        "handoffs/pr13-finish-20261021/handbook-publication-build-root-review.json"
+      ],
+      "originalFieldsImmutable": [
+        "author",
+        "reviewer",
+        "checks",
+        "verdict",
+        "summary",
+        "limits",
+        "gateIds",
+        "requirementIds"
+      ],
+      "limits": [
+        "Preserves only original complete named record scope, no new acceptance/count or global qualification.",
+        "Original historical failures and nonexecution/live/native limits remain; new setup/login commands not executed."
+      ],
+      "currentReaderReceiptHashes": {
+        "reader-artifact-6a4e6de6.json": "928659a6e303d4f55f7adf19487b081ba7cd5d9ac93a57757a117a3bc869bc41",
+        "reader-search-6a4e6de6.json": "f65734344ddbf315e22ea92246192f9ca609b27c2a1260abf38c119fbf91880d",
+        "reader-source-links-6a4e6de6.json": "e8f76d2730915a16c278d5193625994dfaa5c9246682733e98787895a7dbcc9a",
+        "reader-source-previews-6a4e6de6.json": "50943cd2626a1ed21b868860bf9c84dd0b2a4b8322f8ad249684afe6b4018988",
+        "reader-diagrams-6a4e6de6.json": "66f027803943f3133bb64af12d04b7db5814a63ed85f8fd846ce48daa890b976",
+        "browser-fourpage-6a4e6de6-v3/report.json": "d03007b18cf65ddbc087ffa8e6f7fe9c9a3d928edb259ecf9391eaa195ea16f3",
+        "browser-fourpage-6a4e6de6/report.json": "60709dc736f38de798094af5e26ac951a63891d293b4c39dae716a4c830252f5",
+        "reader-archive-6a4e6de6-verified.json": "b23b0d97cd57296f48dcae82538ac831d9b68ab18a1a57576685d3c1c93ec943",
+        "reader-preview-6a4e6de6.json": "d3e61efc0fb779556f009d358516597be91bec90ad72362a31b121633b2a5478",
+        "reader-extracted-artifact-6a4e6de6.json": "928659a6e303d4f55f7adf19487b081ba7cd5d9ac93a57757a117a3bc869bc41",
+        "reader-extracted-search-6a4e6de6.json": "f65734344ddbf315e22ea92246192f9ca609b27c2a1260abf38c119fbf91880d"
+      }
+    },
+    {
+      "recordId": "AP09-complete-platform-change-content-20261021",
+      "originalRecordSha256": "edf02a5282b3c8496af74976a67846190ba48cab10d6d2ba90daf763c87e763b",
+      "originalRevision": "7ef16585ba04eba3628cead304be85307436f091",
+      "revision": "6a4e6de68411c4fe21ddb10b003f17c979a67825",
+      "intersections": {
+        "pages": [
+          {
+            "declared": "docs/site/extend/developer-handbook.md",
+            "changed": "docs/site/extend/developer-handbook.md",
+            "relation": "exact"
+          }
+        ],
+        "sources": []
+      },
+      "reviewer": "/root/operator_acceptance; authored quickstart delta supported by independent /root review",
+      "review": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "verdict": "PASS",
+      "summary": "Corrects misleading Markdown-only staging description to the actual original publisher build: previews/diagrams/HTML/page records/report. Keeps separate checks and unexecuted/failed outcomes, owner cleanup and all outside procedure scopes. Two final Sourceboxes accurately separate map/input selector from current full build; no new combined execution proof. Root independent full bounded Source/procedure review supplies this correction. Actual original6a4normal Reader/five checks terminal0:177canonical187HTML240verifiedoutputs40834localtargets;12search;14851SourceLinks3977objects;411/411previewboxes1888excerpts983objects;27freshSVG. Actual focusedv3browser12page/84box/2search0findings0network, all177physical/staged/HTML/pageRecord bindings stable; oldfull7ef531/1233+6retakes and5543/42 retained only for exactunchanged scopes. Root visually viewed5real320viewport screenshots; bounded readability, not fullaccessibility. v2element screenshot timeout/incomplete1/28 retained separately. Current archive242safeunique members/19Sourceassets/extracted artifact+search0 and240byte-exactloopbackGET preserve delivery only.",
+      "proofs": [
+        "handoffs/pr13-finish-20261021/handbook-publication-build-root-review.json"
+      ],
+      "originalFieldsImmutable": [
+        "author",
+        "reviewer",
+        "checks",
+        "verdict",
+        "summary",
+        "limits",
+        "gateIds",
+        "requirementIds"
+      ],
+      "limits": [
+        "Preserves only original complete named record scope, no new acceptance/count or global qualification.",
+        "Original historical failures and nonexecution/live/native limits remain; new setup/login commands not executed."
+      ],
+      "currentReaderReceiptHashes": {
+        "reader-artifact-6a4e6de6.json": "928659a6e303d4f55f7adf19487b081ba7cd5d9ac93a57757a117a3bc869bc41",
+        "reader-search-6a4e6de6.json": "f65734344ddbf315e22ea92246192f9ca609b27c2a1260abf38c119fbf91880d",
+        "reader-source-links-6a4e6de6.json": "e8f76d2730915a16c278d5193625994dfaa5c9246682733e98787895a7dbcc9a",
+        "reader-source-previews-6a4e6de6.json": "50943cd2626a1ed21b868860bf9c84dd0b2a4b8322f8ad249684afe6b4018988",
+        "reader-diagrams-6a4e6de6.json": "66f027803943f3133bb64af12d04b7db5814a63ed85f8fd846ce48daa890b976",
+        "browser-fourpage-6a4e6de6-v3/report.json": "d03007b18cf65ddbc087ffa8e6f7fe9c9a3d928edb259ecf9391eaa195ea16f3",
+        "browser-fourpage-6a4e6de6/report.json": "60709dc736f38de798094af5e26ac951a63891d293b4c39dae716a4c830252f5",
+        "reader-archive-6a4e6de6-verified.json": "b23b0d97cd57296f48dcae82538ac831d9b68ab18a1a57576685d3c1c93ec943",
+        "reader-preview-6a4e6de6.json": "d3e61efc0fb779556f009d358516597be91bec90ad72362a31b121633b2a5478",
+        "reader-extracted-artifact-6a4e6de6.json": "928659a6e303d4f55f7adf19487b081ba7cd5d9ac93a57757a117a3bc869bc41",
+        "reader-extracted-search-6a4e6de6.json": "f65734344ddbf315e22ea92246192f9ca609b27c2a1260abf38c119fbf91880d"
+      }
+    },
+    {
+      "recordId": "AP09-complete-publication-reference-navigation-20261021",
+      "originalRecordSha256": "2423bc6bad0433c4fa0cfcc75091062b64868766d03ae9b3b7ed4fcfe9096ca4",
+      "originalRevision": "7ef16585ba04eba3628cead304be85307436f091",
+      "revision": "6a4e6de68411c4fe21ddb10b003f17c979a67825",
+      "intersections": {
+        "pages": [],
+        "sources": [
+          {
+            "declared": "docs/site/extend/developer-handbook.md",
+            "changed": "docs/site/extend/developer-handbook.md",
+            "relation": "exact"
+          }
+        ]
+      },
+      "reviewer": "/root/operator_acceptance; authored quickstart delta supported by independent /root review",
+      "review": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "verdict": "PASS",
+      "summary": "Corrects misleading Markdown-only staging description to the actual original publisher build: previews/diagrams/HTML/page records/report. Keeps separate checks and unexecuted/failed outcomes, owner cleanup and all outside procedure scopes. Two final Sourceboxes accurately separate map/input selector from current full build; no new combined execution proof. Root independent full bounded Source/procedure review supplies this correction. Actual original6a4normal Reader/five checks terminal0:177canonical187HTML240verifiedoutputs40834localtargets;12search;14851SourceLinks3977objects;411/411previewboxes1888excerpts983objects;27freshSVG. Actual focusedv3browser12page/84box/2search0findings0network, all177physical/staged/HTML/pageRecord bindings stable; oldfull7ef531/1233+6retakes and5543/42 retained only for exactunchanged scopes. Root visually viewed5real320viewport screenshots; bounded readability, not fullaccessibility. v2element screenshot timeout/incomplete1/28 retained separately. Current archive242safeunique members/19Sourceassets/extracted artifact+search0 and240byte-exactloopbackGET preserve delivery only.",
+      "proofs": [
+        "handoffs/pr13-finish-20261021/handbook-publication-build-root-review.json"
+      ],
+      "originalFieldsImmutable": [
+        "author",
+        "reviewer",
+        "checks",
+        "verdict",
+        "summary",
+        "limits",
+        "gateIds",
+        "requirementIds"
+      ],
+      "limits": [
+        "Preserves only original complete named record scope, no new acceptance/count or global qualification.",
+        "Original historical failures and nonexecution/live/native limits remain; new setup/login commands not executed."
+      ],
+      "currentReaderReceiptHashes": {
+        "reader-artifact-6a4e6de6.json": "928659a6e303d4f55f7adf19487b081ba7cd5d9ac93a57757a117a3bc869bc41",
+        "reader-search-6a4e6de6.json": "f65734344ddbf315e22ea92246192f9ca609b27c2a1260abf38c119fbf91880d",
+        "reader-source-links-6a4e6de6.json": "e8f76d2730915a16c278d5193625994dfaa5c9246682733e98787895a7dbcc9a",
+        "reader-source-previews-6a4e6de6.json": "50943cd2626a1ed21b868860bf9c84dd0b2a4b8322f8ad249684afe6b4018988",
+        "reader-diagrams-6a4e6de6.json": "66f027803943f3133bb64af12d04b7db5814a63ed85f8fd846ce48daa890b976",
+        "browser-fourpage-6a4e6de6-v3/report.json": "d03007b18cf65ddbc087ffa8e6f7fe9c9a3d928edb259ecf9391eaa195ea16f3",
+        "browser-fourpage-6a4e6de6/report.json": "60709dc736f38de798094af5e26ac951a63891d293b4c39dae716a4c830252f5",
+        "reader-archive-6a4e6de6-verified.json": "b23b0d97cd57296f48dcae82538ac831d9b68ab18a1a57576685d3c1c93ec943",
+        "reader-preview-6a4e6de6.json": "d3e61efc0fb779556f009d358516597be91bec90ad72362a31b121633b2a5478",
+        "reader-extracted-artifact-6a4e6de6.json": "928659a6e303d4f55f7adf19487b081ba7cd5d9ac93a57757a117a3bc869bc41",
+        "reader-extracted-search-6a4e6de6.json": "f65734344ddbf315e22ea92246192f9ca609b27c2a1260abf38c119fbf91880d"
+      }
+    },
+    {
+      "recordId": "AP09-complete-developer-reader-contracts-20261021",
+      "originalRecordSha256": "eddbc907dc9beffd9327842a50ac816945e329eb2412e44b8ee6a840ff55a3fd",
+      "originalRevision": "7ef16585ba04eba3628cead304be85307436f091",
+      "revision": "6a4e6de68411c4fe21ddb10b003f17c979a67825",
+      "intersections": {
+        "pages": [
+          {
+            "declared": "docs/site/extend/developer-handbook.md",
+            "changed": "docs/site/extend/developer-handbook.md",
+            "relation": "exact"
+          }
+        ],
+        "sources": []
+      },
+      "reviewer": "/root/operator_acceptance; authored quickstart delta supported by independent /root review",
+      "review": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "verdict": "PASS",
+      "summary": "Corrects misleading Markdown-only staging description to the actual original publisher build: previews/diagrams/HTML/page records/report. Keeps separate checks and unexecuted/failed outcomes, owner cleanup and all outside procedure scopes. Two final Sourceboxes accurately separate map/input selector from current full build; no new combined execution proof. Root independent full bounded Source/procedure review supplies this correction. Actual original6a4normal Reader/five checks terminal0:177canonical187HTML240verifiedoutputs40834localtargets;12search;14851SourceLinks3977objects;411/411previewboxes1888excerpts983objects;27freshSVG. Actual focusedv3browser12page/84box/2search0findings0network, all177physical/staged/HTML/pageRecord bindings stable; oldfull7ef531/1233+6retakes and5543/42 retained only for exactunchanged scopes. Root visually viewed5real320viewport screenshots; bounded readability, not fullaccessibility. v2element screenshot timeout/incomplete1/28 retained separately. Current archive242safeunique members/19Sourceassets/extracted artifact+search0 and240byte-exactloopbackGET preserve delivery only.",
+      "proofs": [
+        "handoffs/pr13-finish-20261021/handbook-publication-build-root-review.json"
+      ],
+      "originalFieldsImmutable": [
+        "author",
+        "reviewer",
+        "checks",
+        "verdict",
+        "summary",
+        "limits",
+        "gateIds",
+        "requirementIds"
+      ],
+      "limits": [
+        "Preserves only original complete named record scope, no new acceptance/count or global qualification.",
+        "Original historical failures and nonexecution/live/native limits remain; new setup/login commands not executed."
+      ],
+      "currentReaderReceiptHashes": {
+        "reader-artifact-6a4e6de6.json": "928659a6e303d4f55f7adf19487b081ba7cd5d9ac93a57757a117a3bc869bc41",
+        "reader-search-6a4e6de6.json": "f65734344ddbf315e22ea92246192f9ca609b27c2a1260abf38c119fbf91880d",
+        "reader-source-links-6a4e6de6.json": "e8f76d2730915a16c278d5193625994dfaa5c9246682733e98787895a7dbcc9a",
+        "reader-source-previews-6a4e6de6.json": "50943cd2626a1ed21b868860bf9c84dd0b2a4b8322f8ad249684afe6b4018988",
+        "reader-diagrams-6a4e6de6.json": "66f027803943f3133bb64af12d04b7db5814a63ed85f8fd846ce48daa890b976",
+        "browser-fourpage-6a4e6de6-v3/report.json": "d03007b18cf65ddbc087ffa8e6f7fe9c9a3d928edb259ecf9391eaa195ea16f3",
+        "browser-fourpage-6a4e6de6/report.json": "60709dc736f38de798094af5e26ac951a63891d293b4c39dae716a4c830252f5",
+        "reader-archive-6a4e6de6-verified.json": "b23b0d97cd57296f48dcae82538ac831d9b68ab18a1a57576685d3c1c93ec943",
+        "reader-preview-6a4e6de6.json": "d3e61efc0fb779556f009d358516597be91bec90ad72362a31b121633b2a5478",
+        "reader-extracted-artifact-6a4e6de6.json": "928659a6e303d4f55f7adf19487b081ba7cd5d9ac93a57757a117a3bc869bc41",
+        "reader-extracted-search-6a4e6de6.json": "f65734344ddbf315e22ea92246192f9ca609b27c2a1260abf38c119fbf91880d"
+      }
+    },
+    {
+      "recordId": "AP09-complete-static-reader-search-20261021",
+      "originalRecordSha256": "d387d23eb78a9bd1a3bbd4dee539f404c025d56714a65650143fd949bc1a421d",
+      "originalRevision": "55496fa427f536fb9ad6c1a833a4da38dce4839f",
+      "revision": "6a4e6de68411c4fe21ddb10b003f17c979a67825",
+      "intersections": {
+        "pages": [
+          {
+            "declared": "docs/site/extend/developer-handbook.md",
+            "changed": "docs/site/extend/developer-handbook.md",
+            "relation": "exact"
+          },
+          {
+            "declared": "docs/site/reference/buster-suites.md",
+            "changed": "docs/site/reference/buster-suites.md",
+            "relation": "exact"
+          },
+          {
+            "declared": "docs/site/reference/sdk-exports.md",
+            "changed": "docs/site/reference/sdk-exports.md",
+            "relation": "exact"
+          },
+          {
+            "declared": "docs/site/use/quickstart.md",
+            "changed": "docs/site/use/quickstart.md",
+            "relation": "exact"
+          }
+        ],
+        "sources": []
+      },
+      "reviewer": "/root/operator_acceptance; authored quickstart delta supported by independent /root review",
+      "review": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "verdict": "PASS",
+      "summary": "Corrects misleading Markdown-only staging description to the actual original publisher build: previews/diagrams/HTML/page records/report. Keeps separate checks and unexecuted/failed outcomes, owner cleanup and all outside procedure scopes. Two final Sourceboxes accurately separate map/input selector from current full build; no new combined execution proof. Root independent full bounded Source/procedure review supplies this correction. + Append-only demo-auth chapter adds protocol/cookie/partial-login recovery detail; all old page content outside insertion byte-exact. Workflow independent full source/consumer/schema review and corrected equality-string exception preserve the original Buster suite/workflow scope, without claiming login/session/native tests executed. + Two actual original SDK CLI stages plus installed original --check succeeded. Complete Markdown equals old bytes with2361revision-only substitutions; complete companion inventory differs only sourceRevision. All119exports/28support/551schemafacts/consumer meanings remain identical, backed by existing whole119Source scope and exact58current/7994bindings. No new runtime or full Program census claim. + Canonical locked include-dev installation and required module resolution repair the single independently identified A98 preparation gap. Root independently read full changed procedure/installed npm include+omit branches/handbook pattern and approved final non-execution metadata. All other task authorities retain exact prior behavior. Actual original6a4normal Reader/five checks terminal0:177canonical187HTML240verifiedoutputs40834localtargets;12search;14851SourceLinks3977objects;411/411previewboxes1888excerpts983objects;27freshSVG. Actual focusedv3browser12page/84box/2search0findings0network, all177physical/staged/HTML/pageRecord bindings stable; oldfull7ef531/1233+6retakes and5543/42 retained only for exactunchanged scopes. Root visually viewed5real320viewport screenshots; bounded readability, not fullaccessibility. v2element screenshot timeout/incomplete1/28 retained separately. Current archive242safeunique members/19Sourceassets/extracted artifact+search0 and240byte-exactloopbackGET preserve delivery only.",
+      "proofs": [
+        "handoffs/pr13-finish-20261021/handbook-publication-build-root-review.json",
+        "handoffs/pr13-finish-20261021/demo-auth-chapter-review.json",
+        "handoffs/pr13-finish-20261021/sdk9f4-independent-result-review.json",
+        "handoffs/pr13-finish-20261021/quickstart-prerequisite-root-review.json"
+      ],
+      "originalFieldsImmutable": [
+        "author",
+        "reviewer",
+        "checks",
+        "verdict",
+        "summary",
+        "limits",
+        "gateIds",
+        "requirementIds"
+      ],
+      "limits": [
+        "Preserves only original complete named record scope, no new acceptance/count or global qualification.",
+        "Original historical failures and nonexecution/live/native limits remain; new setup/login commands not executed."
+      ],
+      "currentReaderReceiptHashes": {
+        "reader-artifact-6a4e6de6.json": "928659a6e303d4f55f7adf19487b081ba7cd5d9ac93a57757a117a3bc869bc41",
+        "reader-search-6a4e6de6.json": "f65734344ddbf315e22ea92246192f9ca609b27c2a1260abf38c119fbf91880d",
+        "reader-source-links-6a4e6de6.json": "e8f76d2730915a16c278d5193625994dfaa5c9246682733e98787895a7dbcc9a",
+        "reader-source-previews-6a4e6de6.json": "50943cd2626a1ed21b868860bf9c84dd0b2a4b8322f8ad249684afe6b4018988",
+        "reader-diagrams-6a4e6de6.json": "66f027803943f3133bb64af12d04b7db5814a63ed85f8fd846ce48daa890b976",
+        "browser-fourpage-6a4e6de6-v3/report.json": "d03007b18cf65ddbc087ffa8e6f7fe9c9a3d928edb259ecf9391eaa195ea16f3",
+        "browser-fourpage-6a4e6de6/report.json": "60709dc736f38de798094af5e26ac951a63891d293b4c39dae716a4c830252f5",
+        "reader-archive-6a4e6de6-verified.json": "b23b0d97cd57296f48dcae82538ac831d9b68ab18a1a57576685d3c1c93ec943",
+        "reader-preview-6a4e6de6.json": "d3e61efc0fb779556f009d358516597be91bec90ad72362a31b121633b2a5478",
+        "reader-extracted-artifact-6a4e6de6.json": "928659a6e303d4f55f7adf19487b081ba7cd5d9ac93a57757a117a3bc869bc41",
+        "reader-extracted-search-6a4e6de6.json": "f65734344ddbf315e22ea92246192f9ca609b27c2a1260abf38c119fbf91880d"
+      }
+    },
+    {
+      "recordId": "AP09-complete-static-offline-fallback-20261021",
+      "originalRecordSha256": "681e56aa93df93a9d007d34b3ad77d5c9d974a1fbd943718060fcfbf07f60234",
+      "originalRevision": "7ef16585ba04eba3628cead304be85307436f091",
+      "revision": "6a4e6de68411c4fe21ddb10b003f17c979a67825",
+      "intersections": {
+        "pages": [
+          {
+            "declared": "docs/site/extend/developer-handbook.md",
+            "changed": "docs/site/extend/developer-handbook.md",
+            "relation": "exact"
+          }
+        ],
+        "sources": []
+      },
+      "reviewer": "/root/operator_acceptance; authored quickstart delta supported by independent /root review",
+      "review": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "verdict": "PASS",
+      "summary": "Corrects misleading Markdown-only staging description to the actual original publisher build: previews/diagrams/HTML/page records/report. Keeps separate checks and unexecuted/failed outcomes, owner cleanup and all outside procedure scopes. Two final Sourceboxes accurately separate map/input selector from current full build; no new combined execution proof. Root independent full bounded Source/procedure review supplies this correction. Actual original6a4normal Reader/five checks terminal0:177canonical187HTML240verifiedoutputs40834localtargets;12search;14851SourceLinks3977objects;411/411previewboxes1888excerpts983objects;27freshSVG. Actual focusedv3browser12page/84box/2search0findings0network, all177physical/staged/HTML/pageRecord bindings stable; oldfull7ef531/1233+6retakes and5543/42 retained only for exactunchanged scopes. Root visually viewed5real320viewport screenshots; bounded readability, not fullaccessibility. v2element screenshot timeout/incomplete1/28 retained separately. Current archive242safeunique members/19Sourceassets/extracted artifact+search0 and240byte-exactloopbackGET preserve delivery only.",
+      "proofs": [
+        "handoffs/pr13-finish-20261021/handbook-publication-build-root-review.json"
+      ],
+      "originalFieldsImmutable": [
+        "author",
+        "reviewer",
+        "checks",
+        "verdict",
+        "summary",
+        "limits",
+        "gateIds",
+        "requirementIds"
+      ],
+      "limits": [
+        "Preserves only original complete named record scope, no new acceptance/count or global qualification.",
+        "Original historical failures and nonexecution/live/native limits remain; new setup/login commands not executed."
+      ],
+      "currentReaderReceiptHashes": {
+        "reader-artifact-6a4e6de6.json": "928659a6e303d4f55f7adf19487b081ba7cd5d9ac93a57757a117a3bc869bc41",
+        "reader-search-6a4e6de6.json": "f65734344ddbf315e22ea92246192f9ca609b27c2a1260abf38c119fbf91880d",
+        "reader-source-links-6a4e6de6.json": "e8f76d2730915a16c278d5193625994dfaa5c9246682733e98787895a7dbcc9a",
+        "reader-source-previews-6a4e6de6.json": "50943cd2626a1ed21b868860bf9c84dd0b2a4b8322f8ad249684afe6b4018988",
+        "reader-diagrams-6a4e6de6.json": "66f027803943f3133bb64af12d04b7db5814a63ed85f8fd846ce48daa890b976",
+        "browser-fourpage-6a4e6de6-v3/report.json": "d03007b18cf65ddbc087ffa8e6f7fe9c9a3d928edb259ecf9391eaa195ea16f3",
+        "browser-fourpage-6a4e6de6/report.json": "60709dc736f38de798094af5e26ac951a63891d293b4c39dae716a4c830252f5",
+        "reader-archive-6a4e6de6-verified.json": "b23b0d97cd57296f48dcae82538ac831d9b68ab18a1a57576685d3c1c93ec943",
+        "reader-preview-6a4e6de6.json": "d3e61efc0fb779556f009d358516597be91bec90ad72362a31b121633b2a5478",
+        "reader-extracted-artifact-6a4e6de6.json": "928659a6e303d4f55f7adf19487b081ba7cd5d9ac93a57757a117a3bc869bc41",
+        "reader-extracted-search-6a4e6de6.json": "f65734344ddbf315e22ea92246192f9ca609b27c2a1260abf38c119fbf91880d"
+      }
+    },
+    {
+      "recordId": "A910-01-whole-content-20261021",
+      "originalRecordSha256": "d27a71c2aa01e1cb0edc0857c460603e392f42c2d03fee6e28108106f3ab1134",
+      "originalRevision": "d0bb52c4d8bcf323c0ff32b95e8e3120ffa6eefb",
+      "revision": "6a4e6de68411c4fe21ddb10b003f17c979a67825",
+      "intersections": {
+        "pages": [
+          {
+            "declared": "docs/site/extend/developer-handbook.md",
+            "changed": "docs/site/extend/developer-handbook.md",
+            "relation": "exact"
+          }
+        ],
+        "sources": []
+      },
+      "reviewer": "/root/operator_acceptance; authored quickstart delta supported by independent /root review",
+      "review": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "verdict": "PASS",
+      "summary": "Corrects misleading Markdown-only staging description to the actual original publisher build: previews/diagrams/HTML/page records/report. Keeps separate checks and unexecuted/failed outcomes, owner cleanup and all outside procedure scopes. Two final Sourceboxes accurately separate map/input selector from current full build; no new combined execution proof. Root independent full bounded Source/procedure review supplies this correction. Actual original6a4normal Reader/five checks terminal0:177canonical187HTML240verifiedoutputs40834localtargets;12search;14851SourceLinks3977objects;411/411previewboxes1888excerpts983objects;27freshSVG. Actual focusedv3browser12page/84box/2search0findings0network, all177physical/staged/HTML/pageRecord bindings stable; oldfull7ef531/1233+6retakes and5543/42 retained only for exactunchanged scopes. Root visually viewed5real320viewport screenshots; bounded readability, not fullaccessibility. v2element screenshot timeout/incomplete1/28 retained separately. Current archive242safeunique members/19Sourceassets/extracted artifact+search0 and240byte-exactloopbackGET preserve delivery only.",
+      "proofs": [
+        "handoffs/pr13-finish-20261021/handbook-publication-build-root-review.json"
+      ],
+      "originalFieldsImmutable": [
+        "author",
+        "reviewer",
+        "checks",
+        "verdict",
+        "summary",
+        "limits",
+        "gateIds",
+        "requirementIds"
+      ],
+      "limits": [
+        "Preserves only original complete named record scope, no new acceptance/count or global qualification.",
+        "Original historical failures and nonexecution/live/native limits remain; new setup/login commands not executed."
+      ],
+      "currentReaderReceiptHashes": {
+        "reader-artifact-6a4e6de6.json": "928659a6e303d4f55f7adf19487b081ba7cd5d9ac93a57757a117a3bc869bc41",
+        "reader-search-6a4e6de6.json": "f65734344ddbf315e22ea92246192f9ca609b27c2a1260abf38c119fbf91880d",
+        "reader-source-links-6a4e6de6.json": "e8f76d2730915a16c278d5193625994dfaa5c9246682733e98787895a7dbcc9a",
+        "reader-source-previews-6a4e6de6.json": "50943cd2626a1ed21b868860bf9c84dd0b2a4b8322f8ad249684afe6b4018988",
+        "reader-diagrams-6a4e6de6.json": "66f027803943f3133bb64af12d04b7db5814a63ed85f8fd846ce48daa890b976",
+        "browser-fourpage-6a4e6de6-v3/report.json": "d03007b18cf65ddbc087ffa8e6f7fe9c9a3d928edb259ecf9391eaa195ea16f3",
+        "browser-fourpage-6a4e6de6/report.json": "60709dc736f38de798094af5e26ac951a63891d293b4c39dae716a4c830252f5",
+        "reader-archive-6a4e6de6-verified.json": "b23b0d97cd57296f48dcae82538ac831d9b68ab18a1a57576685d3c1c93ec943",
+        "reader-preview-6a4e6de6.json": "d3e61efc0fb779556f009d358516597be91bec90ad72362a31b121633b2a5478",
+        "reader-extracted-artifact-6a4e6de6.json": "928659a6e303d4f55f7adf19487b081ba7cd5d9ac93a57757a117a3bc869bc41",
+        "reader-extracted-search-6a4e6de6.json": "f65734344ddbf315e22ea92246192f9ca609b27c2a1260abf38c119fbf91880d"
+      }
+    },
+    {
+      "recordId": "A910-11-whole-content-20261021",
+      "originalRecordSha256": "ffa2d676e889ccb5926ba3beb4eaf264877493f05b1816a150c16100546db0fc",
+      "originalRevision": "7ef16585ba04eba3628cead304be85307436f091",
+      "revision": "6a4e6de68411c4fe21ddb10b003f17c979a67825",
+      "intersections": {
+        "pages": [
+          {
+            "declared": "docs/site/extend/developer-handbook.md",
+            "changed": "docs/site/extend/developer-handbook.md",
+            "relation": "exact"
+          }
+        ],
+        "sources": []
+      },
+      "reviewer": "/root/operator_acceptance; authored quickstart delta supported by independent /root review",
+      "review": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "verdict": "PASS",
+      "summary": "Corrects misleading Markdown-only staging description to the actual original publisher build: previews/diagrams/HTML/page records/report. Keeps separate checks and unexecuted/failed outcomes, owner cleanup and all outside procedure scopes. Two final Sourceboxes accurately separate map/input selector from current full build; no new combined execution proof. Root independent full bounded Source/procedure review supplies this correction. Actual original6a4normal Reader/five checks terminal0:177canonical187HTML240verifiedoutputs40834localtargets;12search;14851SourceLinks3977objects;411/411previewboxes1888excerpts983objects;27freshSVG. Actual focusedv3browser12page/84box/2search0findings0network, all177physical/staged/HTML/pageRecord bindings stable; oldfull7ef531/1233+6retakes and5543/42 retained only for exactunchanged scopes. Root visually viewed5real320viewport screenshots; bounded readability, not fullaccessibility. v2element screenshot timeout/incomplete1/28 retained separately. Current archive242safeunique members/19Sourceassets/extracted artifact+search0 and240byte-exactloopbackGET preserve delivery only.",
+      "proofs": [
+        "handoffs/pr13-finish-20261021/handbook-publication-build-root-review.json"
+      ],
+      "originalFieldsImmutable": [
+        "author",
+        "reviewer",
+        "checks",
+        "verdict",
+        "summary",
+        "limits",
+        "gateIds",
+        "requirementIds"
+      ],
+      "limits": [
+        "Preserves only original complete named record scope, no new acceptance/count or global qualification.",
+        "Original historical failures and nonexecution/live/native limits remain; new setup/login commands not executed."
+      ],
+      "currentReaderReceiptHashes": {
+        "reader-artifact-6a4e6de6.json": "928659a6e303d4f55f7adf19487b081ba7cd5d9ac93a57757a117a3bc869bc41",
+        "reader-search-6a4e6de6.json": "f65734344ddbf315e22ea92246192f9ca609b27c2a1260abf38c119fbf91880d",
+        "reader-source-links-6a4e6de6.json": "e8f76d2730915a16c278d5193625994dfaa5c9246682733e98787895a7dbcc9a",
+        "reader-source-previews-6a4e6de6.json": "50943cd2626a1ed21b868860bf9c84dd0b2a4b8322f8ad249684afe6b4018988",
+        "reader-diagrams-6a4e6de6.json": "66f027803943f3133bb64af12d04b7db5814a63ed85f8fd846ce48daa890b976",
+        "browser-fourpage-6a4e6de6-v3/report.json": "d03007b18cf65ddbc087ffa8e6f7fe9c9a3d928edb259ecf9391eaa195ea16f3",
+        "browser-fourpage-6a4e6de6/report.json": "60709dc736f38de798094af5e26ac951a63891d293b4c39dae716a4c830252f5",
+        "reader-archive-6a4e6de6-verified.json": "b23b0d97cd57296f48dcae82538ac831d9b68ab18a1a57576685d3c1c93ec943",
+        "reader-preview-6a4e6de6.json": "d3e61efc0fb779556f009d358516597be91bec90ad72362a31b121633b2a5478",
+        "reader-extracted-artifact-6a4e6de6.json": "928659a6e303d4f55f7adf19487b081ba7cd5d9ac93a57757a117a3bc869bc41",
+        "reader-extracted-search-6a4e6de6.json": "f65734344ddbf315e22ea92246192f9ca609b27c2a1260abf38c119fbf91880d"
+      }
+    },
+    {
+      "recordId": "A99-01-whole-recursive-input-content-20261021",
+      "originalRecordSha256": "8d98d45ce2ea0d164ead67053169fddbc7bbbade12dba137f21038670c38654e",
+      "originalRevision": "7ef16585ba04eba3628cead304be85307436f091",
+      "revision": "6a4e6de68411c4fe21ddb10b003f17c979a67825",
+      "intersections": {
+        "pages": [
+          {
+            "declared": "docs/site/reference/buster-suites.md",
+            "changed": "docs/site/reference/buster-suites.md",
+            "relation": "exact"
+          }
+        ],
+        "sources": []
+      },
+      "reviewer": "/root/operator_acceptance; authored quickstart delta supported by independent /root review",
+      "review": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "verdict": "PASS",
+      "summary": "Append-only demo-auth chapter adds protocol/cookie/partial-login recovery detail; all old page content outside insertion byte-exact. Workflow independent full source/consumer/schema review and corrected equality-string exception preserve the original Buster suite/workflow scope, without claiming login/session/native tests executed. Actual original6a4normal Reader/five checks terminal0:177canonical187HTML240verifiedoutputs40834localtargets;12search;14851SourceLinks3977objects;411/411previewboxes1888excerpts983objects;27freshSVG. Actual focusedv3browser12page/84box/2search0findings0network, all177physical/staged/HTML/pageRecord bindings stable; oldfull7ef531/1233+6retakes and5543/42 retained only for exactunchanged scopes. Root visually viewed5real320viewport screenshots; bounded readability, not fullaccessibility. v2element screenshot timeout/incomplete1/28 retained separately. Current archive242safeunique members/19Sourceassets/extracted artifact+search0 and240byte-exactloopbackGET preserve delivery only.",
+      "proofs": [
+        "handoffs/pr13-finish-20261021/demo-auth-chapter-review.json"
+      ],
+      "originalFieldsImmutable": [
+        "author",
+        "reviewer",
+        "checks",
+        "verdict",
+        "summary",
+        "limits",
+        "gateIds",
+        "requirementIds"
+      ],
+      "limits": [
+        "Preserves only original complete named record scope, no new acceptance/count or global qualification.",
+        "Original historical failures and nonexecution/live/native limits remain; new setup/login commands not executed."
+      ],
+      "currentReaderReceiptHashes": {
+        "reader-artifact-6a4e6de6.json": "928659a6e303d4f55f7adf19487b081ba7cd5d9ac93a57757a117a3bc869bc41",
+        "reader-search-6a4e6de6.json": "f65734344ddbf315e22ea92246192f9ca609b27c2a1260abf38c119fbf91880d",
+        "reader-source-links-6a4e6de6.json": "e8f76d2730915a16c278d5193625994dfaa5c9246682733e98787895a7dbcc9a",
+        "reader-source-previews-6a4e6de6.json": "50943cd2626a1ed21b868860bf9c84dd0b2a4b8322f8ad249684afe6b4018988",
+        "reader-diagrams-6a4e6de6.json": "66f027803943f3133bb64af12d04b7db5814a63ed85f8fd846ce48daa890b976",
+        "browser-fourpage-6a4e6de6-v3/report.json": "d03007b18cf65ddbc087ffa8e6f7fe9c9a3d928edb259ecf9391eaa195ea16f3",
+        "browser-fourpage-6a4e6de6/report.json": "60709dc736f38de798094af5e26ac951a63891d293b4c39dae716a4c830252f5",
+        "reader-archive-6a4e6de6-verified.json": "b23b0d97cd57296f48dcae82538ac831d9b68ab18a1a57576685d3c1c93ec943",
+        "reader-preview-6a4e6de6.json": "d3e61efc0fb779556f009d358516597be91bec90ad72362a31b121633b2a5478",
+        "reader-extracted-artifact-6a4e6de6.json": "928659a6e303d4f55f7adf19487b081ba7cd5d9ac93a57757a117a3bc869bc41",
+        "reader-extracted-search-6a4e6de6.json": "f65734344ddbf315e22ea92246192f9ca609b27c2a1260abf38c119fbf91880d"
+      }
+    },
+    {
+      "recordId": "A99-07-representative-buster-workflow-content-20261021",
+      "originalRecordSha256": "0a42a7155596718fbc8626960b5e5095e30cda0bd86a7701ecc238217db32b49",
+      "originalRevision": "7ef16585ba04eba3628cead304be85307436f091",
+      "revision": "6a4e6de68411c4fe21ddb10b003f17c979a67825",
+      "intersections": {
+        "pages": [
+          {
+            "declared": "docs/site/reference/buster-suites.md",
+            "changed": "docs/site/reference/buster-suites.md",
+            "relation": "exact"
+          }
+        ],
+        "sources": []
+      },
+      "reviewer": "/root/operator_acceptance; authored quickstart delta supported by independent /root review",
+      "review": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "verdict": "PASS",
+      "summary": "Append-only demo-auth chapter adds protocol/cookie/partial-login recovery detail; all old page content outside insertion byte-exact. Workflow independent full source/consumer/schema review and corrected equality-string exception preserve the original Buster suite/workflow scope, without claiming login/session/native tests executed. Actual original6a4normal Reader/five checks terminal0:177canonical187HTML240verifiedoutputs40834localtargets;12search;14851SourceLinks3977objects;411/411previewboxes1888excerpts983objects;27freshSVG. Actual focusedv3browser12page/84box/2search0findings0network, all177physical/staged/HTML/pageRecord bindings stable; oldfull7ef531/1233+6retakes and5543/42 retained only for exactunchanged scopes. Root visually viewed5real320viewport screenshots; bounded readability, not fullaccessibility. v2element screenshot timeout/incomplete1/28 retained separately. Current archive242safeunique members/19Sourceassets/extracted artifact+search0 and240byte-exactloopbackGET preserve delivery only.",
+      "proofs": [
+        "handoffs/pr13-finish-20261021/demo-auth-chapter-review.json"
+      ],
+      "originalFieldsImmutable": [
+        "author",
+        "reviewer",
+        "checks",
+        "verdict",
+        "summary",
+        "limits",
+        "gateIds",
+        "requirementIds"
+      ],
+      "limits": [
+        "Preserves only original complete named record scope, no new acceptance/count or global qualification.",
+        "Original historical failures and nonexecution/live/native limits remain; new setup/login commands not executed."
+      ],
+      "currentReaderReceiptHashes": {
+        "reader-artifact-6a4e6de6.json": "928659a6e303d4f55f7adf19487b081ba7cd5d9ac93a57757a117a3bc869bc41",
+        "reader-search-6a4e6de6.json": "f65734344ddbf315e22ea92246192f9ca609b27c2a1260abf38c119fbf91880d",
+        "reader-source-links-6a4e6de6.json": "e8f76d2730915a16c278d5193625994dfaa5c9246682733e98787895a7dbcc9a",
+        "reader-source-previews-6a4e6de6.json": "50943cd2626a1ed21b868860bf9c84dd0b2a4b8322f8ad249684afe6b4018988",
+        "reader-diagrams-6a4e6de6.json": "66f027803943f3133bb64af12d04b7db5814a63ed85f8fd846ce48daa890b976",
+        "browser-fourpage-6a4e6de6-v3/report.json": "d03007b18cf65ddbc087ffa8e6f7fe9c9a3d928edb259ecf9391eaa195ea16f3",
+        "browser-fourpage-6a4e6de6/report.json": "60709dc736f38de798094af5e26ac951a63891d293b4c39dae716a4c830252f5",
+        "reader-archive-6a4e6de6-verified.json": "b23b0d97cd57296f48dcae82538ac831d9b68ab18a1a57576685d3c1c93ec943",
+        "reader-preview-6a4e6de6.json": "d3e61efc0fb779556f009d358516597be91bec90ad72362a31b121633b2a5478",
+        "reader-extracted-artifact-6a4e6de6.json": "928659a6e303d4f55f7adf19487b081ba7cd5d9ac93a57757a117a3bc869bc41",
+        "reader-extracted-search-6a4e6de6.json": "f65734344ddbf315e22ea92246192f9ca609b27c2a1260abf38c119fbf91880d"
+      }
+    },
+    {
+      "recordId": "AP09-publication-positive-scope-7ef16585",
+      "originalRecordSha256": "8bf134577afea5697132704591b66208eaac2491d56816482defae907f06fba7",
+      "originalRevision": "55496fa427f536fb9ad6c1a833a4da38dce4839f",
+      "revision": "6a4e6de68411c4fe21ddb10b003f17c979a67825",
+      "intersections": {
+        "pages": [
+          {
+            "declared": "docs/site/extend/developer-handbook.md",
+            "changed": "docs/site/extend/developer-handbook.md",
+            "relation": "exact"
+          },
+          {
+            "declared": "docs/site/reference/buster-suites.md",
+            "changed": "docs/site/reference/buster-suites.md",
+            "relation": "exact"
+          },
+          {
+            "declared": "docs/site/reference/sdk-exports.md",
+            "changed": "docs/site/reference/sdk-exports.md",
+            "relation": "exact"
+          },
+          {
+            "declared": "docs/site/use/quickstart.md",
+            "changed": "docs/site/use/quickstart.md",
+            "relation": "exact"
+          }
+        ],
+        "sources": []
+      },
+      "reviewer": "/root/operator_acceptance; authored quickstart delta supported by independent /root review",
+      "review": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "verdict": "PASS",
+      "summary": "Corrects misleading Markdown-only staging description to the actual original publisher build: previews/diagrams/HTML/page records/report. Keeps separate checks and unexecuted/failed outcomes, owner cleanup and all outside procedure scopes. Two final Sourceboxes accurately separate map/input selector from current full build; no new combined execution proof. Root independent full bounded Source/procedure review supplies this correction. + Append-only demo-auth chapter adds protocol/cookie/partial-login recovery detail; all old page content outside insertion byte-exact. Workflow independent full source/consumer/schema review and corrected equality-string exception preserve the original Buster suite/workflow scope, without claiming login/session/native tests executed. + Two actual original SDK CLI stages plus installed original --check succeeded. Complete Markdown equals old bytes with2361revision-only substitutions; complete companion inventory differs only sourceRevision. All119exports/28support/551schemafacts/consumer meanings remain identical, backed by existing whole119Source scope and exact58current/7994bindings. No new runtime or full Program census claim. + Canonical locked include-dev installation and required module resolution repair the single independently identified A98 preparation gap. Root independently read full changed procedure/installed npm include+omit branches/handbook pattern and approved final non-execution metadata. All other task authorities retain exact prior behavior. Actual original6a4normal Reader/five checks terminal0:177canonical187HTML240verifiedoutputs40834localtargets;12search;14851SourceLinks3977objects;411/411previewboxes1888excerpts983objects;27freshSVG. Actual focusedv3browser12page/84box/2search0findings0network, all177physical/staged/HTML/pageRecord bindings stable; oldfull7ef531/1233+6retakes and5543/42 retained only for exactunchanged scopes. Root visually viewed5real320viewport screenshots; bounded readability, not fullaccessibility. v2element screenshot timeout/incomplete1/28 retained separately. Current archive242safeunique members/19Sourceassets/extracted artifact+search0 and240byte-exactloopbackGET preserve delivery only.",
+      "proofs": [
+        "handoffs/pr13-finish-20261021/handbook-publication-build-root-review.json",
+        "handoffs/pr13-finish-20261021/demo-auth-chapter-review.json",
+        "handoffs/pr13-finish-20261021/sdk9f4-independent-result-review.json",
+        "handoffs/pr13-finish-20261021/quickstart-prerequisite-root-review.json"
+      ],
+      "originalFieldsImmutable": [
+        "author",
+        "reviewer",
+        "checks",
+        "verdict",
+        "summary",
+        "limits",
+        "gateIds",
+        "requirementIds"
+      ],
+      "limits": [
+        "Preserves only original complete named record scope, no new acceptance/count or global qualification.",
+        "Original historical failures and nonexecution/live/native limits remain; new setup/login commands not executed."
+      ],
+      "currentReaderReceiptHashes": {
+        "reader-artifact-6a4e6de6.json": "928659a6e303d4f55f7adf19487b081ba7cd5d9ac93a57757a117a3bc869bc41",
+        "reader-search-6a4e6de6.json": "f65734344ddbf315e22ea92246192f9ca609b27c2a1260abf38c119fbf91880d",
+        "reader-source-links-6a4e6de6.json": "e8f76d2730915a16c278d5193625994dfaa5c9246682733e98787895a7dbcc9a",
+        "reader-source-previews-6a4e6de6.json": "50943cd2626a1ed21b868860bf9c84dd0b2a4b8322f8ad249684afe6b4018988",
+        "reader-diagrams-6a4e6de6.json": "66f027803943f3133bb64af12d04b7db5814a63ed85f8fd846ce48daa890b976",
+        "browser-fourpage-6a4e6de6-v3/report.json": "d03007b18cf65ddbc087ffa8e6f7fe9c9a3d928edb259ecf9391eaa195ea16f3",
+        "browser-fourpage-6a4e6de6/report.json": "60709dc736f38de798094af5e26ac951a63891d293b4c39dae716a4c830252f5",
+        "reader-archive-6a4e6de6-verified.json": "b23b0d97cd57296f48dcae82538ac831d9b68ab18a1a57576685d3c1c93ec943",
+        "reader-preview-6a4e6de6.json": "d3e61efc0fb779556f009d358516597be91bec90ad72362a31b121633b2a5478",
+        "reader-extracted-artifact-6a4e6de6.json": "928659a6e303d4f55f7adf19487b081ba7cd5d9ac93a57757a117a3bc869bc41",
+        "reader-extracted-search-6a4e6de6.json": "f65734344ddbf315e22ea92246192f9ca609b27c2a1260abf38c119fbf91880d"
+      }
+    },
+    {
+      "recordId": "A912-05-whole-source-excerpt-callouts-20261022",
+      "originalRecordSha256": "c62bd99dabb3d47622f292c1ea9ef24315eff828bf66185f367692742a22b82f",
+      "originalRevision": "55496fa427f536fb9ad6c1a833a4da38dce4839f",
+      "revision": "6a4e6de68411c4fe21ddb10b003f17c979a67825",
+      "intersections": {
+        "pages": [
+          {
+            "declared": "docs/site/extend/developer-handbook.md",
+            "changed": "docs/site/extend/developer-handbook.md",
+            "relation": "exact"
+          }
+        ],
+        "sources": []
+      },
+      "reviewer": "/root/operator_acceptance; authored quickstart delta supported by independent /root review",
+      "review": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "verdict": "PASS",
+      "summary": "Corrects misleading Markdown-only staging description to the actual original publisher build: previews/diagrams/HTML/page records/report. Keeps separate checks and unexecuted/failed outcomes, owner cleanup and all outside procedure scopes. Two final Sourceboxes accurately separate map/input selector from current full build; no new combined execution proof. Root independent full bounded Source/procedure review supplies this correction. Actual original6a4normal Reader/five checks terminal0:177canonical187HTML240verifiedoutputs40834localtargets;12search;14851SourceLinks3977objects;411/411previewboxes1888excerpts983objects;27freshSVG. Actual focusedv3browser12page/84box/2search0findings0network, all177physical/staged/HTML/pageRecord bindings stable; oldfull7ef531/1233+6retakes and5543/42 retained only for exactunchanged scopes. Root visually viewed5real320viewport screenshots; bounded readability, not fullaccessibility. v2element screenshot timeout/incomplete1/28 retained separately. Current archive242safeunique members/19Sourceassets/extracted artifact+search0 and240byte-exactloopbackGET preserve delivery only.",
+      "proofs": [
+        "handoffs/pr13-finish-20261021/handbook-publication-build-root-review.json"
+      ],
+      "originalFieldsImmutable": [
+        "author",
+        "reviewer",
+        "checks",
+        "verdict",
+        "summary",
+        "limits",
+        "gateIds",
+        "requirementIds"
+      ],
+      "limits": [
+        "Preserves only original complete named record scope, no new acceptance/count or global qualification.",
+        "Original historical failures and nonexecution/live/native limits remain; new setup/login commands not executed."
+      ],
+      "currentReaderReceiptHashes": {
+        "reader-artifact-6a4e6de6.json": "928659a6e303d4f55f7adf19487b081ba7cd5d9ac93a57757a117a3bc869bc41",
+        "reader-search-6a4e6de6.json": "f65734344ddbf315e22ea92246192f9ca609b27c2a1260abf38c119fbf91880d",
+        "reader-source-links-6a4e6de6.json": "e8f76d2730915a16c278d5193625994dfaa5c9246682733e98787895a7dbcc9a",
+        "reader-source-previews-6a4e6de6.json": "50943cd2626a1ed21b868860bf9c84dd0b2a4b8322f8ad249684afe6b4018988",
+        "reader-diagrams-6a4e6de6.json": "66f027803943f3133bb64af12d04b7db5814a63ed85f8fd846ce48daa890b976",
+        "browser-fourpage-6a4e6de6-v3/report.json": "d03007b18cf65ddbc087ffa8e6f7fe9c9a3d928edb259ecf9391eaa195ea16f3",
+        "browser-fourpage-6a4e6de6/report.json": "60709dc736f38de798094af5e26ac951a63891d293b4c39dae716a4c830252f5",
+        "reader-archive-6a4e6de6-verified.json": "b23b0d97cd57296f48dcae82538ac831d9b68ab18a1a57576685d3c1c93ec943",
+        "reader-preview-6a4e6de6.json": "d3e61efc0fb779556f009d358516597be91bec90ad72362a31b121633b2a5478",
+        "reader-extracted-artifact-6a4e6de6.json": "928659a6e303d4f55f7adf19487b081ba7cd5d9ac93a57757a117a3bc869bc41",
+        "reader-extracted-search-6a4e6de6.json": "f65734344ddbf315e22ea92246192f9ca609b27c2a1260abf38c119fbf91880d"
+      }
+    }
+  ],
+  "originalObjectsFile": "original-records.json"
+}

@@ -1,0 +1,32 @@
+{
+  "priorFailureReport": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/browser-fourpage-6a4e6de6/report.json",
+  "sha256": "60709dc736f38de798094af5e26ac951a63891d293b4c39dae716a4c830252f5",
+  "actual": {
+    "terminal": "Root reports1",
+    "pageObservations": 1,
+    "boxObservations": 28,
+    "searches": 0,
+    "network": 0,
+    "findings": [
+      {
+        "kind": "fatal",
+        "name": "TimeoutError",
+        "message": "locator.screenshot: Timeout 9996.652ms exceeded.\nCall log:\n\u001b[2m  - taking element screenshot\u001b[22m\n\u001b[2m  - waiting for fonts to load...\u001b[22m\n\u001b[2m  - fonts loaded\u001b[22m\n\u001b[2m  - attempting scroll into view action\u001b[22m\n\u001b[2m    - waiting for element to be stable\u001b[22m\n",
+        "stack": "locator.screenshot: Timeout 9996.652ms exceeded.\nCall log:\n\u001b[2m  - taking element screenshot\u001b[22m\n\u001b[2m  - waiting for fonts to load...\u001b[22m\n\u001b[2m  - fonts loaded\u001b[22m\n\u001b[2m  - attempting scroll into view action\u001b[22m\n\u001b[2m    - waiting for element to be stable\u001b[22m\n\n    at /home/node/.openclaw/workspace/tmp/pr13-finish-20261021/browser-fourpage-6a4e6de6-author-v2/browser-fourpage.mjs:164:157"
+      },
+      {
+        "kind": "incomplete-page-census",
+        "actual": 1,
+        "expected": 12
+      },
+      {
+        "kind": "incomplete-box-census",
+        "actual": 28,
+        "expected": 84
+      }
+    ]
+  },
+  "boundedAssessment": "Original screenshot failed waiting for element stability after fonts loaded. Source27 already has visible/native keyboard/field/link/containment observations at320. Recorded horizontal bounds left16right304width288/client285/scroll285/page320 are contained. Height was not recorded, so no causal claim that it is oversized. The census is incomplete and v2 is not a successful Reader check.",
+  "successor": "Use native page viewport screenshot after the existing exact Source27 scroll. No DOM/style/HTML mutation, no disabled assertion and no result manufacture.",
+  "notExecuted": true
+}

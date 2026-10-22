@@ -1,0 +1,5 @@
+# V3 — one-receiver screenshot correction
+
+Preserve frozen v2 and its first actual failing report. V2 records1page/28boxes/no searches/no network before `locator.screenshot` times out waiting for element stability after fonts loaded. Its Source27 observations already show visible fields, native disclosure and contained horizontal bounds; height is not recorded, so this assessment does not infer a giant-box cause or content defect. Actual full census remains incomplete.
+
+V3 changes only `changedBox.screenshot` to native `page.screenshot` after the exact unchanged `changedBox.scrollIntoViewIfNeeded()` step. It captures the real current320px viewport rather than a full element image. All assertions, Source bindings, screenshot file/count, fresh-output guards, search checks and first-failure retention are unchanged. No HTML/DOM/style mutation or screenshot clipping rule is introduced. Syntax-only check is permitted; no preflight or browser launched here. Root must review the exact one-line patch before execution into a fresh evidence directory.

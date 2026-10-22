@@ -1,0 +1,11 @@
+--- a/frozen-v2/browser-fourpage.mjs
++++ b/frozen-v3/browser-fourpage.mjs
+@@ -161,7 +161,7 @@
+     }
+     if(width===320&&screenshots.has(p.page)){
+      // Five actual320px screenshots, not a new whole-site visual review.
+-     if(p.page==='docs/site/extend/developer-handbook.md'){const changedBox=all.nth(indexes[26]);await changedBox.scrollIntoViewIfNeeded();await changedBox.screenshot({path:path.join(output,'developer-handbook-source27-320.png')});}
++     if(p.page==='docs/site/extend/developer-handbook.md'){const changedBox=all.nth(indexes[26]);await changedBox.scrollIntoViewIfNeeded();await page.screenshot({path:path.join(output,'developer-handbook-source27-320.png')});}
+      else {
+       if(p.page==='docs/site/use/quickstart.md')await page.getByRole('heading',{name:'Locked Dependency Installation',exact:true}).scrollIntoViewIfNeeded();
+       if(p.page==='docs/site/reference/buster-suites.md')await page.getByRole('heading',{name:'Demo session protocol and partial-login recovery',exact:true}).scrollIntoViewIfNeeded();

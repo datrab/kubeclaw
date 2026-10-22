@@ -1,0 +1,17 @@
+{
+  "revision": "6a4e6de68411c4fe21ddb10b003f17c979a67825",
+  "archive": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/kubeclaw-reader-offline-6a4e6de6.zip",
+  "sha256": "4f40046ff3f3e644460694427170a9ef4d29a6cad5b35b3fafd3b74a450b4c57",
+  "bytes": 7895751,
+  "members": 242,
+  "copiedAssetsSourceCompared": 19,
+  "extracted": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/offline-reader-6a4e6de6",
+  "limit": "Checkpoint reader, not aggregate documentation or release acceptance.",
+  "safeUniqueRegularUnencryptedMembers": 242,
+  "allFreshExtractedBytesExact": true,
+  "normalExtractedArtifactAndSearchTerminals": [
+    0,
+    0
+  ],
+  "actualLoopbackAll240OutputsExactBytes": true
+}

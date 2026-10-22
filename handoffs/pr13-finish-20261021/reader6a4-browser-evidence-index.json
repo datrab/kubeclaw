@@ -1,0 +1,22 @@
+{
+  "actualAttempts": [
+    {
+      "report": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/browser-fourpage-6a4e6de6/report.json",
+      "sha256": "60709dc736f38de798094af5e26ac951a63891d293b4c39dae716a4c830252f5",
+      "terminal": 1,
+      "pages": 1,
+      "boxes": 28,
+      "disposition": "incomplete screenshot-stability timeout"
+    },
+    {
+      "report": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/browser-fourpage-6a4e6de6-v3/report.json",
+      "sha256": "d03007b18cf65ddbc087ffa8e6f7fe9c9a3d928edb259ecf9391eaa195ea16f3",
+      "terminal": 0,
+      "pages": 12,
+      "boxes": 84,
+      "searches": 2,
+      "findings": []
+    }
+  ],
+  "limit": "No historicalfullbrowser recount/globalaccessibility/Source/runtimegrant"
+}

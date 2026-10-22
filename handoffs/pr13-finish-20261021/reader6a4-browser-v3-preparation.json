@@ -1,0 +1,30 @@
+{
+  "status": "FROZEN_NOT_LAUNCHED_NO_ARTIFACT_PREFLIGHT",
+  "sourceRevision": "6a4e6de68411c4fe21ddb10b003f17c979a67825",
+  "scriptSha256": "a692a9a33c1c50ecaf6f2df5e3bc84b466f249023dbd18f3e3abe87085565f4b",
+  "ledgerSha256": "2387df30d3b1b4a0a5fb1b6b7a9a4127b1a6bb59e48e05309e176588f5901176",
+  "expected": {
+    "allPhysicalStagedHTMLPageRecordPreflight": 177,
+    "pageObservations": 12,
+    "boxObservations": 84,
+    "searches": 2,
+    "screenshots": 5
+  },
+  "limits": [
+    "Same reviewed real noJS native Enter/Source fields/links/containment mechanism; no DOM rewrite or network following.",
+    "Only static parse/syntax preparation; Root full diff review and immutable artifact path required before launch.",
+    "Old531/1233+6retakes and5543/42 retained only for unchanged scopes; no fresh whole-site accessibility/Source/gate acceptance."
+  ],
+  "priorFrozenV1ScriptSha256": "425860484fd586f977c8fb4006526116edf61ab28ad13a7f1f00551963950e47",
+  "changesFromV1": [
+    "Quickstart320viewport screenshot scrolls to exact existing Locked Dependency Installation heading.",
+    "Buster320viewport screenshot scrolls to exact existing Demo session protocol and partial-login recovery heading.",
+    "One additional Buster320viewport screenshot scrolls to existing exact Result or error table columnheader; no such section heading is invented.",
+    "Only screenshot locator behavior/comment/declared screenshot count changed; all177binding/preflight,12page/84box/2search assertion and report content remain unchanged."
+  ],
+  "priorFrozenV2ScriptSha256": "ba6c86599482f5e1ee64591d703894e0dc98bc0af89c1fba697e5f2b24d46d34",
+  "changesFromV2": [
+    "Only handbookSource27 screenshot receiver changed changedBox\u2192page after the same already-established native changedBox.scrollIntoViewIfNeeded().",
+    "Current viewport screenshot, not a complete element/fullpage image; filename and all assertions/census/binding/search checks unchanged."
+  ]
+}

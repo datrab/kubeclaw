@@ -1,0 +1,21 @@
+{
+  "status": "PASS_BOUNDED_RECORD_FORMAT_NORMALIZATION",
+  "reviewer": "/root/operator_acceptance",
+  "frozenCandidateSha256": "596bafb96afe869df9c4c6183ff03a3e7b8f855673444278bc12847824a0024c",
+  "affectedRecordIds": [
+    "A98-02-13-whole-operator-procedure-contract-20261022",
+    "A910-03-whole-command-prerequisite-contract-20261022",
+    "A910-04-whole-sdk-export-semantics-20261022"
+  ],
+  "normalization": "Move each original checks[0] human whole-Source/semantic walkthrough object to sourceReviewBasis, remove exitCode from that moved object, and preserve its exact command/observation as human review method/basis. Keep only actual original process receipt entries under checks.",
+  "reason": "An exitCode on a human review could imply a process was executed. No such process claim is supported. This is an evidence-format correction, not an audit rerun or removal of Source review.",
+  "unchanged": [
+    "Complete Source/Reader/Quality whole criteria conclusions",
+    "Actual SDK stage/check, five Reader checks and focused browser receipts",
+    "Original frozen candidates and first evidence-format diagnostic",
+    "Exact four gate IDs, zero requirement IDs, nineteen preservation addenda and all original limits"
+  ],
+  "ninetyRecordScope": "Root separately independently recomputed all90original hashes and exact ownrevision intersections19affected/71unaffected; that corroborates the existing bounded scope, not new acceptance.",
+  "mainWrites": false,
+  "targetExecution": false
+}

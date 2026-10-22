@@ -1,0 +1,962 @@
+{
+  "status": "ROOT_INDEPENDENT_HASH_AND_LITERAL_SCOPE_COMPARISON_PASS_READER_FINAL_PENDING",
+  "revision": "6a4e6de68411c4fe21ddb10b003f17c979a67825",
+  "records": [
+    {
+      "id": "A911-03-REF-007-20261020",
+      "sha256": "f90ebab35414138319cccb9715ea2e7bda84db0ca5a3d6961a3236c2a9904a24",
+      "intersections": {
+        "pages": [],
+        "sources": []
+      },
+      "affected": false
+    },
+    {
+      "id": "AP09.1-ready-topics-20261020",
+      "sha256": "1ddadec8cf846994c33f6a9dc362852cfacf224180cc201e4ba58fe41e55a32e",
+      "intersections": {
+        "pages": [],
+        "sources": []
+      },
+      "affected": false
+    },
+    {
+      "id": "AP09.2-ready-topics-20261020",
+      "sha256": "12acd94d78311b1370b31c7068d08835d35e1029c3a5d3b7d874729125301e36",
+      "intersections": {
+        "pages": [],
+        "sources": []
+      },
+      "affected": false
+    },
+    {
+      "id": "AP09.4-ready-prism-topics-20261020",
+      "sha256": "6f0241dda1c1f547db3188aaad2e4d9198a350a8495eb8644984dd320abd2428",
+      "intersections": {
+        "pages": [],
+        "sources": []
+      },
+      "affected": false
+    },
+    {
+      "id": "AP09.5-ready-buster-core-change-20261020",
+      "sha256": "cc0d799f3f006be7def0c4a41e69d83da4891bc9cafa544eff85607110ff7197",
+      "intersections": {
+        "pages": [],
+        "sources": []
+      },
+      "affected": false
+    },
+    {
+      "id": "AP09.3-ready-worker-topics-20261020",
+      "sha256": "b44870d28737673d2dd4ee5dd849ec43e1a0355ae1eef7dccea051a2a0172797",
+      "intersections": {
+        "pages": [],
+        "sources": []
+      },
+      "affected": false
+    },
+    {
+      "id": "AP09.7-ready-platform-topics-20261020",
+      "sha256": "605d3127ea928d72606f959aa3919f942feb3eb2c5ca885ebf6ca59ee5f08f24",
+      "intersections": {
+        "pages": [],
+        "sources": []
+      },
+      "affected": false
+    },
+    {
+      "id": "AP09.7-ready-data-topics-20261020",
+      "sha256": "de4d9467d0ef138d91ab276cd890e349bd711fd8e3f3832b2891c7c39ee839b3",
+      "intersections": {
+        "pages": [],
+        "sources": []
+      },
+      "affected": false
+    },
+    {
+      "id": "Reviewed-corrections-20261020",
+      "sha256": "bd67d3440d1f9b8d1807e540bc47afe8d6c7e26a32b8850bc0004118e28075b2",
+      "intersections": {
+        "pages": [
+          {
+            "declared": "docs/site/reference/buster-suites.md",
+            "changed": "docs/site/reference/buster-suites.md",
+            "relation": "exact"
+          }
+        ],
+        "sources": []
+      },
+      "affected": true
+    },
+    {
+      "id": "AP09-reader-operators-20261020",
+      "sha256": "a315a3c17aaaef78d6390f6db70e9c0d3994d1825ff5d1460b1279e8715d36ce",
+      "intersections": {
+        "pages": [],
+        "sources": []
+      },
+      "affected": false
+    },
+    {
+      "id": "AP09-reader-workflows-20261020",
+      "sha256": "c3181d97016569d4043e589e51c9ca57972fb2d1dde5a1b699107c7c26ee527d",
+      "intersections": {
+        "pages": [],
+        "sources": []
+      },
+      "affected": false
+    },
+    {
+      "id": "AP09-reader-developers-20261020",
+      "sha256": "225e26a26682efa2a6e16136e1fd8b9aacd1d20a1c041423640542818139b034",
+      "intersections": {
+        "pages": [
+          {
+            "declared": "docs/site/extend/developer-handbook.md",
+            "changed": "docs/site/extend/developer-handbook.md",
+            "relation": "exact"
+          }
+        ],
+        "sources": []
+      },
+      "affected": true
+    },
+    {
+      "id": "AP09-reviewed-configuration-20261020",
+      "sha256": "382bf43ba225160f318d28bc4e3f44931d6faadc06264d3e174f23bb2a0694d7",
+      "intersections": {
+        "pages": [],
+        "sources": []
+      },
+      "affected": false
+    },
+    {
+      "id": "AP09-reviewed-reference-20261020",
+      "sha256": "b2f67c1dc8e0861f57aeac2095169465599aa857a319b580862defc521756c5e",
+      "intersections": {
+        "pages": [
+          {
+            "declared": "docs/site/reference/sdk-exports.md",
+            "changed": "docs/site/reference/sdk-exports.md",
+            "relation": "exact"
+          }
+        ],
+        "sources": []
+      },
+      "affected": true
+    },
+    {
+      "id": "AP09-reviewed-maintenance-20261020",
+      "sha256": "6642c50ad9b7dafedcc8da8bf7f508a78134a23f63c639dedf8db1d90e99b79e",
+      "intersections": {
+        "pages": [],
+        "sources": []
+      },
+      "affected": false
+    },
+    {
+      "id": "AP09-reviewed-publication-navigation-20261020",
+      "sha256": "3f8deaddf77aca5d036a3629c1dd9c6b5c4359bbd04bb4547b82400594542ac4",
+      "intersections": {
+        "pages": [
+          {
+            "declared": "docs/site/extend/developer-handbook.md",
+            "changed": "docs/site/extend/developer-handbook.md",
+            "relation": "exact"
+          }
+        ],
+        "sources": []
+      },
+      "affected": true
+    },
+    {
+      "id": "AP09-closeout-runtime-20261020",
+      "sha256": "e745327c7662109b5a5ac8074a79ad0405494034bb486c49e37f435440b853b7",
+      "intersections": {
+        "pages": [],
+        "sources": []
+      },
+      "affected": false
+    },
+    {
+      "id": "AP09-closeout-config-reference-20261020",
+      "sha256": "ba34b642a07518ba19fe392963b4361f632a36af623201ee57cc1e2d602ffaf4",
+      "intersections": {
+        "pages": [],
+        "sources": []
+      },
+      "affected": false
+    },
+    {
+      "id": "AP09-closeout-developer-maintenance-20261020",
+      "sha256": "bb4b8eab325b7b453f64f3270ea437ddf07c8b676732fe072b01cbe917f11ccd",
+      "intersections": {
+        "pages": [
+          {
+            "declared": "docs/site/extend/developer-handbook.md",
+            "changed": "docs/site/extend/developer-handbook.md",
+            "relation": "exact"
+          }
+        ],
+        "sources": []
+      },
+      "affected": true
+    },
+    {
+      "id": "AP09-closeout-ARC006-20261020",
+      "sha256": "2508bd6c838f7dae1a5fc25bd98c77f28d13b246f6a375bef900136c6abf5afb",
+      "intersections": {
+        "pages": [],
+        "sources": []
+      },
+      "affected": false
+    },
+    {
+      "id": "AP09-first-project-example-20261020",
+      "sha256": "d569334aa236f9be57606492eb46f0fc36cc20683560f6d21ca58e34f79c6bcd",
+      "intersections": {
+        "pages": [],
+        "sources": []
+      },
+      "affected": false
+    },
+    {
+      "id": "AP09-buster-lease-reference-20261020",
+      "sha256": "4a2b231e591979152d329899a963411db940fc8e23ad4f924f9876c0cae5d24a",
+      "intersections": {
+        "pages": [],
+        "sources": []
+      },
+      "affected": false
+    },
+    {
+      "id": "AP09-complete-public-cli-20261020",
+      "sha256": "0fbe248d9b5e525f0e3891f69cafe750d455991d22a8922c58267ea2bfaa9dec",
+      "intersections": {
+        "pages": [],
+        "sources": []
+      },
+      "affected": false
+    },
+    {
+      "id": "AP09-compiler-import-provider-diagnosis-20261021",
+      "sha256": "d21189e52150a759d8acafb3374411eeb27ac34b97a46f1394d1bec6c92a7ae4",
+      "intersections": {
+        "pages": [],
+        "sources": []
+      },
+      "affected": false
+    },
+    {
+      "id": "AP09-confidential-adapter-lifecycle-20261021",
+      "sha256": "92644ea121cc7d2db7b59e7e8d53701ce07e8f41f4a925f85fd10e2b0a32ff98",
+      "intersections": {
+        "pages": [],
+        "sources": []
+      },
+      "affected": false
+    },
+    {
+      "id": "AP09-selected-model-gateway-20261021",
+      "sha256": "0f5709e67d4c182915f8a88f4c57586188e368e6d8d6ca6c10c67dc343d5cd6e",
+      "intersections": {
+        "pages": [],
+        "sources": []
+      },
+      "affected": false
+    },
+    {
+      "id": "AP09-contributor-baselines-and-migrations-20261021",
+      "sha256": "e02878d36574bd59beaaf96d5f19fdff586df8dbfbbb49a8c09d6ea16832814c",
+      "intersections": {
+        "pages": [
+          {
+            "declared": "docs/site/extend/developer-handbook.md",
+            "changed": "docs/site/extend/developer-handbook.md",
+            "relation": "exact"
+          }
+        ],
+        "sources": []
+      },
+      "affected": true
+    },
+    {
+      "id": "AP09-install-maintenance-project-entry-20261021",
+      "sha256": "0ebcc07d89575a9ce855097313065e88ee72d2985d06901219efc78ba2abfb45",
+      "intersections": {
+        "pages": [
+          {
+            "declared": "docs/site/use/quickstart.md",
+            "changed": "docs/site/use/quickstart.md",
+            "relation": "exact"
+          }
+        ],
+        "sources": []
+      },
+      "affected": true
+    },
+    {
+      "id": "AP09-ops-mcp-complete-contract-20261021",
+      "sha256": "58d9b3be11743fc0e1029d043eb2d769e8809beb1ad7934cf9a714281b0bb5eb",
+      "intersections": {
+        "pages": [],
+        "sources": []
+      },
+      "affected": false
+    },
+    {
+      "id": "AP09-communication-complete-contracts-20261021",
+      "sha256": "6c8c73c71cbcefd337449acc3e738cfb473830d03f6f3ea60aa12c0b6c1c851c",
+      "intersections": {
+        "pages": [],
+        "sources": []
+      },
+      "affected": false
+    },
+    {
+      "id": "AP09-private-routes-complete-20261021",
+      "sha256": "89b84dcf134fc73b321a15ecda818d02753cee9d8306d65ff7d542a943d66f9e",
+      "intersections": {
+        "pages": [],
+        "sources": []
+      },
+      "affected": false
+    },
+    {
+      "id": "AP09-complete-state-content-20261021",
+      "sha256": "c1f2179bd2099036d550a887313c400aab2ac6d9ef541d120778645aca4c8d43",
+      "intersections": {
+        "pages": [],
+        "sources": []
+      },
+      "affected": false
+    },
+    {
+      "id": "AP09-decision-record-content-20261021",
+      "sha256": "12541bb7db3cda047128c08a3d15cc1072c11bb12a270cb22a5cfaa4ebc09b23",
+      "intersections": {
+        "pages": [],
+        "sources": []
+      },
+      "affected": false
+    },
+    {
+      "id": "AP09-documentation-agent-maintenance-20261021",
+      "sha256": "e47092dbc25e6a43d2d6036db4a34b200c381df4ada2077377180d2216a067d7",
+      "intersections": {
+        "pages": [
+          {
+            "declared": "docs/site/extend/developer-handbook.md",
+            "changed": "docs/site/extend/developer-handbook.md",
+            "relation": "exact"
+          }
+        ],
+        "sources": []
+      },
+      "affected": true
+    },
+    {
+      "id": "AP09-specialists-whole-gate-20261021",
+      "sha256": "27f6a07cb69919b8384f85c77ae36691f3419a87b8b96bc7830be463a097ed1b",
+      "intersections": {
+        "pages": [],
+        "sources": []
+      },
+      "affected": false
+    },
+    {
+      "id": "AP09-complete-platform-change-content-20261021",
+      "sha256": "edf02a5282b3c8496af74976a67846190ba48cab10d6d2ba90daf763c87e763b",
+      "intersections": {
+        "pages": [
+          {
+            "declared": "docs/site/extend/developer-handbook.md",
+            "changed": "docs/site/extend/developer-handbook.md",
+            "relation": "exact"
+          }
+        ],
+        "sources": []
+      },
+      "affected": true
+    },
+    {
+      "id": "AP09-registry-data-path-20261021",
+      "sha256": "7f4123e6a2db211c9c281f90d81b0a06b03905a94dfdf1614eab9de7fa8e0e0c",
+      "intersections": {
+        "pages": [],
+        "sources": []
+      },
+      "affected": false
+    },
+    {
+      "id": "AP09-studio-complete-journey-20261021",
+      "sha256": "69e8a88c205670570b9f95ba807cb1fce334a839e2427a2120db21b1402eae0c",
+      "intersections": {
+        "pages": [],
+        "sources": []
+      },
+      "affected": false
+    },
+    {
+      "id": "AP09-complete-plugin-maintenance-mechanisms-20261021",
+      "sha256": "d8e0d01211bcb8d9ba8df728acbbceaa3c51870c39e926d004c04edc256b3231",
+      "intersections": {
+        "pages": [],
+        "sources": []
+      },
+      "affected": false
+    },
+    {
+      "id": "AP09-litellm-complete-data-contract-20261021",
+      "sha256": "ab09331e30cbd403bc51c06674f8b0d86af27d8f93c4e796dd015edada57387f",
+      "intersections": {
+        "pages": [],
+        "sources": []
+      },
+      "affected": false
+    },
+    {
+      "id": "AP09-complete-publication-reference-navigation-20261021",
+      "sha256": "2423bc6bad0433c4fa0cfcc75091062b64868766d03ae9b3b7ed4fcfe9096ca4",
+      "intersections": {
+        "pages": [],
+        "sources": [
+          {
+            "declared": "docs/site/extend/developer-handbook.md",
+            "changed": "docs/site/extend/developer-handbook.md",
+            "relation": "exact"
+          }
+        ]
+      },
+      "affected": true
+    },
+    {
+      "id": "AP09-complete-developer-reader-contracts-20261021",
+      "sha256": "eddbc907dc9beffd9327842a50ac816945e329eb2412e44b8ee6a840ff55a3fd",
+      "intersections": {
+        "pages": [
+          {
+            "declared": "docs/site/extend/developer-handbook.md",
+            "changed": "docs/site/extend/developer-handbook.md",
+            "relation": "exact"
+          }
+        ],
+        "sources": []
+      },
+      "affected": true
+    },
+    {
+      "id": "AP09-complete-static-reader-search-20261021",
+      "sha256": "d387d23eb78a9bd1a3bbd4dee539f404c025d56714a65650143fd949bc1a421d",
+      "intersections": {
+        "pages": [
+          {
+            "declared": "docs/site/extend/developer-handbook.md",
+            "changed": "docs/site/extend/developer-handbook.md",
+            "relation": "exact"
+          },
+          {
+            "declared": "docs/site/reference/buster-suites.md",
+            "changed": "docs/site/reference/buster-suites.md",
+            "relation": "exact"
+          },
+          {
+            "declared": "docs/site/reference/sdk-exports.md",
+            "changed": "docs/site/reference/sdk-exports.md",
+            "relation": "exact"
+          },
+          {
+            "declared": "docs/site/use/quickstart.md",
+            "changed": "docs/site/use/quickstart.md",
+            "relation": "exact"
+          }
+        ],
+        "sources": []
+      },
+      "affected": true
+    },
+    {
+      "id": "AP09-search-reader-gate-20261021",
+      "sha256": "948abbac5de37eacdab82c3f852d16eb72352a1b4eb598bc71e46f238c52bc49",
+      "intersections": {
+        "pages": [],
+        "sources": []
+      },
+      "affected": false
+    },
+    {
+      "id": "AP09-rendered-source-bounds-gate-20261021",
+      "sha256": "0b13db19efbc12626100c1d239dce6ae8e13c532eb96488ff8504d4eaa8e6c8d",
+      "intersections": {
+        "pages": [],
+        "sources": []
+      },
+      "affected": false
+    },
+    {
+      "id": "AP09-complete-static-offline-fallback-20261021",
+      "sha256": "681e56aa93df93a9d007d34b3ad77d5c9d974a1fbd943718060fcfbf07f60234",
+      "intersections": {
+        "pages": [
+          {
+            "declared": "docs/site/extend/developer-handbook.md",
+            "changed": "docs/site/extend/developer-handbook.md",
+            "relation": "exact"
+          }
+        ],
+        "sources": []
+      },
+      "affected": true
+    },
+    {
+      "id": "AP09-complete-same-source-code-preview-20261021",
+      "sha256": "c442d367d972c32b855c4f62c3300d99babd00fa114de6557446abbfa6dd2470",
+      "intersections": {
+        "pages": [],
+        "sources": []
+      },
+      "affected": false
+    },
+    {
+      "id": "AP09-complete-responsive-reader-layout-20261021",
+      "sha256": "2b9a49d5447e3c48a4f18ec247553df28b53585dfb78978a87898af8cda712d4",
+      "intersections": {
+        "pages": [],
+        "sources": []
+      },
+      "affected": false
+    },
+    {
+      "id": "AP09-complete-source-backed-diagrams-20261021",
+      "sha256": "289f43f01bd639c3c3a54f6419dd975413441edf9145b036d4376c5b940bc4ec",
+      "intersections": {
+        "pages": [],
+        "sources": []
+      },
+      "affected": false
+    },
+    {
+      "id": "AP09-whole-platform-discovery-and-drift-20261021",
+      "sha256": "ec75e7c190a0088f79eaf75618aef7d6f24b0a07f50846d9219abc37e858d339",
+      "intersections": {
+        "pages": [],
+        "sources": []
+      },
+      "affected": false
+    },
+    {
+      "id": "AP09-whole-store-contract-20261021",
+      "sha256": "cb10362aab4c912876c1a62345d2e51314dcc45016b4a9e6e2197649128fc409",
+      "intersections": {
+        "pages": [],
+        "sources": []
+      },
+      "affected": false
+    },
+    {
+      "id": "AP09-whole-trust-and-spiffe-contract-20261021",
+      "sha256": "4b238e53382e4c7d4d9c1cafcbe13df3356de1596d9d842f6cf6cb9cb7e1584a",
+      "intersections": {
+        "pages": [],
+        "sources": []
+      },
+      "affected": false
+    },
+    {
+      "id": "AP09-whole-dependency-decision-traces-20261021",
+      "sha256": "88d375ddecccacac5584e373437e8bd73090c37dd193d4ae22577252eb892121",
+      "intersections": {
+        "pages": [],
+        "sources": []
+      },
+      "affected": false
+    },
+    {
+      "id": "AP09-whole-install-and-readiness-20261021",
+      "sha256": "5f3a36e1f11231013776a6bdea794e929453989ab4ca2b53a62f87307b14e11d",
+      "intersections": {
+        "pages": [],
+        "sources": []
+      },
+      "affected": false
+    },
+    {
+      "id": "AP09-whole-upgrade-and-retirement-20261021",
+      "sha256": "1e3c4924e8107000eba469d86fc2306a8b638ae50fdf3d1c50d4756a2d64d0ff",
+      "intersections": {
+        "pages": [],
+        "sources": []
+      },
+      "affected": false
+    },
+    {
+      "id": "AP09-whole-studio-demo-journey-20261021",
+      "sha256": "e14599bc0273c8a7ed5574cc16f183655adbca9fc222c0b4594658490e293757",
+      "intersections": {
+        "pages": [],
+        "sources": []
+      },
+      "affected": false
+    },
+    {
+      "id": "AP09-complete-event-producer-consumer-catalogue-20261021",
+      "sha256": "c2d7d478153f10f683d55772492d7cc18e68db44dafc4d2aaa5d66c3eeb151e1",
+      "intersections": {
+        "pages": [],
+        "sources": []
+      },
+      "affected": false
+    },
+    {
+      "id": "A99-02-whole-content-20261021",
+      "sha256": "61276695feb78df4903ec26adf47ede0992ce63e1073cf7cf556cfe767bc8a18",
+      "intersections": {
+        "pages": [],
+        "sources": []
+      },
+      "affected": false
+    },
+    {
+      "id": "A99-03-whole-content-20261021",
+      "sha256": "f055d2ddb1752aa5ffd8169580803af2127779865d688079977a41f431999bf6",
+      "intersections": {
+        "pages": [],
+        "sources": []
+      },
+      "affected": false
+    },
+    {
+      "id": "A99-04-whole-content-20261021",
+      "sha256": "ebdc251edd165f2c8b4a623c6c4105f4108ced00b3799ca4389346796713fc54",
+      "intersections": {
+        "pages": [],
+        "sources": []
+      },
+      "affected": false
+    },
+    {
+      "id": "A99-05-whole-content-20261021",
+      "sha256": "8a3000f50fc155236ee5ed887669c230d5e0ed3509aa9a6563e14397169e902f",
+      "intersections": {
+        "pages": [],
+        "sources": []
+      },
+      "affected": false
+    },
+    {
+      "id": "A910-01-whole-content-20261021",
+      "sha256": "d27a71c2aa01e1cb0edc0857c460603e392f42c2d03fee6e28108106f3ab1134",
+      "intersections": {
+        "pages": [
+          {
+            "declared": "docs/site/extend/developer-handbook.md",
+            "changed": "docs/site/extend/developer-handbook.md",
+            "relation": "exact"
+          }
+        ],
+        "sources": []
+      },
+      "affected": true
+    },
+    {
+      "id": "A910-11-whole-content-20261021",
+      "sha256": "ffa2d676e889ccb5926ba3beb4eaf264877493f05b1816a150c16100546db0fc",
+      "intersections": {
+        "pages": [
+          {
+            "declared": "docs/site/extend/developer-handbook.md",
+            "changed": "docs/site/extend/developer-handbook.md",
+            "relation": "exact"
+          }
+        ],
+        "sources": []
+      },
+      "affected": true
+    },
+    {
+      "id": "A99-01-whole-recursive-input-content-20261021",
+      "sha256": "8d98d45ce2ea0d164ead67053169fddbc7bbbade12dba137f21038670c38654e",
+      "intersections": {
+        "pages": [
+          {
+            "declared": "docs/site/reference/buster-suites.md",
+            "changed": "docs/site/reference/buster-suites.md",
+            "relation": "exact"
+          }
+        ],
+        "sources": []
+      },
+      "affected": true
+    },
+    {
+      "id": "AP09-whole-current-communication-union-20261021-d477",
+      "sha256": "b64bc3bbe51b3bc663990d9fb2b771cc309e76e523883dbda37ae284d4075d52",
+      "intersections": {
+        "pages": [],
+        "sources": []
+      },
+      "affected": false
+    },
+    {
+      "id": "AP09-whole-current-telemetry-union-20261021-d477",
+      "sha256": "e41207f35a5b41f32319752cf6f27058f8b3ca8709fa433a4de75788f65f70f1",
+      "intersections": {
+        "pages": [],
+        "sources": []
+      },
+      "affected": false
+    },
+    {
+      "id": "AP09-whole-independent-platform-decision-review-20261021-d477",
+      "sha256": "cdb63feaf8cd09352ca507433ad641dd906ef80d9593cf7128d95b77fcc80a12",
+      "intersections": {
+        "pages": [],
+        "sources": []
+      },
+      "affected": false
+    },
+    {
+      "id": "AP09-reference-network-paths-80178-20261021",
+      "sha256": "fdec911fd5e492741cb2f94e918f7c60cbac2925470d9839d7c076cd68cd9e6a",
+      "intersections": {
+        "pages": [],
+        "sources": []
+      },
+      "affected": false
+    },
+    {
+      "id": "AP09-reference-event-payloads-80178-20261021",
+      "sha256": "b3f46560d2f23d18c7aad3df822da1fd4ebe2b01212092749bb94d52b548a76d",
+      "intersections": {
+        "pages": [],
+        "sources": []
+      },
+      "affected": false
+    },
+    {
+      "id": "AP09-reference-stores-retention-80178-20261021",
+      "sha256": "93a92d7a71b0b53d169bf46eb0232063e0d20ce204126a6580488fbe0d1033c3",
+      "intersections": {
+        "pages": [],
+        "sources": []
+      },
+      "affected": false
+    },
+    {
+      "id": "FLW010-uncertain-effect-supported-boundary-20261021",
+      "sha256": "d3003029ffc9a7b596c62171db733b19a5a84b5b52fa78b3815995147717c885",
+      "intersections": {
+        "pages": [],
+        "sources": []
+      },
+      "affected": false
+    },
+    {
+      "id": "FLW014-plugin-operator-supported-lifecycle-20261021",
+      "sha256": "6a38bd01d9e1e05a325ff2fa59945e2f9780d6abcf4e1376144ae0ae734243cc",
+      "intersections": {
+        "pages": [],
+        "sources": []
+      },
+      "affected": false
+    },
+    {
+      "id": "FLW017-demo-supported-contract-and-live-gap-20261021",
+      "sha256": "bae11da9dbf5758864d00a9808ac60bfef317203d4ddb075f6fdbf7fb7454fe9",
+      "intersections": {
+        "pages": [],
+        "sources": []
+      },
+      "affected": false
+    },
+    {
+      "id": "A99-09-whole-workflow-security-content-20261021",
+      "sha256": "ca73574d8eb70ded48e393068c5dda74055db16f7f8df5cade9a5d8827c6dbc4",
+      "intersections": {
+        "pages": [],
+        "sources": []
+      },
+      "affected": false
+    },
+    {
+      "id": "A99-10-whole-workflow-compatibility-content-20261021",
+      "sha256": "1bfddf65842ed288271d26c9df3556032f1c530a49c83197ee2f0129f9855cc1",
+      "intersections": {
+        "pages": [],
+        "sources": []
+      },
+      "affected": false
+    },
+    {
+      "id": "FLW006-local-core-same-run-audit-artifact-telemetry-20261021",
+      "sha256": "67872b5f302b8b59657a7e689a9b83aa646973ad273d67c54361dd6db325c79b",
+      "intersections": {
+        "pages": [],
+        "sources": []
+      },
+      "affected": false
+    },
+    {
+      "id": "FLW001-A9906-exact-compile-obligation-20261021",
+      "sha256": "db08888466e99a02b1513bbcd25fac7787019400da9dcb711cf3d29182318a13",
+      "intersections": {
+        "pages": [],
+        "sources": []
+      },
+      "affected": false
+    },
+    {
+      "id": "A99-07-representative-buster-workflow-content-20261021",
+      "sha256": "0a42a7155596718fbc8626960b5e5095e30cda0bd86a7701ecc238217db32b49",
+      "intersections": {
+        "pages": [
+          {
+            "declared": "docs/site/reference/buster-suites.md",
+            "changed": "docs/site/reference/buster-suites.md",
+            "relation": "exact"
+          }
+        ],
+        "sources": []
+      },
+      "affected": true
+    },
+    {
+      "id": "REF010-current-contract-directions-20261021",
+      "sha256": "184937af4464dff88e63f06c9a0e685e367a05c4659b421070b09dd2f65ec0e0",
+      "intersections": {
+        "pages": [],
+        "sources": []
+      },
+      "affected": false
+    },
+    {
+      "id": "FLW007-supported-failure-task-20261021",
+      "sha256": "4e48e7db5693bf4eb505b5ba98559d7db50a4b2aa0c0d356c7f523400dcec41b",
+      "intersections": {
+        "pages": [],
+        "sources": []
+      },
+      "affected": false
+    },
+    {
+      "id": "FLW009-supported-failure-task-20261021",
+      "sha256": "32fd111b23c02dd453fe8336a68853c4f8517f8a9984d1468c46dc8a0c42ccf0",
+      "intersections": {
+        "pages": [],
+        "sources": []
+      },
+      "affected": false
+    },
+    {
+      "id": "FLW015-supported-failure-task-20261021",
+      "sha256": "af4218f1be8ee8c76b204f6de1f4d9835a58a62f4b63331f65105445f1b2a19f",
+      "intersections": {
+        "pages": [],
+        "sources": []
+      },
+      "affected": false
+    },
+    {
+      "id": "FLW016-supported-failure-task-20261021",
+      "sha256": "8c3e682c17ae4c30149736e4e8998909d552ffb6fc3c4359f257a598d63b4b21",
+      "intersections": {
+        "pages": [],
+        "sources": []
+      },
+      "affected": false
+    },
+    {
+      "id": "FLW012-supported-failure-task-20261021",
+      "sha256": "bbf428f15f28fc8aa674debc05a35fa3eb937bd8a9e694f2cad9d8c35f5ca990",
+      "intersections": {
+        "pages": [],
+        "sources": []
+      },
+      "affected": false
+    },
+    {
+      "id": "FLW013-supported-failure-task-20261021",
+      "sha256": "478091dab501be642f14131c2d5c43b29d37466228b2198e4521e6853a3083da",
+      "intersections": {
+        "pages": [],
+        "sources": []
+      },
+      "affected": false
+    },
+    {
+      "id": "A99-08-complete-supported-failure-journey-union-20261021",
+      "sha256": "66a0760ac14aa043cab9ff58ee35c4abf3c942b86fb353a05d633fef934dc9fd",
+      "intersections": {
+        "pages": [],
+        "sources": []
+      },
+      "affected": false
+    },
+    {
+      "id": "A912-03-supported-redirect-paths-20261021",
+      "sha256": "b939d83b6214e6890e340147f871f1259163e1a01b831a4e732d6d8b0e7c29b7",
+      "intersections": {
+        "pages": [],
+        "sources": []
+      },
+      "affected": false
+    },
+    {
+      "id": "A912-11-deterministic-page-records-20261022",
+      "sha256": "2c93a5724eb06a43f2079ffa16f08f76f435b45a7017d1f3157afe07ddd84a03",
+      "intersections": {
+        "pages": [],
+        "sources": []
+      },
+      "affected": false
+    },
+    {
+      "id": "AP09-publication-positive-scope-7ef16585",
+      "sha256": "8bf134577afea5697132704591b66208eaac2491d56816482defae907f06fba7",
+      "intersections": {
+        "pages": [
+          {
+            "declared": "docs/site/extend/developer-handbook.md",
+            "changed": "docs/site/extend/developer-handbook.md",
+            "relation": "exact"
+          },
+          {
+            "declared": "docs/site/reference/buster-suites.md",
+            "changed": "docs/site/reference/buster-suites.md",
+            "relation": "exact"
+          },
+          {
+            "declared": "docs/site/reference/sdk-exports.md",
+            "changed": "docs/site/reference/sdk-exports.md",
+            "relation": "exact"
+          },
+          {
+            "declared": "docs/site/use/quickstart.md",
+            "changed": "docs/site/use/quickstart.md",
+            "relation": "exact"
+          }
+        ],
+        "sources": []
+      },
+      "affected": true
+    },
+    {
+      "id": "A912-05-whole-source-excerpt-callouts-20261022",
+      "sha256": "c62bd99dabb3d47622f292c1ea9ef24315eff828bf66185f367692742a22b82f",
+      "intersections": {
+        "pages": [
+          {
+            "declared": "docs/site/extend/developer-handbook.md",
+            "changed": "docs/site/extend/developer-handbook.md",
+            "relation": "exact"
+          }
+        ],
+        "sources": []
+      },
+      "affected": true
+    }
+  ],
+  "initialDiagnostic": "First parent comparison used declaration/changedFiles shape instead of actual declared/changed/relation row shape; corrected schema comparison retains every exact and prefix occurrence. No product/input drift inferred.",
+  "limits": "All90originalfullrecords equal retainedobjects;19affected scopes independently recomputed. Does not replace per-topic semantic verdict or current final Reader adjudication; no newcounts."
+}
