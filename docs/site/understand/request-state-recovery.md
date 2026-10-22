@@ -36,11 +36,23 @@ That difference controls whether a retry is safe.
 
 > **Source evidence — durable run creation**
 >
+> **Claim:** Nova persists the fixed run inputs and ordered records before continued execution.
+>
+> **Implementation:** Run creation and transactional file journal below establish local replay inputs.
+>
+>
 > [`runNewPipeline()` writes graph and registry snapshots before execution](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/skills/nova/core/execution/engine-run.ts#L36-L43).
 >
 > [`FileJournal` appends sequenced JSON records and uses a file mutex for transactions](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/skills/nova/core/state/journal.ts#L21-L94).
 >
 > **Limit:** A durable local file still depends on the durability and protection of its mounted storage.
+>
+> **Contract or setting:** Run identity, graph/registry snapshot and sequenced journal records bind recovery.
+>
+> **Test evidence:** No fresh storage-fault or restart execution is established by these source links.
+>
+> **Revision:** `85e73b1885f04a9494f388cf6622ad0bde2db447`. Source bindings, not execution receipts.
+>
 
 ## Normal Path
 
@@ -108,7 +120,21 @@ Without it, two attempts could claim to test the same task while reading differe
 
 > **Source evidence — project admission**
 >
+> **Claim:** Project admission validates fixed source, repository/workspace paths, modules and final policy before graph execution.
+>
+> **Implementation:** compileProject below defines accepted project shape and compilation inputs.
+>
+>
 > [`compileProject()` validates the project shape, paths, revision, modules, and final policy](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/skills/nova/project/compiler.ts#L153-L192).
+>
+> **Contract or setting:** The supported project version, immutable revision and separated workspace roots must validate.
+>
+> **Test evidence:** No fresh invalid-project/path/revision rejection fixture ran for this source summary.
+>
+> **Revision:** `85e73b1885f04a9494f388cf6622ad0bde2db447`. Source bindings, not execution receipts.
+>
+> **Limit:** Accepted project syntax is not an executed implementation or final delivery result.
+>
 
 ### 2. Compile a Fixed Graph
 
@@ -125,9 +151,23 @@ This rule prevents a plugin from inventing later work during execution.
 
 > **Source evidence — real module chain**
 >
+> **Claim:** Compilation fixes the module chain and validates graph constraints before any stage executes.
+>
+> **Implementation:** Project compiler and graph builder below own stage construction and graph admission.
+>
+>
 > [The compiler emits implementation, lint, review, and quality stages with repair routes](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/skills/nova/project/compiler.ts#L60-L86).
 >
 > [`buildGraph()` validates limits, dependencies, cycles, activation, and remediation](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/skills/nova/core/execution/graph-build.ts#L8-L96).
+>
+> **Contract or setting:** Declared stages/dependencies, limits, activation and remediation edges must form a valid fixed graph.
+>
+> **Test evidence:** No fresh cycle, dependency or unsafe-repair-edge rejection test execution is claimed here.
+>
+> **Revision:** `85e73b1885f04a9494f388cf6622ad0bde2db447`. Source bindings, not execution receipts.
+>
+> **Limit:** A plugin cannot add undeclared later work merely by returning a stage result.
+>
 
 ### 3. Select and Start a Stage
 
@@ -143,9 +183,23 @@ Every effect request passes a second resource check.
 
 > **Source evidence — bounded invocation**
 >
+> **Claim:** Core starts one admitted active stage owner with a bounded attempt and leased capabilities.
+>
+> **Implementation:** StageExecutor and invocation context below bind execution, result validation and cleanup.
+>
+>
 > [`StageExecutor.execute()` requires an active owner, records the attempt, validates the result, and cleans up](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/skills/nova/core/execution/stage-executor.ts#L31-L52).
 >
 > [`createPluginInvocationContext()` checks the lease, capability grant, resource constraint, event namespace, and run ID](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/skills/nova/core/execution/context.ts#L34-L79).
+>
+> **Contract or setting:** Attempt deadline, active registration, lease and exact resource grant constrain invocation.
+>
+> **Test evidence:** No fresh inactive-owner, lease-expiry or missing-grant execution ran for this source summary.
+>
+> **Revision:** `85e73b1885f04a9494f388cf6622ad0bde2db447`. Source bindings, not execution receipts.
+>
+> **Limit:** An invoked stage does not receive a direct canonical lifecycle mutation method.
+>
 
 ### 4. Perform External Effects
 
@@ -166,9 +220,23 @@ A durable receipt prevents an automatic duplicate when the first call already su
 
 > **Source evidence — effect ordering**
 >
+> **Claim:** Durable effects bind stable request identity, resource locking, acceptance and retained receipts.
+>
+> **Implementation:** DurableInvocation below checks prior state, locks/rechecks and persists the request before invocation or recovery.
+>
+>
 > [`DurableInvocation.execute()` checks prior state, acquires a resource lock, and rechecks under that lock](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/skills/nova/core/effects/durable-invocation.ts#L39-L67).
 >
 > [`DurableInvocation.#executeLocked()` stores the request before adapter invocation or receipt recovery](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/skills/nova/core/effects/durable-invocation.ts#L88-L100).
+>
+> **Contract or setting:** Existing receipts, accepted requests and adapter receipt lookup take different branches; replay must retain original identity.
+>
+> **Test evidence:** No fresh interrupted-effect or duplicate-invocation test execution is established by these links.
+>
+> **Revision:** `85e73b1885f04a9494f388cf6622ad0bde2db447`. Source bindings, not execution receipts.
+>
+> **Limit:** A timeout does not prove external failure or authorize changing identity to force another operation.
+>
 
 ### 5. Return a Typed Result
 
@@ -181,11 +249,25 @@ The plugin cannot supply a direct state change.
 
 > **Source evidence — state machine**
 >
+> **Claim:** Core validates a plugin result and maps it to an allowed lifecycle action.
+>
+> **Implementation:** Reducer state/action definitions and result application below define transitions and attempt bounds.
+>
+>
 > [The state type lists all stage states](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/skills/nova/core/lifecycle/reducer.ts#L9-L36).
 >
 > [The action type lists every lifecycle action that Core can take](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/skills/nova/core/lifecycle/reducer.ts#L38-L52).
 >
 > [`applyStageResult()` rejects illegal state and applies attempt limits](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/skills/nova/core/lifecycle/reducer.ts#L111-L135).
+>
+> **Contract or setting:** Current state, typed outcome and configured attempt limits constrain the next transition.
+>
+> **Test evidence:** No fresh illegal-transition or exhausted-attempt rejection test ran for this source summary.
+>
+> **Revision:** `85e73b1885f04a9494f388cf6622ad0bde2db447`. Source bindings, not execution receipts.
+>
+> **Limit:** A plugin outcome is not a direct journal edit or permission to bypass lifecycle rules.
+>
 
 ### 6. Dispatch and Import Buster Work
 
@@ -207,11 +289,25 @@ Nova applies the project policy to verified facts.
 
 > **Source evidence — remote result boundary**
 >
+> **Claim:** Nova imports a terminal Buster result only after verifying its bound identities and evidence.
+>
+> **Implementation:** Buster result publication and Nova remote importer below separate terminal storage from verified import.
+>
+>
 > [Buster checks result identity and stores result bytes before terminal status](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/skills/buster/engine/test-gates/remote-plan-service.ts#L217-L258).
 >
 > [`NovaRemoteGateImporter.import()` accepts terminal status, verifies a completed result, fetches evidence, and records the import](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/skills/nova/core/test-gates/remote-result-import.ts#L213-L247).
 >
 > [ADR-013 explains durable Nova-to-Buster jobs](../decisions/core-and-plugins.md#adr-013-use-authenticated-durable-nova-to-buster-plan-jobs).
+>
+> **Contract or setting:** Job/plan/run/source/request/result bindings and completed evidence constrain acceptance.
+>
+> **Test evidence:** No fresh remote-result mismatch or complete live import exercise is established by these links.
+>
+> **Revision:** `85e73b1885f04a9494f388cf6622ad0bde2db447`. Source bindings, not execution receipts.
+>
+> **Limit:** HTTP completion does not establish test quality or authorize importing a changed duplicate.
+>
 
 ### 7. Close the Run
 
@@ -312,9 +408,23 @@ Named budgets show which checker consumed the repair allowance.
 
 > **Source evidence — repair limits**
 >
+> **Claim:** Product repair uses declared edges and budgets rather than an unbounded technical retry loop.
+>
+> **Implementation:** Repair disposition and decision construction below choose allowed, authorization-required or blocked paths.
+>
+>
 > [`repairDisposition()` returns only allowed, authorize, or blocked](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/skills/nova/core/lifecycle/repair-budget.ts#L48-L56).
 >
 > [`budgetedRepairDecision()` records a repair order, creates a wait, or stops](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/skills/nova/core/lifecycle/repair-budget.ts#L64-L84).
+>
+> **Contract or setting:** Category allowance, exceptional authorization and the declared remediation target constrain each order.
+>
+> **Test evidence:** No fresh repair-budget exhaustion or exceptional-authorization execution ran for this source summary.
+>
+> **Revision:** `85e73b1885f04a9494f388cf6622ad0bde2db447`. Source bindings, not execution receipts.
+>
+> **Limit:** An authorization request does not grant unlimited later repairs or invent a new graph edge.
+>
 
 ### Wait and Approval
 
@@ -335,9 +445,23 @@ The durable signal makes the decision attributable and safe to replay.
 
 > **Source evidence — safe resume**
 >
+> **Claim:** Resume validates one recorded wait and retains a matching signal before rebuilding run state.
+>
+> **Implementation:** Resume and signal-recording functions below enforce pinned inputs and conflict-safe wait resolution.
+>
+>
 > [`resumePipeline()` verifies pinned inputs, validates the signal, records it, and rebuilds state](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/skills/nova/core/execution/engine-run.ts#L82-L96).
 >
 > [`recordSignal()` rejects changed duplicates and already-resolved waits](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/skills/nova/core/execution/engine-run.ts#L109-L114).
+>
+> **Contract or setting:** Run/wait/issuer/time/payload and idempotency bindings must match; issuer metadata alone is not caller authentication.
+>
+> **Test evidence:** No fresh stale-wait, duplicate-signal or changed-payload execution ran for this source summary.
+>
+> **Revision:** `85e73b1885f04a9494f388cf6622ad0bde2db447`. Source bindings, not execution receipts.
+>
+> **Limit:** Do not answer an uncertain or already-resolved wait by changing the signal identity.
+>
 
 ### Restart and Recovery
 
@@ -356,7 +480,21 @@ A terminal run cannot enter ordinary recovery.
 
 > **Source evidence — recovery boundary**
 >
+> **Claim:** Recovery continues the recorded run, not a newly compiled graph or similar replacement.
+>
+> **Implementation:** recoverPipeline below verifies pinned inputs and reconstructs/reconciles state before execution.
+>
+>
 > [`recoverPipeline()` verifies pinned packages and graph, reconciles, replays state, and rejects unresolved waits](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/skills/nova/core/execution/engine-run.ts#L56-L69).
+>
+> **Contract or setting:** Stored graph/configuration and exact packages or authorized package upgrades constrain recovery; unresolved waits still stop.
+>
+> **Test evidence:** No fresh changed-configuration/package or unresolved-wait recovery test execution is claimed here.
+>
+> **Revision:** `85e73b1885f04a9494f388cf6622ad0bde2db447`. Source bindings, not execution receipts.
+>
+> **Limit:** A package upgrade does not waive runtime-configuration equality or permit ordinary recovery of a terminal run.
+>
 
 ### Cancellation
 
@@ -373,9 +511,23 @@ Cleanup state and effect receipts remain part of the evidence.
 
 > **Source evidence — cancellation**
 >
+> **Claim:** Pipeline cancellation and Worker drain have separate controlled-stop boundaries.
+>
+> **Implementation:** PipelineLoop cancellation and LocalWorkerRuntime drain below define their respective terminal behavior.
+>
+>
 > [`PipelineLoop.#cancelled()` marks unfinished stages and the run](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/skills/nova/core/execution/pipeline-loop.ts#L75-L84).
 >
 > [`LocalWorkerRuntime.#drainOnce()` waits, aborts, and becomes unhealthy after a second timeout](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/skills/worker/core/worker/local-runtime.ts#L223-L235).
+>
+> **Contract or setting:** Unfinished-stage cancellation, drain deadlines and abort/unhealthy outcomes do not reverse external effects.
+>
+> **Test evidence:** No fresh deployed cancellation, process-tree drain or cleanup exercise is established by these links.
+>
+> **Revision:** `85e73b1885f04a9494f388cf6622ad0bde2db447`. Source bindings, not execution receipts.
+>
+> **Limit:** A cancellation request is not proof that every process stopped or external mutation was undone.
+>
 
 ### Uncertain External Result
 
@@ -394,9 +546,23 @@ Uncertainty says that the effect outcome is not known.
 
 > **Source evidence — unknown outcome**
 >
+> **Claim:** An accepted effect without a recoverable receipt stops for reconciliation rather than blind replay.
+>
+> **Implementation:** DurableInvocation recovery and StageExecutor failure classification below define this uncertainty boundary.
+>
+>
 > [`DurableInvocation.#recover()` requires an adapter receipt for an accepted request](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/skills/nova/core/effects/durable-invocation.ts#L112-L117).
 >
 > [`StageExecutor.#failure()` converts unresolved effect recovery into a blocked stage](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/skills/nova/core/execution/stage-executor.ts#L125-L137).
+>
+> **Contract or setting:** Accepted request identity must resolve through the adapter receipt contract before another outcome gains authority.
+>
+> **Test evidence:** No fresh lost-response/receipt-unavailable test execution is established by these implementation links.
+>
+> **Revision:** `85e73b1885f04a9494f388cf6622ad0bde2db447`. Source bindings, not execution receipts.
+>
+> **Limit:** Unknown external outcome is not a known failure or permission for replacement work.
+>
 
 ### Escalation and Administrative Repair
 
@@ -404,7 +570,7 @@ An orchestrator wait is a normal, declared escalation.
 It asks an authorized actor for a bounded decision.
 
 Administrative reopen or repair is exceptional.
-It needs a separate signed decision record and strict replay checks.
+It needs a separate decision record, matching authenticated-principal and allowed-issuer checks for new decisions, and strict replay checks.
 It must not edit the old lifecycle journal.
 
 Use the operator procedure for any administrative action.

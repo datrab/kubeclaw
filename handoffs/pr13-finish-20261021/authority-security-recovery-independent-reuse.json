@@ -1,0 +1,88 @@
+[
+  {
+    "id": "AP09.2-ready-topics-20261020",
+    "revision": "d0bb52c4d8bcf323c0ff32b95e8e3120ffa6eefb",
+    "sourceCount": 57,
+    "changed": [],
+    "summary": "Independent PASS for named authority/architecture, execution/graph/state/repair/effects/wait/recovery/audit/result import and plugin contract/discovery/configuration/isolation/removal/extension scopes.",
+    "limits": [
+      "Source and documentation acceptance only; no live deployment or global publication acceptance.",
+      "ARC-003/006 and PLG-004/012 have material content gaps and are not accepted.",
+      "NVC-002/003,PLG-006/008/009/011 remain NOT_READY; missing workspace dependency or stale capability-security fixture blocks their checks.",
+      "Kernel isolation remains environment-dependent; no whole-AP09.2 or gate acceptance."
+    ]
+  },
+  {
+    "id": "AP09.3-ready-worker-topics-20261020",
+    "revision": "d0bb52c4d8bcf323c0ff32b95e8e3120ffa6eefb",
+    "sourceCount": 29,
+    "changed": [],
+    "summary": "Independent PASS for neutral worker authority, readiness/claims/replay, trusted supervisor/launch/control/spool/resources/cancellation and ownership/cleanup/result-sealing descriptions.",
+    "limits": [
+      "Documentation/source acceptance only; no live deployment or globally green publication/CI claim.",
+      "WKC-002/014 field-reference completeness and WKC-011 native recovery result classification remain FAIL.",
+      "Broad wrappers fail at unrelated missing Buster/browser dependencies; no whole-suite or live cgroup claim."
+    ]
+  },
+  {
+    "id": "AP09.7-ready-platform-topics-20261020",
+    "revision": "2e89bce7e59009e39de32d7df2bf8c52e839d5e9",
+    "sourceCount": 69,
+    "changed": [],
+    "summary": "Independent PASS for Forge/Echo/OpenClaw/Codex, infrastructure INF001..011 and seven security topics. Explicit whole-gate PASS for six named runtime dependencies and optional-layer/unsupported-fallback boundary.",
+    "limits": [
+      "Documentation/source acceptance only; no live deployment or globally green publication/CI claim.",
+      "SPC-010 Archviewer alternative and INF-012 embedding-client release remain FAIL; SPC-009 HTTP/auth execution check dependency missing.",
+      "A97-08 complete discovered trust/Secret inventory reconciliation not established; broad specialist sourcepin check failed and not treated as passed."
+    ]
+  },
+  {
+    "id": "AP09.7-ready-data-topics-20261020",
+    "revision": "2e89bce7e59009e39de32d7df2bf8c52e839d5e9",
+    "sourceCount": 31,
+    "changed": [],
+    "summary": "Independent PASS for Nova-Buster dispatch/result import,Worker control channel,Redis streams,Core and Worker persistence,transport-vs-authority and five telemetry authority/identity/recovery/retention topics.",
+    "limits": [
+      "Documentation/source acceptance only; no live deployment or globally green publication/CI claim.",
+      "TEL-002 event-specific payload catalogue and DAT-008 codec/exact-reference compatibility remain FAIL.",
+      "Other15 assigned scopes remain NOT_READY from incomplete independent full source coverage; A97-05/07 NOT_READY,A97-06 FAIL."
+    ]
+  },
+  {
+    "id": "AP09-closeout-runtime-20261020",
+    "revision": "2e89bce7e59009e39de32d7df2bf8c52e839d5e9",
+    "sourceCount": 39,
+    "changed": [],
+    "summary": "Independent sourceAccuracy/readerUsability/quality PASS for ARC-003, SPC-010, DAT-008, WKC-002, WKC-011, WKC-014. Exact correction bytes reviewed; full scopes rather than file-existence or count proxies.",
+    "limits": [
+      "Documentation/source acceptance only; no live deployment or globally green publication/CI claim.",
+      "No new whole-gate acceptance;all inherited scoped limits retained.",
+      "Remaining public reference/schema/error/event/store completeness,SDK/environment prerequisites,missing first-project/capability/integration journeys and integrated publication/language findings remain open."
+    ]
+  },
+  {
+    "id": "AP09-closeout-ARC006-20261020",
+    "revision": "c5d0062db699056ebc044c0a016a77ace6a1ede9",
+    "sourceCount": 12,
+    "changed": [],
+    "summary": "Complete architecture communication/failure/data map now distinguishes separatehostobserverRedisprojection,volatilequeue,retry/deadletter/retention and lifecycle-authority boundaries.",
+    "limits": [
+      "Documentation/source acceptance only; no live deployment or globally green publication/CI claim.",
+      "Hostobserverruntimewrapper blocked before assertions by absent generatedcontract;no functionalhost/Redis/liveclaim.",
+      "No fullcommunication/telemetry/publication gate inferred."
+    ]
+  },
+  {
+    "id": "AP09-whole-trust-and-spiffe-contract-20261021",
+    "revision": "d0bb52c4d8bcf323c0ff32b95e8e3120ffa6eefb",
+    "sourceCount": 14,
+    "changed": [],
+    "summary": "Pages: understand/security-and-trust.md and deployment-and-trust.md; reference/secrets.md; use/worker-trust.md. Sources: skills/worker/core/worker/trust.ts17\u201352, skills/nova/core/execution/authorization.ts, source-snapshot.ts, my-values/infra/spire-values.yaml, charts/kubeclaw/templates/{configmap-worker-trust,serviceaccount,rbac}.yaml, charts/prism/templates/networkpolicy.yaml, charts/ops-pod/templates/{network,rbac,workload}.yaml, my-values/setup-secrets.sh. Reuse accepted SEC001\u2013007; independently checked SPIFFE exact allowlist plus loopback proxy proof, session/CSRF versus workload identity, capability grants, default-deny enforcement limit, secret rotation, digest-versus-provenance distinctions and mutable Ops Tailscale exception. Render intent is not live enforcement. Correctly asks for positive and negative controls without asserting they ran.",
+    "limits": [
+      "COM011 preservation after planned communication model/mention correction: compare diff and confirm SPIFFE section664\u2013678 and security cross-referenced contract unchanged before carrying acceptance forward.",
+      "No live SPIRE/CNI/ACL enforcement or credential rotation claimed.",
+      "Listed documentation scope only; no live deployment, release or product approval. RELEASE_CONFIGURATION_CHANGED: charts/kubeclaw/files/config/knip.json remains a stop.",
+      "Parallel custody-metadata and negative-test corrections do not alter reviewed named product-source claims; changes to those sources or reader claims require bounded impact review. Unrelated whole-source generator/source-pin failures are not passed checks here."
+    ]
+  }
+]

@@ -1,0 +1,72 @@
+{
+  "author": "/root/workflow_acceptance",
+  "status": "OFFTREE_AUTHOR_CANDIDATE_REQUIRES_INDEPENDENT_REVIEW",
+  "baseline": {
+    "HEAD": "e1791bbbcdc3c16da1ef0fc7532d6c67fd92094b",
+    "files": [
+      {
+        "path": "docs/site/understand/components-and-authority.md",
+        "sha256": "6b6f7368915aed296f0501414535aeae1837f6a51f80af49f5db71e292f15260",
+        "HEADMatches": true
+      },
+      {
+        "path": "docs/site/understand/security-and-trust.md",
+        "sha256": "df44304ef2e3a70b98755edb2ed853abc3dd220302d1f65cbdc7f66df1e03d7d",
+        "HEADMatches": true
+      },
+      {
+        "path": "docs/site/understand/request-state-recovery.md",
+        "sha256": "21c9bd88ec28e46b6632d125ee2c29f7eefdb54ed6ff143a818b1332ccbe3325",
+        "HEADMatches": true
+      },
+      {
+        "path": "docs/site/understand/deployment-and-trust.md",
+        "sha256": "66f395c6d0c434a8774f6a48e0ca4d74a2afb061b46dbda092cf6eb51a63160d",
+        "HEADMatches": true
+      }
+    ]
+  },
+  "files": [
+    {
+      "path": "docs/site/understand/components-and-authority.md",
+      "baselineSha256": "6b6f7368915aed296f0501414535aeae1837f6a51f80af49f5db71e292f15260",
+      "candidateSha256": "2b920791a796db03c31a421b643dbc5d669da4808b086bcbf6104002e50745a2",
+      "SourceBoxes": 14,
+      "headingsUnchanged": true,
+      "URLsExact": true,
+      "outsideSourceBytesExactExceptAuthorizedAdminSentence": true
+    },
+    {
+      "path": "docs/site/understand/security-and-trust.md",
+      "baselineSha256": "df44304ef2e3a70b98755edb2ed853abc3dd220302d1f65cbdc7f66df1e03d7d",
+      "candidateSha256": "78b478d64623271c3d800efa8602e65041602027eaaeafccf4ef21d99ab90bcd",
+      "SourceBoxes": 14,
+      "headingsUnchanged": true,
+      "URLsExact": true,
+      "outsideSourceBytesExactExceptAuthorizedAdminSentence": true
+    },
+    {
+      "path": "docs/site/understand/request-state-recovery.md",
+      "baselineSha256": "21c9bd88ec28e46b6632d125ee2c29f7eefdb54ed6ff143a818b1332ccbe3325",
+      "candidateSha256": "f17de9aa7f74d4dc6d65a88211b7380cf3a215389dca52f581c432659e529a64",
+      "SourceBoxes": 12,
+      "headingsUnchanged": true,
+      "URLsExact": true,
+      "outsideSourceBytesExactExceptAuthorizedAdminSentence": true
+    },
+    {
+      "path": "docs/site/understand/deployment-and-trust.md",
+      "baselineSha256": "66f395c6d0c434a8774f6a48e0ca4d74a2afb061b46dbda092cf6eb51a63160d",
+      "candidateSha256": "5d223efd4bfd3a8f641f9023555d0784dbad8f267ef220ea31a83950d55797f2",
+      "SourceBoxes": 10,
+      "headingsUnchanged": true,
+      "URLsExact": true,
+      "outsideSourceBytesExactExceptAuthorizedAdminSentence": true
+    }
+  ],
+  "sourceBindings": "source-bindings.json",
+  "exceptions": [
+    "One separately authorized administrative-auth sentence; admin-auth-only.patch"
+  ],
+  "execution": "Inert text/Git reads and actual MarkdownIt prose parser only; no product tests/imports, generator or rendered Reader."
+}

@@ -140,6 +140,11 @@ Text version: humans enter through an operator or application boundary. Nova del
 
 > **Source evidence — application authorization**
 >
+> **Claim:** Application authorization combines trusted peer admission with per-invocation capability and resource checks.
+>
+> **Implementation:** Worker proxy authorization, invocation context and resource predicates below implement separate checks.
+>
+>
 > [Worker Core requires a loopback proxy, parses one SPIFFE URI, and checks an exact allowlist](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/worker/core/worker/trust.ts#L17-L52).
 >
 > [Nova denies missing capabilities and checks every invocation against its lease](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/nova/core/execution/context.ts#L34-L79).
@@ -147,6 +152,15 @@ Text version: humans enter through an operator or application boundary. Nova del
 > [Capability authorization limits paths, namespaces, secret names, agents, and
 > network origins](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/nova/core/execution/authorization.ts#L39-L98).
 > [It also constrains executable, telemetry, wait, and operator resources](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/nova/core/execution/authorization.ts#L99-L130).
+>
+> **Contract or setting:** Loopback proxy, exact SPIFFE peer, current lease and constrained resource apply to their selected paths.
+>
+> **Test evidence:** No live wrong-SVID, forged-header or missing-grant exercise is established by these source links.
+>
+> **Revision:** `13bff0a18a64e74f2cbbaa1978e746fcdeff0c10`. Source bindings, not execution receipts.
+>
+> **Limit:** Network reachability and Kubernetes rights do not substitute for plugin or domain permission.
+>
 
 ## Identity Types Must Not Be Confused
 
@@ -188,12 +202,26 @@ The current session format does not include an automatic multi-key overlap mecha
 
 > **Source evidence — current human session path**
 >
+> **Claim:** Prism exchanges trusted ingress identity for a short-lived session; product acceptance adds distinct operator authority.
+>
+> **Implementation:** Session, Control cookie/CSRF guards and product-decision signing below define the human path.
+>
+>
 > [Prism exchanges a trusted Tailscale ingress identity for a 15-minute HMAC session](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/prism/control/session.ts#L1-L20).
 >
 > [Control checks the session and CSRF value](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/prism/server/control-server.ts#L108-L122).
 > [It creates protected cookies only through the ingress exchange](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/prism/server/control-server.ts#L152-L172).
 >
 > [Product decisions require an explicit operator, origin and CSRF checks, and a dedicated Ed25519 signing key](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/prism/control/product-decisions.ts#L20-L43).
+>
+> **Contract or setting:** Ingress secret/login, HMAC session, CSRF/origin and the explicit product-operator allowlist serve different checks.
+>
+> **Test evidence:** No deployed login, CSRF denial, signer rotation or product-acceptance journey is established here.
+>
+> **Revision:** `13bff0a18a64e74f2cbbaa1978e746fcdeff0c10`. Source bindings, not execution receipts.
+>
+> **Limit:** Sign-in alone does not authorize a product decision or issue workload identity.
+>
 
 The KubeClaw chart disables automatic ServiceAccount token mounting by default.
 The selected Nova values enable token mounting, the namespace lease client, and verification reads.
@@ -203,6 +231,11 @@ SPIRE uses the namespace and ServiceAccount name to derive the workload identity
 
 > **Source evidence — workload identity**
 >
+> **Claim:** Workload identity and mounted Kubernetes token authority remain separate controls.
+>
+> **Implementation:** SPIRE selectors, ServiceAccount defaults, selected Nova values and RBAC below declare those boundaries.
+>
+>
 > [SPIRE selects labeled workloads and derives the SPIFFE ID from namespace and ServiceAccount](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/my-values/infra/spire-values.yaml#L25-L40).
 >
 > [The KubeClaw ServiceAccount disables automatic token mounting by default](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/charts/kubeclaw/templates/serviceaccount.yaml#L1-L10).
@@ -211,6 +244,15 @@ SPIRE uses the namespace and ServiceAccount name to derive the workload identity
 > [The lease-client Role permits lease operations and Deployment and Service reads](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/charts/kubeclaw/templates/rbac.yaml#L16-L29).
 > [Verification adds Pod reads and access to the named Tailscale IngressClass](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/charts/kubeclaw/templates/rbac.yaml#L57-L65).
 > [A separate Role permits GET for only the configured OAuth Secret in the configured operator namespace](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/charts/kubeclaw/templates/rbac.yaml#L80-L96).
+>
+> **Contract or setting:** Selected token mounting enables only the configured lease/verification/OAuth-read grants, not controller workload management.
+>
+> **Test evidence:** No live SVID issuance or effective Kubernetes denial result is established by these declarations.
+>
+> **Revision:** `13bff0a18a64e74f2cbbaa1978e746fcdeff0c10`; `0e35889a3c4e65d5c47ba88e924611aace67eb1d`. Source bindings, not execution receipts.
+>
+> **Limit:** Code reading a mounted token holds its effective RBAC rights despite a narrower plugin grant.
+>
 
 Treat code that can read the mounted token as holding these Kubernetes rights.
 A plugin capability grant limits its configured adapter; it does not remove rights from the ServiceAccount token.
@@ -245,11 +287,25 @@ The configured peer relationships include these paths:
 
 > **Source evidence — proxy peer policy**
 >
+> **Claim:** Envoy authenticates selected workload peers before forwarding identity to local application authorization.
+>
+> **Implementation:** Worker-trust listeners, SDS transport and Prism policy below define the protected peer paths.
+>
+>
 > [The shared worker-trust template defines protected listeners and exact URI SAN
 > matching](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/charts/kubeclaw/templates/configmap-worker-trust.yaml#L14-L73).
 > [Its downstream transport uses SDS and replaces forwarded certificate identity](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/charts/kubeclaw/templates/configmap-worker-trust.yaml#L138-L197).
 >
 > [The Prism policies select the same application callers and protected ports](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/charts/prism/templates/networkpolicy.yaml#L24-L59).
+>
+> **Contract or setting:** Exact URI SANs, trusted loopback forwarding and allowed ports must agree.
+>
+> **Test evidence:** No live certificate rotation, wrong-peer handshake or forged-header rejection is established here.
+>
+> **Revision:** `13bff0a18a64e74f2cbbaa1978e746fcdeff0c10`; `0e35889a3c4e65d5c47ba88e924611aace67eb1d`. Source bindings, not execution receipts.
+>
+> **Limit:** A syntactic listener or policy does not prove issuance, CNI enforcement or service availability.
+>
 
 ### Rotation and failure behavior
 
@@ -310,12 +366,31 @@ and stops if that source is absent.
 
 > **Source evidence — Ops credential preparation**
 >
+> **Claim:** Ops bootstrap prepares selected Kubernetes credentials without creating upstream GitHub or Tailscale identities.
+>
+> **Implementation:** Bootstrap branches below retain/create the bearer and validate optional credential-file inputs.
+>
+>
 > [The bootstrap helper creates only a missing bearer and copies only a missing
 > pull Secret](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/ops/pod/bootstrap.py#L56-L64).
 > [Optional GitHub and Tailscale file inputs are checked and applied to their
 > named Secrets](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/ops/pod/bootstrap.py#L65-L71).
+>
+> **Contract or setting:** Existing bearer/pull Secret retention differs from applying explicitly supplied GitHub or Tailscale file material.
+>
+> **Test evidence:** No fresh bootstrap, credential rotation or upstream revocation test execution is claimed here.
+>
+> **Revision:** `13bff0a18a64e74f2cbbaa1978e746fcdeff0c10`. Source bindings, not execution receipts.
+>
+> **Limit:** Replacing or deleting a Kubernetes Secret does not revoke its upstream account or device.
+>
 
 > **Source evidence — Secret consumers outside the shared helper**
+>
+> **Claim:** Prism, bundle, Archviewer, monitoring and Ops Secrets have distinct producers and named consumers.
+>
+> **Implementation:** Deployment checks, workload key references and product-decision projections below identify those separate owners.
+>
 >
 > [Prism creates separate database-role and runtime relationship secrets and
 > verifies every required key without printing values](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/scripts/deploy.sh#L1621-L1663).
@@ -330,6 +405,15 @@ and stops if that source is absent.
 > to Codex](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/charts/ops-pod/templates/workload.yaml#L49-L76),
 > and [gives the Tailscale authkey only to its sidecar](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/charts/ops-pod/templates/workload.yaml#L113-L135).
 > [Grafana reads an externally managed administrator Secret](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/gitops/platform/values/prometheus.yaml#L3-L23).
+>
+> **Contract or setting:** Database roles, runtime relationships, signer/CA/audience and per-container credential selection must remain separated.
+>
+> **Test evidence:** No complete deployed Secret creation, rotation or least-authority matrix is established by these references.
+>
+> **Revision:** `0e35889a3c4e65d5c47ba88e924611aace67eb1d`; `13bff0a18a64e74f2cbbaa1978e746fcdeff0c10`. Source bindings, not execution receipts.
+>
+> **Limit:** The shared setup inventory is not every deployment Secret or proof of external credential availability.
+>
 
 The shared-Secret setup path uses this precedence. Other Secrets have their own
 setup paths; do not assume that they use the same order.
@@ -350,10 +434,24 @@ setup paths; do not assume that they use the same order.
 
 > **Source evidence — shared-Secret precedence**
 >
+> **Claim:** Shared-Secret setup follows explicit retention, encrypted-file, copy and interactive-input precedence.
+>
+> **Implementation:** Existing-target, SOPS and fallback branches below implement this one setup path.
+>
+>
 > [An existing target is retained or repaired, then this setup path returns](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/my-values/setup-secrets.sh#L567-L581).
 > [A present SOPS file precedes namespace copying, interactive input, and the
 > missing-Secret warning](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/my-values/setup-secrets.sh#L583-L609).
 > [The SOPS path selects named fields and applies the shared Secret](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/my-values/setup-secrets.sh#L438-L469).
+>
+> **Contract or setting:** Overwrite mode, file presence, source namespace and interactivity determine the selected branch.
+>
+> **Test evidence:** No fresh existing/missing/SOPS/copy branch exercise ran for this source summary.
+>
+> **Revision:** `13bff0a18a64e74f2cbbaa1978e746fcdeff0c10`. Source bindings, not execution receipts.
+>
+> **Limit:** A warning or retained incomplete Secret is not proof that consumers can authenticate.
+>
 
 The source-attestation Secret is a useful example.
 Setup reuses a complete key pair or copies it from the configured source.
@@ -370,11 +468,25 @@ It does not enumerate the environment and it does not accept an environment-vari
 
 > **Source evidence — secret lifecycle**
 >
+> **Claim:** Source-attestation private/public keys and logical environment-secret resolution have different consumers and trust boundaries.
+>
+> **Implementation:** Key-pair setup, role key mounts and resolver admission below implement those relationships.
+>
+>
 > [Secret setup creates or repairs the source-attestation key pair and applies it as one Kubernetes Secret](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/my-values/setup-secrets.sh#L610-L646).
 >
 > [Nova receives the private key from the source-attestation Secret](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/my-values/nova-values.yaml#L129-L134), while [Buster receives its public key](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/my-values/buster-values.yaml#L96-L101).
 >
 > [The secret resolver maps bounded logical names to environment values and fails closed for all other requests](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/common/plugins/secret-resolver/src/adapter.ts#L3-L22).
+>
+> **Contract or setting:** Nova signs with private material; Buster verifies public material; resolver callers need a granted mapped logical name.
+>
+> **Test evidence:** No fresh coordinated key rotation or deployed Secret-resolution test is established here.
+>
+> **Revision:** `13bff0a18a64e74f2cbbaa1978e746fcdeff0c10`; `0e35889a3c4e65d5c47ba88e924611aace67eb1d`. Source bindings, not execution receipts.
+>
+> **Limit:** Named lookup does not grant Kubernetes Secret API access or automatic overlapping-key rotation.
+>
 
 ### Rotation procedure and compromise response
 
@@ -431,6 +543,11 @@ boundary does not silently expand another.
 
 > **Source evidence — route relations**
 >
+> **Claim:** Services, network routes, workload identity and operation grants impose independent admission boundaries.
+>
+> **Implementation:** Platform/Prism policies, Worker peer checks and lease/Ops RBAC below ground the route matrix.
+>
+>
 > [Project policy defines agent-to-Redis, LiteLLM, registry, mirror, gateway, and
 > bounded world egress](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/my-values/infra/network-policies.yaml#L15-L74).
 > [It separately selects Nova-to-Buster egress and Buster-from-Nova ingress](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/my-values/infra/network-policies.yaml#L121-L157).
@@ -447,6 +564,15 @@ boundary does not silently expand another.
 > [The Ops chart separates namespaced reads, cluster reads, and namespace-scoped
 > pod exec](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/charts/ops-pod/templates/rbac.yaml#L6-L63).
 > [Pod exec is a distinct Role created only for each configured exec namespace](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/charts/ops-pod/templates/rbac.yaml#L63-L92).
+>
+> **Contract or setting:** Exact caller/destination/port, peer identity and resource grant must match the selected operation.
+>
+> **Test evidence:** No live permitted/denied route matrix execution is established by these manifests and handlers.
+>
+> **Revision:** `13bff0a18a64e74f2cbbaa1978e746fcdeff0c10`; `0e35889a3c4e65d5c47ba88e924611aace67eb1d`. Source bindings, not execution receipts.
+>
+> **Limit:** A reachable port or valid certificate cannot grant every route or namespace operation.
+>
 
 Important negative checks are:
 
@@ -459,10 +585,24 @@ Important negative checks are:
 
 > **Source evidence — policy boundary**
 >
+> **Claim:** Selected policies deny undeclared paths and allow only their named workload relationships.
+>
+> **Implementation:** Prism and cluster-wide policy definitions below separate deny, DNS and explicit application routes.
+>
+>
 > [Prism applies default deny, DNS, and explicit Control application paths](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/charts/prism/templates/networkpolicy.yaml#L1-L59).
 > [Separate policies restrict Studio, Worker, and the OpenClaw agent](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/charts/prism/templates/networkpolicy.yaml#L61-L113).
 >
 > [The platform policy separates cluster-wide default deny and DNS from namespace-specific routes](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/my-values/infra/cilium-cluster-policies.yaml#L31-L90).
+>
+> **Contract or setting:** The supported secured deployment requires equivalent CNI enforcement and matching positive/negative path proof.
+>
+> **Test evidence:** No live CNI enforcement or alternate-CNI equivalence exercise is established by these declarations.
+>
+> **Revision:** `0e35889a3c4e65d5c47ba88e924611aace67eb1d`; `13bff0a18a64e74f2cbbaa1978e746fcdeff0c10`. Source bindings, not execution receipts.
+>
+> **Limit:** Rendered policy is not evidence that a particular cluster rejects unwanted traffic.
+>
 
 ## Source, Package, Image, and Artifact Integrity
 
@@ -480,9 +620,23 @@ It does not publish general public provenance and does not prove that the select
 
 > **Source evidence — committed source**
 >
+> **Claim:** Nova signs committed source metadata; Buster verifies that source and request identity before admission.
+>
+> **Implementation:** Source snapshot construction and remote-plan verification below bind the archive handoff.
+>
+>
 > [Nova builds and signs one archive from a verified Git commit](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/nova/core/test-gates/source-snapshot.ts#L16-L60).
 >
 > [Buster verifies the source signature and all request identities before admission](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/buster/engine/test-gates/remote-plan-service.ts#L84-L123).
+>
+> **Contract or setting:** Commit/tree, Ed25519 authority, archive size/digest and job/plan/request identities must agree.
+>
+> **Test evidence:** No fresh signer-rejection or complete signed-source dispatch test execution is claimed here.
+>
+> **Revision:** `13bff0a18a64e74f2cbbaa1978e746fcdeff0c10`. Source bindings, not execution receipts.
+>
+> **Limit:** A valid source signature is not image provenance, vulnerability approval or business acceptance.
+>
 
 ### Plugin packages and isolated execution
 
@@ -540,6 +694,11 @@ implemented and checked, do not state that every running image is immutable.
 
 > **Source evidence — registry and scanner limits**
 >
+> **Claim:** Registry transport, digest identity and scanner evidence provide distinct, incomplete supply-chain guarantees.
+>
+> **Implementation:** Client admission, frozen scanner data and image-template selections below define the stated limits.
+>
+>
 > [The registry client contract separates HTTPS from explicit HTTP lab transport and rejects authentication on HTTP](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/scripts/registry-client-config.mjs#L59-L118).
 >
 > [The Buster runtime copies a versioned Trivy database into the immutable image](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/docker/Dockerfile.buster-runtime#L115-L124).
@@ -551,6 +710,15 @@ implemented and checked, do not state that every running image is immutable.
 > digests](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/charts/ops-pod/values.yaml#L37-L46).
 > [The separate Tailscale Operator values select digest-pinned operator and proxy
 > images](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/my-values/infra/tailscale-operator-values.yaml#L20-L34).
+>
+> **Contract or setting:** Credentials require HTTPS; HTTP is explicit lab mode; the optional Ops Tailscale sidecar remains tag-selectable.
+>
+> **Test evidence:** No fresh authenticated registry, scanner freshness or sidecar-image admission exercise ran here.
+>
+> **Revision:** `13bff0a18a64e74f2cbbaa1978e746fcdeff0c10`. Source bindings, not execution receipts.
+>
+> **Limit:** Digest selection does not prove source provenance, safety or universal running-image immutability.
+>
 
 ### Supply-chain decision record
 
@@ -614,10 +782,24 @@ An operator must review that list as privileged access and keep it as small as p
 
 > **Source evidence — Ops authority**
 >
+> **Claim:** Ops Kubernetes authority follows ServiceAccount RBAC, including optional namespace-scoped Pod execution.
+>
+> **Implementation:** Read/exec Roles and the default namespace list below expose those distinct grants.
+>
+>
 > [The Ops chart defines namespaced and cluster read authority](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/charts/ops-pod/templates/rbac.yaml#L1-L60).
 > [It defines pod exec separately for each selected namespace](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/charts/ops-pod/templates/rbac.yaml#L63-L92).
 >
 > [The default exec namespace list contains only `kubeclaw`](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/charts/ops-pod/values.yaml#L20-L29).
+>
+> **Contract or setting:** execNamespaces selects exec grants; the shared credential retains their effective authority.
+>
+> **Test evidence:** No deployed effective-RBAC or container-isolation exercise is established by these templates.
+>
+> **Revision:** `13bff0a18a64e74f2cbbaa1978e746fcdeff0c10`. Source bindings, not execution receipts.
+>
+> **Limit:** A read-oriented tool list cannot reduce the credential rights available inside its Pod.
+>
 
 ## Threats, Controls, and Residual Risk
 

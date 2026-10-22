@@ -90,11 +90,25 @@ Each row names a directed connection. Labels preserve the diagram’s conditions
 
 > **Source evidence — deployed Prism path**
 >
+> **Claim:** The selected Prism topology separates protected dispatch, a local bridge and durable Control coordination.
+>
+> **Implementation:** Agent selection, proxy and Control workload bindings below declare the named handoffs.
+>
+>
 > [The selected Prism agent values colocate OpenClaw, the loopback bridge, and the Control egress listener](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/my-values/prism-agent-values.yaml#L45-L85).
 >
 > [The role proxy accepts Nova, Control, and test-runner identities at 18082 and forwards only to the loopback bridge](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/kubeclaw/templates/configmap-worker-trust.yaml#L84-L117).
 >
 > [Control receives its database, Ingestion, Worker, agent, and exact SPIFFE settings from the rendered chart](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/prism/templates/workloads.yaml#L90-L138).
+>
+> **Contract or setting:** Loopback ports, exact SPIFFE peers and role-specific dependency settings constrain the selected path.
+>
+> **Test evidence:** No deployed bridge-to-Control, agent launch or provider journey is established by these declarations.
+>
+> **Revision:** `569f7b4933d4859cc67c80ddf40d5154ffd95ce5`. Historical agent selection; current startup/probe settings differ, while the cited bridge/proxy relationship remains applicable.
+>
+> **Limit:** The older selection does not attest current startup/probe settings or a successful live path.
+>
 
 
 > **Source evidence — Worker authentication modes have different database boundaries**
@@ -138,9 +152,23 @@ Their actual process location depends on that runtime configuration.
 
 > **Source evidence — package boundaries**
 >
+> **Claim:** Runtime-role bundles declare available packages, not activated registrations or permitted operations.
+>
+> **Implementation:** Nova, Buster and Prism role manifests below delimit packaged content.
+>
+>
 > [Nova role declaration](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/packaging/runtime/roles/nova.json#L1-L60), [Buster role declaration](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/packaging/runtime/roles/buster.json#L1-L60), and [Prism role declaration](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/packaging/runtime/roles/prism.json#L1-L28).
 >
 > **Decision record:** [ADR-012 explains role-specific immutable bundles](../decisions/core-and-plugins.md#adr-012-assemble-exact-role-specific-runtime-bundles).
+>
+> **Contract or setting:** Role-specific package lists precede the separate activation, lease, network and identity checks.
+>
+> **Test evidence:** No actual image build, role startup or registration-activation result is established here.
+>
+> **Revision:** `569f7b4933d4859cc67c80ddf40d5154ffd95ce5`. Source bindings, not execution receipts.
+>
+> **Limit:** Forge/Echo dispatch location and runtime reachability do not follow from a role manifest.
+>
 
 ## Why Role Bundles Exist
 
@@ -187,11 +215,25 @@ positive and negative route behavior without trusting a caller-supplied header.
 
 > **Source evidence — application identity check**
 >
+> **Claim:** Application identity checks require trusted proxy origin and an exact allowed workload peer.
+>
+> **Implementation:** Worker trust and separate configured Prism caller identities below define this application boundary.
+>
+>
 > [Worker Core parses and authorizes proxied SPIFFE identities](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/worker/core/worker/trust.ts#L1-L52).
 >
 > [Prism workloads receive separate trusted caller identities](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/prism/templates/workloads.yaml#L127-L138).
 >
 > [Worker Trust gives the complete certificate and proxy path](worker-trust.md).
+>
+> **Contract or setting:** A valid forwarded URI still requires loopback origin and membership in the selected allowlist.
+>
+> **Test evidence:** No live forged-header, missing-SVID or wrong-peer rejection is established by these source links.
+>
+> **Revision:** `569f7b4933d4859cc67c80ddf40d5154ffd95ce5`. Source bindings, not execution receipts.
+>
+> **Limit:** A caller-supplied identity header or valid unrelated SVID cannot grant service authority.
+>
 
 ## Identity Boundaries
 
@@ -218,7 +260,21 @@ path described by the selected application procedure.
 
 > **Source evidence — separate service accounts**
 >
+> **Claim:** Prism workloads use separate ServiceAccounts for their declared responsibilities.
+>
+> **Implementation:** The account template below declares the Control, Studio, Worker, Ingestion, Backup and test-runner identities.
+>
+>
 > [The Prism chart creates Control, Studio, Worker, Ingestion, Backup, and test-runner accounts](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/prism/templates/serviceaccounts.yaml#L1-L7).
+>
+> **Contract or setting:** Namespace/ServiceAccount identity feeds workload attestation; human authentication remains a separate application path.
+>
+> **Test evidence:** No deployed account selection or SVID issuance test execution is established by this template.
+>
+> **Revision:** `569f7b4933d4859cc67c80ddf40d5154ffd95ce5`. Source bindings, not execution receipts.
+>
+> **Limit:** An account declaration does not deploy Keycloak, grant human roles or prove token isolation.
+>
 
 ## Network Boundaries
 
@@ -267,6 +323,11 @@ as “secured Flannel profile available.”
 
 > **Source evidence — default deny and allowed paths**
 >
+> **Claim:** Selected Prism policies separate default deny, DNS and explicit application/service routes.
+>
+> **Implementation:** Policy and Service definitions below bind callers, destinations, ports and the protected sidecar target.
+>
+>
 > [The Prism default-deny and DNS policies](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/prism/templates/networkpolicy.yaml#L1-L22).
 >
 > [The Prism application paths name allowed callers, destinations, and ports](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/prism/templates/networkpolicy.yaml#L24-L59).
@@ -276,6 +337,15 @@ as “secured Flannel profile available.”
 > [The Prism agent policy permits dispatch, Control, LiteLLM, and managed-provider paths](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/prism/templates/networkpolicy.yaml#L95-L121).
 >
 > [Optional Ingestion permits only Control ingress and public HTTPS egress](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/prism/templates/networkpolicy.yaml#L150-L165).
+>
+> **Contract or setting:** Cilium enforcement and matching positive/negative route evidence remain prerequisites for the supported secured deployment.
+>
+> **Test evidence:** No live deny/allow matrix or equivalent Flannel enforcement exercise is established by these manifests.
+>
+> **Revision:** `569f7b4933d4859cc67c80ddf40d5154ffd95ce5`. Historical policy excerpt; current source also adds Redis egress.
+>
+> **Limit:** The historical policy excerpt is not the current full egress set or live enforcement proof.
+>
 
 **Decision status:** A CNI-neutral application boundary is an architecture
 direction; Cilium is the implemented and currently supported secured deployment.
@@ -304,9 +374,23 @@ This work is intentional security review, not incidental wiring.
 
 > **Source evidence — least authority**
 >
+> **Claim:** A leased capability grant constrains each invocation independently of network reachability.
+>
+> **Implementation:** Context grant lookup and authorization predicates below validate permitted resources.
+>
+>
 > [`createPluginInvocationContext()` creates the grant map and denies missing grants](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/core/execution/context.ts#L34-L58).
 >
 > [Capability authorization checks paths, namespaces, names, targets, and sources](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/core/execution/authorization.ts#L39-L93) and [checks origins, commands, and signals](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/core/execution/authorization.ts#L94-L130).
+>
+> **Contract or setting:** Paths, namespaces, names, targets, origins, commands and signals must satisfy the selected grant.
+>
+> **Test evidence:** No fresh missing-grant or out-of-range resource rejection test execution is claimed here.
+>
+> **Revision:** `569f7b4933d4859cc67c80ddf40d5154ffd95ce5`. Source bindings, not execution receipts.
+>
+> **Limit:** A configured adapter or reachable endpoint does not expand the granted operation/resource range.
+>
 
 ## Process Isolation
 
@@ -328,9 +412,23 @@ The runtime must also constrain how untrusted code reaches the host.
 
 > **Source evidence — trust-dependent activation**
 >
+> **Claim:** Package trust selects direct import or bounded isolation; external adapters require their own persistent boundary.
+>
+> **Implementation:** Activation loading and isolation-runner policy below define the selected execution path.
+>
+>
 > [`load()` selects direct import or isolated invocation from the package trust scope](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/common/plugin-runtime/foundation/registry/activation.ts#L47-L100).
 >
 > [The isolation runner grants only selected file reads and disables add-ons](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/common/plugin-runtime/foundation/isolation/runner.ts#L33-L52).
+>
+> **Contract or setting:** Selected file-read permissions, disabled add-ons, import audit and package integrity limit different forms of execution.
+>
+> **Test evidence:** No fresh malicious-package or host-isolation exercise ran for this source summary.
+>
+> **Revision:** `569f7b4933d4859cc67c80ddf40d5154ffd95ce5`. Source bindings, not execution receipts.
+>
+> **Limit:** A manifest alone is not a sandbox; trusted in-process code still shares host authority.
+>
 
 ## Storage Boundaries
 
@@ -394,11 +492,25 @@ Database-only restore can create references to missing artifacts.
 
 > **Source evidence — Prism persistence**
 >
+> **Claim:** Prism keeps relational state and immutable artifact bytes in one matched recovery group.
+>
+> **Implementation:** Control replica/PVC rules and backup group construction below define the selected storage boundary.
+>
+>
 > [The chart enforces one Control replica and mounts the artifact PVC only there](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/prism/templates/workloads.yaml#L1-L6).
 >
 > [The retained artifact PVC uses `ReadWriteOnce`](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/prism/templates/workloads.yaml#L217-L230).
 >
 > [The backup script defines one database-and-artifact group](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/prism/files/prism-backup.sh#L54-L105).
+>
+> **Contract or setting:** Single Control writer, retained ReadWriteOnce storage and matched database/artifact identities constrain recovery.
+>
+> **Test evidence:** No deployed volume-loss, matched restore or live application-recovery exercise is established here.
+>
+> **Revision:** `569f7b4933d4859cc67c80ddf40d5154ffd95ce5`. Historical backup excerpt; current script additionally gates database readiness.
+>
+> **Limit:** A PVC declaration or database-only restore cannot prove artifact availability or complete disaster recovery.
+>
 
 ## Observability Boundary
 
@@ -415,9 +527,23 @@ Use the ordered event, effect receipt, artifact digest, or remote result record 
 
 > **Source evidence — committed events before delivery**
 >
+> **Claim:** Observers project committed events without becoming a second lifecycle authority.
+>
+> **Implementation:** The prepared runner and serialized observer drainer below separate pipeline state from event delivery.
+>
+>
 > [`executePrepared()` creates a serialized observer drainer around the pipeline runner](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/core/execution/engine-run.ts#L21-L34).
 >
 > [ADR-011 explains immutable observer input and independent delivery](../decisions/core-and-plugins.md#adr-011-observers-consume-immutable-events-without-lifecycle-mutation).
+>
+> **Contract or setting:** Committed event identity and owner-specific observer delivery state govern replay, not raw diagnostic logs.
+>
+> **Test evidence:** No fresh observer-outage or delivery-recovery execution is established by these links.
+>
+> **Revision:** `569f7b4933d4859cc67c80ddf40d5154ffd95ce5`. Source bindings, not execution receipts.
+>
+> **Limit:** Delivery failure does not erase canonical events or authorize manufacturing lifecycle history.
+>
 
 ## Failure Domains
 

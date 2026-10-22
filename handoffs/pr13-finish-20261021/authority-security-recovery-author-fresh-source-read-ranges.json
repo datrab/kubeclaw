@@ -1,0 +1,332 @@
+[
+  {
+    "path": "skills/nova/core/execution/engine-admin.ts",
+    "sha256": "f3ba44d49baffa01ee74a4d749818e8f903feb48827eb9108f959c24c8a0a1f2",
+    "readRanges": [
+      [
+        1,
+        152
+      ]
+    ],
+    "scope": "complete fresh inert Source/assertion read; not imported or executed"
+  },
+  {
+    "path": "skills/nova/core/execution/administrative-repair.ts",
+    "sha256": "9ff829bc31a4602ecd1e52f3cc0ba8fb5db40f3e597306e4e401cf8f451fc137",
+    "readRanges": [
+      [
+        1,
+        29
+      ]
+    ],
+    "scope": "complete fresh inert Source/assertion read; not imported or executed"
+  },
+  {
+    "path": "skills/nova/core/execution/engine.ts",
+    "sha256": "a75ed99915780e157a54f684a7cb9202a13e6cdcea6229af7f2aceaf79710839",
+    "readRanges": [
+      [
+        1,
+        35
+      ]
+    ],
+    "scope": "complete fresh inert Source/assertion read; not imported or executed"
+  },
+  {
+    "path": "skills/nova/core/execution/engine-run.ts",
+    "sha256": "eca97e2a488bd31d597c0dd71cd9971beffc9a5dc94fad1dbccf8867aa8f4819",
+    "readRanges": [
+      [
+        1,
+        122
+      ]
+    ],
+    "scope": "complete fresh inert Source/assertion read; not imported or executed"
+  },
+  {
+    "path": "skills/nova/core/execution/context.ts",
+    "sha256": "3f61fc7b2e18d6c36bf9eaff5173a06d31dd06d14a07b05c6d8be7320098a288",
+    "readRanges": [
+      [
+        1,
+        80
+      ]
+    ],
+    "scope": "complete fresh inert Source/assertion read; not imported or executed"
+  },
+  {
+    "path": "skills/nova/core/execution/graph-build.ts",
+    "sha256": "75ce0387330d8acc6d7217aa8539a41c7796fcfd1522c079c8585c55e765adc6",
+    "readRanges": [
+      [
+        1,
+        97
+      ]
+    ],
+    "scope": "complete fresh inert Source/assertion read; not imported or executed"
+  },
+  {
+    "path": "skills/nova/core/execution/pipeline-loop.ts",
+    "sha256": "129a77125e5d88a118b9d3cefb06d1bedf734924cabd32be607063a33d985530",
+    "readRanges": [
+      [
+        1,
+        148
+      ]
+    ],
+    "scope": "complete fresh inert Source/assertion read; not imported or executed"
+  },
+  {
+    "path": "skills/nova/core/lifecycle/repair-budget.ts",
+    "sha256": "6bd3d5f44d67edf626ce45301a716d5a6ea06d1f0f870b47d6f071b7930872d4",
+    "readRanges": [
+      [
+        1,
+        114
+      ]
+    ],
+    "scope": "complete fresh inert Source/assertion read; not imported or executed"
+  },
+  {
+    "path": "skills/nova/core/lifecycle/reducer.ts",
+    "sha256": "13982ba82b9b619f5df89dc0b9932c7802f0b78968e450263ab302726d4f552d",
+    "readRanges": [
+      [
+        1,
+        136
+      ]
+    ],
+    "scope": "complete fresh inert Source/assertion read; not imported or executed"
+  },
+  {
+    "path": "skills/prism/server/worker.ts",
+    "sha256": "b8e882d4c0a5ea6001c5882a73c5a48ce079514ca758dacac7a623c529c4c376",
+    "readRanges": [
+      [
+        1,
+        60
+      ]
+    ],
+    "scope": "complete fresh inert Source/assertion read; not imported or executed"
+  },
+  {
+    "path": "skills/prism/control/session.ts",
+    "sha256": "0d4f5e3842275055aaf928b51580f3879655538584dfd607ff80b31fc2aef77b",
+    "readRanges": [
+      [
+        1,
+        20
+      ]
+    ],
+    "scope": "complete fresh inert Source/assertion read; not imported or executed"
+  },
+  {
+    "path": "skills/prism/control/product-decisions.ts",
+    "sha256": "65a172a7867a3ff4635956d3c02fd1ecae837fd9b25f913826b0d12fdca3f1a2",
+    "readRanges": [
+      [
+        1,
+        72
+      ]
+    ],
+    "scope": "complete fresh inert Source/assertion read; not imported or executed"
+  },
+  {
+    "path": "skills/common/plugins/secret-resolver/src/adapter.ts",
+    "sha256": "89e997cbc5c533ab70b5c17e71f29e72ce26a49263345ae635ad9a41f8b56eb3",
+    "readRanges": [
+      [
+        1,
+        23
+      ]
+    ],
+    "scope": "complete fresh inert Source/assertion read; not imported or executed"
+  },
+  {
+    "path": "skills/common/plugins/secret-resolver/tests/live-function.test.ts",
+    "sha256": "24256122aea32b514f8f6641a8bff0551c9af2cf31afb439bc675463b3df325f",
+    "readRanges": [
+      [
+        1,
+        42
+      ]
+    ],
+    "scope": "complete fresh inert Source/assertion read; not imported or executed"
+  },
+  {
+    "path": "tests/verification/reliability/admin-repair.test.mjs",
+    "sha256": "887e08f1cade96ff0552859b8eea40c440f66eb939fe4fc800dcc5b31a1deb3f",
+    "readRanges": [
+      [
+        1,
+        122
+      ]
+    ],
+    "scope": "complete fresh inert Source/assertion read; not imported or executed"
+  },
+  {
+    "path": "tests/verification/reliability/admin-approval-fixture.mjs",
+    "sha256": "e2e4ec64bc963ab3c9f82ec5f04dd3c06432d5039dabafe999d4a5bdeff8b146",
+    "readRanges": [
+      [
+        1,
+        56
+      ]
+    ],
+    "scope": "complete fresh inert Source/assertion read; not imported or executed"
+  },
+  {
+    "path": "ops/pod/bootstrap.py",
+    "sha256": "f12b2fdf8b87c5a0ee1f6a643acfd6110a12698dfb908ea713a79f71f2bd990e",
+    "readRanges": [
+      [
+        1,
+        80
+      ]
+    ],
+    "scope": "complete fresh inert Source/assertion read; not imported or executed"
+  },
+  {
+    "path": "charts/prism/files/prism-backup.sh",
+    "sha256": "6823dff4e65d056a82676d7970474921d55cd9573960a82344f15dd0eeaffece",
+    "readRanges": [
+      [
+        1,
+        191
+      ]
+    ],
+    "scope": "complete fresh inert Source/assertion read; not imported or executed"
+  },
+  {
+    "path": "charts/prism/templates/networkpolicy.yaml",
+    "sha256": "45aa5b3b5de8b05f698c104633c9411bc91a55818361cbf13f479200e65dc208",
+    "readRanges": [
+      [
+        1,
+        180
+      ]
+    ],
+    "scope": "complete fresh inert Source/assertion read; not imported or executed"
+  },
+  {
+    "path": "my-values/prism-agent-values.yaml",
+    "sha256": "aaa81d8deb3ae3a512b98edad516f235be958866f4b11eaf54e0c1b2e919c696",
+    "readRanges": [
+      [
+        1,
+        120
+      ]
+    ],
+    "scope": "complete fresh inert Source/assertion read; not imported or executed"
+  },
+  {
+    "path": "skills/common/plugin-runtime/sdk/src/generated/contracts.ts",
+    "sha256": "8ade81b1f64c78b4cf2198f7ae7dc0c726fb4cec3ffa553986310d353dbc71c1",
+    "readRanges": [
+      [
+        146,
+        230
+      ]
+    ],
+    "scope": "bounded controlling function/assertion text, not whole-file fresh review"
+  },
+  {
+    "path": "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json",
+    "sha256": "837efd7975991aa21b8c92b57881194e9bc8c7adc4370f238d1a15b6d85d44db",
+    "readRanges": [
+      [
+        803,
+        879
+      ]
+    ],
+    "scope": "bounded controlling function/assertion text, not whole-file fresh review"
+  },
+  {
+    "path": "skills/nova/core/effects/durable-invocation.ts",
+    "sha256": "6856d2c2761cb9c8e974d0f8683e0083571ed91b25740832921d32341e70d3f2",
+    "readRanges": [
+      [
+        1,
+        130
+      ]
+    ],
+    "scope": "bounded controlling function/assertion text, not whole-file fresh review"
+  },
+  {
+    "path": "skills/nova/core/execution/engine-snapshots.ts",
+    "sha256": "50dfe92e656875658b7604f30012f8493564729473f6ddd65b64960ecf9946fd",
+    "readRanges": [
+      [
+        1,
+        74
+      ]
+    ],
+    "scope": "bounded controlling function/assertion text, not whole-file fresh review"
+  },
+  {
+    "path": "my-values/setup-secrets.sh",
+    "sha256": "d417ee6bb8f6ba1008ad077f7cb4bf6172891aa9d8753681701aad4697e1834c",
+    "readRanges": [
+      [
+        430,
+        477
+      ],
+      [
+        555,
+        646
+      ]
+    ],
+    "scope": "bounded controlling function/assertion text, not whole-file fresh review"
+  },
+  {
+    "path": "tests/verification/contracts/check-plugin-system-v2-phase6.mjs",
+    "sha256": "26499c11e9fdd8742a9b47cd1c3b000458b3fc250b64d16df9ea1b39cf5a58fa",
+    "readRanges": [
+      [
+        155,
+        195
+      ],
+      [
+        400,
+        560
+      ]
+    ],
+    "scope": "bounded controlling function/assertion text, not whole-file fresh review"
+  },
+  {
+    "path": "charts/prism/files/prism-backup.sh",
+    "revision": "569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+    "sha256": "4164f2d8237a83359a797fc397f49c3405380792cdfc6e8d061ec49efcec8135",
+    "readRanges": [
+      [
+        1,
+        169
+      ]
+    ],
+    "scope": "complete historical Source and complete old/current diff read; specific later changes retained"
+  },
+  {
+    "path": "charts/prism/templates/networkpolicy.yaml",
+    "revision": "569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+    "sha256": "fcc61920277b2481d7b7f206d787eebbb831dd9b588352a3e5abf3814be4b066",
+    "readRanges": [
+      [
+        1,
+        177
+      ]
+    ],
+    "scope": "complete historical Source and complete old/current diff read; specific later changes retained"
+  },
+  {
+    "path": "my-values/prism-agent-values.yaml",
+    "revision": "569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+    "sha256": "5ff81cee48e035c74e67694c57dea8a2ee66ce5ca5015c6b15cd6ae352c2936a",
+    "readRanges": [
+      [
+        1,
+        103
+      ]
+    ],
+    "scope": "complete historical Source and complete old/current diff read; specific later changes retained"
+  }
+]

@@ -1,0 +1,539 @@
+{
+  "scope": "Independent frozen four-page50 Sourcebox batch plus separate one-sentence Admin-auth correction",
+  "review": {
+    "Source": "PASS",
+    "semanticReader": "PASS",
+    "Quality": "PASS"
+  },
+  "findings": [],
+  "pages": [
+    {
+      "page": "docs/site/understand/components-and-authority.md",
+      "baselineExactMain": true,
+      "sha256": "2b920791a796db03c31a421b643dbc5d669da4808b086bcbf6104002e50745a2",
+      "orderedURLsExact": true,
+      "outsideActualBlocksExactExceptSingleAdminSentence": true
+    },
+    {
+      "page": "docs/site/understand/security-and-trust.md",
+      "baselineExactMain": true,
+      "sha256": "78b478d64623271c3d800efa8602e65041602027eaaeafccf4ef21d99ab90bcd",
+      "orderedURLsExact": true,
+      "outsideActualBlocksExactExceptSingleAdminSentence": true
+    },
+    {
+      "page": "docs/site/understand/request-state-recovery.md",
+      "baselineExactMain": true,
+      "sha256": "f17de9aa7f74d4dc6d65a88211b7380cf3a215389dca52f581c432659e529a64",
+      "orderedURLsExact": true,
+      "outsideActualBlocksExactExceptSingleAdminSentence": true
+    },
+    {
+      "page": "docs/site/understand/deployment-and-trust.md",
+      "baselineExactMain": true,
+      "sha256": "5d223efd4bfd3a8f641f9023555d0784dbad8f267ef220ea31a83950d55797f2",
+      "orderedURLsExact": true,
+      "outsideActualBlocksExactExceptSingleAdminSentence": true
+    }
+  ],
+  "boxes": [
+    {
+      "index": 1,
+      "page": "docs/site/understand/components-and-authority.md",
+      "title": "> **Source evidence \u2014 Prism packaging is not plugin activation**",
+      "Source": "PASS",
+      "semanticReader": "PASS",
+      "Quality": "PASS",
+      "disposition": "EXACT_PRIOR_COMPLETE_PRESERVATION"
+    },
+    {
+      "index": 2,
+      "page": "docs/site/understand/components-and-authority.md",
+      "title": "> **Source evidence \u2014 role and engine boundary**",
+      "Source": "PASS",
+      "semanticReader": "PASS",
+      "Quality": "PASS",
+      "disposition": "BOUNDED_NEW_FIELDS_PASS"
+    },
+    {
+      "index": 3,
+      "page": "docs/site/understand/components-and-authority.md",
+      "title": "> **Source evidence \u2014 scheduling and closure**",
+      "Source": "PASS",
+      "semanticReader": "PASS",
+      "Quality": "PASS",
+      "disposition": "BOUNDED_NEW_FIELDS_PASS"
+    },
+    {
+      "index": 4,
+      "page": "docs/site/understand/components-and-authority.md",
+      "title": "> **Source evidence \u2014 fixed registry**",
+      "Source": "PASS",
+      "semanticReader": "PASS",
+      "Quality": "PASS",
+      "disposition": "BOUNDED_NEW_FIELDS_PASS"
+    },
+    {
+      "index": 5,
+      "page": "docs/site/understand/components-and-authority.md",
+      "title": "> **Source evidence \u2014 neutral controls**",
+      "Source": "PASS",
+      "semanticReader": "PASS",
+      "Quality": "PASS",
+      "disposition": "BOUNDED_NEW_FIELDS_PASS"
+    },
+    {
+      "index": 6,
+      "page": "docs/site/understand/components-and-authority.md",
+      "title": "> **Source evidence \u2014 Buster boundary**",
+      "Source": "PASS",
+      "semanticReader": "PASS",
+      "Quality": "PASS",
+      "disposition": "BOUNDED_NEW_FIELDS_PASS"
+    },
+    {
+      "index": 7,
+      "page": "docs/site/understand/components-and-authority.md",
+      "title": "> **Source evidence \u2014 baseline handoff**",
+      "Source": "PASS",
+      "semanticReader": "PASS",
+      "Quality": "PASS",
+      "disposition": "BOUNDED_NEW_FIELDS_PASS"
+    },
+    {
+      "index": 8,
+      "page": "docs/site/understand/components-and-authority.md",
+      "title": "> **Source evidence \u2014 Forge permissions**",
+      "Source": "PASS",
+      "semanticReader": "PASS",
+      "Quality": "PASS",
+      "disposition": "BOUNDED_NEW_FIELDS_PASS"
+    },
+    {
+      "index": 9,
+      "page": "docs/site/understand/components-and-authority.md",
+      "title": "> **Source evidence \u2014 Echo permissions**",
+      "Source": "PASS",
+      "semanticReader": "PASS",
+      "Quality": "PASS",
+      "disposition": "BOUNDED_NEW_FIELDS_PASS"
+    },
+    {
+      "index": 10,
+      "page": "docs/site/understand/components-and-authority.md",
+      "title": "> **Source evidence \u2014 Registration and host-extension boundaries**",
+      "Source": "PASS",
+      "semanticReader": "PASS",
+      "Quality": "PASS",
+      "disposition": "BOUNDED_NEW_FIELDS_PASS"
+    },
+    {
+      "index": 11,
+      "page": "docs/site/understand/components-and-authority.md",
+      "title": "> **Source evidence \u2014 bounded plugin invocation**",
+      "Source": "PASS",
+      "semanticReader": "PASS",
+      "Quality": "PASS",
+      "disposition": "BOUNDED_NEW_FIELDS_PASS"
+    },
+    {
+      "index": 12,
+      "page": "docs/site/understand/components-and-authority.md",
+      "title": "> **Source evidence \u2014 component-boundary communication**",
+      "Source": "PASS",
+      "semanticReader": "PASS",
+      "Quality": "PASS",
+      "disposition": "BOUNDED_NEW_FIELDS_PASS"
+    },
+    {
+      "index": 13,
+      "page": "docs/site/understand/components-and-authority.md",
+      "title": "> **Source boundary:** [Host observer](https://github.com/datrab/kubeclaw/blob/f50e90cd19501dcbf422423310a8f1fe7f3ca9c8/skills/common/plugins/openclaw-agent-observer/src/index.ts),",
+      "Source": "PASS",
+      "semanticReader": "PASS",
+      "Quality": "PASS",
+      "disposition": "BOUNDED_NEW_FIELDS_PASS"
+    },
+    {
+      "index": 14,
+      "page": "docs/site/understand/components-and-authority.md",
+      "title": "> **Source evidence \u2014 retained authority across boundaries**",
+      "Source": "PASS",
+      "semanticReader": "PASS",
+      "Quality": "PASS",
+      "disposition": "BOUNDED_NEW_FIELDS_PASS"
+    },
+    {
+      "index": 15,
+      "page": "docs/site/understand/security-and-trust.md",
+      "title": "> **Source evidence \u2014 Secret resolution reads the mapped process environment**",
+      "Source": "PASS",
+      "semanticReader": "PASS",
+      "Quality": "PASS",
+      "disposition": "EXACT_PRIOR_COMPLETE_PRESERVATION"
+    },
+    {
+      "index": 16,
+      "page": "docs/site/understand/security-and-trust.md",
+      "title": "> **Source evidence \u2014 application authorization**",
+      "Source": "PASS",
+      "semanticReader": "PASS",
+      "Quality": "PASS",
+      "disposition": "BOUNDED_NEW_FIELDS_PASS"
+    },
+    {
+      "index": 17,
+      "page": "docs/site/understand/security-and-trust.md",
+      "title": "> **Source evidence \u2014 current human session path**",
+      "Source": "PASS",
+      "semanticReader": "PASS",
+      "Quality": "PASS",
+      "disposition": "BOUNDED_NEW_FIELDS_PASS"
+    },
+    {
+      "index": 18,
+      "page": "docs/site/understand/security-and-trust.md",
+      "title": "> **Source evidence \u2014 workload identity**",
+      "Source": "PASS",
+      "semanticReader": "PASS",
+      "Quality": "PASS",
+      "disposition": "BOUNDED_NEW_FIELDS_PASS"
+    },
+    {
+      "index": 19,
+      "page": "docs/site/understand/security-and-trust.md",
+      "title": "> **Source evidence \u2014 proxy peer policy**",
+      "Source": "PASS",
+      "semanticReader": "PASS",
+      "Quality": "PASS",
+      "disposition": "BOUNDED_NEW_FIELDS_PASS"
+    },
+    {
+      "index": 20,
+      "page": "docs/site/understand/security-and-trust.md",
+      "title": "> **Source evidence \u2014 Ops credential preparation**",
+      "Source": "PASS",
+      "semanticReader": "PASS",
+      "Quality": "PASS",
+      "disposition": "BOUNDED_NEW_FIELDS_PASS"
+    },
+    {
+      "index": 21,
+      "page": "docs/site/understand/security-and-trust.md",
+      "title": "> **Source evidence \u2014 Secret consumers outside the shared helper**",
+      "Source": "PASS",
+      "semanticReader": "PASS",
+      "Quality": "PASS",
+      "disposition": "BOUNDED_NEW_FIELDS_PASS"
+    },
+    {
+      "index": 22,
+      "page": "docs/site/understand/security-and-trust.md",
+      "title": "> **Source evidence \u2014 shared-Secret precedence**",
+      "Source": "PASS",
+      "semanticReader": "PASS",
+      "Quality": "PASS",
+      "disposition": "BOUNDED_NEW_FIELDS_PASS"
+    },
+    {
+      "index": 23,
+      "page": "docs/site/understand/security-and-trust.md",
+      "title": "> **Source evidence \u2014 secret lifecycle**",
+      "Source": "PASS",
+      "semanticReader": "PASS",
+      "Quality": "PASS",
+      "disposition": "BOUNDED_NEW_FIELDS_PASS"
+    },
+    {
+      "index": 24,
+      "page": "docs/site/understand/security-and-trust.md",
+      "title": "> **Source evidence \u2014 route relations**",
+      "Source": "PASS",
+      "semanticReader": "PASS",
+      "Quality": "PASS",
+      "disposition": "BOUNDED_NEW_FIELDS_PASS"
+    },
+    {
+      "index": 25,
+      "page": "docs/site/understand/security-and-trust.md",
+      "title": "> **Source evidence \u2014 policy boundary**",
+      "Source": "PASS",
+      "semanticReader": "PASS",
+      "Quality": "PASS",
+      "disposition": "BOUNDED_NEW_FIELDS_PASS"
+    },
+    {
+      "index": 26,
+      "page": "docs/site/understand/security-and-trust.md",
+      "title": "> **Source evidence \u2014 committed source**",
+      "Source": "PASS",
+      "semanticReader": "PASS",
+      "Quality": "PASS",
+      "disposition": "BOUNDED_NEW_FIELDS_PASS"
+    },
+    {
+      "index": 27,
+      "page": "docs/site/understand/security-and-trust.md",
+      "title": "> **Source evidence \u2014 registry and scanner limits**",
+      "Source": "PASS",
+      "semanticReader": "PASS",
+      "Quality": "PASS",
+      "disposition": "BOUNDED_NEW_FIELDS_PASS"
+    },
+    {
+      "index": 28,
+      "page": "docs/site/understand/security-and-trust.md",
+      "title": "> **Source evidence \u2014 Ops authority**",
+      "Source": "PASS",
+      "semanticReader": "PASS",
+      "Quality": "PASS",
+      "disposition": "BOUNDED_NEW_FIELDS_PASS"
+    },
+    {
+      "index": 29,
+      "page": "docs/site/understand/request-state-recovery.md",
+      "title": "> **Source evidence \u2014 durable run creation**",
+      "Source": "PASS",
+      "semanticReader": "PASS",
+      "Quality": "PASS",
+      "disposition": "BOUNDED_NEW_FIELDS_PASS"
+    },
+    {
+      "index": 30,
+      "page": "docs/site/understand/request-state-recovery.md",
+      "title": "> **Source evidence \u2014 project admission**",
+      "Source": "PASS",
+      "semanticReader": "PASS",
+      "Quality": "PASS",
+      "disposition": "BOUNDED_NEW_FIELDS_PASS"
+    },
+    {
+      "index": 31,
+      "page": "docs/site/understand/request-state-recovery.md",
+      "title": "> **Source evidence \u2014 real module chain**",
+      "Source": "PASS",
+      "semanticReader": "PASS",
+      "Quality": "PASS",
+      "disposition": "BOUNDED_NEW_FIELDS_PASS"
+    },
+    {
+      "index": 32,
+      "page": "docs/site/understand/request-state-recovery.md",
+      "title": "> **Source evidence \u2014 bounded invocation**",
+      "Source": "PASS",
+      "semanticReader": "PASS",
+      "Quality": "PASS",
+      "disposition": "BOUNDED_NEW_FIELDS_PASS"
+    },
+    {
+      "index": 33,
+      "page": "docs/site/understand/request-state-recovery.md",
+      "title": "> **Source evidence \u2014 effect ordering**",
+      "Source": "PASS",
+      "semanticReader": "PASS",
+      "Quality": "PASS",
+      "disposition": "BOUNDED_NEW_FIELDS_PASS"
+    },
+    {
+      "index": 34,
+      "page": "docs/site/understand/request-state-recovery.md",
+      "title": "> **Source evidence \u2014 state machine**",
+      "Source": "PASS",
+      "semanticReader": "PASS",
+      "Quality": "PASS",
+      "disposition": "BOUNDED_NEW_FIELDS_PASS"
+    },
+    {
+      "index": 35,
+      "page": "docs/site/understand/request-state-recovery.md",
+      "title": "> **Source evidence \u2014 remote result boundary**",
+      "Source": "PASS",
+      "semanticReader": "PASS",
+      "Quality": "PASS",
+      "disposition": "BOUNDED_NEW_FIELDS_PASS"
+    },
+    {
+      "index": 36,
+      "page": "docs/site/understand/request-state-recovery.md",
+      "title": "> **Source evidence \u2014 repair limits**",
+      "Source": "PASS",
+      "semanticReader": "PASS",
+      "Quality": "PASS",
+      "disposition": "BOUNDED_NEW_FIELDS_PASS"
+    },
+    {
+      "index": 37,
+      "page": "docs/site/understand/request-state-recovery.md",
+      "title": "> **Source evidence \u2014 safe resume**",
+      "Source": "PASS",
+      "semanticReader": "PASS",
+      "Quality": "PASS",
+      "disposition": "BOUNDED_NEW_FIELDS_PASS"
+    },
+    {
+      "index": 38,
+      "page": "docs/site/understand/request-state-recovery.md",
+      "title": "> **Source evidence \u2014 recovery boundary**",
+      "Source": "PASS",
+      "semanticReader": "PASS",
+      "Quality": "PASS",
+      "disposition": "BOUNDED_NEW_FIELDS_PASS"
+    },
+    {
+      "index": 39,
+      "page": "docs/site/understand/request-state-recovery.md",
+      "title": "> **Source evidence \u2014 cancellation**",
+      "Source": "PASS",
+      "semanticReader": "PASS",
+      "Quality": "PASS",
+      "disposition": "BOUNDED_NEW_FIELDS_PASS"
+    },
+    {
+      "index": 40,
+      "page": "docs/site/understand/request-state-recovery.md",
+      "title": "> **Source evidence \u2014 unknown outcome**",
+      "Source": "PASS",
+      "semanticReader": "PASS",
+      "Quality": "PASS",
+      "disposition": "BOUNDED_NEW_FIELDS_PASS"
+    },
+    {
+      "index": 41,
+      "page": "docs/site/understand/deployment-and-trust.md",
+      "title": "> **Source evidence \u2014 deployed Prism path**",
+      "Source": "PASS",
+      "semanticReader": "PASS",
+      "Quality": "PASS",
+      "disposition": "BOUNDED_NEW_FIELDS_PASS"
+    },
+    {
+      "index": 42,
+      "page": "docs/site/understand/deployment-and-trust.md",
+      "title": "> **Source evidence \u2014 Worker authentication modes have different database boundaries**",
+      "Source": "PASS",
+      "semanticReader": "PASS",
+      "Quality": "PASS",
+      "disposition": "EXACT_PRIOR_COMPLETE_PRESERVATION"
+    },
+    {
+      "index": 43,
+      "page": "docs/site/understand/deployment-and-trust.md",
+      "title": "> **Source evidence \u2014 package boundaries**",
+      "Source": "PASS",
+      "semanticReader": "PASS",
+      "Quality": "PASS",
+      "disposition": "BOUNDED_NEW_FIELDS_PASS"
+    },
+    {
+      "index": 44,
+      "page": "docs/site/understand/deployment-and-trust.md",
+      "title": "> **Source evidence \u2014 application identity check**",
+      "Source": "PASS",
+      "semanticReader": "PASS",
+      "Quality": "PASS",
+      "disposition": "BOUNDED_NEW_FIELDS_PASS"
+    },
+    {
+      "index": 45,
+      "page": "docs/site/understand/deployment-and-trust.md",
+      "title": "> **Source evidence \u2014 separate service accounts**",
+      "Source": "PASS",
+      "semanticReader": "PASS",
+      "Quality": "PASS",
+      "disposition": "BOUNDED_NEW_FIELDS_PASS"
+    },
+    {
+      "index": 46,
+      "page": "docs/site/understand/deployment-and-trust.md",
+      "title": "> **Source evidence \u2014 default deny and allowed paths**",
+      "Source": "PASS",
+      "semanticReader": "PASS",
+      "Quality": "PASS",
+      "disposition": "BOUNDED_NEW_FIELDS_PASS"
+    },
+    {
+      "index": 47,
+      "page": "docs/site/understand/deployment-and-trust.md",
+      "title": "> **Source evidence \u2014 least authority**",
+      "Source": "PASS",
+      "semanticReader": "PASS",
+      "Quality": "PASS",
+      "disposition": "BOUNDED_NEW_FIELDS_PASS"
+    },
+    {
+      "index": 48,
+      "page": "docs/site/understand/deployment-and-trust.md",
+      "title": "> **Source evidence \u2014 trust-dependent activation**",
+      "Source": "PASS",
+      "semanticReader": "PASS",
+      "Quality": "PASS",
+      "disposition": "BOUNDED_NEW_FIELDS_PASS"
+    },
+    {
+      "index": 49,
+      "page": "docs/site/understand/deployment-and-trust.md",
+      "title": "> **Source evidence \u2014 Prism persistence**",
+      "Source": "PASS",
+      "semanticReader": "PASS",
+      "Quality": "PASS",
+      "disposition": "BOUNDED_NEW_FIELDS_PASS"
+    },
+    {
+      "index": 50,
+      "page": "docs/site/understand/deployment-and-trust.md",
+      "title": "> **Source evidence \u2014 committed events before delivery**",
+      "Source": "PASS",
+      "semanticReader": "PASS",
+      "Quality": "PASS",
+      "disposition": "BOUNDED_NEW_FIELDS_PASS"
+    }
+  ],
+  "adminCorrection": {
+    "Source": "PASS",
+    "semanticReader": "PASS",
+    "Quality": "PASS",
+    "proof": "Complete engine.ts, engine-admin.ts, administrative-repair.ts, engine-run.ts fresh read; closed schema and actual phase6 principal/issuer/replay assertion sections; no universal signature protocol, exact recorded replay intentionally skips new authentication."
+  },
+  "checks": [
+    {
+      "command": "node authority-security-recovery-independent/structure.mjs",
+      "exit": 0,
+      "observation": "Actual installed MarkdownIt production top-level Source selection:14/14/12/10, all six semantic fields in same actual blocks; recognizes existing Test/Contract/Checked revision aliases."
+    },
+    {
+      "command": "python3 authority-security-recovery-independent/bindings.py",
+      "exit": 0,
+      "observation": "All4candidate+baseline hashes and fullpacket verify; all4baselinebytes equalmain; originalURLs/order exact; outsideactualSourceblocks exact except explicitAdminsentence;3oldcompleteblocks exact;94wholepinnedobjects91currentequal/3historicaldifferent, everylineboundvalid."
+    },
+    {
+      "command": "Independent seven-record declared Source comparison",
+      "exit": 0,
+      "observation": "57/29/69/31/39/12/14 original declared sources independently compared to their own record revisions; no changes. Exact prior accepted subset/limits retained, not all earlier NOT_READY topics promoted."
+    }
+  ],
+  "historicalDifferent": [
+    {
+      "revision": "569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "path": "my-values/prism-agent-values.yaml",
+      "sha256": "5ff81cee48e035c74e67694c57dea8a2ee66ce5ca5015c6b15cd6ae352c2936a"
+    },
+    {
+      "revision": "569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "path": "charts/prism/templates/networkpolicy.yaml",
+      "sha256": "fcc61920277b2481d7b7f206d787eebbb831dd9b588352a3e5abf3814be4b066"
+    },
+    {
+      "revision": "569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "path": "charts/prism/files/prism-backup.sh",
+      "sha256": "4164f2d8237a83359a797fc397f49c3405380792cdfc6e8d061ec49efcec8135"
+    }
+  ],
+  "retainedHarnessDiagnostic": "First independent packet-hash loop assumed mapping format, attempted nonexistent scratch/status and raised FileNotFoundError after Source checks. Fixed only harness to iterate actual packet files rows; final bindings.py0. No product/validator/candidate changed.",
+  "limits": [
+    "No main/register/candidate/generator or owner-output writes. Only independent scratch reports/parser/check scripts.",
+    "No product module imports, product tests, services, providers, cluster, browser, publication build, fresh Reader or gate/global execution claim.",
+    "Source/semanticReader/Quality PASS only50 callout scopes plus exact Admin sentence; not wholeTopic/newrequirements/corpus/A91205/gate acceptance.",
+    "Historical three pins remain historical, no fullfile-current claim or arbitrary repinning.",
+    "Prior whole-topic semantic proof reused only exact accepted unchanged scope; no new fresh all94files complete semantic audit."
+  ]
+}

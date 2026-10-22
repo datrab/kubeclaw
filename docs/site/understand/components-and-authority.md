@@ -131,11 +131,25 @@ Each row names a directed connection. Labels preserve the diagram’s conditions
 
 > **Source evidence — role and engine boundary**
 >
+> **Claim:** The Nova role packages Core, project compilation and selected extensions; Core owns run execution.
+>
+> **Implementation:** Role declarations, pipeline entry and run creation below separate packaging from execution.
+>
+>
 > [The Nova role lists Core, project code, shared contracts, and its selected plugins](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/packaging/runtime/roles/nova.json#L1-L61).
 >
 > [The Nova entry point exports Core and starts the separate project CLI](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/nova/pipeline.ts#L1-L14).
 >
 > [A new Core run freezes the graph, prepares plugins, writes snapshots, and starts the runner](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/nova/core/execution/engine-run.ts#L36-L43).
+>
+> **Contract or setting:** The admitted graph and registry snapshots bind one run before execution.
+>
+> **Test evidence:** No actual role startup or project-to-run exercise is established by these source links.
+>
+> **Revision:** `13bff0a18a64e74f2cbbaa1978e746fcdeff0c10`. Source bindings, not execution receipts.
+>
+> **Limit:** An available package is not an enabled registration or an observed running process.
+>
 
 ### Nova Core: The Process Authority
 
@@ -159,11 +173,25 @@ No current decision approves that change.
 
 > **Source evidence — scheduling and closure**
 >
+> **Claim:** Nova selects ready work and derives terminal run status from canonical stage states.
+>
+> **Implementation:** PipelineLoop scheduling and finalization below implement the lifecycle owner.
+>
+>
 > [`PipelineLoop.run()` selects ready stages, records decisions, pauses, and finalizes](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/nova/core/execution/pipeline-loop.ts#L20-L37).
 >
 > [`PipelineLoop.#finalize()` derives one terminal result from stage states](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/nova/core/execution/pipeline-loop.ts#L137-L143).
 >
 > [ADR-001 records the decision and its consequences](../decisions/core-and-plugins.md#adr-001-core-owns-canonical-lifecycle-authority).
+>
+> **Contract or setting:** Readiness, declared concurrency and required-stage closure constrain progress.
+>
+> **Test evidence:** No fresh scheduling, interruption or terminal-closure test ran for this source summary.
+>
+> **Revision:** `13bff0a18a64e74f2cbbaa1978e746fcdeff0c10`. Source bindings, not execution receipts.
+>
+> **Limit:** Specialist facts do not grant a second scheduler or direct journal-write authority.
+>
 
 ## Foundation and SDK: The Shared Language
 
@@ -183,11 +211,25 @@ They also permit validation before execution.
 
 > **Source evidence — fixed registry**
 >
+> **Claim:** The registry rejects ambiguous declarations and activates only admitted, configured registrations.
+>
+> **Implementation:** Registry construction, activation and the grant schema below define those boundaries.
+>
+>
 > [`buildRegistry()` rejects duplicate packages, registrations, stage owners, and provider contracts](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/common/plugin-runtime/foundation/registry/build.ts#L265-L317).
 >
 > [`activateRegistry()` loads only enabled registrations and checks package digests](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/common/plugin-runtime/foundation/registry/activation.ts#L103-L137).
 >
 > [The versioned schema defines capability grants and trust scope](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json#L894-L963).
+>
+> **Contract or setting:** Package/registration ownership, API contracts, digests and platform grants must agree.
+>
+> **Test evidence:** No fresh conflicting-package or activation test execution is claimed by these links.
+>
+> **Revision:** `13bff0a18a64e74f2cbbaa1978e746fcdeff0c10`. Source bindings, not execution receipts.
+>
+> **Limit:** Discovery or installation alone does not enable a surface or make its code trusted.
+>
 
 ## Worker Core: The Neutral Attempt Controller
 
@@ -214,11 +256,25 @@ Specialist policy cannot leak into Worker Core.
 
 > **Source evidence — neutral controls**
 >
+> **Claim:** Worker Core controls generic admission and attempt mechanics without deciding specialist quality.
+>
+> **Implementation:** Local runtime and native executor below bind readiness, claims, launch and terminal sealing.
+>
+>
 > [`LocalWorkerRuntime.runAttempt()` checks readiness, capacity, claims, deadlines, protocols, profiles, and replay](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/worker/core/worker/local-runtime.ts#L155-L204).
 >
 > [`executeNativeWorkerAttempt()` persists admission before launch and seals the result before delivery](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/worker/core/worker/native-attempt-executor.ts#L20-L60).
 >
 > [ADR-002 explains the neutral-core decision](../decisions/core-and-plugins.md#adr-002-use-one-neutral-worker-core-below-specialist-engines).
+>
+> **Contract or setting:** Protocol, profile, capacity, identity and deadline checks precede admitted execution.
+>
+> **Test evidence:** No deployment-host launch, drain or sealed-result recovery exercise is established here.
+>
+> **Revision:** `13bff0a18a64e74f2cbbaa1978e746fcdeff0c10`. Source bindings, not execution receipts.
+>
+> **Limit:** A specialist result does not replace native ownership, cleanup or resource evidence.
+>
 
 ## Buster: The Test Engine
 
@@ -240,11 +296,25 @@ Evidence also remains separate from quality policy.
 
 > **Source evidence — Buster boundary**
 >
+> **Claim:** Buster executes fixed test plans and retains evidence; Nova owns their pipeline interpretation.
+>
+> **Implementation:** Engine exports and the role grants below separate test execution from lifecycle authority.
+>
+>
 > [The Buster engine exports Worker Core, plan service, provider loader, and result stores](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/buster/engine/src/index.ts#L1-L23).
 >
 > [The Buster role grants read-only source access and plan execution](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/packaging/runtime/roles/buster.json#L49-L59).
 >
 > [ADR-003 explains why test semantics stay outside Nova and Worker Core](../decisions/core-and-plugins.md#adr-003-keep-buster-test-semantics-outside-nova-and-worker-core).
+>
+> **Contract or setting:** Read-only source and declared plan execution constrain the packaged test role.
+>
+> **Test evidence:** No live resolved-plan execution or verified Nova import is established by these declarations.
+>
+> **Revision:** `13bff0a18a64e74f2cbbaa1978e746fcdeff0c10`. Source bindings, not execution receipts.
+>
+> **Limit:** Provider success or transport completion is not a final pipeline quality verdict.
+>
 
 ## Prism: The Design Engine and Product Surface
 
@@ -272,11 +342,25 @@ separate signed source snapshot comes from Nova.
 
 > **Source evidence — baseline handoff**
 >
+> **Claim:** Prism derives implementation assignments and visual test plans from a bound design baseline.
+>
+> **Implementation:** Pipeline adapter and packaged role below define the baseline handoffs.
+>
+>
 > [`toBusterPlan()` and `toForgeAssignments()` derive bounded handoffs from one baseline](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/prism/pipeline-adapter/index.ts#L20-L57).
 >
 > [The Prism role includes Worker Core and the Prism engine](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/packaging/runtime/roles/prism.json#L1-L28).
 >
 > [Prism decisions explain design ownership and current limits](../decisions/prism.md).
+>
+> **Contract or setting:** Baseline identity and bounded module/test subjects constrain downstream work.
+>
+> **Test evidence:** No completed approval-to-Forge/Buster journey is established by these source definitions.
+>
+> **Revision:** `13bff0a18a64e74f2cbbaa1978e746fcdeff0c10`. Source bindings, not execution receipts.
+>
+> **Limit:** Role packaging does not prove activation, deployment or a durable artifact signature.
+>
 
 ## Forge: The Implementation Specialist
 
@@ -295,9 +379,23 @@ Its configured runtime target can also be unreachable.
 
 > **Source evidence — Forge permissions**
 >
+> **Claim:** Forge receives bounded implementation capabilities through the implementation-agent stage.
+>
+> **Implementation:** Stage capability declarations and Core invocation authorization below delimit the request.
+>
+>
 > [The implementation stage declares dispatch, workspace, commit, merge, and artifact capabilities](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/nova/plugins/implementation-agent/plugin.json#L1-L26).
 >
 > [`createPluginInvocationContext()` denies missing grants and checks each requested resource](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/nova/core/execution/context.ts#L34-L79).
+>
+> **Contract or setting:** The active lease must grant the capability and requested repository/resource range.
+>
+> **Test evidence:** No fresh allowed/denied Forge invocation or repository-mutation test is claimed here.
+>
+> **Revision:** `13bff0a18a64e74f2cbbaa1978e746fcdeff0c10`. Source bindings, not execution receipts.
+>
+> **Limit:** A declared capability is not an automatic grant or canonical lifecycle authority.
+>
 
 ## Echo: The Review Specialist
 
@@ -316,9 +414,23 @@ A deterministic boundary must still verify identity, evidence, and policy.
 
 > **Source evidence — Echo permissions**
 >
+> **Claim:** Echo proposes findings on a fixed subject while deterministic owners validate evidence and policy.
+>
+> **Implementation:** The review manifest and owning decisions below separate review surfaces from lifecycle verdicts.
+>
+>
 > [The review plugin declares three review stages and read-only repository access](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/nova/plugins/review/plugin.json#L1-L54).
 >
 > [Echo decisions separate observations from lifecycle verdicts](../decisions/echo.md).
+>
+> **Contract or setting:** Declared review stages and repository-read capability constrain the reviewer role.
+>
+> **Test evidence:** No executed fixed-subject review or evidence-admission test is established by this manifest.
+>
+> **Revision:** `13bff0a18a64e74f2cbbaa1978e746fcdeff0c10`. Source bindings, not execution receipts.
+>
+> **Limit:** Proposed findings cannot authorize source changes, acceptance or direct lifecycle mutation.
+>
 
 ## The Plugin Runtime: The Controlled Connection Layer
 
@@ -340,9 +452,23 @@ it does not grant pipeline lifecycle authority.
 
 > **Source evidence — Registration and host-extension boundaries**
 >
+> **Claim:** The plugin system has five registration kinds; OpenClaw host extensions are separate packaged integrations.
+>
+> **Implementation:** Manifest arrays and the Nova role extension list below encode these distinct surfaces.
+>
+>
 > [The plugin manifest defines the five registration arrays](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json#L410-L448).
 >
 > [Nova packages host extensions separately from plugins](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/packaging/runtime/roles/nova.json#L58-L62).
+>
+> **Contract or setting:** Host-extension packaging is not another registration kind or pipeline capability grant.
+>
+> **Test evidence:** No fresh extension loading or plugin-activation test is established by these declarations.
+>
+> **Revision:** `f99aecbb00cb399b46dfbbeb3ddb375fba6218e7`. Source bindings, not execution receipts.
+>
+> **Limit:** A packaged host hook does not acquire Core lifecycle authority.
+>
 
 Discovery means that the runtime found and validated a package declaration.
 Registration means that the fixed registry contains its declared surface.
@@ -435,11 +561,25 @@ The plugin never receives a direct method that changes the canonical stage state
 
 > **Source evidence — bounded plugin invocation**
 >
+> **Claim:** Core invokes an admitted active plugin through one leased, resource-constrained context.
+>
+> **Implementation:** Activation, invocation context and durable effect implementation below enforce their respective boundaries.
+>
+>
 > [`activateRegistry()` activates only configured registrations after package-integrity and import checks](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/common/plugin-runtime/foundation/registry/activation.ts#L103-L137).
 >
 > [`createPluginInvocationContext()` checks the lease, grant, and requested resource](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/nova/core/execution/context.ts#L34-L79).
 >
 > [`DurableInvocation` records requests and receipts around the selected adapter](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/nova/core/effects/durable-invocation.ts#L39-L117).
+>
+> **Contract or setting:** Package integrity, selected registration, lease, grant and resource identity must all remain valid.
+>
+> **Test evidence:** No fresh isolated invocation or denied-capability execution is established by these links.
+>
+> **Revision:** `13bff0a18a64e74f2cbbaa1978e746fcdeff0c10`. Source bindings, not execution receipts.
+>
+> **Limit:** Typed results and effect receipts are evidence for Core, not a plugin state-mutation API.
+>
 
 ## Failure Domains And Stop Boundaries
 
@@ -506,6 +646,11 @@ the contract, authority, persistence, and failure behavior in the same row.
 
 > **Source evidence — component-boundary communication**
 >
+> **Claim:** Component handoffs retain owner-specific identities, durable records and failure decisions.
+>
+> **Implementation:** Stage, remote gate, observer, Redis and Worker paths below ground the communication table.
+>
+>
 > [Nova dispatches a resolved attempt through one bounded stage context](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/nova/core/execution/stage-executor.ts#L31-L119).
 >
 > [The remote-plan transport binds HTTP jobs, results, and evidence to stable identities](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/nova/core/test-gates/remote-dispatch.ts#L23-L197).
@@ -517,6 +662,13 @@ the contract, authority, persistence, and failure behavior in the same row.
 > [Worker Core binds specialist work to the generic execution hooks](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/worker/core/worker/attempt-executor.ts#L30-L106).
 >
 > **Limit:** The table proves source-level contracts and ownership. Deployment-specific retention periods and live reachability still require the target environment's configuration and acceptance evidence.
+>
+> **Contract or setting:** Attempt/job/event/effect identities and delivery policies differ by owner; transport does not transfer lifecycle authority.
+>
+> **Test evidence:** No complete live communication/recovery matrix is established by these implementation links.
+>
+> **Revision:** `13bff0a18a64e74f2cbbaa1978e746fcdeff0c10`. Source bindings, not execution receipts.
+>
 
 ### Separate OpenClaw host observer path
 
@@ -537,8 +689,22 @@ Downstream readers must retain their own interpretation and duplicate-handling r
 This ingress does not replay or authorize Nova lifecycle decisions.
 
 > **Source boundary:** [Host observer](https://github.com/datrab/kubeclaw/blob/f50e90cd19501dcbf422423310a8f1fe7f3ca9c8/skills/common/plugins/openclaw-agent-observer/src/index.ts),
+>
+> **Claim:** The OpenClaw host observer writes bounded volatile queues and Redis projections, not Nova lifecycle authority.
+>
+> **Implementation:** Host hooks, Redis writer and ingress constants identify this separate producer path.
+>
 > [queue, retry, and dead-letter writer](https://github.com/datrab/kubeclaw/blob/f50e90cd19501dcbf422423310a8f1fe7f3ca9c8/skills/common/plugins/openclaw-agent-observer/src/redis-writer.ts),
 > and [ingress constants](https://github.com/datrab/kubeclaw/blob/f50e90cd19501dcbf422423310a8f1fe7f3ca9c8/contracts/agent-observability/v1/src/constants.ts).
+>
+> **Contract or setting:** Queue/event bounds, control retries, dead-letter attempts and approximate stream trimming constrain delivery.
+>
+> **Test evidence:** No fresh host-hook-to-Redis or downstream-consumer exercise ran for this source summary.
+>
+> **Revision:** `f50e90cd19501dcbf422423310a8f1fe7f3ca9c8`. Source bindings, not execution receipts.
+>
+> **Limit:** Process loss or exhausted delivery can lose projections; retries do not establish exactly-once delivery.
+>
 
 **Why this design exists:** Recovery needs one answer for each fact.
 A cache or transport copy can disappear without changing the fact's owner.
@@ -551,6 +717,11 @@ universal authority merely because several components can read it.
 
 > **Source evidence — retained authority across boundaries**
 >
+> **Claim:** Each handoff preserves its canonical owner and verifies retained identity before continued work.
+>
+> **Implementation:** Snapshot, effect, remote import and native seal paths below define those retained boundaries.
+>
+>
 > [Nova writes graph and registry snapshots before execution](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/nova/core/execution/engine-run.ts#L36-L43).
 >
 > [The effect path records a request before invocation and records the returned receipt](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/nova/core/effects/durable-invocation.ts#L88-L117).
@@ -560,6 +731,13 @@ universal authority merely because several components can read it.
 > [Worker Core writes admission before launch and seals the result before delivery](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/worker/core/worker/native-attempt-executor.ts#L20-L60).
 >
 > **Limit:** These source paths prove ordering and validation in the inspected implementation. They do not prove storage durability or service availability in a live environment.
+>
+> **Contract or setting:** Original graph/request/result/claim identities govern reuse; a similar replacement is not the same operation.
+>
+> **Test evidence:** No fresh cross-service recovery or target-volume durability exercise is established here.
+>
+> **Revision:** `13bff0a18a64e74f2cbbaa1978e746fcdeff0c10`. Source bindings, not execution receipts.
+>
 
 ## Read Next
 
