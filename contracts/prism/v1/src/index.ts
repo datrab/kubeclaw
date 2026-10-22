@@ -1,4 +1,4 @@
-export { BASELINE_V1, BASELINE_V2, BASELINE_CHECKSUM_ENCODING, baselineChecksumDigest, assertBaselineChecksumDocument } from './baseline-archive.ts';
+export { BASELINE_V1, BASELINE_V2, BASELINE_CHECKSUM_ENCODING, baselineChecksumText, assertBaselineChecksumDocument } from './baseline-checksums.ts';
 import { assertPrismComplexity } from "./complexity.ts";
 export { PRISM_JSON_LIMITS, PrismContractError } from "./complexity.ts";
 import schema from "../schemas/prism-v1.schema.json" with { type: "json" };

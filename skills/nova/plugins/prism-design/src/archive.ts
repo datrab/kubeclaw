@@ -1,5 +1,5 @@
 import { validatePrism } from '@kubeclaw/prism-contracts-v1';
-import { BASELINE_V1, BASELINE_V2, BASELINE_CHECKSUM_ENCODING, baselineChecksumDigest, assertBaselineChecksumDocument } from '@kubeclaw/prism-contracts-v1';
+import { BASELINE_V1, BASELINE_V2, BASELINE_CHECKSUM_ENCODING, baselineChecksumText, assertBaselineChecksumDocument } from '@kubeclaw/prism-contracts-v1';
 import { sha256Bytes, sha256Text } from '@kubeclaw/plugin-sdk';
 
 const digest = (bytes: string | Buffer) => typeof bytes === 'string' ? sha256Text(bytes) : sha256Bytes(bytes);
@@ -51,7 +51,7 @@ function archiveFiles(archive: Record<string, any>, manifest: Record<string, any
     if (totalBytes > budgets.maximumArchiveBytes) throw new Error('PRISM_ARCHIVE_SIZE_EXCEEDED');
     if (Object.hasOwn(checksums, name) && digest(content) !== checksums[name]) throw new Error(`PRISM_ARCHIVE_FILE_DIGEST_MISMATCH:${name}`);
   }
-  if (baselineChecksumDigest(checksums, archive.schema) !== approvedDigest) throw new Error('PRISM_ARCHIVE_BUNDLE_DIGEST_MISMATCH');
+  if (sha256Text(baselineChecksumText(checksums, archive.schema)) !== approvedDigest) throw new Error('PRISM_ARCHIVE_BUNDLE_DIGEST_MISMATCH');
   if (JSON.stringify(JSON.parse(textFiles['manifest.json'])) !== JSON.stringify(manifest)) throw new Error('PRISM_ARCHIVE_MANIFEST_MISMATCH');
   return { textFiles, checksums };
 }
