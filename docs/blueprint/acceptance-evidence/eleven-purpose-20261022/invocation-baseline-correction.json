@@ -1,0 +1,11 @@
+{
+  "originalInvocationPreserved": true,
+  "correction": "Inherited sourceBaseRevision field in invocation reflects older48507fab, not actual baseline. Actual unchanged main HEAD at launch was4c0f754d6b62e69df15a13b06ac453747c2d32c2 plus four reviewed dirty files; sourcePatch field already correctly named4c0f754d. No source files changed while child runs.",
+  "actualBaseRevision": "4c0f754d6b62e69df15a13b06ac453747c2d32c2",
+  "candidateFiles": {
+    "scripts/docs-api-top-level-script-purpose.mjs": "101fc8538bb1ffe426cfc777449862b0bf617a9ac57453f7d9bfe2898879b4c9",
+    "scripts/docs-deployment-scalar-occurrence-custody.mjs": "a2dd1f6bc0f28be4829f0b1a134ba7fe3dbcbeaeb526d33a47eaebd618d48519",
+    "scripts/docs-api-documentation-role-custody.mjs": "ffb5d3c8de12167382465d161e68d7f3a7087fd8758277d3082a3bbc170e7267",
+    "scripts/tests/docs-api-top-level-script-purpose.test.mjs": "7550086041284222afc2bf1e805ccf8d73da15cf4022e7293be22dd51230a695"
+  }
+}

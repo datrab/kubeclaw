@@ -1,0 +1,50 @@
+{
+  "observedAt": "2026-10-22T20:06:13.009184+00:00",
+  "sourceRevision": "4c0f754d6b62e69df15a13b06ac453747c2d32c2",
+  "cwd": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery",
+  "sourceReviewed": [
+    "scripts/versions.mjs",
+    "scripts/infrastructure-chart-lock.mjs",
+    "scripts/runtime-tool-locks.mjs",
+    "scripts/sync-codex-lock.mjs",
+    "scripts/updates/upstream-fetch.mjs",
+    "scripts/updates/refresh-versions.mjs",
+    "tests/verification/deployment/trusted-version-updater.test.mjs"
+  ],
+  "checks": [
+    {
+      "command": "node scripts/runtime-tool-locks.mjs --check",
+      "exitCode": 0,
+      "result": {
+        "inputs": 4,
+        "locks": 5
+      }
+    },
+    {
+      "argv": [
+        "/usr/local/bin/node",
+        "--test",
+        "tests/verification/deployment/trusted-version-updater.test.mjs"
+      ],
+      "completeEnvironment": {
+        "PATH": "/usr/local/bin:/usr/bin:/bin",
+        "HOME": "/home/node",
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "TZ": "UTC",
+        "TMPDIR": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021"
+      },
+      "exitCode": 0,
+      "tests": 1,
+      "passed": 1,
+      "failed": 0,
+      "skipped": 0
+    }
+  ],
+  "evidenceKind": "Parent observation of native terminal results; not fabricated raw stream custody. Original maintained test owns and removes its fixture.",
+  "limits": [
+    "Only unchanged-input original updater test.",
+    "No changed-version/network/check-upstream-refresh/error-restoration or runtime/API acceptance.",
+    "No retained native product output capture from test fixture."
+  ]
+}

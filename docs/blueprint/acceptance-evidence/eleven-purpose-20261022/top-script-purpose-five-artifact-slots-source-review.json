@@ -1,0 +1,73 @@
+{
+  "reviewer": "/root/review_cli_maintenance_closeout independent native Codex",
+  "currentRevision": "4c0f754d6b62e69df15a13b06ac453747c2d32c2",
+  "verdict": "FIVE_SLOTS_ELIGIBLE_FOR_EXACT_SOURCE_ONLY_PRIVATE_PURPOSE",
+  "findings": [],
+  "slots": [
+    {
+      "source": "scripts/recover-openclaw-audit-input.mjs",
+      "line": 70,
+      "verdict": "ELIGIBLE_SOURCE_ONLY_PRIVATE_PURPOSE",
+      "suggestedPurpose": "Exact reviewed sanitized JSONL archive bytes into exclusive recovery temporary descriptor,then guardedrename to fixed config-audit raw archive; not API submission or successful doctor migration.",
+      "constructorAndReceiver": "Sanitized bytes from fixed sibling archive,strictUTF8+nonemptyJSONobjectlines. Destination .recovering file openedwx0600;write(fd,bytes),owner/fsync,secondoriginal/sanitizedhash+inode check,rename to logs/config-audit.jsonl.migrated.raw;subsequentdoctor owns import/checkpoint.",
+      "actualGuards": "Two caller-supplied64hex expectedhashes;canonical physical state/logs/state dirs;raw/sanitizedregularnlink1;fullscrubwhitespace raw;no existing doctorjournal or checkpoint;backup exclusive or identical expectedhash,then selectedrawinode/hash recheck before rename. No livewriters asserted by Source;operator must stopthem.",
+      "notClaimed": "No observation of apply,recovery,doctor sanitize/import,productiondata or external pinnedimage. Sanitizedobjects may containAPIlooking fields;canonicalUNKNOWN remains. No need externaldoctor module to establish this local archivewriter purpose."
+    },
+    {
+      "source": "scripts/updates/materialize-release.mjs",
+      "line": 50,
+      "verdict": "ELIGIBLE_SOURCE_ONLY_PRIVATE_PURPOSE",
+      "suggestedPurpose": "Selected finite runtime/ops Helm-values projection to releases/values/<role>.yaml,consumed as selected Helm-f values; preserves authored values,not a Kubernetes resource stream or successful rendereddeployment.",
+      "constructorAndReceiver": "Runtime rolesnova,buster,prism-agent,prism startfrom actual rolevalues;ops starts{};fixed digest-pinned image refs/codeBundle projection then yaml.dump. Receiver deployment-release.selectedRelease runs originalmaterialize--check;render path supplies correspondingselectedfile to Helm-f and validatesrenderedrelease.",
+      "actualGuards": "Families finite;release schemaVersion1/full40hex;selectedCode validates codebundle and imageinputdigest relationship;normalmodeverifyReleaseConfiguration compares entireconfigurationfileset/currentbytes against selectedcommit. --check-selected-source requires--check and reads exactselectedGitvalues,not currentconfigsuccess. --check comparesbytes;defaultwrite writesselectedfivefileroster. mkdir occurs evencheck.",
+      "notClaimed": "Not every retainedauthoredkey semanticallyvalidated here;unknown/YAML/APIlookingfields can persist. No successfulreceipt/config/materialization/Helmrender/admission/deploy observation. Deploymentstdout195 remainsblocked. Must retain exactSource/receiver/callerseal,not genericYAMLnonAPI."
+    },
+    {
+      "source": "scripts/updates/refresh-versions.mjs",
+      "line": 140,
+      "verdict": "ELIGIBLE_SOURCE_ONLY_PRIVATE_PURPOSE",
+      "suggestedPurpose": "Raw upstreamverification progress status with arbitrary version text before validation; not an API output classification or permission to run requests.",
+      "constructorAndReceiver": "Console status interpolates tool/version/arch in changedversionloop,then calls releaseArtifact/verified. Consoleconsumer is trustedupdaterworkflow/test log,notkubectl/Helmresourceinput.",
+      "actualGuards": "Exact pinnedsource+trustedcopycaller+statusdescriptor;no content-level restriction claimed. Tool/archfinite but versionarbitraryincludingLF before upstreamvalidator. NativecanonicalroleUNKNOWN must remain.",
+      "notClaimed": "No claim outputcannotcontainAPIlookingdocuments;no networkrequest/artifactvalidation/updaterexecution success. No unseenruntimeinputconstraint invented."
+    },
+    {
+      "source": "scripts/updates/refresh-versions.mjs",
+      "line": 151,
+      "verdict": "ELIGIBLE_SOURCE_ONLY_PRIVATE_PURPOSE",
+      "suggestedPurpose": "Parsed/source-preserving versions.json staging write before downstream versionOutputs/lock validation; selectedconfigartifact,not an API payload or fullyvalidated update.",
+      "constructorAndReceiver": "next=JSON.parse(originalversions);earlierselectedmetadata fields mutated by realfetch/check branches;JSON.stringify(next) writes fixedcwdversions.json;then syncVersions(root,false),syncCodexLock and updateRuntimeToolLocks consume. versions.versionOutputs validates usedfields and constructs mixedmemberMap separately.",
+      "actualGuards": "Trustedread-onlymodulecopyfrom workflow;fixedcwdversionsfile;GitHEADversionscomparison controlschangedbranches. JSONparsed but rootextra keys may persist. Full version validation is downstreamAFTERthiswrite. Networkbranches may happenbeforetry. Exact Sourcepurposecannot granttheir execution.",
+      "notClaimed": "Not fullyvalidatedschema or allfieldAPI-free;not successfulnetwork/lock/build/currentversionsobserved. versions181 mixedMap/APIgeneration remainsblocked and separateowner. Privatepurpose must not waive its adapters."
+    },
+    {
+      "source": "scripts/updates/refresh-versions.mjs",
+      "line": 155,
+      "verdict": "ELIGIBLE_SOURCE_ONLY_PRIVATE_PURPOSE",
+      "suggestedPurpose": "Catch-path exact original pre-run versions.json bytes restored to same fixed file; not atomic rollback of generated files,network effects or lock changes.",
+      "constructorAndReceiver": "original captured rawutf8beforemutation;catchfs.writeFileSync(file,original),then rethrows originalerror. Samecwdversionsreceiver.",
+      "actualGuards": "Exactsource/filebinding and unmodifiedoriginalvariable;catch only covers151+sync calls,not all earliernetworkbranches. No guarantee generatedoutputs/lockfiles restored.",
+      "notClaimed": "OriginalbytesmaycontainAPIlookingextra fields;no globalnonAPI,rollbacksuccess,all-or-nothingupdater or productionexecution observation."
+    }
+  ],
+  "sourceHashes": {
+    "scripts/recover-openclaw-audit-input.mjs": "c076ad46a6ff29bfb897b5f9cf218d164706e76bf00cb735dc0a89ffc20cc80f",
+    "scripts/updates/materialize-release.mjs": "ad026a32e4e9cad21ab3f2f0e87fcafe6c5d563f5133191f70b4c5ef4c925475",
+    "scripts/updates/refresh-versions.mjs": "f125cb70dd7dec201ab1415a61d21d5f87e8e6e8ea3f5bd8f2ce1deaa5a04356"
+  },
+  "readBasis": "Existing complete eleven-script frozenSourceplan reused; whole3requestedproducerbodies previouslyread,current sourcehashes match original11sourceseal;whole releaseconfiguration/runtimeinputs,completeversionsreceivergeneration,originalrecoveryunit/integrationtest/trustedupdatertest and selectedworkflow/deploycaller routes read. No repeat136audit.",
+  "implementationConditions": [
+    "Only addexact5source:linepurposeentries to existing immutableSource/24descriptor/68pin checkedroute;no canonicalrole changes,UNKNOWN remainsUNKNOWN,no dynamic/blanketnonAPIoverride.",
+    "Keep existing freshphysical68pin/callergraph/loaderabsence/native24roles/WeakSet checks beforebothcaches and ordinaryrolefallback. Source-onlymeaning is archive/config/status purpose,not runtimepayload/schema observation.",
+    "Read/renew affectedfinitehelperclosure facts/selectors with exactnativevector delta aftermeaningchange;do not blindlyrefreshunrelatedrecipes or trustanchors.",
+    "Focusednegativecontrols should proveall5remaincanonicalUNKNOWN,privatepurpose hasfalse runtime/apply,registryrelabel/newslot/caller/source/input/loader changesreject;rawLFstatus and extraAPIlookingconfig/archivebytes are not safe-nonAPIcounterexamples to erase.",
+    "Do not execute recoveryapply,updaternetwork,materializationwrite or currentproductionbaseline changes to establish these static purposes. Originalreceivingpath validation afterintegration remainsnecessary."
+  ],
+  "remainingBlocked": "Probe39,statefulpolicy68,deploymentrender195 and mixedversions181 remain outside this review and unqualified. No observedAPIreplacement proposed.",
+  "limits": [
+    "Eligibilityreview,not implementation/currentnativegeneratorPASS,gates/requirementacceptance,globalAPI/DATA/runtime/deployment/CI/releasegrant.",
+    "No new observedproduceroutputs or successfullive/nativecases claimed;tests were read assource,not executed.",
+    "Archive/Helmvalues/versionsfilemay preservearbitraryfields/bytes;privatepurposeroute must nameexactreceiver,not declareallpayloads inert or API-free.",
+    "No source/register/code edits."
+  ]
+}

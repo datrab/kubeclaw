@@ -135,3 +135,31 @@ test('renewed governance custody still rejects a changed source-map constructor'
     assert.throws(() => assertDocumentationExecutableRole(root, source), /selected producer\/helper\/initialization custody changed/u);
   } finally {fs.rmSync(root, {recursive: true, force: true});}
 });
+
+test('five additional artifact/status purposes preserve UNKNOWN and their actual limited meaning', () => {
+  const classify = createSerializedOutputRoleClassifier(repository, sources);
+  const receipt = checkedTopLevelScriptPurposes(repository, graph, classify, sources);
+  for (const [source, line, distinction] of [
+    ['scripts/recover-openclaw-audit-input.mjs', 70, /not API submission or successful doctor/u],
+    ['scripts/updates/materialize-release.mjs', 50, /write branch, not check success/u],
+    ['scripts/updates/refresh-versions.mjs', 140, /arbitrary version text including LF/u],
+    ['scripts/updates/refresh-versions.mjs', 151, /BEFORE downstream/u],
+    ['scripts/updates/refresh-versions.mjs', 155, /not atomic rollback/u],
+  ]) {
+    const role = classify(source).find(item => item.line === line);
+    assert.equal(role.role, 'unknown');
+    const purpose = selectedTopLevelScriptPurpose(source, role, receipt);
+    assert.equal(purpose.canonicalRawRole, 'unknown');
+    assert.equal(purpose.runtimeExecutionAuthorized, false);
+    assert.equal(purpose.apiApplyAuthorized, false);
+    assert.match(purpose.purpose, distinction);
+  }
+  for (const [source, line] of [
+    ['scripts/render-kubernetes-api-probe.mjs', 39],
+    ['scripts/render-stateful-network-policies.mjs', 68],
+    ['scripts/updates/deployment-release.mjs', 195],
+    ['scripts/versions.mjs', 181],
+  ]) {
+    assert.equal(selectedTopLevelScriptPurpose(source, classify(source).find(role => role.line === line), receipt), null);
+  }
+});

@@ -1,0 +1,23 @@
+{
+  "focusedTests": {
+    "command": "node --test scripts/tests/docs-api-top-level-script-purpose.test.mjs scripts/tests/deployment-config-output-custody.test.mjs",
+    "exitCode": 0,
+    "tests": 14,
+    "passed": 14,
+    "failed": 0,
+    "skipped": 0
+  },
+  "owningCheck": {
+    "argv": [
+      "/usr/local/bin/node",
+      "--max-old-space-size=4096",
+      "scripts/generate-local-helm-authorities.mjs",
+      "--check"
+    ],
+    "exitCode": 1,
+    "failure": "API_PRODUCT_SCRIPT_OUTPUT_ROLE_UNQUALIFIED: scripts/render-kubernetes-api-probe.mjs:39",
+    "meaning": "Original main receiver passed renewed scalar and documentation guards. Next actual API producer remains blocked; not overall generator success.",
+    "receiptDirectory": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/recovered-eleven-purpose-owning-check"
+  },
+  "newGateOrRuntimeAcceptance": false
+}
