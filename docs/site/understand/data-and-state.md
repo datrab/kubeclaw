@@ -556,13 +556,13 @@ for Core's separate active-wait, expiry, issuer, and one-time resume authority.
 >
 > **Claim:** State read selects a logical stream; append preserves immutable key/value replay and returns the committed entry.
 >
-> **Implementation:** [Namespace, entry projection, read and append](https://github.com/datrab/kubeclaw/blob/38d5c8f22d9cc3a923a7fdd421a1c02e4d176fdb/skills/common/plugins/state-store/src/adapter.ts#L19-L42) [Invocation checks, duplicates and size-error mapping](https://github.com/datrab/kubeclaw/blob/38d5c8f22d9cc3a923a7fdd421a1c02e4d176fdb/skills/common/plugins/state-store/src/adapter.ts#L44-L85)
+> **Implementation:** [Namespace, entry projection, read and append](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/skills/common/plugins/state-store/src/adapter.ts#L19-L42) [Invocation checks, duplicates and size-error mapping](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/skills/common/plugins/state-store/src/adapter.ts#L44-L85)
 >
-> **Contract or setting:** [State root and quotas](https://github.com/datrab/kubeclaw/blob/38d5c8f22d9cc3a923a7fdd421a1c02e4d176fdb/skills/common/plugins/state-store/schemas/config.schema.json#L1-L1)
+> **Contract or setting:** [State root and quotas](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/skills/common/plugins/state-store/schemas/config.schema.json#L1-L1)
 >
-> **Test evidence:** [State package assertions](https://github.com/datrab/kubeclaw/blob/38d5c8f22d9cc3a923a7fdd421a1c02e4d176fdb/skills/common/plugins/state-store/tests/live-function.test.ts#L34-L72) The assertions cover append/read order and equal replay. They reject changed content, invalid namespaces and oversized entries. Read as Source, not executed for this addition.
+> **Test evidence:** [State package assertions](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/skills/common/plugins/state-store/tests/live-function.test.ts#L34-L72) The assertions cover append/read order and equal replay. They reject changed content, invalid namespaces and oversized entries. Read as Source, not executed for this addition.
 >
-> **Revision:** `38d5c8f22d9cc3a923a7fdd421a1c02e4d176fdb`; the linked whole Source objects match this checkout.
+> **Revision:** `0e35889a3c4e65d5c47ba88e924611aace67eb1d`; the linked whole Source objects match this checkout.
 >
 > **Limit:** Store append serialization is not a compare-and-swap across separate read/append calls or lifecycle authority for a run.
 
@@ -570,13 +570,13 @@ for Core's separate active-wait, expiry, issuer, and one-time resume authority.
 >
 > **Claim:** Wait read returns the selected adapter root's validated waits, while create supplies a deterministic identity and rejects conflicting replay.
 >
-> **Implementation:** [Wait read, replay and create](https://github.com/datrab/kubeclaw/blob/38d5c8f22d9cc3a923a7fdd421a1c02e4d176fdb/skills/common/plugins/wait-store/src/adapter.ts#L188-L241)
+> **Implementation:** [Wait read, replay and create](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/skills/common/plugins/wait-store/src/adapter.ts#L188-L241)
 >
-> **Contract or setting:** [Closed Wait payload and issuer validation](https://github.com/datrab/kubeclaw/blob/38d5c8f22d9cc3a923a7fdd421a1c02e4d176fdb/skills/common/plugins/wait-store/src/adapter.ts#L95-L147) [Wait root and quotas](https://github.com/datrab/kubeclaw/blob/38d5c8f22d9cc3a923a7fdd421a1c02e4d176fdb/skills/common/plugins/wait-store/schemas/config.schema.json#L1-L1)
+> **Contract or setting:** [Closed Wait payload and issuer validation](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/skills/common/plugins/wait-store/src/adapter.ts#L95-L147) [Wait root and quotas](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/skills/common/plugins/wait-store/schemas/config.schema.json#L1-L1)
 >
-> **Test evidence:** [Read and duplicate assertions](https://github.com/datrab/kubeclaw/blob/38d5c8f22d9cc3a923a7fdd421a1c02e4d176fdb/skills/common/plugins/wait-store/tests/live-function.test.ts#L43-L65) [Post-read and malformed-store assertions](https://github.com/datrab/kubeclaw/blob/38d5c8f22d9cc3a923a7fdd421a1c02e4d176fdb/skills/common/plugins/wait-store/tests/live-function.test.ts#L95-L129) The assertions cover duplicate/conflicting creates and inspection. They cover malformed stored waits. They also check the post-read fence and cancellation. No test ran for this addition.
+> **Test evidence:** [Read and duplicate assertions](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/skills/common/plugins/wait-store/tests/live-function.test.ts#L43-L65) [Post-read and malformed-store assertions](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/skills/common/plugins/wait-store/tests/live-function.test.ts#L95-L129) The assertions cover duplicate/conflicting creates and inspection. They cover malformed stored waits. They also check the post-read fence and cancellation. No test ran for this addition.
 >
-> **Revision:** `38d5c8f22d9cc3a923a7fdd421a1c02e4d176fdb`; the linked whole Source objects match this checkout.
+> **Revision:** `0e35889a3c4e65d5c47ba88e924611aace67eb1d`; the linked whole Source objects match this checkout.
 >
 > **Limit:** A returned wait is durable intent, not proof that Core still considers it active or that the caller may resume it.
 

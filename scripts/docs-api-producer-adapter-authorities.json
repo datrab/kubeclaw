@@ -15505,7 +15505,7 @@
               "expression": "`AP09.6/9.7 guides passed (${specifications.length} pages, ${sourceLinkCount} pinned source links, ${checkedSources.size} source files, ${opsTools.length} Ops tools)\\n`"
             }
           ],
-          "factsDigest": "513ed26c0e7f6a665b2580ecbe51b68e0f4801a2401d54388988df08b0e1c50a"
+          "factsDigest": "729bfa69657a2118aba7248dbc655cba1da19a8bc1d82ee65177b67fff0c7c77"
         }
       ],
       "roleConsumerEvidence": {

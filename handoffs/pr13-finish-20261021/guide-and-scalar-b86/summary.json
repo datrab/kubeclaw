@@ -1,0 +1,90 @@
+{
+  "candidateParent": "b86f6e17335dd10790986101e6db4ccb46ed7825",
+  "candidateFileHashes": {
+    "docs/site/understand/data-and-state.md": "d921325f4872298175ecb785264a75af5e4b8a0d4164d69acd534f98536572ed",
+    "docs/site/understand/echo.md": "83aada2464c8ea9db1582bca17b07fb7995278b91e637505b4db51b4773fc51a",
+    "scripts/check-cni-portability.mjs": "bb1340530df9dce3fdb240a9be836897212b9fdbb69aba7c58785b2382bf5d03",
+    "scripts/check-platform-specialist-guides.mjs": "6216adf652a7b3a31c01315ab9ad1bb51811485a1a5bd69e2223d45b9a21fbb3",
+    "scripts/docs-api-documentation-role-custody.mjs": "26c218a2c04eccfd39b08e9695eb5f08b12a2c278a2668b043d8d04c932ab395",
+    "scripts/docs-api-producer-adapter-authorities.json": "ec6647e7f021f4d37c4ff13ef414a1ef0ec29181eca9ff9924045893d3fe8569",
+    "scripts/docs-deployment-scalar-occurrence-custody.mjs": "416071533de6425b986278d3d57dfaa42ef7cb4aa1e1dfb77264b88dfde119e2",
+    "scripts/platform-surface-source-discovery.mjs": "450d02d6a246e7dfc7b35f7831ac15ce41fc3e3d587578088ab68e50d2600b53"
+  },
+  "checks": [
+    {
+      "command": "node scripts/check-platform-specialist-guides.mjs",
+      "exitCode": 0,
+      "observation": "AP09.6/9.7 guides passed (15 pages, 1915 pinned source links, 579 source files, 8 Ops tools)",
+      "scope": "Original whole15-page guide check including its own Sourcepin/inventory/selftest/drift-mutation/CNI children; no live product outcome."
+    },
+    {
+      "command": "node scripts/platform-surface-source-discovery.mjs --self-test",
+      "exitCode": 0
+    },
+    {
+      "command": "node scripts/check-cni-portability.mjs",
+      "exitCode": 0
+    },
+    {
+      "command": "native AST-selected original invocation guard",
+      "positive": 7,
+      "negative": 21,
+      "exitCode": 0
+    },
+    {
+      "command": "original103JSrole first/warm guards",
+      "exitCode": 0,
+      "native4": "unchanged/notexecuted by metadata-only run"
+    },
+    {
+      "command": "original2scalar guards first/warm",
+      "exitCode": 0,
+      "occurrences": [
+        6,
+        2
+      ],
+      "canonicalStandaloneRole": "unknown",
+      "runtimeExecutionAuthorized": false,
+      "apiApplyAuthorized": false
+    },
+    {
+      "command": "originalclassifier covered-map warmmutation and restoration",
+      "exitCode": 0,
+      "childAttempts": 0
+    },
+    {
+      "command": "autoreview --mode local (two bounded datasets)",
+      "exitCode": 0,
+      "actionableFindings": 0
+    }
+  ],
+  "preservedOriginalFailures": [
+    "b86 normal localHelm: go ENOENT in omitted tool environment",
+    "b86 declaredGo originallocalHelm: old executablecaller census",
+    "guide missing Echo invocation admission",
+    "guide two overlywide Echo citation ranges",
+    "guide DataState unadmitted same-byte revision",
+    "guide source-discovery/CNI render namespacefixture mismatch"
+  ],
+  "contextChanges": "No caller/selected-source membership, edges or publicentries changes. Seven already independently reviewed source byte deltas only; fixed original occurrence profiles and all guards remain unchanged.",
+  "readerPredecessor": {
+    "revision": "b86f6e17335dd10790986101e6db4ccb46ed7825",
+    "pages": 177,
+    "artifactSearchSourcePreviewsExitCode": 0,
+    "changedPagesViewportCases": 24,
+    "viewportWidths": [
+      320,
+      768,
+      1440
+    ],
+    "targetedBrowserFindings": 0,
+    "limit": "This predates the two authored Echo/DataState citation-only successors; not fresh final-content rendering."
+  },
+  "limits": [
+    "Normal full generator remains pending; these are bounded positive metadata and guide results, not wholeAPI/generator/live acceptance.",
+    "No live model/preflight examples executed by metadata witnesses.",
+    "No AP10 deletion, no productchart/values changes, no product/runtime Source adoption.",
+    "No acceptance-record rebinding or new aggregate gate count."
+  ],
+  "externalEvidenceRoot": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021"
+}

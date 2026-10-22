@@ -1,0 +1,13 @@
+{
+  "metadataOnly": true,
+  "productCliExecuted": false,
+  "passed": 103,
+  "nativeNotExecuted": [
+    "scripts/docs-api-go-output-role-adapter.go",
+    "scripts/docs-api-go-output-shapes.go",
+    "scripts/docs-api-python-output-adapter.py",
+    "scripts/docs-api-python-ast-v1.py"
+  ],
+  "errors": [],
+  "childAttempts": []
+}

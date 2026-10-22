@@ -1,0 +1,206 @@
+{
+  "source": "scripts/check-platform-specialist-guides.mjs",
+  "sourceSha256": "6216adf652a7b3a31c01315ab9ad1bb51811485a1a5bd69e2223d45b9a21fbb3",
+  "selectedOriginalGuardSource": "const reviewedOperatorInvocationBlocks = new Map([\n  [\"docs/site/understand/data-and-state.md:bash\", new Set([\"1eb6d0e7a4f36d116677d9928611f6ba56496251c38c4bd1a0e84ac6c3ae4c79\", \"2136684a1dc8309e94ee786a8f76cfb2d524c00792e7cbeb3bd1b45a06d3067c\", \"1bdae1bd4ca174516fc703ebd059c6e82731e881f63123a5c2113151e2e4c488\"])],\n  [\"docs/site/understand/echo.md:sh\", new Set([\"f552bfe8686918b49c4138af2d327105b4393a09c6eb1e08a07f76666c6d5a4c\", \"e143f404d4eea298cf9ba8522ca07998b2820052808ccdd81042a9f0187da823\", \"66096c1b38c9366a42ef34f98b0d673a2d61f0c4ef3aec5cba11e0ffb492fec3\"])],\n  [\"docs/site/understand/telemetry.md:sh\", new Set([\"f135f9fa4f38fd0c92563221116e2f79df0838f5ff86440ae44d4b428576fc62\"])],\n]);\nassert(reviewedOperatorInvocationBlocks.get(`${file}:${language.trim()}`)\n        ?.has(createHash('sha256').update(body).digest('hex')),\n      `${file} copies maintained source or adds an unreviewed operator invocation`);",
+  "positiveCases": 7,
+  "negativeCases": 21,
+  "observed": [
+    {
+      "name": "genuine-exact-positive",
+      "page": "docs/site/understand/data-and-state.md",
+      "language": "bash",
+      "expected": true,
+      "actual": true
+    },
+    {
+      "name": "changed-body-denied",
+      "page": "docs/site/understand/data-and-state.md",
+      "language": "bash",
+      "expected": false,
+      "actual": false
+    },
+    {
+      "name": "body-relocated-to-other-page-denied",
+      "page": "docs/site/understand/echo.md",
+      "language": "bash",
+      "expected": false,
+      "actual": false
+    },
+    {
+      "name": "different-language-denied",
+      "page": "docs/site/understand/data-and-state.md",
+      "language": "sh",
+      "expected": false,
+      "actual": false
+    },
+    {
+      "name": "genuine-exact-positive",
+      "page": "docs/site/understand/data-and-state.md",
+      "language": "bash",
+      "expected": true,
+      "actual": true
+    },
+    {
+      "name": "changed-body-denied",
+      "page": "docs/site/understand/data-and-state.md",
+      "language": "bash",
+      "expected": false,
+      "actual": false
+    },
+    {
+      "name": "body-relocated-to-other-page-denied",
+      "page": "docs/site/understand/echo.md",
+      "language": "bash",
+      "expected": false,
+      "actual": false
+    },
+    {
+      "name": "different-language-denied",
+      "page": "docs/site/understand/data-and-state.md",
+      "language": "sh",
+      "expected": false,
+      "actual": false
+    },
+    {
+      "name": "genuine-exact-positive",
+      "page": "docs/site/understand/data-and-state.md",
+      "language": "bash",
+      "expected": true,
+      "actual": true
+    },
+    {
+      "name": "changed-body-denied",
+      "page": "docs/site/understand/data-and-state.md",
+      "language": "bash",
+      "expected": false,
+      "actual": false
+    },
+    {
+      "name": "body-relocated-to-other-page-denied",
+      "page": "docs/site/understand/echo.md",
+      "language": "bash",
+      "expected": false,
+      "actual": false
+    },
+    {
+      "name": "different-language-denied",
+      "page": "docs/site/understand/data-and-state.md",
+      "language": "sh",
+      "expected": false,
+      "actual": false
+    },
+    {
+      "name": "genuine-exact-positive",
+      "page": "docs/site/understand/echo.md",
+      "language": "sh",
+      "expected": true,
+      "actual": true
+    },
+    {
+      "name": "changed-body-denied",
+      "page": "docs/site/understand/echo.md",
+      "language": "sh",
+      "expected": false,
+      "actual": false
+    },
+    {
+      "name": "body-relocated-to-other-page-denied",
+      "page": "docs/site/understand/telemetry.md",
+      "language": "sh",
+      "expected": false,
+      "actual": false
+    },
+    {
+      "name": "different-language-denied",
+      "page": "docs/site/understand/echo.md",
+      "language": "bash",
+      "expected": false,
+      "actual": false
+    },
+    {
+      "name": "genuine-exact-positive",
+      "page": "docs/site/understand/echo.md",
+      "language": "sh",
+      "expected": true,
+      "actual": true
+    },
+    {
+      "name": "changed-body-denied",
+      "page": "docs/site/understand/echo.md",
+      "language": "sh",
+      "expected": false,
+      "actual": false
+    },
+    {
+      "name": "body-relocated-to-other-page-denied",
+      "page": "docs/site/understand/telemetry.md",
+      "language": "sh",
+      "expected": false,
+      "actual": false
+    },
+    {
+      "name": "different-language-denied",
+      "page": "docs/site/understand/echo.md",
+      "language": "bash",
+      "expected": false,
+      "actual": false
+    },
+    {
+      "name": "genuine-exact-positive",
+      "page": "docs/site/understand/echo.md",
+      "language": "sh",
+      "expected": true,
+      "actual": true
+    },
+    {
+      "name": "changed-body-denied",
+      "page": "docs/site/understand/echo.md",
+      "language": "sh",
+      "expected": false,
+      "actual": false
+    },
+    {
+      "name": "body-relocated-to-other-page-denied",
+      "page": "docs/site/understand/telemetry.md",
+      "language": "sh",
+      "expected": false,
+      "actual": false
+    },
+    {
+      "name": "different-language-denied",
+      "page": "docs/site/understand/echo.md",
+      "language": "bash",
+      "expected": false,
+      "actual": false
+    },
+    {
+      "name": "genuine-exact-positive",
+      "page": "docs/site/understand/telemetry.md",
+      "language": "sh",
+      "expected": true,
+      "actual": true
+    },
+    {
+      "name": "changed-body-denied",
+      "page": "docs/site/understand/telemetry.md",
+      "language": "sh",
+      "expected": false,
+      "actual": false
+    },
+    {
+      "name": "body-relocated-to-other-page-denied",
+      "page": "docs/site/understand/echo.md",
+      "language": "sh",
+      "expected": false,
+      "actual": false
+    },
+    {
+      "name": "different-language-denied",
+      "page": "docs/site/understand/telemetry.md",
+      "language": "bash",
+      "expected": false,
+      "actual": false
+    }
+  ],
+  "limits": "Executes exact AST-selected registry and owning assert from candidate, not mirrored guard logic. No example commands/wholeCLI/product/runtime are executed here; separate originalwholeCLI result retained."
+}

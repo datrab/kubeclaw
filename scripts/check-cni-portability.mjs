@@ -9,7 +9,7 @@ import YAML from 'yaml';
 const root = path.resolve(import.meta.dirname, '..');
 
 function render(name, chart, values = [], stringSets = [], typedSets = []) {
-  const args = ['template', name, chart];
+  const args = ['template', name, chart, '--namespace', 'kubeclaw'];
   for (const value of values) args.push('-f', value);
   for (const setting of stringSets) args.push('--set-string', setting);
   for (const setting of typedSets) args.push('--set', setting);

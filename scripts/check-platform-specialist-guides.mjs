@@ -181,7 +181,11 @@ const reviewedPageSourceRevisions = {
 
 // Existing independently reviewed operator invocations, not maintained source
 // copies. Keep the language/body roster exact; new examples require review.
-const reviewedOperatorInvocationBlocks = new Set(["1eb6d0e7a4f36d116677d9928611f6ba56496251c38c4bd1a0e84ac6c3ae4c79", "2136684a1dc8309e94ee786a8f76cfb2d524c00792e7cbeb3bd1b45a06d3067c", "1bdae1bd4ca174516fc703ebd059c6e82731e881f63123a5c2113151e2e4c488"]);
+const reviewedOperatorInvocationBlocks = new Map([
+  ["docs/site/understand/data-and-state.md:bash", new Set(["1eb6d0e7a4f36d116677d9928611f6ba56496251c38c4bd1a0e84ac6c3ae4c79", "2136684a1dc8309e94ee786a8f76cfb2d524c00792e7cbeb3bd1b45a06d3067c", "1bdae1bd4ca174516fc703ebd059c6e82731e881f63123a5c2113151e2e4c488"])],
+  ["docs/site/understand/echo.md:sh", new Set(["f552bfe8686918b49c4138af2d327105b4393a09c6eb1e08a07f76666c6d5a4c", "e143f404d4eea298cf9ba8522ca07998b2820052808ccdd81042a9f0187da823", "66096c1b38c9366a42ef34f98b0d673a2d61f0c4ef3aec5cba11e0ffb492fec3"])],
+  ["docs/site/understand/telemetry.md:sh", new Set(["f135f9fa4f38fd0c92563221116e2f79df0838f5ff86440ae44d4b428576fc62"])],
+]);
 
 let sourceLinkCount = 0;
 const upstreamOps = JSON.parse(fs.readFileSync(path.join(root, 'scripts/ops-mcp-docs-upstream.json'), 'utf8'));
@@ -206,9 +210,8 @@ for (const [file, minimumLinks, markers] of specifications) {
   if (file.startsWith('docs/site/understand/')) {
     for (const [, language, body] of source.matchAll(/^```([^\n]*)\n([\s\S]*?)^```/gmu)) {
       if (language.trim().toLowerCase() === 'mermaid') continue;
-      assert(file === 'docs/site/understand/data-and-state.md'
-        && language.trim().toLowerCase() === 'bash'
-        && reviewedOperatorInvocationBlocks.has(createHash('sha256').update(body).digest('hex')),
+      assert(reviewedOperatorInvocationBlocks.get(`${file}:${language.trim()}`)
+        ?.has(createHash('sha256').update(body).digest('hex')),
       `${file} copies maintained source or adds an unreviewed operator invocation`);
     }
   }

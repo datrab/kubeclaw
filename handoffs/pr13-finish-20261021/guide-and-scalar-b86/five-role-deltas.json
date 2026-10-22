@@ -1,0 +1,197 @@
+[
+  {
+    "source": "scripts/docs-api-output-discovery.mjs",
+    "factCount": 226,
+    "oldDigest": "a446392551269f28cd780a8733d38254dad545f66175006ad88a471da1efa21c",
+    "newDigest": "a982961ab903d07b2a16adc27f40f1a52f3be6548a9aa992cbab7afa2431d96d",
+    "orderedChanges": [
+      {
+        "index": 180,
+        "old": {
+          "source": "scripts/docs-deployment-scalar-occurrence-custody.mjs",
+          "kind": "FirstStatement",
+          "symbol": "reviewedCallerCensusSha256",
+          "sha256": "bb9deeeadede069c5137e1a4bc2ea0d0b697cdf18d42b694ab7475a8d0433779"
+        },
+        "current": {
+          "source": "scripts/docs-deployment-scalar-occurrence-custody.mjs",
+          "kind": "FirstStatement",
+          "symbol": "reviewedCallerCensusSha256",
+          "sha256": "17eba306918b0e52096865de97b5666c0f4e10e37663c5f9599e297182b1b64c"
+        }
+      },
+      {
+        "index": 181,
+        "old": {
+          "source": "scripts/docs-deployment-scalar-occurrence-custody.mjs",
+          "kind": "FirstStatement",
+          "symbol": "reviewedSelectedGraphSha256",
+          "sha256": "5a95a27b00a0f2733db8f29375ccd4260052010d0a500f890eed67cbdcd5fb44"
+        },
+        "current": {
+          "source": "scripts/docs-deployment-scalar-occurrence-custody.mjs",
+          "kind": "FirstStatement",
+          "symbol": "reviewedSelectedGraphSha256",
+          "sha256": "e496f0cd25b5f174378c58f587794a0578b7945855cc7410d378b63ca8d650b5"
+        }
+      }
+    ],
+    "otherOrderedFactsExact": true
+  },
+  {
+    "source": "scripts/docs-api-product-scope.mjs",
+    "factCount": 1419,
+    "oldDigest": "3b7cab29cb2517dfb462746fe2fc14c34b400770027568e86d72df3740f8ed24",
+    "newDigest": "012d1f6369a6d1e89e49eb02ce59c78bffb160030332a1c989955d43743dfdf9",
+    "orderedChanges": [
+      {
+        "index": 344,
+        "old": {
+          "source": "scripts/docs-deployment-scalar-occurrence-custody.mjs",
+          "kind": "FirstStatement",
+          "symbol": "reviewedCallerCensusSha256",
+          "sha256": "bb9deeeadede069c5137e1a4bc2ea0d0b697cdf18d42b694ab7475a8d0433779"
+        },
+        "current": {
+          "source": "scripts/docs-deployment-scalar-occurrence-custody.mjs",
+          "kind": "FirstStatement",
+          "symbol": "reviewedCallerCensusSha256",
+          "sha256": "17eba306918b0e52096865de97b5666c0f4e10e37663c5f9599e297182b1b64c"
+        }
+      },
+      {
+        "index": 345,
+        "old": {
+          "source": "scripts/docs-deployment-scalar-occurrence-custody.mjs",
+          "kind": "FirstStatement",
+          "symbol": "reviewedSelectedGraphSha256",
+          "sha256": "5a95a27b00a0f2733db8f29375ccd4260052010d0a500f890eed67cbdcd5fb44"
+        },
+        "current": {
+          "source": "scripts/docs-deployment-scalar-occurrence-custody.mjs",
+          "kind": "FirstStatement",
+          "symbol": "reviewedSelectedGraphSha256",
+          "sha256": "e496f0cd25b5f174378c58f587794a0578b7945855cc7410d378b63ca8d650b5"
+        }
+      }
+    ],
+    "otherOrderedFactsExact": true
+  },
+  {
+    "source": "scripts/docs-api-reference.mjs",
+    "factCount": 1441,
+    "oldDigest": "8010a88d7139e4d31ba0f70a5d06f82f714acd4a74998e3ba50d2125cbffd856",
+    "newDigest": "f23861f66e48fd55880ca70b93a6e33dd23b50eb09ba8eeb0963a08dbf705fbf",
+    "orderedChanges": [
+      {
+        "index": 366,
+        "old": {
+          "source": "scripts/docs-deployment-scalar-occurrence-custody.mjs",
+          "kind": "FirstStatement",
+          "symbol": "reviewedCallerCensusSha256",
+          "sha256": "bb9deeeadede069c5137e1a4bc2ea0d0b697cdf18d42b694ab7475a8d0433779"
+        },
+        "current": {
+          "source": "scripts/docs-deployment-scalar-occurrence-custody.mjs",
+          "kind": "FirstStatement",
+          "symbol": "reviewedCallerCensusSha256",
+          "sha256": "17eba306918b0e52096865de97b5666c0f4e10e37663c5f9599e297182b1b64c"
+        }
+      },
+      {
+        "index": 367,
+        "old": {
+          "source": "scripts/docs-deployment-scalar-occurrence-custody.mjs",
+          "kind": "FirstStatement",
+          "symbol": "reviewedSelectedGraphSha256",
+          "sha256": "5a95a27b00a0f2733db8f29375ccd4260052010d0a500f890eed67cbdcd5fb44"
+        },
+        "current": {
+          "source": "scripts/docs-deployment-scalar-occurrence-custody.mjs",
+          "kind": "FirstStatement",
+          "symbol": "reviewedSelectedGraphSha256",
+          "sha256": "e496f0cd25b5f174378c58f587794a0578b7945855cc7410d378b63ca8d650b5"
+        }
+      }
+    ],
+    "otherOrderedFactsExact": true
+  },
+  {
+    "source": "scripts/docs-configuration-inventory.mjs",
+    "factCount": 2211,
+    "oldDigest": "cc44315d05744d17b57d3f52b6704629b3d72e325bf7c96cb6e5a28c80841c62",
+    "newDigest": "8340f51bae245b410df3a85f646796e448ba8bd14b4475f5ff36ead3a5c7218b",
+    "orderedChanges": [
+      {
+        "index": 653,
+        "old": {
+          "source": "scripts/docs-deployment-scalar-occurrence-custody.mjs",
+          "kind": "FirstStatement",
+          "symbol": "reviewedCallerCensusSha256",
+          "sha256": "bb9deeeadede069c5137e1a4bc2ea0d0b697cdf18d42b694ab7475a8d0433779"
+        },
+        "current": {
+          "source": "scripts/docs-deployment-scalar-occurrence-custody.mjs",
+          "kind": "FirstStatement",
+          "symbol": "reviewedCallerCensusSha256",
+          "sha256": "17eba306918b0e52096865de97b5666c0f4e10e37663c5f9599e297182b1b64c"
+        }
+      },
+      {
+        "index": 654,
+        "old": {
+          "source": "scripts/docs-deployment-scalar-occurrence-custody.mjs",
+          "kind": "FirstStatement",
+          "symbol": "reviewedSelectedGraphSha256",
+          "sha256": "5a95a27b00a0f2733db8f29375ccd4260052010d0a500f890eed67cbdcd5fb44"
+        },
+        "current": {
+          "source": "scripts/docs-deployment-scalar-occurrence-custody.mjs",
+          "kind": "FirstStatement",
+          "symbol": "reviewedSelectedGraphSha256",
+          "sha256": "e496f0cd25b5f174378c58f587794a0578b7945855cc7410d378b63ca8d650b5"
+        }
+      }
+    ],
+    "otherOrderedFactsExact": true
+  },
+  {
+    "source": "scripts/docs-generate.mjs",
+    "factCount": 1537,
+    "oldDigest": "e9e17585ba99381f0266fafdbd28957f02509d76f7020c22496883720a221e5b",
+    "newDigest": "40b346f70eecb58513f1ee7449e7f5a6792529c1f8f24053c433acf3c66b7b7f",
+    "orderedChanges": [
+      {
+        "index": 364,
+        "old": {
+          "source": "scripts/docs-deployment-scalar-occurrence-custody.mjs",
+          "kind": "FirstStatement",
+          "symbol": "reviewedCallerCensusSha256",
+          "sha256": "bb9deeeadede069c5137e1a4bc2ea0d0b697cdf18d42b694ab7475a8d0433779"
+        },
+        "current": {
+          "source": "scripts/docs-deployment-scalar-occurrence-custody.mjs",
+          "kind": "FirstStatement",
+          "symbol": "reviewedCallerCensusSha256",
+          "sha256": "17eba306918b0e52096865de97b5666c0f4e10e37663c5f9599e297182b1b64c"
+        }
+      },
+      {
+        "index": 365,
+        "old": {
+          "source": "scripts/docs-deployment-scalar-occurrence-custody.mjs",
+          "kind": "FirstStatement",
+          "symbol": "reviewedSelectedGraphSha256",
+          "sha256": "5a95a27b00a0f2733db8f29375ccd4260052010d0a500f890eed67cbdcd5fb44"
+        },
+        "current": {
+          "source": "scripts/docs-deployment-scalar-occurrence-custody.mjs",
+          "kind": "FirstStatement",
+          "symbol": "reviewedSelectedGraphSha256",
+          "sha256": "e496f0cd25b5f174378c58f587794a0578b7945855cc7410d378b63ca8d650b5"
+        }
+      }
+    ],
+    "otherOrderedFactsExact": true
+  }
+]

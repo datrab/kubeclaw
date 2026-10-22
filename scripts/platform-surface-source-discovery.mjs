@@ -1415,7 +1415,7 @@ export function selfTest(root = path.resolve(import.meta.dirname, '..')) {
 
   const rendered = [];
   const helm = (name, chart, values = [], sets = []) => {
-    const args = ['template', name, chart];
+    const args = ['template', name, chart, '--namespace', 'kubeclaw'];
     for (const value of values) args.push('-f', value);
     for (const setting of sets) args.push('--set-string', setting);
     return execFileSync('helm', args, { cwd: root, encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 });

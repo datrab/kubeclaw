@@ -1,0 +1,38 @@
+{
+  "metadataOnly": true,
+  "productCliExecuted": false,
+  "observed": [
+    {
+      "source": "scripts/bundle-values-field.mjs",
+      "phase": "first",
+      "canonicalRole": "unknown",
+      "occurrences": 6,
+      "runtimeExecutionAuthorized": false,
+      "apiApplyAuthorized": false
+    },
+    {
+      "source": "scripts/bundle-values-field.mjs",
+      "phase": "warm",
+      "canonicalRole": "unknown",
+      "occurrences": 6,
+      "runtimeExecutionAuthorized": false,
+      "apiApplyAuthorized": false
+    },
+    {
+      "source": "scripts/buster-resource-overlay.mjs",
+      "phase": "first",
+      "canonicalRole": "unknown",
+      "occurrences": 2,
+      "runtimeExecutionAuthorized": false,
+      "apiApplyAuthorized": false
+    },
+    {
+      "source": "scripts/buster-resource-overlay.mjs",
+      "phase": "warm",
+      "canonicalRole": "unknown",
+      "occurrences": 2,
+      "runtimeExecutionAuthorized": false,
+      "apiApplyAuthorized": false
+    }
+  ]
+}
