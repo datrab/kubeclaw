@@ -1,0 +1,18 @@
+import fs from 'node:fs';import assert from 'node:assert/strict';import {gunzipSync} from 'node:zlib';import {isDeepStrictEqual as same} from 'node:util';
+import {documentationExecutableRoleRecipes as recipes} from '/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/docs-api-documentation-role-custody.mjs';
+import {nativeOperationFactDigest as digest} from '/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/docs-api-output-role-classification.mjs';
+const out=new URL('.',import.meta.url),read=name=>JSON.parse(fs.readFileSync(new URL(name,out)));const changes=read('candidate-delta.json');
+const old=JSON.parse(gunzipSync(fs.readFileSync('docs/blueprint/acceptance-evidence/exposure-predecessor-20261023/current-recipes.json.gz'))).records;
+const now=JSON.parse(gunzipSync(fs.readFileSync(new URL('candidate-recipes.json.gz',out)))).records;
+assert.equal(old.length,105);assert.equal(now.length,105);
+for(const previous of old){assert.equal(digest(previous.facts),recipes[previous.source].factsDigest);const current=now.find(r=>r.source===previous.source);assert(current);assert.equal(digest(current.facts),current.actualDigest);if(!changes.some(c=>c.source===previous.source))assert.deepEqual(current.facts,previous.facts);}
+assert.deepEqual(changes.map(c=>c.source).sort(),['scripts/docs-api-output-discovery.mjs','scripts/docs-api-output-role-classification.mjs','scripts/docs-api-product-scope.mjs','scripts/docs-api-reference.mjs','scripts/docs-configuration-inventory.mjs','scripts/docs-generate.mjs'].sort());
+const file='scripts/docs-api-documentation-role-custody.mjs';let code=fs.readFileSync(file,'utf8');
+for(const c of changes){assert(!c.childChanged);const classifier=c.source==='scripts/docs-api-output-role-classification.mjs';assert.equal(c.added.length,classifier?3:5);assert.equal(c.removed.length,classifier?2:4);
+ const allowed=classifier?new Set(['opaqueFileDataCapabilities','createSerializedOutputRoleClassifier','qualifiedFileRole']):new Set(['opaqueFileDataCapabilities','createSerializedOutputRoleClassifier','authoritySha256','reviewedCallerCensusSha256','reviewedSelectedGraphSha256']);
+ for(const f of [...c.added,...c.removed]){assert(allowed.has(f.symbol));assert.equal(f.source,f.symbol.startsWith('reviewed')?'scripts/docs-deployment-scalar-occurrence-custody.mjs':f.symbol==='authoritySha256'?'scripts/docs-api-top-level-script-purpose.mjs':'scripts/docs-api-output-role-classification.mjs');}
+ assert.equal(c.selectorsChanged,classifier);
+ if(classifier){assert.equal(c.selectors.length,15);assert.equal(c.oldSelectors.length,15);assert.equal(c.selectors.filter((v,i)=>!same(v,c.oldSelectors[i])).length,1);const oldText=JSON.stringify(c.oldSelectors,null,2).replaceAll('\n','\n    '),nextText=JSON.stringify(c.selectors,null,2).replaceAll('\n','\n    ');assert.equal(code.split(oldText).length,2);code=code.replace(oldText,nextText);}
+ assert.equal(code.split(c.beforeDigest).length,2);code=code.replace(c.beforeDigest,c.actualDigest);
+}
+fs.writeFileSync(file,code);console.log(JSON.stringify({baselineRecipesVerified:105,unchangedRecipes:99,renewed:6,onlyClassifierSyntaxSelectorChanged:true,childRoleMembershipUnchanged:true}));

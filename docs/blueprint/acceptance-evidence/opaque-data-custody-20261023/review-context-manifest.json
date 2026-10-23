@@ -1,0 +1,15 @@
+{
+  "path": ".cache/pr13-renewal-review/context.txt",
+  "bytes": 34636,
+  "sha256": "6feb01305ed9bc4e7a185f3422257aceaa9181cd7d7d1e6982390d61cba77a98",
+  "helperCommit": "fe588b1a6267eb47f785d0c748db9f6f3e9a3b4f",
+  "engine": "codex",
+  "model": "gpt-5.6-terra",
+  "thinking": "high",
+  "maxPriority": "P2",
+  "sourceOnly": true,
+  "reviewerExecutedTests": false,
+  "bundleBytes": 6585,
+  "findings": 0,
+  "confidence": 0.82
+}
