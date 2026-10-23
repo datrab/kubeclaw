@@ -61,3 +61,47 @@ credited as a successful mutation, and no receipt is rewritten.
 Exact raw failures and successful owner/mutation outputs, original scope object
 and independent verdict are retained outside tmp at
 `/home/node/.openclaw/workspace/operations/pr13/evidence/extension-guide-drift-20261023/`.
+
+## Qualification guard recovery (supersedes the fixture Source repair above)
+
+The original receiver subsequently rejected the fixture Source edit with
+`DOCUMENTATION_TOOL_QUALIFICATION_SOURCE_DRIFT` for
+`check-capability-drift-mutations.mjs`. This newly exposed failure is retained;
+it is not the old DATA failure and is not a passing guard result.
+
+Rather than refreshing qualification hashes without a complete custody-vector
+review, the owned seven-line fixture edit was explicitly restored to the exact
+previously qualified `ce04ec8f` bytes. The genuine installed reader packages
+`markdown-it`15.0.3, `mermaid`12.2.0 and `sanitize-html`2.18.1 are exposed through
+local ignored root module symlinks, so the original clone's existing dependency
+binding mechanism can find them. Every version was checked against the existing
+reader package manifest. No package manifest, lock, qualification, role, product
+runtime or release receipt changes. A first partial binding exposed sanitize-html
+as missing too; that failed baseline is retained separately and is not credited.
+The original unchanged fixture is rerun against the repaired real environment;
+only its final terminal results may be used as current capability evidence.
+
+## Final review finding and current unfinished custody (supersedes recovery above)
+
+The independent recovery review raised a material P1: the runtime-only root
+aliases do not make a normal tracked-only mutation clone reproducible. Accepted:
+the tracked explicit reader-tree binding was restored to the independently
+reviewed `ad41b9eb` Source, and only the three owned root aliases were removed.
+The final Source is therefore the reproducible fixture fix described first, not
+the rejected machine-local workaround. Its original six successful mutations in
+`capability-repaired.stdout` used exactly this Source without the later aliases.
+The subsequent unchanged-old-Source six passes remain separate historical proof.
+
+Integration custody is NOT closed. The original receiver first observed
+`DOCUMENTATION_TOOL_QUALIFICATION_SOURCE_DRIFT` for the seven-line fixture change.
+The attempted exact-Source fallback then exposed
+`DEPLOYMENT_SCALAR_OCCURRENCE_UNQUALIFIED: scripts/bundle-values-field.mjs;
+changed/new executable caller census` from the advanced-guide checker change.
+Neither failure is credited as the old DATA stop or as a successful mutation.
+No qualification or scalar digest was refreshed. The original DATA artifacts:41
+failure and all five UNKNOWN slots remain separately preserved, not re-run past
+these new custody guards. The next coherent batch must compare the complete
+1,005-caller/1,248-selected-source vectors and all 105 role recipes/qualification
+purpose/selector/child inputs, independently assess the exact two Source deltas,
+and renew only demonstrated unchanged scopes before resuming the receiver.
+No whole gate is accepted and no additional acceptance is counted.
