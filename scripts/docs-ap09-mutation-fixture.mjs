@@ -82,6 +82,24 @@ if (variant.constructor === 'typescript-error-code-v1') {
   replacement = operation === 'add' ? anchor.trimEnd() + ',\n' + added
     : operation === 'change' ? anchor.replace('"format": "junit"', '"format": "fixture-junit"')
     : anchor.replace('        "application/xml",\n        "text/xml"', '        "application/xml"');
+} else if (variant.constructor === 'json-schema-nested-field-v1') {
+  // Use an existing nested target field, not a flat lint flag masquerading
+  // as nested removal. The runtime consumer independently bounds this value.
+  anchor = '          "maxRequestBytes": { "type": "integer", "minimum": 1, "maximum": 8388608, "default": 1048576 },\n';
+  if (operation === 'add') {
+    // Add a condition-specific bound for an existing consumer-qualified field.
+    anchor = '"then": { "properties": { "endpoint":';
+    replacement = '"then": { "properties": { "maxRequestBytes": { "type": "integer", "maximum": 524288 }, "endpoint":';
+  } else replacement = operation === 'change'
+    ? anchor.replace('"default": 1048576', '"default": 524288') : '';
+} else if (variant.constructor === 'yaml-secret-reference-v1') {
+  // Remove a unique complete reference: the gateway reference is repeated
+  // elsewhere, so removing only one gateway occurrence does not remove identity.
+  anchor = '            - name: CODE_BUNDLE_AUTH_TOKEN\n              valueFrom:\n                secretKeyRef:\n                  name: {{ .Values.codeBundle.auth.existingSecret }}\n                  key: {{ .Values.codeBundle.auth.existingSecretKey | default "token" }}\n';
+  added = '            - name: FIXTURE_GATEWAY_TOKEN\n              valueFrom: { secretKeyRef: { name: fixture-gateway-secret, key: fixture-token, optional: true } }\n';
+  replacement = operation === 'add' ? anchor + added
+    : operation === 'change' ? anchor.replace('{{ .Values.codeBundle.auth.existingSecretKey | default "token" }}', 'fixture-rotated-token')
+    : '';
 } else if (variant.constructor === 'typescript-export-v1') {
   anchor = "export const PLUGIN_API_VERSION = 'pipeline-plugin-v2' as const;\n";
   added = "export const FIXTURE_PLUGIN_COMPATIBILITY = 'fixture-plugin-v1' as const;\n";

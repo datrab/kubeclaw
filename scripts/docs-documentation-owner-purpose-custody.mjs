@@ -46,9 +46,14 @@ export const reviewedDocumentationOwnerPurposes=freeze({
   },
   "scripts/docs-ap09-mutation-fixture.mjs": {
     "kind": "finite-documentation-patch-constructor/v1",
-    "sourceSha256": "f46c275fce0ef9d55e2ac61a4bcc7b466519d42f07bec4ec8d86a7c2ce6fc687",
+    "sourceSha256": "107001d3dce206fac16f0bf8c71f66967eca35aaf42531b23d1be548741e6d77",
     "consumer": "Registered deterministic unified patches consumed only by the already reviewed documentation mutation callers in owned temporary copies.",
     "purposeInputs": [
+      {
+        "path": "skills/common/plugins/runtime-dispatch/schemas/config.schema.json",
+        "canonical": "skills/common/plugins/runtime-dispatch/schemas/config.schema.json",
+        "sha256": "c780e8086e6d6c954734e62c171f3de67a37b1c94c7483c887571ea08f18a641"
+      },
       {
         "path": "charts/kubeclaw/files/config/swarm.config.json",
         "canonical": "charts/kubeclaw/files/config/swarm.config.json",
@@ -72,7 +77,7 @@ export const reviewedDocumentationOwnerPurposes=freeze({
       {
         "path": "docs/blueprint/AP09-acceptance-fixtures.json",
         "canonical": "docs/blueprint/AP09-acceptance-fixtures.json",
-        "sha256": "5671508592d263002a2689007cd554b7e2c179403bc9e0e793a7a6a22adb88a8"
+        "sha256": "19edae3ea55ec0a59988ef625f5e06bd2a6d940b144f59e75bed6849c4f76435"
       },
       {
         "path": "docs/site/use/workflows/wait-resume/platform.template.json",

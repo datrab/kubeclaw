@@ -178,3 +178,42 @@ exactly that one SHA field; all4470path/class/consumer records and immutable
 classification/baseline remain identical. No PASS completion record lists that
 generated tree as Source; this data-only synchronization does not repin any
 additional acceptance scope. The original tree candidate check passes.
+
+
+## Subsequent genuine nested-schema constructor candidate
+
+Uncommitted candidate based on `ad924f9f`; no custody or acceptance renewal yet.
+The prior lint schema is flat, so its flat flag removal cannot establish nested
+coverage. The registered nested variant now names the existing runtime-dispatch
+schema and its real catalogue page. Add introduces a conditional bound for the
+existing consumer-qualified nested `maxRequestBytes`; change alters its schema
+default; remove deletes that actual nested field. Product sources stay unchanged.
+
+The original schema-only configuration receiver has a green original/isolated
+baseline. All three registered patches are deterministic, modify only their
+registered authority, reject with exact `DOC_DRIFT_CONFIG`, leave the expected
+reader page unchanged and restore green. The combined tool call timed out only
+after completed Add/Change restorations; Remove was completed separately. Actual
+Ajv validation separately proves Add/Remove reject formerly valid nested values
+and Change supplies 524288 instead of1048576. This does not execute runtime defaults.
+An initial invented field was rejected as `CONFIG_SEMANTIC_GAP`, not credited.
+
+Pinned Terra/high P2 review reports no findings for the emitter, changed registry
+row, full nested schema and bounded actual consumer excerpt. Unchanged authentication,
+full config integration, runtime and Reader remain outside that source-only review.
+Full105-recipe comparison against the current qualified baseline finds exactly
+one emitter IfStatement change; selectors/children remain identical. Complete
+1248-selected-source and1005-caller memberships are unchanged; only emitter bytes
+differ. Seventeen qualifications depend on changed purpose inputs. The newly
+selected existing schema is absent from the emitter's explicit owner-purpose roster:
+review/bind that exact finite input, never blindly refresh hashes. Original receiver
+again actually rejects emitter qualification Source drift; baseline DATA artifacts41
+and all5UNKNOWN remain separately preserved. Full config/guide/publication evidence
+and affected-scope preservation remain unfinished;225/261 and56/89 unchanged.
+
+Exact candidate, raw failures, native controls, review limits and runnable complete
+current-baseline acquisition are retained in operations evidence under
+`extension-guide-drift-20261023/nested-constructor-progress.json` and `nested-custody/`.
+Continue from those current vectors; do not rerun the historical custody acquisition
+or count this as A910-13/A910-14 acceptance. No commit/push until coherent custody
+and affected original-scope preservation have been reviewed together.
