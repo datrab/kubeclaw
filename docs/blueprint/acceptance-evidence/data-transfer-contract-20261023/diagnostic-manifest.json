@@ -1,0 +1,25 @@
+{
+  "baseline": "635c676232accda0976d177974c02071a6d68c4a",
+  "sourceOnlyReview": true,
+  "reviewerExecutedTests": false,
+  "reviewerShellInspection": false,
+  "files": {
+    "custom-store-control.mts.raw": {
+      "bytes": 14900,
+      "sha256": "ff1d7a9aa90081708ceac82cc3097130a43391c9d9e19dcecb375afd99fcdb43"
+    },
+    "custom-store-error-control.mts.raw": {
+      "bytes": 15068,
+      "sha256": "0335c36b6510e17a013670eeaa9d6b2ce0151a83caa9f4024a131251630eb026"
+    },
+    "custom-store-control.log": {
+      "bytes": 211,
+      "sha256": "a214f67c0b569c2f9f24c7161fed1bf1569effd5bc80659b2651c0bf69e69f7f"
+    },
+    "custom-store-error-control.log": {
+      "bytes": 229,
+      "sha256": "e399747fac8e59a967f3bd68a2149b77e3763f84190ff24f9862a50ccee33761"
+    }
+  },
+  "originalReceiver": "exit1; full bytes retained outside tmp in operations/pr13/evidence/data-transfer-contract-20261023/original-receiver.log"
+}

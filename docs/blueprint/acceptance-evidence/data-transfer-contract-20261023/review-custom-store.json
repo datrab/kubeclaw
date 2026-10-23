@@ -1,0 +1,6 @@
+{
+  "findings": [],
+  "overall_correctness": "patch is correct",
+  "overall_explanation": "The documentation and retained synthetic diagnostic sources are consistent with the supplied runner behavior and stated scope. No actionable P0-P2 defect was identified in the change bundle.",
+  "overall_confidence": 0.9
+}

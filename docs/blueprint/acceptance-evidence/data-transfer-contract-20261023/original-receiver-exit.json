@@ -1,0 +1,7 @@
+{
+  "startedAt": "2026-10-23T18:32:19.511388+00:00",
+  "endedAt": "2026-10-23T18:35:14.580797+00:00",
+  "exitCode": 1,
+  "supervisorPid": 182635,
+  "command": "node --max-old-space-size=4096 scripts/generate-local-helm-authorities.mjs --check"
+}

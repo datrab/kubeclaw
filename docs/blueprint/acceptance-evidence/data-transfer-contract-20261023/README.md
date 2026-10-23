@@ -42,7 +42,7 @@ Synthetic ConfigMap/Secret values are fixtures, not cluster or credential data.
 
 All six utility controls pass. No provider process, custom-store implementation,
 API client, deployment, Reader exercise or complete producer-family census was
-executed by these controls. They establish byte preservation in the original
+executed by these six utility controls. They establish byte preservation in the original
 default utility, not that a future discovery adapter preserves API documents.
 
 ## Required next implementation proof
@@ -64,3 +64,34 @@ The original receiver still requires its independent API DATA contract. No
 acceptance counts change: 224/261 requirements and 56/89 gates accepted.
 `RELEASE_CONFIGURATION_CHANGED: charts/kubeclaw/files/config/knip.json` is
 preserved; no release receipts or custody authorities are renewed here.
+
+## Continued actual runner diagnostics after the first commit
+
+Two additional synthetic-loader diagnostics execute the actual `TestPlanRunner`
+with an injected custom EvidenceStore wrapper and a default file-store backing.
+They reuse the fixture definitions before `const calls` from the existing
+`check-pipeline-test-plan-runner.mts` contract harness; exact generated sources
+are retained as `.mts.raw` evidence (absolute imports bind this checkout).
+They do not execute the registered-provider sandbox or production providers.
+
+The completed route observes the entire two-document YAML stream at the custom
+store's `selected` input, then verifies the complete stream through the final
+returned durable evidence URL. The error-route diagnostic deliberately fails
+the first custom-store publication, verifies a second call from `error` staging,
+and verifies the same full stream through the final evidence URL. The attempt
+correctly remains errored with the injected failure; retained evidence is not
+reported as successful provider execution.
+
+An initial custom-store destination outside `artifactRoot` was rejected by
+`#readManagedEvidence` with `OBSERVABILITY_EVIDENCE_PATH_FORBIDDEN` AFTER the
+store had accepted its input. The successful diagnostic places its backing
+store inside the authorized artifact root. This is an actual downstream
+consumer constraint, not permission to assume arbitrary custom stores are
+valid. A separate initial assertion incorrectly named the error directory
+`on-error`; Source and the observation establish the actual name `error`.
+Both failed attempts are preserved in operations evidence, not overwritten.
+
+These diagnostics strengthen producer/consumer understanding, but still do not
+implement or qualify the discovery adapter. They add no acceptance and do not
+change Source custody vectors or release receipts. The next adapter-level
+negative must include downstream managed-evidence custody, not stop at store().
