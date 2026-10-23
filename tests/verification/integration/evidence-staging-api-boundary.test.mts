@@ -11,6 +11,10 @@ import { stageEvidenceFiles, FileEvidenceStore } from '../../../skills/buster/en
 for (const [name, mediaType, content] of [
   ['json', 'application/json', '{"apiVersion":"v1","kind":"ConfigMap","metadata":{"name":"synthetic-boundary"},"data":{"synthetic":"true"}}\n'],
   ['yaml', 'application/yaml', 'apiVersion: v1\nkind: ConfigMap\nmetadata:\n  name: synthetic-boundary\ndata:\n  synthetic: "true"\n'],
+  // A transfer proof must retain every document/item, not just the first API
+  // object discovered by a parser or an envelope summary.
+  ['yaml-multi-document', 'application/octet-stream', 'apiVersion: v1\nkind: ConfigMap\nmetadata:\n  name: first\n---\napiVersion: v1\nkind: Secret\nmetadata:\n  name: second\nstringData:\n  synthetic: not-a-credential\n'],
+  ['json-list', 'text/plain', '{"apiVersion":"v1","kind":"List","items":[{"apiVersion":"v1","kind":"ConfigMap","metadata":{"name":"first"}},{"apiVersion":"v1","kind":"Secret","metadata":{"name":"second"},"stringData":{"synthetic":"not-a-credential"}}]}\n'],
   ['opaque', 'application/octet-stream', '{"apiVersion":"v1","kind":"ConfigMap","metadata":{"name":"synthetic-boundary"}}\n'],
 ] as const) test(`staging and artifact storage preserve actual API-bearing ${name} bytes`, async () => {
   const root = await fs.mkdtemp(path.join(os.tmpdir(), 'pr13-evidence-boundary-'));

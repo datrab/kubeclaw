@@ -1,0 +1,12 @@
+{
+  "baseline": "3d9a31ade4254c15816a2f3e8ae390fc2a67d90e",
+  "scope": "test and documentation only; complete original runtime sources supplied; discovery adapter is not implemented",
+  "contextBytes": 103869,
+  "files": {
+    "skills/buster/engine/test-gates/artifacts.ts": "4eedb9892218a3b0ee8a9b14d22c8e37b29c454333adbdf4cbae1772f44e5179",
+    "skills/buster/engine/test-gates/provider-loader.ts": "8453535b799916c74d2f036ca09a5bc973f600eb402ade0da57f93ab24ab6c85",
+    "skills/buster/engine/test-gates/runner.ts": "d6695dc52cd1919a88f7feed8051a543bdd9cee260b95afb829cbcee6f254919",
+    "tests/verification/integration/evidence-staging-api-boundary.test.mts": "1ffedb82465669b3645e3beaf353927cec84d46d5e1dfff65bf2b25c2528a188"
+  },
+  "contextSha256": "1f7ea93e9e7166e819f13e17f284cf4eaeeb23fdcd88f53399f0164a844d1a83"
+}

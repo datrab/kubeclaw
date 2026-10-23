@@ -1,0 +1,6 @@
+{
+  "findings": [],
+  "overall_correctness": "patch is correct",
+  "overall_explanation": "The added cases correctly exercise byte-preserving staging and default artifact storage for multi-document YAML and JSON List payloads, and the accompanying investigation material accurately scopes those controls without claiming broader adapter or acceptance coverage.",
+  "overall_confidence": 0.94
+}
