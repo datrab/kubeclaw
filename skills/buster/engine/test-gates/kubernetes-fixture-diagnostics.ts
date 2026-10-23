@@ -29,19 +29,41 @@ export function fixtureEventEvidence(value: unknown): RecordValue {
   return { ...fields(event, ['type', 'reason', 'count', 'firstTimestamp', 'lastTimestamp']),
     involvedObject: fields(event.involvedObject, ['kind', 'name', 'uid']) };
 }
+// Classify failures without publishing arbitrary subprocess stderr. Inspect causes
+// because the runtime wraps kubectl failures while preserving the original error.
+function readFailureReason(error: unknown, signal: AbortSignal): string {
+  if (signal.aborted) return signal.reason instanceof DOMException && signal.reason.name === 'TimeoutError' ? 'timeout' : 'cancelled';
+  for (let current = error, depth = 0; current && depth < 4; depth++) {
+    if (current instanceof SyntaxError) return 'invalid-json';
+    const value = record(current);
+    const message = current instanceof Error ? current.message : '';
+    const diagnostic = `${message} ${typeof value.stderr === 'string' ? value.stderr : ''}`;
+    if (/\bForbidden\b|\b403\b/u.test(diagnostic)) return 'forbidden';
+    if (/\bUnauthorized\b|\b401\b/u.test(diagnostic)) return 'unauthorized';
+    if (/\bNotFound\b|\b404\b/u.test(diagnostic)) return 'not-found';
+    if (value.code === 'ENOBUFS' || value.code === 'ERR_CHILD_PROCESS_STDIO_MAXBUFFER') return 'output-limit';
+    if (value.code === 'ETIMEDOUT' || value.killed === true || /\bTimeoutError\b/u.test(diagnostic)) return 'timeout';
+    current = value.cause;
+  }
+  return 'unavailable';
+}
 export async function collectFixtureFailureEvidence(namespace: string, signal: AbortSignal,
   read: (args: readonly string[], signal: AbortSignal) => Promise<string>) {
   const readErrors: string[] = [];
-  const get = async (resource: string): Promise<unknown[]> => {
+  const get = async (resource: string, name?: string): Promise<unknown[]> => {
     try {
       signal.throwIfAborted();
-      const result = record(JSON.parse(await read(['get', resource, '-n', namespace, '-o', 'json'], signal)));
-      return list(result.items);
-    } catch { readErrors.push(`${resource}:${signal.aborted ? 'cancelled' : 'unavailable'}`); return []; }
+      const result = record(JSON.parse(await read(['get', resource, ...(name ? [name] : ['-n', namespace]), '-o', 'json'], signal)));
+      if (name) return [result];
+      if (!Array.isArray(result.items)) throw new SyntaxError('Expected Kubernetes resource list');
+      return result.items;
+    } catch (error) { readErrors.push(`${resource}:${readFailureReason(error, signal)}`); return []; }
   };
   const pods = await get('pods');
   const events = signal.aborted ? [] : await get('events');
-  return { schemaVersion: 'kubernetes-fixture-failure.v1', namespace, observedAt: new Date().toISOString(),
+  const namespaceObjects = signal.aborted ? [] : await get('namespace', namespace);
+  return { namespaceIdentity: namespaceObjects.length ? fields(record(namespaceObjects[0]).metadata, ['name', 'uid']) : null,
+    schemaVersion: 'kubernetes-fixture-failure.v1', namespace, observedAt: new Date().toISOString(),
     pods: pods.slice(0, 16).map(fixturePodEvidence), events: events.slice(-32).map(fixtureEventEvidence), readErrors,
     truncated: pods.length > 16 || events.length > 32,
     omitted: ['pod specs', 'free-form messages', 'container logs (pending safe log-redaction policy)'] };
