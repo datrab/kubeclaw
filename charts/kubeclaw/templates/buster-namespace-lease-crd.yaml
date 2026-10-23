@@ -142,7 +142,6 @@ spec:
                   type: array
                   minItems: 1
                   maxItems: 32
-                  uniqueItems: true
                   x-kubernetes-list-type: atomic
                   items:
                     type: string
