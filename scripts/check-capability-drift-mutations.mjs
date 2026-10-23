@@ -32,6 +32,13 @@ try {
     if (name === '@kubeclaw') continue;
     fs.symlinkSync(path.join(root, 'node_modules', name), path.join(modules, name), 'dir');
   }
+  // Publication imports the reader renderer, whose pinned dependencies are a
+  // separate package. A tracked-only clone deliberately omits that installed
+  // tree; bind the genuine local package just as the root dependencies above.
+  const readerModules = path.join(root, 'scripts/docs-reader/node_modules');
+  assert(fs.existsSync(path.join(readerModules, 'markdown-it/package.json')),
+    'install the pinned scripts/docs-reader dependencies before capability mutations');
+  fs.symlinkSync(readerModules, path.join(temporary, 'scripts/docs-reader/node_modules'), 'dir');
   fs.mkdirSync(path.join(modules, '@kubeclaw'));
   for (const name of fs.readdirSync(path.join(root, 'node_modules/@kubeclaw'))) {
     const source = fs.realpathSync(path.join(root, 'node_modules/@kubeclaw', name));

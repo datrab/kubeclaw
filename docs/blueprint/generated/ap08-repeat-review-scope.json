@@ -80,16 +80,12 @@
   ],
   "evidenceObjects": [
     {
+      "revision": "399d775e8efa7b54267af98d04463d6480e63684",
+      "path": "skills/buster/plugins/coverage-budget/tests/live-function.test.ts"
+    },
+    {
       "revision": "569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
       "path": "charts/kubeclaw/templates/configmap-gateway.yaml"
-    },
-    {
-      "revision": "569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
-      "path": "charts/ops-pod/templates/workload.yaml"
-    },
-    {
-      "revision": "569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
-      "path": "charts/ops-pod/values.yaml"
     },
     {
       "revision": "569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
@@ -1998,10 +1994,6 @@
     {
       "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
       "path": "skills/buster/plugins/coverage-budget/src/provider.js"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/buster/plugins/coverage-budget/tests/live-function.test.ts"
     },
     {
       "revision": "bcf032f241b432bf920baa9ee5f727947921447d",

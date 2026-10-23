@@ -65996,7 +65996,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "03fc4be52c272fbc2a5ec97d937826d941571f1f47c4af262f24f3ae2e6f296a"
+      "sha256": "2702accc7464a966034454c9b2b98ecbb431be3610316b800b878c155dc9ad46"
     },
     {
       "path": "docs/blueprint/generated/ap09-catalogue.json",
@@ -171274,6 +171274,11 @@
           "sourcePath": "scripts/docs-published-route-baseline.json",
           "token": "docs/site/extend/buster.md",
           "inputUse": false
+        },
+        {
+          "sourcePath": "scripts/tests/docs-ap08-advanced-guide-custody.test.mjs",
+          "token": "docs/site/extend/buster.md",
+          "inputUse": false
         }
       ],
       "executableConsumers": [
@@ -171285,7 +171290,8 @@
         "handoffs/pr13-finish-20261021/ee285a46-archviewer-format-addendum.json",
         "handoffs/pr13-finish-20261021/ee285a46-review.json",
         "handoffs/pr13-finish-20261021/prior57-review.json",
-        "scripts/check-buster-guides.mjs"
+        "scripts/check-buster-guides.mjs",
+        "scripts/tests/docs-ap08-advanced-guide-custody.test.mjs"
       ],
       "indirectExecutableConsumers": [
         {
@@ -174797,6 +174803,11 @@
           "sourcePath": "scripts/docs-published-route-baseline.json",
           "token": "docs/site/extend/nova.md",
           "inputUse": false
+        },
+        {
+          "sourcePath": "scripts/tests/docs-ap08-advanced-guide-custody.test.mjs",
+          "token": "docs/site/extend/nova.md",
+          "inputUse": false
         }
       ],
       "executableConsumers": [
@@ -174804,7 +174815,8 @@
         "handoffs/pr13-finish-20261021/a91201-7ef-review.json",
         "handoffs/pr13-finish-20261021/ee285a46-archviewer-format-addendum.json",
         "handoffs/pr13-finish-20261021/ee285a46-review.json",
-        "handoffs/pr13-finish-20261021/prior57-review.json"
+        "handoffs/pr13-finish-20261021/prior57-review.json",
+        "scripts/tests/docs-ap08-advanced-guide-custody.test.mjs"
       ],
       "indirectExecutableConsumers": [
         {

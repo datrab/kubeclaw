@@ -7,6 +7,14 @@ import { execFileSync } from 'node:child_process';
 
 const root = path.resolve(import.meta.dirname, '..');
 const revision = 'bcf032f241b432bf920baa9ee5f727947921447d';
+// One independently corrected coverage test locator in the otherwise original
+// assessment. Bind guide, source, range AND revision; this is not a general
+// mixed-revision allowance. The cited object still equals current test Source.
+const reviewedLinkCorrections = new Map([
+  [JSON.stringify(['docs/site/extend/buster.md',
+    'skills/buster/plugins/coverage-budget/tests/live-function.test.ts', '9', '51']),
+  '399d775e8efa7b54267af98d04463d6480e63684'],
+]);
 const specifications = [
   {
     file: 'docs/site/extend/contracts.md',
@@ -79,7 +87,11 @@ for (const specification of specifications) {
     `${specification.file} has only ${links.length} pinned source links`);
   for (const match of links) {
     const [, linkRevision, repositoryPath, firstValue, lastValue] = match;
-    assert.equal(linkRevision, revision, `${specification.file} uses another revision for ${repositoryPath}`);
+    const expectedRevision = reviewedLinkCorrections.get(JSON.stringify([
+      specification.file, repositoryPath, firstValue, lastValue,
+    ])) ?? revision;
+    assert.equal(linkRevision, expectedRevision,
+      `${specification.file} uses an unreviewed revision for ${repositoryPath}`);
     const pinned = execFileSync('git', ['-C', root, 'show', `${linkRevision}:${repositoryPath}`], { encoding: 'utf8' });
     const lineCount = pinned.split('\n').length;
     const first = Number(firstValue);
