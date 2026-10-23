@@ -85,6 +85,7 @@ test('timeout snapshots safe evidence before cleanup and preserves event read er
     if (args[1]?.startsWith('busternamespacelease')) return { stdout: JSON.stringify({ status: {
       phase: 'Ready', namespaceName: 'test-stack', createdAt: new Date().toISOString() } }) };
     assert.equal(deleted, false);
+    if (args[1] === 'namespace') return { stdout: JSON.stringify({ metadata: { name: 'test-stack', uid: 'namespace-uid' } }) };
     if (args[1] === 'events') { eventRead = true; throw new Error('Forbidden secret=do-not-publish'); }
     return { stdout: JSON.stringify({ items: [{ metadata: { name: 'app', uid: 'pod-uid' },
       spec: { password: 'do-not-publish' }, status: { phase: 'Pending',
@@ -97,11 +98,12 @@ test('timeout snapshots safe evidence before cleanup and preserves event read er
     const result: any = await invoker.invoke('kubernetes.fixture', { operation: 'prepare', resource: requestResource, payload } as any, new AbortController().signal);
     assert.equal(result.ok, false);
     assert.equal(result.errorCode, 'KUBERNETES_FIXTURE_READINESS_TIMEOUT');
+    assert.equal(result.failureEvidence.namespaceIdentity.uid, 'namespace-uid');
     const pod = result.failureEvidence.pods[0];
     assert.equal(pod.containerStatuses[0].state.waiting.reason, 'ImagePullBackOff');
     assert.equal(pod.containerStatuses[0].lastState.terminated.exitCode, 137);
     assert.equal(pod.initContainerStatuses[0].state.terminated.exitCode, 1);
-    assert.deepEqual(result.failureEvidence.readErrors, ['events:unavailable']);
+    assert.deepEqual(result.failureEvidence.readErrors, ['events:forbidden']);
     assert.equal(deleted, true);
     assert.doesNotMatch(JSON.stringify(result), /do-not-publish|password/);
   } finally { fs.rmSync(root, { recursive: true, force: true }); }
@@ -132,8 +134,30 @@ test('diagnostic cancellation avoids reads and collection bounds the public snap
   const bounded = await collectFixtureFailureEvidence('test-stack', new AbortController().signal, async () => {
     reads++; return JSON.stringify({ items: Array.from({ length: 100 }, () => ({ metadata: { name: 'pod' }, reason: 'FailedScheduling' })) });
   });
-  assert.equal(reads, 2);
+  assert.equal(reads, 3);
   assert.equal(bounded.pods.length, 16);
   assert.equal(bounded.events.length, 32);
   assert.equal(bounded.truncated, true);
+});
+
+test('diagnostic read failures retain actionable categories without leaking stderr', async () => {
+  const { collectFixtureFailureEvidence } = await import('../../../skills/buster/engine/test-gates/kubernetes-fixture-diagnostics.ts');
+  for (const [failure, reason] of [
+    [new Error('Forbidden password=private'), 'forbidden'],
+    [new Error('Unauthorized token=private'), 'unauthorized'],
+    [new Error('NotFound private'), 'not-found'],
+    [Object.assign(new Error('private'), { code: 'ETIMEDOUT' }), 'timeout'],
+    [Object.assign(new Error('private'), { code: 'ERR_CHILD_PROCESS_STDIO_MAXBUFFER' }), 'output-limit'],
+    [new SyntaxError('private'), 'invalid-json'],
+  ] as const) {
+    const evidence = await collectFixtureFailureEvidence('test-stack', new AbortController().signal, async () => {
+      throw new Error('KUBERNETES_FIXTURE_KUBECTL_FAILED', { cause: failure });
+    });
+    assert.deepEqual(evidence.readErrors, [`pods:${reason}`, `events:${reason}`, `namespace:${reason}`]);
+    assert.doesNotMatch(JSON.stringify(evidence), /private|password=|token=/u);
+  }
+  const malformed = await collectFixtureFailureEvidence('test-stack', new AbortController().signal, async () => '{}');
+  assert.deepEqual(malformed.readErrors, ['pods:invalid-json', 'events:invalid-json']);
+  const timedOut = await collectFixtureFailureEvidence('test-stack', AbortSignal.abort(new DOMException('private', 'TimeoutError')), async () => { throw new Error('not reached'); });
+  assert.deepEqual(timedOut.readErrors, ['pods:timeout']);
 });

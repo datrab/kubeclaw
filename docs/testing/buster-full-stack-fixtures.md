@@ -105,9 +105,13 @@ This document records the extension; target-cluster behavior remains unverified.
 Readiness and service-readiness timeouts now collect an allowlisted snapshot of
 Pod identity/UID, phase, scheduling/readiness conditions, init/regular container
 current and previous state, exit codes and restarts, plus event reasons/counts,
-**before** lease cleanup. Pod/event reads have one-second per-read and five-second
+**before** lease cleanup. Pod/event/namespace reads have one-second per-read and five-second
 overall diagnostic deadlines and share caller cancellation. Diagnostic read
-failures and cleanup failure are recorded independently. Ordinary fixture provider
+failures and cleanup failure are recorded independently. Namespace identity now
+includes its UID when readable; an RBAC denial remains separate from pod evidence.
+Diagnostic read errors distinguish forbidden, unauthorized, not-found, timeout,
+output-limit and invalid JSON (including malformed list shape), inspecting wrapped
+causes without exposing arbitrary stderr. Unknown failures remain unavailable. Ordinary fixture provider
 results carry the snapshot in `providerDetails.values.failureEvidence`, with a
 failed outcome and no deployment outputs. Cancellation still propagates as an
 error and cleanup retains its independent deadline.
@@ -115,7 +119,7 @@ error and cleanup retains its independent deadline.
 This is intentionally **not yet the complete diagnostic gap fix**. Arbitrary API
 messages and container logs remain omitted rather than leaking probe commands,
 credentials or application output. Next: establish the safe bounded log/message
-redaction path (including previous logs), namespace UID, durable evidence-file
+redaction path (including previous logs), durable evidence-file
 publication, and cover actual crash/probe cases and cancellation/cleanup through
 the runtime. Then run platform review/build/rollout via the established workflow
 and repeat the disposable HTTP canary. No rollout or live acceptance was performed
