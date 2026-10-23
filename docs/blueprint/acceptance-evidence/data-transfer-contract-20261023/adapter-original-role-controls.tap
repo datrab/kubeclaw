@@ -1,0 +1,38 @@
+✔ exact API-capable declaration remains a capability, not a private projection: scripts/observability-retirement/files.mjs (244.402499ms)
+✔ exact API-capable declaration remains a capability, not a private projection: skills/buster/engine/test-gates/native-fixture-journal.ts (731.910974ms)
+✔ exact API-capable declaration remains a capability, not a private projection: skills/common/plugin-runtime/foundation/config/published-pair.ts (317.984707ms)
+✔ exact API-capable declaration remains a capability, not a private projection: skills/common/plugins/runtime-dispatch/src/result-persistence.ts (135.002719ms)
+✔ warm changed utility Source cannot borrow old declaration or refreshed metadata: scripts/observability-retirement/files.mjs (165.55895ms)
+✔ warm changed utility Source cannot borrow old declaration or refreshed metadata: skills/buster/engine/test-gates/native-fixture-journal.ts (807.635496ms)
+✔ warm changed utility Source cannot borrow old declaration or refreshed metadata: skills/common/plugin-runtime/foundation/config/published-pair.ts (389.741485ms)
+✔ warm changed utility Source cannot borrow old declaration or refreshed metadata: skills/common/plugins/runtime-dispatch/src/result-persistence.ts (156.918327ms)
+✔ forged console role/basis/receipt fields do not create either internal receipt (135.050969ms)
+✔ private bundle writer still projects all3 callers and warm escape rejects (143.033814ms)
+✔ public writer caller root stays API/UNKNOWN despite refreshed AUTHOR-style call receipt: persistResult('/repo','result.json',PAYLOAD) {apiVersion:'v1',kind:'Secret',metadata:{name:'synthetic'}} (131.450193ms)
+✔ public writer caller root stays API/UNKNOWN despite refreshed AUTHOR-style call receipt: persistResult('/repo','result.json',PAYLOAD) process.argv[2] (136.616882ms)
+✔ public writer caller root stays API/UNKNOWN despite refreshed AUTHOR-style call receipt: publishJsonPair('/repo',['progress.json','pipeline.json'],[PAYLOAD,{ok:true}]) {apiVersion:'v1',kind:'Secret',metadata:{name:'synthetic'}} (279.394368ms)
+✔ public writer caller root stays API/UNKNOWN despite refreshed AUTHOR-style call receipt: publishJsonPair('/repo',['progress.json','pipeline.json'],[PAYLOAD,{ok:true}]) process.argv[2] (296.751005ms)
+✔ deleting mutable native-writer capability metadata cannot erase Source-owned caller publications (241.058988ms)
+✔ warm operation receipts reacquire changed receiver dependency facts, not old cached true (802.382901ms)
+✔ import alias preserves literal encoded API root and unknown wrapper caller selection (137.643309ms)
+✔ API-capable reader declaration does not qualify new stdout forwarding: inventory (136.793366ms)
+✔ API-capable reader declaration does not qualify new stdout forwarding: fixture journal (487.689863ms)
+✔ mutable declaration role downgrade cannot relabel the four Source-owned capabilities non-API (632.978807ms)
+✔ fresh but unrelated operation metadata cannot renew a selected utility receiver (141.80923ms)
+✔ Source-owned writer selection survives finite aliases and opaque namespace escapes: persistResult (280.027553ms)
+✔ Source-owned writer selection survives finite aliases and opaque namespace escapes: publishJsonPair (2104.219278ms)
+✔ same export spelling in an unrelated namespace cannot borrow Source-owned writer identity (123.274181ms)
+✔ warm namespace capability reacquires changed exact receiver Source: persistResult (136.299231ms)
+✔ warm namespace capability reacquires changed exact receiver Source: publishJsonPair (321.051794ms)
+✔ opaque contained-file DATA survives descriptor shape, fresh/deleted/forged receipts and warm receiver changes: staging (232.740052ms)
+✔ opaque contained-file DATA survives descriptor shape, fresh/deleted/forged receipts and warm receiver changes: store (245.569656ms)
+✔ physical contained-file writes cannot inherit stale or forged non-API DATA receipts (255.287387ms)
+✔ original and custom EvidenceStore private-field publications remain visible UNKNOWN (1084.640091ms)
+ℹ tests 30
+ℹ suites 0
+ℹ pass 30
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 11833.975908

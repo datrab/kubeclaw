@@ -1,0 +1,49 @@
+{
+  "baseline": "d4b50c582f0675e4c7325f6b10e71cc3f52f0d45",
+  "runtimeModified": false,
+  "providerSandboxExecuted": true,
+  "staticDataRoleGranted": false,
+  "newGateAcceptance": false,
+  "files": [
+    {
+      "path": "tests/verification/fixtures/evidence-discovery/provider.mjs",
+      "bytes": 869,
+      "sha256": "7ef6a9ad7c7e54aa75680f0ced6ed15b6f1c84610366d5fdf8d4d61a21863764"
+    },
+    {
+      "path": "tests/verification/fixtures/evidence-discovery/json.bin",
+      "bytes": 222,
+      "sha256": "f559549428ec02a0d32af9f7515ce51d7e162f01cd9c6ab089706d78cec8f95a"
+    },
+    {
+      "path": "tests/verification/fixtures/evidence-discovery/yaml.bin",
+      "bytes": 154,
+      "sha256": "59d99aec95cd035b519c4c5e5b00be6e5dd0c310a61c714d2d0b0a220aabbfac"
+    },
+    {
+      "path": "tests/verification/helpers/observed-evidence-discovery.mjs",
+      "bytes": 4449,
+      "sha256": "b73682dfd698659951da29a901329b00514fe6eccd309b4518ca2d15cfa0f561"
+    },
+    {
+      "path": "tests/verification/integration/evidence-discovery-adapter.test.mts",
+      "bytes": 10469,
+      "sha256": "0a2683b9275318498d12d85380e8273d8ce43c74fda470a3a8799fb0329f075c"
+    },
+    {
+      "path": "docs/blueprint/acceptance-evidence/data-transfer-contract-20261023/adapter-focused.tap",
+      "bytes": 5050,
+      "sha256": "a3c37d812496522c88e3db902a3dfc8808a84617669252bb74573e95e8217192"
+    },
+    {
+      "path": "docs/blueprint/acceptance-evidence/data-transfer-contract-20261023/adapter-original-role-controls.tap",
+      "bytes": 4166,
+      "sha256": "0034e5bf9dc5b10edb65efc99e8b243c11c157ef29ed805c6abf7fd5a49d7cb3"
+    },
+    {
+      "path": "docs/blueprint/acceptance-evidence/data-transfer-contract-20261023/review-adapter-integration.json",
+      "bytes": 455,
+      "sha256": "3661e0237bbfbe6d9d0e5f2879413b4aca9e35be26353503fc4382eb6b50bd92"
+    }
+  ]
+}

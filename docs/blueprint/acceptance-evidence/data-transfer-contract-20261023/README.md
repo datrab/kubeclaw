@@ -141,3 +141,13 @@ API documents in arbitrary provider output. The originally requested
 producer/discovery-adapter integration test remains unimplemented, including
 cold/warm custody changes; these four controls narrow its required contract.
 All five DATA slots remain UNKNOWN and all existing acceptance limits remain.
+
+
+## Implemented integration follow-up
+
+The previously missing concrete producer/discovery-adapter integration is now
+implemented; see [adapter-integration.md](adapter-integration.md) for its actual
+registered-package/isolation paths, full-byte positive and loss controls, cold/
+warm checks and explicit observation-only limit. The earlier sections describe
+the historical state at their respective commits, not a current claim that this
+test is still absent. No static DATA qualification or new acceptance follows.

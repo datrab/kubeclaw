@@ -1,0 +1,6 @@
+{
+  "findings": [],
+  "overall_correctness": "patch is correct",
+  "overall_explanation": "The bundle\u2019s integration coverage consistently verifies full producer, live staging capture, and final durable artifact bytes; loss controls are rejected despite updated metadata, and cold/warm source and data drift are rejected before interpretation. No actionable P0\u2013P2 defects were identified in the changed material.",
+  "overall_confidence": 0.87
+}
