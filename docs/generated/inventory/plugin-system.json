@@ -10,7 +10,7 @@
     "testProviders": 19,
     "reportAdapters": 1,
     "registrations": 67,
-    "files": 997
+    "files": 999
   },
   "runtime": {
     "roots": [
@@ -41,6 +41,8 @@
       "skills/buster/engine/test-gates/generated-demo-credentials.ts",
       "skills/buster/engine/test-gates/kubernetes-fixture-runtime.ts",
       "skills/buster/engine/test-gates/kubernetes-manifest.ts",
+      "skills/buster/engine/test-gates/kubernetes-network-envelope.ts",
+      "skills/buster/engine/test-gates/kubernetes-pod-readiness.ts",
       "skills/buster/engine/test-gates/kubernetes-runtime-security.ts",
       "skills/buster/engine/test-gates/native-fixture-control.ts",
       "skills/buster/engine/test-gates/native-fixture-journal.ts",
@@ -2253,6 +2255,8 @@
     "skills/buster/engine/test-gates/generated-demo-credentials.ts",
     "skills/buster/engine/test-gates/kubernetes-fixture-runtime.ts",
     "skills/buster/engine/test-gates/kubernetes-manifest.ts",
+    "skills/buster/engine/test-gates/kubernetes-network-envelope.ts",
+    "skills/buster/engine/test-gates/kubernetes-pod-readiness.ts",
     "skills/buster/engine/test-gates/kubernetes-runtime-security.ts",
     "skills/buster/engine/test-gates/native-fixture-control.ts",
     "skills/buster/engine/test-gates/native-fixture-journal.ts",
