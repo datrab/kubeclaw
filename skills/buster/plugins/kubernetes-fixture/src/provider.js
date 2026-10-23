@@ -150,7 +150,15 @@ export function provider() {
       if (result.ok !== true) {
         if (!result.failureEvidence) throw new Error('KUBERNETES_FIXTURE_PREPARATION_FAILED');
         const artifact = failureArtifact(invocation, context, result.failureEvidence);
-        const summary = `${String(result.errorCode)} in ${String(result.namespace)}; see fixture failure evidence.`;
+        const evidence = result.failureEvidence;
+        const pod = evidence.pods?.[0];
+        const container = [...(pod?.initContainerStatuses ?? []), ...(pod?.containerStatuses ?? [])]
+          .find(item => item.state?.waiting || item.state?.terminated?.exitCode);
+        const condition = pod?.conditions?.find(item => item.status === 'False');
+        const detail = container?.state?.waiting ?? container?.state?.terminated ?? condition ?? evidence.events?.at(-1);
+        // Evidence is already redacted and bounded by the fixture runtime.
+        const diagnostic = [detail?.reason, detail?.message].filter(Boolean).join(': ').slice(0, 1200);
+        const summary = `${String(result.errorCode)} in ${String(result.namespace)}${diagnostic ? `: ${diagnostic}` : ''}; see fixture failure evidence.`;
         return { schemaVersion: 'provider-result.v1', outcome: 'failed', summary,
           counts: { total: 1, passed: 0, failed: 1, skipped: 0 },
           findings: [{ id: 'kubernetes-fixture:readiness', severity: 'high', rule: 'kubernetes.fixture.readiness', message: summary }],

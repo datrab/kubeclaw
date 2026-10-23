@@ -1,5 +1,4 @@
-// Public failure evidence is allowlisted: never serialize a Pod spec or arbitrary
-// API messages (which can contain credentials from command lines or probes).
+// Public failure evidence never serializes Pod specs. Free-form diagnostics use the shared bounded redaction policy below.
 type RecordValue = Record<string, unknown>;
 const record = (value: unknown): RecordValue => value && typeof value === 'object' && !Array.isArray(value) ? value as RecordValue : {};
 const list = (value: unknown): unknown[] => Array.isArray(value) ? value : [];
@@ -9,25 +8,41 @@ const fields = (value: unknown, names: string[]): RecordValue => {
   return Object.fromEntries(names.map(name => [name, typeof input[name] === 'number' && Number.isFinite(input[name])
     ? input[name] : typeof input[name] === 'boolean' ? input[name] : identifier(input[name])]));
 };
-function state(value: unknown): RecordValue {
+// Redact before truncating: slicing first could expose a partial credential.
+export function fixtureDiagnosticText(value: unknown, privateValues: readonly string[] = []): string | null {
+  if (typeof value !== 'string') return null;
+  let text = value.replace(/\\+(?=["'])/gu, '');
+  // Credential-bearing line suffixes are private, including malformed/escaped JSON.
+  text = text.replace(/-----BEGIN [^-]*PRIVATE KEY-----[\s\S]*?(?:-----END [^-]*PRIVATE KEY-----|$)/gu, '[REDACTED]')
+    .replace(/(\b(?:authorization|proxy-authorization|cookie|set-cookie)["']?\s*[:=]\s*)[^\r\n]+/giu, '$1[REDACTED]')
+    .replace(/(\b(?:[a-z0-9_.-]*(?:password|passwd|pwd|token|secret|api[_-]?key|credential|access[_-]?key|private[_-]?key))\b["']?\s*[:=]\s*)[^\r\n]*/giu, '$1[REDACTED]')
+    .replace(/([a-z][a-z0-9+.-]*:\/\/)[^\s/@]*:[^\s/@]+@/giu, '$1[REDACTED]@')
+    .replace(/\b(?:Bearer|Basic|Digest)\s+[^\s,;]+/giu, 'Bearer [REDACTED]')
+;
+  const variants = privateValues.flatMap(secret => [secret, ...secret.split(/[\r\n]+/u)]).filter(Boolean).flatMap(secret => [secret, JSON.stringify(secret).slice(1, -1).replace(/\\+(?=["'])/gu, ''), encodeURIComponent(secret), Buffer.from(secret).toString('base64')]);
+  for (const secret of variants.filter(Boolean).sort((a, b) => b.length - a.length)) text = text.split(secret.replace(/\\+(?=["'])/gu, '')).join('[REDACTED]');
+  text = text.replace(/[\u0000-\u0008\u000b-\u001f\u007f]/gu, '');
+  return text.length > 1024 ? text.slice(0, 1024) + '[TRUNCATED]' : text;
+}
+function state(value: unknown, privateValues: readonly string[]): RecordValue {
   const input = record(value);
   return Object.fromEntries(['waiting', 'running', 'terminated'].filter(key => input[key]).map(key => [key,
-    fields(input[key], ['reason', 'exitCode', 'signal', 'startedAt', 'finishedAt'])]));
+    { ...fields(input[key], ['reason', 'exitCode', 'signal', 'startedAt', 'finishedAt']), message: fixtureDiagnosticText(record(input[key]).message, privateValues) }]));
 }
-export function fixturePodEvidence(value: unknown): RecordValue {
+export function fixturePodEvidence(value: unknown, privateValues: readonly string[] = []): RecordValue {
   const pod = record(value); const status = record(pod.status);
   const containers = (entries: unknown) => list(entries).slice(0, 16).map(entry => {
     const container = record(entry);
-    return { ...fields(container, ['name', 'ready', 'restartCount']), state: state(container.state), lastState: state(container.lastState) };
+    return { ...fields(container, ['name', 'ready', 'restartCount']), state: state(container.state, privateValues), lastState: state(container.lastState, privateValues) };
   });
-  return { ...fields(pod.metadata, ['name', 'uid', 'namespace']), ...fields(status, ['phase', 'reason']),
-    conditions: list(status.conditions).slice(0, 16).map(condition => fields(condition, ['type', 'status', 'reason', 'lastTransitionTime'])),
+  return { ...fields(pod.metadata, ['name', 'uid', 'namespace']), ...fields(status, ['phase', 'reason']), message: fixtureDiagnosticText(status.message, privateValues),
+    conditions: list(status.conditions).slice(0, 16).map(condition => ({ ...fields(condition, ['type', 'status', 'reason', 'lastTransitionTime']), message: fixtureDiagnosticText(record(condition).message, privateValues) })),
     initContainerStatuses: containers(status.initContainerStatuses), containerStatuses: containers(status.containerStatuses) };
 }
-export function fixtureEventEvidence(value: unknown): RecordValue {
+export function fixtureEventEvidence(value: unknown, privateValues: readonly string[] = []): RecordValue {
   const event = record(value);
   return { ...fields(event, ['type', 'reason', 'count', 'firstTimestamp', 'lastTimestamp']),
-    involvedObject: fields(event.involvedObject, ['kind', 'name', 'uid']) };
+    message: fixtureDiagnosticText(event.message, privateValues), involvedObject: fields(event.involvedObject, ['kind', 'name', 'uid']) };
 }
 // Classify failures without publishing arbitrary subprocess stderr. Inspect causes
 // because the runtime wraps kubectl failures while preserving the original error.
@@ -62,9 +77,77 @@ export async function collectFixtureFailureEvidence(namespace: string, signal: A
   const pods = await get('pods');
   const events = signal.aborted ? [] : await get('events');
   const namespaceObjects = signal.aborted ? [] : await get('namespace', namespace);
-  return { namespaceIdentity: namespaceObjects.length ? fields(record(namespaceObjects[0]).metadata, ['name', 'uid']) : null,
+  // Literal env values are private even when they have innocuous names. Never
+  // publish the spec itself or read Kubernetes Secret objects for diagnostics.
+  const privateValues = pods.flatMap(pod => {
+    const spec = record(record(pod).spec);
+    return [...list(spec.containers), ...list(spec.initContainers)].flatMap(container =>
+      list(record(container).env).map(env => record(env).value).filter((value): value is string => typeof value === 'string' && value.length > 0));
+  });
+  // Do not guess Secret values from regexes. Fixtures with unresolved private
+  // sources retain structural diagnoses but explicitly withhold free-form text.
+  const unresolvedPrivateSources = pods.length === 0 || readErrors.some(error => error.startsWith('pods:')) || pods.some(pod => {
+    const spec = record(record(pod).spec);
+    return [...list(spec.containers), ...list(spec.initContainers)].some(container => {
+      const item = record(container);
+      return list(item.env).some(env => record(record(env).valueFrom).secretKeyRef)
+        || list(item.envFrom).some(source => record(source).secretRef);
+    }) || list(spec.volumes).some(volume => {
+      const item = record(volume);
+      return item.secret || item.csi || list(record(item.projected).sources).some(source => record(source).secret || record(source).serviceAccountToken);
+    });
+  });
+  const logs: RecordValue[] = [];
+  let logReads = 0;
+  for (const pod of pods.slice(0, 16)) {
+    const name = identifier(record(record(pod).metadata).name);
+    const status = record(record(pod).status);
+    if (!name || !/^[a-z0-9][a-z0-9.-]*$/u.test(name)) continue;
+    for (const container of [...list(status.initContainerStatuses), ...list(status.containerStatuses)]) {
+      const containerName = identifier(record(container).name);
+      if (!containerName || !/^[a-z0-9][a-z0-9-]*$/u.test(containerName)) continue;
+      for (const previous of [false, true]) {
+        if (signal.aborted || logReads >= 8) break;
+        if (previous && !record(record(container).lastState).terminated) continue;
+        logReads++;
+        if (unresolvedPrivateSources) {
+          logs.push({ pod: name, container: containerName, previous, text: null, omitted: 'unresolved-private-sources' });
+          continue;
+        }
+        try {
+          const output = await read(['logs', name, '-n', namespace, '-c', containerName,
+            '--tail=40', '--limit-bytes=4096', '--timestamps=true', ...(previous ? ['--previous=true'] : [])], signal);
+          // Kubernetes byte limiting can clip the first record mid-credential.
+          // Discard that record before publishing any potentially partial value.
+          const byteLimited = Buffer.byteLength(output) >= 4090;
+          const completeOutput = byteLimited ? output.slice(output.indexOf('\n') + 1 || output.length) : output;
+          logs.push({ pod: name, container: containerName, previous, text: fixtureDiagnosticText(completeOutput, privateValues), truncated: byteLimited || output.length > 1024 });
+        } catch (error) { readErrors.push(`logs/${name}/${containerName}/${previous ? 'previous' : 'current'}:${readFailureReason(error, signal)}`); }
+      }
+    }
+  }
+  const podEvidence = pods.slice(0, 16).map(pod => fixturePodEvidence(pod, privateValues));
+  const eventEvidence = events.slice(-32).map(event => fixtureEventEvidence(event, privateValues));
+  const withholdMessages = (value: unknown): void => {
+    if (!value || typeof value !== 'object') return;
+    for (const [key, child] of Object.entries(value)) {
+      if (key === 'message' && child !== null) (value as RecordValue)[key] = '[OMITTED: unresolved private sources]';
+      else withholdMessages(child);
+    }
+  };
+  if (unresolvedPrivateSources) { withholdMessages(podEvidence); withholdMessages(eventEvidence); }
+  const evidence = { namespaceIdentity: namespaceObjects.length ? fields(record(namespaceObjects[0]).metadata, ['name', 'uid']) : null,
     schemaVersion: 'kubernetes-fixture-failure.v1', namespace, observedAt: new Date().toISOString(),
-    pods: pods.slice(0, 16).map(fixturePodEvidence), events: events.slice(-32).map(fixtureEventEvidence), readErrors,
+    pods: podEvidence, events: eventEvidence, logs, readErrors, unresolvedPrivateSources,
     truncated: pods.length > 16 || events.length > 32,
-    omitted: ['pod specs', 'free-form messages', 'container logs (pending safe log-redaction policy)'] };
+    logReadLimitReached: logReads >= 8, omitted: ['pod specs', 'Secret objects', 'literal env values and credential patterns'] };
+  // Leave room for the provider envelope under its 128 KiB artifact ceiling.
+  while (Buffer.byteLength(JSON.stringify(evidence)) > 96 * 1024) {
+    evidence.truncated = true;
+    if (evidence.pods.length) evidence.pods.pop();
+    else if (evidence.events.length) evidence.events.pop();
+    else if (evidence.logs.length) evidence.logs.pop();
+    else break;
+  }
+  return evidence;
 }

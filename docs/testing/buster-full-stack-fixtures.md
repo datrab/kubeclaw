@@ -123,10 +123,28 @@ verified in a live remote pipeline. Results retain a
 failed outcome and no deployment outputs. Cancellation still propagates as an
 error and cleanup retains its independent deadline.
 
-This is intentionally **not yet the complete diagnostic gap fix**. Arbitrary API
-messages and container logs remain omitted rather than leaking probe commands,
-credentials or application output. Next: establish the safe bounded log/message
-redaction path (including previous logs), verify live artifact publication, and cover actual crash/probe cases and cancellation/cleanup through
-the runtime. Then run platform review/build/rollout via the established workflow
-and repeat the disposable HTTP canary. No rollout or live acceptance was performed
-at this checkpoint; the historical startup cause is still unknown.
+Free-form Pod/condition/state/event messages are now included after bounded
+credential redaction. Current and previous init/application log tails use at most
+8 reads, 40 lines/4096 bytes per read within the existing 5-second collection
+deadline; possibly clipped leading records are discarded. Known literal env values,
+their line components and common serialized representations are private. Credential
+keys (including OAuth/prefixed keys), authorization, URL userinfo and private keys
+are redacted before final truncation. Credential-bearing line suffixes are omitted
+even for malformed/escaped JSON. Messages are capped at 1024 characters and the
+complete UTF-8 snapshot at 96 KiB, leaving room under the provider artifact ceiling.
+
+Unknown Secret-backed env/volumes, CSI/private projected sources, or unavailable
+Pod discovery explicitly withhold free-form messages/logs; structural reasons,
+conditions and exit codes remain available. This is a documented confidentiality
+boundary, not a claim that arbitrary application output can always be sanitized.
+Namespace UID remains best-effort, with separate RBAC failures. Event get/list
+rights are now included in disposable namespace roles and their bound ClusterRoles;
+no event writes or cluster-wide client binding is added. Ordinary failed-result
+summaries include an actionable available reason/message.
+
+Source checks and local evidence storage are not live acceptance. A matching
+runtime/plugin and controller/chart publication is still required through the
+supported release workflow, followed by disposable HTTP failure-artifact and
+successful lifecycle canaries. The installed 9ec5f2c runtime still returned the
+old readiness-only timeout in the 2026-10-23 17:10 UTC diagnostic; the new fix was
+not deployed in that run. Historical and fresh Pod startup causes remain unknown.

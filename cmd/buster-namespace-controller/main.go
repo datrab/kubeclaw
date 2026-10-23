@@ -1063,6 +1063,11 @@ func (c *controller) namespaceRole(namespaceName string, roleName string, mode s
 		"rules": []interface{}{
 			map[string]interface{}{
 				"apiGroups": []string{""},
+				"resources": []string{"events"},
+				"verbs":     []string{"get", "list"},
+			},
+			map[string]interface{}{
+				"apiGroups": []string{""},
 				"resources": coreResources,
 				"verbs":     []string{"create", "get", "list", "watch", "delete", "patch", "update"},
 			},
