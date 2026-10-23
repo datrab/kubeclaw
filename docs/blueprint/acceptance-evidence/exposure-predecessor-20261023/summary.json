@@ -41,7 +41,7 @@
     "settings": "Codex gpt-5.6-terra/high, tools on, P0-P2",
     "finalConfidence": 0.86,
     "result": "No actionable findings. Supplied complete datasets and strict semantic delta/install scripts; noncredential unitToken identifier in unrelated classifier dataset line901 renamed unitBasenamePart only to avoid evidence-scanner false positive; actual source unchanged.",
-    "limits": "Reviewer source-only; no reviewer test execution or unchanged repository inspection. Coordinator tests separate. No fresh Reader/practical/global/API/runtime acceptance. Five original reader scopes supplied; sixth maintenance scope identified after purpose authority renewal and requires separate bounded impact review before register rebind."
+    "limits": "Reviewer source-only; no reviewer test execution or unchanged repository inspection. Coordinator tests separate. No fresh Reader/practical/global/API/runtime acceptance."
   },
   "acceptance": {
     "requirementsAccepted": 224,
@@ -50,7 +50,8 @@
     "gatesTotal": 89,
     "newAcceptedIds": [],
     "affectedOriginalExplicitScopes": 6,
-    "historicalPracticalEvidenceNotReexecuted": true
+    "historicalPracticalEvidenceNotReexecuted": true,
+    "scopePreservationReview": "Independent bounded six-scope register impact review clean0.93; original authors/reviewers/summaries/limits/verdicts/checks/IDs preserved; revision/history and bounded impact/check additions only."
   },
   "preservedFailure": "RELEASE_CONFIGURATION_CHANGED: charts/kubeclaw/files/config/knip.json; no selected-release receipt rewritten",
   "originalReceiver": "Original command exit1 after predecessor36 and all finite input/custody dependencies pass; next actual blocker skills/buster/engine/test-gates/runner.ts:1263 return errorCandidates. No global generator success.",

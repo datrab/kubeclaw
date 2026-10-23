@@ -1,0 +1,6 @@
+{
+  "findings": [],
+  "overall_correctness": "patch is correct",
+  "overall_explanation": "The bounded register update consistently rebases exactly the six supplied scopes to the reviewed revision, appends the matching scoped test and preservation evidence, and retains the stated limits and existing failure state. No actionable P0-P2 defect is evident in the supplied bundle.",
+  "overall_confidence": 0.93
+}
