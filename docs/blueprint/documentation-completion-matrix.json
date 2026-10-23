@@ -14191,7 +14191,7 @@
     },
     {
       "id": "AP09-complete-static-reader-search-20261021",
-      "revision": "5ae0fa2e8b54cd02dfd78d11e55f0baced7c144b",
+      "revision": "2997ab95ae9c9ba3f47e22e56208f9a7b9912694",
       "author": "Nova /root documentation author and implementation coordinator",
       "reviewer": "Independent Codex autoreview static-reader whole PUB-002 Source/reader-quality closeout",
       "verdict": "PASS",
@@ -14572,6 +14572,16 @@
           "command": "node --max-old-space-size=4096 scripts/docs-publication.mjs build\nnode --max-old-space-size=4096 scripts/docs-reader/check-artifact.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-search.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-links.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-previews.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-diagrams.mjs",
           "exitCode": 0,
           "observation": "Actual six separate original processes exited0 against reviewed committed nested-schema/Secret constructor Source. Current177page reader build and artifact/search/Source-links/source-previews/fresh-diagrams verified. One captured group reused across five bounded preserved scopes; no fresh browser, participant, screenreader, runtime, global DATA or whole-gate acceptance."
+        },
+        {
+          "command": "node --test scripts/tests/deployment-scalar-occurrence-custody.test.mjs scripts/tests/docs-documentation-owner-purpose.test.mjs",
+          "exitCode": 0,
+          "observation": "49 original final custody controls pass after exact same-purpose nested-guide mapping correction. Initial8 owner-purpose input failures retained and addressed; no test removed."
+        },
+        {
+          "command": "node --test scripts/tests/docs-reader-purpose-routing.test.mjs scripts/tests/docs-reader-artifact-ci-purpose.test.mjs scripts/tests/docs-reader-source-links.test.mjs scripts/tests/docs-reader-source-previews.test.mjs scripts/tests/docs-reader-page-records.test.mjs",
+          "exitCode": 0,
+          "observation": "104 original final Reader controls pass. All361 original scoped files compared: pages and every Source except role custody unchanged. No fresh browser, participant, screenreader or runtime exercise claimed."
         }
       ],
       "limits": [
@@ -15426,6 +15436,14 @@
           "scope": "Complete202/19/33/26/81file original scope vectors: all pages and all other Source exact; only role-custody metadata changed. Exact105native operations, six changed recipes; all selectors/children and1248selected/1005caller membership unchanged; finite schema/constructor/owner/scalar data renewal. Original contracts, all prior checks and original red DATA baseline supplied before review.",
           "limits": "Original summaries/limits and historical observations unchanged. Actual original receiver still fails API_PRODUCT_SCRIPT_OUTPUT_ROLE_UNQUALIFIED artifacts.ts41 content; all5DATA UNKNOWN; release Knip remains failed. No fresh browser/person/runtime or wholeA91013/14 approval.",
           "evidence": "handoffs/pr13-finish-20261023/extension-guide-drift.md"
+        },
+        {
+          "revision": "2997ab95ae9c9ba3f47e22e56208f9a7b9912694",
+          "reviewer": "Independent pinned fe588b1a Codex gpt-5.6-terra high P2 source-first and combined exact closure/preservation review",
+          "result": "PASS — preserves only original bounded Source/Reader scopes, not recounted",
+          "scope": "Complete202/19/33/26/81file vectors: only role-custody Source changed.105 freshly verified native recipe vectors exact; five changed solely existing owner-purpose one-pin object and two scalar initializer hashes; selectors/children and1248selected/1005caller memberships unchanged.17 existing purpose inputs bind corrected same registry. Original scope summaries/limits and baseline failures supplied up front.",
+          "limits": "Original summaries/limits/checks/history remain. Original receiver actually re-reached DATA artifacts.ts41 content; all5UNKNOWN and release Knip failure retained. No fresh historical browser/person/runtime/global publication or A91013 acceptance. New A91014 acceptance is separate, not inferred from these preserved scopes.",
+          "evidence": "handoffs/pr13-finish-20261023/extension-guide-drift.md"
         }
       ],
       "scopePreservation3408": {
@@ -15473,7 +15491,7 @@
     },
     {
       "id": "AP09-search-reader-gate-20261021",
-      "revision": "5ae0fa2e8b54cd02dfd78d11e55f0baced7c144b",
+      "revision": "2997ab95ae9c9ba3f47e22e56208f9a7b9912694",
       "author": "Nova /root documentation author and implementation coordinator",
       "reviewer": "Independent Codex autoreview whole A912-04 code/evidence review plus narrow Source/Reader/Quality native-impact follow-up",
       "verdict": "PASS",
@@ -15646,6 +15664,16 @@
           "command": "node --max-old-space-size=4096 scripts/docs-publication.mjs build\nnode --max-old-space-size=4096 scripts/docs-reader/check-artifact.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-search.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-links.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-previews.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-diagrams.mjs",
           "exitCode": 0,
           "observation": "Actual six separate original processes exited0 against reviewed committed nested-schema/Secret constructor Source. Current177page reader build and artifact/search/Source-links/source-previews/fresh-diagrams verified. One captured group reused across five bounded preserved scopes; no fresh browser, participant, screenreader, runtime, global DATA or whole-gate acceptance."
+        },
+        {
+          "command": "node --test scripts/tests/deployment-scalar-occurrence-custody.test.mjs scripts/tests/docs-documentation-owner-purpose.test.mjs",
+          "exitCode": 0,
+          "observation": "49 original final custody controls pass after exact same-purpose nested-guide mapping correction. Initial8 owner-purpose input failures retained and addressed; no test removed."
+        },
+        {
+          "command": "node --test scripts/tests/docs-reader-purpose-routing.test.mjs scripts/tests/docs-reader-artifact-ci-purpose.test.mjs scripts/tests/docs-reader-source-links.test.mjs scripts/tests/docs-reader-source-previews.test.mjs scripts/tests/docs-reader-page-records.test.mjs",
+          "exitCode": 0,
+          "observation": "104 original final Reader controls pass. All361 original scoped files compared: pages and every Source except role custody unchanged. No fresh browser, participant, screenreader or runtime exercise claimed."
         }
       ],
       "limits": [
@@ -16111,6 +16139,14 @@
           "scope": "Complete202/19/33/26/81file original scope vectors: all pages and all other Source exact; only role-custody metadata changed. Exact105native operations, six changed recipes; all selectors/children and1248selected/1005caller membership unchanged; finite schema/constructor/owner/scalar data renewal. Original contracts, all prior checks and original red DATA baseline supplied before review.",
           "limits": "Original summaries/limits and historical observations unchanged. Actual original receiver still fails API_PRODUCT_SCRIPT_OUTPUT_ROLE_UNQUALIFIED artifacts.ts41 content; all5DATA UNKNOWN; release Knip remains failed. No fresh browser/person/runtime or wholeA91013/14 approval.",
           "evidence": "handoffs/pr13-finish-20261023/extension-guide-drift.md"
+        },
+        {
+          "revision": "2997ab95ae9c9ba3f47e22e56208f9a7b9912694",
+          "reviewer": "Independent pinned fe588b1a Codex gpt-5.6-terra high P2 source-first and combined exact closure/preservation review",
+          "result": "PASS — preserves only original bounded Source/Reader scopes, not recounted",
+          "scope": "Complete202/19/33/26/81file vectors: only role-custody Source changed.105 freshly verified native recipe vectors exact; five changed solely existing owner-purpose one-pin object and two scalar initializer hashes; selectors/children and1248selected/1005caller memberships unchanged.17 existing purpose inputs bind corrected same registry. Original scope summaries/limits and baseline failures supplied up front.",
+          "limits": "Original summaries/limits/checks/history remain. Original receiver actually re-reached DATA artifacts.ts41 content; all5UNKNOWN and release Knip failure retained. No fresh historical browser/person/runtime/global publication or A91013 acceptance. New A91014 acceptance is separate, not inferred from these preserved scopes.",
+          "evidence": "handoffs/pr13-finish-20261023/extension-guide-drift.md"
         }
       ],
       "scopePreservation3408": {
@@ -16157,7 +16193,7 @@
     },
     {
       "id": "AP09-rendered-source-bounds-gate-20261021",
-      "revision": "5ae0fa2e8b54cd02dfd78d11e55f0baced7c144b",
+      "revision": "2997ab95ae9c9ba3f47e22e56208f9a7b9912694",
       "author": "Nova /root documentation author and implementation coordinator",
       "reviewer": "Independent Codex autoreview whole A912-09 Source/Reader/Quality review and narrow changed-boundary impact review for 21 prior PASS records",
       "verdict": "PASS",
@@ -16339,6 +16375,16 @@
           "command": "node --max-old-space-size=4096 scripts/docs-publication.mjs build\nnode --max-old-space-size=4096 scripts/docs-reader/check-artifact.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-search.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-links.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-previews.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-diagrams.mjs",
           "exitCode": 0,
           "observation": "Actual six separate original processes exited0 against reviewed committed nested-schema/Secret constructor Source. Current177page reader build and artifact/search/Source-links/source-previews/fresh-diagrams verified. One captured group reused across five bounded preserved scopes; no fresh browser, participant, screenreader, runtime, global DATA or whole-gate acceptance."
+        },
+        {
+          "command": "node --test scripts/tests/deployment-scalar-occurrence-custody.test.mjs scripts/tests/docs-documentation-owner-purpose.test.mjs",
+          "exitCode": 0,
+          "observation": "49 original final custody controls pass after exact same-purpose nested-guide mapping correction. Initial8 owner-purpose input failures retained and addressed; no test removed."
+        },
+        {
+          "command": "node --test scripts/tests/docs-reader-purpose-routing.test.mjs scripts/tests/docs-reader-artifact-ci-purpose.test.mjs scripts/tests/docs-reader-source-links.test.mjs scripts/tests/docs-reader-source-previews.test.mjs scripts/tests/docs-reader-page-records.test.mjs",
+          "exitCode": 0,
+          "observation": "104 original final Reader controls pass. All361 original scoped files compared: pages and every Source except role custody unchanged. No fresh browser, participant, screenreader or runtime exercise claimed."
         }
       ],
       "limits": [
@@ -16789,6 +16835,14 @@
           "scope": "Complete202/19/33/26/81file original scope vectors: all pages and all other Source exact; only role-custody metadata changed. Exact105native operations, six changed recipes; all selectors/children and1248selected/1005caller membership unchanged; finite schema/constructor/owner/scalar data renewal. Original contracts, all prior checks and original red DATA baseline supplied before review.",
           "limits": "Original summaries/limits and historical observations unchanged. Actual original receiver still fails API_PRODUCT_SCRIPT_OUTPUT_ROLE_UNQUALIFIED artifacts.ts41 content; all5DATA UNKNOWN; release Knip remains failed. No fresh browser/person/runtime or wholeA91013/14 approval.",
           "evidence": "handoffs/pr13-finish-20261023/extension-guide-drift.md"
+        },
+        {
+          "revision": "2997ab95ae9c9ba3f47e22e56208f9a7b9912694",
+          "reviewer": "Independent pinned fe588b1a Codex gpt-5.6-terra high P2 source-first and combined exact closure/preservation review",
+          "result": "PASS — preserves only original bounded Source/Reader scopes, not recounted",
+          "scope": "Complete202/19/33/26/81file vectors: only role-custody Source changed.105 freshly verified native recipe vectors exact; five changed solely existing owner-purpose one-pin object and two scalar initializer hashes; selectors/children and1248selected/1005caller memberships unchanged.17 existing purpose inputs bind corrected same registry. Original scope summaries/limits and baseline failures supplied up front.",
+          "limits": "Original summaries/limits/checks/history remain. Original receiver actually re-reached DATA artifacts.ts41 content; all5UNKNOWN and release Knip failure retained. No fresh historical browser/person/runtime/global publication or A91013 acceptance. New A91014 acceptance is separate, not inferred from these preserved scopes.",
+          "evidence": "handoffs/pr13-finish-20261023/extension-guide-drift.md"
         }
       ],
       "scopePreservation3408": {
@@ -17154,7 +17208,7 @@
     },
     {
       "id": "AP09-complete-same-source-code-preview-20261021",
-      "revision": "5ae0fa2e8b54cd02dfd78d11e55f0baced7c144b",
+      "revision": "2997ab95ae9c9ba3f47e22e56208f9a7b9912694",
       "author": "Nova /root documentation author and implementation coordinator",
       "reviewer": "Independent Codex autoreview whole PUB004 Source/Reader/Quality closeout plus narrow changed-boundary preservation for21priorPASSrecords",
       "verdict": "PASS",
@@ -17324,6 +17378,16 @@
           "command": "node --max-old-space-size=4096 scripts/docs-publication.mjs build\nnode --max-old-space-size=4096 scripts/docs-reader/check-artifact.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-search.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-links.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-previews.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-diagrams.mjs",
           "exitCode": 0,
           "observation": "Actual six separate original processes exited0 against reviewed committed nested-schema/Secret constructor Source. Current177page reader build and artifact/search/Source-links/source-previews/fresh-diagrams verified. One captured group reused across five bounded preserved scopes; no fresh browser, participant, screenreader, runtime, global DATA or whole-gate acceptance."
+        },
+        {
+          "command": "node --test scripts/tests/deployment-scalar-occurrence-custody.test.mjs scripts/tests/docs-documentation-owner-purpose.test.mjs",
+          "exitCode": 0,
+          "observation": "49 original final custody controls pass after exact same-purpose nested-guide mapping correction. Initial8 owner-purpose input failures retained and addressed; no test removed."
+        },
+        {
+          "command": "node --test scripts/tests/docs-reader-purpose-routing.test.mjs scripts/tests/docs-reader-artifact-ci-purpose.test.mjs scripts/tests/docs-reader-source-links.test.mjs scripts/tests/docs-reader-source-previews.test.mjs scripts/tests/docs-reader-page-records.test.mjs",
+          "exitCode": 0,
+          "observation": "104 original final Reader controls pass. All361 original scoped files compared: pages and every Source except role custody unchanged. No fresh browser, participant, screenreader or runtime exercise claimed."
         }
       ],
       "limits": [
@@ -17747,6 +17811,14 @@
           "scope": "Complete202/19/33/26/81file original scope vectors: all pages and all other Source exact; only role-custody metadata changed. Exact105native operations, six changed recipes; all selectors/children and1248selected/1005caller membership unchanged; finite schema/constructor/owner/scalar data renewal. Original contracts, all prior checks and original red DATA baseline supplied before review.",
           "limits": "Original summaries/limits and historical observations unchanged. Actual original receiver still fails API_PRODUCT_SCRIPT_OUTPUT_ROLE_UNQUALIFIED artifacts.ts41 content; all5DATA UNKNOWN; release Knip remains failed. No fresh browser/person/runtime or wholeA91013/14 approval.",
           "evidence": "handoffs/pr13-finish-20261023/extension-guide-drift.md"
+        },
+        {
+          "revision": "2997ab95ae9c9ba3f47e22e56208f9a7b9912694",
+          "reviewer": "Independent pinned fe588b1a Codex gpt-5.6-terra high P2 source-first and combined exact closure/preservation review",
+          "result": "PASS — preserves only original bounded Source/Reader scopes, not recounted",
+          "scope": "Complete202/19/33/26/81file vectors: only role-custody Source changed.105 freshly verified native recipe vectors exact; five changed solely existing owner-purpose one-pin object and two scalar initializer hashes; selectors/children and1248selected/1005caller memberships unchanged.17 existing purpose inputs bind corrected same registry. Original scope summaries/limits and baseline failures supplied up front.",
+          "limits": "Original summaries/limits/checks/history remain. Original receiver actually re-reached DATA artifacts.ts41 content; all5UNKNOWN and release Knip failure retained. No fresh historical browser/person/runtime/global publication or A91013 acceptance. New A91014 acceptance is separate, not inferred from these preserved scopes.",
+          "evidence": "handoffs/pr13-finish-20261023/extension-guide-drift.md"
         }
       ],
       "scopePreservation3408": {
@@ -17793,7 +17865,7 @@
     },
     {
       "id": "AP09-complete-responsive-reader-layout-20261021",
-      "revision": "5ae0fa2e8b54cd02dfd78d11e55f0baced7c144b",
+      "revision": "2997ab95ae9c9ba3f47e22e56208f9a7b9912694",
       "author": "Nova /root documentation author and implementation coordinator",
       "reviewer": "Independent Codex autoreview whole A91207 responsive-layout closeout and narrow24-record prior-boundary preservation",
       "verdict": "PASS",
@@ -18023,6 +18095,16 @@
           "command": "node --max-old-space-size=4096 scripts/docs-publication.mjs build\nnode --max-old-space-size=4096 scripts/docs-reader/check-artifact.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-search.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-links.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-previews.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-diagrams.mjs",
           "exitCode": 0,
           "observation": "Actual six separate original processes exited0 against reviewed committed nested-schema/Secret constructor Source. Current177page reader build and artifact/search/Source-links/source-previews/fresh-diagrams verified. One captured group reused across five bounded preserved scopes; no fresh browser, participant, screenreader, runtime, global DATA or whole-gate acceptance."
+        },
+        {
+          "command": "node --test scripts/tests/deployment-scalar-occurrence-custody.test.mjs scripts/tests/docs-documentation-owner-purpose.test.mjs",
+          "exitCode": 0,
+          "observation": "49 original final custody controls pass after exact same-purpose nested-guide mapping correction. Initial8 owner-purpose input failures retained and addressed; no test removed."
+        },
+        {
+          "command": "node --test scripts/tests/docs-reader-purpose-routing.test.mjs scripts/tests/docs-reader-artifact-ci-purpose.test.mjs scripts/tests/docs-reader-source-links.test.mjs scripts/tests/docs-reader-source-previews.test.mjs scripts/tests/docs-reader-page-records.test.mjs",
+          "exitCode": 0,
+          "observation": "104 original final Reader controls pass. All361 original scoped files compared: pages and every Source except role custody unchanged. No fresh browser, participant, screenreader or runtime exercise claimed."
         }
       ],
       "limits": [
@@ -18468,6 +18550,14 @@
           "result": "PASS — only existing bounded Source/Reader scopes preserved, not recounted",
           "scope": "Complete202/19/33/26/81file original scope vectors: all pages and all other Source exact; only role-custody metadata changed. Exact105native operations, six changed recipes; all selectors/children and1248selected/1005caller membership unchanged; finite schema/constructor/owner/scalar data renewal. Original contracts, all prior checks and original red DATA baseline supplied before review.",
           "limits": "Original summaries/limits and historical observations unchanged. Actual original receiver still fails API_PRODUCT_SCRIPT_OUTPUT_ROLE_UNQUALIFIED artifacts.ts41 content; all5DATA UNKNOWN; release Knip remains failed. No fresh browser/person/runtime or wholeA91013/14 approval.",
+          "evidence": "handoffs/pr13-finish-20261023/extension-guide-drift.md"
+        },
+        {
+          "revision": "2997ab95ae9c9ba3f47e22e56208f9a7b9912694",
+          "reviewer": "Independent pinned fe588b1a Codex gpt-5.6-terra high P2 source-first and combined exact closure/preservation review",
+          "result": "PASS — preserves only original bounded Source/Reader scopes, not recounted",
+          "scope": "Complete202/19/33/26/81file vectors: only role-custody Source changed.105 freshly verified native recipe vectors exact; five changed solely existing owner-purpose one-pin object and two scalar initializer hashes; selectors/children and1248selected/1005caller memberships unchanged.17 existing purpose inputs bind corrected same registry. Original scope summaries/limits and baseline failures supplied up front.",
+          "limits": "Original summaries/limits/checks/history remain. Original receiver actually re-reached DATA artifacts.ts41 content; all5UNKNOWN and release Knip failure retained. No fresh historical browser/person/runtime/global publication or A91013 acceptance. New A91014 acceptance is separate, not inferred from these preserved scopes.",
           "evidence": "handoffs/pr13-finish-20261023/extension-guide-drift.md"
         }
       ],
@@ -29113,6 +29203,142 @@
       "openIssues": [],
       "verdict": "PASS",
       "evidenceReport": "docs/blueprint/acceptance-evidence/publication-build-20261023/checked-observations.json"
+    },
+    {
+      "id": "AP09-whole-extension-drift-A91014-20261023",
+      "revision": "2997ab95ae9c9ba3f47e22e56208f9a7b9912694",
+      "author": "Nova documentation continuation coordinator",
+      "reviewer": "Independent pinned fe588b1a autoreview Codex gpt-5.6-terra high P2 whole-A91014 topic reviewer",
+      "gateIds": [
+        "A910-14"
+      ],
+      "requirementIds": [],
+      "pages": [
+        "docs/site/extend/README.md",
+        "docs/site/extend/developer-handbook.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.lint.md",
+        "docs/site/reference/buster-error-codes.md",
+        "docs/site/reference/buster-provider-configuration.md",
+        "docs/site/reference/buster-suites.md",
+        "docs/site/reference/capabilities.md",
+        "docs/site/reference/plugin-configuration.md",
+        "docs/site/reference/workflows.md",
+        "docs/site/understand/security-and-trust.md"
+      ],
+      "sources": [
+        "charts/kubeclaw/templates/deployment.yaml",
+        "docs/blueprint/AP09-acceptance-contract.md",
+        "docs/blueprint/AP09-acceptance-fixtures.json",
+        "docs/site/use/workflows/wait-resume/platform.template.json",
+        "scripts/check-capability-drift-mutations.mjs",
+        "scripts/check-contract-drift-mutations.mjs",
+        "scripts/check-error-code-drift-mutations.mjs",
+        "scripts/check-extension-class-drift-mutations.mjs",
+        "scripts/check-fixture-registration-drift-mutations.mjs",
+        "scripts/check-fixture-registration-drift.mjs",
+        "scripts/check-plugin-manifest-drift-mutations.mjs",
+        "scripts/check-provider-registration-drift-mutations.mjs",
+        "scripts/check-provider-registration-drift.mjs",
+        "scripts/check-report-registration-drift-mutations.mjs",
+        "scripts/check-report-registration-drift.mjs",
+        "scripts/check-schema-drift-mutations.mjs",
+        "scripts/docs-ap09-mutation-fixture.mjs",
+        "scripts/docs-api-documentation-role-custody.mjs",
+        "scripts/docs-api-producer-adapter-authorities.json",
+        "scripts/docs-configuration-inventory.mjs",
+        "scripts/docs-deployment-scalar-occurrence-custody.mjs",
+        "scripts/docs-documentation-owner-purpose-custody.mjs",
+        "scripts/docs-generate.mjs",
+        "scripts/docs-platform-surface-inventory.mjs",
+        "skills/buster/engine/test-gates/production.ts",
+        "skills/buster/plugins/junit-report-adapter/plugin.json",
+        "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+        "skills/common/plugin-runtime/foundation/registry/types.ts",
+        "skills/common/plugin-runtime/sdk/src/generated/contracts.ts",
+        "skills/common/plugin-runtime/sdk/src/index.ts",
+        "skills/common/plugins/runtime-dispatch/schemas/config.schema.json",
+        "skills/nova/plugins/lint/plugin.json",
+        "skills/nova/project/compiler.ts",
+        "skills/nova/project_setup/tools/progress-scaffold-validation.ts",
+        "tests/verification/e2e/fixture-coverage.mjs",
+        "tests/verification/e2e/provider-catalog.mjs"
+      ],
+      "checks": [
+        {
+          "command": "node scripts/check-contract-drift-mutations.mjs",
+          "exitCode": 0,
+          "observation": "Original baseline-green Add/Change/Remove with exact semantic diagnostic, unchanged affected reader page and green restoration; unchanged valid Source scope reused for earlier batches, not a fresh runtime/human exercise."
+        },
+        {
+          "command": "node scripts/check-schema-drift-mutations.mjs",
+          "exitCode": 0,
+          "observation": "Original baseline-green Add/Change/Remove with exact semantic diagnostic, unchanged affected reader page and green restoration; unchanged valid Source scope reused for earlier batches, not a fresh runtime/human exercise."
+        },
+        {
+          "command": "node scripts/check-capability-drift-mutations.mjs",
+          "exitCode": 0,
+          "observation": "Original baseline-green Add/Change/Remove with exact semantic diagnostic, unchanged affected reader page and green restoration; unchanged valid Source scope reused for earlier batches, not a fresh runtime/human exercise."
+        },
+        {
+          "command": "node scripts/check-plugin-manifest-drift-mutations.mjs",
+          "exitCode": 0,
+          "observation": "Original baseline-green Add/Change/Remove with exact semantic diagnostic, unchanged affected reader page and green restoration; unchanged valid Source scope reused for earlier batches, not a fresh runtime/human exercise."
+        },
+        {
+          "command": "node scripts/check-extension-class-drift-mutations.mjs",
+          "exitCode": 0,
+          "observation": "Original baseline-green Add/Change/Remove with exact semantic diagnostic, unchanged affected reader page and green restoration; unchanged valid Source scope reused for earlier batches, not a fresh runtime/human exercise."
+        },
+        {
+          "command": "node scripts/check-provider-registration-drift-mutations.mjs",
+          "exitCode": 0,
+          "observation": "Original baseline-green Add/Change/Remove with exact semantic diagnostic, unchanged affected reader page and green restoration; unchanged valid Source scope reused for earlier batches, not a fresh runtime/human exercise."
+        },
+        {
+          "command": "node scripts/check-fixture-registration-drift-mutations.mjs",
+          "exitCode": 0,
+          "observation": "Original baseline-green Add/Change/Remove with exact semantic diagnostic, unchanged affected reader page and green restoration; unchanged valid Source scope reused for earlier batches, not a fresh runtime/human exercise."
+        },
+        {
+          "command": "node scripts/check-report-registration-drift-mutations.mjs",
+          "exitCode": 0,
+          "observation": "Original baseline-green Add/Change/Remove with exact semantic diagnostic, unchanged affected reader page and green restoration; unchanged valid Source scope reused for earlier batches, not a fresh runtime/human exercise."
+        },
+        {
+          "command": "node scripts/check-error-code-drift-mutations.mjs",
+          "exitCode": 0,
+          "observation": "Original baseline-green Add/Change/Remove with exact semantic diagnostic, unchanged affected reader page and green restoration; unchanged valid Source scope reused for earlier batches, not a fresh runtime/human exercise."
+        },
+        {
+          "command": "node operations/pr13/evidence/extension-guide-drift-20261023/run-registered-secret.mjs",
+          "exitCode": 0,
+          "observation": "Retained original native isolated platform inventory Secret Add/Change/Remove: baseline green, exact DOC_DRIFT_SECRET, reader unchanged, restoration green. Owned operations harness, not a repository npm command; unchanged constructor/Source proof reused."
+        },
+        {
+          "command": "Retained registered config:nested-plugin-config Add/Change/Remove: deterministic emitter, original schema-only receiver, restoration (Remove separately collected)",
+          "exitCode": 0,
+          "observation": "Retained original schema-only inventory Add/Change/Remove on actual $.targets.*.maxRequestBytes; green baseline/restoration, exact DOC_DRIFT_CONFIG. Initial combined tool collection timed out after completed Add/Change; Remove was independently completed. No full combined-process exit0 is inferred; genuine nested behavior, not prior flat lint proof."
+        },
+        {
+          "command": "node operations/pr13/evidence/extension-guide-drift-20261023/whole-topic-2231/run-mapped-nested-publication.mjs",
+          "exitCode": 0,
+          "observation": "Actual registry-derived affected page asserted for all3 original schema-inventory to guide regenerations; exactly plugin-configuration.md stale, updated page changes, check and restoration green. Explicit original historical2f719pin isolated fixture only; no full current-root publication or mutated citation-accuracy claim."
+        }
+      ],
+      "review": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "summary": "Independent complete A91014 generator-or-guide mutation acceptance across SDK export/public contracts, plugin manifest, extension class, distinct provider/fixture/report registration, genuine nested configuration, capability/grant, Secret and error-code routes. Representative Add/Change/Remove per actual independent path:45 registered observations, not45 requirements. Wrong nested affected-page mapping found independently and corrected with registry-derived publication assertion; whole-topic review explicitly PASS after source/custody closure.",
+      "limits": [
+        "Only whole A91014 documentation drift contract; no new catalogue requirement or A91013/other gate acceptance.",
+        "Coordinator native tests and independent source/content review are distinct; no independent reviewer-executed tests, fresh participant, browser, human screenreader, runtime or deployment acceptance claimed.",
+        "Original global API DATA artifacts.ts41 content and all5UNKNOWN, selected-release Knip and current-root publication URL-pin baseline remain separately red. They were not successful mutation diagnostics and were not waived.",
+        "Historical2f719pin isolated publication proof does not qualify full current-root publisher, mutated historical citation accuracy or shared7994lock; no page/lock repinned."
+      ],
+      "openIssues": [],
+      "verdict": "PASS"
     }
   ],
   "purpose": "Internal planning and observed findings; not an acceptance ledger and not reader documentation.",
@@ -49779,17 +50005,25 @@
       "id": "A910-14",
       "passCondition": "Mutationen an SDK-Export, Pluginmanifest, Erweiterungsklasse, Registration, verschachteltem Configfeld, Capability, Secret und Error Code machen Generator oder Guide-Check rot.",
       "automaticFailure": "Eine neue öffentliche Oberfläche oder Erweiterungsklasse bleibt unbemerkt oder nur die Sollzahl ändert sich.",
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [],
       "readerFixtureIds": [],
       "executionScenarioIds": [],
       "closureDecision": {
-        "verdict": "NOT_READY",
-        "revision": "13d6f0a8326d5672f97cb42c0fc91f28da008e0d",
-        "reason": "Independent developers review: Full gate scope not independently established in this batch; narrower PASSs do not imply whole-gate completion.",
-        "campaign": "independent-ready-topics-20261020"
-      }
+        "verdict": "PASS",
+        "revision": "2997ab95ae9c9ba3f47e22e56208f9a7b9912694",
+        "reason": "Independent whole-topic sourceAccuracy/readerUsability/quality PASS after correcting actual nested affected-page mapping; representative original green-baseline Add/Change/Remove across distinct routes, exact diagnostics and restoration.",
+        "campaign": "whole-extension-drift-20261023"
+      },
+      "closureDecisionHistory": [
+        {
+          "verdict": "NOT_READY",
+          "revision": "13d6f0a8326d5672f97cb42c0fc91f28da008e0d",
+          "reason": "Independent developers review: Full gate scope not independently established in this batch; narrower PASSs do not imply whole-gate completion.",
+          "campaign": "independent-ready-topics-20261020"
+        }
+      ]
     },
     {
       "id": "A911-01",

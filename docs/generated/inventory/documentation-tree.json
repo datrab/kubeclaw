@@ -26147,7 +26147,7 @@
         "scripts/check-workflow-drift-mutations.mjs"
       ],
       "indirectExecutableConsumers": [],
-      "sha256": "19edae3ea55ec0a59988ef625f5e06bd2a6d940b144f59e75bed6849c4f76435"
+      "sha256": "af1973d167a0c43ffe14eb828fc8d139a63ab8b696fdc4095c8e862f2d414dd8"
     },
     {
       "path": "docs/blueprint/AP09-completeness-audit.md",
@@ -65766,7 +65766,7 @@
         "scripts/tests/docs-source-freshness.test.mjs"
       ],
       "indirectExecutableConsumers": [],
-      "sha256": "65f046eeb2625ecbc58a5f62b578a8cba81a143058421159c558e2d889ee9a49"
+      "sha256": "98b19767374d85f83d9f1af895ea57f8ca235207099d133bebd26e83cf03d941"
     },
     {
       "path": "docs/blueprint/documentation-parity-contract.md",
@@ -185820,11 +185820,6 @@
           "inputUse": false
         },
         {
-          "sourcePath": "docs/blueprint/AP09-acceptance-fixtures.json",
-          "token": "docs/site/extend/plugin-catalogue/kubeclaw.runtime-dispatch.md",
-          "inputUse": false
-        },
-        {
           "sourcePath": "docs/blueprint/documentation-completion-matrix.json",
           "token": "docs/site/extend/plugin-catalogue/kubeclaw.runtime-dispatch.md",
           "inputUse": false
@@ -203343,6 +203338,11 @@
         },
         {
           "sourcePath": "docs/blueprint/acceptance-evidence/tree-boundary-closeout-20261021/initial-owner-delta.json",
+          "token": "docs/site/reference/plugin-configuration.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "docs/blueprint/AP09-acceptance-fixtures.json",
           "token": "docs/site/reference/plugin-configuration.md",
           "inputUse": false
         },

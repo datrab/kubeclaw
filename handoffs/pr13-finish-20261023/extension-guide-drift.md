@@ -259,3 +259,67 @@ publication contract, then independent whole representative-path/guide assessmen
 Exact runnable proof, original failures and new immutable final qualified105 and
 1248/1005 baselines are in operations `nested-custody/`; do not repeat the old
 ad924 baseline acquisition or promote the36 bounded observations into gate PASS.
+
+## Whole A910-14 acceptance and continued A910-13 assessment — 2026-10-23
+
+Reviewed Source `2997ab95` corrects the registered genuine nested-schema mutation's
+reader destination: `reference/plugin-configuration.md`, not the runtime-dispatch
+catalogue page. An independent complete drift-topic review first found this P2.
+The new native Add/Change/Remove publication proof derives its expected stale page
+from that registry, regenerates the real schema inventory, detects exactly that
+page, regenerates changed page bytes, checks freshness and restores green.
+The explicit historical `2f719` isolated-fixture pin remains a limit, not a
+full-current-root publication or mutated-citation-accuracy claim. A complete
+read-only audit of all 3,159 published citations / 252 objects found identical
+current Source bytes and cited ranges. The actual current-root bounded publisher
+still reports the page stale on revision URLs; no page or shared lock was repinned.
+
+Three distinct original provider-return, fixture-policy and report-manifest
+registration harnesses additionally pass all nine registered mutations, restored
+baselines, reader-field and syntax/error controls. Together with the reusable
+unchanged earlier paths and the real Secret/nested paths, these are 45 registered
+observations, not 45 requirements. The independent final topic reviewer explicitly
+returns sourceAccuracy PASS, readerUsability PASS, quality PASS and **WHOLEGATE:
+PASS for A910-14** under the generator-or-guide contract. This is not inferred
+from a clean patch, individual requirement totals or an unrelated red receiver.
+
+The mapping's exact registry-byte change also required its existing owner-purpose
+input pin. Initial meaningful controls exposed eight failures at that guard; they
+remain retained. Source-first review then approved that one owner-pin correction.
+Complete 1,248-selected / 1,005-caller vectors change only that owner Source, with
+no membership changes. Seventeen existing role-purpose inputs bind the same
+corrected registry. Five native recipe vectors change only the existing owner
+object and two exact scalar initializers; the same original Boolean dependency's
+baseline digest was reconstructed before renewal. All 105 final native vectors
+were freshly verified exactly, selectors and child authority unchanged. Final
+49 custody and 104 Reader controls pass. The unchanged original receiver with
+actual Go on PATH again terminally reaches `API_PRODUCT_SCRIPT_OUTPUT_ROLE_UNQUALIFIED:
+skills/buster/engine/test-gates/artifacts.ts:41: content`; all five DATA slots remain
+UNKNOWN. No product runtime, release receipt or generic role grant changed.
+
+Pinned `fe588b1a6267eb47f785d0c748db9f6f3e9a3b4f` autoreview, explicit Codex
+`gpt-5.6-terra` / high / P2, source-first and combined closure reviews are clean
+(.97); independent whole A910-14 review is explicit PASS (.95). Complete supplied
+in-band sources and coordinator observations were reviewed; no reviewer-executed
+runtime tests are claimed. Exactly five old bounded reader records are preserved
+by complete 202/19/33/26/81-file comparisons: only role-custody Source differs;
+all pages and other declared Source bytes remain exact. Prior summaries, limits,
+checks and observations remain historical. New A910-14 acceptance is separate;
+225/261 requirements remain unchanged, while gates become 57/89.
+
+Work continued beyond that checkpoint. An independent content/task assessment
+read all eight core extension guides and the catalogue index plus 25 package
+pages (26/52 catalogue pages). It found three material candidate documentation
+issues: host catalogue boilerplate incorrectly describes pipeline/Buster
+activation for OpenClaw/Codex packages; host-and-engine Codex steps contradict the
+explicit unavailable-host lifecycle boundary; Buster's provider procedure wrongly
+says the runtime-role verification command installs locked dependencies. The
+helper filtered these findings as outside the five-file patch, but the content
+report explicitly identifies them; they are retained as actionable topic findings,
+NOT a clean A910-13 verdict. Verify against actual source and fix all related
+owner/generator/prose paths together. The other 26 catalogue pages and adequate
+current primary-source assessment remain unreviewed. No whole A910-13 approval.
+
+Exact native results, original failures, complete vectors, source/closure/topic
+review invocations and the bounded A910-13 report remain in operations evidence
+`extension-guide-drift-20261023/whole-topic-2231/`; acceptance uses the single matrix.
