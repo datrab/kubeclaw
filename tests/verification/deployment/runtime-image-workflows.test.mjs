@@ -1,6 +1,9 @@
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import test from 'node:test';
+import os from 'node:os';
+import path from 'node:path';
+import { execFileSync } from 'node:child_process';
 import YAML from 'yaml';
 import { runtimeImages } from '../../../scripts/updates/runtime-components.mjs';
 
@@ -80,5 +83,29 @@ test('bundle publication rejects failed or cancelled image proofs while allowing
         assert.equal(evaluate(needs, { event_name: event }, () => true), false);
       }
     }
+  }
+});
+
+
+test('bundle checksum assets remain nonempty with zero, one or all changed roles', () => {
+  const run = main.jobs['bundle-skills'].steps.find(step => step.name === 'Record bundle checksums and source identity').run;
+  // Execute the actual workflow checksum command against each publication shape.
+  const checksum = run.slice(run.indexOf('(cd dist;'));
+  assert(checksum.startsWith('(cd dist;'));
+  for (const roles of [[], ['buster'], ['nova', 'buster', 'prism']]) {
+    const root = fs.mkdtempSync(path.join(os.tmpdir(), 'bundle-checksums-'));
+    try {
+      fs.mkdirSync(path.join(root, 'dist'));
+      fs.writeFileSync(path.join(root, 'dist/runtime-code.json'), '{"bundles":{}}\n');
+      for (const role of roles) fs.writeFileSync(path.join(root, `dist/${role}-test.tgz`), `bundle:${role}`);
+      execFileSync('bash', ['-e', '-o', 'pipefail', '-c', checksum], { cwd: root, env: { ...process.env, GITHUB_SHA: 'test' } });
+      const manifest = fs.readFileSync(path.join(root, 'dist/SHA256SUMS-test.txt'), 'utf8');
+      assert.equal(manifest.trim().split('\n').length, roles.length + 1);
+      assert.match(manifest, /  \.\/runtime-code\.json\n/u);
+      execFileSync('sha256sum', ['--check', 'SHA256SUMS-test.txt'], { cwd: path.join(root, 'dist') });
+      // A changed receipt must invalidate the published checksum even without bundles.
+      fs.appendFileSync(path.join(root, 'dist/runtime-code.json'), ' ');
+      assert.throws(() => execFileSync('sha256sum', ['--check', 'SHA256SUMS-test.txt'], { cwd: path.join(root, 'dist'), stdio: 'pipe' }));
+    } finally { fs.rmSync(root, { recursive: true, force: true }); }
   }
 });
