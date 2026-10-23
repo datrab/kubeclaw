@@ -232,6 +232,11 @@ while (dependencyQueue.length > 0) {
   // robots-parser: mocha suite; trace_engine: node:test and emitted test
   // declarations; Zod: vitest suites and the benchmark importing test Mocker.
   const developmentPaths = {
+    // pm-runtests, mocha and tape suites; published main/module/bin remain intact.
+    'prosemirror-changeset@2.4.1': ['test'],
+    'deep-diff@1.0.2': ['test'],
+    'flat@5.0.2': ['test'],
+    'pg-types@2.2.0': ['test'],
     'fast-uri@3.1.5': ['test'],
     'robots-parser@3.0.1': ['test'],
     'zod@3.25.76': ['src/v3/tests', 'src/v3/benchmarks', 'src/v4/core/tests',

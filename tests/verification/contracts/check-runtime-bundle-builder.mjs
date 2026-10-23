@@ -44,8 +44,41 @@ try {
       assert.equal(fs.lstatSync(link).isSymbolicLink(), true, `${role} package link is missing: ${entry.id}`);
       assert(fs.realpathSync(link).startsWith(`${path.join(output, 'skills/packages')}${path.sep}`), `${role} package link escapes: ${entry.id}`);
     }
+    // Playwright's published CLI imports this runtime backend unconditionally.
+    // Classify that exact version/path by executable provenance, not basename;
+    // every other test/tests/nested-node_modules directory remains forbidden.
+    const runtimeDirectories = new Set();
+    const playwright = bundleManifest.dependencies.find((entry) => entry.name === 'playwright');
+    if (playwright) {
+      assert.equal(playwright.version, '1.62.1', 're-audit Playwright runtime directories after version changes');
+      const packageRoot = path.join(output, 'skills/node_modules/playwright');
+      const installedPackage = JSON.parse(fs.readFileSync(path.join(packageRoot, 'package.json'), 'utf8'));
+      assert.equal(installedPackage.name, playwright.name);
+      assert.equal(installedPackage.version, playwright.version);
+      const program = fs.readFileSync(path.join(packageRoot, 'lib/program.js'), 'utf8');
+      assert(program.includes('require("./mcp/test/testBackend")'), 'CLI must consume the retained runtime backend');
+      execFileSync(process.execPath, ['--input-type=module', '-e',
+        `const {createRequire}=await import('node:module');const require=createRequire(import.meta.url);const backend=require(${JSON.stringify(path.join(packageRoot, 'lib/mcp/test/testBackend.js'))});if(typeof backend.TestServerBackend!=='function'||!Array.isArray(backend.testServerBackendTools)||!backend.testServerBackendTools.length)process.exit(2);`],
+      { cwd: temporary, env: { PATH: process.env.PATH ?? '', NODE_PATH: '' } });
+      execFileSync(process.execPath, [path.join(packageRoot, 'cli.js'), '--help'],
+        { cwd: temporary, env: { PATH: process.env.PATH ?? '', NODE_PATH: '' } });
+      runtimeDirectories.add(path.join(packageRoot, 'lib/mcp/test'));
+    }
+    const lighthouse = bundleManifest.dependencies.find((entry) => entry.name === 'lighthouse');
+    if (lighthouse) {
+      assert.equal(lighthouse.version, '13.4.1', 're-audit Lighthouse runtime directories after version changes');
+      const packageRoot = path.join(output, 'skills/node_modules/lighthouse');
+      const installedPackage = JSON.parse(fs.readFileSync(path.join(packageRoot, 'package.json'), 'utf8'));
+      assert.equal(installedPackage.name, lighthouse.name);
+      assert.equal(installedPackage.version, lighthouse.version);
+      assert.equal(installedPackage.bin.smokehouse, 'cli/test/smokehouse/frontends/smokehouse-bin.js');
+      assert(fs.statSync(path.join(packageRoot, installedPackage.bin.smokehouse)).isFile(), 'published smokehouse bin must remain installed');
+      execFileSync(process.execPath, [path.join(packageRoot, 'cli/index.js'), '--help'],
+        { cwd: temporary, env: { PATH: process.env.PATH ?? '', NODE_PATH: '' } });
+      runtimeDirectories.add(path.join(packageRoot, 'cli/test'));
+    }
     const forbidden = execFileSync('find', [output, '-type', 'd', '(', '-name', 'test', '-o', '-name', 'tests', '-o', '-name', 'node_modules', ')'], { encoding: 'utf8' })
-      .split('\n').filter((entry) => entry && entry !== path.join(output, 'skills/node_modules'));
+      .split('\n').filter((entry) => entry && entry !== path.join(output, 'skills/node_modules') && !runtimeDirectories.has(entry));
     assert.deepEqual(forbidden, [], `${role} bundle contains development directories`);
     const observer = path.join(output, 'skills/plugins/openclaw-agent-observer');
     const canonicalContract = path.join(root, 'contracts/agent-observability/v1/src');
