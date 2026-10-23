@@ -29,3 +29,14 @@ await assert.rejects(() => instance.cleanup({ ...invocation, inputs: [] }, {
 } as any), /KUBERNETES_FIXTURE_RELEASE_FAILED/u);
 await instance.cleanup({ ...invocation, inputs: [] }, { invoke: async () => ({ ok: true }) } as any);
 console.log(JSON.stringify({ ok: true, provider: 'kubernetes-fixture', deterministicIdentity: true, mocks: 0 }));
+const secondImage = `registry.local/database@sha256:${'b'.repeat(64)}`;
+const stackValues = { ...invocation.configuration.values, fullStack: true,
+  verifiedImages: [secondImage, invocation.configuration.values.image.reference] };
+assert.deepEqual(testContract.configuration({ ...invocation, inputs: [], configuration: { values: stackValues } }).verifiedImages,
+  [...stackValues.verifiedImages].sort());
+for (const verifiedImages of [[], [secondImage], [stackValues.verifiedImages[1], 'registry.local/database:latest'],
+  [stackValues.verifiedImages[1], stackValues.verifiedImages[1]]]) {
+  assert.throws(() => testContract.configuration({ ...invocation, inputs: [], configuration: { values: { ...stackValues, verifiedImages } } }), /IMAGE_INVENTORY_INVALID/u);
+}
+assert.throws(() => testContract.configuration({ ...invocation, inputs: [], configuration: {
+  values: { ...invocation.configuration.values, verifiedImages: stackValues.verifiedImages } } }), /FULL_STACK_REQUIRED/u);

@@ -29,6 +29,22 @@ function configuration(invocation) {
   if (!matched || typeof image.digest !== 'string' || !DIGEST.test(image.digest) || matched[1] !== image.digest) {
     throw new Error('KUBERNETES_FIXTURE_IMAGE_INVALID');
   }
+  const fullStack = value.fullStack;
+  if (fullStack !== undefined && (fullStack !== true || !Array.isArray(value.verifiedImages)
+    || value.verifiedImages.length < 1 || value.verifiedImages.length > 32
+    || new Set(value.verifiedImages).size !== value.verifiedImages.length
+    || !value.verifiedImages.includes(image.reference)
+    || value.verifiedImages.some((item) => typeof item !== 'string' || !IMAGE.test(item)))) {
+    throw new Error('KUBERNETES_FIXTURE_IMAGE_INVENTORY_INVALID');
+  }
+  if (fullStack === undefined && value.verifiedImages !== undefined) throw new Error('KUBERNETES_FIXTURE_FULL_STACK_REQUIRED');
+  const podReplacementSelectors = value.podReplacementSelectors ?? [];
+  if (!Array.isArray(podReplacementSelectors) || podReplacementSelectors.length > 8
+    || (podReplacementSelectors.length && !fullStack) || podReplacementSelectors.some(selector =>
+      !selector || typeof selector !== 'object' || Array.isArray(selector) || !Object.keys(selector).length
+      || Object.entries(selector).some(([key, value]) => !key || typeof value !== 'string' || value.length > 63))) {
+    throw new Error('KUBERNETES_FIXTURE_REPLACEMENT_SELECTORS_INVALID');
+  }
   if (typeof value.serviceName !== 'string' || !DNS_LABEL.test(value.serviceName)) throw new Error('KUBERNETES_FIXTURE_SERVICE_NAME_INVALID');
   if (!Number.isSafeInteger(value.servicePort) || value.servicePort < 1 || value.servicePort > 65535) throw new Error('KUBERNETES_FIXTURE_SERVICE_PORT_INVALID');
   const serviceTargetPort = value.serviceTargetPort;
@@ -56,7 +72,7 @@ function configuration(invocation) {
     || typeof testCredentials.secretName !== 'string' || !DNS_LABEL.test(testCredentials.secretName))) {
     throw new Error('KUBERNETES_FIXTURE_TEST_CREDENTIALS_INVALID');
   }
-  return { immutableImage: image.reference, imageDigest: image.digest, serviceName: value.serviceName,
+  return { ...(fullStack ? { fullStack: true, verifiedImages: [...value.verifiedImages].sort(), podReplacementSelectors } : {}), immutableImage: image.reference, imageDigest: image.digest, serviceName: value.serviceName,
     servicePort: value.servicePort, namespacePrefix, retentionMode, retentionSeconds,
     readinessTimeoutSeconds, secretReferences: [...new Set(secretReferences)],
     ...(serviceTargetPort === undefined ? {} : { serviceTargetPort }),
@@ -88,6 +104,7 @@ function capabilityRequest(invocation, config, manifest) {
   return {
     operation: 'prepare', resource: { type: 'kubernetes.fixture', canonicalId: `kubernetes-fixture:${invocation.attemptId}` },
     payload: { ...names, namespacePrefix: config.namespacePrefix, project: invocation.moduleId ?? invocation.runId,
+      ...(config.fullStack ? { fullStack: true, verifiedImages: config.verifiedImages, podReplacementSelectors: config.podReplacementSelectors } : {}),
       immutableImage: config.immutableImage, imageDigest: config.imageDigest, manifestPath: manifest.file,
       manifestDigest: manifest.artifact.contentDigest, serviceName: config.serviceName, servicePort: config.servicePort,
       ...(config.serviceTargetPort === undefined ? {} : { serviceTargetPort: config.serviceTargetPort }),
@@ -129,7 +146,8 @@ export function provider() {
         ],
         exitCode: null, signal: null, providerDetails: details({ leaseName: result.leaseName, namespace: result.namespace,
           manifestDigest: manifest.artifact.contentDigest, immutableImage: config.immutableImage,
-          retentionMode: config.retentionMode, expiresAt: result.expiresAt }) };
+          retentionMode: config.retentionMode, expiresAt: result.expiresAt,
+          ...(result.podReplacements ? { podReplacements: result.podReplacements } : {}) }) };
     },
     async cleanup(invocation, context) {
       const config = configuration(invocation);
