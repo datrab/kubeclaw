@@ -65766,7 +65766,7 @@
         "scripts/tests/docs-source-freshness.test.mjs"
       ],
       "indirectExecutableConsumers": [],
-      "sha256": "98b19767374d85f83d9f1af895ea57f8ca235207099d133bebd26e83cf03d941"
+      "sha256": "6cf106a9728131c00049efd7e28bf6eb5c3af85e76019955a3f8dba123362e33"
     },
     {
       "path": "docs/blueprint/documentation-parity-contract.md",
@@ -171373,7 +171373,7 @@
           ]
         }
       ],
-      "sha256": "561609a23f82da2629cf83f72366a9f3532503b99d5f03d8ea2c32eac49007b5"
+      "sha256": "bb95a7e9c9b8b5a9fd19a2b57b2d5e1219a61f64acce283b792aa73c1617007e"
     },
     {
       "path": "docs/site/extend/contracts.md",
@@ -174253,7 +174253,7 @@
           ]
         }
       ],
-      "sha256": "8f6286a23d3f06734b3ecfd2b8458136171ef4a2cdb35086b6777642cdfa1519"
+      "sha256": "e3ca4cd74b44044a7df51fecaac44cf7b5aa7187cb04ee3162ffe004e2dcb683"
     },
     {
       "path": "docs/site/extend/lint.md",

@@ -323,3 +323,62 @@ current primary-source assessment remain unreviewed. No whole A910-13 approval.
 Exact native results, original failures, complete vectors, source/closure/topic
 review invocations and the bounded A910-13 report remain in operations evidence
 `extension-guide-drift-20261023/whole-topic-2231/`; acceptance uses the single matrix.
+
+## Whole A910-13 acceptance after actual-source assessment — 2026-10-23
+
+Source `deef4c3ad6e25aaefb13a9977da93889266a043c` fixes the two substantiated
+procedure defects together. Buster now correctly calls the two role/provider
+commands verification, not dependency installation; the canonical locked install
+remains their prerequisite. Codex authoring explicitly stops at the existing
+host-lifecycle boundary until the environment owner supplies real version,
+installation/connect controls, connection authority and discovery/removal proof.
+No unavailable control, host version or successful installation is invented.
+Code blocks, commands, citations, evidence headers and headings stay byte-identical.
+
+The earlier host-catalogue boilerplate candidate finding is **rejected after actual
+Source verification**, not silently ignored: all three actual OpenClaw/Codex pages
+already have host-specific failure sections, and the original publisher selects
+separate pipeline/OpenClaw/Codex branches. No generator or correct host page was
+changed to satisfy that false attribution. The exact three real page sections and
+conditional publisher proof are retained in operations finding dispositions.
+
+The original advanced, host/catalogue and repeat-scope owners pass: four pages /
+94 pinned links; 54 pages / 51 packages / 434 source targets / 70 pinned line links;
+69 scope paths / 561 evidence objects. Actual committed Source produces all 177
+reader pages. The five separate original artifact/search/Source-link/Source-preview/
+fresh-diagram processes all exit zero: 241 output digests, 40,886 local links,
+2,000 excerpts / 1,070 objects and 28 fresh diagram render hashes. These are
+coordinator native observations, not fresh human, keyboard, screenreader or live
+host executions.
+
+Independent content chunks read all eight current core guides and all 52 catalogue
+pages. The whole-source review additionally received 28 complete current primary
+contracts, implementations and manifests: discovery/activation/capabilities,
+provider/report loaders, Worker Core operation, real stage/effect test, observer,
+provider, adapter, host manifests and role closure. Three public description/runtime
+reference fragments triggered the helper's credential-shape heuristic; their exact
+bytes were losslessly concatenation-rendered in supplied context, with unchanged
+physical Source and retained failed inputs. No credential or Source qualification
+was fabricated. Source review found no material documentation issue and initially
+returned closeout-only NOT_READY because the concrete matrix record and final
+artifact results were not yet supplied. That original verdict remains retained.
+After supplying the complete proposed record and all six actual successful reader
+processes, the same pinned independent reviewer explicitly returns source accuracy,
+reader usability, quality and **WHOLEGATE: PASS** for A910-13 (.97).
+
+The six old affected scopes are preserved, not recounted, using their complete
+33/77/202/192/70/218-file vectors: only the assigned two prose pages differ; every
+other declared Source/page byte is exact. Original summaries, limits, checks,
+histories and practical observations remain unchanged. Source/preservation review
+is clean (.98). Exactly one new whole A910-13 record is separate from that narrow
+preservation. Requirements remain 225/261; gates become 58/89. This is not all-task
+completion. The existing DATA artifacts.ts41/all five UNKNOWN, selected-release
+Knip and current-root publication URL-pin failures remain explicitly unresolved;
+neither unavailable runtime nor globally red publication is claimed successful.
+
+Exact source/content/final review contexts, native results, original NOT_READY,
+verified finding dispositions and six-scope vectors are in operations evidence
+`extension-guide-drift-20261023/guide-procedure-corrections/`. Next work must choose
+an actually unaccepted remaining topic from the current register rather than
+repeat unchanged 105-vector custody, equivalent DATA fixtures, these two accepted
+whole extension gates or historical review acquisitions.

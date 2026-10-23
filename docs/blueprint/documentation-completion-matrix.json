@@ -2345,7 +2345,7 @@
     },
     {
       "id": "Reviewed-corrections-20261020",
-      "revision": "c4ebd7e428209c1d2fcf3599dab424ce9e0df23f",
+      "revision": "deef4c3ad6e25aaefb13a9977da93889266a043c",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/review_worker_ready",
       "gateIds": [],
@@ -2490,6 +2490,11 @@
           "command": "Independent finite source-map delta review plus original current publication build and five native artifact checks",
           "exitCode": 0,
           "observation": "Exact16-record source/reader-contract preservation, including two independently reviewed historical deltas. Current c4ebd7e4:177canonical187HTML241output hashes;12search;14947source links/4061objects;435previewboxes/2000excerpts/1070objects;28freshdiagramhashes. Details current-native-results.json; no new accepted ID or global generator/runtime claim."
+        },
+        {
+          "command": "node --max-old-space-size=4096 scripts/docs-publication.mjs build\nnode --max-old-space-size=4096 scripts/docs-reader/check-artifact.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-search.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-links.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-previews.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-diagrams.mjs",
+          "exitCode": 0,
+          "observation": "Six actual separate original processes against committed two-guide Source:177page reader build and artifact/search/Source-link/source-preview/fresh-diagram checks pass. Existing command blocks, headings, evidence headers and Source citations unchanged; original advanced/host/repeat-scope owner checks pass. No fresh participant, keyboard, screenreader, live Codex host or runtime exercise claimed."
         }
       ],
       "review": {
@@ -2934,6 +2939,14 @@
           "historicalOtherChangesNotNewlyApproved": [],
           "nativeResults": "docs/blueprint/acceptance-evidence/source-doc-join-20261022/current-native-results.json",
           "independentReview": "docs/blueprint/acceptance-evidence/source-doc-join-20261022/independent-delta-review.json"
+        },
+        {
+          "revision": "deef4c3ad6e25aaefb13a9977da93889266a043c",
+          "reviewer": "Independent pinned fe588b1a Codex gpt-5.6-terra high P2 two-guide source and six-scope preservation reviewer",
+          "result": "PASS — original bounded source/reader scopes preserved, not recounted",
+          "scope": "Complete original33/77/202/192/70/218file vectors: exactly assigned Buster and/or host-and-engine prose changes; all other declared files exact. Corrected dependency-install versus verification statement and aligned Codex authoring with existing unavailable-owner-controls stop boundary. Commands/codeblocks/citations/headings/evidence headers unchanged; no executable/generator/runtime/authority change. Original summary/limits and baseline DATA/Knip failures supplied before review.",
+          "limits": "Original summaries, limits, histories and observations retained. Actual committed reader build/five artifact checks, not fresh human/practical/runtime approval. Neither A91013 nor any other new gate/requirement accepted. Current-root publication pin, DATA artifacts.ts41/all5UNKNOWN and selected-release Knip remain separately unresolved.",
+          "evidence": "handoffs/pr13-finish-20261023/extension-guide-drift.md"
         }
       ],
       "previousReviewedRevision": "078105e40a50f23983e31c136f9bd81912ae6310",
@@ -3593,7 +3606,7 @@
     },
     {
       "id": "AP09-reader-developers-20261020",
-      "revision": "c4ebd7e428209c1d2fcf3599dab424ce9e0df23f",
+      "revision": "deef4c3ad6e25aaefb13a9977da93889266a043c",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/review_platform_ready",
       "gateIds": [
@@ -3771,6 +3784,11 @@
           "command": "Independent finite source-map delta review plus original current publication build and five native artifact checks",
           "exitCode": 0,
           "observation": "Exact16-record source/reader-contract preservation, including two independently reviewed historical deltas. Current c4ebd7e4:177canonical187HTML241output hashes;12search;14947source links/4061objects;435previewboxes/2000excerpts/1070objects;28freshdiagramhashes. Details current-native-results.json; no new accepted ID or global generator/runtime claim."
+        },
+        {
+          "command": "node --max-old-space-size=4096 scripts/docs-publication.mjs build\nnode --max-old-space-size=4096 scripts/docs-reader/check-artifact.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-search.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-links.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-previews.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-diagrams.mjs",
+          "exitCode": 0,
+          "observation": "Six actual separate original processes against committed two-guide Source:177page reader build and artifact/search/Source-link/source-preview/fresh-diagram checks pass. Existing command blocks, headings, evidence headers and Source citations unchanged; original advanced/host/repeat-scope owner checks pass. No fresh participant, keyboard, screenreader, live Codex host or runtime exercise claimed."
         }
       ],
       "review": {
@@ -4113,6 +4131,14 @@
           "historicalOtherChangesNotNewlyApproved": [],
           "nativeResults": "docs/blueprint/acceptance-evidence/source-doc-join-20261022/current-native-results.json",
           "independentReview": "docs/blueprint/acceptance-evidence/source-doc-join-20261022/independent-delta-review.json"
+        },
+        {
+          "revision": "deef4c3ad6e25aaefb13a9977da93889266a043c",
+          "reviewer": "Independent pinned fe588b1a Codex gpt-5.6-terra high P2 two-guide source and six-scope preservation reviewer",
+          "result": "PASS — original bounded source/reader scopes preserved, not recounted",
+          "scope": "Complete original33/77/202/192/70/218file vectors: exactly assigned Buster and/or host-and-engine prose changes; all other declared files exact. Corrected dependency-install versus verification statement and aligned Codex authoring with existing unavailable-owner-controls stop boundary. Commands/codeblocks/citations/headings/evidence headers unchanged; no executable/generator/runtime/authority change. Original summary/limits and baseline DATA/Knip failures supplied before review.",
+          "limits": "Original summaries, limits, histories and observations retained. Actual committed reader build/five artifact checks, not fresh human/practical/runtime approval. Neither A91013 nor any other new gate/requirement accepted. Current-root publication pin, DATA artifacts.ts41/all5UNKNOWN and selected-release Knip remain separately unresolved.",
+          "evidence": "handoffs/pr13-finish-20261023/extension-guide-drift.md"
         }
       ],
       "previousReviewedRevision": "2f8a116e00d6d38a5cc5076b10befcabe426f9f4",
@@ -14191,7 +14217,7 @@
     },
     {
       "id": "AP09-complete-static-reader-search-20261021",
-      "revision": "2997ab95ae9c9ba3f47e22e56208f9a7b9912694",
+      "revision": "deef4c3ad6e25aaefb13a9977da93889266a043c",
       "author": "Nova /root documentation author and implementation coordinator",
       "reviewer": "Independent Codex autoreview static-reader whole PUB-002 Source/reader-quality closeout",
       "verdict": "PASS",
@@ -14582,6 +14608,11 @@
           "command": "node --test scripts/tests/docs-reader-purpose-routing.test.mjs scripts/tests/docs-reader-artifact-ci-purpose.test.mjs scripts/tests/docs-reader-source-links.test.mjs scripts/tests/docs-reader-source-previews.test.mjs scripts/tests/docs-reader-page-records.test.mjs",
           "exitCode": 0,
           "observation": "104 original final Reader controls pass. All361 original scoped files compared: pages and every Source except role custody unchanged. No fresh browser, participant, screenreader or runtime exercise claimed."
+        },
+        {
+          "command": "node --max-old-space-size=4096 scripts/docs-publication.mjs build\nnode --max-old-space-size=4096 scripts/docs-reader/check-artifact.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-search.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-links.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-previews.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-diagrams.mjs",
+          "exitCode": 0,
+          "observation": "Six actual separate original processes against committed two-guide Source:177page reader build and artifact/search/Source-link/source-preview/fresh-diagram checks pass. Existing command blocks, headings, evidence headers and Source citations unchanged; original advanced/host/repeat-scope owner checks pass. No fresh participant, keyboard, screenreader, live Codex host or runtime exercise claimed."
         }
       ],
       "limits": [
@@ -15443,6 +15474,14 @@
           "result": "PASS — preserves only original bounded Source/Reader scopes, not recounted",
           "scope": "Complete202/19/33/26/81file vectors: only role-custody Source changed.105 freshly verified native recipe vectors exact; five changed solely existing owner-purpose one-pin object and two scalar initializer hashes; selectors/children and1248selected/1005caller memberships unchanged.17 existing purpose inputs bind corrected same registry. Original scope summaries/limits and baseline failures supplied up front.",
           "limits": "Original summaries/limits/checks/history remain. Original receiver actually re-reached DATA artifacts.ts41 content; all5UNKNOWN and release Knip failure retained. No fresh historical browser/person/runtime/global publication or A91013 acceptance. New A91014 acceptance is separate, not inferred from these preserved scopes.",
+          "evidence": "handoffs/pr13-finish-20261023/extension-guide-drift.md"
+        },
+        {
+          "revision": "deef4c3ad6e25aaefb13a9977da93889266a043c",
+          "reviewer": "Independent pinned fe588b1a Codex gpt-5.6-terra high P2 two-guide source and six-scope preservation reviewer",
+          "result": "PASS — original bounded source/reader scopes preserved, not recounted",
+          "scope": "Complete original33/77/202/192/70/218file vectors: exactly assigned Buster and/or host-and-engine prose changes; all other declared files exact. Corrected dependency-install versus verification statement and aligned Codex authoring with existing unavailable-owner-controls stop boundary. Commands/codeblocks/citations/headings/evidence headers unchanged; no executable/generator/runtime/authority change. Original summary/limits and baseline DATA/Knip failures supplied before review.",
+          "limits": "Original summaries, limits, histories and observations retained. Actual committed reader build/five artifact checks, not fresh human/practical/runtime approval. Neither A91013 nor any other new gate/requirement accepted. Current-root publication pin, DATA artifacts.ts41/all5UNKNOWN and selected-release Knip remain separately unresolved.",
           "evidence": "handoffs/pr13-finish-20261023/extension-guide-drift.md"
         }
       ],
@@ -25208,7 +25247,7 @@
     },
     {
       "id": "AP09-publication-positive-scope-7ef16585",
-      "revision": "1b2921a14c0a5b1342a83fadadb4316fa21071c5",
+      "revision": "deef4c3ad6e25aaefb13a9977da93889266a043c",
       "author": "existing publication/content maintainers; final authored Sourcefield additions separately reviewed by workflow_acceptance",
       "reviewer": "/root/operator_acceptance",
       "gateIds": [
@@ -25458,6 +25497,11 @@
           "command": "Independent finite source-map delta review plus original current publication build and five native artifact checks",
           "exitCode": 0,
           "observation": "Exact16-record source/reader-contract preservation, including two independently reviewed historical deltas. Current c4ebd7e4:177canonical187HTML241output hashes;12search;14947source links/4061objects;435previewboxes/2000excerpts/1070objects;28freshdiagramhashes. Details current-native-results.json; no new accepted ID or global generator/runtime claim."
+        },
+        {
+          "command": "node --max-old-space-size=4096 scripts/docs-publication.mjs build\nnode --max-old-space-size=4096 scripts/docs-reader/check-artifact.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-search.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-links.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-previews.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-diagrams.mjs",
+          "exitCode": 0,
+          "observation": "Six actual separate original processes against committed two-guide Source:177page reader build and artifact/search/Source-link/source-preview/fresh-diagram checks pass. Existing command blocks, headings, evidence headers and Source citations unchanged; original advanced/host/repeat-scope owner checks pass. No fresh participant, keyboard, screenreader, live Codex host or runtime exercise claimed."
         }
       ],
       "review": {
@@ -25900,6 +25944,14 @@
           "report": "handoffs/pr13-finish-20261023/tree-classification.md",
           "evidence": "operations/pr13/evidence/tree-classification-20261023/",
           "inspectionLimit": "Source-only independent assessment with complete necessary adjacent sources/contract fields supplied in-band; no reviewer checkout inspection or tests. Coordinator67tree+14publication controls and complete nine-scope vectors separately attributed. Unchanged historical checks/impact histories retained, not reapproved. Baseline API DATA and Knip failures unchanged."
+        },
+        {
+          "revision": "deef4c3ad6e25aaefb13a9977da93889266a043c",
+          "reviewer": "Independent pinned fe588b1a Codex gpt-5.6-terra high P2 two-guide source and six-scope preservation reviewer",
+          "result": "PASS — original bounded source/reader scopes preserved, not recounted",
+          "scope": "Complete original33/77/202/192/70/218file vectors: exactly assigned Buster and/or host-and-engine prose changes; all other declared files exact. Corrected dependency-install versus verification statement and aligned Codex authoring with existing unavailable-owner-controls stop boundary. Commands/codeblocks/citations/headings/evidence headers unchanged; no executable/generator/runtime/authority change. Original summary/limits and baseline DATA/Knip failures supplied before review.",
+          "limits": "Original summaries, limits, histories and observations retained. Actual committed reader build/five artifact checks, not fresh human/practical/runtime approval. Neither A91013 nor any other new gate/requirement accepted. Current-root publication pin, DATA artifacts.ts41/all5UNKNOWN and selected-release Knip remain separately unresolved.",
+          "evidence": "handoffs/pr13-finish-20261023/extension-guide-drift.md"
         }
       ],
       "scopePreservation3408": {
@@ -25931,7 +25983,7 @@
     },
     {
       "id": "A912-05-whole-source-excerpt-callouts-20261022",
-      "revision": "1b2921a14c0a5b1342a83fadadb4316fa21071c5",
+      "revision": "deef4c3ad6e25aaefb13a9977da93889266a043c",
       "author": "Existing publication/canonical topic maintainers; field-correction authors in named independent reviews",
       "reviewer": "/root/operator_acceptance",
       "gateIds": [
@@ -26047,6 +26099,11 @@
           "command": "/usr/local/bin/node --max-old-space-size=4096 scripts/docs-publication.mjs build\n/usr/local/bin/node scripts/docs-reader/check-artifact.mjs /home/node/.openclaw/workspace/tmp/pr13-finish-20261021/reader-d23046f0\n/usr/local/bin/node scripts/docs-reader/check-search.mjs /home/node/.openclaw/workspace/tmp/pr13-finish-20261021/reader-d23046f0\n/usr/local/bin/node scripts/docs-reader/check-source-links.mjs /home/node/.openclaw/workspace/tmp/pr13-finish-20261021/reader-d23046f0\n/usr/local/bin/node scripts/docs-reader/check-source-previews.mjs /home/node/.openclaw/workspace/tmp/pr13-finish-20261021/reader-d23046f0",
           "exitCode": 0,
           "observation": "Five separate original native processes each exited0: publication build177canonical/187HTML; artifact local targets/digests,177-page search,Source links and2000excerpts/1070objects. This is one captured group reused for this record; no synthetic shell invocation or human review counted as command success."
+        },
+        {
+          "command": "node --max-old-space-size=4096 scripts/docs-publication.mjs build\nnode --max-old-space-size=4096 scripts/docs-reader/check-artifact.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-search.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-links.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-previews.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-diagrams.mjs",
+          "exitCode": 0,
+          "observation": "Six actual separate original processes against committed two-guide Source:177page reader build and artifact/search/Source-link/source-preview/fresh-diagram checks pass. Existing command blocks, headings, evidence headers and Source citations unchanged; original advanced/host/repeat-scope owner checks pass. No fresh participant, keyboard, screenreader, live Codex host or runtime exercise claimed."
         }
       ],
       "review": {
@@ -26320,6 +26377,14 @@
           "report": "handoffs/pr13-finish-20261023/tree-classification.md",
           "evidence": "operations/pr13/evidence/tree-classification-20261023/",
           "inspectionLimit": "Source-only independent assessment with complete necessary adjacent sources/contract fields supplied in-band; no reviewer checkout inspection or tests. Coordinator67tree+14publication controls and complete nine-scope vectors separately attributed. Unchanged historical checks/impact histories retained, not reapproved. Baseline API DATA and Knip failures unchanged."
+        },
+        {
+          "revision": "deef4c3ad6e25aaefb13a9977da93889266a043c",
+          "reviewer": "Independent pinned fe588b1a Codex gpt-5.6-terra high P2 two-guide source and six-scope preservation reviewer",
+          "result": "PASS — original bounded source/reader scopes preserved, not recounted",
+          "scope": "Complete original33/77/202/192/70/218file vectors: exactly assigned Buster and/or host-and-engine prose changes; all other declared files exact. Corrected dependency-install versus verification statement and aligned Codex authoring with existing unavailable-owner-controls stop boundary. Commands/codeblocks/citations/headings/evidence headers unchanged; no executable/generator/runtime/authority change. Original summary/limits and baseline DATA/Knip failures supplied before review.",
+          "limits": "Original summaries, limits, histories and observations retained. Actual committed reader build/five artifact checks, not fresh human/practical/runtime approval. Neither A91013 nor any other new gate/requirement accepted. Current-root publication pin, DATA artifacts.ts41/all5UNKNOWN and selected-release Knip remain separately unresolved.",
+          "evidence": "handoffs/pr13-finish-20261023/extension-guide-drift.md"
         }
       ],
       "scopePreservation3408": {
@@ -26967,7 +27032,7 @@
     },
     {
       "id": "A910-03-whole-command-prerequisite-contract-20261022",
-      "revision": "c4ebd7e428209c1d2fcf3599dab424ce9e0df23f",
+      "revision": "deef4c3ad6e25aaefb13a9977da93889266a043c",
       "author": "Original canonical topic maintainers plus separately reviewed bounded corrections",
       "reviewer": "/root/operator_acceptance; own quickstart delta independently reviewed by /root",
       "gateIds": [
@@ -27222,6 +27287,11 @@
           "command": "Independent finite source-map delta review plus original current publication build and five native artifact checks",
           "exitCode": 0,
           "observation": "Exact16-record source/reader-contract preservation, including two independently reviewed historical deltas. Current c4ebd7e4:177canonical187HTML241output hashes;12search;14947source links/4061objects;435previewboxes/2000excerpts/1070objects;28freshdiagramhashes. Details current-native-results.json; no new accepted ID or global generator/runtime claim."
+        },
+        {
+          "command": "node --max-old-space-size=4096 scripts/docs-publication.mjs build\nnode --max-old-space-size=4096 scripts/docs-reader/check-artifact.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-search.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-links.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-previews.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-diagrams.mjs",
+          "exitCode": 0,
+          "observation": "Six actual separate original processes against committed two-guide Source:177page reader build and artifact/search/Source-link/source-preview/fresh-diagram checks pass. Existing command blocks, headings, evidence headers and Source citations unchanged; original advanced/host/repeat-scope owner checks pass. No fresh participant, keyboard, screenreader, live Codex host or runtime exercise claimed."
         }
       ],
       "review": {
@@ -27427,6 +27497,14 @@
           "historicalOtherChangesNotNewlyApproved": [],
           "nativeResults": "docs/blueprint/acceptance-evidence/source-doc-join-20261022/current-native-results.json",
           "independentReview": "docs/blueprint/acceptance-evidence/source-doc-join-20261022/independent-delta-review.json"
+        },
+        {
+          "revision": "deef4c3ad6e25aaefb13a9977da93889266a043c",
+          "reviewer": "Independent pinned fe588b1a Codex gpt-5.6-terra high P2 two-guide source and six-scope preservation reviewer",
+          "result": "PASS — original bounded source/reader scopes preserved, not recounted",
+          "scope": "Complete original33/77/202/192/70/218file vectors: exactly assigned Buster and/or host-and-engine prose changes; all other declared files exact. Corrected dependency-install versus verification statement and aligned Codex authoring with existing unavailable-owner-controls stop boundary. Commands/codeblocks/citations/headings/evidence headers unchanged; no executable/generator/runtime/authority change. Original summary/limits and baseline DATA/Knip failures supplied before review.",
+          "limits": "Original summaries, limits, histories and observations retained. Actual committed reader build/five artifact checks, not fresh human/practical/runtime approval. Neither A91013 nor any other new gate/requirement accepted. Current-root publication pin, DATA artifacts.ts41/all5UNKNOWN and selected-release Knip remain separately unresolved.",
+          "evidence": "handoffs/pr13-finish-20261023/extension-guide-drift.md"
         }
       ],
       "scopePreservation3408": {
@@ -29336,6 +29414,174 @@
         "Coordinator native tests and independent source/content review are distinct; no independent reviewer-executed tests, fresh participant, browser, human screenreader, runtime or deployment acceptance claimed.",
         "Original global API DATA artifacts.ts41 content and all5UNKNOWN, selected-release Knip and current-root publication URL-pin baseline remain separately red. They were not successful mutation diagnostics and were not waived.",
         "Historical2f719pin isolated publication proof does not qualify full current-root publisher, mutated historical citation accuracy or shared7994lock; no page/lock repinned."
+      ],
+      "openIssues": [],
+      "verdict": "PASS"
+    },
+    {
+      "id": "AP09-whole-extension-guides-A91013-20261023",
+      "revision": "deef4c3ad6e25aaefb13a9977da93889266a043c",
+      "author": "Nova documentation continuation coordinator",
+      "reviewer": "Independent pinned fe588b1a Codex gpt-5.6-terra high P2 whole-extension source/content/closure reviewer",
+      "gateIds": [
+        "A910-13"
+      ],
+      "requirementIds": [],
+      "pages": [
+        "docs/site/extend/README.md",
+        "docs/site/extend/buster.md",
+        "docs/site/extend/contracts.md",
+        "docs/site/extend/effectful-plugin.md",
+        "docs/site/extend/first-plugin.md",
+        "docs/site/extend/host-and-engine.md",
+        "docs/site/extend/nova.md",
+        "docs/site/extend/plugin-catalogue/README.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw-agent-observer.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw-ops.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw-prism.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.agent-observability.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.api-flow.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.architecture-validator.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.artifact-store.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.axe.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.blueprint-sync.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.buster-quality-gate.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.case-study.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.command-runner.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.container-build.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.coverage-budget.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.delivery-lint.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.demo-auth-smoke.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.demo-handoff.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.direct-command.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.git-workspace.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.http.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.human-approval.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.implementation-agent.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.junit-report.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.kubernetes-fixture.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.lighthouse.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.lint.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.network-http.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.notification-observer.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.openapi.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.openclaw-agent-events.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.operator-messaging.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.pipeline-review.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.playwright.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.preflight-contract.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.prism-design.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.project-summary.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.redis-transport.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.remote-test-gate.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.repository-adapter.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.review.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.runtime-dispatch.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.secret-resolver.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.security-providers.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.size-budget.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.state-store.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.tailscale-exposure.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.telemetry-observer.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.telemetry-store.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.transport-publisher.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.visual.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.wait-store.md",
+        "docs/site/extend/testing.md"
+      ],
+      "sources": [
+        "contracts/pipeline-worker-core/v1/src/types.ts",
+        "docs/blueprint/AP09-acceptance-contract.md",
+        "packaging/runtime/package-ownership.json",
+        "packaging/runtime/roles/buster.json",
+        "packaging/runtime/roles/nova.json",
+        "packaging/runtime/roles/prism.json",
+        "plugins/kubeclaw-ops/.codex-plugin/plugin.json",
+        "scripts/ap08-review-scope.mjs",
+        "scripts/check-ap08-advanced-guides.mjs",
+        "scripts/check-ap08-host-lifecycle-catalogue.mjs",
+        "scripts/check-ap08-minimal-plugin.mjs",
+        "skills/buster/engine/test-gates/provider-loader.ts",
+        "skills/buster/engine/test-gates/report-adapter-runtime.ts",
+        "skills/buster/plugins/coverage-budget/plugin.json",
+        "skills/buster/plugins/coverage-budget/src/provider.js",
+        "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json",
+        "skills/common/plugin-runtime/foundation/config/platform.ts",
+        "skills/common/plugin-runtime/foundation/registry/activation.ts",
+        "skills/common/plugin-runtime/foundation/registry/capabilities.ts",
+        "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+        "skills/common/plugin-runtime/foundation/registry/discovery.ts",
+        "skills/common/plugin-runtime/foundation/registry/types.ts",
+        "skills/common/plugin-runtime/sdk/src/generated/contracts.ts",
+        "skills/common/plugins/notification-observer/plugin.json",
+        "skills/common/plugins/notification-observer/src/observer.ts",
+        "skills/common/plugins/openclaw-agent-observer/openclaw.plugin.json",
+        "skills/common/plugins/runtime-dispatch/plugin.json",
+        "skills/common/plugins/runtime-dispatch/src/adapter.ts",
+        "skills/nova/plugins/blueprint-sync/src/stage.ts",
+        "skills/nova/plugins/blueprint-sync/tests/live-function.test.ts",
+        "skills/nova/plugins/lint/plugin.json",
+        "skills/prism/openclaw-plugin/openclaw.plugin.json",
+        "skills/worker/core/worker/attempt-executor.ts"
+      ],
+      "checks": [
+        {
+          "command": "node scripts/check-ap08-advanced-guides.mjs",
+          "exitCode": 0,
+          "observation": "Actual original guide/scope owner or committed177page reader/artifact process completed successfully; coordinator executed, not reviewer-executed or human/live-host acceptance."
+        },
+        {
+          "command": "node scripts/check-ap08-host-lifecycle-catalogue.mjs",
+          "exitCode": 0,
+          "observation": "Actual original guide/scope owner or committed177page reader/artifact process completed successfully; coordinator executed, not reviewer-executed or human/live-host acceptance."
+        },
+        {
+          "command": "node scripts/ap08-review-scope.mjs --check",
+          "exitCode": 0,
+          "observation": "Actual original guide/scope owner or committed177page reader/artifact process completed successfully; coordinator executed, not reviewer-executed or human/live-host acceptance."
+        },
+        {
+          "command": "node --max-old-space-size=4096 scripts/docs-publication.mjs build",
+          "exitCode": 0,
+          "observation": "Actual original guide/scope owner or committed177page reader/artifact process completed successfully; coordinator executed, not reviewer-executed or human/live-host acceptance."
+        },
+        {
+          "command": "node --max-old-space-size=4096 scripts/docs-reader/check-artifact.mjs",
+          "exitCode": 0,
+          "observation": "Actual original guide/scope owner or committed177page reader/artifact process completed successfully; coordinator executed, not reviewer-executed or human/live-host acceptance."
+        },
+        {
+          "command": "node --max-old-space-size=4096 scripts/docs-reader/check-search.mjs",
+          "exitCode": 0,
+          "observation": "Actual original guide/scope owner or committed177page reader/artifact process completed successfully; coordinator executed, not reviewer-executed or human/live-host acceptance."
+        },
+        {
+          "command": "node --max-old-space-size=4096 scripts/docs-reader/check-source-links.mjs",
+          "exitCode": 0,
+          "observation": "Actual original guide/scope owner or committed177page reader/artifact process completed successfully; coordinator executed, not reviewer-executed or human/live-host acceptance."
+        },
+        {
+          "command": "node --max-old-space-size=4096 scripts/docs-reader/check-source-previews.mjs",
+          "exitCode": 0,
+          "observation": "Actual original guide/scope owner or committed177page reader/artifact process completed successfully; coordinator executed, not reviewer-executed or human/live-host acceptance."
+        },
+        {
+          "command": "node --max-old-space-size=4096 scripts/docs-reader/check-diagrams.mjs",
+          "exitCode": 0,
+          "observation": "Actual original guide/scope owner or committed177page reader/artifact process completed successfully; coordinator executed, not reviewer-executed or human/live-host acceptance."
+        }
+      ],
+      "review": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "summary": "Independent whole A91013 documentation topic acceptance: complete current eight core guides, all52 catalogue pages through two complete content chunks, current28 representative primary contracts/implementations/manifests and independent creation/change/authority/test/activation/failure/removal/remnant assessment. Both substantiated procedure contradictions corrected; apparent host-boilerplate issue disproved against actual conditional generator/three pages. Final reviewer explicitly sourceAccuracy/readerUsability/quality and WHOLEGATE PASS after concrete record and allsix committed reader/artifact checks; not acceptance inferred from prior EXT/CDV counters.",
+      "limits": [
+        "Documentation completeness/source and reader-task assessment; no live host installation, deployment, runtime or fresh participant/screenreader acceptance.",
+        "Codex installation/lifecycle controls and external long-lived adapter host remain explicitly unavailable product capabilities with concrete owner/action/stop boundaries, not successful executions.",
+        "Current primary-source assessment uses complete representative implementations/contracts and unchanged valid prior bounded content/source scopes; no claim to newly execute or re-review every historical package test.",
+        "Original DATA artifacts.ts41 content/all5UNKNOWN, selected-release Knip and current-root publication URL-pin baseline stay red and separately preserved; no unrelated global gate waived."
       ],
       "openIssues": [],
       "verdict": "PASS"
@@ -49986,7 +50232,7 @@
       "id": "A910-13",
       "passCondition": "Alle unterstützten Erweiterungsklassen und komplexen Plugins besitzen vollständige Erstellungs- oder Änderungsanleitungen. Ein unabhängiger Reviewer prüft repräsentative unterschiedliche Wege anhand der veröffentlichten Anleitung einschließlich Berechtigungen, Tests, Aktivierung, Fehler, Entfernung und Datenresten.",
       "automaticFailure": "Eine unterstützte Erweiterungsklasse oder wesentliche Pluginfunktion fehlt, Maintainerwissen ersetzt einen dokumentierten Schritt oder eine Produktgrenze wird verschwiegen.",
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [],
       "readerFixtureIds": [
@@ -49995,11 +50241,19 @@
       ],
       "executionScenarioIds": [],
       "closureDecision": {
-        "verdict": "FAIL",
-        "revision": "13d6f0a8326d5672f97cb42c0fc91f28da008e0d",
-        "reason": "Independent developers review: material supported-task or authority gap; see topic closure decisions.",
-        "campaign": "independent-ready-topics-20261020"
-      }
+        "verdict": "PASS",
+        "revision": "deef4c3ad6e25aaefb13a9977da93889266a043c",
+        "reason": "Independent complete current core-guide/whole-catalogue content and representative primary-source assessment: three dimensions and whole documentation gate PASS after correcting actual prerequisite/lifecycle contradictions. Unavailable product capabilities and no live-host acceptance remain explicit.",
+        "campaign": "whole-extension-guides-20261023"
+      },
+      "closureDecisionHistory": [
+        {
+          "verdict": "FAIL",
+          "revision": "13d6f0a8326d5672f97cb42c0fc91f28da008e0d",
+          "reason": "Independent developers review: material supported-task or authority gap; see topic closure decisions.",
+          "campaign": "independent-ready-topics-20261020"
+        }
+      ]
     },
     {
       "id": "A910-14",
