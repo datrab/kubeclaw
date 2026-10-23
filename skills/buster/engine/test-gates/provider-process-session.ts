@@ -72,8 +72,8 @@ export class ProviderProcessSession {
   #resources: ProviderProcessResources = { cpuTimeMs: 0, maximumMemoryBytes: 0, maximumProcesses: 1 };
 
   constructor(entry: TestProviderRegistryEntry, invocation: ProviderInvocationV1, workspaceRootValue: string, policy: BusterProviderRuntimeSettings) {
+    assertBudgetSourceAdmission(invocation?.configuration);
     this.#policy = validateBusterProviderRuntimeSettings(policy);
-    assertBudgetSourceAdmission(invocation.configuration);
     this.#capabilities = new ProviderCapabilities(this.#policy.provider.maximumPendingCapabilities);
     this.#entry = entry;
     this.#invocation = invocation;
