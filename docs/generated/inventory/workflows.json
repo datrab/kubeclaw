@@ -58,7 +58,6 @@
       "commandAndActionRefs": [
         "bash scripts/deploy.sh prism-e2e",
         "bash scripts/prepare-image-build-runner.sh",
-        "node scripts/updates/code-release.mjs dist \"$GITHUB_SHA\" \"$GITHUB_REPOSITORY",
         "node scripts/updates/runtime-inputs.mjs",
         "npm ci --ignore-scripts",
         "npm run plugin-system:sandbox:build",
