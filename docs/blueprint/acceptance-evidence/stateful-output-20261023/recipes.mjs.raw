@@ -1,0 +1,20 @@
+import fs from 'node:fs';import assert from 'node:assert/strict';import {gunzipSync} from 'node:zlib';
+import {documentationExecutableRoleRecipes,documentationExecutableSelectors,documentationSelectorReceipt} from '/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/docs-api-documentation-role-custody.mjs';
+import {deriveNativeOperationFacts,nativeOperationFactDigest} from '/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/docs-api-output-role-classification.mjs';
+const root=process.cwd(),out='/home/node/.openclaw/workspace/tmp/pr13-stateful-20261023';
+const old=JSON.parse(gunzipSync(fs.readFileSync('docs/blueprint/acceptance-evidence/combined-api-adapters-20261022/restart-current-recipes.json.gz'))).records;
+const file='scripts/docs-api-documentation-role-custody.mjs';let code=fs.readFileSync(file,'utf8');const changed=[],checked=[];
+for(const [source,recipe]of Object.entries(documentationExecutableRoleRecipes)){
+ if(!recipe.selectors)continue;
+ const selectors=documentationExecutableSelectors(source,fs.readFileSync(source,'utf8'),root);
+ assert.deepEqual(documentationSelectorReceipt(selectors),recipe.selectors,'selector changed '+source);
+ const facts=deriveNativeOperationFacts(root,source,selectors,{trustAnchorSources:[file]});const digest=nativeOperationFactDigest(facts);checked.push({source,digest});
+ if(digest===recipe.factsDigest)continue;
+ const baseline=old.find(r=>r.source===source);assert(baseline,'missing baseline '+source);assert.equal(baseline.actualDigest,recipe.factsDigest,'baseline not current '+source);
+ const added=facts.filter(f=>!baseline.facts.some(b=>JSON.stringify(b)===JSON.stringify(f))),removed=baseline.facts.filter(f=>!facts.some(b=>JSON.stringify(b)===JSON.stringify(f)));
+ const allowed=new Set(['purposes','reviewedSelectedGraphSha256','reviewedCallerCensusSha256']);
+ for(const f of [...added,...removed])assert(allowed.has(f.symbol),'unexpected semantic delta '+JSON.stringify(f));
+ assert.equal(added.length,3);assert.equal(removed.length,3);
+ assert.equal(code.split(recipe.factsDigest).length,2,'ambiguous digest');code=code.replace(recipe.factsDigest,digest);changed.push({source,oldDigest:recipe.factsDigest,digest,added,removed});
+}
+fs.writeFileSync(file,code);fs.writeFileSync(out+'/recipe-renewal.json',JSON.stringify({checked,changed},null,2)+'\n');console.log(JSON.stringify({checked:checked.length,changed:changed.map(x=>x.source)}));

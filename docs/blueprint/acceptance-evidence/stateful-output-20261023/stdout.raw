@@ -1,0 +1,371 @@
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: kubeclaw-agents-egress
+spec:
+  endpointSelector:
+    matchLabels:
+      app.kubernetes.io/name: kubeclaw
+    matchExpressions:
+      - key: app.kubernetes.io/component
+        operator: NotIn
+        values:
+          - prism
+  egress:
+    - toEndpoints:
+        - matchLabels:
+            app.kubernetes.io/instance: redis
+            app.kubernetes.io/name: redis
+            app.kubernetes.io/component: master
+      toPorts:
+        - ports:
+            - port: '6379'
+              protocol: TCP
+    - toEndpoints:
+        - matchLabels:
+            app: litellm
+      toPorts:
+        - ports:
+            - protocol: TCP
+              port: '4000'
+    - toEndpoints:
+        - matchLabels:
+            app: registry-local
+      toPorts:
+        - ports:
+            - protocol: TCP
+              port: '5000'
+            - protocol: TCP
+              port: '5001'
+    - toEndpoints:
+        - matchLabels:
+            app: registry-mirror
+      toPorts:
+        - ports:
+            - protocol: TCP
+              port: '5000'
+    - toEndpoints:
+        - matchLabels:
+            app.kubernetes.io/name: kubeclaw
+      toPorts:
+        - ports:
+            - protocol: TCP
+              port: '18789'
+            - protocol: TCP
+              port: '18790'
+    - toEntities:
+        - world
+      toPorts:
+        - ports:
+            - protocol: TCP
+              port: '22'
+            - protocol: TCP
+              port: '80'
+            - protocol: TCP
+              port: '443'
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: kubeclaw-agents-ingress
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: kubeclaw
+    matchExpressions:
+      - key: app.kubernetes.io/component
+        operator: NotIn
+        values:
+          - prism
+  policyTypes:
+    - Ingress
+  ingress:
+    - from:
+        - podSelector: {}
+      ports:
+        - protocol: TCP
+          port: 18789
+        - protocol: TCP
+          port: 18790
+---
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: kubeclaw-buster-namespace-controller-api-egress
+spec:
+  endpointSelector:
+    matchLabels:
+      app.kubernetes.io/name: kubeclaw
+      app.kubernetes.io/component: buster-namespace-controller
+  egress:
+    - toEntities:
+        - kube-apiserver
+      toPorts:
+        - ports:
+            - protocol: TCP
+              port: '443'
+            - protocol: TCP
+              port: '6443'
+---
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: kubeclaw-nova-buster-test-gates
+spec:
+  endpointSelector:
+    matchLabels:
+      app.kubernetes.io/name: kubeclaw
+      app.kubernetes.io/component: nova
+  egress:
+    - toEndpoints:
+        - matchLabels:
+            app.kubernetes.io/name: kubeclaw
+            app.kubernetes.io/component: buster
+      toPorts:
+        - ports:
+            - protocol: TCP
+              port: '18891'
+---
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: kubeclaw-buster-test-gates-from-nova
+spec:
+  endpointSelector:
+    matchLabels:
+      app.kubernetes.io/name: kubeclaw
+      app.kubernetes.io/component: buster
+  ingress:
+    - fromEndpoints:
+        - matchLabels:
+            app.kubernetes.io/name: kubeclaw
+            app.kubernetes.io/component: nova
+      toPorts:
+        - ports:
+            - protocol: TCP
+              port: '18891'
+---
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: kubeclaw-nova-prism-agent-trust
+spec:
+  endpointSelector:
+    matchLabels:
+      app.kubernetes.io/name: kubeclaw
+      app.kubernetes.io/component: nova
+  egress:
+    - toEndpoints:
+        - matchLabels:
+            app.kubernetes.io/name: kubeclaw
+            app.kubernetes.io/component: prism
+      toPorts:
+        - ports:
+            - protocol: TCP
+              port: '18082'
+    - toEndpoints:
+        - matchLabels:
+            app.kubernetes.io/name: kubeclaw
+            app.kubernetes.io/component: prism
+            io.cilium.k8s.namespace.labels.kubeclaw/managed-by: buster-namespace-controller
+      toPorts:
+        - ports:
+            - protocol: TCP
+              port: '18082'
+---
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: kubeclaw-redis-ingress
+spec:
+  endpointSelector:
+    matchLabels:
+      app.kubernetes.io/instance: redis
+      app.kubernetes.io/name: redis
+      app.kubernetes.io/component: master
+  ingress:
+    - fromEndpoints:
+        - matchLabels:
+            app.kubernetes.io/name: kubeclaw
+        - matchLabels:
+            app.kubernetes.io/name: clawdeck
+      toPorts:
+        - ports:
+            - port: '6379'
+              protocol: TCP
+---
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: kubeclaw-clawdeck-redis-egress
+spec:
+  endpointSelector:
+    matchLabels:
+      app.kubernetes.io/name: clawdeck
+  egress:
+    - toEndpoints:
+        - matchLabels:
+            app.kubernetes.io/instance: redis
+            app.kubernetes.io/name: redis
+            app.kubernetes.io/component: master
+      toPorts:
+        - ports:
+            - port: '6379'
+              protocol: TCP
+---
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: kubeclaw-litellm-ingress
+spec:
+  endpointSelector:
+    matchLabels:
+      app: litellm
+  ingress:
+    - fromEndpoints:
+        - matchLabels:
+            app.kubernetes.io/name: kubeclaw
+      toPorts:
+        - ports:
+            - protocol: TCP
+              port: '4000'
+---
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: kubeclaw-litellm-egress
+spec:
+  endpointSelector:
+    matchLabels:
+      app: litellm
+  egress:
+    - toEndpoints:
+        - matchLabels:
+            app.kubernetes.io/instance: postgresql
+            app.kubernetes.io/name: postgresql
+            app.kubernetes.io/component: primary
+      toPorts:
+        - ports:
+            - port: '5432'
+              protocol: TCP
+    - toEntities:
+        - world
+      toPorts:
+        - ports:
+            - protocol: TCP
+              port: '80'
+            - protocol: TCP
+              port: '443'
+---
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: kubeclaw-postgresql-ingress
+spec:
+  endpointSelector:
+    matchLabels:
+      app.kubernetes.io/instance: postgresql
+      app.kubernetes.io/name: postgresql
+      app.kubernetes.io/component: primary
+  ingress:
+    - fromEndpoints:
+        - matchLabels:
+            app: litellm
+      toPorts:
+        - ports:
+            - port: '5432'
+              protocol: TCP
+---
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: kubeclaw-registry-local-ingress
+spec:
+  endpointSelector:
+    matchLabels:
+      app: registry-local
+  ingress:
+    - fromEndpoints:
+        - matchLabels:
+            app.kubernetes.io/name: kubeclaw
+      toPorts:
+        - ports:
+            - protocol: TCP
+              port: '5000'
+            - protocol: TCP
+              port: '5001'
+    - fromEntities:
+        - host
+        - remote-node
+      toPorts:
+        - ports:
+            - protocol: TCP
+              port: '5000'
+            - protocol: TCP
+              port: '5001'
+---
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: kubeclaw-registry-mirror-ingress
+spec:
+  endpointSelector:
+    matchLabels:
+      app: registry-mirror
+  ingress:
+    - fromEndpoints:
+        - matchLabels:
+            app.kubernetes.io/name: kubeclaw
+      toPorts:
+        - ports:
+            - protocol: TCP
+              port: '5000'
+    - fromEntities:
+        - host
+        - remote-node
+      toPorts:
+        - ports:
+            - protocol: TCP
+              port: '5000'
+---
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: kubeclaw-registry-mirror-egress
+spec:
+  endpointSelector:
+    matchLabels:
+      app: registry-mirror
+  egress:
+    - toEntities:
+        - world
+      toPorts:
+        - ports:
+            - protocol: TCP
+              port: '80'
+            - protocol: TCP
+              port: '443'
+---
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: kubeclaw-lease-clients-api-egress
+spec:
+  endpointSelector:
+    matchLabels:
+      app.kubernetes.io/name: kubeclaw
+    matchExpressions:
+      - key: app.kubernetes.io/component
+        operator: In
+        values:
+          - nova
+          - buster
+  egress:
+    - toEntities:
+        - kube-apiserver
+      toPorts:
+        - ports:
+            - port: '443'
+              protocol: TCP
+            - port: '6443'
+              protocol: TCP

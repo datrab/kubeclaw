@@ -1,0 +1,14 @@
+{
+  "argv": [
+    "node",
+    "scripts/render-stateful-network-policies.mjs",
+    "my-values/infra/network-policies.yaml",
+    "default",
+    "redis",
+    "my-values/infra/redis-values.yaml",
+    "postgresql",
+    "my-values/infra/postgresql-values.yaml"
+  ],
+  "cwd": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery",
+  "startedAt": "2026-10-23T08:58:25.633019+00:00"
+}

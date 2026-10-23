@@ -1,0 +1,13 @@
+import fs from 'node:fs';import path from 'node:path';import assert from 'node:assert/strict';import {createHash} from 'node:crypto';import {gunzipSync} from 'node:zlib';import {execFileSync} from 'node:child_process';
+import {deploymentScalarCallerFacts} from '/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/docs-deployment-scalar-occurrence-custody.mjs';
+const root=process.cwd(),out='/home/node/.openclaw/workspace/tmp/pr13-stateful-20261023',hash=x=>createHash('sha256').update(x).digest('hex');
+const graph=JSON.parse(gunzipSync(fs.readFileSync('docs/blueprint/acceptance-evidence/combined-api-adapters-20261022/restart-two-helper-purpose-acquisition.json.gz')));
+const helper='scripts/docs-api-top-level-script-purpose.mjs',scalar='scripts/docs-deployment-scalar-occurrence-custody.mjs';
+const scalarBytes=fs.readFileSync(scalar,'utf8'),oldHelper=execFileSync('git',['show','HEAD:'+helper]);
+const selected=graph.closureSources.filter(f=>![scalar,'scripts/docs-api-documentation-role-custody.mjs'].includes(f)).sort().map(f=>({path:f,sha256:hash(fs.readFileSync(f))}));
+const callers=deploymentScalarCallerFacts(root);
+const baseline=rows=>rows.map(row=>row.path===helper?{...row,sha256:hash(oldHelper)}:row);
+for(const [name,rows]of [['reviewedSelectedGraphSha256',selected],['reviewedCallerCensusSha256',callers]]){const old=scalarBytes.match(new RegExp('const '+name+" = '([a-f0-9]{64})'"))[1];assert.equal(hash(JSON.stringify(baseline(rows))),old,'baseline full vector mismatch '+name);}
+let candidate=scalarBytes;for(const [name,rows]of [['reviewedSelectedGraphSha256',selected],['reviewedCallerCensusSha256',callers]])candidate=candidate.replace(new RegExp('(const '+name+" = ')[a-f0-9]{64}(';)"),'$1'+hash(JSON.stringify(rows))+'$2');
+fs.writeFileSync(scalar,candidate);fs.writeFileSync(out+'/scalar-renewal.json',JSON.stringify({selected,callers,onlyChangedSource:helper,baselineSelected:hash(JSON.stringify(baseline(selected))),baselineCallers:hash(JSON.stringify(baseline(callers)))},null,2)+'\n');
+console.log(JSON.stringify({selected:selected.length,callers:callers.length,baselineExact:true}));

@@ -1,0 +1,30 @@
+file:///home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/generate-local-helm-authorities.mjs:27
+if (candidate.status !== 0) throw new Error(`candidate local Helm inventory failed\n${candidate.stdout}\n${candidate.stderr}`);
+                                  ^
+
+Error: candidate local Helm inventory failed
+
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: API_PRODUCT_SCRIPT_OUTPUT_ROLE_UNQUALIFIED: scripts/updates/deployment-release.mjs:195: undefined
+    at discoverScriptApiOutputs (file:///home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/docs-api-output-discovery.mjs:1875:7)
+    at discoverProductApiContexts (file:///home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/docs-api-product-scope.mjs:291:80)
+    at buildApiResourceInventory (file:///home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/docs-configuration-inventory.mjs:2784:25)
+    at buildYamlInventory (file:///home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/docs-configuration-inventory.mjs:2863:24)
+    at buildConfigurationInventories (file:///home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/docs-configuration-inventory.mjs:9292:16)
+    at file:///home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/docs-configuration-inventory.mjs:9307:37 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: '==',
+  diff: 'simple'
+}
+
+Node.js v24.21.0
+
+    at file:///home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/generate-local-helm-authorities.mjs:27:35
+
+Node.js v24.21.0

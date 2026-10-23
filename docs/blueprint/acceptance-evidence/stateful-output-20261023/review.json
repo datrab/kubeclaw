@@ -1,0 +1,1283 @@
+{
+  "verdict": "PASS_BOUNDED_NATIVE_STREAM_AND_PRIVATE_PURPOSE",
+  "negativeMutations": 4,
+  "originalDocuments": 15,
+  "adapterDocuments": 15,
+  "allOriginalDocumentsPreserved": true,
+  "registryEntirelyUnchanged": true,
+  "operationFacts": [
+    {
+      "source": "scripts/infrastructure-chart-lock.mjs",
+      "kind": "FunctionDeclaration",
+      "symbol": "parseInfrastructureOciChart",
+      "sha256": "9d0ee9d4605424ff7f7cc45dee0076a63c60483ad1bc269eaeb996849a91d632"
+    },
+    {
+      "source": "scripts/infrastructure-chart-lock.mjs",
+      "kind": "FunctionDeclaration",
+      "symbol": "validateInfrastructureChartLock",
+      "sha256": "38f5aa04b6b5a3658f16e4edd255b2685196a12b7b46c5328bbd281cfa621968"
+    },
+    {
+      "source": "scripts/infrastructure-chart.mjs",
+      "kind": "FirstStatement",
+      "symbol": "maximumBytes",
+      "sha256": "a8c5ca7b806c87b253584bbab0fbcf0d4877f472f795454779327f107a83a400"
+    },
+    {
+      "source": "scripts/infrastructure-chart.mjs",
+      "kind": "FirstStatement",
+      "symbol": "root",
+      "sha256": "a238ac04e5bc14475dd492d34d0a8cc910c613836849dcbcd746fef5ff6777f3"
+    },
+    {
+      "source": "scripts/infrastructure-chart.mjs",
+      "kind": "FunctionDeclaration",
+      "symbol": "infrastructureChart",
+      "sha256": "d88a3382143e6c2c9cbaa82b783d440c8d4aa202e0d7272ddf45abc49d407472"
+    },
+    {
+      "source": "scripts/infrastructure-chart.mjs",
+      "kind": "FunctionDeclaration",
+      "symbol": "stageInfrastructureChart",
+      "sha256": "c3cd2bd59cb9d5b18cdeefa417374db4bc3023ead589c6c63d42815f3531a9ce"
+    },
+    {
+      "source": "scripts/infrastructure-chart.mjs",
+      "kind": "FunctionDeclaration",
+      "symbol": "verifyInfrastructureChart",
+      "sha256": "ecaf5bffd5036083d1bde498ab9a07d36cd9fee3dc86f6b757c5fe0fa59de8d3"
+    },
+    {
+      "source": "scripts/infrastructure-chart.mjs",
+      "kind": "IfStatement",
+      "symbol": "<operation>",
+      "sha256": "9a49a4822a0382b47e445112abcd6f1e8750671f7fec3d9717b1627f0e8facb3"
+    },
+    {
+      "source": "scripts/infrastructure-chart.mjs",
+      "kind": "ImportDeclaration",
+      "symbol": "<operation>",
+      "sha256": "35c67915491fcbfb64876620aa674106c01852344b6af83125cddafe95c72faa"
+    },
+    {
+      "source": "scripts/infrastructure-chart.mjs",
+      "kind": "ImportDeclaration",
+      "symbol": "<operation>",
+      "sha256": "6cf13229f6da408b237d25acaa533131c3adb416799ca619cc6d1aded8853786"
+    },
+    {
+      "source": "scripts/infrastructure-image-renderer.mjs",
+      "kind": "FirstStatement",
+      "symbol": "root",
+      "sha256": "a238ac04e5bc14475dd492d34d0a8cc910c613836849dcbcd746fef5ff6777f3"
+    },
+    {
+      "source": "scripts/infrastructure-image-renderer.mjs",
+      "kind": "FunctionDeclaration",
+      "symbol": "bindInfrastructureImages",
+      "sha256": "0e387a0ad8b55735a69ff7d23e77793c071e69c5e6e69300e4d1decbc8cf9858"
+    },
+    {
+      "source": "scripts/infrastructure-image-renderer.mjs",
+      "kind": "FunctionDeclaration",
+      "symbol": "podSpec",
+      "sha256": "d05d7c005a2d3a18f9f1a12bf18991210408ac04ac4595bdafa5dff3401cbc8c"
+    },
+    {
+      "source": "scripts/infrastructure-image-renderer.mjs",
+      "kind": "FunctionDeclaration",
+      "symbol": "verifyReservedImage",
+      "sha256": "599f021df68ce1fd024b00d32f96da957f8de99977979eef2716ffe37633a069"
+    },
+    {
+      "source": "scripts/infrastructure-image-renderer.mjs",
+      "kind": "IfStatement",
+      "symbol": "<operation>",
+      "sha256": "6d8f94fe948ed4c148dc31e28a9a931dfb37bd9d3d9e03a4c05f3bf0b1a17d41"
+    },
+    {
+      "source": "scripts/infrastructure-oci-chart.mjs",
+      "kind": "FirstStatement",
+      "symbol": "maximumBytes",
+      "sha256": "a8c5ca7b806c87b253584bbab0fbcf0d4877f472f795454779327f107a83a400"
+    },
+    {
+      "source": "scripts/infrastructure-oci-chart.mjs",
+      "kind": "FunctionDeclaration",
+      "symbol": "downloadInfrastructureOciChart",
+      "sha256": "218f982b3ea95a1ecebe0173891fb49ba8f096330e621e6e5f0f353dfe56e7c0"
+    },
+    {
+      "source": "scripts/infrastructure-oci-chart.mjs",
+      "kind": "FunctionDeclaration",
+      "symbol": "request",
+      "sha256": "3d246bec495b091330cab440d4a6a46fafad62537d8ccf7b8a3b6f81f568064b"
+    },
+    {
+      "source": "scripts/infrastructure-oci-chart.mjs",
+      "kind": "IfStatement",
+      "symbol": "<operation>",
+      "sha256": "0c6548ded59e4234f5fd7258caa64d3bf66a545ccc979d77e0b0b7fba25f9643"
+    },
+    {
+      "source": "scripts/infrastructure-oci-chart.mjs",
+      "kind": "ImportDeclaration",
+      "symbol": "<operation>",
+      "sha256": "dc0086fa588c91e3931643122a17b694199d5240bab9f248ec6827f045da6e51"
+    },
+    {
+      "source": "scripts/infrastructure-release.mjs",
+      "kind": "FirstStatement",
+      "symbol": "renderMarker",
+      "sha256": "e329b5a393877c826af6934fb9ed8dc27701459f99853bdc367e531ddda42a7b"
+    },
+    {
+      "source": "scripts/infrastructure-release.mjs",
+      "kind": "FirstStatement",
+      "symbol": "root",
+      "sha256": "a238ac04e5bc14475dd492d34d0a8cc910c613836849dcbcd746fef5ff6777f3"
+    },
+    {
+      "source": "scripts/infrastructure-release.mjs",
+      "kind": "FunctionDeclaration",
+      "symbol": "renderInfrastructureChart",
+      "sha256": "2de9f1ff665d8e0edd52f50b350f1f7da3ddb6c76e87b26eeef3083add517cb1"
+    },
+    {
+      "source": "scripts/infrastructure-release.mjs",
+      "kind": "ImportDeclaration",
+      "symbol": "<operation>",
+      "sha256": "5f23b62d1b6e8c293798236ec2eb88e2ce755fd1dd2874db841efabdfee02b7f"
+    },
+    {
+      "source": "scripts/render-stateful-network-policies.mjs",
+      "kind": "FunctionDeclaration",
+      "symbol": "bindEgress",
+      "sha256": "8eeeafb8cb3c9f872b664330ef8ad5b47c36fdd31672bb16703e5465235399b5"
+    },
+    {
+      "source": "scripts/render-stateful-network-policies.mjs",
+      "kind": "FunctionDeclaration",
+      "symbol": "bindPorts",
+      "sha256": "b8ac6b6843ed92c1b2ce8f4b4ae804b540785f14419cf227a5961b964ae95200"
+    },
+    {
+      "source": "scripts/render-stateful-network-policies.mjs",
+      "kind": "FunctionDeclaration",
+      "symbol": "bindSelector",
+      "sha256": "c658731f2e3dcd3f1681e3d2b9f0d39cc6ecd679d8492bc6a9e78946a2e64658"
+    },
+    {
+      "source": "scripts/render-stateful-network-policies.mjs",
+      "kind": "FunctionDeclaration",
+      "symbol": "defaultPorts",
+      "sha256": "8d82e1519ef46d61a6565c34307ddbe44b1120b6a29ee78bd39170ed36db225e"
+    },
+    {
+      "source": "scripts/render-stateful-network-policies.mjs",
+      "kind": "FunctionDeclaration",
+      "symbol": "profile",
+      "sha256": "943de38e360fb949cc756d320af35dc699f8f0f5293ef5755fa3260b3822f9aa"
+    },
+    {
+      "source": "scripts/render-stateful-network-policies.mjs",
+      "kind": "FunctionDeclaration",
+      "symbol": "renderStatefulNetworkPolicies",
+      "sha256": "47f6945c5451bd2311a68616ca202dce421264c519fe14f8900aecbb69512bb6"
+    },
+    {
+      "source": "scripts/render-stateful-network-policies.mjs",
+      "kind": "IfStatement",
+      "symbol": "<operation>",
+      "sha256": "e54ae46490279f71967fdc55fd331bc04acf65284db68069aa958ed80a08798d"
+    },
+    {
+      "source": "scripts/render-stateful-network-policies.mjs",
+      "kind": "ImportDeclaration",
+      "symbol": "<operation>",
+      "sha256": "545769ce8f54b2929cf0c98d8b6053f70cee6abd932d89054b61b49177fc0a6a"
+    },
+    {
+      "source": "scripts/stateful-database-service.mjs",
+      "kind": "FunctionDeclaration",
+      "symbol": "statefulDatabaseService",
+      "sha256": "0e7e30c72b70de926a882850380c54442c56df394f9d562f3e16930054dc7d14"
+    },
+    {
+      "source": "scripts/stateful-database-service.mjs",
+      "kind": "FunctionDeclaration",
+      "symbol": "targetPort",
+      "sha256": "e2a4ced4ef6e1d225b2c976f3ef2f1a98019e081002409f8f3249032f5453e8a"
+    },
+    {
+      "source": "scripts/stateful-database-service.mjs",
+      "kind": "IfStatement",
+      "symbol": "<operation>",
+      "sha256": "fed6b232b4bef0a03fc8741043a74715eb65f3644680a77ec289cca36d47ca59"
+    },
+    {
+      "source": "scripts/stateful-database-service.mjs",
+      "kind": "ImportDeclaration",
+      "symbol": "<operation>",
+      "sha256": "1e46a0dfc55e8a824fdcb85c00c9b038a18f47608af66a108c5436f057bc4d4e"
+    },
+    {
+      "source": "scripts/stateful-database-service.mjs",
+      "kind": "ImportDeclaration",
+      "symbol": "<operation>",
+      "sha256": "77015f855cc10b78fd55f827c5d63fb5e79a64a6bf64893a69bc06625d72cca8"
+    }
+  ],
+  "sourceHashes": {
+    "scripts/render-stateful-network-policies.mjs": "4b2777294145a1605113238cc6319558abad3a6bd0409dc974e7684e495d0e25",
+    "scripts/infrastructure-chart-lock.mjs": "8884d8e41166f9739ea8f5986cbd8a4c8ae66e8756f0fa3ccb8712e9124601e5",
+    "scripts/infrastructure-chart.mjs": "6a136a40cced70d63de028e635bd5b9e4fb30f1a632cd725175385faf9c57e25",
+    "scripts/infrastructure-image-renderer.mjs": "9b53451d99784c0feaa3cfde28dea32e268b3eae85bfc6092bb1598301da46f3",
+    "scripts/infrastructure-oci-chart.mjs": "6dd86a2ebbb67d0e181adb4f6180164e3129d53dfb5a5b3d9f9f2431524a35db",
+    "scripts/infrastructure-release.mjs": "a03aa7721f871473effbb0f79de84bc7ebcb2877c68fa023675ea335e27936f8",
+    "scripts/stateful-database-service.mjs": "fd96f1a30f997d4a6a71a23b81cad2dc4ccca69b223e4945e22c9261819bbfa8",
+    "scripts/deploy.sh": "97c1e39bf9cec6c1d5d8e11198af90ed04efd15a6077f2bbac1129c2ea0741e2",
+    "scripts/docs-api-output-discovery.mjs": "18490b3ea38f27fa98c93c9f4f95dcc5bb929bd3236710197c91a4b8c8edfbbc",
+    "my-values/infra/network-policies.yaml": "a42018fe382e389077f4ed373c4ae54ebfd7e46a639b5360215cd80948823d79",
+    "my-values/infra/redis-values.yaml": "929dec7ffac0922517188e0fb318b746e276292acad2723c59da802e5962c9b2",
+    "my-values/infra/postgresql-values.yaml": "b7c1445d47350c6fcae2fc7de901e930dec1f8309331bf0db69c70c1f3404994",
+    "versions.json": "04281d9b2addd93073bd548293ea9ba6e1d88c2a18fff0f34cbdbc14ca7fe2c1"
+  },
+  "outputs": [
+    {
+      "value": {
+        "apiVersion": "cilium.io/v2",
+        "kind": "CiliumNetworkPolicy",
+        "metadata": {
+          "name": "kubeclaw-agents-egress"
+        },
+        "spec": {
+          "endpointSelector": {
+            "matchLabels": {
+              "app.kubernetes.io/name": "kubeclaw"
+            },
+            "matchExpressions": [
+              {
+                "key": "app.kubernetes.io/component",
+                "operator": "NotIn",
+                "values": [
+                  "prism"
+                ]
+              }
+            ]
+          },
+          "egress": [
+            {
+              "toEndpoints": [
+                {
+                  "matchLabels": {
+                    "app.kubernetes.io/instance": "redis",
+                    "app.kubernetes.io/name": "redis",
+                    "app.kubernetes.io/component": "master"
+                  }
+                }
+              ],
+              "toPorts": [
+                {
+                  "ports": [
+                    {
+                      "port": "6379",
+                      "protocol": "TCP"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "toEndpoints": [
+                {
+                  "matchLabels": {
+                    "app": "litellm"
+                  }
+                }
+              ],
+              "toPorts": [
+                {
+                  "ports": [
+                    {
+                      "protocol": "TCP",
+                      "port": "4000"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "toEndpoints": [
+                {
+                  "matchLabels": {
+                    "app": "registry-local"
+                  }
+                }
+              ],
+              "toPorts": [
+                {
+                  "ports": [
+                    {
+                      "protocol": "TCP",
+                      "port": "5000"
+                    },
+                    {
+                      "protocol": "TCP",
+                      "port": "5001"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "toEndpoints": [
+                {
+                  "matchLabels": {
+                    "app": "registry-mirror"
+                  }
+                }
+              ],
+              "toPorts": [
+                {
+                  "ports": [
+                    {
+                      "protocol": "TCP",
+                      "port": "5000"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "toEndpoints": [
+                {
+                  "matchLabels": {
+                    "app.kubernetes.io/name": "kubeclaw"
+                  }
+                }
+              ],
+              "toPorts": [
+                {
+                  "ports": [
+                    {
+                      "protocol": "TCP",
+                      "port": "18789"
+                    },
+                    {
+                      "protocol": "TCP",
+                      "port": "18790"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "toEntities": [
+                "world"
+              ],
+              "toPorts": [
+                {
+                  "ports": [
+                    {
+                      "protocol": "TCP",
+                      "port": "22"
+                    },
+                    {
+                      "protocol": "TCP",
+                      "port": "80"
+                    },
+                    {
+                      "protocol": "TCP",
+                      "port": "443"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "context": {
+        "apiVersion": "cilium.io/v2",
+        "kind": "CiliumNetworkPolicy",
+        "path": "scripts/render-stateful-network-policies.mjs",
+        "document": 0,
+        "producer": "script-render",
+        "profile": "deploy-default",
+        "sourceDigest": "4b2777294145a1605113238cc6319558abad3a6bd0409dc974e7684e495d0e25",
+        "inputs": [
+          "my-values/infra/network-policies.yaml",
+          "my-values/infra/redis-values.yaml",
+          "my-values/infra/postgresql-values.yaml"
+        ],
+        "inputDigest": "dcc50a8481bcb6443fa78f792ec69f18d050292e294539892656bb46fbbb487f",
+        "outputDigest": "0798e832e21759d6e9a9832e68d049b844b5b995dd02c5fe3cb052c38116e24d"
+      }
+    },
+    {
+      "value": {
+        "apiVersion": "networking.k8s.io/v1",
+        "kind": "NetworkPolicy",
+        "metadata": {
+          "name": "kubeclaw-agents-ingress"
+        },
+        "spec": {
+          "podSelector": {
+            "matchLabels": {
+              "app.kubernetes.io/name": "kubeclaw"
+            },
+            "matchExpressions": [
+              {
+                "key": "app.kubernetes.io/component",
+                "operator": "NotIn",
+                "values": [
+                  "prism"
+                ]
+              }
+            ]
+          },
+          "policyTypes": [
+            "Ingress"
+          ],
+          "ingress": [
+            {
+              "from": [
+                {
+                  "podSelector": {}
+                }
+              ],
+              "ports": [
+                {
+                  "protocol": "TCP",
+                  "port": 18789
+                },
+                {
+                  "protocol": "TCP",
+                  "port": 18790
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "context": {
+        "apiVersion": "networking.k8s.io/v1",
+        "kind": "NetworkPolicy",
+        "path": "scripts/render-stateful-network-policies.mjs",
+        "document": 1,
+        "producer": "script-render",
+        "profile": "deploy-default",
+        "sourceDigest": "4b2777294145a1605113238cc6319558abad3a6bd0409dc974e7684e495d0e25",
+        "inputs": [
+          "my-values/infra/network-policies.yaml",
+          "my-values/infra/redis-values.yaml",
+          "my-values/infra/postgresql-values.yaml"
+        ],
+        "inputDigest": "dcc50a8481bcb6443fa78f792ec69f18d050292e294539892656bb46fbbb487f",
+        "outputDigest": "77b45405d7164fcfb9d52d2957402e03197a64b5c2b9a329fb5faeff61b131d0"
+      }
+    },
+    {
+      "value": {
+        "apiVersion": "cilium.io/v2",
+        "kind": "CiliumNetworkPolicy",
+        "metadata": {
+          "name": "kubeclaw-buster-namespace-controller-api-egress"
+        },
+        "spec": {
+          "endpointSelector": {
+            "matchLabels": {
+              "app.kubernetes.io/name": "kubeclaw",
+              "app.kubernetes.io/component": "buster-namespace-controller"
+            }
+          },
+          "egress": [
+            {
+              "toEntities": [
+                "kube-apiserver"
+              ],
+              "toPorts": [
+                {
+                  "ports": [
+                    {
+                      "protocol": "TCP",
+                      "port": "443"
+                    },
+                    {
+                      "protocol": "TCP",
+                      "port": "6443"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "context": {
+        "apiVersion": "cilium.io/v2",
+        "kind": "CiliumNetworkPolicy",
+        "path": "scripts/render-stateful-network-policies.mjs",
+        "document": 2,
+        "producer": "script-render",
+        "profile": "deploy-default",
+        "sourceDigest": "4b2777294145a1605113238cc6319558abad3a6bd0409dc974e7684e495d0e25",
+        "inputs": [
+          "my-values/infra/network-policies.yaml",
+          "my-values/infra/redis-values.yaml",
+          "my-values/infra/postgresql-values.yaml"
+        ],
+        "inputDigest": "dcc50a8481bcb6443fa78f792ec69f18d050292e294539892656bb46fbbb487f",
+        "outputDigest": "738807d7abec75d13dd348d8f81948feb5d86f62c5b6722aee1a5e2d04691916"
+      }
+    },
+    {
+      "value": {
+        "apiVersion": "cilium.io/v2",
+        "kind": "CiliumNetworkPolicy",
+        "metadata": {
+          "name": "kubeclaw-nova-buster-test-gates"
+        },
+        "spec": {
+          "endpointSelector": {
+            "matchLabels": {
+              "app.kubernetes.io/name": "kubeclaw",
+              "app.kubernetes.io/component": "nova"
+            }
+          },
+          "egress": [
+            {
+              "toEndpoints": [
+                {
+                  "matchLabels": {
+                    "app.kubernetes.io/name": "kubeclaw",
+                    "app.kubernetes.io/component": "buster"
+                  }
+                }
+              ],
+              "toPorts": [
+                {
+                  "ports": [
+                    {
+                      "protocol": "TCP",
+                      "port": "18891"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "context": {
+        "apiVersion": "cilium.io/v2",
+        "kind": "CiliumNetworkPolicy",
+        "path": "scripts/render-stateful-network-policies.mjs",
+        "document": 3,
+        "producer": "script-render",
+        "profile": "deploy-default",
+        "sourceDigest": "4b2777294145a1605113238cc6319558abad3a6bd0409dc974e7684e495d0e25",
+        "inputs": [
+          "my-values/infra/network-policies.yaml",
+          "my-values/infra/redis-values.yaml",
+          "my-values/infra/postgresql-values.yaml"
+        ],
+        "inputDigest": "dcc50a8481bcb6443fa78f792ec69f18d050292e294539892656bb46fbbb487f",
+        "outputDigest": "43e790e1703d03a33eba6f2cfff7c21eb6fa4c2d87d01f1f85c55fec95aab172"
+      }
+    },
+    {
+      "value": {
+        "apiVersion": "cilium.io/v2",
+        "kind": "CiliumNetworkPolicy",
+        "metadata": {
+          "name": "kubeclaw-buster-test-gates-from-nova"
+        },
+        "spec": {
+          "endpointSelector": {
+            "matchLabels": {
+              "app.kubernetes.io/name": "kubeclaw",
+              "app.kubernetes.io/component": "buster"
+            }
+          },
+          "ingress": [
+            {
+              "fromEndpoints": [
+                {
+                  "matchLabels": {
+                    "app.kubernetes.io/name": "kubeclaw",
+                    "app.kubernetes.io/component": "nova"
+                  }
+                }
+              ],
+              "toPorts": [
+                {
+                  "ports": [
+                    {
+                      "protocol": "TCP",
+                      "port": "18891"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "context": {
+        "apiVersion": "cilium.io/v2",
+        "kind": "CiliumNetworkPolicy",
+        "path": "scripts/render-stateful-network-policies.mjs",
+        "document": 4,
+        "producer": "script-render",
+        "profile": "deploy-default",
+        "sourceDigest": "4b2777294145a1605113238cc6319558abad3a6bd0409dc974e7684e495d0e25",
+        "inputs": [
+          "my-values/infra/network-policies.yaml",
+          "my-values/infra/redis-values.yaml",
+          "my-values/infra/postgresql-values.yaml"
+        ],
+        "inputDigest": "dcc50a8481bcb6443fa78f792ec69f18d050292e294539892656bb46fbbb487f",
+        "outputDigest": "8485dd926696e0779f5bbb9b3bfe99fc5e1debe22e4d346016ad3d601dbd2d80"
+      }
+    },
+    {
+      "value": {
+        "apiVersion": "cilium.io/v2",
+        "kind": "CiliumNetworkPolicy",
+        "metadata": {
+          "name": "kubeclaw-nova-prism-agent-trust"
+        },
+        "spec": {
+          "endpointSelector": {
+            "matchLabels": {
+              "app.kubernetes.io/name": "kubeclaw",
+              "app.kubernetes.io/component": "nova"
+            }
+          },
+          "egress": [
+            {
+              "toEndpoints": [
+                {
+                  "matchLabels": {
+                    "app.kubernetes.io/name": "kubeclaw",
+                    "app.kubernetes.io/component": "prism"
+                  }
+                }
+              ],
+              "toPorts": [
+                {
+                  "ports": [
+                    {
+                      "protocol": "TCP",
+                      "port": "18082"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "toEndpoints": [
+                {
+                  "matchLabels": {
+                    "app.kubernetes.io/name": "kubeclaw",
+                    "app.kubernetes.io/component": "prism",
+                    "io.cilium.k8s.namespace.labels.kubeclaw/managed-by": "buster-namespace-controller"
+                  }
+                }
+              ],
+              "toPorts": [
+                {
+                  "ports": [
+                    {
+                      "protocol": "TCP",
+                      "port": "18082"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "context": {
+        "apiVersion": "cilium.io/v2",
+        "kind": "CiliumNetworkPolicy",
+        "path": "scripts/render-stateful-network-policies.mjs",
+        "document": 5,
+        "producer": "script-render",
+        "profile": "deploy-default",
+        "sourceDigest": "4b2777294145a1605113238cc6319558abad3a6bd0409dc974e7684e495d0e25",
+        "inputs": [
+          "my-values/infra/network-policies.yaml",
+          "my-values/infra/redis-values.yaml",
+          "my-values/infra/postgresql-values.yaml"
+        ],
+        "inputDigest": "dcc50a8481bcb6443fa78f792ec69f18d050292e294539892656bb46fbbb487f",
+        "outputDigest": "3c60af7f57fc103f28b00f3c235872ea126f9e64174a10f04c63e75906f79021"
+      }
+    },
+    {
+      "value": {
+        "apiVersion": "cilium.io/v2",
+        "kind": "CiliumNetworkPolicy",
+        "metadata": {
+          "name": "kubeclaw-redis-ingress"
+        },
+        "spec": {
+          "endpointSelector": {
+            "matchLabels": {
+              "app.kubernetes.io/instance": "redis",
+              "app.kubernetes.io/name": "redis",
+              "app.kubernetes.io/component": "master"
+            }
+          },
+          "ingress": [
+            {
+              "fromEndpoints": [
+                {
+                  "matchLabels": {
+                    "app.kubernetes.io/name": "kubeclaw"
+                  }
+                },
+                {
+                  "matchLabels": {
+                    "app.kubernetes.io/name": "clawdeck"
+                  }
+                }
+              ],
+              "toPorts": [
+                {
+                  "ports": [
+                    {
+                      "port": "6379",
+                      "protocol": "TCP"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "context": {
+        "apiVersion": "cilium.io/v2",
+        "kind": "CiliumNetworkPolicy",
+        "path": "scripts/render-stateful-network-policies.mjs",
+        "document": 6,
+        "producer": "script-render",
+        "profile": "deploy-default",
+        "sourceDigest": "4b2777294145a1605113238cc6319558abad3a6bd0409dc974e7684e495d0e25",
+        "inputs": [
+          "my-values/infra/network-policies.yaml",
+          "my-values/infra/redis-values.yaml",
+          "my-values/infra/postgresql-values.yaml"
+        ],
+        "inputDigest": "dcc50a8481bcb6443fa78f792ec69f18d050292e294539892656bb46fbbb487f",
+        "outputDigest": "bea13000decb8117a113a81f6218c75553d6fdf0697fee98003e6c33c00f861b"
+      }
+    },
+    {
+      "value": {
+        "apiVersion": "cilium.io/v2",
+        "kind": "CiliumNetworkPolicy",
+        "metadata": {
+          "name": "kubeclaw-clawdeck-redis-egress"
+        },
+        "spec": {
+          "endpointSelector": {
+            "matchLabels": {
+              "app.kubernetes.io/name": "clawdeck"
+            }
+          },
+          "egress": [
+            {
+              "toEndpoints": [
+                {
+                  "matchLabels": {
+                    "app.kubernetes.io/instance": "redis",
+                    "app.kubernetes.io/name": "redis",
+                    "app.kubernetes.io/component": "master"
+                  }
+                }
+              ],
+              "toPorts": [
+                {
+                  "ports": [
+                    {
+                      "port": "6379",
+                      "protocol": "TCP"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "context": {
+        "apiVersion": "cilium.io/v2",
+        "kind": "CiliumNetworkPolicy",
+        "path": "scripts/render-stateful-network-policies.mjs",
+        "document": 7,
+        "producer": "script-render",
+        "profile": "deploy-default",
+        "sourceDigest": "4b2777294145a1605113238cc6319558abad3a6bd0409dc974e7684e495d0e25",
+        "inputs": [
+          "my-values/infra/network-policies.yaml",
+          "my-values/infra/redis-values.yaml",
+          "my-values/infra/postgresql-values.yaml"
+        ],
+        "inputDigest": "dcc50a8481bcb6443fa78f792ec69f18d050292e294539892656bb46fbbb487f",
+        "outputDigest": "15a33c1f526602a9d96fdc0c0bfe5268769f8fec4faf2b3d8ed6ad40b86d4fa2"
+      }
+    },
+    {
+      "value": {
+        "apiVersion": "cilium.io/v2",
+        "kind": "CiliumNetworkPolicy",
+        "metadata": {
+          "name": "kubeclaw-litellm-ingress"
+        },
+        "spec": {
+          "endpointSelector": {
+            "matchLabels": {
+              "app": "litellm"
+            }
+          },
+          "ingress": [
+            {
+              "fromEndpoints": [
+                {
+                  "matchLabels": {
+                    "app.kubernetes.io/name": "kubeclaw"
+                  }
+                }
+              ],
+              "toPorts": [
+                {
+                  "ports": [
+                    {
+                      "protocol": "TCP",
+                      "port": "4000"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "context": {
+        "apiVersion": "cilium.io/v2",
+        "kind": "CiliumNetworkPolicy",
+        "path": "scripts/render-stateful-network-policies.mjs",
+        "document": 8,
+        "producer": "script-render",
+        "profile": "deploy-default",
+        "sourceDigest": "4b2777294145a1605113238cc6319558abad3a6bd0409dc974e7684e495d0e25",
+        "inputs": [
+          "my-values/infra/network-policies.yaml",
+          "my-values/infra/redis-values.yaml",
+          "my-values/infra/postgresql-values.yaml"
+        ],
+        "inputDigest": "dcc50a8481bcb6443fa78f792ec69f18d050292e294539892656bb46fbbb487f",
+        "outputDigest": "3dabf6b308f694afe43d6fb5860f0caa051a36ef115e3e1baa2dfb228b08d756"
+      }
+    },
+    {
+      "value": {
+        "apiVersion": "cilium.io/v2",
+        "kind": "CiliumNetworkPolicy",
+        "metadata": {
+          "name": "kubeclaw-litellm-egress"
+        },
+        "spec": {
+          "endpointSelector": {
+            "matchLabels": {
+              "app": "litellm"
+            }
+          },
+          "egress": [
+            {
+              "toEndpoints": [
+                {
+                  "matchLabels": {
+                    "app.kubernetes.io/instance": "postgresql",
+                    "app.kubernetes.io/name": "postgresql",
+                    "app.kubernetes.io/component": "primary"
+                  }
+                }
+              ],
+              "toPorts": [
+                {
+                  "ports": [
+                    {
+                      "port": "5432",
+                      "protocol": "TCP"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "toEntities": [
+                "world"
+              ],
+              "toPorts": [
+                {
+                  "ports": [
+                    {
+                      "protocol": "TCP",
+                      "port": "80"
+                    },
+                    {
+                      "protocol": "TCP",
+                      "port": "443"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "context": {
+        "apiVersion": "cilium.io/v2",
+        "kind": "CiliumNetworkPolicy",
+        "path": "scripts/render-stateful-network-policies.mjs",
+        "document": 9,
+        "producer": "script-render",
+        "profile": "deploy-default",
+        "sourceDigest": "4b2777294145a1605113238cc6319558abad3a6bd0409dc974e7684e495d0e25",
+        "inputs": [
+          "my-values/infra/network-policies.yaml",
+          "my-values/infra/redis-values.yaml",
+          "my-values/infra/postgresql-values.yaml"
+        ],
+        "inputDigest": "dcc50a8481bcb6443fa78f792ec69f18d050292e294539892656bb46fbbb487f",
+        "outputDigest": "896e5c03b3eed898c333fc72196809af8eb26170dc9e4e4393e8e5ce191d8993"
+      }
+    },
+    {
+      "value": {
+        "apiVersion": "cilium.io/v2",
+        "kind": "CiliumNetworkPolicy",
+        "metadata": {
+          "name": "kubeclaw-postgresql-ingress"
+        },
+        "spec": {
+          "endpointSelector": {
+            "matchLabels": {
+              "app.kubernetes.io/instance": "postgresql",
+              "app.kubernetes.io/name": "postgresql",
+              "app.kubernetes.io/component": "primary"
+            }
+          },
+          "ingress": [
+            {
+              "fromEndpoints": [
+                {
+                  "matchLabels": {
+                    "app": "litellm"
+                  }
+                }
+              ],
+              "toPorts": [
+                {
+                  "ports": [
+                    {
+                      "port": "5432",
+                      "protocol": "TCP"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "context": {
+        "apiVersion": "cilium.io/v2",
+        "kind": "CiliumNetworkPolicy",
+        "path": "scripts/render-stateful-network-policies.mjs",
+        "document": 10,
+        "producer": "script-render",
+        "profile": "deploy-default",
+        "sourceDigest": "4b2777294145a1605113238cc6319558abad3a6bd0409dc974e7684e495d0e25",
+        "inputs": [
+          "my-values/infra/network-policies.yaml",
+          "my-values/infra/redis-values.yaml",
+          "my-values/infra/postgresql-values.yaml"
+        ],
+        "inputDigest": "dcc50a8481bcb6443fa78f792ec69f18d050292e294539892656bb46fbbb487f",
+        "outputDigest": "97ed9568ff806e696aa2b27f402645cd6ad899d3415fe6d7b27934235b7af8d7"
+      }
+    },
+    {
+      "value": {
+        "apiVersion": "cilium.io/v2",
+        "kind": "CiliumNetworkPolicy",
+        "metadata": {
+          "name": "kubeclaw-registry-local-ingress"
+        },
+        "spec": {
+          "endpointSelector": {
+            "matchLabels": {
+              "app": "registry-local"
+            }
+          },
+          "ingress": [
+            {
+              "fromEndpoints": [
+                {
+                  "matchLabels": {
+                    "app.kubernetes.io/name": "kubeclaw"
+                  }
+                }
+              ],
+              "toPorts": [
+                {
+                  "ports": [
+                    {
+                      "protocol": "TCP",
+                      "port": "5000"
+                    },
+                    {
+                      "protocol": "TCP",
+                      "port": "5001"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "fromEntities": [
+                "host",
+                "remote-node"
+              ],
+              "toPorts": [
+                {
+                  "ports": [
+                    {
+                      "protocol": "TCP",
+                      "port": "5000"
+                    },
+                    {
+                      "protocol": "TCP",
+                      "port": "5001"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "context": {
+        "apiVersion": "cilium.io/v2",
+        "kind": "CiliumNetworkPolicy",
+        "path": "scripts/render-stateful-network-policies.mjs",
+        "document": 11,
+        "producer": "script-render",
+        "profile": "deploy-default",
+        "sourceDigest": "4b2777294145a1605113238cc6319558abad3a6bd0409dc974e7684e495d0e25",
+        "inputs": [
+          "my-values/infra/network-policies.yaml",
+          "my-values/infra/redis-values.yaml",
+          "my-values/infra/postgresql-values.yaml"
+        ],
+        "inputDigest": "dcc50a8481bcb6443fa78f792ec69f18d050292e294539892656bb46fbbb487f",
+        "outputDigest": "2a0e3dbf3d5cb5b22f9dd556434e4b05e53d66c116200ca5add2f01e49bebca3"
+      }
+    },
+    {
+      "value": {
+        "apiVersion": "cilium.io/v2",
+        "kind": "CiliumNetworkPolicy",
+        "metadata": {
+          "name": "kubeclaw-registry-mirror-ingress"
+        },
+        "spec": {
+          "endpointSelector": {
+            "matchLabels": {
+              "app": "registry-mirror"
+            }
+          },
+          "ingress": [
+            {
+              "fromEndpoints": [
+                {
+                  "matchLabels": {
+                    "app.kubernetes.io/name": "kubeclaw"
+                  }
+                }
+              ],
+              "toPorts": [
+                {
+                  "ports": [
+                    {
+                      "protocol": "TCP",
+                      "port": "5000"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "fromEntities": [
+                "host",
+                "remote-node"
+              ],
+              "toPorts": [
+                {
+                  "ports": [
+                    {
+                      "protocol": "TCP",
+                      "port": "5000"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "context": {
+        "apiVersion": "cilium.io/v2",
+        "kind": "CiliumNetworkPolicy",
+        "path": "scripts/render-stateful-network-policies.mjs",
+        "document": 12,
+        "producer": "script-render",
+        "profile": "deploy-default",
+        "sourceDigest": "4b2777294145a1605113238cc6319558abad3a6bd0409dc974e7684e495d0e25",
+        "inputs": [
+          "my-values/infra/network-policies.yaml",
+          "my-values/infra/redis-values.yaml",
+          "my-values/infra/postgresql-values.yaml"
+        ],
+        "inputDigest": "dcc50a8481bcb6443fa78f792ec69f18d050292e294539892656bb46fbbb487f",
+        "outputDigest": "8a2213a3405c87d9aeccdc14b01c28b8c7b179e225d365a589d681dabef27b04"
+      }
+    },
+    {
+      "value": {
+        "apiVersion": "cilium.io/v2",
+        "kind": "CiliumNetworkPolicy",
+        "metadata": {
+          "name": "kubeclaw-registry-mirror-egress"
+        },
+        "spec": {
+          "endpointSelector": {
+            "matchLabels": {
+              "app": "registry-mirror"
+            }
+          },
+          "egress": [
+            {
+              "toEntities": [
+                "world"
+              ],
+              "toPorts": [
+                {
+                  "ports": [
+                    {
+                      "protocol": "TCP",
+                      "port": "80"
+                    },
+                    {
+                      "protocol": "TCP",
+                      "port": "443"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "context": {
+        "apiVersion": "cilium.io/v2",
+        "kind": "CiliumNetworkPolicy",
+        "path": "scripts/render-stateful-network-policies.mjs",
+        "document": 13,
+        "producer": "script-render",
+        "profile": "deploy-default",
+        "sourceDigest": "4b2777294145a1605113238cc6319558abad3a6bd0409dc974e7684e495d0e25",
+        "inputs": [
+          "my-values/infra/network-policies.yaml",
+          "my-values/infra/redis-values.yaml",
+          "my-values/infra/postgresql-values.yaml"
+        ],
+        "inputDigest": "dcc50a8481bcb6443fa78f792ec69f18d050292e294539892656bb46fbbb487f",
+        "outputDigest": "4a340b9a01019b9ed4061729585578986a8482d34c966ed23fc09bc21df65374"
+      }
+    },
+    {
+      "value": {
+        "apiVersion": "cilium.io/v2",
+        "kind": "CiliumNetworkPolicy",
+        "metadata": {
+          "name": "kubeclaw-lease-clients-api-egress"
+        },
+        "spec": {
+          "endpointSelector": {
+            "matchLabels": {
+              "app.kubernetes.io/name": "kubeclaw"
+            },
+            "matchExpressions": [
+              {
+                "key": "app.kubernetes.io/component",
+                "operator": "In",
+                "values": [
+                  "nova",
+                  "buster"
+                ]
+              }
+            ]
+          },
+          "egress": [
+            {
+              "toEntities": [
+                "kube-apiserver"
+              ],
+              "toPorts": [
+                {
+                  "ports": [
+                    {
+                      "port": "443",
+                      "protocol": "TCP"
+                    },
+                    {
+                      "port": "6443",
+                      "protocol": "TCP"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "context": {
+        "apiVersion": "cilium.io/v2",
+        "kind": "CiliumNetworkPolicy",
+        "path": "scripts/render-stateful-network-policies.mjs",
+        "document": 14,
+        "producer": "script-render",
+        "profile": "deploy-default",
+        "sourceDigest": "4b2777294145a1605113238cc6319558abad3a6bd0409dc974e7684e495d0e25",
+        "inputs": [
+          "my-values/infra/network-policies.yaml",
+          "my-values/infra/redis-values.yaml",
+          "my-values/infra/postgresql-values.yaml"
+        ],
+        "inputDigest": "dcc50a8481bcb6443fa78f792ec69f18d050292e294539892656bb46fbbb487f",
+        "outputDigest": "1ad5e3b168dd2a714bd39f02703a1906c0f6832fdcd3fe65a97fbf5e8e104ed7"
+      }
+    }
+  ],
+  "limits": "No global inventory, arbitrary-profile, cluster apply, runtime or AP acceptance."
+}

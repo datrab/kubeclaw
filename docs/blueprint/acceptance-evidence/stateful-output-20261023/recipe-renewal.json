@@ -1,0 +1,651 @@
+{
+  "checked": [
+    {
+      "source": "scripts/docs-api-probe39-original-output.mjs",
+      "digest": "4c705633da5c312e90c3aa45e129f24a884cdaf2073d9d95e67f56bc80f8e5f3"
+    },
+    {
+      "source": "scripts/docs-api-versions-map-output.mjs",
+      "digest": "66d4b4b6dac5a3c50b05767334342c19f786701686eb14800b6844cd4d7e9c10"
+    },
+    {
+      "source": "scripts/docs-ap09-catalogue.mjs",
+      "digest": "fdad6ff3ac2f22daf4688a11553195d187e1ecc069d31630c0e74bf443e492f9"
+    },
+    {
+      "source": "scripts/docs-api-output-discovery.mjs",
+      "digest": "9acd252d46973606e5b3193bd8e3a68782af3bfc4c5466b8d5696c85fd73ec93"
+    },
+    {
+      "source": "scripts/docs-api-output-role-classification.mjs",
+      "digest": "871eae7269f25ef3fe6931f8ea2e9db479787968cbcc4e6cbd946752a892caa3"
+    },
+    {
+      "source": "scripts/docs-api-product-scope.mjs",
+      "digest": "9962061857f36c390c9127f1f16493f540e8aee46bef13a4a5428bbd8aae810d"
+    },
+    {
+      "source": "scripts/docs-api-receiver-coverage.mjs",
+      "digest": "0fba0459dfacbc074183abba20e6298f36e3f14224f9e81e0c9b1ef3ad6dfb5c"
+    },
+    {
+      "source": "scripts/docs-api-reference.mjs",
+      "digest": "1ee62e4fd4cdc51628c278de5cb10e41586251f4e72c288c816818e5cd4ea61e"
+    },
+    {
+      "source": "scripts/docs-api-schema-authorities.mjs",
+      "digest": "2bb1356ae2400879d1b407d0d14d88b625dc8969a31627f2e0dd3ae55885b861"
+    },
+    {
+      "source": "scripts/docs-argo-receiver-contracts.mjs",
+      "digest": "96413857d8bdea736520d86e6cd971dd38420def6f8d5ae570b98487c2d87304"
+    },
+    {
+      "source": "scripts/docs-blueprint-generate.mjs",
+      "digest": "762a51a8170b260ce89aa30e8a1e61d7c051fc6b6c22daae026ec26c07ef7f92"
+    },
+    {
+      "source": "scripts/docs-buster-authored-unknown-field-contracts.mjs",
+      "digest": "49435cf78ea81cd102b88ad041305e4643dbbb18ff40282b055d4ce7eaa2e2dc"
+    },
+    {
+      "source": "scripts/docs-buster-lease-receiver-contracts.mjs",
+      "digest": "a9c5ea18cb71c4e5fe0453393b7679decbf65d0b709dc3741a277fcd8a886b87"
+    },
+    {
+      "source": "scripts/docs-check-coverage.mjs",
+      "digest": "3ce5c3d0cc554644fe3638d96cdfc133b026a2be2a8573447cc28ba991962e13"
+    },
+    {
+      "source": "scripts/docs-check-refs.mjs",
+      "digest": "24aa5fac12863891b601642b8bd3bbd2124cafaf878c21381fd6202f0e405e79"
+    },
+    {
+      "source": "scripts/docs-check.mjs",
+      "digest": "9b69d5ff4929d923a78978e692f92563855f1ec86b0956166165402846eb439b"
+    },
+    {
+      "source": "scripts/docs-cilium-receiver-contracts.mjs",
+      "digest": "77d10976b9372c069cc2e602dbe4849d105baf5c97776d42df8dbb0bdbb6e587"
+    },
+    {
+      "source": "scripts/docs-clusterspiffeid-selected-receiver-contracts.mjs",
+      "digest": "036ef53a0bc5bfe49fc8572d1107983bae2e5cf340d4a470e557f1d00c17bb69"
+    },
+    {
+      "source": "scripts/docs-configuration-inventory.mjs",
+      "digest": "c2d5cc0f84db0e1df24181ef91b7ef80990c517ec9b8d323d3d831e7e10add4c"
+    },
+    {
+      "source": "scripts/docs-generate-core.mjs",
+      "digest": "837d1ec195d38a8048ec705e1a3eb38eadbd0a130ebf53c410eb5895fbde35da"
+    },
+    {
+      "source": "scripts/docs-generate.mjs",
+      "digest": "2048893996540fcb9a527874bed664fc5965a42f15602b6986d6d96ec3d416bc"
+    },
+    {
+      "source": "scripts/docs-governance.mjs",
+      "digest": "f74ee092872b6d418f07e1fd87ed858a8a5f1d88e0f78eaa58a62840b6478158"
+    },
+    {
+      "source": "scripts/docs-inventory.mjs",
+      "digest": "886ae027638d388607566bccff8dbfec31d2e358afce44abb88836c14c54084d"
+    },
+    {
+      "source": "scripts/docs-kubernetes-admission-receiver-contracts.mjs",
+      "digest": "714d8ace663c38d0f7afc38f69b0981a2154eb62693978af6282b022e25cccb3"
+    },
+    {
+      "source": "scripts/docs-kubernetes-admission-status-contracts.mjs",
+      "digest": "4977ba36d9aeac4833c8113a8078b041feadc8a17928fcc41913458f968e8bf9"
+    },
+    {
+      "source": "scripts/docs-kubernetes-apps-receiver-contracts.mjs",
+      "digest": "b504ca27cc2e1054c5ba43ec1c4ff27804fd77a292eba00baf10068946b87b8b"
+    },
+    {
+      "source": "scripts/docs-kubernetes-auth-delete-receiver-contracts.mjs",
+      "digest": "f8571edc14c991066347802d3930e5329499f4a3e03d45d9fbc270dc3cdf74a6"
+    },
+    {
+      "source": "scripts/docs-kubernetes-cluster-configuration-receiver-contracts.mjs",
+      "digest": "c0e9ef1f92827d3a50942d2ccf2386f05b031474ccfa84c1498631c15fe4187a"
+    },
+    {
+      "source": "scripts/docs-kubernetes-core-receiver-contracts.mjs",
+      "digest": "e2efd81701d61882f0796185419ad5f15d0d7d87bdf7ea85613245ac556f6769"
+    },
+    {
+      "source": "scripts/docs-kubernetes-envelope-receiver-contracts.mjs",
+      "digest": "7a400c3450d05927f4310e20cf95c1b60cad4eb91275c706d6ac7455c080439e"
+    },
+    {
+      "source": "scripts/docs-kubernetes-identity-secret-receiver-contracts.mjs",
+      "digest": "22ff0df48323767ea34a9bb59ead9110b966c18d6a2f1ddf56259456dfb4c77c"
+    },
+    {
+      "source": "scripts/docs-kubernetes-metadata-receiver-contracts.mjs",
+      "digest": "c79139cf4fcf9226f7ab7acb87bd19feaba3533a2220d301e4b936d00e92dc2d"
+    },
+    {
+      "source": "scripts/docs-kubernetes-namespace-isolation-receiver-contracts.mjs",
+      "digest": "61776edafd30d9ecaa892464798d32152ca08778338fc38303dbca2a7db9ce8b"
+    },
+    {
+      "source": "scripts/docs-kubernetes-network-receiver-contracts.mjs",
+      "digest": "6fc40d6eae6a9055906707c24d92478fe3f2088fe55cc64124bf28f127f68581"
+    },
+    {
+      "source": "scripts/docs-kubernetes-node-workloads-receiver-contracts.mjs",
+      "digest": "e7f482e1b66a7a7c13b17640e6bbdf8ae4b6445fa0d77208d30e834c5177b3d2"
+    },
+    {
+      "source": "scripts/docs-kubernetes-pv-selected-receiver-contracts.mjs",
+      "digest": "f5238fe3a39d9f14e1b34ed5cdc8da74f3d4e089c9481b545a68f1a170aa007e"
+    },
+    {
+      "source": "scripts/docs-kubernetes-webhook-selected-receiver-contracts.mjs",
+      "digest": "686793dc248e63bdff84dd413080d229158a6bec9af19f2aebac43a8c3aef30a"
+    },
+    {
+      "source": "scripts/docs-kubernetes-workload-receiver-contracts.mjs",
+      "digest": "dd656fb19cb49a4aff45a7dbce597926dc38b0672e97c6085125417183e2de90"
+    },
+    {
+      "source": "scripts/docs-lint-policy-reference.mjs",
+      "digest": "f1ab999e2d336ffd6d4e498bfc7469a24a9bf6ee271ae999fc634af9d6b2b363"
+    },
+    {
+      "source": "scripts/docs-local-helm-authorities.mjs",
+      "digest": "4080567b8ddbe9f9f635f571f779a58aa0da04b6bf2b770c9a688b52aa79dcf2"
+    },
+    {
+      "source": "scripts/docs-parity-batches.mjs",
+      "digest": "77a217250837f1a5afee09da52c3f987887bf36a5165953b4ace6eb2c5d57809"
+    },
+    {
+      "source": "scripts/docs-parity-check.mjs",
+      "digest": "ece97c878fc1b4e3bd9e7053efd312dfad5800b7f8e9eb4b85fc32caf7f2cb92"
+    },
+    {
+      "source": "scripts/docs-parity-extract.mjs",
+      "digest": "933955299edeb41108f2afbdcba6f375f98ccaad754e997996ad7e89bc225876"
+    },
+    {
+      "source": "scripts/docs-parity-review-assignments.mjs",
+      "digest": "294d33b1ecedf3cad511664a887792ed26c49b2af7584587f61f4478afb19a7f"
+    },
+    {
+      "source": "scripts/docs-parity-status.mjs",
+      "digest": "446801fe5a500e6ef5256bdc39c880ca378f4f5f394a867f0ab0187c9d79833f"
+    },
+    {
+      "source": "scripts/docs-parity-transition.mjs",
+      "digest": "3b362d2e1d46278c3ecdcebb3a436b0c7b01c0ca0b61ab68f04a3a1798287fc1"
+    },
+    {
+      "source": "scripts/docs-platform-surface-inventory.mjs",
+      "digest": "3ee5313f1c10f72c32ef2d567ed3fd6f269d6423c2bf0040f9ab37cea2595bbe"
+    },
+    {
+      "source": "scripts/docs-prometheus-selected-receiver-contracts.mjs",
+      "digest": "2098ff40398807aa1c40d7ab1c8f3309dc2fcf5cc986dd6071e33300d7a9bdd3"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "digest": "8bbdb9ed22b6ecaa9c5ae7333c225c992e9df4c2efebaa76d4757cdb350a3b57"
+    },
+    {
+      "source": "scripts/docs-runtime-consumer-contracts.mjs",
+      "digest": "58ba359be2426a37e8f0981ce0d705e0389416c444868cbd590fc2397c5c14f9"
+    },
+    {
+      "source": "scripts/docs-secret-inventory.mjs",
+      "digest": "ecb46e18306da35038409befa0671d8349acb58b2886c7accd1d8aac2fcea92a"
+    },
+    {
+      "source": "scripts/docs-status.mjs",
+      "digest": "5d148dc83f6fc096a2571280cc823e0fb804de888b2d8470e28bfc783c14a03b"
+    },
+    {
+      "source": "scripts/docs-tree-boundary.mjs",
+      "digest": "4d04b1bf3ba93e1f69085c27a4a7604506487253e47ff53b71fb5d6b62b15d5b"
+    },
+    {
+      "source": "scripts/docs-yaml-field-authorities.mjs",
+      "digest": "c73c59abf882671e2e0bd5555e73ce80a1a67cafeccb9489924b95b2674a7a57"
+    },
+    {
+      "source": "scripts/docs-yaml-inventory.mjs",
+      "digest": "42a307dd5942086f199d960e62cc242190f37d4b050fe61515c19a2e0eb62ea0"
+    },
+    {
+      "source": "scripts/docs-sdk-reference.mjs",
+      "digest": "5985f6dfcc71350c9200fdfcf273906977e1f848c6ae0c48e5bb541276561b50"
+    },
+    {
+      "source": "scripts/docs-reader/renderer.mjs",
+      "digest": "653eeef16fe776d29f8bb17e687df4baa5e1d22ff424afafe00f14b666a43f26"
+    },
+    {
+      "source": "scripts/docs-reader/check-artifact.mjs",
+      "digest": "3035ba4888de3bfdf09230543f8fe520ae9b2478aac46f8cb848f8630ce3ea3a"
+    },
+    {
+      "source": "scripts/docs-reader/check-search.mjs",
+      "digest": "8ab0979f81fb2e1fc6abc99072ba8f4271276aca78c5f21d124038791a8c36b2"
+    },
+    {
+      "source": "scripts/docs-reader/source-links.mjs",
+      "digest": "ebacc268fbfec19af69642190a1d22151d1d4640e83a7fe2dd6e2e0cfeaff1ae"
+    },
+    {
+      "source": "scripts/docs-reader/check-source-links.mjs",
+      "digest": "d55158b42669f73f2f0c670fdf14bd09d7d4713013048372b1ed709e81f84d02"
+    },
+    {
+      "source": "scripts/docs-reader/metadata.mjs",
+      "digest": "0c86abe719d8e56f6c93979dfd03949a5646d6f91be899308badcc36de401293"
+    },
+    {
+      "source": "scripts/docs-reader/source-previews.mjs",
+      "digest": "772cc4df98c798f7a086c3c53377a834b5fa03d9479215c640608cf0c6ff5084"
+    },
+    {
+      "source": "scripts/docs-reader/check-source-previews.mjs",
+      "digest": "7a249dadbf54e0083cf47853ac1761b532d07e3ab66388b7fcadfb6686df8486"
+    },
+    {
+      "source": "scripts/docs-reader/diagrams.mjs",
+      "digest": "f65c3bdcce8867e01c621f137298b1449a4b414455a129bf0955f1c9b40e90df"
+    },
+    {
+      "source": "scripts/docs-reader/check-diagrams.mjs",
+      "digest": "12a1d2884f474f203c454e1b5fc818c457708880e4d1cbdfc27bc24dd95c0b3a"
+    },
+    {
+      "source": "scripts/docs-plugin-complexity.mjs",
+      "digest": "2e77fd1131c12daa991291d0f42f81a6cdb07539accf87239d35212b66c90ed1"
+    },
+    {
+      "source": "scripts/check-capability-drift-mutations.mjs",
+      "digest": "029864aeb501eabc9c072473b0d64322ac375af3d8b9161b36ac0ebf482f6263"
+    },
+    {
+      "source": "scripts/check-capability-drift.mjs",
+      "digest": "6677ccc7b91470a78d043456760f493bf2bc0132da52ce9390f6de1ba7b4834c"
+    },
+    {
+      "source": "scripts/check-capability-policy-drift-mutations.mjs",
+      "digest": "ec394161f48a92120363d1a5901c79a70b5cbb898cf67508811ae1d95436729b"
+    },
+    {
+      "source": "scripts/check-capability-policy-drift.mjs",
+      "digest": "97acf518dcdecc29cfb30c183d9e91ee6fd254721140b5fe41b305496718493e"
+    },
+    {
+      "source": "scripts/check-capability-registrations-drift.mjs",
+      "digest": "b76bf0219d739f5c7c9ef1ef293c3b26a1be7e0fb8a8ac3026b83c12035a187c"
+    },
+    {
+      "source": "scripts/check-capability-swarm-boundary.mjs",
+      "digest": "5645df69deff39aeb1c88c1e38826cb0946588e723558394cf33da25968426e2"
+    },
+    {
+      "source": "scripts/check-capability-vocabulary-drift-mutations.mjs",
+      "digest": "ffa53c0a2d845946c9e7032b530d5c5b5de821928b67444c59385125a65b7020"
+    },
+    {
+      "source": "scripts/check-capability-vocabulary-drift.mjs",
+      "digest": "eea3b4ab743862492d8708a3571fd387af4209a5f019d497869623c75ed7802c"
+    },
+    {
+      "source": "scripts/check-configuration-cli-drift.mjs",
+      "digest": "dab463f4b6cad18b7b73fa62625c316e3ed300b87fc3659513559ac936e32fd7"
+    },
+    {
+      "source": "scripts/check-configuration-drift-mutations.mjs",
+      "digest": "9ec990b9a17c32e00c0a6c47c4c11fb9bbdef42e40804a58733f2c4f0a489464"
+    },
+    {
+      "source": "scripts/check-contract-drift-mutations.mjs",
+      "digest": "14c4f2916ce6ea22f2976c5828dda2dc727f776798e5d0072ebc8fdd4b0981f2"
+    },
+    {
+      "source": "scripts/check-contract-drift.mjs",
+      "digest": "9cb51aa7de5e04a299e7f058443070235a3baf1ad073e50c3f32a1ca19daf0a7"
+    },
+    {
+      "source": "scripts/check-error-code-drift-mutations.mjs",
+      "digest": "44e32a3a2f6d2b411b38d2bc43d4b31100bcbe71ad7a6d2f91597ad6883f6fc2"
+    },
+    {
+      "source": "scripts/check-error-code-drift.mjs",
+      "digest": "51862426fc009157d8f602f5f49f5124fd4f9ae230c84ee75d6c67ed381a760e"
+    },
+    {
+      "source": "scripts/check-extension-class-drift-mutations.mjs",
+      "digest": "9b1bf05d5dbc636328c8329eb87c0c329cba5ec8087ec1f862fb9fd290167481"
+    },
+    {
+      "source": "scripts/check-extension-class-drift.mjs",
+      "digest": "562fe8fd0fb1c23b3c071b80801d865e24d5e51cbee9ffcc28bc401472adc176"
+    },
+    {
+      "source": "scripts/check-fixture-registration-drift-mutations.mjs",
+      "digest": "fe4992a08f51a8d12fb89dca97ce8c60283d2144f3fc60ffca7702b94bf46cf0"
+    },
+    {
+      "source": "scripts/check-fixture-registration-drift.mjs",
+      "digest": "2e6561a77a805ea26ef9574e1da5cae3ba9b4253031b1be676323c33cf7adad9"
+    },
+    {
+      "source": "scripts/check-platform-surface-drift-mutations.mjs",
+      "digest": "84bcdaf63345befab21328cf2e4165d5bd7913d2f2a82167c6b1cce26b4dd828"
+    },
+    {
+      "source": "scripts/check-plugin-manifest-drift-mutations.mjs",
+      "digest": "9265f0bdcc52c8bc1afe5e02992d987c9075b5d1e362dae10b0c39c8cdd1e226"
+    },
+    {
+      "source": "scripts/check-plugin-manifest-drift.mjs",
+      "digest": "4bffe869c1c80f9ea387e76a30ba0f3a6392151b35a55c2e2220351260a52874"
+    },
+    {
+      "source": "scripts/check-progress-contract-drift-mutations.mjs",
+      "digest": "d12ea3298dfe82ff6ecbbb11bb3b9a1f3419da33c2d7e9c797e658babba4f506"
+    },
+    {
+      "source": "scripts/check-provider-registration-drift-mutations.mjs",
+      "digest": "95858985f90997c794ca36639a03f702cb7f8e983f6ac0d671acb351fe7647b7"
+    },
+    {
+      "source": "scripts/check-provider-registration-drift.mjs",
+      "digest": "18db671a25f87960ba76d26cf82b5f908022a43a6b731477fd4e20dc755f8dcd"
+    },
+    {
+      "source": "scripts/check-report-registration-drift-mutations.mjs",
+      "digest": "d4bfccfd148eaea0f1bf1d21e0b8ce5b4014f12befeb382947bfee58468d906b"
+    },
+    {
+      "source": "scripts/check-report-registration-drift.mjs",
+      "digest": "901d8e73ccfb5b371675aba402fbee16172d09082025cc67165d30bbf2d0ecfa"
+    },
+    {
+      "source": "scripts/check-schema-drift-mutations.mjs",
+      "digest": "38a11dc72e1cc0720102b4c399e0e9949ef697fd17f957d513dd5917c8c9149d"
+    },
+    {
+      "source": "scripts/check-sdk-contract-mutation-constructors.mjs",
+      "digest": "50969745d2c116634982ccea3a9967ba7251b45b55c0ca80ee7275aca1d29296"
+    },
+    {
+      "source": "scripts/check-workflow-drift-mutations.mjs",
+      "digest": "0e3443d9ff20065feb3328c687523a08f092ce53174621a700596f0eeb491c65"
+    },
+    {
+      "source": "scripts/docs-product-pipeline-reference.mjs",
+      "digest": "bd4fb25aab9573f2a46bc34be0cac26dcfea8c1f04749e8f1f376aaf02d9cc20"
+    },
+    {
+      "source": "scripts/generate-local-helm-authorities.mjs",
+      "digest": "cbe0bfc95ec38e0f469b685b33f37f649ae505ccf2347e567600840be1128a7f"
+    },
+    {
+      "source": "scripts/docs-reader/redirects.mjs",
+      "digest": "9a6e1412afa2e25b52509f6721d05e6690e677133b7e1d536ad35c8490ce2564"
+    },
+    {
+      "source": "scripts/docs-reader/serve.mjs",
+      "digest": "20385852d2fc894df27baad6289c5b908b5cd15ed033844effd187fca3bba205"
+    },
+    {
+      "source": "scripts/check-capability-registrations-drift-controls.mjs",
+      "digest": "ee7048005760475515a138049032373eebf56defae6b60f10c5f7329316acf60"
+    },
+    {
+      "source": "scripts/docs-ap09-mutation-fixture.mjs",
+      "digest": "36647e648cccf910477c831913e0a711c85acb932aa9f938504b7668ee94dd12"
+    },
+    {
+      "source": "scripts/plugin-system-inventory.mjs",
+      "digest": "e71866e18615042e9496962ec969a15301bc2401585adb6c4df0cbc2a447ed59"
+    },
+    {
+      "source": "scripts/vendor-external-helm-authorities.mjs",
+      "digest": "d27dbe54e59e927087c4021689ddf39a197f90a8b9ad6a69888eeceb284a69b2"
+    },
+    {
+      "source": "scripts/docs-reader/page-records.mjs",
+      "digest": "f8c807b2dd2a622ae761d3d76526cab1674847c654f0fbea6bbfd8c6c5e0dd78"
+    }
+  ],
+  "changed": [
+    {
+      "source": "scripts/docs-api-output-discovery.mjs",
+      "oldDigest": "c0b81cbe2d467b85fcc9171f8472554fbd04293c3d56ae72501b17e450af8776",
+      "digest": "9acd252d46973606e5b3193bd8e3a68782af3bfc4c5466b8d5696c85fd73ec93",
+      "added": [
+        {
+          "source": "scripts/docs-api-top-level-script-purpose.mjs",
+          "kind": "FirstStatement",
+          "symbol": "purposes",
+          "sha256": "ba8125eaf5ab132b4f582220ca5082fc6270a91dcd8344ffbd0db02179b19b11"
+        },
+        {
+          "source": "scripts/docs-deployment-scalar-occurrence-custody.mjs",
+          "kind": "FirstStatement",
+          "symbol": "reviewedCallerCensusSha256",
+          "sha256": "b53112006eb43dccabb9a9b64175a7b2b31102b0858b8850d5fa37d59683ec53"
+        },
+        {
+          "source": "scripts/docs-deployment-scalar-occurrence-custody.mjs",
+          "kind": "FirstStatement",
+          "symbol": "reviewedSelectedGraphSha256",
+          "sha256": "59e2bd7fa5b917c8bb71bc6dc8dc202e63fb5b70378dbb68482902e22feaaa78"
+        }
+      ],
+      "removed": [
+        {
+          "source": "scripts/docs-api-top-level-script-purpose.mjs",
+          "kind": "FirstStatement",
+          "symbol": "purposes",
+          "sha256": "415500c5f0c9115eafe47c735570a7a1895f8b25d4776a9673f2c289cc39e770"
+        },
+        {
+          "source": "scripts/docs-deployment-scalar-occurrence-custody.mjs",
+          "kind": "FirstStatement",
+          "symbol": "reviewedCallerCensusSha256",
+          "sha256": "6e565dd981d53cdc479b64c7df3fecb80dd7e7fa3cc977c8ad071ea37a81973e"
+        },
+        {
+          "source": "scripts/docs-deployment-scalar-occurrence-custody.mjs",
+          "kind": "FirstStatement",
+          "symbol": "reviewedSelectedGraphSha256",
+          "sha256": "7573ba9d2ab4b7518e52b9de2f6ae9a140d24bc8b5f64b7583c4c8d4c5b75d22"
+        }
+      ]
+    },
+    {
+      "source": "scripts/docs-api-product-scope.mjs",
+      "oldDigest": "cdbcc809bd3979f1e656c59000ab1dfdb5d6a2d333e677fe67ca3d831a3dcc66",
+      "digest": "9962061857f36c390c9127f1f16493f540e8aee46bef13a4a5428bbd8aae810d",
+      "added": [
+        {
+          "source": "scripts/docs-api-top-level-script-purpose.mjs",
+          "kind": "FirstStatement",
+          "symbol": "purposes",
+          "sha256": "ba8125eaf5ab132b4f582220ca5082fc6270a91dcd8344ffbd0db02179b19b11"
+        },
+        {
+          "source": "scripts/docs-deployment-scalar-occurrence-custody.mjs",
+          "kind": "FirstStatement",
+          "symbol": "reviewedCallerCensusSha256",
+          "sha256": "b53112006eb43dccabb9a9b64175a7b2b31102b0858b8850d5fa37d59683ec53"
+        },
+        {
+          "source": "scripts/docs-deployment-scalar-occurrence-custody.mjs",
+          "kind": "FirstStatement",
+          "symbol": "reviewedSelectedGraphSha256",
+          "sha256": "59e2bd7fa5b917c8bb71bc6dc8dc202e63fb5b70378dbb68482902e22feaaa78"
+        }
+      ],
+      "removed": [
+        {
+          "source": "scripts/docs-api-top-level-script-purpose.mjs",
+          "kind": "FirstStatement",
+          "symbol": "purposes",
+          "sha256": "415500c5f0c9115eafe47c735570a7a1895f8b25d4776a9673f2c289cc39e770"
+        },
+        {
+          "source": "scripts/docs-deployment-scalar-occurrence-custody.mjs",
+          "kind": "FirstStatement",
+          "symbol": "reviewedCallerCensusSha256",
+          "sha256": "6e565dd981d53cdc479b64c7df3fecb80dd7e7fa3cc977c8ad071ea37a81973e"
+        },
+        {
+          "source": "scripts/docs-deployment-scalar-occurrence-custody.mjs",
+          "kind": "FirstStatement",
+          "symbol": "reviewedSelectedGraphSha256",
+          "sha256": "7573ba9d2ab4b7518e52b9de2f6ae9a140d24bc8b5f64b7583c4c8d4c5b75d22"
+        }
+      ]
+    },
+    {
+      "source": "scripts/docs-api-reference.mjs",
+      "oldDigest": "e905206e211e24de09afa3950145ce85408f45c5e055f58bdcb8fde032652289",
+      "digest": "1ee62e4fd4cdc51628c278de5cb10e41586251f4e72c288c816818e5cd4ea61e",
+      "added": [
+        {
+          "source": "scripts/docs-api-top-level-script-purpose.mjs",
+          "kind": "FirstStatement",
+          "symbol": "purposes",
+          "sha256": "ba8125eaf5ab132b4f582220ca5082fc6270a91dcd8344ffbd0db02179b19b11"
+        },
+        {
+          "source": "scripts/docs-deployment-scalar-occurrence-custody.mjs",
+          "kind": "FirstStatement",
+          "symbol": "reviewedCallerCensusSha256",
+          "sha256": "b53112006eb43dccabb9a9b64175a7b2b31102b0858b8850d5fa37d59683ec53"
+        },
+        {
+          "source": "scripts/docs-deployment-scalar-occurrence-custody.mjs",
+          "kind": "FirstStatement",
+          "symbol": "reviewedSelectedGraphSha256",
+          "sha256": "59e2bd7fa5b917c8bb71bc6dc8dc202e63fb5b70378dbb68482902e22feaaa78"
+        }
+      ],
+      "removed": [
+        {
+          "source": "scripts/docs-api-top-level-script-purpose.mjs",
+          "kind": "FirstStatement",
+          "symbol": "purposes",
+          "sha256": "415500c5f0c9115eafe47c735570a7a1895f8b25d4776a9673f2c289cc39e770"
+        },
+        {
+          "source": "scripts/docs-deployment-scalar-occurrence-custody.mjs",
+          "kind": "FirstStatement",
+          "symbol": "reviewedCallerCensusSha256",
+          "sha256": "6e565dd981d53cdc479b64c7df3fecb80dd7e7fa3cc977c8ad071ea37a81973e"
+        },
+        {
+          "source": "scripts/docs-deployment-scalar-occurrence-custody.mjs",
+          "kind": "FirstStatement",
+          "symbol": "reviewedSelectedGraphSha256",
+          "sha256": "7573ba9d2ab4b7518e52b9de2f6ae9a140d24bc8b5f64b7583c4c8d4c5b75d22"
+        }
+      ]
+    },
+    {
+      "source": "scripts/docs-configuration-inventory.mjs",
+      "oldDigest": "18f92eefe3df2b150fe7c71968a9e06b5fc2d1e1127679ee87d26e970e8639a2",
+      "digest": "c2d5cc0f84db0e1df24181ef91b7ef80990c517ec9b8d323d3d831e7e10add4c",
+      "added": [
+        {
+          "source": "scripts/docs-api-top-level-script-purpose.mjs",
+          "kind": "FirstStatement",
+          "symbol": "purposes",
+          "sha256": "ba8125eaf5ab132b4f582220ca5082fc6270a91dcd8344ffbd0db02179b19b11"
+        },
+        {
+          "source": "scripts/docs-deployment-scalar-occurrence-custody.mjs",
+          "kind": "FirstStatement",
+          "symbol": "reviewedCallerCensusSha256",
+          "sha256": "b53112006eb43dccabb9a9b64175a7b2b31102b0858b8850d5fa37d59683ec53"
+        },
+        {
+          "source": "scripts/docs-deployment-scalar-occurrence-custody.mjs",
+          "kind": "FirstStatement",
+          "symbol": "reviewedSelectedGraphSha256",
+          "sha256": "59e2bd7fa5b917c8bb71bc6dc8dc202e63fb5b70378dbb68482902e22feaaa78"
+        }
+      ],
+      "removed": [
+        {
+          "source": "scripts/docs-api-top-level-script-purpose.mjs",
+          "kind": "FirstStatement",
+          "symbol": "purposes",
+          "sha256": "415500c5f0c9115eafe47c735570a7a1895f8b25d4776a9673f2c289cc39e770"
+        },
+        {
+          "source": "scripts/docs-deployment-scalar-occurrence-custody.mjs",
+          "kind": "FirstStatement",
+          "symbol": "reviewedCallerCensusSha256",
+          "sha256": "6e565dd981d53cdc479b64c7df3fecb80dd7e7fa3cc977c8ad071ea37a81973e"
+        },
+        {
+          "source": "scripts/docs-deployment-scalar-occurrence-custody.mjs",
+          "kind": "FirstStatement",
+          "symbol": "reviewedSelectedGraphSha256",
+          "sha256": "7573ba9d2ab4b7518e52b9de2f6ae9a140d24bc8b5f64b7583c4c8d4c5b75d22"
+        }
+      ]
+    },
+    {
+      "source": "scripts/docs-generate.mjs",
+      "oldDigest": "d94432c228bb4058fb8daab7d4ee851c1def21d53611237e715889297a606325",
+      "digest": "2048893996540fcb9a527874bed664fc5965a42f15602b6986d6d96ec3d416bc",
+      "added": [
+        {
+          "source": "scripts/docs-api-top-level-script-purpose.mjs",
+          "kind": "FirstStatement",
+          "symbol": "purposes",
+          "sha256": "ba8125eaf5ab132b4f582220ca5082fc6270a91dcd8344ffbd0db02179b19b11"
+        },
+        {
+          "source": "scripts/docs-deployment-scalar-occurrence-custody.mjs",
+          "kind": "FirstStatement",
+          "symbol": "reviewedCallerCensusSha256",
+          "sha256": "b53112006eb43dccabb9a9b64175a7b2b31102b0858b8850d5fa37d59683ec53"
+        },
+        {
+          "source": "scripts/docs-deployment-scalar-occurrence-custody.mjs",
+          "kind": "FirstStatement",
+          "symbol": "reviewedSelectedGraphSha256",
+          "sha256": "59e2bd7fa5b917c8bb71bc6dc8dc202e63fb5b70378dbb68482902e22feaaa78"
+        }
+      ],
+      "removed": [
+        {
+          "source": "scripts/docs-api-top-level-script-purpose.mjs",
+          "kind": "FirstStatement",
+          "symbol": "purposes",
+          "sha256": "415500c5f0c9115eafe47c735570a7a1895f8b25d4776a9673f2c289cc39e770"
+        },
+        {
+          "source": "scripts/docs-deployment-scalar-occurrence-custody.mjs",
+          "kind": "FirstStatement",
+          "symbol": "reviewedCallerCensusSha256",
+          "sha256": "6e565dd981d53cdc479b64c7df3fecb80dd7e7fa3cc977c8ad071ea37a81973e"
+        },
+        {
+          "source": "scripts/docs-deployment-scalar-occurrence-custody.mjs",
+          "kind": "FirstStatement",
+          "symbol": "reviewedSelectedGraphSha256",
+          "sha256": "7573ba9d2ab4b7518e52b9de2f6ae9a140d24bc8b5f64b7583c4c8d4c5b75d22"
+        }
+      ]
+    }
+  ]
+}

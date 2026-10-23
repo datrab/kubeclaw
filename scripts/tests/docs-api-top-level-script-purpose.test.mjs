@@ -156,10 +156,24 @@ test('five additional artifact/status purposes preserve UNKNOWN and their actual
   }
   for (const [source, line] of [
     ['scripts/render-kubernetes-api-probe.mjs', 39],
-    ['scripts/render-stateful-network-policies.mjs', 68],
     ['scripts/updates/deployment-release.mjs', 195],
     ['scripts/versions.mjs', 181],
   ]) {
     assert.equal(selectedTopLevelScriptPurpose(source, classify(source).find(role => role.line === line), receipt), null);
   }
+});
+
+test('stateful stream purpose keeps canonical UNKNOWN and requires its separate original API adapter', () => {
+  const classify = createSerializedOutputRoleClassifier(repository, sources);
+  const receipt = checkedTopLevelScriptPurposes(repository, graph, classify, sources);
+  const source = 'scripts/render-stateful-network-policies.mjs';
+  const role = classify(source).find(row => row.line === 68);
+  assert.equal(role.role, 'unknown');
+  const purpose = selectedTopLevelScriptPurpose(source, role, receipt);
+  assert.equal(purpose.canonicalRawRole, 'unknown');
+  assert.equal(purpose.runtimeExecutionAuthorized, false);
+  assert.equal(purpose.apiApplyAuthorized, false);
+  assert.match(purpose.purpose, /API-capable YAML stream/);
+  assert.match(purpose.purpose, /separate mandatory discoverTransformedApiOutputs/);
+  assert.throws(() => selectedTopLevelScriptPurpose(source, {...role, role: 'non-api'}, receipt), /changed canonical slot or role/);
 });

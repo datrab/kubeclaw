@@ -1,0 +1,55 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import os from 'node:os';
+import path from 'node:path';
+import {createHash} from 'node:crypto';
+import {pathToFileURL} from 'node:url';
+import {spawnSync} from 'node:child_process';
+const root='/home/node/.openclaw/workspace/kubeclaw-pr13-recovery';
+const out=path.dirname(new URL(import.meta.url).pathname);
+const {createSerializedOutputRoleClassifier,deriveNativeOperationFacts,nativeOperationFactDigest}=await import(pathToFileURL(root+'/scripts/docs-api-output-role-classification.mjs'));
+const {discoverTransformedApiOutputs}=await import(pathToFileURL(root+'/scripts/docs-api-output-discovery.mjs'));
+const {default:YAML}=await import(pathToFileURL(root+'/node_modules/yaml/dist/index.js'));
+const source='scripts/render-stateful-network-policies.mjs';
+const authority='scripts/docs-api-producer-adapter-authorities.json';
+const registry=JSON.parse(fs.readFileSync(root+'/'+authority));
+const contract=registry.nonApiOutputContracts.find(r=>r.source===source);
+const classify=r=>createSerializedOutputRoleClassifier(r,[source])(source);
+assert.equal(classify(root).length,1);
+assert.equal(classify(root)[0].role,'unknown');
+const operation=contract.operations[0];
+const facts=deriveNativeOperationFacts(root,source,operation.selectors);
+assert.equal(nativeOperationFactDigest(facts),operation.factsDigest);
+const scratch=fs.mkdtempSync(path.join(os.tmpdir(),'stateful-role-'));
+let negatives=0;
+try{
+ const sources=[...new Set(facts.map(f=>f.source))];
+ for(const file of sources){fs.mkdirSync(path.dirname(scratch+'/'+file),{recursive:true});fs.copyFileSync(root+'/'+file,scratch+'/'+file);}
+ fs.writeFileSync(scratch+'/'+authority,JSON.stringify({nonApiOutputContracts:[contract]}));
+ assert.equal(classify(scratch)[0].role,'unknown');
+ const original=fs.readFileSync(scratch+'/'+source,'utf8');
+ for(const mutation of [
+  text=>text.replace('return documents;','return [...documents, {apiVersion:"v1",kind:"Secret"}];'),
+  text=>text.replace('...service.selector','...service.selector, changed: "true"'),
+  text=>text.replace("join('---\\n')","join('\\n')"),
+ ]){
+  const changed=mutation(original);assert.notEqual(changed,original);
+  fs.writeFileSync(scratch+'/'+source,changed);
+  assert(!classify(scratch).some(r=>r.role==='non-api' && r.basis==='original-manifest-stream-covered-by-qualified-offline-adapter'));
+  negatives++;
+ }
+ fs.writeFileSync(scratch+'/'+source,original+"\nprocess.stdout.write(process.argv[2]);\n");
+ assert(classify(scratch).some(r=>r.role==='unknown'));negatives++;
+}finally{fs.rmSync(scratch,{recursive:true,force:true});}
+const selected=discoverTransformedApiOutputs(root).filter(r=>r.context.path===source);
+const native=YAML.parseAllDocuments(fs.readFileSync(out+'/stdout.raw','utf8')).map(d=>{assert.equal(d.errors.length,0);return d.toJS();});
+assert.equal(selected.length,15);
+assert.deepEqual(selected.map(r=>r.value),native);
+for(const row of selected){assert.equal(row.context.producer,'script-render');assert.equal(row.context.profile,'deploy-default');}
+const old=JSON.parse(spawnSync('git',['show','HEAD:'+authority],{cwd:root,encoding:'utf8',maxBuffer:16*1024*1024}).stdout);
+assert.deepEqual(registry,old);
+const files=[source,...new Set(facts.map(f=>f.source)),'scripts/deploy.sh','scripts/docs-api-output-discovery.mjs','my-values/infra/network-policies.yaml','my-values/infra/redis-values.yaml','my-values/infra/postgresql-values.yaml','versions.json'];
+const sha=bytes=>createHash('sha256').update(bytes).digest('hex');
+const report={verdict:'PASS_BOUNDED_NATIVE_STREAM_AND_PRIVATE_PURPOSE',negativeMutations:negatives,originalDocuments:native.length,adapterDocuments:selected.length,allOriginalDocumentsPreserved:true,registryEntirelyUnchanged:true,operationFacts:facts,sourceHashes:Object.fromEntries(files.map(f=>[f,sha(fs.readFileSync(root+'/'+f))])),outputs:selected,limits:'No global inventory, arbitrary-profile, cluster apply, runtime or AP acceptance.'};
+fs.writeFileSync(out+'/review.json',JSON.stringify(report,null,2)+'\n');
+console.log(JSON.stringify({verdict:report.verdict,negativeMutations:negatives,originalDocuments:native.length,adapterDocuments:selected.length,operationFacts:facts.length}));

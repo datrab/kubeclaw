@@ -1,0 +1,7 @@
+import pathlib,json,subprocess,os,datetime,hashlib
+base=pathlib.Path('/home/node/.openclaw/workspace/tmp/pr13-stateful-20261023');out=base/'final-owning';out.mkdir(exist_ok=True);old=json.loads((base/'owning-invocation.json').read_text());env=old['environment']
+files=['scripts/docs-api-top-level-script-purpose.mjs','scripts/docs-deployment-scalar-occurrence-custody.mjs','scripts/docs-api-documentation-role-custody.mjs','scripts/docs-api-producer-adapter-authorities.json']
+hashfile=lambda p:hashlib.sha256(pathlib.Path(p).read_bytes()).hexdigest()
+record={'argv':old['argv'],'cwd':os.getcwd(),'environment':env,'startedAt':datetime.datetime.now(datetime.timezone.utc).isoformat(),'inputs':{p:hashfile(p) for p in files}};(out/'invocation.json').write_text(json.dumps(record,indent=2)+'\n')
+with (out/'stdout.raw').open('wb') as stdout,(out/'stderr.raw').open('wb') as stderr:r=subprocess.run(record['argv'],cwd=record['cwd'],env=env,stdout=stdout,stderr=stderr)
+result={'exitCode':r.returncode,'finishedAt':datetime.datetime.now(datetime.timezone.utc).isoformat(),'inputsUnchanged':all(hashfile(p)==h for p,h in record['inputs'].items()),'streams':{s:hashfile(out/s) for s in ['stdout.raw','stderr.raw']}};(out/'result.json').write_text(json.dumps(result,indent=2)+'\n');print(json.dumps(result));print((out/'stderr.raw').read_text()[:3500])
