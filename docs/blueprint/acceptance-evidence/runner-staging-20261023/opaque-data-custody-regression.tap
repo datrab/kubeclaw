@@ -1,0 +1,46 @@
+✔ sink location discovery conservatively retains classified writers without assigning roles (25.755225ms)
+✔ closed bundle writer retains its API capability and projects every payload caller (63.795242ms)
+✔ changed or escaping bundle writers cannot refresh a private projection into authority (90.258674ms)
+✔ an operation receipt cannot forge a projected API-capable utility (3.032527ms)
+✔ bundle facade construction binds all three role values without qualifying source copies or imports (109.196175ms)
+✔ Ops Helm source checksum stays a hash-check input, not a generic Docker writer exemption (16.748005ms)
+✔ live-check diagnostic roles bind complete readonly source and cannot be refreshed into API output (558.185625ms)
+✔ auxiliary Python receipts distinguish AST, policy-probe and JSON-RPC metadata from API writers (255.327428ms)
+✔ node module builtin-name projections preserve API discovery and reject loader escapes (38.085978ms)
+✔ current documentation checker role binds exported link parser, helper and guarded invocation (284.974482ms)
+✔ native ESM keeps actual .js authority, explicit .ts neighbors, creation and removal custody (51.805116ms)
+✔ scalar and guard exemptions revoke direct and captured caller-time binding writes (171.334254ms)
+✔ reached initialization effects and caller writes bind facts, unused siblings remain passive (3.308934ms)
+✔ heredoc closure uses exact << and tab-only <<- native boundaries (70.46792ms)
+✔ finite command custody selects actual argv and final fd0, not quoted or commented neighbors (0.991725ms)
+✔ outside-root public main, exports, bin and actual Node commands independently publish finite closure (195.607831ms)
+✔ caller-only change, deletion and re-creation cannot reuse transformed custody (47.442656ms)
+✔ same-line API to native transition revokes transaction shell facts (313.418135ms)
+✔ actual reached validator format and schema installation authority is present in finite facts (116.229374ms)
+✔ finite heredoc fd duplication and legacy substitutions agree with actual native consumption (39.570256ms)
+✔ guarded array aliases and unsupported post-proof calls cannot retain a stale scalar-array exemption (43.462984ms)
+✔ package argv distinguishes passive quoted mentions from actual inline Node programs (45.148277ms)
+✔ two source-bound resolver terminals classify only source-location metadata (61.072212ms)
+✔ source/archive compiler metadata binds both callers, extraction branch, package mapping and helper transfer (67.722851ms)
+✔ historical environment roots classify only bound operations and retain current executable source facts (47.055026ms)
+✔ native historical from selector really follows external root, not scanner checkout identity (151.810508ms)
+✔ six native replay recipes bind archive, overlay, caller and exact loader branches without fixture exclusion (331.362171ms)
+✔ native replay root selector preserves explicit external and empty-string nullish cases (242.237947ms)
+✔ Worker resource schema generator receipts retain schema inputs and reject refreshed API output (72.123123ms)
+✔ zero-argument scalar method calls remain conservative without crashing classification (1.716134ms)
+✔ exact caller-qualified fixture harnesses retain genuine imported and child producers (2009.312783ms)
+✔ harness caller and public reachability cannot transfer fixture purpose (2033.92702ms)
+✔ import-time effects, generated crash/historical child bytes, fixture root and new exports revoke cached harness purpose (17856.518612ms)
+✔ literal generated supervisor child argument/lease and declarative registration/schema authority remain bound (4912.564672ms)
+✔ reviewed refs fixture and copied CLI still reject changed authority with warm and fresh roots (22100.093088ms)
+✔ bounded4 native POSIX package globs acquire every142 source and no harness roles (789.917223ms)
+✔ glob quoted/custom/dynamic callers and added/renamed/removed/aliased sources fail before acceptance (1091.46243ms)
+✔ a known wildcard-selected test is an ordinary native API producer, not a fixture-purpose exclusion (8157.233434ms)
+ℹ tests 38
+ℹ suites 0
+ℹ pass 38
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 59367.785283

@@ -1,0 +1,36 @@
+✔ exact API-capable declaration remains a capability, not a private projection: scripts/observability-retirement/files.mjs (207.584257ms)
+✔ exact API-capable declaration remains a capability, not a private projection: skills/buster/engine/test-gates/native-fixture-journal.ts (632.777946ms)
+✔ exact API-capable declaration remains a capability, not a private projection: skills/common/plugin-runtime/foundation/config/published-pair.ts (321.752059ms)
+✔ exact API-capable declaration remains a capability, not a private projection: skills/common/plugins/runtime-dispatch/src/result-persistence.ts (143.554095ms)
+✔ warm changed utility Source cannot borrow old declaration or refreshed metadata: scripts/observability-retirement/files.mjs (174.92855ms)
+✔ warm changed utility Source cannot borrow old declaration or refreshed metadata: skills/buster/engine/test-gates/native-fixture-journal.ts (835.679994ms)
+✔ warm changed utility Source cannot borrow old declaration or refreshed metadata: skills/common/plugin-runtime/foundation/config/published-pair.ts (399.649141ms)
+✔ warm changed utility Source cannot borrow old declaration or refreshed metadata: skills/common/plugins/runtime-dispatch/src/result-persistence.ts (166.319202ms)
+✔ forged console role/basis/receipt fields do not create either internal receipt (141.486743ms)
+✔ private bundle writer still projects all3 callers and warm escape rejects (152.520132ms)
+✔ public writer caller root stays API/UNKNOWN despite refreshed AUTHOR-style call receipt: persistResult('/repo','result.json',PAYLOAD) {apiVersion:'v1',kind:'Secret',metadata:{name:'synthetic'}} (141.401831ms)
+✔ public writer caller root stays API/UNKNOWN despite refreshed AUTHOR-style call receipt: persistResult('/repo','result.json',PAYLOAD) process.argv[2] (139.548444ms)
+✔ public writer caller root stays API/UNKNOWN despite refreshed AUTHOR-style call receipt: publishJsonPair('/repo',['progress.json','pipeline.json'],[PAYLOAD,{ok:true}]) {apiVersion:'v1',kind:'Secret',metadata:{name:'synthetic'}} (279.275463ms)
+✔ public writer caller root stays API/UNKNOWN despite refreshed AUTHOR-style call receipt: publishJsonPair('/repo',['progress.json','pipeline.json'],[PAYLOAD,{ok:true}]) process.argv[2] (291.387289ms)
+✔ deleting mutable native-writer capability metadata cannot erase Source-owned caller publications (247.778675ms)
+✔ warm operation receipts reacquire changed receiver dependency facts, not old cached true (823.436055ms)
+✔ import alias preserves literal encoded API root and unknown wrapper caller selection (140.589411ms)
+✔ API-capable reader declaration does not qualify new stdout forwarding: inventory (133.211844ms)
+✔ API-capable reader declaration does not qualify new stdout forwarding: fixture journal (437.47744ms)
+✔ mutable declaration role downgrade cannot relabel the four Source-owned capabilities non-API (641.172919ms)
+✔ fresh but unrelated operation metadata cannot renew a selected utility receiver (150.292556ms)
+✔ Source-owned writer selection survives finite aliases and opaque namespace escapes: persistResult (283.244604ms)
+✔ Source-owned writer selection survives finite aliases and opaque namespace escapes: publishJsonPair (2133.684521ms)
+✔ same export spelling in an unrelated namespace cannot borrow Source-owned writer identity (131.49895ms)
+✔ warm namespace capability reacquires changed exact receiver Source: persistResult (147.64548ms)
+✔ warm namespace capability reacquires changed exact receiver Source: publishJsonPair (343.250954ms)
+✔ opaque contained-file DATA survives descriptor shape, fresh/deleted/forged receipts and warm receiver changes: staging (239.077116ms)
+✔ opaque contained-file DATA survives descriptor shape, fresh/deleted/forged receipts and warm receiver changes: store (238.671565ms)
+ℹ tests 28
+ℹ suites 0
+ℹ pass 28
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 10485.331287

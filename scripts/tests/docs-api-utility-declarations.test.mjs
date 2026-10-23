@@ -139,3 +139,23 @@ for(const [name,utility,args]of [
  const changed=read(utility).replace('function '+name+'(', 'function changedWriter(');assert.notEqual(changed,read(utility));write(utility,changed);
  const after=classify(source);assert.equal(after.filter(role=>role.sink==='native-file-writer-call').length,0,'stale resolved callable survived receiver change');assert(after.some(role=>role.role==='unknown'),'unresolved namespace capability disappeared');
 }));
+// Descriptor syntax cannot establish the role of separately copied file DATA.
+for(const [name,body,call]of [
+ ['staging',"import {stageEvidenceFiles} from '../skills/buster/engine/test-gates/artifacts.ts';const declarations=[{evidenceId:'x',type:'artifact',file:'api.json',mediaType:'application/octet-stream'}];",'stageEvidenceFiles(process.argv[2],process.argv[3],declarations,1,4096)'],
+ ['store',"import {FileEvidenceStore} from '../skills/buster/engine/test-gates/artifacts.ts';const store=new FileEvidenceStore('/output');const declaration={evidenceId:'x',type:'artifact',file:'api.json',mediaType:'application/octet-stream'};","store.store('attempt',process.argv[2],declaration,4096)"],
+])test('opaque contained-file DATA survives descriptor shape, fresh/deleted/forged receipts and warm receiver changes: '+name,()=>fixture(({root,write,read,update})=>{
+ const source='tools/opaque.mjs',writer='skills/buster/engine/test-gates/artifacts.ts';write(source,body+call+';');
+ // The descriptor deliberately names actual API-bearing fixture bytes, but no
+ // copied product module is evaluated and the AST analyzer must not infer a
+ // non-API role from the declaration or the media type.
+ write('api.json','{"apiVersion":"v1","kind":"Secret","metadata":{"name":"synthetic"}}');
+ const classify=createSerializedOutputRoleClassifier(root);
+ const check=classifier=>{const sinks=classifier(source).filter(r=>r.sink==='native-file-writer-call');assert.equal(sinks.length,1);assert.equal(sinks[0].role,'unknown');assert.equal(sinks[0].basis,'opaque-contained-file-DATA-not-descriptor-shape');};
+ check(classify);check(s=>classifySerializedOutputRoles(root,s));
+ const selectors=[{expression:call}],facts=deriveNativeOperationFacts(root,source,selectors);assert(facts);
+ update(registry=>{registry.nativeFileWriterCapabilities=[];registry.nativeFileWriterCallContracts=[{source,call,basis:'pretend-reviewed-descriptor',operations:[{source,selectors,factsDigest:nativeOperationFactDigest(facts)}]}];});
+ check(classify);check(s=>classifySerializedOutputRoles(root,s));
+ update(registry=>{registry.nativeFileWriterCapabilities=[{source:writer,export:'stageEvidenceFiles',inputParameter:'maximumBytes',operations:[]},{source:writer,class:'FileEvidenceStore',method:'store',inputParameter:'maximumBytes',operations:[]}];});
+ check(s=>classifySerializedOutputRoles(root,s));
+ write(writer,read(writer).replace("flag: 'wx'","flag: 'w'"));check(classify);check(s=>classifySerializedOutputRoles(root,s));
+}));

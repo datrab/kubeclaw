@@ -1,0 +1,12 @@
+✔ staging and artifact storage preserve actual API-bearing json bytes (7.619334ms)
+✔ staging and artifact storage preserve actual API-bearing yaml bytes (3.254163ms)
+✔ staging and artifact storage preserve actual API-bearing opaque bytes (3.108829ms)
+✔ API-bearing evidence still obeys byte limit and cancellation before publication (2.166865ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 121.749411

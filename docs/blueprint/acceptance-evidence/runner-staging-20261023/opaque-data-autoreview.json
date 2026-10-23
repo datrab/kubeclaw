@@ -1,0 +1,6 @@
+{
+  "findings": [],
+  "overall_correctness": "patch is correct",
+  "overall_explanation": "The change conservatively recognizes the two contained-file writer APIs as source-owned publication sinks and forces their descriptor arguments to UNKNOWN before registry or shape-based classification can qualify copied file bytes. The accompanying tests cover registry forgery/deletion, cache refresh, and both writer forms.",
+  "overall_confidence": 0.91
+}

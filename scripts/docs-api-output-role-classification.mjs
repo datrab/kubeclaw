@@ -16,6 +16,13 @@ const reviewedClosedLocalWriters = [{
 }];
 // Exact API-capable declarations, not payload waivers. Receiver syntax and
 // complete physical Source bind each operation independently of registry roles.
+// These parameters describe contained files, not their bytes. Keep the
+// publication inventory Source-owned even if mutable capability rows disappear.
+// Identity here confers no positive role and never qualifies contained DATA.
+const opaqueFileDataCapabilities = [
+ {source:'skills/buster/engine/test-gates/artifacts.ts',export:'stageEvidenceFiles',inputParameter:'declarations'},
+ {source:'skills/buster/engine/test-gates/artifacts.ts',class:'FileEvidenceStore',method:'store',inputParameter:'declaration'},
+];
 const reviewedApiUtilityDeclarations = [
   {
     "source": "scripts/observability-retirement/files.mjs",
@@ -342,7 +349,9 @@ export function createSerializedOutputRoleClassifier(root,universe=[]) {
  // Only acquisition constructs these receipts; mutable registry fields cannot.
  const privateProjectionReceipts=new WeakSet(),apiUtilityReceipts=new WeakSet();
  const sourceOwnedWriterCapabilities=new WeakSet();
- const nativeWriterCapabilities=[...reviewedApiUtilityDeclarations.filter(profile=>profile.writerExport).map(profile=>{const capability=Object.freeze({source:profile.source,export:profile.writerExport,inputParameter:profile.inputParameter});sourceOwnedWriterCapabilities.add(capability);return capability;}),...(roleRegistry.nativeFileWriterCapabilities??[]).filter(capability=>!reviewedApiUtilityDeclarations.some(profile=>profile.writerExport&&profile.source===capability.source))];
+ const opaqueFileDataWriters=new WeakSet();
+ const opaqueWriters=opaqueFileDataCapabilities.map(profile=>{const capability=Object.freeze({...profile});opaqueFileDataWriters.add(capability);return capability;});
+ const nativeWriterCapabilities=[...opaqueWriters,...reviewedApiUtilityDeclarations.filter(profile=>profile.writerExport).map(profile=>{const capability=Object.freeze({source:profile.source,export:profile.writerExport,inputParameter:profile.inputParameter});sourceOwnedWriterCapabilities.add(capability);return capability;}),...(roleRegistry.nativeFileWriterCapabilities??[]).filter(capability=>!opaqueFileDataCapabilities.some(profile=>profile.source===capability.source&&(profile.export?profile.export===capability.export:profile.class===capability.class&&profile.method===capability.method))&&!reviewedApiUtilityDeclarations.some(profile=>profile.writerExport&&profile.source===capability.source))];
  function utilitySourceProfile(source){
   const profile=reviewedApiUtilityDeclarations.find(value=>value.source===source);if(!profile)return null;
   const file=path.join(root,source);if(!fs.existsSync(file)||fs.realpathSync(file)!==file||!fs.statSync(file).isFile())return null;
@@ -842,6 +851,10 @@ export function createSerializedOutputRoleClassifier(root,universe=[]) {
    dependencies.add(state.file);
    return {role:'non-api',basis:'Source-owned-bounded-guarded-exposure-predecessor-string-array-codec'};
   }
+  // A fixed descriptor (even one with API-looking fields) is not the file
+  // copied by readContainedFile. Return before shape inference AND all native
+  // receipt fallbacks; refreshed writer/consumer digests cannot qualify DATA.
+  if(sink.expression.getText(state.tree)==='native-file-writer-call'&&opaqueFileDataWriters.has(sink.capability))return {...unknown(argument,state),basis:'opaque-contained-file-DATA-not-descriptor-shape'};
   if(sink.closedWriterDeclaration)return {role:'api-capable-utility',basis:'reviewed-private-writer-with-all-direct-callers-projected',expression:argument.getText(state.tree),closedWriterDeclaration:sink.closedWriterDeclaration};
   // These declarations retain API capability regardless of a mutable role or
   // basis field. Fresh operations are evidence, not authority to relabel them.

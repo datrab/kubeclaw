@@ -1,0 +1,36 @@
+{
+  "updatedAt": "2026-10-23T16:28:57.838442+00:00",
+  "helperCommit": "fe588b1a6267eb47f785d0c748db9f6f3e9a3b4f",
+  "reviewSettings": {
+    "engine": "codex",
+    "model": "gpt-5.6-terra",
+    "thinking": "high",
+    "maxPriority": "P2"
+  },
+  "scope": "conservative opaque-contained-file-DATA classification; no metadata renewal or acceptance",
+  "sourceOnly": true,
+  "reviewerExecutedTests": false,
+  "contextTransformation": "Only noncredential unitToken => unitBasenamePart in classifier context copy, explicitly disclosed to reviewer; actual Source unchanged",
+  "context": [
+    {
+      "path": "scripts/docs-api-output-role-classification.mjs",
+      "bytes": 144333,
+      "sha256": "e02f1231c2a97bc455760244cbd00682cb5b2fe9315ae12140662a0219a291a8"
+    },
+    {
+      "path": ".cache/pr13-opaque-review/source.txt",
+      "bytes": 144347,
+      "sha256": "f200cf4482edc7ea31d1c721cae46fb179e25bf393c4a94e4274946212be1358"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/artifacts.ts",
+      "bytes": 5273,
+      "sha256": "4eedb9892218a3b0ee8a9b14d22c8e37b29c454333adbdf4cbae1772f44e5179"
+    },
+    {
+      "path": "scripts/tests/docs-api-utility-declarations.test.mjs",
+      "bytes": 17558,
+      "sha256": "e8f279065e07f60c6fb47b9bf2dab2c2c507ab5e16e0ef70a16b3e1dd04ae6dd"
+    }
+  ]
+}
