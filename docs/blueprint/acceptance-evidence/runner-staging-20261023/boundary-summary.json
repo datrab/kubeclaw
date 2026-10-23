@@ -1,0 +1,38 @@
+{
+  "updatedAt": "2026-10-23T16:12:52.105021+00:00",
+  "scope": "Four local utility DATA-boundary controls and inert AST descriptor-indirection diagnostic only",
+  "testCommand": "node --test tests/verification/integration/evidence-staging-api-boundary.test.mts",
+  "testResult": "4 passed; no provider/runner/API/deploy execution",
+  "review": {
+    "helperCommit": "fe588b1a6267eb47f785d0c748db9f6f3e9a3b4f",
+    "engine": "codex",
+    "model": "gpt-5.6-terra",
+    "thinking": "high",
+    "maxPriority": "P2",
+    "sourceOnly": true,
+    "reviewerExecutedTests": false,
+    "result": "clean, confidence0.93",
+    "inputLimits": "Each complete unchanged dataset below180000bytes; helper aggregates datasets separately from printed diff bundle and fails closed on truncation; one review pass. No truncation markers in retained stdout/stderr.",
+    "datasets": [
+      {
+        "path": "skills/buster/engine/test-gates/runner.ts",
+        "bytes": 72068,
+        "sha256": "d6695dc52cd1919a88f7feed8051a543bdd9cee260b95afb829cbcee6f254919"
+      },
+      {
+        "path": "skills/buster/engine/test-gates/artifacts.ts",
+        "bytes": 5273,
+        "sha256": "4eedb9892218a3b0ee8a9b14d22c8e37b29c454333adbdf4cbae1772f44e5179"
+      },
+      {
+        "path": "contracts/pipeline-test-gate/v1/src/types.ts",
+        "bytes": 11579,
+        "sha256": "704d87007fce75e3f6d8eafd73273478de08c0bf6b1d0ee753f3da31b9fc010c"
+      }
+    ],
+    "command": "CODEX_HOME=<existing-agent-codex-home> TMPDIR=<owned-workspace-tmp> PATH=<verified-trufflehog-3.99.4>:$PATH bash /home/node/.openclaw/agents/main/agent/workshop-skills/autoreview-terra/scripts/run-autoreview.sh --mode local --engine codex --codex-bin /app/extensions/codex/node_modules/.bin/codex --max-priority P2 --json-output <operations-evidence>/evidence-staging-boundary-final-review.json --dataset skills/buster/engine/test-gates/runner.ts --dataset skills/buster/engine/test-gates/artifacts.ts --dataset contracts/pipeline-test-gate/v1/src/types.ts --prompt <bounded-controls-and-negative-diagnostic-scope>"
+  },
+  "originalBlocker": "API_PRODUCT_SCRIPT_OUTPUT_ROLE_UNQUALIFIED: skills/buster/engine/test-gates/runner.ts:1263: errorCandidates",
+  "semanticFinding": "Fixed declaration array is incorrectly inferred non-api even without receipt; fresh fixture-only native caller receipt also non-api. Underlying bytes can contain API documents. No original receipt changed.",
+  "acceptance": "56/89gates and224/261requirements unchanged; no additional acceptance. Runtime RELEASE_CONFIGURATION_CHANGED preserved."
+}

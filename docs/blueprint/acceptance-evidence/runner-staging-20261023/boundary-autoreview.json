@@ -1,0 +1,6 @@
+{
+  "findings": [],
+  "overall_correctness": "patch is correct",
+  "overall_explanation": "The added utility tests accurately exercise byte-preserving staging and storage behavior plus budget and cancellation controls. The README and inert AST diagnostic are scoped consistently with those tests and do not claim runner-wide acceptance coverage.",
+  "overall_confidence": 0.93
+}

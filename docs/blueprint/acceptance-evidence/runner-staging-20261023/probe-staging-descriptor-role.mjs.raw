@@ -1,0 +1,28 @@
+import fs from 'node:fs';
+import os from 'node:os';
+import path from 'node:path';
+import {pathToFileURL} from 'node:url';
+const repo=process.cwd();
+const {classifySerializedOutputRoles,deriveNativeOperationFacts,nativeOperationFactDigest}=await import(pathToFileURL(path.join(repo,'scripts/docs-api-output-role-classification.mjs')));
+const root=fs.mkdtempSync(path.join(os.tmpdir(),'pr13-staging-role-probe-'));
+const source='tools/caller.mjs',writer='skills/buster/engine/test-gates/artifacts.ts';
+const write=(p,b)=>{const f=path.join(root,p);fs.mkdirSync(path.dirname(f),{recursive:true});fs.writeFileSync(f,b);};
+try {
+ write('package.json','{}');
+ fs.cpSync(path.join(repo,'contracts'),path.join(root,'contracts'),{recursive:true});
+ fs.mkdirSync(path.join(root,'node_modules/@kubeclaw'),{recursive:true});
+ for(const name of fs.readdirSync(path.join(repo,'node_modules/@kubeclaw'))){const target=fs.realpathSync(path.join(repo,'node_modules/@kubeclaw',name)),relative=path.relative(repo,target);if(relative.startsWith('contracts/'))fs.symlinkSync(path.join(root,relative),path.join(root,'node_modules/@kubeclaw',name),'dir');}
+ write(writer,fs.readFileSync(path.join(repo,writer)));
+ const call="stageEvidenceFiles(process.argv[2],process.argv[3],declarations,1,4096)";
+ write(source,`import {stageEvidenceFiles} from '../${writer}';\nconst declarations=[{evidenceId:'synthetic',type:'artifact',file:'api.json',mediaType:'application/octet-stream'}];\n${call};\n`);
+ const original=JSON.parse(fs.readFileSync(path.join(repo,'scripts/docs-api-producer-adapter-authorities.json')));
+ const cap=structuredClone(original.nativeFileWriterCapabilities.find(c=>c.source===writer&&c.export==='stageEvidenceFiles'));
+ for(const operation of cap.operations)operation.factsDigest=nativeOperationFactDigest(deriveNativeOperationFacts(root,operation.source,operation.selectors));
+ const registry={nativeFileWriterCapabilities:[cap],nativeFileWriterCallContracts:[]};
+ const save=()=>write('scripts/docs-api-producer-adapter-authorities.json',JSON.stringify(registry));
+ save();const withoutReceipt=classifySerializedOutputRoles(root,source);
+ const selectors=[{expression:call}],facts=deriveNativeOperationFacts(root,source,selectors);
+ registry.nativeFileWriterCallContracts.push({source,call,basis:'diagnostic-only-fresh-receipt-not-acceptance',operations:[{source,selectors,factsDigest:nativeOperationFactDigest(facts)}]});
+ save();const refreshedReceipt=classifySerializedOutputRoles(root,source);
+ process.stdout.write(JSON.stringify({scope:'Inert AST only; no copied product module evaluated; no API action; no repository authority edited',source:fs.readFileSync(path.join(root,source),'utf8'),withoutReceipt,refreshedReceipt,interpretation:'Compare with runtime utility control: declarations can point to actual API bytes. This probe observes current classifier behavior, not a passing acceptance test or permission to renew any original receipt.'},null,2)+'\n');
+}finally{fs.rmSync(root,{recursive:true,force:true});}
