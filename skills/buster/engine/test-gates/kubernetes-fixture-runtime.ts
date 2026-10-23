@@ -1,4 +1,6 @@
 import crypto from 'node:crypto';
+import { validateFixtureNetworkPolicy } from './kubernetes-network-envelope.ts';
+import { fixturePodIsReady } from './kubernetes-pod-readiness.ts';
 import { assertGeneratedCredentialLease,generatedDemoCredentials } from './generated-demo-credentials.ts';
 import { runProcessInput } from './process-input.ts';
 import fs from 'node:fs';
@@ -299,7 +301,7 @@ function validatePodSecurity(spec: JsonObject): void {
 
 function inspectManifest(bytes: Buffer, immutableImage: string, maximumResources: number,
   allowedRegistryPrefixes: readonly string[], serviceName: string, servicePort: number,
-  expectedServiceTargetPort: number | null, persistentVolumePolicy: PersistentVolumePolicy):
+  expectedServiceTargetPort: number | null, persistentVolumePolicy: PersistentVolumePolicy, verifiedImages?: readonly string[]):
   { resources: number; workloads: number; serviceTargetPort: number } {
   const loaded = boundedManifestDocuments(bytes);
   const documents = flattenDocuments(loaded, maximumResources);
@@ -317,7 +319,7 @@ function inspectManifest(bytes: Buffer, immutableImage: string, maximumResources
     const metadata = object(document.metadata, 'metadata');
     text(metadata.name, 'metadata.name', 253);
     if (CLUSTER_SCOPED_KINDS.has(kind)) throw new Error(`KUBERNETES_FIXTURE_CLUSTER_SCOPE_DENIED:${kind}`);
-    if (!ALLOWED_NAMESPACED_KINDS.has(kind)) throw new Error(`KUBERNETES_FIXTURE_RESOURCE_KIND_DENIED:${kind}`);
+    if (!(kind === 'NetworkPolicy' && verifiedImages) && !ALLOWED_NAMESPACED_KINDS.has(kind)) throw new Error(`KUBERNETES_FIXTURE_RESOURCE_KIND_DENIED:${kind}`);
     if (metadata.namespace !== undefined) throw new Error(`KUBERNETES_FIXTURE_NAMESPACE_FIELD_DENIED:${kind}`);
     if (!apiVersion.includes('/') && apiVersion !== 'v1') throw new Error('KUBERNETES_FIXTURE_API_VERSION_INVALID');
     for (const claim of persistentVolumeClaims(document)) {
@@ -326,6 +328,10 @@ function inspectManifest(bytes: Buffer, immutableImage: string, maximumResources
       if (persistentVolumeTotalBytes > persistentVolumePolicy.maximumTotalBytes) {
         throw new Error('KUBERNETES_FIXTURE_PVC_TOTAL_SIZE_DENIED');
       }
+    }
+    if (kind === 'NetworkPolicy') {
+      if (apiVersion !== 'networking.k8s.io/v1') throw new Error('KUBERNETES_FIXTURE_NETWORK_POLICY_INVALID');
+      validateFixtureNetworkPolicy(document.spec);
     }
     if (kind === 'Service') {
       const spec = object(document.spec, 'service.spec');
@@ -368,6 +374,7 @@ function inspectManifest(bytes: Buffer, immutableImage: string, maximumResources
           if (!allowedRegistryPrefixes.some((prefix) => parsed[1] === prefix || parsed[1]!.startsWith(`${prefix}/`))) {
             throw new Error(`KUBERNETES_FIXTURE_IMAGE_REGISTRY_DENIED:${image}`);
           }
+          if (verifiedImages && !verifiedImages.includes(image)) throw new Error(`KUBERNETES_FIXTURE_UNVERIFIED_IMAGE:${image}`);
           if (image === immutableImage) matchedImage = true;
           for (const rawPort of Array.isArray(containerObject.ports) ? containerObject.ports : []) {
             const port = object(rawPort, 'container.port');
@@ -555,11 +562,7 @@ export class KubernetesFixtureCapabilityInvoker implements TestProviderCapabilit
           const pod = object(rawPod, 'pod');
           const metadata = object(pod.metadata, 'pod.metadata');
           const status = object(pod.status ?? {}, 'pod.status');
-          const conditions = Array.isArray(status.conditions) ? status.conditions : [];
-          const ready = conditions.some((condition) => {
-            const item = condition && typeof condition === 'object' && !Array.isArray(condition) ? condition as JsonObject : {};
-            return item.type === 'Ready' && item.status === 'True';
-          });
+          const ready = fixturePodIsReady({ ...pod, status });
           if (!ready) pending.push(String(metadata.name ?? 'unknown'));
         }
         if (pending.length === 0) return items.length;
@@ -652,6 +655,22 @@ export class KubernetesFixtureCapabilityInvoker implements TestProviderCapabilit
     if (payload.imageDigest !== image[2] || !DIGEST.test(String(payload.imageDigest))) {
       throw new Error('KUBERNETES_FIXTURE_IMAGE_DIGEST_INVALID');
     }
+    let verifiedImages: string[] | undefined;
+    if (payload.fullStack !== undefined) {
+      if (payload.fullStack !== true) throw new Error('KUBERNETES_FIXTURE_FULL_STACK_INVALID');
+      verifiedImages = stringArray(payload.verifiedImages, 'verifiedImages', 32);
+      if (!verifiedImages.length || !verifiedImages.includes(immutableImage) || verifiedImages.some((ref) => {
+        const parsed = IMMUTABLE_IMAGE.exec(ref);
+        return !parsed || !this.#registryPrefixes.some((prefix) => parsed[1] === prefix || parsed[1]!.startsWith(`${prefix}/`));
+      })) throw new Error('KUBERNETES_FIXTURE_IMAGE_INVENTORY_INVALID');
+      verifiedImages.sort();
+    } else if (payload.verifiedImages !== undefined) throw new Error('KUBERNETES_FIXTURE_FULL_STACK_REQUIRED');
+    const replacementSelectors = payload.podReplacementSelectors ?? [];
+    if (!Array.isArray(replacementSelectors) || replacementSelectors.length > 8 || (replacementSelectors.length > 0 && !verifiedImages)) throw new Error('KUBERNETES_FIXTURE_REPLACEMENT_SELECTORS_INVALID');
+    for (const raw of replacementSelectors) {
+      const labels = object(raw, 'replacementSelector');
+      if (!Object.keys(labels).length || Object.keys(labels).length > 32 || Object.entries(labels).some(([key, value]) => !key || typeof value !== 'string' || value.length > 63)) throw new Error('KUBERNETES_FIXTURE_REPLACEMENT_SELECTORS_INVALID');
+    }
     const manifestDigest = text(payload.manifestDigest, 'manifestDigest', 71);
     if (!DIGEST.test(manifestDigest)) throw new Error('KUBERNETES_FIXTURE_MANIFEST_DIGEST_INVALID');
     const manifestPath = contained(this.#root, payload.manifestPath);
@@ -671,7 +690,7 @@ export class KubernetesFixtureCapabilityInvoker implements TestProviderCapabilit
         allowDefaultStorageClass: this.#allowDefaultStorageClass,
         maximumClaimBytes: this.#maximumPersistentVolumeClaimBytes,
         maximumTotalBytes: this.#maximumPersistentVolumeTotalBytes,
-      });
+      }, verifiedImages);
     const retentionSeconds = integer(payload.retentionSeconds, 'retentionSeconds', 60, this.#maximumRetentionSeconds);
     const retentionMode = text(payload.retentionMode, 'retentionMode', 6);
     if (retentionMode !== 'delete' && retentionMode !== 'retain') {
@@ -689,6 +708,12 @@ export class KubernetesFixtureCapabilityInvoker implements TestProviderCapabilit
       testCredentials = { mode, secretName, keys: ['username', 'password'],
         readers: [...new Set([this.#credentialReaderSubject, this.#runnerSubject])] };
     }
+    const documents = verifiedImages ? flattenDocuments(boundedManifestDocuments(bytes), this.#maximumResources) : [];
+    const networkPolicies = documents.filter(doc => doc.kind === 'NetworkPolicy').map(doc => ({ name: object(doc.metadata, 'metadata').name, spec: doc.spec }));
+    const endpointService = documents.find(doc => doc.kind === 'Service' && object(doc.metadata, 'metadata').name === serviceName);
+    const endpointSelector = endpointService ? object(object(endpointService.spec, 'service.spec').selector, 'service.selector') : undefined;
+    if (verifiedImages && (!endpointSelector || Object.keys(endpointSelector).length === 0)) throw new Error('KUBERNETES_FIXTURE_SERVICE_SELECTOR_REQUIRED');
+    const applyBytes = verifiedImages ? JSON.stringify({ apiVersion: 'v1', kind: 'List', items: documents.filter(doc => doc.kind !== 'NetworkPolicy') }) : bytes;
     const lease = {
       apiVersion: `${this.#apiGroup}/${this.#apiVersion}`, kind: 'BusterNamespaceLease',
       metadata: { name: leaseName, namespace: this.#controllerNamespace,
@@ -696,6 +721,7 @@ export class KubernetesFixtureCapabilityInvoker implements TestProviderCapabilit
       spec: { namespaceName, namespacePrefix, runId: leaseName, project: text(payload.project, 'project', 253),
         purpose: 'gate', serviceName, servicePort, serviceTargetPort: facts.serviceTargetPort, cleanupPolicy: retentionMode,
         verifiedImage: immutableImage, manifestDigest,
+        ...(verifiedImages ? { fullStack: true, verifiedImages, networkPolicies, endpointSelector } : {}),
         ttlSeconds: retentionSeconds, access: [{ subject: this.#runnerSubject, mode: 'deployer' }],
         secretsToCopy: secretReferences, ...(testCredentials ? { testCredentials } : {}), exposure: { provider: 'off' } },
     };
@@ -712,12 +738,25 @@ export class KubernetesFixtureCapabilityInvoker implements TestProviderCapabilit
       status = await this.#waitLease(leaseName, signal, readinessTimeoutMs);
       const actualNamespace = text(status.namespaceName, 'status.namespaceName', 63);
       if (actualNamespace !== namespaceName) throw new Error('KUBERNETES_FIXTURE_NAMESPACE_MISMATCH');
-      await this.#kubectlRun(['apply', '--namespace', namespaceName, '-f', '-'], bytes, signal, readinessTimeoutMs);
+      await this.#kubectlRun(['apply', '--namespace', namespaceName, '-f', '-'], applyBytes, signal, readinessTimeoutMs);
       const readinessDeadline = Date.now() + readinessTimeoutMs;
       const podCount = await this.#waitPods(namespaceName, signal, readinessTimeoutMs);
       const serviceReadinessMs = readinessDeadline - Date.now();
       if (serviceReadinessMs <= 0) throw new Error('KUBERNETES_FIXTURE_SERVICE_READINESS_TIMEOUT:Readiness deadline expired.');
       await this.#waitService(namespaceName, serviceName, servicePort, signal, serviceReadinessMs);
+      const podReplacements: Readonly<Record<string, unknown>>[] = [];
+      for (const raw of replacementSelectors) {
+        const selector = object(raw, 'replacementSelector');
+        const list = object(JSON.parse(await this.#kubectlRun(['get', 'pods', '-n', namespaceName, '-o', 'json'], null, signal, 15_000)), 'pods');
+        const candidates = (Array.isArray(list.items) ? list.items : []).map(item => object(item, 'pod')).filter(pod => {
+          const labels = object(object(pod.metadata, 'metadata').labels ?? {}, 'labels');
+          return Object.entries(selector).every(([key, value]) => labels[key] === value);
+        });
+        if (candidates.length !== 1) throw new Error('KUBERNETES_FIXTURE_REPLACEMENT_SELECTOR_NOT_UNIQUE');
+        const fresh = object(JSON.parse(await this.#kubectlRun(['get', resource, leaseName, '-n', this.#controllerNamespace, '-o', 'json'], null, signal, 15_000)), 'lease');
+        const pod = object(candidates[0]!.metadata, 'metadata');
+        podReplacements.push(await this.#replacePod({ leaseName, leaseUID: object(fresh.metadata, 'metadata').uid, namespace: namespaceName, podName: pod.name, podUID: pod.uid, timeoutMs: readinessTimeoutMs }, signal));
+      }
       const createdAt = text(status.createdAt, 'status.createdAt', 64);
       if (!Number.isFinite(Date.parse(createdAt))) throw new Error('KUBERNETES_FIXTURE_CREATED_AT_INVALID');
       const expiresAt = typeof status.expiresAt === 'string' ? status.expiresAt : new Date(Date.parse(createdAt) + retentionSeconds * 1_000).toISOString();
@@ -729,11 +768,69 @@ export class KubernetesFixtureCapabilityInvoker implements TestProviderCapabilit
         manifestDigest, immutableImage, secretReferences,
         ...(testCredentials ? { credentialsRef: testCredentials.secretName } : {}),
         ...(generatedCredentials ? { generatedCredentials } : {}),
-        resourceCount: facts.resources, workloadCount: facts.workloads, podCount });
+        resourceCount: facts.resources, workloadCount: facts.workloads, podCount, ...(podReplacements.length ? { podReplacements } : {}) });
     } catch (error) {
       await this.#releaseAfterPrepareFailure(leaseName).catch(() => undefined);
       throw error;
     }
+  }
+
+  async #replacePod(payload: JsonObject, signal: AbortSignal): Promise<Readonly<Record<string, unknown>>> {
+    const timeoutMs = integer(payload.timeoutMs, 'timeoutMs', 1000, this.#maximumExecutionMs);
+    const leaseName = text(payload.leaseName, 'leaseName', 63);
+    const namespace = text(payload.namespace, 'namespace', 63);
+    const podName = text(payload.podName, 'podName', 63);
+    const podUID = text(payload.podUID, 'podUID', 128);
+    const leaseUID = text(payload.leaseUID, 'leaseUID', 128);
+    if (![leaseName, namespace, podName].every(value => DNS_LABEL.test(value))) throw new Error('KUBERNETES_FIXTURE_REPLACEMENT_NAME_INVALID');
+    const resource = `busternamespaceleases.${this.#apiGroup}`;
+    const lease = object(JSON.parse(await this.#kubectlRun(['get', resource, leaseName, '-n', this.#controllerNamespace, '-o', 'json'], null, signal, 15_000)), 'lease');
+    const metadata = object(lease.metadata, 'lease.metadata');
+    const spec = object(lease.spec, 'lease.spec');
+    const status = object(lease.status, 'lease.status');
+    if (metadata.uid !== leaseUID || metadata.deletionTimestamp || spec.fullStack !== true || spec.purpose !== 'gate'
+      || spec.namespaceName !== namespace || status.namespaceName !== namespace || status.phase !== 'Ready'
+      || !this.#namespacePrefixes.has(String(spec.namespacePrefix)) || !namespace.startsWith(`${String(spec.namespacePrefix)}-`)
+      || !Number.isFinite(Date.parse(String(status.expiresAt))) || Date.parse(String(status.expiresAt)) <= Date.now()) {
+      throw new Error('KUBERNETES_FIXTURE_REPLACEMENT_LEASE_DENIED');
+    }
+    const allowed = (await this.#kubectlRun(['auth', 'can-i', 'patch', resource, '-n', this.#controllerNamespace], null, signal, 15_000)).trim();
+    if (allowed !== 'yes') throw new Error('KUBERNETES_FIXTURE_RBAC_DENIED:patch');
+    const before = object(JSON.parse(await this.#kubectlRun(['get', 'pods', '-n', namespace, '-o', 'json'], null, signal, 15_000)), 'pods');
+    const beforeItems = Array.isArray(before.items) ? before.items.map(value => object(value, 'pod')) : [];
+    const original = beforeItems.find(pod => object(pod.metadata, 'metadata').name === podName && object(pod.metadata, 'metadata').uid === podUID);
+    if (!original) throw new Error('KUBERNETES_FIXTURE_REPLACEMENT_POD_CHANGED');
+    const owner = (object(original.metadata, 'metadata').ownerReferences as JsonObject[] | undefined)?.find(value => value.controller === true && ['ReplicaSet', 'StatefulSet'].includes(String(value.kind)));
+    if (!owner || typeof owner.uid !== 'string') throw new Error('KUBERNETES_FIXTURE_REPLACEMENT_OWNER_REQUIRED');
+    const sameOwner = (pod: JsonObject): boolean => {
+      const owners = object(pod.metadata, 'metadata').ownerReferences;
+      return Array.isArray(owners) && owners.some(value => object(value, 'owner').uid === owner.uid && object(value, 'owner').controller === true);
+    };
+    const originalCount = beforeItems.filter(sameOwner).length;
+    const requestId = crypto.randomUUID();
+    const request = { requestId, leaseUID, namespace, podName, podUID };
+    const patch = JSON.stringify({ metadata: { resourceVersion: metadata.resourceVersion,
+      annotations: { 'kubeclaw.forgestack.ai/replace-pod': JSON.stringify(request) } } });
+    await this.#kubectlRun(['patch', resource, leaseName, '-n', this.#controllerNamespace, '--type=merge', '-p', patch], null, signal, 15_000);
+    const deadline = Date.now() + timeoutMs;
+    while (Date.now() < deadline) {
+      const fresh = object(JSON.parse(await this.#kubectlRun(['get', resource, leaseName, '-n', this.#controllerNamespace, '-o', 'json'], null, signal, Math.max(1, Math.min(15_000, deadline - Date.now())))), 'lease');
+      if (object(fresh.metadata, 'metadata').uid !== leaseUID || object(fresh.metadata, 'metadata').deletionTimestamp
+        || object(fresh.status, 'status').phase !== 'Ready' || Date.parse(String(object(fresh.status, 'status').expiresAt)) <= Date.now()) throw new Error('KUBERNETES_FIXTURE_REPLACEMENT_LEASE_CHANGED');
+      const receipt = object(object(fresh.status, 'status').podReplacement ?? {}, 'podReplacement');
+      if (receipt.requestId === requestId && receipt.podUID === podUID && receipt.phase === 'DeletionRequested') {
+        const pods = object(JSON.parse(await this.#kubectlRun(['get', 'pods', '-n', namespace, '-o', 'json'], null, signal, Math.max(1, Math.min(15_000, deadline - Date.now())))), 'pods');
+        const items = Array.isArray(pods.items) ? pods.items.map(value => object(value, 'pod')) : [];
+        if (items.filter(sameOwner).length >= originalCount && items.filter(sameOwner).every(fixturePodIsReady)
+          && !items.some(pod => object(pod.metadata, 'metadata').uid === podUID)) {
+          await this.#waitPods(namespace, signal, Math.max(1, deadline - Date.now()));
+          await this.#waitService(namespace, String(spec.serviceName), Number(spec.servicePort), signal, Math.max(1, deadline - Date.now()));
+          return { ok: true, ...request, phase: 'ReadyAfterReplacement', observedAt: new Date().toISOString() };
+        }
+      }
+      await waitForPoll(Math.min(this.#pollIntervalMs, Math.max(0, deadline - Date.now())), signal);
+    }
+    throw new Error('KUBERNETES_FIXTURE_REPLACEMENT_TIMEOUT');
   }
 
   async #release(leaseName: string, signal: AbortSignal): Promise<Readonly<Record<string, unknown>>> {
@@ -748,6 +845,7 @@ export class KubernetesFixtureCapabilityInvoker implements TestProviderCapabilit
       || !/^kubernetes-fixture:attempt:[A-Za-z0-9._:-]+$/u.test(request.resource.canonicalId)) {
       throw new Error('KUBERNETES_FIXTURE_CAPABILITY_REQUEST_INVALID');
     }
+    if (request.operation === 'replace-pod') return this.#replacePod(object(request.payload, 'payload'), signal);
     if (request.operation === 'prepare') return this.#prepare(request, signal);
     if (request.operation === 'release') {
       const payload = object(request.payload, 'payload');

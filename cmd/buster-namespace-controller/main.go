@@ -346,6 +346,9 @@ func (c *controller) expireLease(ctx context.Context, item *lease, namespaceName
 }
 
 func (c *controller) reconcileReadyLease(ctx context.Context, item *lease, namespaceName string) error {
+	if handled, err := c.reconcilePodReplacement(ctx, item, namespaceName); handled || err != nil {
+		return err
+	}
 	if err := c.verifyNamespaceOwnership(ctx, item, namespaceName); err != nil {
 		return err
 	}
@@ -495,7 +498,7 @@ func securityItems(value map[string]interface{}) []interface{} {
 	return interfaceSlice(value["items"])
 }
 
-func inspectRuntimeSecurityState(state map[string]map[string]interface{}, immutableImage string, expectedRBAC []map[string]interface{}) ([]interface{}, int, int) {
+func inspectRuntimeSecurityState(state map[string]map[string]interface{}, immutableImage string, expectedRBAC []map[string]interface{}, inventory ...string) ([]interface{}, int, int) {
 	findings := []interface{}{}
 	for _, rawPod := range securityItems(state["pods"]) {
 		pod := securityObject(rawPod)
@@ -517,7 +520,7 @@ func inspectRuntimeSecurityState(state map[string]map[string]interface{}, immuta
 		for _, rawContainer := range containers {
 			container := securityObject(rawContainer)
 			containerName := stringValueDefault(container["name"], "unknown")
-			if stringValue(container["image"]) != immutableImage {
+			if stringValue(container["image"]) != immutableImage && !contains(inventory, stringValue(container["image"])) {
 				findings = append(findings, securityFinding("runtime:"+podName+":"+containerName+":image", "critical", "Runtime image differs from the verified immutable image.", "Pod/"+podName))
 			}
 			security := securityObject(container["securityContext"])
@@ -579,7 +582,7 @@ func (c *controller) runtimeSecurityStatus(ctx context.Context, item *lease, nam
 	if err != nil {
 		return nil, err
 	}
-	findings, podCount, serviceCount := inspectRuntimeSecurityState(state, immutableImage, expected)
+	findings, podCount, serviceCount := inspectRuntimeSecurityState(state, immutableImage, expected, stringSlice(item.Spec["verifiedImages"])...)
 	findings, totalFindingCount, omittedFindingCount := boundedRuntimeSecurityFindings(findings)
 	resultDigest := runtimeSecurityResultDigest(findings, totalFindingCount, omittedFindingCount, podCount, serviceCount)
 	return map[string]interface{}{"phase": "Observed", "observedAt": time.Now().UTC().Format(time.RFC3339),
@@ -855,6 +858,32 @@ func (c *controller) ensureNamespaceNetworkPolicy(ctx context.Context, item *lea
 				},
 			},
 		},
+	}
+	if item.Spec["fullStack"] == true {
+		if err := validateFullStackNetwork(item.Spec); err != nil {
+			return err
+		}
+		spec := securityObject(manifest["spec"])
+		// No namespace-wide intra-fixture allow: product policy edges govern local traffic.
+		spec["ingress"] = []interface{}{}
+		egress := interfaceSlice(spec["egress"])
+		spec["egress"] = egress[1:]
+		if err := c.ensureFullStackPolicies(ctx, item, namespaceName); err != nil {
+			return err
+		}
+		endpoint := map[string]interface{}{
+			"apiVersion": "networking.k8s.io/v1", "kind": "NetworkPolicy",
+			"metadata": map[string]interface{}{"name": "buster-fixture-endpoint", "namespace": namespaceName, "labels": ownerLabels(item, namespaceName)},
+			"spec": map[string]interface{}{"podSelector": map[string]interface{}{"matchLabels": item.Spec["endpointSelector"]}, "policyTypes": []interface{}{"Ingress"},
+				"ingress": []interface{}{map[string]interface{}{"from": []interface{}{map[string]interface{}{
+					"namespaceSelector": map[string]interface{}{"matchLabels": map[string]interface{}{"kubernetes.io/metadata.name": c.namespace}},
+					"podSelector":       map[string]interface{}{"matchLabels": map[string]interface{}{"kubeclaw/role": "buster"}},
+				}}, "ports": []interface{}{map[string]interface{}{"protocol": "TCP", "port": intValue(item.Spec["serviceTargetPort"], intValue(item.Spec["servicePort"], 0))}}}}},
+		}
+		base := "/apis/networking.k8s.io/v1/namespaces/" + namespaceName + "/networkpolicies"
+		if err := c.createOrPatch(ctx, base, base+"/buster-fixture-endpoint", endpoint, nil); err != nil {
+			return err
+		}
 	}
 	return c.createOrPatch(ctx,
 		"/apis/networking.k8s.io/v1/namespaces/"+namespaceName+"/networkpolicies",
@@ -1607,6 +1636,12 @@ func (c *controller) expiresAt(item *lease) time.Time {
 }
 
 func (c *controller) validateLeaseSpec(item *lease) error {
+	if err := validateFullStackNetwork(item.Spec); err != nil {
+		return err
+	}
+	if err := validateFullStackImages(item.Spec); err != nil {
+		return err
+	}
 	ttlSeconds := intValue(item.Spec["ttlSeconds"], int(c.defaultTTL/time.Second))
 	if ttlSeconds < 60 {
 		return errors.New("ttlSeconds must be at least 60")
