@@ -706,7 +706,7 @@ export const documentationExecutableRoleRecipes = {
         "expressionSha256": "328f8dd702f5cb8ccffb9ae17cc3d577e76cd8ec81456fffa49b452e908adb55"
       }
     ],
-    "factsDigest": "936f351d54d7cfe6847c3e4cf85d66c4f7d935c283f2aa87450b669463f0ea0d",
+    "factsDigest": "ce84dc5697778b0cc82a2690094ba6497f1af3981e3dc91b080ef27a19651de4",
     "authorityInputs": [
       {
         "path": "scripts/docs-api-go-output-role-adapter.go",
@@ -924,7 +924,7 @@ export const documentationExecutableRoleRecipes = {
         "expressionSha256": "041aa7206a41cf5c3bdd66f61797f9b67c06085f6d0076ce1f84e2a9c8d57db8"
       }
     ],
-    "factsDigest": "d100f24036e887e03a62775b15022d57accc6fc143fb9ab76b9a3dac1c426956",
+    "factsDigest": "870c29402c8b7e62a3b6b4d125f3abd1cb55eb9520361a4c1b2b546160e8cb46",
     "authorityInputs": []
   },
   "scripts/docs-api-python-output-adapter.py": {
@@ -1203,7 +1203,7 @@ export const documentationExecutableRoleRecipes = {
         "expressionSha256": "9efac25cb0d8a53fc3a31aec649afa2cd99102c34366428833c403eccaef3fbe"
       }
     ],
-    "factsDigest": "12d496963c30243e60f26ea8eccbe0c940e2d3fe08145a55eb0fa2accd410edc",
+    "factsDigest": "05bf5370d911845589a83a77c4e257f047b6e3a76d46056adf44a9f136451aa7",
     "authorityInputs": []
   },
   "scripts/docs-api-schema-authorities.mjs": {
@@ -1999,7 +1999,7 @@ export const documentationExecutableRoleRecipes = {
         "expressionSha256": "7602a8f927b47cd0b4b4f2501bccd41bb8e4e4ea43e571cf4bce62f3c3717191"
       }
     ],
-    "factsDigest": "a900fc5cf8f2bca9e04ddd7a60d70e7b868937a9009a2b6b38f4f38325f21980",
+    "factsDigest": "76efbef9fd49406cfa4ddeaee9b098bf2ac09f97899a38dee8f27f14f29a24f0",
     "authorityInputs": [
       {
         "path": "scripts/vendor-external-helm-authorities.mjs",
@@ -2102,7 +2102,7 @@ export const documentationExecutableRoleRecipes = {
         "expressionSha256": "cba76d80649d6ce8d92897a224d01ee9877a1807a9de9e765cdad79d29f912ce"
       }
     ],
-    "factsDigest": "935d23b15837cdbf334186fa56e56053bd04e88bc8b38aa700c1fbd1f6af8364",
+    "factsDigest": "e72f5e5f6af030198a818e5230bccd2e59880d37be8a2aa3fe0c8586372565b7",
     "authorityInputs": []
   },
   "scripts/docs-governance.mjs": {
@@ -6103,7 +6103,7 @@ export const documentationExecutableRoleRecipes = {
   "scripts/check-capability-drift-mutations.mjs": {
     "role": "documentation-consumer",
     "qualificationKind": "reviewed-documentation-consumer/v1",
-    "sourceSha256": "31171d9e192c617b2a56cc752dd19339a485de22b19a97af30759e0d6c9a604f",
+    "sourceSha256": "11127a406716cf4372a6e066eb2700367d77da14927c7cb42d1bcb723fa6dbe0",
     "consumer": "Documentation verification harness in fresh disposable workspace: deterministic exact single-authority patches/controlled source or reader changes; child gate rejection and baseline/restoration assertions. Read-only capability vocabulary/declaration/example-policy comparison and exact documentation-boundary qualification; registration grants remain separate from swarm roles, installed registry and deployment. Source restoration and API-shaped fixture bytes remain test-only effects, not product resource outputs or child/module execution authority.",
     "selectors": [
       {
@@ -6149,7 +6149,7 @@ export const documentationExecutableRoleRecipes = {
         "expressionSha256": "a033ca56449a6593c3688e0fa8aa391f55264aa87fddd6c9a78c1ced03587c39"
       }
     ],
-    "factsDigest": "029864aeb501eabc9c072473b0d64322ac375af3d8b9161b36ac0ebf482f6263",
+    "factsDigest": "e60422376a80e9f2f25c999feb3dac3892c3dc0b14ec72d8d4b26996aca3ac04",
     "authorityInputs": [],
     "purposeInputs": [
       {
@@ -6170,7 +6170,7 @@ export const documentationExecutableRoleRecipes = {
       {
         "path": "scripts/check-capability-drift-mutations.mjs",
         "canonical": "scripts/check-capability-drift-mutations.mjs",
-        "sha256": "31171d9e192c617b2a56cc752dd19339a485de22b19a97af30759e0d6c9a604f"
+        "sha256": "11127a406716cf4372a6e066eb2700367d77da14927c7cb42d1bcb723fa6dbe0"
       },
       {
         "path": "scripts/check-capability-drift.mjs",
@@ -9593,7 +9593,7 @@ export const documentationExecutableRoleRecipes = {
       {
         "path": "scripts/check-capability-drift-mutations.mjs",
         "canonical": "scripts/check-capability-drift-mutations.mjs",
-        "sha256": "31171d9e192c617b2a56cc752dd19339a485de22b19a97af30759e0d6c9a604f"
+        "sha256": "11127a406716cf4372a6e066eb2700367d77da14927c7cb42d1bcb723fa6dbe0"
       },
       {
         "path": "scripts/check-capability-policy-drift-mutations.mjs",

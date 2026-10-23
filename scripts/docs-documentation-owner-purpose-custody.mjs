@@ -92,7 +92,7 @@ export const reviewedDocumentationOwnerPurposes=freeze({
       {
         "path": "scripts/check-capability-drift-mutations.mjs",
         "canonical": "scripts/check-capability-drift-mutations.mjs",
-        "sha256": "31171d9e192c617b2a56cc752dd19339a485de22b19a97af30759e0d6c9a604f"
+        "sha256": "11127a406716cf4372a6e066eb2700367d77da14927c7cb42d1bcb723fa6dbe0"
       },
       {
         "path": "scripts/check-capability-policy-drift-mutations.mjs",
