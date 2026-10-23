@@ -176,8 +176,8 @@ Use this authoring path:
 6. State prohibited mutations and sensitive-data rules.
 7. Explain pagination, retention, partial output, and missing coverage.
 8. Test the skill with connected tools and with missing-tool conditions.
-9. Install or update it through the Codex plugin lifecycle.
-10. Remove the plugin without claiming that external tool data was removed.
+9. Stop before installation or update at the [Codex host lifecycle boundary](testing.md#codex-host-lifecycle-boundary). The environment owner must supply the supported host version, installation path, versioned install/connect controls and effective Ops connection/tool authority. Those controls are not supplied for this package; authoring its files does not install it.
+10. Resume only after that owner supplies the required discovery, missing-tool and disable/removal checks. Use the owner-qualified removal path, verify skill absence, and retain conversation/service data; plugin removal does not delete external tool data.
 
 The current package has no package-local automated test. Its catalogue record must
 show that limit. Repository inspection proves only its manifest and skill content.

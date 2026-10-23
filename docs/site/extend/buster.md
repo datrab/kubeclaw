@@ -322,8 +322,9 @@ npm run verify:runtime-packaging:roles
 npm run verify:test-gate:provider-registry
 ```
 
-The first command installs the locked dependencies. The other commands establish
-that current role closure and the provider registry were valid before the change.
+These two commands verify current role closure and the provider registry before
+the change. They do not install dependencies; complete the locked installation
+linked above first.
 Stop if one of these checks fails. A pre-existing failure would make a later result
 ambiguous.
 
