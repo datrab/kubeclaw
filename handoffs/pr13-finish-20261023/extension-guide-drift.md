@@ -153,3 +153,28 @@ intermediate failures, full original contracts/vectors and review invocations:
 `operations/pr13/evidence/extension-guide-drift-20261023/` outside repository tmp.
 Whole A910-13/14, nested-config/Secret baseline-green mutation routes, all five
 DATA slots UNKNOWN and the selected-release Knip boundary remain open.
+
+
+## Subsequent independent Secret route investigation
+
+The original platform/Secret inventory baseline is green. Its tracked-only
+isolated copy initially failed before any mutation: exactly seven genuine,
+ignored observer generated Source files were absent from the route census.
+Copying those existing exact Source bytes into the disposable native Source-root
+fixture restored that baseline; no inventory/receipt was regenerated or relaxed.
+The registered Secret fixture then failed before patch emission with
+`constructor not implemented: yaml-secret-reference-v1`. No Secret mutation is
+credited. The nested-plugin-config registered constructor is also absent from
+the current emitter. Implement both missing registered constructors and their
+real green-baseline/restore diagnostic paths as one subsequent topic batch;
+retain the API-dependent configuration receiver's separate baseline failure.
+All failure bytes and the exact seven-file census delta are retained in the
+operations evidence directory. This is an executable source-owned next task,
+not an external-dependency or whole-gate acceptance claim.
+
+The final original tree check exposed only the completion-register digest row
+as stale after the five reviewed scope updates. Original tree generation changed
+exactly that one SHA field; all4470path/class/consumer records and immutable
+classification/baseline remain identical. No PASS completion record lists that
+generated tree as Source; this data-only synchronization does not repin any
+additional acceptance scope. The original tree candidate check passes.
