@@ -1,4 +1,5 @@
 import crypto from 'node:crypto';
+import { collectFixtureFailureEvidence } from './kubernetes-fixture-diagnostics.ts';
 import { validateFixtureNetworkPolicy } from './kubernetes-network-envelope.ts';
 import { fixturePodIsReady } from './kubernetes-pod-readiness.ts';
 import { assertGeneratedCredentialLease,generatedDemoCredentials } from './generated-demo-credentials.ts';
@@ -770,8 +771,21 @@ export class KubernetesFixtureCapabilityInvoker implements TestProviderCapabilit
         ...(generatedCredentials ? { generatedCredentials } : {}),
         resourceCount: facts.resources, workloadCount: facts.workloads, podCount, ...(podReplacements.length ? { podReplacements } : {}) });
     } catch (error) {
-      await this.#releaseAfterPrepareFailure(leaseName).catch(() => undefined);
-      throw error;
+      // Keep cancellation semantics; cleanup has its own independent deadline.
+      // Read diagnostics before releasing the lease, bounded by both cancellation
+      // and a dedicated short deadline. Never expose arbitrary kubectl stderr.
+      const diagnosticSignal = AbortSignal.any([signal, AbortSignal.timeout(5_000)]);
+      const failureEvidence = await collectFixtureFailureEvidence(namespaceName, diagnosticSignal,
+        (args, readSignal) => this.#kubectlRun(args, null, readSignal, 1_000));
+      let cleanupError = false;
+      await this.#releaseAfterPrepareFailure(leaseName).catch(() => { cleanupError = true; });
+      if (signal.aborted) throw error;
+      const errorCode = error instanceof Error ? error.message.split(':', 1)[0] : 'KUBERNETES_FIXTURE_PREPARATION_FAILED';
+      // Only readiness errors become ordinary failed fixture results. Validation,
+      // credential and controller failures retain their existing error semantics.
+      if (!['KUBERNETES_FIXTURE_READINESS_TIMEOUT', 'KUBERNETES_FIXTURE_SERVICE_READINESS_TIMEOUT'].includes(errorCode!)) throw error;
+      return Object.freeze({ ok: false, errorCode, namespace: namespaceName, leaseName,
+        failureEvidence: { ...failureEvidence, cleanupError } });
     }
   }
 

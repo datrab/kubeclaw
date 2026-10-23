@@ -1,0 +1,28 @@
+{
+  "scope": "Buster readiness diagnostic source closeout; no deployed acceptance",
+  "checks": {
+    "runtimeProviderRegressions": 11,
+    "engineTypecheck": "passed",
+    "providerTypecheck": "passed",
+    "fixtureImplementationContract": "passed",
+    "controllerGoTests": "passed",
+    "helmRenderedEventRoles": "events get/list only",
+    "diffWhitespace": "passed"
+  },
+  "review": {
+    "skill": "autoreview",
+    "mode": "local",
+    "engine": "codex",
+    "result": "clean: no accepted/actionable findings",
+    "limitation": "Reviewer sandbox unavailable; review evaluated complete supplied local diff. Parent executed repository checks."
+  },
+  "policy": {
+    "logs": "8 reads; 40 lines/4096 bytes; clipped first record omitted; 5s shared deadline",
+    "messages": "1024 characters; credential redaction before final truncation",
+    "snapshot": "96KiB UTF-8",
+    "privateSources": "explicitly withhold free-form text when Pod discovery or private source values are unresolved"
+  },
+  "liveVerified": false,
+  "releaseRequired": true,
+  "productionChanged": false
+}

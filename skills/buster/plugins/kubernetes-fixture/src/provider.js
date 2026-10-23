@@ -1,5 +1,6 @@
 import crypto from 'node:crypto';
 import fs from 'node:fs';
+import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const DIGEST = /^sha256:[a-f0-9]{64}$/u;
@@ -119,13 +120,52 @@ function details(values) {
   return { schemaId, schemaDigest: `sha256:${crypto.createHash('sha256').update(schemaId).digest('hex')}`, values };
 }
 
+// Reuse log evidence so default failed-node collection retains the JSON snapshot.
+// Publication errors remain separate from the original readiness failure.
+function failureArtifact(invocation, context, evidence) {
+  try {
+    const bytes = Buffer.from(`${JSON.stringify(evidence)}\n`);
+    if (!Number.isSafeInteger(invocation.limits?.artifactFiles) || invocation.limits.artifactFiles < 1
+      || !Number.isSafeInteger(invocation.limits?.artifactBytes)
+      || bytes.length > Math.min(128 * 1024, invocation.limits.artifactBytes)) {
+      return { files: [], error: 'budget-exceeded' };
+    }
+    const root = fs.realpathSync(context.workspaceRoot);
+    const directory = fs.realpathSync(path.resolve(root, invocation.workspace.evidence));
+    if (directory !== root && !directory.startsWith(`${root}${path.sep}`)) return { files: [], error: 'path-denied' };
+    const file = 'kubernetes-fixture-failure.json';
+    fs.writeFileSync(path.join(directory, file), bytes, { flag: 'wx', mode: 0o600 });
+    return { files: [{ evidenceId: 'kubernetes-fixture-failure', type: 'log', file, mediaType: 'application/json' }], error: null };
+  } catch (error) {
+    return { files: [], error: error?.code === 'EEXIST' ? 'already-exists' : 'write-failed' };
+  }
+}
+
 export function provider() {
   return {
     async execute(invocation, context) {
       const config = configuration(invocation);
       const manifest = manifestInput(invocation);
       const result = await context.invoke('kubernetes.fixture', capabilityRequest(invocation, config, manifest));
-      if (result.ok !== true) throw new Error('KUBERNETES_FIXTURE_PREPARATION_FAILED');
+      if (result.ok !== true) {
+        if (!result.failureEvidence) throw new Error('KUBERNETES_FIXTURE_PREPARATION_FAILED');
+        const artifact = failureArtifact(invocation, context, result.failureEvidence);
+        const evidence = result.failureEvidence;
+        const pod = evidence.pods?.[0];
+        const container = [...(pod?.initContainerStatuses ?? []), ...(pod?.containerStatuses ?? [])]
+          .find(item => item.state?.waiting || item.state?.terminated?.exitCode);
+        const condition = pod?.conditions?.find(item => item.status === 'False');
+        const detail = container?.state?.waiting ?? container?.state?.terminated ?? condition ?? evidence.events?.at(-1);
+        // Evidence is already redacted and bounded by the fixture runtime.
+        const diagnostic = [detail?.reason, detail?.message].filter(Boolean).join(': ').slice(0, 1200);
+        const summary = `${String(result.errorCode)} in ${String(result.namespace)}${diagnostic ? `: ${diagnostic}` : ''}; see fixture failure evidence.`;
+        return { schemaVersion: 'provider-result.v1', outcome: 'failed', summary,
+          counts: { total: 1, passed: 0, failed: 1, skipped: 0 },
+          findings: [{ id: 'kubernetes-fixture:readiness', severity: 'high', rule: 'kubernetes.fixture.readiness', message: summary }],
+          metrics: [], evidenceFiles: artifact.files, reports: [], outputs: [], exitCode: null, signal: null,
+          providerDetails: details({ failureEvidence: result.failureEvidence, errorCode: result.errorCode,
+            failureArtifactError: artifact.error }) };
+      }
       if (config.testCredentials && !result.generatedCredentials) throw new Error('KUBERNETES_FIXTURE_CREDENTIAL_PROVENANCE_MISSING');
       const deployment = { schemaVersion: 'kubernetes-deployment-fixture.v1', leaseName: result.leaseName,
         namespace: result.namespace,

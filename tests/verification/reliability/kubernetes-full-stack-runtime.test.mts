@@ -76,3 +76,214 @@ test('replacement rejects stale lease and invalid timeout before any mutation', 
     assert.equal(mutations, 0);
   } finally { fs.rmSync(root, { recursive: true, force: true }); }
 });
+test('timeout snapshots safe evidence before cleanup and preserves event read errors', async () => {
+  let deleted = false; let eventRead = false;
+  const { invoker, root, payload } = setup(async (_: string, args: string[]) => {
+    if (args[0] === 'auth') return { stdout: 'yes' };
+    if (args[0] === 'apply') return { stdout: '{}' };
+    if (args[0] === 'delete') { assert.ok(eventRead); deleted = true; return { stdout: '{}' }; }
+    if (args[1]?.startsWith('busternamespacelease')) return { stdout: JSON.stringify({ status: {
+      phase: 'Ready', namespaceName: 'test-stack', createdAt: new Date().toISOString() } }) };
+    assert.equal(deleted, false);
+    if (args[0] === 'logs') return { stdout: 'connection refused password=do-not-publish' };
+    if (args[1] === 'namespace') return { stdout: JSON.stringify({ metadata: { name: 'test-stack', uid: 'namespace-uid' } }) };
+    if (args[1] === 'events') { eventRead = true; throw new Error('Forbidden secret=do-not-publish'); }
+    return { stdout: JSON.stringify({ items: [{ metadata: { name: 'app', uid: 'pod-uid' },
+      spec: { containers: [{ env: [{ name: 'CONFIG', value: 'do-not-publish' }] }] }, status: { phase: 'Pending',
+        conditions: [{ type: 'PodScheduled', status: 'False', reason: 'Unschedulable', message: 'do-not-publish' }],
+        initContainerStatuses: [{ name: 'init', state: { terminated: { exitCode: 1, reason: 'Error' } } }],
+        containerStatuses: [{ name: 'app', restartCount: 3, state: { waiting: { reason: 'ImagePullBackOff' } },
+          lastState: { terminated: { exitCode: 137, reason: 'OOMKilled', message: 'do-not-publish' } } }] } }] }) };
+  });
+  try {
+    const result: any = await invoker.invoke('kubernetes.fixture', { operation: 'prepare', resource: requestResource, payload } as any, new AbortController().signal);
+    assert.equal(result.ok, false);
+    assert.equal(result.errorCode, 'KUBERNETES_FIXTURE_READINESS_TIMEOUT');
+    assert.equal(result.failureEvidence.namespaceIdentity.uid, 'namespace-uid');
+    const pod = result.failureEvidence.pods[0];
+    assert.equal(pod.containerStatuses[0].state.waiting.reason, 'ImagePullBackOff');
+    assert.equal(pod.containerStatuses[0].lastState.terminated.exitCode, 137);
+    assert.equal(pod.initContainerStatuses[0].state.terminated.exitCode, 1);
+    assert.deepEqual(result.failureEvidence.readErrors, ['events:forbidden']);
+    assert.equal(result.failureEvidence.logs.length, 3);
+    assert.match(result.failureEvidence.logs[0].text, /connection refused/);
+    assert.equal(result.failureEvidence.logs[2].previous, true);
+    assert.equal(deleted, true);
+    assert.doesNotMatch(JSON.stringify(result), /do-not-publish|password=(?!\[REDACTED\])/);
+  } finally { fs.rmSync(root, { recursive: true, force: true }); }
+});
+test('ordinary fixture provider result carries failure evidence without deployment outputs', async () => {
+  const { provider } = await import('../../../skills/buster/plugins/kubernetes-fixture/src/provider.js');
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'fixture-report-'));
+  const file = path.join(root, 'manifest.json'); fs.writeFileSync(file, '{}');
+  try {
+    const evidence = { schemaVersion: 'kubernetes-fixture-failure.v1', pods: [], readErrors: ['pods:unavailable'] };
+    const invocation: any = { runId: 'run', nodeId: 'fixture', attemptId: 'attempt', timeoutMs: 1000,
+      workspace: { evidence: '.' }, limits: { artifactFiles: 2, artifactBytes: 1024 * 1024 },
+      configuration: { values: { image: { reference: primary, digest: `sha256:${'a'.repeat(64)}` }, serviceName: 'app', servicePort: 8080 } },
+      inputs: [{ name: 'checked-manifest', kind: 'artifact', artifact: { mediaType: 'application/vnd.kubeclaw.checked-kubernetes-yaml',
+        contentDigest: `sha256:${'b'.repeat(64)}`, sizeBytes: 2, storageUrl: new URL(`file://${file}`).href } }] };
+    const context: any = { workspaceRoot: root,
+      invoke: async () => ({ ok: false, errorCode: 'KUBERNETES_FIXTURE_READINESS_TIMEOUT', namespace: 'test-stack', failureEvidence: evidence }),
+    };
+    const result = await provider().execute(invocation, context);
+    assert.equal(result.outcome, 'failed');
+    assert.deepEqual(result.providerDetails.values.failureEvidence, evidence);
+    assert.deepEqual(result.outputs, []);
+    assert.match(result.summary, /READINESS_TIMEOUT.*test-stack/);
+    assert.equal(result.providerDetails.values.failureArtifactError, null);
+    assert.equal(result.evidenceFiles[0].type, 'log');
+    const snapshot = path.join(root, result.evidenceFiles[0].file);
+    assert.deepEqual(JSON.parse(fs.readFileSync(snapshot, 'utf8')), evidence);
+    assert.equal(fs.statSync(snapshot).mode & 0o777, 0o600);
+    const { stageEvidenceFiles, FileEvidenceStore } = await import('../../../skills/buster/engine/test-gates/artifacts.ts');
+    const staged = path.join(root, 'staged');
+    const use = await stageEvidenceFiles(root, staged, result.evidenceFiles, 2, 1024 * 1024);
+    assert.equal(use.files, 1);
+    const stored = await new FileEvidenceStore(path.join(root, 'store')).store('attempt', staged, result.evidenceFiles[0], 1024 * 1024);
+    assert.equal(stored.artifact.contentDigest, `sha256:${crypto.createHash('sha256').update(fs.readFileSync(snapshot)).digest('hex')}`);
+    fs.rmSync(staged, { recursive: true });
+    assert.deepEqual(JSON.parse(fs.readFileSync(new URL(stored.artifact.storageUrl), 'utf8')), evidence);
+    const repeated = await provider().execute(invocation, context);
+    assert.equal(repeated.outcome, 'failed');
+    assert.equal(repeated.providerDetails.values.errorCode, 'KUBERNETES_FIXTURE_READINESS_TIMEOUT');
+    assert.equal(repeated.providerDetails.values.failureArtifactError, 'already-exists');
+    assert.deepEqual(repeated.evidenceFiles, []);
+    const limited = await provider().execute({ ...invocation, limits: { artifactFiles: 0, artifactBytes: 0 } }, context);
+    assert.equal(limited.providerDetails.values.failureArtifactError, 'budget-exceeded');
+    assert.deepEqual(limited.providerDetails.values.failureEvidence, evidence);
+    const outside = fs.mkdtempSync(path.join(os.tmpdir(), 'fixture-outside-'));
+    try {
+      fs.symlinkSync(outside, path.join(root, 'escape'));
+      const denied = await provider().execute({ ...invocation, workspace: { evidence: 'escape' } }, context);
+      assert.equal(denied.providerDetails.values.failureArtifactError, 'path-denied');
+      assert.deepEqual(fs.readdirSync(outside), []);
+      const missing = await provider().execute({ ...invocation, workspace: { evidence: 'missing' } }, context);
+      assert.equal(missing.providerDetails.values.failureArtifactError, 'write-failed');
+      assert.equal(missing.outcome, 'failed');
+    } finally { fs.rmSync(outside, { recursive: true, force: true }); }
+  } finally { fs.rmSync(root, { recursive: true, force: true }); }
+});
+test('diagnostic cancellation avoids reads and collection bounds the public snapshot', async () => {
+  const { collectFixtureFailureEvidence } = await import('../../../skills/buster/engine/test-gates/kubernetes-fixture-diagnostics.ts');
+  const cancelled = await collectFixtureFailureEvidence('test-stack', AbortSignal.abort(), async () => { throw new Error('must not read'); });
+  assert.deepEqual(cancelled.readErrors, ['pods:cancelled']);
+  let reads = 0;
+  const bounded = await collectFixtureFailureEvidence('test-stack', new AbortController().signal, async () => {
+    reads++; return JSON.stringify({ items: Array.from({ length: 100 }, () => ({ metadata: { name: 'pod' }, reason: 'FailedScheduling' })) });
+  });
+  assert.equal(reads, 3);
+  assert.equal(bounded.pods.length, 16);
+  assert.equal(bounded.events.length, 32);
+  assert.equal(bounded.truncated, true);
+});
+
+test('diagnostic read failures retain actionable categories without leaking stderr', async () => {
+  const { collectFixtureFailureEvidence } = await import('../../../skills/buster/engine/test-gates/kubernetes-fixture-diagnostics.ts');
+  for (const [failure, reason] of [
+    [new Error('Forbidden password=private'), 'forbidden'],
+    [new Error('Unauthorized token=private'), 'unauthorized'],
+    [new Error('NotFound private'), 'not-found'],
+    [Object.assign(new Error('private'), { code: 'ETIMEDOUT' }), 'timeout'],
+    [Object.assign(new Error('private'), { code: 'ERR_CHILD_PROCESS_STDIO_MAXBUFFER' }), 'output-limit'],
+    [new SyntaxError('private'), 'invalid-json'],
+  ] as const) {
+    const evidence = await collectFixtureFailureEvidence('test-stack', new AbortController().signal, async () => {
+      throw new Error('KUBERNETES_FIXTURE_KUBECTL_FAILED', { cause: failure });
+    });
+    assert.deepEqual(evidence.readErrors, [`pods:${reason}`, `events:${reason}`, `namespace:${reason}`]);
+    assert.doesNotMatch(JSON.stringify(evidence), /private|password=|token=/u);
+  }
+  const malformed = await collectFixtureFailureEvidence('test-stack', new AbortController().signal, async () => '{}');
+  assert.deepEqual(malformed.readErrors, ['pods:invalid-json', 'events:invalid-json']);
+  const timedOut = await collectFixtureFailureEvidence('test-stack', AbortSignal.abort(new DOMException('private', 'TimeoutError')), async () => { throw new Error('not reached'); });
+  assert.deepEqual(timedOut.readErrors, ['pods:timeout']);
+});
+
+test('diagnostics preserve probe/scheduling errors and bounded redacted current/previous logs', async () => {
+  const { collectFixtureFailureEvidence, fixtureDiagnosticText } = await import('../../../skills/buster/engine/test-gates/kubernetes-fixture-diagnostics.ts');
+  const requests: string[][] = [];
+  const evidence = await collectFixtureFailureEvidence('test-stack', new AbortController().signal, async args => {
+    requests.push([...args]);
+    if (args[0] === 'logs') {
+      if (args.includes('--previous=true')) throw new Error('Forbidden private-stderr');
+      return 'x'.repeat(4090) + '\nconnection refused token=abc https://user:pass@host literal-value';
+    }
+    if (args[1] === 'namespace') return JSON.stringify({ metadata: { name: 'test-stack', uid: 'ns-uid' } });
+    if (args[1] === 'events') return JSON.stringify({ items: [{ reason: 'Unhealthy', message: 'Readiness probe failed: dial tcp: connection refused' }] });
+    return JSON.stringify({ items: [{ metadata: { name: 'app' }, spec: { containers: [{ env: [{ value: 'literal-value' }] }] },
+      status: { conditions: [{ reason: 'Unschedulable', message: '0/3 nodes available: insufficient memory' }],
+        containerStatuses: [{ name: 'app', state: { waiting: { reason: 'CrashLoopBackOff', message: 'back-off restarting failed container' } }, lastState: { terminated: { exitCode: 1 } } }] } }] });
+  });
+  assert.match(String(evidence.events[0]?.message), /connection refused/);
+  assert.match(JSON.stringify(evidence.pods), /insufficient memory/);
+  assert.match(String(evidence.logs[0]?.text), /connection refused/);
+  assert.ok(String(evidence.logs[0]?.text).length < 1100);
+  assert.deepEqual(evidence.readErrors, ['logs/app/app/previous:forbidden']);
+  assert.doesNotMatch(JSON.stringify(evidence), /abc|user:pass|literal-value|private-stderr/);
+  assert.ok(requests.filter(args => args[0] === 'logs').every(args => args.includes('--limit-bytes=4096') && args.includes('--tail=40')));
+  assert.doesNotMatch(fixtureDiagnosticText('Authorization: Bearer hidden\npassword="two words" api_key=hidden')!, /hidden|two words/);
+});
+
+test('credential redaction covers OAuth responses, prefixed keys and database URLs', async () => {
+  const { fixtureDiagnosticText } = await import('../../../skills/buster/engine/test-gates/kubernetes-fixture-diagnostics.ts');
+  assert.doesNotMatch(fixtureDiagnosticText('postgresql://user:private-password@db/main access_token=hidden', ['postgresql', 'token'])!, /private-password|hidden/);
+  for (const input of ['{"access_token":"sensitive-value"}', 'refresh_token=sensitive-value', '{"Authorization":"Basic sensitive-value"}', '{"Cookie":"session=sensitive-value"}',
+    'client_secret: sensitive-value', String.raw`{"password":"prefix\"sensitive-value"}`,  'DB_PASSWORD=sensitive-value', 'AWS_SECRET_ACCESS_KEY=sensitive-value',
+    'postgresql://user:sensitive-value@db/main', 'redis://:sensitive-value@host', String.raw`\"access_token\":\"sensitive-value\"`]) {
+    assert.doesNotMatch(fixtureDiagnosticText(input)!, /sensitive-value/);
+  }
+});
+
+test('unresolved Secret sources explicitly withhold free-form diagnostics without hiding structural causes', async () => {
+  const { collectFixtureFailureEvidence } = await import('../../../skills/buster/engine/test-gates/kubernetes-fixture-diagnostics.ts');
+  const result = await collectFixtureFailureEvidence('test-stack', new AbortController().signal, async args => {
+    assert.notEqual(args[0], 'logs');
+    if (args[1] === 'namespace') return '{}';
+    if (args[1] === 'events') return JSON.stringify({ items: [{ reason: 'Unhealthy', message: 'secret-canary' }] });
+    return JSON.stringify({ items: [{ metadata: { name: 'app' }, spec: { containers: [{ envFrom: [{ secretRef: { name: 'private' } }] }] },
+      status: { containerStatuses: [{ name: 'app', state: { waiting: { reason: 'CrashLoopBackOff', message: 'secret-canary' } } }] } }] });
+  });
+  assert.equal(result.unresolvedPrivateSources, true);
+  assert.match(JSON.stringify(result), /CrashLoopBackOff/);
+  assert.doesNotMatch(JSON.stringify(result), /secret-canary/);
+  assert.equal(result.logs[0]?.omitted, 'unresolved-private-sources');
+});
+
+test('private values remain redacted when serialized and events are withheld without Pod discovery', async () => {
+  const { fixtureDiagnosticText, collectFixtureFailureEvidence } = await import('../../../skills/buster/engine/test-gates/kubernetes-fixture-diagnostics.ts');
+  for (const secret of ['alpha\rbravo', 'alpha\r\nbravo']) assert.doesNotMatch(fixtureDiagnosticText('CONFIG=' + secret, [secret])!, /alpha|bravo/);
+  const secret = 'alpha\nbravo';
+  assert.doesNotMatch(fixtureDiagnosticText('2026-10-23T00:00:00Z bravo', [secret])!, /bravo/);
+  for (const encoded of [JSON.stringify(secret), encodeURIComponent(secret), Buffer.from(secret).toString('base64')]) {
+    const output = fixtureDiagnosticText('CONFIG=' + encoded, [secret]);
+    assert.doesNotMatch(output!, /alpha|bravo|YWxwaGE/);
+  }
+  const result = await collectFixtureFailureEvidence('test-stack', new AbortController().signal, async args => {
+    if (args[1] === 'pods') throw new Error('Forbidden');
+    if (args[1] === 'events') return JSON.stringify({ items: [{ reason: 'Unhealthy', message: 'unlabelled-private-value' }] });
+    return '{}';
+  });
+  assert.equal(result.unresolvedPrivateSources, true);
+  assert.doesNotMatch(JSON.stringify(result), /unlabelled-private-value/);
+  assert.match(JSON.stringify(result), /Unhealthy/);
+});
+
+test('diagnostic log requests and total UTF-8 evidence remain bounded', async () => {
+  const { collectFixtureFailureEvidence } = await import('../../../skills/buster/engine/test-gates/kubernetes-fixture-diagnostics.ts');
+  let reads = 0;
+  const result = await collectFixtureFailureEvidence('test-stack', new AbortController().signal, async args => {
+    if (args[0] === 'logs') { reads++; return 'x'.repeat(4096); }
+    if (args[1] === 'namespace') return '{}';
+    if (args[1] === 'events') return JSON.stringify({ items: [] });
+    return JSON.stringify({ items: Array.from({ length: 16 }, (_, index) => ({ metadata: { name: 'pod-' + index },
+      status: { containerStatuses: Array.from({ length: 16 }, (_, i) => ({ name: 'app-' + i,
+        state: { waiting: { reason: 'CrashLoopBackOff', message: '語'.repeat(2000) } },
+        lastState: { terminated: { exitCode: 1, message: '語'.repeat(2000) } } })) } })) });
+  });
+  assert.equal(reads, 8);
+  assert.equal(result.logReadLimitReached, true);
+  assert.equal(result.truncated, true);
+  assert.ok(Buffer.byteLength(JSON.stringify(result)) <= 96 * 1024);
+  assert.ok(result.logs.every(log => log.text === ''));
+});

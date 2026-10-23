@@ -99,3 +99,52 @@ It lacks a supported multi-image inventory, controller-owned product-policy
 composition, UID-bound replacement and completed-Job readiness semantics. Those
 are extension gaps, not evidence that the documented single-image flow failed.
 This document records the extension; target-cluster behavior remains unverified.
+
+## 2026-10-23 readiness diagnostics: first implementation checkpoint
+
+Readiness and service-readiness timeouts now collect an allowlisted snapshot of
+Pod identity/UID, phase, scheduling/readiness conditions, init/regular container
+current and previous state, exit codes and restarts, plus event reasons/counts,
+**before** lease cleanup. Pod/event/namespace reads have one-second per-read and five-second
+overall diagnostic deadlines and share caller cancellation. Diagnostic read
+failures and cleanup failure are recorded independently. Namespace identity now
+includes its UID when readable; an RBAC denial remains separate from pod evidence.
+Diagnostic read errors distinguish forbidden, unauthorized, not-found, timeout,
+output-limit and invalid JSON (including malformed list shape), inspecting wrapped
+causes without exposing arbitrary stderr. Unknown failures remain unavailable. Ordinary fixture provider
+results carry the snapshot in `providerDetails.values.failureEvidence` and declare
+`kubernetes-fixture-failure.json` as JSON log evidence for the existing default
+failed-node artifact collector. The provider writes exclusively with mode 0600,
+checks the real evidence directory stays inside the workspace, and enforces a
+128 KiB ceiling plus invocation artifact budgets. Publication failures are separate
+`failureArtifactError` values; they never replace the readiness failure or inline
+snapshot. Durable staging/store round-trip is regression-tested locally, not yet
+verified in a live remote pipeline. Results retain a
+failed outcome and no deployment outputs. Cancellation still propagates as an
+error and cleanup retains its independent deadline.
+
+Free-form Pod/condition/state/event messages are now included after bounded
+credential redaction. Current and previous init/application log tails use at most
+8 reads, 40 lines/4096 bytes per read within the existing 5-second collection
+deadline; possibly clipped leading records are discarded. Known literal env values,
+their line components and common serialized representations are private. Credential
+keys (including OAuth/prefixed keys), authorization, URL userinfo and private keys
+are redacted before final truncation. Credential-bearing line suffixes are omitted
+even for malformed/escaped JSON. Messages are capped at 1024 characters and the
+complete UTF-8 snapshot at 96 KiB, leaving room under the provider artifact ceiling.
+
+Unknown Secret-backed env/volumes, CSI/private projected sources, or unavailable
+Pod discovery explicitly withhold free-form messages/logs; structural reasons,
+conditions and exit codes remain available. This is a documented confidentiality
+boundary, not a claim that arbitrary application output can always be sanitized.
+Namespace UID remains best-effort, with separate RBAC failures. Event get/list
+rights are now included in disposable namespace roles and their bound ClusterRoles;
+no event writes or cluster-wide client binding is added. Ordinary failed-result
+summaries include an actionable available reason/message.
+
+Source checks and local evidence storage are not live acceptance. A matching
+runtime/plugin and controller/chart publication is still required through the
+supported release workflow, followed by disposable HTTP failure-artifact and
+successful lifecycle canaries. The installed 9ec5f2c runtime still returned the
+old readiness-only timeout in the 2026-10-23 17:10 UTC diagnostic; the new fix was
+not deployed in that run. Historical and fresh Pod startup causes remain unknown.
