@@ -183,13 +183,31 @@ exact `tools` and explicit `exec` grants. `rbac.namespaces`, `execNamespaces` an
 Nova receives `test*` in addition to its existing scope; Ops can read every namespace. Matching ignores
 case and covers `test`, `testing`, `test-123` and future matching namespaces.
 Only the Ops/Codex client has `readAllNamespaces: true` and the `platform_cluster_state(resource=namespaces)`
-operation. Its reads include current and future namespaces. Its explicit
+operation. Its reads include current and future namespaces. The chart default has an explicit
 `allNonSystemNamespaces` exec grant permits all regular containers outside
 reserved `kube-*` namespaces, with 30-second and 65536-byte ceilings.
 Pods with system priority classes or numeric priority at least 2000000000
 are excluded even in other namespaces. `rbac.execAllNonSystemNamespaces: true`
 is the backend upper bound; disabling it also requires removing the broad client
-grant. Rebuild and promote the Ops MCP image before activating this policy. Nova and Buster do not inherit this global read permission. The observer
+grant. Rebuild and promote the Ops MCP image before activating this policy.
+The pinned production values retain their existing narrow grants until that new
+image is selected. As part of that promotion, set
+`rbac.execAllNonSystemNamespaces: true` in
+`gitops/platform/values/codex-ops.yaml` and replace only Codex's `exec` list with:
+
+```yaml
+exec:
+  - allNonSystemNamespaces: true
+    allPods: true
+    allContainers: true
+    timeoutSeconds: 30
+    maxOutputBytes: 65536
+```
+
+Regenerate the Argo application with `node scripts/argocd-self-management.mjs`
+after selecting the new image receipt, then sync through the operator deployment
+path. Do not apply this grant to the previously selected image.
+Nova and Buster do not inherit this global read permission. The observer
 role excludes Secrets and all mutation/exec rights. Disabling global observation
 reconciles its named ClusterRoleBinding to empty subjects without relying on prune.
 The dedicated reconciler grants only the MCP workload namespace exec access, normally within five seconds
