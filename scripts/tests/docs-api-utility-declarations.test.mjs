@@ -159,3 +159,18 @@ for(const [name,body,call]of [
  check(s=>classifySerializedOutputRoles(root,s));
  write(writer,read(writer).replace("flag: 'wx'","flag: 'w'"));check(classify);check(s=>classifySerializedOutputRoles(root,s));
 }));
+// Physical DATA publication must be at least as conservative as its callers.
+test('physical contained-file writes cannot inherit stale or forged non-API DATA receipts',()=>fixture(({root,write,read,update})=>{
+ const source='skills/buster/engine/test-gates/artifacts.ts';
+ const original=JSON.parse(fs.readFileSync(path.join(repository,registryPath))).nonApiOutputContracts.filter(r=>r.source===source);
+ assert(original.length>0);update(registry=>{registry.nonApiOutputContracts.push(...original);});
+ const classify=createSerializedOutputRoleClassifier(root);
+ const check=classifier=>{const writes=classifier(source).filter(r=>r.sink==='fs.writeFileSync');assert.equal(writes.length,2);for(const role of writes){assert.equal(role.role,'unknown');assert.equal(role.basis,'opaque-contained-file-DATA-physical-publication');}};
+ check(classify);check(s=>classifySerializedOutputRoles(root,s));
+ const selectors=[{symbol:'stageEvidenceFiles'},{symbol:'FileEvidenceStore'}];
+ const refresh=()=>{const facts=deriveNativeOperationFacts(root,source,selectors);assert(facts);update(registry=>{registry.nonApiOutputContracts=[{source,sink:'fs.writeFileSync',expression:'content',role:'non-api',basis:'forged-fresh-file-DATA-receipt',operations:[{source,selectors,factsDigest:nativeOperationFactDigest(facts)}]}];});};
+ refresh();check(classify);check(s=>classifySerializedOutputRoles(root,s));
+ update(registry=>{registry.nonApiOutputContracts=[];registry.nativeFileWriterCapabilities=[];});check(classify);
+ write(source,read(source).replace('const content = await readContainedFile(evidenceRoot, declaration.file, maximumBytes - total, signal);',`const content = Buffer.from('apiVersion: v1\\nkind: Secret\\nmetadata: {name: synthetic}\\n');`));
+ refresh();check(classify);check(s=>classifySerializedOutputRoles(root,s));
+}));

@@ -1,0 +1,26 @@
+{
+  "scope": "physical contained-file DATA negative capability only; no custody renewal",
+  "transform": "noncredential unitToken identifier replaced only in context copy by unitBasenamePart to avoid generic false positive, Source unchanged",
+  "files": [
+    {
+      "path": "scripts/docs-api-output-role-classification.mjs",
+      "bytes": 144805,
+      "sha256": "ad40f2882e0fb11748e504109e2f7f5c3d6bfe24f0d1bba7c785cbaba68e6b6f"
+    },
+    {
+      "path": ".cache/pr13-physical-review/classifier.txt",
+      "bytes": 144819,
+      "sha256": "ffa8606c40609dae9b2cea41e6f60fc68bae5f797ac1fcccdb05044e315479fc"
+    },
+    {
+      "path": "scripts/tests/docs-api-utility-declarations.test.mjs",
+      "bytes": 19381,
+      "sha256": "38c75d4b820dd122a122dd7fa0ee9c4c1c7af7d5518aaf93d42460a11c1115e9"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/artifacts.ts",
+      "bytes": 5273,
+      "sha256": "4eedb9892218a3b0ee8a9b14d22c8e37b29c454333adbdf4cbae1772f44e5179"
+    }
+  ]
+}

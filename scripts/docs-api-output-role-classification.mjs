@@ -855,6 +855,10 @@ export function createSerializedOutputRoleClassifier(root,universe=[]) {
   // copied by readContainedFile. Return before shape inference AND all native
   // receipt fallbacks; refreshed writer/consumer digests cannot qualify DATA.
   if(sink.expression.getText(state.tree)==='native-file-writer-call'&&opaqueFileDataWriters.has(sink.capability))return {...unknown(argument,state),basis:'opaque-contained-file-DATA-not-descriptor-shape'};
+  // The same unresolved bytes reach both physical writes. Path containment,
+  // digesting and ArtifactRef metadata cannot establish their API identity;
+  // mutable contracts must not qualify these terminal publications either.
+  if(state.file==='skills/buster/engine/test-gates/artifacts.ts'&&['fs.writeFileSync','writeFileSync'].includes(sink.expression.getText(state.tree)))return {...unknown(argument,state),basis:'opaque-contained-file-DATA-physical-publication'};
   if(sink.closedWriterDeclaration)return {role:'api-capable-utility',basis:'reviewed-private-writer-with-all-direct-callers-projected',expression:argument.getText(state.tree),closedWriterDeclaration:sink.closedWriterDeclaration};
   // These declarations retain API capability regardless of a mutable role or
   // basis field. Fresh operations are evidence, not authority to relabel them.

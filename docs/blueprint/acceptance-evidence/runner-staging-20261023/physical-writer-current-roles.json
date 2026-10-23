@@ -1,0 +1,50 @@
+[
+  {
+    "line": 41,
+    "sink": "fs.writeFileSync",
+    "role": "non-api",
+    "basis": "original-contained-evidence-copy-and-digest-artifact-storage",
+    "sinkContract": {
+      "destination": "destination",
+      "expression": "content"
+    },
+    "operationSources": [
+      "skills/buster/engine/test-gates/artifacts.ts"
+    ],
+    "dependencies": [
+      "contracts/pipeline-observability/v1/package.json",
+      "contracts/pipeline-observability/v1/src/canonical-json.ts",
+      "contracts/pipeline-test-gate/v1/package.json",
+      "contracts/pipeline-test-gate/v1/src/coverage.ts",
+      "contracts/pipeline-test-gate/v1/src/digest.ts",
+      "contracts/pipeline-test-gate/v1/src/index.ts",
+      "contracts/pipeline-test-gate/v1/src/types.ts",
+      "scripts/docs-api-producer-adapter-authorities.json",
+      "skills/buster/engine/test-gates/artifacts.ts"
+    ]
+  },
+  {
+    "line": 100,
+    "sink": "fs.writeFileSync",
+    "role": "non-api",
+    "basis": "original-contained-evidence-copy-and-digest-artifact-storage",
+    "sinkContract": {
+      "destination": "destination",
+      "expression": "content"
+    },
+    "operationSources": [
+      "skills/buster/engine/test-gates/artifacts.ts"
+    ],
+    "dependencies": [
+      "contracts/pipeline-observability/v1/package.json",
+      "contracts/pipeline-observability/v1/src/canonical-json.ts",
+      "contracts/pipeline-test-gate/v1/package.json",
+      "contracts/pipeline-test-gate/v1/src/coverage.ts",
+      "contracts/pipeline-test-gate/v1/src/digest.ts",
+      "contracts/pipeline-test-gate/v1/src/index.ts",
+      "contracts/pipeline-test-gate/v1/src/types.ts",
+      "scripts/docs-api-producer-adapter-authorities.json",
+      "skills/buster/engine/test-gates/artifacts.ts"
+    ]
+  }
+]

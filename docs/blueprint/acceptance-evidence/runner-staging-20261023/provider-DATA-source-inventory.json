@@ -1,0 +1,240 @@
+{
+  "scope": "Informational physical original built-in plugin evidence constructors only; not complete runtime provider registry or DATA qualification",
+  "sources": [
+    {
+      "source": "skills/buster/plugins/api-flow/src/provider.js",
+      "sha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b",
+      "sites": [
+        {
+          "line": 121,
+          "text": "return { schemaVersion: 'provider-result.v1', outcome: findings.length ? 'failed' : 'passed', summary: findings.length ? `${findings.length} API flow assertion(s) failed.` : `${passed} API flow step(s) passed.`, counts: { total: records.length, passed, failed: records.length - passed - skipped, skipped }, findings, metrics: [], evidenceFiles: [{ evidenceId: 'api-flow-report', type: 'test-report', file: evidenceFile, mediaType: 'application/vnd.kubeclaw.api-flow+json' }], reports: [], outputs: [], exitCode: null, signal: null, providerDetails: { schemaId: 'kubeclaw.api-flow-details.v1', schemaDigest: `sha256:${crypto.createHash('sha256').update('kubeclaw.api-flow-details.v1').digest('hex')}`, values: { steps: records.map(({ id, state, status, durationMs }) => ({ id, state, status, durationMs })) } } };"
+        },
+        {
+          "line": 149,
+          "text": "const evidenceFile = 'api-flow-result.json'; fs.writeFileSync(path.join(path.resolve(context.workspaceRoot, invocation.workspace.evidence), evidenceFile), `${JSON.stringify({ schemaVersion: 'kubeclaw.api-flow-evidence.v1', records }, null, 2)}\\n`); return output(invocation, records, evidenceFile, executedMainSteps);"
+        }
+      ]
+    },
+    {
+      "source": "skills/buster/plugins/axe/src/provider.js",
+      "sha256": "3943f787c2d7fc1f2215268c043135f0a6d6425fd6e09b26d48bb2171e87c472",
+      "sites": [
+        {
+          "line": 97,
+          "text": "fs.writeFileSync(path.join(workspace, invocation.workspace.evidence, file), bytes);"
+        },
+        {
+          "line": 103,
+          "text": "const reportFile = 'axe-results.json'; fs.writeFileSync(path.join(workspace, invocation.workspace.evidence, reportFile), `${JSON.stringify(report, null, 2)}\\n`);"
+        },
+        {
+          "line": 110,
+          "text": "], evidenceFiles: evidence, reports: [], outputs: [], exitCode: null, signal: null,"
+        }
+      ]
+    },
+    {
+      "source": "skills/buster/plugins/container-build/src/provider.js",
+      "sha256": "1204d07c75942e9def8b703748bf97510e933b2cfb33b85f84c485d42b89c847",
+      "sites": [
+        {
+          "line": 80,
+          "text": "fs.writeFileSync(dockerfile, template.dockerfile, { flag: 'wx', mode: 0o600 });"
+        },
+        {
+          "line": 136,
+          "text": "evidenceFiles: [], reports: [],"
+        }
+      ]
+    },
+    {
+      "source": "skills/buster/plugins/coverage-budget/src/provider.js",
+      "sha256": "3e76c0b48e6728a195de48f8c7325e517e0681e8e0e169e7adb129bd0752430b",
+      "sites": [
+        {
+          "line": 93,
+          "text": "], evidenceFiles: [], reports: [], outputs: [], exitCode: 0, signal: null,"
+        }
+      ]
+    },
+    {
+      "source": "skills/buster/plugins/demo-auth-smoke/src/provider.js",
+      "sha256": "21e239a33d59c5849d8b9acef7ac0d6eba70b5652f885a430eefd82063f07c30",
+      "sites": [
+        {
+          "line": 56,
+          "text": "counts:{total:3,passed:3,failed:0,skipped:0},findings:[],metrics:[],evidenceFiles:[],reports:[],"
+        }
+      ]
+    },
+    {
+      "source": "skills/buster/plugins/direct-command/src/provider.js",
+      "sha256": "825182b963d34c1414fd779b5c523d00cc354fb38d6e8669cc68aa0b40261667",
+      "sites": [
+        {
+          "line": 170,
+          "text": "const evidenceFiles = [];"
+        },
+        {
+          "line": 179,
+          "text": "evidenceFiles.push({ evidenceId: report.id, type: 'test-report', file: copied.file, mediaType: report.mediaType });"
+        },
+        {
+          "line": 185,
+          "text": "evidenceFiles.push({ evidenceId: coverage.id, type: 'coverage', file: copied.file, mediaType: coverage.mediaType });"
+        },
+        {
+          "line": 190,
+          "text": "evidenceFiles.push({ evidenceId: artifact.id, type: 'artifact', file: copied.file, mediaType: artifact.mediaType });"
+        },
+        {
+          "line": 199,
+          "text": "findings: [], metrics: [], evidenceFiles, reports, outputs, exitCode, signal,"
+        }
+      ]
+    },
+    {
+      "source": "skills/buster/plugins/http/src/provider.js",
+      "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186",
+      "sites": [
+        {
+          "line": 140,
+          "text": "evidenceFiles: [], reports: [], outputs: [], exitCode: null, signal: null,"
+        },
+        {
+          "line": 153,
+          "text": "metrics: [], evidenceFiles: [], reports: [], outputs: [], exitCode: null, signal: null,"
+        }
+      ]
+    },
+    {
+      "source": "skills/buster/plugins/kubernetes-fixture/src/provider.js",
+      "sha256": "4af5c60de7d010bc6956e81429ee10cbbca38fcf25636c348e0ef4fbb0f2d50e",
+      "sites": [
+        {
+          "line": 123,
+          "text": "{ name: 'kubernetes_fixture_pods', value: Number(result.podCount ?? 0) }], evidenceFiles: [], reports: [],"
+        }
+      ]
+    },
+    {
+      "source": "skills/buster/plugins/lighthouse/src/provider.js",
+      "sha256": "8858c30f362574414d16d8dcd99b963382b79e3195a670145c2e67d63dfa85a5",
+      "sites": [
+        {
+          "line": 98,
+          "text": "fs.writeFileSync(path.join(workspace, invocation.workspace.evidence, file), `${JSON.stringify(result.report, null, 2)}\\n`);"
+        },
+        {
+          "line": 145,
+          "text": "evidenceFiles: evidence, reports: [], outputs: [], exitCode: null, signal: null,"
+        }
+      ]
+    },
+    {
+      "source": "skills/buster/plugins/openapi/src/provider.js",
+      "sha256": "cabeb560867f9dc802a7e936c0efc1fb6f900f211b5563414b6016c780f48cca",
+      "sites": [
+        {
+          "line": 188,
+          "text": "return { schemaVersion: 'provider-result.v1', outcome: findings.length ? 'failed' : 'passed', summary: findings.length ? `${findings.length} OpenAPI runtime check(s) failed.` : `${passed} OpenAPI operation(s) passed.`, counts: { total: records.length, passed, failed: records.length - passed, skipped: 0 }, findings, metrics: [], evidenceFiles: [{ evidenceId: 'openapi-report', type: 'test-report', file: evidenceFile, mediaType: 'application/vnd.kubeclaw.openapi-runtime+json' }], reports: [], outputs: [], exitCode: null, signal: null, providerDetails: { schemaId: 'kubeclaw.openapi-details.v1', schemaDigest: `sha256:${crypto.createHash('sha256').update('kubeclaw.openapi-details.v1').digest('hex')}`, values: { operations: records.map(({ operationId, status, durationMs }) => ({ operationId, status, durationMs })) } } };"
+        },
+        {
+          "line": 261,
+          "text": "const evidenceFile = 'openapi-runtime-result.json'; fs.writeFileSync(path.join(path.resolve(workspace, invocation.workspace.evidence), evidenceFile), `${JSON.stringify({ schemaVersion: 'kubeclaw.openapi-runtime-evidence.v1', records }, null, 2)}\\n`); return output(invocation, records, evidenceFile);"
+        }
+      ]
+    },
+    {
+      "source": "skills/buster/plugins/playwright/src/provider.js",
+      "sha256": "7a380ecfc9dd2b42751ecd451222779f606f82668274cdc66e7b9136f1f988e8",
+      "sites": [
+        {
+          "line": 29,
+          "text": "fs.writeFileSync(target, bytes, { flag: 'wx', mode: 0o600 }); budget.bytes -= bytes.byteLength; budget.files -= 1;"
+        },
+        {
+          "line": 84,
+          "text": "const budget = { bytes: invocation.limits.artifactBytes - reportBytes.byteLength, files: invocation.limits.artifactFiles - 1 }; const evidenceFiles = [];"
+        },
+        {
+          "line": 85,
+          "text": "for (const [index, attachment] of command.artifacts.entries()) { const copied = copyAttachment(evidence, attachment, index + 1, budget); if (copied) evidenceFiles.push(copied); }"
+        },
+        {
+          "line": 86,
+          "text": "const reportFile = 'playwright-report.json'; fs.writeFileSync(path.join(evidence, reportFile), reportBytes, { flag: 'wx', mode: 0o600 }); evidenceFiles.push({ evidenceId: 'playwright-report', type: 'test-report', file: reportFile, mediaType: 'application/vnd.kubeclaw.playwright+json' });"
+        },
+        {
+          "line": 87,
+          "text": "return { schemaVersion: 'provider-result.v1', outcome, summary: `${total} Playwright test(s): ${passed} passed, ${failed} failed, ${skipped} skipped, ${unexecuted} unexecuted.`, counts: { total, passed, failed, skipped: skipped + unexecuted }, findings, metrics: [], evidenceFiles, reports: [], outputs: [], exitCode: Number.isSafeInteger(command.exitCode) ? command.exitCode : null, signal: typeof command.signal === 'string' ? command.signal : null,"
+        }
+      ]
+    },
+    {
+      "source": "skills/buster/plugins/security-providers/src/common.js",
+      "sha256": "74fd765615fdee3f5876cfffa0b7baca6405b57fc3830e39dd56293fdc8d04b3",
+      "sites": [
+        {
+          "line": 96,
+          "text": "evidenceFiles: [], reports: [], outputs: [], exitCode: null, signal: null,"
+        }
+      ]
+    },
+    {
+      "source": "skills/buster/plugins/size-budget/src/provider.js",
+      "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce",
+      "sites": [
+        {
+          "line": 292,
+          "text": "fs.writeFileSync(path.join(evidence, file), bytes, { flag: 'wx', mode: 0o600 });"
+        },
+        {
+          "line": 358,
+          "text": "evidenceFiles: [{ evidenceId: 'baseline', type: 'size-budget-baseline', file: output.file,"
+        }
+      ]
+    },
+    {
+      "source": "skills/buster/plugins/tailscale-exposure/src/provider.js",
+      "sha256": "7e8f092bf66aac62bcd7ffd01b80710ccdd97c87f1ceec126139ba23d08ca1f0",
+      "sites": [
+        {
+          "line": 90,
+          "text": "counts: { total: 1, passed: 1, failed: 0, skipped: 0 }, findings: [], metrics: [], evidenceFiles: [], reports: [],"
+        }
+      ]
+    },
+    {
+      "source": "skills/buster/plugins/visual/src/provider.js",
+      "sha256": "1a321386019f583561a20297bf8ad1ff57599aac2e906ed1f48bada2f08419b1",
+      "sites": [
+        {
+          "line": 147,
+          "text": "const evidenceFiles = []; const pendingEvidence = []; const findings = []; const results = []; let failed = 0;"
+        },
+        {
+          "line": 172,
+          "text": "for (const [file, bytes, type] of files) { pendingEvidence.push({ file, bytes }); evidenceFiles.push({ evidenceId: file.slice(0, -4), type, file, mediaType: 'image/png' }); }"
+        },
+        {
+          "line": 186,
+          "text": "for (const item of pendingEvidence) fs.writeFileSync(path.join(workspace, invocation.workspace.evidence, item.file), item.bytes);"
+        },
+        {
+          "line": 187,
+          "text": "evidenceFiles.push({ evidenceId: 'visual-results', type: 'test-report', file: reportFile, mediaType: 'application/vnd.kubeclaw.visual+json' });"
+        },
+        {
+          "line": 191,
+          "text": "evidenceFiles, reports: [], outputs: [], exitCode: null, signal: null,"
+        }
+      ]
+    }
+  ],
+  "boundaries": [
+    "provider-loader.ts canonicalModule resolves entry.package.root and registration.entrypoint.module, snapshot digest is integrity not DATA role",
+    "runner.ts708 accepts options.evidenceStore override, so FileEvidenceStore is default not exclusive terminal store",
+    "physical artifacts.ts41 and100 still return non-api from stale role contract in current classifier; inert probe retained; new actionable boundary defect, not accepted behavior"
+  ]
+}

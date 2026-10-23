@@ -1,0 +1,6 @@
+{
+  "findings": [],
+  "overall_correctness": "patch is correct",
+  "overall_explanation": "The new guard applies before receipt and shape fallbacks to both canonicalized physical file-write sinks in artifacts.ts, preserving unknown classification for copied contained-file bytes. The regression test covers stale, forged, removed, and changed-source cases.",
+  "overall_confidence": 0.95
+}

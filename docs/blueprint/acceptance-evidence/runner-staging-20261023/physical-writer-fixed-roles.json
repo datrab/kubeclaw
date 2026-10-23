@@ -1,0 +1,36 @@
+[
+  {
+    "line": 41,
+    "sink": "fs.writeFileSync",
+    "role": "unknown",
+    "expression": "content",
+    "basis": "opaque-contained-file-DATA-physical-publication",
+    "dependencies": [
+      "contracts/pipeline-observability/v1/package.json",
+      "contracts/pipeline-observability/v1/src/canonical-json.ts",
+      "contracts/pipeline-test-gate/v1/package.json",
+      "contracts/pipeline-test-gate/v1/src/coverage.ts",
+      "contracts/pipeline-test-gate/v1/src/digest.ts",
+      "contracts/pipeline-test-gate/v1/src/index.ts",
+      "contracts/pipeline-test-gate/v1/src/types.ts",
+      "skills/buster/engine/test-gates/artifacts.ts"
+    ]
+  },
+  {
+    "line": 100,
+    "sink": "fs.writeFileSync",
+    "role": "unknown",
+    "expression": "content",
+    "basis": "opaque-contained-file-DATA-physical-publication",
+    "dependencies": [
+      "contracts/pipeline-observability/v1/package.json",
+      "contracts/pipeline-observability/v1/src/canonical-json.ts",
+      "contracts/pipeline-test-gate/v1/package.json",
+      "contracts/pipeline-test-gate/v1/src/coverage.ts",
+      "contracts/pipeline-test-gate/v1/src/digest.ts",
+      "contracts/pipeline-test-gate/v1/src/index.ts",
+      "contracts/pipeline-test-gate/v1/src/types.ts",
+      "skills/buster/engine/test-gates/artifacts.ts"
+    ]
+  }
+]

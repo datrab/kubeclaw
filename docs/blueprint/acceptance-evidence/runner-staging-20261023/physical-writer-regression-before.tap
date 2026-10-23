@@ -1,0 +1,35 @@
+✖ physical contained-file writes cannot inherit stale or forged non-API DATA receipts (258.806947ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 583.486917
+
+✖ failing tests:
+
+test at scripts/tests/docs-api-utility-declarations.test.mjs:163:1
+✖ physical contained-file writes cannot inherit stale or forged non-API DATA receipts (258.806947ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'non-api'
+  - 'unknown'
+  
+      at check (file:///home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/tests/docs-api-utility-declarations.test.mjs:168:161)
+      at file:///home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/tests/docs-api-utility-declarations.test.mjs:169:2
+      at fixture (file:///home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/tests/docs-api-utility-declarations.test.mjs:27:3)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/tests/docs-api-utility-declarations.test.mjs:163:96)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'non-api',
+    expected: 'unknown',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
