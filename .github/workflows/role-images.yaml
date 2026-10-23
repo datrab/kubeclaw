@@ -9,6 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       changed: ${{ steps.detect.outputs.image_inputs }}
+      image_matrix: ${{ steps.detect.outputs.image_matrix }}
     steps:
       - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
         with:
@@ -27,7 +28,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        name: [nova, prism-agent, buster-gateway, buster-runtime, namespace-controller, archviewer, prism-control, prism-studio, prism-worker, prism-ingestion]
+        name: ${{ fromJSON(needs.inputs.outputs.image_matrix) }}
     steps:
       - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
         with:

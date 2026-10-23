@@ -1,5 +1,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
+import { changedImages } from './runtime-inputs.mjs';
+import { runtimeImages, componentSource } from './runtime-components.mjs';
 
 // Production build receipts are downloaded from one successful, verified workflow run.
 export function collectReceipts(directory, commit, expected) {
@@ -16,11 +18,21 @@ export function collectReceipts(directory, commit, expected) {
   if (Object.keys(images).length !== expected.length) throw new Error('Release is missing required images');
   return { schemaVersion: 1, commit, images };
 }
+export function collectRuntimeReceipts(directory, commit, prior, source, root = process.cwd(), force = false) {
+  const expected = changedImages(root, prior, commit, force);
+  const built = collectReceipts(directory, commit, expected);
+  return { ...built, ...source,
+    images: Object.fromEntries(runtimeImages.map(name => [name, built.images[name] ?? prior?.images[name]])),
+    imageSources: Object.fromEntries(runtimeImages.map(name => [name, built.images[name] ? { commit, ...source } : componentSource(prior, name, 'image')])) };
+}
 if (process.argv[1] === import.meta.filename) {
   const [directory, commit, output, family = "runtime"] = process.argv.slice(2);
   if (!["runtime", "ops"].includes(family)) throw new Error("Unknown release family");
   const names = family === 'ops' ? ['codex-ops', 'ops-mcp'] : ['nova', 'prism-agent', 'buster-gateway', 'buster-runtime', 'namespace-controller', 'archviewer', 'prism-control', 'prism-studio', 'prism-worker', 'prism-ingestion'];
-  const release = collectReceipts(directory, commit, names);
+  const priorFile = 'releases/runtime-images.json';
+  const prior = family === 'runtime' && fs.existsSync(priorFile) ? JSON.parse(fs.readFileSync(priorFile, 'utf8')) : undefined;
+  const source = { sourceRunId: Number(process.env.SOURCE_RUN_ID), sourceRunAttempt: Number(process.env.SOURCE_RUN_ATTEMPT) };
+  const release = family === 'runtime' ? collectRuntimeReceipts(directory, commit, prior, source, process.cwd(), process.env.GITHUB_EVENT_NAME === 'workflow_dispatch') : collectReceipts(directory, commit, names);
   release.sourceRunId = Number(process.env.SOURCE_RUN_ID);
   if (!Number.isSafeInteger(release.sourceRunId) || release.sourceRunId < 1) throw new Error("Verified source run ID required");
   release.sourceRunAttempt = Number(process.env.SOURCE_RUN_ATTEMPT);

@@ -20,6 +20,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       image_inputs_changed: ${{ steps.filter.outputs.image_inputs }}
+      image_matrix: ${{ steps.filter.outputs.image_matrix }}
       deployment_inputs_changed: ${{ steps.filter.outputs.deployment_inputs }}
     steps:
       - name: Checkout
@@ -46,7 +47,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        name: [nova, prism-agent, buster-gateway, buster-runtime, namespace-controller, archviewer, prism-control, prism-studio, prism-worker, prism-ingestion]
+        name: ${{ fromJSON(needs.detect-build-inputs.outputs.image_matrix) }}
     steps:
       - name: Checkout
         uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
@@ -129,6 +130,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          fetch-depth: 0
 
       - name: Set up Node.js
         uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
@@ -142,16 +145,14 @@ jobs:
       - name: Build plugin isolation launcher
         run: npm run plugin-system:sandbox:build
 
-      - name: Build Nova, Buster, and Prism bundles
+      - name: Build changed role bundles
         run: |
           mkdir -p dist
-          bash ./scripts/package-agent-skill-bundle.sh nova "dist/nova-${GITHUB_SHA}.tgz" "${GITHUB_SHA}"
-          bash ./scripts/package-agent-skill-bundle.sh buster "dist/buster-${GITHUB_SHA}.tgz" "${GITHUB_SHA}"
-          bash ./scripts/package-agent-skill-bundle.sh prism "dist/prism-${GITHUB_SHA}.tgz" "${GITHUB_SHA}"
-          (
-            cd dist
-            sha256sum "nova-${GITHUB_SHA}.tgz" "buster-${GITHUB_SHA}.tgz" "prism-${GITHUB_SHA}.tgz" > "SHA256SUMS-${GITHUB_SHA}.txt"
-          )
+          node scripts/updates/code-release.mjs --roles > dist/roles.json
+          while IFS= read -r role; do
+            bash ./scripts/package-agent-skill-bundle.sh "$role" "dist/$role-${GITHUB_SHA}.tgz" "$GITHUB_SHA"
+          done < <(jq -r '.[]' dist/roles.json)
+          (cd dist; find . -maxdepth 1 -name '*.tgz' -print0 | sort -z | xargs -0 -r sha256sum > "SHA256SUMS-${GITHUB_SHA}.txt")
 
       - name: Record bundle checksums and source identity
         run: node scripts/updates/code-release.mjs dist "$GITHUB_SHA" "$GITHUB_REPOSITORY"
@@ -170,26 +171,22 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          gh release upload "$BUNDLE_RELEASE_TAG" \
-            "dist/nova-${GITHUB_SHA}.tgz#nova-${GITHUB_SHA}.tgz" \
-            "dist/buster-${GITHUB_SHA}.tgz#buster-${GITHUB_SHA}.tgz" \
-            "dist/prism-${GITHUB_SHA}.tgz#prism-${GITHUB_SHA}.tgz" \
-            "dist/SHA256SUMS-${GITHUB_SHA}.txt#SHA256SUMS-${GITHUB_SHA}.txt" \
-            "dist/runtime-code.json#runtime-code.json"
+          assets=("dist/SHA256SUMS-${GITHUB_SHA}.txt" "dist/runtime-code.json")
+          while IFS= read -r role; do
+            assets+=("dist/$role-${GITHUB_SHA}.tgz")
+          done < <(jq -r '.[]' dist/roles.json)
+          gh release upload "$BUNDLE_RELEASE_TAG" "${assets[@]}"
 
       - name: Summary
         run: |
-          echo "### Skill bundles published" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "- https://github.com/${{ github.repository }}/releases/download/${BUNDLE_RELEASE_TAG}/nova-${GITHUB_SHA}.tgz" >> $GITHUB_STEP_SUMMARY
-          echo "- https://github.com/${{ github.repository }}/releases/download/${BUNDLE_RELEASE_TAG}/buster-${GITHUB_SHA}.tgz" >> $GITHUB_STEP_SUMMARY
-          echo "- https://github.com/${{ github.repository }}/releases/download/${BUNDLE_RELEASE_TAG}/prism-${GITHUB_SHA}.tgz" >> $GITHUB_STEP_SUMMARY
-          echo "- https://github.com/${{ github.repository }}/releases/download/${BUNDLE_RELEASE_TAG}/SHA256SUMS-${GITHUB_SHA}.txt" >> $GITHUB_STEP_SUMMARY
+          echo "### Runtime bundles" >> "$GITHUB_STEP_SUMMARY"
+          echo "Built roles: $(jq -c . dist/roles.json)" >> "$GITHUB_STEP_SUMMARY"
+          echo "Unchanged roles retain their selected bundle and source identity." >> "$GITHUB_STEP_SUMMARY"
   prism-live-acceptance:
     name: Prism leased-namespace service smoke
     runs-on: ubuntu-latest
-    needs: build
-    if: ${{ vars.PRISM_LIVE_ACCEPTANCE_ENABLED == 'true' }}
+    needs: [build, detect-build-inputs]
+    if: ${{ contains(fromJSON(needs.detect-build-inputs.outputs.image_matrix), 'prism-control') && contains(fromJSON(needs.detect-build-inputs.outputs.image_matrix), 'prism-studio') && contains(fromJSON(needs.detect-build-inputs.outputs.image_matrix), 'prism-worker') && contains(fromJSON(needs.detect-build-inputs.outputs.image_matrix), 'prism-ingestion') && vars.PRISM_LIVE_ACCEPTANCE_ENABLED == 'true' }}
     permissions:
       contents: read
       packages: read

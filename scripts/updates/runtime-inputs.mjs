@@ -1,14 +1,12 @@
 import fs from 'node:fs';
 import { createHash } from 'node:crypto';
 import { execFileSync } from 'node:child_process';
+import { runtimeImages, runtimeRoles, imageInput, bundleInput, componentSource } from './runtime-components.mjs';
 
-// Agent packages are delivered by bundles. These inputs still produce native
-// tools, dependencies, gateway extensions or services embedded in images.
+// This is the union of actual image consumers, including the Buster runtime's
+// current COPY skills payload. It is also used by stale-rollout checks.
 export function isImageInput(file) {
-  return /^(?:docker\/|cmd\/|contracts\/|go\.(?:mod|sum)$|\.dockerignore$|package(?:-lock)?\.json$|tsconfig\.base\.json$)/u.test(file)
-    || /^skills\/(?:prism\/|worker\/core\/|common\/plugin-runtime\/|common\/plugins\/openclaw-agent-observer\/)/u.test(file)
-    || /^skills\/.*\/(?:package(?:-lock)?\.json|.*\.(?:c|h))$/u.test(file)
-    || /^(?:scripts\/(?:versions|build-plugin-sandbox|registry-client-config)\.mjs|versions\.json)$/u.test(file);
+  return runtimeImages.some(name => imageInput(name, file));
 }
 export function isDeploymentInput(file) {
   return isImageInput(file) || /^(?:skills\/|contracts\/|packaging\/runtime\/|charts\/(?:kubeclaw|prism)\/|my-values\/(?:nova|buster|prism-agent|prism)-values\.yaml$|gitops\/production\/(?:config\.json|overlays\/)|scripts\/(?:package-agent-skill-bundle\.sh|build-runtime-role-bundle\.mjs|deploy\.sh|gitops[^/]*\.mjs|updates\/)|\.github\/workflows\/(?:build-images|auto-promote-runtime)\.yaml$)/u.test(file);
@@ -24,6 +22,23 @@ export function inputDigest(root, revision, predicate) {
     }).sort();
   return createHash('sha256').update(entries.join('\0')).digest('hex');
 }
+// Compare both dependency graphs so removed packages/plugins cannot be missed.
+export function bundleDigest(root, revision, role, dependencyRevision = revision) {
+  return inputDigest(root, revision, bundleInput(root, dependencyRevision, role));
+}
+export function changedBundles(root, prior, head, force = false) {
+  return runtimeRoles.filter(role => {
+    if (force || !prior?.bundles?.[role]) return true;
+    const source = componentSource(prior, role, 'bundle').commit;
+    return bundleDigest(root, source, role) !== bundleDigest(root, head, role)
+      || bundleDigest(root, source, role, head) !== bundleDigest(root, head, role, head);
+  });
+}
+export function changedImages(root, prior, head, force = false) {
+  return runtimeImages.filter(name => force || !prior?.images?.[name]
+    || inputDigest(root, componentSource(prior, name, 'image').commit, file => imageInput(name, file))
+      !== inputDigest(root, head, file => imageInput(name, file)));
+}
 if (process.argv[1] === import.meta.filename) {
   const root = process.cwd(), head = process.env.GITHUB_SHA;
   const event = JSON.parse(fs.readFileSync(process.env.GITHUB_EVENT_PATH, 'utf8'));
@@ -31,12 +46,14 @@ if (process.argv[1] === import.meta.filename) {
   const manual = process.env.GITHUB_EVENT_NAME === 'workflow_dispatch';
   const changed = predicate => manual || !before || /^0+$/u.test(before)
     || inputDigest(root, before, predicate) !== inputDigest(root, head, predicate);
-  const deployment = changed(isDeploymentInput);
-  const selection = 'releases/runtime-images.json';
-  // Compare production builds with the selected image, not just the last push:
-  // a preceding build may have failed or been superseded before selection.
-  const selectedCommit = fs.existsSync(selection) ? JSON.parse(fs.readFileSync(selection, 'utf8')).commit : undefined;
-  const images = deployment && (changed(isImageInput) || (process.env.GITHUB_EVENT_NAME !== 'pull_request'
-    && (!selectedCommit || inputDigest(root, selectedCommit, isImageInput) !== inputDigest(root, head, isImageInput))));
-  fs.appendFileSync(process.env.GITHUB_OUTPUT, `image_inputs=${images}\ndeployment_inputs=${deployment}\n`);
+  const read = file => fs.existsSync(file) ? JSON.parse(fs.readFileSync(file, 'utf8')) : undefined;
+  const pr = process.env.GITHUB_EVENT_NAME === 'pull_request';
+  const prior = pr && before && !/^0+$/u.test(before)
+    ? { commit: before, images: Object.fromEntries(runtimeImages.map(name => [name, true])) }
+    : read('releases/runtime-images.json');
+  // Compare against selected component sources, including changes from failed or
+  // superseded builds. A manual dispatch deliberately refreshes every component.
+  const images = changedImages(root, prior, head, manual);
+  const deployment = changed(isDeploymentInput) || images.length > 0;
+  fs.appendFileSync(process.env.GITHUB_OUTPUT, `image_inputs=${images.length > 0}\ndeployment_inputs=${deployment}\nimage_matrix=${JSON.stringify(images)}\n`);
 }

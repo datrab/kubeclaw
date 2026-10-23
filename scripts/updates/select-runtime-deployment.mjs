@@ -4,6 +4,7 @@ import { isDeepStrictEqual } from 'node:util';
 import { validateCodeReceipt, selectedCode } from './code-release.mjs';
 import { inputDigest, isDeploymentInput } from './runtime-inputs.mjs';
 import { validateReleaseReceipt } from './deployment-release.mjs';
+import { componentSource } from './runtime-components.mjs';
 
 const root = process.cwd(), repo = process.env.GITHUB_REPOSITORY, token = process.env.GITHUB_TOKEN;
 const id = process.env.SOURCE_RUN_ID, attempt = process.env.SOURCE_RUN_ATTEMPT;
@@ -36,7 +37,11 @@ const published = await receipt(`code-bundles-${id}-${attempt}`, 'runtime-code.j
 if (!published) { console.log('No deployment inputs published; nothing to promote.'); process.exit(0); }
 const code = validateCodeReceipt(published.value);
 for (const [role, bundle] of Object.entries(code.bundles)) {
-  const assets = published.release.assets.filter(item => item.name === `${role}-${code.commit}.tgz`);
+  const source = componentSource(code, role, 'bundle');
+  // Retained sources are authenticated against their own original release by
+  // verify-release-source before the selection can be committed or pushed.
+  if (source.sourceRunId !== Number(id) || source.sourceRunAttempt !== Number(attempt)) continue;
+  const assets = published.release.assets.filter(item => item.name === `${role}-${source.commit}.tgz`);
   if (assets.length !== 1 || assets[0].browser_download_url !== bundle.url || assets[0].digest !== `sha256:${bundle.sha256}`) throw new Error('PUBLISHED_BUNDLE_DIGEST_MISMATCH');
 }
 const git = args => execFileSync('git', args, { encoding: 'utf8' }).trim();

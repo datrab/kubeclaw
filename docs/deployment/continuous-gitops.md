@@ -7,17 +7,41 @@ normale Deployments nicht mehr erforderlich.
 ## Normaler Ablauf
 
 1. Code oder Deployment-Konfiguration nach `main` mergen.
-2. Der Image-Workflow baut und prueft die Runtime. Nach erfolgreichem Abschluss
-   startet `Propose production deployment` automatisch die Release-Promotion.
-3. Der erzeugte PR enthaelt Image-Digests, fertige Kubernetes-Manifeste und die
-   aktualisierten Argo-Applications. Den PR pruefen und mergen.
-4. Die einmal eingerichtete Root-Application `kubeclaw-runtime` verfolgt
-   `gitops/production/apps` auf `main`. Argo synchronisiert Buster, Prism und Nova.
+2. `Build Runtime Images And Skill Bundles` erkennt betroffene Images einzeln
+   anhand ihrer Build-Eingaben. Rollen-Bundles folgen den Paket- und
+   Plugin-Zuordnungen in `packaging/runtime/`. Die PR-Image-Pruefung nutzt
+   dieselbe Auswahl.
+3. Nach erfolgreichem Lauf waehlt `Publish production deployment` die
+   verifizierten Artefakte automatisch aus und schreibt Auswahl, fertige
+   Kubernetes-Manifeste und Argo-Applications nach `main`.
+4. Argo synchronisiert die betroffenen Anwendungen. Bei byte-identischen
+   Manifesten bleibt der bisherige unveraenderliche Anwendungspfad erhalten.
+
+Eine Aenderung an Busters Namespace-Controller baut nur dessen Image. Werden
+zusaetzlich Buster-Engine oder Buster-Plugins geaendert, kommen das
+`buster-runtime`-Image und das Buster-Bundle hinzu. Nova und Prism behalten ihre
+Image-Digests, Bundle-URLs, Pruefsummen und Bundle-Quellcommits.
+Gemeinsame Abhaengigkeiten aktualisieren alle tatsaechlichen Verbraucher.
+Das Buster-Runtime-Image kopiert derzeit den gesamten `skills/`-Baum; deshalb
+koennen auch Aenderungen an anderen Skills dessen Neubau erfordern.
+
+Vollstaendige Release-Receipts bleiben erhalten. Wiederverwendete Images tragen
+ihre urspruengliche Herkunft in `imageSources`, wiederverwendete Bundles in
+`bundles.<rolle>.source`. Die Promotion prueft jede Herkunft gegen den
+urspruenglichen erfolgreichen Workflow-Lauf und dessen dauerhaftes Receipt;
+Bundle-Assets werden weiterhin anhand ihres SHA-256-Digests geprueft.
+Alte Receipts ohne diese Felder bleiben lesbar.
+
+Die Erkennung vergleicht mit dem ausgewaehlten Quellstand jeder Komponente,
+nicht nur mit dem letzten Push. Dadurch werden Aenderungen aus fehlgeschlagenen
+oder ueberholten Builds erneut gebaut. Ein manueller `workflow_dispatch` auf
+`main` erneuert bewusst alle Images und Bundles. Fehlgeschlagene oder
+abgebrochene Image-Pruefungen verhindern die Bundle-Publikation und Promotion.
 
 Keine Run-ID, kein `git pull` auf dem Control Node und kein `deploy.sh` sind im
-Normalbetrieb erforderlich. Ein fehlgeschlagener Build erzeugt keinen Vorschlag.
-Ein erfolgreicher Lauf ohne neue Image-Receipts erzeugt ebenfalls keinen PR;
-das verhindert eine Schleife nach dem Merge eines Deployment-PRs.
+Normalbetrieb erforderlich. Erfolgreiche Laeufe ohne Deployment-Eingaben
+publizieren keine neue Auswahl; generierte Release-Commits starten keine
+Build-Schleife.
 
 Argo verfolgt fuer Root und Kinder `main`; Image-Digests und die jeweils
 referenzierten Release-Verzeichnisse bleiben fest. Alte Bundle-Verzeichnisse

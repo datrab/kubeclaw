@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import test from 'node:test';
 import YAML from 'yaml';
+import { runtimeImages } from '../../../scripts/updates/runtime-components.mjs';
 
 const read = name => YAML.parse(fs.readFileSync(`.github/workflows/${name}.yaml`, 'utf8'));
 const main = read('build-images'), pr = read('role-images'), updates = read('update-checks'), promote = read('promote-runtime');
@@ -29,8 +30,9 @@ test('each runtime is built once per event and PR builds cannot publish', () => 
   assert.equal(pr.on.push, undefined);
   assert.equal(pr.on.workflow_call, undefined);
   assert.deepEqual(pr.permissions, { contents: 'read' });
-  const names = main.jobs.build.strategy.matrix.name;
-  assert.deepEqual(names, pr.jobs.image.strategy.matrix.name);
+  assert.match(main.jobs.build.strategy.matrix.name, /fromJSON\(needs.detect-build-inputs.outputs.image_matrix\)/u);
+  assert.match(pr.jobs.image.strategy.matrix.name, /fromJSON\(needs.inputs.outputs.image_matrix\)/u);
+  const names = runtimeImages;
   assert.equal(new Set(names).size, 10);
   for (const name of names) assert(fs.existsSync(`docker/Dockerfile.${name}`));
   for (const job of [main.jobs.build, pr.jobs.image]) {
@@ -58,7 +60,8 @@ test('immutable candidate checks precede release receipts and share PR acceptanc
   assert.equal(steps[receipt].if, undefined);
   assert.equal(steps[upload].if, undefined);
   assert.equal(main.jobs['preserve-receipts'].needs, 'build');
-  assert.equal(main.jobs['prism-live-acceptance'].needs, 'build');
+  assert.deepEqual(main.jobs['prism-live-acceptance'].needs, ['build', 'detect-build-inputs']);
+  for (const service of ['control', 'studio', 'worker', 'ingestion']) assert(main.jobs['prism-live-acceptance'].if.includes(`'prism-${service}'`));
 });
 
 test('bundle publication rejects failed or cancelled image proofs while allowing code-only changes', () => {
