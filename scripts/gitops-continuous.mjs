@@ -50,6 +50,30 @@ export function continuousApplications(manifest, config = {}) {
   return documents;
 }
 
+// Keep an unchanged child's immutable path. A promotion of another role must
+// not create an Argo sync for byte-identical resources.
+export function retainUnchangedApplications(repository, documents) {
+  const file = path.join(repository, environment, 'apps/applications.yaml');
+  if (!fs.existsSync(file)) return documents;
+  const prior = yaml.loadAll(fs.readFileSync(file, 'utf8')).filter(Boolean);
+  for (const application of documents.filter(document => document.kind === 'Application')) {
+    const old = prior.find(document => document.kind === 'Application' && document.metadata?.name === application.metadata.name
+      && document.metadata?.namespace === application.metadata.namespace);
+    const before = old?.spec?.source, after = application.spec.source;
+    const allowed = value => /^releases\/gitops\/[a-z0-9][a-z0-9-]{0,50}\/(buster|nova|prism)$/u.exec(value ?? '');
+    const oldRole = allowed(before?.path)?.[1], newRole = allowed(after.path)?.[1];
+    if (!oldRole || oldRole !== newRole || before.repoURL !== after.repoURL || before.targetRevision !== 'main'
+      || before.directory?.include !== 'resources.yaml' || after.directory?.include !== 'resources.yaml') continue;
+    const previous = path.join(repository, before.path, 'resources.yaml');
+    const current = path.join(repository, after.path, 'resources.yaml');
+    if (!fs.existsSync(previous) || !fs.existsSync(current)
+      || !fs.readFileSync(previous).equals(fs.readFileSync(current))) continue;
+    after.path = before.path;
+    application.metadata.annotations['kubeclaw.dev/immutable-bundle-path'] = before.path;
+  }
+  return documents;
+}
+
 function configuration(repository) {
   const config = JSON.parse(fs.readFileSync(path.join(repository, environment, 'config.json'), 'utf8'));
   for (const field of ['namespace', 'prismNamespace', 'argoNamespace']) {
@@ -67,7 +91,7 @@ export function renderContinuousEnvironment(repository, directory, url, revision
     const rendered = execFileSync('helm', ['template', 'runtime', path.join(repository, 'charts/gitops'),
       '-n', config.argoNamespace, '-f', values], { encoding: 'utf8', maxBuffer: 32 * 1024 * 1024 });
     return { result: { ...result, documents: continuousDocuments(result, config.argoNamespace, config) },
-      files: { 'apps/applications.yaml': dump(continuousApplications(rendered, config)),
+      files: { 'apps/applications.yaml': dump(retainUnchangedApplications(repository, continuousApplications(rendered, config))),
         'bootstrap.yaml': dump(continuousDocuments(result, config.argoNamespace, config)),
         'selection.json': JSON.stringify({ directory }, null, 2) + '\n' } };
   } finally { fs.rmSync(temporary, { recursive: true, force: true }); }

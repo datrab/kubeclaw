@@ -2,6 +2,7 @@ import fs from 'node:fs';
 import { execFileSync } from 'node:child_process';
 import yaml from 'js-yaml';
 import { selectedCode } from './code-release.mjs';
+import { componentSource } from './runtime-components.mjs';
 import { verifyReleaseConfiguration } from './release-configuration.mjs';
 const family = process.argv.includes('--family=ops') ? 'ops' : 'runtime';
 const release = JSON.parse(fs.readFileSync(`releases/${family}-images.json`, 'utf8'));
@@ -41,7 +42,7 @@ for (const role of family === 'ops' ? ['ops'] : ['nova', 'buster', 'prism-agent'
   }
   if (code && ['nova', 'buster', 'prism-agent'].includes(role)) {
     const bundle = code.bundles[role === 'prism-agent' ? 'prism' : role];
-    values.codeBundle = { ...values.codeBundle, enabled: true, archiveUrl: bundle.url, expectedCommit: code.commit,
+    values.codeBundle = { ...values.codeBundle, enabled: true, archiveUrl: bundle.url, expectedCommit: componentSource(code, role === 'prism-agent' ? 'prism' : role, 'bundle').commit,
       sha256: bundle.sha256, contractVersion: bundle.contractVersion };
   }
   const output = `# Generated from release ${release.commit} and byte-matched source configuration; do not edit.\n${yaml.dump(values, { lineWidth: 120, noRefs: true })}`;
