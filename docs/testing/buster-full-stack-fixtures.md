@@ -112,15 +112,21 @@ includes its UID when readable; an RBAC denial remains separate from pod evidenc
 Diagnostic read errors distinguish forbidden, unauthorized, not-found, timeout,
 output-limit and invalid JSON (including malformed list shape), inspecting wrapped
 causes without exposing arbitrary stderr. Unknown failures remain unavailable. Ordinary fixture provider
-results carry the snapshot in `providerDetails.values.failureEvidence`, with a
+results carry the snapshot in `providerDetails.values.failureEvidence` and declare
+`kubernetes-fixture-failure.json` as JSON log evidence for the existing default
+failed-node artifact collector. The provider writes exclusively with mode 0600,
+checks the real evidence directory stays inside the workspace, and enforces a
+128 KiB ceiling plus invocation artifact budgets. Publication failures are separate
+`failureArtifactError` values; they never replace the readiness failure or inline
+snapshot. Durable staging/store round-trip is regression-tested locally, not yet
+verified in a live remote pipeline. Results retain a
 failed outcome and no deployment outputs. Cancellation still propagates as an
 error and cleanup retains its independent deadline.
 
 This is intentionally **not yet the complete diagnostic gap fix**. Arbitrary API
 messages and container logs remain omitted rather than leaking probe commands,
 credentials or application output. Next: establish the safe bounded log/message
-redaction path (including previous logs), durable evidence-file
-publication, and cover actual crash/probe cases and cancellation/cleanup through
+redaction path (including previous logs), verify live artifact publication, and cover actual crash/probe cases and cancellation/cleanup through
 the runtime. Then run platform review/build/rollout via the established workflow
 and repeat the disposable HTTP canary. No rollout or live acceptance was performed
 at this checkpoint; the historical startup cause is still unknown.
