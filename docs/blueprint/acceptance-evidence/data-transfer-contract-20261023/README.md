@@ -95,3 +95,49 @@ These diagnostics strengthen producer/consumer understanding, but still do not
 implement or qualify the discovery adapter. They add no acceptance and do not
 change Source custody vectors or release receipts. The next adapter-level
 negative must include downstream managed-evidence custody, not stop at store().
+
+
+## Executed downstream loss controls (continuation)
+
+Baseline: `6ae345c26f0e1f6d0cc855cfe202e2c9fd6ce91f`. Four new
+synthetic-loader diagnostics retain the original producer, real staging,
+injected custom store, and actual managed-evidence consumer. Each custom store
+first checks the complete input and lets the default store write it, then
+truncates only that store's output file inside `artifactRoot`. It returns the
+original artifact metadata, including the now-stale size and digest. No product
+Source, registry, classification or release receipt was modified.
+
+| Route | Input | Final durable content | Result |
+| --- | --- | --- | --- |
+| completed | two YAML documents, 154 bytes | first document, 55 bytes | full-byte assertion fails |
+| error staging after injected first store failure | same YAML stream | first document, 55 bytes | full-byte assertion fails |
+| completed | two-item JSON List, 221 bytes | first item only, 110 bytes | full-byte assertion fails |
+| error staging after injected first store failure | same JSON List | first item only, 110 bytes | full-byte assertion fails |
+
+All four commands exit 1 at the intended assertion AFTER reading the final
+durable evidence URL. The completed routes still report `completed`; the
+error routes remain `errored` for the deliberately injected first-store
+failure. Raw sources and full assertion logs are retained next to this file;
+`downstream-negative-manifest.json` pins their exact bytes. These are expected
+negative controls, not passing preservation tests or a qualified adapter.
+
+`#persistWorkerCompletion` reads the custom store's URL with
+`#readManagedEvidence`, enforcing the file protocol, containment, identity and
+byte budget. It then publishes the bytes it actually read to the durable store.
+It does not compare them with the earlier staging input or validate the custom
+store's returned digest/size against those input bytes. Thus a readable file
+inside `artifactRoot`, and even the original full-input metadata, are not a
+full-document custody proof. This observation is not a claim that the runtime
+promises to distrust every configured store; it invalidates using its current
+interface alone as a documentation DATA-preservation authority.
+
+The next adapter-level proof must explicitly reject unsupported custom stores
+or independently establish complete-byte equality through the final consumer.
+Checking returned metadata alone is insufficient; even a self-consistent digest
+of truncated output cannot prove preservation of the producer's original input.
+Do not change product runtime behavior merely to make a documentation authority
+pass. Runtime hardening, if separately needed, does not itself enumerate the
+API documents in arbitrary provider output. The originally requested
+producer/discovery-adapter integration test remains unimplemented, including
+cold/warm custody changes; these four controls narrow its required contract.
+All five DATA slots remain UNKNOWN and all existing acceptance limits remain.

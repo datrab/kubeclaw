@@ -1,0 +1,21 @@
+{"route":"error","downstreamReached":true,"executionState":"errored","inputBytes":221,"finalBytes":110,"storeReturnedOriginalDigest":true,"providerSandboxExecuted":false,"discoveryAdapterQualified":false}
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
++ actual - expected
+
++ '{"apiVersion":"v1","kind":"List","items":[{"apiVersion":"v1","kind":"ConfigMap","metadata":{"name":"first"}}]}'
+- '{"apiVersion":"v1","kind":"List","items":[{"apiVersion":"v1","kind":"ConfigMap","metadata":{"name":"first"}},{"apiVersion":"v1","kind":"Secret","metadata":{"name":"second"},"stringData":{"synthetic":"not-a-credential"}}]}'
+
+    at file:///home/node/.openclaw/workspace/kubeclaw-pr13-recovery/.cache/pr13-transfer-negative/error-list-truncation.mts:411:9 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: '{"apiVersion":"v1","kind":"List","items":[{"apiVersion":"v1","kind":"ConfigMap","metadata":{"name":"first"}}]}',
+  expected: '{"apiVersion":"v1","kind":"List","items":[{"apiVersion":"v1","kind":"ConfigMap","metadata":{"name":"first"}},{"apiVersion":"v1","kind":"Secret","metadata":{"name":"second"},"stringData":{"synthetic":"not-a-credential"}}]}',
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.21.0

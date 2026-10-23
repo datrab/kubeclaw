@@ -1,0 +1,6 @@
+{
+  "findings": [],
+  "overall_correctness": "patch is correct",
+  "overall_explanation": "The supplied diagnostics reach the persisted evidence path and intentionally fail strict full-content equality after reading its final URL on both completed and errored staging routes. The documentation accurately limits the result to negative custody evidence and grants no DATA authority or acceptance. Inspection was limited to the provided change bundle and in-band runtime sources; tests were not executed in the read-only review sandbox.",
+  "overall_confidence": 0.94
+}

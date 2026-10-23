@@ -1,0 +1,50 @@
+{
+  "baseline": "6ae345c26f0e1f6d0cc855cfe202e2c9fd6ce91f",
+  "expectedExitCode": 1,
+  "failure": "complete-byte equality assertion after actual durable URL read",
+  "runtimeModified": false,
+  "providerSandboxExecuted": false,
+  "discoveryAdapterQualified": false,
+  "files": [
+    {
+      "path": "completed-truncation.mts.raw",
+      "bytes": 15604,
+      "sha256": "1ab431773eb862974eadfa9a70aa404d7f5d57d7b8c21e07517a8da7a4c77083"
+    },
+    {
+      "path": "completed-truncation.log",
+      "bytes": 1226,
+      "sha256": "ff920ae4358acb3e816023b20a1e1eecd914a07f8c6bb4fe8bbdd5831517fa70"
+    },
+    {
+      "path": "completed-list-truncation.mts.raw",
+      "bytes": 15768,
+      "sha256": "1436de7058916a1947088114327393e5df507a482870ff296871892cf24c601f"
+    },
+    {
+      "path": "completed-list-truncation.log",
+      "bytes": 1328,
+      "sha256": "7397c11def6b2ca3a31d8d1ee59bd879ff6f4b602965cdf4430be91ec7b2a3ca"
+    },
+    {
+      "path": "error-truncation.mts.raw",
+      "bytes": 15768,
+      "sha256": "482c01b1279b8f89da6d4a7a72a0707fd5c62bdb332b157cf3fddcdfd3b5e8b9"
+    },
+    {
+      "path": "error-truncation.log",
+      "bytes": 1216,
+      "sha256": "8038a6b65b1ccc60578a7fa2a04256422523967cea032284694030611143768f"
+    },
+    {
+      "path": "error-list-truncation.mts.raw",
+      "bytes": 15932,
+      "sha256": "f4394841d801349e1e18ee2b589a93e2253f32b52822ca43a6bb9093ef751bb8"
+    },
+    {
+      "path": "error-list-truncation.log",
+      "bytes": 1318,
+      "sha256": "63748ce8246f73f10294531cdf1c50df703f875f5e5e8c650dfedebd407270e1"
+    }
+  ]
+}

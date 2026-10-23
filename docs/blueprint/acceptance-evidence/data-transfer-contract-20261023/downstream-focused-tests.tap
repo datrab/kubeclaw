@@ -1,0 +1,44 @@
+✔ exact API-capable declaration remains a capability, not a private projection: scripts/observability-retirement/files.mjs (212.039448ms)
+✔ exact API-capable declaration remains a capability, not a private projection: skills/buster/engine/test-gates/native-fixture-journal.ts (665.814847ms)
+✔ exact API-capable declaration remains a capability, not a private projection: skills/common/plugin-runtime/foundation/config/published-pair.ts (342.9978ms)
+✔ exact API-capable declaration remains a capability, not a private projection: skills/common/plugins/runtime-dispatch/src/result-persistence.ts (145.364127ms)
+✔ warm changed utility Source cannot borrow old declaration or refreshed metadata: scripts/observability-retirement/files.mjs (390.016382ms)
+✔ warm changed utility Source cannot borrow old declaration or refreshed metadata: skills/buster/engine/test-gates/native-fixture-journal.ts (816.928411ms)
+✔ warm changed utility Source cannot borrow old declaration or refreshed metadata: skills/common/plugin-runtime/foundation/config/published-pair.ts (391.368307ms)
+✔ warm changed utility Source cannot borrow old declaration or refreshed metadata: skills/common/plugins/runtime-dispatch/src/result-persistence.ts (265.595397ms)
+✔ forged console role/basis/receipt fields do not create either internal receipt (302.069521ms)
+✔ private bundle writer still projects all3 callers and warm escape rejects (217.65815ms)
+✔ public writer caller root stays API/UNKNOWN despite refreshed AUTHOR-style call receipt: persistResult('/repo','result.json',PAYLOAD) {apiVersion:'v1',kind:'Secret',metadata:{name:'synthetic'}} (312.925307ms)
+✔ public writer caller root stays API/UNKNOWN despite refreshed AUTHOR-style call receipt: persistResult('/repo','result.json',PAYLOAD) process.argv[2] (151.00078ms)
+✔ public writer caller root stays API/UNKNOWN despite refreshed AUTHOR-style call receipt: publishJsonPair('/repo',['progress.json','pipeline.json'],[PAYLOAD,{ok:true}]) {apiVersion:'v1',kind:'Secret',metadata:{name:'synthetic'}} (271.031344ms)
+✔ public writer caller root stays API/UNKNOWN despite refreshed AUTHOR-style call receipt: publishJsonPair('/repo',['progress.json','pipeline.json'],[PAYLOAD,{ok:true}]) process.argv[2] (302.982295ms)
+✔ deleting mutable native-writer capability metadata cannot erase Source-owned caller publications (233.070482ms)
+✔ warm operation receipts reacquire changed receiver dependency facts, not old cached true (865.936594ms)
+✔ import alias preserves literal encoded API root and unknown wrapper caller selection (142.867194ms)
+✔ API-capable reader declaration does not qualify new stdout forwarding: inventory (125.714409ms)
+✔ API-capable reader declaration does not qualify new stdout forwarding: fixture journal (1016.424541ms)
+✔ mutable declaration role downgrade cannot relabel the four Source-owned capabilities non-API (618.056367ms)
+✔ fresh but unrelated operation metadata cannot renew a selected utility receiver (175.181323ms)
+✔ Source-owned writer selection survives finite aliases and opaque namespace escapes: persistResult (1254.10168ms)
+✔ Source-owned writer selection survives finite aliases and opaque namespace escapes: publishJsonPair (2427.708049ms)
+✔ same export spelling in an unrelated namespace cannot borrow Source-owned writer identity (185.429303ms)
+✔ warm namespace capability reacquires changed exact receiver Source: persistResult (211.066394ms)
+✔ warm namespace capability reacquires changed exact receiver Source: publishJsonPair (346.749116ms)
+✔ opaque contained-file DATA survives descriptor shape, fresh/deleted/forged receipts and warm receiver changes: staging (268.422878ms)
+✔ opaque contained-file DATA survives descriptor shape, fresh/deleted/forged receipts and warm receiver changes: store (344.122739ms)
+✔ physical contained-file writes cannot inherit stale or forged non-API DATA receipts (330.793571ms)
+✔ original and custom EvidenceStore private-field publications remain visible UNKNOWN (1310.772508ms)
+✔ staging and artifact storage preserve actual API-bearing json bytes (9.007169ms)
+✔ staging and artifact storage preserve actual API-bearing yaml bytes (3.723505ms)
+✔ staging and artifact storage preserve actual API-bearing yaml-multi-document bytes (3.423887ms)
+✔ staging and artifact storage preserve actual API-bearing json-list bytes (3.092018ms)
+✔ staging and artifact storage preserve actual API-bearing opaque bytes (4.061943ms)
+✔ API-bearing evidence still obeys byte limit and cancellation before publication (2.37286ms)
+ℹ tests 36
+ℹ suites 0
+ℹ pass 36
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 15036.178445

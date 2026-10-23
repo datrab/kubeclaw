@@ -1,0 +1,35 @@
+{"route":"completed","downstreamReached":true,"executionState":"completed","inputBytes":154,"finalBytes":55,"storeReturnedOriginalDigest":true,"providerSandboxExecuted":false,"discoveryAdapterQualified":false}
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
++ actual - expected
+
++ 'apiVersion: v1\nkind: ConfigMap\nmetadata: {name: first}\n'
+- 'apiVersion: v1\n' +
+-   'kind: ConfigMap\n' +
+-   'metadata: {name: first}\n' +
+-   '---\n' +
+-   'apiVersion: v1\n' +
+-   'kind: Secret\n' +
+-   'metadata: {name: second}\n' +
+-   'stringData: {synthetic: not-a-credential}\n'
+
+    at file:///home/node/.openclaw/workspace/kubeclaw-pr13-recovery/.cache/pr13-transfer-negative/completed-truncation.mts:409:9 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: 'apiVersion: v1\nkind: ConfigMap\nmetadata: {name: first}\n',
+  expected: 'apiVersion: v1\n' +
+    'kind: ConfigMap\n' +
+    'metadata: {name: first}\n' +
+    '---\n' +
+    'apiVersion: v1\n' +
+    'kind: Secret\n' +
+    'metadata: {name: second}\n' +
+    'stringData: {synthetic: not-a-credential}\n',
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.21.0
