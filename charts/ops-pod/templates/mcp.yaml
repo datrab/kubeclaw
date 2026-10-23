@@ -2,6 +2,7 @@
 {{- $clients := list -}}
 {{- $ids := dict -}}
 {{- range .Values.mcp.clients -}}
+{{- $client := . -}}
 {{- if or (not (regexMatch "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$" .id)) (gt (len .id) 63) (hasKey $ids .id) -}}
 {{- fail "mcp client ids must be unique DNS labels" -}}
 {{- end -}}
@@ -14,7 +15,9 @@
 {{- if not (has (lower .) $.Values.rbac.namespacePrefixes) -}}{{- fail "MCP client prefix is outside rbac.namespacePrefixes" -}}{{- end -}}
 {{- end -}}
 {{- range .exec -}}
-{{- if .namespacePrefix -}}
+{{- if .allNonSystemNamespaces -}}
+{{- if or (not $.Values.rbac.execAllNonSystemNamespaces) (not $client.readAllNamespaces) -}}{{- fail "MCP broad exec requires RBAC and client all-namespace observation" -}}{{- end -}}
+{{- else if .namespacePrefix -}}
 {{- if not (has (lower .namespacePrefix) $.Values.rbac.namespacePrefixes) -}}{{- fail "MCP exec prefix is outside rbac.namespacePrefixes" -}}{{- end -}}
 {{- else if not (has .namespace $.Values.rbac.execNamespaces) -}}{{- fail "MCP exec grant is outside rbac.execNamespaces" -}}{{- end -}}
 {{- end -}}
@@ -63,6 +66,7 @@ spec:
             - {name: HOST, value: "0.0.0.0"}
             - {name: OPS_DEFAULT_NAMESPACE, value: {{ .Values.defaultNamespace | quote }}}
             - {name: OPS_ALLOWED_NAMESPACES, value: {{ join "," .Values.rbac.namespaces | quote }}}
+            - {name: OPS_EXEC_ALL_NON_SYSTEM_NAMESPACES, value: {{ ternary "1" "0" .Values.rbac.execAllNonSystemNamespaces | quote }}}
             - {name: OPS_READ_ALL_NAMESPACES, value: {{ ternary "1" "0" .Values.rbac.readAllNamespaces | quote }}}
             - {name: OPS_ALLOWED_NAMESPACE_PREFIXES, value: {{ join "," .Values.rbac.namespacePrefixes | quote }}}
             - {name: ARGOCD_NAMESPACE, value: {{ .Values.argoNamespace | quote }}}

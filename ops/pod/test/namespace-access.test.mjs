@@ -19,15 +19,17 @@ test('rendered MCP scope, dynamic backend, admission guard and network edge agre
   assert.deepEqual(backend.prefixes, ['test']);
   assert.equal(backend.serviceAccount, 'codex-ops-mcp');
   const policy = JSON.parse(resources.find(x => x.kind === 'ConfigMap' && x.data['policy.json']).data['policy.json']);
-  const clients = parsePolicy(JSON.stringify(policy), ['kubeclaw'], backend.prefixes, true);
+  const clients = parsePolicy(JSON.stringify(policy), ['kubeclaw'], backend.prefixes, true, backend.allNonSystemNamespaces);
   assert.deepEqual(clients.map(c => c.id), ['codex', 'nova', 'buster']);
   for (const client of clients) {
     assert.deepEqual(client.namespacePrefixes, ['test']);
-    assert.ok(client.exec.some(g => g.namespacePrefix === 'test' && g.allPods && g.allContainers));
+    assert.ok(client.exec.some(g => (client.id === 'codex' ? g.allNonSystemNamespaces === true : g.namespacePrefix === 'test') && g.allPods && g.allContainers));
   }
   assert.deepEqual(clients.find(c => c.id === 'buster').namespaces, []);
   const guard = resources.find(x => x.kind === 'ValidatingAdmissionPolicy');
   const binding = resources.find(x => x.kind === 'ValidatingAdmissionPolicyBinding');
+  assert.equal(backend.allNonSystemNamespaces, true);
+  assert.equal(guard.spec.validations[0].expression, "!request.namespace.startsWith('kube-')");
   assert.equal(guard.spec.failurePolicy, 'Fail');
   assert.deepEqual(binding.spec.validationActions, ['Deny']);
   assert.equal(binding.spec.policyName, guard.metadata.name);
@@ -50,7 +52,7 @@ test('rendered MCP scope, dynamic backend, admission guard and network edge agre
 
 test('production Ops retains its platform read scopes and all clients receive test access', () => {
   const values = parse(readFileSync(root + 'gitops/platform/values/codex-ops.yaml', 'utf8'));
-  const clients = parsePolicy(JSON.stringify({clients: values.mcp.clients.map(c => ({...c, tokenFile: '/token/'+c.id}))}), values.rbac.namespaces, ['test'], values.rbac.readAllNamespaces);
+  const clients = parsePolicy(JSON.stringify({clients: values.mcp.clients.map(c => ({...c, tokenFile: '/token/'+c.id}))}), values.rbac.namespaces, ['test'], values.rbac.readAllNamespaces, values.rbac.execAllNonSystemNamespaces);
   assert.deepEqual(clients[0].namespaces, values.rbac.namespaces);
   assert.ok(clients[0].tools.includes('list_argocd_applications'));
   assert.deepEqual(clients.find(c => c.id === 'buster').namespaces, []);
@@ -68,4 +70,28 @@ test('global observer binding grants only MCP reads and cannot introduce cluster
   const policy = JSON.parse(resources.find(x => x.kind === 'ConfigMap' && x.data['policy.json']).data['policy.json']);
   assert.deepEqual(policy.clients.filter(c => c.readAllNamespaces).map(c => c.id), ['codex']);
   assert.ok(policy.clients.find(c => c.id === 'codex').tools.includes('platform_cluster_state'));
+});
+
+test('broad backend is explicit and reconciler retains API egress without namespace prefixes', () => {
+  const defaults = parse(readFileSync(root + 'charts/ops-pod/values.yaml', 'utf8'));
+  const clients = defaults.mcp.clients.map(c => ({ ...c, namespacePrefixes: [], exec: c.id === 'codex' ? c.exec : [] }));
+  const args = ['template', 'codex-ops', root + 'charts/ops-pod', '-n', 'kubeclaw-ops',
+    '--set-string', 'codexImage=example/codex@sha256:' + 'a'.repeat(64),
+    '--set-string', 'mcpImage=example/mcp@sha256:' + 'b'.repeat(64),
+    '--set', 'networkPolicy.apiServerCIDRs[0]=10.0.0.1/32', '--set', 'networkPolicy.cilium=true',
+    '--set-json', 'rbac.namespacePrefixes=[]', '--set-json', 'mcp.clients=' + JSON.stringify(clients)];
+  const docs = parseAllDocuments(execFileSync('helm', args, { encoding: 'utf8' })).map(doc => {
+    assert.deepEqual(doc.errors, []); return doc.toJSON();
+  }).filter(Boolean);
+  const backend = JSON.parse(docs.find(x => x.kind === 'ConfigMap' && x.metadata.name.endsWith('-namespace-access')).data['config.json']);
+  assert.deepEqual(backend.prefixes, []);
+  assert.equal(backend.allNonSystemNamespaces, true);
+  const policy = JSON.parse(docs.find(x => x.kind === 'ConfigMap' && x.data['policy.json']).data['policy.json']);
+  assert.doesNotThrow(() => parsePolicy(JSON.stringify(policy), ['kubeclaw'], [], true, true));
+  assert.throws(() => parsePolicy(JSON.stringify(policy), ['kubeclaw'], [], true, false), /grant/);
+  const deployment = docs.find(x => x.kind === 'Deployment' && x.metadata.name === 'codex-ops-mcp');
+  assert.equal(deployment.spec.template.spec.containers[0].env.find(x => x.name === 'OPS_EXEC_ALL_NON_SYSTEM_NAMESPACES').value, '1');
+  assert.ok(docs.some(x => x.kind === 'NetworkPolicy' && x.metadata.name.endsWith('-namespace-access')));
+  assert.ok(docs.find(x => x.kind === 'CiliumNetworkPolicy').spec.endpointSelector.matchExpressions[0].values.includes('codex-ops-mcp-namespace-access'));
+  assert.throws(() => execFileSync('helm', [...args, '--set', 'rbac.execAllNonSystemNamespaces=false'], { stdio: 'pipe' }));
 });

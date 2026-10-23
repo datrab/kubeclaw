@@ -1,4 +1,4 @@
-{{- if .Values.rbac.namespacePrefixes }}
+{{- if or .Values.rbac.namespacePrefixes .Values.rbac.execAllNonSystemNamespaces }}
 {{- $name := printf "%s-mcp-namespace-access" .Release.Name }}
 {{- $reader := printf "%s-%s-reader" .Release.Namespace .Release.Name }}
 {{- $exec := printf "%s-%s-test-exec" .Release.Namespace .Release.Name }}
@@ -69,8 +69,13 @@ spec:
     - name: reconciler-identity
       expression: {{ printf "request.userInfo.username == 'system:serviceaccount:%s:%s'" .Release.Namespace $name | quote }}
   validations:
+    {{- if .Values.rbac.execAllNonSystemNamespaces }}
+    - expression: "!request.namespace.startsWith('kube-')"
+      message: Namespace access reconciler must never bind Kubernetes system namespaces
+    {{- else }}
     - expression: {{ printf "%s.exists(prefix, request.namespace.startsWith(prefix))" (toJson .Values.rbac.namespacePrefixes) | quote }}
       message: Namespace access reconciler may only bind configured namespace prefixes
+    {{- end }}
     - expression: {{ printf "object.metadata.name in ['%s', '%s'] && object.roleRef.apiGroup == 'rbac.authorization.k8s.io' && object.roleRef.kind == 'ClusterRole' && object.roleRef.name == object.metadata.name" $reader $exec | quote }}
       message: Only the two dedicated MCP roles may be bound
     - expression: {{ printf "has(object.subjects) && size(object.subjects) == 1 && object.subjects[0].kind == 'ServiceAccount' && object.subjects[0].name == '%s-mcp' && object.subjects[0].namespace == '%s' && (!has(object.subjects[0].apiGroup) || object.subjects[0].apiGroup == '')" .Release.Name .Release.Namespace | quote }}
@@ -89,7 +94,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata: {name: {{ $name }}}
 data:
-  config.json: {{ dict "namespace" .Release.Namespace "serviceAccount" (printf "%s-mcp" .Release.Name) "prefixes" .Values.rbac.namespacePrefixes "roles" (list $reader $exec) | toJson | quote }}
+  config.json: {{ dict "namespace" .Release.Namespace "serviceAccount" (printf "%s-mcp" .Release.Name) "prefixes" .Values.rbac.namespacePrefixes "allNonSystemNamespaces" (.Values.rbac.execAllNonSystemNamespaces | default false) "roles" (list $reader $exec) | toJson | quote }}
 ---
 apiVersion: apps/v1
 kind: Deployment

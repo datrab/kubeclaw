@@ -153,7 +153,7 @@ remote process, so that this connection remains attached to the deployed service
 | Nova runtime | Own workspace and distinct MCP client bearer | No API token, lease-client role, verification-read role or broker deployer grant |
 | Central MCP | Selected observer reads and pod exec | Dedicated `codex-ops-mcp` ServiceAccount; per-client policy further restricts its authority |
 | Buster | Read/exec through MCP only in `test*`; existing broker lease exception | Own MCP bearer; explicit lease token only in worker; controller retains namespace management |
-| Namespace access reconciler | List namespaces; maintain two named MCP RoleBindings | Admission restricts writes to configured prefixes, exact roles and MCP subject; no workload, exec or Secret rights |
+| Namespace access reconciler | List namespaces; maintain two named MCP RoleBindings | Admission restricts writes to workload namespaces (or configured prefixes), exact roles and MCP subject; no workload, exec or Secret rights |
 
 `mcp.clients` is the authorization source. Each client declares exact tool names,
 readable `namespaces`, dynamic `namespacePrefixes`, and explicit exec grants.
@@ -161,15 +161,21 @@ Exact namespace grants require a nonempty Pod label selector and exact container
 names. Prefix exec grants explicitly set `namespacePrefix`, `allPods: true` and
 `allContainers: true`, with timeout and output ceilings. Empty `exec: []` denies
 exec. All calls check client scope before accessing Kubernetes. Buster has no
-exact namespaces and only the `test` prefix; Nova retains `kubeclaw` plus `test`; Ops reads all namespaces. Both retain their
-explicit exec targets plus `test`. Prefix matching ignores case; tool input is canonicalized
+exact namespaces and only the `test` prefix; Nova retains `kubeclaw` plus `test`; Ops reads all namespaces and has an explicit `allNonSystemNamespaces` exec
+grant for all regular containers. Nova retains its explicit exec targets plus `test`. Prefix matching ignores case; tool input is canonicalized
 to Kubernetes' lowercase namespace names. `test`, `testing` and `test-build` match;
 `prod-test` and `contest` do not.
 
 `rbac.namespaces`, `rbac.execNamespaces` and `rbac.namespacePrefixes` cap the MCP
 identity. The separate namespace-access reconciler lists namespaces every five
 seconds and maintains reader/exec RoleBindings for every matching namespace,
-including existing, newly created and recreated namespaces. No opt-in label or
+including existing, newly created and recreated namespaces.
+`rbac.execAllNonSystemNamespaces` extends this reconciliation to every namespace
+except the Kubernetes-reserved `kube-*` namespaces. The mandatory admission
+guard enforces that same exclusion; there is no global exec ClusterRoleBinding.
+Only Codex receives the broad client grant. The MCP rejects Pods with
+`system-node-critical`/`system-cluster-critical` priority classes or numeric system
+priority (at least 2000000000), even outside the reserved namespaces. No opt-in label or
 per-namespace Git change is needed. New namespace access may initially return
 403 until the next successful reconciliation; terminating namespaces are skipped.
 Only the MCP receives these RoleBindings. Buster's namespace-controller inventory
@@ -178,15 +184,15 @@ access; it still reports changed names, roles, subjects or additional grantees.
 `busterNamespaceBroker.controller.opsMcpAccess` must agree with the Ops namespace
 and release name; it recognizes bindings without creating them. Kubernetes RBAC cannot restrict binding
 creation by prefix, so a mandatory, fail-closed ValidatingAdmissionPolicy also
-checks the reconciler identity, namespace prefix, exact binding/role names and
+checks the reconciler identity, namespace selection, exact binding/role names and
 single MCP subject. Argo installs that guard before the reconciler's RBAC.
 `rbac.readAllNamespaces: true` binds the existing read-only observer role globally
 to the MCP. Only the Ops/Codex client declares `readAllNamespaces: true`; Nova and
 Buster retain their explicit namespaces/prefixes. The `platform_cluster_state(resource=namespaces)`
 operation requires both an explicit tool grant and this global read capability. New
 namespaces are readable immediately without discovery or a per-namespace binding.
-Global observation never grants exec: that still requires a matching exact or
-prefix exec grant, checked before fetching a Pod or opening remotecommand.
+Global observation never grants exec: that still requires a matching exact, prefix or explicit non-system-namespace
+exec grant, checked before fetching a Pod or opening remotecommand.
 No agent receives the reader binding. The observer role contains no Secret reads,
 exec, port-forward or mutation rights. Disabling global reads reconciles the named
 ClusterRoleBinding to empty subjects, even with Argo pruning disabled.

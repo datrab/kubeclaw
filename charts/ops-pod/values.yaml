@@ -27,6 +27,8 @@ rbac:
   # Upper bound on namespaces where the MCP may exec. Per-client grants below
   # further restrict target labels, containers, timeout and output size.
   execNamespaces: [kubeclaw]
+  # Devbox may exec in existing/future workload namespaces; kube-* is excluded.
+  execAllNonSystemNamespaces: true
   # Reconciled continuously for existing and future namespaces. Lowercase prefixes.
   namespacePrefixes: [test]
 argoNamespace: argocd
@@ -68,19 +70,9 @@ mcp:
       namespacePrefixes: [test]
       tools: [list_argocd_applications, platform_cluster_state, platform_network_state, namespace_overview, get_pod, get_events, get_pod_logs, get_hubble_flows, get_pod_metrics, exec_pod]
       exec:
-        - namespacePrefix: test
+        - allNonSystemNamespaces: true
           allPods: true
           allContainers: true
-          timeoutSeconds: 30
-          maxOutputBytes: 65536
-        - namespace: kubeclaw
-          podLabels: {app.kubernetes.io/instance: agent-buster}
-          containers: [buster-v2-runtime]
-          timeoutSeconds: 30
-          maxOutputBytes: 65536
-        - namespace: kubeclaw
-          podLabels: {app.kubernetes.io/instance: agent-nova}
-          containers: [kubeclaw, archviewer]
           timeoutSeconds: 30
           maxOutputBytes: 65536
     - id: nova
