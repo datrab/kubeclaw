@@ -217,3 +217,45 @@ current-baseline acquisition are retained in operations evidence under
 Continue from those current vectors; do not rerun the historical custody acquisition
 or count this as A910-13/A910-14 acceptance. No commit/push until coherent custody
 and affected original-scope preservation have been reviewed together.
+
+## Genuine nested/Secret custody and next guide path — 2026-10-23 22:23 UTC
+
+Source `5ae0fa2e8b54cd02dfd78d11e55f0baced7c144b` qualifies the real Secret and
+nested-schema constructors and explicitly binds the existing runtime-dispatch
+schema. Complete final105 native recipe vectors match Source exactly: six recipes
+change, selectors/children and1248selected/1005caller memberships do not. Five
+recipes include only the demonstrated owner-purpose and two scalar initializer
+changes; the sixth changes the emitter IfStatement. Seventeen purpose-input
+qualifications change only the demonstrated registry/emitter bytes. No DATA role,
+product runtime or release receipt changes. The original receiver actually reaches
+`API_PRODUCT_SCRIPT_OUTPUT_ROLE_UNQUALIFIED: artifacts.ts:41: content` again.
+
+Independent pinned Terra/high P2 source and combined closure/preservation reviews
+are clean (.90/.91). A premature scalar-rebinding P1 was retained and addressed:
+old pins restored, source independently reviewed, then the exact scalar closure
+reviewed. A mixed acquisition was explicitly invalidated, never accepted; final
+all105 vectors were freshly acquired. Actual final50 custody controls,90 Reader
+controls and all eight original guide/inventory checks pass. Actual committed177
+page build and all five artifact/search/Source/previews/fresh-diagram checks pass:
+241 output digests,40885 local targets,14947 Source links/4061 objects,2000 excerpts/
+1070 objects. Initial missing-browser-library failure remains in operations; the
+unchanged build succeeded using the existing shared genuine browser runtime.
+Only five prior record revisions plus append-only checks/impact reviews change;
+all91 other records, original summaries/limits and acceptance states stay exact.
+Historical browser/person observations remain historical;225/261 and56/89 unchanged.
+
+Work continued into the genuine schema-inventory-to-published-guide route. The
+initial isolated publisher baseline was red, not mutation evidence: exactly3159
+Source URLs use published pin `2f719b1028c0140a5168cc8e6ec1c0964e06c7e2`, while the
+shared lock is `7994a51e16bc752357c3a801190b12b7d6a191a4`. Complete outputs are
+otherwise byte-identical. With the explicit original published pin in the owned
+isolated fixture, actual Add/Change/Remove each regenerate the original schema
+inventory, reject exactly the unchanged plugin-configuration page, regenerate a
+changed page, pass its original freshness check and restore a green baseline.
+This does NOT establish full current-root publication, mutated historical citation
+accuracy, global config/API, runtime or whole A910-13/14 acceptance. The shared
+lock and published page were not rewritten. Next: reconcile that actual source-pin
+publication contract, then independent whole representative-path/guide assessment.
+Exact runnable proof, original failures and new immutable final qualified105 and
+1248/1005 baselines are in operations `nested-custody/`; do not repeat the old
+ad924 baseline acquisition or promote the36 bounded observations into gate PASS.

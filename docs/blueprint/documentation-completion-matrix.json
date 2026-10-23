@@ -14191,7 +14191,7 @@
     },
     {
       "id": "AP09-complete-static-reader-search-20261021",
-      "revision": "337e1e6dc5467941a66c26e1930528f414aed93b",
+      "revision": "5ae0fa2e8b54cd02dfd78d11e55f0baced7c144b",
       "author": "Nova /root documentation author and implementation coordinator",
       "reviewer": "Independent Codex autoreview static-reader whole PUB-002 Source/reader-quality closeout",
       "verdict": "PASS",
@@ -14567,6 +14567,11 @@
           "command": "Independent finite extension-checker custody review; 14 scalar +36 owner/guide +97 publication controls; original current177-page build and five artifact/search/Source/preview/diagram checks",
           "exitCode": 0,
           "observation": "Same bounded reader acceptance preserved, not counted anew. Complete original scope file vectors: only role-custody authority changes;99/105 role facts unchanged,6 exact reviewed dependencies;all105 selectors/child authorities unchanged. Original DATA artifacts.ts41 failure actually reached; no new Reader/person/runtime or whole extension acceptance."
+        },
+        {
+          "command": "node --max-old-space-size=4096 scripts/docs-publication.mjs build\nnode --max-old-space-size=4096 scripts/docs-reader/check-artifact.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-search.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-links.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-previews.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-diagrams.mjs",
+          "exitCode": 0,
+          "observation": "Actual six separate original processes exited0 against reviewed committed nested-schema/Secret constructor Source. Current177page reader build and artifact/search/Source-links/source-previews/fresh-diagrams verified. One captured group reused across five bounded preserved scopes; no fresh browser, participant, screenreader, runtime, global DATA or whole-gate acceptance."
         }
       ],
       "limits": [
@@ -15413,6 +15418,14 @@
           "report": "handoffs/pr13-finish-20261023/tree-classification.md",
           "evidence": "operations/pr13/evidence/tree-classification-20261023/",
           "inspectionLimit": "Source-only independent assessment with complete necessary adjacent sources/contract fields supplied in-band; no reviewer checkout inspection or tests. Coordinator67tree+14publication controls and complete nine-scope vectors separately attributed. Unchanged historical checks/impact histories retained, not reapproved. Baseline API DATA and Knip failures unchanged."
+        },
+        {
+          "revision": "5ae0fa2e8b54cd02dfd78d11e55f0baced7c144b",
+          "reviewer": "Independent pinned fe588b1a Codex gpt-5.6-terra high P2 final source closure and five-scope preservation review",
+          "result": "PASS — only existing bounded Source/Reader scopes preserved, not recounted",
+          "scope": "Complete202/19/33/26/81file original scope vectors: all pages and all other Source exact; only role-custody metadata changed. Exact105native operations, six changed recipes; all selectors/children and1248selected/1005caller membership unchanged; finite schema/constructor/owner/scalar data renewal. Original contracts, all prior checks and original red DATA baseline supplied before review.",
+          "limits": "Original summaries/limits and historical observations unchanged. Actual original receiver still fails API_PRODUCT_SCRIPT_OUTPUT_ROLE_UNQUALIFIED artifacts.ts41 content; all5DATA UNKNOWN; release Knip remains failed. No fresh browser/person/runtime or wholeA91013/14 approval.",
+          "evidence": "handoffs/pr13-finish-20261023/extension-guide-drift.md"
         }
       ],
       "scopePreservation3408": {
@@ -15460,7 +15473,7 @@
     },
     {
       "id": "AP09-search-reader-gate-20261021",
-      "revision": "337e1e6dc5467941a66c26e1930528f414aed93b",
+      "revision": "5ae0fa2e8b54cd02dfd78d11e55f0baced7c144b",
       "author": "Nova /root documentation author and implementation coordinator",
       "reviewer": "Independent Codex autoreview whole A912-04 code/evidence review plus narrow Source/Reader/Quality native-impact follow-up",
       "verdict": "PASS",
@@ -15628,6 +15641,11 @@
           "command": "Independent finite extension-checker custody review; 14 scalar +36 owner/guide +97 publication controls; original current177-page build and five artifact/search/Source/preview/diagram checks",
           "exitCode": 0,
           "observation": "Same bounded reader acceptance preserved, not counted anew. Complete original scope file vectors: only role-custody authority changes;99/105 role facts unchanged,6 exact reviewed dependencies;all105 selectors/child authorities unchanged. Original DATA artifacts.ts41 failure actually reached; no new Reader/person/runtime or whole extension acceptance."
+        },
+        {
+          "command": "node --max-old-space-size=4096 scripts/docs-publication.mjs build\nnode --max-old-space-size=4096 scripts/docs-reader/check-artifact.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-search.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-links.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-previews.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-diagrams.mjs",
+          "exitCode": 0,
+          "observation": "Actual six separate original processes exited0 against reviewed committed nested-schema/Secret constructor Source. Current177page reader build and artifact/search/Source-links/source-previews/fresh-diagrams verified. One captured group reused across five bounded preserved scopes; no fresh browser, participant, screenreader, runtime, global DATA or whole-gate acceptance."
         }
       ],
       "limits": [
@@ -16085,6 +16103,14 @@
           "report": "handoffs/pr13-finish-20261023/tree-classification.md",
           "evidence": "operations/pr13/evidence/tree-classification-20261023/",
           "inspectionLimit": "Source-only independent assessment with complete necessary adjacent sources/contract fields supplied in-band; no reviewer checkout inspection or tests. Coordinator67tree+14publication controls and complete nine-scope vectors separately attributed. Unchanged historical checks/impact histories retained, not reapproved. Baseline API DATA and Knip failures unchanged."
+        },
+        {
+          "revision": "5ae0fa2e8b54cd02dfd78d11e55f0baced7c144b",
+          "reviewer": "Independent pinned fe588b1a Codex gpt-5.6-terra high P2 final source closure and five-scope preservation review",
+          "result": "PASS — only existing bounded Source/Reader scopes preserved, not recounted",
+          "scope": "Complete202/19/33/26/81file original scope vectors: all pages and all other Source exact; only role-custody metadata changed. Exact105native operations, six changed recipes; all selectors/children and1248selected/1005caller membership unchanged; finite schema/constructor/owner/scalar data renewal. Original contracts, all prior checks and original red DATA baseline supplied before review.",
+          "limits": "Original summaries/limits and historical observations unchanged. Actual original receiver still fails API_PRODUCT_SCRIPT_OUTPUT_ROLE_UNQUALIFIED artifacts.ts41 content; all5DATA UNKNOWN; release Knip remains failed. No fresh browser/person/runtime or wholeA91013/14 approval.",
+          "evidence": "handoffs/pr13-finish-20261023/extension-guide-drift.md"
         }
       ],
       "scopePreservation3408": {
@@ -16131,7 +16157,7 @@
     },
     {
       "id": "AP09-rendered-source-bounds-gate-20261021",
-      "revision": "337e1e6dc5467941a66c26e1930528f414aed93b",
+      "revision": "5ae0fa2e8b54cd02dfd78d11e55f0baced7c144b",
       "author": "Nova /root documentation author and implementation coordinator",
       "reviewer": "Independent Codex autoreview whole A912-09 Source/Reader/Quality review and narrow changed-boundary impact review for 21 prior PASS records",
       "verdict": "PASS",
@@ -16308,6 +16334,11 @@
           "command": "Independent finite extension-checker custody review; 14 scalar +36 owner/guide +97 publication controls; original current177-page build and five artifact/search/Source/preview/diagram checks",
           "exitCode": 0,
           "observation": "Same bounded reader acceptance preserved, not counted anew. Complete original scope file vectors: only role-custody authority changes;99/105 role facts unchanged,6 exact reviewed dependencies;all105 selectors/child authorities unchanged. Original DATA artifacts.ts41 failure actually reached; no new Reader/person/runtime or whole extension acceptance."
+        },
+        {
+          "command": "node --max-old-space-size=4096 scripts/docs-publication.mjs build\nnode --max-old-space-size=4096 scripts/docs-reader/check-artifact.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-search.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-links.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-previews.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-diagrams.mjs",
+          "exitCode": 0,
+          "observation": "Actual six separate original processes exited0 against reviewed committed nested-schema/Secret constructor Source. Current177page reader build and artifact/search/Source-links/source-previews/fresh-diagrams verified. One captured group reused across five bounded preserved scopes; no fresh browser, participant, screenreader, runtime, global DATA or whole-gate acceptance."
         }
       ],
       "limits": [
@@ -16750,6 +16781,14 @@
           "reason": "Only three custody files changed across six preexisting acceptance records; helper logic, role/child/authority-input membership, all reader texts and renderer sources remain unchanged. Full105 vectors compared;99 equal,6 limited deltas. Preserve original authors, reviews, checks, limits and scope IDs; no practical exercise reexecution or new scope acceptance.",
           "report": "docs/blueprint/acceptance-evidence/publication-build-20261023/prior-scope-preservation-review.json",
           "historicalPracticalEvidenceNotReexecuted": true
+        },
+        {
+          "revision": "5ae0fa2e8b54cd02dfd78d11e55f0baced7c144b",
+          "reviewer": "Independent pinned fe588b1a Codex gpt-5.6-terra high P2 final source closure and five-scope preservation review",
+          "result": "PASS — only existing bounded Source/Reader scopes preserved, not recounted",
+          "scope": "Complete202/19/33/26/81file original scope vectors: all pages and all other Source exact; only role-custody metadata changed. Exact105native operations, six changed recipes; all selectors/children and1248selected/1005caller membership unchanged; finite schema/constructor/owner/scalar data renewal. Original contracts, all prior checks and original red DATA baseline supplied before review.",
+          "limits": "Original summaries/limits and historical observations unchanged. Actual original receiver still fails API_PRODUCT_SCRIPT_OUTPUT_ROLE_UNQUALIFIED artifacts.ts41 content; all5DATA UNKNOWN; release Knip remains failed. No fresh browser/person/runtime or wholeA91013/14 approval.",
+          "evidence": "handoffs/pr13-finish-20261023/extension-guide-drift.md"
         }
       ],
       "scopePreservation3408": {
@@ -17115,7 +17154,7 @@
     },
     {
       "id": "AP09-complete-same-source-code-preview-20261021",
-      "revision": "337e1e6dc5467941a66c26e1930528f414aed93b",
+      "revision": "5ae0fa2e8b54cd02dfd78d11e55f0baced7c144b",
       "author": "Nova /root documentation author and implementation coordinator",
       "reviewer": "Independent Codex autoreview whole PUB004 Source/Reader/Quality closeout plus narrow changed-boundary preservation for21priorPASSrecords",
       "verdict": "PASS",
@@ -17280,6 +17319,11 @@
           "command": "Independent finite extension-checker custody review; 14 scalar +36 owner/guide +97 publication controls; original current177-page build and five artifact/search/Source/preview/diagram checks",
           "exitCode": 0,
           "observation": "Same bounded reader acceptance preserved, not counted anew. Complete original scope file vectors: only role-custody authority changes;99/105 role facts unchanged,6 exact reviewed dependencies;all105 selectors/child authorities unchanged. Original DATA artifacts.ts41 failure actually reached; no new Reader/person/runtime or whole extension acceptance."
+        },
+        {
+          "command": "node --max-old-space-size=4096 scripts/docs-publication.mjs build\nnode --max-old-space-size=4096 scripts/docs-reader/check-artifact.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-search.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-links.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-previews.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-diagrams.mjs",
+          "exitCode": 0,
+          "observation": "Actual six separate original processes exited0 against reviewed committed nested-schema/Secret constructor Source. Current177page reader build and artifact/search/Source-links/source-previews/fresh-diagrams verified. One captured group reused across five bounded preserved scopes; no fresh browser, participant, screenreader, runtime, global DATA or whole-gate acceptance."
         }
       ],
       "limits": [
@@ -17695,6 +17739,14 @@
           "reason": "Only three custody files changed across six preexisting acceptance records; helper logic, role/child/authority-input membership, all reader texts and renderer sources remain unchanged. Full105 vectors compared;99 equal,6 limited deltas. Preserve original authors, reviews, checks, limits and scope IDs; no practical exercise reexecution or new scope acceptance.",
           "report": "docs/blueprint/acceptance-evidence/publication-build-20261023/prior-scope-preservation-review.json",
           "historicalPracticalEvidenceNotReexecuted": true
+        },
+        {
+          "revision": "5ae0fa2e8b54cd02dfd78d11e55f0baced7c144b",
+          "reviewer": "Independent pinned fe588b1a Codex gpt-5.6-terra high P2 final source closure and five-scope preservation review",
+          "result": "PASS — only existing bounded Source/Reader scopes preserved, not recounted",
+          "scope": "Complete202/19/33/26/81file original scope vectors: all pages and all other Source exact; only role-custody metadata changed. Exact105native operations, six changed recipes; all selectors/children and1248selected/1005caller membership unchanged; finite schema/constructor/owner/scalar data renewal. Original contracts, all prior checks and original red DATA baseline supplied before review.",
+          "limits": "Original summaries/limits and historical observations unchanged. Actual original receiver still fails API_PRODUCT_SCRIPT_OUTPUT_ROLE_UNQUALIFIED artifacts.ts41 content; all5DATA UNKNOWN; release Knip remains failed. No fresh browser/person/runtime or wholeA91013/14 approval.",
+          "evidence": "handoffs/pr13-finish-20261023/extension-guide-drift.md"
         }
       ],
       "scopePreservation3408": {
@@ -17741,7 +17793,7 @@
     },
     {
       "id": "AP09-complete-responsive-reader-layout-20261021",
-      "revision": "337e1e6dc5467941a66c26e1930528f414aed93b",
+      "revision": "5ae0fa2e8b54cd02dfd78d11e55f0baced7c144b",
       "author": "Nova /root documentation author and implementation coordinator",
       "reviewer": "Independent Codex autoreview whole A91207 responsive-layout closeout and narrow24-record prior-boundary preservation",
       "verdict": "PASS",
@@ -17966,6 +18018,11 @@
           "command": "Independent finite extension-checker custody review; 14 scalar +36 owner/guide +97 publication controls; original current177-page build and five artifact/search/Source/preview/diagram checks",
           "exitCode": 0,
           "observation": "Same bounded reader acceptance preserved, not counted anew. Complete original scope file vectors: only role-custody authority changes;99/105 role facts unchanged,6 exact reviewed dependencies;all105 selectors/child authorities unchanged. Original DATA artifacts.ts41 failure actually reached; no new Reader/person/runtime or whole extension acceptance."
+        },
+        {
+          "command": "node --max-old-space-size=4096 scripts/docs-publication.mjs build\nnode --max-old-space-size=4096 scripts/docs-reader/check-artifact.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-search.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-links.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-previews.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-diagrams.mjs",
+          "exitCode": 0,
+          "observation": "Actual six separate original processes exited0 against reviewed committed nested-schema/Secret constructor Source. Current177page reader build and artifact/search/Source-links/source-previews/fresh-diagrams verified. One captured group reused across five bounded preserved scopes; no fresh browser, participant, screenreader, runtime, global DATA or whole-gate acceptance."
         }
       ],
       "limits": [
@@ -18404,6 +18461,14 @@
           "reason": "Only three custody files changed across six preexisting acceptance records; helper logic, role/child/authority-input membership, all reader texts and renderer sources remain unchanged. Full105 vectors compared;99 equal,6 limited deltas. Preserve original authors, reviews, checks, limits and scope IDs; no practical exercise reexecution or new scope acceptance.",
           "report": "docs/blueprint/acceptance-evidence/publication-build-20261023/prior-scope-preservation-review.json",
           "historicalPracticalEvidenceNotReexecuted": true
+        },
+        {
+          "revision": "5ae0fa2e8b54cd02dfd78d11e55f0baced7c144b",
+          "reviewer": "Independent pinned fe588b1a Codex gpt-5.6-terra high P2 final source closure and five-scope preservation review",
+          "result": "PASS — only existing bounded Source/Reader scopes preserved, not recounted",
+          "scope": "Complete202/19/33/26/81file original scope vectors: all pages and all other Source exact; only role-custody metadata changed. Exact105native operations, six changed recipes; all selectors/children and1248selected/1005caller membership unchanged; finite schema/constructor/owner/scalar data renewal. Original contracts, all prior checks and original red DATA baseline supplied before review.",
+          "limits": "Original summaries/limits and historical observations unchanged. Actual original receiver still fails API_PRODUCT_SCRIPT_OUTPUT_ROLE_UNQUALIFIED artifacts.ts41 content; all5DATA UNKNOWN; release Knip remains failed. No fresh browser/person/runtime or wholeA91013/14 approval.",
+          "evidence": "handoffs/pr13-finish-20261023/extension-guide-drift.md"
         }
       ],
       "scopePreservation3408": {
