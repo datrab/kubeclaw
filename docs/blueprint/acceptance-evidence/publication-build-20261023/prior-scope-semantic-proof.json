@@ -1,0 +1,26 @@
+{
+  "baseline": "e993471978b1414b1db2573540c74a95ed4c5e0f",
+  "current": "2a78151955534f57f8c6ebeb49d051383b3a3afa",
+  "custodySourceLogicOutsideExactRecipeObjectUnchanged": true,
+  "recipeMembership": 109,
+  "nativeVectors": 105,
+  "unchangedVectors": 99,
+  "changedRecipeNames": [
+    "scripts/docs-api-output-discovery.mjs",
+    "scripts/docs-api-output-role-classification.mjs",
+    "scripts/docs-api-product-scope.mjs",
+    "scripts/docs-api-reference.mjs",
+    "scripts/docs-configuration-inventory.mjs",
+    "scripts/docs-generate.mjs"
+  ],
+  "noRecipeRoleChildOrAuthorityInputChange": true,
+  "onlyOneClassifierSyntaxSelectorChanged": true,
+  "purpose": {
+    "inputs": 68,
+    "descriptors": 24,
+    "sourceCount": 11,
+    "fullObjectEqualExceptClassifierDigest": true,
+    "helperLogicEqualExceptAuthoritySeal": true
+  },
+  "limits": "Historical vectors compared completely; current original receiver independently revalidated custody before reaching artifacts.ts41. No raw re-acquisition/new role grant or preserved practical exercise reexecution claimed."
+}

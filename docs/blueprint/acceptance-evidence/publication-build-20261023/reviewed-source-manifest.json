@@ -1,0 +1,88 @@
+{
+  "originalRoot": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery",
+  "revision": "2a78151955534f57f8c6ebeb49d051383b3a3afa",
+  "snapshotRoot": "/home/node/.openclaw/workspace/tmp/pr13-publication-review",
+  "completeSourceFiles": [
+    {
+      "path": "docs/site/reference/documentation-site.md",
+      "bytes": 29517,
+      "sha256": "c0c4b55949be05d571aa4ea5b353c5ab479caeafd3ebbcdeb70ebec0ca10a1e0"
+    },
+    {
+      "path": "scripts/docs-publication.mjs",
+      "bytes": 81565,
+      "sha256": "fdae9667aa99505d4fcc90681f081fb45717ab9f9d4333a30544abdea33525a4"
+    },
+    {
+      "path": "scripts/docs-reader/renderer.mjs",
+      "bytes": 21223,
+      "sha256": "a0bf02d079637cf862fe0a40bbc34e4bfbd982c58126e347d8aea079047abd87"
+    },
+    {
+      "path": "scripts/docs-reader/metadata.mjs",
+      "bytes": 1133,
+      "sha256": "51e0b027356401a68c52a3b8b1fe4d6c6ed35070dfcb300067dd1b9af8da0abc"
+    },
+    {
+      "path": "scripts/docs-reader/page-records.mjs",
+      "bytes": 11080,
+      "sha256": "6268501ef047b13e0794950a85d57e2c7aaf54e85a16d77ca8c1263237691a2f"
+    },
+    {
+      "path": "scripts/docs-reader/check-artifact.mjs",
+      "bytes": 3677,
+      "sha256": "7f4e8cb928a5fba48bbd590e5349ce6247264f9cae1935a1e3679ae54c1a2a67"
+    },
+    {
+      "path": "scripts/docs-reader/check-search.mjs",
+      "bytes": 1970,
+      "sha256": "6eb9c612a24e87e3697094de6e0853b865644e0ed95bf12877c6ab214b644452"
+    },
+    {
+      "path": "scripts/docs-reader/diagrams.mjs",
+      "bytes": 15669,
+      "sha256": "c37045c51e6bbbf2c6c473389900497444f6194dafe61f29f9efacbf2dc08b81"
+    },
+    {
+      "path": "scripts/docs-reader/source-previews.mjs",
+      "bytes": 10004,
+      "sha256": "44a78b3922c7cc9af759ca1e2757c6f91e85d5ee8204a35eab56a7119576e13d"
+    },
+    {
+      "path": "scripts/lib/docs-publication-assets.mjs",
+      "bytes": 5133,
+      "sha256": "239950ea0ebc87501d03aa178d07b99922cb4ec7dabdded3fbf8f8ab5c5de6f0"
+    },
+    {
+      "path": "scripts/lib/docs-publication-links.mjs",
+      "bytes": 1304,
+      "sha256": "7e73aec54f5ca370dea96c1b8332e55b5c38bf86a846052cc2534f40c5d6d019"
+    },
+    {
+      "path": ".github/workflows/docs-checks.yaml",
+      "bytes": 8731,
+      "sha256": "96e54e68a99450a6b4cdd1568cd4309cf290ee54f8b368efa76b032f2c7b48b4"
+    },
+    {
+      "path": ".github/workflows/build-ops-mcp.yaml",
+      "bytes": 9504,
+      "sha256": "79cb301569d096bfff6c82135c6d4ee84df487da8cc2f0ccf1ee1b6e196460ba"
+    },
+    {
+      "path": "tests/verification/contracts/workflow-trust-split.test.mjs",
+      "bytes": 7232,
+      "sha256": "314a9d639c8fd17f576cd9254ba9783006bb7ff5ea32826e57734cd826ac782b"
+    },
+    {
+      "path": "package.json",
+      "bytes": 53756,
+      "sha256": "4ab1e90c2259aeb96acfdc877e5a9eed330f605abff46d7eca85faded0f020c3"
+    },
+    {
+      "path": "scripts/docs-reader/package.json",
+      "bytes": 186,
+      "sha256": "8b0ac8aee241df368b4588f10e2d76203c271245b54153fd8479274cb146c00f"
+    }
+  ],
+  "omittedResponsibilities": "global acceptance, inventory runtime release/hosting accessibility practical participant checks"
+}

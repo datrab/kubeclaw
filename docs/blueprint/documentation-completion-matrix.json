@@ -9885,7 +9885,7 @@
     },
     {
       "id": "AP09-documentation-agent-maintenance-20261021",
-      "revision": "e993471978b1414b1db2573540c74a95ed4c5e0f",
+      "revision": "2a78151955534f57f8c6ebeb49d051383b3a3afa",
       "author": "Nova /root authored content and correction coordinator",
       "reviewer": "Independent Codex autoreview 2026-10-21 maintenance-ready-review",
       "gateIds": [],
@@ -10169,6 +10169,11 @@
           "command": "node --test scripts/tests/exposure-predecessor-role.test.mjs scripts/tests/api-output-custody.test.mjs scripts/tests/deployment-config-output-custody.test.mjs scripts/tests/docs-api-top-level-script-purpose.test.mjs scripts/tests/docs-api-probe39-original-output.test.mjs scripts/tests/docs-api-versions-map-output.test.mjs",
           "exitCode": 0,
           "observation": "68/68 coordinator focused/regression tests PASS, no skips. Eight predecessor codec guard/API mutation/warm-cache cases; original68purpose inputs/24native slots/11source roles and caller/alias/package boundary rejection controls retained. Original owner remains exit1 at runner.ts1263 errorCandidates; no new global acceptance or release receipt rewrite."
+        },
+        {
+          "command": "node --test scripts/tests/docs-api-top-level-script-purpose.test.mjs scripts/tests/deployment-scalar-occurrence-custody.test.mjs scripts/tests/docs-documentation-owner-purpose.test.mjs scripts/tests/api-output-node-entry-custody.test.mjs; current publication build and five native artifact checks",
+          "exitCode": 0,
+          "observation": "69 custody controls pass;106 publication/CI controls and current177-page build/five artifact checks pass. Exact full105-vector comparison:99 unchanged,6 reviewed bounded metadata deltas; all affected pages and remaining listed Source files unchanged."
         }
       ],
       "review": {
@@ -10598,6 +10603,15 @@
           "verdict": "PASS_BOUNDED_EXISTING_SCOPE_PRESERVATION",
           "report": "docs/blueprint/acceptance-evidence/exposure-predecessor-20261023/scope-preservation-review.json",
           "reason": "Exact guarded predecessor string-array codec only; all authored pages, renderer/search/Source-preview/layout sources unchanged. Whole105semantic vectors compared (99unchanged,6reviewed);24native top-purpose descriptors/11producers/current1250Source graph unchanged, one input hash and helper seal only. Two complete1248/1005scalar vector stages exact. Preserve original scoped content/quality/Reader evidence and all limits; no new practical exercise, global generator/runtime approval, requirement or gate.",
+          "historicalPracticalEvidenceNotReexecuted": true
+        },
+        {
+          "revision": "2a78151955534f57f8c6ebeb49d051383b3a3afa",
+          "previousRevision": "e993471978b1414b1db2573540c74a95ed4c5e0f",
+          "reviewer": "Independent pinned Codex gpt-5.6-terra/high two-chunk scope review 01a16a61/01a16a62; 2026-10-23",
+          "verdict": "PASS_BOUNDED_EXISTING_SCOPE_PRESERVATION",
+          "reason": "Only three custody files changed across six preexisting acceptance records; helper logic, role/child/authority-input membership, all reader texts and renderer sources remain unchanged. Full105 vectors compared;99 equal,6 limited deltas. Preserve original authors, reviews, checks, limits and scope IDs; no practical exercise reexecution or new scope acceptance.",
+          "report": "docs/blueprint/acceptance-evidence/publication-build-20261023/prior-scope-preservation-review.json",
           "historicalPracticalEvidenceNotReexecuted": true
         }
       ],
@@ -14107,7 +14121,7 @@
     },
     {
       "id": "AP09-complete-static-reader-search-20261021",
-      "revision": "e993471978b1414b1db2573540c74a95ed4c5e0f",
+      "revision": "2a78151955534f57f8c6ebeb49d051383b3a3afa",
       "author": "Nova /root documentation author and implementation coordinator",
       "reviewer": "Independent Codex autoreview static-reader whole PUB-002 Source/reader-quality closeout",
       "verdict": "PASS",
@@ -14473,6 +14487,11 @@
           "command": "node --test scripts/tests/exposure-predecessor-role.test.mjs scripts/tests/api-output-custody.test.mjs scripts/tests/deployment-config-output-custody.test.mjs scripts/tests/docs-api-top-level-script-purpose.test.mjs scripts/tests/docs-api-probe39-original-output.test.mjs scripts/tests/docs-api-versions-map-output.test.mjs",
           "exitCode": 0,
           "observation": "68/68 coordinator focused/regression tests PASS, no skips. Eight predecessor codec guard/API mutation/warm-cache cases; original68purpose inputs/24native slots/11source roles and caller/alias/package boundary rejection controls retained. Original owner remains exit1 at runner.ts1263 errorCandidates; no new global acceptance or release receipt rewrite."
+        },
+        {
+          "command": "node --test scripts/tests/docs-api-top-level-script-purpose.test.mjs scripts/tests/deployment-scalar-occurrence-custody.test.mjs scripts/tests/docs-documentation-owner-purpose.test.mjs scripts/tests/api-output-node-entry-custody.test.mjs; current publication build and five native artifact checks",
+          "exitCode": 0,
+          "observation": "69 custody controls pass;106 publication/CI controls and current177-page build/five artifact checks pass. Exact full105-vector comparison:99 unchanged,6 reviewed bounded metadata deltas; all affected pages and remaining listed Source files unchanged."
         }
       ],
       "limits": [
@@ -15296,6 +15315,15 @@
           "report": "docs/blueprint/acceptance-evidence/exposure-predecessor-20261023/scope-preservation-review.json",
           "reason": "Exact guarded predecessor string-array codec only; all authored pages, renderer/search/Source-preview/layout sources unchanged. Whole105semantic vectors compared (99unchanged,6reviewed);24native top-purpose descriptors/11producers/current1250Source graph unchanged, one input hash and helper seal only. Two complete1248/1005scalar vector stages exact. Preserve original scoped content/quality/Reader evidence and all limits; no new practical exercise, global generator/runtime approval, requirement or gate.",
           "historicalPracticalEvidenceNotReexecuted": true
+        },
+        {
+          "revision": "2a78151955534f57f8c6ebeb49d051383b3a3afa",
+          "previousRevision": "e993471978b1414b1db2573540c74a95ed4c5e0f",
+          "reviewer": "Independent pinned Codex gpt-5.6-terra/high two-chunk scope review 01a16a61/01a16a62; 2026-10-23",
+          "verdict": "PASS_BOUNDED_EXISTING_SCOPE_PRESERVATION",
+          "reason": "Only three custody files changed across six preexisting acceptance records; helper logic, role/child/authority-input membership, all reader texts and renderer sources remain unchanged. Full105 vectors compared;99 equal,6 limited deltas. Preserve original authors, reviews, checks, limits and scope IDs; no practical exercise reexecution or new scope acceptance.",
+          "report": "docs/blueprint/acceptance-evidence/publication-build-20261023/prior-scope-preservation-review.json",
+          "historicalPracticalEvidenceNotReexecuted": true
         }
       ],
       "scopePreservation3408": {
@@ -15343,7 +15371,7 @@
     },
     {
       "id": "AP09-search-reader-gate-20261021",
-      "revision": "e993471978b1414b1db2573540c74a95ed4c5e0f",
+      "revision": "2a78151955534f57f8c6ebeb49d051383b3a3afa",
       "author": "Nova /root documentation author and implementation coordinator",
       "reviewer": "Independent Codex autoreview whole A912-04 code/evidence review plus narrow Source/Reader/Quality native-impact follow-up",
       "verdict": "PASS",
@@ -15501,6 +15529,11 @@
           "command": "node --test scripts/tests/exposure-predecessor-role.test.mjs scripts/tests/api-output-custody.test.mjs scripts/tests/deployment-config-output-custody.test.mjs scripts/tests/docs-api-top-level-script-purpose.test.mjs scripts/tests/docs-api-probe39-original-output.test.mjs scripts/tests/docs-api-versions-map-output.test.mjs",
           "exitCode": 0,
           "observation": "68/68 coordinator focused/regression tests PASS, no skips. Eight predecessor codec guard/API mutation/warm-cache cases; original68purpose inputs/24native slots/11source roles and caller/alias/package boundary rejection controls retained. Original owner remains exit1 at runner.ts1263 errorCandidates; no new global acceptance or release receipt rewrite."
+        },
+        {
+          "command": "node --test scripts/tests/docs-api-top-level-script-purpose.test.mjs scripts/tests/deployment-scalar-occurrence-custody.test.mjs scripts/tests/docs-documentation-owner-purpose.test.mjs scripts/tests/api-output-node-entry-custody.test.mjs; current publication build and five native artifact checks",
+          "exitCode": 0,
+          "observation": "69 custody controls pass;106 publication/CI controls and current177-page build/five artifact checks pass. Exact full105-vector comparison:99 unchanged,6 reviewed bounded metadata deltas; all affected pages and remaining listed Source files unchanged."
         }
       ],
       "limits": [
@@ -15935,6 +15968,15 @@
           "report": "docs/blueprint/acceptance-evidence/exposure-predecessor-20261023/scope-preservation-review.json",
           "reason": "Exact guarded predecessor string-array codec only; all authored pages, renderer/search/Source-preview/layout sources unchanged. Whole105semantic vectors compared (99unchanged,6reviewed);24native top-purpose descriptors/11producers/current1250Source graph unchanged, one input hash and helper seal only. Two complete1248/1005scalar vector stages exact. Preserve original scoped content/quality/Reader evidence and all limits; no new practical exercise, global generator/runtime approval, requirement or gate.",
           "historicalPracticalEvidenceNotReexecuted": true
+        },
+        {
+          "revision": "2a78151955534f57f8c6ebeb49d051383b3a3afa",
+          "previousRevision": "e993471978b1414b1db2573540c74a95ed4c5e0f",
+          "reviewer": "Independent pinned Codex gpt-5.6-terra/high two-chunk scope review 01a16a61/01a16a62; 2026-10-23",
+          "verdict": "PASS_BOUNDED_EXISTING_SCOPE_PRESERVATION",
+          "reason": "Only three custody files changed across six preexisting acceptance records; helper logic, role/child/authority-input membership, all reader texts and renderer sources remain unchanged. Full105 vectors compared;99 equal,6 limited deltas. Preserve original authors, reviews, checks, limits and scope IDs; no practical exercise reexecution or new scope acceptance.",
+          "report": "docs/blueprint/acceptance-evidence/publication-build-20261023/prior-scope-preservation-review.json",
+          "historicalPracticalEvidenceNotReexecuted": true
         }
       ],
       "scopePreservation3408": {
@@ -15981,7 +16023,7 @@
     },
     {
       "id": "AP09-rendered-source-bounds-gate-20261021",
-      "revision": "e993471978b1414b1db2573540c74a95ed4c5e0f",
+      "revision": "2a78151955534f57f8c6ebeb49d051383b3a3afa",
       "author": "Nova /root documentation author and implementation coordinator",
       "reviewer": "Independent Codex autoreview whole A912-09 Source/Reader/Quality review and narrow changed-boundary impact review for 21 prior PASS records",
       "verdict": "PASS",
@@ -16148,6 +16190,11 @@
           "command": "node --test scripts/tests/exposure-predecessor-role.test.mjs scripts/tests/api-output-custody.test.mjs scripts/tests/deployment-config-output-custody.test.mjs scripts/tests/docs-api-top-level-script-purpose.test.mjs scripts/tests/docs-api-probe39-original-output.test.mjs scripts/tests/docs-api-versions-map-output.test.mjs",
           "exitCode": 0,
           "observation": "68/68 coordinator focused/regression tests PASS, no skips. Eight predecessor codec guard/API mutation/warm-cache cases; original68purpose inputs/24native slots/11source roles and caller/alias/package boundary rejection controls retained. Original owner remains exit1 at runner.ts1263 errorCandidates; no new global acceptance or release receipt rewrite."
+        },
+        {
+          "command": "node --test scripts/tests/docs-api-top-level-script-purpose.test.mjs scripts/tests/deployment-scalar-occurrence-custody.test.mjs scripts/tests/docs-documentation-owner-purpose.test.mjs scripts/tests/api-output-node-entry-custody.test.mjs; current publication build and five native artifact checks",
+          "exitCode": 0,
+          "observation": "69 custody controls pass;106 publication/CI controls and current177-page build/five artifact checks pass. Exact full105-vector comparison:99 unchanged,6 reviewed bounded metadata deltas; all affected pages and remaining listed Source files unchanged."
         }
       ],
       "limits": [
@@ -16581,6 +16628,15 @@
           "report": "docs/blueprint/acceptance-evidence/exposure-predecessor-20261023/scope-preservation-review.json",
           "reason": "Exact guarded predecessor string-array codec only; all authored pages, renderer/search/Source-preview/layout sources unchanged. Whole105semantic vectors compared (99unchanged,6reviewed);24native top-purpose descriptors/11producers/current1250Source graph unchanged, one input hash and helper seal only. Two complete1248/1005scalar vector stages exact. Preserve original scoped content/quality/Reader evidence and all limits; no new practical exercise, global generator/runtime approval, requirement or gate.",
           "historicalPracticalEvidenceNotReexecuted": true
+        },
+        {
+          "revision": "2a78151955534f57f8c6ebeb49d051383b3a3afa",
+          "previousRevision": "e993471978b1414b1db2573540c74a95ed4c5e0f",
+          "reviewer": "Independent pinned Codex gpt-5.6-terra/high two-chunk scope review 01a16a61/01a16a62; 2026-10-23",
+          "verdict": "PASS_BOUNDED_EXISTING_SCOPE_PRESERVATION",
+          "reason": "Only three custody files changed across six preexisting acceptance records; helper logic, role/child/authority-input membership, all reader texts and renderer sources remain unchanged. Full105 vectors compared;99 equal,6 limited deltas. Preserve original authors, reviews, checks, limits and scope IDs; no practical exercise reexecution or new scope acceptance.",
+          "report": "docs/blueprint/acceptance-evidence/publication-build-20261023/prior-scope-preservation-review.json",
+          "historicalPracticalEvidenceNotReexecuted": true
         }
       ],
       "scopePreservation3408": {
@@ -16946,7 +17002,7 @@
     },
     {
       "id": "AP09-complete-same-source-code-preview-20261021",
-      "revision": "e993471978b1414b1db2573540c74a95ed4c5e0f",
+      "revision": "2a78151955534f57f8c6ebeb49d051383b3a3afa",
       "author": "Nova /root documentation author and implementation coordinator",
       "reviewer": "Independent Codex autoreview whole PUB004 Source/Reader/Quality closeout plus narrow changed-boundary preservation for21priorPASSrecords",
       "verdict": "PASS",
@@ -17101,6 +17157,11 @@
           "command": "node --test scripts/tests/exposure-predecessor-role.test.mjs scripts/tests/api-output-custody.test.mjs scripts/tests/deployment-config-output-custody.test.mjs scripts/tests/docs-api-top-level-script-purpose.test.mjs scripts/tests/docs-api-probe39-original-output.test.mjs scripts/tests/docs-api-versions-map-output.test.mjs",
           "exitCode": 0,
           "observation": "68/68 coordinator focused/regression tests PASS, no skips. Eight predecessor codec guard/API mutation/warm-cache cases; original68purpose inputs/24native slots/11source roles and caller/alias/package boundary rejection controls retained. Original owner remains exit1 at runner.ts1263 errorCandidates; no new global acceptance or release receipt rewrite."
+        },
+        {
+          "command": "node --test scripts/tests/docs-api-top-level-script-purpose.test.mjs scripts/tests/deployment-scalar-occurrence-custody.test.mjs scripts/tests/docs-documentation-owner-purpose.test.mjs scripts/tests/api-output-node-entry-custody.test.mjs; current publication build and five native artifact checks",
+          "exitCode": 0,
+          "observation": "69 custody controls pass;106 publication/CI controls and current177-page build/five artifact checks pass. Exact full105-vector comparison:99 unchanged,6 reviewed bounded metadata deltas; all affected pages and remaining listed Source files unchanged."
         }
       ],
       "limits": [
@@ -17507,6 +17568,15 @@
           "report": "docs/blueprint/acceptance-evidence/exposure-predecessor-20261023/scope-preservation-review.json",
           "reason": "Exact guarded predecessor string-array codec only; all authored pages, renderer/search/Source-preview/layout sources unchanged. Whole105semantic vectors compared (99unchanged,6reviewed);24native top-purpose descriptors/11producers/current1250Source graph unchanged, one input hash and helper seal only. Two complete1248/1005scalar vector stages exact. Preserve original scoped content/quality/Reader evidence and all limits; no new practical exercise, global generator/runtime approval, requirement or gate.",
           "historicalPracticalEvidenceNotReexecuted": true
+        },
+        {
+          "revision": "2a78151955534f57f8c6ebeb49d051383b3a3afa",
+          "previousRevision": "e993471978b1414b1db2573540c74a95ed4c5e0f",
+          "reviewer": "Independent pinned Codex gpt-5.6-terra/high two-chunk scope review 01a16a61/01a16a62; 2026-10-23",
+          "verdict": "PASS_BOUNDED_EXISTING_SCOPE_PRESERVATION",
+          "reason": "Only three custody files changed across six preexisting acceptance records; helper logic, role/child/authority-input membership, all reader texts and renderer sources remain unchanged. Full105 vectors compared;99 equal,6 limited deltas. Preserve original authors, reviews, checks, limits and scope IDs; no practical exercise reexecution or new scope acceptance.",
+          "report": "docs/blueprint/acceptance-evidence/publication-build-20261023/prior-scope-preservation-review.json",
+          "historicalPracticalEvidenceNotReexecuted": true
         }
       ],
       "scopePreservation3408": {
@@ -17553,7 +17623,7 @@
     },
     {
       "id": "AP09-complete-responsive-reader-layout-20261021",
-      "revision": "e993471978b1414b1db2573540c74a95ed4c5e0f",
+      "revision": "2a78151955534f57f8c6ebeb49d051383b3a3afa",
       "author": "Nova /root documentation author and implementation coordinator",
       "reviewer": "Independent Codex autoreview whole A91207 responsive-layout closeout and narrow24-record prior-boundary preservation",
       "verdict": "PASS",
@@ -17768,6 +17838,11 @@
           "command": "node --test scripts/tests/exposure-predecessor-role.test.mjs scripts/tests/api-output-custody.test.mjs scripts/tests/deployment-config-output-custody.test.mjs scripts/tests/docs-api-top-level-script-purpose.test.mjs scripts/tests/docs-api-probe39-original-output.test.mjs scripts/tests/docs-api-versions-map-output.test.mjs",
           "exitCode": 0,
           "observation": "68/68 coordinator focused/regression tests PASS, no skips. Eight predecessor codec guard/API mutation/warm-cache cases; original68purpose inputs/24native slots/11source roles and caller/alias/package boundary rejection controls retained. Original owner remains exit1 at runner.ts1263 errorCandidates; no new global acceptance or release receipt rewrite."
+        },
+        {
+          "command": "node --test scripts/tests/docs-api-top-level-script-purpose.test.mjs scripts/tests/deployment-scalar-occurrence-custody.test.mjs scripts/tests/docs-documentation-owner-purpose.test.mjs scripts/tests/api-output-node-entry-custody.test.mjs; current publication build and five native artifact checks",
+          "exitCode": 0,
+          "observation": "69 custody controls pass;106 publication/CI controls and current177-page build/five artifact checks pass. Exact full105-vector comparison:99 unchanged,6 reviewed bounded metadata deltas; all affected pages and remaining listed Source files unchanged."
         }
       ],
       "limits": [
@@ -18196,6 +18271,15 @@
           "verdict": "PASS_BOUNDED_EXISTING_SCOPE_PRESERVATION",
           "report": "docs/blueprint/acceptance-evidence/exposure-predecessor-20261023/scope-preservation-review.json",
           "reason": "Exact guarded predecessor string-array codec only; all authored pages, renderer/search/Source-preview/layout sources unchanged. Whole105semantic vectors compared (99unchanged,6reviewed);24native top-purpose descriptors/11producers/current1250Source graph unchanged, one input hash and helper seal only. Two complete1248/1005scalar vector stages exact. Preserve original scoped content/quality/Reader evidence and all limits; no new practical exercise, global generator/runtime approval, requirement or gate.",
+          "historicalPracticalEvidenceNotReexecuted": true
+        },
+        {
+          "revision": "2a78151955534f57f8c6ebeb49d051383b3a3afa",
+          "previousRevision": "e993471978b1414b1db2573540c74a95ed4c5e0f",
+          "reviewer": "Independent pinned Codex gpt-5.6-terra/high two-chunk scope review 01a16a61/01a16a62; 2026-10-23",
+          "verdict": "PASS_BOUNDED_EXISTING_SCOPE_PRESERVATION",
+          "reason": "Only three custody files changed across six preexisting acceptance records; helper logic, role/child/authority-input membership, all reader texts and renderer sources remain unchanged. Full105 vectors compared;99 equal,6 limited deltas. Preserve original authors, reviews, checks, limits and scope IDs; no practical exercise reexecution or new scope acceptance.",
+          "report": "docs/blueprint/acceptance-evidence/publication-build-20261023/prior-scope-preservation-review.json",
           "historicalPracticalEvidenceNotReexecuted": true
         }
       ],
@@ -28728,6 +28812,77 @@
         "practicalReaderProvenance": "Any original practical/semantic Reader observation remains dated and scoped. This source-informed content review is not a fresh eligible practical participant or new run.",
         "limits": "Only affected declared content/source bindings preserved. Old Ops loopback/shared-token/read-only/direct-token units are superseded where applicable by current source-only central Ops contract; no original live result transfers. No new global API/config generator, runtime, full accessibility, practical Reader execution or two-build determinism claim."
       }
+    },
+    {
+      "id": "PUB008-current-reader-build-ci-20261023",
+      "revision": "2a78151955534f57f8c6ebeb49d051383b3a3afa",
+      "author": "Existing canonical publication authors; Nova coordinated unchanged-source checks and adoption",
+      "reviewer": "Independent Codex gpt-5.6-terra/high thread 01a16a57-38f2-76d1-bed3-b85a518192f1; pinned topical review",
+      "gateIds": [],
+      "requirementIds": [
+        "PUB-008"
+      ],
+      "pages": [
+        "docs/site/reference/documentation-site.md"
+      ],
+      "sources": [
+        "scripts/docs-publication.mjs",
+        "scripts/docs-reader/renderer.mjs",
+        "scripts/docs-reader/metadata.mjs",
+        "scripts/docs-reader/page-records.mjs",
+        "scripts/docs-reader/check-artifact.mjs",
+        "scripts/docs-reader/check-search.mjs",
+        "scripts/docs-reader/diagrams.mjs",
+        "scripts/docs-reader/source-previews.mjs",
+        "scripts/lib/docs-publication-assets.mjs",
+        "scripts/lib/docs-publication-links.mjs",
+        ".github/workflows/docs-checks.yaml",
+        ".github/workflows/build-ops-mcp.yaml",
+        "tests/verification/contracts/workflow-trust-split.test.mjs",
+        "package.json",
+        "scripts/docs-reader/package.json"
+      ],
+      "checks": [
+        {
+          "command": "node scripts/docs-publication.mjs check",
+          "exitCode": 0,
+          "observation": "Current publication check passes:177 pages,51 plugins."
+        },
+        {
+          "command": "run-reader-env.sh node scripts/docs-publication.mjs build",
+          "exitCode": 0,
+          "observation": "Committed 2a781519 local HTML reader builds:177 canonical pages,187 HTML outputs."
+        },
+        {
+          "command": "node --test tests/verification/contracts/workflow-trust-split.test.mjs scripts/tests/docs-reader-artifact-ci-purpose.test.mjs scripts/tests/docs-publication-assets.test.mjs scripts/tests/docs-publication-links.test.mjs scripts/tests/docs-reader.test.mjs scripts/tests/docs-reader-page-records.test.mjs",
+          "exitCode": 0,
+          "observation": "106 current CI trust/publication/reader controls pass."
+        },
+        {
+          "command": "run-reader-env.sh node --max-old-space-size=4096 scripts/docs-reader/check-{artifact,search,source-links,source-previews,diagrams}.mjs (five separate original invocations)",
+          "exitCode": 0,
+          "observation": "All five exit0;241 output digests/40885 local links;14947 source links/4061 objects;435 previews/2000 excerpts;28 diagram rerenders."
+        },
+        {
+          "command": "Independent full PUB-008 topic review against complete current page and owning Source bundle",
+          "exitCode": 0,
+          "observation": "Source accuracy,reader usability,quality PASS; no actionable findings. Sole pending source-link adoption condition fulfilled before adoption."
+        }
+      ],
+      "review": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "summary": "Current local HTML build and CI publication-gate guidance are complete and accurate for PUB-008; actual current build/checks replace the older no-renderer/red-check/absent-CI findings. Only this requirement is adopted.",
+      "limits": [
+        "Coordinator tests are separate from static bundle-only independent review.",
+        "No GitHub CI execution, external hosting, accessibility/screenreader, fresh-persona or runtime/release acceptance.",
+        "Full API inventory receiver still fails artifacts.ts:41; all five DATA roles remain UNKNOWN."
+      ],
+      "openIssues": [],
+      "verdict": "PASS",
+      "evidenceReport": "docs/blueprint/acceptance-evidence/publication-build-20261023/checked-observations.json"
     }
   ],
   "purpose": "Internal planning and observed findings; not an acceptance ledger and not reader documentation.",
@@ -44955,19 +45110,27 @@
         "quality",
         "astra-final"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L391",
       "closureDecision": {
-        "verdict": "FAIL",
-        "revision": "e161be417432d4ebdd22a3d84e09057df70abc0d",
-        "reason": "- PUB-008 FAIL: actual node scripts/docs-publication.mjs check exits 1 (observer generated imports missing, operator plugin matrix stale, controlled-language errors). .github/workflows/docs-checks.yaml validate calls generated/reference/boundary/tree checks but not docs:publication:check/build or full docs:publish-check. No successful current build or rendered publication.",
-        "requiresAffectedRereview": true,
-        "currentScopeNote": "Historical integrated review; later scoped fixes and first-project example are separately accepted. Remaining whole requirement needs affected re-review, not automatic promotion.",
-        "campaign": "independent-ready-topics-20261020"
-      }
+        "verdict": "PASS",
+        "revision": "2a78151955534f57f8c6ebeb49d051383b3a3afa",
+        "reason": "Current local HTML build and CI publication-gate guidance are complete and accurate for PUB-008; actual current build/checks replace the older no-renderer/red-check/absent-CI findings. Only this requirement is adopted.",
+        "completionRecord": "PUB008-current-reader-build-ci-20261023"
+      },
+      "closureHistory": [
+        {
+          "verdict": "FAIL",
+          "revision": "e161be417432d4ebdd22a3d84e09057df70abc0d",
+          "reason": "- PUB-008 FAIL: actual node scripts/docs-publication.mjs check exits 1 (observer generated imports missing, operator plugin matrix stale, controlled-language errors). .github/workflows/docs-checks.yaml validate calls generated/reference/boundary/tree checks but not docs:publication:check/build or full docs:publish-check. No successful current build or rendered publication.",
+          "requiresAffectedRereview": true,
+          "currentScopeNote": "Historical integrated review; later scoped fixes and first-project example are separately accepted. Remaining whole requirement needs affected re-review, not automatic promotion.",
+          "campaign": "independent-ready-topics-20261020"
+        }
+      ]
     },
     {
       "id": "PUB-009",

@@ -1,0 +1,6 @@
+{
+  "findings": [],
+  "overall_correctness": "patch is correct",
+  "overall_explanation": "sourceAccuracy=PASS; readerUsability=PASS; quality=PASS. The supplied canonical page accurately describes the local publication commands, prerequisites, artifact boundaries, reader behavior, and the PR/non-main-dispatch versus trusted-main CI split represented in the supplied sources. PUB-008 content is ready on the inspected-source basis, but formal PUB-008 adoption is NOT_READY until the coordinator independently records the still-running comprehensive source-link check. Limits: static bundle-only review; no commands were run and no external hosting, runtime, accessibility, screen-reader, or practical-persona acceptance was assessed.",
+  "overall_confidence": 0.88
+}

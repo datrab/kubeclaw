@@ -1,0 +1,117 @@
+{
+  "revision": "2a78151955534f57f8c6ebeb49d051383b3a3afa",
+  "publicationCheck": {
+    "exitCode": 0,
+    "pages": 177,
+    "plugins": 51
+  },
+  "build": {
+    "exitCode": 0,
+    "pages": 177,
+    "htmlPages": 187
+  },
+  "tests": {
+    "passed": 106,
+    "failed": 0
+  },
+  "checkRuns": [
+    {
+      "check": "artifact",
+      "command": [
+        "/home/node/.openclaw/workspace/operations/pr13/run-reader-env.sh",
+        "node",
+        "--max-old-space-size=4096",
+        "scripts/docs-reader/check-artifact.mjs"
+      ],
+      "startedAt": "2026-10-23T19:56:25.520560+00:00",
+      "endedAt": "2026-10-23T19:57:03.261596+00:00",
+      "exitCode": 0
+    },
+    {
+      "check": "search",
+      "command": [
+        "/home/node/.openclaw/workspace/operations/pr13/run-reader-env.sh",
+        "node",
+        "--max-old-space-size=4096",
+        "scripts/docs-reader/check-search.mjs"
+      ],
+      "startedAt": "2026-10-23T19:56:25.520773+00:00",
+      "endedAt": "2026-10-23T19:56:51.823516+00:00",
+      "exitCode": 0
+    },
+    {
+      "check": "source-links",
+      "command": [
+        "/home/node/.openclaw/workspace/operations/pr13/run-reader-env.sh",
+        "node",
+        "--max-old-space-size=4096",
+        "scripts/docs-reader/check-source-links.mjs"
+      ],
+      "startedAt": "2026-10-23T19:56:25.521445+00:00",
+      "endedAt": "2026-10-23T19:58:26.018061+00:00",
+      "exitCode": 0
+    },
+    {
+      "check": "source-previews",
+      "command": [
+        "/home/node/.openclaw/workspace/operations/pr13/run-reader-env.sh",
+        "node",
+        "--max-old-space-size=4096",
+        "scripts/docs-reader/check-source-previews.mjs"
+      ],
+      "startedAt": "2026-10-23T19:56:25.521671+00:00",
+      "endedAt": "2026-10-23T19:57:10.335450+00:00",
+      "exitCode": 0
+    },
+    {
+      "check": "diagrams",
+      "command": [
+        "/home/node/.openclaw/workspace/operations/pr13/run-reader-env.sh",
+        "node",
+        "--max-old-space-size=4096",
+        "scripts/docs-reader/check-diagrams.mjs"
+      ],
+      "startedAt": "2026-10-23T19:56:25.522004+00:00",
+      "endedAt": "2026-10-23T19:56:58.063298+00:00",
+      "exitCode": 0
+    }
+  ],
+  "artifact": {
+    "selectedPages": 177,
+    "htmlPages": 187,
+    "localLinks": 40885,
+    "verifiedOutputDigests": 241
+  },
+  "sourceLinks": {
+    "htmlPages": 187,
+    "uniqueVerifiedLinks": 14947,
+    "uniqueSourceObjects": 4061,
+    "limit": "Primary source object/revision/line or Markdown-fragment verification only; not semantic or live-runtime acceptance."
+  },
+  "sourcePreviews": {
+    "pages": 177,
+    "sourceBoxes": 435,
+    "boxesWithPreviews": 435,
+    "excerpts": 2000,
+    "uniqueSourceObjects": 1070,
+    "limit": "Exact linked source and rendered excerpt verification; no semantic claim or test/runtime result inferred."
+  },
+  "diagrams": {
+    "pages": 177,
+    "diagrams": 28,
+    "freshRenderHashesMatched": 28,
+    "localOnly": true,
+    "limit": "Source/owner/question/visible alternative routing, static SVG and deterministic render checks only; not per-edge semantic or human screenreader acceptance."
+  },
+  "rawSourceLinkReceipt": {
+    "operationsPath": "/home/node/.openclaw/workspace/operations/pr13/evidence/data-transfer-contract-20261023/publication-check-source-links.log",
+    "bytes": 1475792,
+    "sha256": "7f5c0b76d2ce815809d0d7cd5f3d8d88957e8e31d1a586b211b0bba3ee7621eb"
+  },
+  "adoptionCondition": "Reviewer required coordinator source-link result. It completed exit 0 at 19:58:26 UTC, after dispatch and before adoption. All supplied Source bytes remain exact; no second unchanged-input review needed.",
+  "limits": [
+    "Coordinator tests are separate from static bundle-only independent review.",
+    "No GitHub CI execution, external hosting, accessibility/screenreader, fresh-persona or runtime/release acceptance.",
+    "Full API inventory receiver still fails artifacts.ts:41; all five DATA roles remain UNKNOWN."
+  ]
+}

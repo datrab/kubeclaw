@@ -1,0 +1,280 @@
+{
+  "revision": "2a78151955534f57f8c6ebeb49d051383b3a3afa",
+  "startedAt": "2026-10-23T20:08:08.668Z",
+  "endedAt": "2026-10-23T20:09:02.425Z",
+  "chromium": "151.0.7922.34",
+  "scanCount": 18,
+  "keyboard": [
+    {
+      "width": 320,
+      "steps": [
+        "native Tab reaches visible skip link",
+        "native Enter moves focus to main",
+        "native keyboard query and Enter produce local results",
+        "native Tab and Enter activate search result",
+        "native Tab and Enter toggle navigation disclosure"
+      ],
+      "errors": [],
+      "status": "8 pages found. Showing up to 50.",
+      "firstResult": "use/recovery.html"
+    },
+    {
+      "width": 1440,
+      "steps": [
+        "native Tab reaches visible skip link",
+        "native Enter moves focus to main",
+        "native keyboard query and Enter produce local results",
+        "native Tab and Enter activate search result",
+        "native Tab and Enter toggle navigation disclosure"
+      ],
+      "errors": [],
+      "status": "8 pages found. Showing up to 50.",
+      "firstResult": "use/recovery.html"
+    }
+  ],
+  "limit": "Coordinator automated WCAG subset and bounded native keyboard diagnostics only. Nine representative content/renderer routes at two widths; not all-page, independent participant, human screenreader, accessibility-tree perception, or whole PUB007/A91208 acceptance.",
+  "scanResults": [
+    {
+      "route": "README.html",
+      "width": 320,
+      "testEngine": {
+        "name": "axe-core",
+        "version": "4.14.0"
+      },
+      "passes": 17,
+      "inapplicable": 47,
+      "violations": 0,
+      "incompleteRules": [
+        "color-contrast"
+      ]
+    },
+    {
+      "route": "reference/documentation-site.html",
+      "width": 320,
+      "testEngine": {
+        "name": "axe-core",
+        "version": "4.14.0"
+      },
+      "passes": 15,
+      "inapplicable": 49,
+      "violations": 0,
+      "incompleteRules": [
+        "color-contrast"
+      ]
+    },
+    {
+      "route": "README.html",
+      "width": 1440,
+      "testEngine": {
+        "name": "axe-core",
+        "version": "4.14.0"
+      },
+      "passes": 22,
+      "inapplicable": 42,
+      "violations": 0,
+      "incompleteRules": [
+        "color-contrast"
+      ]
+    },
+    {
+      "route": "use/operate.html",
+      "width": 320,
+      "testEngine": {
+        "name": "axe-core",
+        "version": "4.14.0"
+      },
+      "passes": 17,
+      "inapplicable": 47,
+      "violations": 0,
+      "incompleteRules": [
+        "color-contrast"
+      ]
+    },
+    {
+      "route": "reference/documentation-site.html",
+      "width": 1440,
+      "testEngine": {
+        "name": "axe-core",
+        "version": "4.14.0"
+      },
+      "passes": 22,
+      "inapplicable": 42,
+      "violations": 0,
+      "incompleteRules": []
+    },
+    {
+      "route": "use/operate.html",
+      "width": 1440,
+      "testEngine": {
+        "name": "axe-core",
+        "version": "4.14.0"
+      },
+      "passes": 22,
+      "inapplicable": 42,
+      "violations": 0,
+      "incompleteRules": []
+    },
+    {
+      "route": "understand/worker-core.html",
+      "width": 320,
+      "testEngine": {
+        "name": "axe-core",
+        "version": "4.14.0"
+      },
+      "passes": 26,
+      "inapplicable": 38,
+      "violations": 0,
+      "incompleteRules": [
+        "color-contrast"
+      ]
+    },
+    {
+      "route": "understand/worker-core.html",
+      "width": 1440,
+      "testEngine": {
+        "name": "axe-core",
+        "version": "4.14.0"
+      },
+      "passes": 26,
+      "inapplicable": 38,
+      "violations": 0,
+      "incompleteRules": []
+    },
+    {
+      "route": "extend/first-plugin.html",
+      "width": 320,
+      "testEngine": {
+        "name": "axe-core",
+        "version": "4.14.0"
+      },
+      "passes": 17,
+      "inapplicable": 47,
+      "violations": 0,
+      "incompleteRules": [
+        "color-contrast"
+      ]
+    },
+    {
+      "route": "extend/first-plugin.html",
+      "width": 1440,
+      "testEngine": {
+        "name": "axe-core",
+        "version": "4.14.0"
+      },
+      "passes": 22,
+      "inapplicable": 42,
+      "violations": 0,
+      "incompleteRules": []
+    },
+    {
+      "route": "reference/configuration-precedence.html",
+      "width": 320,
+      "testEngine": {
+        "name": "axe-core",
+        "version": "4.14.0"
+      },
+      "passes": 17,
+      "inapplicable": 47,
+      "violations": 0,
+      "incompleteRules": [
+        "color-contrast"
+      ]
+    },
+    {
+      "route": "reference/configuration-precedence.html",
+      "width": 1440,
+      "testEngine": {
+        "name": "axe-core",
+        "version": "4.14.0"
+      },
+      "passes": 22,
+      "inapplicable": 42,
+      "violations": 0,
+      "incompleteRules": []
+    },
+    {
+      "route": "understand/deployment-and-trust.html",
+      "width": 320,
+      "testEngine": {
+        "name": "axe-core",
+        "version": "4.14.0"
+      },
+      "passes": 26,
+      "inapplicable": 38,
+      "violations": 0,
+      "incompleteRules": [
+        "color-contrast"
+      ]
+    },
+    {
+      "route": "understand/deployment-and-trust.html",
+      "width": 1440,
+      "testEngine": {
+        "name": "axe-core",
+        "version": "4.14.0"
+      },
+      "passes": 26,
+      "inapplicable": 38,
+      "violations": 0,
+      "incompleteRules": []
+    },
+    {
+      "route": "search.html",
+      "width": 320,
+      "testEngine": {
+        "name": "axe-core",
+        "version": "4.14.0"
+      },
+      "passes": 21,
+      "inapplicable": 43,
+      "violations": 0,
+      "incompleteRules": []
+    },
+    {
+      "route": "search.html",
+      "width": 1440,
+      "testEngine": {
+        "name": "axe-core",
+        "version": "4.14.0"
+      },
+      "passes": 28,
+      "inapplicable": 36,
+      "violations": 0,
+      "incompleteRules": [
+        "color-contrast"
+      ]
+    },
+    {
+      "route": "reference/helm-values.html",
+      "width": 1440,
+      "testEngine": {
+        "name": "axe-core",
+        "version": "4.14.0"
+      },
+      "passes": 22,
+      "inapplicable": 42,
+      "violations": 0,
+      "incompleteRules": []
+    },
+    {
+      "route": "reference/helm-values.html",
+      "width": 320,
+      "testEngine": {
+        "name": "axe-core",
+        "version": "4.14.0"
+      },
+      "passes": 17,
+      "inapplicable": 47,
+      "violations": 0,
+      "incompleteRules": [
+        "color-contrast"
+      ]
+    }
+  ],
+  "rawReceipt": {
+    "operationsPath": "/home/node/.openclaw/workspace/operations/pr13/evidence/data-transfer-contract-20261023/reader-a11y-batch.json",
+    "bytes": 908070,
+    "sha256": "090204fdd5359a5d7a090fd08eae7857c4632523ee9d23bfaf21407199e3e76d"
+  },
+  "gateAcceptanceGranted": false
+}

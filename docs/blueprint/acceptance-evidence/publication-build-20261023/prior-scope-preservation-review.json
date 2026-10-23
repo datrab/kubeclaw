@@ -1,0 +1,34 @@
+{
+  "final": {
+    "findings": [],
+    "overall_correctness": "patch is correct",
+    "overall_explanation": "Chunked review complete. chunk 1/2: 0 finding(s), chunk 2/2: 0 finding(s).",
+    "overall_confidence": 0.88
+  },
+  "completeChunkVerdicts": [
+    {
+      "findings": [],
+      "overall_correctness": "patch is correct",
+      "overall_explanation": "preserveExistingScopes=PASS. The supplied delta confines behavioral change to conservative UNKNOWN handling for opaque artifact-file bytes and updates the dependent custody/purpose pins; the six bounded reader, search, source-preview, layout, and maintenance scopes retain unchanged reader/renderer sources and recorded scope boundaries. Concrete unresolved gap: the global configuration/API inventory receiver remains non-green at artifacts.ts:41 because opaque DATA remains UNKNOWN; this was already outside the six accepted scopes and is not presented as resolved.",
+      "overall_confidence": 0.88
+    },
+    {
+      "findings": [],
+      "overall_correctness": "patch is correct",
+      "overall_explanation": "preserveExistingScopes=PASS. The six bounded reader/search/source-preview/layout scopes remain supported by the supplied unchanged-source and complete-vector evidence; the changed custody metadata is limited to the classifier-related facts. Concrete unresolved gap: the global configuration/API inventory still stops at artifacts.ts:41 with UNKNOWN, but the supplied original scope contracts explicitly exclude that global acceptance condition.",
+      "overall_confidence": 0.88
+    }
+  ],
+  "upstream": "fe588b1a6267eb47f785d0c748db9f6f3e9a3b4f",
+  "model": "gpt-5.6-terra",
+  "thinking": "high",
+  "maxPriority": "P2",
+  "bundleBytes": 602729,
+  "passes": 2,
+  "firstReviewDisposition": {
+    "finding": "Requires full original API receiver green before preserving six scopes",
+    "disposition": "Rejected as out-of-scope requirement, repaired missing baseline/scope context before retry",
+    "reason": "At original independently preserved e993 baseline the same receiver already failed runner1263, while these six bounded scopes excluded global/API/runtime qualification. Current artifacts41 UNKNOWN is intentionally conservative. Retained original source evidence and scope contracts supplied; no DATA waiver or test bypass."
+  },
+  "inspectionLimit": "Static supplied-source/bounded-scope review; no reviewer-run tests or new practical participant exercise."
+}

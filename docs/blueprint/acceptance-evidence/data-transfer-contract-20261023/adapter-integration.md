@@ -104,3 +104,14 @@ This is bounded change review, not global Source/Reader/Quality acceptance.
 The fresh publication check also passed: 177 pages, 51 plugins. Its original
 command was `node scripts/docs-publication.mjs check`; no reader build, browser,
 screenreader or whole-publication acceptance follows from that check alone.
+
+
+The recovered original receiver completed on2026-10-23 at19:56:06 UTC, exit1,
+again at `API_PRODUCT_SCRIPT_OUTPUT_ROLE_UNQUALIFIED: artifacts.ts:41: content`.
+The prior18:50 attempt remains unobserved; this is a separate fresh execution.
+First recovery failures (missing Go in PATH and the temporary sandbox binary as
+the sole additional caller fact) are retained in operations proof. Removing that
+owned, unused test build restored all1005 original caller facts exactly; no
+custody hashes were changed. Diagnostic tools were installed Go1.26.5 and
+Helm3.18.4, not a claim of matching CI's documented pins. The five DATA slots and
+selected-release Knip failure remain unchanged.
